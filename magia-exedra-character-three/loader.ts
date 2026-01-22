@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
-import { channel2AlphaMap, imageData2Texture, input2ImageData, loadTexture, mixImage, parseCtrlMap } from './texture';
+import { createGeneralMaterial, createFaceMaterial } from './shaders'
+import { loadTexture } from './texture';
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes } from './utils';
 
 const fbxLoader = new FBXLoader();
@@ -109,160 +110,74 @@ export async function loadCharacter(files: Record<string, string>, loadProgressC
 
                     // mix color and shadow map and set texture
                     if (name.includes('face')) {
-                        const colorTex = await loadTexture(colorMap, { colorSpace: THREE.SRGBColorSpace });
-                        const shadowTex = await loadTexture(shadowMap!, { colorSpace: THREE.SRGBColorSpace });
-                        const ctrlTex = await loadTexture(ctrlMap!);
+                        mesh.material = await createFaceMaterial({ colorMap, shadowMap: shadowMap!, ctrlMap: ctrlMap! })
+                    }
+                    else if (characterId == 113701 && name.includes('body')) {
+                        /*
+                        ultimate madoka
+ 
+                        body_color ---\
+                                       |--> body_ctrl[red] --\
+                        body_shadow --/                       \
+                                                               |--> body_ctrl[alpha] --> final texture
+                        body_space_color ---------------------/
+                                                                  body_shadow[alpha] --> final alpha map
+                        */
+                        const spaceTex = await loadTexture(ObjFindByKey(meshTextures, x => x.includes('space'))!, { colorSpace: THREE.SRGBColorSpace })
 
-                        const material = new THREE.MeshStandardMaterial({
-                            map: colorTex,
-                            // transparent: true,
-                        });
+                        const material = await createGeneralMaterial({
+                            colorMap, shadowMap, ctrlMap, alphaSrc: 'shadow',
 
-                        // 2. Inject your custom Blush/Highlight logic
-                        material.onBeforeCompile = (shader) => {
-                            // Add your extra uniforms
-                            shader.uniforms.tShadow = { value: shadowTex };
-                            shader.uniforms.tCtrl = { value: ctrlTex };
+                            onBeforeCompile(shader) {
+                                shader.uniforms.tSpace = { value: spaceTex }
 
-                            shader.uniforms.uShadowMix = { value: 0.67 }
-                            shader.uniforms.uHighlightBrightness = { value: 1.0 }
-                            shader.uniforms.uBlushStrength = { value: 0.33 };
+                                shader.vertexShader = /*glsl*/`
+                                    attribute vec2 uv1;
+                                    varying vec2 vUv1;
+                                    ${shader.vertexShader}
+                                `.replace(
+                                    '#include <uv_vertex>',
+                                    /*glsl*/`
+                                    #include <uv_vertex>
+                                    vUv1 = uv1;
+                                    `
+                                );
 
-                            // Update Vertex Shader to handle UV1 (uv1 attribute)
-                            shader.vertexShader = /*glsl*/`
-                                attribute vec2 uv1;
-                                varying vec2 vUv;
-                                varying vec2 vUv2;
-                                ${shader.vertexShader}
-                            `.replace(
-                                '#include <uv_vertex>',
-                                /*glsl*/`
-                                #include <uv_vertex>
-                                vUv = uv;
-                                vUv2 = uv1;
-                                `
-                            );
-
-                            // Update Fragment Shader
-                            shader.fragmentShader = /*glsl*/`
-                                varying vec2 vUv;
-                                varying vec2 vUv2;
-
-                                uniform sampler2D tShadow;
-                                uniform sampler2D tCtrl;
-                                
-                                uniform float uShadowMix;
-                                uniform float uHighlightBrightness;
-                                uniform float uBlushStrength;
-                                ${shader.fragmentShader}
-                            `.replace(
-                                '#include <map_fragment>',
-                                /*glsl*/`
-                                vec4 faceColor = texture2D(map, vUv);
-                                vec4 faceShadow = texture2D(tShadow, vUv);
-                                vec4 faceCtrl = texture2D(tCtrl, vUv2);
-                                
-                                // mix color and shadow map
-                                faceColor.rgb = mix(faceShadow.rgb, faceColor.rgb, uShadowMix);
-
-                                float eyeMask = step(vUv2.y, 0.5); // extract eye highlights (bottom-half)
-                                float highlightIntensity = smoothstep(0.5, 1.0, faceCtrl.r) * eyeMask; // hide pixels with value < 0.5
-                                vec3 highlightColor = vec3(highlightIntensity * uHighlightBrightness);
-
-                                float blushMask = step(0.5, vUv2.y); // extract blush (top-half)
-                                float blushFactor = faceCtrl.r * blushMask * uBlushStrength; // calculate factor
-                                vec3 blushCyan = vec3(0.0, blushFactor, blushFactor); // map red to grenn-blue, used for subtraction later
-
-                                faceColor.rgb += highlightColor; // add eye highlights
-                                faceColor.rgb -= blushCyan; // add blush (subtract the inverted red)
-
-                                // Apply back to the standard variable 'diffuseColor'
-                                diffuseColor = faceColor;
-                                `
-                            );
-                        };
+                                shader.fragmentShader = /*glsl*/`
+                                    varying vec2 vUv1;
+                                    uniform sampler2D tSpace;
+                                    ${shader.fragmentShader}
+                                `.replace(
+                                    '// end map_fragment injection',
+                                    /*glsl*/`
+                                    vec4 texSpace = texture2D(tSpace, vUv1);
+                                    diffuseColor.rgb = mix(diffuseColor.rgb, texSpace.rgb, texCtrl.a);
+                                    // end map_fragment injection
+                                    `
+                                )
+                            },
+                        })
 
                         mesh.material = material
                     }
                     else {
-                        let ctrlMapData: ImageData | undefined,
-                            alphaData: ImageData | undefined,
-                            shadowMapData: ImageData | undefined,
-                            alphaTex: THREE.Texture | null = null,
-                            pbrTex: THREE.Texture | null = null,
-                            finalTex: THREE.Texture;
-
-                        if (characterId == 113701 && name.includes('body')) {
-                            /*
-                            ultimate madoka
-
-                            body_color ---\
-                                           |--> body_ctrl[red] --\
-                            body_shadow --/                       \
-                                                                   |--> body_ctrl[alpha] --> final texture
-                            body_space_color ---------------------/
-                                                                      body_shadow[alpha] --> final alpha map
-                            */
-                            ({ ctrlMapData, alphaData, pbrTex } = await parseCtrlMap(ctrlMap!))
-                            shadowMapData = await input2ImageData(shadowMap!)
-                            alphaTex = channel2AlphaMap(shadowMapData)
-                            const bodyImg = await mixImage(shadowMapData, colorMap, ctrlMapData)
-                            const spaceImg = ObjFindByKey(meshTextures, x => x.includes('space'))!
-                            finalTex = imageData2Texture(await mixImage(bodyImg, spaceImg, alphaData), { colorSpace: THREE.SRGBColorSpace })
-                        }
-                        else {
-                            /*
-                            color ---\
-                                      |--> ctrl[red] --> final texture
-                            shadow --/
-                                         ctrl[alpha] --> final alpha map
-                            */
-                            if (ctrlMap) {
-                                ({ ctrlMapData, alphaData, pbrTex } = await parseCtrlMap(ctrlMap))
-                            }
-                            if (shadowMap) {
-                                shadowMapData = await input2ImageData(shadowMap)
-                                finalTex = imageData2Texture(await mixImage(shadowMapData, colorMap, ctrlMapData || 0.67), { colorSpace: THREE.SRGBColorSpace })
-                            } else {
-                                finalTex = await loadTexture(colorMap)
-                            }
-
-                            // FBX has `transparent` material -> use alpha map from shadow map
-                            // example: ultimate madoka's body (transparent), 加賀見まさら's body (trans), アリナ・グレイ's weapon (trs)
-                            // this condition should always place in front of `alpha`, as these two may exist together
-                            if (shadowMapData && meshMaterialNames.some(x => x.includes('trans') || x.includes('trs'))) {
-                                alphaTex = channel2AlphaMap(shadowMapData)
-                            }
-                            // has `alpha` material -> use alpha map frpm ctrl map
-                            // example: homura's glasses
-                            else if (alphaData && meshMaterialNames.some(x => x.includes('alpha'))) {
-                                alphaTex = imageData2Texture(alphaData)
-                            }
-                        }
-
-                        if (alphaTex) {
-                            alphaTex.magFilter = THREE.LinearFilter
-                            alphaTex.minFilter = THREE.LinearFilter
-                            alphaTex.anisotropy = 4
-                        }
-
-                        if (pbrTex) {
-                            pbrTex.magFilter = THREE.LinearFilter
-                            pbrTex.minFilter = THREE.LinearFilter
-                            pbrTex.anisotropy = 4
-                        }
-
-                        finalTex.magFilter = THREE.LinearFilter
-                        finalTex.minFilter = THREE.LinearFilter
-                        finalTex.anisotropy = 4
-
-                        mesh.material = new THREE.MeshStandardMaterial({
-                            map: finalTex,
-                            metalnessMap: pbrTex, // blue channel
-                            roughnessMap: pbrTex, // green channel
-                            transparent: Boolean(alphaTex),
-                            alphaMap: alphaTex,
-                        });
+                        mesh.material = await createGeneralMaterial({
+                            colorMap, shadowMap, ctrlMap,
+                            alphaSrc: (() => {
+                                // FBX has `transparent` material -> use alpha map from shadow map
+                                // example: ultimate madoka's body (transparent), 加賀見まさら's body (trans), アリナ・グレイ's weapon (trs)
+                                // this condition should always place in front of `alpha`, as these two may exist together
+                                if (meshMaterialNames.some(x => x.includes('trans') || x.includes('trs'))) {
+                                    return 'shadow'
+                                }
+                                // has `alpha` material -> use alpha map frpm ctrl map
+                                // example: homura's glasses
+                                else if (meshMaterialNames.some(x => x.includes('alpha'))) {
+                                    return 'ctrl'
+                                }
+                                return undefined
+                            })()
+                        })
                     }
 
                 } catch (error) {

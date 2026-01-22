@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import type MagiaExedraCharacter3D from 'magia-exedra-character-three/character'
+import * as Texture from 'magia-exedra-character-three/texture'
 import { characters } from './character';
 
 export default class ViewerScene {
@@ -16,7 +17,8 @@ export default class ViewerScene {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         this.renderer.xr.enabled = true
-        console.log('MaxAnisotropy:', this.renderer.capabilities.getMaxAnisotropy())
+
+        Texture.setRenderer(this.renderer)
 
         element.appendChild(this.renderer.domElement);
 
