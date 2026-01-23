@@ -14,15 +14,22 @@ body {
     right: 0;
     color: white;
     display: flex;
+    justify-content: space-between;
+    pointer-events: none;
 }
 
 #menu-controls {
-    flex: 1;
     overflow: auto;
 }
 
 #menu-controls>div {
     margin: 8px;
+    pointer-events: initial;
+    width: fit-content;
+}
+
+#menu-links>* {
+    pointer-events: initial;
 }
 
 #menu-links img {
