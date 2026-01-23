@@ -1,7 +1,10 @@
 import MagiaExedraCharacter3D from './character'
 import characterList from './getStyle3dCharacterMstList.json'
-import { loadCharacter } from "./loader"
+import { loadCharacter, type LoadCharacterCallbacks } from "./loader"
 import { ObjFilterByKey } from './utils'
+
+import { createRenderer } from './renderer'
+export { createRenderer }
 
 export default class MagiaExedraCharacterThree {
     files: Record<string, string>
@@ -67,9 +70,11 @@ export default class MagiaExedraCharacterThree {
     }
 
     /** Loads the FBX model and returns the character instance */
-    async loadCharacterById(id: number | string, loadProgressCallback?: (progress: string) => any): Promise<MagiaExedraCharacter3D> {
+    async loadCharacterById(id: number | string, callbacks?: Partial<LoadCharacterCallbacks>): Promise<MagiaExedraCharacter3D> {
         const files = ObjFilterByKey(this.files, x => new RegExp(`chara_${id}.*\/`).test(x))
-        if (Object.keys(files).length == 0) throw new Error(`Could not find files for character "${id}"`)
-        return new MagiaExedraCharacter3D(await loadCharacter(files, loadProgressCallback))
+        if (Object.keys(files).length == 0) {
+            throw new Error(`Could not find files for character "${id}"`)
+        }
+        return new MagiaExedraCharacter3D(await loadCharacter(files, callbacks))
     }
 }

@@ -1,10 +1,12 @@
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
-import { createGeneralMaterial, createFaceMaterial } from './shaders'
+import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh } from './shaders'
 import { loadTexture } from './texture';
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes } from './utils';
+import type { ObjectUserData } from './character';
 
 const fbxLoader = new FBXLoader();
+let stencilRefCount = 1
 
 // suppress warning `THREE.FBXLoader: unknown attribute mapping type NoMappingInformation`
 const origConsoleWarn = console.warn
@@ -17,7 +19,17 @@ console.warn = function (...data: any[]) {
     origConsoleWarn(...data)
 }
 
-export async function loadCharacter(files: Record<string, string>, loadProgressCallback: (progress: string) => any = () => { }): Promise<THREE.Group> {
+export interface LoadCharacterCallbacks {
+    loadProgressCallback: (progress: string) => any
+    modelLoadedCallback: (model: THREE.Group) => any
+    loadFinishCallback: (model: THREE.Group) => any
+}
+
+export async function loadCharacter(files: Record<string, string>, callbacks?: Partial<LoadCharacterCallbacks>): Promise<THREE.Group> {
+    const loadProgressCallback = callbacks?.loadProgressCallback || (() => undefined)
+    const modelLoadedCallback = callbacks?.modelLoadedCallback || (() => undefined)
+    const loadFinishCallback = callbacks?.loadFinishCallback || (() => undefined)
+
     const fbxPathUrl = ObjFilterByKey(files, x => x.includes('.fbx'))
     const fbxPath = Object.keys(fbxPathUrl)[0]
     const characterId = parseInt(fbxPath.match(/chara_(\d+).*\//)![1])
@@ -33,6 +45,7 @@ export async function loadCharacter(files: Record<string, string>, loadProgressC
             // return model, load textures later
             console.log(`Model "${modelObject.name}" loaded successfully`);
             resolve(modelObject)
+            modelLoadedCallback(modelObject)
 
             // process and apply textures
             loadProgressCallback('Loading textures...')
@@ -40,6 +53,12 @@ export async function loadCharacter(files: Record<string, string>, loadProgressC
 
             const meshes: THREE.Mesh[] = []
             modelObject.traverse(child => (child as THREE.Mesh).isMesh && meshes.push(child as THREE.Mesh))
+
+            const userData: ObjectUserData = {
+                textures: [],
+                outlineMeshes: [],
+            }
+            modelObject.userData = userData
 
             await Promise.all(meshes.map(mesh => new Promise<void>(async (resolve, _reject) => {
                 try {
@@ -109,8 +128,12 @@ export async function loadCharacter(files: Record<string, string>, loadProgressC
                     }
 
                     // mix color and shadow map and set texture
+                    let alphaTex: THREE.Texture | undefined
+
                     if (name.includes('face')) {
-                        mesh.material = await createFaceMaterial({ colorMap, shadowMap: shadowMap!, ctrlMap: ctrlMap! })
+                        const { material, textures } = await createFaceMaterial({ colorMap, shadowMap: shadowMap!, ctrlMap: ctrlMap! })
+                        mesh.material = material
+                        userData.textures.push(...textures.textures)
                     }
                     else if (characterId == 113701 && name.includes('body')) {
                         /*
@@ -125,7 +148,7 @@ export async function loadCharacter(files: Record<string, string>, loadProgressC
                         */
                         const spaceTex = await loadTexture(ObjFindByKey(meshTextures, x => x.includes('space'))!, { colorSpace: THREE.SRGBColorSpace })
 
-                        const material = await createGeneralMaterial({
+                        const { material, textures } = await createGeneralMaterial({
                             colorMap, shadowMap, ctrlMap, alphaSrc: 'shadow',
 
                             onBeforeCompile(shader) {
@@ -158,26 +181,54 @@ export async function loadCharacter(files: Record<string, string>, loadProgressC
                             },
                         })
 
-                        mesh.material = material
+                        mesh.material = material;
+                        userData.textures.push(...textures.textures, spaceTex);
+                        ({ alphaTex } = textures);
                     }
                     else {
-                        mesh.material = await createGeneralMaterial({
-                            colorMap, shadowMap, ctrlMap,
-                            alphaSrc: (() => {
-                                // FBX has `transparent` material -> use alpha map from shadow map
-                                // example: ultimate madoka's body (transparent), 加賀見まさら's body (trans), アリナ・グレイ's weapon (trs)
-                                // this condition should always place in front of `alpha`, as these two may exist together
-                                if (meshMaterialNames.some(x => x.includes('trans') || x.includes('trs'))) {
-                                    return 'shadow'
-                                }
-                                // has `alpha` material -> use alpha map frpm ctrl map
-                                // example: homura's glasses
-                                else if (meshMaterialNames.some(x => x.includes('alpha'))) {
-                                    return 'ctrl'
-                                }
-                                return undefined
-                            })()
-                        })
+                        let alphaSrc: 'ctrl' | 'shadow' | undefined = undefined
+
+                        // FBX has `transparent` material -> use alpha map from shadow map
+                        // example: ultimate madoka's body (transparent), 加賀見まさら's body (trans), アリナ・グレイ's weapon (trs)
+                        // this condition should always place in front of `alpha`, as these two may exist together
+                        if (meshMaterialNames.some(x => x.includes('trans') || x.includes('trs'))) {
+                            alphaSrc = 'shadow'
+                        }
+                        // has `alpha` material -> use alpha map frpm ctrl map
+                        // example: homura's glasses
+                        else if (meshMaterialNames.some(x => x.includes('alpha'))) {
+                            alphaSrc = 'ctrl'
+                        }
+                        console.log(`${name} alpha  ->`, alphaSrc)
+
+                        const { material, textures } = await createGeneralMaterial({ colorMap, shadowMap, ctrlMap, alphaSrc })
+                        mesh.material = material;
+                        userData.textures.push(...textures.textures);
+                        ({ alphaTex } = textures);
+                    }
+
+                    /*
+                    TODO:
+                    焰的盾牌描边不正常 (特定视角出现, 不知道什么bug)
+                    圆神胸口和丝袜花边的描边没有遵循透明通道, 尽管翅膀正常
+                    头发容易出现大黑色块, 可能是里层面透出来导致
+                    */
+                    const outlineMesh = addOutlineToMesh(mesh, { alphaTex })
+                    userData.outlineMeshes.push(outlineMesh)
+
+                    if (name.includes('face') || name.includes('weapon')) {
+                        // prevent outlines from being displayed inside mesh area
+                        // require renderer stencil enabled
+                        mesh.material.stencilWrite = true;
+                        mesh.material.stencilRef = stencilRefCount;
+                        mesh.material.stencilFunc = THREE.AlwaysStencilFunc;
+                        mesh.material.stencilZPass = THREE.ReplaceStencilOp;
+
+                        outlineMesh.material.stencilWrite = true;
+                        outlineMesh.material.stencilRef = stencilRefCount;
+                        outlineMesh.material.stencilFunc = THREE.NotEqualStencilFunc;
+
+                        stencilRefCount++
                     }
 
                 } catch (error) {
@@ -188,6 +239,7 @@ export async function loadCharacter(files: Record<string, string>, loadProgressC
             })))
 
             loadProgressCallback('')
+            loadFinishCallback(modelObject)
 
         }, (progress) => {
             const loaded = humanizeBytes(progress.loaded)

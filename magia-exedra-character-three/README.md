@@ -5,7 +5,10 @@ Load Magia Exedra 3D character models into three.js
 ## Usage
 
 ```ts
-import MagiaExedraCharacterThree from "magia-exedra-character-three"
+import MagiaExedraCharacterThree, { createRenderer } from "magia-exedra-character-three"
+
+// Characters must use the renderer created by this function to render correctly
+const renderer = createRenderer()
 
 // Import all models
 const characters = new MagiaExedraCharacterThree(import.meta.glob([

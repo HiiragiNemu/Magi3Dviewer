@@ -1,11 +1,5 @@
 import * as THREE from 'three';
-
-export let renderer: THREE.WebGLRenderer | undefined
-
-export function setRenderer(r: THREE.WebGLRenderer) {
-    renderer = r
-    console.log('MaxAnisotropy:', renderer.capabilities.getMaxAnisotropy())
-}
+import { renderer } from './renderer'
 
 const texLoader = new THREE.TextureLoader()
 

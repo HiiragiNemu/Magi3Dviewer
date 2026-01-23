@@ -1,13 +1,20 @@
 import * as THREE from 'three';
 import { disposeObject } from './utils';
 
+export interface ObjectUserData {
+    textures: THREE.Texture[]
+    outlineMeshes: THREE.SkinnedMesh[]
+}
+
 export default class MagiaExedraCharacter3D {
     /** Can be added to three.js scene */
     object: THREE.Group
+    userData: ObjectUserData
     mixer: THREE.AnimationMixer
 
     constructor(object: THREE.Group) {
         this.object = object
+        this.userData = object.userData as ObjectUserData
         this.mixer = new THREE.AnimationMixer(object)
     }
 
@@ -71,5 +78,6 @@ export default class MagiaExedraCharacter3D {
 
     dispose() {
         disposeObject(this.object)
+        this.userData.textures.forEach(x => x.dispose())
     }
 }

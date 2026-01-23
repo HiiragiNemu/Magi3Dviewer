@@ -5,8 +5,13 @@ interface GeneralMaterialCreationOptions {
     colorMap: string
     shadowMap?: string
     ctrlMap?: string
-    alphaSrc?: 'shadow' | 'ctrl'
+    alphaSrc?: 'ctrl' | 'shadow'
     onBeforeCompile?: (shader: THREE.WebGLProgramParametersWithUniforms) => any
+}
+
+interface MaterialTexutres {
+    textures: THREE.Texture[],
+    alphaTex?: THREE.Texture,
 }
 
 /**
@@ -17,17 +22,15 @@ interface GeneralMaterialCreationOptions {
  * 
  * ctrl[alpha] / shadow[alpha] --> final alpha map
  * ```
- * 
- * **TODO: Need to return the textures to prevent memory leak**
  */
-export async function createGeneralMaterial(options: GeneralMaterialCreationOptions): Promise<THREE.MeshStandardMaterial> {
+export async function createGeneralMaterial(options: GeneralMaterialCreationOptions): Promise<{ material: THREE.MeshStandardMaterial, textures: MaterialTexutres }> {
     if (options.alphaSrc == 'shadow' && !options.shadowMap) options.alphaSrc = undefined
     if (options.alphaSrc == 'ctrl' && !options.ctrlMap) options.alphaSrc = undefined
 
     const [colorTex, shadowTex, ctrlTex] = await Promise.all([
         loadTexture(options.colorMap, { colorSpace: THREE.SRGBColorSpace }),
-        options.shadowMap ? loadTexture(options.shadowMap, { colorSpace: THREE.SRGBColorSpace }) : Promise.resolve(null),
-        options.ctrlMap ? loadTexture(options.ctrlMap) : Promise.resolve(null),
+        options.shadowMap ? loadTexture(options.shadowMap, { colorSpace: THREE.SRGBColorSpace }) : Promise.resolve(undefined),
+        options.ctrlMap ? loadTexture(options.ctrlMap) : Promise.resolve(undefined),
     ]);
 
     MaximizeTextureQuality(colorTex, shadowTex, ctrlTex)
@@ -112,7 +115,17 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         // console.log(shader.fragmentShader)
     };
 
-    return material;
+    return {
+        material,
+        textures: {
+            textures: [colorTex, shadowTex, ctrlTex].filter(x => x instanceof THREE.Texture),
+            alphaTex: {
+                ctrl: ctrlTex,
+                shadow: shadowTex,
+                none: undefined,
+            }[options.alphaSrc || 'none']
+        }
+    }
 }
 
 interface FaceMaterialCreationOptions {
@@ -121,7 +134,7 @@ interface FaceMaterialCreationOptions {
     ctrlMap: string
 }
 
-export async function createFaceMaterial(options: FaceMaterialCreationOptions): Promise<THREE.MeshStandardMaterial> {
+export async function createFaceMaterial(options: FaceMaterialCreationOptions): Promise<{ material: THREE.MeshStandardMaterial, textures: MaterialTexutres }> {
     const [colorTex, shadowTex, ctrlTex] = await Promise.all([
         loadTexture(options.colorMap, { colorSpace: THREE.SRGBColorSpace }),
         loadTexture(options.shadowMap, { colorSpace: THREE.SRGBColorSpace }),
@@ -199,5 +212,87 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
         );
     };
 
+    return {
+        material,
+        textures: {
+            textures: [colorTex, shadowTex, ctrlTex]
+        }
+    }
+}
+
+interface OutlineMaterialCreationOptions {
+    thickness?: number
+    color?: number
+    alphaTex?: THREE.Texture
+}
+
+export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) {
+    const thickness = options?.thickness ?? 0.0035
+    const color = options?.color ?? 0x303030
+    const alphaTex = options?.alphaTex
+
+    const colorThree = new THREE.Color(color)
+    colorThree.convertLinearToSRGB()
+
+    const material = new THREE.ShaderMaterial({
+        uniforms: {
+            uThickness: { value: thickness },
+            uColor: { value: colorThree },
+        },
+        vertexShader: /*glsl*/`
+            uniform float uThickness;
+            varying vec2 vUv;
+            #include <skinning_pars_vertex> // Required for animated FBX
+
+            void main() {
+                vUv = uv;
+                #include <skinbase_vertex>
+                // Move vertex along the normal
+                vec3 transformed = position + normal * uThickness;
+                
+                #include <skinning_vertex>
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+            }
+        `,
+        fragmentShader: /*glsl*/`
+            uniform vec3 uColor;
+            varying vec2 vUv;
+
+            #ifdef HAS_ALPHA
+                uniform sampler2D tAlpha;
+            #endif
+
+            void main() {
+                #ifdef HAS_ALPHA
+                    float alpha = texture2D(tAlpha, vUv).a;
+                    gl_FragColor = vec4(uColor, alpha);
+                #else
+                    gl_FragColor = vec4(uColor, 1.0);
+                #endif
+            }
+        `,
+        side: THREE.BackSide, // Draw the INSIDE of the shell
+        transparent: Boolean(alphaTex),
+    })
+
+    if (alphaTex) {
+        material.uniforms.tAlpha = { value: alphaTex }
+        material.defines.HAS_ALPHA = true
+    }
+
     return material
+}
+
+export function addOutlineToMesh(mesh: THREE.Mesh, options?: OutlineMaterialCreationOptions) {
+    // Create the outline
+    const outlineMat = createOutlineMaterial(options);
+    const outlineMesh = new THREE.SkinnedMesh(mesh.geometry, outlineMat);
+
+    // Link the outline skeleton to the body skeleton so they move together
+    if (mesh instanceof THREE.SkinnedMesh && mesh.skeleton) {
+        outlineMesh.bind(mesh.skeleton, mesh.bindMatrix);
+    }
+
+    mesh.add(outlineMesh); // Add it as a child
+    return outlineMesh
 }
