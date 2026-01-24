@@ -13,25 +13,30 @@
 
 <body>
     <div id="app">
-        <div id="demo">
-            <div><span>Demo screenshot. Please wait for the character to load...</span></div>
-            <img src="/src/demo.jpg" alt="Demo Screenshot">
-        </div>
-
         <div id="viewer"></div>
+
+        <img id="demo-screenshot" class="demo" src="/src/demo.jpg" alt="Demo Screenshot">
+
+        <div id="stat">
+            <span class="demo">Demo screenshot. Please wait for the character to load...</span>
+            <div style="text-align: center;">
+                <span id="load-progress"></span>
+            </div>
+        </div>
 
         <div id="menu">
             <div id="menu-controls">
                 <div>
                     Model: <select id="character-selector"></select>
                 </div>
+
                 <div>
                     Animation: <select id="animation-selector"></select>
                     <button id="animation-play">Play</button>
                     <button id="animation-loop">Loop</button>
                     <button id="animation-stop">Stop</button>
                 </div>
-                <div id="load-progress"></div>
+
                 <div id="three-gui"></div>
             </div>
 
