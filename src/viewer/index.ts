@@ -41,6 +41,7 @@ const guiOptions = {
         scene?.resetCameraControl()
     }
 }
+let guiMeshes: GUI | undefined
 
 export function setupViewer() {
     initSelector(
@@ -95,12 +96,13 @@ function changeCharacter(id: number | string) {
     if (typeof id == 'number') id = id.toString()
 
     characterSelector.value = id
+    guiMeshes?.destroy()
 
     scene?.switchCharacter(
         id,
         {
             loadProgressCallback: progress => loadProgressEl.textContent = progress,
-            loadFinishCallback: () => updateCharacterOutline() // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
+            loadFinishCallback: updateCharacterOutline // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
         }
     ).then((character) => {
         initSelector(
@@ -117,7 +119,18 @@ function changeCharacter(id: number | string) {
 
         if (playing.length > 0) animationSelector.value = character.animations.find(x => playing.includes(x))!
 
-        updateCharacterOutline()
+        guiMeshes = gui.addFolder('meshes')
+        guiMeshes.close()
+        const guiMeshesOptions: Record<string, boolean> = {}
+        for (const mesh of character.userData.meshes) {
+            guiMeshesOptions[mesh.name] = true
+        }
+        for (const mesh of character.userData.meshes) {
+            guiMeshes.add(guiMeshesOptions, mesh.name).onChange(value => {
+                const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
+                materials.forEach(x => x.visible = value)
+            })
+        }
     })
 }
 

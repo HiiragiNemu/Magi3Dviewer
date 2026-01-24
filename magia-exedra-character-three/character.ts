@@ -2,12 +2,18 @@ import * as THREE from 'three';
 import { disposeObject } from './utils';
 
 export interface ObjectUserData {
+    /** Original meshes of the object. Does not include outline meshes */
+    meshes: THREE.Mesh[]
     textures: THREE.Texture[]
     outlineMeshes: THREE.SkinnedMesh[]
 }
 
 export default class MagiaExedraCharacter3D {
-    /** Can be added to three.js scene */
+    /** 
+     * Can be added to three.js scene.
+     * 
+     * The scene must use a renderer created by `MagiaExedraCharacterThree.createRenderer()` to render correctly.
+     */
     object: THREE.Group
     userData: ObjectUserData
     mixer: THREE.AnimationMixer

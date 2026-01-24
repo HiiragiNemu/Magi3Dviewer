@@ -22,6 +22,7 @@ console.warn = function (...data: any[]) {
 export interface LoadCharacterCallbacks {
     loadProgressCallback: (progress: string) => any
     modelLoadedCallback: (model: THREE.Group) => any
+    /** TODO: If a character is disposed before all textures are loaded, this function should not be called */
     loadFinishCallback: (model: THREE.Group) => any
 }
 
@@ -42,23 +43,25 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
         console.log('Loading model:', fbxPathUrl)
         loadProgressCallback('Loading FBX...')
         fbxLoader.load(fbxUrl, async (modelObject) => {
+            console.log(`Model "${modelObject.name}" loaded successfully`)
+
+            const meshes: THREE.Mesh[] = []
+            modelObject.traverse(child => (child as THREE.Mesh).isMesh && meshes.push(child as THREE.Mesh))
+
+            const userData: ObjectUserData = {
+                meshes,
+                textures: [],
+                outlineMeshes: [],
+            }
+            modelObject.userData = userData
+
             // return model, load textures later
-            console.log(`Model "${modelObject.name}" loaded successfully`);
             resolve(modelObject)
             modelLoadedCallback(modelObject)
 
             // process and apply textures
             loadProgressCallback('Loading textures...')
             console.log('Using textures:', texturePathUrl)
-
-            const meshes: THREE.Mesh[] = []
-            modelObject.traverse(child => (child as THREE.Mesh).isMesh && meshes.push(child as THREE.Mesh))
-
-            const userData: ObjectUserData = {
-                textures: [],
-                outlineMeshes: [],
-            }
-            modelObject.userData = userData
 
             await Promise.all(meshes.map(mesh => new Promise<void>(async (resolve, _reject) => {
                 try {
@@ -197,7 +200,9 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         // has `alpha` material -> use alpha map frpm ctrl map
                         // example: homura's glasses
                         else if (meshMaterialNames.some(x => x.includes('alpha'))) {
-                            alphaSrc = 'ctrl'
+                            alphaSrc = name.includes('hair')
+                                ? 'shadow' // hair always uses alpha from shadow map
+                                : 'ctrl'
                         }
                         console.log(`${name} alpha  ->`, alphaSrc)
 
@@ -207,14 +212,21 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         ({ alphaTex } = textures);
                     }
 
+                    if (name.includes('hair')) {
+                        mesh.renderOrder = 1 // render hair first to prevent seeing through on transparent meshes (e.g. ultimate madoka's wings)
+                    } else {
+                        mesh.renderOrder = 2
+                    }
+
                     /*
                     TODO:
-                    焰的盾牌描边不正常 (特定视角出现, 不知道什么bug)
-                    圆神胸口和丝袜花边的描边没有遵循透明通道, 尽管翅膀正常
                     头发容易出现大黑色块, 可能是里层面透出来导致
                     */
                     const outlineMesh = addOutlineToMesh(mesh, { alphaTex })
                     userData.outlineMeshes.push(outlineMesh)
+                    // render last so that transparent meshes won't see the outline mesh behind
+                    // this also fixes some cases that outline meshs display regardless of stencil
+                    outlineMesh.renderOrder = 3
 
                     if (name.includes('face') || name.includes('weapon')) {
                         // prevent outlines from being displayed inside mesh area
