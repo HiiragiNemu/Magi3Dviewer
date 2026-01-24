@@ -218,10 +218,6 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         mesh.renderOrder = 2
                     }
 
-                    /*
-                    TODO:
-                    头发容易出现大黑色块, 可能是里层面透出来导致
-                    */
                     const outlineMesh = addOutlineToMesh(mesh, { alphaTex })
                     userData.outlineMeshes.push(outlineMesh)
                     // render last so that transparent meshes won't see the outline mesh behind

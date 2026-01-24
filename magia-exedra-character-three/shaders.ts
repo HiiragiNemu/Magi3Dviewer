@@ -246,12 +246,25 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
 
             void main() {
                 vUv = uv;
+
                 #include <skinbase_vertex>
-                // Move vertex along the normal
-                vec3 transformed = position + normal * uThickness;
-                
-                #include <skinning_vertex>
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+                #include <begin_vertex> // defines 'transformed' as position
+                #include <beginnormal_vertex> // defines 'objectNormal' as normal
+                #include <skinnormal_vertex> // applies skinning to objectNormal
+                #include <skinning_vertex> // applies skinning to transformed position
+
+                // 1. Project position to View Space (before the lens)
+                vec4 mvPosition = modelViewMatrix * vec4(transformed, 1.0);
+
+                // 2. Get the normal in View Space
+                vec3 vNormal = normalize(normalMatrix * objectNormal);
+
+                // 3. Offset in View Space (Actual 3D units)
+                // This closes gaps because it's 2D-aligned but stays in 3D "meters"
+                mvPosition.xy += vNormal.xy * uThickness;
+
+                // 4. Final Projection
+                gl_Position = projectionMatrix * mvPosition;
             }
         `,
         fragmentShader: /*glsl*/`
