@@ -4,6 +4,7 @@ import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh } from './s
 import { loadTexture } from './texture';
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes } from './utils';
 import type { ObjectUserData } from './character';
+// import faceCtrlMap from './models/face_ctrl.png'
 
 const fbxLoader = new FBXLoader();
 let stencilRefCount = 1
@@ -104,12 +105,6 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                             meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes('weapon'))
                         }
                     }
-                    if (name.includes('face')) {
-                        meshTextures = ObjFilterByKey(
-                            { ...meshTextures, ...ObjFilterByKey(texturePathUrl, x => x.includes('eye')) }, // add `eyehighlight_ctrl.png`
-                            x => !x.includes('face_ctrl') // remove `face_ctrl.png`
-                        )
-                    }
                     console.log(`Using textures for mesh [${mesh.name} -> ${name}]:`, meshTextures)
 
                     let colorMap = ObjFindByKey(meshTextures, x => x.includes('color'))
@@ -134,7 +129,11 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                     let alphaTex: THREE.Texture | undefined
 
                     if (name.includes('face')) {
-                        const { material, textures } = await createFaceMaterial({ colorMap, shadowMap: shadowMap!, ctrlMap: ctrlMap! })
+                        // TODO: The public face_ctrl is not suitable for all characters, but characters do not have individual face_ctrl!
+                        const { material, textures } = await createFaceMaterial({
+                            colorMap, shadowMap: shadowMap!, ctrlMap: undefined,
+                            eyehighlightMap: ObjFindByKey(texturePathUrl, x => x.includes('eye'))!
+                        })
                         mesh.material = material
                         userData.textures.push(...textures.textures)
                     }
