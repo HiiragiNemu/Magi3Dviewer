@@ -5,12 +5,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Magi3Dviewer - Magia Exedra 3D model viewer online</title>
+    <title>Magi3Dviewer - Magia Exedra 3D model viewer online | 圆哆啦角色模型查看器</title>
+    <meta name="description" content="Magia Exedra 3D model viewer | 圆哆啦角色模型查看器">
+    <meta name="keywords" content="Puella Magi Madoka Magica, Madoka Magica, Magia Exedra, Madoka Exedra, Magia Record, 3D Models, Three.js, 魔法少女小圆, 圆哆啦, 魔法纪录, 角色模型, 3D模型">
+    <meta name="author" content="浩劫者12345">
 </head>
 
 <body>
     <div id="app">
+        <div id="demo">
+            <div><span>Demo screenshot. Please wait for the character to load...</span></div>
+            <img src="/src/demo.jpg" alt="Demo Screenshot">
+        </div>
+
         <div id="viewer"></div>
+
         <div id="menu">
             <div id="menu-controls">
                 <div>
@@ -25,11 +34,13 @@
                 <div id="load-progress"></div>
                 <div id="three-gui"></div>
             </div>
+
             <div id="menu-links">
                 <a href="https://github.com/haojiezhe12345/Magi3Dviewer" target="_blank"><img src="/src/github-mark-white.svg"></a>
             </div>
         </div>
     </div>
+
     <script type="module" src="/src/main.ts"></script>
 </body>
 

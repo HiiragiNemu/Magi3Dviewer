@@ -16,6 +16,7 @@ const animationLoopBtn = document.getElementById('animation-loop') as HTMLButton
 const animationStopBtn = document.getElementById('animation-stop') as HTMLButtonElement
 const loadProgressEl = document.getElementById('load-progress') as HTMLDivElement
 const threeGuiContainer = document.getElementById('three-gui') as HTMLDivElement
+const demoEl = document.getElementById('demo') as HTMLDivElement
 
 animationPlayBtn.onclick = () => scene?.character?.playAnimation(animationSelector.value)
 animationLoopBtn.onclick = () => scene?.character?.playAnimation(animationSelector.value, true)
@@ -105,6 +106,8 @@ function changeCharacter(id: number | string) {
             loadFinishCallback: updateCharacterOutline // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
         }
     ).then((character) => {
+        demoEl.style.display = 'none'
+
         initSelector(
             animationSelector,
             character.animations.reduce((obj, name) => {
