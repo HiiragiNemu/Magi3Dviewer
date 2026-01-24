@@ -6,7 +6,17 @@ import { ObjFindByKey, ObjFilterByKey, humanizeBytes } from './utils';
 import type { ObjectUserData } from './character';
 // import faceCtrlMap from './models/face_ctrl.png'
 
-const fbxLoader = new FBXLoader();
+const loadingManager = new THREE.LoadingManager();
+loadingManager.setURLModifier((url) => {
+    // Check if the URL is one of the textures the FBX is trying to auto-load
+    if (url.endsWith('.png')) {
+        console.log('Prevented auto-load for:', url);
+        return 'data:,';
+    }
+    return url;
+});
+
+const fbxLoader = new FBXLoader(loadingManager);
 let stencilRefCount = 1
 
 // suppress warning `THREE.FBXLoader: unknown attribute mapping type NoMappingInformation`

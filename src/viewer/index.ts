@@ -60,6 +60,7 @@ export function setupViewer() {
 
     stats.dom.style.removeProperty('top')
     stats.dom.style.bottom = '0'
+    stats.dom.style.pointerEvents = 'initial'
     menuEl.appendChild(stats.dom)
 
     scene = new ViewerScene(viewerEl)
