@@ -265,8 +265,8 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
                 vUv = uv;
 
                 #include <skinbase_vertex>
-                #include <begin_vertex> // defines 'transformed' as position
-                #include <beginnormal_vertex> // defines 'objectNormal' as normal
+                #include <begin_vertex> // defines transformed as position
+                #include <beginnormal_vertex> // defines objectNormal as normal
                 #include <skinnormal_vertex> // applies skinning to objectNormal
                 #include <skinning_vertex> // applies skinning to transformed position
 
