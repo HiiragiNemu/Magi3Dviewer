@@ -200,10 +200,16 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                     else {
                         let alphaSrc: 'ctrl' | 'shadow' | undefined = undefined
 
+                        // character overrides
+                        if (characterId == 100106 && name.includes('body')) {
+                            // madoka swimsuit
+                            // it doesn't have transparent materials but should use alpha from shadow map
+                            alphaSrc = 'shadow'
+                        }
                         // FBX has `transparent` material -> use alpha map from shadow map
                         // example: ultimate madoka's body (transparent), 加賀見まさら's body (trans), アリナ・グレイ's weapon (trs)
                         // this condition should always place in front of `alpha`, as these two may exist together
-                        if (meshMaterialNames.some(x => x.includes('trans') || x.includes('trs'))) {
+                        else if (meshMaterialNames.some(x => x.includes('trans') || x.includes('trs'))) {
                             alphaSrc = 'shadow'
                         }
                         // has `alpha` material -> use alpha map frpm ctrl map

@@ -40,6 +40,10 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         transparent: Boolean(options.alphaSrc),
     });
 
+    // prevent different materials from using a same shader
+    const programCacheKey = JSON.stringify(options)
+    material.customProgramCacheKey = () => programCacheKey
+
     material.onBeforeCompile = (shader) => {
         if (!shader.defines) shader.defines = {}
 
@@ -102,7 +106,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             #endif
             `
         ).replace(
-            '#include <alphatest_fragment>',
+            '#include <alphamap_fragment>',
             {
                 ctrl: /*glsl*/`diffuseColor.a = texCtrl.a;`,
                 shadow: /*glsl*/`diffuseColor.a = texShadow.a;`,
@@ -112,6 +116,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
         options.onBeforeCompile && options.onBeforeCompile(shader)
 
+        material.userData.shader = shader
         // console.log(shader.fragmentShader)
     };
 
@@ -227,6 +232,8 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             diffuseColor = faceColor;
             `
         );
+
+        material.userData.shader = shader
     };
 
     return {
