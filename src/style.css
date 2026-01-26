@@ -8,6 +8,11 @@ body {
     color: white;
 }
 
+.theme-light {
+    background-color: white;
+    color: initial;
+}
+
 #menu {
     position: fixed;
     top: 0;
@@ -16,13 +21,14 @@ body {
     display: flex;
     justify-content: space-between;
     pointer-events: none;
+    max-height: 100%;
 }
 
 #menu-controls {
     overflow: auto;
 }
 
-#menu-controls>div {
+#menu-controls>* {
     margin: 8px;
     pointer-events: initial;
     width: fit-content;
@@ -37,6 +43,10 @@ body {
     width: 32px;
     height: 32px;
     padding: 8px;
+}
+
+.theme-light #menu-links img {
+    filter: invert();
 }
 
 .lil-gui {
@@ -69,6 +79,7 @@ body {
     text-align: center;
     width: max-content;
     max-width: 100%;
+    color: white;
 }
 
 #stat .demo {

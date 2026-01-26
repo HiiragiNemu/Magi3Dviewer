@@ -239,13 +239,16 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
 
 interface OutlineMaterialCreationOptions {
     thickness?: number
-    color?: number
+    color?: THREE.ColorRepresentation
     alphaTex?: THREE.Texture
 }
 
+export const OutlineThickness = 0.0035
+export const OutlineColor = '#303030'
+
 export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) {
-    const thickness = options?.thickness ?? 0.0035
-    const color = options?.color ?? 0x303030
+    const thickness = options?.thickness ?? OutlineThickness
+    const color = options?.color ?? OutlineColor
     const alphaTex = options?.alphaTex
 
     const colorThree = new THREE.Color(color)

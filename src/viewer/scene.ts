@@ -10,12 +10,24 @@ export default class ViewerScene {
     scene: THREE.Scene
 
     camera: THREE.PerspectiveCamera
-    cameraInitialPosition: [number, number, number] = [0, 1.5, 10]
+    static cameraInitialFov = 15
+    static cameraInitialPosition: [number, number, number] = [0, 1.5, 7.5]
 
     controls: OrbitControls
-    controlsInitialTarget: [number, number, number] = [0, 1, 0]
+    static controlsInitialTarget: [number, number, number] = [0, 0.9, 0]
 
     ambientLight: THREE.AmbientLight
+    static ambientLightInitialColor = '#ffffff'
+    static ambientLightInitialIntensity = 2
+
+    directionalLight: THREE.DirectionalLight
+    static directionalLightInitialColor = '#ffffff'
+    static directionalLightInitialIntensity = 1.5
+    static directionalLightInitialAngle = -45
+    static directionalLightInitialDistance = 5 * Math.sqrt(2)
+    static directionalLightInitialHeight = 5
+
+    axesHelper: THREE.AxesHelper
 
     animateLoopCallback: () => any = () => { }
 
@@ -31,19 +43,31 @@ export default class ViewerScene {
         this.scene = new THREE.Scene();
         // scene.background = new THREE.Color(0x333333);
 
-        this.ambientLight = new THREE.AmbientLight(0xffffff, 2);
+        this.ambientLight = new THREE.AmbientLight(ViewerScene.ambientLightInitialColor, ViewerScene.ambientLightInitialIntensity);
         this.scene.add(this.ambientLight);
 
-        const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
-        sunLight.position.set(5, 5, 5);
-        this.scene.add(sunLight);
+        this.directionalLight = new THREE.DirectionalLight(ViewerScene.directionalLightInitialColor, ViewerScene.directionalLightInitialIntensity);
+        const {
+            x: directionalLightPositionX,
+            z: directionalLightPositionZ
+        } = deg2pos(ViewerScene.directionalLightInitialAngle, ViewerScene.directionalLightInitialDistance)
+        this.directionalLight.position.set(
+            directionalLightPositionX,
+            ViewerScene.directionalLightInitialHeight,
+            directionalLightPositionZ
+        );
+        this.scene.add(this.directionalLight);
 
-        this.camera = new THREE.PerspectiveCamera(10, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.camera.position.set(...this.cameraInitialPosition);
+        this.axesHelper = new THREE.AxesHelper(2);
+        this.axesHelper.visible = false
+        this.scene.add(this.axesHelper);
+
+        this.camera = new THREE.PerspectiveCamera(ViewerScene.cameraInitialFov, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera.position.set(...ViewerScene.cameraInitialPosition);
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableDamping = true;
-        this.controls.target.set(...this.controlsInitialTarget);
+        this.controls.target.set(...ViewerScene.controlsInitialTarget);
 
         this.renderer.setAnimationLoop(() => {
             this.controls.update();
@@ -57,8 +81,11 @@ export default class ViewerScene {
             this.renderer.setPixelRatio(window.devicePixelRatio);
             this.renderer.setSize(window.innerWidth, window.innerHeight);
         });
+    }
 
-        Object.assign(window, { scene: this })
+    resetCameraControl() {
+        this.camera.position.set(...ViewerScene.cameraInitialPosition)
+        this.controls.target.set(...ViewerScene.controlsInitialTarget)
     }
 
     character?: MagiaExedraCharacter3D
@@ -105,9 +132,11 @@ export default class ViewerScene {
                 })
         })
     }
+}
 
-    resetCameraControl() {
-        this.camera.position.set(...this.cameraInitialPosition)
-        this.controls.target.set(...this.controlsInitialTarget)
-    }
+export function deg2pos(degrees: number, radius: number) {
+    const rad = degrees * (Math.PI / 180);
+    const x = -radius * Math.sin(rad);
+    const z = radius * Math.cos(rad);
+    return { x, z }
 }

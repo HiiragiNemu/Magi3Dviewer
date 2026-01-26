@@ -15,14 +15,14 @@
     <div id="app">
         <div id="viewer"></div>
 
-        <img id="demo-screenshot" class="demo" src="/src/demo.jpg" alt="Demo Screenshot">
-
         <div id="stat">
             <span class="demo">Demo screenshot. Please wait for the character to load...</span>
             <div style="text-align: center;">
                 <span id="load-progress"></span>
             </div>
         </div>
+
+        <img id="demo-screenshot" class="demo" src="/src/demo.jpg" alt="Demo Screenshot">
 
         <div id="menu">
             <div id="menu-controls">
@@ -36,6 +36,17 @@
                     <button id="animation-loop">Loop</button>
                     <button id="animation-stop">Stop</button>
                 </div>
+
+                <form id="theme-selector">
+                    Theme:
+                    <label>
+                        <input type="radio" name="theme" value="light" />Light
+                    </label>
+                    <label>
+                        <input type="radio" name="theme" value="dark" checked />Dark
+                    </label>
+                    <button id="fullscreen-btn">Fullscreen</button>
+                </form>
 
                 <div id="three-gui"></div>
             </div>
