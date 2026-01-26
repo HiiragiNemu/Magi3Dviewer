@@ -13,6 +13,11 @@ body {
     color: initial;
 }
 
+#viewer {
+    /* allows the canvas to shrink on mobile devices */
+    overflow: hidden;
+}
+
 #menu {
     position: fixed;
     top: 0;
