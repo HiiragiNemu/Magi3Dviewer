@@ -1,4 +1,4 @@
-export function initSelector(el: HTMLSelectElement, items: Record<string, string>, onchangeCallback: (value: string) => any) {
+export function initSelector(el: HTMLSelectElement, items: Record<string, string>, onchangeCallback?: (value: string) => any) {
     el.innerHTML = ''
 
     for (const key in items) {
@@ -8,7 +8,9 @@ export function initSelector(el: HTMLSelectElement, items: Record<string, string
         el.appendChild(option)
     }
 
-    el.onchange = e => {
-        onchangeCallback((e!.target as HTMLSelectElement).value)
+    if (onchangeCallback) {
+        el.onchange = e => {
+            onchangeCallback((e!.target as HTMLSelectElement).value)
+        }
     }
 }

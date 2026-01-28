@@ -259,7 +259,6 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
     const alphaTex = options?.alphaTex
 
     const colorThree = new THREE.Color(color)
-    colorThree.convertLinearToSRGB()
 
     const material = new THREE.ShaderMaterial({
         uniforms: {
@@ -306,6 +305,9 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
                 #else
                     gl_FragColor = vec4(uColor, 1.0);
                 #endif
+
+                // #include <tonemapping_fragment>
+                #include <colorspace_fragment> // enable color space awareness so that we dont need convertLinearToSRGB
             }
         `,
         side: THREE.BackSide, // Draw the INSIDE of the shell

@@ -5,7 +5,27 @@ import type MagiaExedraCharacter3D from 'magia-exedra-character-three/character'
 import { characters } from './character';
 import type { LoadCharacterCallbacks } from 'magia-exedra-character-three/loader';
 
-export default class ViewerScene {
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+import { TAARenderPass } from 'three/addons/postprocessing/TAARenderPass.js';
+import { SSAARenderPass } from 'three/addons/postprocessing/SSAARenderPass.js';
+import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass.js';
+import { FXAAPass } from 'three/addons/postprocessing/FXAAPass.js';
+
+export interface SceneCharacter {
+    character?: MagiaExedraCharacter3D
+    loading: boolean
+    pending?: number | string
+    pendingResolve?: (value: SceneCharacter) => void
+    removed: boolean
+}
+
+export type SceneComposerAntiAliasing = 'None' | 'MSAA' | 'TAA' | 'SSAA' | 'SMAA' | 'FXAA'
+
+export class ViewerScene {
     renderer: THREE.WebGLRenderer
     scene: THREE.Scene
 
@@ -29,9 +49,29 @@ export default class ViewerScene {
 
     axesHelper: THREE.AxesHelper
 
+    raycaster: THREE.Raycaster
+
+    composerEnabled: 'Auto' | 'Always' | 'Never' = 'Auto'
+    composerRenderTarget: THREE.WebGLRenderTarget | undefined
+    composer: EffectComposer | undefined
+    taaRenderPass: TAARenderPass
+    ssaaRenderPass: SSAARenderPass
+    renderPass: RenderPass
+    outlinePass: OutlinePass
+    static outlineColorLight = new THREE.Color(0xffff00)
+    static outlineColorDark = new THREE.Color(0xff00ff)
+    smaaPass: SMAAPass
+    outputPass: OutputPass
+    fxaaPass: FXAAPass
+
     animateLoopCallback: () => any = () => { }
 
+    taaCount = 0
+
     constructor(element: HTMLElement) {
+        //
+        // Renderer, scene, camera & controls
+        //
         this.renderer = createRenderer({ antialias: true, alpha: true });
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -69,18 +109,134 @@ export default class ViewerScene {
         this.controls.enableDamping = true;
         this.controls.target.set(...ViewerScene.controlsInitialTarget);
 
+        this.raycaster = new THREE.Raycaster();
+
+        //
+        // Post effects
+        //
+        // TAA
+        this.taaRenderPass = new TAARenderPass(this.scene, this.camera);
+        this.taaRenderPass.stencilBuffer = true
+        this.taaRenderPass.enabled = false
+
+        // SSAA
+        this.ssaaRenderPass = new SSAARenderPass(this.scene, this.camera);
+        this.ssaaRenderPass.stencilBuffer = true
+        this.ssaaRenderPass.enabled = false
+
+        // render pass (disable if using TAA or SSAA)
+        this.renderPass = new RenderPass(this.scene, this.camera);
+
+        // outline pass
+        this.outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), this.scene, this.camera);
+        this.outlinePass.visibleEdgeColor = ViewerScene.outlineColorLight
+        this.outlinePass.enabled = false
+
+        // SMAA
+        this.smaaPass = new SMAAPass();
+        this.smaaPass.enabled = false
+
+        // output pass
+        this.outputPass = new OutputPass();
+
+        // FXAA
+        this.fxaaPass = new FXAAPass();
+        this.fxaaPass.enabled = false
+
+        // composer
+        this.createComposer()
+
+        //
+        // Rendering
+        //
         this.renderer.setAnimationLoop(() => {
             this.controls.update();
             this.animateLoopCallback()
-            this.renderer.render(this.scene, this.camera);
+
+            this.outlinePass.enabled = this.outlinePass.selectedObjects.length > 0 && this.characters.length > 1
+
+            if (
+                (this.composerEnabled == 'Auto' && this.outlinePass.enabled) ||
+                this.composerEnabled == 'Always'
+            ) {
+                if (this.taaRenderPass.enabled) {
+                    if (this.taaCount < 1) {
+                        this.taaCount++
+                    } else {
+                        if ((this.taaRenderPass as any).accumulateIndex >= 32) {
+                            this.taaRenderPass.accumulate = false
+                        } else {
+                            this.taaRenderPass.accumulate = true
+                        }
+                    }
+                }
+                this.composer?.render();
+            } else {
+                this.renderer.render(this.scene, this.camera);
+            }
         })
 
         window.addEventListener('resize', () => {
-            this.camera.aspect = window.innerWidth / window.innerHeight;
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            this.camera.aspect = width / height;
             this.camera.updateProjectionMatrix();
+
             this.renderer.setPixelRatio(window.devicePixelRatio);
-            this.renderer.setSize(window.innerWidth, window.innerHeight);
+            this.renderer.setSize(width, height);
+
+            this.composer?.setPixelRatio(window.devicePixelRatio);
+            this.composer?.setSize(width, height)
         });
+    }
+
+    createComposer(msaaSamples = 0) {
+        this.composer?.dispose()
+        this.composerRenderTarget?.dispose()
+        this.composerRenderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, {
+            stencilBuffer: true,
+            samples: msaaSamples,
+            type: THREE.HalfFloatType, // ensure no color bands
+        });
+        this.composer = new EffectComposer(this.renderer, this.composerRenderTarget);
+        this.composer.setPixelRatio(window.devicePixelRatio);
+        this.composer.addPass(this.taaRenderPass);
+        this.composer.addPass(this.ssaaRenderPass);
+        this.composer.addPass(this.renderPass);
+        this.composer.addPass(this.outlinePass);
+        this.composer.addPass(this.smaaPass);
+        this.composer.addPass(this.outputPass);
+        this.composer.addPass(this.fxaaPass);
+    }
+
+    setAntiAliasing(aa: SceneComposerAntiAliasing, level: number) {
+        this.taaRenderPass.enabled = false
+        this.ssaaRenderPass.enabled = false
+        this.renderPass.enabled = false
+        this.smaaPass.enabled = false
+        this.fxaaPass.enabled = false
+
+        if (aa != 'MSAA' && this.composerRenderTarget && this.composerRenderTarget.samples > 0) {
+            this.createComposer(0)
+        }
+
+        if (aa == 'TAA') {
+            this.taaRenderPass.enabled = true
+            this.taaRenderPass.sampleLevel = level
+        } else if (aa == 'SSAA') {
+            this.ssaaRenderPass.enabled = true
+            this.ssaaRenderPass.sampleLevel = level
+        } else {
+            this.renderPass.enabled = true
+            if (aa == 'MSAA') {
+                this.createComposer(level)
+            } else if (aa == 'SMAA') {
+                this.smaaPass.enabled = true
+            } else if (aa == 'FXAA') {
+                this.fxaaPass.enabled = true
+            }
+        }
     }
 
     resetCameraControl() {
@@ -88,55 +244,131 @@ export default class ViewerScene {
         this.controls.target.set(...ViewerScene.controlsInitialTarget)
     }
 
-    character?: MagiaExedraCharacter3D
-    characterLoading = false
-    characterPending?: number | string
-    characterPendingResolve?: (value: MagiaExedraCharacter3D) => void
+    getIntersectedCharacter(x: number, y: number) {
+        const coords = new THREE.Vector2(
+            (x / this.renderer.domElement.offsetWidth) * 2 - 1,
+            - (y / this.renderer.domElement.offsetHeight) * 2 + 1,
+        )
+        this.raycaster.setFromCamera(coords, this.camera);
+        const intersects = this.raycaster.intersectObject(this.scene, true);
+        // console.log(coords, intersects)
 
-    async switchCharacter(id: number | string, callbacks?: Partial<LoadCharacterCallbacks>): Promise<MagiaExedraCharacter3D> {
+        for (const intersect of intersects) {
+            for (const character of this.characters) {
+                if (!character.character) continue
+                for (const mesh of character.character.userData.meshes) {
+                    if (mesh == intersect.object) {
+                        return character
+                    }
+                }
+            }
+        }
+    }
+
+    characters: SceneCharacter[] = []
+    _characterSelected?: SceneCharacter
+    get characterSelected() {
+        return this._characterSelected
+    }
+    set characterSelected(value) {
+        this._characterSelected = value
+        let obj = value?.character?.object
+        if (obj) {
+            this.outlinePass.selectedObjects = [obj]
+            console.log('Set scene selected character (with object):', value)
+        } else {
+            this.outlinePass.selectedObjects = []
+            if (!value) {
+                console.log('Deselected scene character')
+            } else {
+                console.log('Set scene selected character (without object):', value)
+            }
+        }
+    }
+
+    async switchCharacter(sceneCharacter: SceneCharacter | undefined, id: number | string, callbacks?: Partial<LoadCharacterCallbacks>): Promise<SceneCharacter> {
+        if (!sceneCharacter) {
+            sceneCharacter = {
+                loading: false,
+                removed: false,
+            }
+            if (this.characters.length == 0) this.characterSelected = sceneCharacter
+            this.characters.push(sceneCharacter)
+        }
+
         return new Promise((resolve, reject) => {
-            if (this.characterLoading) {
-                this.characterPending = id
-                this.characterPendingResolve = resolve
+            if (sceneCharacter.removed) {
+                reject('Character already removed')
+            }
+
+            if (sceneCharacter.loading) {
+                sceneCharacter.pending = id
+                sceneCharacter.pendingResolve = resolve
                 return
             }
-            this.characterLoading = true
-            this.characterPending = undefined
+            sceneCharacter.loading = true
+            sceneCharacter.pending = undefined
 
-            if (this.character) {
-                this.scene.remove(this.character.object)
-                this.character.dispose()
-                this.character = undefined
+            if (sceneCharacter.character) {
+                this.scene.remove(sceneCharacter.character.object)
+                sceneCharacter.character.dispose()
+                sceneCharacter.character = undefined
             }
 
             characters.loadCharacterById(id, callbacks)
                 .then(character => {
-                    if (this.characterPending) return
+                    if (sceneCharacter.pending || sceneCharacter.removed) {
+                        character.dispose() // dispose if not adding to scene
+                        return
+                    }
 
-                    this.character = character
-                    this.scene.add(this.character.object)
+                    sceneCharacter.character = character
+                    this.scene.add(sceneCharacter.character.object)
 
-                    resolve(this.character)
+                    resolve(sceneCharacter)
                 })
                 .catch(e => {
-                    if (this.characterPending) return
+                    if (sceneCharacter.pending || sceneCharacter.removed) return // skip errors if stale
                     reject(e)
                 })
                 .finally(() => {
-                    this.characterLoading = false
-                    if (this.characterPending) {
-                        this.switchCharacter(this.characterPending, callbacks).then(x => {
-                            if (!this.characterPending) this.characterPendingResolve!(x)
+                    sceneCharacter.loading = false
+
+                    if (sceneCharacter.removed) return
+
+                    if (sceneCharacter.pending) {
+                        // load and resolve pending character
+                        this.switchCharacter(sceneCharacter, sceneCharacter.pending, callbacks).then(x => {
+                            if (!sceneCharacter.pending) sceneCharacter.pendingResolve!(x)
                         })
                     }
                 })
         })
     }
+
+    async addCharacter(id: number | string, callbacks?: Partial<LoadCharacterCallbacks>) {
+        return await this.switchCharacter(undefined, id, callbacks)
+    }
+
+    removeCharacter(sceneCharacter: SceneCharacter) {
+        if (sceneCharacter.character) {
+            this.scene.remove(sceneCharacter.character.object)
+            sceneCharacter.character.dispose()
+            sceneCharacter.character = undefined
+        }
+        this.characters = this.characters.filter(x => x != sceneCharacter)
+        if (this.characterSelected == sceneCharacter) this.characterSelected = undefined
+    }
 }
 
 export function deg2pos(degrees: number, radius: number) {
-    const rad = degrees * (Math.PI / 180);
+    const rad = THREE.MathUtils.degToRad(degrees);
     const x = -radius * Math.sin(rad);
     const z = radius * Math.cos(rad);
     return { x, z }
 }
+
+export const viewerEl = document.getElementById('viewer')!
+
+export const scene = new ViewerScene(viewerEl)
+Object.assign(window, { scene })

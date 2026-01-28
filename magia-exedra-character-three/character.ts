@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import { disposeObject } from './utils';
+import { addAnimationLoop, getClockDelta, removeAnimationLoop } from './renderer';
 
 export interface ObjectUserData {
+    characterId: number
     /** Original meshes of the object. Does not include outline meshes */
     meshes: THREE.Mesh[]
     textures: THREE.Texture[]
@@ -17,11 +19,14 @@ export default class MagiaExedraCharacter3D {
     object: THREE.Group
     userData: ObjectUserData
     mixer: THREE.AnimationMixer
+    lastPlayedAnimations: string[] | undefined
 
     constructor(object: THREE.Group) {
         this.object = object
         this.userData = object.userData as ObjectUserData
         this.mixer = new THREE.AnimationMixer(object)
+
+        addAnimationLoop(this.animationLoop)
     }
 
     get animations(): string[] {
@@ -30,6 +35,11 @@ export default class MagiaExedraCharacter3D {
                 .filter(x => x.tracks.length > 0)
                 .map(x => x.name.replace(/_\d/, ''))
         )].sort()
+    }
+
+    animationLoop = () => {
+        const delta = getClockDelta()
+        this.mixer.update(delta)
     }
 
     playAnimation(name: string | undefined = undefined, loop = false): string[] {
@@ -79,10 +89,15 @@ export default class MagiaExedraCharacter3D {
         const animationNames = animations.map(x => x.name)
         console.log('Playing animation:', animationNames)
 
+        this.lastPlayedAnimations = animationNames
+
         return animationNames
     }
 
     dispose() {
+        removeAnimationLoop(this.animationLoop)
+        this.mixer.stopAllAction()
+        this.mixer.uncacheRoot(this.object)
         disposeObject(this.object)
         this.userData.textures.forEach(x => x.dispose())
     }

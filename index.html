@@ -27,14 +27,18 @@
         <div id="menu">
             <div id="menu-controls">
                 <div>
-                    Model: <select id="character-selector"></select>
+                    Model: <select id="character-selector" class="target-true"></select>
+                    <span class="target-false">&lt;No target selected&gt;</span>
+                    <button id="character-add-plus-btn" title="Add model">➕</button>
+                    <button id="character-add-cross-btn" class="target-true" title="Remove selected model">❌</button>
                 </div>
 
                 <div>
-                    Animation: <select id="animation-selector"></select>
-                    <button id="animation-play">Play</button>
-                    <button id="animation-loop">Loop</button>
-                    <button id="animation-stop">Stop</button>
+                    Animation: <select id="animation-selector" class="target-true"></select>
+                    <button id="animation-play" class="target-true">Play</button>
+                    <button id="animation-loop" class="target-true">Loop</button>
+                    <button id="animation-stop" class="target-true">Stop</button>
+                    <span class="target-false">&lt;No target selected&gt;</span>
                 </div>
 
                 <form id="theme-selector">
@@ -53,6 +57,17 @@
 
             <div id="menu-links">
                 <a href="https://github.com/haojiezhe12345/Magi3Dviewer" target="_blank"><img src="/src/github-mark-white.svg"></a>
+            </div>
+        </div>
+
+        <div id="character-add" style="display: none;">
+            <div>
+                <div>Add character:</div>
+                <select id="character-add-selector"></select>
+            </div>
+            <div style="text-align: center;">
+                <button id="character-add-ok">Add</button>
+                <button id="character-add-cancel">Cancel</button>
             </div>
         </div>
     </div>

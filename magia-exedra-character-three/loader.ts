@@ -60,6 +60,7 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
             modelObject.traverse(child => (child as THREE.Mesh).isMesh && meshes.push(child as THREE.Mesh))
 
             const userData: ObjectUserData = {
+                characterId,
                 meshes,
                 textures: [],
                 outlineMeshes: [],

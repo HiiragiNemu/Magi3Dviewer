@@ -1,83 +1,58 @@
-import * as THREE from 'three'
 import Stats from 'three/addons/libs/stats.module.js';
-import GUI, { type ColorController } from 'three/addons/libs/lil-gui.module.min.js';
-import ViewerScene, { deg2pos } from './scene';
+import { scene, type SceneCharacter } from './scene';
 import { initSelector } from './UIControls'
 import { characters } from './character';
-import { OutlineColor, OutlineThickness } from 'magia-exedra-character-three/shaders'
+import { guiOptions, updateCharacterController, updateCharacterOutline } from './controller';
+import type MagiaExedraCharacter3D from 'magia-exedra-character-three/character';
 // import { ARButton } from 'three/examples/jsm/Addons.js';
 
-const viewerEl = document.getElementById('viewer')!
 const menuEl = document.getElementById('menu')!
 
 const characterSelector = document.getElementById('character-selector') as HTMLSelectElement
+const characterAddPlusBtn = document.getElementById('character-add-plus-btn') as HTMLButtonElement
+const characterAddCrossBtn = document.getElementById('character-add-cross-btn') as HTMLButtonElement
 const animationSelector = document.getElementById('animation-selector') as HTMLSelectElement
 const animationPlayBtn = document.getElementById('animation-play') as HTMLButtonElement
 const animationLoopBtn = document.getElementById('animation-loop') as HTMLButtonElement
 const animationStopBtn = document.getElementById('animation-stop') as HTMLButtonElement
-const themeSelector = document.getElementById('theme-selector') as HTMLFormElement
 const fullscreenBtn = document.getElementById('fullscreen-btn') as HTMLButtonElement
 const loadProgressEl = document.getElementById('load-progress')!
-const threeGuiContainer = document.getElementById('three-gui')!
 const demoEls = document.getElementsByClassName('demo')
 
-animationPlayBtn.onclick = () => scene?.character?.playAnimation(animationSelector.value)
-animationLoopBtn.onclick = () => scene?.character?.playAnimation(animationSelector.value, true)
-animationStopBtn.onclick = () => scene?.character?.mixer?.stopAllAction()
-themeSelector.onsubmit = e => e.preventDefault()
-themeSelector.onchange = e => e.target instanceof HTMLInputElement && setTheme(e.target.value);
+const characterAddEl = document.getElementById('character-add') as HTMLDivElement
+const characterAddSelector = document.getElementById('character-add-selector') as HTMLSelectElement
+const characterAddOkBtn = document.getElementById('character-add-ok') as HTMLButtonElement
+const characterAddCancelBtn = document.getElementById('character-add-cancel') as HTMLButtonElement
+
+const targetTrueEls = document.getElementsByClassName('target-true')
+const targetFalseEls = document.getElementsByClassName('target-false')
+
+animationPlayBtn.onclick = () => scene.characterSelected?.character?.playAnimation(animationSelector.value)
+animationLoopBtn.onclick = () => scene.characterSelected?.character?.playAnimation(animationSelector.value, true)
+animationStopBtn.onclick = () => scene.characterSelected?.character?.mixer?.stopAllAction()
 fullscreenBtn.onclick = () => document.documentElement.requestFullscreen().then(() => (screen.orientation as any).lock('landscape').catch(() => undefined))
 
-let scene: ViewerScene | undefined = undefined
+characterAddPlusBtn.onclick = () => characterAddEl.style.removeProperty('display')
+characterAddCancelBtn.onclick = () => characterAddEl.style.display = 'none'
+characterAddOkBtn.onclick = addSelectedCharacter
+characterAddCrossBtn.onclick = removeSelectedCharacter
 
 const characterIdList = characters.getCharacterIdList()
+const characterSelectDict = characterIdList.reduce((obj, id) => {
+    obj[`${id} - ${characters.getCharacterNameById(id)}`] = id
+    return obj
+}, {} as Record<string, string>)
 
-const clock = new THREE.Clock()
 const stats = new Stats()
-
-const themeDarkBgColor = '#444444'
-const themeLightBgColor = '#ffffff'
-
-const gui = new GUI({ container: threeGuiContainer })
-gui.close()
-const guiOptions = {
-    BgColor: themeDarkBgColor,
-    OutlineVisible: true,
-    OutlineThickness: OutlineThickness,
-    OutlineColor: OutlineColor,
-
-    AmbientLightColor: ViewerScene.ambientLightInitialColor,
-    DirectionalLightColor: ViewerScene.directionalLightInitialColor,
-    AmbientLight: ViewerScene.ambientLightInitialIntensity,
-    DirectionalLight: ViewerScene.directionalLightInitialIntensity,
-    LightAngle: ViewerScene.directionalLightInitialAngle,
-    LightHeight: ViewerScene.directionalLightInitialHeight,
-    LightDistance: ViewerScene.directionalLightInitialDistance,
-
-    FOV: ViewerScene.cameraInitialFov,
-    Axes: false,
-
-    Reset: () => {
-        gui.reset()
-        scene?.resetCameraControl()
-    }
-}
-let guiBgColor: ColorController<typeof guiOptions, 'BgColor'> | undefined
-let guiMeshes: GUI | undefined
 
 export function setupViewer() {
     initSelector(
         characterSelector,
-        characterIdList.reduce((obj, id) => {
-            obj[`${id} - ${characters.getCharacterNameById(id)}`] = id
-            return obj
-        }, {} as Record<string, string>),
-        value => {
-            console.log('Selector value change:', value)
-            if (!value || location.hash == `#${value}`) return
-            location.hash = value
-        }
+        characterSelectDict,
+        changeCharacter
     );
+
+    initSelector(characterAddSelector, characterSelectDict);
 
     stats.dom.style.removeProperty('top')
     stats.dom.style.removeProperty('left')
@@ -86,9 +61,8 @@ export function setupViewer() {
     stats.dom.style.pointerEvents = 'initial'
     menuEl.appendChild(stats.dom)
 
-    scene = new ViewerScene(viewerEl)
     scene.animateLoopCallback = animateLoop
-    Object.assign(window, { scene })
+    setupViewerInputHandler()
 
     // viewerEl.appendChild(ARButton.createButton(scene.renderer, {
     //     requiredFeatures: ['hit-test'],
@@ -96,17 +70,47 @@ export function setupViewer() {
     //     domOverlay: { root: menuEl }
     // }))
 
-    window.addEventListener('hashchange', tryChangeCharacterByHash)
     tryChangeCharacterByHash() || changeCharacter(100107)
+}
 
-    setupGui()
+function setupViewerInputHandler() {
+    scene.renderer.domElement.addEventListener('click', mouseClickHandler)
+    scene.renderer.domElement.addEventListener('mousedown', mouseDownHandler)
+    scene.renderer.domElement.addEventListener('mousemove', mouseMoveHandler)
+
+    let mouseMoveX = 0
+    let mouseMoveY = 0
+
+    function mouseClickHandler(e: PointerEvent | MouseEvent) {
+        if (Math.abs(mouseMoveX) > 3 || Math.abs(mouseMoveY) > 3) return
+        selectCharacterByMouse(e)
+    }
+
+    function mouseDownHandler(_e: MouseEvent) {
+        mouseMoveX = 0
+        mouseMoveY = 0
+    }
+
+    function mouseMoveHandler(e: MouseEvent) {
+        if (e.buttons == 1) {
+            mouseMoveX += e.movementX
+            mouseMoveY += e.movementY
+        }
+    }
+
+    function selectCharacterByMouse(e: PointerEvent | MouseEvent) {
+        const character = scene.getIntersectedCharacter(e.offsetX, e.offsetY)
+        if (character) {
+            if (character != scene.characterSelected) {
+                selectCharacter(character)
+            }
+        } else if (scene.characters.length > 1 && scene.characterSelected) {
+            deselectCharacter()
+        }
+    }
 }
 
 function animateLoop() {
-    const delta = clock.getDelta();
-    if (scene?.character?.mixer) {
-        scene.character.mixer.update(delta);
-    }
     stats.update()
 }
 
@@ -122,103 +126,86 @@ function changeCharacter(id: number | string) {
     if (typeof id == 'number') id = id.toString()
 
     characterSelector.value = id
-    guiMeshes?.destroy()
+    updateCharacterController(null)
 
-    scene?.switchCharacter(
+    addOrChangeCharacter(id, scene.characterSelected)
+}
+
+function addSelectedCharacter() {
+    characterAddEl.style.display = 'none'
+    addOrChangeCharacter(characterAddSelector.value)
+}
+
+function removeSelectedCharacter() {
+    if (scene.characterSelected) {
+        scene.removeCharacter(scene.characterSelected)
+        deselectCharacter()
+    }
+}
+
+function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharacter) {
+    let loadedCharacter: MagiaExedraCharacter3D | undefined = undefined
+
+    scene.switchCharacter(
+        sceneCharacter,
         id,
         {
             loadProgressCallback: progress => loadProgressEl.textContent = progress,
-            loadFinishCallback: updateCharacterOutline // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
+            loadFinishCallback: () => loadedCharacter && updateCharacterOutline(loadedCharacter, guiOptions) // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
         }
-    ).then((character) => {
+    ).then((sceneCharacter) => {
+        const character = sceneCharacter.character!
+        loadedCharacter = character;
+
         [...demoEls].forEach(x => x instanceof HTMLElement && (x.style.display = 'none'))
 
-        initSelector(
-            animationSelector,
-            character.animations.reduce((obj, name) => {
-                obj[name] = name
-                return obj
-            }, {} as Record<string, string>),
-            value => value && character.playAnimation(value)
-        );
-
         character.mixer.addEventListener('finished', () => character.playAnimation())
-        const playing = character.playAnimation()
+        character.playAnimation()
 
-        if (playing.length > 0) animationSelector.value = character.animations.find(x => playing.includes(x))!
-
-        guiMeshes = gui.addFolder('Meshes')
-        guiMeshes.close()
-        const guiMeshesOptions: Record<string, boolean> = {}
-        for (const mesh of character.userData.meshes) {
-            guiMeshesOptions[mesh.name] = true
-        }
-        for (const mesh of character.userData.meshes) {
-            guiMeshes.add(guiMeshesOptions, mesh.name).onChange(value => {
-                const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
-                materials.forEach(x => x.visible = value)
-            })
-        }
+        selectCharacter(sceneCharacter)
     })
 }
 
-function setupGui() {
-    Object.assign(window, { gui, guiOptions })
+function selectCharacter(sceneCharacter: SceneCharacter) {
+    scene.characterSelected = sceneCharacter
 
-    guiBgColor = gui.addColor(guiOptions, 'BgColor').onChange(value => viewerEl.style.backgroundColor = value)
-    gui.add(guiOptions, 'OutlineVisible').onChange(updateCharacterOutline)
-    gui.add(guiOptions, 'OutlineThickness', 0, 0.01).onChange(updateCharacterOutline)
-    gui.addColor(guiOptions, 'OutlineColor').onChange(updateCharacterOutline)
+    const character = sceneCharacter.character
+    if (!character) return
 
-    const lightingFolder = gui.addFolder('Lighting')
-    lightingFolder.addColor(guiOptions, 'AmbientLightColor').onChange(value => scene && (scene.ambientLight.color = new THREE.Color(value)))
-    lightingFolder.addColor(guiOptions, 'DirectionalLightColor').onChange(value => scene && (scene.directionalLight.color = new THREE.Color(value)))
-    lightingFolder.add(guiOptions, 'AmbientLight', 0, 5).onChange(value => scene && (scene.ambientLight.intensity = value))
-    lightingFolder.add(guiOptions, 'DirectionalLight', 0, 5).onChange(value => scene && (scene.directionalLight.intensity = value))
-    lightingFolder.add(guiOptions, 'LightAngle', -180, 180).onChange(updateSceneDirectionalLight)
-    lightingFolder.add(guiOptions, 'LightHeight', -10, 10).onChange(updateSceneDirectionalLight)
-    lightingFolder.add(guiOptions, 'LightDistance', 0, 20).onChange(updateSceneDirectionalLight)
+    characterSelector.value = character.userData.characterId.toString()
 
-    const miscFolder = gui.addFolder('Misc')
-    miscFolder.close()
-    miscFolder.add(guiOptions, 'FOV', 5, 60).onChange(value => scene && (scene.camera.fov = value) && scene.camera.updateProjectionMatrix())
-    miscFolder.add(guiOptions, 'Axes').onChange(value => scene && (scene.axesHelper.visible = value))
+    initSelector(
+        animationSelector,
+        character.animations.reduce((obj, name) => {
+            obj[name] = name
+            return obj
+        }, {} as Record<string, string>),
+        value => value && character.playAnimation(value)
+    );
 
-    gui.add(guiOptions, 'Reset')
+    if (character.lastPlayedAnimations) {
+        const playing = character.lastPlayedAnimations
+        animationSelector.value = character.animations.find(x => playing.includes(x))!
+    }
+
+    updateCharacterController(character)
+    updateTargetConditionalEls(true)
 }
 
-function updateCharacterOutline() {
-    if (!(scene && scene.character)) return
-    for (const mesh of scene.character.userData.outlineMeshes) {
-        mesh.visible = guiOptions.OutlineVisible;
-        const material = mesh.material as THREE.ShaderMaterial
-        material.uniforms.uThickness.value = guiOptions.OutlineThickness
-        material.uniforms.uColor.value = new THREE.Color(guiOptions.OutlineColor)
+function deselectCharacter() {
+    scene.characterSelected = undefined
+    updateCharacterController(null)
+    updateTargetConditionalEls(false)
+}
+
+function updateTargetConditionalEls(condition: boolean) {
+    if (condition) {
+        [...targetTrueEls].forEach(x => x instanceof HTMLElement && x.style.removeProperty('display'));
+        [...targetFalseEls].forEach(x => x instanceof HTMLElement && x.style.removeProperty('display'));
+    } else {
+        [...targetTrueEls].forEach(x => x instanceof HTMLElement && (x.style.display = 'none'));
+        [...targetFalseEls].forEach(x => x instanceof HTMLElement && (x.style.display = 'initial'));
     }
 }
 
-function updateSceneDirectionalLight() {
-    if (!scene) return
-    const { x, z } = deg2pos(guiOptions.LightAngle, guiOptions.LightDistance)
-    scene.directionalLight.position.set(x, guiOptions.LightHeight, z)
-}
-
-function setTheme(theme: string) {
-    let newColor
-    let shouldApplyNewColor = false
-
-    if (theme == 'light') {
-        document.body.classList.add('theme-light')
-        newColor = themeLightBgColor
-        shouldApplyNewColor = guiOptions.BgColor == themeDarkBgColor
-    } else if (theme == 'dark') {
-        document.body.classList.remove('theme-light')
-        newColor = themeDarkBgColor
-        shouldApplyNewColor = guiOptions.BgColor == themeLightBgColor
-    } else return
-
-    if (guiBgColor) {
-        guiBgColor._initialValueHexString = newColor
-        if (shouldApplyNewColor) guiBgColor.reset()
-    }
-}
+Object.assign(window, { changeCharacter })

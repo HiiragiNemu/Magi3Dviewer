@@ -31,12 +31,21 @@ body {
 
 #menu-controls {
     overflow: auto;
+    scrollbar-width: none;
+}
+
+#menu-controls::-webkit-scrollbar {
+    display: none;
 }
 
 #menu-controls>* {
     margin: 8px;
     pointer-events: initial;
     width: fit-content;
+}
+
+.target-false {
+    display: none;
 }
 
 #menu-links>* {
@@ -96,4 +105,19 @@ body {
 #load-progress {
     font-size: 1.25em;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+#character-add {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+
+#character-add>* {
+    margin: 8px;
 }
