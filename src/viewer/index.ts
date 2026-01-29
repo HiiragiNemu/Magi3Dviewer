@@ -164,7 +164,14 @@ function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharact
         sceneCharacter,
         id,
         {
-            loadProgressCallback: progress => loadProgressEl.textContent = progress,
+            loadProgressCallback: progress => {
+                if (progress) {
+                    loadProgressEl.style.removeProperty('display')
+                    loadProgressEl.textContent = progress
+                } else {
+                    loadProgressEl.style.display = 'none'
+                }
+            },
             loadFinishCallback: () => loadedCharacter && updateCharacterOutline(loadedCharacter, guiOptions) // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
         }
     ).then((sceneCharacter) => {
