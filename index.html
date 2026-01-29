@@ -27,36 +27,32 @@
         <div id="menu">
             <div id="menu-controls">
                 <div>
-                    Model: <select id="character-selector" class="target-true"></select>
+                    <img src="src/icons/accessibility_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg">
+                    <select id="character-selector" class="target-true" title="Choose model"></select>
                     <span class="target-false">&lt;No target selected&gt;</span>
-                    <button id="character-add-plus-btn" title="Add model">➕</button>
                     <button id="character-add-cross-btn" class="target-true" title="Remove selected model">❌</button>
+                    <button id="character-add-plus-btn" title="Add model">➕</button>
                 </div>
 
                 <div>
-                    Animation: <select id="animation-selector" class="target-true"></select>
-                    <button id="animation-play" class="target-true">Play</button>
-                    <button id="animation-loop" class="target-true">Loop</button>
-                    <button id="animation-stop" class="target-true">Stop</button>
+                    <img src="src/icons/emoji_people_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg">
+                    <select id="animation-selector" class="target-true" title="Choose animation"></select>
+                    <button id="animation-play" class="target-true" title="Play animation once">▶️</button>
+                    <button id="animation-loop" class="target-true" title="Loop this animation">🔂</button>
+                    <button id="animation-stop" class="target-true" title="Stop all animations">⏹️</button>
                     <span class="target-false">&lt;No target selected&gt;</span>
                 </div>
 
-                <form id="theme-selector">
-                    Theme:
-                    <label>
-                        <input type="radio" name="theme" value="light" />Light
-                    </label>
-                    <label>
-                        <input type="radio" name="theme" value="dark" checked />Dark
-                    </label>
-                    <button id="fullscreen-btn">Fullscreen</button>
-                </form>
+                <div class="spacer"></div>
 
                 <div id="three-gui"></div>
             </div>
 
-            <div id="menu-links">
-                <a href="https://github.com/haojiezhe12345/Magi3Dviewer" target="_blank"><img src="/src/github-mark-white.svg"></a>
+            <div id="menu-icons">
+                <a href="https://github.com/haojiezhe12345/Magi3Dviewer" target="_blank" title="Visit Github repo"><img src="src/icons/GitHub_Invertocat_Black.svg"></a>
+                <button id="theme-set-light" title="Use light theme"><img src="src/icons/light_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                <button id="theme-set-dark" title="Use dark theme"><img src="src/icons/dark_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                <button id="fullscreen-btn" title="Fullscreen"><img src="src/icons/fullscreen_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
             </div>
         </div>
 

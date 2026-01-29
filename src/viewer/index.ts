@@ -1,10 +1,10 @@
 import Stats from 'three/addons/libs/stats.module.js';
-import { scene, type SceneCharacter } from './scene';
+import { scene, viewerEl, type SceneCharacter } from './scene';
 import { initSelector } from './UIControls'
 import { characters } from './character';
 import { guiOptions, updateCharacterController, updateCharacterOutline } from './controller';
 import type MagiaExedraCharacter3D from 'magia-exedra-character-three/character';
-// import { ARButton } from 'three/examples/jsm/Addons.js';
+import { ARButton } from 'three/examples/jsm/Addons.js';
 
 const menuEl = document.getElementById('menu')!
 
@@ -54,23 +54,27 @@ export function setupViewer() {
 
     initSelector(characterAddSelector, characterSelectDict);
 
+    scene.animateLoopCallback = animateLoop
+    setupViewerInputHandler()
+
+    tryChangeCharacterByHash() || changeCharacter(100107)
+
     stats.dom.style.removeProperty('top')
     stats.dom.style.removeProperty('left')
     stats.dom.style.right = '0'
     stats.dom.style.bottom = '0'
     stats.dom.style.pointerEvents = 'initial'
+    stats.dom.style.zIndex = '-1'
     menuEl.appendChild(stats.dom)
 
-    scene.animateLoopCallback = animateLoop
-    setupViewerInputHandler()
-
-    // viewerEl.appendChild(ARButton.createButton(scene.renderer, {
-    //     requiredFeatures: ['hit-test'],
-    //     optionalFeatures: ['dom-overlay'],
-    //     domOverlay: { root: menuEl }
-    // }))
-
-    tryChangeCharacterByHash() || changeCharacter(100107)
+    const arButton = ARButton.createButton(scene.renderer, {
+        requiredFeatures: ['hit-test'],
+        optionalFeatures: ['dom-overlay'],
+        domOverlay: { root: menuEl }
+    })
+    arButton.style.removeProperty('z-index')
+    arButton.style.bottom = '101%'
+    viewerEl.appendChild(arButton)
 }
 
 function setupViewerInputHandler() {

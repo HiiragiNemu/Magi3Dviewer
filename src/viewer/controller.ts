@@ -7,14 +7,15 @@ import { scene, ViewerScene, deg2pos, viewerEl, type SceneComposerAntiAliasing }
 //
 // Theme controller
 //
-export const themeSelector = document.getElementById('theme-selector') as HTMLFormElement
-themeSelector.onsubmit = e => e.preventDefault()
-themeSelector.onchange = e => e.target instanceof HTMLInputElement && setTheme(e.target.value);
+export const themeLightBtn = document.getElementById('theme-set-light') as HTMLButtonElement
+export const themeDarkBtn = document.getElementById('theme-set-dark') as HTMLButtonElement
+themeLightBtn.onclick = () => setTheme('light')
+themeDarkBtn.onclick = () => setTheme('dark')
 
 export const themeDarkBgColor = '#444444'
 export const themeLightBgColor = '#ffffff'
 
-function setTheme(theme: string) {
+function setTheme(theme: 'light' | 'dark') {
     let newColor
     let shouldApplyNewColor = false
 

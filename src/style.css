@@ -8,11 +8,6 @@ body {
     color: white;
 }
 
-.theme-light {
-    background-color: white;
-    color: initial;
-}
-
 #viewer {
     /* allows the canvas to shrink on mobile devices */
     overflow: hidden;
@@ -30,37 +25,59 @@ body {
 }
 
 #menu-controls {
-    overflow: auto;
-    scrollbar-width: none;
-}
-
-#menu-controls::-webkit-scrollbar {
-    display: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 4px;
+    padding-left: 4px;
 }
 
 #menu-controls>* {
-    margin: 8px;
+    flex-shrink: 0;
     pointer-events: initial;
-    width: fit-content;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+}
+
+#menu-controls>*>* {
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
+#menu-controls img {
+    filter: invert();
+}
+
+#menu-controls select {
+    min-width: 80px;
 }
 
 .target-false {
     display: none;
 }
 
-#menu-links>* {
-    pointer-events: initial;
+.spacer {
+    flex: 1;
 }
 
-#menu-links img {
-    display: block;
-    width: 32px;
-    height: 32px;
-    padding: 8px;
+#menu-controls .spacer {
+    display: none;
 }
 
-.theme-light #menu-links img {
-    filter: invert();
+#three-gui {
+    overflow: auto;
+    flex-shrink: 1;
+    overscroll-behavior: contain;
+    display: initial;
+    margin-top: 8px;
+    margin-left: 4px;
+}
+
+#three-gui>.lil-gui {
+    margin: 0;
 }
 
 .lil-gui {
@@ -73,6 +90,34 @@ body {
 
 .children>.lil-gui {
     background: none;
+}
+
+#menu-icons>* {
+    pointer-events: initial;
+    display: block;
+}
+
+#menu-icons>*:hover {
+    opacity: 0.7;
+}
+
+#menu-icons button {
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu-icons img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+    filter: invert();
+}
+
+#theme-set-dark {
+    display: none;
 }
 
 #demo-screenshot {
@@ -120,4 +165,54 @@ body {
 
 #character-add>* {
     margin: 8px;
+}
+
+.theme-light {
+    background-color: white;
+    color: initial;
+}
+
+.theme-light #menu-controls img {
+    filter: initial;
+}
+
+.theme-light #menu-icons>*:hover {
+    opacity: 0.6;
+}
+
+.theme-light #menu-icons img {
+    filter: initial;
+}
+
+.theme-light #theme-set-dark {
+    display: block;
+}
+
+.theme-light #theme-set-light {
+    display: none;
+}
+
+@media (max-width: 750px) and (max-height: 700px) {
+    #menu {
+        height: 100%;
+    }
+
+    #menu-controls .spacer {
+        display: initial;
+    }
+
+    #three-gui {
+        border: 1px solid white;
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 400px) {
+    #stat .demo {
+        font-size: 1.3em;
+    }
+
+    #load-progress {
+        font-size: 1.15em;
+    }
 }
