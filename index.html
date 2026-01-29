@@ -31,7 +31,12 @@
                     <select id="character-selector" class="target-true" title="Choose model"></select>
                     <span class="target-false">&lt;No target selected&gt;</span>
                     <button id="character-add-cross-btn" class="target-true" title="Remove selected model">❌</button>
-                    <button id="character-add-plus-btn" title="Add model">➕</button>
+                    <span class="button-dropdown" title="Add model">
+                        <button tabindex="-1">➕</button>
+                        <div>
+                            <select id="character-add-selector"></select>
+                        </div>
+                    </span>
                 </div>
 
                 <div>
@@ -53,17 +58,6 @@
                 <button id="theme-set-light" title="Use light theme"><img src="src/icons/light_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                 <button id="theme-set-dark" title="Use dark theme"><img src="src/icons/dark_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                 <button id="fullscreen-btn" title="Fullscreen"><img src="src/icons/fullscreen_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-            </div>
-        </div>
-
-        <div id="character-add" style="display: none;">
-            <div>
-                <div>Add character:</div>
-                <select id="character-add-selector"></select>
-            </div>
-            <div style="text-align: center;">
-                <button id="character-add-ok">Add</button>
-                <button id="character-add-cancel">Cancel</button>
             </div>
         </div>
     </div>

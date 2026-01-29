@@ -9,8 +9,8 @@ import { ARButton } from 'three/examples/jsm/Addons.js';
 const menuEl = document.getElementById('menu')!
 
 const characterSelector = document.getElementById('character-selector') as HTMLSelectElement
-const characterAddPlusBtn = document.getElementById('character-add-plus-btn') as HTMLButtonElement
 const characterAddCrossBtn = document.getElementById('character-add-cross-btn') as HTMLButtonElement
+const characterAddSelector = document.getElementById('character-add-selector') as HTMLSelectElement
 const animationSelector = document.getElementById('animation-selector') as HTMLSelectElement
 const animationPlayBtn = document.getElementById('animation-play') as HTMLButtonElement
 const animationLoopBtn = document.getElementById('animation-loop') as HTMLButtonElement
@@ -19,23 +19,14 @@ const fullscreenBtn = document.getElementById('fullscreen-btn') as HTMLButtonEle
 const loadProgressEl = document.getElementById('load-progress')!
 const demoEls = document.getElementsByClassName('demo')
 
-const characterAddEl = document.getElementById('character-add') as HTMLDivElement
-const characterAddSelector = document.getElementById('character-add-selector') as HTMLSelectElement
-const characterAddOkBtn = document.getElementById('character-add-ok') as HTMLButtonElement
-const characterAddCancelBtn = document.getElementById('character-add-cancel') as HTMLButtonElement
-
 const targetTrueEls = document.getElementsByClassName('target-true')
 const targetFalseEls = document.getElementsByClassName('target-false')
 
+characterAddCrossBtn.onclick = removeSelectedCharacter
 animationPlayBtn.onclick = () => scene.characterSelected?.character?.playAnimation(animationSelector.value)
 animationLoopBtn.onclick = () => scene.characterSelected?.character?.playAnimation(animationSelector.value, true)
 animationStopBtn.onclick = () => scene.characterSelected?.character?.mixer?.stopAllAction()
 fullscreenBtn.onclick = () => document.documentElement.requestFullscreen().then(() => (screen.orientation as any).lock('landscape').catch(() => undefined))
-
-characterAddPlusBtn.onclick = () => characterAddEl.style.removeProperty('display')
-characterAddCancelBtn.onclick = () => characterAddEl.style.display = 'none'
-characterAddOkBtn.onclick = addSelectedCharacter
-characterAddCrossBtn.onclick = removeSelectedCharacter
 
 const characterIdList = characters.getCharacterIdList()
 const characterSelectDict = characterIdList.reduce((obj, id) => {
@@ -52,10 +43,10 @@ export function setupViewer() {
         changeCharacter
     );
 
-    initSelector(characterAddSelector, characterSelectDict);
+    setupCharacterAddSelector()
+    setupViewerInputHandler()
 
     scene.animateLoopCallback = animateLoop
-    setupViewerInputHandler()
 
     tryChangeCharacterByHash() || changeCharacter(100107)
 
@@ -75,6 +66,24 @@ export function setupViewer() {
     arButton.style.removeProperty('z-index')
     arButton.style.bottom = '101%'
     viewerEl.appendChild(arButton)
+}
+
+function setupCharacterAddSelector() {
+    initSelector(characterAddSelector, { '': '', ...characterSelectDict });
+    characterAddSelector.value = ''
+
+    characterAddSelector.addEventListener('focus', () => {
+        characterAddSelector.value = ''
+    })
+    characterAddSelector.addEventListener('click', () => {
+        characterAddSelector.value = ''
+    })
+    characterAddSelector.addEventListener('change', () => {
+        if (characterAddSelector.value != '') {
+            addOrChangeCharacter(characterAddSelector.value)
+            characterAddSelector.value = ''
+        }
+    })
 }
 
 function setupViewerInputHandler() {
@@ -133,11 +142,6 @@ function changeCharacter(id: number | string) {
     updateCharacterController(null)
 
     addOrChangeCharacter(id, scene.characterSelected)
-}
-
-function addSelectedCharacter() {
-    characterAddEl.style.display = 'none'
-    addOrChangeCharacter(characterAddSelector.value)
 }
 
 function removeSelectedCharacter() {
