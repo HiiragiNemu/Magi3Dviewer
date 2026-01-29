@@ -130,6 +130,8 @@ export class ViewerScene {
         // outline pass
         this.outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), this.scene, this.camera);
         this.outlinePass.visibleEdgeColor = ViewerScene.outlineColorLight
+        this.outlinePass.edgeThickness = window.devicePixelRatio
+        this.outlinePass.edgeStrength = window.devicePixelRatio * 3
         this.outlinePass.enabled = false
 
         // SMAA
@@ -188,6 +190,9 @@ export class ViewerScene {
 
             this.composer?.setPixelRatio(window.devicePixelRatio);
             this.composer?.setSize(width, height)
+
+            this.outlinePass.edgeThickness = window.devicePixelRatio
+            this.outlinePass.edgeStrength = window.devicePixelRatio * 3
         });
     }
 

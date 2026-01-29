@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import Stats from 'three/addons/libs/stats.module.js';
 import { scene, viewerEl, type SceneCharacter } from './scene';
 import { initSelector } from './UIControls'
@@ -18,9 +19,6 @@ const animationStopBtn = document.getElementById('animation-stop') as HTMLButton
 const fullscreenBtn = document.getElementById('fullscreen-btn') as HTMLButtonElement
 const loadProgressEl = document.getElementById('load-progress')!
 const demoEls = document.getElementsByClassName('demo')
-
-const targetTrueEls = document.getElementsByClassName('target-true')
-const targetFalseEls = document.getElementsByClassName('target-false')
 
 characterAddCrossBtn.onclick = removeSelectedCharacter
 animationPlayBtn.onclick = () => scene.characterSelected?.character?.playAnimation(animationSelector.value)
@@ -154,6 +152,14 @@ function removeSelectedCharacter() {
 function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharacter) {
     let loadedCharacter: MagiaExedraCharacter3D | undefined = undefined
 
+    let oldTransform = undefined
+    if (sceneCharacter?.character?.object) {
+        oldTransform = {
+            position: sceneCharacter.character.object.position,
+            rotation: sceneCharacter.character.object.rotation,
+        }
+    }
+
     scene.switchCharacter(
         sceneCharacter,
         id,
@@ -162,10 +168,17 @@ function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharact
             loadFinishCallback: () => loadedCharacter && updateCharacterOutline(loadedCharacter, guiOptions) // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
         }
     ).then((sceneCharacter) => {
+        [...demoEls].forEach(x => x instanceof HTMLElement && (x.style.display = 'none'))
+
         const character = sceneCharacter.character!
         loadedCharacter = character;
 
-        [...demoEls].forEach(x => x instanceof HTMLElement && (x.style.display = 'none'))
+        if (oldTransform) {
+            character.object.position.copy(oldTransform.position)
+            character.object.rotation.copy(oldTransform.rotation)
+        } else {
+            character.object.position.copy(calculateNewCharacterPosition(sceneCharacter))
+        }
 
         character.mixer.addEventListener('finished', () => character.playAnimation())
         character.playAnimation()
@@ -197,23 +210,29 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
     }
 
     updateCharacterController(character)
-    updateTargetConditionalEls(true)
+    document.body.classList.remove('no-target')
 }
 
 function deselectCharacter() {
     scene.characterSelected = undefined
     updateCharacterController(null)
-    updateTargetConditionalEls(false)
+    document.body.classList.add('no-target')
 }
 
-function updateTargetConditionalEls(condition: boolean) {
-    if (condition) {
-        [...targetTrueEls].forEach(x => x instanceof HTMLElement && x.style.removeProperty('display'));
-        [...targetFalseEls].forEach(x => x instanceof HTMLElement && x.style.removeProperty('display'));
-    } else {
-        [...targetTrueEls].forEach(x => x instanceof HTMLElement && (x.style.display = 'none'));
-        [...targetFalseEls].forEach(x => x instanceof HTMLElement && (x.style.display = 'initial'));
+/** Find available positions for a new character, 0.667 (2/3) meters per one */
+function calculateNewCharacterPosition(newCharacter: SceneCharacter): THREE.Vector3 {
+    const spacing = 2 / 3;
+    const existingPositions = scene.characters.filter(x => x != newCharacter).map(x => x.character?.object.position).filter(x => !!x)
+    const occupiedX = existingPositions.map(p => Math.round(p.x / spacing));
+
+    let n = 0;
+    while (true) {
+        if (!occupiedX.includes(n)) return new THREE.Vector3(n * spacing, 0, 0);
+        if (!occupiedX.includes(-n)) return new THREE.Vector3(-n * spacing, 0, 0);
+        n++;
+        if (n > 100) break;
     }
+    return new THREE.Vector3(0, 0, 0);
 }
 
 Object.assign(window, { changeCharacter })
