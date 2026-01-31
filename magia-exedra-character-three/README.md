@@ -2,7 +2,7 @@
 
 Load Magia Exedra 3D character models into three.js
 
-All `.fbx`s are named `.fbx.txt` to enable gzip compression on most web servers.
+All `.fbx`s are compressed with gzip which can enable transparent decompression when `Content-Encoding: gzip` header is set.
 
 ## Usage
 
