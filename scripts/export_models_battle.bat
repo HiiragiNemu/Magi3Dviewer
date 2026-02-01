@@ -4,7 +4,7 @@ chcp 65001
 
 :: --- CONFIGURATION ---
 set "CLI_PATH=C:\Users\31126\Desktop\AssetStudio\AssetStudioCLI\bin\Release\net9.0\AssetStudioModCLI.exe"
-set "SRC_DIR=D:\madodora\下载解密一条龙脚本\magia_exedra_decrypted\battle\character"
+set "SRC_DIR=D:\madodora\下载解密一条龙脚本\magia_exedra_decrypted_new\battle\character"
 set "BASE_OUT_DIR=D:\madodora\character_models\latest_animate"
 
 :: Loop through every folder in the source directory
