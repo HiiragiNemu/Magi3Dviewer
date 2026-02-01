@@ -43,7 +43,7 @@ export class ViewerScene {
     directionalLight: THREE.DirectionalLight
     static directionalLightInitialColor = '#ffffff'
     static directionalLightInitialIntensity = 1.5
-    static directionalLightInitialAngle = -45
+    static directionalLightInitialAngle = 45
     static directionalLightInitialDistance = 5 * Math.sqrt(2)
     static directionalLightInitialHeight = 5
 
@@ -368,7 +368,7 @@ export class ViewerScene {
 
 export function deg2pos(degrees: number, radius: number) {
     const rad = THREE.MathUtils.degToRad(degrees);
-    const x = -radius * Math.sin(rad);
+    const x = radius * Math.sin(rad);
     const z = radius * Math.cos(rad);
     return { x, z }
 }

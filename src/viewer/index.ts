@@ -4,7 +4,6 @@ import { scene, viewerEl, type SceneCharacter } from './scene';
 import { initSelector } from './UIControls'
 import { characters } from './character';
 import { guiOptions, updateCharacterController, updateCharacterOutline } from './controller';
-import type MagiaExedraCharacter3D from 'magia-exedra-character-three/character';
 import { ARButton } from 'three/examples/jsm/Addons.js';
 
 const menuEl = document.getElementById('menu')!
@@ -150,7 +149,7 @@ function removeSelectedCharacter() {
 }
 
 function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharacter) {
-    let loadedCharacter: MagiaExedraCharacter3D | undefined = undefined
+    let loadedSceneCharacter: SceneCharacter | undefined = undefined
 
     let oldTransform = undefined
     if (sceneCharacter?.character?.object) {
@@ -172,13 +171,22 @@ function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharact
                     loadProgressEl.style.display = 'none'
                 }
             },
-            loadFinishCallback: () => loadedCharacter && updateCharacterOutline(loadedCharacter, guiOptions) // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
+            loadFinishCallback: () => { // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
+                if (loadedSceneCharacter?.character) {
+                    // character outlines are added after texture load. apply global character outlines
+                    updateCharacterOutline(loadedSceneCharacter.character, guiOptions)
+                    // mesh visibility may change after textures loaded. update it.
+                    if (scene.characterSelected == loadedSceneCharacter) { // the user may select another chatacter when textures are loading
+                        updateCharacterController(loadedSceneCharacter.character)
+                    }
+                }
+            }
         }
     ).then((sceneCharacter) => {
         [...demoEls].forEach(x => x instanceof HTMLElement && (x.style.display = 'none'))
 
         const character = sceneCharacter.character!
-        loadedCharacter = character;
+        loadedSceneCharacter = sceneCharacter;
 
         if (oldTransform) {
             character.object.position.copy(oldTransform.position)

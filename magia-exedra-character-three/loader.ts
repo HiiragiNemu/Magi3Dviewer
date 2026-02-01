@@ -126,7 +126,7 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         else if (name.includes('weapon')) {
                             meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes('weapon'))
                         }
-                        // holy mami has `eye_nohighlight` that uses face map
+                        // holy mami and akuma homura has `eye_nohighlight` that uses face map
                         else if (name.includes('eye')) {
                             meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes('face'))
                         }
@@ -167,25 +167,31 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         mesh.material = material
                         userData.textures.push(...textures.textures)
                     }
-                    else if (characterId == 113701 && name.includes('body')) {
+                    else if ((characterId == 113701 || characterId == 113801) && name.includes('body')) {
                         /*
-                        ultimate madoka
+                        ultimate madoka & akuma homura's dresses has special inside color
  
                         body_color ---\
-                                       |--> body_ctrl[red] --\
-                        body_shadow --/                       \
-                                                               |--> body_ctrl[alpha] --> final texture
-                        body_space_color ---------------------/
-                                                                  body_shadow[alpha] --> final alpha map
+                                       mix, factor=body_ctrl[red] --\
+                        body_shadow --/                              \
+                                                                      |--> final texture
+                        [UV1]dress_inside, UV1.xy > 0 ---------------/
+
+                                                    body_shadow[alpha] --> final alpha map
                         */
-                        const spaceTex = await loadTexture(ObjFindByKey(meshTextures, x => x.includes('space'))!, { colorSpace: THREE.SRGBColorSpace })
+                        const insideTex = await loadTexture(ObjFindByKey(meshTextures, x =>
+                            x.includes('space') || // ultimate madoka (body_space_color)
+                            x.includes('inside') // akuma homura (body_inside_color)
+                        )!, { colorSpace: THREE.SRGBColorSpace })
 
                         const { material, textures } = await createGeneralMaterial({
-                            colorMap, shadowMap, ctrlMap, alphaSrc: 'shadow',
+                            colorMap, shadowMap, ctrlMap,
+                            alphaSrc: 'shadow', // only effective for ultimate madoka. akuma homura's maps are fully opaque
 
                             onBeforeCompile(shader) {
-                                shader.uniforms.tSpace = { value: spaceTex }
+                                shader.uniforms.tInside = { value: insideTex }
 
+                                // dress inside uses UV1
                                 shader.vertexShader = /*glsl*/`
                                     attribute vec2 uv1;
                                     varying vec2 vUv1;
@@ -200,13 +206,15 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
 
                                 shader.fragmentShader = /*glsl*/`
                                     varying vec2 vUv1;
-                                    uniform sampler2D tSpace;
+                                    uniform sampler2D tInside;
                                     ${shader.fragmentShader}
                                 `.replace(
                                     '// end map_fragment injection',
                                     /*glsl*/`
-                                    vec4 texSpace = texture2D(tSpace, vUv1);
-                                    diffuseColor.rgb = mix(diffuseColor.rgb, texSpace.rgb, texCtrl.a);
+                                    vec4 texInside = texture2D(tInside, vUv1);
+                                    if (vUv1.x > 0.0 && vUv1.y > 0.0) {
+                                        diffuseColor.rgb = texInside.rgb; // replace color if UV1 > 0
+                                    }
                                     // end map_fragment injection
                                     `
                                 )
@@ -214,7 +222,7 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         })
 
                         mesh.material = material;
-                        userData.textures.push(...textures.textures, spaceTex);
+                        userData.textures.push(...textures.textures, insideTex);
                         ({ alphaTex } = textures);
                     }
                     else {
@@ -225,6 +233,14 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                             // madoka swimsuit
                             // it doesn't have transparent materials but should use alpha from shadow map
                             alphaSrc = 'shadow'
+                        }
+                        else if (characterId == 100205 && name.includes('acc')) {
+                            // homura school uniform - glasses
+                            alphaSrc = 'shadow'
+                        }
+                        else if (characterId == 113801 && name.includes('weapon')) {
+                            // akuma homura's dark orb - do not use any alpha
+                            alphaSrc = undefined
                         }
                         // FBX has `transparent` material -> use alpha map from shadow map
                         // example: ultimate madoka's body (transparent), 加賀見まさら's body (trans), アリナ・グレイ's weapon (trs)
@@ -245,6 +261,14 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         mesh.material = material;
                         userData.textures.push(...textures.textures);
                         ({ alphaTex } = textures);
+                    }
+
+                    // apply mesh visibility
+                    mesh.material.visible = getMeshDefaultVisibility(name)
+
+                    // prevent weapons from hiding because of bounding box issues with animation
+                    if (name.includes('weapon')) {
+                        mesh.frustumCulled = false
                     }
 
                     if (name.includes('hair')) {
@@ -290,4 +314,15 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
             reject(error)
         });
     })
+}
+
+export function getMeshDefaultVisibility(name: string): boolean {
+    name = name.toLowerCase()
+
+    // hide `eye_nohighlight` by default
+    if (name.includes('eye_nohighlight')) {
+        return false
+    }
+
+    return true
 }

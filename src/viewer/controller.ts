@@ -3,6 +3,7 @@ import GUI from 'three/addons/libs/lil-gui.module.min.js';
 import { OutlineColor, OutlineThickness } from 'magia-exedra-character-three/shaders'
 import MagiaExedraCharacter3D from 'magia-exedra-character-three/character';
 import { scene, ViewerScene, deg2pos, viewerEl, type SceneComposerAntiAliasing } from './scene';
+import { getMeshDefaultVisibility } from 'magia-exedra-character-three/loader';
 
 //
 // Theme controller
@@ -193,7 +194,7 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
         meshesOptions[mesh.name] = getMaterials().every(x => x.visible)
         meshesFolder.add(meshesOptions, mesh.name).onChange(value => {
             getMaterials().forEach(x => x.visible = value)
-        }).initialValue = true
+        }).initialValue = getMeshDefaultVisibility(mesh.name)
     }
 }
 
