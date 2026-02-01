@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh } from './shaders'
 import { loadTexture } from './texture';
-import { ObjFindByKey, ObjFilterByKey, humanizeBytes } from './utils';
+import { ObjFindByKey, ObjFilterByKey, humanizeBytes, fetchAndTryDecompressGzip } from './utils';
 import type { ObjectUserData } from './character';
 // import faceCtrlMap from './models/face_ctrl.png'
 
@@ -49,11 +49,30 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
 
     const texturePathUrl = ObjFilterByKey(files, x => x.includes('.png'))
 
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         // load model
         console.log('Loading model:', fbxPathUrl)
         loadProgressCallback('Loading FBX...')
-        fbxLoader.load(fbxUrl, async (modelObject) => {
+
+        let fbxBlob
+        try {
+            fbxBlob = await fetchAndTryDecompressGzip(fbxUrl, (progress) => {
+                const loaded = humanizeBytes(progress.loaded)
+                const total = humanizeBytes(progress.total)
+                loadProgressCallback(`Downloading FBX... ${progress.lengthComputable ? `${loaded} / ${total}` : loaded}`)
+            }, () => {
+                loadProgressCallback('Decompressing FBX...')
+            })
+        } catch (e) {
+            loadProgressCallback('Download FAILED')
+            reject(e)
+            return
+        }
+        const fbxBlobUrl = URL.createObjectURL(fbxBlob)
+
+        loadProgressCallback('Parsing geometry...')
+        fbxLoader.load(fbxBlobUrl, async (modelObject) => {
+            URL.revokeObjectURL(fbxBlobUrl)
             console.log(`Model "${modelObject.name}" loaded successfully`)
 
             const meshes: THREE.Mesh[] = []
@@ -265,12 +284,9 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
             loadProgressCallback('')
             loadFinishCallback(modelObject)
 
-        }, (progress) => {
-            const loaded = humanizeBytes(progress.loaded)
-            const total = humanizeBytes(progress.total)
-            loadProgressCallback(`Loading FBX... ${progress.lengthComputable ? `${loaded} / ${total}` : loaded}`)
-        }, (error) => {
-            loadProgressCallback('Load FAILED')
+        }, undefined, (error) => {
+            URL.revokeObjectURL(fbxBlobUrl)
+            loadProgressCallback('Parse FAILED')
             reject(error)
         });
     })

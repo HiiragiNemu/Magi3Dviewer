@@ -1,3 +1,4 @@
+import { gunzipSync } from 'fflate'
 import * as THREE from 'three'
 
 export function ObjFindByKey<T>(obj: Record<string, T>, predicate: (value: string) => boolean, lowerCase = true) {
@@ -12,6 +13,42 @@ export function ObjFilterByKey<T>(obj: Record<string, T>, predicate: (value: str
             newObj[key] = obj[key]
             return newObj
         }, {} as Record<string, T>)
+}
+
+/** Fetch the URL, decompress if it is gzip compressed */
+export async function fetchAndTryDecompressGzip(url: string, onDownload?: (e: ProgressEvent) => any, onDecompress?: () => any): Promise<Blob> {
+    return new Promise(async (resolve, reject) => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', url)
+        xhr.responseType = 'arraybuffer'
+        xhr.send()
+        onDownload && (xhr.onprogress = onDownload);
+        xhr.onload = () => {
+            try {
+                const arrayBuffer = xhr.response as unknown
+                if (!(arrayBuffer instanceof ArrayBuffer)) {
+                    reject('Response is not `ArrayBuffer`')
+                    return
+                }
+
+                const byteArray = new Uint8Array(arrayBuffer)
+                const isGzip = byteArray[0] == 0x1F && byteArray[1] == 0x8B // gzip magic numbers
+
+                let finalData
+                if (isGzip) {
+                    console.log('Decompressing gzip in JavaScript, the server did not set `Content-Encoding: gzip` to let it decompress by the browser.')
+                    onDecompress && onDecompress()
+                    finalData = gunzipSync(byteArray) as typeof byteArray
+                } else {
+                    finalData = byteArray
+                }
+                resolve(new Blob([finalData]))
+            } catch (e) {
+                reject(e)
+            }
+        }
+        xhr.onerror = reject
+    })
 }
 
 export function humanizeBytes(b: number) {
