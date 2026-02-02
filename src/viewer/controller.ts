@@ -52,6 +52,7 @@ export interface CharacterOptions extends CharacterOutlineOptions {
     RotateX: number
     RotateY: number
     RotateZ: number
+    Reset: () => any
 }
 
 export const threeGuiContainer = document.getElementById('three-gui')!
@@ -85,7 +86,7 @@ export const guiOptions = {
     }
 }
 
-export const guiCharacterSelected = gui.addFolder('Character (Selected)')
+export const guiCharacterSelected = gui.addFolder('Character (Selected)').close()
 
 const characterGlobalFolder = gui.addFolder('Characters (Global)')
 characterGlobalFolder.add(guiOptions, 'OutlineVisible').onChange(() => updateCharacterOutline('OutlineVisible', guiOptions))
@@ -127,7 +128,7 @@ guiAntiAliasing.domElement.title = `Anti-aliasing method used for the effect com
 This option does not affect direct rendering that always uses default MSAA.`;
 const guiAntiAliasingLevel = miscFolder.add(guiOptions, 'AntiAliasingLevel', 0, 8, 1).onChange(updateAntiAliasing).hide()
 
-gui.add(guiOptions, 'Reset')
+gui.add(guiOptions, 'Reset').name('Reset everything')
 
 function updateAntiAliasingGUI() {
     if (guiOptions.UseEffectComposer != 'Never') {
@@ -152,27 +153,55 @@ function updateAntiAliasing() {
     scene.setAntiAliasing(guiOptions.AntiAliasing, guiOptions.AntiAliasingLevel)
 }
 
-export function updateCharacterController(character: MagiaExedraCharacter3D | null) {
-    for (let i = 0; i < 2; i++) { // run for N times to clear N folders
-        guiCharacterSelected.controllersRecursive().forEach(x => x.destroy())
-        guiCharacterSelected.children.forEach(x => x.destroy())
-    }
-
-    if (!character) return
-
-    let characterOptions: CharacterOptions = {
+//
+// Selected character controller
+//
+export function getCharacterOptions(character: MagiaExedraCharacter3D): CharacterOptions {
+    return {
         X: character.object.position.x,
         Y: character.object.position.y,
         Z: character.object.position.z,
-        RotateX: character.object.rotation.x,
-        RotateY: character.object.rotation.y,
-        RotateZ: character.object.rotation.z,
+        RotateX: THREE.MathUtils.radToDeg(character.object.rotation.x),
+        RotateY: THREE.MathUtils.radToDeg(character.object.rotation.y),
+        RotateZ: THREE.MathUtils.radToDeg(character.object.rotation.z),
         ...(getCharacterOutline(character) || {
             OutlineVisible: true,
             OutlineThickness: OutlineThickness,
             OutlineColor: OutlineColor,
         }),
+        Reset() {
+            guiCharacterSelected.reset()
+        },
     }
+}
+
+let currentCharacter: MagiaExedraCharacter3D | undefined = undefined
+let currentCharacterOptions: CharacterOptions | undefined = undefined
+
+export function updateCharacterController(character: MagiaExedraCharacter3D | null) {
+    // character not changed, update values & display
+    if (character && currentCharacterOptions && currentCharacter == character) {
+        Object.assign(currentCharacterOptions, getCharacterOptions(character))
+        guiCharacterSelected.controllers.forEach(x => x.updateDisplay())
+        return
+    }
+
+    // character changed, destroy all old controllers
+    for (let i = 0; i < 2; i++) { // run for N times to clear N folders
+        guiCharacterSelected.controllersRecursive().forEach(x => x.destroy())
+        guiCharacterSelected.children.forEach(x => x.destroy())
+    }
+
+    if (!character) {
+        currentCharacter = undefined
+        currentCharacterOptions = undefined
+        return
+    }
+    currentCharacter = character
+
+    let characterOptions = getCharacterOptions(character)
+    currentCharacterOptions = characterOptions
+
     guiCharacterSelected.add(characterOptions, 'X', -2, 2).onChange(value => character.object.position.x = value).initialValue = 0
     guiCharacterSelected.add(characterOptions, 'Y', -2, 2).onChange(value => character.object.position.y = value).initialValue = 0
     guiCharacterSelected.add(characterOptions, 'Z', -2, 2).onChange(value => character.object.position.z = value).initialValue = 0
@@ -196,6 +225,8 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
             getMaterials().forEach(x => x.visible = value)
         }).initialValue = getMeshDefaultVisibility(mesh.name)
     }
+
+    guiCharacterSelected.add(characterOptions, 'Reset').name('Reset character')
 }
 
 export function getCharacterOutline(character: MagiaExedraCharacter3D): CharacterOutlineOptions | undefined {

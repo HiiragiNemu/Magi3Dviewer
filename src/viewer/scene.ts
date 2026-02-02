@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
+
 import { createRenderer } from 'magia-exedra-character-three'
 import type MagiaExedraCharacter3D from 'magia-exedra-character-three/character'
 import { characters } from './character';
@@ -51,6 +53,9 @@ export class ViewerScene {
 
     raycaster: THREE.Raycaster
 
+    transformControls: TransformControls
+    transformControlsHelper
+
     composerEnabled: 'Auto' | 'Always' | 'Never' = 'Auto'
     composerRenderTarget: THREE.WebGLRenderTarget | undefined
     composer: EffectComposer | undefined
@@ -65,6 +70,10 @@ export class ViewerScene {
     fxaaPass: FXAAPass
 
     animateLoopCallback: () => any = () => { }
+
+    get characterSelectionVisible() {
+        return this.outlinePass.selectedObjects.length > 0 && this.characters.length > 1
+    }
 
     taaCount = 0
 
@@ -111,6 +120,13 @@ export class ViewerScene {
 
         this.raycaster = new THREE.Raycaster();
 
+        this.transformControls = new TransformControls(this.camera, this.renderer.domElement)
+        this.transformControls.addEventListener('dragging-changed', e => {
+            this.controls.enabled = !e.value;
+        });
+        this.transformControlsHelper = this.transformControls.getHelper();
+        this.scene.add(this.transformControlsHelper);
+
         //
         // Post effects
         //
@@ -155,10 +171,12 @@ export class ViewerScene {
             this.controls.update();
             this.animateLoopCallback()
 
-            this.outlinePass.enabled = this.outlinePass.selectedObjects.length > 0 && this.characters.length > 1
+            this.outlinePass.enabled = this.characterSelectionVisible
+            this.transformControls.enabled = this.characterSelectionVisible
+            this.transformControlsHelper.visible = this.characterSelectionVisible
 
             if (
-                (this.composerEnabled == 'Auto' && this.outlinePass.enabled) ||
+                (this.composerEnabled == 'Auto' && this.characterSelectionVisible) ||
                 this.composerEnabled == 'Always'
             ) {
                 if (this.taaRenderPass.enabled) {
@@ -280,9 +298,11 @@ export class ViewerScene {
         let obj = value?.character?.object
         if (obj) {
             this.outlinePass.selectedObjects = [obj]
+            this.transformControls.attach(obj)
             console.log('Set scene selected character (with object):', value)
         } else {
             this.outlinePass.selectedObjects = []
+            this.transformControls.detach()
             if (!value) {
                 console.log('Deselected scene character')
             } else {

@@ -4,7 +4,7 @@ import { scene, viewerEl, type SceneCharacter } from './scene';
 import { initSelector } from './UIControls'
 import { characters } from './character';
 import { guiOptions, updateCharacterController, updateCharacterOutline } from './controller';
-import { ARButton } from 'three/examples/jsm/Addons.js';
+import { ARButton, type TransformControlsMode } from 'three/examples/jsm/Addons.js';
 
 const menuEl = document.getElementById('menu')!
 
@@ -25,6 +25,11 @@ animationLoopBtn.onclick = () => scene.characterSelected?.character?.playAnimati
 animationStopBtn.onclick = () => scene.characterSelected?.character?.mixer?.stopAllAction()
 fullscreenBtn.onclick = () => document.documentElement.requestFullscreen().then(() => (screen.orientation as any).lock('landscape').catch(() => undefined))
 
+const transformTranslateBtn = document.getElementById('transform-set-translate') as HTMLButtonElement
+const transformRotateBtn = document.getElementById('transform-set-rotate') as HTMLButtonElement
+transformTranslateBtn.onclick = () => setTransformMode('translate')
+transformRotateBtn.onclick = () => setTransformMode('rotate')
+
 const characterIdList = characters.getCharacterIdList()
 const characterSelectDict = characterIdList.reduce((obj, id) => {
     obj[`${id} - ${characters.getCharacterNameById(id)}`] = id
@@ -44,6 +49,12 @@ export function setupViewer() {
     setupViewerInputHandler()
 
     scene.animateLoopCallback = animateLoop
+
+    scene.transformControls.addEventListener('change', () => {
+        if (scene.characterSelected?.character) {
+            updateCharacterController(scene.characterSelected?.character)
+        }
+    })
 
     tryChangeCharacterByHash() || changeCharacter(100107)
 
@@ -225,12 +236,17 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
     }
 
     updateCharacterController(character)
+    updateTransformModeButtons()
+
     document.body.classList.remove('no-target')
 }
 
 function deselectCharacter() {
     scene.characterSelected = undefined
+
     updateCharacterController(null)
+    updateTransformModeButtons()
+
     document.body.classList.add('no-target')
 }
 
@@ -248,6 +264,32 @@ function calculateNewCharacterPosition(newCharacter: SceneCharacter): THREE.Vect
         if (n > 100) break;
     }
     return new THREE.Vector3(0, 0, 0);
+}
+
+function setTransformMode(mode: TransformControlsMode) {
+    if (mode == 'rotate') {
+        scene.transformControls.showX = false
+        scene.transformControls.showZ = false
+    } else {
+        scene.transformControls.showX = true
+        scene.transformControls.showZ = true
+    }
+    scene.transformControls.mode = mode
+
+    updateTransformModeButtons()
+}
+
+function updateTransformModeButtons() {
+    transformTranslateBtn.style.display = 'none'
+    transformRotateBtn.style.display = 'none'
+
+    if (scene.characterSelectionVisible) {
+        if (scene.transformControls.mode == 'translate') {
+            transformRotateBtn.style.removeProperty('display')
+        } else {
+            transformTranslateBtn.style.removeProperty('display')
+        }
+    }
 }
 
 Object.assign(window, { changeCharacter })
