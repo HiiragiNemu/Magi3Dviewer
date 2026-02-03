@@ -18,15 +18,14 @@ export default class MagiaExedraCharacter3D {
      */
     object: THREE.Group
     userData: ObjectUserData
-    mixer: THREE.AnimationMixer
-    lastPlayedAnimations: string[] | undefined
+    animation: ChatacterAnimation
 
     constructor(object: THREE.Group) {
         this.object = object
         this.userData = object.userData as ObjectUserData
-        this.mixer = new THREE.AnimationMixer(object)
+        this.animation = new ChatacterAnimation(this)
 
-        addAnimationLoop(this.animationLoop)
+        addAnimationLoop(this.animation.animationLoop)
     }
 
     get animations(): string[] {
@@ -37,14 +36,30 @@ export default class MagiaExedraCharacter3D {
         )].sort()
     }
 
-    animationLoop = () => {
-        const delta = getClockDelta()
-        this.mixer.update(delta)
+    dispose() {
+        removeAnimationLoop(this.animation.animationLoop)
+        this.animation.mixer.stopAllAction()
+        this.animation.mixer.uncacheRoot(this.object)
+        disposeObject(this.object)
+        this.userData.textures.forEach(x => x.dispose())
+    }
+}
+
+export class ChatacterAnimation {
+    private _character: MagiaExedraCharacter3D
+    mixer: THREE.AnimationMixer
+    private _default?: string | null = null
+    private _current?: string
+    paused = false
+
+    constructor(character: MagiaExedraCharacter3D) {
+        this._character = character
+        this.mixer = new THREE.AnimationMixer(this._character.object)
+
+        this.mixer.addEventListener('finished', this.onFinishHandler)
     }
 
-    playAnimation(name: string | undefined = undefined, loop = false): string[] {
-        if (!name) loop = true
-
+    play(name: string, loop = false) {
         /*
         character and its weapon have seperate animations
     
@@ -54,20 +69,10 @@ export default class MagiaExedraCharacter3D {
     
         if it plays `CommonWait_L`, `CommonWait_L_1` should also be played
         */
-        const animations = this.object.animations.filter(x => {
-            if (name) {
-                return x.name.startsWith(name)
-            } else {
-                return x.name.startsWith('CommonWait') || x.name.startsWith('DungeonWait')
-            }
-        })
+        const animations = this.getAnimationClipsByName(name)
         if (animations.length == 0) {
-            if (name) {
-                console.warn(`Animation "${name}" not found in "${this.object.name}"`)
-            } else {
-                console.warn(`Default animation not found in "${this.object.name}"`)
-            }
-            return []
+            console.warn(`Animation "${name}" not found in "${this._character.object.name}"`)
+            return
         }
 
         this.mixer.stopAllAction()
@@ -86,19 +91,62 @@ export default class MagiaExedraCharacter3D {
             action.play()
         }
 
-        const animationNames = animations.map(x => x.name)
-        console.log('Playing animation:', animationNames)
+        this.paused = false
+        this.time = 0
 
-        this.lastPlayedAnimations = animationNames
-
-        return animationNames
+        console.log('Playing animation:', animations.map(x => x.name))
+        this._current = name
     }
 
-    dispose() {
-        removeAnimationLoop(this.animationLoop)
+    clear() {
         this.mixer.stopAllAction()
-        this.mixer.uncacheRoot(this.object)
-        disposeObject(this.object)
-        this.userData.textures.forEach(x => x.dispose())
+        this._current = undefined
+    }
+
+    get default(): string | undefined {
+        if (this._default === null) {
+            this._default = this._character.animations.find(x => x.startsWith('CommonWait') || x.startsWith('DungeonWait'))
+            if (!this._default) {
+                console.warn(`Default animation not found in "${this._character.object.name}"`)
+            }
+        }
+        return this._default
+    }
+
+    get current(): string | undefined {
+        return this._current
+    }
+
+    getAnimationClipsByName(name: string) {
+        return this._character.object.animations.filter(x => x.name.startsWith(name))
+    }
+
+    get duration() {
+        if (this._current) {
+            return Math.max(... this.getAnimationClipsByName(this._current).map(x => x.duration))
+        } else {
+            return 0
+        }
+    }
+
+    get time() {
+        if (this._current) {
+            return this.mixer.time % this.duration
+        } else {
+            return 0
+        }
+    }
+    set time(value) {
+        this.mixer.setTime(value)
+    }
+
+    animationLoop = () => {
+        if (this.paused) return
+        const delta = getClockDelta()
+        this.mixer.update(delta)
+    }
+
+    onFinishHandler = () => {
+        this._current = undefined
     }
 }

@@ -13,16 +13,23 @@ const characterAddCrossBtn = document.getElementById('character-add-cross-btn') 
 const characterAddSelector = document.getElementById('character-add-selector') as HTMLSelectElement
 const animationSelector = document.getElementById('animation-selector') as HTMLSelectElement
 const animationPlayBtn = document.getElementById('animation-play') as HTMLButtonElement
-const animationLoopBtn = document.getElementById('animation-loop') as HTMLButtonElement
-const animationStopBtn = document.getElementById('animation-stop') as HTMLButtonElement
+const animationPauseBtn = document.getElementById('animation-pause') as HTMLButtonElement
+const animationSlider = document.getElementById('animation-slider') as HTMLInputElement
 const fullscreenBtn = document.getElementById('fullscreen-btn') as HTMLButtonElement
 const loadProgressEl = document.getElementById('load-progress')!
 const demoEls = document.getElementsByClassName('demo')
 
 characterAddCrossBtn.onclick = removeSelectedCharacter
-animationPlayBtn.onclick = () => scene.characterSelected?.character?.playAnimation(animationSelector.value)
-animationLoopBtn.onclick = () => scene.characterSelected?.character?.playAnimation(animationSelector.value, true)
-animationStopBtn.onclick = () => scene.characterSelected?.character?.mixer?.stopAllAction()
+animationPlayBtn.onclick = () => { scene.characterSelected?.character && (scene.characterSelected.character.animation.paused = false); updateAnimationControls() }
+animationPauseBtn.onclick = () => { scene.characterSelected?.character && (scene.characterSelected.character.animation.paused = true); updateAnimationControls() }
+animationSlider.oninput = () => {
+    if (scene.characterSelected?.character) {
+        const animation = scene.characterSelected.character.animation
+        animation.paused = true
+        animation.time = parseFloat(animationSlider.value)
+        updateAnimationControls()
+    }
+}
 fullscreenBtn.onclick = () => document.documentElement.requestFullscreen().then(() => (screen.orientation as any).lock('landscape').catch(() => undefined))
 
 const transformTranslateBtn = document.getElementById('transform-set-translate') as HTMLButtonElement
@@ -88,8 +95,9 @@ function setupCharacterAddSelector() {
     })
     characterAddSelector.addEventListener('change', async () => {
         if (characterAddSelector.value != '') {
+            const id = characterAddSelector.value
             characterAddSelector.value = ''
-            const newCharacter = await addOrChangeCharacter(characterAddSelector.value)
+            const newCharacter = await addOrChangeCharacter(id)
             selectCharacter(newCharacter)
         }
     })
@@ -134,6 +142,7 @@ function setupViewerInputHandler() {
 
 function animateLoop() {
     stats.update()
+    updateAnimationControls()
 }
 
 function tryChangeCharacterByHash(): boolean {
@@ -210,8 +219,9 @@ async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneC
             character.object.position.copy(calculateNewCharacterPosition(sceneCharacter))
         }
 
-        character.mixer.addEventListener('finished', () => character.playAnimation())
-        character.playAnimation()
+        if (character.animation.default) {
+            character.animation.play(character.animation.default, true)
+        }
 
         return sceneCharacter
     })
@@ -230,14 +240,18 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
         character.animations.reduce((obj, name) => {
             obj[name] = name
             return obj
-        }, {} as Record<string, string>),
-        value => value && character.playAnimation(value)
+        }, { '<None>': '' } as Record<string, string>),
+        value => {
+            if (value) {
+                character.animation.play(value, true)
+            } else {
+                character.animation.clear()
+            }
+        }
     );
 
-    if (character.lastPlayedAnimations) {
-        const playing = character.lastPlayedAnimations
-        animationSelector.value = character.animations.find(x => playing.includes(x))!
-    }
+    animationSelector.value = character.animation.current || ''
+    updateAnimationControls()
 
     updateCharacterController(character)
     updateTransformModeButtons()
@@ -268,6 +282,25 @@ function calculateNewCharacterPosition(newCharacter: SceneCharacter): THREE.Vect
         if (n > 100) break;
     }
     return new THREE.Vector3(0, 0, 0);
+}
+
+function updateAnimationControls() {
+    if (scene.characterSelected?.character) {
+        const animation = scene.characterSelected.character.animation
+
+        if (animation.paused) {
+            animationPlayBtn.style.removeProperty('display')
+            animationPauseBtn.style.display = 'none'
+        } else {
+            animationPlayBtn.style.display = 'none'
+            animationPauseBtn.style.removeProperty('display')
+        }
+
+        animationSlider.min = '0'
+        animationSlider.max = (animation.duration - 0.01).toString()
+        animationSlider.step = '0.01'
+        animationSlider.value = animation.time.toString()
+    }
 }
 
 function setTransformMode(mode: TransformControlsMode) {

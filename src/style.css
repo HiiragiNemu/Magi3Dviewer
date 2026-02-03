@@ -92,6 +92,24 @@ body {
     height: 100%;
 }
 
+#animation-play,
+#animation-pause {
+    padding: 0;
+}
+
+#animation-play img,
+#animation-pause img {
+    width: 1.4em;
+    height: 1.4em;
+    filter: none;
+    display: block;
+    padding: 0 4px;
+}
+
+#animation-slider {
+    min-width: 80px;
+}
+
 .spacer {
     flex: 1;
 }
