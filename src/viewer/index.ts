@@ -77,7 +77,7 @@ export function setupViewer() {
 }
 
 function setupCharacterAddSelector() {
-    initSelector(characterAddSelector, { '': '', ...characterSelectDict });
+    initSelector(characterAddSelector, { '< Select a character to add >': '', ...characterSelectDict });
     characterAddSelector.value = ''
 
     characterAddSelector.addEventListener('focus', () => {
@@ -86,10 +86,11 @@ function setupCharacterAddSelector() {
     characterAddSelector.addEventListener('click', () => {
         characterAddSelector.value = ''
     })
-    characterAddSelector.addEventListener('change', () => {
+    characterAddSelector.addEventListener('change', async () => {
         if (characterAddSelector.value != '') {
-            addOrChangeCharacter(characterAddSelector.value)
             characterAddSelector.value = ''
+            const newCharacter = await addOrChangeCharacter(characterAddSelector.value)
+            selectCharacter(newCharacter)
         }
     })
 }
@@ -143,13 +144,16 @@ function tryChangeCharacterByHash(): boolean {
     return true
 }
 
-function changeCharacter(id: number | string) {
+async function changeCharacter(id: number | string) {
     if (typeof id == 'number') id = id.toString()
 
     characterSelector.value = id
     updateCharacterController(null)
 
-    addOrChangeCharacter(id, scene.characterSelected)
+    const loaded = await addOrChangeCharacter(id, scene.characterSelected)
+    if (scene.characterSelected == loaded) {
+        selectCharacter(loaded)
+    }
 }
 
 function removeSelectedCharacter() {
@@ -159,7 +163,7 @@ function removeSelectedCharacter() {
     }
 }
 
-function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharacter) {
+async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharacter): Promise<SceneCharacter> {
     let loadedSceneCharacter: SceneCharacter | undefined = undefined
 
     let oldTransform = undefined
@@ -170,7 +174,7 @@ function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharact
         }
     }
 
-    scene.switchCharacter(
+    return scene.switchCharacter(
         sceneCharacter,
         id,
         {
@@ -209,7 +213,7 @@ function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharact
         character.mixer.addEventListener('finished', () => character.playAnimation())
         character.playAnimation()
 
-        selectCharacter(sceneCharacter)
+        return sceneCharacter
     })
 }
 

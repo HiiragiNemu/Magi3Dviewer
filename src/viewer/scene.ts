@@ -322,6 +322,8 @@ export class ViewerScene {
         }
 
         return new Promise((resolve, reject) => {
+            const isSelected = this.characterSelected == sceneCharacter
+
             if (sceneCharacter.removed) {
                 reject('Character already removed')
             }
@@ -335,9 +337,11 @@ export class ViewerScene {
             sceneCharacter.pending = undefined
 
             if (sceneCharacter.character) {
+                if (isSelected) this.characterSelected = undefined // clear selected temporarily to avoid errors in OutlinePass / TransformControls
                 this.scene.remove(sceneCharacter.character.object)
                 sceneCharacter.character.dispose()
                 sceneCharacter.character = undefined
+                if (isSelected) this.characterSelected = sceneCharacter // select it afterwards but with empty character
             }
 
             characters.loadCharacterById(id, callbacks)
@@ -349,6 +353,10 @@ export class ViewerScene {
 
                     sceneCharacter.character = character
                     this.scene.add(sceneCharacter.character.object)
+
+                    if (this.characterSelected == sceneCharacter) {
+                        this.characterSelected = sceneCharacter // select again to restore OutlinePass and TransformControls
+                    }
 
                     resolve(sceneCharacter)
                 })
