@@ -50,6 +50,7 @@ export class ChatacterAnimation {
     mixer: THREE.AnimationMixer
     private _default?: string | null = null
     private _current?: string
+    private _clamped = false
     paused = false
 
     constructor(character: MagiaExedraCharacter3D) {
@@ -93,14 +94,29 @@ export class ChatacterAnimation {
 
         this.paused = false
         this.time = 0
+        this._current = name
+        this._clamped = false
 
         console.log('Playing animation:', animations.map(x => x.name))
-        this._current = name
     }
 
     clear() {
         this.mixer.stopAllAction()
         this._current = undefined
+    }
+
+    getAnimationClipsByName(name: string) {
+        return this._character.object.animations.filter(x => x.name.startsWith(name))
+    }
+
+    animationLoop = () => {
+        if (this.paused) return
+        const delta = getClockDelta()
+        this.mixer.update(delta)
+    }
+
+    onFinishHandler = () => {
+        this._clamped = true
     }
 
     get default(): string | undefined {
@@ -117,36 +133,30 @@ export class ChatacterAnimation {
         return this._current
     }
 
-    getAnimationClipsByName(name: string) {
-        return this._character.object.animations.filter(x => x.name.startsWith(name))
+    get clamped(): boolean {
+        return this._clamped
     }
 
-    get duration() {
-        if (this._current) {
-            return Math.max(... this.getAnimationClipsByName(this._current).map(x => x.duration))
+    get duration(): number {
+        if (this.current) {
+            return Math.max(...this.getAnimationClipsByName(this.current).map(x => x.duration))
         } else {
             return 0
         }
     }
 
-    get time() {
-        if (this._current) {
-            return this.mixer.time % this.duration
+    get time(): number {
+        if (this.current) {
+            if (this.clamped) {
+                return this.duration
+            } else {
+                return this.mixer.time % this.duration
+            }
         } else {
             return 0
         }
     }
     set time(value) {
         this.mixer.setTime(value)
-    }
-
-    animationLoop = () => {
-        if (this.paused) return
-        const delta = getClockDelta()
-        this.mixer.update(delta)
-    }
-
-    onFinishHandler = () => {
-        this._current = undefined
     }
 }

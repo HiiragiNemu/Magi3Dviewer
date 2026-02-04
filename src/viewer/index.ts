@@ -288,18 +288,24 @@ function updateAnimationControls() {
     if (scene.characterSelected?.character) {
         const animation = scene.characterSelected.character.animation
 
-        if (animation.paused) {
-            animationPlayBtn.style.removeProperty('display')
-            animationPauseBtn.style.display = 'none'
+        if (animationSelector.value) {
+            if (animation.paused) {
+                animationPlayBtn.style.removeProperty('display')
+                animationPauseBtn.style.display = 'none'
+            } else {
+                animationPlayBtn.style.display = 'none'
+                animationPauseBtn.style.removeProperty('display')
+            }
+            animationSlider.style.removeProperty('display')
+            animationSlider.min = '0'
+            animationSlider.max = (animation.duration - 0.01).toString()
+            animationSlider.step = '0.01'
+            animationSlider.value = animation.time.toString()
         } else {
+            animationPauseBtn.style.display = 'none'
             animationPlayBtn.style.display = 'none'
-            animationPauseBtn.style.removeProperty('display')
+            animationSlider.style.display = 'none'
         }
-
-        animationSlider.min = '0'
-        animationSlider.max = (animation.duration - 0.01).toString()
-        animationSlider.step = '0.01'
-        animationSlider.value = animation.time.toString()
     }
 }
 
