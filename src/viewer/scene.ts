@@ -317,7 +317,6 @@ export class ViewerScene {
                 loading: false,
                 removed: false,
             }
-            if (this.characters.length == 0) this.characterSelected = sceneCharacter
             this.characters.push(sceneCharacter)
         }
 

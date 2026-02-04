@@ -203,6 +203,10 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.no-demo .demo {
+    display: none;
+}
+
 .theme-light {
     background-color: white;
     color: initial;

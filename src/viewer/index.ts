@@ -5,6 +5,7 @@ import { initSelector } from './UIControls'
 import { characters } from './character';
 import { guiOptions, updateCharacterController, updateCharacterOutline } from './controller';
 import { ARButton, type TransformControlsMode } from 'three/examples/jsm/Addons.js';
+import { presetImport } from './presets';
 
 const menuEl = document.getElementById('menu')!
 
@@ -17,7 +18,6 @@ const animationPauseBtn = document.getElementById('animation-pause') as HTMLButt
 const animationSlider = document.getElementById('animation-slider') as HTMLInputElement
 const fullscreenBtn = document.getElementById('fullscreen-btn') as HTMLButtonElement
 const loadProgressEl = document.getElementById('load-progress')!
-const demoEls = document.getElementsByClassName('demo')
 
 characterAddCrossBtn.onclick = removeSelectedCharacter
 animationPlayBtn.onclick = () => { scene.characterSelected?.character && (scene.characterSelected.character.animation.paused = false); updateAnimationControls() }
@@ -63,7 +63,7 @@ export function setupViewer() {
         }
     })
 
-    tryChangeCharacterByHash() || changeCharacter(100107)
+    tryChangeCharacterByHash()
 
     stats.dom.style.removeProperty('top')
     stats.dom.style.removeProperty('left')
@@ -145,12 +145,17 @@ function animateLoop() {
     updateAnimationControls()
 }
 
-function tryChangeCharacterByHash(): boolean {
+async function tryChangeCharacterByHash() {
+    try {
+        await presetImport(location.href)
+        return
+    } catch (e) { }
+
     let id = location.hash.replace('#', '')
-    if (id === '') id = '100107'
-    if (!characterIdList.includes(id)) return false
-    changeCharacter(id)
-    return true
+    if (!characterIdList.includes(id)) id = '100107'
+
+    const sceneCharacter = await changeCharacter(id)
+    selectCharacter(sceneCharacter)
 }
 
 async function changeCharacter(id: number | string) {
@@ -163,6 +168,7 @@ async function changeCharacter(id: number | string) {
     if (scene.characterSelected == loaded) {
         selectCharacter(loaded)
     }
+    return loaded
 }
 
 function removeSelectedCharacter() {
@@ -187,14 +193,7 @@ async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneC
         sceneCharacter,
         id,
         {
-            loadProgressCallback: progress => {
-                if (progress) {
-                    loadProgressEl.style.removeProperty('display')
-                    loadProgressEl.textContent = progress
-                } else {
-                    loadProgressEl.style.display = 'none'
-                }
-            },
+            loadProgressCallback: displayProgress,
             loadFinishCallback: () => { // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
                 if (loadedSceneCharacter?.character) {
                     // character outlines are added after texture load. apply global character outlines
@@ -207,7 +206,7 @@ async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneC
             }
         }
     ).then((sceneCharacter) => {
-        [...demoEls].forEach(x => x instanceof HTMLElement && (x.style.display = 'none'))
+        hideAllDemoItems()
 
         const character = sceneCharacter.character!
         loadedSceneCharacter = sceneCharacter;
@@ -259,7 +258,7 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
     document.body.classList.remove('no-target')
 }
 
-function deselectCharacter() {
+export function deselectCharacter() {
     scene.characterSelected = undefined
 
     updateCharacterController(null)
@@ -282,6 +281,19 @@ function calculateNewCharacterPosition(newCharacter: SceneCharacter): THREE.Vect
         if (n > 100) break;
     }
     return new THREE.Vector3(0, 0, 0);
+}
+
+export function displayProgress(text: string) {
+    if (text) {
+        loadProgressEl.style.removeProperty('display')
+        loadProgressEl.textContent = text
+    } else {
+        loadProgressEl.style.display = 'none'
+    }
+}
+
+export function hideAllDemoItems() {
+    document.body.classList.add('no-demo')
 }
 
 function updateAnimationControls() {

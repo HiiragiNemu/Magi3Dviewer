@@ -4,6 +4,7 @@ import { OutlineColor, OutlineThickness } from 'magia-exedra-character-three/sha
 import MagiaExedraCharacter3D from 'magia-exedra-character-three/character';
 import { scene, ViewerScene, deg2pos, viewerEl, type SceneComposerAntiAliasing } from './scene';
 import { getMeshDefaultVisibility } from 'magia-exedra-character-three/loader';
+import { presetExport, presetImport } from './presets';
 
 //
 // Theme controller
@@ -16,16 +17,19 @@ themeDarkBtn.onclick = () => setTheme('dark')
 export const themeDarkBgColor = '#444444'
 export const themeLightBgColor = '#ffffff'
 
-function setTheme(theme: 'light' | 'dark') {
+export type Theme = 'light' | 'dark'
+export const themeLightClassName = 'theme-light'
+
+export function setTheme(theme: Theme) {
     let newColor
     let shouldApplyNewColor = false
 
     if (theme == 'light') {
-        document.body.classList.add('theme-light')
+        document.body.classList.add(themeLightClassName)
         newColor = themeLightBgColor
         shouldApplyNewColor = guiOptions.BgColor == themeDarkBgColor
     } else if (theme == 'dark') {
-        document.body.classList.remove('theme-light')
+        document.body.classList.remove(themeLightClassName)
         newColor = themeDarkBgColor
         shouldApplyNewColor = guiOptions.BgColor == themeLightBgColor
     } else return
@@ -36,15 +40,13 @@ function setTheme(theme: 'light' | 'dark') {
     }
 }
 
+export function getCurrentTheme(): Theme {
+    return document.body.classList.contains(themeLightClassName) ? 'light' : 'dark'
+}
+
 //
 // GUI controller
 //
-export interface CharacterOutlineOptions {
-    OutlineVisible: boolean,
-    OutlineThickness: number,
-    OutlineColor: string,
-}
-
 export interface CharacterOptions extends CharacterOutlineOptions {
     X: number
     Y: number
@@ -52,6 +54,15 @@ export interface CharacterOptions extends CharacterOutlineOptions {
     RotateX: number
     RotateY: number
     RotateZ: number
+}
+
+export interface CharacterOutlineOptions {
+    OutlineVisible: boolean,
+    OutlineThickness: number,
+    OutlineColor: string,
+}
+
+export interface CharacterGuiOptions extends CharacterOptions {
     Reset: () => any
 }
 
@@ -80,13 +91,22 @@ export const guiOptions = {
     AntiAliasing: 'None' satisfies SceneComposerAntiAliasing as SceneComposerAntiAliasing,
     AntiAliasingLevel: 2,
 
-    Reset: () => {
+    Export: presetExport,
+    async Import() {
+        try {
+            await presetImport(undefined, true)
+        } catch (e) {
+            if (e instanceof Error) window.alert(e.message)
+        }
+    },
+    Reset() {
         gui.reset()
         scene.resetCameraControl()
-    }
+    },
 }
 
-export const guiCharacterSelected = gui.addFolder('Character (Selected)').close()
+export const guiCharacterSelectedFolderName = 'Character (Selected)'
+export const guiCharacterSelected = gui.addFolder(guiCharacterSelectedFolderName).close()
 
 const characterGlobalFolder = gui.addFolder('Characters (Global)')
 characterGlobalFolder.add(guiOptions, 'OutlineVisible').onChange(() => updateCharacterOutline('OutlineVisible', guiOptions))
@@ -128,6 +148,8 @@ guiAntiAliasing.domElement.title = `Anti-aliasing method used for the effect com
 This option does not affect direct rendering that always uses default MSAA.`;
 const guiAntiAliasingLevel = miscFolder.add(guiOptions, 'AntiAliasingLevel', 0, 8, 1).onChange(updateAntiAliasing).hide()
 
+gui.add(guiOptions, 'Export').name('Export presets')
+gui.add(guiOptions, 'Import').name('Import presets')
 gui.add(guiOptions, 'Reset').name('Reset everything')
 
 function updateAntiAliasingGUI() {
@@ -156,27 +178,8 @@ function updateAntiAliasing() {
 //
 // Selected character controller
 //
-export function getCharacterOptions(character: MagiaExedraCharacter3D): CharacterOptions {
-    return {
-        X: character.object.position.x,
-        Y: character.object.position.y,
-        Z: character.object.position.z,
-        RotateX: THREE.MathUtils.radToDeg(character.object.rotation.x),
-        RotateY: THREE.MathUtils.radToDeg(character.object.rotation.y),
-        RotateZ: THREE.MathUtils.radToDeg(character.object.rotation.z),
-        ...(getCharacterOutline(character) || {
-            OutlineVisible: true,
-            OutlineThickness: OutlineThickness,
-            OutlineColor: OutlineColor,
-        }),
-        Reset() {
-            guiCharacterSelected.reset()
-        },
-    }
-}
-
 let currentCharacter: MagiaExedraCharacter3D | undefined = undefined
-let currentCharacterOptions: CharacterOptions | undefined = undefined
+let currentCharacterOptions: CharacterGuiOptions | undefined = undefined
 
 export function updateCharacterController(character: MagiaExedraCharacter3D | null) {
     // character not changed, update values & display
@@ -199,15 +202,20 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
     }
     currentCharacter = character
 
-    let characterOptions = getCharacterOptions(character)
+    let characterOptions: CharacterGuiOptions = {
+        ...getCharacterOptions(character),
+        Reset() {
+            guiCharacterSelected.reset()
+        },
+    }
     currentCharacterOptions = characterOptions
 
-    guiCharacterSelected.add(characterOptions, 'X', -2, 2).onChange(value => character.object.position.x = value).initialValue = 0
-    guiCharacterSelected.add(characterOptions, 'Y', -2, 2).onChange(value => character.object.position.y = value).initialValue = 0
-    guiCharacterSelected.add(characterOptions, 'Z', -2, 2).onChange(value => character.object.position.z = value).initialValue = 0
-    guiCharacterSelected.add(characterOptions, 'RotateX', -180, 180).onChange(value => character.object.rotation.x = THREE.MathUtils.degToRad(value)).initialValue = 0
-    guiCharacterSelected.add(characterOptions, 'RotateY', -180, 180).onChange(value => character.object.rotation.y = THREE.MathUtils.degToRad(value)).initialValue = 0
-    guiCharacterSelected.add(characterOptions, 'RotateZ', -180, 180).onChange(value => character.object.rotation.z = THREE.MathUtils.degToRad(value)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'X', -2, 2).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'Y', -2, 2).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'Z', -2, 2).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'RotateX', -180, 180).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'RotateY', -180, 180).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'RotateZ', -180, 180).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
 
     const outlineFolder = guiCharacterSelected.addFolder('Outline').close()
     outlineFolder.add(characterOptions, 'OutlineVisible').onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = true
@@ -227,6 +235,31 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
     }
 
     guiCharacterSelected.add(characterOptions, 'Reset').name('Reset character')
+}
+
+export function getCharacterOptions(character: MagiaExedraCharacter3D): CharacterOptions {
+    return {
+        X: character.object.position.x,
+        Y: character.object.position.y,
+        Z: character.object.position.z,
+        RotateX: THREE.MathUtils.radToDeg(character.object.rotation.x),
+        RotateY: THREE.MathUtils.radToDeg(character.object.rotation.y),
+        RotateZ: THREE.MathUtils.radToDeg(character.object.rotation.z),
+        ...(getCharacterOutline(character) || {
+            OutlineVisible: true,
+            OutlineThickness: OutlineThickness,
+            OutlineColor: OutlineColor,
+        }),
+    }
+}
+
+export function updateCharacterPosition(character: MagiaExedraCharacter3D, options: CharacterOptions) {
+    character.object.position.x = options.X
+    character.object.position.y = options.Y
+    character.object.position.z = options.Z
+    character.object.rotation.x = THREE.MathUtils.degToRad(options.RotateX)
+    character.object.rotation.y = THREE.MathUtils.degToRad(options.RotateY)
+    character.object.rotation.z = THREE.MathUtils.degToRad(options.RotateZ)
 }
 
 export function getCharacterOutline(character: MagiaExedraCharacter3D): CharacterOutlineOptions | undefined {
@@ -261,4 +294,4 @@ export function updateCharacterOutline(target: MagiaExedraCharacter3D | keyof Ch
     }
 }
 
-Object.assign(window, { setTheme, gui, guiOptions, guiCharacterSelected, getCharacterOutline, updateCharacterController })
+Object.assign(window, { setTheme, getCurrentTheme, gui, guiOptions, guiCharacterSelected, getCharacterOutline, updateCharacterController })
