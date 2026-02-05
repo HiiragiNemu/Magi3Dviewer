@@ -5,6 +5,32 @@ import type { Vector3Like } from "three"
 import { deselectCharacter, displayProgress, hideAllDemoItems } from "."
 import type MagiaExedraCharacter3D from "magia-exedra-character-three/character"
 
+const dialogContainer = document.getElementById('preset-dialog-container') as HTMLDivElement
+const dialogOverlay = document.getElementById('preset-dialog-overlay') as HTMLDivElement
+const dialogTitle = document.getElementById('preset-dialog-title') as HTMLDivElement
+const dialogTextarea = document.getElementById('preset-dialog-textarea') as HTMLTextAreaElement
+const dialogBtnOk = document.getElementById('preset-dialog-button-ok') as HTMLButtonElement
+
+async function showDialog(title: string, text?: string): Promise<string | undefined> {
+    return new Promise(resolve => {
+        dialogTitle.textContent = title
+        dialogContainer.style.removeProperty('display')
+
+        dialogTextarea.value = text || ''
+        dialogTextarea.select()
+
+        dialogBtnOk.onclick = () => {
+            resolve(dialogTextarea.value)
+            dialogContainer.style.display = 'none'
+        }
+
+        dialogOverlay.onclick = () => {
+            resolve(undefined)
+            dialogContainer.style.display = 'none'
+        }
+    })
+}
+
 interface ViewerPreset {
     characters: Array<{
         id: number
@@ -23,7 +49,8 @@ interface ViewerPreset {
 
 export const presetPattern = '#preset='
 
-export async function presetExport() {
+/** @returns `true` if copied to clipboard, otherwise `false` */
+export async function presetExport(): Promise<boolean> {
     const preset: ViewerPreset = {
         characters: scene.characters.map(x => x.character).filter(x => !!x).map(character => ({
             id: character.userData.characterId,
@@ -54,18 +81,37 @@ export async function presetExport() {
     console.log('JSON:', presetJson.length, ' encodeURIComponent:', presetQueryParamUncompressed.length, ' Compressed:', presetQueryParam.length)
 
     const presetUrl = getHrefWithoutHash() + presetPattern + presetQueryParam
-    await tryWriteClipboardText(presetUrl, 'Please copy the preset:')
+    try {
+        await navigator.clipboard.writeText(presetUrl);
+        return true
+    } catch (e) {
+        await showDialog('Please copy the preset:', presetUrl)
+        return false
+    }
 }
+
+let hasPendingClipboardPermissionApproval = false
 
 export async function presetImport(presetUrl?: string | null, ask = false) {
     let preset
     if (!presetUrl) {
         try {
-            const clipboardUrl = await navigator.clipboard.readText()
+            if (hasPendingClipboardPermissionApproval) {
+                // if the user holds on the permission request and clicks the button twice,
+                // revert to manual input immediately
+                throw new Error('A clipboard permission request is ongoing')
+            }
+            hasPendingClipboardPermissionApproval = true
+            let clipboardUrl
+            try {
+                clipboardUrl = await navigator.clipboard.readText()
+            } finally {
+                hasPendingClipboardPermissionApproval = false
+            }
             preset = parsePresetUrl(clipboardUrl)
         } catch (e) {
             console.log('Auto parse clipboard failed, asking user input')
-            presetUrl = window.prompt('Enter preset:')
+            presetUrl = await showDialog('Enter preset:')
         }
     }
 
@@ -81,7 +127,7 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
 
     const total = preset.characters.length
     if (ask) {
-        if (!window.confirm(`Import preset with ${total} characters?`)) return
+        if (!window.confirm(`Import preset with ${total} character(s)?`)) return
     }
 
     hideAllDemoItems()
@@ -150,22 +196,6 @@ export function parsePresetUrl(presetUrl: string): ViewerPreset {
 
 export function getHrefWithoutHash() {
     return location.origin + location.pathname + location.search
-}
-
-export async function tryWriteClipboardText(text: string, promptMessage: string = 'Please copy:') {
-    try {
-        await navigator.clipboard.writeText(text);
-    } catch (e) {
-        window.prompt(promptMessage, text)
-    }
-}
-
-export async function tryReadClipboardText(promptMessage: string = 'Please paste text:') {
-    try {
-        return await navigator.clipboard.readText();
-    } catch (e) {
-        return window.prompt(promptMessage)
-    }
 }
 
 export async function prettyPrintJSON(obj: object | string) {

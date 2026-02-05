@@ -91,7 +91,18 @@ export const guiOptions = {
     AntiAliasing: 'None' satisfies SceneComposerAntiAliasing as SceneComposerAntiAliasing,
     AntiAliasingLevel: 2,
 
-    Export: presetExport,
+    async Export() {
+        if (await presetExport()) {
+            const el = guiExport.domElement.getElementsByClassName('name')[0]
+            const oldText = el.textContent
+            el.textContent = 'Copied to clipbaord!'
+            guiExport.disable()
+            setTimeout(() => {
+                el.textContent = oldText
+                guiExport.enable()
+            }, 1500);
+        }
+    },
     async Import() {
         try {
             await presetImport(undefined, true)
@@ -148,7 +159,7 @@ guiAntiAliasing.domElement.title = `Anti-aliasing method used for the effect com
 This option does not affect direct rendering that always uses default MSAA.`;
 const guiAntiAliasingLevel = miscFolder.add(guiOptions, 'AntiAliasingLevel', 0, 8, 1).onChange(updateAntiAliasing).hide()
 
-gui.add(guiOptions, 'Export').name('Export presets')
+const guiExport = gui.add(guiOptions, 'Export').name('Export presets')
 gui.add(guiOptions, 'Import').name('Import presets')
 gui.add(guiOptions, 'Reset').name('Reset everything')
 
