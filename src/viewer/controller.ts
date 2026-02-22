@@ -3,7 +3,6 @@ import GUI from 'three/addons/libs/lil-gui.module.min.js';
 import { OutlineColor, OutlineThickness } from 'magia-exedra-character-three/shaders'
 import MagiaExedraCharacter3D from 'magia-exedra-character-three/character';
 import { scene, ViewerScene, deg2pos, viewerEl, type SceneComposerAntiAliasing } from './scene';
-import { getMeshDefaultVisibility } from 'magia-exedra-character-three/loader';
 import { presetExport, presetImport } from './presets';
 
 //
@@ -54,6 +53,7 @@ export interface CharacterOptions extends CharacterOutlineOptions {
     RotateX: number
     RotateY: number
     RotateZ: number
+    Meshes?: CharacterMeshVisibilityOptions
 }
 
 export interface CharacterOutlineOptions {
@@ -61,6 +61,8 @@ export interface CharacterOutlineOptions {
     OutlineThickness: number,
     OutlineColor: string,
 }
+
+export type CharacterMeshVisibilityOptions = Record<string, boolean>
 
 export interface CharacterGuiOptions extends CharacterOptions {
     Reset: () => any
@@ -194,9 +196,10 @@ let currentCharacterOptions: CharacterGuiOptions | undefined = undefined
 
 export function updateCharacterController(character: MagiaExedraCharacter3D | null) {
     // character not changed, update values & display
-    if (character && currentCharacterOptions && currentCharacter == character) {
-        Object.assign(currentCharacterOptions, getCharacterOptions(character))
-        guiCharacterSelected.controllers.forEach(x => x.updateDisplay())
+    if (character && currentCharacter == character) {
+        currentCharacterOptions && Object.assign(currentCharacterOptions, getCharacterOptions(character))
+        currentCharacterOptions?.Meshes && Object.assign(currentCharacterOptions.Meshes, getCharacterMeshVisibility(character))
+        guiCharacterSelected.controllersRecursive().forEach(x => x.updateDisplay())
         return
     }
 
@@ -215,6 +218,7 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
 
     let characterOptions: CharacterGuiOptions = {
         ...getCharacterOptions(character),
+        Meshes: getCharacterMeshVisibility(character),
         Reset() {
             guiCharacterSelected.reset()
         },
@@ -234,15 +238,11 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
     outlineFolder.addColor(characterOptions, 'OutlineColor').onChange(() => updateCharacterOutline(character, characterOptions))._initialValueHexString = OutlineColor
 
     const meshesFolder = guiCharacterSelected.addFolder('Meshes').close()
-    const meshesOptions: Record<string, boolean> = {}
-    for (const mesh of character.userData.meshes) {
-        function getMaterials() {
-            return Array.isArray(mesh.material) ? mesh.material : [mesh.material]
+    for (const meshName in characterOptions.Meshes) {
+        let controller = character.meshes.find(x => x.name == meshName)
+        if (controller) {
+            meshesFolder.add(characterOptions.Meshes, meshName).onChange(value => controller.visible = value).initialValue = controller.defaultVisibility
         }
-        meshesOptions[mesh.name] = getMaterials().every(x => x.visible)
-        meshesFolder.add(meshesOptions, mesh.name).onChange(value => {
-            getMaterials().forEach(x => x.visible = value)
-        }).initialValue = getMeshDefaultVisibility(mesh.name)
     }
 
     guiCharacterSelected.add(characterOptions, 'Reset').name('Reset character')
@@ -284,6 +284,14 @@ export function getCharacterOutline(character: MagiaExedraCharacter3D): Characte
     }
 }
 
+/**
+ * @param target
+ * If `MagiaExedraCharacter3D`, apply the given `CharacterOutlineOptions` to the specified character.  
+ * If `keyof CharacterOutlineOptions`, apply the specified property to all characters in the scene.  
+ * If `null`, apply the given options to all characters in the scene.
+ * 
+ * @param source
+ */
 export function updateCharacterOutline(target: MagiaExedraCharacter3D | keyof CharacterOutlineOptions | null, source: CharacterOutlineOptions) {
     const characters = target instanceof MagiaExedraCharacter3D
         ? [target]
@@ -301,6 +309,25 @@ export function updateCharacterOutline(target: MagiaExedraCharacter3D | keyof Ch
             if (typeof target != 'string' || target == 'OutlineColor') {
                 material.uniforms.uColor.value = new THREE.Color(source.OutlineColor)
             }
+        }
+    }
+}
+
+export function getCharacterMeshVisibility(character: MagiaExedraCharacter3D): CharacterMeshVisibilityOptions {
+    const options: CharacterMeshVisibilityOptions = {}
+
+    for (const controller of character.meshes) {
+        options[controller.name] = controller.visible
+    }
+
+    return options
+}
+
+export function updateCharacterMeshVisibility(character: MagiaExedraCharacter3D, options: CharacterMeshVisibilityOptions) {
+    for (const meshName in options) {
+        let controller = character.meshes.find(x => x.name == meshName)
+        if (controller) {
+            controller.visible = options[meshName]
         }
     }
 }

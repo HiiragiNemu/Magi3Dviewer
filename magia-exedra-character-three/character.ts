@@ -19,11 +19,14 @@ export default class MagiaExedraCharacter3D {
     object: THREE.Group
     userData: ObjectUserData
     animation: ChatacterAnimation
+    meshes: CharacterMeshController[]
 
     constructor(object: THREE.Group) {
         this.object = object
         this.userData = object.userData as ObjectUserData
+
         this.animation = new ChatacterAnimation(this)
+        this.meshes = this.userData.meshes.map(x => new CharacterMeshController(x))
 
         addAnimationLoop(this.animation.animationLoop)
     }
@@ -36,12 +39,20 @@ export default class MagiaExedraCharacter3D {
         )].sort()
     }
 
+    private _disposed = false
+
+    get disposed() {
+        return this._disposed
+    }
+
     dispose() {
         removeAnimationLoop(this.animation.animationLoop)
         this.animation.mixer.stopAllAction()
         this.animation.mixer.uncacheRoot(this.object)
         disposeObject(this.object)
         this.userData.textures.forEach(x => x.dispose())
+
+        this._disposed = true
     }
 }
 
@@ -158,5 +169,56 @@ export class ChatacterAnimation {
     }
     set time(value) {
         this.mixer.setTime(value)
+    }
+}
+
+export class CharacterMeshController {
+    mesh: THREE.Mesh
+
+    constructor(mesh: THREE.Mesh) {
+        this.mesh = mesh
+    }
+
+    get name() {
+        return this.mesh.name
+    }
+
+    get defaultVisibility(): boolean {
+        let name = this.mesh.name.toLowerCase()
+
+        // hide `eye_nohighlight` by default
+        if (name.includes('eye_nohighlight')) {
+            return false
+        }
+
+        // hide `face_a` for momoe nagisa
+        if (name.includes('face') && name.includes('_a')) {
+            return false
+        }
+
+        return true
+    }
+
+    get materials() {
+        return Array.isArray(this.mesh.material) ? this.mesh.material : [this.mesh.material]
+    }
+
+    get visible(): boolean {
+        return this.mesh.visible && this.materials.every(x => x.visible)
+    }
+
+    set visible(value) {
+        if (value) {
+            this.mesh.visible = true
+        }
+        else if (this.defaultVisibility == false) {
+            this.mesh.visible = false
+        }
+
+        this.materials.forEach(x => x.visible = value)
+    }
+
+    restoreDefaultVisibility() {
+        this.visible = this.defaultVisibility
     }
 }

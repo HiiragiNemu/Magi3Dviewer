@@ -194,7 +194,7 @@ async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneC
         id,
         {
             loadProgressCallback: displayProgress,
-            loadFinishCallback: () => { // WARN: In some racing cases, a stale character may callback this function, but it won't cause any issues for now
+            loadFinishCallback: () => {
                 if (loadedSceneCharacter?.character) {
                     // character outlines are added after texture load. apply global character outlines
                     updateCharacterOutline(loadedSceneCharacter.character, guiOptions)

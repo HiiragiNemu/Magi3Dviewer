@@ -1,5 +1,5 @@
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string"
-import { getCharacterOptions, getCurrentTheme, gui, guiCharacterSelectedFolderName, setTheme, updateCharacterOutline, updateCharacterPosition, type CharacterOptions, type Theme } from "./controller"
+import { getCharacterMeshVisibility, getCharacterOptions, getCurrentTheme, gui, guiCharacterSelectedFolderName, setTheme, updateCharacterMeshVisibility, updateCharacterOutline, updateCharacterPosition, type CharacterOptions, type Theme } from "./controller"
 import { scene } from "./scene"
 import type { Vector3Like } from "three"
 import { deselectCharacter, displayProgress, hideAllDemoItems } from "."
@@ -56,7 +56,10 @@ export async function presetExport(): Promise<boolean> {
             id: character.userData.characterId,
             animation: character.animation.current,
             animationTime: (character.animation.current && character.animation.paused) ? character.animation.time : undefined,
-            options: getCharacterOptions(character),
+            options: {
+                ...getCharacterOptions(character),
+                Meshes: getCharacterMeshVisibility(character),
+            },
         })),
         camera: {
             position: scene.camera.position,
@@ -152,6 +155,9 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
             loadFinishCallback() {
                 if (character) {
                     updateCharacterOutline(character, characterPreset.options)
+                    if (characterPreset.options.Meshes) {
+                        updateCharacterMeshVisibility(character, characterPreset.options.Meshes)
+                    }
                 }
                 resolve()
             },

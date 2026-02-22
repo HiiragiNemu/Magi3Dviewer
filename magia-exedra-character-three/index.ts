@@ -75,6 +75,6 @@ export default class MagiaExedraCharacterThree {
         if (Object.keys(files).length == 0) {
             throw new Error(`Could not find files for character "${id}"`)
         }
-        return new MagiaExedraCharacter3D(await loadCharacter(files, callbacks))
+        return await loadCharacter(files, callbacks)
     }
 }

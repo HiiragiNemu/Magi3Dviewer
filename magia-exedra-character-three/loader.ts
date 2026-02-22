@@ -3,7 +3,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh } from './shaders'
 import { loadTexture } from './texture';
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes, fetchAndTryDecompressGzip } from './utils';
-import type { ObjectUserData } from './character';
+import MagiaExedraCharacter3D, { type ObjectUserData } from './character';
 // import faceCtrlMap from './models/face_ctrl.png'
 
 const loadingManager = new THREE.LoadingManager();
@@ -32,12 +32,11 @@ console.warn = function (...data: any[]) {
 
 export interface LoadCharacterCallbacks {
     loadProgressCallback: (progress: string) => any
-    modelLoadedCallback: (model: THREE.Group) => any
-    /** TODO: If a character is disposed before all textures are loaded, this function should not be called */
-    loadFinishCallback: (model: THREE.Group) => any
+    modelLoadedCallback: (model: MagiaExedraCharacter3D) => any
+    loadFinishCallback: (model: MagiaExedraCharacter3D) => any
 }
 
-export async function loadCharacter(files: Record<string, string>, callbacks?: Partial<LoadCharacterCallbacks>): Promise<THREE.Group> {
+export async function loadCharacter(files: Record<string, string>, callbacks?: Partial<LoadCharacterCallbacks>): Promise<MagiaExedraCharacter3D> {
     const loadProgressCallback = callbacks?.loadProgressCallback || (() => undefined)
     const modelLoadedCallback = callbacks?.modelLoadedCallback || (() => undefined)
     const loadFinishCallback = callbacks?.loadFinishCallback || (() => undefined)
@@ -87,8 +86,9 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
             modelObject.userData = userData
 
             // return model, load textures later
-            resolve(modelObject)
-            modelLoadedCallback(modelObject)
+            const character = new MagiaExedraCharacter3D(modelObject)
+            resolve(character)
+            modelLoadedCallback(character)
 
             // process and apply textures
             loadProgressCallback('Loading textures...')
@@ -107,16 +107,27 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                     Body_Mesh
                     Face_Mesh
                     Hair_Mesh
+
                     weapon_mesh (if there's only one weapon)
                     weapon_a_mesh
                     weapon_b_mesh
+
+                    special for momoe nagisa (two faces):
+                    Face_Mesh
+                    Face_Mesh_a (a mask)
                     */
                     const name = mesh.name
-                        .replace('_Mesh', '')
+                        .replace('_Mesh', '') // remove `mesh` because texture filenames doesn't include it
                         .replace('_mesh', '')
                         .toLowerCase();
 
                     let meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes(name))
+
+                    // do not include `face_a` for `face`
+                    if (name.includes('face') && !name.includes('_a')) {
+                        meshTextures = ObjFilterByKey(meshTextures, x => !x.includes('_a'))
+                    }
+
                     if (Object.keys(meshTextures).length == 0) {
                         // tomoe mami swimsuit
                         if (characterId == 100303 && ['glass', 'mint', 'tea'].includes(name)) {
@@ -135,6 +146,7 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                             meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes('weapon'))
                         }
                     }
+
                     console.log(`Using textures for mesh [${mesh.name} -> ${name}]:`, meshTextures)
 
                     let colorMap = ObjFindByKey(meshTextures, x => x.includes('color'))
@@ -264,7 +276,7 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                     }
 
                     // apply mesh visibility
-                    mesh.material.visible = getMeshDefaultVisibility(name)
+                    character.meshes.find(x => x.mesh == mesh)?.restoreDefaultVisibility()
 
                     // prevent weapons from hiding because of bounding box issues with animation
                     if (name.includes('weapon')) {
@@ -306,7 +318,9 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
             })))
 
             loadProgressCallback('')
-            loadFinishCallback(modelObject)
+            if (!character.disposed) {
+                loadFinishCallback(character)
+            }
 
         }, undefined, (error) => {
             URL.revokeObjectURL(fbxBlobUrl)
@@ -314,15 +328,4 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
             reject(error)
         });
     })
-}
-
-export function getMeshDefaultVisibility(name: string): boolean {
-    name = name.toLowerCase()
-
-    // hide `eye_nohighlight` by default
-    if (name.includes('eye_nohighlight')) {
-        return false
-    }
-
-    return true
 }
