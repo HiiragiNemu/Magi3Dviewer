@@ -85,7 +85,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             #endif
             
             float eyeMask = step(vUv2.y, 0.5); // extract eye highlights (bottom-half)
-            float highlightIntensity = smoothstep(0.5, 1.0, eyehighlight.r) * eyeMask; // hide pixels with value < 0.5
+            float highlightIntensity = eyehighlight.r * step(0.5, eyehighlight.r) * eyeMask; // hide pixels with value < 0.5
             vec3 highlightColor = vec3(highlightIntensity * uHighlightBrightness);
 
             float blushMask = step(0.5, vUv2.y); // extract blush (top-half)
