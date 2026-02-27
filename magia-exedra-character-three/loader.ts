@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
-import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh } from './shaders'
-import { loadTexture } from './texture';
+import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh, createBodyInsideMaterial } from './shaders'
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes, fetchAndTryDecompressGzip } from './utils';
 import MagiaExedraCharacter3D, { type ObjectUserData } from './character';
 // import faceCtrlMap from './models/face_ctrl.png'
@@ -179,97 +178,48 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         mesh.material = material
                         userData.textures.push(...textures.textures)
                     }
-                    else if ((characterId == 113701 || characterId == 113801) && name.includes('body')) {
-                        /*
-                        ultimate madoka & akuma homura's dresses has special inside color
- 
-                        body_color ---\
-                                       mix, factor=body_ctrl[red] --\
-                        body_shadow --/                              \
-                                                                      |--> final texture
-                        [UV1]dress_inside, UV1.xy > 0 ---------------/
-
-                                                    body_shadow[alpha] --> final alpha map
-                        */
-                        const insideTex = await loadTexture(ObjFindByKey(meshTextures, x =>
-                            x.includes('space') || // ultimate madoka (body_space_color)
-                            x.includes('inside') // akuma homura (body_inside_color)
-                        )!, { colorSpace: THREE.SRGBColorSpace })
-
-                        const { material, textures } = await createGeneralMaterial({
-                            colorMap, shadowMap, ctrlMap,
-                            alphaSrc: 'shadow', // only effective for ultimate madoka. akuma homura's maps are fully opaque
-
-                            onBeforeCompile(shader) {
-                                shader.uniforms.tInside = { value: insideTex }
-
-                                // dress inside uses UV1
-                                shader.vertexShader = /*glsl*/`
-                                    attribute vec2 uv1;
-                                    varying vec2 vUv1;
-                                    ${shader.vertexShader}
-                                `.replace(
-                                    '#include <uv_vertex>',
-                                    /*glsl*/`
-                                    #include <uv_vertex>
-                                    vUv1 = uv1;
-                                    `
-                                );
-
-                                shader.fragmentShader = /*glsl*/`
-                                    varying vec2 vUv1;
-                                    uniform sampler2D tInside;
-                                    ${shader.fragmentShader}
-                                `.replace(
-                                    '// end map_fragment injection',
-                                    /*glsl*/`
-                                    vec4 texInside = texture2D(tInside, vUv1);
-                                    if (vUv1.x > 0.0 && vUv1.y > 0.0) {
-                                        diffuseColor.rgb = texInside.rgb; // replace color if UV1 > 0
-                                    }
-                                    // end map_fragment injection
-                                    `
-                                )
-                            },
-                        })
-
-                        mesh.material = material;
-                        userData.textures.push(...textures.textures, insideTex);
-                        ({ alphaTex } = textures);
-                    }
                     else {
                         let alphaSrc: 'ctrl' | 'shadow' | undefined = undefined
+                        let material, textures
 
-                        // character overrides
-                        if (characterId == 100106 && name.includes('body')) {
-                            // madoka swimsuit
-                            // it doesn't have transparent materials but should use alpha from shadow map
-                            alphaSrc = 'shadow'
+                        // material overrides
+                        if ((characterId == 113701 || characterId == 113801) && name.includes('body')) {
+                            // ultimate madoka & akuma homura's dresses has special inside color
+                            ({ material, textures } = await createBodyInsideMaterial({ colorMap, shadowMap, ctrlMap }, texturePathUrl))
                         }
-                        else if (characterId == 100205 && name.includes('acc')) {
-                            // homura school uniform - glasses
-                            alphaSrc = 'shadow'
-                        }
-                        else if (characterId == 113801 && name.includes('weapon')) {
-                            // akuma homura's dark orb - do not use any alpha
-                            alphaSrc = undefined
-                        }
-                        // FBX has `transparent` material -> use alpha map from shadow map
-                        // example: ultimate madoka's body (transparent), 加賀見まさら's body (trans), アリナ・グレイ's weapon (trs)
-                        // this condition should always place in front of `alpha`, as these two may exist together
-                        else if (meshMaterialNames.some(x => x.includes('trans') || x.includes('trs'))) {
-                            alphaSrc = 'shadow'
-                        }
-                        // has `alpha` material -> use alpha map frpm ctrl map
-                        // example: homura's glasses
-                        else if (meshMaterialNames.some(x => x.includes('alpha'))) {
-                            alphaSrc = name.includes('hair')
-                                ? 'shadow' // hair always uses alpha from shadow map
-                                : 'ctrl'
-                        }
-                        console.log(`${name} alpha  ->`, alphaSrc)
+                        else {
+                            // `alphaSrc` overrides
+                            if (characterId == 100106 && name.includes('body')) {
+                                // madoka swimsuit
+                                // it doesn't have transparent materials but should use alpha from shadow map
+                                alphaSrc = 'shadow'
+                            }
+                            else if (characterId == 100205 && name.includes('acc')) {
+                                // homura school uniform - glasses
+                                alphaSrc = 'shadow'
+                            }
+                            else if (characterId == 113801 && name.includes('weapon')) {
+                                // akuma homura's dark orb - do not use any alpha
+                                alphaSrc = undefined
+                            }
+                            // FBX has `transparent` material -> use alpha map from shadow map
+                            // example: ultimate madoka's body (transparent), 加賀見まさら's body (trans), アリナ・グレイ's weapon (trs)
+                            // this condition should always place in front of `alpha`, as these two may exist together
+                            else if (meshMaterialNames.some(x => x.includes('trans') || x.includes('trs'))) {
+                                alphaSrc = 'shadow'
+                            }
+                            // has `alpha` material -> use alpha map frpm ctrl map
+                            // example: homura's glasses
+                            else if (meshMaterialNames.some(x => x.includes('alpha'))) {
+                                alphaSrc = name.includes('hair')
+                                    ? 'shadow' // hair always uses alpha from shadow map
+                                    : 'ctrl'
+                            }
+                            console.log(`${name} alpha  ->`, alphaSrc);
 
-                        const { material, textures } = await createGeneralMaterial({ colorMap, shadowMap, ctrlMap, alphaSrc })
+                            ({ material, textures } = await createGeneralMaterial({ colorMap, shadowMap, ctrlMap, alphaSrc }))
+                        }
+
                         mesh.material = material;
                         userData.textures.push(...textures.textures);
                         ({ alphaTex } = textures);
