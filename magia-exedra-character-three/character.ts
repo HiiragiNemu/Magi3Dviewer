@@ -8,6 +8,7 @@ export interface ObjectUserData {
     meshes: THREE.Mesh[]
     textures: THREE.Texture[]
     outlineMeshes: THREE.SkinnedMesh[]
+    animationLoops: Function[]
 }
 
 export default class MagiaExedraCharacter3D {
@@ -28,7 +29,12 @@ export default class MagiaExedraCharacter3D {
         this.animation = new ChatacterAnimation(this)
         this.meshes = this.userData.meshes.map(x => new CharacterMeshController(x))
 
-        addAnimationLoop(this.animation.animationLoop)
+        addAnimationLoop(this.animationLoop)
+    }
+
+    animationLoop = () => {
+        this.animation.animationLoop()
+        this.userData.animationLoops.forEach(x => x())
     }
 
     get animations(): string[] {
@@ -46,7 +52,7 @@ export default class MagiaExedraCharacter3D {
     }
 
     dispose() {
-        removeAnimationLoop(this.animation.animationLoop)
+        removeAnimationLoop(this.animationLoop)
         this.animation.mixer.stopAllAction()
         this.animation.mixer.uncacheRoot(this.object)
         disposeObject(this.object)

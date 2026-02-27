@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import type { MaterialCreationOptions, MaterialTexutres } from '.';
+import { getMaterialType, type MaterialCreationOptions, type MaterialCreationResult } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 
 interface FaceMaterialCreationOptions extends MaterialCreationOptions {
@@ -7,7 +7,7 @@ interface FaceMaterialCreationOptions extends MaterialCreationOptions {
     eyehighlightMap: string;
 }
 
-export async function createFaceMaterial(options: FaceMaterialCreationOptions): Promise<{ material: THREE.MeshStandardMaterial; textures: MaterialTexutres; }> {
+export async function createFaceMaterial(options: FaceMaterialCreationOptions): Promise<MaterialCreationResult> {
     const [colorTex, shadowTex, ctrlTex, eyehighlightTex] = await Promise.all([
         loadTexture(options.colorMap, { colorSpace: THREE.SRGBColorSpace }),
         loadTexture(options.shadowMap, { colorSpace: THREE.SRGBColorSpace }),
@@ -17,7 +17,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
 
     MaximizeTextureQuality(colorTex, shadowTex, ctrlTex, eyehighlightTex);
 
-    const material = new THREE.MeshStandardMaterial({
+    const material = new (getMaterialType())({
         map: colorTex,
         // transparent: true,
     });
@@ -105,8 +105,6 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
 
     return {
         material,
-        textures: {
-            textures: [colorTex, shadowTex, ctrlTex, eyehighlightTex].filter(x => x instanceof THREE.Texture)
-        }
+        textures: [colorTex, shadowTex, ctrlTex, eyehighlightTex].filter(x => x instanceof THREE.Texture)
     };
 }

@@ -13,7 +13,19 @@ export interface MaterialCreationOptions {
     alphaSrc?: 'ctrl' | 'shadow';
 }
 
-export interface MaterialTexutres {
+export interface MaterialCreationResult {
+    material: THREE.Material
     textures: THREE.Texture[];
     alphaTex?: THREE.Texture;
+}
+
+type MaterialTypes = typeof THREE.MeshStandardMaterial | typeof THREE.MeshToonMaterial
+let materialType: MaterialTypes = THREE.MeshStandardMaterial
+
+export function setMaterialType(mat: MaterialTypes) {
+    materialType = mat
+}
+
+export function getMaterialType() {
+    return materialType
 }

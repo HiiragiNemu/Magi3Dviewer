@@ -81,6 +81,7 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                 meshes,
                 textures: [],
                 outlineMeshes: [],
+                animationLoops: [],
             }
             modelObject.userData = userData
 
@@ -176,7 +177,7 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                             eyehighlightMap: ObjFindByKey(texturePathUrl, x => x.includes('eye'))!
                         })
                         mesh.material = material
-                        userData.textures.push(...textures.textures)
+                        userData.textures.push(...textures)
                     }
                     else {
                         let alphaSrc: 'ctrl' | 'shadow' | undefined = undefined
@@ -185,7 +186,9 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         // material overrides
                         if ((characterId == 113701 || characterId == 113801) && name.includes('body')) {
                             // ultimate madoka & akuma homura's dresses has special inside color
-                            ({ material, textures } = await createBodyInsideMaterial({ colorMap, shadowMap, ctrlMap }, texturePathUrl))
+                            let animate;
+                            ({ material, textures, alphaTex, animate } = await createBodyInsideMaterial({ colorMap, shadowMap, ctrlMap }, texturePathUrl));
+                            userData.animationLoops.push(animate)
                         }
                         else {
                             // `alphaSrc` overrides
@@ -217,12 +220,11 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                             }
                             console.log(`${name} alpha  ->`, alphaSrc);
 
-                            ({ material, textures } = await createGeneralMaterial({ colorMap, shadowMap, ctrlMap, alphaSrc }))
+                            ({ material, textures, alphaTex } = await createGeneralMaterial({ colorMap, shadowMap, ctrlMap, alphaSrc }))
                         }
 
                         mesh.material = material;
-                        userData.textures.push(...textures.textures);
-                        ({ alphaTex } = textures);
+                        userData.textures.push(...textures);
                     }
 
                     // apply mesh visibility

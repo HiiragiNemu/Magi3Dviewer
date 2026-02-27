@@ -1,6 +1,8 @@
 import * as THREE from 'three';
-import type { MaterialCreationOptions, MaterialTexutres } from '.';
+import { getMaterialType, type MaterialCreationOptions, type MaterialCreationResult } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
+
+export const mapFragmentInjectionEndFlag = '// end map_fragment injection'
 
 interface GeneralMaterialCreationOptions extends MaterialCreationOptions {
     onBeforeCompile?: (shader: THREE.WebGLProgramParametersWithUniforms) => any;
@@ -15,7 +17,7 @@ interface GeneralMaterialCreationOptions extends MaterialCreationOptions {
  * ctrl[alpha] / shadow[alpha] --> final alpha map
  * ```
  */
-export async function createGeneralMaterial(options: GeneralMaterialCreationOptions): Promise<{ material: THREE.MeshStandardMaterial; textures: MaterialTexutres; }> {
+export async function createGeneralMaterial(options: GeneralMaterialCreationOptions): Promise<MaterialCreationResult> {
     if (options.alphaSrc == 'shadow' && !options.shadowMap) options.alphaSrc = undefined;
     if (options.alphaSrc == 'ctrl' && !options.ctrlMap) options.alphaSrc = undefined;
 
@@ -27,7 +29,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
     MaximizeTextureQuality(colorTex, shadowTex, ctrlTex);
 
-    const material = new THREE.MeshStandardMaterial({
+    const material = new (getMaterialType())({
         map: colorTex,
         transparent: Boolean(options.alphaSrc),
     });
@@ -58,9 +60,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         `.replace(
             '#include <map_fragment>',
             /*glsl*/ `
-            // start map_fragment injection
             #include <map_fragment>
-            
+
             #ifdef HAS_CTRL
                 vec4 texCtrl = texture2D(tCtrl, vMapUv);
             #endif
@@ -73,7 +74,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                     diffuseColor.rgb = mix(texShadow.rgb, diffuseColor.rgb, uShadowMix);
                 #endif
             #endif
-            // end map_fragment injection
+            ${mapFragmentInjectionEndFlag}
             `
         ).replace(
             '#include <roughnessmap_fragment>',
@@ -114,13 +115,11 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
     return {
         material,
-        textures: {
-            textures: [colorTex, shadowTex, ctrlTex].filter(x => x instanceof THREE.Texture),
-            alphaTex: {
-                ctrl: ctrlTex,
-                shadow: shadowTex,
-                none: undefined,
-            }[options.alphaSrc || 'none']
-        }
+        textures: [colorTex, shadowTex, ctrlTex].filter(x => x instanceof THREE.Texture),
+        alphaTex: {
+            ctrl: ctrlTex,
+            shadow: shadowTex,
+            none: undefined,
+        }[options.alphaSrc || 'none']
     };
 }
