@@ -1,11 +1,11 @@
 import * as THREE from 'three'
 import Stats from 'three/addons/libs/stats.module.js';
 import { scene, viewerEl, type SceneCharacter } from './scene';
-import { initSelector } from './UIControls'
+import { initSelector } from './controls'
 import { characters } from './character';
-import { guiOptions, updateCharacterController, updateCharacterOutline } from './controller';
+import { guiOptions, updateCharacterController, updateCharacterOutline } from './controllers';
 import { ARButton, type TransformControlsMode } from 'three/examples/jsm/Addons.js';
-import { presetImport } from './presets';
+import { presetImport } from './controllers/presets';
 
 const menuEl = document.getElementById('menu')!
 

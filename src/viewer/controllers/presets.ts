@@ -1,8 +1,8 @@
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string"
-import { getCharacterMeshVisibility, getCharacterOptions, getCurrentTheme, gui, guiCharacterSelectedFolderName, setTheme, updateCharacterMeshVisibility, updateCharacterOutline, updateCharacterPosition, type CharacterOptions, type Theme } from "./controller"
-import { scene } from "./scene"
+import { getCharacterMeshVisibility, getCharacterOptions, getCurrentTheme, gui, guiCharacterSelectedFolderName, setTheme, updateCharacterMeshVisibility, updateCharacterOutline, updateCharacterPosition, type CharacterOptions, type Theme } from "."
+import { scene } from "../scene"
 import type { Vector3Like } from "three"
-import { deselectCharacter, displayProgress, hideAllDemoItems } from "."
+import { deselectCharacter, displayProgress, hideAllDemoItems } from "../"
 import type MagiaExedraCharacter3D from "magia-exedra-character-three/character"
 
 const dialogContainer = document.getElementById('preset-dialog-container') as HTMLDivElement
@@ -10,26 +10,6 @@ const dialogOverlay = document.getElementById('preset-dialog-overlay') as HTMLDi
 const dialogTitle = document.getElementById('preset-dialog-title') as HTMLDivElement
 const dialogTextarea = document.getElementById('preset-dialog-textarea') as HTMLTextAreaElement
 const dialogBtnOk = document.getElementById('preset-dialog-button-ok') as HTMLButtonElement
-
-async function showDialog(title: string, text?: string): Promise<string | undefined> {
-    return new Promise(resolve => {
-        dialogTitle.textContent = title
-        dialogContainer.style.removeProperty('display')
-
-        dialogTextarea.value = text || ''
-        dialogTextarea.select()
-
-        dialogBtnOk.onclick = () => {
-            resolve(dialogTextarea.value)
-            dialogContainer.style.display = 'none'
-        }
-
-        dialogOverlay.onclick = () => {
-            resolve(undefined)
-            dialogContainer.style.display = 'none'
-        }
-    })
-}
 
 interface ViewerPreset {
     characters: Array<{
@@ -210,6 +190,26 @@ export async function prettyPrintJSON(obj: object | string) {
     } else {
         console.log(JSON.stringify(JSON.parse(obj), undefined, 2))
     }
+}
+
+async function showDialog(title: string, text?: string): Promise<string | undefined> {
+    return new Promise(resolve => {
+        dialogTitle.textContent = title
+        dialogContainer.style.removeProperty('display')
+
+        dialogTextarea.value = text || ''
+        dialogTextarea.select()
+
+        dialogBtnOk.onclick = () => {
+            resolve(dialogTextarea.value)
+            dialogContainer.style.display = 'none'
+        }
+
+        dialogOverlay.onclick = () => {
+            resolve(undefined)
+            dialogContainer.style.display = 'none'
+        }
+    })
 }
 
 Object.assign(window, { presetExport, presetImport, getHrefWithoutHash })
