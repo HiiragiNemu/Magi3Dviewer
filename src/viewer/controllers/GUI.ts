@@ -1,5 +1,5 @@
 import GUI, { type FunctionController } from 'three/addons/libs/lil-gui.module.min.js';
-import { OutlineColor, OutlineThickness } from 'magia-exedra-character-three/shaders'
+import { OutlineColor, OutlineThickness, shaderOptions } from 'magia-exedra-character-three/shaders'
 import { scene, ViewerScene, type SceneComposerAntiAliasing } from '../scene';
 import { presetExport, presetImport } from './presets';
 import { themeDarkBgColor } from './theme';
@@ -23,6 +23,10 @@ export const guiOptions = {
     LightAngle: ViewerScene.directionalLightInitialAngle,
     LightHeight: ViewerScene.directionalLightInitialHeight,
     LightDistance: ViewerScene.directionalLightInitialDistance,
+
+    ShadowThreshold: shaderOptions.shadowThreshold,
+    ShadowTransition: shaderOptions.shadowTransition,
+    ShadowMinLight: shaderOptions.shadowMinLight,
 
     FOV: ViewerScene.cameraInitialFov,
     Axes: false,

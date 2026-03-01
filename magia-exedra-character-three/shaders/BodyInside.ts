@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { createGeneralMaterial, mapFragmentInjectionEndFlag, type MaterialCreationOptions, type MaterialCreationResult } from '.';
+import { createGeneralMaterial, diffuseColorManipulationEndFlag, type MaterialCreationOptions, type MaterialCreationResult } from '.';
 import { loadTexture } from '../texture';
 import { ObjFindByKey } from '../utils';
 import type GUI from 'three/examples/jsm/libs/lil-gui.module.min.js';
@@ -110,7 +110,7 @@ export async function createBodyInsideMaterial(options: MaterialCreationOptions,
 
                 ${shader.fragmentShader}
             `.replace(
-                mapFragmentInjectionEndFlag,
+                diffuseColorManipulationEndFlag,
                 /*glsl*/`
                 vec4 texInside = texture2D(tInside, vInsideUV);
                 #ifdef HAS_STAR
@@ -123,7 +123,7 @@ export async function createBodyInsideMaterial(options: MaterialCreationOptions,
                         diffuseColor.rgb += texStar.rgb * uStarBrightness;
                     #endif
                 }
-                ${mapFragmentInjectionEndFlag}
+                ${diffuseColorManipulationEndFlag}
                 `
             )
 

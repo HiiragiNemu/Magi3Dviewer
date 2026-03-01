@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { getMaterialType, type MaterialCreationOptions, type MaterialCreationResult } from '.';
+import type { MaterialCreationOptions, MaterialCreationResult, MaterialUserData } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 
 interface FaceMaterialCreationOptions extends MaterialCreationOptions {
@@ -17,10 +17,13 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
 
     MaximizeTextureQuality(colorTex, shadowTex, ctrlTex, eyehighlightTex);
 
-    const material = new (getMaterialType())({
+    const material = new THREE.MeshStandardMaterial({
         map: colorTex,
         // transparent: true,
     });
+
+    const userData: MaterialUserData = {}
+    material.userData = userData
 
     // 2. Inject your custom Blush/Highlight logic
     material.onBeforeCompile = (shader) => {
@@ -100,7 +103,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             `
         );
 
-        material.userData.shader = shader;
+        userData.shader = shader;
     };
 
     return {

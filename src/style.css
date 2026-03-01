@@ -122,6 +122,7 @@ body {
     overflow: auto;
     flex-shrink: 1;
     overscroll-behavior: contain;
+    scrollbar-width: thin;
     display: initial;
     margin-top: 8px;
     margin-left: 4px;

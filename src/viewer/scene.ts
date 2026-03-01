@@ -45,9 +45,9 @@ export class ViewerScene {
     directionalLight: THREE.DirectionalLight
     static directionalLightInitialColor = '#ffffff'
     static directionalLightInitialIntensity = 1.5
-    static directionalLightInitialAngle = 45
-    static directionalLightInitialDistance = 5 * Math.sqrt(2)
-    static directionalLightInitialHeight = 5
+    static directionalLightInitialAngle = 15
+    static directionalLightInitialDistance = 10
+    static directionalLightInitialHeight = 2.5
 
     axesHelper: THREE.AxesHelper
 

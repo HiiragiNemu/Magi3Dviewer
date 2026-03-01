@@ -19,13 +19,6 @@ export interface MaterialCreationResult {
     alphaTex?: THREE.Texture;
 }
 
-type MaterialTypes = typeof THREE.MeshStandardMaterial | typeof THREE.MeshToonMaterial
-let materialType: MaterialTypes = THREE.MeshStandardMaterial
-
-export function setMaterialType(mat: MaterialTypes) {
-    materialType = mat
-}
-
-export function getMaterialType() {
-    return materialType
+export interface MaterialUserData {
+    shader?: THREE.WebGLProgramParametersWithUniforms
 }

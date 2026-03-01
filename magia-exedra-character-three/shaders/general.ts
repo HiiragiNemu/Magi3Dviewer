@@ -1,8 +1,14 @@
 import * as THREE from 'three';
-import { getMaterialType, type MaterialCreationOptions, type MaterialCreationResult } from '.';
+import type { MaterialCreationOptions, MaterialCreationResult, MaterialUserData } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 
-export const mapFragmentInjectionEndFlag = '// end map_fragment injection'
+export const shaderOptions = {
+    shadowThreshold: 0.33,
+    shadowTransition: 0.01,
+    shadowMinLight: 0.2,
+}
+
+export const diffuseColorManipulationEndFlag = '// END diffuseColor manipulation'
 
 interface GeneralMaterialCreationOptions extends MaterialCreationOptions {
     onBeforeCompile?: (shader: THREE.WebGLProgramParametersWithUniforms) => any;
@@ -29,10 +35,13 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
     MaximizeTextureQuality(colorTex, shadowTex, ctrlTex);
 
-    const material = new (getMaterialType())({
+    const material = new THREE.MeshStandardMaterial({
         map: colorTex,
         transparent: Boolean(options.alphaSrc),
     });
+
+    const userData: MaterialUserData = {}
+    material.userData = userData
 
     // prevent different materials from using a same shader
     const programCacheKey = JSON.stringify(options);
@@ -46,6 +55,10 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             shader.uniforms.tShadow = { value: shadowTex };
         }
         shader.uniforms.uShadowMix = { value: 0.67 };
+        shader.uniforms.uShadowTest = { value: 0.5 };
+        shader.uniforms.uShadowThreshold = { value: shaderOptions.shadowThreshold };
+        shader.uniforms.uShadowTransition = { value: shaderOptions.shadowTransition };
+        shader.uniforms.uShadowMinLight = { value: shaderOptions.shadowMinLight };
 
         if (ctrlTex) {
             shader.defines.HAS_CTRL = true;
@@ -55,7 +68,13 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         shader.fragmentShader = /*glsl*/ `
             uniform sampler2D tShadow;
             uniform sampler2D tCtrl;
+
             uniform float uShadowMix;
+            uniform float uShadowTest;
+            uniform float uShadowThreshold;
+            uniform float uShadowTransition;
+            uniform float uShadowMinLight;
+
             ${shader.fragmentShader}
         `.replace(
             '#include <map_fragment>',
@@ -74,7 +93,6 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                     diffuseColor.rgb = mix(texShadow.rgb, diffuseColor.rgb, uShadowMix);
                 #endif
             #endif
-            ${mapFragmentInjectionEndFlag}
             `
         ).replace(
             '#include <roughnessmap_fragment>',
@@ -105,11 +123,48 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                 shadow: /*glsl*/ `diffuseColor.a = texShadow.a;`,
                 none: /*glsl*/ `diffuseColor.a = 1.0;`,
             }[options.alphaSrc || 'none']
+        ).replace(
+            '#include <lights_physical_fragment>',
+            /*glsl*/`
+            #ifdef HAS_SHADOW
+                // backup global variables
+                vec3 o_diffuseColor = diffuseColor.rgb;
+                ReflectedLight o_reflectedLight = reflectedLight;
+
+                // first pass: get light strength
+                diffuseColor.rgb = vec3(uShadowTest, uShadowTest, uShadowTest);
+                float lightStrength;
+                if (0 == 0) {
+                    // these includes define some variables
+                    // to avoid re-declaration, run them inside a block
+                    #include <lights_physical_fragment>
+                    #include <lights_fragment_begin>
+                    #include <lights_fragment_maps>
+                    #include <lights_fragment_end>
+                    lightStrength = reflectedLight.directDiffuse.r + reflectedLight.indirectDiffuse.r;
+                    lightStrength = smoothstep(uShadowThreshold - uShadowTransition / 2.0, uShadowThreshold + uShadowTransition / 2.0, lightStrength); // distinguish light and shadow
+                    lightStrength = uShadowMinLight + lightStrength * (1.0 - uShadowMinLight); // add minimum light
+                }
+
+                // restore global variables
+                diffuseColor.rgb = o_diffuseColor;
+                reflectedLight = o_reflectedLight;
+
+                // select between color and shadow map according to light strength
+                diffuseColor.rgb = mix(texShadow.rgb, diffuseColor.rgb, lightStrength);
+                // diffuseColor.rgb = vec3(lightStrength, lightStrength, lightStrength); // debug: for testing whether we've got the correct light strength
+            #endif
+
+            ${diffuseColorManipulationEndFlag}
+
+            // second pass: calculate final light based on new diffuseColor
+            #include <lights_physical_fragment>
+            `
         );
 
         options.onBeforeCompile && options.onBeforeCompile(shader);
 
-        material.userData.shader = shader;
+        userData.shader = shader;
         // console.log(shader.fragmentShader)
     };
 
