@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
-import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh, createBodyInsideMaterial } from './shaders'
+import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh, createBodyInsideMaterial, createHairMaterial } from './shaders'
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes, fetchAndTryDecompressGzip } from './utils';
 import MagiaExedraCharacter3D, { type ObjectUserData } from './character';
-// import faceCtrlMap from './models/face_ctrl.png'
 
 const loadingManager = new THREE.LoadingManager();
 loadingManager.setURLModifier((url) => {
@@ -173,7 +172,7 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                     if (name.includes('face')) {
                         // TODO: The public face_ctrl is not suitable for all characters, but characters do not have individual face_ctrl!
                         const { material, textures } = await createFaceMaterial({
-                            colorMap, shadowMap: shadowMap!, ctrlMap: undefined,
+                            colorMap, shadowMap: shadowMap!, ctrlMap,
                             eyehighlightMap: ObjFindByKey(texturePathUrl, x => x.includes('eye'))!
                         })
                         mesh.material = material
@@ -220,7 +219,10 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                             }
                             console.log(`${name} alpha  ->`, alphaSrc);
 
-                            ({ material, textures, alphaTex } = await createGeneralMaterial({ colorMap, shadowMap, ctrlMap, alphaSrc }))
+                            ({ material, textures, alphaTex } = await (name.includes('hair')
+                                ? createHairMaterial
+                                : createGeneralMaterial)
+                                ({ colorMap, shadowMap, ctrlMap, alphaSrc }))
                         }
 
                         mesh.material = material;

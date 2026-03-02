@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import type { MaterialCreationOptions, MaterialCreationResult, MaterialUserData } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
+import FaceCtrlBase from './face_ctrl_base.png'
+
+const enableFaceCtrl = false
 
 interface FaceMaterialCreationOptions extends MaterialCreationOptions {
     shadowMap: string;
@@ -11,7 +14,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
     const [colorTex, shadowTex, ctrlTex, eyehighlightTex] = await Promise.all([
         loadTexture(options.colorMap, { colorSpace: THREE.SRGBColorSpace }),
         loadTexture(options.shadowMap, { colorSpace: THREE.SRGBColorSpace }),
-        options.ctrlMap ? loadTexture(options.ctrlMap) : Promise.resolve(undefined),
+        enableFaceCtrl ? loadTexture(options.ctrlMap || FaceCtrlBase) : Promise.resolve(undefined),
         loadTexture(options.eyehighlightMap),
     ]);
 

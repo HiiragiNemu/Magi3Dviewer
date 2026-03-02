@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 
 export * from './general'
+export * from './BodyInside'
+export * from './hair'
 export * from './face'
 export * from './outline'
-
-export * from './BodyInside'
 
 export interface MaterialCreationOptions {
     colorMap: string;
