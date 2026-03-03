@@ -1,5 +1,5 @@
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string"
-import { getCharacterMeshVisibility, getCharacterOptions, getCurrentTheme, gui, guiCharacterSelectedFolderName, setTheme, updateCharacterMeshVisibility, updateCharacterOutline, updateCharacterPosition, type CharacterOptions, type Theme } from "."
+import { getCharacterMeshVisibility, getCharacterOptions, getCurrentTheme, gui, guiCharacterSelectedFolderName, guiColorBrightness, guiColorContrast, guiColorSaturation, guiShader, setTheme, updateCharacterMeshVisibility, updateCharacterOutline, updateCharacterPosition, type CharacterOptions, type Theme } from "."
 import { scene } from "../scene"
 import type { Vector3Like } from "three"
 import { deselectCharacter, displayProgress, hideAllDemoItems } from "../"
@@ -12,6 +12,7 @@ const dialogTextarea = document.getElementById('preset-dialog-textarea') as HTML
 const dialogBtnOk = document.getElementById('preset-dialog-button-ok') as HTMLButtonElement
 
 interface ViewerPreset {
+    version?: number
     characters: Array<{
         id: number
         animation?: string
@@ -27,11 +28,13 @@ interface ViewerPreset {
     gui: ReturnType<typeof gui.save>
 }
 
+export const PresetVersion = 1
 export const presetPattern = '#preset='
 
 /** @returns `true` if copied to clipboard, otherwise `false` */
 export async function presetExport(): Promise<boolean> {
     const preset: ViewerPreset = {
+        version: PresetVersion,
         characters: scene.characters.map(x => x.character).filter(x => !!x).map(character => ({
             id: character.userData.characterId,
             animation: character.animation.current,
@@ -122,6 +125,15 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
     setTheme(preset.theme)
     scene.camera.position.copy(preset.camera.position)
     scene.controls.target.copy(preset.camera.target)
+
+    // migrate old version presets
+    if (preset.version == undefined) {
+        guiColorBrightness.setValue(1)
+        guiColorContrast.setValue(1)
+        guiColorSaturation.setValue(1)
+
+        guiShader.controllersRecursive().forEach(x => x.reset())
+    }
 
     let completed = 0
 

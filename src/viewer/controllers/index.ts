@@ -1,6 +1,7 @@
 export * from './theme'
 export * from './GUI'
 export * from './GUICharacter'
+export * from './GUIColor'
 export * from './GUILighting'
 export * from './GUIShader'
 export * from './GUIMisc'

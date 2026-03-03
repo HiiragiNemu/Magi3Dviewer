@@ -2,10 +2,10 @@ import * as THREE from 'three';
 import type { MaterialCreationOptions, MaterialCreationResult, MaterialUserData } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 
-export const shaderOptions = {
-    shadowThreshold: 0.33,
-    shadowTransition: 0.01,
-    shadowMinLight: 0.2,
+export const shadowOptions = {
+    threshold: 0.0,
+    transition: 0.002,
+    amount: 0.0,
 }
 
 export const diffuseColorManipulationEndFlag = '// END diffuseColor manipulation'
@@ -56,9 +56,9 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         }
         shader.uniforms.uShadowMix = { value: 0.67 };
         shader.uniforms.uShadowTest = { value: 0.5 };
-        shader.uniforms.uShadowThreshold = { value: shaderOptions.shadowThreshold };
-        shader.uniforms.uShadowTransition = { value: shaderOptions.shadowTransition };
-        shader.uniforms.uShadowMinLight = { value: shaderOptions.shadowMinLight };
+        shader.uniforms.uShadowThreshold = { value: shadowOptions.threshold };
+        shader.uniforms.uShadowTransition = { value: shadowOptions.transition };
+        shader.uniforms.uShadowAmount = { value: shadowOptions.amount };
 
         if (ctrlTex) {
             shader.defines.HAS_CTRL = true;
@@ -73,7 +73,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             uniform float uShadowTest;
             uniform float uShadowThreshold;
             uniform float uShadowTransition;
-            uniform float uShadowMinLight;
+            uniform float uShadowAmount;
 
             ${shader.fragmentShader}
         `.replace(
@@ -134,6 +134,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                 // first pass: get light strength
                 diffuseColor.rgb = vec3(uShadowTest, uShadowTest, uShadowTest);
                 float lightStrength;
+
                 if (0 == 0) {
                     // these includes define some variables
                     // to avoid re-declaration, run them inside a block
@@ -141,9 +142,27 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                     #include <lights_fragment_begin>
                     #include <lights_fragment_maps>
                     #include <lights_fragment_end>
-                    lightStrength = reflectedLight.directDiffuse.r + reflectedLight.indirectDiffuse.r;
-                    lightStrength = smoothstep(uShadowThreshold - uShadowTransition / 2.0, uShadowThreshold + uShadowTransition / 2.0, lightStrength); // distinguish light and shadow
-                    lightStrength = uShadowMinLight + lightStrength * (1.0 - uShadowMinLight); // add minimum light
+
+                    lightStrength =
+                        reflectedLight.directDiffuse.r // directional lights
+                        // + reflectedLight.indirectDiffuse.r // ambient lights
+                        ;
+                    
+                    // distinguish light and shadow, add a tiny smooth transition to prevent aliasing
+                    lightStrength = smoothstep(
+                        uShadowThreshold,
+                        uShadowThreshold + (1.0 - uShadowThreshold) * uShadowTransition,
+                        lightStrength
+                    );
+
+                    // use ambient light as shadow strength
+                    float shadowStrength;
+                    if (uShadowAmount < 0.0) {
+                        shadowStrength = reflectedLight.indirectDiffuse.r * (1.0 + uShadowAmount);
+                    } else {
+                        shadowStrength = reflectedLight.indirectDiffuse.r + (1.0 - reflectedLight.indirectDiffuse.r) * uShadowAmount;
+                    }
+                    lightStrength = shadowStrength + lightStrength * (1.0 - shadowStrength); // add shadow
                 }
 
                 // restore global variables

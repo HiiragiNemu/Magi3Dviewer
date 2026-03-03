@@ -27,7 +27,15 @@ export interface SceneCharacter {
 
 export type SceneComposerAntiAliasing = 'None' | 'MSAA' | 'TAA' | 'SSAA' | 'SMAA' | 'FXAA'
 
+export interface ColorFilter {
+    brightness: number
+    contrast: number
+    saturation: number
+}
+
 export class ViewerScene {
+    containerElement: HTMLElement
+
     renderer: THREE.WebGLRenderer
     scene: THREE.Scene
 
@@ -39,12 +47,12 @@ export class ViewerScene {
     static controlsInitialTarget: [number, number, number] = [0, 0.9, 0]
 
     ambientLight: THREE.AmbientLight
-    static ambientLightInitialColor = '#ffffff'
-    static ambientLightInitialIntensity = 2
+    static ambientLightInitialColor = '#999999'
+    static ambientLightInitialIntensity = 5
 
     directionalLight: THREE.DirectionalLight
-    static directionalLightInitialColor = '#ffffff'
-    static directionalLightInitialIntensity = 1.5
+    static directionalLightInitialColor = '#777777'
+    static directionalLightInitialIntensity = 5
     static directionalLightInitialAngle = 15
     static directionalLightInitialDistance = 10
     static directionalLightInitialHeight = 2.5
@@ -77,17 +85,26 @@ export class ViewerScene {
 
     taaCount = 0
 
+    static colorFilter: ColorFilter = {
+        brightness: 1.2,
+        contrast: 1.0,
+        saturation: 1.15,
+    }
+
     constructor(element: HTMLElement) {
         //
         // Renderer, scene, camera & controls
         //
+        this.containerElement = element
+        this.setColorFilter(ViewerScene.colorFilter)
+
         this.renderer = createRenderer({ antialias: true, alpha: true });
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         this.renderer.xr.enabled = true
 
-        element.appendChild(this.renderer.domElement);
+        this.containerElement.appendChild(this.renderer.domElement);
 
         this.scene = new THREE.Scene();
         // scene.background = new THREE.Color(0x333333);
@@ -265,6 +282,10 @@ export class ViewerScene {
     resetCameraControl() {
         this.camera.position.set(...ViewerScene.cameraInitialPosition)
         this.controls.target.set(...ViewerScene.controlsInitialTarget)
+    }
+
+    setColorFilter(filter: ColorFilter) {
+        this.containerElement.style.filter = `brightness(${filter.brightness}) contrast(${filter.contrast}) saturate(${filter.saturation})`
     }
 
     getIntersectedCharacter(x: number, y: number) {
