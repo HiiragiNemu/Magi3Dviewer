@@ -71,4 +71,10 @@ setTimeout(() => {
     gui.add(guiOptions, 'Reset').name('Reset everything')
 }, 0);
 
+
+export function isGuiClosed(gui: GUI) {
+    return gui.domElement.classList.contains('closed')
+}
+
+
 Object.assign(window, { gui, guiOptions })

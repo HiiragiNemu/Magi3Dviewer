@@ -1,8 +1,9 @@
 import * as THREE from 'three'
+import type GUI from 'three/examples/jsm/libs/lil-gui.module.min.js';
 import { OutlineColor, OutlineThickness } from 'magia-exedra-character-three/shaders'
 import MagiaExedraCharacter3D from 'magia-exedra-character-three/character';
 import { scene } from '../scene';
-import { gui, guiOptions } from './GUI';
+import { gui, guiOptions, isGuiClosed } from './GUI';
 
 export interface CharacterOptions extends CharacterOutlineOptions {
     X: number
@@ -36,6 +37,8 @@ characterGlobalFolder.addColor(guiOptions, 'OutlineColor').onChange(() => update
 
 let currentCharacter: MagiaExedraCharacter3D | undefined = undefined
 let currentCharacterOptions: CharacterGuiOptions | undefined = undefined
+let outlineFolder: GUI | undefined = undefined
+let meshesFolder: GUI | undefined = undefined
 
 export function updateCharacterController(character: MagiaExedraCharacter3D | null) {
     // character not changed, update values & display
@@ -75,12 +78,20 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
     guiCharacterSelected.add(characterOptions, 'RotateY', -180, 180).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
     guiCharacterSelected.add(characterOptions, 'RotateZ', -180, 180).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
 
-    const outlineFolder = guiCharacterSelected.addFolder('Outline').close()
+    const outlineFolderClosed: boolean = outlineFolder ? isGuiClosed(outlineFolder) : true
+    outlineFolder = guiCharacterSelected.addFolder('Outline')
+    if (outlineFolderClosed) {
+        outlineFolder.close()
+    }
     outlineFolder.add(characterOptions, 'OutlineVisible').onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = true
     outlineFolder.add(characterOptions, 'OutlineThickness', 0, 0.01).onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = OutlineThickness
     outlineFolder.addColor(characterOptions, 'OutlineColor').onChange(() => updateCharacterOutline(character, characterOptions))._initialValueHexString = OutlineColor
 
-    const meshesFolder = guiCharacterSelected.addFolder('Meshes').close()
+    const meshesFolderClosed: boolean = meshesFolder ? isGuiClosed(meshesFolder) : true
+    meshesFolder = guiCharacterSelected.addFolder('Meshes')
+    if (meshesFolderClosed) {
+        meshesFolder.close()
+    }
     for (const meshName in characterOptions.Meshes) {
         let controller = character.meshes.find(x => x.name == meshName)
         if (controller) {

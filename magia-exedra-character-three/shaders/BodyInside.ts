@@ -149,7 +149,7 @@ export async function createBodyInsideMaterial(options: MaterialCreationOptions,
 
         shader.uniforms.uStarBrightness.value = THREE.MathUtils.smoothstep(
             Math.abs((elapsed % bodyInsideOptions.starBlinkInterval) / bodyInsideOptions.starBlinkInterval * 2 - 1),
-            0.15, 1
+            0.1, 1
         )
     }
 
