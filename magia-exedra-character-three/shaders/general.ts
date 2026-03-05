@@ -3,6 +3,7 @@ import type { MaterialCreationOptions, MaterialCreationResult, MaterialUserData 
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 
 export const shadowOptions = {
+    preMix: 1.0,
     threshold: 0.0,
     transition: 0.002,
     amount: 0.0,
@@ -55,6 +56,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             shader.uniforms.tShadow = { value: shadowTex };
         }
         shader.uniforms.uShadowMix = { value: 0.67 };
+        shader.uniforms.uShadowPreMix = { value: shadowOptions.preMix };
         shader.uniforms.uShadowTest = { value: 0.5 };
         shader.uniforms.uShadowThreshold = { value: shadowOptions.threshold };
         shader.uniforms.uShadowTransition = { value: shadowOptions.transition };
@@ -70,6 +72,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             uniform sampler2D tCtrl;
 
             uniform float uShadowMix;
+            uniform float uShadowPreMix;
             uniform float uShadowTest;
             uniform float uShadowThreshold;
             uniform float uShadowTransition;
@@ -87,11 +90,15 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
             #ifdef HAS_SHADOW
                 vec4 texShadow = texture2D(tShadow, vMapUv);
+
+                float shadowMix;
                 #ifdef HAS_CTRL
-                    diffuseColor.rgb = mix(texShadow.rgb, diffuseColor.rgb, texCtrl.r); // Mix Color and Shadow texture with Ctrl red
+                    shadowMix = mix(1.0, texCtrl.r, uShadowPreMix); // Mix Color and Shadow texture with Ctrl red, controlled by a premix factor
                 #else
-                    diffuseColor.rgb = mix(texShadow.rgb, diffuseColor.rgb, uShadowMix);
+                    shadowMix = uShadowMix;
                 #endif
+
+                diffuseColor.rgb = mix(texShadow.rgb, diffuseColor.rgb, shadowMix);
             #endif
             `
         ).replace(
@@ -130,9 +137,14 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                 // backup global variables
                 vec3 o_diffuseColor = diffuseColor.rgb;
                 ReflectedLight o_reflectedLight = reflectedLight;
+                float o_roughnessFactor = roughnessFactor;
+                float o_metalnessFactor = metalnessFactor;
 
                 // first pass: get light strength
-                diffuseColor.rgb = vec3(uShadowTest, uShadowTest, uShadowTest);
+                diffuseColor.rgb = vec3(uShadowTest, uShadowTest, uShadowTest); // set texture to 50% gray
+                roughnessFactor = 1.0; // disable speculars
+                metalnessFactor = 0.0;
+
                 float lightStrength;
 
                 if (0 == 0) {
@@ -168,6 +180,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                 // restore global variables
                 diffuseColor.rgb = o_diffuseColor;
                 reflectedLight = o_reflectedLight;
+                roughnessFactor = o_roughnessFactor;
+                metalnessFactor = o_metalnessFactor;
 
                 // select between color and shadow map according to light strength
                 diffuseColor.rgb = mix(texShadow.rgb, diffuseColor.rgb, lightStrength);

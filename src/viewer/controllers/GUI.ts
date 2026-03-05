@@ -28,6 +28,7 @@ export const guiOptions = {
     LightHeight: ViewerScene.directionalLightInitialHeight,
     LightDistance: ViewerScene.directionalLightInitialDistance,
 
+    ShadowPreMix: shadowOptions.preMix,
     ShadowThreshold: shadowOptions.threshold,
     ShadowTransition: shadowOptions.transition,
     ShadowAmount: shadowOptions.amount,
