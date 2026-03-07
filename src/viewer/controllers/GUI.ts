@@ -1,4 +1,5 @@
 import GUI, { type FunctionController } from 'three/addons/libs/lil-gui.module.min.js';
+import { PCFShadowMap, type ShadowMapType } from 'three';
 import { OutlineColor, OutlineThickness, shadowOptions } from 'magia-exedra-character-three/shaders'
 import { scene, ViewerScene, type SceneComposerAntiAliasing } from '../scene';
 import { presetExport, presetImport } from './presets';
@@ -28,10 +29,16 @@ export const guiOptions = {
     LightHeight: ViewerScene.directionalLightInitialHeight,
     LightDistance: ViewerScene.directionalLightInitialDistance,
 
-    ShadowPreMix: shadowOptions.preMix,
-    ShadowThreshold: shadowOptions.threshold,
-    ShadowTransition: shadowOptions.transition,
-    ShadowAmount: shadowOptions.amount,
+    ShadowEnabled: ViewerScene.shadowEnabled,
+    ShadowType: PCFShadowMap satisfies ShadowMapType as ShadowMapType,
+    ShadowResolution: ViewerScene.shadowResolution,
+    ShadowBias: ViewerScene.shadowBias,
+
+    ShadowTexPreMix: shadowOptions.preMix,
+    ShadowTexTest: shadowOptions.test,
+    ShadowTexThreshold: shadowOptions.threshold,
+    ShadowTexTransition: shadowOptions.transition,
+    ShadowTexAmount: shadowOptions.amount,
 
     FOV: ViewerScene.cameraInitialFov,
     Axes: false,

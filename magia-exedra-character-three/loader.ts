@@ -95,6 +95,10 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
 
             await Promise.all(meshes.map(mesh => new Promise<void>(async (resolve, _reject) => {
                 try {
+                    // enable shadows
+                    mesh.castShadow = true
+                    mesh.receiveShadow = true
+
                     const meshMaterialNames: string[] = Array.isArray(mesh.material)
                         ? mesh.material.map(x => x.name)
                         : [mesh.material.name]

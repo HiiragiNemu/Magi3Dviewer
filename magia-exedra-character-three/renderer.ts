@@ -18,6 +18,9 @@ export function createRenderer(parameters?: THREE.WebGLRendererParameters) {
 
     console.log('MaxAnisotropy:', renderer.capabilities.getMaxAnisotropy())
 
+    // enable shadows
+    renderer.shadowMap.enabled = true
+
     renderer.setAnimationLoop((...args) => {
         clockDelta = clock.getDelta()
         animationLoop(...args)

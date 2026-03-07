@@ -57,6 +57,10 @@ export class ViewerScene {
     static directionalLightInitialDistance = 10
     static directionalLightInitialHeight = 2.5
 
+    static shadowEnabled = true
+    static shadowResolution = 4096
+    static shadowBias = 0
+
     axesHelper: THREE.AxesHelper
 
     raycaster: THREE.Raycaster
@@ -122,6 +126,8 @@ export class ViewerScene {
             ViewerScene.directionalLightInitialHeight,
             directionalLightPositionZ
         );
+        // enable shadows
+        this.setShadow(ViewerScene.shadowEnabled, ViewerScene.shadowResolution, ViewerScene.shadowBias)
         this.scene.add(this.directionalLight);
 
         this.axesHelper = new THREE.AxesHelper(2);
@@ -279,13 +285,35 @@ export class ViewerScene {
         }
     }
 
-    resetCameraControl() {
-        this.camera.position.set(...ViewerScene.cameraInitialPosition)
-        this.controls.target.set(...ViewerScene.controlsInitialTarget)
+    setShadow(enabled: boolean, resolution: number, bias: number) {
+        this.directionalLight.castShadow = enabled
+        if (!enabled) {
+            this.removeShadowMap()
+            return
+        }
+
+        if (this.directionalLight.shadow.mapSize.x != resolution) {
+            this.directionalLight.shadow.mapSize = new THREE.Vector2(resolution, resolution)
+            this.removeShadowMap()
+        }
+
+        this.directionalLight.shadow.bias = bias
+    }
+
+    removeShadowMap() {
+        if (this.directionalLight.shadow.map) {
+            this.directionalLight.shadow.map.dispose()
+        }
+        this.directionalLight.shadow.map = null
     }
 
     setColorFilter(filter: ColorFilter) {
         this.containerElement.style.filter = `brightness(${filter.brightness}) contrast(${filter.contrast}) saturate(${filter.saturation})`
+    }
+
+    resetCameraControl() {
+        this.camera.position.set(...ViewerScene.cameraInitialPosition)
+        this.controls.target.set(...ViewerScene.controlsInitialTarget)
     }
 
     getIntersectedCharacter(x: number, y: number) {

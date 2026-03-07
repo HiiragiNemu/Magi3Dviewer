@@ -87,7 +87,7 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
     outlineFolder.add(characterOptions, 'OutlineThickness', 0, 0.01).onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = OutlineThickness
     outlineFolder.addColor(characterOptions, 'OutlineColor').onChange(() => updateCharacterOutline(character, characterOptions))._initialValueHexString = OutlineColor
 
-    const meshesFolderClosed: boolean = meshesFolder ? isGuiClosed(meshesFolder) : true
+    const meshesFolderClosed: boolean = meshesFolder ? isGuiClosed(meshesFolder) : false
     meshesFolder = guiCharacterSelected.addFolder('Meshes')
     if (meshesFolderClosed) {
         meshesFolder.close()

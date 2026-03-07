@@ -1,19 +1,38 @@
 import { shadowOptions } from 'magia-exedra-character-three/shaders';
 import { scene } from '../scene';
 import { gui, guiOptions } from './GUI';
+import { createSquareExponentController } from './GUIExtensions';
 
 export const guiShader = gui.addFolder('Shader').close()
 
-guiShader.add(guiOptions, 'ShadowPreMix', 0, 1).onChange(updateShaders)
-guiShader.add(guiOptions, 'ShadowThreshold', 0, 0.2).onChange(updateShaders)
-guiShader.add(guiOptions, 'ShadowTransition', 0, 0.01).onChange(updateShaders)
-guiShader.add(guiOptions, 'ShadowAmount', -1, 1).onChange(updateShaders)
+guiShader.add(guiOptions, 'ShadowEnabled').onChange(updateShadow)
+guiShader.add(guiOptions, 'ShadowType', {
+    BasicShadowMap: 0,
+    PCFShadowMap: 1,
+    PCFSoftShadowMap: 2,
+    VSMShadowMap: 3,
+}).onChange(updateShadow)
+createSquareExponentController(guiShader, guiOptions, 'ShadowResolution', 512, scene.renderer.capabilities.maxTextureSize).onChange(updateShadow)
+guiShader.add(guiOptions, 'ShadowBias', -0.0001, 0).onChange(updateShadow)
 
-function updateShaders() {
-    shadowOptions.preMix = guiOptions.ShadowPreMix
-    shadowOptions.threshold = guiOptions.ShadowThreshold
-    shadowOptions.transition = guiOptions.ShadowTransition
-    shadowOptions.amount = guiOptions.ShadowAmount
+function updateShadow() {
+    scene.setShadow(guiOptions.ShadowEnabled, guiOptions.ShadowResolution, guiOptions.ShadowBias)
+    scene.renderer.shadowMap.type = guiOptions.ShadowType
+}
+
+
+guiShader.add(guiOptions, 'ShadowTexPreMix', 0, 1).onChange(updateMaterialShadow)
+guiShader.add(guiOptions, 'ShadowTexTest', 0, 1).onChange(updateMaterialShadow)
+guiShader.add(guiOptions, 'ShadowTexThreshold', 0, 0.2).onChange(updateMaterialShadow)
+guiShader.add(guiOptions, 'ShadowTexTransition', 0, 0.01).onChange(updateMaterialShadow)
+guiShader.add(guiOptions, 'ShadowTexAmount', -1, 1).onChange(updateMaterialShadow)
+
+function updateMaterialShadow() {
+    shadowOptions.preMix = guiOptions.ShadowTexPreMix
+    shadowOptions.test = guiOptions.ShadowTexTest
+    shadowOptions.threshold = guiOptions.ShadowTexThreshold
+    shadowOptions.transition = guiOptions.ShadowTexTransition
+    shadowOptions.amount = guiOptions.ShadowTexAmount
 
     scene.characters.map(x => x.character).filter(x => !!x).map(x => x.meshes.forEach(mesh => {
         const shader = mesh.shader
@@ -21,6 +40,9 @@ function updateShaders() {
 
         if (shader.uniforms.uShadowPreMix) {
             shader.uniforms.uShadowPreMix.value = shadowOptions.preMix
+        }
+        if (shader.uniforms.uShadowTest) {
+            shader.uniforms.uShadowTest.value = shadowOptions.test
         }
         if (shader.uniforms.uShadowThreshold) {
             shader.uniforms.uShadowThreshold.value = shadowOptions.threshold

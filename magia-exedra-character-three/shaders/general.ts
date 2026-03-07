@@ -4,6 +4,7 @@ import { loadTexture, MaximizeTextureQuality } from '../texture';
 
 export const shadowOptions = {
     preMix: 1.0,
+    test: 0.33,
     threshold: 0.0,
     transition: 0.002,
     amount: 0.0,
@@ -57,7 +58,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         }
         shader.uniforms.uShadowMix = { value: 0.67 };
         shader.uniforms.uShadowPreMix = { value: shadowOptions.preMix };
-        shader.uniforms.uShadowTest = { value: 0.5 };
+        shader.uniforms.uShadowTest = { value: shadowOptions.test };
         shader.uniforms.uShadowThreshold = { value: shadowOptions.threshold };
         shader.uniforms.uShadowTransition = { value: shadowOptions.transition };
         shader.uniforms.uShadowAmount = { value: shadowOptions.amount };
