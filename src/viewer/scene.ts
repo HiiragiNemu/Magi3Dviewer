@@ -38,6 +38,8 @@ export class ViewerScene {
 
     renderer: THREE.WebGLRenderer
     scene: THREE.Scene
+    static defaultPixelRatio = 1
+    private _pixelRatio = ViewerScene.defaultPixelRatio
 
     camera: THREE.PerspectiveCamera
     static cameraInitialFov = 15
@@ -103,7 +105,7 @@ export class ViewerScene {
         this.setColorFilter(ViewerScene.colorFilter)
 
         this.renderer = createRenderer({ antialias: true, alpha: true });
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setPixelRatio(this.getRenderPixelRatio());
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         this.renderer.xr.enabled = true
@@ -169,8 +171,8 @@ export class ViewerScene {
         // outline pass
         this.outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), this.scene, this.camera);
         this.outlinePass.visibleEdgeColor = ViewerScene.outlineColorLight
-        this.outlinePass.edgeThickness = window.devicePixelRatio
-        this.outlinePass.edgeStrength = window.devicePixelRatio * 3
+        this.outlinePass.edgeThickness = this.getRenderPixelRatio()
+        this.outlinePass.edgeStrength = this.getRenderPixelRatio() * 3
         this.outlinePass.enabled = false
 
         // SMAA
@@ -226,15 +228,31 @@ export class ViewerScene {
             this.camera.aspect = width / height;
             this.camera.updateProjectionMatrix();
 
-            this.renderer.setPixelRatio(window.devicePixelRatio);
             this.renderer.setSize(width, height);
-
-            this.composer?.setPixelRatio(window.devicePixelRatio);
             this.composer?.setSize(width, height)
-
-            this.outlinePass.edgeThickness = window.devicePixelRatio
-            this.outlinePass.edgeStrength = window.devicePixelRatio * 3
+            this.updateRenderPixelRatio()
         });
+    }
+
+    get pixelRatio() {
+        return this._pixelRatio
+    }
+
+    set pixelRatio(value) {
+        this._pixelRatio = value
+        this.updateRenderPixelRatio()
+    }
+
+    getRenderPixelRatio() {
+        return window.devicePixelRatio * this.pixelRatio
+    }
+
+    updateRenderPixelRatio() {
+        this.renderer.setPixelRatio(this.getRenderPixelRatio());
+        this.composer?.setPixelRatio(this.getRenderPixelRatio());
+
+        this.outlinePass.edgeThickness = this.getRenderPixelRatio()
+        this.outlinePass.edgeStrength = this.getRenderPixelRatio() * 3
     }
 
     createComposer(msaaSamples = 0) {
@@ -246,7 +264,7 @@ export class ViewerScene {
             type: THREE.HalfFloatType, // ensure no color bands
         });
         this.composer = new EffectComposer(this.renderer, this.composerRenderTarget);
-        this.composer.setPixelRatio(window.devicePixelRatio);
+        this.composer.setPixelRatio(this.getRenderPixelRatio());
         this.composer.addPass(this.taaRenderPass);
         this.composer.addPass(this.ssaaRenderPass);
         this.composer.addPass(this.renderPass);

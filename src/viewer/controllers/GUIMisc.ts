@@ -1,10 +1,13 @@
 import { scene } from '../scene';
 import { gui, guiOptions } from './GUI';
+import { createSquareExponentController } from './GUIExtensions';
 
 const miscFolder = gui.addFolder('Misc').close()
 
 miscFolder.add(guiOptions, 'FOV', 5, 60).onChange(value => { scene.camera.fov = value; scene.camera.updateProjectionMatrix() })
 miscFolder.add(guiOptions, 'Axes').onChange(value => scene.axesHelper.visible = value)
+
+miscFolder.add(guiOptions, 'PixelRatio', 0.2, 2, 0.1).onChange(value => scene.pixelRatio = value)
 
 miscFolder.add(guiOptions, 'UseEffectComposer', ['Auto', 'Always', 'Never']).onChange(value => { scene.composerEnabled = value; updateAntiAliasingGUI() }).domElement.title =
     `Auto: Use effect composer only when needed to render selection outlines.
@@ -17,7 +20,7 @@ const guiAntiAliasing = miscFolder.add(guiOptions, 'AntiAliasing', ['None', 'MSA
 guiAntiAliasing.domElement.title = `Anti-aliasing method used for the effect composer.
 This option does not affect direct rendering that always uses default MSAA.`;
 
-const guiAntiAliasingLevel = miscFolder.add(guiOptions, 'AntiAliasingLevel', 0, 8, 1).onChange(updateAntiAliasing).hide()
+const guiAntiAliasingLevel = createSquareExponentController(miscFolder, guiOptions, 'AntiAliasingLevel', 1, 8).onChange(updateAntiAliasing).hide()
 
 function updateAntiAliasingGUI() {
     if (guiOptions.UseEffectComposer != 'Never') {
