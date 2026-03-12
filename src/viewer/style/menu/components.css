@@ -1,0 +1,28 @@
+.button-dropdown {
+    position: relative;
+}
+
+.button-dropdown:focus-within {
+    outline-color: black;
+    outline-style: auto;
+    outline-width: 1px;
+    outline-offset: -1px;
+}
+
+.button-dropdown div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.button-dropdown div select {
+    height: 100%;
+}
+
+.spacer {
+    flex: 1;
+}

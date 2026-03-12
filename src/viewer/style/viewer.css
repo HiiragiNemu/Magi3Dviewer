@@ -1,0 +1,14 @@
+body {
+    background-color: #444;
+    color: white;
+}
+
+.theme-light {
+    background-color: white;
+    color: initial;
+}
+
+#viewer {
+    /* allows the canvas to shrink on mobile devices */
+    overflow: hidden;
+}

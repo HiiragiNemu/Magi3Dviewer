@@ -1,0 +1,48 @@
+#menu-icons>* {
+    pointer-events: initial;
+    display: block;
+}
+
+#menu-icons>button,
+#menu-icons>*>button {
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu-icons>*>button {
+    display: block;
+}
+
+#menu-icons img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+    filter: invert(1);
+}
+
+.theme-light #menu-icons img {
+    filter: initial;
+}
+
+#menu-icons img:hover {
+    opacity: 0.7;
+}
+
+.theme-light #menu-icons img:hover {
+    opacity: 0.6;
+}
+
+#theme-set-dark {
+    display: none;
+}
+
+.theme-light #theme-set-dark {
+    display: block;
+}
+
+.theme-light #theme-set-light {
+    display: none;
+}

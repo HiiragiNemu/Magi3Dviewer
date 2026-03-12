@@ -1,0 +1,11 @@
+.target-false {
+    display: none;
+}
+
+.no-target .target-true {
+    display: none;
+}
+
+.no-target .target-false {
+    display: initial;
+}

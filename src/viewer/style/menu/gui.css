@@ -1,0 +1,25 @@
+#three-gui {
+    overflow: auto;
+    flex-shrink: 1;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    display: initial;
+    margin-top: 8px;
+    margin-left: 4px;
+}
+
+#three-gui>.lil-gui {
+    margin: 0;
+}
+
+.lil-gui {
+    --background-color: rgba(0, 0, 0, 0.5);
+    --title-background-color: rgba(0, 0, 0, 0.25);
+    --widget-color: rgba(0, 0, 0, 0.5);
+    --hover-color: rgba(0, 0, 0, 0.65);
+    --focus-color: rgba(0, 0, 0, 0.9);
+}
+
+.children>.lil-gui {
+    background: none;
+}
