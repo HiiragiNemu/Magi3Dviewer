@@ -329,6 +329,10 @@ export class ViewerScene {
         this.containerElement.style.filter = `brightness(${filter.brightness}) contrast(${filter.contrast}) saturate(${filter.saturation})`
     }
 
+    getColorFilterCSS() {
+        return this.containerElement.style.filter
+    }
+
     resetCameraControl() {
         this.camera.position.set(...ViewerScene.cameraInitialPosition)
         this.controls.target.set(...ViewerScene.controlsInitialTarget)

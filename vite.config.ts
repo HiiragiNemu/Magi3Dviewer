@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import legacy from '@vitejs/plugin-legacy'
+import basicSsl from '@vitejs/plugin-basic-ssl'
 import { visualizer } from "rollup-plugin-visualizer"
 
 export default defineConfig({
@@ -8,6 +9,7 @@ export default defineConfig({
     legacy({
       targets: ['defaults', 'not IE 11'],
     }),
+    basicSsl(),
     visualizer(),
   ],
   build: {

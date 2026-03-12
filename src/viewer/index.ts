@@ -1,11 +1,12 @@
 import * as THREE from 'three'
 import Stats from 'three/addons/libs/stats.module.js';
-import { scene, viewerEl, type SceneCharacter } from './scene';
+import { scene, type SceneCharacter } from './scene';
 import { initSelector } from './controls'
 import { characters } from './character';
 import { guiOptions, updateCharacterController, updateCharacterOutline } from './controllers';
-import { ARButton, type TransformControlsMode } from 'three/examples/jsm/Addons.js';
+import { type TransformControlsMode } from 'three/examples/jsm/Addons.js';
 import { presetImport } from './controllers/presets';
+import { setupCameraModeButtons } from './camera'
 
 const menuEl = document.getElementById('menu')!
 
@@ -54,6 +55,7 @@ export function setupViewer() {
 
     setupCharacterAddSelector()
     setupViewerInputHandler()
+    setupCameraModeButtons()
 
     scene.animateLoopCallback = animateLoop
 
@@ -72,15 +74,6 @@ export function setupViewer() {
     stats.dom.style.pointerEvents = 'initial'
     stats.dom.style.zIndex = '-1'
     menuEl.appendChild(stats.dom)
-
-    const arButton = ARButton.createButton(scene.renderer, {
-        requiredFeatures: ['hit-test'],
-        optionalFeatures: ['dom-overlay'],
-        domOverlay: { root: menuEl }
-    })
-    arButton.style.removeProperty('z-index')
-    arButton.style.bottom = '101%'
-    viewerEl.appendChild(arButton)
 }
 
 function setupCharacterAddSelector() {

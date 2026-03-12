@@ -43,6 +43,7 @@ export const guiOptions = {
     FOV: ViewerScene.cameraInitialFov,
     Axes: false,
     PixelRatio: ViewerScene.defaultPixelRatio,
+    CameraFullscreen: true,
     UseEffectComposer: scene.composerEnabled,
     AntiAliasing: 'None' satisfies SceneComposerAntiAliasing as SceneComposerAntiAliasing,
     AntiAliasingLevel: 2,

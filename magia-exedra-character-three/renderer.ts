@@ -14,6 +14,7 @@ export function createRenderer(parameters?: THREE.WebGLRendererParameters) {
     renderer = new THREE.WebGLRenderer({
         ...parameters,
         stencil: true,
+        preserveDrawingBuffer: true,
     })
 
     console.log('MaxAnisotropy:', renderer.capabilities.getMaxAnisotropy())

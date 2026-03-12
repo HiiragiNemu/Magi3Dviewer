@@ -11,4 +11,10 @@ body {
 #viewer {
     /* allows the canvas to shrink on mobile devices */
     overflow: hidden;
+    position: relative;
+}
+
+a img,
+button img {
+    pointer-events: none;
 }

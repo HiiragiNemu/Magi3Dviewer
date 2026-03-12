@@ -38,6 +38,10 @@
 
         <img id="demo-screenshot" class="demo" src="/demo.jpg" alt="Demo Screenshot">
 
+        <video id="camera-bg"></video>
+
+        <button id="camera-shot-btn" title="Take a photo"><img src="src/icons/camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+
         <div id="menu">
             <div id="menu-controls">
                 <div>
@@ -76,6 +80,15 @@
                 <button id="transform-set-translate" title="Adjust character position" style="display: none;"><img src="src/icons/drag_pan_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                 <button id="transform-set-rotate" title="Adjust character rotation" style="display: none;"><img src="src/icons/360_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
 
+                <div id="camera-mode-selector" title="Select camera mode">
+                    <button><img src="src/icons/photo_camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                    <div id="camera-mode-list">
+                        <button id="camera-mode-background">Camera background</button>
+                        <!-- <button id="camera-mode-ar">AR</button> -->
+                    </div>
+                </div>
+                <button id="camera-off" title="Turn off camera background"><img src="src/icons/no_photography_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+
                 <button id="fullscreen-btn" title="Fullscreen"><img src="src/icons/fullscreen_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
             </div>
         </div>
@@ -86,6 +99,14 @@
                 <div id="preset-dialog-title">Preset</div>
                 <textarea id="preset-dialog-textarea"></textarea>
                 <button id="preset-dialog-button-ok">OK</button>
+            </div>
+        </div>
+
+        <div id="camera-save-container">
+            <img id="camera-save-img">
+            <div id="camera-save-actions">
+                <button id="camera-save-close">Close</button>
+                <button id="camera-save-download">Download</button>
             </div>
         </div>
     </div>

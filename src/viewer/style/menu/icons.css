@@ -27,11 +27,11 @@
     filter: initial;
 }
 
-#menu-icons img:hover {
+#menu-icons>*:hover img {
     opacity: 0.7;
 }
 
-.theme-light #menu-icons img:hover {
+.theme-light #menu-icons>*:hover img {
     opacity: 0.6;
 }
 
