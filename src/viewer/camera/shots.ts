@@ -1,13 +1,19 @@
 import * as THREE from 'three';
 import { scene } from '../scene';
 import { cameraVideo, getCameraStreamDimensions } from './background';
+import { setRenderPaused } from 'magia-exedra-character-three/renderer';
 
 const cameraSaveContainer = document.getElementById('camera-save-container') as HTMLDivElement
 const cameraSaveImg = document.getElementById('camera-save-img') as HTMLImageElement
 const btnCameraSaveClose = document.getElementById('camera-save-close') as HTMLButtonElement
 const btnCameraSaveDownload = document.getElementById('camera-save-download') as HTMLButtonElement
 
+btnCameraSaveClose.onclick = closeImage
+btnCameraSaveDownload.onclick = downloadImage
+
 export function savePhoto() {
+    pauseViewer()
+
     const canvas = document.createElement('canvas')
 
     const renderSize = new THREE.Vector2()
@@ -75,22 +81,38 @@ export function savePhoto() {
     const url = canvas.toDataURL()
     console.log('toDataURL:', performance.now() - t, 'ms')
 
+    showImage(url)
+}
+
+function showImage(url: string) {
     cameraSaveImg.src = url
     cameraSaveContainer.style.display = 'block'
     document.documentElement.style.overscrollBehavior = 'contain'
+    pauseViewer()
 }
 
-btnCameraSaveClose.onclick = () => {
+function closeImage() {
+    cameraSaveImg.src = ''
     cameraSaveContainer.style.removeProperty('display')
     document.documentElement.style.removeProperty('overscroll-behavior')
-    cameraSaveImg.src = ''
+    resumeViewer()
 }
 
-btnCameraSaveDownload.onclick = () => {
+function downloadImage() {
     const a = document.createElement('a')
     a.href = cameraSaveImg.src
     a.download = `Magi3Dviewer - ${new Date().toLocaleString()}.png`
     a.click()
+}
+
+function pauseViewer() {
+    setRenderPaused(true)
+    if (cameraVideo.readyState != HTMLMediaElement.HAVE_NOTHING) cameraVideo.pause()
+}
+
+function resumeViewer() {
+    setRenderPaused(false)
+    if (cameraVideo.readyState != HTMLMediaElement.HAVE_NOTHING) cameraVideo.play()
 }
 
 Object.assign(window, { savePhoto })

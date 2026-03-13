@@ -4,6 +4,8 @@ export let renderer: THREE.WebGLRenderer | undefined
 let animationLoop: XRFrameRequestCallback = () => undefined
 let animationLoops: Array<() => any> = []
 
+let renderPaused = false
+
 const clock = new THREE.Clock()
 let clockDelta = clock.getDelta()
 
@@ -23,6 +25,7 @@ export function createRenderer(parameters?: THREE.WebGLRendererParameters) {
     renderer.shadowMap.enabled = true
 
     renderer.setAnimationLoop((...args) => {
+        if (renderPaused) return
         clockDelta = clock.getDelta()
         animationLoop(...args)
         animationLoops.forEach(x => x())
@@ -45,3 +48,9 @@ export function removeAnimationLoop(callback: () => any) {
 export function getClockDelta() {
     return clockDelta
 }
+
+export function setRenderPaused(value: boolean) {
+    renderPaused = value
+}
+
+Object.assign(window, { setRenderPaused })

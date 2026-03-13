@@ -169,4 +169,4 @@ function enableTestEnvironmentMap() {
     })
 }
 
-Object.assign(window, { disableSceneCamera, enableTestEnvironmentMap, getCameraStreamDimensions })
+Object.assign(window, { cameraVideo, disableSceneCamera, enableTestEnvironmentMap, getCameraStreamDimensions })
