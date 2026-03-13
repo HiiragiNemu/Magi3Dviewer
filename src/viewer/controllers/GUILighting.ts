@@ -1,5 +1,7 @@
 import * as THREE from 'three'
-import { scene, ViewerScene, deg2pos } from '../scene';
+import { scene } from '../scene';
+import { MagiaExedraScene3D, deg2pos } from 'magia-exedra-character-three/scene'
+
 import { gui, guiOptions } from "./GUI";
 
 const lightingFolder = gui.addFolder('Lighting')
@@ -9,7 +11,7 @@ export const guiBgColor = lightingFolder.addColor(guiOptions, 'BgColor').onChang
     const color = new THREE.Color(value)
     // W3C Luminance Formula
     const luminance = (0.299 * color.r) + (0.587 * color.g) + (0.114 * color.b);
-    scene.outlinePass.visibleEdgeColor = luminance > 0.5 ? ViewerScene.outlineColorDark : ViewerScene.outlineColorLight
+    scene.outlinePass.visibleEdgeColor = luminance > 0.5 ? MagiaExedraScene3D.outlineColorDark : MagiaExedraScene3D.outlineColorLight
 })
 lightingFolder.addColor(guiOptions, 'AmbientLightColor').onChange(value => scene.ambientLight.color = new THREE.Color(value))
 lightingFolder.addColor(guiOptions, 'DirectionalLightColor').onChange(value => scene.directionalLight.color = new THREE.Color(value))

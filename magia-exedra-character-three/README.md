@@ -7,10 +7,7 @@ All `.fbx`s are compressed with gzip which can enable transparent decompression 
 ## Usage
 
 ```ts
-import MagiaExedraCharacterThree, { createRenderer } from "magia-exedra-character-three"
-
-// Characters must use the renderer created by this function to render correctly
-const renderer = createRenderer()
+import { MagiaExedraCharacterThree, MagiaExedraScene3D } from "magia-exedra-character-three"
 
 // Import all models
 const characters = new MagiaExedraCharacterThree(import.meta.glob([
@@ -18,9 +15,17 @@ const characters = new MagiaExedraCharacterThree(import.meta.glob([
     '../node_modules/magia-exedra-character-three/models/**/*.png'
 ], { query: '?url', import: 'default', eager: true }))
 
-// Load character model
-const character = await characters.loadCharacterById(100107) // 100107 = Madoka Kaname
+// Create the scene
+const scene = new MagiaExedraScene3D(characters)
 
-// Add to three.js scene
-scene.add(character.object)
+// Add canvas to page
+document.body.appendChild(scene.renderer.domElement)
+
+// Load character model and add to scene
+const character = (await scene.addCharacter(100107)).character! // 100107 = Madoka Kaname
+
+// Play default animation
+if (character.animation.default) {
+    character.animation.play(character.animation.default, true)
+}
 ```

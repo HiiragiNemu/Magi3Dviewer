@@ -3,8 +3,8 @@ import characterList from './getStyle3dCharacterMstList.json'
 import { loadCharacter, type LoadCharacterCallbacks } from "./loader"
 import { ObjFilterByKey } from './utils'
 
-import { createRenderer } from './renderer'
-export { createRenderer }
+import { MagiaExedraScene3D } from './scene'
+export { MagiaExedraCharacterThree, MagiaExedraScene3D }
 
 export default class MagiaExedraCharacterThree {
     files: Record<string, string>

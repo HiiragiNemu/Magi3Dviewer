@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Stats from 'three/addons/libs/stats.module.js';
-import { scene, type SceneCharacter } from './scene';
+import { scene } from './scene';
+import { type SceneCharacter } from 'magia-exedra-character-three/scene'
 import { initSelector } from './controls'
 import { characters } from './character';
 import { guiOptions, updateCharacterController, updateCharacterOutline } from './controllers';

@@ -16,7 +16,9 @@ createSquareExponentController(guiShader, guiOptions, 'ShadowResolution', 512, s
 guiShader.add(guiOptions, 'ShadowBias', -0.0001, 0).onChange(updateShadow)
 
 function updateShadow() {
-    scene.setShadow(guiOptions.ShadowEnabled, guiOptions.ShadowResolution, guiOptions.ShadowBias)
+    scene.shadow.enabled = guiOptions.ShadowEnabled
+    scene.shadow.resolution = guiOptions.ShadowResolution
+    scene.shadow.bias = guiOptions.ShadowBias
     scene.renderer.shadowMap.type = guiOptions.ShadowType
 }
 

@@ -1,7 +1,8 @@
 import GUI, { type FunctionController } from 'three/addons/libs/lil-gui.module.min.js';
 import { PCFShadowMap, type ShadowMapType } from 'three';
 import { OutlineColor, OutlineThickness, shadowOptions } from 'magia-exedra-character-three/shaders'
-import { scene, ViewerScene, type SceneComposerAntiAliasing } from '../scene';
+import { scene } from '../scene';
+import { MagiaExedraScene3D, type SceneComposerAntiAliasing } from 'magia-exedra-character-three/scene'
 import { presetExport, presetImport } from './presets';
 import { themeDarkBgColor } from './theme';
 
@@ -14,25 +15,25 @@ export const guiOptions = {
     OutlineThickness: OutlineThickness,
     OutlineColor: OutlineColor,
 
-    Brightness: ViewerScene.colorFilter.brightness,
-    Contrast: ViewerScene.colorFilter.contrast,
-    Saturation: ViewerScene.colorFilter.saturation,
+    Brightness: MagiaExedraScene3D.colorFilter.brightness,
+    Contrast: MagiaExedraScene3D.colorFilter.contrast,
+    Saturation: MagiaExedraScene3D.colorFilter.saturation,
 
     BgColor: themeDarkBgColor,
-    AmbientLightColor: ViewerScene.ambientLightInitialColor,
-    DirectionalLightColor: ViewerScene.directionalLightInitialColor,
+    AmbientLightColor: MagiaExedraScene3D.ambientLightInitialColor,
+    DirectionalLightColor: MagiaExedraScene3D.directionalLightInitialColor,
 
-    AmbientLight: ViewerScene.ambientLightInitialIntensity,
-    DirectionalLight: ViewerScene.directionalLightInitialIntensity,
+    AmbientLight: MagiaExedraScene3D.ambientLightInitialIntensity,
+    DirectionalLight: MagiaExedraScene3D.directionalLightInitialIntensity,
 
-    LightAngle: ViewerScene.directionalLightInitialAngle,
-    LightHeight: ViewerScene.directionalLightInitialHeight,
-    LightDistance: ViewerScene.directionalLightInitialDistance,
+    LightAngle: MagiaExedraScene3D.directionalLightInitialAngle,
+    LightHeight: MagiaExedraScene3D.directionalLightInitialHeight,
+    LightDistance: MagiaExedraScene3D.directionalLightInitialDistance,
 
-    ShadowEnabled: ViewerScene.shadowEnabled,
+    ShadowEnabled: MagiaExedraScene3D.shadowEnabled,
     ShadowType: PCFShadowMap satisfies ShadowMapType as ShadowMapType,
-    ShadowResolution: ViewerScene.shadowResolution,
-    ShadowBias: ViewerScene.shadowBias,
+    ShadowResolution: MagiaExedraScene3D.shadowResolution,
+    ShadowBias: MagiaExedraScene3D.shadowBias,
 
     ShadowTexPreMix: shadowOptions.preMix,
     ShadowTexTest: shadowOptions.test,
@@ -40,9 +41,9 @@ export const guiOptions = {
     ShadowTexTransition: shadowOptions.transition,
     ShadowTexAmount: shadowOptions.amount,
 
-    FOV: ViewerScene.cameraInitialFov,
+    FOV: MagiaExedraScene3D.cameraInitialFov,
     Axes: false,
-    PixelRatio: ViewerScene.defaultPixelRatio,
+    PixelRatio: MagiaExedraScene3D.defaultPixelRatio,
     CameraFullscreen: true,
     UseEffectComposer: scene.composerEnabled,
     AntiAliasing: 'None' satisfies SceneComposerAntiAliasing as SceneComposerAntiAliasing,
