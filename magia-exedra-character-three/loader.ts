@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
-import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh, createBodyInsideMaterial, createHairMaterial } from './shaders'
+import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh, createBodyInsideMaterial, createHairMaterial, createDepthMaterial, createDistanceMaterial } from './shaders'
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes, fetchAndTryDecompressGzip } from './utils';
 import MagiaExedraCharacter3D, { type ObjectUserData } from './character';
 
@@ -231,6 +231,12 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
 
                         mesh.material = material;
                         userData.textures.push(...textures);
+                    }
+
+                    // hide shadows for the transparent part of the mesh
+                    if (alphaTex) {
+                        mesh.customDepthMaterial = createDepthMaterial(alphaTex)
+                        mesh.customDistanceMaterial = createDistanceMaterial(alphaTex)
                     }
 
                     // apply mesh visibility

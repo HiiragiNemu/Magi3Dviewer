@@ -5,6 +5,7 @@ export * from './BodyInside'
 export * from './hair'
 export * from './face'
 export * from './outline'
+export * from './shadow'
 
 export interface MaterialCreationOptions {
     colorMap: string;
