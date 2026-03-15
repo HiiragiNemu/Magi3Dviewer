@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { disposeObject } from './utils';
 import { addAnimationLoop, getClockDelta, removeAnimationLoop } from './renderer';
-import type { MaterialUserData } from './shaders';
 
 export interface ObjectUserData {
     characterId: number
@@ -204,15 +203,6 @@ export class CharacterMeshController {
 
     get materials(): THREE.Material[] {
         return Array.isArray(this.mesh.material) ? this.mesh.material : [this.mesh.material]
-    }
-
-    get shader(): THREE.WebGLProgramParametersWithUniforms | undefined {
-        const userData: MaterialUserData | object | undefined = this.material?.userData
-        if (!userData) return
-
-        if ('shader' in userData) {
-            return userData.shader
-        }
     }
 
     get defaultVisibility(): boolean {

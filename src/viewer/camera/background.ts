@@ -1,15 +1,13 @@
 import * as THREE from 'three';
 import { HDRLoader } from 'three/examples/jsm/Addons.js';
+import { Controller } from 'three/addons/libs/lil-gui.module.min.js';
 import { scene } from '../scene';
 import { prettyPrintJSON } from '../controllers/presets';
 import { addAnimationLoop, getClockDelta, removeAnimationLoop } from 'magia-exedra-character-three/renderer';
-import { guiAmbientLight, guiDirectionalLight, guiOptions } from '../controllers';
+import { guiAmbientLight, guiAmbientLightColor, guiDirectionalLight, guiDirectionalLightColor, guiFloorShadowOpacity, guiLightAngle, guiLightDistance, guiLightHeight } from '../controllers';
 
 export const cameraVideo = document.getElementById('camera-bg') as HTMLVideoElement
 let cameraStream: MediaStream | undefined = undefined
-
-let prevAmbientLightStrength: number | undefined = undefined
-let prevDirectionalLightStrength: number | undefined = undefined
 
 export async function enableSceneCamera() {
     cameraStream = await navigator.mediaDevices.getUserMedia({
@@ -30,10 +28,14 @@ export async function enableSceneCamera() {
         addAnimationLoop(updateSceneEnvironment)
     }
 
-    prevAmbientLightStrength = guiOptions.AmbientLight
-    prevDirectionalLightStrength = guiOptions.DirectionalLight
-
+    backupGuiValues(
+        guiAmbientLightColor, guiAmbientLight,
+        guiDirectionalLightColor, guiDirectionalLight,
+        guiLightAngle, guiLightHeight, guiLightDistance,
+        guiFloorShadowOpacity
+    )
     guiAmbientLight.setValue(1.25)
+    guiFloorShadowOpacity.setValue(0.25)
 }
 
 export function disableSceneCamera() {
@@ -51,8 +53,20 @@ export function disableSceneCamera() {
         cameraStream = undefined
     }
 
-    if (prevAmbientLightStrength != undefined) guiAmbientLight.setValue(prevAmbientLightStrength)
-    if (prevDirectionalLightStrength != undefined) guiDirectionalLight.setValue(prevDirectionalLightStrength)
+    restoreGuiValues()
+}
+
+let savedGuiValues: { controller: Controller, value: unknown }[] | undefined
+
+function backupGuiValues(...controllers: unknown[]) {
+    savedGuiValues = controllers.filter(x => x instanceof Controller).map(controller => ({
+        controller,
+        value: controller.getValue()
+    }))
+}
+
+function restoreGuiValues() {
+    savedGuiValues?.forEach(x => x.controller.setValue(x.value))
 }
 
 const cameraPanoramaCanvas = document.createElement('canvas')
@@ -127,15 +141,17 @@ export function getCameraStreamDimensions(): { width: number, height: number } {
 }
 
 // debug canvas
-if (false) {
-    cameraPanoramaCanvas.style.maxWidth = '100%'
-    cameraPanoramaCanvas.style.maxHeight = '25%'
-    cameraPanoramaCanvas.style.border = '2px solid red'
-    cameraPanoramaCanvas.style.boxSizing = 'border-box'
-    cameraPanoramaCanvas.style.position = 'fixed'
-    cameraPanoramaCanvas.style.left = '0'
-    cameraPanoramaCanvas.style.bottom = '0'
-    document.body.appendChild(cameraPanoramaCanvas)
+// showCanvas(cameraPanoramaCanvas)
+
+export function showCanvas(canvas: HTMLCanvasElement) {
+    canvas.style.maxWidth = '100%'
+    canvas.style.maxHeight = '25%'
+    canvas.style.border = '2px solid red'
+    canvas.style.boxSizing = 'border-box'
+    canvas.style.position = 'fixed'
+    canvas.style.left = '0'
+    canvas.style.bottom = '0'
+    document.body.appendChild(canvas)
 }
 
 // plane for debugging environment reflection

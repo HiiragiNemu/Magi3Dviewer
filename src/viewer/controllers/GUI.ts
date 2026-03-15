@@ -1,10 +1,11 @@
 import GUI, { type FunctionController } from 'three/addons/libs/lil-gui.module.min.js';
 import { PCFShadowMap, type ShadowMapType } from 'three';
-import { OutlineColor, OutlineThickness, shadowOptions } from 'magia-exedra-character-three/shaders'
+import { OutlineColor, OutlineThickness, ShadowOptions, ShadowTexOptions } from 'magia-exedra-character-three/shaders'
 import { scene } from '../scene';
 import { MagiaExedraScene3D, type SceneComposerAntiAliasing } from 'magia-exedra-character-three/scene'
 import { presetExport, presetImport } from './presets';
 import { themeDarkBgColor } from './theme';
+import { SceneShadowController } from 'magia-exedra-character-three/scene/shadow';
 
 export const threeGuiContainer = document.getElementById('three-gui')!
 
@@ -34,12 +35,14 @@ export const guiOptions = {
     ShadowType: PCFShadowMap satisfies ShadowMapType as ShadowMapType,
     ShadowResolution: MagiaExedraScene3D.shadowResolution,
     ShadowBias: MagiaExedraScene3D.shadowBias,
+    FloorShadowOpacity: SceneShadowController.FloorOpacity,
+    ShadowAlphaTest: ShadowOptions.alphaTest,
 
-    ShadowTexPreMix: shadowOptions.preMix,
-    ShadowTexTest: shadowOptions.test,
-    ShadowTexThreshold: shadowOptions.threshold,
-    ShadowTexTransition: shadowOptions.transition,
-    ShadowTexAmount: shadowOptions.amount,
+    ShadowTexPreMix: ShadowTexOptions.preMix,
+    ShadowTexTest: ShadowTexOptions.test,
+    ShadowTexThreshold: ShadowTexOptions.threshold,
+    ShadowTexTransition: ShadowTexOptions.transition,
+    ShadowTexAmount: ShadowTexOptions.amount,
 
     FOV: MagiaExedraScene3D.cameraInitialFov,
     Axes: false,

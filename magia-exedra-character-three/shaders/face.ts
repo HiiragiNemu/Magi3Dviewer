@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import type { MaterialCreationOptions, MaterialCreationResult, MaterialUserData } from '.';
+import { MaterialUserData, type MaterialCreationOptions, type MaterialCreationResult } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 import FaceCtrlBase from './face_ctrl_base.png'
 
@@ -25,7 +25,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
         // transparent: true,
     });
 
-    const userData: MaterialUserData = {}
+    const userData = new MaterialUserData()
     material.userData = userData
 
     // 2. Inject your custom Blush/Highlight logic

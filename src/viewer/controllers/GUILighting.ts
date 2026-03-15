@@ -13,8 +13,8 @@ export const guiBgColor = lightingFolder.addColor(guiOptions, 'BgColor').onChang
     const luminance = (0.299 * color.r) + (0.587 * color.g) + (0.114 * color.b);
     scene.outlinePass.visibleEdgeColor = luminance > 0.5 ? MagiaExedraScene3D.outlineColorDark : MagiaExedraScene3D.outlineColorLight
 })
-lightingFolder.addColor(guiOptions, 'AmbientLightColor').onChange(value => scene.ambientLight.color = new THREE.Color(value))
-lightingFolder.addColor(guiOptions, 'DirectionalLightColor').onChange(value => scene.directionalLight.color = new THREE.Color(value))
+export const guiAmbientLightColor = lightingFolder.addColor(guiOptions, 'AmbientLightColor').onChange(value => scene.ambientLight.color = new THREE.Color(value))
+export const guiDirectionalLightColor = lightingFolder.addColor(guiOptions, 'DirectionalLightColor').onChange(value => scene.directionalLight.color = new THREE.Color(value))
 export const guiAmbientLight = lightingFolder.add(guiOptions, 'AmbientLight', 0, 10).onChange(value => scene.ambientLight.intensity = value)
 export const guiDirectionalLight = lightingFolder.add(guiOptions, 'DirectionalLight', 0, 10).onChange(value => scene.directionalLight.intensity = value)
 export const guiLightAngle = lightingFolder.add(guiOptions, 'LightAngle', -180, 180).onChange(updateSceneDirectionalLight)

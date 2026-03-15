@@ -1,4 +1,4 @@
-import { shadowOptions } from 'magia-exedra-character-three/shaders';
+import { ShadowOptions, ShadowTexOptions, getMeshShadowMaterialUniforms, getMeshGeneralMaterialUniforms } from 'magia-exedra-character-three/shaders';
 import { scene } from '../scene';
 import { gui, guiOptions } from './GUI';
 import { createSquareExponentController } from './GUIExtensions';
@@ -14,14 +14,27 @@ guiShader.add(guiOptions, 'ShadowType', {
 }).onChange(updateShadow)
 createSquareExponentController(guiShader, guiOptions, 'ShadowResolution', 512, scene.renderer.capabilities.maxTextureSize).onChange(updateShadow)
 guiShader.add(guiOptions, 'ShadowBias', -0.0001, 0).onChange(updateShadow)
+export const guiFloorShadowOpacity = guiShader.add(guiOptions, 'FloorShadowOpacity', 0, 1).onChange(updateShadow)
 
 function updateShadow() {
     scene.shadow.enabled = guiOptions.ShadowEnabled
     scene.shadow.resolution = guiOptions.ShadowResolution
     scene.shadow.bias = guiOptions.ShadowBias
+    scene.shadow.floorOpacity = guiOptions.FloorShadowOpacity
+
     scene.renderer.shadowMap.type = guiOptions.ShadowType
 }
 
+guiShader.add(guiOptions, 'ShadowAlphaTest', 0, 1).onChange(() => {
+    ShadowOptions.alphaTest = guiOptions.ShadowAlphaTest
+
+    scene.characters
+        .map(x => x.character)
+        .flatMap(x => x?.meshes.map(x => x.mesh))
+        .filter(x => !!x)
+        .flatMap(x => getMeshShadowMaterialUniforms(x))
+        .forEach(uniforms => uniforms.loadGlobalOptions())
+})
 
 guiShader.add(guiOptions, 'ShadowTexPreMix', 0, 1).onChange(updateMaterialShadow)
 guiShader.add(guiOptions, 'ShadowTexTest', 0, 1).onChange(updateMaterialShadow)
@@ -30,30 +43,16 @@ guiShader.add(guiOptions, 'ShadowTexTransition', 0, 0.01).onChange(updateMateria
 guiShader.add(guiOptions, 'ShadowTexAmount', -1, 1).onChange(updateMaterialShadow)
 
 function updateMaterialShadow() {
-    shadowOptions.preMix = guiOptions.ShadowTexPreMix
-    shadowOptions.test = guiOptions.ShadowTexTest
-    shadowOptions.threshold = guiOptions.ShadowTexThreshold
-    shadowOptions.transition = guiOptions.ShadowTexTransition
-    shadowOptions.amount = guiOptions.ShadowTexAmount
+    ShadowTexOptions.preMix = guiOptions.ShadowTexPreMix
+    ShadowTexOptions.test = guiOptions.ShadowTexTest
+    ShadowTexOptions.threshold = guiOptions.ShadowTexThreshold
+    ShadowTexOptions.transition = guiOptions.ShadowTexTransition
+    ShadowTexOptions.amount = guiOptions.ShadowTexAmount
 
-    scene.characters.map(x => x.character).filter(x => !!x).map(x => x.meshes.forEach(mesh => {
-        const shader = mesh.shader
-        if (!shader) return
-
-        if (shader.uniforms.uShadowPreMix) {
-            shader.uniforms.uShadowPreMix.value = shadowOptions.preMix
-        }
-        if (shader.uniforms.uShadowTest) {
-            shader.uniforms.uShadowTest.value = shadowOptions.test
-        }
-        if (shader.uniforms.uShadowThreshold) {
-            shader.uniforms.uShadowThreshold.value = shadowOptions.threshold
-        }
-        if (shader.uniforms.uShadowTransition) {
-            shader.uniforms.uShadowTransition.value = shadowOptions.transition
-        }
-        if (shader.uniforms.uShadowAmount) {
-            shader.uniforms.uShadowAmount.value = shadowOptions.amount
-        }
-    }))
+    scene.characters
+        .map(x => x.character)
+        .flatMap(x => x?.meshes.map(x => x.mesh))
+        .filter(x => !!x)
+        .flatMap(x => getMeshGeneralMaterialUniforms(x))
+        .forEach(uniforms => uniforms.loadGlobalOptions())
 }

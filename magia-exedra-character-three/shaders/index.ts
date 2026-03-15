@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+export * from './userdata'
 export * from './general'
 export * from './BodyInside'
 export * from './hair'
@@ -18,8 +19,4 @@ export interface MaterialCreationResult {
     material: THREE.Material
     textures: THREE.Texture[];
     alphaTex?: THREE.Texture;
-}
-
-export interface MaterialUserData {
-    shader?: THREE.WebGLProgramParametersWithUniforms
 }

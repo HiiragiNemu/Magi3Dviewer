@@ -1,13 +1,46 @@
 import * as THREE from 'three';
-import type { MaterialCreationOptions, MaterialCreationResult, MaterialUserData } from '.';
+import { MaterialUserData, ShaderUniformsController, type MaterialCreationOptions, type MaterialCreationResult } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 
-export const shadowOptions = {
+export const ShadowTexOptions = {
     preMix: 1.0,
     test: 0.33,
     threshold: 0.0,
     transition: 0.002,
     amount: 0.0,
+}
+
+export class GeneralMatrialUniforms extends ShaderUniformsController {
+    constructor(shader: THREE.WebGLProgramParametersWithUniforms) {
+        super(shader)
+    }
+
+    get uShadowMix(): number | undefined { return this.getValue('uShadowMix') }
+    set uShadowMix(value) { this.setValue('uShadowMix', value) }
+
+    get uShadowPreMix(): number | undefined { return this.getValue('uShadowPreMix') }
+    set uShadowPreMix(value) { this.setValue('uShadowPreMix', value) }
+
+    get uShadowTest(): number | undefined { return this.getValue('uShadowTest') }
+    set uShadowTest(value) { this.setValue('uShadowTest', value) }
+
+    get uShadowThreshold(): number | undefined { return this.getValue('uShadowThreshold') }
+    set uShadowThreshold(value) { this.setValue('uShadowThreshold', value) }
+
+    get uShadowTransition(): number | undefined { return this.getValue('uShadowTransition') }
+    set uShadowTransition(value) { this.setValue('uShadowTransition', value) }
+
+    get uShadowAmount(): number | undefined { return this.getValue('uShadowAmount') }
+    set uShadowAmount(value) { this.setValue('uShadowAmount', value) }
+
+    loadGlobalOptions() {
+        this.uShadowMix = 0.67
+        this.uShadowPreMix = ShadowTexOptions.preMix
+        this.uShadowTest = ShadowTexOptions.test
+        this.uShadowThreshold = ShadowTexOptions.threshold
+        this.uShadowTransition = ShadowTexOptions.transition
+        this.uShadowAmount = ShadowTexOptions.amount
+    }
 }
 
 export const diffuseColorManipulationEndFlag = '// END diffuseColor manipulation'
@@ -42,7 +75,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         transparent: Boolean(options.alphaSrc),
     });
 
-    const userData: MaterialUserData = {}
+    const userData = new MaterialUserData()
     material.userData = userData
 
     // prevent different materials from using a same shader
@@ -52,16 +85,13 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
     material.onBeforeCompile = (shader) => {
         if (!shader.defines) shader.defines = {};
 
+        const uniforms = new GeneralMatrialUniforms(shader)
+        uniforms.loadGlobalOptions()
+
         if (shadowTex) {
             shader.defines.HAS_SHADOW = true;
             shader.uniforms.tShadow = { value: shadowTex };
         }
-        shader.uniforms.uShadowMix = { value: 0.67 };
-        shader.uniforms.uShadowPreMix = { value: shadowOptions.preMix };
-        shader.uniforms.uShadowTest = { value: shadowOptions.test };
-        shader.uniforms.uShadowThreshold = { value: shadowOptions.threshold };
-        shader.uniforms.uShadowTransition = { value: shadowOptions.transition };
-        shader.uniforms.uShadowAmount = { value: shadowOptions.amount };
 
         if (ctrlTex) {
             shader.defines.HAS_CTRL = true;
@@ -199,6 +229,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         options.onBeforeCompile && options.onBeforeCompile(shader);
 
         userData.shader = shader;
+        userData.shaderUniforms = uniforms;
         // console.log(shader.fragmentShader)
     };
 
@@ -211,4 +242,12 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             none: undefined,
         }[options.alphaSrc || 'none']
     };
+}
+
+export function getMeshGeneralMaterialUniforms(mesh: THREE.Mesh): GeneralMatrialUniforms[] {
+    return (Array.isArray(mesh.material) ? mesh.material : [mesh.material])
+        .map(x => x?.userData)
+        .filter(x => x instanceof MaterialUserData)
+        .map(x => x.shaderUniforms)
+        .filter(x => x instanceof GeneralMatrialUniforms)
 }
