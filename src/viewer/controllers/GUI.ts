@@ -6,6 +6,7 @@ import { MagiaExedraScene3D, type SceneComposerAntiAliasing } from 'magia-exedra
 import { presetExport, presetImport } from './presets';
 import { themeDarkBgColor } from './theme';
 import { SceneShadowController } from 'magia-exedra-character-three/scene/shadow';
+import { CameraSettings } from '../camera';
 
 export const threeGuiContainer = document.getElementById('three-gui')!
 
@@ -45,9 +46,12 @@ export const guiOptions = {
     ShadowTexAmount: ShadowTexOptions.amount,
 
     FOV: MagiaExedraScene3D.cameraInitialFov,
+    CameraRotation: 0,
+    CameraResolution: CameraSettings.resolution,
+    CameraFullscreen: true,
+
     Axes: false,
     PixelRatio: MagiaExedraScene3D.defaultPixelRatio,
-    CameraFullscreen: true,
     UseEffectComposer: scene.composerEnabled,
     AntiAliasing: 'None' satisfies SceneComposerAntiAliasing as SceneComposerAntiAliasing,
     AntiAliasingLevel: 2,

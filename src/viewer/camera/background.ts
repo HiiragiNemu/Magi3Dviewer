@@ -3,8 +3,13 @@ import { HDRLoader } from 'three/examples/jsm/Addons.js';
 import { Controller } from 'three/addons/libs/lil-gui.module.min.js';
 import { scene } from '../scene';
 import { prettyPrintJSON } from '../controllers/presets';
-import { addAnimationLoop, getClockDelta, removeAnimationLoop } from 'magia-exedra-character-three/renderer';
-import { guiAmbientLight, guiAmbientLightColor, guiDirectionalLight, guiDirectionalLightColor, guiFloorShadowOpacity, guiLightAngle, guiLightDistance, guiLightHeight } from '../controllers';
+import { addAnimationLoop, removeAnimationLoop } from 'magia-exedra-character-three/renderer';
+import { guiAmbientLight, guiAmbientLightColor, guiDirectionalLight, guiDirectionalLightColor, guiFloorShadowOpacity, guiLightAngle, guiLightDistance, guiLightHeight, setCameraVideoOptionsVisible, updateCameraVideoCurrentResolution } from '../controllers';
+import { disposeEnvironmentMaps, updateSceneEnvironment } from './environment';
+
+export const CameraSettings = {
+    resolution: '1920x1440'
+}
 
 export const cameraVideo = document.getElementById('camera-bg') as HTMLVideoElement
 let cameraStream: MediaStream | undefined = undefined
@@ -12,8 +17,8 @@ let cameraStream: MediaStream | undefined = undefined
 export async function enableSceneCamera() {
     cameraStream = await navigator.mediaDevices.getUserMedia({
         video: {
-            width: { ideal: 1920 },
-            height: { ideal: 1440 },
+            width: { ideal: parseResolutionString(CameraSettings.resolution).width },
+            height: { ideal: parseResolutionString(CameraSettings.resolution).height },
             aspectRatio: { ideal: 4 / 3 },
             facingMode: "environment",
         }
@@ -36,6 +41,9 @@ export async function enableSceneCamera() {
     )
     guiAmbientLight.setValue(1.25)
     guiFloorShadowOpacity.setValue(0.25)
+
+    setCameraVideoOptionsVisible(true)
+    updateCameraVideoCurrentResolution()
 }
 
 export function disableSceneCamera() {
@@ -43,10 +51,7 @@ export function disableSceneCamera() {
     scene.scene.environment = null
     scene.scene.background = null
 
-    cameraPanoramaTex?.dispose()
-    cameraPanoramaTex = undefined
-    pmremRenderTarget?.dispose()
-    pmremRenderTarget = undefined
+    disposeEnvironmentMaps()
 
     if (cameraStream) {
         cameraStream.getTracks().forEach(x => x.stop())
@@ -54,6 +59,8 @@ export function disableSceneCamera() {
     }
 
     restoreGuiValues()
+
+    setCameraVideoOptionsVisible(false)
 }
 
 let savedGuiValues: { controller: Controller, value: unknown }[] | undefined
@@ -69,53 +76,52 @@ function restoreGuiValues() {
     savedGuiValues?.forEach(x => x.controller.setValue(x.value))
 }
 
-const cameraPanoramaCanvas = document.createElement('canvas')
-cameraPanoramaCanvas.width = 512
-cameraPanoramaCanvas.height = 256
-const cameraPanoramaCanvasCtx = cameraPanoramaCanvas.getContext('2d')
-
-let cameraPanoramaTex: THREE.Texture | undefined = undefined
-let pmremRenderTarget: THREE.WebGLRenderTarget | undefined = undefined
-
-const pmremGenerator = new THREE.PMREMGenerator(scene.renderer);
-pmremGenerator.compileEquirectangularShader();
-
-let accumulatedTimeDelta = 0
-const environmentUpdateTime = 1 / 5
-
-/**
- * Use the webcam to create a panorama and apply it as scene environment, to provide ambient lighting
- */
-function updateSceneEnvironment() {
-    if (!cameraPanoramaCanvasCtx) return
-
-    // run at a throttled framerate. the PMREM calculation is heavy
-    accumulatedTimeDelta += getClockDelta()
-    if (accumulatedTimeDelta < environmentUpdateTime) return
-    accumulatedTimeDelta = 0
-
-    const drawWidth = cameraPanoramaCanvas.width / 2
-    const drawHeight = cameraPanoramaCanvas.height
-
-    cameraPanoramaCanvasCtx.drawImage(cameraVideo, 0, 0, drawWidth, drawHeight) // draw the front side
-    cameraPanoramaCanvasCtx.scale(-1, 1)
-    cameraPanoramaCanvasCtx.drawImage(cameraVideo, 0 - drawWidth * 2, 0, drawWidth, drawHeight) // draw the rear side (mirrord front side)
-    cameraPanoramaCanvasCtx.resetTransform()
-
-    if (!cameraPanoramaTex) {
-        cameraPanoramaTex = new THREE.Texture(cameraPanoramaCanvas)
-        cameraPanoramaTex.colorSpace = THREE.SRGBColorSpace
-        // cameraTex.mapping = THREE.EquirectangularReflectionMapping
+export function getCameraStreamDimensions(): { width: number, height: number } {
+    const track = getCameraVideoTrack()
+    if (!track) {
+        return { width: 0, height: 0 }
     }
-    cameraPanoramaTex.needsUpdate = true
+    const settings = track.getSettings()
+    return {
+        width: settings.width ?? 0,
+        height: settings.height ?? 0,
+    }
+}
 
-    // we need to re-calculate PMREM every time, or it won't update
-    const renderTarget = pmremGenerator.fromEquirectangular(cameraPanoramaTex)
-    scene.scene.environment = renderTarget.texture
-    // scene.scene.background = pmremTexNext
+export async function setCameraStreamDimensions(width: number | string, height?: number) {
+    if (typeof width == 'string') {
+        ({ width, height } = parseResolutionString(width));
+    } else if (height == undefined) {
+        height = width
+    }
 
-    pmremRenderTarget?.dispose() // dispose the old texture
-    pmremRenderTarget = renderTarget
+    const track = getCameraVideoTrack()
+    if (!track) return
+
+    console.log(`trying to set camera resolution to ${width}x${height}`)
+    await track.applyConstraints({ width, height })
+
+    await new Promise(resolve => {
+        if (cameraVideo.requestVideoFrameCallback != undefined) {
+            cameraVideo.requestVideoFrameCallback(resolve)
+        } else {
+            console.log('`requestVideoFrameCallback` is not available')
+            setTimeout(resolve, 1000)
+        }
+    })
+    prettyPrintJSON(track.getSettings())
+}
+
+function getCameraVideoTrack() {
+    return cameraStream?.getTracks().find(x => x.kind == 'video')
+}
+
+function parseResolutionString(resolution: string) {
+    const [width, height] = resolution.split('x')
+    return {
+        width: parseInt(width),
+        height: parseInt(height)
+    }
 }
 
 export function setCameraVideoFullscreen(fullscreen: boolean) {
@@ -124,20 +130,6 @@ export function setCameraVideoFullscreen(fullscreen: boolean) {
     } else {
         cameraVideo.style.objectFit = 'contain'
     }
-}
-
-export function getCameraStreamDimensions(): { width: number, height: number } {
-    if (cameraStream) {
-        for (const track of cameraStream.getTracks()) {
-            if (track.kind != 'video') continue
-            const settings = track.getSettings()
-            return {
-                width: settings.width ?? 0,
-                height: settings.height ?? 0,
-            }
-        }
-    }
-    return { width: 0, height: 0 }
 }
 
 // debug canvas
@@ -171,12 +163,6 @@ if (false) {
     scene.scene.add(plane)
 }
 
-export function getAllMaterials() {
-    return scene.characters.map(x => x.character).filter(x => !!x).flatMap(x =>
-        x.meshes.map(x => x.material).filter(x => x instanceof THREE.MeshStandardMaterial)
-    )
-}
-
 function enableTestEnvironmentMap() {
     new HDRLoader().load('https://sbcode.net/img/spruit_sunrise_1k.hdr', (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping
@@ -185,4 +171,4 @@ function enableTestEnvironmentMap() {
     })
 }
 
-Object.assign(window, { cameraVideo, disableSceneCamera, enableTestEnvironmentMap, getCameraStreamDimensions })
+Object.assign(window, { cameraVideo, disableSceneCamera, enableTestEnvironmentMap, getCameraStreamDimensions, setCameraStreamDimensions, getCameraVideoTrack })

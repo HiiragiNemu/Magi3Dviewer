@@ -33,11 +33,14 @@ export function setupCameraModeButtons() {
     btnCameraBackground.onclick = async () => {
         if (cameraEnabling) return
         cameraEnabling = true
-
-        await enableSceneCamera()
-        document.body.classList.add('camera-active')
-
-        cameraEnabling = false
+        try {
+            await enableSceneCamera()
+            document.body.classList.add('camera-active')
+        } catch (error) {
+            window.alert(error)
+        } finally {
+            cameraEnabling = false
+        }
     }
 
     // btnCameraAR.onclick = () => arButton.click()

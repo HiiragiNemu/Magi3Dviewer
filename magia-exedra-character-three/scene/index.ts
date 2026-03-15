@@ -43,6 +43,7 @@ export class MagiaExedraScene3D {
     private _pixelRatio = MagiaExedraScene3D.defaultPixelRatio
 
     camera: THREE.PerspectiveCamera
+    cameraRotation: number | undefined = undefined
     static cameraInitialFov = 15
     static cameraInitialPosition: [number, number, number] = [0, 1.5, 7.5]
 
@@ -198,6 +199,13 @@ export class MagiaExedraScene3D {
         //
         this.renderer.setAnimationLoop(() => {
             this.controls.update();
+            // apply user rotation
+            if (this.cameraRotation != undefined) {
+                const rad = THREE.MathUtils.degToRad(this.cameraRotation)
+                this.camera.quaternion.multiply(
+                    new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), rad)
+                )
+            }
 
             this.animateLoopCallback()
 

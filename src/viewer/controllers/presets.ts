@@ -28,7 +28,7 @@ interface ViewerPreset {
     gui: ReturnType<typeof gui.save>
 }
 
-export const PresetVersion = 1
+export const PresetVersion = 2
 export const presetPattern = '#preset='
 
 /** @returns `true` if copied to clipboard, otherwise `false` */
@@ -121,19 +121,39 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
     deselectCharacter()
     scene.characters.forEach(x => scene.removeCharacter(x))
 
-    gui.load(preset.gui)
-    setTheme(preset.theme)
-    scene.camera.position.copy(preset.camera.position)
-    scene.controls.target.copy(preset.camera.target)
-
     // migrate old version presets
-    if (preset.version == undefined) {
+    preset.version ??= 0
+    if (preset.version <= 0) {
         guiColorBrightness.setValue(1)
         guiColorContrast.setValue(1)
         guiColorSaturation.setValue(1)
 
         guiShader.controllersRecursive().forEach(x => x.reset())
     }
+    if (preset.version <= 1) {
+        try {
+            const guiPreset = preset.gui as any
+            guiPreset.folders.Camera = {
+                "controllers": {}
+            }
+            if (guiPreset.folders.Misc.controllers.FOV != undefined) {
+                guiPreset.folders.Camera.controllers.FOV = guiPreset.folders.Misc.controllers.FOV
+            }
+            if (guiPreset.folders.Misc.controllers.CameraFullscreen != undefined) {
+                guiPreset.folders.Camera.controllers.CameraFullscreen = guiPreset.folders.Misc.controllers.CameraFullscreen
+            }
+
+            console.log('migrated from preset version <= 1:')
+            prettyPrintJSON(preset)
+        } catch (error) {
+            console.warn('failed to migrate preset version <= 1:', error)
+        }
+    }
+
+    gui.load(preset.gui)
+    setTheme(preset.theme)
+    scene.camera.position.copy(preset.camera.position)
+    scene.controls.target.copy(preset.camera.target)
 
     let completed = 0
 
