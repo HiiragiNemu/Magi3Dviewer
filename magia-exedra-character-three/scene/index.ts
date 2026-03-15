@@ -378,7 +378,8 @@ export class MagiaExedraScene3D {
             const isSelected = this.characterSelected == sceneCharacter
 
             if (sceneCharacter.removed) {
-                reject('Character already removed')
+                // reject('Character already removed')
+                return
             }
 
             if (sceneCharacter.loading) {
@@ -437,6 +438,7 @@ export class MagiaExedraScene3D {
     }
 
     removeCharacter(sceneCharacter: SceneCharacter) {
+        sceneCharacter.removed = true
         if (sceneCharacter.character) {
             this.scene.remove(sceneCharacter.character.object)
             sceneCharacter.character.dispose()
