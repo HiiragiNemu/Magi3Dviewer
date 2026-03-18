@@ -3,9 +3,9 @@ import { HDRLoader } from 'three/examples/jsm/Addons.js';
 import { Controller } from 'three/addons/libs/lil-gui.module.min.js';
 import { scene } from '../scene';
 import { prettyPrintJSON } from '../controllers/presets';
-import { addAnimationLoop, removeAnimationLoop } from 'magia-exedra-character-three/renderer';
-import { guiAmbientLight, guiAmbientLightColor, guiDirectionalLight, guiDirectionalLightColor, guiFloorShadowOpacity, guiLightAngle, guiLightDistance, guiLightHeight, setCameraVideoOptionsVisible, updateCameraVideoCurrentResolution } from '../controllers';
-import { disposeEnvironmentMaps, updateSceneEnvironment } from './environment';
+import { guiAmbientLight, guiAmbientLightColor, guiDirectionalLight, guiDirectionalLightColor, guiFloorShadowOpacity, guiLightAngle, guiLightDistance, guiLightHeight, updateCameraVideoCurrentResolution, updateCameraVideoGUI } from '../controllers';
+import { startUpdateSceneEnvironment, stopUpdateSceneEnvironment } from './environment';
+import { MagiaExedraScene3D } from 'magia-exedra-character-three';
 
 export const CameraSettings = {
     resolution: '1920x1440'
@@ -29,30 +29,36 @@ export async function enableSceneCamera() {
     cameraVideo.srcObject = cameraStream
     cameraVideo.play()
 
-    cameraVideo.onloadedmetadata = () => {
-        addAnimationLoop(updateSceneEnvironment)
-    }
-
     backupGuiValues(
         guiAmbientLightColor, guiAmbientLight,
         guiDirectionalLightColor, guiDirectionalLight,
         guiLightAngle, guiLightHeight, guiLightDistance,
         guiFloorShadowOpacity
     )
-    guiAmbientLight.setValue(1.25)
-    guiFloorShadowOpacity.setValue(0.25)
 
-    setCameraVideoOptionsVisible(true)
-    updateCameraVideoCurrentResolution()
+    guiAmbientLightColor.setValue(MagiaExedraScene3D.ambientLightInitialColor)
+    guiAmbientLight.setValue(1.25)
+    guiAmbientLight.initialValue = 1.25
+
+    guiDirectionalLightColor.setValue(MagiaExedraScene3D.directionalLightInitialColor)
+    // guiLightDistance.setValue(5)
+    // guiLightDistance.initialValue = 5
+
+    // guiFloorShadowOpacity.setValue(0.25)
+    // guiFloorShadowOpacity.initialValue = 0.25
+
+    updateCameraVideoGUI()
+
+    cameraVideo.onloadedmetadata = () => {
+        startUpdateSceneEnvironment()
+        updateCameraVideoCurrentResolution()
+    }
 }
 
 export function disableSceneCamera() {
-    removeAnimationLoop(updateSceneEnvironment)
-    scene.scene.environment = null
-    scene.scene.background = null
+    stopUpdateSceneEnvironment()
 
-    disposeEnvironmentMaps()
-
+    cameraVideo.srcObject = null
     if (cameraStream) {
         cameraStream.getTracks().forEach(x => x.stop())
         cameraStream = undefined
@@ -60,23 +66,43 @@ export function disableSceneCamera() {
 
     restoreGuiValues()
 
-    setCameraVideoOptionsVisible(false)
+    updateCameraVideoGUI()
 }
 
-let savedGuiValues: { controller: Controller, value: unknown }[] | undefined
+let savedGuiValues: Array<{
+    controller: Controller,
+    value: unknown,
+    initialValue: unknown,
+    // TODO: initial color hex value
+}> | undefined
 
 function backupGuiValues(...controllers: unknown[]) {
     savedGuiValues = controllers.filter(x => x instanceof Controller).map(controller => ({
         controller,
-        value: controller.getValue()
+        value: controller.getValue(),
+        initialValue: controller.initialValue,
     }))
 }
 
 function restoreGuiValues() {
-    savedGuiValues?.forEach(x => x.controller.setValue(x.value))
+    savedGuiValues?.forEach(x => {
+        x.controller.initialValue = x.initialValue
+        x.controller.setValue(x.value)
+    })
 }
 
-export function getCameraStreamDimensions(): { width: number, height: number } {
+export function getCameraVideoResolution(): { width: number, height: number } {
+    if (cameraVideo.srcObject) {
+        return {
+            width: cameraVideo.videoWidth,
+            height: cameraVideo.videoHeight
+        }
+    } else {
+        return { width: 0, height: 0 }
+    }
+}
+
+function getCameraStreamDimensions(): { width: number, height: number } {
     const track = getCameraVideoTrack()
     if (!track) {
         return { width: 0, height: 0 }
@@ -110,6 +136,7 @@ export async function setCameraStreamDimensions(width: number | string, height?:
         }
     })
     prettyPrintJSON(track.getSettings())
+    console.log(getCameraVideoResolution())
 }
 
 function getCameraVideoTrack() {
@@ -132,14 +159,11 @@ export function setCameraVideoFullscreen(fullscreen: boolean) {
     }
 }
 
-// debug canvas
-// showCanvas(cameraPanoramaCanvas)
-
 export function showCanvas(canvas: HTMLCanvasElement) {
     canvas.style.maxWidth = '100%'
     canvas.style.maxHeight = '25%'
     canvas.style.border = '2px solid red'
-    canvas.style.boxSizing = 'border-box'
+    canvas.style.boxSizing = 'content-box'
     canvas.style.position = 'fixed'
     canvas.style.left = '0'
     canvas.style.bottom = '0'
@@ -171,4 +195,4 @@ function enableTestEnvironmentMap() {
     })
 }
 
-Object.assign(window, { cameraVideo, disableSceneCamera, enableTestEnvironmentMap, getCameraStreamDimensions, setCameraStreamDimensions, getCameraVideoTrack })
+Object.assign(window, { cameraVideo, disableSceneCamera, enableTestEnvironmentMap, getCameraVideoResolution, getCameraStreamDimensions, setCameraStreamDimensions, getCameraVideoTrack })

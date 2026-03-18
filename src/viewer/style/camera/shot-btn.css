@@ -1,0 +1,64 @@
+#camera-shot-btn {
+    position: fixed;
+    bottom: 48px;
+    left: 50%;
+    transform: var(--translate);
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    filter: invert(1);
+    --translate: translateX(-50%);
+}
+
+#camera-shot-btn img {
+    display: block;
+    width: 48px;
+    height: 48px;
+}
+
+#camera-shot-btn:hover img {
+    transform: scale(1.1);
+    opacity: 0.7;
+}
+
+#camera-shot-btn.shoting {
+    border: 4px solid transparent;
+    margin: 4px 0;
+    border-top: 4px solid black;
+    border-radius: 100%;
+    animation: camera-shot-btn-rotate linear 0.5s infinite;
+}
+
+#camera-shot-btn.shoting img {
+    opacity: 0;
+    width: 32px;
+    height: 32px;
+}
+
+@keyframes camera-shot-btn-rotate {
+    from {
+        transform: var(--translate) rotate(0deg);
+    }
+
+    to {
+        transform: var(--translate) rotate(360deg);
+    }
+}
+
+.theme-light #camera-shot-btn {
+    filter: initial;
+}
+
+@media (min-aspect-ratio: 1/1) {
+    #camera-shot-btn {
+        left: initial;
+        bottom: 50%;
+        right: 56px;
+        --translate: translateY(50%);
+    }
+
+    #camera-shot-btn.shoting {
+        margin: 0 4px;
+    }
+}

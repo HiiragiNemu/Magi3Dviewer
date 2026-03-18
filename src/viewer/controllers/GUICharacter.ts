@@ -30,7 +30,7 @@ export interface CharacterGuiOptions extends CharacterOptions {
 export const guiCharacterSelectedFolderName = 'Character (Selected)'
 export const guiCharacterSelected = gui.addFolder(guiCharacterSelectedFolderName).close()
 
-const characterGlobalFolder = gui.addFolder('Characters (Global)')
+const characterGlobalFolder = gui.addFolder('Characters (Global)').close()
 characterGlobalFolder.add(guiOptions, 'OutlineVisible').onChange(() => updateCharacterOutline('OutlineVisible', guiOptions))
 characterGlobalFolder.add(guiOptions, 'OutlineThickness', 0, 0.01).onChange(() => updateCharacterOutline('OutlineThickness', guiOptions))
 characterGlobalFolder.addColor(guiOptions, 'OutlineColor').onChange(() => updateCharacterOutline('OutlineColor', guiOptions))

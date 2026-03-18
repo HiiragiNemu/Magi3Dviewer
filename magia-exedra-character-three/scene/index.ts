@@ -4,6 +4,7 @@ import { createRenderer } from '../renderer'
 import type MagiaExedraCharacter3D from '../character'
 import type { LoadCharacterCallbacks } from '../loader';
 import { SceneShadowController } from './shadow'
+import { PerformanceController } from '../performance'
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
@@ -100,6 +101,8 @@ export class MagiaExedraScene3D {
         saturation: 1.15,
     }
 
+    perfRender = new PerformanceController('Scene')
+
     constructor(characterManager: MagiaExedraCharacterThree) {
         this.characterManager = characterManager
 
@@ -130,12 +133,13 @@ export class MagiaExedraScene3D {
             MagiaExedraScene3D.directionalLightInitialHeight,
             directionalLightPositionZ
         );
+        this.scene.add(this.directionalLight);
+
         // enable shadows
         this.shadow = new SceneShadowController(this)
         this.shadow.enabled = MagiaExedraScene3D.shadowEnabled
         this.shadow.resolution = MagiaExedraScene3D.shadowResolution
         this.shadow.bias = MagiaExedraScene3D.shadowBias
-        this.scene.add(this.directionalLight);
 
         this.axesHelper = new THREE.AxesHelper(2);
         this.axesHelper.visible = false
@@ -213,6 +217,7 @@ export class MagiaExedraScene3D {
             this.transformControls.enabled = this.characterSelectionVisible
             this.transformControlsHelper.visible = this.characterSelectionVisible
 
+            this.perfRender.start()
             if (
                 (this.composerEnabled == 'Auto' && this.characterSelectionVisible) ||
                 this.composerEnabled == 'Always'
@@ -232,6 +237,7 @@ export class MagiaExedraScene3D {
             } else {
                 this.renderer.render(this.scene, this.camera);
             }
+            this.perfRender.stop()
         })
 
         window.addEventListener('resize', () => {

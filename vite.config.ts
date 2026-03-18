@@ -13,7 +13,8 @@ export default defineConfig({
     visualizer(),
   ],
   build: {
-    // minify: false
+    // minify: false,
+    sourcemap: true,
   },
   server: {
     allowedHosts: true

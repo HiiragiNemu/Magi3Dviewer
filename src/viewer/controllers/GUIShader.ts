@@ -25,9 +25,7 @@ function updateShadow() {
     scene.renderer.shadowMap.type = guiOptions.ShadowType
 }
 
-guiShader.add(guiOptions, 'ShadowAlphaTest', 0, 1).onChange(() => {
-    ShadowOptions.alphaTest = guiOptions.ShadowAlphaTest
-
+guiShader.add(ShadowOptions, 'alphaTest', 0, 1).name('ShadowAlphaTest').onChange(() => {
     scene.characters
         .map(x => x.character)
         .flatMap(x => x?.meshes.map(x => x.mesh))
@@ -36,19 +34,13 @@ guiShader.add(guiOptions, 'ShadowAlphaTest', 0, 1).onChange(() => {
         .forEach(uniforms => uniforms.loadGlobalOptions())
 })
 
-guiShader.add(guiOptions, 'ShadowTexPreMix', 0, 1).onChange(updateMaterialShadow)
-guiShader.add(guiOptions, 'ShadowTexTest', 0, 1).onChange(updateMaterialShadow)
-guiShader.add(guiOptions, 'ShadowTexThreshold', 0, 0.2).onChange(updateMaterialShadow)
-guiShader.add(guiOptions, 'ShadowTexTransition', 0, 0.01).onChange(updateMaterialShadow)
-guiShader.add(guiOptions, 'ShadowTexAmount', -1, 1).onChange(updateMaterialShadow)
+guiShader.add(ShadowTexOptions, 'preMix', 0, 1).name('ShadowTexPreMix').onChange(updateMaterialShadow)
+guiShader.add(ShadowTexOptions, 'test', 0, 1).name('ShadowTexTest').onChange(updateMaterialShadow)
+guiShader.add(ShadowTexOptions, 'threshold', 0, 0.2).name('ShadowTexThreshold').onChange(updateMaterialShadow)
+guiShader.add(ShadowTexOptions, 'transition', 0, 0.01).name('ShadowTexTransition').onChange(updateMaterialShadow)
+guiShader.add(ShadowTexOptions, 'amount', -1, 1).name('ShadowTexAmount').onChange(updateMaterialShadow)
 
 function updateMaterialShadow() {
-    ShadowTexOptions.preMix = guiOptions.ShadowTexPreMix
-    ShadowTexOptions.test = guiOptions.ShadowTexTest
-    ShadowTexOptions.threshold = guiOptions.ShadowTexThreshold
-    ShadowTexOptions.transition = guiOptions.ShadowTexTransition
-    ShadowTexOptions.amount = guiOptions.ShadowTexAmount
-
     scene.characters
         .map(x => x.character)
         .flatMap(x => x?.meshes.map(x => x.mesh))

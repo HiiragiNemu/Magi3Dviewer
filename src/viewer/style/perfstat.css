@@ -1,0 +1,31 @@
+#perf-stat {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: monospace;
+    color: white;
+    pointer-events: none;
+}
+
+#perf-stat-js {
+    pointer-events: initial;
+}
+
+#perf-time {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#perf-time>* {
+    pointer-events: initial;
+    background-color: rgba(0, 0, 0, 0.33);
+}
+
+.perf-bad {
+    color: #fd3;
+}

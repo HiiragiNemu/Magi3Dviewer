@@ -38,6 +38,7 @@ export function createRenderer(parameters?: THREE.WebGLRendererParameters) {
 }
 
 export function addAnimationLoop(callback: () => any) {
+    if (animationLoops.includes(callback)) return
     animationLoops.push(callback)
 }
 

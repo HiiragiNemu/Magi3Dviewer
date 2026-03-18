@@ -9,8 +9,6 @@ import { type TransformControlsMode } from 'three/examples/jsm/Addons.js';
 import { presetImport } from './controllers/presets';
 import { setupCameraModeButtons } from './camera'
 
-const menuEl = document.getElementById('menu')!
-
 const characterSelector = document.getElementById('character-selector') as HTMLSelectElement
 const characterAddCrossBtn = document.getElementById('character-add-cross-btn') as HTMLButtonElement
 const characterAddSelector = document.getElementById('character-add-selector') as HTMLSelectElement
@@ -19,7 +17,10 @@ const animationPlayBtn = document.getElementById('animation-play') as HTMLButton
 const animationPauseBtn = document.getElementById('animation-pause') as HTMLButtonElement
 const animationSlider = document.getElementById('animation-slider') as HTMLInputElement
 const fullscreenBtn = document.getElementById('fullscreen-btn') as HTMLButtonElement
+
 const loadProgressEl = document.getElementById('load-progress')!
+
+const perfStatJsContainer = document.getElementById('perf-stat-js') as HTMLDivElement
 
 characterAddCrossBtn.onclick = removeSelectedCharacter
 animationPlayBtn.onclick = () => { scene.characterSelected?.character && (scene.characterSelected.character.animation.paused = false); updateAnimationControls() }
@@ -70,11 +71,9 @@ export function setupViewer() {
 
     stats.dom.style.removeProperty('top')
     stats.dom.style.removeProperty('left')
-    stats.dom.style.right = '0'
-    stats.dom.style.bottom = '0'
-    stats.dom.style.pointerEvents = 'initial'
-    stats.dom.style.zIndex = '-1'
-    menuEl.appendChild(stats.dom)
+    stats.dom.style.removeProperty('position')
+    stats.dom.style.removeProperty('z-index')
+    perfStatJsContainer.appendChild(stats.dom)
 }
 
 function setupCharacterAddSelector() {

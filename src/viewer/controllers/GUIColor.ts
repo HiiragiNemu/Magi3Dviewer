@@ -1,7 +1,7 @@
 import { scene } from "../scene";
 import { gui, guiOptions } from "./GUI";
 
-export const guiColor = gui.addFolder('Color')
+export const guiColor = gui.addFolder('Color').close()
 
 export const guiColorBrightness = guiColor.add(guiOptions, 'Brightness', 0.5, 1.5, 0.01).onChange(updateColorFilter)
 export const guiColorContrast = guiColor.add(guiOptions, 'Contrast', 0.5, 1.5, 0.01).onChange(updateColorFilter)

@@ -15,7 +15,7 @@ const cameraModeList = document.getElementById('camera-mode-list') as HTMLDivEle
 const btnCameraBackground = document.getElementById('camera-mode-background') as HTMLButtonElement
 // const btnCameraAR = document.getElementById('camera-mode-ar') as HTMLButtonElement
 const btnCameraOff = document.getElementById('camera-off') as HTMLButtonElement
-const btnCameraShot = document.getElementById('camera-shot-btn') as HTMLButtonElement
+export const btnCameraShot = document.getElementById('camera-shot-btn') as HTMLButtonElement
 
 export function setupCameraModeButtons() {
     arButton.removeAttribute('style')

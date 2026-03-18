@@ -1,3 +1,4 @@
+import { PerformanceMetricsOptions } from '../performance';
 import { scene } from '../scene';
 import { gui, guiOptions } from './GUI';
 import { createSquareExponentController } from './GUIExtensions';
@@ -43,3 +44,5 @@ function updateAntiAliasing() {
     updateAntiAliasingGUI()
     scene.setAntiAliasing(guiOptions.AntiAliasing, guiOptions.AntiAliasingLevel)
 }
+
+miscFolder.add(PerformanceMetricsOptions, 'visible').name('PerformanceMetrics')

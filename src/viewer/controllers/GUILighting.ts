@@ -3,14 +3,20 @@ import { scene } from '../scene';
 import { MagiaExedraScene3D, deg2pos } from 'magia-exedra-character-three/scene'
 
 import { gui, guiOptions } from "./GUI";
+import { CameraEnvironmentOptions } from '../camera/environment';
+import { cameraVideo } from '../camera';
 
-const lightingFolder = gui.addFolder('Lighting')
+const lightingFolder = gui.addFolder('Lighting').close()
+const guiLightingOptions = {
+    Reset() {
+        lightingFolder.reset()
+    }
+}
 
 export const guiBgColor = lightingFolder.addColor(guiOptions, 'BgColor').onChange(value => {
     document.body.style.backgroundColor = value
     const color = new THREE.Color(value)
-    // W3C Luminance Formula
-    const luminance = (0.299 * color.r) + (0.587 * color.g) + (0.114 * color.b);
+    const luminance = rgb2luminance(color.r, color.g, color.b);
     scene.outlinePass.visibleEdgeColor = luminance > 0.5 ? MagiaExedraScene3D.outlineColorDark : MagiaExedraScene3D.outlineColorLight
 })
 export const guiAmbientLightColor = lightingFolder.addColor(guiOptions, 'AmbientLightColor').onChange(value => scene.ambientLight.color = new THREE.Color(value))
@@ -25,3 +31,32 @@ function updateSceneDirectionalLight() {
     const { x, z } = deg2pos(guiOptions.LightAngle, guiOptions.LightDistance)
     scene.directionalLight.position.set(x, guiOptions.LightHeight, z)
 }
+
+/** W3C Luminance Formula */
+export function rgb2luminance(r: number, g: number, b: number) {
+    return 0.299 * r + 0.587 * g + 0.114 * b
+}
+
+export const guiCameraEnvironment = lightingFolder.add(CameraEnvironmentOptions, 'enabled').name('CameraEnvironment').onChange(updateGuiLightingDynamic).hide()
+export const guiDynamicAmbient = lightingFolder.add(CameraEnvironmentOptions, 'enablePMREM').name('DynamicAmbient').hide()
+export const guiDynamicLight = lightingFolder.add(CameraEnvironmentOptions, 'enableLightCalculation').name('DynamicLight').hide()
+
+export function updateGuiLightingDynamic() {
+    const cameraEnabled = !!cameraVideo.srcObject
+
+    if (cameraEnabled) {
+        guiCameraEnvironment.show()
+    } else {
+        guiCameraEnvironment.hide()
+    }
+
+    if (cameraEnabled && CameraEnvironmentOptions.enabled) {
+        guiDynamicAmbient.show()
+        guiDynamicLight.show()
+    } else {
+        guiDynamicAmbient.hide()
+        guiDynamicLight.hide()
+    }
+}
+
+lightingFolder.add(guiLightingOptions, 'Reset').name('Reset lighting')

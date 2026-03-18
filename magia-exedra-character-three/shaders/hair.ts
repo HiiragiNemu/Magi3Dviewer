@@ -13,6 +13,8 @@ const angelRingOptions = {
 export async function createHairMaterial(options: MaterialCreationOptions): Promise<MaterialCreationResult> {
     return createGeneralMaterial(options)
 
+    // TODO: Angel ring
+
     const angelRingTex = await loadTexture(AngelRingMap, { colorSpace: THREE.SRGBColorSpace })
 
     angelRingTex.wrapS = THREE.ClampToEdgeWrapping

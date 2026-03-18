@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Magi3Dviewer - Magia Exedra 3D model viewer online | 圆哆啦角色模型查看器</title>
-    <meta name="description" content="View Magia Exedra 3D models online. 圆哆啦3D角色模型，在线查看。 网站收录魔法少女小圆 Magia Exedra 所有3D角色建模，均为游戏解包提取。 Built with WebGL via Three.js">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Magi3Dviewer - Magia Exedra 3D model viewer online | 魔法少女小圆-圆哆啦角色模型查看器</title>
+    <meta name="description" content="View Madoka Exedra 3D models online. 圆哆啦3D角色模型，在线查看，并使用拍照模式。 网站收录魔法少女小圆 Magia Exedra 所有3D角色建模，均为游戏解包提取。 You can also take pictures with camera mode, additionally AR. Built with WebGL via Three.js">
     <meta name="keywords" content="Puella Magi Madoka Magica, Madoka Magica, Magia Exedra, Madoka Exedra, Magia Record, 3D Models, Three.js, 魔法少女小圆, 圆哆啦, 魔法纪录, 角色模型, 3D模型, 解包">
     <meta name="author" content="浩劫者12345">
 
@@ -39,6 +39,11 @@
         <img id="demo-screenshot" class="demo" src="/demo.jpg" alt="Demo Screenshot">
 
         <video id="camera-bg"></video>
+
+        <div id="perf-stat">
+            <div id="perf-time" style="display: none;"></div>
+            <div id="perf-stat-js"></div>
+        </div>
 
         <button id="camera-shot-btn" title="Take a photo"><img src="src/icons/camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
 

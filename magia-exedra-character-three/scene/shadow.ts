@@ -20,40 +20,44 @@ export class SceneShadowController {
         this.floorOpacity = SceneShadowController.FloorOpacity
     }
 
+    private get _shadowLight() {
+        return this.scene.directionalLight
+    }
+
     get enabled() {
-        return this.scene.directionalLight.castShadow
+        return this._shadowLight.castShadow
     }
 
     set enabled(enabled) {
-        this.scene.directionalLight.castShadow = enabled
+        this._shadowLight.castShadow = enabled
         if (!enabled) {
             this.removeShadowMap()
         }
     }
 
     get resolution() {
-        return this.scene.directionalLight.shadow.mapSize.x
+        return this._shadowLight.shadow.mapSize.x
     }
 
     set resolution(resolution) {
         if (this.resolution == resolution) return
-        this.scene.directionalLight.shadow.mapSize = new THREE.Vector2(resolution, resolution)
+        this._shadowLight.shadow.mapSize = new THREE.Vector2(resolution, resolution)
         this.removeShadowMap()
     }
 
     get bias() {
-        return this.scene.directionalLight.shadow.bias
+        return this._shadowLight.shadow.bias
     }
 
     set bias(bias) {
-        this.scene.directionalLight.shadow.bias = bias
+        this._shadowLight.shadow.bias = bias
     }
 
     removeShadowMap() {
-        if (this.scene.directionalLight.shadow.map) {
-            this.scene.directionalLight.shadow.map.dispose()
+        if (this._shadowLight.shadow.map) {
+            this._shadowLight.shadow.map.dispose()
         }
-        this.scene.directionalLight.shadow.map = null
+        this._shadowLight.shadow.map = null
     }
 
     get floorOpacity() {
