@@ -27,6 +27,7 @@
     margin: 4px 0;
     border-top: 4px solid black;
     border-radius: 100%;
+    outline: none;
     animation: camera-shot-btn-rotate linear 0.5s infinite;
 }
 

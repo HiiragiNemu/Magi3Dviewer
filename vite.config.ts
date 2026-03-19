@@ -7,7 +7,10 @@ export default defineConfig({
   base: '',
   plugins: [
     legacy({
-      targets: ['defaults', 'not IE 11'],
+      // tested working on chrome 61, firefox 68
+      targets: ['chrome >= 49'],
+      modernTargets: ['chrome >= 60'],
+      modernPolyfills: true,
     }),
     basicSsl(),
     visualizer(),

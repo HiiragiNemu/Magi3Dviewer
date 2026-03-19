@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import 'abortcontroller-polyfill/dist/polyfill-patch-fetch' // for chrome <= 66
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh, createBodyInsideMaterial, createHairMaterial, createDepthMaterial, createDistanceMaterial } from './shaders'
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes, fetchAndTryDecompressGzip } from './utils';
