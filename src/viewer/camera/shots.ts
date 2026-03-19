@@ -11,6 +11,10 @@ const btnCameraSaveDownload = document.getElementById('camera-save-download') as
 
 cameraSaveImg.onload = () => {
     btnCameraShot.classList.remove('shoting')
+    setTimeout(() => {
+        btnCameraSaveClose.disabled = false
+        btnCameraSaveDownload.disabled = false
+    }, 100);
 }
 
 btnCameraSaveClose.onclick = closeImage
@@ -27,6 +31,9 @@ btnCameraSaveDownload.onclick = () => {
 let imgDownloadUrl = ''
 
 export function savePhoto() {
+    if (btnCameraShot.classList.contains('shoting')) return
+    if (cameraSaveContainer.style.display) return
+
     pauseViewer()
     btnCameraShot.classList.add('shoting')
 
@@ -99,6 +106,8 @@ const metaViewport = document.querySelector('meta[name="viewport"]') as HTMLMeta
 const origViewportContent = metaViewport.content
 
 function showImage() {
+    pauseViewer()
+
     cameraSaveImg.src = imgDownloadUrl
     cameraSaveContainer.style.display = 'block'
 
@@ -106,10 +115,16 @@ function showImage() {
     document.documentElement.style.overflow = 'hidden'
     metaViewport.content = origViewportContent.replace(', maximum-scale=1.0', '').replace('maximum-scale=1.0', '')
 
-    pauseViewer()
+    btnCameraSaveClose.disabled = true
+    btnCameraSaveDownload.disabled = true
+    setTimeout(() => {
+        btnCameraSaveClose.disabled = false
+    }, 100);
 }
 
 function closeImage() {
+    resumeViewer()
+
     cameraSaveImg.src = ''
     cameraSaveContainer.style.removeProperty('display')
 
@@ -117,7 +132,6 @@ function closeImage() {
     document.documentElement.style.removeProperty('overflow')
     metaViewport.content = origViewportContent
 
-    resumeViewer()
     btnCameraShot.classList.remove('shoting')
 
     if (imgDownloadUrl.startsWith('blob:')) {
