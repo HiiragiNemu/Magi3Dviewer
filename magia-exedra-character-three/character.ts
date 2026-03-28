@@ -41,7 +41,10 @@ export default class MagiaExedraCharacter3D {
         return [...new Set(
             this.object.animations
                 .filter(x => x.tracks.length > 0)
-                .map(x => x.name.replace(/_\d/, ''))
+                .map(x => x.name
+                    .replace(/_weapon_\w/, '') // remove `_weapon_a`, `_weapon_b`, ...
+                    .replace(/_\d/, '') // remove `_1`, `_2`, ...
+                )
         )].sort()
     }
 
