@@ -52,11 +52,11 @@ export class MagiaExedraScene3D {
     static controlsInitialTarget: [number, number, number] = [0, 0.9, 0]
 
     ambientLight: THREE.AmbientLight
-    static ambientLightInitialColor = '#999999'
+    static ambientLightInitialColor = '#aaaaaa'
     static ambientLightInitialIntensity = 5
 
     directionalLight: THREE.DirectionalLight
-    static directionalLightInitialColor = '#777777'
+    static directionalLightInitialColor = '#999999'
     static directionalLightInitialIntensity = 5
     static directionalLightInitialAngle = 15
     static directionalLightInitialDistance = 10
@@ -96,7 +96,7 @@ export class MagiaExedraScene3D {
     taaCount = 0
 
     static colorFilter: ColorFilter = {
-        brightness: 1.2,
+        brightness: 1.0,
         contrast: 1.0,
         saturation: 1.15,
     }
@@ -348,7 +348,7 @@ export class MagiaExedraScene3D {
             for (const character of this.characters) {
                 if (!character.character) continue
                 for (const mesh of character.character.userData.meshes) {
-                    if (mesh == intersect.object) {
+                    if (mesh == intersect.object && intersect.object.visible) {
                         return character
                     }
                 }

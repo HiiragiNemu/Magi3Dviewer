@@ -69,23 +69,25 @@ export function disposeObject(obj: THREE.Object3D) {
             const mesh = child as THREE.Mesh;
             mesh.geometry.dispose();
 
-            // Disposing materials and textures
-            if (Array.isArray(mesh.material)) {
-                mesh.material.forEach(m => disposeMaterial(m));
-            } else {
-                disposeMaterial(mesh.material);
-            }
+            disposeMaterial(mesh.material);
+            disposeMaterial(mesh.customDepthMaterial)
+            disposeMaterial(mesh.customDistanceMaterial)
         }
     });
 }
 
-function disposeMaterial(mat: THREE.Material) {
-    mat.dispose();
-    // Check for textures
-    for (const key of Object.keys(mat)) {
-        const value = (mat as any)[key];
-        if (value && value.isTexture) {
-            value.dispose();
-        }
+function disposeMaterial(materials?: THREE.Material | THREE.Material[]) {
+    if (!materials) return
+
+    if (!Array.isArray(materials)) {
+        materials = [materials]
     }
+
+    materials.forEach(mat => {
+        mat.dispose();
+        // Check for textures
+        Object.values(mat)
+            .filter(x => x instanceof THREE.Texture)
+            .forEach(x => x.dispose())
+    })
 }

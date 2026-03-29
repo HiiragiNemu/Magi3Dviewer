@@ -183,6 +183,8 @@ export class ChatacterAnimation {
 
 export class CharacterMeshController {
     mesh: THREE.Mesh
+    static OutlineAlwaysVisible = false
+    private _outlineAlwaysVisible = CharacterMeshController.OutlineAlwaysVisible
 
     constructor(mesh: THREE.Mesh) {
         this.mesh = mesh
@@ -229,14 +231,23 @@ export class CharacterMeshController {
     }
 
     set visible(value) {
-        if (value) {
+        this.mesh.visible = value
+
+        if (this.outlineAlwaysVisible && this.defaultVisibility == true) {
             this.mesh.visible = true
-        }
-        else if (this.defaultVisibility == false) {
-            this.mesh.visible = false
         }
 
         this.materials.forEach(x => x.visible = value)
+    }
+
+    get outlineAlwaysVisible() {
+        return this._outlineAlwaysVisible
+    }
+
+    set outlineAlwaysVisible(value) {
+        this._outlineAlwaysVisible = value
+
+        this.visible = this.visible
     }
 
     restoreDefaultVisibility() {

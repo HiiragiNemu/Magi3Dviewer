@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import type GUI from 'three/examples/jsm/libs/lil-gui.module.min.js';
 import { OutlineColor, OutlineThickness } from 'magia-exedra-character-three/shaders'
-import MagiaExedraCharacter3D from 'magia-exedra-character-three/character';
+import MagiaExedraCharacter3D, { CharacterMeshController } from 'magia-exedra-character-three/character';
 import { scene } from '../scene';
 import { gui, guiOptions, isGuiClosed } from './GUI';
 
@@ -19,6 +19,7 @@ export interface CharacterOutlineOptions {
     OutlineVisible: boolean,
     OutlineThickness: number,
     OutlineColor: string,
+    OutlineAlwaysVisible: boolean,
 }
 
 export type CharacterMeshVisibilityOptions = Record<string, boolean>
@@ -34,6 +35,7 @@ const characterGlobalFolder = gui.addFolder('Characters (Global)').close()
 characterGlobalFolder.add(guiOptions, 'OutlineVisible').onChange(() => updateCharacterOutline('OutlineVisible', guiOptions))
 characterGlobalFolder.add(guiOptions, 'OutlineThickness', 0, 0.01).onChange(() => updateCharacterOutline('OutlineThickness', guiOptions))
 characterGlobalFolder.addColor(guiOptions, 'OutlineColor').onChange(() => updateCharacterOutline('OutlineColor', guiOptions))
+characterGlobalFolder.add(guiOptions, 'OutlineAlwaysVisible').onChange(() => updateCharacterOutline('OutlineAlwaysVisible', guiOptions)).domElement.title = 'Show outline even when mesh is hidden'
 
 let currentCharacter: MagiaExedraCharacter3D | undefined = undefined
 let currentCharacterOptions: CharacterGuiOptions | undefined = undefined
@@ -86,6 +88,7 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
     outlineFolder.add(characterOptions, 'OutlineVisible').onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = true
     outlineFolder.add(characterOptions, 'OutlineThickness', 0, 0.01).onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = OutlineThickness
     outlineFolder.addColor(characterOptions, 'OutlineColor').onChange(() => updateCharacterOutline(character, characterOptions))._initialValueHexString = OutlineColor
+    outlineFolder.add(characterOptions, 'OutlineAlwaysVisible').onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = CharacterMeshController.OutlineAlwaysVisible
 
     const meshesFolderClosed: boolean = meshesFolder ? isGuiClosed(meshesFolder) : false
     meshesFolder = guiCharacterSelected.addFolder('Meshes')
@@ -114,6 +117,7 @@ export function getCharacterOptions(character: MagiaExedraCharacter3D): Characte
             OutlineVisible: true,
             OutlineThickness: OutlineThickness,
             OutlineColor: OutlineColor,
+            OutlineAlwaysVisible: CharacterMeshController.OutlineAlwaysVisible,
         }),
     }
 }
@@ -134,7 +138,8 @@ export function getCharacterOutline(character: MagiaExedraCharacter3D): Characte
     return {
         OutlineVisible: mesh.visible,
         OutlineThickness: material.uniforms.uThickness.value,
-        OutlineColor: '#' + (material.uniforms.uColor.value as THREE.Color).getHexString()
+        OutlineColor: '#' + (material.uniforms.uColor.value as THREE.Color).getHexString(),
+        OutlineAlwaysVisible: character.meshes.some(x => x.outlineAlwaysVisible == true)
     }
 }
 
@@ -152,6 +157,7 @@ export function updateCharacterOutline(target: MagiaExedraCharacter3D | keyof Ch
         : scene.characters.map(x => x.character).filter(x => !!x);
 
     for (const character of characters) {
+        // update outline mesh materials
         for (const mesh of character.userData.outlineMeshes) {
             const material = mesh.material as THREE.ShaderMaterial
             if (typeof target != 'string' || target == 'OutlineVisible') {
@@ -162,6 +168,13 @@ export function updateCharacterOutline(target: MagiaExedraCharacter3D | keyof Ch
             }
             if (typeof target != 'string' || target == 'OutlineColor') {
                 material.uniforms.uColor.value = new THREE.Color(source.OutlineColor)
+            }
+        }
+
+        // update mesh controllers
+        for (const mesh of character.meshes) {
+            if (typeof target != 'string' || target == 'OutlineAlwaysVisible') {
+                mesh.outlineAlwaysVisible = source.OutlineAlwaysVisible
             }
         }
     }

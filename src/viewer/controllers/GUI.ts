@@ -6,6 +6,7 @@ import { MagiaExedraScene3D, type SceneComposerAntiAliasing } from 'magia-exedra
 import { presetExport, presetImport } from './presets';
 import { themeDarkBgColor } from './theme';
 import { SceneShadowController } from 'magia-exedra-character-three/scene/shadow';
+import { CharacterMeshController } from 'magia-exedra-character-three/character';
 
 export const threeGuiContainer = document.getElementById('three-gui')!
 
@@ -15,6 +16,7 @@ export const guiOptions = {
     OutlineVisible: true,
     OutlineThickness: OutlineThickness,
     OutlineColor: OutlineColor,
+    OutlineAlwaysVisible: CharacterMeshController.OutlineAlwaysVisible,
 
     Brightness: MagiaExedraScene3D.colorFilter.brightness,
     Contrast: MagiaExedraScene3D.colorFilter.contrast,
