@@ -1,10 +1,7 @@
-import * as THREE from 'three';
-import { HDRLoader } from 'three/examples/jsm/Addons.js';
 import { Controller } from 'three/addons/libs/lil-gui.module.min.js';
-import { scene } from '../scene';
 import { prettyPrintJSON } from '../controllers/presets';
 import { guiAmbientLight, guiAmbientLightColor, guiDirectionalLight, guiDirectionalLightColor, guiFloorShadowOpacity, guiLightAngle, guiLightDistance, guiLightHeight, updateCameraVideoCurrentResolution, updateCameraVideoGUI } from '../controllers';
-import { startUpdateSceneEnvironment, stopUpdateSceneEnvironment } from './environment';
+import { CameraEnvironmentOptions } from './environment';
 import { MagiaExedraScene3D } from 'magia-exedra-character-three';
 
 export const CameraSettings = {
@@ -50,13 +47,13 @@ export async function enableSceneCamera() {
     updateCameraVideoGUI()
 
     cameraVideo.onloadedmetadata = () => {
-        startUpdateSceneEnvironment()
         updateCameraVideoCurrentResolution()
+        CameraEnvironmentOptions.active = true
     }
 }
 
 export function disableSceneCamera() {
-    stopUpdateSceneEnvironment()
+    CameraEnvironmentOptions.active = false
 
     cameraVideo.srcObject = null
     if (cameraStream) {
@@ -159,40 +156,4 @@ export function setCameraVideoFullscreen(fullscreen: boolean) {
     }
 }
 
-export function showCanvas(canvas: HTMLCanvasElement) {
-    canvas.style.maxWidth = '100%'
-    canvas.style.maxHeight = '25%'
-    canvas.style.border = '2px solid red'
-    canvas.style.boxSizing = 'content-box'
-    canvas.style.position = 'fixed'
-    canvas.style.left = '0'
-    canvas.style.bottom = '0'
-    document.body.appendChild(canvas)
-}
-
-// plane for debugging environment reflection
-if (false) {
-    const plane = new THREE.Mesh(
-        new THREE.PlaneGeometry(100, 100),
-        new THREE.MeshStandardMaterial({
-            roughness: 0,
-            metalness: 0.9,
-            color: 0xffffff,
-        })
-    )
-    plane.castShadow = true
-    plane.receiveShadow = true
-    plane.rotation.x = -Math.PI / 2
-    plane.position.y = 0
-    scene.scene.add(plane)
-}
-
-function enableTestEnvironmentMap() {
-    new HDRLoader().load('https://sbcode.net/img/spruit_sunrise_1k.hdr', (texture) => {
-        texture.mapping = THREE.EquirectangularReflectionMapping
-        scene.scene.environment = texture
-        scene.scene.background = texture
-    })
-}
-
-Object.assign(window, { cameraVideo, disableSceneCamera, enableTestEnvironmentMap, getCameraVideoResolution, getCameraStreamDimensions, setCameraStreamDimensions, getCameraVideoTrack })
+Object.assign(window, { cameraVideo, disableSceneCamera, getCameraVideoResolution, getCameraStreamDimensions, setCameraStreamDimensions, getCameraVideoTrack })

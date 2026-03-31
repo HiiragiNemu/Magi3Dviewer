@@ -17,7 +17,11 @@ export class PerformanceController {
             this.clear()
             return
         }
-        this.domElement.innerHTML = `${this.title}: ${this._ms2html(performance.now() - this.time)}`
+        this.setTimeMs(performance.now() - this.time)
+    }
+
+    setTimeMs(ms: number) {
+        this.domElement.innerHTML = `${this.title}: ${this._ms2html(ms)}`
     }
 
     clear() {

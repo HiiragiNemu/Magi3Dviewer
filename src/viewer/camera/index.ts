@@ -1,9 +1,9 @@
 import { ARButton } from 'three/examples/jsm/Addons.js';
 import { scene } from '../scene';
-import { disableSceneCamera, enableSceneCamera } from './background';
+import { disableSceneCamera, enableSceneCamera } from './camera';
 import { savePhoto } from './shots';
 
-export * from './background'
+export * from './camera'
 export * from './shots'
 
 const arButton = ARButton.createButton(scene.renderer, {

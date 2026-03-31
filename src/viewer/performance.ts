@@ -16,14 +16,21 @@ export const PerformanceMetricsOptions = {
     }
 }
 
-export const perfCameraDownscale = new PerformanceController('Camera downscale')
+export const perfCreateImageBitmap = new PerformanceController('CreateImageBitmap')
 export const perfPanoramaDraw = new PerformanceController('Panorama draw')
 export const perfPmrem = new PerformanceController('PMREM')
-export const perfLightDraw = new PerformanceController('Light drawCtx')
-export const perfLightGetImageData = new PerformanceController('Light getData')
 export const perfLightCalc = new PerformanceController('Light calc')
 
-const cameraPerfControllers = [perfCameraDownscale, perfPanoramaDraw, perfPmrem, perfLightDraw, perfLightGetImageData, perfLightCalc]
+export const perfWorkerDownscale = new PerformanceController('Worker downscale')
+export const perfWorkerLightDraw = new PerformanceController('Worker light draw')
+export const perfWorkerLightGet = new PerformanceController('Worker light get')
+export const perfWorkerTotal = new PerformanceController('Worker total')
+
+const cameraPerfControllers = [
+    perfCreateImageBitmap, perfPanoramaDraw, perfPmrem, perfLightCalc,
+    perfWorkerDownscale, perfWorkerLightDraw, perfWorkerLightGet, perfWorkerTotal
+]
+
 const controllers = [...cameraPerfControllers]
 
 export function clearCameraPerformance() {

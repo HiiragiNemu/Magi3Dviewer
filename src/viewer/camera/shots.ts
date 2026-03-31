@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { scene } from '../scene';
-import { cameraVideo, getCameraVideoResolution } from './background';
+import { cameraVideo, getCameraVideoResolution } from './camera';
 import { setRenderPaused } from 'magia-exedra-character-three/renderer';
 import { btnCameraShot } from '.';
 
