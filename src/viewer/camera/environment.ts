@@ -5,11 +5,11 @@ import { addAnimationLoop, removeAnimationLoop } from 'magia-exedra-character-th
 import { updateSceneLight } from './lighting'
 import { clearCameraPerformance, perfCreateImageBitmap, perfWorkerDownscale, perfWorkerLightDraw, perfWorkerLightGet, perfWorkerTotal } from '../performance'
 import { disposePMREM, updatePMREM } from './PMREM'
-import CameraWorker from './worker?worker'
-import type { CameraWorkerMessage } from './worker';
+import { createCameraWorker } from './worker';
+import type { CameraWorkerMessage } from './WorkerCore';
 import { cameraVideo } from './camera';
 
-const cameraWorker = new CameraWorker()
+const cameraWorker = createCameraWorker()
 
 const _cameraEnvironmentOptions = {
     active: false,
@@ -65,6 +65,8 @@ function updateSceneEnvironment() {
 }
 
 async function submitCameraImage() {
+    if (!CameraEnvironmentOptions.active) return
+
     perfCreateImageBitmap.start()
     const imageBitmapPromise = createImageBitmap(cameraVideo)
     perfCreateImageBitmap.stop()
@@ -76,7 +78,7 @@ async function submitCameraImage() {
     )
 }
 
-cameraWorker.onmessage = e => {
+cameraWorker.onmessage = (e: MessageEvent) => {
     if (typeof e.data != 'object') return
     const data = e.data as CameraWorkerMessage
 
