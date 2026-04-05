@@ -2,7 +2,8 @@ import GUI, { type FunctionController } from 'three/addons/libs/lil-gui.module.m
 import { PCFShadowMap, type ShadowMapType } from 'three';
 import { OutlineColor, OutlineThickness } from 'magia-exedra-character-three/shaders'
 import { scene } from '../scene';
-import { MagiaExedraScene3D, type SceneComposerAntiAliasing } from 'magia-exedra-character-three/scene'
+import { MagiaExedraScene3D } from 'magia-exedra-character-three/scene'
+import type { SceneComposerAntiAliasing } from 'magia-exedra-character-three/scene/effects';
 import { presetExport, presetImport } from './presets';
 import { themeDarkBgColor } from './theme';
 import { SceneShadowController } from 'magia-exedra-character-three/scene/shadow';

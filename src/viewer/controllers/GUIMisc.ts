@@ -42,7 +42,7 @@ function updateAntiAliasingGUI() {
 
 function updateAntiAliasing() {
     updateAntiAliasingGUI()
-    scene.setAntiAliasing(guiOptions.AntiAliasing, guiOptions.AntiAliasingLevel)
+    scene.effects.setAntiAliasing(guiOptions.AntiAliasing, guiOptions.AntiAliasingLevel)
 }
 
 miscFolder.add(PerformanceMetricsOptions, 'visible').name('PerformanceMetrics')

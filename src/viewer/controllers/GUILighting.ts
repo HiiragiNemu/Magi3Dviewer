@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { scene } from '../scene';
-import { MagiaExedraScene3D, deg2pos } from 'magia-exedra-character-three/scene'
+import { deg2pos } from 'magia-exedra-character-three/scene'
+import { SceneEffectsController } from 'magia-exedra-character-three/scene/effects';
 
 import { gui, guiOptions } from "./GUI";
 import { CameraEnvironmentOptions } from '../camera/environment';
@@ -17,7 +18,7 @@ export const guiBgColor = lightingFolder.addColor(guiOptions, 'BgColor').onChang
     document.body.style.backgroundColor = value
     const color = new THREE.Color(value)
     const luminance = rgb2luminance(color.r, color.g, color.b);
-    scene.outlinePass.visibleEdgeColor = luminance > 0.5 ? MagiaExedraScene3D.outlineColorDark : MagiaExedraScene3D.outlineColorLight
+    scene.effects.outlinePass.visibleEdgeColor = luminance > 0.5 ? SceneEffectsController.outlineColorDark : SceneEffectsController.outlineColorLight
 })
 export const guiAmbientLightColor = lightingFolder.addColor(guiOptions, 'AmbientLightColor').onChange(value => scene.ambientLight.color = new THREE.Color(value))
 export const guiDirectionalLightColor = lightingFolder.addColor(guiOptions, 'DirectionalLightColor').onChange(value => scene.directionalLight.color = new THREE.Color(value))

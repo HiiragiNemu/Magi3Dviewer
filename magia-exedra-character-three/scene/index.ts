@@ -5,19 +5,10 @@ import type MagiaExedraCharacter3D from '../character'
 import type { LoadCharacterCallbacks } from '../loader';
 import { SceneShadowController } from './shadow'
 import { PerformanceController } from '../performance'
+import { SceneEffectsController } from './effects'
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
-
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-
-import { TAARenderPass } from 'three/addons/postprocessing/TAARenderPass.js';
-import { SSAARenderPass } from 'three/addons/postprocessing/SSAARenderPass.js';
-import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass.js';
-import { FXAAPass } from 'three/addons/postprocessing/FXAAPass.js';
 
 export interface SceneCharacter {
     character?: MagiaExedraCharacter3D
@@ -26,8 +17,6 @@ export interface SceneCharacter {
     pendingResolve?: (value: SceneCharacter) => void
     removed: boolean
 }
-
-export type SceneComposerAntiAliasing = 'None' | 'MSAA' | 'TAA' | 'SSAA' | 'SMAA' | 'FXAA'
 
 export interface ColorFilter {
     brightness: number
@@ -75,22 +64,12 @@ export class MagiaExedraScene3D {
     transformControlsHelper
 
     composerEnabled: 'Auto' | 'Always' | 'Never' = 'Auto'
-    composerRenderTarget: THREE.WebGLRenderTarget | undefined
-    composer: EffectComposer | undefined
-    taaRenderPass: TAARenderPass
-    ssaaRenderPass: SSAARenderPass
-    renderPass: RenderPass
-    outlinePass: OutlinePass
-    static outlineColorLight = new THREE.Color(0xffff00)
-    static outlineColorDark = new THREE.Color(0xff00ff)
-    smaaPass: SMAAPass
-    outputPass: OutputPass
-    fxaaPass: FXAAPass
+    effects: SceneEffectsController
 
     animateLoopCallback: () => any = () => { }
 
     get characterSelectionVisible() {
-        return this.outlinePass.selectedObjects.length > 0 && this.characters.length > 1
+        return this.effects.outlinePass.selectedObjects.length > 0 && this.characters.length > 1
     }
 
     taaCount = 0
@@ -161,42 +140,8 @@ export class MagiaExedraScene3D {
         this.transformControlsHelper = this.transformControls.getHelper();
         this.scene.add(this.transformControlsHelper);
 
-        //
-        // Post effects
-        //
-        // TAA
-        this.taaRenderPass = new TAARenderPass(this.scene, this.camera);
-        this.taaRenderPass.stencilBuffer = true
-        this.taaRenderPass.enabled = false
-
-        // SSAA
-        this.ssaaRenderPass = new SSAARenderPass(this.scene, this.camera);
-        this.ssaaRenderPass.stencilBuffer = true
-        this.ssaaRenderPass.enabled = false
-
-        // render pass (disable if using TAA or SSAA)
-        this.renderPass = new RenderPass(this.scene, this.camera);
-
-        // outline pass
-        this.outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), this.scene, this.camera);
-        this.outlinePass.visibleEdgeColor = MagiaExedraScene3D.outlineColorLight
-        this.outlinePass.edgeThickness = this.getRenderPixelRatio()
-        this.outlinePass.edgeStrength = this.getRenderPixelRatio() * 3
-        this.outlinePass.enabled = false
-
-        // SMAA
-        this.smaaPass = new SMAAPass();
-        this.smaaPass.enabled = false
-
-        // output pass
-        this.outputPass = new OutputPass();
-
-        // FXAA
-        this.fxaaPass = new FXAAPass();
-        this.fxaaPass.enabled = false
-
         // composer
-        this.createComposer()
+        this.effects = new SceneEffectsController(this)
 
         //
         // Rendering
@@ -213,7 +158,7 @@ export class MagiaExedraScene3D {
 
             this.animateLoopCallback()
 
-            this.outlinePass.enabled = this.characterSelectionVisible
+            this.effects.outlinePass.enabled = this.characterSelectionVisible
             this.transformControls.enabled = this.characterSelectionVisible
             this.transformControlsHelper.visible = this.characterSelectionVisible
 
@@ -222,18 +167,18 @@ export class MagiaExedraScene3D {
                 (this.composerEnabled == 'Auto' && this.characterSelectionVisible) ||
                 this.composerEnabled == 'Always'
             ) {
-                if (this.taaRenderPass.enabled) {
+                if (this.effects.taaRenderPass.enabled) {
                     if (this.taaCount < 1) {
                         this.taaCount++
                     } else {
-                        if ((this.taaRenderPass as any).accumulateIndex >= 32) {
-                            this.taaRenderPass.accumulate = false
+                        if ((this.effects.taaRenderPass as any).accumulateIndex >= 32) {
+                            this.effects.taaRenderPass.accumulate = false
                         } else {
-                            this.taaRenderPass.accumulate = true
+                            this.effects.taaRenderPass.accumulate = true
                         }
                     }
                 }
-                this.composer?.render();
+                this.effects.composer.render();
             } else {
                 this.renderer.render(this.scene, this.camera);
             }
@@ -248,7 +193,7 @@ export class MagiaExedraScene3D {
             this.camera.updateProjectionMatrix();
 
             this.renderer.setSize(width, height);
-            this.composer?.setSize(width, height)
+            this.effects.composer.setSize(width, height)
             this.updateRenderPixelRatio()
         });
     }
@@ -268,58 +213,10 @@ export class MagiaExedraScene3D {
 
     updateRenderPixelRatio() {
         this.renderer.setPixelRatio(this.getRenderPixelRatio());
-        this.composer?.setPixelRatio(this.getRenderPixelRatio());
+        this.effects.composer.setPixelRatio(this.getRenderPixelRatio());
 
-        this.outlinePass.edgeThickness = this.getRenderPixelRatio()
-        this.outlinePass.edgeStrength = this.getRenderPixelRatio() * 3
-    }
-
-    createComposer(msaaSamples = 0) {
-        this.composer?.dispose()
-        this.composerRenderTarget?.dispose()
-        this.composerRenderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight, {
-            stencilBuffer: true,
-            samples: msaaSamples,
-            type: THREE.HalfFloatType, // ensure no color bands
-        });
-        this.composer = new EffectComposer(this.renderer, this.composerRenderTarget);
-        this.composer.setPixelRatio(this.getRenderPixelRatio());
-        this.composer.addPass(this.taaRenderPass);
-        this.composer.addPass(this.ssaaRenderPass);
-        this.composer.addPass(this.renderPass);
-        this.composer.addPass(this.outlinePass);
-        this.composer.addPass(this.smaaPass);
-        this.composer.addPass(this.outputPass);
-        this.composer.addPass(this.fxaaPass);
-    }
-
-    setAntiAliasing(aa: SceneComposerAntiAliasing, level: number) {
-        this.taaRenderPass.enabled = false
-        this.ssaaRenderPass.enabled = false
-        this.renderPass.enabled = false
-        this.smaaPass.enabled = false
-        this.fxaaPass.enabled = false
-
-        if (aa != 'MSAA' && this.composerRenderTarget && this.composerRenderTarget.samples > 0) {
-            this.createComposer(0)
-        }
-
-        if (aa == 'TAA') {
-            this.taaRenderPass.enabled = true
-            this.taaRenderPass.sampleLevel = level
-        } else if (aa == 'SSAA') {
-            this.ssaaRenderPass.enabled = true
-            this.ssaaRenderPass.sampleLevel = level
-        } else {
-            this.renderPass.enabled = true
-            if (aa == 'MSAA') {
-                this.createComposer(level)
-            } else if (aa == 'SMAA') {
-                this.smaaPass.enabled = true
-            } else if (aa == 'FXAA') {
-                this.fxaaPass.enabled = true
-            }
-        }
+        this.effects.outlinePass.edgeThickness = this.getRenderPixelRatio()
+        this.effects.outlinePass.edgeStrength = this.getRenderPixelRatio() * 3
     }
 
     setColorFilter(filter: ColorFilter) {
@@ -365,11 +262,11 @@ export class MagiaExedraScene3D {
         this._characterSelected = value
         let obj = value?.character?.object
         if (obj) {
-            this.outlinePass.selectedObjects = [obj]
+            this.effects.outlinePass.selectedObjects = [obj]
             this.transformControls.attach(obj)
             console.log('Set scene selected character (with object):', value)
         } else {
-            this.outlinePass.selectedObjects = []
+            this.effects.outlinePass.selectedObjects = []
             this.transformControls.detach()
             if (!value) {
                 console.log('Deselected scene character')
