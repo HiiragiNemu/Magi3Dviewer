@@ -8,6 +8,7 @@ import { SSAARenderPass } from 'three/addons/postprocessing/SSAARenderPass.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
 import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
@@ -28,6 +29,8 @@ export class SceneEffectsController {
     outlinePass: OutlinePass
     static outlineColorLight = new THREE.Color(0xffff00)
     static outlineColorDark = new THREE.Color(0xff00ff)
+
+    bloomPass: UnrealBloomPass
 
     smaaPass: SMAAPass
     outputPass: OutputPass
@@ -55,6 +58,10 @@ export class SceneEffectsController {
         this.outlinePass.edgeThickness = this.scene.getRenderPixelRatio()
         this.outlinePass.edgeStrength = this.scene.getRenderPixelRatio() * 3
         this.outlinePass.enabled = false
+
+        // bloom
+        this.bloomPass = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.05, 0, 0.5)
+        this.bloomPass.enabled = false
 
         // SMAA
         this.smaaPass = new SMAAPass();
@@ -84,7 +91,10 @@ export class SceneEffectsController {
         this.composer.addPass(this.taaRenderPass);
         this.composer.addPass(this.ssaaRenderPass);
         this.composer.addPass(this.renderPass);
+
+        this.composer.addPass(this.bloomPass);
         this.composer.addPass(this.outlinePass);
+
         this.composer.addPass(this.smaaPass);
         this.composer.addPass(this.outputPass);
         this.composer.addPass(this.fxaaPass);

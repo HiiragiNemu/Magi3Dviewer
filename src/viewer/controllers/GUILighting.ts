@@ -38,6 +38,21 @@ export function rgb2luminance(r: number, g: number, b: number) {
     return 0.299 * r + 0.587 * g + 0.114 * b
 }
 
+lightingFolder.add(scene.effects.bloomPass, 'enabled').name('Bloom').onChange(value => {
+    if (value) {
+        guiBloomStrength.show()
+        guiBloomRadius.show()
+        guiBloomThreshold.show()
+    } else {
+        guiBloomStrength.hide()
+        guiBloomRadius.hide()
+        guiBloomThreshold.hide()
+    }
+})
+const guiBloomStrength = lightingFolder.add(scene.effects.bloomPass, 'strength', 0, 0.1).name('BloomStrength').hide()
+const guiBloomRadius = lightingFolder.add(scene.effects.bloomPass, 'radius', -1, 1).name('BloomRadius').hide()
+const guiBloomThreshold = lightingFolder.add(scene.effects.bloomPass, 'threshold', 0, 1).name('BloomThreshold').hide()
+
 export const guiCameraEnvironment = lightingFolder.add(CameraEnvironmentOptions, 'enabled').name('CameraEnvironment').onChange(updateGuiLightingDynamic).hide()
 export const guiDynamicAmbient = lightingFolder.add(CameraEnvironmentOptions, 'enablePMREM').name('DynamicAmbient').hide()
 export const guiDynamicLight = lightingFolder.add(CameraEnvironmentOptions, 'enableLightCalculation').name('DynamicLight').hide()

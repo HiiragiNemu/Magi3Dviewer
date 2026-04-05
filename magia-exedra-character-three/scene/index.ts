@@ -66,11 +66,25 @@ export class MagiaExedraScene3D {
     composerEnabled: 'Auto' | 'Always' | 'Never' = 'Auto'
     effects: SceneEffectsController
 
-    animateLoopCallback: () => any = () => { }
+    get shouldUseComposer(): boolean {
+        if (this.composerEnabled == 'Always') {
+            return true
+        }
+
+        if (this.composerEnabled == 'Auto') {
+            if (this.characterSelectionVisible || this.effects.bloomPass.enabled) {
+                return true
+            }
+        }
+
+        return false
+    }
 
     get characterSelectionVisible() {
         return this.effects.outlinePass.selectedObjects.length > 0 && this.characters.length > 1
     }
+
+    animateLoopCallback: () => any = () => { }
 
     taaCount = 0
 
@@ -163,10 +177,7 @@ export class MagiaExedraScene3D {
             this.transformControlsHelper.visible = this.characterSelectionVisible
 
             this.perfRender.start()
-            if (
-                (this.composerEnabled == 'Auto' && this.characterSelectionVisible) ||
-                this.composerEnabled == 'Always'
-            ) {
+            if (this.shouldUseComposer) {
                 if (this.effects.taaRenderPass.enabled) {
                     if (this.taaCount < 1) {
                         this.taaCount++
