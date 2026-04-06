@@ -102,7 +102,11 @@ export class MagiaExedraScene3D {
         //
         // Renderer, scene, camera & controls
         //
-        this.renderer = createRenderer({ antialias: true, alpha: true });
+        this.renderer = createRenderer({
+            antialias: true,
+            alpha: true, // transparent background
+            preserveDrawingBuffer: true, // allow it to be captured, for photo mode
+        });
         this.renderer.setPixelRatio(this.getRenderPixelRatio());
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.outputColorSpace = THREE.SRGBColorSpace;

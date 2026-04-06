@@ -127,15 +127,28 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
 
                     let meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes(name))
 
+                    // `weapon_b` mesh may use `weapon_a` texture in materials
+                    if (meshMaterialNames.some(x => x.includes('weapon'))) {
+                        let meshWeaponNames = meshMaterialNames
+                            .map(x => x.match(/(weapon_\w)($|_)/)?.at(1))
+                            .filter(x => typeof x == 'string')
+                        console.log('weapon material names:', meshWeaponNames)
+                        meshWeaponNames = [... new Set(meshWeaponNames)]
+
+                        if (meshWeaponNames.length == 1) {
+                            meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes(meshWeaponNames[0]))
+                        }
+                    }
+
                     // do not include `face_a` for `face`
                     if (name.includes('face') && !name.includes('_a')) {
                         meshTextures = ObjFilterByKey(meshTextures, x => !x.includes('_a'))
                     }
 
                     if (Object.keys(meshTextures).length == 0) {
-                        // tomoe mami swimsuit
-                        if (characterId == 100303 && ['glass', 'mint', 'tea'].includes(name)) {
-                            meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes('weapon_b'))
+                        // PAPA series, 'face_hide', 'face_l', 'face_r', 'face_side', 'faceparts', 'mouth' uses the same face texture
+                        if (meshMaterialNames.some(x => x.includes('face'))) {
+                            meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes('face'))
                         }
                         // `weapon_a_mesh` and `weapon_b_mesh` may use the same `weapon_a.png`
                         else if (name.includes('weapon')) {
@@ -208,6 +221,13 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                             else if (characterId == 113801 && name.includes('weapon')) {
                                 // akuma homura's dark orb - do not use any alpha
                                 alphaSrc = undefined
+                            }
+                            // has either `shadow` or `ctrl` - use what exists
+                            else if (shadowMap != undefined && ctrlMap == undefined) {
+                                alphaSrc = 'shadow'
+                            }
+                            else if (shadowMap == undefined && ctrlMap != undefined) {
+                                alphaSrc = 'ctrl'
                             }
                             // FBX has `transparent` material -> use alpha map from shadow map
                             // example: ultimate madoka's body (transparent), 加賀見まさら's body (trans), アリナ・グレイ's weapon (trs)
