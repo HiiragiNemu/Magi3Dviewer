@@ -1,12 +1,10 @@
 import GUI, { type FunctionController } from 'three/addons/libs/lil-gui.module.min.js';
-import { PCFShadowMap, type ShadowMapType } from 'three';
 import { OutlineColor, OutlineThickness } from 'magia-exedra-character-three/shaders'
 import { scene } from '../scene';
 import { MagiaExedraScene3D } from 'magia-exedra-character-three/scene'
 import type { SceneComposerAntiAliasing } from 'magia-exedra-character-three/scene/effects';
 import { presetExport, presetImport } from './presets';
 import { themeDarkBgColor } from './theme';
-import { SceneShadowController } from 'magia-exedra-character-three/scene/shadow';
 import { CharacterMeshController } from 'magia-exedra-character-three/character';
 
 export const threeGuiContainer = document.getElementById('three-gui')!
@@ -33,12 +31,6 @@ export const guiOptions = {
     LightAngle: MagiaExedraScene3D.directionalLightInitialAngle,
     LightHeight: MagiaExedraScene3D.directionalLightInitialHeight,
     LightDistance: MagiaExedraScene3D.directionalLightInitialDistance,
-
-    ShadowEnabled: MagiaExedraScene3D.shadowEnabled,
-    ShadowType: PCFShadowMap satisfies ShadowMapType as ShadowMapType,
-    ShadowResolution: MagiaExedraScene3D.shadowResolution,
-    ShadowBias: MagiaExedraScene3D.shadowBias,
-    FloorShadowOpacity: SceneShadowController.FloorOpacity,
 
     FOV: MagiaExedraScene3D.cameraInitialFov,
     CameraRotation: 0,

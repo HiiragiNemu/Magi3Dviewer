@@ -1,15 +1,19 @@
 import GUI, { type KeyToValueOfType } from 'three/addons/libs/lil-gui.module.min.js';
 
 export function createSquareExponentController<T, K extends KeyToValueOfType<T, number>>(gui: GUI, obj: T, key: K, min: number, max: number) {
-    const controller = gui.add(obj, key, min, max)
+    const fakeObj = { [key]: obj[key] } as T
+    const controller = gui.add(fakeObj, key, min, max)
 
     // hook change, convert fake value in the object to real
-    const origOnChange = controller.onChange.bind(controller)
-    controller.onChange = (callback: (value: T[K]) => void) => {
-        return origOnChange(_value => {
-            handleChange()
-            callback(obj[key])
-        })
+    let onChangeCallback = (_value: T[K]) => { }
+    controller.onChange(_ => {
+        handleChange() // injection: process the change
+        onChangeCallback(obj[key]) // callback the processed value
+        // console.log(obj[key])
+    })
+    controller.onChange = (callback: typeof onChangeCallback) => {
+        onChangeCallback = callback
+        return controller
     }
 
     let loadMode = false
@@ -73,11 +77,12 @@ export function createSquareExponentController<T, K extends KeyToValueOfType<T, 
     }
 
     function getObjectValue() {
-        return obj[key] as number
+        return fakeObj[key] as number
     }
 
     function setObjectValue(value: number) {
-        (obj[key] as number) = value
+        (fakeObj[key] as number) = value;
+        (obj[key] as number) = value;
     }
 
     return controller
