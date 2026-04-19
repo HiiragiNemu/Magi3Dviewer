@@ -82,12 +82,19 @@
                 <button id="theme-set-light" title="Use light theme"><img src="src/icons/light_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                 <button id="theme-set-dark" title="Use dark theme"><img src="src/icons/dark_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
 
-                <button id="transform-set-translate" title="Adjust character position" style="display: none;"><img src="src/icons/drag_pan_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-                <button id="transform-set-rotate" title="Adjust character rotation" style="display: none;"><img src="src/icons/360_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                <div id="background-select" class="icon-hover-container" title="Change background">
+                    <button><img src="src/icons/wallpaper_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                    <div class="icon-hover-popitem">
+                        <div id="background-list">
+                            <button id="background-clear"><img src="src/icons/block_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                        </div>
+                        <button id="background-choose-file"><img src="src/icons/add_photo_alternate_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg">Choose from album</button>
+                    </div>
+                </div>
 
-                <div id="camera-mode-selector" title="Select camera mode">
+                <div id="camera-mode-selector" class="icon-hover-container" title="Select camera mode">
                     <button><img src="src/icons/photo_camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-                    <div id="camera-mode-list">
+                    <div id="camera-mode-list" class="icon-hover-popitem center">
                         <button id="camera-mode-background">Camera background</button>
                         <!-- <button id="camera-mode-ar">AR</button> -->
                     </div>
@@ -95,6 +102,9 @@
                 <button id="camera-off" title="Turn off camera background"><img src="src/icons/no_photography_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
 
                 <button id="fullscreen-btn" title="Fullscreen"><img src="src/icons/fullscreen_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+
+                <button id="transform-set-translate" title="Adjust character position" style="display: none;"><img src="src/icons/drag_pan_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                <button id="transform-set-rotate" title="Adjust character rotation" style="display: none;"><img src="src/icons/360_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
             </div>
         </div>
 

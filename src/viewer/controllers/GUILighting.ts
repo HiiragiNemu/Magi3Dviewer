@@ -1,11 +1,11 @@
 import * as THREE from 'three'
 import { scene } from '../scene';
 import { deg2pos } from 'magia-exedra-character-three/scene'
-import { SceneEffectsController } from 'magia-exedra-character-three/scene/effects';
 
 import { gui, guiOptions } from "./GUI";
 import { CameraEnvironmentOptions } from '../camera/environment';
 import { cameraVideo } from '../camera';
+import { setBackgroundColor } from './background';
 
 const lightingFolder = gui.addFolder('Lighting').close()
 const guiLightingOptions = {
@@ -14,12 +14,7 @@ const guiLightingOptions = {
     }
 }
 
-export const guiBgColor = lightingFolder.addColor(guiOptions, 'BgColor').onChange(value => {
-    document.body.style.backgroundColor = value
-    const color = new THREE.Color(value)
-    const luminance = rgb2luminance(color.r, color.g, color.b);
-    scene.effects.outlinePass.visibleEdgeColor = luminance > 0.5 ? SceneEffectsController.outlineColorDark : SceneEffectsController.outlineColorLight
-})
+export const guiBgColor = lightingFolder.addColor(guiOptions, 'BgColor').onChange(setBackgroundColor)
 export const guiAmbientLightColor = lightingFolder.addColor(guiOptions, 'AmbientLightColor').onChange(value => scene.ambientLight.color = new THREE.Color(value))
 export const guiDirectionalLightColor = lightingFolder.addColor(guiOptions, 'DirectionalLightColor').onChange(value => scene.directionalLight.color = new THREE.Color(value))
 export const guiAmbientLight = lightingFolder.add(guiOptions, 'AmbientLight', 0, 10).onChange(value => scene.ambientLight.intensity = value)
@@ -31,11 +26,6 @@ export const guiLightDistance = lightingFolder.add(guiOptions, 'LightDistance', 
 function updateSceneDirectionalLight() {
     const { x, z } = deg2pos(guiOptions.LightAngle, guiOptions.LightDistance)
     scene.directionalLight.position.set(x, guiOptions.LightHeight, z)
-}
-
-/** W3C Luminance Formula */
-export function rgb2luminance(r: number, g: number, b: number) {
-    return 0.299 * r + 0.587 * g + 0.114 * b
 }
 
 lightingFolder.add(scene.effects.bloomPass, 'enabled').name('Bloom').onChange(value => {

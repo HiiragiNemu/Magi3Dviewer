@@ -4,7 +4,7 @@ import { scene } from './scene';
 import { type SceneCharacter } from 'magia-exedra-character-three/scene'
 import { initSelector } from './controls'
 import { characters } from './character';
-import { guiOptions, updateCharacterController, updateCharacterOutline } from './controllers';
+import { guiOptions, setupBackgroundImageSelector, updateCharacterController, updateCharacterOutline } from './controllers';
 import { type TransformControlsMode } from 'three/examples/jsm/Addons.js';
 import { presetImport } from './controllers/presets';
 import { setupCameraModeButtons } from './camera'
@@ -57,6 +57,7 @@ export function setupViewer() {
 
     setupCharacterAddSelector()
     setupViewerInputHandler()
+    setupBackgroundImageSelector()
     setupCameraModeButtons()
 
     scene.animateLoopCallback = animateLoop

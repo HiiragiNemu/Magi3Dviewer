@@ -1,4 +1,5 @@
 export * from './theme'
+export * from './background'
 export * from './GUI'
 export * from './GUICharacter'
 export * from './GUIColor'

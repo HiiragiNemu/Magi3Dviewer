@@ -1,0 +1,29 @@
+.icon-hover-container {
+    position: relative;
+}
+
+.icon-hover-popitem {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 8px 8px 2px 8px;
+    width: max-content;
+    display: none;
+}
+
+.icon-hover-popitem.center {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.icon-hover-container:hover .icon-hover-popitem,
+.icon-hover-container:focus-within .icon-hover-popitem {
+    display: block;
+}
+
+.icon-hover-popitem>* {
+    display: block;
+    width: 100%;
+    margin-bottom: 6px;
+}

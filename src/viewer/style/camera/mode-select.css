@@ -1,29 +1,3 @@
-#camera-mode-selector {
-    position: relative;
-}
-
-#camera-mode-list {
-    position: absolute;
-    right: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 8px 8px 2px 8px;
-    width: max-content;
-    display: none;
-}
-
-#camera-mode-selector:hover #camera-mode-list,
-#camera-mode-selector:focus-within #camera-mode-list {
-    display: block;
-}
-
-#camera-mode-list>* {
-    display: block;
-    width: 100%;
-    margin-bottom: 6px;
-}
-
 .camera-active #camera-mode-selector {
     display: none;
 }

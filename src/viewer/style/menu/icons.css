@@ -15,7 +15,8 @@
     display: block;
 }
 
-#menu-icons img {
+#menu-icons>*>img,
+#menu-icons>*>button>img {
     display: block;
     width: 32px;
     height: 32px;
@@ -23,15 +24,18 @@
     filter: invert(1);
 }
 
-.theme-light #menu-icons img {
+.theme-light #menu-icons>*>img,
+.theme-light #menu-icons>*>button>img {
     filter: initial;
 }
 
-#menu-icons>*:hover img {
+#menu-icons>*:hover>img,
+#menu-icons>*:hover>button>img {
     opacity: 0.7;
 }
 
-.theme-light #menu-icons>*:hover img {
+.theme-light #menu-icons>*:hover>img,
+.theme-light #menu-icons>*:hover>button>img {
     opacity: 0.6;
 }
 

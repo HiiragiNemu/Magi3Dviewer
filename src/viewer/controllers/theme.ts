@@ -25,10 +25,8 @@ export function setTheme(theme: Theme) {
         shouldApplyNewColor = guiOptions.BgColor == themeLightBgColor
     } else return
 
-    if (guiBgColor) {
-        guiBgColor._initialValueHexString = newColor
-        if (shouldApplyNewColor) guiBgColor.reset()
-    }
+    guiBgColor._initialValueHexString = newColor
+    if (shouldApplyNewColor) guiBgColor.reset()
 }
 
 export function getCurrentTheme(): Theme {
