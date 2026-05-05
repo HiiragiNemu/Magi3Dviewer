@@ -61,12 +61,19 @@ export default class MagiaExedraCharacterThree {
 
     getCharacterNameById(id: number | string): string {
         if (typeof id == 'number') id = id.toString()
-        return characterList.payload.mstList.find(x => x.resourceName.includes(id))?.name
+
+        const wipIds = [114901, 115201].map(x => x.toString())
+
+        let name = characterList.payload.mstList.find(x => x.resourceName.includes(id))?.name
             || {
                 '100101': 'Madoka Kaname (Magical Girl)',
                 '100102': 'Madoka Kaname (School Uniform)',
             }[id]
             || 'Unknown'
+
+        if (wipIds.includes(id)) name += ' (WIP)'
+
+        return name
     }
 
     /** Loads the FBX model and returns the character instance */

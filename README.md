@@ -21,8 +21,8 @@ Built with [three.js](https://github.com/mrdoob/three.js/)
 
 ## Screenshots
 
-<img width="520" height="500" alt="Screenshot" src="https://github.com/user-attachments/assets/ccebda22-7908-448f-a0dd-e91ba2df4464" />
-<img width="280" height="500" alt="Camera mode" src="https://github.com/user-attachments/assets/e4b41d5a-b3d3-4243-8d85-328de11374e9" />
+<img width="520" alt="Screenshot" src="https://github.com/user-attachments/assets/ccebda22-7908-448f-a0dd-e91ba2df4464" />
+<img width="280" alt="Camera mode" src="https://github.com/user-attachments/assets/e4b41d5a-b3d3-4243-8d85-328de11374e9" />
 
 ## Shaders
 

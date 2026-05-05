@@ -45,6 +45,7 @@ const characterSelectDict = characterIdList.reduce((obj, id) => {
     obj[`${id} - ${characters.getCharacterNameById(id)}`] = id
     return obj
 }, {} as Record<string, string>)
+console.log(Object.keys(characterSelectDict).join('\n'))
 
 const stats = new Stats()
 
