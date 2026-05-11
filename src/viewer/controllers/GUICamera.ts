@@ -1,5 +1,5 @@
 import { gui, guiOptions } from './GUI';
-import { CameraSettings, cameraVideo, getCameraVideoResolution, setCameraStreamDimensions, setCameraVideoFullscreen } from '../camera';
+import { CameraSettings, getCameraVideoResolution, isCameraEnabled, setCameraStreamDimensions, setCameraVideoFullscreen } from '../camera';
 import { scene } from '../scene';
 import { updateGuiLightingDynamic } from './GUILighting';
 
@@ -23,7 +23,7 @@ const guiCurrentResolution = guiCamera.add(guiCameraOptions, 'CurrentResolution'
 const guiCameraFullscreen = guiCamera.add(guiOptions, 'CameraFullscreen').onChange(setCameraVideoFullscreen).hide()
 
 export function updateCameraVideoGUI() {
-    [guiCameraResolution, guiCurrentResolution, guiCameraFullscreen].forEach(x => cameraVideo.srcObject ? x.show() : x.hide());
+    [guiCameraResolution, guiCurrentResolution, guiCameraFullscreen].forEach(x => isCameraEnabled() ? x.show() : x.hide());
     updateGuiLightingDynamic()
 }
 

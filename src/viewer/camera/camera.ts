@@ -88,8 +88,12 @@ function restoreGuiValues() {
     })
 }
 
+export function isCameraEnabled(): boolean {
+    return !!cameraVideo.srcObject
+}
+
 export function getCameraVideoResolution(): { width: number, height: number } {
-    if (cameraVideo.srcObject) {
+    if (isCameraEnabled()) {
         return {
             width: cameraVideo.videoWidth,
             height: cameraVideo.videoHeight

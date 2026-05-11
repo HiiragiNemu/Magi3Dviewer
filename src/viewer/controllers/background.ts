@@ -2,6 +2,9 @@ import * as THREE from 'three'
 import { scene } from '../scene';
 import { SceneEffectsController } from 'magia-exedra-character-three/scene/effects';
 
+export const bgActiveClassName = 'bg-active'
+
+export const bgImageEl = document.getElementById('bg-image') as HTMLImageElement
 export const backgroundListEl = document.getElementById('background-list') as HTMLDivElement
 export const backgroundClearEl = document.getElementById('background-clear') as HTMLButtonElement
 export const backgroundChooseFileEl = document.getElementById('background-choose-file') as HTMLButtonElement
@@ -24,7 +27,7 @@ function addBackgroundImage(url: string, position: 'start' | 'end' = 'end') {
     img.src = url
 
     btn.onclick = () => {
-        setBackgroundImage(url)
+        setBackgroundImage(img.src)
     }
 
     if (position == 'end') {
@@ -53,11 +56,17 @@ function chooseBackgroundFile() {
 }
 
 function setBackgroundImage(url: string) {
-    document.body.style.backgroundImage = `url(${url})`
+    bgImageEl.src = url
+    document.body.classList.add(bgActiveClassName)
 }
 
 function clearBackgroundImage() {
-    document.body.style.removeProperty('background-image')
+    bgImageEl.src = ''
+    document.body.classList.remove(bgActiveClassName)
+}
+
+export function isBackgroundImageVisible() {
+    return document.body.classList.contains(bgActiveClassName)
 }
 
 export function setBackgroundColor(value: string) {

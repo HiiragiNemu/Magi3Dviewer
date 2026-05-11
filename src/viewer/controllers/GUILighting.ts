@@ -4,7 +4,7 @@ import { deg2pos } from 'magia-exedra-character-three/scene'
 
 import { gui, guiOptions } from "./GUI";
 import { CameraEnvironmentOptions } from '../camera/environment';
-import { cameraVideo } from '../camera';
+import { isCameraEnabled } from '../camera';
 import { setBackgroundColor } from './background';
 
 const lightingFolder = gui.addFolder('Lighting').close()
@@ -48,7 +48,7 @@ export const guiDynamicAmbient = lightingFolder.add(CameraEnvironmentOptions, 'e
 export const guiDynamicLight = lightingFolder.add(CameraEnvironmentOptions, 'enableLightCalculation').name('DynamicLight').hide()
 
 export function updateGuiLightingDynamic() {
-    const cameraEnabled = !!cameraVideo.srcObject
+    const cameraEnabled = isCameraEnabled()
 
     if (cameraEnabled) {
         guiCameraEnvironment.show()
