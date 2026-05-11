@@ -158,6 +158,10 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         else if (name.includes('eye')) {
                             meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes('face'))
                         }
+                        // タルトver.Final has `Flower_Mesh` with material name `mt_chara_114401_body_flower`
+                        else if (meshMaterialNames.some(x => x.includes('body'))) {
+                            meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes('body'))
+                        }
                         // defaults to `weapon`
                         else {
                             meshTextures = ObjFilterByKey(texturePathUrl, x => x.includes('weapon'))

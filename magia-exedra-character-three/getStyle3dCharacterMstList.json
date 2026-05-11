@@ -404,6 +404,16 @@
         "isDefault": true
       },
       {
+        "style3dCharacterMstId": 102301,
+        "type": 1,
+        "name": "和泉十七夜/魔法少女",
+        "resourceName": "chara_102301_battle_unit",
+        "homeMotionResourceName": "chara_10230101_home",
+        "sortOrder": 102301,
+        "isExistVoice": true,
+        "isDefault": true
+      },
+      {
         "style3dCharacterMstId": 102401,
         "type": 1,
         "name": "八雲みたま/魔法少女",
@@ -680,7 +690,27 @@
         "resourceName": "chara_111501_battle_unit",
         "homeMotionResourceName": "chara_11150101_home",
         "sortOrder": 111501,
-        "isExistVoice": false,
+        "isExistVoice": true,
+        "isDefault": true
+      },
+      {
+        "style3dCharacterMstId": 111601,
+        "type": 1,
+        "name": "リズ・ホークウッド/魔法少女",
+        "resourceName": "chara_111601_battle_unit",
+        "homeMotionResourceName": "chara_11160101_home",
+        "sortOrder": 111601,
+        "isExistVoice": true,
+        "isDefault": true
+      },
+      {
+        "style3dCharacterMstId": 111701,
+        "type": 1,
+        "name": "メリッサ・ド・ヴィニョル/魔法少女",
+        "resourceName": "chara_111701_battle_unit",
+        "homeMotionResourceName": "chara_11170101_home",
+        "sortOrder": 111701,
+        "isExistVoice": true,
         "isDefault": true
       },
       {
@@ -739,7 +769,7 @@
         "name": "名前のない少女",
         "resourceName": "chara_113401_model",
         "homeMotionResourceName": "",
-        "sortOrder": 200,
+        "sortOrder": 100,
         "isExistVoice": true,
         "isDefault": true
       },
@@ -749,7 +779,7 @@
         "name": "A-Q",
         "resourceName": "chara_113501_model",
         "homeMotionResourceName": "",
-        "sortOrder": 300,
+        "sortOrder": 200,
         "isExistVoice": true,
         "isDefault": true
       },
@@ -759,7 +789,7 @@
         "name": "ヨダカ",
         "resourceName": "chara_113601_model",
         "homeMotionResourceName": "",
-        "sortOrder": 400,
+        "sortOrder": 300,
         "isExistVoice": true,
         "isDefault": true
       },
@@ -770,6 +800,16 @@
         "resourceName": "chara_113801_battle_unit",
         "homeMotionResourceName": "chara_11380101_home",
         "sortOrder": 100205,
+        "isExistVoice": true,
+        "isDefault": true
+      },
+      {
+        "style3dCharacterMstId": 114401,
+        "type": 1,
+        "name": "タルトver.Final",
+        "resourceName": "chara_114401_battle_unit",
+        "homeMotionResourceName": "chara_11440101_home",
+        "sortOrder": 111510,
         "isExistVoice": true,
         "isDefault": true
       },
@@ -799,7 +839,7 @@
         "name": "べべ",
         "resourceName": "chara_114801_model",
         "homeMotionResourceName": "",
-        "sortOrder": 100,
+        "sortOrder": 400,
         "isExistVoice": true,
         "isDefault": true
       },
