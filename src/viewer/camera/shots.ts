@@ -28,46 +28,46 @@ export function savePhoto() {
     pauseViewer()
     btnCameraShot.classList.add('shoting')
 
-    setTimeout(() => {
-        let bgSource, bgSize
+    let bgSource, bgSize
 
-        if (isCameraEnabled()) {
-            bgSource = cameraVideo
-            bgSize = getCameraVideoResolution()
+    if (isCameraEnabled()) {
+        bgSource = cameraVideo
+        bgSize = getCameraVideoResolution()
+    }
+    else if (isBackgroundImageVisible()) {
+        bgSource = bgImageEl
+        bgSize = {
+            width: bgImageEl.naturalWidth,
+            height: bgImageEl.naturalHeight
         }
-        else if (isBackgroundImageVisible()) {
-            bgSource = bgImageEl
-            bgSize = {
-                width: bgImageEl.naturalWidth,
-                height: bgImageEl.naturalHeight
-            }
-        }
+    }
 
-        const c = compositeBgScene(bgSource, bgSize)
+    const c = compositeBgScene(bgSource, bgSize)
 
-        if (c) {
-            const canvas = c
+    if (c) {
+        const canvas = c
 
-            let t = performance.now()
-            if (true) {
-                canvas.toBlob(blob => {
-                    console.log('toBlob:', performance.now() - t, 'ms')
-                    if (blob) {
-                        showImage(URL.createObjectURL(blob))
-                    }
-                })
-            } else {
+        let t = performance.now()
+        if (true) {
+            canvas.toBlob(blob => {
+                console.log('toBlob:', performance.now() - t, 'ms')
+                if (blob) {
+                    showImage(URL.createObjectURL(blob))
+                }
+            })
+        } else {
+            setTimeout(() => {
                 const url = canvas.toDataURL()
                 console.log('toDataURL:', performance.now() - t, 'ms')
                 showImage(url)
-            }
+            }, 50);
         }
-        else {
-            window.alert('Failed to take photo')
-            resumeViewer()
-            btnCameraShot.classList.remove('shoting')
-        }
-    }, 50);
+    }
+    else {
+        window.alert('Failed to take photo')
+        resumeViewer()
+        btnCameraShot.classList.remove('shoting')
+    }
 }
 
 const metaViewport = document.querySelector('meta[name="viewport"]') as HTMLMetaElement
