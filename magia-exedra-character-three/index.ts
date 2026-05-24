@@ -1,5 +1,5 @@
 import MagiaExedraCharacter3D from './character'
-import characterList from './getStyle3dCharacterMstList.json'
+import characterMstList from './getStyle3dCharacterMstList.json'
 import { loadCharacter, type LoadCharacterCallbacks } from "./loader"
 import { ObjFilterByKey } from './utils'
 
@@ -53,10 +53,22 @@ export default class MagiaExedraCharacterThree {
         this.files = files
     }
 
+    /** Returns resource IDs (the ID in asset files), sorted by `sortOrder` from mst list */
     getCharacterIdList() {
-        return Object.keys(this.files)
+        let ids = Object.keys(this.files)
             .filter(x => x.includes('.fbx'))
             .map(x => x.match(/chara_(\d+).*\//)![1])
+
+        let sortedMst = characterMstList.payload.mstList.sort((a, b) => a.sortOrder - b.sortOrder)
+        let unmatchedIds = ids.filter(x => !sortedMst.some(y => y.resourceName.includes(x)))
+        let sortedIds = [...unmatchedIds]
+
+        sortedMst.forEach(x => {
+            let id = ids.find(y => x.resourceName.includes(y))
+            if (id != undefined) sortedIds.push(id)
+        })
+
+        return sortedIds
     }
 
     getCharacterNameById(id: number | string): string {
@@ -64,7 +76,7 @@ export default class MagiaExedraCharacterThree {
 
         const wipIds = [114901, 115201].map(x => x.toString())
 
-        let name = characterList.payload.mstList.find(x => x.resourceName.includes(id))?.name
+        let name = characterMstList.payload.mstList.find(x => x.resourceName.includes(id))?.name
             || {
                 '100101': 'Madoka Kaname (Magical Girl)',
                 '100102': 'Madoka Kaname (School Uniform)',
