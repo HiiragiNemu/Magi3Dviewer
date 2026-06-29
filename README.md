@@ -24,7 +24,17 @@ Built with [three.js](https://github.com/mrdoob/three.js/)
 <img width="520" alt="Screenshot" src="https://github.com/user-attachments/assets/ccebda22-7908-448f-a0dd-e91ba2df4464" />
 <img width="280" alt="Camera mode" src="https://github.com/user-attachments/assets/e4b41d5a-b3d3-4243-8d85-328de11374e9" />
 
-## Shaders
+## Known issues
+
+- **There are currently no expressions on the face (mouth open, eye close, etc.).** This is because the animations extracted with the tools doesn't contain shape keys, which is crucial for the face expressions. Can't find a tool to extract the shape keys for now.
+
+- The face of "Madoka Senpai (まどか先輩)" does not render correctly because of the missing shape keys mentioned above. The face is assembled with many meshes and require using shape keys to resize and fit properly.
+
+- **Some characters have weird poses.** This is probably due to some brokenly exported animations. **Changing "animation" to `<None>` solves the problem, at the expense of having only a T-style pose.**
+
+- The dress of "斧乃木余接" appears black because it has another 3 "cosmic" textures that should render dynamically over the black area. That 3 textures applies to different part of the dress, but the model is probably missing some UVs so they can't be mapped to the correct area of the surface. Simply applying one of the textures to the whole black area won't be perfect.
+
+## Shader detail
 
 ### General shader
 
@@ -98,15 +108,17 @@ From decrypted asset bundle files, these files may be useful:
 | `/dungeon/character/XXXXXX` | Has Madoka School Uniform in earlier versions, but removed later |
 | `/shader/` | Shader materials such as `RDToon_AngelRingMap`, `face_ctrl_base` and `face_ctrl_nose` |
 
-Almost everything we need can be exported with [AssetStudio](https://github.com/aelurum/AssetStudio)
+Almost everything we need can be exported with [AssetStudio](https://github.com/aelurum/AssetStudio).
 - Unity version is `2022.3.21f1`, some of the assets may have the version stripped
 - To export models, enable `Export all UVs as diffuse maps`, load a model asset file and select everything in `Asset list`, then use `Export -> Animator + selected AnimationClips`
+
+You can find the exported models at [here](magia-exedra-character-three/models).
 
 ## Character list
 
 Source: [getStyle3dCharacterMstList.json](magia-exedra-character-three/getStyle3dCharacterMstList.json)
 
-The list may not be up to date with the repository
+The list may not be up to date with the repository.
 
 - 100101 - Madoka Kaname (Magical Girl)
 - 100107 - 鹿目まどか/魔法少女
