@@ -32,7 +32,7 @@ jobs:
       - name: Install Blender FBX inspector
         run: |
           sudo apt-get update
-          sudo apt-get install -y blender
+          sudo apt-get install -y blender python3-numpy
 
       - name: Decompress Ashley and control FBX files
         shell: bash
