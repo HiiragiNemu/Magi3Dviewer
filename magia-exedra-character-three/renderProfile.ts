@@ -17,23 +17,22 @@ export interface CharacterReDriveProfile {
 }
 
 /**
- * Profiles intentionally separate recovered official values from estimates.
- * Unknown per-character values are not silently branded as official; the loader
- * derives a visible fallback from the Head bone and hair bounds until the
- * AssetBundle MonoBehaviour export supplies the serialized value.
+ * The exported humanoid Head bones use Unity's bone orientation: local +X is
+ * character forward, local +Y is up and local -Z is character right. These are
+ * fallback values only; an exported ReDriveToonMaterialController profile takes
+ * precedence once its serialized vectors are available.
  */
 const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
     [110701, {
         characterId: 110701,
         source: 'native-schema',
         headBoneName: 'Head',
-        // The exported FBX faces local -Z. Using +Z projected the AngelRing map
-        // onto the rear hair and produced the visible square/wedge artifact.
-        faceForwardAxis: '-z',
+        faceForwardAxis: 'x',
         faceUpAxis: 'y',
-        faceRightAxis: 'x',
+        faceRightAxis: '-z',
         notes: [
             'Ashley Taylor / chara_110701_battle_unit.',
+            'FBX Head bind matrix maps local +X to character forward (+Z).',
             'FBX material graph confirms Aniso and material-specific OutlineOffset variants.',
             'Serialized headOffset is pending extraction from ReDriveToonMaterialController.',
         ],
@@ -43,10 +42,10 @@ const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
 const DEFAULT_PROFILE: Omit<CharacterReDriveProfile, 'characterId'> = {
     source: 'estimated',
     headBoneName: 'Head',
-    faceForwardAxis: '-z',
+    faceForwardAxis: 'x',
     faceUpAxis: 'y',
-    faceRightAxis: 'x',
-    notes: ['Generic Head-bone fallback; replace with an official exported profile.'],
+    faceRightAxis: '-z',
+    notes: ['Generic Unity humanoid Head-axis fallback; replace with an official exported profile.'],
 };
 
 export function getCharacterReDriveProfile(characterId: number): CharacterReDriveProfile {
@@ -130,9 +129,14 @@ function setBoxCorners(box: THREE.Box3): THREE.Vector3[] {
 
 /**
  * Build the official coordinate model (Head position + rotated face axes).
- * When the serialized headOffset is unavailable, only the numerical
- * offset/width/radius are derived from the current hair bounds and the result is
- * explicitly marked estimated.
+ *
+ * Long hair and twin tails extend far below the Head. Using the complete hair
+ * vertical span therefore pushed the old estimated plane above the crown. The
+ * fallback now uses only `maxUp` — the actual crown height above the Head bone.
+ * Ashley's exported bind pose measures approximately 0.272 world units from
+ * Head origin to crown; Madoka measures approximately 0.249. The resulting
+ * estimated offsets are about 0.18 and 0.16 respectively, instead of the invalid
+ * clamped value 0.34 that produced no front highlight.
  */
 export function createAngelRingReference(
     root: THREE.Object3D,
@@ -158,24 +162,24 @@ export function createAngelRingReference(
     const box = new THREE.Box3().setFromObject(hairMesh);
     if (box.isEmpty()) return undefined;
 
-    let minUp = Infinity;
     let maxUp = -Infinity;
     let radius = 0;
     for (const corner of setBoxCorners(box)) {
         const delta = corner.clone().sub(headPosition);
-        const alongUp = delta.dot(up);
-        minUp = Math.min(minUp, alongUp);
-        maxUp = Math.max(maxUp, alongUp);
+        maxUp = Math.max(maxUp, delta.dot(up));
         radius = Math.max(radius, Math.abs(delta.dot(right)), Math.abs(delta.dot(forward)));
     }
 
-    const verticalSpan = Math.max(maxUp - minUp, 0.05);
-    // Official captures place the band around the upper fringe/crown transition,
-    // not at the Head origin. The older 0.48 factor was visibly too low.
+    const crownHeight = THREE.MathUtils.clamp(maxUp, 0.08, 0.42);
     const estimatedOffset = THREE.MathUtils.clamp(
-        Math.max(maxUp * 0.70, verticalSpan * 0.58),
-        0.075,
-        0.34,
+        crownHeight * 0.66,
+        0.055,
+        0.24,
+    );
+    const estimatedBandHalfWidth = THREE.MathUtils.clamp(
+        crownHeight * 0.18,
+        0.024,
+        0.060,
     );
 
     return {
@@ -184,7 +188,7 @@ export function createAngelRingReference(
         localRight: axisToVector(profile.faceRightAxis),
         localForward: axisToVector(profile.faceForwardAxis),
         headOffset: profile.headOffset ?? estimatedOffset,
-        bandHalfWidth: THREE.MathUtils.clamp(verticalSpan * 0.085, 0.022, 0.11),
+        bandHalfWidth: estimatedBandHalfWidth,
         projectionRadius: THREE.MathUtils.clamp(radius, 0.12, 0.65),
         uvMode: profile.hairUvAngelRing ?? false,
         estimated: profile.headOffset == undefined,
