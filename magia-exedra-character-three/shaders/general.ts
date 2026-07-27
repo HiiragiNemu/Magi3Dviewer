@@ -189,7 +189,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
             #ifdef HAS_CTRL
                 // Keep the physical lobe broad. The authored narrow response is
-                // restored separately through `_SpecularGradientMap`.
+                // restored separately through the SpecularGradientMap.
                 roughnessFactor = mix(0.96, 0.52, texCtrl.b);
             #else
                 roughnessFactor = roughness;
