@@ -10,7 +10,7 @@ const clock = new THREE.Clock()
 let clockDelta = clock.getDelta()
 
 /**
- * Characters must a the renderer created by this function to render correctly
+ * Characters must use the renderer created by this function to render correctly.
  */
 export function createRenderer(parameters?: THREE.WebGLRendererParameters) {
     renderer = new THREE.WebGLRenderer({
@@ -20,8 +20,10 @@ export function createRenderer(parameters?: THREE.WebGLRendererParameters) {
 
     console.log('MaxAnisotropy:', renderer.capabilities.getMaxAnisotropy())
 
-    // enable shadows
     renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    renderer.toneMapping = THREE.ACESFilmicToneMapping
+    renderer.toneMappingExposure = 1.02
 
     renderer.setAnimationLoop((...args) => {
         if (renderPaused) return
