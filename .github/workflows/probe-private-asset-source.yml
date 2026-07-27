@@ -1,0 +1,73 @@
+name: Probe private Exedra asset source access
+
+on:
+  pull_request:
+    branches: ['main']
+    paths: ['.github/research-triggers/private-asset-probe.txt']
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Attempt sparse checkout of private asset source
+        id: checkout
+        continue-on-error: true
+        uses: actions/checkout@v5
+        with:
+          repository: HiiragiNemu/ma-ex-dataSP
+          ref: main
+          token: ${{ github.token }}
+          path: private-source
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            gamedata/AssetBundles/Android
+            downloader.py
+            helpers.py
+            AssetStudioModCLI/AssetStudioModCLI.dll
+
+      - name: Record access result without uploading private bytes
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          mkdir -p /tmp/private-source-probe
+          {
+            echo "checkout-outcome=${{ steps.checkout.outcome }}"
+            if [[ -d private-source/.git ]]; then
+              echo 'private-source-git=true'
+              find private-source -type f -not -path '*/.git/*' -printf '%P %s bytes\n' | sort
+              find private-source -type f -not -path '*/.git/*' -print0 | sort -z | xargs -0 -r sha256sum
+            else
+              echo 'private-source-git=false'
+            fi
+          } | tee /tmp/private-source-probe/result.txt
+
+      - name: Upload probe result only
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: private-asset-source-probe
+          path: /tmp/private-source-probe/result.txt
+          retention-days: 3
+
+      - name: Publish probe status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const succeeded='${{ steps.checkout.outcome }}' === 'success';
+            await github.rest.repos.createCommitStatus({
+              owner:context.repo.owner,
+              repo:context.repo.repo,
+              sha:context.payload.pull_request.head.sha,
+              state:succeeded?'success':'failure',
+              context:'Private Exedra source access probe',
+              description:succeeded?'Cross-repository sparse checkout is available':'Repository token cannot read the private source repository',
+              target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
