@@ -4,6 +4,7 @@ import { scene } from "../scene"
 import type { Vector3Like } from "three"
 import { deselectCharacter, displayProgress, hideAllDemoItems } from "../"
 import type MagiaExedraCharacter3D from "magia-exedra-character-three/character"
+import type { StagePreset } from "../stages"
 
 const dialogContainer = document.getElementById('preset-dialog-container') as HTMLDivElement
 const dialogOverlay = document.getElementById('preset-dialog-overlay') as HTMLDivElement
@@ -24,15 +25,17 @@ interface ViewerPreset {
         position: Vector3Like
         target: Vector3Like
     }
+    stage?: StagePreset
     theme: Theme
     gui: ReturnType<typeof gui.save>
 }
 
-export const PresetVersion = 2
+export const PresetVersion = 3
 export const presetPattern = '#preset='
 
 /** @returns `true` if copied to clipboard, otherwise `false` */
 export async function presetExport(): Promise<boolean> {
+    const { getCurrentStagePreset } = await import('../stages')
     const preset: ViewerPreset = {
         version: PresetVersion,
         characters: scene.characters.map(x => x.character).filter(x => !!x).map(character => ({
@@ -48,6 +51,7 @@ export async function presetExport(): Promise<boolean> {
             position: scene.camera.position,
             target: scene.controls.target,
         },
+        stage: getCurrentStagePreset(),
         theme: getCurrentTheme(),
         gui: gui.save(),
     }
@@ -59,11 +63,8 @@ export async function presetExport(): Promise<boolean> {
     prettyPrintJSON(preset)
 
     const presetJson = JSON.stringify(preset)
-    // console.log(presetJson, presetJson.length)
     const presetQueryParamUncompressed = encodeURIComponent(presetJson)
-    // console.log(presetQueryParamUncompressed, presetQueryParamUncompressed.length)
     const presetQueryParam = compressToEncodedURIComponent(presetJson)
-    // console.log(presetQueryParam, presetQueryParam.length)
     console.log('JSON:', presetJson.length, ' encodeURIComponent:', presetQueryParamUncompressed.length, ' Compressed:', presetQueryParam.length)
 
     const presetUrl = getHrefWithoutHash() + presetPattern + presetQueryParam
@@ -83,8 +84,6 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
     if (!presetUrl) {
         try {
             if (hasPendingClipboardPermissionApproval) {
-                // if the user holds on the permission request and clicks the button twice,
-                // revert to manual input immediately
                 throw new Error('A clipboard permission request is ongoing')
             }
             hasPendingClipboardPermissionApproval = true
@@ -121,7 +120,6 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
     deselectCharacter()
     scene.characters.forEach(x => scene.removeCharacter(x))
 
-    // migrate old version presets
     preset.version ??= 0
     if (preset.version <= 0) {
         guiColorBrightness.setValue(1)
@@ -154,6 +152,11 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
     setTheme(preset.theme)
     scene.camera.position.copy(preset.camera.position)
     scene.controls.target.copy(preset.camera.target)
+
+    if (preset.stage) {
+        const { applyStagePreset } = await import('../stages')
+        await applyStagePreset(preset.stage)
+    }
 
     let completed = 0
 
@@ -196,7 +199,7 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
 
 export function parsePresetUrl(presetUrl: string): ViewerPreset {
     let presetQueryParam
-    let hashIndex = presetUrl.indexOf(presetPattern)
+    const hashIndex = presetUrl.indexOf(presetPattern)
     if (hashIndex >= 0) {
         presetQueryParam = presetUrl.slice(hashIndex + presetPattern.length)
     } else {
@@ -205,10 +208,7 @@ export function parsePresetUrl(presetUrl: string): ViewerPreset {
 
     const presetJson = decompressFromEncodedURIComponent(presetQueryParam)
     const preset: ViewerPreset | null | undefined = JSON.parse(presetJson)
-
-    if (!preset) {
-        throw new Error('Preset not valid')
-    }
+    if (!preset) throw new Error('Preset not valid')
     return preset
 }
 
@@ -228,7 +228,6 @@ async function showDialog(title: string, text?: string): Promise<string | undefi
     return new Promise(resolve => {
         dialogTitle.textContent = title
         dialogContainer.style.removeProperty('display')
-
         dialogTextarea.value = text || ''
         dialogTextarea.select()
 
