@@ -1,6 +1,5 @@
-# Deploy the independent Magius3Dviewer build while keeping upstream source on main
 name: Deploy Magius3Dviewer
-run-name: Validate and deploy official-shader iteration from protected main
+run-name: Validate all-character animation, Shader and stage runtime
 
 on:
   push:
@@ -17,7 +16,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: 'magius3dviewer-pages'
+  group: magius3dviewer-pages
   cancel-in-progress: true
 
 jobs:
@@ -32,21 +31,20 @@ jobs:
         with:
           ref: magius3dviewer
 
-      - name: Resolve Magius3Dviewer revision
+      - name: Resolve source revision
         id: revision
-        shell: bash
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: 'npm'
+          cache: npm
 
-      - name: Audit animation families across all character FBX exports
+      - name: Audit animation families across every bundled character
         id: animation_audit
         run: |
-          python scripts/audit-animation-families.py \
+          python scripts/audit-animation-families-v2.py \
             --root magia-exedra-character-three/models \
             --out /tmp/all-character-animation-family-audit.json \
             --minimum-models 90
@@ -85,7 +83,7 @@ jobs:
         if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' }}
         run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
 
-      - name: Run WebGL shader and stage smoke test
+      - name: Run Ashley, AngelRing, Shader and stage WebGL smoke test
         if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' }}
         id: smoke
         shell: bash
@@ -96,7 +94,7 @@ jobs:
           sleep 4
           node scripts/smoke-magius.mjs
 
-      - name: Upload WebGL smoke report
+      - name: Upload WebGL smoke evidence
         if: ${{ always() && steps.smoke.outcome != 'skipped' }}
         uses: actions/upload-artifact@v4
         with:
@@ -118,90 +116,40 @@ jobs:
         if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './dist'
+          path: ./dist
 
-      - name: Deploy Magius3Dviewer to GitHub Pages
+      - name: Deploy Magius3Dviewer
         if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Publish build and deployment status
+      - name: Publish commit statuses
         if: ${{ always() }}
         uses: actions/github-script@v7
         env:
-          BUILD_SHA: ${{ steps.revision.outputs.sha }}
-          ANIMATION_AUDIT_OUTCOME: ${{ steps.animation_audit.outcome }}
-          BUILD_OUTCOME: ${{ steps.build.outcome }}
-          SMOKE_OUTCOME: ${{ steps.smoke.outcome }}
-          DEPLOY_OUTCOME: ${{ steps.deployment.outcome }}
+          SOURCE_SHA: ${{ steps.revision.outputs.sha }}
+          ANIMATION: ${{ steps.animation_audit.outcome }}
+          BUILD: ${{ steps.build.outcome }}
+          SMOKE: ${{ steps.smoke.outcome }}
+          DEPLOY: ${{ steps.deployment.outcome }}
         with:
           script: |
-            const fs = require('fs');
-            const targetUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-            const sha = process.env.BUILD_SHA || context.sha;
-            const animationSucceeded = process.env.ANIMATION_AUDIT_OUTCOME === 'success';
-            const buildSucceeded = process.env.BUILD_OUTCOME === 'success';
-            const smokeSucceeded = process.env.SMOKE_OUTCOME === 'success';
-            const deploySucceeded = process.env.DEPLOY_OUTCOME === 'success';
-
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha,
-              state: animationSucceeded ? 'success' : 'failure',
-              context: 'Magius3Dviewer all-character animation audit',
-              description: animationSucceeded
-                ? 'All bundled FBX exports parsed; generic family correction present'
-                : `Animation audit outcome: ${process.env.ANIMATION_AUDIT_OUTCOME || 'unknown'}`,
-              target_url: targetUrl,
-            });
-
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha,
-              state: buildSucceeded ? 'success' : 'failure',
-              context: 'Magius3Dviewer production build',
-              description: buildSucceeded
-                ? 'npm run build completed successfully'
-                : `Build outcome: ${process.env.BUILD_OUTCOME || 'unknown'}`,
-              target_url: targetUrl,
-            });
-
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha,
-              state: smokeSucceeded ? 'success' : 'failure',
-              context: 'Magius3Dviewer WebGL smoke test',
-              description: smokeSucceeded
-                ? 'Ashley binding, Head-local AngelRing, shader GUI and stage runtime rendered in Chromium'
-                : `WebGL smoke outcome: ${process.env.SMOKE_OUTCOME || 'not-run'}`,
-              target_url: targetUrl,
-            });
-
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha,
-              state: deploySucceeded ? 'success' : 'failure',
-              context: 'Magius3Dviewer GitHub Pages deployment',
-              description: deploySucceeded
-                ? 'Magius3Dviewer deployment completed successfully'
-                : `Deployment outcome: ${process.env.DEPLOY_OUTCOME || 'not-run'}`,
-              target_url: targetUrl,
-            });
-
-            if (!buildSucceeded) {
-              let tail = 'Build log was not available.';
-              try {
-                const lines = fs.readFileSync('/tmp/magius-build.log', 'utf8').split(/\r?\n/);
-                tail = lines.slice(-120).join('\n').slice(-55000);
-              } catch (_) {}
-              await github.rest.issues.create({
+            const target_url = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const sha = process.env.SOURCE_SHA || context.sha;
+            const checks = [
+              ['Magius3Dviewer all-character animation audit', process.env.ANIMATION, 'All FBX animation families parsed and generic binding correction verified'],
+              ['Magius3Dviewer production build', process.env.BUILD, 'Production TypeScript/Vite build completed'],
+              ['Magius3Dviewer WebGL smoke test', process.env.SMOKE, 'Ashley binding, AngelRing and stage runtime rendered in Chromium'],
+              ['Magius3Dviewer GitHub Pages deployment', process.env.DEPLOY, 'Magius3Dviewer deployed'],
+            ];
+            for (const [contextName, outcome, successText] of checks) {
+              await github.rest.repos.createCommitStatus({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                title: `[automation] Magius build failure ${sha.slice(0, 8)}`,
-                body: `Source revision: \`${sha}\`\n\n[Open workflow run](${targetUrl})\n\n\`\`\`text\n${tail}\n\`\`\``,
+                sha,
+                state: outcome === 'success' ? 'success' : 'failure',
+                context: contextName,
+                description: outcome === 'success' ? successText : `Outcome: ${outcome || 'not-run'}`,
+                target_url,
               });
             }
