@@ -25,32 +25,30 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
 
     const material = new THREE.MeshStandardMaterial({
         map: colorTex,
-        // transparent: true,
+        roughness: 1.0,
+        metalness: 0.0,
     });
 
     const userData = new MaterialUserData()
     material.userData = userData
 
-    // 2. Inject your custom Blush/Highlight logic
     material.onBeforeCompile = (shader) => {
         if (!shader.defines) shader.defines = {};
 
         const uniforms = new FaceMaterialUniforms(shader)
 
-        // Add your extra uniforms
         shader.uniforms.tShadow = { value: shadowTex };
         shader.uniforms.tEyehighlight = { value: eyehighlightTex };
 
-        shader.uniforms.uShadowMix = { value: 0.67 };
-        shader.uniforms.uHighlightBrightness = { value: 1.0 };
-        shader.uniforms.uBlushStrength = { value: 0.33 };
+        shader.uniforms.uShadowMix = { value: 0.80 };
+        shader.uniforms.uHighlightBrightness = { value: 1.12 };
+        shader.uniforms.uBlushStrength = { value: 0.22 };
 
         if (ctrlTex) {
             shader.uniforms.tCtrl = { value: ctrlTex };
             shader.defines.HAS_CTRL = true;
         }
 
-        // Update Vertex Shader to handle UV1 (uv1 attribute)
         shader.vertexShader = /*glsl*/ `
             attribute vec2 uv1;
             varying vec2 vUv;
@@ -65,7 +63,6 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             `
         );
 
-        // Update Fragment Shader
         shader.fragmentShader = /*glsl*/ `
             varying vec2 vUv;
             varying vec2 vUv2;
@@ -85,9 +82,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             vec4 faceShadow = texture2D(tShadow, vUv);
             vec4 eyehighlight = texture2D(tEyehighlight, vUv2);
 
-            // mix color and shadow map
             #ifdef HAS_CTRL
-                // mirror vUv right to the left and reduce range
                 float mirroredU = abs(vUv.x - 0.5) / 2.0 + 0.5;
                 vec4 faceCtrl = texture2D(tCtrl, vec2(mirroredU, vUv.y));
                 faceColor.rgb = mix(faceShadow.rgb, faceColor.rgb, faceCtrl.r);
@@ -95,18 +90,22 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
                 faceColor.rgb = mix(faceShadow.rgb, faceColor.rgb, uShadowMix);
             #endif
 
-            float eyeMask = step(vUv2.y, 0.5); // extract eye highlights (bottom-half)
-            float highlightIntensity = eyehighlight.r * step(0.5, eyehighlight.r) * eyeMask; // hide pixels with value < 0.5
-            vec3 highlightColor = vec3(highlightIntensity * uHighlightBrightness);
+            float eyeMask = step(vUv2.y, 0.5);
+            float highlightIntensity =
+                eyehighlight.r *
+                smoothstep(0.46, 0.62, eyehighlight.r) *
+                eyeMask;
+            vec3 highlightColor = vec3(
+                highlightIntensity * uHighlightBrightness
+            );
 
-            float blushMask = step(0.5, vUv2.y); // extract blush (top-half)
-            float blushFactor = eyehighlight.r * blushMask * uBlushStrength; // calculate factor
-            vec3 blushCyan = vec3(0.0, blushFactor, blushFactor); // map red to grenn-blue, used for subtraction later
+            float blushMask = step(0.5, vUv2.y);
+            float blushFactor =
+                eyehighlight.r * blushMask * uBlushStrength;
+            vec3 blushCyan = vec3(0.0, blushFactor, blushFactor);
 
-            faceColor.rgb += highlightColor; // add eye highlights
-            faceColor.rgb -= blushCyan; // add blush (subtract the inverted red)
-
-            // Apply back to the standard variable 'diffuseColor'
+            faceColor.rgb += highlightColor;
+            faceColor.rgb -= blushCyan;
             diffuseColor = faceColor;
             `
         );
@@ -118,6 +117,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
 
     return {
         material,
-        textures: [colorTex, shadowTex, ctrlTex, eyehighlightTex].filter(x => x instanceof THREE.Texture)
+        textures: [colorTex, shadowTex, ctrlTex, eyehighlightTex]
+            .filter(x => x instanceof THREE.Texture)
     };
 }
