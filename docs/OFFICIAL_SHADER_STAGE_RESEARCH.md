@@ -1,6 +1,7 @@
 # Magius3Dviewer official shader and 3D-stage research
 
 Updated: 2026-07-27
+Iteration: official shader pass 2 / stage framework pass 1
 
 ## Visual diagnosis
 
@@ -27,7 +28,9 @@ The previous web implementation remained visually close to the upstream viewer b
 - per-character scale and animation-speed controls;
 - line/arc/center multi-character arrangement actions;
 - selectable procedural 3D stages and an external stage catalog/loader;
-- GLTF/GLB and FBX/FBX.GZ stage loading support.
+- GLTF/GLB and FBX/FBX.GZ stage loading support;
+- stage, character transform, animation and shader state included in shareable presets;
+- source-branch pushes request deployment through the protected `main` workflow, so verified builds update the online viewer automatically.
 
 ## Asset evidence and next extraction stage
 
