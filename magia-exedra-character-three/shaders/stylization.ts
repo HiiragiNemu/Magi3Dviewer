@@ -32,25 +32,27 @@ export interface ToonStylizationOptions {
 }
 
 /**
- * Texture-dominant official presentation tuned after the automated Chromium
- * screenshot showed that pass 1 was overexposed. These values retain the
- * authored pinks and cool shadows while keeping the physical pass secondary.
+ * Recovered baseline presentation. It is intentionally neutral: scene colour,
+ * additional Rim and Fresnel belong to ReDriveVolume/Timeline or per-renderer
+ * animation attributes, not to a permanently enabled global beauty filter.
  */
 export const toonStylizationOptions: ToonStylizationOptions = {
     officialLookEnabled: true,
-    lightingInfluence: 0.18,
+    lightingInfluence: 0.24,
     albedoLift: 0.00,
-    brightness: 0.92,
-    contrast: 1.08,
-    saturation: 1.08,
-    shadowTint: '#7f83a8',
-    shadowTintStrength: 0.20,
-    highlightTint: '#ffd9d2',
-    highlightTintStrength: 0.04,
-    specularStrength: 0.35,
-    metallicResponse: 0.18,
+    brightness: 0.98,
+    contrast: 1.03,
+    saturation: 1.02,
+    shadowTint: '#858aa8',
+    shadowTintStrength: 0.12,
+    highlightTint: '#ffe7e0',
+    highlightTintStrength: 0.015,
+    specularStrength: 0.72,
+    metallicResponse: 0.12,
 
-    rimEnabled: true,
+    // Official additional Rim is scene/Timeline driven. Keep the implementation
+    // available for imported tracks, but do not bake it into every character.
+    rimEnabled: false,
     rimColor: '#c9d7ff',
     rimStrength: 0.14,
     rimThreshold: 0.56,
@@ -59,6 +61,7 @@ export const toonStylizationOptions: ToonStylizationOptions = {
     rimDirectionY: 0.35,
     rimDirectionality: 0.46,
 
+    // Official Fresnel is a per-renderer MaterialPropertyBlock animation value.
     fresnelEnabled: false,
     fresnelColor: '#ffffff',
     fresnelStrength: 0.20,
@@ -131,13 +134,9 @@ export class ToonStylizationUniforms extends ShaderUniformsController {
 }
 
 /**
- * Adds the official-style presentation layer after Three.js has assembled the
- * physical lighting result. General materials populate the three channel masks
- * below from the ReDrive control texture:
- *
- * R = per-pixel shadow threshold offset
- * G = metallic response
- * B = specular response
+ * Adds the texture-dominant ReDrive baseline after Three.js has assembled its
+ * physical lighting result. General materials populate the masks below from the
+ * control texture: R shadow offset, G metallic/tint response, B specular mask.
  */
 export function injectToonStylization(
     shader: THREE.WebGLProgramParametersWithUniforms,
@@ -239,10 +238,15 @@ export function injectToonStylization(
             saturate(rdToonMetallicMask * uMetallicResponse)
         );
 
-        rdToonOfficial +=
-            totalSpecular *
-            rdToonSpecularMask *
-            uOfficialSpecularStrength;
+        // General materials with the recovered SpecularGradientMap already add
+        // the authored Control-B highlight. Keep the legacy Three specular path
+        // only for materials that do not provide that official gradient.
+        #ifndef HAS_SPECULAR_GRADIENT
+            rdToonOfficial +=
+                totalSpecular *
+                rdToonSpecularMask *
+                uOfficialSpecularStrength;
+        #endif
 
         float rdToonOfficialLuma = dot(
             rdToonOfficial,
