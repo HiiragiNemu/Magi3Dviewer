@@ -103,19 +103,19 @@ export function applyOfficialReference() {
     resetOfficialAngelRingPreset()
 
     Object.assign(guiOptions, {
-        BgColor: '#789bd4',
-        AmbientLightColor: '#b8c7ea',
-        DirectionalLightColor: '#ffe1d9',
-        AmbientLight: 3.0,
-        DirectionalLight: 3.8,
+        BgColor: '#5c92df',
+        AmbientLightColor: '#9ebbe9',
+        DirectionalLightColor: '#ffd8cf',
+        AmbientLight: 1.4,
+        DirectionalLight: 2.2,
         LightAngle: -38,
         LightHeight: 4.2,
         LightDistance: 8.0,
-        Brightness: 1.03,
-        Contrast: 0.93,
-        Saturation: 1.02,
-        OutlineThickness: 0.0024,
-        OutlineColor: '#5a5268',
+        Brightness: 0.96,
+        Contrast: 1.03,
+        Saturation: 1.08,
+        OutlineThickness: 0.0022,
+        OutlineColor: '#655c76',
     })
 
     setBackgroundColor(guiOptions.BgColor)
@@ -135,11 +135,11 @@ export function applyOfficialReference() {
         saturation: guiOptions.Saturation,
     })
     scene.renderer.toneMapping = THREE.ACESFilmicToneMapping
-    scene.renderer.toneMappingExposure = 1.02
+    scene.renderer.toneMappingExposure = 0.82
     scene.effects.bloomPass.enabled = true
-    scene.effects.bloomPass.strength = 0.018
-    scene.effects.bloomPass.radius = 0.10
-    scene.effects.bloomPass.threshold = 0.82
+    scene.effects.bloomPass.strength = 0.008
+    scene.effects.bloomPass.radius = 0.08
+    scene.effects.bloomPass.threshold = 0.90
 
     scene.characters
         .map(entry => entry.character)
