@@ -11,6 +11,23 @@ export interface ObjectUserData {
     animationLoops: Function[]
 }
 
+/**
+ * Exedra exports one logical animation as a body clip plus optional weapon or
+ * numbered companion clips. Normalize only documented suffixes. The previous
+ * startsWith() grouping could activate unrelated animations that happened to
+ * share a prefix, which is especially destructive when both clips key the same
+ * skeleton transforms.
+ */
+export function getAnimationFamilyName(name: string): string {
+    return name
+        .replace(/_weapon_[a-z0-9]+(?=_|$)/gi, '')
+        .replace(/_\d+$/g, '')
+}
+
+function isCompanionAnimationName(name: string): boolean {
+    return /_weapon_[a-z0-9]+(?=_|$)/i.test(name) || /_\d+$/.test(name)
+}
+
 export default class MagiaExedraCharacter3D {
     /** 
      * Can be added to three.js scene.
@@ -41,10 +58,7 @@ export default class MagiaExedraCharacter3D {
         return [...new Set(
             this.object.animations
                 .filter(x => x.tracks.length > 0)
-                .map(x => x.name
-                    .replace(/_weapon_\w/, '') // remove `_weapon_a`, `_weapon_b`, ...
-                    .replace(/_\d/, '') // remove `_1`, `_2`, ...
-                )
+                .map(x => getAnimationFamilyName(x.name))
         )].sort()
     }
 
@@ -71,6 +85,7 @@ export class ChatacterAnimation {
     private _default?: string | null = null
     private _current?: string
     private _clamped = false
+    private _preparedFamilies = new Map<string, THREE.AnimationClip[]>()
     paused = false
 
     constructor(character: MagiaExedraCharacter3D) {
@@ -82,7 +97,7 @@ export class ChatacterAnimation {
 
     play(name: string, loop = false) {
         /*
-        character and its weapon have seperate animations
+        character and its weapon have separate animations
     
         for example:
         CommonWait_L    - for body
@@ -90,7 +105,7 @@ export class ChatacterAnimation {
     
         if it plays `CommonWait_L`, `CommonWait_L_1` should also be played
         */
-        const animations = this.getAnimationClipsByName(name)
+        const animations = this.getPreparedAnimationClipsByName(name)
         if (animations.length == 0) {
             console.warn(`Animation "${name}" not found in "${this._character.object.name}"`)
             return
@@ -109,15 +124,15 @@ export class ChatacterAnimation {
                 action.clampWhenFinished = true;
             }
 
-            action.play()
+            action.reset().play()
         }
 
         this.paused = false
         this.time = 0
-        this._current = name
+        this._current = getAnimationFamilyName(name)
         this._clamped = false
 
-        console.log('Playing animation:', animations.map(x => x.name))
+        console.log('Playing animation family:', this._current, animations.map(x => x.name))
     }
 
     clear() {
@@ -125,8 +140,77 @@ export class ChatacterAnimation {
         this._current = undefined
     }
 
-    getAnimationClipsByName(name: string) {
-        return this._character.object.animations.filter(x => x.name.startsWith(name))
+    getAnimationClipsByName(name: string): THREE.AnimationClip[] {
+        const family = getAnimationFamilyName(name)
+        return this._character.object.animations
+            .filter(clip => getAnimationFamilyName(clip.name) === family)
+            .sort((a, b) => {
+                const exactA = a.name === name || a.name === family ? 0 : 1
+                const exactB = b.name === name || b.name === family ? 0 : 1
+                if (exactA !== exactB) return exactA - exactB
+
+                const companionA = isCompanionAnimationName(a.name) ? 1 : 0
+                const companionB = isCompanionAnimationName(b.name) ? 1 : 0
+                if (companionA !== companionB) return companionA - companionB
+
+                return a.name.localeCompare(b.name)
+            })
+    }
+
+    /**
+     * A number of exported companion clips contain duplicate body channels in
+     * addition to their weapon channels. Playing those clips at equal weight
+     * blends two transforms onto the same bone and can produce a visibly broken
+     * pose. The primary body clip owns each binding; companion clips retain only
+     * channels not already claimed by an earlier clip.
+     */
+    private getPreparedAnimationClipsByName(name: string): THREE.AnimationClip[] {
+        const family = getAnimationFamilyName(name)
+        const cached = this._preparedFamilies.get(family)
+        if (cached) return cached
+
+        const sourceClips = this.getAnimationClipsByName(name)
+        const claimedTracks = new Map<string, string>()
+        const prepared: THREE.AnimationClip[] = []
+
+        for (const source of sourceClips) {
+            const duplicateTracks: string[] = []
+            const uniqueTracks = source.tracks.filter(track => {
+                const owner = claimedTracks.get(track.name)
+                if (owner) {
+                    duplicateTracks.push(`${track.name} (already owned by ${owner})`)
+                    return false
+                }
+                claimedTracks.set(track.name, source.name)
+                return true
+            })
+
+            if (duplicateTracks.length > 0) {
+                console.warn(
+                    `Removed duplicate animation bindings from "${source.name}" in family "${family}":`,
+                    duplicateTracks,
+                )
+            }
+
+            if (uniqueTracks.length == 0) {
+                console.warn(`Skipped animation companion "${source.name}" because every track duplicates an earlier clip`)
+                continue
+            }
+
+            if (uniqueTracks.length === source.tracks.length) {
+                prepared.push(source)
+                continue
+            }
+
+            const clone = source.clone()
+            clone.name = source.name
+            clone.tracks = uniqueTracks
+            clone.duration = source.duration
+            prepared.push(clone)
+        }
+
+        this._preparedFamilies.set(family, prepared)
+        return prepared
     }
 
     animationLoop = () => {
@@ -159,7 +243,8 @@ export class ChatacterAnimation {
 
     get duration(): number {
         if (this.current) {
-            return Math.max(...this.getAnimationClipsByName(this.current).map(x => x.duration))
+            const clips = this.getPreparedAnimationClipsByName(this.current)
+            return clips.length > 0 ? Math.max(...clips.map(x => x.duration)) : 0
         } else {
             return 0
         }
@@ -170,7 +255,8 @@ export class ChatacterAnimation {
             if (this.clamped) {
                 return this.duration
             } else {
-                return this.mixer.time % this.duration
+                const duration = this.duration
+                return duration > 0 ? this.mixer.time % duration : 0
             }
         } else {
             return 0
