@@ -117,8 +117,9 @@ const result = await page.evaluate(async () => {
 
   const canvas = document.querySelector('#viewer canvas')
   const guiText = document.querySelector('#three-gui')?.textContent ?? ''
-  const stageNames = [...document.querySelectorAll('#stage-selector option')]
-    .map(option => option.textContent ?? '')
+  const stageOptions = [...document.querySelectorAll('#stage-selector option')]
+  const stageNames = stageOptions.map(option => option.textContent ?? '')
+  const officialStageCount = stageOptions.filter(option => option.dataset.official === 'true').length
   const gl = canvas instanceof HTMLCanvasElement
     ? canvas.getContext('webgl2') || canvas.getContext('webgl')
     : null
@@ -161,8 +162,6 @@ const result = await page.evaluate(async () => {
     const pixels = new Uint8Array(width * height * 4)
     gl.finish()
     gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
-    // Head occupies the centre/top region after the camera adjustment. Sampling
-    // every second pixel keeps the report compact while retaining the ring band.
     const samples = []
     const x0 = Math.floor(width * 0.23)
     const x1 = Math.floor(width * 0.77)
@@ -209,6 +208,7 @@ const result = await page.evaluate(async () => {
   return {
     title: document.title,
     stageNames,
+    officialStageCount,
     characterCount: document.querySelectorAll('#character-selector option').length,
     selectedCharacterId: selectedCharacter?.userData?.characterId ?? null,
     selectedAnimation: selectedCharacter?.animation?.current ?? null,
@@ -216,8 +216,8 @@ const result = await page.evaluate(async () => {
     canvasWidth: canvas instanceof HTMLCanvasElement ? canvas.width : 0,
     canvasHeight: canvas instanceof HTMLCanvasElement ? canvas.height : 0,
     webgl: Boolean(gl),
-    hasOfficialToonControls: guiText.includes('Official ReDrive Toon'),
-    hasAngelRingControls: guiText.includes('AngelRing (Hair)'),
+    hasOfficialToonControls: guiText.includes('Recovered ReDrive Toon base'),
+    hasAngelRingControls: guiText.includes('AngelRing (Head-local Hair)'),
     hasStageControls: guiText.includes('3D Stage'),
     activeStagePresent: Boolean(
       viewerScene?.scene?.getObjectByName('Magius3DviewerStageRoot'),
@@ -261,11 +261,14 @@ if (result.selectedCharacterId !== 110701) failures.push(`Ashley was not selecte
 if (result.selectedAnimation !== 'Wait_L') failures.push(`Ashley Wait_L was not selected: ${result.selectedAnimation}`)
 if (result.loadedCharacterCount <= 0) failures.push('no character loaded')
 if (!result.demoHidden) failures.push('initial character never became visible')
-if (!result.hasOfficialToonControls) failures.push('official toon controls missing')
-if (!result.hasAngelRingControls) failures.push('AngelRing controls missing')
+if (!result.hasOfficialToonControls) failures.push('recovered toon controls missing')
+if (!result.hasAngelRingControls) failures.push('Head-local AngelRing controls missing')
 if (!result.hasStageControls) failures.push('3D stage controls missing')
 if (!result.activeStagePresent) failures.push('active 3D stage root missing')
 if (result.stageNames.length < 4) failures.push('stage catalog infrastructure incomplete')
+if (!result.stageNames.every(name => name.includes('[Research]')) && result.officialStageCount === 0) {
+  failures.push('procedural stages are not clearly marked as research-only')
+}
 if (result.hairMeshCount <= 0) failures.push('Ashley has no detected hair mesh')
 if (result.angelRingShaderCount <= 0) failures.push('AngelRing shader not attached to Ashley hair')
 if (!result.angelRingPlaneUniforms.every(item => item.enabled >= 0.5)) failures.push('AngelRing uniform is disabled')
