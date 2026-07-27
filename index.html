@@ -1,16 +1,18 @@
 <!doctype html>
-<html>
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="./vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <title>Magi3Dviewer - Madoka Magica 3D model viewer | 魔法少女小圆角色模型查看/拍照工具-圆哆啦解包</title>
-    <meta name="description" content="View Magia Exedra 3D models online and take photos. 魔法少女小圆3D角色模型在线查看，并使用AR拍照工具。 网站收录魔法少女小圆 Magia Exedra 所有3D角色建模，均为游戏解包提取。 Built with WebGL via Three.js">
-    <meta name="keywords" content="Puella Magi Madoka Magica, Madoka Magica, Magia Exedra, Madoka Exedra, Magia Record, 3D Models, Three.js, WebGL, 魔法少女小圆, 圆哆啦, 魔法纪录, 角色模型, 3D模型, 解包">
-    <meta name="author" content="浩劫者12345">
+    <title>Magius3Dviewer | Magia Exedra 3D Shader Viewer</title>
+    <meta name="description" content="Magius3Dviewer is an independent Magia Exedra WebGL 3D viewer build with ReDriveToon-compatible directional Rim and Fresnel shader controls, based on the original Magi3Dviewer project.">
+    <meta name="keywords" content="Magius3Dviewer, Magia Exedra, ReDriveToon, Rim Light, Fresnel, Madoka Magica, Magia Record, 3D Models, Three.js, WebGL, 魔法少女小圆, 魔法纪录, 3D模型, Shader">
+    <meta name="author" content="haojiezhe12345; HiiragiNemu">
 
-    <meta property="og:image" content="https://magi3dviewer.haojiezhe12345.top/demo.jpg">
+    <meta property="og:title" content="Magius3Dviewer">
+    <meta property="og:description" content="Magia Exedra 3D viewer with ReDriveToon-compatible Rim and Fresnel shader controls.">
+    <meta property="og:image" content="https://hiiraginemu.github.io/Magi3Dviewer/demo.jpg">
     <meta property="og:image:width" content="768">
     <meta property="og:image:height" content="1152">
 
@@ -18,9 +20,9 @@
         {
             "@context": "https://schema.org/",
             "@type": "WebPage",
-            "name": "Magi3Dviewer",
-            "image": "https://magi3dviewer.haojiezhe12345.top/demo.jpg",
-            "description": "View Magia Exedra 3D models online and take photos. 魔法少女小圆3D角色模型在线查看，并使用AR拍照工具。"
+            "name": "Magius3Dviewer",
+            "image": "https://hiiraginemu.github.io/Magi3Dviewer/demo.jpg",
+            "description": "Magia Exedra 3D viewer with ReDriveToon-compatible Rim and Fresnel shader controls."
         }
     </script>
 </head>
@@ -30,13 +32,13 @@
         <div id="viewer"></div>
 
         <div id="stat">
-            <span class="demo">Demo screenshot. Please wait for the character to load...</span>
+            <span class="demo">Magius3Dviewer is loading. Please wait for the character model...</span>
             <div style="text-align: center;">
                 <span id="load-progress"></span>
             </div>
         </div>
 
-        <img id="demo-screenshot" class="demo" src="/demo.jpg" alt="Demo Screenshot">
+        <img id="demo-screenshot" class="demo" src="./demo.jpg" alt="Magius3Dviewer demo screenshot">
 
         <img id="bg-image">
 
@@ -79,7 +81,7 @@
             </div>
 
             <div id="menu-icons">
-                <a href="https://github.com/haojiezhe12345/Magi3Dviewer" target="_blank" title="Visit Github repo"><img src="src/icons/GitHub_Invertocat_Black.svg"></a>
+                <a href="https://github.com/HiiragiNemu/Magi3Dviewer/tree/magius3dviewer" target="_blank" title="Visit the Magius3Dviewer source branch"><img src="src/icons/GitHub_Invertocat_Black.svg"></a>
 
                 <button id="theme-set-light" title="Use light theme"><img src="src/icons/light_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                 <button id="theme-set-dark" title="Use dark theme"><img src="src/icons/dark_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
