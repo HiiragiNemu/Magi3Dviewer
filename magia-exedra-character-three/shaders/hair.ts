@@ -6,6 +6,7 @@ import {
     type MaterialCreationOptions,
     type MaterialCreationResult,
 } from '.';
+import type { AngelRingReference } from '../renderProfile';
 import { loadTexture } from '../texture';
 import AngelRingMap from './RDToon_AngelRingMap.png'
 
@@ -13,8 +14,11 @@ export interface AngelRingOptions {
     enabled: boolean;
     color: string;
     strength: number;
+    /** Fine vertical shift; 0.5 means the serialized/estimated Head plane. */
     center: number;
+    /** Multiplies the per-character world-space band width; 0.1 is 1x. */
     width: number;
+    /** World-band edge softness relative to the default 0.1 control value. */
     softness: number;
     tilt: number;
     viewPower: number;
@@ -24,13 +28,13 @@ export interface AngelRingOptions {
 export const angelRingOptions: AngelRingOptions = {
     enabled: true,
     color: '#fff2f7',
-    strength: 0.38,
-    center: 0.73,
+    strength: 0.78,
+    center: 0.50,
     width: 0.10,
-    softness: 0.045,
-    tilt: 0.14,
-    viewPower: 1.10,
-    textureInfluence: 0.62,
+    softness: 0.035,
+    tilt: 0.10,
+    viewPower: 0.80,
+    textureInfluence: 0.90,
 }
 
 export const officialAngelRingPreset = {
@@ -42,8 +46,15 @@ export function resetOfficialAngelRingPreset() {
 }
 
 export interface HairMaterialCreationOptions extends MaterialCreationOptions {
+    /** Official coordinate model: Head position + faceUp * headOffset. */
+    angelRingReference?: AngelRingReference;
+    /** Legacy fallback only when no usable Head bone exists. */
     angelRingMinY?: number;
     angelRingMaxY?: number;
+}
+
+export interface HairMaterialCreationResult extends MaterialCreationResult {
+    updateAngelRingReference?: () => void;
 }
 
 function setColorUniform(
@@ -64,9 +75,9 @@ export function loadAngelRingOptions(
 ) {
     shader.uniforms.uAngelRingEnabled ??= { value: 0 };
     shader.uniforms.uAngelRingStrength ??= { value: 0 };
-    shader.uniforms.uAngelRingCenter ??= { value: 0 };
-    shader.uniforms.uAngelRingWidth ??= { value: 0 };
-    shader.uniforms.uAngelRingSoftness ??= { value: 0 };
+    shader.uniforms.uAngelRingCenter ??= { value: 0.5 };
+    shader.uniforms.uAngelRingWidth ??= { value: 0.1 };
+    shader.uniforms.uAngelRingSoftness ??= { value: 0.035 };
     shader.uniforms.uAngelRingTilt ??= { value: 0 };
     shader.uniforms.uAngelRingViewPower ??= { value: 0 };
     shader.uniforms.uAngelRingTextureInfluence ??= { value: 0 };
@@ -78,26 +89,27 @@ export function loadAngelRingOptions(
     shader.uniforms.uAngelRingSoftness.value = angelRingOptions.softness;
     shader.uniforms.uAngelRingTilt.value = angelRingOptions.tilt;
     shader.uniforms.uAngelRingViewPower.value = angelRingOptions.viewPower;
-    shader.uniforms.uAngelRingTextureInfluence.value =
-        angelRingOptions.textureInfluence;
+    shader.uniforms.uAngelRingTextureInfluence.value = angelRingOptions.textureInfluence;
     setColorUniform(shader, 'uAngelRingColor', angelRingOptions.color);
 }
 
 /**
- * Official ReDrive AngelRing approximation.
+ * ReDriveToon AngelRing reconstruction.
  *
- * The original upstream function returned before compiling its AngelRing code.
- * The restored version uses a model-height band plus a UV-height fallback. The
- * fallback is important for FBX hair meshes whose local Y origin/range differs
- * between characters, so every currently exported hair mesh receives a visible
- * ring while still using the supplied ReDrive map and view-space normal.
+ * Native evidence shows the reference point is character-local:
+ * `Head.position + faceUpDirectionWs * headOffset`. The previous normalized
+ * model-height/UV band ignored the animated Head transform and could disappear
+ * or drift between characters. This implementation projects skinned hair into
+ * the animated Head plane, samples the official AngelRing map in face-local
+ * right/forward coordinates and retains the UV mode exposed by
+ * `_YuugenHighlight` when an exported profile enables it.
  */
 export async function createHairMaterial(
     options: HairMaterialCreationOptions,
-): Promise<MaterialCreationResult> {
+): Promise<HairMaterialCreationResult> {
     const angelRingTex = await loadTexture(
         AngelRingMap,
-        { colorSpace: THREE.SRGBColorSpace },
+        { colorSpace: THREE.NoColorSpace },
     )
     angelRingTex.wrapS = THREE.ClampToEdgeWrapping
     angelRingTex.wrapT = THREE.ClampToEdgeWrapping
@@ -105,19 +117,64 @@ export async function createHairMaterial(
     const minY = options.angelRingMinY ?? 0
     const maxY = options.angelRingMaxY ?? 2.2
     const safeMaxY = Math.abs(maxY - minY) > 0.0001 ? maxY : minY + 1
+    const reference = options.angelRingReference
+    let compiledShader: THREE.WebGLProgramParametersWithUniforms | undefined
+
+    const headPosition = new THREE.Vector3()
+    const headQuaternion = new THREE.Quaternion()
+    const planePosition = new THREE.Vector3()
+    const planeUp = new THREE.Vector3(0, 1, 0)
+    const planeRight = new THREE.Vector3(1, 0, 0)
+    const planeForward = new THREE.Vector3(0, 0, 1)
+
+    const updateAngelRingReference = () => {
+        if (!compiledShader || !reference) return
+        reference.headBone.updateWorldMatrix(true, false)
+        reference.headBone.getWorldPosition(headPosition)
+        reference.headBone.getWorldQuaternion(headQuaternion)
+        planeUp.copy(reference.localUp).applyQuaternion(headQuaternion).normalize()
+        planeRight.copy(reference.localRight).applyQuaternion(headQuaternion).normalize()
+        planeForward.copy(reference.localForward).applyQuaternion(headQuaternion).normalize()
+        planePosition.copy(headPosition).addScaledVector(planeUp, reference.headOffset)
+
+        compiledShader.uniforms.uAngelRingPlanePosition.value.copy(planePosition)
+        compiledShader.uniforms.uAngelRingPlaneUp.value.copy(planeUp)
+        compiledShader.uniforms.uAngelRingPlaneRight.value.copy(planeRight)
+        compiledShader.uniforms.uAngelRingPlaneForward.value.copy(planeForward)
+        compiledShader.uniforms.uAngelRingBandHalfWidth.value = reference.bandHalfWidth
+        compiledShader.uniforms.uAngelRingProjectionRadius.value = reference.projectionRadius
+        compiledShader.uniforms.uAngelRingUvMode.value = reference.uvMode ? 1 : 0
+    }
 
     const result = await createGeneralMaterial({
         ...options,
         onBeforeCompile(shader) {
+            compiledShader = shader
             shader.uniforms.tAngelRing = { value: angelRingTex }
             shader.uniforms.uAngelRingMinY = { value: minY }
             shader.uniforms.uAngelRingMaxY = { value: safeMaxY }
+            shader.uniforms.uAngelRingUseHeadPlane = { value: reference ? 1 : 0 }
+            shader.uniforms.uAngelRingPlanePosition = { value: new THREE.Vector3() }
+            shader.uniforms.uAngelRingPlaneUp = { value: new THREE.Vector3(0, 1, 0) }
+            shader.uniforms.uAngelRingPlaneRight = { value: new THREE.Vector3(1, 0, 0) }
+            shader.uniforms.uAngelRingPlaneForward = { value: new THREE.Vector3(0, 0, 1) }
+            shader.uniforms.uAngelRingBandHalfWidth = { value: reference?.bandHalfWidth ?? 0.035 }
+            shader.uniforms.uAngelRingProjectionRadius = { value: reference?.projectionRadius ?? 0.35 }
+            shader.uniforms.uAngelRingUvMode = { value: reference?.uvMode ? 1 : 0 }
             loadAngelRingOptions(shader)
+            updateAngelRingReference()
 
             shader.vertexShader = /* glsl */ `
                 varying float vAngelRingHeight;
+                varying float vAngelRingPlaneDistance;
+                varying vec2 vAngelRingPlaneUv;
                 uniform float uAngelRingMinY;
                 uniform float uAngelRingMaxY;
+                uniform vec3 uAngelRingPlanePosition;
+                uniform vec3 uAngelRingPlaneUp;
+                uniform vec3 uAngelRingPlaneRight;
+                uniform vec3 uAngelRingPlaneForward;
+                uniform float uAngelRingProjectionRadius;
                 ${shader.vertexShader}
             `.replace(
                 '#include <project_vertex>',
@@ -129,11 +186,20 @@ export async function createHairMaterial(
                     0.0,
                     1.0
                 );
+                vec3 rdAngelWorldPosition = (modelMatrix * vec4(transformed, 1.0)).xyz;
+                vec3 rdAngelWorldDelta = rdAngelWorldPosition - uAngelRingPlanePosition;
+                vAngelRingPlaneDistance = dot(rdAngelWorldDelta, normalize(uAngelRingPlaneUp));
+                vAngelRingPlaneUv = vec2(
+                    dot(rdAngelWorldDelta, normalize(uAngelRingPlaneRight)),
+                    dot(rdAngelWorldDelta, normalize(uAngelRingPlaneForward))
+                ) / max(uAngelRingProjectionRadius * 2.0, 0.0001) + 0.5;
                 `
             )
 
             shader.fragmentShader = /* glsl */ `
                 varying float vAngelRingHeight;
+                varying float vAngelRingPlaneDistance;
+                varying vec2 vAngelRingPlaneUv;
                 uniform sampler2D tAngelRing;
                 uniform float uAngelRingEnabled;
                 uniform vec3 uAngelRingColor;
@@ -144,73 +210,91 @@ export async function createHairMaterial(
                 uniform float uAngelRingTilt;
                 uniform float uAngelRingViewPower;
                 uniform float uAngelRingTextureInfluence;
+                uniform float uAngelRingUseHeadPlane;
+                uniform float uAngelRingBandHalfWidth;
+                uniform float uAngelRingUvMode;
                 ${shader.fragmentShader}
             `.replace(
                 diffuseColorManipulationEndFlag,
                 /* glsl */ `
-                // UV fallback makes the band independent from inconsistent FBX
-                // local origins while the model-height component preserves a
-                // coherent ring on well-exported characters.
-                float rdAngelUvHeight = clamp(1.0 - vMapUv.y, 0.0, 1.0);
-                float rdAngelHeight = mix(
+                float rdAngelFallbackHeight = mix(
                     vAngelRingHeight,
-                    rdAngelUvHeight,
+                    clamp(1.0 - vMapUv.y, 0.0, 1.0),
                     0.55
                 );
-                float rdAngelCenter =
-                    uAngelRingCenter +
-                    normal.x * uAngelRingTilt * 0.16;
-                float rdAngelDistance = abs(
-                    rdAngelHeight - rdAngelCenter
-                );
-                float rdAngelInner = max(
-                    uAngelRingWidth - uAngelRingSoftness,
-                    0.0
-                );
-                float rdAngelOuter = max(
-                    rdAngelInner + 0.0001,
+                float rdAngelFallbackCenter = uAngelRingCenter + normal.x * uAngelRingTilt * 0.16;
+                float rdAngelFallbackDistance = abs(rdAngelFallbackHeight - rdAngelFallbackCenter);
+                float rdAngelFallbackInner = max(uAngelRingWidth - uAngelRingSoftness, 0.0);
+                float rdAngelFallbackOuter = max(
+                    rdAngelFallbackInner + 0.0001,
                     uAngelRingWidth + uAngelRingSoftness
                 );
-                float rdAngelBand = 1.0 - smoothstep(
-                    rdAngelInner,
-                    rdAngelOuter,
-                    rdAngelDistance
+                float rdAngelFallbackBand = 1.0 - smoothstep(
+                    rdAngelFallbackInner,
+                    rdAngelFallbackOuter,
+                    rdAngelFallbackDistance
+                );
+                vec2 rdAngelFallbackUv = vec2(
+                    clamp(normal.x * 0.5 + 0.5, 0.0, 1.0),
+                    clamp(
+                        0.5 + (rdAngelFallbackHeight - rdAngelFallbackCenter) /
+                        max(uAngelRingWidth * 2.0, 0.0001),
+                        0.0,
+                        1.0
+                    )
                 );
 
-                float rdAngelU = clamp(normal.x * 0.5 + 0.5, 0.0, 1.0);
-                float rdAngelV = clamp(
-                    0.5 +
-                    (rdAngelHeight - rdAngelCenter) /
-                    max(uAngelRingWidth * 2.0, 0.0001),
-                    0.0,
-                    1.0
+                float rdAngelWorldWidth = max(
+                    uAngelRingBandHalfWidth * max(uAngelRingWidth / 0.10, 0.05),
+                    0.001
                 );
-                vec3 rdAngelTexture = texture2D(
-                    tAngelRing,
-                    vec2(rdAngelU, rdAngelV)
-                ).rgb;
-                float rdAngelTextureMask = max(
-                    rdAngelTexture.r,
-                    max(rdAngelTexture.g, rdAngelTexture.b)
+                float rdAngelWorldSoftness = max(
+                    uAngelRingBandHalfWidth * max(uAngelRingSoftness / 0.10, 0.02),
+                    0.0005
                 );
+                float rdAngelWorldCenterShift =
+                    (uAngelRingCenter - 0.5) * rdAngelWorldWidth * 2.0 +
+                    (vAngelRingPlaneUv.x - 0.5) * uAngelRingTilt * rdAngelWorldWidth;
+                float rdAngelWorldDistance = abs(
+                    vAngelRingPlaneDistance - rdAngelWorldCenterShift
+                );
+                float rdAngelWorldBand = 1.0 - smoothstep(
+                    max(rdAngelWorldWidth - rdAngelWorldSoftness, 0.0),
+                    rdAngelWorldWidth + rdAngelWorldSoftness,
+                    rdAngelWorldDistance
+                );
+
+                vec2 rdAngelProjectedUv = clamp(vAngelRingPlaneUv, 0.0, 1.0);
+                vec2 rdAngelHairUv = vec2(vMapUv.x, 1.0 - vMapUv.y);
+                vec2 rdAngelOfficialUv = mix(
+                    rdAngelProjectedUv,
+                    rdAngelHairUv,
+                    saturate(uAngelRingUvMode)
+                );
+                float rdAngelProjectedMap = texture2D(tAngelRing, rdAngelOfficialUv).r;
+                float rdAngelFallbackMap = texture2D(tAngelRing, rdAngelFallbackUv).r;
+                float rdAngelBand = mix(
+                    rdAngelFallbackBand,
+                    rdAngelWorldBand,
+                    saturate(uAngelRingUseHeadPlane)
+                );
+                float rdAngelMap = mix(
+                    rdAngelFallbackMap,
+                    rdAngelProjectedMap,
+                    saturate(uAngelRingUseHeadPlane)
+                );
+
                 float rdAngelFacing = pow(
                     saturate(dot(normal, normalize(vViewPosition))),
                     max(uAngelRingViewPower, 0.0001)
                 );
                 float rdAngelMask =
                     rdAngelBand *
-                    mix(
-                        1.0,
-                        rdAngelTextureMask,
-                        saturate(uAngelRingTextureInfluence)
-                    ) *
-                    mix(0.70, 1.0, rdAngelFacing) *
+                    mix(1.0, rdAngelMap, saturate(uAngelRingTextureInfluence)) *
+                    mix(0.74, 1.0, rdAngelFacing) *
                     uAngelRingEnabled;
 
-                vec3 rdAngelTarget = max(
-                    diffuseColor.rgb,
-                    uAngelRingColor
-                );
+                vec3 rdAngelTarget = max(diffuseColor.rgb, uAngelRingColor);
                 diffuseColor.rgb = mix(
                     diffuseColor.rgb,
                     rdAngelTarget,
@@ -224,7 +308,10 @@ export async function createHairMaterial(
     })
 
     result.textures.push(angelRingTex)
-    return result
+    return {
+        ...result,
+        updateAngelRingReference: reference ? updateAngelRingReference : undefined,
+    }
 }
 
 export function getMeshAngelRingShaders(
