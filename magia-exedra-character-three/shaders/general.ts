@@ -4,11 +4,20 @@ import { loadTexture, MaximizeTextureQuality } from '../texture';
 import { injectToonStylization, ToonStylizationUniforms } from './stylization';
 
 export const ShadowTexOptions = {
-    preMix: 1.0,
-    test: 0.33,
-    threshold: 0.0,
-    transition: 0.002,
-    amount: 0.0,
+    preMix: 0.82,
+    test: 0.50,
+    threshold: 0.18,
+    transition: 0.22,
+    amount: 0.28,
+    controlOffsetStrength: 0.32,
+}
+
+export const officialShadowPreset = {
+    ...ShadowTexOptions,
+}
+
+export function resetOfficialShadowPreset() {
+    Object.assign(ShadowTexOptions, officialShadowPreset)
 }
 
 export class GeneralMatrialUniforms extends ToonStylizationUniforms {
@@ -34,14 +43,18 @@ export class GeneralMatrialUniforms extends ToonStylizationUniforms {
     get uShadowAmount(): number | undefined { return this.getValue('uShadowAmount') }
     set uShadowAmount(value) { this.setValue('uShadowAmount', value) }
 
+    get uControlOffsetStrength(): number | undefined { return this.getValue('uControlOffsetStrength') }
+    set uControlOffsetStrength(value) { this.setValue('uControlOffsetStrength', value) }
+
     loadGlobalOptions() {
         super.loadGlobalOptions()
-        this.uShadowMix = 0.67
+        this.uShadowMix = 0.72
         this.uShadowPreMix = ShadowTexOptions.preMix
         this.uShadowTest = ShadowTexOptions.test
         this.uShadowThreshold = ShadowTexOptions.threshold
         this.uShadowTransition = ShadowTexOptions.transition
         this.uShadowAmount = ShadowTexOptions.amount
+        this.uControlOffsetStrength = ShadowTexOptions.controlOffsetStrength
     }
 }
 
@@ -52,13 +65,11 @@ interface GeneralMaterialCreationOptions extends MaterialCreationOptions {
 }
 
 /**
- * ```txt
- * color ---\
- *           |--> ctrl[red] -----> final texture
- * shadow --/
- *
- * ctrl[alpha] / shadow[alpha] --> final alpha map
- * ```
+ * ReDriveToon control texture:
+ * R = per-pixel shadow threshold offset
+ * G = metallic response
+ * B = specular response
+ * A = alpha
  */
 export async function createGeneralMaterial(options: GeneralMaterialCreationOptions): Promise<MaterialCreationResult> {
     if (options.alphaSrc == 'shadow' && !options.shadowMap) options.alphaSrc = undefined;
@@ -74,14 +85,21 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
     const material = new THREE.MeshStandardMaterial({
         map: colorTex,
+        roughness: 1,
+        metalness: 0,
         transparent: Boolean(options.alphaSrc),
     });
 
     const userData = new MaterialUserData()
     material.userData = userData
 
-    // prevent different materials from using a same shader
-    const programCacheKey = JSON.stringify(options);
+    const programCacheKey = JSON.stringify({
+        colorMap: options.colorMap,
+        shadowMap: options.shadowMap,
+        ctrlMap: options.ctrlMap,
+        alphaSrc: options.alphaSrc,
+        hasExtension: Boolean(options.onBeforeCompile),
+    });
     material.customProgramCacheKey = () => programCacheKey;
 
     material.onBeforeCompile = (shader) => {
@@ -110,6 +128,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             uniform float uShadowThreshold;
             uniform float uShadowTransition;
             uniform float uShadowAmount;
+            uniform float uControlOffsetStrength;
 
             ${shader.fragmentShader}
         `.replace(
@@ -119,6 +138,9 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
             #ifdef HAS_CTRL
                 vec4 texCtrl = texture2D(tCtrl, vMapUv);
+                rdToonShadowOffset = texCtrl.r - 0.5;
+                rdToonMetallicMask = texCtrl.g;
+                rdToonSpecularMask = texCtrl.b;
             #endif
 
             #ifdef HAS_SHADOW
@@ -126,7 +148,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
                 float shadowMix;
                 #ifdef HAS_CTRL
-                    shadowMix = mix(1.0, texCtrl.r, uShadowPreMix); // Mix Color and Shadow texture with Ctrl red, controlled by a premix factor
+                    float authoredPreMix = mix(0.78, 1.0, texCtrl.r);
+                    shadowMix = mix(1.0, authoredPreMix, uShadowPreMix);
                 #else
                     shadowMix = uShadowMix;
                 #endif
@@ -140,9 +163,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             float roughnessFactor;
 
             #ifdef HAS_CTRL
-                // ReDriveToon ControlMap: B = specular. MeshStandardMaterial
-                // expresses this most closely as inverse roughness.
-                roughnessFactor = 1.0 - texCtrl.b;
+                roughnessFactor = mix(0.94, 0.38, texCtrl.b);
             #else
                 roughnessFactor = roughness;
             #endif
@@ -151,13 +172,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             '#include <metalnessmap_fragment>',
             /*glsl*/ `
             float metalnessFactor;
-
-            #ifdef HAS_CTRL
-                // ReDriveToon ControlMap: G = metallic.
-                metalnessFactor = texCtrl.g;
-            #else
-                metalnessFactor = metalness;
-            #endif
+            metalnessFactor = 0.0;
             `
         ).replace(
             '#include <alphamap_fragment>',
@@ -170,73 +185,79 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             '#include <lights_physical_fragment>',
             /*glsl*/`
             #ifdef HAS_SHADOW
-                // backup global variables
                 vec3 o_diffuseColor = diffuseColor.rgb;
                 ReflectedLight o_reflectedLight = reflectedLight;
                 float o_roughnessFactor = roughnessFactor;
                 float o_metalnessFactor = metalnessFactor;
 
-                // first pass: get light strength
-                diffuseColor.rgb = vec3(uShadowTest, uShadowTest, uShadowTest); // set texture to 50% gray
-                roughnessFactor = 1.0; // disable speculars
+                diffuseColor.rgb = vec3(uShadowTest);
+                roughnessFactor = 1.0;
                 metalnessFactor = 0.0;
 
                 float lightStrength;
 
                 if (0 == 0) {
-                    // these includes define some variables
-                    // to avoid re-declaration, run them inside a block
                     #include <lights_physical_fragment>
                     #include <lights_fragment_begin>
                     #include <lights_fragment_maps>
                     #include <lights_fragment_end>
 
-                    lightStrength =
-                        reflectedLight.directDiffuse.r // directional lights
-                        // + reflectedLight.indirectDiffuse.r // ambient lights
-                        ;
+                    lightStrength = reflectedLight.directDiffuse.r;
 
-                    // distinguish light and shadow, add a tiny smooth transition to prevent aliasing
+                    float pixelShadowThreshold = clamp(
+                        uShadowThreshold - rdToonShadowOffset * uControlOffsetStrength,
+                        -0.25,
+                        0.95
+                    );
+                    float pixelShadowEnd = pixelShadowThreshold +
+                        (1.0 - pixelShadowThreshold) *
+                        max(uShadowTransition, 0.0001);
+
                     lightStrength = smoothstep(
-                        uShadowThreshold,
-                        uShadowThreshold + (1.0 - uShadowThreshold) * uShadowTransition,
+                        pixelShadowThreshold,
+                        max(pixelShadowEnd, pixelShadowThreshold + 0.0001),
                         lightStrength
                     );
 
-                    // use ambient light as shadow strength
                     float shadowStrength;
                     if (uShadowAmount < 0.0) {
-                        shadowStrength = reflectedLight.indirectDiffuse.r * (1.0 + uShadowAmount);
+                        shadowStrength =
+                            reflectedLight.indirectDiffuse.r *
+                            (1.0 + uShadowAmount);
                     } else {
-                        shadowStrength = reflectedLight.indirectDiffuse.r + (1.0 - reflectedLight.indirectDiffuse.r) * uShadowAmount;
+                        shadowStrength =
+                            reflectedLight.indirectDiffuse.r +
+                            (1.0 - reflectedLight.indirectDiffuse.r) *
+                            uShadowAmount;
                     }
-                    lightStrength = shadowStrength + lightStrength * (1.0 - shadowStrength); // add shadow
+                    lightStrength =
+                        shadowStrength +
+                        lightStrength * (1.0 - shadowStrength);
                 }
 
-                // restore global variables
                 diffuseColor.rgb = o_diffuseColor;
                 reflectedLight = o_reflectedLight;
                 roughnessFactor = o_roughnessFactor;
                 metalnessFactor = o_metalnessFactor;
 
-                // select between color and shadow map according to light strength
-                diffuseColor.rgb = mix(texShadow.rgb, diffuseColor.rgb, lightStrength);
-                // diffuseColor.rgb = vec3(lightStrength, lightStrength, lightStrength); // debug: for testing whether we've got the correct light strength
+                diffuseColor.rgb = mix(
+                    texShadow.rgb,
+                    diffuseColor.rgb,
+                    lightStrength
+                );
             #endif
 
             ${diffuseColorManipulationEndFlag}
 
-            // second pass: calculate final light based on new diffuseColor
             #include <lights_physical_fragment>
             `
         );
 
-        options.onBeforeCompile && options.onBeforeCompile(shader);
+        options.onBeforeCompile?.(shader);
         injectToonStylization(shader, uniforms);
 
         userData.shader = shader;
         userData.shaderUniforms = uniforms;
-        // console.log(shader.fragmentShader)
     };
 
     return {
