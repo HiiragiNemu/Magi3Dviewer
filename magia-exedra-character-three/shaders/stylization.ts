@@ -2,6 +2,19 @@ import * as THREE from 'three';
 import { MaterialUserData, ShaderUniformsController } from './userdata';
 
 export interface ToonStylizationOptions {
+    officialLookEnabled: boolean;
+    lightingInfluence: number;
+    albedoLift: number;
+    brightness: number;
+    contrast: number;
+    saturation: number;
+    shadowTint: string;
+    shadowTintStrength: number;
+    highlightTint: string;
+    highlightTintStrength: number;
+    specularStrength: number;
+    metallicResponse: number;
+
     rimEnabled: boolean;
     rimColor: string;
     rimStrength: number;
@@ -10,6 +23,7 @@ export interface ToonStylizationOptions {
     rimDirectionX: number;
     rimDirectionY: number;
     rimDirectionality: number;
+
     fresnelEnabled: boolean;
     fresnelColor: string;
     fresnelStrength: number;
@@ -18,27 +32,50 @@ export interface ToonStylizationOptions {
 }
 
 /**
- * ReDriveToon exposes a regular rim light plus a timeline-controlled,
- * screen-directional additional rim light. These restrained defaults preserve
- * the characteristic lit edge without washing out the character.
+ * Default presentation tuned against the official in-game character viewer:
+ * a mostly texture-preserving toon result with soft cool shadows, warm highlights
+ * and a restrained directional rim. The old implementation only added an edge
+ * light, which was too subtle to materially change the upstream PBR result.
  */
 export const toonStylizationOptions: ToonStylizationOptions = {
+    officialLookEnabled: true,
+    lightingInfluence: 0.42,
+    albedoLift: 0.08,
+    brightness: 1.04,
+    contrast: 0.90,
+    saturation: 0.96,
+    shadowTint: '#817aa7',
+    shadowTintStrength: 0.18,
+    highlightTint: '#ffe4dc',
+    highlightTintStrength: 0.12,
+    specularStrength: 0.55,
+    metallicResponse: 0.28,
+
     rimEnabled: true,
-    rimColor: '#fff4dc',
-    rimStrength: 0.16,
-    rimThreshold: 0.58,
-    rimFeather: 0.18,
-    rimDirectionX: -0.45,
-    rimDirectionY: 0.8,
-    rimDirectionality: 0.42,
+    rimColor: '#cfdcff',
+    rimStrength: 0.26,
+    rimThreshold: 0.52,
+    rimFeather: 0.20,
+    rimDirectionX: -0.65,
+    rimDirectionY: 0.35,
+    rimDirectionality: 0.46,
+
     fresnelEnabled: false,
     fresnelColor: '#ffffff',
-    fresnelStrength: 0.35,
-    fresnelThreshold: 0.5,
-    fresnelFeather: 0.25,
+    fresnelStrength: 0.25,
+    fresnelThreshold: 0.58,
+    fresnelFeather: 0.22,
 };
 
-/** Runtime uniforms shared by general and face materials. */
+export const officialToonPreset: Readonly<ToonStylizationOptions> = {
+    ...toonStylizationOptions,
+};
+
+export function resetOfficialToonPreset() {
+    Object.assign(toonStylizationOptions, officialToonPreset);
+}
+
+/** Runtime uniforms shared by general, face and hair materials. */
 export class ToonStylizationUniforms extends ShaderUniformsController {
     private setColor(key: string, value: THREE.ColorRepresentation) {
         const current = this.getValue(key);
@@ -61,6 +98,19 @@ export class ToonStylizationUniforms extends ShaderUniformsController {
     loadGlobalOptions() {
         const options = toonStylizationOptions;
 
+        this.setValue('uOfficialLookEnabled', options.officialLookEnabled ? 1 : 0);
+        this.setValue('uLightingInfluence', options.lightingInfluence);
+        this.setValue('uAlbedoLift', options.albedoLift);
+        this.setValue('uOfficialBrightness', options.brightness);
+        this.setValue('uOfficialContrast', options.contrast);
+        this.setValue('uOfficialSaturation', options.saturation);
+        this.setColor('uShadowTint', options.shadowTint);
+        this.setValue('uShadowTintStrength', options.shadowTintStrength);
+        this.setColor('uHighlightTint', options.highlightTint);
+        this.setValue('uHighlightTintStrength', options.highlightTintStrength);
+        this.setValue('uOfficialSpecularStrength', options.specularStrength);
+        this.setValue('uMetallicResponse', options.metallicResponse);
+
         this.setValue('uRimEnabled', options.rimEnabled ? 1 : 0);
         this.setColor('uRimColor', options.rimColor);
         this.setValue('uRimStrength', options.rimStrength);
@@ -82,9 +132,13 @@ export class ToonStylizationUniforms extends ShaderUniformsController {
 }
 
 /**
- * Add emission-like edge lighting after Three.js has assembled the physical
- * lighting result. Rim and Fresnel therefore remain legible in shadow and do
- * not interfere with the first pass used to choose the toon shadow texture.
+ * Adds the official-style presentation layer after Three.js has assembled the
+ * physical lighting result. General materials populate the three channel masks
+ * below from the ReDrive control texture:
+ *
+ * R = per-pixel shadow threshold offset
+ * G = metallic response
+ * B = specular response
  */
 export function injectToonStylization(
     shader: THREE.WebGLProgramParametersWithUniforms,
@@ -93,6 +147,19 @@ export function injectToonStylization(
     uniforms.loadGlobalOptions();
 
     shader.fragmentShader = /* glsl */ `
+        uniform float uOfficialLookEnabled;
+        uniform float uLightingInfluence;
+        uniform float uAlbedoLift;
+        uniform float uOfficialBrightness;
+        uniform float uOfficialContrast;
+        uniform float uOfficialSaturation;
+        uniform vec3 uShadowTint;
+        uniform float uShadowTintStrength;
+        uniform vec3 uHighlightTint;
+        uniform float uHighlightTintStrength;
+        uniform float uOfficialSpecularStrength;
+        uniform float uMetallicResponse;
+
         uniform float uRimEnabled;
         uniform vec3 uRimColor;
         uniform float uRimStrength;
@@ -107,10 +174,104 @@ export function injectToonStylization(
         uniform float uFresnelThreshold;
         uniform float uFresnelFeather;
 
+        float rdToonShadowOffset = 0.0;
+        float rdToonMetallicMask = 0.0;
+        float rdToonSpecularMask = 0.0;
+
         ${shader.fragmentShader}
     `.replace(
         '#include <opaque_fragment>',
         /* glsl */ `
+        vec3 rdToonAlbedo = max(diffuseColor.rgb, vec3(0.0));
+        vec3 rdToonPhysical = max(outgoingLight, vec3(0.0));
+
+        float rdToonAlbedoLuma = max(
+            dot(rdToonAlbedo, vec3(0.2126, 0.7152, 0.0722)),
+            0.001
+        );
+        float rdToonPhysicalLuma = dot(
+            rdToonPhysical,
+            vec3(0.2126, 0.7152, 0.0722)
+        );
+        float rdToonRelativeLight = clamp(
+            rdToonPhysicalLuma / rdToonAlbedoLuma,
+            0.0,
+            2.0
+        );
+        float rdToonShadowMask = 1.0 - smoothstep(
+            0.52,
+            0.96,
+            rdToonRelativeLight
+        );
+        float rdToonHighlightMask = smoothstep(
+            0.90,
+            1.45,
+            rdToonRelativeLight
+        );
+
+        // Preserve the authored color/shadow textures instead of applying the
+        // full PBR lighting a second time. This is the largest visual difference
+        // between the official renderer and the former web approximation.
+        vec3 rdToonOfficial = mix(
+            rdToonAlbedo,
+            rdToonPhysical,
+            saturate(uLightingInfluence)
+        );
+        rdToonOfficial += rdToonAlbedo * uAlbedoLift;
+
+        rdToonOfficial = mix(
+            rdToonOfficial,
+            rdToonOfficial * uShadowTint,
+            rdToonShadowMask * saturate(uShadowTintStrength)
+        );
+        rdToonOfficial +=
+            uHighlightTint *
+            rdToonHighlightMask *
+            uHighlightTintStrength;
+
+        // ReDrive uses a metallic gradient rather than relying only on an IBL
+        // environment. Approximate that gradient from the view-space normal so
+        // metallic control-map regions remain bright and readable online.
+        float rdToonMetalGradientPosition = saturate(normal.y * 0.5 + 0.5);
+        vec3 rdToonMetalGradient = mix(
+            uShadowTint,
+            uHighlightTint,
+            smoothstep(0.05, 0.95, rdToonMetalGradientPosition)
+        );
+        vec3 rdToonMetalColor =
+            rdToonMetalGradient * mix(rdToonAlbedo, vec3(1.0), 0.20);
+        rdToonOfficial = mix(
+            rdToonOfficial,
+            rdToonMetalColor,
+            saturate(rdToonMetallicMask * uMetallicResponse)
+        );
+
+        // B channel is the authored specular mask. PBR specular is retained but
+        // scaled by that mask instead of being mistaken for metallic.
+        rdToonOfficial +=
+            totalSpecular *
+            rdToonSpecularMask *
+            uOfficialSpecularStrength;
+
+        float rdToonOfficialLuma = dot(
+            rdToonOfficial,
+            vec3(0.2126, 0.7152, 0.0722)
+        );
+        rdToonOfficial = mix(
+            vec3(rdToonOfficialLuma),
+            rdToonOfficial,
+            max(uOfficialSaturation, 0.0)
+        );
+        rdToonOfficial =
+            (rdToonOfficial - vec3(0.5)) * uOfficialContrast + vec3(0.5);
+        rdToonOfficial *= uOfficialBrightness;
+
+        outgoingLight = mix(
+            outgoingLight,
+            max(rdToonOfficial, vec3(0.0)),
+            saturate(uOfficialLookEnabled)
+        );
+
         float rdToonNdotV = saturate(dot(normal, geometryViewDir));
         float rdToonEdge = 1.0 - rdToonNdotV;
 
@@ -133,8 +294,8 @@ export function injectToonStylization(
             ? normalize(uRimDirection)
             : vec2(0.0, 1.0);
         float rdToonDirectionalRim = smoothstep(
-            -0.2,
-            0.7,
+            -0.25,
+            0.72,
             dot(rdToonNormalXy, rdToonRimDirection)
         );
         float rdToonRimMask = rdToonRimBand * mix(
