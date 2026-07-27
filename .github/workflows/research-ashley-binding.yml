@@ -6,6 +6,8 @@ on:
     branches: ['main']
     paths: ['.github/workflows/research-ashley-binding.yml']
   workflow_dispatch:
+  issues:
+    types: [opened]
 
 permissions:
   contents: read
@@ -19,6 +21,7 @@ concurrency:
 
 jobs:
   diagnose:
+    if: ${{ github.event_name != 'issues' || github.event.issue.title == '[automation-trigger] Diagnose Ashley 110701 binding' }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -138,15 +141,15 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import json,re
+          import json
           source=Path('magia-exedra-character-three/character.ts').read_text(encoding='utf-8')
           findings=[]
           if '.filter(x => x.name.startsWith(name))' in source:
             findings.append({'severity':'high','finding':'Animation group selection uses startsWith(name), which can activate unrelated clips sharing the same prefix.'})
-          if '.replace(/_\\d/, \'\')' in source:
-            findings.append({'severity':'medium','finding':'Animation display-name normalization removes only the first underscore-digit occurrence and is not anchored to a suffix.'})
-          if 'mixer.stopAllAction()' in source:
-            findings.append({'severity':'info','finding':'All actions are stopped before grouped body/weapon clips are started.'})
+          if 'getAnimationFamilyName' in source:
+            findings.append({'severity':'info','finding':'Viewer now uses exact normalized animation families.'})
+          if 'duplicate animation bindings' in source.lower():
+            findings.append({'severity':'info','finding':'Viewer removes duplicate channels from body/weapon companion clips.'})
           Path('work/out/viewer-animation-code-findings.json').write_text(json.dumps(findings,indent=2),encoding='utf-8')
 
       - name: Package diagnostics
