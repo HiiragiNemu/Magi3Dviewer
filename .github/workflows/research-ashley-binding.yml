@@ -22,17 +22,17 @@ concurrency:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - name: Checkout Magius3Dviewer source
         uses: actions/checkout@v5
         with:
           ref: magius3dviewer
 
-      - name: Install FBX inspection tools
+      - name: Install Blender FBX inspector
         run: |
           sudo apt-get update
-          sudo apt-get install -y assimp-utils
+          sudo apt-get install -y blender
 
       - name: Decompress Ashley and control FBX files
         shell: bash
@@ -45,71 +45,114 @@ jobs:
             test -n "$src"
             gzip -dc "$src" > "work/fbx/chara_${id}.fbx"
             sha256sum "$src" "work/fbx/chara_${id}.fbx" >> work/out/checksums.txt
-            assimp info "work/fbx/chara_${id}.fbx" > "work/out/chara_${id}-assimp-info.txt" 2>&1 || true
-            assimp export "work/fbx/chara_${id}.fbx" "work/out/chara_${id}.assjson" -f assjson > "work/out/chara_${id}-assimp-export.log" 2>&1 || true
           done
 
-      - name: Analyze skeleton and animation-channel bindings
+      - name: Create Blender inspection script
+        shell: bash
+        run: |
+          cat > work/inspect_fbx.py <<'PY'
+          import bpy, json, re, sys
+          from pathlib import Path
+
+          fbx = Path(sys.argv[-2])
+          out = Path(sys.argv[-1])
+          bpy.ops.wm.read_factory_settings(use_empty=True)
+          result = {'file': str(fbx)}
+          try:
+              bpy.ops.import_scene.fbx(filepath=str(fbx), use_anim=True, automatic_bone_orientation=False)
+          except Exception as exc:
+              result['importError'] = repr(exc)
+              out.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
+              raise
+
+          objects=[]; armatures=[]; meshes=[]
+          for obj in bpy.data.objects:
+              entry={'name':obj.name,'type':obj.type,'parent':obj.parent.name if obj.parent else None,'parentType':obj.parent_type,'scale':list(obj.scale),'location':list(obj.location),'rotationMode':obj.rotation_mode}
+              objects.append(entry)
+              if obj.type=='ARMATURE':
+                  bones=[]
+                  for bone in obj.data.bones:
+                      bones.append({'name':bone.name,'parent':bone.parent.name if bone.parent else None,'useDeform':bone.use_deform,'headLocal':list(bone.head_local),'tailLocal':list(bone.tail_local),'matrixLocal':[list(row) for row in bone.matrix_local]})
+                  armatures.append({'object':obj.name,'bones':bones,'poseBoneCount':len(obj.pose.bones)})
+              if obj.type=='MESH':
+                  modifiers=[{'name':m.name,'type':m.type,'object':getattr(getattr(m,'object',None),'name',None)} for m in obj.modifiers]
+                  groups=[g.name for g in obj.vertex_groups]
+                  invalid_groups=[]
+                  vertex_count=len(obj.data.vertices)
+                  for group in obj.vertex_groups:
+                      weighted=0
+                      for vertex in obj.data.vertices:
+                          try:
+                              group.weight(vertex.index); weighted+=1
+                          except RuntimeError:
+                              pass
+                      if weighted==0: invalid_groups.append(group.name)
+                  meshes.append({'object':obj.name,'vertexCount':vertex_count,'polygonCount':len(obj.data.polygons),'vertexGroups':groups,'emptyVertexGroups':invalid_groups,'modifiers':modifiers})
+
+          actions=[]
+          for action in bpy.data.actions:
+              curves=[]
+              groups={}
+              for curve in action.fcurves:
+                  curves.append({'dataPath':curve.data_path,'arrayIndex':curve.array_index,'keyframes':len(curve.keyframe_points),'range':list(curve.range())})
+                  match=re.search(r'pose\.bones\["(.+?)"\]',curve.data_path)
+                  if match: groups.setdefault(match.group(1),0); groups[match.group(1)]+=1
+              actions.append({'name':action.name,'frameRange':list(action.frame_range),'fcurveCount':len(curves),'boneChannels':groups,'curves':curves})
+
+          result.update({'sceneObjects':objects,'armatures':armatures,'meshes':meshes,'actions':actions,'actionCount':len(actions),'objectCount':len(objects)})
+          out.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+
+      - name: Inspect Ashley and control models in Blender
+        shell: bash
+        run: |
+          set -euo pipefail
+          for id in 110701 100107; do
+            blender --background --python work/inspect_fbx.py -- "work/fbx/chara_${id}.fbx" "work/out/chara_${id}-blender.json" > "work/out/chara_${id}-blender.log" 2>&1 || true
+          done
+
+      - name: Compare skeletons, actions and Viewer binding logic
         shell: python
         run: |
           from pathlib import Path
-          import json, re
-          from collections import Counter, defaultdict
+          import json,re
+          from collections import Counter,defaultdict
 
-          def norm(value):
-            return re.sub(r'[^a-z0-9]', '', str(value).split(':')[-1].lower())
+          def norm(value): return re.sub(r'[^a-z0-9]','',str(value).split(':')[-1].lower())
+          def load(cid):
+              path=Path(f'work/out/chara_{cid}-blender.json')
+              return json.loads(path.read_text(encoding='utf-8')) if path.exists() else {'importError':'Blender report missing'}
+          def summarize(data):
+              bones=[]
+              for arm in data.get('armatures',[]): bones.extend(b['name'] for b in arm.get('bones',[]))
+              bone_set=set(bones); normalized=defaultdict(list)
+              for bone in bones: normalized[norm(bone)].append(bone)
+              bindings=[]
+              for action in data.get('actions',[]):
+                  for bone,count in action.get('boneChannels',{}).items():
+                      if bone in bone_set: status='exact'; candidates=[bone]
+                      elif norm(bone) in normalized: status='normalized'; candidates=normalized[norm(bone)]
+                      else: status='missing'; candidates=[]
+                      bindings.append({'action':action['name'],'bone':bone,'curveCount':count,'status':status,'candidates':candidates})
+              return {'boneCount':len(bones),'bones':bones,'actionCount':len(data.get('actions',[])),'actions':data.get('actions',[]),'meshes':data.get('meshes',[]),'bindingStatus':dict(Counter(x['status'] for x in bindings)),'bindings':bindings,'duplicateNormalizedBones':{k:v for k,v in normalized.items() if len(v)>1},'importError':data.get('importError')}
 
-          def load(character_id):
-            path = Path(f'work/out/chara_{character_id}.assjson')
-            if not path.exists():
-              return {'error': 'assjson export missing'}
-            data = json.loads(path.read_text(encoding='utf-8', errors='ignore'))
-            nodes=[]; paths=[]
-            def walk(node, prefix=''):
-              name=str(node.get('name',''))
-              current=f'{prefix}/{name}'.strip('/')
-              nodes.append(name); paths.append(current)
-              for child in node.get('children',[]) or []: walk(child,current)
-            walk(data.get('rootnode',{}))
-            bones=[]
-            for mesh_index,mesh in enumerate(data.get('meshes',[]) or []):
-              for bone in mesh.get('bones',[]) or []:
-                bones.append({'mesh':mesh_index,'name':bone.get('name',''),'weights':len(bone.get('weights',[]) or [])})
-            animations=[]; channels=[]
-            for animation in data.get('animations',[]) or []:
-              name=animation.get('name',''); clip_channels=[]
-              for channel in animation.get('channels',[]) or []:
-                node=channel.get('name',channel.get('nodename',''))
-                clip_channels.append(node)
-                channels.append({'animation':name,'node':node,'positionKeys':len(channel.get('positionkeys',[]) or []),'rotationKeys':len(channel.get('rotationkeys',[]) or []),'scalingKeys':len(channel.get('scalingkeys',[]) or [])})
-              animations.append({'name':name,'duration':animation.get('duration'),'ticksPerSecond':animation.get('tickspersecond'),'channels':clip_channels})
-            node_set=set(nodes); normalized=defaultdict(list)
-            for node in nodes: normalized[norm(node)].append(node)
-            bindings=[]
-            for item in channels:
-              node=item['node']
-              if node in node_set: status='exact'; candidates=[node]
-              elif norm(node) in normalized: status='normalized'; candidates=normalized[norm(node)]
-              else: status='missing'; candidates=[]
-              bindings.append({**item,'status':status,'candidates':candidates})
-            return {'nodeCount':len(nodes),'nodeNames':nodes,'nodePaths':paths,'meshBoneCount':len(bones),'meshBones':bones,'animationCount':len(animations),'animations':animations,'bindingStatus':dict(Counter(x['status'] for x in bindings)),'bindings':bindings,'duplicateNormalizedNodes':{k:v for k,v in normalized.items() if len(v)>1}}
-
-          ashley=load(110701); control=load(100107)
-          result={'schemaVersion':1,'ashley':ashley,'controlMadoka':control}
-          if 'nodeNames' in ashley and 'nodeNames' in control:
-            a=set(map(norm,ashley['nodeNames'])); c=set(map(norm,control['nodeNames']))
-            result['skeletonComparison']={'sharedNormalizedNodes':len(a&c),'ashleyOnly':sorted(a-c),'controlOnly':sorted(c-a)}
+          ashley_raw=load(110701); control_raw=load(100107)
+          ashley=summarize(ashley_raw); control=summarize(control_raw)
+          report={'schemaVersion':2,'parser':'Blender FBX importer','ashley':ashley,'controlMadoka':control}
+          a=set(map(norm,ashley['bones'])); c=set(map(norm,control['bones']))
+          report['skeletonComparison']={'sharedNormalizedBones':len(a&c),'ashleyOnly':sorted(a-c),'controlOnly':sorted(c-a)}
           source=Path('magia-exedra-character-three/character.ts').read_text(encoding='utf-8')
-          result['viewerCode']={'exactAnimationFamilies':'getAnimationFamilyName' in source,'deduplicatesCompanionChannels':'duplicate animation bindings' in source.lower(),'legacyStartsWithSelection':'.filter(x => x.name.startsWith(name))' in source}
-          Path('work/out/ashley-binding-diagnostics.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
-          summary=['# Ashley 110701 binding diagnostics','']
-          if 'error' in ashley:
-            summary.append(f"- Error: {ashley['error']}")
-          else:
-            summary += [f"- Nodes: **{ashley['nodeCount']}**",f"- Skin bones: **{ashley['meshBoneCount']}**",f"- Animation clips: **{ashley['animationCount']}**",f"- Binding status: `{ashley['bindingStatus']}`",'', '## Missing channels','']
-            missing=[x for x in ashley['bindings'] if x['status']=='missing']
-            summary += [f"- `{x['animation']}` -> `{x['node']}`" for x in missing] or ['No Assimp-level missing channels detected.']
-          Path('work/out/ASHLEY_BINDING_DIAGNOSTICS.md').write_text('\n'.join(summary)+'\n',encoding='utf-8')
+          report['viewerCode']={'exactAnimationFamilies':'getAnimationFamilyName' in source,'deduplicatesCompanionChannels':'duplicate animation bindings' in source.lower(),'legacyStartsWithSelection':'.filter(x => x.name.startsWith(name))' in source}
+          Path('work/out/ashley-binding-diagnostics.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+          lines=['# Ashley 110701 Blender binding diagnostics','',f"- Ashley bones: **{ashley['boneCount']}**",f"- Ashley actions: **{ashley['actionCount']}**",f"- Binding status: `{ashley['bindingStatus']}`",f"- Shared normalized bones with control Madoka: **{report['skeletonComparison']['sharedNormalizedBones']}**",'', '## Missing action bone bindings','']
+          missing=[x for x in ashley['bindings'] if x['status']=='missing']
+          lines += [f"- `{x['action']}` -> `{x['bone']}` ({x['curveCount']} curves)" for x in missing] or ['No Blender-level missing action bone bindings detected.']
+          lines += ['', '## Empty skin vertex groups','']
+          empty=[]
+          for mesh in ashley['meshes']:
+              for group in mesh.get('emptyVertexGroups',[]): empty.append((mesh['object'],group))
+          lines += [f"- `{mesh}` -> `{group}`" for mesh,group in empty] or ['No empty vertex groups detected.']
+          Path('work/out/ASHLEY_BINDING_DIAGNOSTICS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
 
       - name: Package diagnostics
         run: tar -czf ashley-110701-binding-diagnostics.tar.gz work/out
@@ -127,4 +170,4 @@ jobs:
         with:
           script: |
             const status='${{ job.status }}';
-            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:status==='success'?'success':'failure',context:'Ashley 110701 FBX binding diagnostics',description:status==='success'?'Ashley binding artifact generated':'Ashley binding diagnostics failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:status==='success'?'success':'failure',context:'Ashley 110701 FBX binding diagnostics',description:status==='success'?'Blender Ashley binding artifact generated':'Ashley binding diagnostics failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
