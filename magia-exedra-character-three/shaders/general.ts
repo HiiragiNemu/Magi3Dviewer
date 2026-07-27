@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-import { MaterialUserData, ShaderUniformsController, type MaterialCreationOptions, type MaterialCreationResult } from '.';
+import { MaterialUserData, type MaterialCreationOptions, type MaterialCreationResult } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
+import { injectToonStylization, ToonStylizationUniforms } from './stylization';
 
 export const ShadowTexOptions = {
     preMix: 1.0,
@@ -10,7 +11,7 @@ export const ShadowTexOptions = {
     amount: 0.0,
 }
 
-export class GeneralMatrialUniforms extends ShaderUniformsController {
+export class GeneralMatrialUniforms extends ToonStylizationUniforms {
     constructor(shader: THREE.WebGLProgramParametersWithUniforms) {
         super(shader)
     }
@@ -34,6 +35,7 @@ export class GeneralMatrialUniforms extends ShaderUniformsController {
     set uShadowAmount(value) { this.setValue('uShadowAmount', value) }
 
     loadGlobalOptions() {
+        super.loadGlobalOptions()
         this.uShadowMix = 0.67
         this.uShadowPreMix = ShadowTexOptions.preMix
         this.uShadowTest = ShadowTexOptions.test
@@ -138,9 +140,11 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             float roughnessFactor;
 
             #ifdef HAS_CTRL
-                roughnessFactor = 1.0 - texCtrl.g; // Ctrl green inverted -> Roughness
+                // ReDriveToon ControlMap: B = specular. MeshStandardMaterial
+                // expresses this most closely as inverse roughness.
+                roughnessFactor = 1.0 - texCtrl.b;
             #else
-                roughnessFactor = roughness; 
+                roughnessFactor = roughness;
             #endif
             `
         ).replace(
@@ -149,9 +153,10 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             float metalnessFactor;
 
             #ifdef HAS_CTRL
-                metalnessFactor = texCtrl.b; // Ctrl blue -> Metalness
+                // ReDriveToon ControlMap: G = metallic.
+                metalnessFactor = texCtrl.g;
             #else
-                metalnessFactor = metalness; 
+                metalnessFactor = metalness;
             #endif
             `
         ).replace(
@@ -190,7 +195,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                         reflectedLight.directDiffuse.r // directional lights
                         // + reflectedLight.indirectDiffuse.r // ambient lights
                         ;
-                    
+
                     // distinguish light and shadow, add a tiny smooth transition to prevent aliasing
                     lightStrength = smoothstep(
                         uShadowThreshold,
@@ -227,6 +232,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         );
 
         options.onBeforeCompile && options.onBeforeCompile(shader);
+        injectToonStylization(shader, uniforms);
 
         userData.shader = shader;
         userData.shaderUniforms = uniforms;

@@ -7,6 +7,7 @@ export * from './hair'
 export * from './face'
 export * from './outline'
 export * from './shadow'
+export * from './stylization'
 
 export interface MaterialCreationOptions {
     colorMap: string;

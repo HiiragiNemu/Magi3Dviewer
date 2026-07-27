@@ -1,27 +1,22 @@
-# Simple workflow for deploying static content to GitHub Pages
+# Build and deploy Magi3Dviewer to GitHub Pages
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ['main']
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
+  statuses: write
 
-# Allow one concurrent deployment
 concurrency:
   group: 'pages'
   cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
@@ -30,22 +25,76 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Resolve build revision
+        id: revision
+        shell: bash
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
           cache: 'npm'
+
       - name: Install dependencies
         run: npm ci
+
       - name: Build
+        id: build
         run: npm run build
+
       - name: Setup Pages
+        if: ${{ steps.build.outcome == 'success' }}
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
+        if: ${{ steps.build.outcome == 'success' }}
         uses: actions/upload-pages-artifact@v4
         with:
-          # Upload dist folder
           path: './dist'
+
       - name: Deploy to GitHub Pages
+        if: ${{ steps.build.outcome == 'success' }}
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Publish build and deployment status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        env:
+          BUILD_SHA: ${{ steps.revision.outputs.sha }}
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          DEPLOY_OUTCOME: ${{ steps.deployment.outcome }}
+        with:
+          script: |
+            const targetUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const sha = process.env.BUILD_SHA || context.sha;
+            const buildSucceeded = process.env.BUILD_OUTCOME === 'success';
+            const deploySucceeded = process.env.DEPLOY_OUTCOME === 'success';
+
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha,
+              state: buildSucceeded ? 'success' : 'failure',
+              context: 'Magi3Dviewer production build',
+              description: buildSucceeded
+                ? 'npm run build completed successfully'
+                : `Build outcome: ${process.env.BUILD_OUTCOME || 'unknown'}`,
+              target_url: targetUrl,
+            });
+
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha,
+              state: deploySucceeded ? 'success' : 'failure',
+              context: 'Magi3Dviewer GitHub Pages deployment',
+              description: deploySucceeded
+                ? 'GitHub Pages deployment completed successfully'
+                : `Deployment outcome: ${process.env.DEPLOY_OUTCOME || 'not-run'}`,
+              target_url: targetUrl,
+            });

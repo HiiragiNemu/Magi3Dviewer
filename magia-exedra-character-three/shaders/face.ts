@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { MaterialUserData, type MaterialCreationOptions, type MaterialCreationResult } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 import FaceCtrlBase from './face_ctrl_base.png'
+import { injectToonStylization, ToonStylizationUniforms } from './stylization';
 
 const enableFaceCtrl = false
 
@@ -9,6 +10,8 @@ interface FaceMaterialCreationOptions extends MaterialCreationOptions {
     shadowMap: string;
     eyehighlightMap: string;
 }
+
+export class FaceMaterialUniforms extends ToonStylizationUniforms { }
 
 export async function createFaceMaterial(options: FaceMaterialCreationOptions): Promise<MaterialCreationResult> {
     const [colorTex, shadowTex, ctrlTex, eyehighlightTex] = await Promise.all([
@@ -31,6 +34,8 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
     // 2. Inject your custom Blush/Highlight logic
     material.onBeforeCompile = (shader) => {
         if (!shader.defines) shader.defines = {};
+
+        const uniforms = new FaceMaterialUniforms(shader)
 
         // Add your extra uniforms
         shader.uniforms.tShadow = { value: shadowTex };
@@ -68,7 +73,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             uniform sampler2D tShadow;
             uniform sampler2D tCtrl;
             uniform sampler2D tEyehighlight;
-            
+
             uniform float uShadowMix;
             uniform float uHighlightBrightness;
             uniform float uBlushStrength;
@@ -79,7 +84,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             vec4 faceColor = texture2D(map, vUv);
             vec4 faceShadow = texture2D(tShadow, vUv);
             vec4 eyehighlight = texture2D(tEyehighlight, vUv2);
-            
+
             // mix color and shadow map
             #ifdef HAS_CTRL
                 // mirror vUv right to the left and reduce range
@@ -89,7 +94,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             #else
                 faceColor.rgb = mix(faceShadow.rgb, faceColor.rgb, uShadowMix);
             #endif
-            
+
             float eyeMask = step(vUv2.y, 0.5); // extract eye highlights (bottom-half)
             float highlightIntensity = eyehighlight.r * step(0.5, eyehighlight.r) * eyeMask; // hide pixels with value < 0.5
             vec3 highlightColor = vec3(highlightIntensity * uHighlightBrightness);
@@ -106,7 +111,9 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             `
         );
 
+        injectToonStylization(shader, uniforms);
         userData.shader = shader;
+        userData.shaderUniforms = uniforms;
     };
 
     return {
