@@ -32,39 +32,38 @@ export interface ToonStylizationOptions {
 }
 
 /**
- * Default presentation tuned against the official in-game character viewer:
- * a mostly texture-preserving toon result with soft cool shadows, warm highlights
- * and a restrained directional rim. The old implementation only added an edge
- * light, which was too subtle to materially change the upstream PBR result.
+ * Texture-dominant official presentation tuned after the automated Chromium
+ * screenshot showed that pass 1 was overexposed. These values retain the
+ * authored pinks and cool shadows while keeping the physical pass secondary.
  */
 export const toonStylizationOptions: ToonStylizationOptions = {
     officialLookEnabled: true,
-    lightingInfluence: 0.42,
-    albedoLift: 0.08,
-    brightness: 1.04,
-    contrast: 0.90,
-    saturation: 0.96,
-    shadowTint: '#817aa7',
-    shadowTintStrength: 0.18,
-    highlightTint: '#ffe4dc',
-    highlightTintStrength: 0.12,
-    specularStrength: 0.55,
-    metallicResponse: 0.28,
+    lightingInfluence: 0.18,
+    albedoLift: 0.00,
+    brightness: 0.92,
+    contrast: 1.08,
+    saturation: 1.08,
+    shadowTint: '#7f83a8',
+    shadowTintStrength: 0.20,
+    highlightTint: '#ffd9d2',
+    highlightTintStrength: 0.04,
+    specularStrength: 0.35,
+    metallicResponse: 0.18,
 
     rimEnabled: true,
-    rimColor: '#cfdcff',
-    rimStrength: 0.26,
-    rimThreshold: 0.52,
-    rimFeather: 0.20,
+    rimColor: '#c9d7ff',
+    rimStrength: 0.14,
+    rimThreshold: 0.56,
+    rimFeather: 0.18,
     rimDirectionX: -0.65,
     rimDirectionY: 0.35,
     rimDirectionality: 0.46,
 
     fresnelEnabled: false,
     fresnelColor: '#ffffff',
-    fresnelStrength: 0.25,
-    fresnelThreshold: 0.58,
-    fresnelFeather: 0.22,
+    fresnelStrength: 0.20,
+    fresnelThreshold: 0.60,
+    fresnelFeather: 0.20,
 };
 
 export const officialToonPreset: Readonly<ToonStylizationOptions> = {
@@ -209,9 +208,6 @@ export function injectToonStylization(
             rdToonRelativeLight
         );
 
-        // Preserve the authored color/shadow textures instead of applying the
-        // full PBR lighting a second time. This is the largest visual difference
-        // between the official renderer and the former web approximation.
         vec3 rdToonOfficial = mix(
             rdToonAlbedo,
             rdToonPhysical,
@@ -229,9 +225,6 @@ export function injectToonStylization(
             rdToonHighlightMask *
             uHighlightTintStrength;
 
-        // ReDrive uses a metallic gradient rather than relying only on an IBL
-        // environment. Approximate that gradient from the view-space normal so
-        // metallic control-map regions remain bright and readable online.
         float rdToonMetalGradientPosition = saturate(normal.y * 0.5 + 0.5);
         vec3 rdToonMetalGradient = mix(
             uShadowTint,
@@ -246,8 +239,6 @@ export function injectToonStylization(
             saturate(rdToonMetallicMask * uMetallicResponse)
         );
 
-        // B channel is the authored specular mask. PBR specular is retained but
-        // scaled by that mask instead of being mistaken for metallic.
         rdToonOfficial +=
             totalSpecular *
             rdToonSpecularMask *
