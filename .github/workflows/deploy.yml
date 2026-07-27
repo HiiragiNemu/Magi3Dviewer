@@ -71,6 +71,7 @@ jobs:
           name: magius-webgl-smoke
           path: |
             /tmp/magius-smoke.png
+            /tmp/magius-smoke-closeup.png
             /tmp/magius-smoke.json
             /tmp/magius-preview.log
           if-no-files-found: warn
