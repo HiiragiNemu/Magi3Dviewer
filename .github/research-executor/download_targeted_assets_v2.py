@@ -6,8 +6,8 @@ import importlib.util
 import json
 from pathlib import Path
 
-MODULE_PATH = Path(__file__).with_name('download_targeted_assets.py')
-spec = importlib.util.spec_from_file_location('targeted_assets_v1', MODULE_PATH)
+MODULE_PATH = Path(__file__).with_name('download_targeted_assets_base.py')
+spec = importlib.util.spec_from_file_location('targeted_assets_base', MODULE_PATH)
 if spec is None or spec.loader is None:
     raise RuntimeError(f'Unable to load {MODULE_PATH}')
 base = importlib.util.module_from_spec(spec)
@@ -54,8 +54,6 @@ def get_catalog(session):
         for item in payload["pathMappingMstList"]
     }
 
-    # Persist the exact current schema inside the encrypted research artifact.
-    # Token/signature values are intentionally excluded.
     schema_path = Path('/tmp/private-evidence/catalog-schema.json')
     schema_path.parent.mkdir(parents=True, exist_ok=True)
     schema_path.write_text(json.dumps({
