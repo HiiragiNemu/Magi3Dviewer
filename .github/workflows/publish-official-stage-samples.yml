@@ -1,0 +1,216 @@
+name: Publish official stage samples to Magius3Dviewer
+run-name: Extract and publish true Exedra stage samples
+
+on:
+  workflow_dispatch:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+  statuses: write
+
+concurrency:
+  group: publish-official-stage-samples
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: ${{ github.event_name != 'issues' || github.event.issue.title == '[automation-trigger] Publish official Exedra stage samples' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout research downloader
+        uses: actions/checkout@v5
+        with:
+          ref: automation/encrypted-official-assets
+          path: research
+
+      - name: Checkout Magius3Dviewer source
+        uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+          path: viewer
+          token: ${{ github.token }}
+
+      - name: Set up Python and .NET
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install downloader dependencies
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+
+      - name: Download bounded official AssetBundle set
+        run: |
+          python research/.github/research-executor/download_targeted_assets.py \
+            --out /tmp/official-source
+
+      - name: Build AssetStudioModCLI
+        run: |
+          git clone --depth 1 --branch AssetStudioMod \
+            https://github.com/aelurum/AssetStudio.git /tmp/AssetStudio
+          dotnet publish /tmp/AssetStudio/AssetStudioCLI/AssetStudioCLI.csproj \
+            --configuration Release \
+            --framework net8.0 \
+            --runtime linux-x64 \
+            --self-contained false \
+            -p:SolutionDir=/tmp/AssetStudio/ \
+            --output /tmp/assetstudio-cli
+
+      - name: Export true official stage GameObjects
+        shell: bash
+        run: |
+          set -euo pipefail
+          input=/tmp/official-source/raw/AssetBundles
+          output=/tmp/stage-export
+          mkdir -p "$output"
+          find "$input" -type f \( \
+              -path '*/battle/stage/*' -o \
+              -path '*/dungeon/bg/*' -o \
+              -path '*/dungeon/level/*' -o \
+              -path '*/field/bg/*' -o \
+              -path '*/gallery/bg3d_gallery*' \
+            \) -print0 | while IFS= read -r -d '' bundle; do
+              rel=${bundle#"$input"/}
+              safe=$(echo "$rel" | tr '/ ' '__')
+              mkdir -p "$output/$safe"
+              dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll \
+                "$bundle" -m splitObjects \
+                --unity-version 2022.3.21f1 \
+                -o "$output/$safe" \
+                --log-output both --log-level verbose \
+                > "$output/$safe.log" 2>&1 || true
+            done
+
+      - name: Build public stage package and catalog
+        shell: python
+        run: |
+          from pathlib import Path
+          import gzip, json, shutil, hashlib
+
+          exported = Path('/tmp/stage-export')
+          public = Path('viewer/public/stages/official')
+          if public.exists():
+              shutil.rmtree(public)
+          public.mkdir(parents=True, exist_ok=True)
+
+          profiles = {
+            'battle_stage_bg_3d_600_00_00_001': {
+              'id':'battle-600-00-00-001','name':'[Official/Battle] 600-00-00-001','category':'battle',
+              'renderProfile': {
+                'id':'bg_3d_600_00_00_001','source':'ReDriveVolume','backgroundColor':'#000000',
+                'fog':{'color':'#000000','near':35,'far':200},
+                'ambientLight':{'color':'#fff2ec','intensity':1.0},
+                'directionalLight':{'color':'#ffd4c2','intensity':2.0,'position':[-4,7,6],'target':[0,1,0],'castShadow':True},
+                'renderer':{'toneMapping':'aces','exposure':1.0},
+                'colorFilter':{'brightness':1.02,'contrast':0.95,'saturation':1.15},
+                'bloom':{'enabled':True,'strength':0.35,'radius':0.7,'threshold':0.8},
+                'reDriveVolume':{
+                  'characterShadowTint':'#ccbfb8','characterLightingOverrideColor':'#ffbc9b','characterLightingOverrideRatio':0.5,
+                  'characterAdditionalRimLightColor':'#ffffff','characterAdditionalRimLightDirection':[1,-1],
+                  'backgroundShadowStrengthAdditive':0.25,'backgroundPostExposure':0.2,'backgroundContrast':-5,'backgroundSaturation':5
+                }
+              }
+            },
+            'battle_stage_bg_3d_600_00_01_001': {
+              'id':'battle-600-00-01-001','name':'[Official/Battle] 600-00-01-001','category':'battle',
+              'renderProfile': {
+                'id':'bg_3d_600_00_01_001','source':'ReDriveVolume','backgroundColor':'#282828',
+                'fog':{'color':'#282828','near':10,'far':95},
+                'ambientLight':{'color':'#aaaacc','intensity':0.95},
+                'directionalLight':{'color':'#968f77','intensity':1.8,'position':[-4,6,5],'target':[0,1,0],'castShadow':True},
+                'renderer':{'toneMapping':'aces','exposure':1.0},
+                'colorFilter':{'brightness':1.0,'contrast':1.10,'saturation':1.15},
+                'bloom':{'enabled':True,'strength':0.35,'radius':0.7,'threshold':0.8},
+                'reDriveVolume':{'characterShadowTint':'#ababcc','characterLightingOverrideColor':'#979277','characterLightingOverrideRatio':0.25,'backgroundShadowStrengthAdditive':0.3}
+              }
+            },
+            'dungeon_level_10000_level_intro_0001_001': {
+              'id':'dungeon-intro-0001-001','name':'[Official/Dungeon] Intro 0001-001','category':'dungeon',
+              'renderProfile': {'id':'level_intro_0001_001','source':'exported-prefab','backgroundColor':'#080b12','fog':{'color':'#0b101a','near':8,'far':100},'ambientLight':{'color':'#8794b4','intensity':0.8},'directionalLight':{'color':'#d8e4ff','intensity':1.45,'position':[-3,6,4],'target':[0,1,0],'castShadow':True},'renderer':{'toneMapping':'aces','exposure':0.95},'colorFilter':{'brightness':0.95,'contrast':1.08,'saturation':0.95},'bloom':{'enabled':True,'strength':0.22,'radius':0.55,'threshold':0.82}}
+            },
+            'gallery_bg3d_gallery': {
+              'id':'gallery-memory-room','name':'[Official/Gallery] Memory light room','category':'gallery',
+              'renderProfile': {'id':'bg3d_gallery','source':'ReDriveVolume','backgroundColor':'#ffffff','fog':{'color':'#ffffff','near':5,'far':500},'ambientLight':{'color':'#ffffff','intensity':1.0},'directionalLight':{'color':'#ffffff','intensity':1.6,'position':[-4,7,5],'target':[0,1,0],'castShadow':True},'renderer':{'toneMapping':'aces','exposure':0.75},'colorFilter':{'brightness':0.94,'contrast':0.95,'saturation':1.0},'bloom':{'enabled':True,'strength':0.4,'radius':0.75,'threshold':0.9},'reDriveVolume':{'characterLightingOverrideColor':'#ffffff','characterLightingOverrideRatio':0.4,'characterAdditionalRimLightColor':'#ffffff','characterAdditionalRimLightDirection':[-1,-1],'backgroundPostExposure':-0.6,'backgroundContrast':-5}}
+            },
+            'gallery_bg3d_gallery_story': {
+              'id':'gallery-memory-room-story','name':'[Official/Gallery] Memory light room (story)','category':'gallery',
+              'renderProfile': {'id':'bg3d_gallery_story','source':'ReDriveVolume','backgroundColor':'#000000','fog':{'color':'#000000','near':5,'far':276.7146},'ambientLight':{'color':'#ffffff','intensity':0.9},'directionalLight':{'color':'#ffffff','intensity':1.5,'position':[-4,7,5],'target':[0,1,0],'castShadow':True},'renderer':{'toneMapping':'aces','exposure':0.78},'colorFilter':{'brightness':0.95,'contrast':1.05,'saturation':1.0},'bloom':{'enabled':True,'strength':0.4,'radius':0.75,'threshold':0.9},'reDriveVolume':{'characterLightingOverrideColor':'#ffffff','characterLightingOverrideRatio':0.4,'characterAdditionalRimLightColor':'#ffffff','characterAdditionalRimLightDirection':[-1,-1],'backgroundPostExposure':-0.5,'backgroundContrast':5}}
+            }
+          }
+
+          stages=[]
+          inventory=[]
+          for bundle_dir in sorted(p for p in exported.iterdir() if p.is_dir()):
+              fbx_files=list(bundle_dir.rglob('*.fbx'))
+              if not fbx_files:
+                  continue
+              key=bundle_dir.name
+              profile=profiles.get(key)
+              if not profile:
+                  continue
+              source_dir=fbx_files[0].parent
+              target_dir=public/profile['id']
+              target_dir.mkdir(parents=True,exist_ok=True)
+              for source in source_dir.iterdir():
+                  if not source.is_file(): continue
+                  if source.suffix.lower()=='.fbx':
+                      target=target_dir/(source.name+'.gz')
+                      with source.open('rb') as src, gzip.open(target,'wb',compresslevel=9) as dst:
+                          shutil.copyfileobj(src,dst)
+                  else:
+                      target=target_dir/source.name
+                      shutil.copy2(source,target)
+                  h=hashlib.sha256(target.read_bytes()).hexdigest()
+                  inventory.append({'path':target.relative_to(Path('viewer/public')).as_posix(),'size':target.stat().st_size,'sha256':h})
+              gz=next(target_dir.glob('*.fbx.gz'))
+              stages.append({
+                'id':profile['id'],'name':profile['name'],'category':profile['category'],'official':True,
+                'assetBundleName':key.replace('_','/'),'type':'fbx',
+                'url':'./stages/official/'+profile['id']+'/'+gz.name,
+                'scale':1,'position':[0,0,0],'rotation':[0,0,0],
+                'spawnPoints':[{'id':'actor-0','name':'Actor 0','role':'actor','position':[0,0,0],'rotation':[0,0,0]}],
+                'renderProfile':profile['renderProfile'],
+                'evidence':['AssetStudioModCLI splitObjects','official AssetBundle catalog revision b63d986c8f2e088362e7f26214967c92']
+              })
+
+          catalog={'version':2,'generatedAt':'2026-07-28','sourceRevision':'b63d986c8f2e088362e7f26214967c92','stages':stages}
+          Path('viewer/public/stages/catalog.json').write_text(json.dumps(catalog,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('viewer/public/stages/official/inventory.json').write_text(json.dumps({'schemaVersion':1,'files':inventory},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          if len(stages) < 3:
+              raise SystemExit(f'Expected at least 3 exported official stages, got {len(stages)}')
+          print(json.dumps({'stages':len(stages),'files':len(inventory),'bytes':sum(x['size'] for x in inventory)},indent=2))
+
+      - name: Commit official stage package to Magius branch
+        shell: bash
+        working-directory: viewer
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add public/stages
+          if git diff --cached --quiet; then
+            echo 'No stage package changes'
+          else
+            git commit -m 'feat(scene): publish true official Exedra stage samples'
+            git push origin HEAD:magius3dviewer
+          fi
+
+      - name: Publish result and close trigger issue
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const success='${{ job.status }}'==='success';
+            if (context.eventName==='issues') {
+              await github.rest.issues.createComment({owner:context.repo.owner,repo:context.repo.repo,issue_number:context.issue.number,body:`Official stage sample publication: **${success?'success':'failure'}**\n\n[Open workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`});
+              await github.rest.issues.update({owner:context.repo.owner,repo:context.repo.repo,issue_number:context.issue.number,state:'closed'});
+            }
