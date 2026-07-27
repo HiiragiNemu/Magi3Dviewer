@@ -1,0 +1,173 @@
+name: Research Ashley 110701 animation binding
+run-name: Diagnose Ashley 110701 FBX skeleton and animation channels
+
+on:
+  push:
+    branches: ['main']
+    paths: ['.github/workflows/research-ashley-binding.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  issues: write
+  statuses: write
+
+concurrency:
+  group: ashley-110701-binding-research
+  cancel-in-progress: true
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout Magius3Dviewer source
+        uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+
+      - name: Install FBX inspection tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y assimp-utils jq
+
+      - name: Locate Ashley and control FBX files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/fbx work/out
+          find magia-exedra-character-three/models/chara_110701_battle_unit -maxdepth 2 -type f -printf '%P %s bytes\n' | sort | tee work/out/ashley-directory.txt
+          for id in 110701 100107; do
+            src=$(find "magia-exedra-character-three/models/chara_${id}_battle_unit" -type f -name '*.fbx.gz' -print -quit)
+            test -n "$src"
+            gzip -dc "$src" > "work/fbx/chara_${id}.fbx"
+            sha256sum "$src" "work/fbx/chara_${id}.fbx" >> work/out/checksums.txt
+          done
+
+      - name: Export Assimp JSON and reports
+        shell: bash
+        run: |
+          set -euo pipefail
+          for id in 110701 100107; do
+            assimp info "work/fbx/chara_${id}.fbx" > "work/out/chara_${id}-assimp-info.txt" 2>&1 || true
+            assimp export "work/fbx/chara_${id}.fbx" "work/out/chara_${id}.assjson" -f assjson > "work/out/chara_${id}-assimp-export.log" 2>&1 || true
+          done
+
+      - name: Analyze node, bone, animation and channel bindings
+        shell: python
+        run: |
+          from pathlib import Path
+          import json, re
+          from collections import Counter, defaultdict
+
+          def norm(name):
+            name=str(name).split(':')[-1]
+            return re.sub(r'[^a-z0-9]','',name.lower())
+
+          def load(id):
+            path=Path(f'work/out/chara_{id}.assjson')
+            if not path.exists(): return {'error':'assjson export missing'}
+            data=json.loads(path.read_text(encoding='utf-8',errors='ignore'))
+            node_names=[]; node_paths=[]
+            def walk(node,prefix=''):
+              name=str(node.get('name',''))
+              current=f'{prefix}/{name}'.strip('/')
+              node_names.append(name); node_paths.append(current)
+              for child in node.get('children',[]) or []: walk(child,current)
+            walk(data.get('rootnode',{}))
+            mesh_bones=[]
+            for mi,mesh in enumerate(data.get('meshes',[]) or []):
+              for bone in mesh.get('bones',[]) or []:
+                mesh_bones.append({'mesh':mi,'name':bone.get('name',''),'weights':len(bone.get('weights',[]) or [])})
+            animations=[]; channels=[]
+            for animation in data.get('animations',[]) or []:
+              animation_name=animation.get('name','')
+              channel_names=[]
+              for channel in animation.get('channels',[]) or []:
+                node=channel.get('name',channel.get('nodename',''))
+                channel_names.append(node)
+                channels.append({'animation':animation_name,'node':node,'positionKeys':len(channel.get('positionkeys',[]) or []),'rotationKeys':len(channel.get('rotationkeys',[]) or []),'scalingKeys':len(channel.get('scalingkeys',[]) or [])})
+              animations.append({'name':animation_name,'duration':animation.get('duration'),'ticksPerSecond':animation.get('tickspersecond'),'channels':channel_names})
+            node_set=set(node_names); norm_nodes=defaultdict(list)
+            for n in node_names: norm_nodes[norm(n)].append(n)
+            binding=[]
+            for item in channels:
+              name=item['node']
+              if name in node_set: status='exact'; candidates=[name]
+              elif norm(name) in norm_nodes: status='normalized'; candidates=norm_nodes[norm(name)]
+              else: status='missing'; candidates=[]
+              binding.append({**item,'status':status,'candidates':candidates})
+            return {
+              'nodeCount':len(node_names),'nodeNames':node_names,'nodePaths':node_paths,
+              'duplicateNormalizedNodes':{k:v for k,v in norm_nodes.items() if len(v)>1},
+              'meshBoneCount':len(mesh_bones),'meshBones':mesh_bones,
+              'animationCount':len(animations),'animations':animations,
+              'bindingStatus':dict(Counter(x['status'] for x in binding)),
+              'bindings':binding,
+            }
+
+          ashley=load(110701); control=load(100107)
+          report={'schemaVersion':1,'ashley':ashley,'controlMadoka':control}
+          if 'nodeNames' in ashley and 'nodeNames' in control:
+            a=set(map(norm,ashley['nodeNames'])); c=set(map(norm,control['nodeNames']))
+            report['skeletonComparison']={'sharedNormalizedNodes':len(a&c),'ashleyOnly':sorted(a-c),'controlOnly':sorted(c-a)}
+          Path('work/out/ashley-binding-diagnostics.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
+          lines=['# Ashley 110701 animation binding diagnostics','']
+          if 'error' in ashley:
+            lines.append(f"Assimp analysis failed: {ashley['error']}")
+          else:
+            lines += [
+              f"- Nodes: **{ashley['nodeCount']}**",
+              f"- Skin bones: **{ashley['meshBoneCount']}**",
+              f"- Animation clips: **{ashley['animationCount']}**",
+              f"- Channel binding status: `{ashley['bindingStatus']}`",
+              '', '## Animation clips', ''
+            ]
+            for animation in ashley['animations']:
+              lines.append(f"- `{animation['name']}` — {len(animation['channels'])} channels; duration `{animation['duration']}`")
+            lines += ['', '## Missing bindings', '']
+            missing=[x for x in ashley['bindings'] if x['status']=='missing']
+            lines.extend(f"- `{x['animation']}` → `{x['node']}`" for x in missing)
+            if not missing: lines.append('No Assimp-level missing channel bindings were detected.')
+            lines += ['', '## Duplicate normalized node names', '']
+            for key,value in ashley['duplicateNormalizedNodes'].items(): lines.append(f"- `{key}`: {value}")
+          Path('work/out/ASHLEY_BINDING_DIAGNOSTICS.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+
+      - name: Inspect current viewer animation selection logic
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,re
+          source=Path('magia-exedra-character-three/character.ts').read_text(encoding='utf-8')
+          findings=[]
+          if '.filter(x => x.name.startsWith(name))' in source:
+            findings.append({'severity':'high','finding':'Animation group selection uses startsWith(name), which can activate unrelated clips sharing the same prefix.'})
+          if '.replace(/_\\d/, \'\')' in source:
+            findings.append({'severity':'medium','finding':'Animation display-name normalization removes only the first underscore-digit occurrence and is not anchored to a suffix.'})
+          if 'mixer.stopAllAction()' in source:
+            findings.append({'severity':'info','finding':'All actions are stopped before grouped body/weapon clips are started.'})
+          Path('work/out/viewer-animation-code-findings.json').write_text(json.dumps(findings,indent=2),encoding='utf-8')
+
+      - name: Package diagnostics
+        run: tar -czf ashley-110701-binding-diagnostics.tar.gz work/out
+
+      - name: Upload private diagnostic artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ashley-110701-binding-diagnostics
+          path: ashley-110701-binding-diagnostics.tar.gz
+          retention-days: 14
+
+      - name: Publish artifact locator issue
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runId=context.runId;
+            const artifacts=await github.paginate(github.rest.actions.listWorkflowRunArtifacts,{owner:context.repo.owner,repo:context.repo.repo,run_id:runId,per_page:100});
+            const artifact=artifacts.find(x=>x.name==='ashley-110701-binding-diagnostics')||artifacts[0];
+            const status='${{ job.status }}';
+            const runUrl=`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${runId}`;
+            const issue=await github.rest.issues.create({owner:context.repo.owner,repo:context.repo.repo,title:`[automation] Ashley 110701 binding diagnostics: ${status}`,body:[`Run ID: \`${runId}\``,`Status: **${status}**`,`Artifact: ${artifact?`\`${artifact.name}\` (ID \`${artifact.id}\`, ${artifact.size_in_bytes} bytes)`:'not created'}`,`Commit: \`${context.sha}\``,`[Open workflow run](${runUrl})`].join('\n\n')});
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:status==='success'?'success':'failure',context:'Ashley 110701 FBX binding diagnostics',description:status==='success'?'Ashley binding artifact generated':'Ashley binding diagnostics failed',target_url:issue.data.html_url});
