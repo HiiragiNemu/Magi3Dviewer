@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import sys
 from pathlib import Path
 
 MODULE_PATH = Path(__file__).with_name('download_targeted_assets_base.py')
@@ -11,6 +12,8 @@ spec = importlib.util.spec_from_file_location('targeted_assets_base', MODULE_PAT
 if spec is None or spec.loader is None:
     raise RuntimeError(f'Unable to load {MODULE_PATH}')
 base = importlib.util.module_from_spec(spec)
+# Python 3.13 dataclasses resolves postponed annotations through sys.modules.
+sys.modules[spec.name] = base
 spec.loader.exec_module(base)
 
 
