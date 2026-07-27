@@ -12,7 +12,7 @@ import {
     toonStylizationOptions,
 } from 'magia-exedra-character-three/shaders';
 import { deg2pos } from 'magia-exedra-character-three/scene';
-import { scene } from '../scene';
+import { recoveredFillLight, recoveredHemisphereLight, scene } from '../scene';
 import { gui, guiOptions } from './GUI';
 import { setBackgroundColor } from './background';
 
@@ -53,8 +53,8 @@ angelRingFolder.add(angelRingOptions, 'center', 0, 1, 0.005).name('Head-plane fi
 angelRingFolder.add(angelRingOptions, 'width', 0.01, 0.5, 0.005).name('Band width scale').onChange(updateMaterialAngelRing)
 angelRingFolder.add(angelRingOptions, 'softness', 0.001, 0.3, 0.005).name('Edge softness scale').onChange(updateMaterialAngelRing)
 angelRingFolder.add(angelRingOptions, 'tilt', -1, 1, 0.01).name('Plane tilt').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'viewPower', 0.05, 4, 0.01).name('View response').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'textureInfluence', 0, 1, 0.01).name('Official map influence').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'viewPower', 0.05, 4, 0.01).name('Front hemisphere response').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'textureInfluence', 0, 1, 0.01).name('Official wedge map influence').onChange(updateMaterialAngelRing)
 
 const rimFolder = guiShader.addFolder('Timeline / scene additional Rim').close()
 rimFolder.add(toonStylizationOptions, 'rimEnabled').name('Enabled').onChange(updateMaterialStylization)
@@ -108,19 +108,19 @@ export function applyRecoveredBaseline() {
     resetOfficialAngelRingPreset()
 
     Object.assign(guiOptions, {
-        BgColor: '#5c92df',
-        AmbientLightColor: '#9ebbe9',
-        DirectionalLightColor: '#ffd8cf',
-        AmbientLight: 1.4,
-        DirectionalLight: 2.2,
-        LightAngle: -38,
-        LightHeight: 4.2,
-        LightDistance: 8.0,
-        Brightness: 1.0,
-        Contrast: 1.0,
-        Saturation: 1.0,
-        OutlineThickness: 0.0022,
-        OutlineColor: '#655c76',
+        BgColor: '#5a86c9',
+        AmbientLightColor: '#9bb6df',
+        DirectionalLightColor: '#ffe5da',
+        AmbientLight: 0.42,
+        DirectionalLight: 3.35,
+        LightAngle: -31,
+        LightHeight: 4.8,
+        LightDistance: 6.7,
+        Brightness: 1.02,
+        Contrast: 1.05,
+        Saturation: 1.04,
+        OutlineThickness: 0.0021,
+        OutlineColor: '#594f6d',
     })
 
     setBackgroundColor(guiOptions.BgColor)
@@ -134,17 +134,29 @@ export function applyRecoveredBaseline() {
         guiOptions.LightHeight,
         lightPosition.z,
     )
+    scene.directionalLight.target.position.set(0, 1.28, 0)
+    scene.directionalLight.target.updateMatrixWorld()
+
+    recoveredHemisphereLight.color.set('#b9d2ff')
+    recoveredHemisphereLight.groundColor.set('#75677f')
+    recoveredHemisphereLight.intensity = 0.78
+    recoveredFillLight.color.set('#91b4ff')
+    recoveredFillLight.intensity = 0.42
+    recoveredFillLight.position.set(-4.5, 2.8, -4.0)
+    recoveredFillLight.target.position.set(0, 1.25, 0)
+    recoveredFillLight.target.updateMatrixWorld()
+
     scene.setColorFilter({
         brightness: guiOptions.Brightness,
         contrast: guiOptions.Contrast,
         saturation: guiOptions.Saturation,
     })
     scene.renderer.toneMapping = THREE.ACESFilmicToneMapping
-    scene.renderer.toneMappingExposure = 0.90
+    scene.renderer.toneMappingExposure = 1.0
     scene.effects.bloomPass.enabled = true
-    scene.effects.bloomPass.strength = 0.006
-    scene.effects.bloomPass.radius = 0.06
-    scene.effects.bloomPass.threshold = 0.92
+    scene.effects.bloomPass.strength = 0.014
+    scene.effects.bloomPass.radius = 0.10
+    scene.effects.bloomPass.threshold = 0.86
 
     scene.characters
         .map(entry => entry.character)
