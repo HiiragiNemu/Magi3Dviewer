@@ -1,0 +1,26 @@
+name: Request Magius3Dviewer deployment
+
+on:
+  push:
+    branches: ['magius3dviewer']
+
+permissions:
+  contents: write
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request protected-main deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              event_type: 'deploy-magius3dviewer',
+              client_payload: {
+                source_branch: context.ref.replace('refs/heads/', ''),
+                source_sha: context.sha,
+              },
+            });
