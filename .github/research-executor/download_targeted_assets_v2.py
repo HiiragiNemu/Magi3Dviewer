@@ -12,7 +12,6 @@ spec = importlib.util.spec_from_file_location('targeted_assets_base', MODULE_PAT
 if spec is None or spec.loader is None:
     raise RuntimeError(f'Unable to load {MODULE_PATH}')
 base = importlib.util.module_from_spec(spec)
-# Python 3.13 dataclasses resolves postponed annotations through sys.modules.
 sys.modules[spec.name] = base
 spec.loader.exec_module(base)
 
@@ -49,8 +48,7 @@ def get_catalog(session):
         timeout=60,
     )
     response.raise_for_status()
-    decoded = base.decrypt_data(response.content)
-    payload = decoded["payload"]
+    payload = base.decrypt_data(response.content)["payload"]
     raw_items = payload["mstList"]
     path_map = {
         int(item["pathId"]): str(item["path"])
@@ -65,6 +63,7 @@ def get_catalog(session):
         'pathMappingKeys': sorted({key for item in payload['pathMappingMstList'][:100] for key in item.keys()}),
         'sampleItems': raw_items[:20],
         'samplePathMappings': payload['pathMappingMstList'][:20],
+        'catalogRevisionFallback': catalog_revision,
     }, ensure_ascii=False, indent=2), encoding='utf-8')
 
     revision_keys = (
@@ -89,14 +88,16 @@ def get_catalog(session):
         path_id = int(item['pathId'])
         path = path_map[path_id]
         name = pick(item, name_keys)
-        revision = pick(item, revision_keys)
-        if name is None or revision is None:
+        # The current catalog no longer repeats a revision on every item. The
+        # config response supplies one x-resource-revision-asset-bundle value
+        # used by the CDN key for all entries in this catalog snapshot.
+        revision = pick(item, revision_keys, catalog_revision)
+        if name is None:
             unresolved.append({
                 'index': index,
                 'keys': sorted(item.keys()),
                 'item': item,
-                'missingName': name is None,
-                'missingRevision': revision is None,
+                'missingName': True,
             })
             continue
         entries.append(base.Entry(
@@ -114,9 +115,7 @@ def get_catalog(session):
         encoding='utf-8',
     )
     if not entries:
-        raise RuntimeError(
-            f'No catalog items could be normalized; inspect {schema_path}'
-        )
+        raise RuntimeError(f'No catalog items could be normalized; inspect {schema_path}')
 
     metadata = {
         'language': base.LANGUAGE,
