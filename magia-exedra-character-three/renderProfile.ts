@@ -17,34 +17,45 @@ export interface CharacterReDriveProfile {
 }
 
 /**
- * The exported humanoid Head bones use Unity's bone orientation: local +X is
- * character forward, local +Y is up and local -Z is character right. These are
- * fallback values only; an exported ReDriveToonMaterialController profile takes
- * precedence once its serialized vectors are available.
+ * ReDriveToonMaterialController.TransformDirection values recovered from the
+ * processed IL2CPP dump:
+ *
+ * 0 X, 1 Y, 2 Z, 3 negX, 4 negY, 5 negZ.
+ *
+ * Ashley's official serialized controller stores forward=3, up=1, right=2 and
+ * headOffset=0.2. These values are applied in Head-local space and reproduce the
+ * material's bind-pose world directions: forward +Z, up +Y, right +X.
  */
 const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
     [110701, {
         characterId: 110701,
-        source: 'native-schema',
+        source: 'official-export',
         headBoneName: 'Head',
-        faceForwardAxis: 'x',
+        faceForwardAxis: '-x',
         faceUpAxis: 'y',
-        faceRightAxis: '-z',
+        faceRightAxis: 'z',
+        headOffset: 0.2,
+        hairUvAngelRing: false,
         notes: [
             'Ashley Taylor / chara_110701_battle_unit.',
-            'FBX Head bind matrix maps local +X to character forward (+Z).',
-            'FBX material graph confirms Aniso and material-specific OutlineOffset variants.',
-            'Serialized headOffset is pending extraction from ReDriveToonMaterialController.',
+            'ReDriveToonMaterialController: forward=negX, up=Y, right=Z, headOffset=0.2.',
+            'Hair material: _IsHair=1, _YuugenHighlight=0, _UseRimLight=1.',
+            'FBX material graph confirms Aniso, Gem/MatCap and material-specific OutlineOffset variants.',
         ],
     }],
 ]);
 
+/**
+ * Generic values remain explicitly estimated. The direction fallback follows
+ * the dominant Unity humanoid orientation observed in the current corpus, but
+ * each character should ultimately receive its serialized controller profile.
+ */
 const DEFAULT_PROFILE: Omit<CharacterReDriveProfile, 'characterId'> = {
     source: 'estimated',
     headBoneName: 'Head',
-    faceForwardAxis: 'x',
+    faceForwardAxis: '-x',
     faceUpAxis: 'y',
-    faceRightAxis: '-z',
+    faceRightAxis: 'z',
     notes: ['Generic Unity humanoid Head-axis fallback; replace with an official exported profile.'],
 };
 
@@ -130,13 +141,9 @@ function setBoxCorners(box: THREE.Box3): THREE.Vector3[] {
 /**
  * Build the official coordinate model (Head position + rotated face axes).
  *
- * Long hair and twin tails extend far below the Head. Using the complete hair
- * vertical span therefore pushed the old estimated plane above the crown. The
- * fallback now uses only `maxUp` — the actual crown height above the Head bone.
- * Ashley's exported bind pose measures approximately 0.272 world units from
- * Head origin to crown; Madoka measures approximately 0.249. The resulting
- * estimated offsets are about 0.18 and 0.16 respectively, instead of the invalid
- * clamped value 0.34 that produced no front highlight.
+ * Long hair and twin tails extend far below the Head. The fallback uses only
+ * crown height above the Head bone; an official serialized `headOffset` always
+ * takes precedence.
  */
 export function createAngelRingReference(
     root: THREE.Object3D,
@@ -171,16 +178,8 @@ export function createAngelRingReference(
     }
 
     const crownHeight = THREE.MathUtils.clamp(maxUp, 0.08, 0.42);
-    const estimatedOffset = THREE.MathUtils.clamp(
-        crownHeight * 0.66,
-        0.055,
-        0.24,
-    );
-    const estimatedBandHalfWidth = THREE.MathUtils.clamp(
-        crownHeight * 0.18,
-        0.024,
-        0.060,
-    );
+    const estimatedOffset = THREE.MathUtils.clamp(crownHeight * 0.66, 0.055, 0.24);
+    const estimatedBandHalfWidth = THREE.MathUtils.clamp(crownHeight * 0.18, 0.024, 0.060);
 
     return {
         headBone,
