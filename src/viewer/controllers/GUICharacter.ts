@@ -12,6 +12,8 @@ export interface CharacterOptions extends CharacterOutlineOptions {
     RotateX: number
     RotateY: number
     RotateZ: number
+    Scale: number
+    AnimationSpeed: number
     Meshes?: CharacterMeshVisibilityOptions
 }
 
@@ -37,13 +39,21 @@ characterGlobalFolder.add(guiOptions, 'OutlineThickness', 0, 0.01).onChange(() =
 characterGlobalFolder.addColor(guiOptions, 'OutlineColor').onChange(() => updateCharacterOutline('OutlineColor', guiOptions))
 characterGlobalFolder.add(guiOptions, 'OutlineAlwaysVisible').onChange(() => updateCharacterOutline('OutlineAlwaysVisible', guiOptions)).domElement.title = 'Show outline even when mesh is hidden'
 
+const characterArrangementActions = {
+    ArrangeLine: () => arrangeCharacters('line'),
+    ArrangeArc: () => arrangeCharacters('arc'),
+    CenterAll: () => arrangeCharacters('center'),
+}
+characterGlobalFolder.add(characterArrangementActions, 'ArrangeLine').name('Arrange in line')
+characterGlobalFolder.add(characterArrangementActions, 'ArrangeArc').name('Arrange in arc')
+characterGlobalFolder.add(characterArrangementActions, 'CenterAll').name('Center all')
+
 let currentCharacter: MagiaExedraCharacter3D | undefined = undefined
 let currentCharacterOptions: CharacterGuiOptions | undefined = undefined
 let outlineFolder: GUI | undefined = undefined
 let meshesFolder: GUI | undefined = undefined
 
 export function updateCharacterController(character: MagiaExedraCharacter3D | null) {
-    // character not changed, update values & display
     if (character && currentCharacter == character) {
         currentCharacterOptions && Object.assign(currentCharacterOptions, getCharacterOptions(character))
         currentCharacterOptions?.Meshes && Object.assign(currentCharacterOptions.Meshes, getCharacterMeshVisibility(character))
@@ -51,8 +61,7 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
         return
     }
 
-    // character changed, destroy all old controllers
-    for (let i = 0; i < 2; i++) { // run for N times to clear N folders
+    for (let i = 0; i < 2; i++) {
         guiCharacterSelected.controllersRecursive().forEach(x => x.destroy())
         guiCharacterSelected.children.forEach(x => x.destroy())
     }
@@ -64,7 +73,7 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
     }
     currentCharacter = character
 
-    let characterOptions: CharacterGuiOptions = {
+    const characterOptions: CharacterGuiOptions = {
         ...getCharacterOptions(character),
         Meshes: getCharacterMeshVisibility(character),
         Reset() {
@@ -73,18 +82,18 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
     }
     currentCharacterOptions = characterOptions
 
-    guiCharacterSelected.add(characterOptions, 'X', -2, 2).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
-    guiCharacterSelected.add(characterOptions, 'Y', -2, 2).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
-    guiCharacterSelected.add(characterOptions, 'Z', -2, 2).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
-    guiCharacterSelected.add(characterOptions, 'RotateX', -180, 180).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
-    guiCharacterSelected.add(characterOptions, 'RotateY', -180, 180).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
-    guiCharacterSelected.add(characterOptions, 'RotateZ', -180, 180).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'X', -10, 10, 0.01).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'Y', -5, 5, 0.01).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'Z', -10, 10, 0.01).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'RotateX', -180, 180, 0.1).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'RotateY', -180, 180, 0.1).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'RotateZ', -180, 180, 0.1).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 0
+    guiCharacterSelected.add(characterOptions, 'Scale', 0.1, 3, 0.01).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 1
+    guiCharacterSelected.add(characterOptions, 'AnimationSpeed', 0, 3, 0.01).onChange(() => updateCharacterPosition(character, characterOptions)).initialValue = 1
 
     const outlineFolderClosed: boolean = outlineFolder ? isGuiClosed(outlineFolder) : true
     outlineFolder = guiCharacterSelected.addFolder('Outline')
-    if (outlineFolderClosed) {
-        outlineFolder.close()
-    }
+    if (outlineFolderClosed) outlineFolder.close()
     outlineFolder.add(characterOptions, 'OutlineVisible').onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = true
     outlineFolder.add(characterOptions, 'OutlineThickness', 0, 0.01).onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = OutlineThickness
     outlineFolder.addColor(characterOptions, 'OutlineColor').onChange(() => updateCharacterOutline(character, characterOptions))._initialValueHexString = OutlineColor
@@ -92,11 +101,9 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
 
     const meshesFolderClosed: boolean = meshesFolder ? isGuiClosed(meshesFolder) : false
     meshesFolder = guiCharacterSelected.addFolder('Meshes')
-    if (meshesFolderClosed) {
-        meshesFolder.close()
-    }
+    if (meshesFolderClosed) meshesFolder.close()
     for (const meshName in characterOptions.Meshes) {
-        let controller = character.meshes.find(x => x.name == meshName)
+        const controller = character.meshes.find(x => x.name == meshName)
         if (controller) {
             meshesFolder.add(characterOptions.Meshes, meshName).onChange(value => controller.visible = value).initialValue = controller.defaultVisibility
         }
@@ -113,6 +120,8 @@ export function getCharacterOptions(character: MagiaExedraCharacter3D): Characte
         RotateX: THREE.MathUtils.radToDeg(character.object.rotation.x),
         RotateY: THREE.MathUtils.radToDeg(character.object.rotation.y),
         RotateZ: THREE.MathUtils.radToDeg(character.object.rotation.z),
+        Scale: character.object.scale.x,
+        AnimationSpeed: character.animation.mixer.timeScale,
         ...(getCharacterOutline(character) || {
             OutlineVisible: true,
             OutlineThickness: OutlineThickness,
@@ -123,12 +132,47 @@ export function getCharacterOptions(character: MagiaExedraCharacter3D): Characte
 }
 
 export function updateCharacterPosition(character: MagiaExedraCharacter3D, options: CharacterOptions) {
-    character.object.position.x = options.X
-    character.object.position.y = options.Y
-    character.object.position.z = options.Z
-    character.object.rotation.x = THREE.MathUtils.degToRad(options.RotateX)
-    character.object.rotation.y = THREE.MathUtils.degToRad(options.RotateY)
-    character.object.rotation.z = THREE.MathUtils.degToRad(options.RotateZ)
+    character.object.position.set(options.X, options.Y, options.Z)
+    character.object.rotation.set(
+        THREE.MathUtils.degToRad(options.RotateX),
+        THREE.MathUtils.degToRad(options.RotateY),
+        THREE.MathUtils.degToRad(options.RotateZ),
+    )
+    character.object.scale.setScalar(options.Scale ?? 1)
+    character.animation.mixer.timeScale = options.AnimationSpeed ?? 1
+}
+
+export function arrangeCharacters(mode: 'line' | 'arc' | 'center') {
+    const characters = scene.characters
+        .map(x => x.character)
+        .filter((x): x is MagiaExedraCharacter3D => Boolean(x))
+    const count = characters.length
+    if (count === 0) return
+
+    characters.forEach((character, index) => {
+        const centeredIndex = index - (count - 1) / 2
+        if (mode === 'line') {
+            character.object.position.set(centeredIndex * 0.82, 0, 0)
+            character.object.rotation.y = 0
+        } else if (mode === 'arc') {
+            const angle = centeredIndex * Math.min(18, 80 / Math.max(count - 1, 1))
+            const radians = THREE.MathUtils.degToRad(angle)
+            const radius = Math.max(3.4, count * 0.55)
+            character.object.position.set(
+                Math.sin(radians) * radius,
+                0,
+                Math.cos(radians) * radius - radius,
+            )
+            character.object.rotation.y = -radians
+        } else {
+            character.object.position.set(0, 0, 0)
+            character.object.rotation.y = 0
+        }
+    })
+
+    if (scene.characterSelected?.character) {
+        updateCharacterController(scene.characterSelected.character)
+    }
 }
 
 export function getCharacterOutline(character: MagiaExedraCharacter3D): CharacterOutlineOptions | undefined {
@@ -143,60 +187,36 @@ export function getCharacterOutline(character: MagiaExedraCharacter3D): Characte
     }
 }
 
-/**
- * @param target
- * If `MagiaExedraCharacter3D`, apply the given `CharacterOutlineOptions` to the specified character.  
- * If `keyof CharacterOutlineOptions`, apply the specified property to all characters in the scene.  
- * If `null`, apply the given options to all characters in the scene.
- * 
- * @param source
- */
 export function updateCharacterOutline(target: MagiaExedraCharacter3D | keyof CharacterOutlineOptions | null, source: CharacterOutlineOptions) {
     const characters = target instanceof MagiaExedraCharacter3D
         ? [target]
         : scene.characters.map(x => x.character).filter(x => !!x);
 
     for (const character of characters) {
-        // update outline mesh materials
         for (const mesh of character.userData.outlineMeshes) {
             const material = mesh.material as THREE.ShaderMaterial
-            if (typeof target != 'string' || target == 'OutlineVisible') {
-                mesh.visible = source.OutlineVisible
-            }
-            if (typeof target != 'string' || target == 'OutlineThickness') {
-                material.uniforms.uThickness.value = source.OutlineThickness
-            }
-            if (typeof target != 'string' || target == 'OutlineColor') {
-                material.uniforms.uColor.value = new THREE.Color(source.OutlineColor)
-            }
+            if (typeof target != 'string' || target == 'OutlineVisible') mesh.visible = source.OutlineVisible
+            if (typeof target != 'string' || target == 'OutlineThickness') material.uniforms.uThickness.value = source.OutlineThickness
+            if (typeof target != 'string' || target == 'OutlineColor') material.uniforms.uColor.value = new THREE.Color(source.OutlineColor)
         }
 
-        // update mesh controllers
         for (const mesh of character.meshes) {
-            if (typeof target != 'string' || target == 'OutlineAlwaysVisible') {
-                mesh.outlineAlwaysVisible = source.OutlineAlwaysVisible
-            }
+            if (typeof target != 'string' || target == 'OutlineAlwaysVisible') mesh.outlineAlwaysVisible = source.OutlineAlwaysVisible
         }
     }
 }
 
 export function getCharacterMeshVisibility(character: MagiaExedraCharacter3D): CharacterMeshVisibilityOptions {
     const options: CharacterMeshVisibilityOptions = {}
-
-    for (const controller of character.meshes) {
-        options[controller.name] = controller.visible
-    }
-
+    for (const controller of character.meshes) options[controller.name] = controller.visible
     return options
 }
 
 export function updateCharacterMeshVisibility(character: MagiaExedraCharacter3D, options: CharacterMeshVisibilityOptions) {
     for (const meshName in options) {
-        let controller = character.meshes.find(x => x.name == meshName)
-        if (controller) {
-            controller.visible = options[meshName]
-        }
+        const controller = character.meshes.find(x => x.name == meshName)
+        if (controller) controller.visible = options[meshName]
     }
 }
 
-Object.assign(window, { guiCharacterSelected, getCharacterOutline, updateCharacterController })
+Object.assign(window, { guiCharacterSelected, getCharacterOutline, updateCharacterController, arrangeCharacters })
