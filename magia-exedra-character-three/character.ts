@@ -12,11 +12,10 @@ export interface ObjectUserData {
 }
 
 /**
- * Exedra exports one logical animation as a body clip plus optional weapon or
- * numbered companion clips. Normalize only documented suffixes. The previous
+ * Exedra exports one logical animation as a full-body clip plus optional weapon
+ * or masked companion clips. Normalize only documented suffixes. The previous
  * startsWith() grouping could activate unrelated animations that happened to
- * share a prefix, which is especially destructive when both clips key the same
- * skeleton transforms.
+ * share a prefix, which is especially destructive when clips key the same bones.
  */
 export function getAnimationFamilyName(name: string): string {
     return name
@@ -97,13 +96,11 @@ export class ChatacterAnimation {
 
     play(name: string, loop = false) {
         /*
-        character and its weapon have separate animations
-    
-        for example:
-        CommonWait_L    - for body
-        CommonWait_L_1  - for weapon
-    
-        if it plays `CommonWait_L`, `CommonWait_L_1` should also be played
+        Character, weapon and partially masked body motion can be exported as
+        separate AnimationClips. The numbered clip is not consistently the
+        weapon clip: Ashley 110701 has families where `_1` is the full-body clip
+        and other families where the unnumbered clip is full-body. The family is
+        therefore ordered by binding coverage, not by suffix.
         */
         const animations = this.getPreparedAnimationClipsByName(name)
         if (animations.length == 0) {
@@ -145,6 +142,13 @@ export class ChatacterAnimation {
         return this._character.object.animations
             .filter(clip => getAnimationFamilyName(clip.name) === family)
             .sort((a, b) => {
+                // The clip with the broadest binding coverage is the base pose.
+                // This is required for Ashley: e.g. Wait_L has ~69 target
+                // channels while Wait_L_1 has ~603, but CommonWait_L uses the
+                // opposite suffix arrangement.
+                const coverage = b.tracks.length - a.tracks.length
+                if (coverage !== 0) return coverage
+
                 const exactA = a.name === name || a.name === family ? 0 : 1
                 const exactB = b.name === name || b.name === family ? 0 : 1
                 if (exactA !== exactB) return exactA - exactB
@@ -158,11 +162,11 @@ export class ChatacterAnimation {
     }
 
     /**
-     * A number of exported companion clips contain duplicate body channels in
-     * addition to their weapon channels. Playing those clips at equal weight
-     * blends two transforms onto the same bone and can produce a visibly broken
-     * pose. The primary body clip owns each binding; companion clips retain only
-     * channels not already claimed by an earlier clip.
+     * Exported companion clips can contain duplicate body channels in addition
+     * to weapon channels. Playing them at equal weight blends conflicting
+     * transforms onto the same bone and produces a broken pose. The full-body
+     * clip (largest track set) owns each binding; smaller companions retain only
+     * previously unclaimed channels.
      */
     private getPreparedAnimationClipsByName(name: string): THREE.AnimationClip[] {
         const family = getAnimationFamilyName(name)
@@ -297,7 +301,7 @@ export class CharacterMeshController {
     }
 
     get defaultVisibility(): boolean {
-        let name = this.mesh.name.toLowerCase()
+        const name = this.mesh.name.toLowerCase()
 
         // hide `eye_nohighlight` by default
         if (name.includes('eye_nohighlight')) {
