@@ -4,6 +4,11 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import { createGeneralMaterial, createFaceMaterial, addOutlineToMesh, createBodyInsideMaterial, createHairMaterial, createDepthMaterial, createDistanceMaterial } from './shaders'
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes, fetchAndTryDecompressGzip } from './utils';
 import MagiaExedraCharacter3D, { type ObjectUserData } from './character';
+import {
+    createAngelRingReference,
+    getCharacterReDriveProfile,
+    inferMaterialFeatures,
+} from './renderProfile';
 
 const loadingManager = new THREE.LoadingManager();
 loadingManager.setURLModifier((url) => {
@@ -46,6 +51,11 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
     const fbxUrl = fbxPathUrl[fbxPath]
 
     const texturePathUrl = ObjFilterByKey(files, x => x.includes('.png'))
+    const specularGradientMap = ObjFindByKey(
+        texturePathUrl,
+        x => x.toLowerCase().includes('rdtoon_metallic_gradient_map'),
+    )
+    const characterProfile = getCharacterReDriveProfile(characterId)
 
     return new Promise(async (resolve, reject) => {
         // load model
@@ -73,6 +83,7 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
             URL.revokeObjectURL(fbxBlobUrl)
             console.log(`Model "${modelObject.name}" loaded successfully`)
 
+            modelObject.updateMatrixWorld(true)
             const meshes: THREE.Mesh[] = []
             modelObject.traverse(child => (child as THREE.Mesh).isMesh && meshes.push(child as THREE.Mesh))
 
@@ -93,6 +104,7 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
             // process and apply textures
             loadProgressCallback('Loading textures...')
             console.log('Using textures:', texturePathUrl)
+            console.log('ReDrive character profile:', characterProfile)
 
             await Promise.all(meshes.map(mesh => new Promise<void>(async (resolve, _reject) => {
                 try {
@@ -103,7 +115,8 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                     const meshMaterialNames: string[] = Array.isArray(mesh.material)
                         ? mesh.material.map(x => x.name)
                         : [mesh.material.name]
-                    console.log(`Material names of "${mesh.name}":`, meshMaterialNames)
+                    const featureProfile = inferMaterialFeatures(meshMaterialNames)
+                    console.log(`Material names of "${mesh.name}":`, meshMaterialNames, featureProfile)
 
                     /*
                     mesh.name may be:
@@ -176,16 +189,25 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
 
                     if (!colorMap && shadowMap) {
                         colorMap = shadowMap
-                        // shadowMap = undefined
                     }
 
                     console.log(`${name} color  ->`, colorMap)
                     console.log(`${name} shadow ->`, shadowMap)
                     console.log(`${name} ctrl   ->`, ctrlMap)
+                    console.log(`${name} specular gradient ->`, specularGradientMap)
 
                     if (!colorMap) {
                         console.warn(`Could not find a color map for "${mesh.name}"`)
                         return
+                    }
+
+                    const sharedMaterialOptions = {
+                        colorMap,
+                        shadowMap,
+                        ctrlMap,
+                        materialNames: meshMaterialNames,
+                        featureProfile,
+                        specularGradientMap,
                     }
 
                     // mix color and shadow map and set texture
@@ -194,7 +216,8 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                     if (name.includes('face')) {
                         // TODO: The public face_ctrl is not suitable for all characters, but characters do not have individual face_ctrl!
                         const { material, textures } = await createFaceMaterial({
-                            colorMap, shadowMap: shadowMap!, ctrlMap,
+                            ...sharedMaterialOptions,
+                            shadowMap: shadowMap!,
                             eyehighlightMap: ObjFindByKey(texturePathUrl, x => x.includes('eye'))!
                         })
                         mesh.material = material
@@ -208,14 +231,13 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                         if ((characterId == 113701 || characterId == 113801) && name.includes('body')) {
                             // ultimate madoka & akuma homura's dresses has special inside color
                             let animate;
-                            ({ material, textures, alphaTex, animate } = await createBodyInsideMaterial({ colorMap, shadowMap, ctrlMap }, texturePathUrl));
+                            ({ material, textures, alphaTex, animate } = await createBodyInsideMaterial({ ...sharedMaterialOptions }, texturePathUrl));
                             userData.animationLoops.push(animate)
                         }
                         else {
                             // `alphaSrc` overrides
                             if (characterId == 100106 && name.includes('body')) {
                                 // madoka swimsuit
-                                // it doesn't have transparent materials but should use alpha from shadow map
                                 alphaSrc = 'shadow'
                             }
                             else if (characterId == 100205 && name.includes('acc')) {
@@ -234,13 +256,10 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                                 alphaSrc = 'ctrl'
                             }
                             // FBX has `transparent` material -> use alpha map from shadow map
-                            // example: ultimate madoka's body (transparent), 加賀見まさら's body (trans), アリナ・グレイ's weapon (trs)
-                            // this condition should always place in front of `alpha`, as these two may exist together
                             else if (meshMaterialNames.some(x => x.includes('trans') || x.includes('trs'))) {
                                 alphaSrc = 'shadow'
                             }
-                            // has `alpha` material -> use alpha map frpm ctrl map
-                            // example: homura's glasses
+                            // has `alpha` material -> use alpha map from ctrl map
                             else if (meshMaterialNames.some(x => x.includes('alpha'))) {
                                 alphaSrc = name.includes('hair')
                                     ? 'shadow' // hair always uses alpha from shadow map
@@ -248,10 +267,30 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                             }
                             console.log(`${name} alpha  ->`, alphaSrc);
 
-                            ({ material, textures, alphaTex } = await (name.includes('hair')
-                                ? createHairMaterial
-                                : createGeneralMaterial)
-                                ({ colorMap, shadowMap, ctrlMap, alphaSrc }))
+                            if (name.includes('hair')) {
+                                const angelRingReference = createAngelRingReference(
+                                    modelObject,
+                                    mesh,
+                                    characterProfile,
+                                )
+                                const hairResult = await createHairMaterial({
+                                    ...sharedMaterialOptions,
+                                    alphaSrc,
+                                    angelRingReference,
+                                })
+                                material = hairResult.material
+                                textures = hairResult.textures
+                                alphaTex = hairResult.alphaTex
+                                if (hairResult.updateAngelRingReference) {
+                                    userData.animationLoops.push(hairResult.updateAngelRingReference)
+                                }
+                                console.log('AngelRing reference:', angelRingReference)
+                            } else {
+                                ({ material, textures, alphaTex } = await createGeneralMaterial({
+                                    ...sharedMaterialOptions,
+                                    alphaSrc,
+                                }))
+                            }
                         }
 
                         mesh.material = material;
@@ -273,20 +312,20 @@ export async function loadCharacter(files: Record<string, string>, callbacks?: P
                     }
 
                     if (name.includes('hair')) {
-                        mesh.renderOrder = 1 // render hair first to prevent seeing through on transparent meshes (e.g. ultimate madoka's wings)
+                        mesh.renderOrder = 1 // render hair first to prevent seeing through on transparent meshes
                     } else {
                         mesh.renderOrder = 2
                     }
 
-                    const outlineMesh = addOutlineToMesh(mesh, { alphaTex })
+                    const outlineMesh = addOutlineToMesh(mesh, {
+                        alphaTex,
+                        thickness: featureProfile.outlineOffset ? 0.0018 : undefined,
+                    })
                     userData.outlineMeshes.push(outlineMesh)
-                    // render last so that transparent meshes won't see the outline mesh behind
-                    // this also fixes some cases that outline meshs display regardless of stencil
                     outlineMesh.renderOrder = 3
 
                     if (name.includes('face') || name.includes('weapon')) {
                         // prevent outlines from being displayed inside mesh area
-                        // require renderer stencil enabled
                         mesh.material.stencilWrite = true;
                         mesh.material.stencilRef = stencilRefCount;
                         mesh.material.stencilFunc = THREE.AlwaysStencilFunc;
