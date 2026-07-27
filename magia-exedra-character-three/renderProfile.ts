@@ -27,7 +27,9 @@ const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
         characterId: 110701,
         source: 'native-schema',
         headBoneName: 'Head',
-        faceForwardAxis: 'z',
+        // The exported FBX faces local -Z. Using +Z projected the AngelRing map
+        // onto the rear hair and produced the visible square/wedge artifact.
+        faceForwardAxis: '-z',
         faceUpAxis: 'y',
         faceRightAxis: 'x',
         notes: [
@@ -41,7 +43,7 @@ const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
 const DEFAULT_PROFILE: Omit<CharacterReDriveProfile, 'characterId'> = {
     source: 'estimated',
     headBoneName: 'Head',
-    faceForwardAxis: 'z',
+    faceForwardAxis: '-z',
     faceUpAxis: 'y',
     faceRightAxis: 'x',
     notes: ['Generic Head-bone fallback; replace with an official exported profile.'],
@@ -128,8 +130,9 @@ function setBoxCorners(box: THREE.Box3): THREE.Vector3[] {
 
 /**
  * Build the official coordinate model (Head position + rotated face axes).
- * When the serialized headOffset is unavailable, derive only the numerical
- * offset/width/radius from the current hair bounds and mark the result estimated.
+ * When the serialized headOffset is unavailable, only the numerical
+ * offset/width/radius are derived from the current hair bounds and the result is
+ * explicitly marked estimated.
  */
 export function createAngelRingReference(
     root: THREE.Object3D,
@@ -167,10 +170,12 @@ export function createAngelRingReference(
     }
 
     const verticalSpan = Math.max(maxUp - minUp, 0.05);
+    // Official captures place the band around the upper fringe/crown transition,
+    // not at the Head origin. The older 0.48 factor was visibly too low.
     const estimatedOffset = THREE.MathUtils.clamp(
-        Math.max(maxUp, verticalSpan * 0.45) * 0.48,
-        0.035,
-        0.28,
+        Math.max(maxUp * 0.70, verticalSpan * 0.58),
+        0.075,
+        0.34,
     );
 
     return {
@@ -179,7 +184,7 @@ export function createAngelRingReference(
         localRight: axisToVector(profile.faceRightAxis),
         localForward: axisToVector(profile.faceForwardAxis),
         headOffset: profile.headOffset ?? estimatedOffset,
-        bandHalfWidth: THREE.MathUtils.clamp(verticalSpan * 0.055, 0.012, 0.08),
+        bandHalfWidth: THREE.MathUtils.clamp(verticalSpan * 0.085, 0.022, 0.11),
         projectionRadius: THREE.MathUtils.clamp(radius, 0.12, 0.65),
         uvMode: profile.hairUvAngelRing ?? false,
         estimated: profile.headOffset == undefined,
