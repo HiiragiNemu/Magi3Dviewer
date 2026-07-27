@@ -67,21 +67,31 @@ interface GeneralMaterialCreationOptions extends MaterialCreationOptions {
 /**
  * ReDriveToon control texture:
  * R = per-pixel shadow threshold offset
- * G = metallic response
- * B = specular response
+ * G = metallic/specular tint mask
+ * B = authored specular response mask
  * A = alpha
+ *
+ * Control B is not treated only as inverse roughness. The official schema also
+ * provides `_SpecularGradientMap`; this port samples the exported gradient from
+ * N.H and applies it after Three's PBR accumulation. Materials whose FBX names
+ * contain `Aniso` use a tangent-oriented half-vector coordinate.
  */
 export async function createGeneralMaterial(options: GeneralMaterialCreationOptions): Promise<MaterialCreationResult> {
     if (options.alphaSrc == 'shadow' && !options.shadowMap) options.alphaSrc = undefined;
     if (options.alphaSrc == 'ctrl' && !options.ctrlMap) options.alphaSrc = undefined;
 
-    const [colorTex, shadowTex, ctrlTex] = await Promise.all([
+    const [colorTex, shadowTex, ctrlTex, specularGradientTex] = await Promise.all([
         loadTexture(options.colorMap, { colorSpace: THREE.SRGBColorSpace }),
         options.shadowMap ? loadTexture(options.shadowMap, { colorSpace: THREE.SRGBColorSpace }) : Promise.resolve(undefined),
         options.ctrlMap ? loadTexture(options.ctrlMap) : Promise.resolve(undefined),
+        options.specularGradientMap ? loadTexture(options.specularGradientMap) : Promise.resolve(undefined),
     ]);
 
-    MaximizeTextureQuality(colorTex, shadowTex, ctrlTex);
+    MaximizeTextureQuality(colorTex, shadowTex, ctrlTex, specularGradientTex);
+    if (specularGradientTex) {
+        specularGradientTex.wrapS = THREE.ClampToEdgeWrapping
+        specularGradientTex.wrapT = THREE.ClampToEdgeWrapping
+    }
 
     const material = new THREE.MeshStandardMaterial({
         map: colorTex,
@@ -92,12 +102,17 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
     const userData = new MaterialUserData()
     material.userData = userData
+    const anisotropy = options.featureProfile?.anisotropy ?? false
+    const specialJewel = options.featureProfile?.specialJewel ?? false
 
     const programCacheKey = JSON.stringify({
         colorMap: options.colorMap,
         shadowMap: options.shadowMap,
         ctrlMap: options.ctrlMap,
+        specularGradientMap: options.specularGradientMap,
         alphaSrc: options.alphaSrc,
+        anisotropy,
+        specialJewel,
         hasExtension: Boolean(options.onBeforeCompile),
     });
     material.customProgramCacheKey = () => programCacheKey;
@@ -107,6 +122,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
         const uniforms = new GeneralMatrialUniforms(shader)
         uniforms.loadGlobalOptions()
+        shader.uniforms.uMaterialAnisotropy = { value: anisotropy ? 1 : 0 }
+        shader.uniforms.uMaterialSpecialJewel = { value: specialJewel ? 1 : 0 }
 
         if (shadowTex) {
             shader.defines.HAS_SHADOW = true;
@@ -118,9 +135,15 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             shader.uniforms.tCtrl = { value: ctrlTex };
         }
 
+        if (specularGradientTex) {
+            shader.defines.HAS_SPECULAR_GRADIENT = true;
+            shader.uniforms.tSpecularGradient = { value: specularGradientTex };
+        }
+
         shader.fragmentShader = /*glsl*/ `
             uniform sampler2D tShadow;
             uniform sampler2D tCtrl;
+            uniform sampler2D tSpecularGradient;
 
             uniform float uShadowMix;
             uniform float uShadowPreMix;
@@ -129,6 +152,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             uniform float uShadowTransition;
             uniform float uShadowAmount;
             uniform float uControlOffsetStrength;
+            uniform float uMaterialAnisotropy;
+            uniform float uMaterialSpecialJewel;
 
             ${shader.fragmentShader}
         `.replace(
@@ -163,7 +188,9 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             float roughnessFactor;
 
             #ifdef HAS_CTRL
-                roughnessFactor = mix(0.94, 0.38, texCtrl.b);
+                // Keep the physical lobe broad. The authored narrow response is
+                // restored separately through `_SpecularGradientMap`.
+                roughnessFactor = mix(0.96, 0.52, texCtrl.b);
             #else
                 roughnessFactor = roughness;
             #endif
@@ -172,6 +199,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             '#include <metalnessmap_fragment>',
             /*glsl*/ `
             float metalnessFactor;
+            // Official Control G affects the stylized response/tint; it should
+            // not turn the whole albedo into Three's energy-conserving metal.
             metalnessFactor = 0.0;
             `
         ).replace(
@@ -251,6 +280,62 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
             #include <lights_physical_fragment>
             `
+        ).replace(
+            '#include <opaque_fragment>',
+            /*glsl*/ `
+            #ifdef HAS_CTRL
+                vec3 rdViewDirection = normalize(vViewPosition);
+                vec3 rdLightDirection = normalize(vec3(-0.32, 0.68, 0.66));
+                #if NUM_DIR_LIGHTS > 0
+                    rdLightDirection = normalize(directionalLights[0].direction);
+                #endif
+                vec3 rdHalfDirection = normalize(rdViewDirection + rdLightDirection);
+                float rdNdotH = saturate(dot(normal, rdHalfDirection));
+
+                vec3 rdAnisoTangent = cross(vec3(0.0, 1.0, 0.0), normal);
+                if (dot(rdAnisoTangent, rdAnisoTangent) < 0.0001) {
+                    rdAnisoTangent = cross(vec3(1.0, 0.0, 0.0), normal);
+                }
+                rdAnisoTangent = normalize(rdAnisoTangent);
+                vec3 rdAnisoNormal = normalize(
+                    normal + rdAnisoTangent *
+                    (dot(rdHalfDirection, rdAnisoTangent) * 0.52)
+                );
+                float rdAnisoNdotH = saturate(dot(rdAnisoNormal, rdHalfDirection));
+                float rdSpecularCoordinate = mix(
+                    rdNdotH,
+                    rdAnisoNdotH,
+                    saturate(uMaterialAnisotropy)
+                );
+
+                float rdSpecularGradient = pow(
+                    rdSpecularCoordinate,
+                    mix(18.0, 5.0, rdToonSpecularMask)
+                );
+                #ifdef HAS_SPECULAR_GRADIENT
+                    rdSpecularGradient = texture2D(
+                        tSpecularGradient,
+                        vec2(rdSpecularCoordinate, 0.5)
+                    ).r;
+                #endif
+
+                float rdSpecular =
+                    rdSpecularGradient *
+                    rdToonSpecularMask *
+                    uOfficialSpecularStrength;
+                rdSpecular *= mix(1.0, 1.18, saturate(uMaterialAnisotropy));
+                rdSpecular *= mix(1.0, 1.35, saturate(uMaterialSpecialJewel));
+
+                vec3 rdSpecularColor = mix(
+                    vec3(1.0),
+                    max(diffuseColor.rgb, vec3(0.04)),
+                    saturate(rdToonMetallicMask * uMetallicResponse)
+                );
+                outgoingLight += rdSpecularColor * rdSpecular;
+            #endif
+
+            #include <opaque_fragment>
+            `
         );
 
         options.onBeforeCompile?.(shader);
@@ -262,7 +347,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
     return {
         material,
-        textures: [colorTex, shadowTex, ctrlTex].filter(x => x instanceof THREE.Texture),
+        textures: [colorTex, shadowTex, ctrlTex, specularGradientTex]
+            .filter(x => x instanceof THREE.Texture),
         alphaTex: {
             ctrl: ctrlTex,
             shadow: shadowTex,
