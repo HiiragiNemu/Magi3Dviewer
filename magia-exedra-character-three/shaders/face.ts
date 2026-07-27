@@ -11,7 +11,27 @@ interface FaceMaterialCreationOptions extends MaterialCreationOptions {
     eyehighlightMap: string;
 }
 
-export class FaceMaterialUniforms extends ToonStylizationUniforms { }
+/**
+ * ReDrive face lighting is deliberately flatter than body lighting. Keeping a
+ * dedicated uniform profile prevents the generic PBR normal from splitting the
+ * face into a dark and light half, which was the largest remaining difference
+ * from the official close-up reference.
+ */
+export class FaceMaterialUniforms extends ToonStylizationUniforms {
+    loadGlobalOptions() {
+        super.loadGlobalOptions()
+        this.setValue('uLightingInfluence', 0.02)
+        this.setValue('uAlbedoLift', 0.01)
+        this.setValue('uOfficialBrightness', 0.98)
+        this.setValue('uOfficialContrast', 0.98)
+        this.setValue('uOfficialSaturation', 1.04)
+        this.setValue('uShadowTintStrength', 0.04)
+        this.setValue('uHighlightTintStrength', 0.02)
+        this.setValue('uOfficialSpecularStrength', 0.12)
+        this.setValue('uMetallicResponse', 0.0)
+        this.setValue('uRimStrength', 0.06)
+    }
+}
 
 export async function createFaceMaterial(options: FaceMaterialCreationOptions): Promise<MaterialCreationResult> {
     const [colorTex, shadowTex, ctrlTex, eyehighlightTex] = await Promise.all([
@@ -40,9 +60,9 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
         shader.uniforms.tShadow = { value: shadowTex };
         shader.uniforms.tEyehighlight = { value: eyehighlightTex };
 
-        shader.uniforms.uShadowMix = { value: 0.80 };
-        shader.uniforms.uHighlightBrightness = { value: 1.12 };
-        shader.uniforms.uBlushStrength = { value: 0.22 };
+        shader.uniforms.uShadowMix = { value: 0.86 };
+        shader.uniforms.uHighlightBrightness = { value: 1.08 };
+        shader.uniforms.uBlushStrength = { value: 0.20 };
 
         if (ctrlTex) {
             shader.uniforms.tCtrl = { value: ctrlTex };
