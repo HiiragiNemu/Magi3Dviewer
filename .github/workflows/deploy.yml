@@ -83,16 +83,18 @@ jobs:
         if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' }}
         run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
 
-      - name: Run Ashley, AngelRing, Shader and stage WebGL smoke test
+      - name: Run animation, Shader, stage and two-character AngelRing tests
         if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' }}
         id: smoke
         shell: bash
         run: |
+          set -euo pipefail
           npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/magius-preview.log 2>&1 &
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
           sleep 4
           node scripts/smoke-magius.mjs
+          node scripts/smoke-angelring-two-character.mjs
 
       - name: Upload WebGL smoke evidence
         if: ${{ always() && steps.smoke.outcome != 'skipped' }}
@@ -104,6 +106,9 @@ jobs:
             /tmp/magius-smoke-ashley.png
             /tmp/magius-smoke-closeup.png
             /tmp/magius-smoke.json
+            /tmp/magius-angelring-madoka.png
+            /tmp/magius-angelring-ashley.png
+            /tmp/magius-angelring-two-character.json
             /tmp/magius-preview.log
           if-no-files-found: warn
           retention-days: 3
@@ -139,7 +144,7 @@ jobs:
             const checks = [
               ['Magius3Dviewer all-character animation audit', process.env.ANIMATION, 'All FBX animation families parsed and generic binding correction verified'],
               ['Magius3Dviewer production build', process.env.BUILD, 'Production TypeScript/Vite build completed'],
-              ['Magius3Dviewer WebGL smoke test', process.env.SMOKE, 'Ashley binding, AngelRing and stage runtime rendered in Chromium'],
+              ['Magius3Dviewer WebGL smoke test', process.env.SMOKE, 'Madoka/Ashley AngelRing, Ashley binding and stage runtime rendered in Chromium'],
               ['Magius3Dviewer GitHub Pages deployment', process.env.DEPLOY, 'Magius3Dviewer deployed'],
             ];
             for (const [contextName, outcome, successText] of checks) {
