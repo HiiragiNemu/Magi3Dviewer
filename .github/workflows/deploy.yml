@@ -1,6 +1,6 @@
 # Deploy the independent Magius3Dviewer build while keeping upstream source on main
 name: Deploy Magius3Dviewer
-run-name: Deploy Magius3Dviewer source from protected main trigger
+run-name: Validate and deploy official-shader iteration from protected main
 
 on:
   push:
@@ -37,7 +37,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node-version: lts/*
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies
