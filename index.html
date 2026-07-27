@@ -5,13 +5,13 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <title>Magius3Dviewer | Magia Exedra 3D Shader Viewer</title>
-    <meta name="description" content="Magius3Dviewer is an independent Magia Exedra WebGL 3D viewer build with ReDriveToon-compatible directional Rim and Fresnel shader controls, based on the original Magi3Dviewer project.">
-    <meta name="keywords" content="Magius3Dviewer, Magia Exedra, ReDriveToon, Rim Light, Fresnel, Madoka Magica, Magia Record, 3D Models, Three.js, WebGL, 魔法少女小圆, 魔法纪录, 3D模型, Shader">
+    <title>Magius3Dviewer | Magia Exedra Official-Style 3D Shader Viewer</title>
+    <meta name="description" content="Magius3Dviewer is an independent Magia Exedra WebGL 3D viewer with official-style ReDriveToon shading, AngelRing hair highlights, multi-character staging and selectable 3D scenes, based on the original Magi3Dviewer project.">
+    <meta name="keywords" content="Magius3Dviewer, Magia Exedra, ReDriveToon, AngelRing, Rim Light, Fresnel, Madoka Magica, Magia Record, 3D Models, Three.js, WebGL, 魔法少女小圆, 魔法纪录, 3D模型, Shader">
     <meta name="author" content="haojiezhe12345; HiiragiNemu">
 
     <meta property="og:title" content="Magius3Dviewer">
-    <meta property="og:description" content="Magia Exedra 3D viewer with ReDriveToon-compatible Rim and Fresnel shader controls.">
+    <meta property="og:description" content="Magia Exedra 3D viewer with official-style ReDriveToon, AngelRing and scene staging controls.">
     <meta property="og:image" content="https://hiiraginemu.github.io/Magi3Dviewer/demo.jpg">
     <meta property="og:image:width" content="768">
     <meta property="og:image:height" content="1152">
@@ -22,7 +22,7 @@
             "@type": "WebPage",
             "name": "Magius3Dviewer",
             "image": "https://hiiraginemu.github.io/Magi3Dviewer/demo.jpg",
-            "description": "Magia Exedra 3D viewer with ReDriveToon-compatible Rim and Fresnel shader controls."
+            "description": "Magia Exedra 3D viewer with official-style ReDriveToon, AngelRing and scene staging controls."
         }
     </script>
 </head>
@@ -32,7 +32,7 @@
         <div id="viewer"></div>
 
         <div id="stat">
-            <span class="demo">Magius3Dviewer is loading. Please wait for the character model...</span>
+            <span class="demo">Magius3Dviewer is loading the official-style shader and character model...</span>
             <div style="text-align: center;">
                 <span id="load-progress"></span>
             </div>
@@ -73,6 +73,11 @@
                     <button id="animation-pause" class="target-true" title="Pause animation"><img src="src/icons/pause_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
                     <input id="animation-slider" class="target-true" type="range">
                     <span class="target-false">&lt;No target selected&gt;</span>
+                </div>
+
+                <div>
+                    <img src="src/icons/wallpaper_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="3D Stage">
+                    <select id="stage-selector" title="Choose 3D stage"></select>
                 </div>
 
                 <div class="spacer"></div>
