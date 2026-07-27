@@ -49,18 +49,45 @@ jobs:
         id: build
         run: npm run build
 
-      - name: Setup Pages
+      - name: Install browser smoke-test driver
         if: ${{ steps.build.outcome == 'success' }}
+        run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+
+      - name: Run WebGL shader and stage smoke test
+        if: ${{ steps.build.outcome == 'success' }}
+        id: smoke
+        shell: bash
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/magius-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          sleep 4
+          node scripts/smoke-magius.mjs
+
+      - name: Upload WebGL smoke report
+        if: ${{ always() && steps.smoke.outcome != 'skipped' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: magius-webgl-smoke
+          path: |
+            /tmp/magius-smoke.png
+            /tmp/magius-smoke.json
+            /tmp/magius-preview.log
+          if-no-files-found: warn
+          retention-days: 3
+
+      - name: Setup Pages
+        if: ${{ steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
         uses: actions/configure-pages@v5
 
       - name: Upload production artifact
-        if: ${{ steps.build.outcome == 'success' }}
+        if: ${{ steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
         uses: actions/upload-pages-artifact@v4
         with:
           path: './dist'
 
       - name: Deploy Magius3Dviewer to GitHub Pages
-        if: ${{ steps.build.outcome == 'success' }}
+        if: ${{ steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
         id: deployment
         uses: actions/deploy-pages@v4
 
@@ -70,12 +97,14 @@ jobs:
         env:
           BUILD_SHA: ${{ steps.revision.outputs.sha }}
           BUILD_OUTCOME: ${{ steps.build.outcome }}
+          SMOKE_OUTCOME: ${{ steps.smoke.outcome }}
           DEPLOY_OUTCOME: ${{ steps.deployment.outcome }}
         with:
           script: |
             const targetUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const sha = process.env.BUILD_SHA || context.sha;
             const buildSucceeded = process.env.BUILD_OUTCOME === 'success';
+            const smokeSucceeded = process.env.SMOKE_OUTCOME === 'success';
             const deploySucceeded = process.env.DEPLOY_OUTCOME === 'success';
 
             await github.rest.repos.createCommitStatus({
@@ -87,6 +116,18 @@ jobs:
               description: buildSucceeded
                 ? 'npm run build completed successfully'
                 : `Build outcome: ${process.env.BUILD_OUTCOME || 'unknown'}`,
+              target_url: targetUrl,
+            });
+
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha,
+              state: smokeSucceeded ? 'success' : 'failure',
+              context: 'Magius3Dviewer WebGL smoke test',
+              description: smokeSucceeded
+                ? 'Character, shader GUI, AngelRing and stages rendered in Chromium'
+                : `WebGL smoke outcome: ${process.env.SMOKE_OUTCOME || 'not-run'}`,
               target_url: targetUrl,
             });
 
