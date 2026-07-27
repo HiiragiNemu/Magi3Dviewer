@@ -19,11 +19,11 @@ import { setBackgroundColor } from './background';
 export const guiShader = gui.addFolder('Shader').close()
 
 const profileActions = {
-    ApplyOfficialReference: applyOfficialReference,
+    ApplyRecoveredBaseline: applyRecoveredBaseline,
 }
-guiShader.add(profileActions, 'ApplyOfficialReference').name('Apply official reference look')
+guiShader.add(profileActions, 'ApplyRecoveredBaseline').name('Apply recovered ReDrive baseline')
 
-const toonFolder = guiShader.addFolder('Official ReDrive Toon').close()
+const toonFolder = guiShader.addFolder('Recovered ReDrive Toon base').close()
 toonFolder.add(toonStylizationOptions, 'officialLookEnabled').name('Enabled').onChange(updateMaterialStylization)
 toonFolder.add(toonStylizationOptions, 'lightingInfluence', 0, 1, 0.01).name('Physical light influence').onChange(updateMaterialStylization)
 toonFolder.add(toonStylizationOptions, 'albedoLift', -0.25, 0.5, 0.01).name('Albedo lift').onChange(updateMaterialStylization)
@@ -34,8 +34,8 @@ toonFolder.addColor(toonStylizationOptions, 'shadowTint').name('Shadow tint').on
 toonFolder.add(toonStylizationOptions, 'shadowTintStrength', 0, 1, 0.01).name('Shadow tint strength').onChange(updateMaterialStylization)
 toonFolder.addColor(toonStylizationOptions, 'highlightTint').name('Highlight tint').onChange(updateMaterialStylization)
 toonFolder.add(toonStylizationOptions, 'highlightTintStrength', 0, 1, 0.01).name('Highlight tint strength').onChange(updateMaterialStylization)
-toonFolder.add(toonStylizationOptions, 'specularStrength', 0, 2, 0.01).name('Control B specular').onChange(updateMaterialStylization)
-toonFolder.add(toonStylizationOptions, 'metallicResponse', 0, 1, 0.01).name('Control G metallic').onChange(updateMaterialStylization)
+toonFolder.add(toonStylizationOptions, 'specularStrength', 0, 2, 0.01).name('Control B / gradient specular').onChange(updateMaterialStylization)
+toonFolder.add(toonStylizationOptions, 'metallicResponse', 0, 1, 0.01).name('Control G response tint').onChange(updateMaterialStylization)
 
 const shadowFolder = guiShader.addFolder('Toon shadow selection').close()
 shadowFolder.add(ShadowTexOptions, 'preMix', 0, 1, 0.01).name('Control R pre-mix').onChange(updateMaterialShadow)
@@ -45,20 +45,20 @@ shadowFolder.add(ShadowTexOptions, 'transition', 0.001, 1, 0.001).name('Shadow s
 shadowFolder.add(ShadowTexOptions, 'amount', -1, 1, 0.01).name('Ambient shadow amount').onChange(updateMaterialShadow)
 shadowFolder.add(ShadowTexOptions, 'controlOffsetStrength', 0, 1, 0.01).name('Control R threshold offset').onChange(updateMaterialShadow)
 
-const angelRingFolder = guiShader.addFolder('AngelRing (Hair)').close()
+const angelRingFolder = guiShader.addFolder('AngelRing (Head-local Hair)').close()
 angelRingFolder.add(angelRingOptions, 'enabled').name('Enabled').onChange(updateMaterialAngelRing)
 angelRingFolder.addColor(angelRingOptions, 'color').name('Color').onChange(updateMaterialAngelRing)
 angelRingFolder.add(angelRingOptions, 'strength', 0, 2, 0.01).name('Strength').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'center', 0, 1, 0.005).name('Vertical center').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'width', 0.01, 0.5, 0.005).name('Band width').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'softness', 0.001, 0.3, 0.005).name('Softness').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'tilt', -1, 1, 0.01).name('View tilt').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'center', 0, 1, 0.005).name('Head-plane fine shift').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'width', 0.01, 0.5, 0.005).name('Band width scale').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'softness', 0.001, 0.3, 0.005).name('Edge softness scale').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'tilt', -1, 1, 0.01).name('Plane tilt').onChange(updateMaterialAngelRing)
 angelRingFolder.add(angelRingOptions, 'viewPower', 0.05, 4, 0.01).name('View response').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'textureInfluence', 0, 1, 0.01).name('Map influence').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'textureInfluence', 0, 1, 0.01).name('Official map influence').onChange(updateMaterialAngelRing)
 
-const rimFolder = guiShader.addFolder('Directional rim light').close()
+const rimFolder = guiShader.addFolder('Timeline / scene additional Rim').close()
 rimFolder.add(toonStylizationOptions, 'rimEnabled').name('Enabled').onChange(updateMaterialStylization)
-rimFolder.addColor(toonStylizationOptions, 'rimColor').name('Color').onChange(updateMaterialStylization)
+rimFolder.addColor(toonStylizationOptions, 'rimColor').name('HDR color approximation').onChange(updateMaterialStylization)
 rimFolder.add(toonStylizationOptions, 'rimStrength', 0, 2, 0.01).name('Strength').onChange(updateMaterialStylization)
 rimFolder.add(toonStylizationOptions, 'rimThreshold', 0, 1, 0.01).name('Threshold').onChange(updateMaterialStylization)
 rimFolder.add(toonStylizationOptions, 'rimFeather', 0, 0.5, 0.01).name('Feather').onChange(updateMaterialStylization)
@@ -66,8 +66,8 @@ rimFolder.add(toonStylizationOptions, 'rimDirectionX', -1, 1, 0.01).name('Direct
 rimFolder.add(toonStylizationOptions, 'rimDirectionY', -1, 1, 0.01).name('Direction Y').onChange(updateMaterialStylization)
 rimFolder.add(toonStylizationOptions, 'rimDirectionality', 0, 1, 0.01).name('Directionality').onChange(updateMaterialStylization)
 
-const fresnelFolder = guiShader.addFolder('Fresnel').close()
-fresnelFolder.add(toonStylizationOptions, 'fresnelEnabled').name('Enabled').onChange(updateMaterialStylization)
+const fresnelFolder = guiShader.addFolder('Per-renderer animation Fresnel').close()
+fresnelFolder.add(toonStylizationOptions, 'fresnelEnabled').name('Global debug override').onChange(updateMaterialStylization)
 fresnelFolder.addColor(toonStylizationOptions, 'fresnelColor').name('Color').onChange(updateMaterialStylization)
 fresnelFolder.add(toonStylizationOptions, 'fresnelStrength', 0, 2, 0.01).name('Strength').onChange(updateMaterialStylization)
 fresnelFolder.add(toonStylizationOptions, 'fresnelThreshold', 0, 1, 0.01).name('Threshold').onChange(updateMaterialStylization)
@@ -97,7 +97,12 @@ export function updateMaterialAngelRing() {
         .forEach(shader => loadAngelRingOptions(shader))
 }
 
-export function applyOfficialReference() {
+/**
+ * Applies a neutral recovered baseline. Scene-specific ReDriveVolume, Timeline
+ * Rim/Fresnel, reflection probe and background post-processing must be loaded
+ * by the selected official stage profile rather than baked into this button.
+ */
+export function applyRecoveredBaseline() {
     resetOfficialShadowPreset()
     resetOfficialToonPreset()
     resetOfficialAngelRingPreset()
@@ -111,9 +116,9 @@ export function applyOfficialReference() {
         LightAngle: -38,
         LightHeight: 4.2,
         LightDistance: 8.0,
-        Brightness: 0.96,
-        Contrast: 1.03,
-        Saturation: 1.08,
+        Brightness: 1.0,
+        Contrast: 1.0,
+        Saturation: 1.0,
         OutlineThickness: 0.0022,
         OutlineColor: '#655c76',
     })
@@ -135,11 +140,11 @@ export function applyOfficialReference() {
         saturation: guiOptions.Saturation,
     })
     scene.renderer.toneMapping = THREE.ACESFilmicToneMapping
-    scene.renderer.toneMappingExposure = 0.82
+    scene.renderer.toneMappingExposure = 0.90
     scene.effects.bloomPass.enabled = true
-    scene.effects.bloomPass.strength = 0.008
-    scene.effects.bloomPass.radius = 0.08
-    scene.effects.bloomPass.threshold = 0.90
+    scene.effects.bloomPass.strength = 0.006
+    scene.effects.bloomPass.radius = 0.06
+    scene.effects.bloomPass.threshold = 0.92
 
     scene.characters
         .map(entry => entry.character)
@@ -158,4 +163,4 @@ export function applyOfficialReference() {
     gui.controllersRecursive().forEach(controller => controller.updateDisplay())
 }
 
-setTimeout(applyOfficialReference, 0)
+setTimeout(applyRecoveredBaseline, 0)
