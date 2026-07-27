@@ -80,7 +80,7 @@ jobs:
           cat /tmp/private-evidence/assetstudio-build.log 2>/dev/null || true
           exit "$build_status"
 
-      - name: Dump selected Unity metadata and stage objects
+      - name: Dump selected Unity metadata and export official objects
         id: dump
         if: ${{ always() }}
         continue-on-error: true
@@ -91,7 +91,8 @@ jobs:
           cli=/tmp/assetstudio-cli/AssetStudioModCLI.dll
           mkdir -p /tmp/private-evidence/assetstudio-info \
                    /tmp/private-evidence/assetstudio-dump \
-                   /tmp/private-evidence/stage-export
+                   /tmp/private-evidence/stage-export \
+                   /tmp/private-evidence/character-export
           if [[ ! -d "$input" || ! -f "$cli" ]]; then
             echo "input-exists=$([[ -d "$input" ]] && echo true || echo false)" \
               > /tmp/private-evidence/assetstudio-skipped.txt
@@ -115,11 +116,34 @@ jobs:
             --log-output both --log-level verbose \
             > /tmp/private-evidence/assetstudio-dump.log 2>&1 || true
 
-          dotnet "$cli" "$input" -m splitObjects \
-            --unity-version 2022.3.21f1 --load-all \
-            -o /tmp/private-evidence/stage-export \
-            --log-output both --log-level verbose \
-            > /tmp/private-evidence/stage-export.log 2>&1 || true
+          # SplitObjects does not accept --load-all. Export each official stage
+          # bundle independently so a single malformed dependency cannot abort the
+          # other stage families.
+          find "$input" -type f \( \
+              -path '*/battle/stage/*' -o \
+              -path '*/dungeon/bg/*' -o \
+              -path '*/dungeon/level/*' -o \
+              -path '*/field/bg/*' -o \
+              -path '*/gallery/bg3d_gallery*' \
+            \) -print0 | while IFS= read -r -d '' bundle; do
+              rel=${bundle#"$input"/}
+              safe=$(echo "$rel" | tr '/ ' '__')
+              mkdir -p "/tmp/private-evidence/stage-export/$safe"
+              dotnet "$cli" "$bundle" -m splitObjects \
+                --unity-version 2022.3.21f1 \
+                -o "/tmp/private-evidence/stage-export/$safe" \
+                --log-output both --log-level verbose \
+                > "/tmp/private-evidence/stage-export/$safe.log" 2>&1 || true
+          done
+
+          ashley="$input/battle/character/chara_110701_battle_unit"
+          if [[ -f "$ashley" ]]; then
+            dotnet "$cli" "$ashley" -m splitObjects \
+              --unity-version 2022.3.21f1 \
+              -o /tmp/private-evidence/character-export/chara_110701_battle_unit \
+              --log-output both --log-level verbose \
+              > /tmp/private-evidence/character-export/chara_110701_battle_unit.log 2>&1 || true
+          fi
 
       - name: Build private evidence index
         if: ${{ always() }}
