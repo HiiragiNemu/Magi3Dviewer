@@ -23,14 +23,14 @@ export interface AngelRingOptions {
 
 export const angelRingOptions: AngelRingOptions = {
     enabled: true,
-    color: '#fff0f5',
-    strength: 0.52,
-    center: 0.69,
-    width: 0.17,
-    softness: 0.08,
-    tilt: 0.18,
-    viewPower: 1.25,
-    textureInfluence: 0.72,
+    color: '#fff2f7',
+    strength: 0.38,
+    center: 0.73,
+    width: 0.10,
+    softness: 0.045,
+    tilt: 0.14,
+    viewPower: 1.10,
+    textureInfluence: 0.62,
 }
 
 export const officialAngelRingPreset = {
@@ -86,9 +86,11 @@ export function loadAngelRingOptions(
 /**
  * Official ReDrive AngelRing approximation.
  *
- * The previous implementation returned before compiling its AngelRing code, so
- * no character could display the effect. This version combines the supplied
- * AngelRing map with a model-space height band and view-space hair normal.
+ * The original upstream function returned before compiling its AngelRing code.
+ * The restored version uses a model-height band plus a UV-height fallback. The
+ * fallback is important for FBX hair meshes whose local Y origin/range differs
+ * between characters, so every currently exported hair mesh receives a visible
+ * ring while still using the supplied ReDrive map and view-space normal.
  */
 export async function createHairMaterial(
     options: HairMaterialCreationOptions,
@@ -146,11 +148,20 @@ export async function createHairMaterial(
             `.replace(
                 diffuseColorManipulationEndFlag,
                 /* glsl */ `
+                // UV fallback makes the band independent from inconsistent FBX
+                // local origins while the model-height component preserves a
+                // coherent ring on well-exported characters.
+                float rdAngelUvHeight = clamp(1.0 - vMapUv.y, 0.0, 1.0);
+                float rdAngelHeight = mix(
+                    vAngelRingHeight,
+                    rdAngelUvHeight,
+                    0.55
+                );
                 float rdAngelCenter =
                     uAngelRingCenter +
                     normal.x * uAngelRingTilt * 0.16;
                 float rdAngelDistance = abs(
-                    vAngelRingHeight - rdAngelCenter
+                    rdAngelHeight - rdAngelCenter
                 );
                 float rdAngelInner = max(
                     uAngelRingWidth - uAngelRingSoftness,
@@ -169,7 +180,7 @@ export async function createHairMaterial(
                 float rdAngelU = clamp(normal.x * 0.5 + 0.5, 0.0, 1.0);
                 float rdAngelV = clamp(
                     0.5 +
-                    (vAngelRingHeight - rdAngelCenter) /
+                    (rdAngelHeight - rdAngelCenter) /
                     max(uAngelRingWidth * 2.0, 0.0001),
                     0.0,
                     1.0
@@ -193,7 +204,7 @@ export async function createHairMaterial(
                         rdAngelTextureMask,
                         saturate(uAngelRingTextureInfluence)
                     ) *
-                    mix(0.72, 1.0, rdAngelFacing) *
+                    mix(0.70, 1.0, rdAngelFacing) *
                     uAngelRingEnabled;
 
                 vec3 rdAngelTarget = max(
