@@ -5,20 +5,125 @@ import { fetchAndTryDecompressGzip } from 'magia-exedra-character-three/utils'
 import { scene } from './scene'
 import { gui } from './controllers/GUI'
 
-export interface StageDefinition {
-    id: string
-    name: string
-    type: 'procedural' | 'gltf' | 'fbx'
-    preset?: 'official-sky' | 'studio' | 'battle-arena'
-    url?: string
+export type StageCategory = 'research' | 'battle' | 'field' | 'dungeon' | 'gallery' | 'adv'
+export type StageAssetType = 'gltf' | 'fbx'
+
+export interface StageAssetDefinition {
+    id?: string
+    type: StageAssetType
+    url: string
     scale?: number
     position?: [number, number, number]
     rotation?: [number, number, number]
+}
+
+export interface StageSpawnPoint {
+    id: string
+    name?: string
+    role?: 'ally' | 'enemy' | 'actor' | 'camera-target' | 'generic'
+    position: [number, number, number]
+    rotation?: [number, number, number]
+    scale?: number
+}
+
+export interface StageLightProfile {
+    color: string
+    intensity: number
+    position?: [number, number, number]
+    target?: [number, number, number]
+    castShadow?: boolean
+}
+
+export interface StageRenderProfile {
+    /** Source ReDriveVolume or export profile ID. */
+    id?: string
+    source?: 'ReDriveVolume' | 'exported-prefab' | 'manual-research'
+    backgroundColor?: string
+    backgroundTextureUrl?: string
+    environmentTextureUrl?: string
+    environmentIntensity?: number
+    fog?: {
+        color: string
+        near: number
+        far: number
+    } | null
+    ambientLight?: {
+        color: string
+        intensity: number
+    }
+    directionalLight?: StageLightProfile
+    renderer?: {
+        toneMapping?: 'none' | 'linear' | 'aces'
+        exposure?: number
+        clearAlpha?: number
+    }
+    colorFilter?: {
+        brightness: number
+        contrast: number
+        saturation: number
+    }
+    bloom?: {
+        enabled: boolean
+        strength: number
+        radius: number
+        threshold: number
+    }
+    camera?: {
+        position: [number, number, number]
+        target: [number, number, number]
+        fov?: number
+        near?: number
+        far?: number
+    }
+    /**
+     * Recovered values retained for shader/Timeline integration. Current scene
+     * lighting fields above are applied immediately; these source values remain
+     * attached to stageRoot.userData and are not silently approximated.
+     */
+    reDriveVolume?: {
+        skyboxIntensity?: number
+        reflectionProbe?: string
+        shAmbient?: number[]
+        characterTint?: string
+        characterShadowTint?: string
+        backgroundTint?: string
+        characterLightingOverrideColor?: string
+        characterLightingOverrideRatio?: number
+        characterLightingOverrideDirection?: [number, number, number]
+        characterAdditionalRimLightColor?: string
+        characterAdditionalRimLightDirection?: [number, number]
+        characterFaceAwayTint?: string
+        characterCancelPerspective?: number
+        backgroundShadowStrengthAdditive?: number
+        backgroundPostExposure?: number
+        backgroundContrast?: number
+        backgroundSaturation?: number
+    }
+}
+
+export interface StageDefinition {
+    id: string
+    name: string
+    category?: StageCategory
+    official?: boolean
+    assetBundleName?: string
+    type: 'procedural' | 'gltf' | 'fbx' | 'group'
+    preset?: 'sky-reference' | 'studio' | 'battle-arena'
+    url?: string
+    assets?: StageAssetDefinition[]
+    scale?: number
+    position?: [number, number, number]
+    rotation?: [number, number, number]
+    spawnPoints?: StageSpawnPoint[]
+    renderProfile?: StageRenderProfile
     credit?: string
+    evidence?: string[]
 }
 
 interface StageCatalog {
     version: number
+    generatedAt?: string
+    sourceRevision?: string
     stages: StageDefinition[]
 }
 
@@ -33,10 +138,10 @@ export interface StagePreset {
 }
 
 const builtInStages: StageDefinition[] = [
-    { id: 'none', name: 'No 3D stage', type: 'procedural' },
-    { id: 'official-sky', name: 'Official-style blue sky pavilion', type: 'procedural', preset: 'official-sky' },
-    { id: 'studio', name: 'Neutral shader studio', type: 'procedural', preset: 'studio' },
-    { id: 'battle-arena', name: 'Battle arena prototype', type: 'procedural', preset: 'battle-arena' },
+    { id: 'none', name: '[Research] No 3D stage', category: 'research', official: false, type: 'procedural' },
+    { id: 'sky-reference', name: '[Research] Sky lighting reference (procedural)', category: 'research', official: false, type: 'procedural', preset: 'sky-reference' },
+    { id: 'studio', name: '[Research] Neutral shader studio', category: 'research', official: false, type: 'procedural', preset: 'studio' },
+    { id: 'battle-arena', name: '[Research] Battle arena prototype', category: 'research', official: false, type: 'procedural', preset: 'battle-arena' },
 ]
 
 const stageSelector = document.getElementById('stage-selector') as HTMLSelectElement
@@ -45,8 +150,11 @@ stageRoot.name = 'Magius3DviewerStageRoot'
 scene.scene.add(stageRoot)
 
 const stageFolder = gui.addFolder('3D Stage').close()
+const stageActions = {
+    PlaceCharactersAtSpawns: () => placeCharactersAtStageSpawns(),
+}
 const stageOptions: StagePreset & { Reset: () => void } = {
-    id: 'official-sky',
+    id: 'sky-reference',
     X: 0,
     Y: 0,
     Z: 0,
@@ -67,10 +175,38 @@ stageFolder.add(stageOptions, 'RotateY', -180, 180, 0.1).onChange(updateStageTra
 stageFolder.add(stageOptions, 'Scale', 0.05, 10, 0.01).onChange(updateStageTransform)
 stageFolder.add(stageOptions, 'Visible').onChange(updateStageTransform)
 stageFolder.add(stageOptions, 'Reset').name('Reset stage transform')
+stageFolder.add(stageActions, 'PlaceCharactersAtSpawns').name('Place characters at stage spawns')
 
 let definitions = [...builtInStages]
 let activeStageObject: THREE.Object3D | undefined
+let activeStageDefinition: StageDefinition | undefined
 let currentStageId = 'none'
+let activeProfileTextures: THREE.Texture[] = []
+
+const initialSceneState = {
+    background: scene.scene.background,
+    environment: scene.scene.environment,
+    fog: scene.scene.fog,
+    ambientColor: scene.ambientLight.color.clone(),
+    ambientIntensity: scene.ambientLight.intensity,
+    directionalColor: scene.directionalLight.color.clone(),
+    directionalIntensity: scene.directionalLight.intensity,
+    directionalPosition: scene.directionalLight.position.clone(),
+    directionalTarget: scene.directionalLight.target.position.clone(),
+    directionalCastShadow: scene.directionalLight.castShadow,
+    toneMapping: scene.renderer.toneMapping,
+    exposure: scene.renderer.toneMappingExposure,
+    colorFilter: scene.getColorFilterCSS(),
+    bloomEnabled: scene.effects.bloomPass.enabled,
+    bloomStrength: scene.effects.bloomPass.strength,
+    bloomRadius: scene.effects.bloomPass.radius,
+    bloomThreshold: scene.effects.bloomPass.threshold,
+    cameraPosition: scene.camera.position.clone(),
+    cameraTarget: scene.controls.target.clone(),
+    cameraFov: scene.camera.fov,
+    cameraNear: scene.camera.near,
+    cameraFar: scene.camera.far,
+}
 
 export async function setupStageSelector() {
     try {
@@ -81,6 +217,13 @@ export async function setupStageSelector() {
                 ...builtInStages,
                 ...(catalog.stages || []).filter(stage => !builtInStages.some(builtIn => builtIn.id === stage.id)),
             ]
+            console.log('Loaded stage catalog:', {
+                version: catalog.version,
+                generatedAt: catalog.generatedAt,
+                sourceRevision: catalog.sourceRevision,
+                total: catalog.stages?.length ?? 0,
+                official: catalog.stages?.filter(stage => stage.official).length ?? 0,
+            })
         }
     } catch (error) {
         console.warn('Could not load external stage catalog:', error)
@@ -90,10 +233,12 @@ export async function setupStageSelector() {
         const option = document.createElement('option')
         option.value = definition.id
         option.textContent = definition.name
+        option.dataset.category = definition.category ?? 'research'
+        option.dataset.official = definition.official ? 'true' : 'false'
         return option
     }))
     stageSelector.addEventListener('change', () => void loadStageById(stageSelector.value))
-    await loadStageById('official-sky')
+    await loadStageById('sky-reference')
 }
 
 export async function loadStageById(id: string) {
@@ -103,10 +248,13 @@ export async function loadStageById(id: string) {
 
     try {
         clearStageObject()
+        restoreSceneProfile()
         if (definition.id === 'none') {
             currentStageId = definition.id
+            activeStageDefinition = definition
             stageOptions.id = definition.id
             stageSelector.value = definition.id
+            stageRoot.userData.stageDefinition = definition
             return
         }
 
@@ -117,11 +265,15 @@ export async function loadStageById(id: string) {
         prepareStageObject(object)
         object.name = `Stage:${definition.id}`
         activeStageObject = object
+        activeStageDefinition = definition
         stageRoot.add(object)
 
         currentStageId = definition.id
         stageOptions.id = definition.id
         stageSelector.value = definition.id
+        stageRoot.userData.stageDefinition = definition
+        stageRoot.userData.reDriveVolume = definition.renderProfile?.reDriveVolume ?? null
+        stageRoot.userData.spawnPoints = definition.spawnPoints ?? []
 
         const [x, y, z] = definition.position ?? [0, 0, 0]
         const [rx, ry, rz] = definition.rotation ?? [0, 0, 0]
@@ -136,6 +288,7 @@ export async function loadStageById(id: string) {
         object.rotation.x = rx
         object.rotation.z = rz
         updateStageTransform()
+        await applyStageRenderProfile(definition.renderProfile)
         stageFolder.controllersRecursive().forEach(controller => controller.updateDisplay())
     } catch (error) {
         console.error(`Could not load 3D stage "${definition.name}":`, error)
@@ -160,12 +313,41 @@ export function getCurrentStagePreset(): StagePreset {
     }
 }
 
+export function getCurrentStageDefinition() {
+    return activeStageDefinition
+}
+
+export function getCurrentStageSpawnPoints(): StageSpawnPoint[] {
+    return activeStageDefinition?.spawnPoints ?? []
+}
+
 export async function applyStagePreset(preset?: Partial<StagePreset>) {
     if (!preset?.id) return
     await loadStageById(preset.id)
     Object.assign(stageOptions, preset)
     updateStageTransform()
     stageFolder.controllersRecursive().forEach(controller => controller.updateDisplay())
+}
+
+export function placeCharactersAtStageSpawns() {
+    const spawns = getCurrentStageSpawnPoints()
+    if (spawns.length === 0) {
+        console.warn(`Stage "${currentStageId}" has no exported spawn points`)
+        return
+    }
+
+    const characters = scene.characters
+        .map(entry => entry.character)
+        .filter(character => Boolean(character))
+
+    characters.forEach((character, index) => {
+        const spawn = spawns[index % spawns.length]
+        const [x, y, z] = spawn.position
+        const [rx, ry, rz] = spawn.rotation ?? [0, 0, 0]
+        character!.object.position.set(x, y, z)
+        character!.object.rotation.set(rx, ry, rz)
+        if (spawn.scale != undefined) character!.object.scale.setScalar(spawn.scale)
+    })
 }
 
 function updateStageTransform() {
@@ -176,10 +358,16 @@ function updateStageTransform() {
 }
 
 function clearStageObject() {
-    if (!activeStageObject) return
-    stageRoot.remove(activeStageObject)
-    disposeStageObject(activeStageObject)
-    activeStageObject = undefined
+    if (activeStageObject) {
+        stageRoot.remove(activeStageObject)
+        disposeStageObject(activeStageObject)
+        activeStageObject = undefined
+    }
+    activeProfileTextures.forEach(texture => texture.dispose())
+    activeProfileTextures = []
+    stageRoot.userData.stageDefinition = null
+    stageRoot.userData.reDriveVolume = null
+    stageRoot.userData.spawnPoints = []
 }
 
 function prepareStageObject(object: THREE.Object3D) {
@@ -230,26 +418,165 @@ function disposeStageObject(object: THREE.Object3D) {
 }
 
 async function loadExternalStage(definition: StageDefinition): Promise<THREE.Object3D> {
-    if (!definition.url) throw new Error(`Stage ${definition.id} has no URL`)
-    const url = new URL(definition.url, document.baseURI).href
-
-    if (definition.type === 'gltf') {
-        return (await new GLTFLoader().loadAsync(url)).scene
+    if (definition.type === 'group') {
+        if (!definition.assets?.length) throw new Error(`Stage ${definition.id} has no asset parts`)
+        const group = new THREE.Group()
+        group.name = `StageParts:${definition.id}`
+        const parts = await Promise.all(definition.assets.map(loadExternalStageAsset))
+        parts.forEach(part => group.add(part))
+        return group
     }
 
-    const blob = await fetchAndTryDecompressGzip(url)
-    const arrayBuffer = await blob.arrayBuffer()
-    const resourcePath = new URL('.', url).href
-    return new FBXLoader().parse(arrayBuffer, resourcePath)
+    if (!definition.url) throw new Error(`Stage ${definition.id} has no URL`)
+    return loadExternalStageAsset({
+        id: definition.id,
+        type: definition.type as StageAssetType,
+        url: definition.url,
+    })
+}
+
+async function loadExternalStageAsset(definition: StageAssetDefinition): Promise<THREE.Object3D> {
+    const url = new URL(definition.url, document.baseURI).href
+    const object = definition.type === 'gltf'
+        ? (await new GLTFLoader().loadAsync(url)).scene
+        : await (async () => {
+            const blob = await fetchAndTryDecompressGzip(url)
+            const arrayBuffer = await blob.arrayBuffer()
+            const resourcePath = new URL('.', url).href
+            return new FBXLoader().parse(arrayBuffer, resourcePath)
+        })()
+
+    if (definition.id) object.name = definition.id
+    const [x, y, z] = definition.position ?? [0, 0, 0]
+    const [rx, ry, rz] = definition.rotation ?? [0, 0, 0]
+    object.position.set(x, y, z)
+    object.rotation.set(rx, ry, rz)
+    object.scale.setScalar(definition.scale ?? 1)
+    return object
+}
+
+async function loadProfileTexture(url: string, mapping: THREE.Mapping) {
+    const texture = await new THREE.TextureLoader().loadAsync(new URL(url, document.baseURI).href)
+    texture.mapping = mapping
+    texture.colorSpace = THREE.SRGBColorSpace
+    texture.needsUpdate = true
+    activeProfileTextures.push(texture)
+    return texture
+}
+
+async function applyStageRenderProfile(profile?: StageRenderProfile) {
+    if (!profile) return
+
+    if (profile.backgroundColor) {
+        scene.scene.background = new THREE.Color(profile.backgroundColor)
+    }
+    if (profile.backgroundTextureUrl) {
+        scene.scene.background = await loadProfileTexture(
+            profile.backgroundTextureUrl,
+            THREE.EquirectangularReflectionMapping,
+        )
+    }
+    if (profile.environmentTextureUrl) {
+        scene.scene.environment = await loadProfileTexture(
+            profile.environmentTextureUrl,
+            THREE.EquirectangularReflectionMapping,
+        )
+    }
+    if (profile.environmentIntensity != undefined) {
+        ;(scene.scene as THREE.Scene & { environmentIntensity?: number }).environmentIntensity = profile.environmentIntensity
+    }
+
+    if (profile.fog === null) {
+        scene.scene.fog = null
+    } else if (profile.fog) {
+        scene.scene.fog = new THREE.Fog(profile.fog.color, profile.fog.near, profile.fog.far)
+    }
+
+    if (profile.ambientLight) {
+        scene.ambientLight.color.set(profile.ambientLight.color)
+        scene.ambientLight.intensity = profile.ambientLight.intensity
+    }
+    if (profile.directionalLight) {
+        scene.directionalLight.color.set(profile.directionalLight.color)
+        scene.directionalLight.intensity = profile.directionalLight.intensity
+        if (profile.directionalLight.position) {
+            scene.directionalLight.position.set(...profile.directionalLight.position)
+        }
+        if (profile.directionalLight.target) {
+            scene.directionalLight.target.position.set(...profile.directionalLight.target)
+            scene.directionalLight.target.updateMatrixWorld()
+        }
+        if (profile.directionalLight.castShadow != undefined) {
+            scene.directionalLight.castShadow = profile.directionalLight.castShadow
+        }
+    }
+
+    if (profile.renderer?.toneMapping) {
+        scene.renderer.toneMapping = {
+            none: THREE.NoToneMapping,
+            linear: THREE.LinearToneMapping,
+            aces: THREE.ACESFilmicToneMapping,
+        }[profile.renderer.toneMapping]
+    }
+    if (profile.renderer?.exposure != undefined) {
+        scene.renderer.toneMappingExposure = profile.renderer.exposure
+    }
+    if (profile.renderer?.clearAlpha != undefined) {
+        scene.renderer.setClearAlpha(profile.renderer.clearAlpha)
+    }
+    if (profile.colorFilter) scene.setColorFilter(profile.colorFilter)
+    if (profile.bloom) {
+        scene.effects.bloomPass.enabled = profile.bloom.enabled
+        scene.effects.bloomPass.strength = profile.bloom.strength
+        scene.effects.bloomPass.radius = profile.bloom.radius
+        scene.effects.bloomPass.threshold = profile.bloom.threshold
+    }
+    if (profile.camera) {
+        scene.camera.position.set(...profile.camera.position)
+        scene.controls.target.set(...profile.camera.target)
+        if (profile.camera.fov != undefined) scene.camera.fov = profile.camera.fov
+        if (profile.camera.near != undefined) scene.camera.near = profile.camera.near
+        if (profile.camera.far != undefined) scene.camera.far = profile.camera.far
+        scene.camera.updateProjectionMatrix()
+        scene.controls.update()
+    }
+}
+
+function restoreSceneProfile() {
+    scene.scene.background = initialSceneState.background
+    scene.scene.environment = initialSceneState.environment
+    scene.scene.fog = initialSceneState.fog
+    scene.ambientLight.color.copy(initialSceneState.ambientColor)
+    scene.ambientLight.intensity = initialSceneState.ambientIntensity
+    scene.directionalLight.color.copy(initialSceneState.directionalColor)
+    scene.directionalLight.intensity = initialSceneState.directionalIntensity
+    scene.directionalLight.position.copy(initialSceneState.directionalPosition)
+    scene.directionalLight.target.position.copy(initialSceneState.directionalTarget)
+    scene.directionalLight.castShadow = initialSceneState.directionalCastShadow
+    scene.directionalLight.target.updateMatrixWorld()
+    scene.renderer.toneMapping = initialSceneState.toneMapping
+    scene.renderer.toneMappingExposure = initialSceneState.exposure
+    scene.renderer.domElement.style.filter = initialSceneState.colorFilter
+    scene.effects.bloomPass.enabled = initialSceneState.bloomEnabled
+    scene.effects.bloomPass.strength = initialSceneState.bloomStrength
+    scene.effects.bloomPass.radius = initialSceneState.bloomRadius
+    scene.effects.bloomPass.threshold = initialSceneState.bloomThreshold
+    scene.camera.position.copy(initialSceneState.cameraPosition)
+    scene.controls.target.copy(initialSceneState.cameraTarget)
+    scene.camera.fov = initialSceneState.cameraFov
+    scene.camera.near = initialSceneState.cameraNear
+    scene.camera.far = initialSceneState.cameraFar
+    scene.camera.updateProjectionMatrix()
+    scene.controls.update()
 }
 
 function createProceduralStage(preset: NonNullable<StageDefinition['preset']>): THREE.Group {
-    if (preset === 'official-sky') return createOfficialSkyStage()
+    if (preset === 'sky-reference') return createSkyReferenceStage()
     if (preset === 'battle-arena') return createBattleArenaStage()
     return createStudioStage()
 }
 
-function createOfficialSkyStage() {
+function createSkyReferenceStage() {
     const group = new THREE.Group()
     const sky = new THREE.Mesh(
         new THREE.SphereGeometry(35, 48, 24),
@@ -349,4 +676,11 @@ function createBattleArenaStage() {
     return group
 }
 
-Object.assign(window, { loadStageById, getCurrentStagePreset, applyStagePreset })
+Object.assign(window, {
+    loadStageById,
+    getCurrentStagePreset,
+    getCurrentStageDefinition,
+    getCurrentStageSpawnPoints,
+    applyStagePreset,
+    placeCharactersAtStageSpawns,
+})
