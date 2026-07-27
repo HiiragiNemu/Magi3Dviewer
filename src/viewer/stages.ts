@@ -98,35 +98,54 @@ export async function setupStageSelector() {
 
 export async function loadStageById(id: string) {
     const definition = definitions.find(stage => stage.id === id) ?? builtInStages[0]
-    currentStageId = definition.id
-    stageOptions.id = definition.id
-    stageSelector.value = definition.id
+    const previousId = currentStageId
+    stageSelector.disabled = true
 
-    clearStageObject()
-    if (definition.id === 'none') return
+    try {
+        clearStageObject()
+        if (definition.id === 'none') {
+            currentStageId = definition.id
+            stageOptions.id = definition.id
+            stageSelector.value = definition.id
+            return
+        }
 
-    const object = definition.type === 'procedural'
-        ? createProceduralStage(definition.preset ?? 'studio')
-        : await loadExternalStage(definition)
+        const object = definition.type === 'procedural'
+            ? createProceduralStage(definition.preset ?? 'studio')
+            : await loadExternalStage(definition)
 
-    object.name = `Stage:${definition.id}`
-    activeStageObject = object
-    stageRoot.add(object)
+        prepareStageObject(object)
+        object.name = `Stage:${definition.id}`
+        activeStageObject = object
+        stageRoot.add(object)
 
-    const [x, y, z] = definition.position ?? [0, 0, 0]
-    const [rx, ry, rz] = definition.rotation ?? [0, 0, 0]
-    Object.assign(stageOptions, {
-        X: x,
-        Y: y,
-        Z: z,
-        RotateY: THREE.MathUtils.radToDeg(ry),
-        Scale: definition.scale ?? 1,
-        Visible: true,
-    })
-    object.rotation.x = rx
-    object.rotation.z = rz
-    updateStageTransform()
-    stageFolder.controllersRecursive().forEach(controller => controller.updateDisplay())
+        currentStageId = definition.id
+        stageOptions.id = definition.id
+        stageSelector.value = definition.id
+
+        const [x, y, z] = definition.position ?? [0, 0, 0]
+        const [rx, ry, rz] = definition.rotation ?? [0, 0, 0]
+        Object.assign(stageOptions, {
+            X: x,
+            Y: y,
+            Z: z,
+            RotateY: THREE.MathUtils.radToDeg(ry),
+            Scale: definition.scale ?? 1,
+            Visible: true,
+        })
+        object.rotation.x = rx
+        object.rotation.z = rz
+        updateStageTransform()
+        stageFolder.controllersRecursive().forEach(controller => controller.updateDisplay())
+    } catch (error) {
+        console.error(`Could not load 3D stage "${definition.name}":`, error)
+        stageSelector.value = previousId
+        if (previousId && previousId !== definition.id) {
+            await loadStageById(previousId)
+        }
+    } finally {
+        stageSelector.disabled = false
+    }
 }
 
 export function getCurrentStagePreset(): StagePreset {
@@ -163,6 +182,38 @@ function clearStageObject() {
     activeStageObject = undefined
 }
 
+function prepareStageObject(object: THREE.Object3D) {
+    const maxAnisotropy = scene.renderer.capabilities.getMaxAnisotropy()
+    object.traverse(child => {
+        const mesh = child as THREE.Mesh
+        if (!mesh.isMesh) return
+        mesh.castShadow = true
+        mesh.receiveShadow = true
+        mesh.frustumCulled = false
+
+        const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
+        materials.forEach(material => {
+            material.side = material.side ?? THREE.FrontSide
+            const standardMaterial = material as THREE.MeshStandardMaterial
+            const colorTextures = [
+                standardMaterial.map,
+                standardMaterial.emissiveMap,
+            ].filter((texture): texture is THREE.Texture => Boolean(texture))
+            colorTextures.forEach(texture => {
+                texture.colorSpace = THREE.SRGBColorSpace
+                texture.anisotropy = maxAnisotropy
+                texture.needsUpdate = true
+            })
+            Object.values(material)
+                .filter((value): value is THREE.Texture => value instanceof THREE.Texture)
+                .forEach(texture => {
+                    texture.anisotropy = maxAnisotropy
+                    texture.needsUpdate = true
+                })
+        })
+    })
+}
+
 function disposeStageObject(object: THREE.Object3D) {
     object.traverse(child => {
         const mesh = child as THREE.Mesh
@@ -171,7 +222,7 @@ function disposeStageObject(object: THREE.Object3D) {
         const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
         materials.forEach(material => {
             Object.values(material).forEach(value => {
-                if (value instanceof THREE.Texture) (value as THREE.Texture).dispose()
+                if (value instanceof THREE.Texture) value.dispose()
             })
             material.dispose()
         })
@@ -187,12 +238,9 @@ async function loadExternalStage(definition: StageDefinition): Promise<THREE.Obj
     }
 
     const blob = await fetchAndTryDecompressGzip(url)
-    const blobUrl = URL.createObjectURL(blob)
-    try {
-        return await new FBXLoader().loadAsync(blobUrl)
-    } finally {
-        URL.revokeObjectURL(blobUrl)
-    }
+    const arrayBuffer = await blob.arrayBuffer()
+    const resourcePath = new URL('.', url).href
+    return new FBXLoader().parse(arrayBuffer, resourcePath)
 }
 
 function createProceduralStage(preset: NonNullable<StageDefinition['preset']>): THREE.Group {
