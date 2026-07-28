@@ -93,7 +93,7 @@ jobs:
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
           sleep 4
-          node scripts/smoke-magius.mjs
+          node scripts/smoke-runtime-v2.mjs
           node scripts/smoke-angelring-two-character.mjs
 
       - name: Upload WebGL smoke evidence
