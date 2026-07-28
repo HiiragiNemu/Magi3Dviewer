@@ -106,8 +106,10 @@ jobs:
             /tmp/magius-smoke-ashley.png
             /tmp/magius-smoke-closeup.png
             /tmp/magius-smoke.json
-            /tmp/magius-angelring-madoka.png
-            /tmp/magius-angelring-ashley.png
+            /tmp/magius-angelring-madoka-front.png
+            /tmp/magius-angelring-madoka-back.png
+            /tmp/magius-angelring-ashley-front.png
+            /tmp/magius-angelring-ashley-back.png
             /tmp/magius-angelring-two-character.json
             /tmp/magius-preview.log
           if-no-files-found: warn
@@ -144,7 +146,7 @@ jobs:
             const checks = [
               ['Magius3Dviewer all-character animation audit', process.env.ANIMATION, 'All FBX animation families parsed and generic binding correction verified'],
               ['Magius3Dviewer production build', process.env.BUILD, 'Production TypeScript/Vite build completed'],
-              ['Magius3Dviewer WebGL smoke test', process.env.SMOKE, 'Madoka/Ashley AngelRing, Ashley binding and stage runtime rendered in Chromium'],
+              ['Magius3Dviewer WebGL smoke test', process.env.SMOKE, 'Madoka/Ashley frontal AngelRing and rear suppression rendered in Chromium'],
               ['Magius3Dviewer GitHub Pages deployment', process.env.DEPLOY, 'Magius3Dviewer deployed'],
             ];
             for (const [contextName, outcome, successText] of checks) {
