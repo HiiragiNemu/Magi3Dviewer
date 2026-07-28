@@ -1,0 +1,348 @@
+name: Scan public Taiwan client network protocol
+run-name: Recover Taiwan API, CDN and signing evidence
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-public-client-network-scan.yml'
+      - 'analysis-requests/tw-public-client-network-scan.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-public-client-network-scan
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout controller
+        uses: actions/checkout@v5
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install inspection tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip p7zip-full jq binutils aapt apksigner
+
+      - name: Download public Taiwan XAPK
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/source work/report
+          curl -fL --retry 5 --retry-all-errors \
+            -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/tw.sonet.magiaexedra.xapk
+          sha256sum work/source/tw.sonet.magiaexedra.xapk | tee work/report/xapk-sha256.txt
+          file work/source/tw.sonet.magiaexedra.xapk | tee work/report/xapk-file-type.txt
+
+      - name: Expand XAPK and split APKs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/xapk work/unpacked
+          unzip -q work/source/tw.sonet.magiaexedra.xapk -d work/xapk
+          find work/xapk -type f -printf '%P\t%s\n' | sort > work/report/xapk-inventory.tsv
+          index=0
+          while IFS= read -r -d '' apk; do
+            index=$((index + 1))
+            name=$(basename "$apk" .apk | tr -cs 'A-Za-z0-9._-' '_')
+            target="work/unpacked/$(printf '%03d' "$index")-$name"
+            mkdir -p "$target"
+            unzip -q -o "$apk" -d "$target"
+            sha256sum "$apk" >> work/report/apk-sha256.txt
+            {
+              echo "===== $apk ====="
+              aapt dump badging "$apk" 2>&1 | head -80 || true
+            } >> work/report/apk-badging.txt
+            {
+              echo "===== $apk ====="
+              apksigner verify --print-certs "$apk" 2>&1 || true
+            } >> work/report/apk-certificates.txt
+          done < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test "$index" -gt 0
+          find work/unpacked -type f -printf '%P\t%s\n' | sort > work/report/unpacked-inventory.tsv
+
+      - name: Scan all packaged files for protocol strings
+        shell: python
+        run: |
+          from __future__ import annotations
+          import hashlib
+          import json
+          import re
+          from collections import Counter
+          from pathlib import Path
+
+          root = Path('work/unpacked')
+          report = Path('work/report')
+          report.mkdir(parents=True, exist_ok=True)
+
+          needles = tuple(value.lower() for value in (
+              'get_config', 'create_token', 'get_resource_master_data_mst_list',
+              'get_resource_file_mst_list', 'get_resource_asset_bundle_mst_list',
+              'GetResourceFileMstList', 'GetResourceAssetBundleMstList',
+              'X-post-signature', 'X-GAME-SERVER-URL', 'x-resource-revision',
+              'x-language', 'x-region', 'x-timezone-offset', 'assetbundle',
+              'masterdata', 'akamai', 'static-files', 'static-masterdata',
+              'pokelabo', 'sonet', 'so-net', 'magiaexedra', 'signature',
+              'certificate', 'encrypt', 'decrypt', 'crypto', 'serverurl',
+              'api/', '/api/', 'resource/'
+          ))
+          url_re = re.compile(r'https?://[^\s\x00\"\'<>\\]{4,500}', re.I)
+          domain_re = re.compile(r'(?<![A-Za-z0-9_-])(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}(?::\d+)?')
+          locale_re = re.compile(r'(?<![A-Za-z])(?:zh(?:[-_](?:Hant|Hans|TW|HK|MO|CN)){1,2}|ja[-_]Jpan|en[-_]Latn)(?![A-Za-z])', re.I)
+          unity_re = re.compile(r'20\d{2}\.\d+\.\d+[abfp]\d+', re.I)
+          b64_re = re.compile(r'(?<![A-Za-z0-9+/])[A-Za-z0-9+/]{84,92}={0,2}(?![A-Za-z0-9+/])')
+          hex_re = re.compile(r'(?<![0-9A-Fa-f])[0-9A-Fa-f]{40,128}(?![0-9A-Fa-f])')
+          ascii_re = re.compile(rb'[\x20-\x7e]{4,4096}')
+          utf16_re = re.compile(rb'(?:[\x20-\x7e]\x00){4,2048}')
+
+          urls: set[str] = set()
+          domains: set[str] = set()
+          locales: set[str] = set()
+          unity_versions: set[str] = set()
+          signatures: set[str] = set()
+          long_hex: set[str] = set()
+          network_strings: set[str] = set()
+          source_hits: Counter[str] = Counter()
+          file_records: list[dict[str, object]] = []
+
+          def consume(text: str, source: str) -> None:
+              cleaned = text.strip().strip('.,;)]}')
+              if not cleaned:
+                  return
+              lower = cleaned.lower()
+              has_network_term = any(needle in lower for needle in needles)
+              if has_network_term and len(network_strings) < 50000:
+                  network_strings.add(cleaned[:4000])
+                  source_hits[source] += 1
+              for value in url_re.findall(cleaned):
+                  urls.add(value.rstrip('.,;)]}'))
+              for value in domain_re.findall(cleaned):
+                  candidate = value.rstrip('.,;)]}').lower()
+                  if any(token in candidate for token in ('mmme', 'pokelabo', 'sonet', 'so-net', 'magia', 'exedra', 'akamai', 'cdn', 'api', 'static')):
+                      domains.add(candidate)
+              locales.update(match.group(0) for match in locale_re.finditer(cleaned))
+              unity_versions.update(match.group(0) for match in unity_re.finditer(cleaned))
+              if len(signatures) < 1000:
+                  signatures.update(match.group(0) for match in b64_re.finditer(cleaned))
+              if has_network_term and len(long_hex) < 2000:
+                  long_hex.update(match.group(0) for match in hex_re.finditer(cleaned))
+
+          for path in sorted(root.rglob('*')):
+              if not path.is_file():
+                  continue
+              relative = path.relative_to(root).as_posix()
+              size = path.stat().st_size
+              digest = hashlib.sha256()
+              try:
+                  with path.open('rb') as stream:
+                      overlap = b''
+                      while True:
+                          block = stream.read(4 * 1024 * 1024)
+                          if not block:
+                              break
+                          digest.update(block)
+                          data = overlap + block
+                          for match in ascii_re.finditer(data):
+                              consume(match.group(0).decode('ascii', errors='ignore'), relative)
+                          for match in utf16_re.finditer(data):
+                              consume(match.group(0).decode('utf-16le', errors='ignore'), relative)
+                          overlap = data[-8192:]
+                  file_records.append({'path': relative, 'size': size, 'sha256': digest.hexdigest()})
+              except OSError as exc:
+                  file_records.append({'path': relative, 'size': size, 'error': str(exc)})
+
+          cert_text = (report / 'apk-certificates.txt').read_text(encoding='utf-8', errors='ignore')
+          cert_sha1 = sorted(set(re.findall(r'certificate SHA-1 digest:\s*([0-9A-Fa-f:]+)', cert_text, re.I)))
+          cert_sha256 = sorted(set(re.findall(r'certificate SHA-256 digest:\s*([0-9A-Fa-f:]+)', cert_text, re.I)))
+          api_hosts = sorted(value for value in domains if 'api' in value or 'sonet' in value or 'so-net' in value)
+          cdn_hosts = sorted(value for value in domains if any(token in value for token in ('akamai', 'cdn', 'static', 'resource')))
+          taiwan_specific = sorted(value for value in [*urls, *domains, *locales] if any(token in value.lower() for token in ('taiwan', 'sonet', 'so-net', 'hant', '.tw')))
+
+          evidence = {
+              'schemaVersion': 1,
+              'packageName': 'tw.sonet.magiaexedra',
+              'source': 'public APKPure XAPK; private Release remains canonical',
+              'candidates': {
+                  'urls': sorted(urls),
+                  'domains': sorted(domains),
+                  'apiHosts': api_hosts,
+                  'cdnHosts': cdn_hosts,
+                  'locales': sorted(locales),
+                  'unityVersions': sorted(unity_versions),
+                  'base64Signatures': sorted(signatures),
+                  'networkAdjacentHex': sorted(long_hex),
+                  'taiwanSpecific': taiwan_specific,
+                  'certificateSha1': cert_sha1,
+                  'certificateSha256': cert_sha256,
+              },
+              'sourceHitCounts': dict(source_hits.most_common()),
+              'files': file_records,
+          }
+          (report / 'static-protocol-evidence.json').write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          (report / 'network-strings.txt').write_text('\n'.join(sorted(network_strings, key=str.lower)) + '\n', encoding='utf-8')
+          (report / 'domains.txt').write_text('\n'.join(sorted(domains)) + '\n', encoding='utf-8')
+          (report / 'urls.txt').write_text('\n'.join(sorted(urls)) + '\n', encoding='utf-8')
+          profile = {
+              'schemaVersion': 1,
+              'id': 'taiwan-public-scan-candidate',
+              'apiHostCandidates': api_hosts,
+              'masterDataHostCandidates': [value for value in cdn_hosts if 'master' in value],
+              'filesHostCandidates': [value for value in cdn_hosts if 'file' in value or 'resource' in value],
+              'languageCandidates': sorted(locales),
+              'regionCandidate': 'TW' if taiwan_specific else None,
+              'unityVersionCandidates': sorted(unity_versions),
+              'postSignatureCandidates': sorted(signatures),
+              'certificateSha1': cert_sha1,
+              'knownSharedCandidates': {
+                  'responseCryptoKeyObserved': '/TZh+1VxrtkNiDEH' in network_strings,
+                  'urlHashSaltObserved': any(value == '1c7f' for value in long_hex),
+              },
+          }
+          (report / 'candidate-taiwan-profile.json').write_text(json.dumps(profile, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+      - name: Attempt IL2CPP type recovery
+        id: il2cpp
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -u
+          mkdir -p work/il2cpp-tool work/il2cpp-output
+          metadata=$(find work/unpacked -type f -name 'global-metadata.dat' -print -quit)
+          binary=$(find work/unpacked -type f -path '*/arm64-v8a/libil2cpp.so' -print -quit)
+          if [[ -z "$metadata" || -z "$binary" ]]; then
+            echo 'global-metadata.dat or arm64 libil2cpp.so not found' | tee work/report/il2cpp-status.txt
+            exit 1
+          fi
+          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' \
+            https://api.github.com/repos/Perfare/Il2CppDumper/releases/latest)
+          asset=$(jq -r '[.assets[] | select(.name | test("net[678].*\\.zip$"; "i"))][0].browser_download_url // [.assets[] | select(.name | endswith(".zip"))][0].browser_download_url // empty' <<< "$release")
+          if [[ -z "$asset" ]]; then
+            echo 'No compatible Il2CppDumper release asset found' | tee work/report/il2cpp-status.txt
+            exit 1
+          fi
+          curl -fL --retry 4 "$asset" -o work/il2cpp-tool/tool.zip
+          unzip -q work/il2cpp-tool/tool.zip -d work/il2cpp-tool/extracted
+          dll=$(find work/il2cpp-tool/extracted -type f -name 'Il2CppDumper.dll' -print -quit)
+          test -n "$dll"
+          dotnet "$dll" "$binary" "$metadata" work/il2cpp-output \
+            > work/report/il2cpp-dumper.log 2>&1
+          echo "binary=$binary" > work/report/il2cpp-status.txt
+          echo "metadata=$metadata" >> work/report/il2cpp-status.txt
+          echo "tool_asset=$asset" >> work/report/il2cpp-status.txt
+
+      - name: Curate network-related IL2CPP evidence
+        if: ${{ always() }}
+        shell: python
+        run: |
+          from __future__ import annotations
+          import json
+          import re
+          from pathlib import Path
+
+          output = Path('work/il2cpp-output')
+          report = Path('work/report')
+          terms = (
+              'get_config', 'create_token', 'resource', 'assetbundle', 'masterdata',
+              'akamai', 'signature', 'certificate', 'encrypt', 'decrypt', 'crypto',
+              'server', 'network', 'request', 'response', 'language', 'region',
+              'timezone', 'post-signature', 'game-server-url'
+          )
+          dump = next(iter(output.rglob('dump.cs')), None)
+          blocks: list[str] = []
+          if dump and dump.is_file():
+              text = dump.read_text(encoding='utf-8', errors='ignore')
+              starts = list(re.finditer(r'^// Namespace:.*?$|^(?:public|private|protected|internal).*?\b(?:class|struct|interface|enum)\s+[A-Za-z_]', text, re.M))
+              for index, match in enumerate(starts):
+                  start = match.start()
+                  stop = starts[index + 1].start() if index + 1 < len(starts) else len(text)
+                  block = text[start:stop]
+                  lower = block.lower()
+                  if any(term in lower for term in terms):
+                      blocks.append(block[:100000])
+                      if sum(len(item) for item in blocks) >= 2_000_000:
+                          break
+          (report / 'network-types.cs.txt').write_text('\n\n'.join(blocks), encoding='utf-8')
+
+          selected: list[object] = []
+          for candidate in [*output.rglob('script.json'), *output.rglob('il2cpp.json')]:
+              try:
+                  raw = json.loads(candidate.read_text(encoding='utf-8', errors='ignore'))
+              except Exception:
+                  continue
+              stack = [raw]
+              while stack and len(selected) < 5000:
+                  value = stack.pop()
+                  if isinstance(value, dict):
+                      compact = ' '.join(str(value.get(key, '')) for key in ('Name', 'name', 'Signature', 'signature', 'Namespace', 'namespace'))
+                      if any(term in compact.lower() for term in terms):
+                          selected.append(value)
+                      stack.extend(value.values())
+                  elif isinstance(value, list):
+                      stack.extend(value)
+          (report / 'network-address-candidates.json').write_text(json.dumps(selected, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+      - name: Build human-readable report and remove raw inputs
+        if: ${{ always() }}
+        shell: python
+        run: |
+          from pathlib import Path
+          import json
+
+          report = Path('work/report')
+          evidence_path = report / 'static-protocol-evidence.json'
+          if evidence_path.exists():
+              evidence = json.loads(evidence_path.read_text(encoding='utf-8'))
+              candidates = evidence['candidates']
+          else:
+              candidates = {key: [] for key in ('apiHosts', 'cdnHosts', 'locales', 'unityVersions', 'certificateSha1', 'base64Signatures')}
+          lines = [
+              '# Taiwan public-client network protocol scan',
+              '',
+              'The XAPK and complete IL2CPP outputs were used only inside the runner and are not uploaded.',
+              '',
+              '## API host candidates', '',
+              *([f'- `{value}`' for value in candidates.get('apiHosts', [])] or ['- None recovered.']),
+              '', '## CDN host candidates', '',
+              *([f'- `{value}`' for value in candidates.get('cdnHosts', [])] or ['- None recovered.']),
+              '', '## Locale candidates', '',
+              *([f'- `{value}`' for value in candidates.get('locales', [])] or ['- None recovered.']),
+              '', '## Unity versions', '',
+              *([f'- `{value}`' for value in candidates.get('unityVersions', [])] or ['- None recovered.']),
+              '', '## APK certificate SHA-1', '',
+              *([f'- `{value}`' for value in candidates.get('certificateSha1', [])] or ['- None recovered.']),
+              '', '## Signature candidates', '',
+              f"- {len(candidates.get('base64Signatures', []))} base64 values of the expected signature length were retained for review.",
+          ]
+          (report / 'REPORT.md').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+
+      - name: Delete XAPK, APKs, native binaries and full dumps
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          rm -rf work/source work/xapk work/unpacked work/il2cpp-tool work/il2cpp-output
+          if find work/report -type f \( -name '*.apk' -o -name '*.xapk' -o -name '*.so' -o -name 'global-metadata.dat' -o -name 'dump.cs' \) | grep -q .; then
+            echo 'Raw client material remained in report directory' >&2
+            exit 1
+          fi
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+
+      - name: Upload curated protocol evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-public-client-network-protocol
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
