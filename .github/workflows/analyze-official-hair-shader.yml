@@ -1,0 +1,201 @@
+name: Analyze official ReDrive hair Shader mechanism
+run-name: Extract sanitized AngelRing, baked-normal and hair-highlight evidence
+
+on:
+  pull_request:
+    branches: ['main']
+    paths: ['.github/research-executor/execute.txt']
+
+permissions:
+  contents: read
+  statuses: write
+
+concurrency:
+  group: official-hair-shader-analysis
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout one-time research executor
+        uses: actions/checkout@v5
+
+      - name: Set up Python and .NET
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install protocol dependencies
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+
+      - name: Download bounded official shader and character inputs
+        run: |
+          python .github/research-executor/download_targeted_assets.py \
+            --out /tmp/hair-shader-source
+
+      - name: Build AssetStudioModCLI
+        run: |
+          git clone --depth 1 --branch AssetStudioMod \
+            https://github.com/aelurum/AssetStudio.git /tmp/AssetStudio
+          dotnet publish /tmp/AssetStudio/AssetStudioCLI/AssetStudioCLI.csproj \
+            --configuration Release \
+            --framework net8.0 \
+            --runtime linux-x64 \
+            --self-contained false \
+            -p:SolutionDir=/tmp/AssetStudio/ \
+            --output /tmp/assetstudio-cli
+
+      - name: Dump and export Shader assets
+        shell: bash
+        run: |
+          set +e
+          input=/tmp/hair-shader-source/raw/AssetBundles
+          cli=/tmp/assetstudio-cli/AssetStudioModCLI.dll
+          mkdir -p /tmp/hair-shader-private/dump /tmp/hair-shader-private/export
+          dotnet "$cli" "$input" -m dump -t shader,material \
+            --unity-version 2022.3.21f1 --load-all \
+            -g fileName -f assetName_pathID \
+            -o /tmp/hair-shader-private/dump \
+            --log-output both --log-level verbose \
+            > /tmp/hair-shader-private/dump.log 2>&1
+          echo $? > /tmp/hair-shader-private/dump-exit-code.txt
+          dotnet "$cli" "$input" -m export -t shader \
+            --unity-version 2022.3.21f1 --load-all \
+            -g fileName -f assetName_pathID \
+            -o /tmp/hair-shader-private/export \
+            --log-output both --log-level verbose \
+            > /tmp/hair-shader-private/export.log 2>&1
+          echo $? > /tmp/hair-shader-private/export-exit-code.txt
+          exit 0
+
+      - name: Build sanitized mechanism report
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib, json, re
+
+          private = Path('/tmp/hair-shader-private')
+          out = Path('/tmp/sanitized-hair-shader-analysis')
+          out.mkdir(parents=True, exist_ok=True)
+          terms = re.compile(
+              r'(?i)('
+              r'AngelRing|Yuugen|BakedNormal|IsHair|HighlightThreshold|HighlightRotation|'
+              r'FaceForward|FaceUp|FaceRight|FacePosition|DepthTex|RimLight|'
+              r'SpecularGradient|ControlMap|ShadowOffset|ShadowFeather|RdToon'
+              r')'
+          )
+          binary_line = re.compile(r'^[0-9A-Fa-f\s,{}]+$')
+          source_files = []
+          snippets = []
+          keyword_sets = []
+          pass_names = set()
+          for root in (private / 'dump', private / 'export'):
+              if not root.exists():
+                  continue
+              for path in root.rglob('*'):
+                  if not path.is_file() or path.stat().st_size > 32_000_000:
+                      continue
+                  raw = path.read_bytes()
+                  printable = sum(32 <= value < 127 or value in (9, 10, 13) for value in raw[:20000])
+                  if raw and printable / min(len(raw), 20000) < 0.70:
+                      continue
+                  text = raw.decode('utf-8', errors='ignore')
+                  lines = text.splitlines()
+                  if not terms.search(text):
+                      continue
+                  source_files.append({
+                      'path': path.relative_to(private).as_posix(),
+                      'size': path.stat().st_size,
+                      'sha256': hashlib.sha256(raw).hexdigest(),
+                  })
+                  for match in re.finditer(r'(?i)(?:Pass|Name)\s*[\"= ]+([A-Za-z0-9_./ -]{2,100})', text):
+                      pass_names.add(match.group(1).strip())
+                  for index, line in enumerate(lines):
+                      if not terms.search(line):
+                          continue
+                      context = []
+                      for number in range(max(0, index - 16), min(len(lines), index + 17)):
+                          value = lines[number].rstrip()[:2000]
+                          if binary_line.match(value.strip()) and len(value.strip()) > 160:
+                              value = '[COMPILED BINARY LINE OMITTED]'
+                          context.append({'line': number + 1, 'text': value})
+                      snippets.append({
+                          'file': path.relative_to(private).as_posix(),
+                          'matchLine': index + 1,
+                          'match': line.strip()[:1000],
+                          'context': context,
+                      })
+                      if len(snippets) >= 12000:
+                          break
+                  for match in re.finditer(r'_[A-Z][A-Z0-9_]{2,80}', text):
+                      value = match.group(0)
+                      if terms.search(value):
+                          keyword_sets.append(value)
+                  if len(snippets) >= 12000:
+                      break
+              if len(snippets) >= 12000:
+                  break
+
+          logs = {}
+          for name in ('dump.log', 'export.log', 'dump-exit-code.txt', 'export-exit-code.txt'):
+              path = private / name
+              if path.exists():
+                  logs[name] = path.read_text(encoding='utf-8', errors='ignore')[-50000:]
+          report = {
+              'schemaVersion': 1,
+              'sourceFiles': source_files,
+              'passNames': sorted(pass_names),
+              'targetKeywords': sorted(set(keyword_sets)),
+              'snippets': snippets,
+              'toolLogs': logs,
+          }
+          (out / 'official-hair-shader-mechanism.json').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2),
+              encoding='utf-8',
+          )
+          lines = [
+              '# Official ReDrive hair Shader mechanism evidence',
+              '',
+              f'- Text Shader/Material files: **{len(source_files)}**',
+              f'- Target snippets: **{len(snippets)}**',
+              f'- Pass names: **{len(pass_names)}**',
+              '',
+              '## Target keywords',
+              '',
+          ]
+          lines.extend(f'- `{value}`' for value in sorted(set(keyword_sets)))
+          (out / 'OFFICIAL_HAIR_SHADER_MECHANISM.md').write_text(
+              '\n'.join(lines) + '\n',
+              encoding='utf-8',
+          )
+
+      - name: Upload sanitized hair Shader analysis
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanitized-official-hair-shader-analysis
+          path: /tmp/sanitized-hair-shader-analysis
+          retention-days: 7
+
+      - name: Publish analysis status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status='${{ job.status }}';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.payload.pull_request.head.sha,
+              state: status === 'success' ? 'success' : 'failure',
+              context: 'Sanitized official hair Shader analysis',
+              description: status === 'success'
+                ? 'AngelRing and hair Shader evidence generated'
+                : 'Hair Shader mechanism analysis failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
