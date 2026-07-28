@@ -1,5 +1,5 @@
 name: Probe Taiwan response codec
-run-name: Validate recovered Taiwan MessagePack encryption
+run-name: Validate recovered Taiwan request and response encryption
 
 on:
   workflow_dispatch:
@@ -41,7 +41,7 @@ jobs:
           unzip -q work/input/crypto.zip -d work/input/crypto
           test -s work/input/codec/codec-types/ReDrive.Config.AppCryptoConfig.cs
           test -s work/input/crypto/crypto-literals.json
-      - name: Send disposable login with recovered official codec
+      - name: Send disposable login with recovered official codecs
         shell: python
         run: |
           import base64,hashlib,hmac,json,os,re,time,uuid
@@ -57,6 +57,7 @@ jobs:
             return match.group(1)
           hash_key=constant('hashKey')
           hash_salt=constant('hashSalt')
+          crypto_key_seed=constant('cryptoKeySeed')
           raw_values=json.loads(Path('work/input/crypto/crypto-literals.json').read_text(encoding='utf-8'))['values']
           raw_msgpack_key=raw_values['appMsgPackCryptKey']['value']
           if not isinstance(raw_msgpack_key,str) or not raw_msgpack_key:
@@ -70,10 +71,15 @@ jobs:
             if length<=0 or len(value)<=length: return value
             start=(len(value)-length)//2
             return value[start:start+length]
-          digest=hmac.new(hash_key.encode(),(hash_salt+raw_msgpack_key).encode(),hashlib.sha256).digest()
-          key_text=centered_text(base64.b64encode(centered_bytes(digest,16)).decode(),16)
-          key=key_text.encode()
-          if len(key)!=16: raise RuntimeError(f'derived key length is {len(key)}')
+          def derive(text):
+            digest=hmac.new(hash_key.encode(),(hash_salt+text).encode(),hashlib.sha256).digest()
+            result=centered_text(base64.b64encode(centered_bytes(digest,16)).decode(),16).encode()
+            if len(result)!=16: raise RuntimeError(f'derived key length is {len(result)}')
+            return result
+
+          request_key=derive(raw_msgpack_key)
+          default_crypto_key=derive(crypto_key_seed)
+          response_keys=[('requestMessagePackKey',request_key),('defaultAppCryptoKey',default_crypto_key)]
 
           host='https://app-mme.so-net.tw'; app='1.0.5'; unity='2022.3.62f3'
           client_uuid=uuid.uuid4().hex
@@ -85,22 +91,27 @@ jobs:
             if isinstance(value,list): return [safe(v) for v in value[:100]]
             if isinstance(value,(str,int,float,bool)) or value is None: return value
             return repr(value)[:200]
+          def decode_response(raw):
+            failures=[]
+            for label,key in response_keys:
+              try:
+                if len(raw)<32 or len(raw)%16: raise ValueError(f'invalid encoded length {len(raw)}')
+                decrypted=unpad(AES.new(key,AES.MODE_CBC,raw[:16]).decrypt(raw[16:]),16)
+                decoded=msgpack.unpackb(decrypted,raw=False,strict_map_key=False)
+                return decoded,label,failures
+              except Exception as exc:
+                failures.append({'key':label,'error':type(exc).__name__+': '+str(exc)[:300]})
+            return None,None,failures
           def post(path,payload,user_id=0,session_id='',ctag=None):
             envelope={'payload':payload,'uuid':client_uuid,'userId':user_id,'sessionId':session_id,'actionToken':None,'ctag':ctag,'actionTime':int((time.time()+11644473600)*10_000_000)}
             plain=msgpack.packb(envelope,use_bin_type=True)
             iv=os.urandom(16)
-            body=iv+AES.new(key,AES.MODE_CBC,iv).encrypt(pad(plain,16))
+            body=iv+AES.new(request_key,AES.MODE_CBC,iv).encrypt(pad(plain,16))
             headers=dict(common_headers)
             headers['X-post-signature']=base64.b64encode(hashlib.sha1(body).digest()).decode()
             response=requests.post(host+path,headers=headers,data=body,timeout=30)
-            raw=response.content
-            decoded=None; error=None
-            try:
-              decrypted=unpad(AES.new(key,AES.MODE_CBC,raw[:16]).decrypt(raw[16:]),16)
-              decoded=msgpack.unpackb(decrypted,raw=False,strict_map_key=False)
-            except Exception as exc:
-              error=type(exc).__name__+': '+str(exc)[:500]
-            return response,decoded,error
+            decoded,key_label,errors=decode_response(response.content)
+            return response,decoded,key_label,errors
 
           login_payload={
             'appVersion':app,'urlParam':'','deviceModel':'Codec Probe','osType':2,'osVersion':'Android 14','storeType':2,
@@ -110,8 +121,20 @@ jobs:
             'supportsRenderToCubemap':True,'supportsShadows':True,'supportsSparseTextures':False,'supportsStencil':1,'supportsVibration':True,
             'uuid':client_uuid,'xuid':0,'jwttoken':'','sm':'',
           }
-          response,decoded,error=post('/api/login',login_payload)
-          report={'schemaVersion':3,'derivedKeyLength':len(key),'derivedKeySha256':hashlib.sha256(key).hexdigest(),'login':{'httpStatus':response.status_code,'headers':{k.lower():v for k,v in response.headers.items() if k.lower().startswith('x-') or k.lower() in {'content-type','content-length'}},'decoded':decoded is not None,'decodeError':error,'response':safe(decoded)}}
+          response,decoded,response_key,decode_errors=post('/api/login',login_payload)
+          report={
+            'schemaVersion':4,
+            'requestKeySha256':hashlib.sha256(request_key).hexdigest(),
+            'defaultCryptoKeySha256':hashlib.sha256(default_crypto_key).hexdigest(),
+            'login':{
+              'httpStatus':response.status_code,
+              'headers':{k.lower():v for k,v in response.headers.items() if k.lower().startswith('x-') or k.lower() in {'content-type','content-length'}},
+              'decoded':decoded is not None,
+              'responseKey':response_key,
+              'decodeErrors':decode_errors,
+              'response':safe(decoded),
+            },
+          }
 
           payload=decoded.get('payload') if isinstance(decoded,dict) else None
           user_id=payload.get('userId') if isinstance(payload,dict) else None
@@ -119,8 +142,8 @@ jobs:
           ctag=decoded.get('ctag') if isinstance(decoded,dict) else None
           if isinstance(user_id,int) and user_id>0 and isinstance(session_id,str) and session_id:
             for label,path in [('gameConfig','/api/config/get_config'),('akamaiToken','/api/akamai/create_token'),('resourceConfig','/api/resource/get_config')]:
-              r,d,e=post(path,{'sm':'','lastHomeAccessTime':''},user_id,session_id,ctag if isinstance(ctag,str) else None)
-              report[label]={'httpStatus':r.status_code,'headers':{k.lower():v for k,v in r.headers.items() if k.lower().startswith('x-')},'decoded':d is not None,'decodeError':e,'response':safe(d)}
+              r,d,k,e=post(path,{'sm':'','lastHomeAccessTime':''},user_id,session_id,ctag if isinstance(ctag,str) else None)
+              report[label]={'httpStatus':r.status_code,'headers':{name.lower():value for name,value in r.headers.items() if name.lower().startswith('x-')},'decoded':d is not None,'responseKey':k,'decodeErrors':e,'response':safe(d)}
 
           Path('work/report/codec-probe.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           print(json.dumps(report,ensure_ascii=False,indent=2))
