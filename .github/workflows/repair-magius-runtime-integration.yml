@@ -1,0 +1,190 @@
+name: Repair Magius runtime integration
+run-name: Fix capability-gated Hair shader and ReDriveVolume stage call placement
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths: ['.github/workflows/repair-magius-runtime-integration.yml']
+
+permissions:
+  contents: write
+  statuses: write
+
+concurrency:
+  group: repair-magius-runtime-integration
+  cancel-in-progress: true
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Magius3Dviewer source
+        uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+          fetch-depth: 0
+
+      - name: Gate Hair material construction by character capability
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('magia-exedra-character-three/loader.ts')
+          text = path.read_text(encoding='utf-8')
+          old = '''                            if (name.includes('hair')) {
+                                  const angelRingReference = createAngelRingReference(modelObject, mesh, characterProfile)
+                                  const result = await createHairMaterial({
+                                      ...sharedMaterialOptions,
+                                      alphaSrc,
+                                      angelRingReference,
+                                  })
+                                  material = result.material
+                                  textures = result.textures
+                                  alphaTex = result.alphaTex
+                                  if (result.updateAngelRingReference) {
+                                      userData.animationLoops.push(result.updateAngelRingReference)
+                                  }
+                                  console.log('AngelRing reference:', angelRingReference)
+                              } else {
+                                  const result = await createGeneralMaterial({
+                                      ...sharedMaterialOptions,
+                                      alphaSrc,
+                                  })
+                                  material = result.material
+                                  textures = result.textures
+                                  alphaTex = result.alphaTex
+                              }
+          '''
+          new = '''                            if (name.includes('hair')) {
+                                  const angelRingReference = createAngelRingReference(modelObject, mesh, characterProfile)
+                                  if (angelRingReference) {
+                                      const result = await createHairMaterial({
+                                          ...sharedMaterialOptions,
+                                          alphaSrc,
+                                          angelRingReference,
+                                      })
+                                      material = result.material
+                                      textures = result.textures
+                                      alphaTex = result.alphaTex
+                                      if (result.updateAngelRingReference) {
+                                          userData.animationLoops.push(result.updateAngelRingReference)
+                                      }
+                                  } else {
+                                      const result = await createGeneralMaterial({
+                                          ...sharedMaterialOptions,
+                                          alphaSrc,
+                                      })
+                                      material = result.material
+                                      textures = result.textures
+                                      alphaTex = result.alphaTex
+                                  }
+                                  console.log('AngelRing capability/reference:', {
+                                      enabled: characterProfile.angelRingEnabled,
+                                      reference: angelRingReference,
+                                  })
+                              } else {
+                                  const result = await createGeneralMaterial({
+                                      ...sharedMaterialOptions,
+                                      alphaSrc,
+                                  })
+                                  material = result.material
+                                  textures = result.textures
+                                  alphaTex = result.alphaTex
+                              }
+          '''
+          if old in text:
+              text = text.replace(old, new, 1)
+          elif "AngelRing capability/reference" not in text:
+              raise SystemExit('Current Hair loader block is not the expected source')
+          path.write_text(text, encoding='utf-8')
+
+      - name: Place ReDriveVolume runtime call inside stage profile function
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('src/viewer/stages.ts')
+          text = path.read_text(encoding='utf-8')
+          broken = '''    }
+          }
+              applyReDriveVolumeRuntime(
+              profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
+          )
+
+          function restoreSceneProfile() {
+          '''
+          fixed = '''    }
+              applyReDriveVolumeRuntime(
+                  profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
+              )
+          }
+
+          function restoreSceneProfile() {
+          '''
+          if broken in text:
+              text = text.replace(broken, fixed, 1)
+          else:
+              outside = text.find('\n}\n    applyReDriveVolumeRuntime(')
+              if outside >= 0:
+                  start = outside + 2
+                  end = text.find('\n\nfunction restoreSceneProfile()', start)
+                  if end < 0:
+                      raise SystemExit('Could not locate broken runtime call end')
+                  block = text[start:end].strip()
+                  text = text[:outside] + '\n    ' + block.replace('\n', '\n    ') + '\n}' + text[end:]
+              elif 'applyReDriveVolumeRuntime(' not in text:
+                  marker = '\n}\n\nfunction restoreSceneProfile()'
+                  if marker not in text:
+                      raise SystemExit('Stage render-profile function boundary not found')
+                  call = '''
+              applyReDriveVolumeRuntime(
+                  profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
+              )
+          }
+
+          function restoreSceneProfile()'''
+                  text = text.replace(marker, call, 1)
+          path.write_text(text, encoding='utf-8')
+
+      - name: Validate repaired source shape
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -F "AngelRing capability/reference" magia-exedra-character-three/loader.ts
+          grep -F "applyReDriveVolumeRuntime(" src/viewer/stages.ts
+          python - <<'PY'
+          from pathlib import Path
+          text=Path('src/viewer/stages.ts').read_text(encoding='utf-8')
+          function=text[text.index('async function applyStageRenderProfile'):text.index('function restoreSceneProfile')]
+          if 'applyReDriveVolumeRuntime(' not in function:
+              raise SystemExit('ReDriveVolume call is not inside applyStageRenderProfile')
+          if text.count('function restoreSceneProfile') != 1:
+              raise SystemExit('Unexpected restoreSceneProfile count')
+          PY
+
+      - name: Commit and push repaired integration
+        id: commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add magia-exedra-character-three/loader.ts src/viewer/stages.ts
+          if git diff --cached --quiet; then
+            echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m 'fix(runtime): gate Hair feature and apply stage volume in scope'
+          git push origin HEAD:magius3dviewer
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish repair status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        env:
+          SOURCE_SHA: ${{ steps.commit.outputs.sha }}
+        with:
+          script: |
+            const status='${{ job.status }}';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:process.env.SOURCE_SHA||context.sha,state:status==='success'?'success':'failure',context:'Magius runtime integration repair',description:status==='success'?'Hair gating and ReDriveVolume call repaired':'Runtime integration repair failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
