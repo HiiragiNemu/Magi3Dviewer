@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: '3.13'
       - name: Install dependencies
-        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome py3rijndael
       - name: Download curated client-codec evidence
         shell: bash
         env:
@@ -41,14 +41,15 @@ jobs:
           unzip -q work/input/crypto.zip -d work/input/crypto
           test -s work/input/codec/codec-types/ReDrive.Config.AppCryptoConfig.cs
           test -s work/input/crypto/crypto-literals.json
-      - name: Send disposable login with recovered official codecs
+      - name: Send disposable login and test Rijndael response variants
         shell: python
         run: |
           import base64,hashlib,hmac,json,os,re,time,uuid
           from pathlib import Path
           import msgpack,requests
           from Crypto.Cipher import AES
-          from Crypto.Util.Padding import pad,unpad
+          from Crypto.Util.Padding import pad
+          from py3rijndael import RijndaelCbc, Pkcs7Padding
 
           source=Path('work/input/codec/codec-types/ReDrive.Config.AppCryptoConfig.cs').read_text(encoding='utf-8')
           def constant(name):
@@ -71,15 +72,17 @@ jobs:
             if length<=0 or len(value)<=length: return value
             start=(len(value)-length)//2
             return value[start:start+length]
-          def derive(text):
+          def derive(text,length):
             digest=hmac.new(hash_key.encode(),(hash_salt+text).encode(),hashlib.sha256).digest()
-            result=centered_text(base64.b64encode(centered_bytes(digest,16)).decode(),16).encode()
-            if len(result)!=16: raise RuntimeError(f'derived key length is {len(result)}')
+            result=centered_text(base64.b64encode(centered_bytes(digest,length)).decode(),length).encode()
+            if len(result)!=length: raise RuntimeError(f'derived key length is {len(result)}, expected {length}')
             return result
 
-          request_key=derive(raw_msgpack_key)
-          default_crypto_key=derive(crypto_key_seed)
-          response_keys=[('requestMessagePackKey',request_key),('defaultAppCryptoKey',default_crypto_key)]
+          request_key=derive(raw_msgpack_key,16)
+          response_keys=[]
+          for source_name,raw_key in [('requestMessagePack',raw_msgpack_key),('defaultAppCrypto',crypto_key_seed)]:
+            for length in (16,24,32):
+              response_keys.append((f'{source_name}-{length}',derive(raw_key,length),length))
 
           host='https://app-mme.so-net.tw'; app='1.0.5'; unity='2022.3.62f3'
           client_uuid=uuid.uuid4().hex
@@ -93,14 +96,16 @@ jobs:
             return repr(value)[:200]
           def decode_response(raw):
             failures=[]
-            for label,key in response_keys:
+            for label,key,block_size in response_keys:
               try:
-                if len(raw)<32 or len(raw)%16: raise ValueError(f'invalid encoded length {len(raw)}')
-                decrypted=unpad(AES.new(key,AES.MODE_CBC,raw[:16]).decrypt(raw[16:]),16)
+                if len(raw)<block_size*2 or (len(raw)-block_size)%block_size:
+                  raise ValueError(f'encoded length {len(raw)} is incompatible with block size {block_size}')
+                codec=RijndaelCbc(key=key,iv=raw[:block_size],padding=Pkcs7Padding(block_size),block_size=block_size)
+                decrypted=codec.decrypt(raw[block_size:])
                 decoded=msgpack.unpackb(decrypted,raw=False,strict_map_key=False)
                 return decoded,label,failures
               except Exception as exc:
-                failures.append({'key':label,'error':type(exc).__name__+': '+str(exc)[:300]})
+                failures.append({'key':label,'keySha256':hashlib.sha256(key).hexdigest(),'error':type(exc).__name__+': '+str(exc)[:300]})
             return None,None,failures
           def post(path,payload,user_id=0,session_id='',ctag=None):
             envelope={'payload':payload,'uuid':client_uuid,'userId':user_id,'sessionId':session_id,'actionToken':None,'ctag':ctag,'actionTime':int((time.time()+11644473600)*10_000_000)}
@@ -123,12 +128,13 @@ jobs:
           }
           response,decoded,response_key,decode_errors=post('/api/login',login_payload)
           report={
-            'schemaVersion':4,
+            'schemaVersion':5,
             'requestKeySha256':hashlib.sha256(request_key).hexdigest(),
-            'defaultCryptoKeySha256':hashlib.sha256(default_crypto_key).hexdigest(),
             'login':{
               'httpStatus':response.status_code,
               'headers':{k.lower():v for k,v in response.headers.items() if k.lower().startswith('x-') or k.lower() in {'content-type','content-length'}},
+              'setCookiePresent':bool(response.headers.get('Set-Cookie')),
+              'setCookieName':response.headers.get('Set-Cookie','').split('=',1)[0] or None,
               'decoded':decoded is not None,
               'responseKey':response_key,
               'decodeErrors':decode_errors,
