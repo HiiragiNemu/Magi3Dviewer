@@ -27,19 +27,16 @@ jobs:
           from pathlib import Path
           path=Path('magia-exedra-character-three/shaders/hair.ts')
           text=path.read_text(encoding='utf-8')
-          needle='''            loadAngelRingOptions(shader)
-            updateAngelRingReference()
-          '''
-          replacement='''            loadAngelRingOptions(shader)
+          insertion='''            loadAngelRingOptions(shader)
             // The shared ReDrive shader serializes AngelRing properties even for
-            // unsupported hair materials. Never render the old global fallback
-            // when an official character profile did not create a Head reference.
+            // unsupported hair materials. Never render a global fallback when an
+            // official character profile did not create a Head reference.
             if (!reference) shader.uniforms.uAngelRingEnabled.value = 0
-            updateAngelRingReference()
           '''
-          if replacement not in text:
-            if needle not in text: raise SystemExit('Hair Shader insertion point not found')
-            text=text.replace(needle,replacement,1)
+          if 'if (!reference) shader.uniforms.uAngelRingEnabled.value = 0' not in text:
+            needle='            loadAngelRingOptions(shader)\n'
+            if needle not in text: raise SystemExit('loadAngelRingOptions call not found')
+            text=text.replace(needle,insertion,1)
           path.write_text(text,encoding='utf-8')
 
       - name: Make two-character regression capability-aware
@@ -48,25 +45,11 @@ jobs:
           from pathlib import Path
           path=Path('scripts/smoke-angelring-two-character.mjs')
           text=path.read_text(encoding='utf-8')
-          text=text.replace(
-            "async function testCharacter(selectorValue, expectedResourceId, label) {",
-            "async function testCharacter(selectorValue, expectedResourceId, label, expectedRing) {",
-          )
-          wait_old='''  await page.waitForFunction(
-            () => {
-              const character = window.scene?.characterSelected?.character
-              if (!character) return false
-              return (character.userData.meshes ?? [])
-                .filter(mesh => mesh.name.toLowerCase().includes('hair'))
-                .some(mesh => {
-                  const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
-                  return materials.some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))
-                })
-            },
-            { timeout: 180_000 },
-          )
-          '''
-          wait_new='''  await page.waitForFunction(
+          text=text.replace("async function testCharacter(selectorValue, expectedResourceId, label) {","async function testCharacter(selectorValue, expectedResourceId, label, expectedRing) {")
+          start=text.find('  await page.waitForFunction(\n', text.find('async function testCharacter'))
+          end=text.find('\n\n  await setView(false)', start)
+          if start<0 or end<0: raise SystemExit('character shader wait block not found')
+          wait='''  await page.waitForFunction(
             expected => {
               const character = window.scene?.characterSelected?.character
               if (!character) return false
@@ -80,16 +63,15 @@ jobs:
             },
             { timeout: 180_000 },
             expectedRing,
-          )
-          '''
-          if wait_old in text: text=text.replace(wait_old,wait_new,1)
+          )'''
+          text=text[:start]+wait+text[end:]
           text=text.replace("const madoka = await testCharacter('100107', 100107, 'madoka')","const madoka = await testCharacter('100107', 100107, 'madoka', true)")
           text=text.replace("const ashley = await testCharacter('110701', 110701, 'ashley')","const ashley = await testCharacter('110701', 110701, 'ashley', false)")
           text=text.replace("for (const [name, result] of Object.entries({ madoka, ashley })) {","for (const [name, result] of Object.entries({ madoka })) {")
           marker="if (pageErrors.length) failures.push(`page errors: ${pageErrors.join(' | ')}`)"
           check="if (ashley.front.shaderCount !== 0 || ashley.back.shaderCount !== 0 || ashley.front.changedChannels !== 0) failures.push(`ashley: unsupported AngelRing remains active (${JSON.stringify(ashley.front)})`)\n"
-          if check.strip() not in text:
-            if marker not in text: raise SystemExit('Regression insertion point not found')
+          if 'ashley: unsupported AngelRing remains active' not in text:
+            if marker not in text: raise SystemExit('failure marker not found')
             text=text.replace(marker,check+marker,1)
           path.write_text(text,encoding='utf-8')
 
