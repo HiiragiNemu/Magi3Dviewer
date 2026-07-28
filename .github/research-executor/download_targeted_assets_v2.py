@@ -15,6 +15,18 @@ base = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = base
 spec.loader.exec_module(base)
 
+# The visual regression target is Madoka 100107, while Ashley 110701 remains the
+# animation/material control. Download both official battle models and Ashley's
+# home-motion bundle in the same bounded evidence set.
+base.TOKENS = (
+    '100107',
+    'chara_100107_battle_unit',
+    '110701',
+    '11070101',
+    'chara_110701_battle_unit',
+    'chara_11070101_home',
+)
+
 
 def get_catalog(session):
     request_headers = base.headers()
@@ -88,9 +100,6 @@ def get_catalog(session):
         path_id = int(item['pathId'])
         path = path_map[path_id]
         name = pick(item, name_keys)
-        # The current catalog no longer repeats a revision on every item. The
-        # config response supplies one x-resource-revision-asset-bundle value
-        # used by the CDN key for all entries in this catalog snapshot.
         revision = pick(item, revision_keys, catalog_revision)
         if name is None:
             unresolved.append({
