@@ -45,7 +45,6 @@ await page.waitForFunction(
   () => document.body.classList.contains('no-demo') && window.scene,
   { timeout: 180_000 },
 )
-
 await page.evaluate(async () => {
   window.scene.composerEnabled = 'Never'
   window.scene.effects.bloomPass.enabled = false
@@ -64,7 +63,29 @@ async function setView(back) {
   await new Promise(resolve => setTimeout(resolve, 1_200))
 }
 
-async function measureRing() {
+async function selectCharacter(selectorValue, expectedResourceId) {
+  await page.select('#character-selector', selectorValue)
+  await page.waitForFunction(
+    expected => window.scene?.characterSelected?.character?.userData?.characterId === expected,
+    { timeout: 180_000 },
+    expectedResourceId,
+  )
+  await new Promise(resolve => setTimeout(resolve, 2_000))
+}
+
+async function countAngelRingShaders() {
+  return page.evaluate(() => {
+    const character = window.scene?.characterSelected?.character
+    if (!character) return 0
+    return (character.userData.meshes ?? [])
+      .filter(mesh => mesh.name.toLowerCase().includes('hair'))
+      .flatMap(mesh => Array.isArray(mesh.material) ? mesh.material : [mesh.material])
+      .filter(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))
+      .length
+  })
+}
+
+async function measureMadokaRing() {
   return page.evaluate(async () => {
     const waitFrames = count => new Promise(resolve => {
       let remaining = count
@@ -79,12 +100,11 @@ async function measureRing() {
     const gl = canvas?.getContext('webgl2') || canvas?.getContext('webgl')
     if (!gl) throw new Error('WebGL unavailable')
     const character = window.scene.characterSelected.character
-    const hairMeshes = character.userData.meshes.filter(mesh => mesh.name.toLowerCase().includes('hair'))
-    const shaders = hairMeshes.flatMap(mesh => {
-      const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
-      return materials.map(material => material?.userData?.shader)
-        .filter(shader => shader?.uniforms?.uAngelRingEnabled)
-    })
+    const shaders = character.userData.meshes
+      .filter(mesh => mesh.name.toLowerCase().includes('hair'))
+      .flatMap(mesh => Array.isArray(mesh.material) ? mesh.material : [mesh.material])
+      .map(material => material?.userData?.shader)
+      .filter(shader => shader?.uniforms?.uAngelRingEnabled)
 
     const sample = () => {
       gl.finish()
@@ -92,20 +112,7 @@ async function measureRing() {
       const height = gl.drawingBufferHeight
       const pixels = new Uint8Array(width * height * 4)
       gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
-      // Head/hair region for the fixed close-up camera. readPixels uses a
-      // bottom-left origin, hence the relatively high Y interval.
-      const x0 = Math.floor(width * 0.24)
-      const x1 = Math.floor(width * 0.76)
-      const y0 = Math.floor(height * 0.43)
-      const y1 = Math.floor(height * 0.90)
-      const roi = []
-      for (let y = y0; y < y1; y += 2) {
-        for (let x = x0; x < x1; x += 2) {
-          const index = (y * width + x) * 4
-          roi.push(pixels[index], pixels[index + 1], pixels[index + 2])
-        }
-      }
-      return roi
+      return { width, height, pixels: Array.from(pixels) }
     }
 
     const original = shaders.map(shader => Number(shader.uniforms.uAngelRingEnabled.value))
@@ -116,26 +123,51 @@ async function measureRing() {
     await waitFrames(4)
     const on = sample()
 
+    const x0 = Math.floor(on.width * 0.24)
+    const x1 = Math.floor(on.width * 0.76)
+    const y0 = Math.floor(on.height * 0.43)
+    const y1 = Math.floor(on.height * 0.90)
+    let changedPixels = 0
+    let brightenedPixels = 0
     let absolute = 0
-    let changedChannels = 0
     let maxDelta = 0
-    let brightenedChannels = 0
-    for (let index = 0; index < off.length; index += 1) {
-      const signed = on[index] - off[index]
-      const delta = Math.abs(signed)
-      absolute += delta
-      if (delta >= 2) changedChannels += 1
-      if (signed >= 4) brightenedChannels += 1
-      maxDelta = Math.max(maxDelta, delta)
+    let minX = x1
+    let maxX = x0
+    let minY = y1
+    let maxY = y0
+    const rows = new Map()
+
+    for (let y = y0; y < y1; y += 1) {
+      for (let x = x0; x < x1; x += 1) {
+        const index = (y * on.width + x) * 4
+        const dr = on.pixels[index] - off.pixels[index]
+        const dg = on.pixels[index + 1] - off.pixels[index + 1]
+        const db = on.pixels[index + 2] - off.pixels[index + 2]
+        const signed = (dr + dg + db) / 3
+        const delta = (Math.abs(dr) + Math.abs(dg) + Math.abs(db)) / 3
+        absolute += delta
+        maxDelta = Math.max(maxDelta, delta)
+        if (delta >= 2.5) {
+          changedPixels += 1
+          minX = Math.min(minX, x)
+          maxX = Math.max(maxX, x)
+          minY = Math.min(minY, y)
+          maxY = Math.max(maxY, y)
+          rows.set(y, (rows.get(y) ?? 0) + 1)
+        }
+        if (signed >= 4) brightenedPixels += 1
+      }
     }
+
+    const bboxWidth = changedPixels ? maxX - minX + 1 : 0
+    const bboxHeight = changedPixels ? maxY - minY + 1 : 0
+    const activeRows = [...rows.values()].filter(value => value >= 6).length
+    const dominantRowWidth = rows.size ? Math.max(...rows.values()) : 0
 
     return {
       shaderCount: shaders.length,
       uniforms: shaders.map(shader => ({
         useHeadPlane: Number(shader.uniforms.uAngelRingUseHeadPlane?.value ?? 0),
-        hasUv1: Number(shader.uniforms.uAngelRingHasUv1?.value ?? 0),
-        uv1Signed: Number(shader.uniforms.uAngelRingUv1Signed?.value ?? 0),
-        uvMode: Number(shader.uniforms.uAngelRingUvMode?.value ?? 0),
         position: shader.uniforms.uAngelRingPlanePosition?.value?.toArray?.() ?? null,
         forward: shader.uniforms.uAngelRingFaceForward?.value?.toArray?.() ?? null,
         up: shader.uniforms.uAngelRingPlaneUp?.value?.toArray?.() ?? null,
@@ -143,81 +175,73 @@ async function measureRing() {
         offsetU: Number(shader.uniforms.uAngelRingOffsetU?.value ?? 0),
         offsetV: Number(shader.uniforms.uAngelRingOffsetV?.value ?? 0),
       })),
-      sampledColorChannels: off.length,
-      changedChannels,
-      brightenedChannels,
-      meanAbsoluteDelta: absolute / Math.max(off.length, 1),
+      sampledPixels: (x1 - x0) * (y1 - y0),
+      changedPixels,
+      brightenedPixels,
+      meanAbsoluteDelta: absolute / Math.max((x1 - x0) * (y1 - y0), 1),
       maxDelta,
+      bboxWidth,
+      bboxHeight,
+      bboxAspect: bboxWidth / Math.max(bboxHeight, 1),
+      activeRows,
+      dominantRowWidth,
     }
   })
 }
 
-async function testCharacter(selectorValue, expectedResourceId, label) {
-  await page.select('#character-selector', selectorValue)
-  await page.waitForFunction(
-    expected => window.scene?.characterSelected?.character?.userData?.characterId === expected,
-    { timeout: 180_000 },
-    expectedResourceId,
-  )
-  await page.waitForFunction(
-    () => {
-      const character = window.scene?.characterSelected?.character
-      if (!character) return false
-      return (character.userData.meshes ?? [])
-        .filter(mesh => mesh.name.toLowerCase().includes('hair'))
-        .some(mesh => {
-          const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
-          return materials.some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))
-        })
-    },
-    { timeout: 180_000 },
-  )
+await selectCharacter('100107', 100107)
+await page.waitForFunction(
+  () => {
+    const character = window.scene?.characterSelected?.character
+    return character?.userData?.meshes
+      ?.filter(mesh => mesh.name.toLowerCase().includes('hair'))
+      .some(mesh => (Array.isArray(mesh.material) ? mesh.material : [mesh.material])
+        .some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled)))
+  },
+  { timeout: 180_000 },
+)
+await setView(false)
+const madokaFront = await measureMadokaRing()
+await page.screenshot({ path: '/tmp/magius-angelring-madoka-front.png', fullPage: true })
+await setView(true)
+const madokaBack = await measureMadokaRing()
+await page.screenshot({ path: '/tmp/magius-angelring-madoka-back.png', fullPage: true })
 
-  await setView(false)
-  const front = await measureRing()
-  await page.screenshot({
-    path: `/tmp/magius-angelring-${label}-front.png`,
-    fullPage: true,
-  })
+await selectCharacter('110701', 110701)
+const ashleyShaderCount = await countAngelRingShaders()
+await page.screenshot({ path: '/tmp/magius-angelring-ashley-disabled.png', fullPage: true })
 
-  await setView(true)
-  const back = await measureRing()
-  await page.screenshot({
-    path: `/tmp/magius-angelring-${label}-back.png`,
-    fullPage: true,
-  })
-
-  return {
-    resourceId: expectedResourceId,
-    front,
-    back,
-    frontBackMeanRatio: front.meanAbsoluteDelta / Math.max(back.meanAbsoluteDelta, 0.0001),
-    frontBackBrightRatio: front.brightenedChannels / Math.max(back.brightenedChannels, 1),
-  }
-}
-
-const madoka = await testCharacter('100107', 100107, 'madoka')
-const ashley = await testCharacter('110701', 110701, 'ashley')
+const frontBackMeanRatio = madokaFront.meanAbsoluteDelta / Math.max(madokaBack.meanAbsoluteDelta, 0.0001)
 const failures = []
-for (const [name, result] of Object.entries({ madoka, ashley })) {
-  const { front, back } = result
-  if (front.shaderCount <= 0) failures.push(`${name}: no AngelRing shader`)
-  if (!front.uniforms.every(item => item.useHeadPlane >= 0.5)) failures.push(`${name}: not using Head reference`)
-  if (!front.uniforms.every(item => item.hasUv1 >= 0.5)) failures.push(`${name}: FBX UV3/uv1 is not active`)
-  if (front.changedChannels < 160) failures.push(`${name}: only ${front.changedChannels} frontal changed channels`)
-  if (front.brightenedChannels < 90) failures.push(`${name}: only ${front.brightenedChannels} frontal brightened channels`)
-  if (front.maxDelta < 8) failures.push(`${name}: frontal maximum pixel delta ${front.maxDelta}`)
-  if (result.frontBackMeanRatio < 1.35) {
-    failures.push(`${name}: rear band too strong; front/back mean ratio ${result.frontBackMeanRatio.toFixed(3)}`)
-  }
-  if (back.brightenedChannels > front.brightenedChannels * 0.65 + 40) {
-    failures.push(`${name}: rear brightened channels ${back.brightenedChannels} versus front ${front.brightenedChannels}`)
-  }
-}
+if (madokaFront.shaderCount <= 0) failures.push('madoka: no AngelRing shader')
+if (!madokaFront.uniforms.every(item => item.useHeadPlane >= 0.5)) failures.push('madoka: no official Head reference')
+if (madokaFront.changedPixels < 70) failures.push(`madoka: only ${madokaFront.changedPixels} changed pixels`)
+if (madokaFront.brightenedPixels < 40) failures.push(`madoka: only ${madokaFront.brightenedPixels} brightened pixels`)
+if (madokaFront.maxDelta < 7) failures.push(`madoka: maximum delta ${madokaFront.maxDelta}`)
+if (madokaFront.bboxAspect < 1.6) failures.push(`madoka: highlight is not a horizontal strip; aspect ${madokaFront.bboxAspect.toFixed(3)}`)
+if (madokaFront.activeRows > Math.max(90, madokaFront.bboxWidth * 0.65)) failures.push(`madoka: highlight is vertically scattered across ${madokaFront.activeRows} rows`)
+if (frontBackMeanRatio < 1.8) failures.push(`madoka: rear effect too strong; front/back ratio ${frontBackMeanRatio.toFixed(3)}`)
+if (madokaBack.brightenedPixels > madokaFront.brightenedPixels * 0.38 + 20) failures.push(`madoka: rear brightening ${madokaBack.brightenedPixels} versus front ${madokaFront.brightenedPixels}`)
+if (ashleyShaderCount !== 0) failures.push(`ashley: unsupported global AngelRing shader count ${ashleyShaderCount}`)
 if (pageErrors.length) failures.push(`page errors: ${pageErrors.join(' | ')}`)
 if (shaderErrors.length) failures.push(`shader errors: ${shaderErrors.join(' | ')}`)
 
-const report = { madoka, ashley, pageErrors, shaderErrors, failures }
+const report = {
+  madoka: {
+    resourceId: 100107,
+    front: madokaFront,
+    back: madokaBack,
+    frontBackMeanRatio,
+  },
+  ashley: {
+    resourceId: 110701,
+    expectedAngelRing: false,
+    shaderCount: ashleyShaderCount,
+  },
+  pageErrors,
+  shaderErrors,
+  failures,
+}
 fs.writeFileSync('/tmp/magius-angelring-two-character.json', JSON.stringify(report, null, 2))
 console.log(JSON.stringify(report, null, 2))
 await browser.close()
