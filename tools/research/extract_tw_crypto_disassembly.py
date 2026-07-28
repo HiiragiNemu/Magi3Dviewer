@@ -45,25 +45,18 @@ def main():
   ns=ns_positions[ni][1] if ni>=0 else ''; raw_type=type_positions[ti][1] if ti>=0 else ''; tp=normalize_type(raw_type)
   signature=m.group(2).strip()
   methods.append({'rva':int(m.group(1),16),'namespace':ns,'type':tp,'rawType':raw_type,'name':method_name(signature),'signature':signature,'source':'direct'})
-
- # Generic declarations have RVA -1; recover object-specialized implementations from GenericInstMethod comments.
  for i,(start,raw_type) in enumerate(type_positions):
   ns_i=bisect.bisect_right(ns_starts,start)-1; ns=ns_positions[ns_i][1] if ns_i>=0 else ''; tp=normalize_type(raw_type)
   if ns!='A2.Http' or not any(fragment in tp for fragment in GENERIC_TYPE_FRAGMENTS): continue
-  stop=type_positions[i+1][0] if i+1<len(type_positions) else len(text)
-  block=text[start:stop]
-  declarations=list(DECL.finditer(block))
+  stop=type_positions[i+1][0] if i+1<len(type_positions) else len(text); block=text[start:stop]; declarations=list(DECL.finditer(block))
   for di,decl in enumerate(declarations):
-   signature=decl.group(1).strip()
-   section_start=decl.end(); section_stop=declarations[di+1].start() if di+1<len(declarations) else len(block)
-   section=block[section_start:section_stop]
+   signature=decl.group(1).strip(); section_start=decl.end(); section_stop=declarations[di+1].start() if di+1<len(declarations) else len(block); section=block[section_start:section_stop]
    object_impls=[]; shared_impls=[]
    for gm in GENERIC_RVA.finditer(section):
     item={'rva':int(gm.group(1),16),'namespace':ns,'type':tp,'rawType':raw_type,'name':method_name(signature),'signature':signature,'implementation':gm.group(2).strip(),'source':'generic'}
     if '<object, object>' in item['implementation']: object_impls.append(item)
     else: shared_impls.append(item)
    methods.extend(object_impls if object_impls else shared_impls[:1])
-
  by_rva={}
  for item in methods: by_rva.setdefault(item['rva'],item)
  methods=[by_rva[key] for key in sorted(by_rva)]
@@ -73,17 +66,26 @@ def main():
   exact=any(m['namespace']==ns and m['type']==tp and m['name']==name for ns,tp,name in TARGETS)
   all_type=m['namespace']=='A2.Http' and any(fragment in m['type'] for fragment in ALL_TYPE_FRAGMENTS)
   if exact or all_type: selected.append(m)
- required={(ns,tp,name) for ns,tp,name in TARGETS if ns in {'A2.Crypto','ReDrive.Config'}}
  found={(m['namespace'],m['type'],m['name']) for m in selected}
- missing=sorted(required-found)
- if missing: raise SystemExit(f'missing crypto targets: {missing}')
+ mandatory={
+  ('A2.Crypto','Hash','HashBytes'),('A2.Crypto','Hash','HashString'),('A2.Crypto','Hash','GetSalt'),('A2.Crypto','Hash','GetHashKey'),
+  ('A2.Crypto','BasicCrypto','Encrypt'),('A2.Crypto','BasicCrypto','Decrypt'),
+  ('ReDrive.Config','AppCryptoConfig','get_HashKey'),('ReDrive.Config','AppCryptoConfig','get_HashSalt'),('ReDrive.Config','AppCryptoConfig','get_CryptoKey'),('ReDrive.Config','AppCryptoConfig','GetHashAlgorithm'),('ReDrive.Config','AppCryptoConfig','convert'),
+  ('ReDrive.Config','AppMsgPackConfig','GetCryptKey'),
+ }
+ missing=sorted(mandatory-found)
+ helper_present=any(item in found for item in {
+  ('A2.Crypto','BasicCrypto','CreateRijndaelManagedForEncrypt'),
+  ('A2.Crypto','BasicCrypto','CreateRijndaelManagedForEnCrypt'),
+ })
+ diagnostic={'methodCount':len(methods),'selectedCount':len(selected),'missingMandatory':missing,'rijndaelHelperPresent':helper_present}
+ (args.out/'selection-diagnostic.json').write_text(json.dumps(diagnostic,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+ if missing or not helper_present: raise SystemExit(f'crypto selection incomplete: {diagnostic}')
  (args.out/'targets.json').write_text(json.dumps(selected,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  for i,m in enumerate(selected):
-  label=f"{m['namespace']}.{m['type']}.{m['name']}-{i}"
-  path=args.out/f'{safe_name(label)}.txt'
+  label=f"{m['namespace']}.{m['type']}.{m['name']}-{i}"; path=args.out/f'{safe_name(label)}.txt'
   result=subprocess.run(['aarch64-linux-gnu-objdump','-d',f'--start-address=0x{m["rva"]:X}',f'--stop-address=0x{m["end"]:X}',str(args.binary)],text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,errors='replace',check=False)
   path.write_text(f"{m['signature']}\nimplementation={m.get('implementation','')}\nsource={m['source']}\nRVA 0x{m['rva']:X}-0x{m['end']:X}\n\n{result.stdout}",encoding='utf-8')
-
  block_dir=args.out/'type-blocks'; block_dir.mkdir(exist_ok=True); index=[]
  for i,(start,raw_type) in enumerate(type_positions):
   ns_i=bisect.bisect_right(ns_starts,start)-1; ns=ns_positions[ns_i][1] if ns_i>=0 else ''; tp=normalize_type(raw_type)
