@@ -42,7 +42,7 @@ jobs:
       - name: Install extraction dependencies
         run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome UnityPy==1.23.0
 
-      - name: Download root Android and ReDriveToon Shader bundles
+      - name: Download root catalog targets and ReDriveToon bundle
         run: |
           python research/.github/research-executor/download_targeted_assets.py --out /tmp/official-source
           find /tmp/official-source/raw/AssetBundles -type f -printf '%P %s bytes\n' | sort > /tmp/downloaded-assets.txt
@@ -61,9 +61,7 @@ jobs:
         run: |
           set +e
           mkdir -p /tmp/shader-evidence/{assetstudio-export,assetstudio-raw,assetstudio-dump,logs}
-          for input in \
-            /tmp/official-source/raw/AssetBundles/shader/redrive_toon \
-            /tmp/official-source/raw/AssetBundles/Android; do
+          find /tmp/official-source/raw/AssetBundles -maxdepth 2 -type f \( -path '*/shader/redrive_toon' -o -name Android \) -print0 | while IFS= read -r -d '' input; do
             label=$(basename "$input")
             dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll "$input" \
               -m export -t shader --unity-version 2022.3.21f1 \
@@ -71,14 +69,12 @@ jobs:
               --log-output both --log-level verbose \
               > "/tmp/shader-evidence/logs/$label-export.txt" 2>&1
             echo $? > "/tmp/shader-evidence/logs/$label-export.exit"
-
             dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll "$input" \
               -m exportRaw -t shader --unity-version 2022.3.21f1 --load-all \
               -g fileName -f assetName_pathID -o "/tmp/shader-evidence/assetstudio-raw/$label" \
               --log-output both --log-level verbose \
               > "/tmp/shader-evidence/logs/$label-exportRaw.txt" 2>&1
             echo $? > "/tmp/shader-evidence/logs/$label-exportRaw.exit"
-
             dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll "$input" \
               -m dump -t shader --unity-version 2022.3.21f1 --load-all \
               -g fileName -f assetName_pathID -o "/tmp/shader-evidence/assetstudio-dump/$label" \
@@ -88,7 +84,7 @@ jobs:
           done
           true
 
-      - name: Inventory and parse Shader objects with UnityPy
+      - name: Inventory every object type and parse Shader objects with UnityPy
         continue-on-error: true
         shell: python
         run: |
@@ -96,43 +92,42 @@ jobs:
           import collections, hashlib, importlib.metadata, json, traceback
           import UnityPy
 
-          inputs=[
-            Path('/tmp/official-source/raw/AssetBundles/shader/redrive_toon'),
-            Path('/tmp/official-source/raw/AssetBundles/Android'),
-          ]
+          inputs=[Path('/tmp/official-source/raw/AssetBundles/shader/redrive_toon')]
+          android=list(Path('/tmp/official-source/raw/AssetBundles').rglob('Android'))
+          inputs.extend(path for path in android if path.is_file())
           out=Path('/tmp/shader-evidence/unitypy');out.mkdir(parents=True,exist_ok=True)
-          try:
-            version=importlib.metadata.version('UnityPy')
-          except Exception:
-            version='unknown'
-          result={'schemaVersion':2,'unityPyVersion':version,'bundles':[],'shaderObjects':[],'failures':[]}
+          try:version=importlib.metadata.version('UnityPy')
+          except Exception:version='unknown'
+          result={'schemaVersion':3,'unityPyVersion':version,'inputs':[str(x) for x in inputs],'bundles':[],'objects':[],'shaderObjects':[],'failures':[]}
           for source in inputs:
-            bundle={'path':source.name,'size':source.stat().st_size,'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'types':{},'containers':[]}
+            if not source.exists():
+              result['failures'].append({'bundle':str(source),'error':'missing'})
+              continue
+            bundle={'path':source.relative_to(Path('/tmp/official-source/raw/AssetBundles')).as_posix(),'size':source.stat().st_size,'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'types':{},'containers':[]}
             try:
-              env=UnityPy.load(str(source))
-              objects=list(env.objects)
+              env=UnityPy.load(str(source));objects=list(env.objects)
               bundle['types']=dict(sorted(collections.Counter(obj.type.name for obj in objects).items()))
               try:bundle['containers']=sorted(str(key) for key in env.container.keys())[:10000]
               except Exception as exc:bundle['containerError']=repr(exc)
               for obj in objects:
-                if obj.type.name!='Shader':continue
-                record={'bundle':source.name,'pathId':obj.path_id,'name':None,'rawSize':None,'rawSha256':None,'treeError':None}
+                record={'bundle':bundle['path'],'pathId':obj.path_id,'type':obj.type.name,'name':None}
                 try:record['name']=obj.peek_name()
                 except Exception as exc:record['nameError']=repr(exc)
+                result['objects'].append(record)
+                if obj.type.name!='Shader':continue
+                shader_record=dict(record)
                 try:
-                  raw=obj.get_raw_data();record['rawSize']=len(raw);record['rawSha256']=hashlib.sha256(raw).hexdigest()
+                  raw=obj.get_raw_data();shader_record['rawSize']=len(raw);shader_record['rawSha256']=hashlib.sha256(raw).hexdigest()
                   (out/f"{source.name}-Shader-{obj.path_id}.bin").write_bytes(raw)
-                except Exception as exc:
-                  record['rawError']=repr(exc)
+                except Exception as exc:shader_record['rawError']=repr(exc)
                 try:
-                  tree=obj.parse_as_dict()
-                  record['treeKeys']=sorted(tree.keys()) if isinstance(tree,dict) else []
+                  tree=obj.parse_as_dict();shader_record['treeKeys']=sorted(tree.keys()) if isinstance(tree,dict) else []
                   (out/f"{source.name}-Shader-{obj.path_id}.json").write_text(json.dumps(tree,ensure_ascii=False,indent=2,default=str),encoding='utf-8')
                 except Exception as exc:
-                  record['treeError']=repr(exc);record['traceback']=traceback.format_exc()[-12000:]
-                result['shaderObjects'].append(record)
+                  shader_record['treeError']=repr(exc);shader_record['traceback']=traceback.format_exc()[-12000:]
+                result['shaderObjects'].append(shader_record)
             except Exception as exc:
-              result['failures'].append({'bundle':source.name,'error':repr(exc),'traceback':traceback.format_exc()[-12000:]})
+              result['failures'].append({'bundle':str(source),'error':repr(exc),'traceback':traceback.format_exc()[-12000:]})
             result['bundles'].append(bundle)
           (out/'unitypy-shader-inventory.json').write_text(json.dumps(result,ensure_ascii=False,indent=2,default=str),encoding='utf-8')
 
@@ -142,11 +137,9 @@ jobs:
         run: |
           from pathlib import Path
           import hashlib,json,re,shutil
-          root=Path('/tmp/shader-evidence')
-          out=Path('/tmp/official-rdtoon-shader-export');out.mkdir(parents=True,exist_ok=True)
-          secret=re.compile(r'(?i)(token|signature|crypto.?key|akamai).{0,64}[:=].*')
-          query=re.compile(r'https?://\S+\?\S+')
-          terms=re.compile(r'(?i)(redrive|rdtoon|angel.?ring|yuugen|self.?shadow|face.?gradient|specular.?gradient|depth.?tex|gem|cosmic|aniso|outline|shaderfeature|keyword|subprogram|compressedblob)')
+          root=Path('/tmp/shader-evidence');out=Path('/tmp/official-rdtoon-shader-export');out.mkdir(parents=True,exist_ok=True)
+          secret=re.compile(r'(?i)(token|signature|crypto.?key|akamai).{0,64}[:=].*');query=re.compile(r'https?://\S+\?\S+')
+          terms=re.compile(r'(?i)(redrive|rdtoon|angel.?ring|yuugen|self.?shadow|face.?gradient|specular.?gradient|depth.?tex|gem|cosmic|aniso|outline|shaderfeature|keyword|subprogram|compressedblob|ShaderVariantCollection)')
           manifest=[];hits=[]
           for path in root.rglob('*'):
             if not path.is_file():continue
@@ -154,15 +147,14 @@ jobs:
             try:text=data.decode('utf-8')
             except UnicodeDecodeError:
               target=out/rel;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
-              manifest.append({'path':rel.as_posix(),'size':len(data),'sha256':hashlib.sha256(data).hexdigest(),'binary':True,'magic':data[:64].hex()})
-              continue
+              manifest.append({'path':rel.as_posix(),'size':len(data),'sha256':hashlib.sha256(data).hexdigest(),'binary':True,'magic':data[:64].hex()});continue
             safe='\n'.join(query.sub('[REDACTED URL QUERY]',secret.sub('[REDACTED SECRET FIELD]',line)) for line in text.splitlines())+'\n'
             target=out/rel;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(safe,encoding='utf-8')
             manifest.append({'path':rel.as_posix(),'size':len(safe.encode()),'sha256':hashlib.sha256(safe.encode()).hexdigest(),'binary':False})
             for no,line in enumerate(safe.splitlines(),1):
               if terms.search(line):hits.append({'file':rel.as_posix(),'line':no,'text':line[:4000]})
               if len(hits)>=200000:break
-          (out/'shader-research-index.json').write_text(json.dumps({'schemaVersion':3,'fileCount':len(manifest),'files':manifest,'hits':hits},ensure_ascii=False,indent=2),encoding='utf-8')
+          (out/'shader-research-index.json').write_text(json.dumps({'schemaVersion':4,'fileCount':len(manifest),'files':manifest,'hits':hits},ensure_ascii=False,indent=2),encoding='utf-8')
           shutil.copy2('/tmp/downloaded-assets.txt',out/'downloaded-assets.txt')
           if not manifest:raise SystemExit('No Shader research output generated')
 
@@ -174,7 +166,7 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: official-rdtoon-shader-export-v3
+          name: official-rdtoon-shader-export-v4
           path: /tmp/official-rdtoon-shader-export
           retention-days: 7
           if-no-files-found: error
@@ -185,4 +177,4 @@ jobs:
         with:
           script: |
             const status='${{ job.status }}';
-            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:status==='success'?'success':'failure',context:'Official ReDriveToon Shader export v3',description:status==='success'?'Shader objects parsed through AssetStudio and UnityPy':'Shader extraction completed with diagnostic failures',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:status==='success'?'success':'failure',context:'Official ReDriveToon Shader export v4',description:status==='success'?'Shader object inventory generated':'Shader extraction completed with diagnostic failures',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
