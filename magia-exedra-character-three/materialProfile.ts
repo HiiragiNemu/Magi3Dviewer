@@ -64,12 +64,6 @@ const GENERIC_GEM: OfficialGemProfile = {
     fresnelMaskByMetallic: false,
 };
 
-/**
- * Values below are scalar fields recovered from the official Material dumps.
- * Keep them distinct from heuristic material-name conventions so later
- * AssetStudio catalog imports can replace/extend the table without changing the
- * shader implementation.
- */
 const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
     ['mt_chara_100101_body_sj', {
         source: 'official-export',
@@ -140,11 +134,21 @@ function copyGem(profile: OfficialGemProfile): OfficialGemProfile {
     return { ...profile };
 }
 
+/** AssetStudio/FBXLoader may append `::Material` or a numeric duplicate suffix. */
+export function normalizeOfficialMaterialName(name: string): string {
+    return name
+        .trim()
+        .replace(/\u0000\u0001/g, '::')
+        .replace(/::material$/i, '')
+        .replace(/\.\d+$/g, '')
+        .toLowerCase();
+}
+
 export function getOfficialMaterialProfile(name: string): OfficialMaterialProfile {
-    const normalized = name.toLowerCase();
+    const normalized = normalizeOfficialMaterialName(name);
     const inferredGem = normalized.includes('_sj') || normalized.includes('jewel') || normalized.includes('gem');
     const base: OfficialMaterialProfile = {
-        name,
+        name: normalized,
         source: inferredGem || normalized.includes('aniso') || normalized.includes('outlineoffset')
             ? 'name-convention'
             : 'default',
@@ -158,6 +162,7 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
     return {
         ...base,
         ...official,
+        name: normalized,
         gem: official.gem ? copyGem(official.gem as OfficialGemProfile) : base.gem,
     };
 }
