@@ -11,6 +11,10 @@ permissions:
   contents: write
   statuses: write
 
+concurrency:
+  group: apply-head-direction-face-shading
+  cancel-in-progress: true
+
 jobs:
   patch:
     runs-on: ubuntu-latest
@@ -21,7 +25,7 @@ jobs:
           ref: magius3dviewer
           fetch-depth: 0
 
-      - name: Patch Face material creation
+      - name: Patch Face material creation structurally
         shell: python
         run: |
           from pathlib import Path
@@ -31,46 +35,44 @@ jobs:
           anchor="import {\n    getOfficialMaterialProfiles,\n    type OfficialMaterialProfile,\n} from './materialProfile';\n"
           face_import="import { createFaceDirectionReference, getOfficialFaceProfile } from './faceProfile';\n"
           if face_import not in text:
-            if anchor not in text: raise SystemExit('loader import anchor missing')
+            if anchor not in text: raise SystemExit('loader material-profile import anchor missing')
             text=text.replace(anchor,anchor+face_import,1)
 
-          old='''                    if (name.includes('face')) {
-                          const result = await createFaceMaterial({
-                              ...sharedMaterialOptions,
-                              shadowMap: shadowMap!,
-                              eyehighlightMap: ObjFindByKey(texturePathUrl, path => path.includes('eye'))!,
-                          })
-                          material = result.material
-                          textures = result.textures
-                      } else {
+          if 'Official face profile/reference:' not in text:
+            start=text.index("                    if (name.includes('face')) {")
+            end=text.index("                    } else {\n                        let alphaSrc", start)
+            replacement='''                    if (name.includes('face')) {
+                        const faceProfile = getOfficialFaceProfile(characterId)
+                        const faceReference = createFaceDirectionReference(modelObject, characterProfile)
+                        const result = await createFaceMaterial({
+                            ...sharedMaterialOptions,
+                            shadowMap: shadowMap!,
+                            eyehighlightMap: ObjFindByKey(texturePathUrl, path => path.includes('eye'))!,
+                            faceProfile,
+                            faceReference,
+                        })
+                        material = result.material
+                        textures = result.textures
+                        if (result.updateFaceDirectionReference) {
+                            userData.animationLoops.push(result.updateFaceDirectionReference)
+                        }
+                        console.log('Official face profile/reference:', faceProfile, faceReference)
           '''
-          new='''                    if (name.includes('face')) {
-                          const faceProfile = getOfficialFaceProfile(characterId)
-                          const faceReference = createFaceDirectionReference(modelObject, characterProfile)
-                          const result = await createFaceMaterial({
-                              ...sharedMaterialOptions,
-                              shadowMap: shadowMap!,
-                              eyehighlightMap: ObjFindByKey(texturePathUrl, path => path.includes('eye'))!,
-                              faceProfile,
-                              faceReference,
-                          })
-                          material = result.material
-                          textures = result.textures
-                          if (result.updateFaceDirectionReference) {
-                              userData.animationLoops.push(result.updateFaceDirectionReference)
-                          }
-                          console.log('Official face profile/reference:', faceProfile, faceReference)
-                      } else {
-          '''
-          if old in text:
-            text=text.replace(old,new,1)
-          elif 'Official face profile/reference' not in text:
-            raise SystemExit('current Face material block does not match expected source')
+            text=text[:start]+replacement+text[end:]
           path.write_text(text,encoding='utf-8')
+
+      - name: Validate Face integration
+        run: |
+          grep -F "from './faceProfile'" magia-exedra-character-three/loader.ts
+          grep -F "Official face profile/reference" magia-exedra-character-three/loader.ts
+          grep -F "faceProfile," magia-exedra-character-three/loader.ts
+          grep -F "faceReference," magia-exedra-character-three/loader.ts
 
       - name: Commit and push face runtime integration
         id: commit
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add magia-exedra-character-three/loader.ts
