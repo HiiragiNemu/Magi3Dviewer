@@ -7,7 +7,7 @@ TARGETS=(
  'ReDrive.Config.AppCryptoConfig','ReDrive.Config.AppMsgPackConfig','ReDrive.Config.AppPokkeConfig',
  'A2.Http.MsgPackDefaultConfig','A2.Http.PokkeDefaultConfig','A2.Http.RequestEncoder',
  'A2.Http.PokkeMsgPackAPI','A2.Http.PokkeMsgPackAPIFactory','A2.Http.PokkeReqContainer','A2.Http.PokkeResContainer',
- 'A2.Crypto.BasicCrypto','A2.Crypto.Hash','A2.Crypto.ICryptoConfig',
+ 'A2.Crypto.BasicCrypto','A2.Crypto.Hash',
  'A2.ResourceManager.ResourceMsgPackDataApi','A2.ResourceManager.ResourceCrypto',
 )
 
@@ -23,14 +23,18 @@ def main():
   if value: available.append(value)
  records=[]
  for target in TARGETS:
-  candidates=[x for x in available if x==target or x.startswith(target+'`')]
-  for type_name in candidates:
+  short=target.rsplit('.',1)[-1]
+  candidates=[x for x in available if x==target or x.startswith(target+'`') or x.endswith('.'+short)]
+  for type_name in dict.fromkeys(candidates):
    safe=re.sub(r'[^A-Za-z0-9_.-]+','_',type_name)
    result=run([str(args.ilspy),'-t',type_name,str(args.assembly)])
    path=args.out/f'{safe}.cs'; path.write_text(result.stdout[:2_000_000],encoding='utf-8')
-   records.append({'type':type_name,'file':path.name,'returnCode':result.returncode,'bytes':path.stat().st_size})
+   records.append({'requested':target,'type':type_name,'file':path.name,'returnCode':result.returncode,'bytes':path.stat().st_size})
  (args.out/'type-list.txt').write_text(listed.stdout,encoding='utf-8')
  (args.out/'types.json').write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
- if len(records)<12: raise SystemExit(f'Only {len(records)} codec types recovered')
+ found={record['requested'] for record in records if record['returnCode']==0}
+ required={'A2.Crypto.BasicCrypto','A2.Crypto.Hash','ReDrive.Config.AppCryptoConfig','ReDrive.Config.AppMsgPackConfig','A2.Http.RequestEncoder'}
+ missing=sorted(required-found)
+ if missing: raise SystemExit(f'Missing required Taiwan codec types: {missing}')
 
 if __name__=='__main__': main()
