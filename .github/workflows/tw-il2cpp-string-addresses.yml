@@ -33,8 +33,7 @@ jobs:
           while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
             < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
           test -s work/unpacked/lib/arm64-v8a/libil2cpp.so
-          test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
-      - name: Decode relocated post-v27 metadata usage slots
+      - name: Dereference relocated Il2CppString objects
         shell: python
         run: |
           from pathlib import Path
@@ -43,17 +42,6 @@ jobs:
           from elftools.elf.relocation import RelocationSection
 
           binary_path=Path('work/unpacked/lib/arm64-v8a/libil2cpp.so')
-          metadata_path=Path('work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat')
-          metadata=metadata_path.read_bytes()
-          magic,version=struct.unpack_from('<II',metadata,0)
-          assert magic==0xFAB11BAF
-          literal_offset,literal_size,literal_data_offset,literal_data_size=struct.unpack_from('<IIII',metadata,8)
-          literal_records=[]
-          for pos in range(literal_offset,literal_offset+literal_size,8):
-              length,index=struct.unpack_from('<II',metadata,pos)
-              start=literal_data_offset+index
-              literal_records.append(metadata[start:start+length].decode('utf-8',errors='replace'))
-
           wanted=[int(x,16) for x in '''
           9B7A4F0 9B7A538 9B79C68 9B81818 9B831F8 9B830F0
           9B83D20 9B83D38 9B83D50 9B83D58 9B83D68
@@ -63,57 +51,54 @@ jobs:
           '''.split()]
           wanted_set=set(wanted)
 
-          def raw_value(elf,stream,address:int)->int:
+          def map_va(elf,address:int):
               for segment in elf.iter_segments():
                   if segment['p_type']!='PT_LOAD': continue
                   start=int(segment['p_vaddr']); filesz=int(segment['p_filesz']); memsz=int(segment['p_memsz'])
                   if start<=address<start+memsz:
                       delta=address-start
-                      if delta>=filesz: return 0
-                      stream.seek(int(segment['p_offset'])+delta)
-                      return struct.unpack('<Q',stream.read(8))[0]
-              raise KeyError(f'VA not mapped: 0x{address:X}')
+                      if delta>=filesz: return None
+                      return int(segment['p_offset'])+delta
+              return None
 
           with binary_path.open('rb') as stream:
               elf=ELFFile(stream)
-              relocation_values={}
-              relocation_details={}
+              relocation_values={}; relocation_details={}
               for section in elf.iter_sections():
                   if not isinstance(section,RelocationSection): continue
                   symbol_table=elf.get_section(section['sh_link']) if section['sh_link'] else None
                   for relocation in section.iter_relocations():
                       offset=int(relocation['r_offset'])
                       if offset not in wanted_set: continue
-                      addend=int(relocation.entry.get('r_addend',0))
-                      symbol_value=0; symbol_name=''
+                      addend=int(relocation.entry.get('r_addend',0)); symbol_value=0; symbol_name=''
                       symbol_index=int(relocation['r_info_sym'])
                       if symbol_table is not None and symbol_index:
-                          symbol=symbol_table.get_symbol(symbol_index)
-                          symbol_value=int(symbol['st_value']); symbol_name=symbol.name
-                      # AArch64 RELATIVE stores the final image-relative value in the addend;
-                      # ABS64/GLOB_DAT use symbol value plus addend.
-                      relocated=(symbol_value+addend) & 0xffffffffffffffff
-                      relocation_values[offset]=relocated
-                      relocation_details[offset]={
-                          'section':section.name,'type':int(relocation['r_info_type']),
-                          'addend':f'0x{addend & 0xffffffffffffffff:016X}',
-                          'symbol':symbol_name,'symbolValue':f'0x{symbol_value:X}',
-                      }
+                          symbol=symbol_table.get_symbol(symbol_index); symbol_value=int(symbol['st_value']); symbol_name=symbol.name
+                      pointer=(symbol_value+addend)&0xffffffffffffffff
+                      relocation_values[offset]=pointer
+                      relocation_details[offset]={'section':section.name,'type':int(relocation['r_info_type']),'addend':f'0x{addend & 0xffffffffffffffff:016X}','symbol':symbol_name}
+
               results=[]
-              for address in wanted:
-                  file_value=raw_value(elf,stream,address)
-                  encoded=relocation_values.get(address,file_value)
-                  encoded32=encoded & 0xffffffff
-                  usage_type=(encoded32 & 0xE0000000)>>29
-                  index=(encoded32 & 0x1FFFFFFF)>>1
-                  value=literal_records[index] if usage_type==5 and index<len(literal_records) else None
+              for slot in wanted:
+                  pointer=relocation_values.get(slot,0)
+                  value=None; error=None; length=None; object_file_offset=None
+                  try:
+                      raw=map_va(elf,pointer)
+                      if raw is None: raise ValueError('string object pointer is not file-backed')
+                      object_file_offset=raw
+                      stream.seek(raw+16)
+                      length=struct.unpack('<i',stream.read(4))[0]
+                      if not 0<=length<=100000: raise ValueError(f'invalid Il2CppString length {length}')
+                      value=stream.read(length*2).decode('utf-16le',errors='strict')
+                  except Exception as exc:
+                      error=repr(exc)
                   results.append({
-                      'address':f'0x{address:X}','fileValue':f'0x{file_value:016X}',
-                      'encoded':f'0x{encoded:016X}','usageType':usage_type,
-                      'index':index,'value':value,'relocation':relocation_details.get(address),
+                      'slotAddress':f'0x{slot:X}','stringObjectAddress':f'0x{pointer:X}',
+                      'objectFileOffset':None if object_file_offset is None else f'0x{object_file_offset:X}',
+                      'length':length,'value':value,'error':error,'relocation':relocation_details.get(slot),
                   })
-          Path('work/report/string-address-map.json').write_text(json.dumps({'metadataVersion':version,'literalCount':len(literal_records),'results':results},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          Path('work/report/string-address-map.txt').write_text('\n'.join(f"{r['address']}\t{r['encoded']}\ttype={r['usageType']}\tindex={r['index']}\t{r['value']!r}\t{r.get('relocation')}" for r in results)+'\n',encoding='utf-8')
+          Path('work/report/string-address-map.json').write_text(json.dumps({'results':results},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('work/report/string-address-map.txt').write_text('\n'.join(f"{r['slotAddress']}\t{r['stringObjectAddress']}\tlen={r['length']}\t{r['value']!r}\t{r['error'] or ''}" for r in results)+'\n',encoding='utf-8')
       - name: Remove raw files
         if: ${{ always() }}
         run: rm -rf work/source work/xapk work/unpacked
