@@ -3,6 +3,9 @@ run-name: Extract and publish true Exedra stage samples
 
 on:
   workflow_dispatch:
+  push:
+    branches: ['main']
+    paths: ['.github/stage-publish-trigger.txt']
   issues:
     types: [opened]
 
@@ -104,9 +107,9 @@ jobs:
 
           profiles = {
             'battle_stage_bg_3d_600_00_00_001': {
-              'id':'battle-600-00-00-001','name':'[Official/Battle] 600-00-00-001','category':'battle',
+              'id':'battle-600-00-00-001','name':'[Official geometry/Battle] 600-00-00-001','category':'battle',
               'renderProfile': {
-                'id':'bg_3d_600_00_00_001','source':'ReDriveVolume','backgroundColor':'#000000',
+                'id':'bg_3d_600_00_00_001','source':'manual-research','backgroundColor':'#000000',
                 'fog':{'color':'#000000','near':35,'far':200},
                 'ambientLight':{'color':'#fff2ec','intensity':1.0},
                 'directionalLight':{'color':'#ffd4c2','intensity':2.0,'position':[-4,7,6],'target':[0,1,0],'castShadow':True},
@@ -121,9 +124,9 @@ jobs:
               }
             },
             'battle_stage_bg_3d_600_00_01_001': {
-              'id':'battle-600-00-01-001','name':'[Official/Battle] 600-00-01-001','category':'battle',
+              'id':'battle-600-00-01-001','name':'[Official geometry/Battle] 600-00-01-001','category':'battle',
               'renderProfile': {
-                'id':'bg_3d_600_00_01_001','source':'ReDriveVolume','backgroundColor':'#282828',
+                'id':'bg_3d_600_00_01_001','source':'manual-research','backgroundColor':'#282828',
                 'fog':{'color':'#282828','near':10,'far':95},
                 'ambientLight':{'color':'#aaaacc','intensity':0.95},
                 'directionalLight':{'color':'#968f77','intensity':1.8,'position':[-4,6,5],'target':[0,1,0],'castShadow':True},
@@ -134,16 +137,16 @@ jobs:
               }
             },
             'dungeon_level_10000_level_intro_0001_001': {
-              'id':'dungeon-intro-0001-001','name':'[Official/Dungeon] Intro 0001-001','category':'dungeon',
-              'renderProfile': {'id':'level_intro_0001_001','source':'exported-prefab','backgroundColor':'#080b12','fog':{'color':'#0b101a','near':8,'far':100},'ambientLight':{'color':'#8794b4','intensity':0.8},'directionalLight':{'color':'#d8e4ff','intensity':1.45,'position':[-3,6,4],'target':[0,1,0],'castShadow':True},'renderer':{'toneMapping':'aces','exposure':0.95},'colorFilter':{'brightness':0.95,'contrast':1.08,'saturation':0.95},'bloom':{'enabled':True,'strength':0.22,'radius':0.55,'threshold':0.82}}
+              'id':'dungeon-intro-0001-001','name':'[Official geometry/Dungeon] Intro 0001-001','category':'dungeon',
+              'renderProfile': {'id':'level_intro_0001_001','source':'manual-research','backgroundColor':'#080b12','fog':{'color':'#0b101a','near':8,'far':100},'ambientLight':{'color':'#8794b4','intensity':0.8},'directionalLight':{'color':'#d8e4ff','intensity':1.45,'position':[-3,6,4],'target':[0,1,0],'castShadow':True},'renderer':{'toneMapping':'aces','exposure':0.95},'colorFilter':{'brightness':0.95,'contrast':1.08,'saturation':0.95},'bloom':{'enabled':True,'strength':0.22,'radius':0.55,'threshold':0.82}}
             },
             'gallery_bg3d_gallery': {
-              'id':'gallery-memory-room','name':'[Official/Gallery] Memory light room','category':'gallery',
-              'renderProfile': {'id':'bg3d_gallery','source':'ReDriveVolume','backgroundColor':'#ffffff','fog':{'color':'#ffffff','near':5,'far':500},'ambientLight':{'color':'#ffffff','intensity':1.0},'directionalLight':{'color':'#ffffff','intensity':1.6,'position':[-4,7,5],'target':[0,1,0],'castShadow':True},'renderer':{'toneMapping':'aces','exposure':0.75},'colorFilter':{'brightness':0.94,'contrast':0.95,'saturation':1.0},'bloom':{'enabled':True,'strength':0.4,'radius':0.75,'threshold':0.9},'reDriveVolume':{'characterLightingOverrideColor':'#ffffff','characterLightingOverrideRatio':0.4,'characterAdditionalRimLightColor':'#ffffff','characterAdditionalRimLightDirection':[-1,-1],'backgroundPostExposure':-0.6,'backgroundContrast':-5}}
+              'id':'gallery-memory-room','name':'[Official geometry/Gallery] Memory light room','category':'gallery',
+              'renderProfile': {'id':'bg3d_gallery','source':'manual-research','backgroundColor':'#ffffff','fog':{'color':'#ffffff','near':5,'far':500},'ambientLight':{'color':'#ffffff','intensity':1.0},'directionalLight':{'color':'#ffffff','intensity':1.6,'position':[-4,7,5],'target':[0,1,0],'castShadow':True},'renderer':{'toneMapping':'aces','exposure':0.75},'colorFilter':{'brightness':0.94,'contrast':0.95,'saturation':1.0},'bloom':{'enabled':True,'strength':0.4,'radius':0.75,'threshold':0.9},'reDriveVolume':{'characterLightingOverrideColor':'#ffffff','characterLightingOverrideRatio':0.4,'characterAdditionalRimLightColor':'#ffffff','characterAdditionalRimLightDirection':[-1,-1],'backgroundPostExposure':-0.6,'backgroundContrast':-5}}
             },
             'gallery_bg3d_gallery_story': {
-              'id':'gallery-memory-room-story','name':'[Official/Gallery] Memory light room (story)','category':'gallery',
-              'renderProfile': {'id':'bg3d_gallery_story','source':'ReDriveVolume','backgroundColor':'#000000','fog':{'color':'#000000','near':5,'far':276.7146},'ambientLight':{'color':'#ffffff','intensity':0.9},'directionalLight':{'color':'#ffffff','intensity':1.5,'position':[-4,7,5],'target':[0,1,0],'castShadow':True},'renderer':{'toneMapping':'aces','exposure':0.78},'colorFilter':{'brightness':0.95,'contrast':1.05,'saturation':1.0},'bloom':{'enabled':True,'strength':0.4,'radius':0.75,'threshold':0.9},'reDriveVolume':{'characterLightingOverrideColor':'#ffffff','characterLightingOverrideRatio':0.4,'characterAdditionalRimLightColor':'#ffffff','characterAdditionalRimLightDirection':[-1,-1],'backgroundPostExposure':-0.5,'backgroundContrast':5}}
+              'id':'gallery-memory-room-story','name':'[Official geometry/Gallery] Memory light room (story)','category':'gallery',
+              'renderProfile': {'id':'bg3d_gallery_story','source':'manual-research','backgroundColor':'#000000','fog':{'color':'#000000','near':5,'far':276.7146},'ambientLight':{'color':'#ffffff','intensity':0.9},'directionalLight':{'color':'#ffffff','intensity':1.5,'position':[-4,7,5],'target':[0,1,0],'castShadow':True},'renderer':{'toneMapping':'aces','exposure':0.78},'colorFilter':{'brightness':0.95,'contrast':1.05,'saturation':1.0},'bloom':{'enabled':True,'strength':0.4,'radius':0.75,'threshold':0.9},'reDriveVolume':{'characterLightingOverrideColor':'#ffffff','characterLightingOverrideRatio':0.4,'characterAdditionalRimLightColor':'#ffffff','characterAdditionalRimLightDirection':[-1,-1],'backgroundPostExposure':-0.5,'backgroundContrast':5}}
             }
           }
 
@@ -179,7 +182,7 @@ jobs:
                 'scale':1,'position':[0,0,0],'rotation':[0,0,0],
                 'spawnPoints':[{'id':'actor-0','name':'Actor 0','role':'actor','position':[0,0,0],'rotation':[0,0,0]}],
                 'renderProfile':profile['renderProfile'],
-                'evidence':['AssetStudioModCLI splitObjects','official AssetBundle catalog revision b63d986c8f2e088362e7f26214967c92']
+                'evidence':['AssetStudioModCLI splitObjects','official AssetBundle geometry; render profile remains under parameter recovery']
               })
 
           catalog={'version':2,'generatedAt':'2026-07-28','sourceRevision':'b63d986c8f2e088362e7f26214967c92','stages':stages}
