@@ -12,15 +12,22 @@ TARGETS=(
  ('ReDrive.Config','AppMsgPackConfig','GetCryptKey'),
 )
 ALL_TYPE_FRAGMENTS=('PokkeMsgPackAPI','PokkeMsgPackAPIFactory','PokkeAPI','PHPSession','WebRequestExt','JsonProtocol','BasicAPI')
+GENERIC_TYPE_FRAGMENTS=('PokkeMsgPackAPI','PokkeAPI')
 NS=re.compile(r'^// Namespace:\s*(.*)$')
 TYPE=re.compile(r'^(?:public|private|protected|internal)?\s*(?:sealed\s+|static\s+|abstract\s+|partial\s+)*(?:class|struct)\s+([^:{]+)')
 METHOD=re.compile(r'^\s*// RVA: 0x([0-9A-Fa-f]+).*\n\s*([^\n{]+\([^\n]*\))\s*\{\s*\}',re.M)
+DECL=re.compile(r'^\s*((?:public|private|protected|internal)[^\n{]+\([^\n]*\))\s*\{\s*\}',re.M)
+GENERIC_RVA=re.compile(r'\|-RVA: 0x([0-9A-Fa-f]+)[^\n]*\n\s*\|-([^\n]+)')
 
 def normalize_type(value:str)->str:
  return value.split('//',1)[0].strip().split('<',1)[0].strip()
 
 def safe_name(value:str)->str:
  return re.sub(r'[^A-Za-z0-9_.-]+','_',value)[:220]
+
+def method_name(signature:str)->str:
+ match=re.search(r'([A-Za-z_<>][A-Za-z0-9_<>]*)\s*\(',signature)
+ return match.group(1) if match else 'unknown'
 
 def main():
  ap=argparse.ArgumentParser(); ap.add_argument('--dump',type=Path,required=True); ap.add_argument('--binary',type=Path,required=True); ap.add_argument('--out',type=Path,required=True); args=ap.parse_args(); args.out.mkdir(parents=True,exist_ok=True)
@@ -36,10 +43,31 @@ def main():
  for m in METHOD.finditer(text):
   pos=m.start(); ni=bisect.bisect_right(ns_starts,pos)-1; ti=bisect.bisect_right(type_starts,pos)-1
   ns=ns_positions[ni][1] if ni>=0 else ''; raw_type=type_positions[ti][1] if ti>=0 else ''; tp=normalize_type(raw_type)
-  signature=m.group(2).strip(); name_match=re.search(r'([A-Za-z_][A-Za-z0-9_]*)\s*\(',signature)
-  methods.append({'rva':int(m.group(1),16),'namespace':ns,'type':tp,'rawType':raw_type,'name':name_match.group(1) if name_match else '', 'signature':signature})
- methods.sort(key=lambda x:x['rva'])
- for i,m in enumerate(methods): m['end']=methods[i+1]['rva'] if i+1<len(methods) else m['rva']+4
+  signature=m.group(2).strip()
+  methods.append({'rva':int(m.group(1),16),'namespace':ns,'type':tp,'rawType':raw_type,'name':method_name(signature),'signature':signature,'source':'direct'})
+
+ # Generic declarations have RVA -1; recover object-specialized implementations from GenericInstMethod comments.
+ for i,(start,raw_type) in enumerate(type_positions):
+  ns_i=bisect.bisect_right(ns_starts,start)-1; ns=ns_positions[ns_i][1] if ns_i>=0 else ''; tp=normalize_type(raw_type)
+  if ns!='A2.Http' or not any(fragment in tp for fragment in GENERIC_TYPE_FRAGMENTS): continue
+  stop=type_positions[i+1][0] if i+1<len(type_positions) else len(text)
+  block=text[start:stop]
+  declarations=list(DECL.finditer(block))
+  for di,decl in enumerate(declarations):
+   signature=decl.group(1).strip()
+   section_start=decl.end(); section_stop=declarations[di+1].start() if di+1<len(declarations) else len(block)
+   section=block[section_start:section_stop]
+   object_impls=[]; shared_impls=[]
+   for gm in GENERIC_RVA.finditer(section):
+    item={'rva':int(gm.group(1),16),'namespace':ns,'type':tp,'rawType':raw_type,'name':method_name(signature),'signature':signature,'implementation':gm.group(2).strip(),'source':'generic'}
+    if '<object, object>' in item['implementation']: object_impls.append(item)
+    else: shared_impls.append(item)
+   methods.extend(object_impls if object_impls else shared_impls[:1])
+
+ by_rva={}
+ for item in methods: by_rva.setdefault(item['rva'],item)
+ methods=[by_rva[key] for key in sorted(by_rva)]
+ for i,m in enumerate(methods): m['end']=methods[i+1]['rva'] if i+1<len(methods) else m['rva']+0x400
  selected=[]
  for m in methods:
   exact=any(m['namespace']==ns and m['type']==tp and m['name']==name for ns,tp,name in TARGETS)
@@ -54,13 +82,14 @@ def main():
   label=f"{m['namespace']}.{m['type']}.{m['name']}-{i}"
   path=args.out/f'{safe_name(label)}.txt'
   result=subprocess.run(['aarch64-linux-gnu-objdump','-d',f'--start-address=0x{m["rva"]:X}',f'--stop-address=0x{m["end"]:X}',str(args.binary)],text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,errors='replace',check=False)
-  path.write_text(f"{m['signature']}\nRVA 0x{m['rva']:X}-0x{m['end']:X}\n\n{result.stdout}",encoding='utf-8')
+  path.write_text(f"{m['signature']}\nimplementation={m.get('implementation','')}\nsource={m['source']}\nRVA 0x{m['rva']:X}-0x{m['end']:X}\n\n{result.stdout}",encoding='utf-8')
+
  block_dir=args.out/'type-blocks'; block_dir.mkdir(exist_ok=True); index=[]
  for i,(start,raw_type) in enumerate(type_positions):
   ns_i=bisect.bisect_right(ns_starts,start)-1; ns=ns_positions[ns_i][1] if ns_i>=0 else ''; tp=normalize_type(raw_type)
   keep=(ns=='A2.Http' and any(fragment in tp for fragment in ALL_TYPE_FRAGMENTS)) or (ns=='A2.Crypto' and tp in {'Hash','BasicCrypto'}) or (ns=='ReDrive.Config' and tp in {'AppCryptoConfig','AppMsgPackConfig'})
   if not keep: continue
-  stop=type_positions[i+1][0] if i+1<len(type_positions) else len(text); block=text[start:stop][:500_000]
+  stop=type_positions[i+1][0] if i+1<len(type_positions) else len(text); block=text[start:stop][:700_000]
   name=f'{safe_name(ns+"."+tp)}.cs.txt'; (block_dir/name).write_text(block,encoding='utf-8'); index.append({'namespace':ns,'type':tp,'file':name,'bytes':len(block.encode())})
  (block_dir/'index.json').write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
