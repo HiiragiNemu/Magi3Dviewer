@@ -1,5 +1,5 @@
 name: Probe Taiwan response codec
-run-name: Identify live login response framing and encryption
+run-name: Validate recovered Taiwan MessagePack encryption
 
 on:
   workflow_dispatch:
@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: tw-live-codec-probe
@@ -27,18 +28,81 @@ jobs:
           python-version: '3.13'
       - name: Install dependencies
         run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
-      - name: Send disposable login request and inspect response
+      - name: Download curated client-codec evidence
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p work/input/codec work/input/crypto work/report
+          gh api /repos/HiiragiNemu/Magi3Dviewer/actions/artifacts/8682018345/zip > work/input/codec.zip
+          gh api /repos/HiiragiNemu/Magi3Dviewer/actions/artifacts/8682591837/zip > work/input/crypto.zip
+          unzip -q work/input/codec.zip -d work/input/codec
+          unzip -q work/input/crypto.zip -d work/input/crypto
+          test -s work/input/codec/codec-types/ReDrive.Config.AppCryptoConfig.cs
+          test -s work/input/crypto/crypto-literals.json
+      - name: Send disposable login with recovered official codec
         shell: python
         run: |
-          import base64,gzip,hashlib,json,os,re,time,uuid,zlib
+          import base64,hashlib,hmac,json,os,re,time,uuid
           from pathlib import Path
           import msgpack,requests
           from Crypto.Cipher import AES
           from Crypto.Util.Padding import pad,unpad
 
-          host='https://app-mme.so-net.tw'; key=b'/TZh+1VxrtkNiDEH'; app='1.0.5'; unity='2022.3.62f3'
+          source=Path('work/input/codec/codec-types/ReDrive.Config.AppCryptoConfig.cs').read_text(encoding='utf-8')
+          def constant(name):
+            match=re.search(rf'private const string {name} = "(.*?)";',source)
+            if not match: raise RuntimeError(f'missing {name} in recovered AppCryptoConfig')
+            return match.group(1)
+          hash_key=constant('hashKey')
+          hash_salt=constant('hashSalt')
+          raw_values=json.loads(Path('work/input/crypto/crypto-literals.json').read_text(encoding='utf-8'))['values']
+          raw_msgpack_key=raw_values['appMsgPackCryptKey']['value']
+          if not isinstance(raw_msgpack_key,str) or not raw_msgpack_key:
+            raise RuntimeError('recovered AppMsgPackConfig key is empty')
+
+          def centered_bytes(value,length):
+            if length<=0 or len(value)<=length: return value
+            start=(len(value)-length)//2
+            return value[start:start+length]
+          def centered_text(value,length):
+            if length<=0 or len(value)<=length: return value
+            start=(len(value)-length)//2
+            return value[start:start+length]
+          digest=hmac.new(hash_key.encode(),(hash_salt+raw_msgpack_key).encode(),hashlib.sha256).digest()
+          key_text=centered_text(base64.b64encode(centered_bytes(digest,16)).decode(),16)
+          key=key_text.encode()
+          if len(key)!=16: raise RuntimeError(f'derived key length is {len(key)}')
+
+          host='https://app-mme.so-net.tw'; app='1.0.5'; unity='2022.3.62f3'
           client_uuid=uuid.uuid4().hex
-          payload={
+          common_headers={'Accept':'*/*','Content-Type':'application/x-msgpack','x-region':'TW','x-language':'zh_TW','x-timezone-offset':'28800','x-app-version':app,'X-GAME-SERVER-URL':host,'X-Unity-Version':unity}
+          secret=re.compile(r'(?i)(uuid|user.?id|session|token|jwt|ctag|guid|handover)')
+          def safe(value):
+            if isinstance(value,dict):
+              return {str(k):({'present':True,'sha256':hashlib.sha256(str(v).encode()).hexdigest(),'length':len(str(v))} if secret.search(str(k)) and v not in (None,'',0,False) else safe(v)) for k,v in value.items()}
+            if isinstance(value,list): return [safe(v) for v in value[:100]]
+            if isinstance(value,(str,int,float,bool)) or value is None: return value
+            return repr(value)[:200]
+          def post(path,payload,user_id=0,session_id='',ctag=None):
+            envelope={'payload':payload,'uuid':client_uuid,'userId':user_id,'sessionId':session_id,'actionToken':None,'ctag':ctag,'actionTime':int((time.time()+11644473600)*10_000_000)}
+            plain=msgpack.packb(envelope,use_bin_type=True)
+            iv=os.urandom(16)
+            body=iv+AES.new(key,AES.MODE_CBC,iv).encrypt(pad(plain,16))
+            headers=dict(common_headers)
+            headers['X-post-signature']=base64.b64encode(hashlib.sha1(body).digest()).decode()
+            response=requests.post(host+path,headers=headers,data=body,timeout=30)
+            raw=response.content
+            decoded=None; error=None
+            try:
+              decrypted=unpad(AES.new(key,AES.MODE_CBC,raw[:16]).decrypt(raw[16:]),16)
+              decoded=msgpack.unpackb(decrypted,raw=False,strict_map_key=False)
+            except Exception as exc:
+              error=type(exc).__name__+': '+str(exc)[:500]
+            return response,decoded,error
+
+          login_payload={
             'appVersion':app,'urlParam':'','deviceModel':'Codec Probe','osType':2,'osVersion':'Android 14','storeType':2,
             'graphicsDeviceId':0,'graphicsDeviceVendorId':0,'processorCount':8,'processorType':'arm64-v8a','supportedRenderTargetCount':4,
             'supports3DTextures':True,'supportsAccelerometer':True,'supportsComputeShaders':True,'supportsGyroscope':True,
@@ -46,56 +110,25 @@ jobs:
             'supportsRenderToCubemap':True,'supportsShadows':True,'supportsSparseTextures':False,'supportsStencil':1,'supportsVibration':True,
             'uuid':client_uuid,'xuid':0,'jwttoken':'','sm':'',
           }
-          envelope={'payload':payload,'uuid':client_uuid,'userId':0,'sessionId':'','actionToken':None,'ctag':None,'actionTime':int((time.time()+11644473600)*10_000_000)}
-          plain=msgpack.packb(envelope,use_bin_type=True); iv=os.urandom(16); body=iv+AES.new(key,AES.MODE_CBC,iv).encrypt(pad(plain,16)); signature=base64.b64encode(hashlib.sha1(body).digest()).decode()
-          headers={'Accept':'*/*','Content-Type':'application/x-msgpack','x-region':'TW','x-language':'zh_TW','x-timezone-offset':'28800','x-app-version':app,'X-GAME-SERVER-URL':host,'X-post-signature':signature,'X-Unity-Version':unity}
-          response=requests.post(host+'/api/login',headers=headers,data=body,timeout=30)
-          raw=response.content
-          report={
-            'schemaVersion':1,'httpStatus':response.status_code,'size':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),
-            'first64Hex':raw[:64].hex(),'last32Hex':raw[-32:].hex(),
-            'headers':{k.lower():v for k,v in response.headers.items() if k.lower() in {'content-type','content-length','content-encoding','transfer-encoding'} or k.lower().startswith('x-')},
-            'decoders':[],
-          }
-          def safe(value):
-            secret=re.compile(r'(?i)(uuid|user.?id|session|token|jwt|ctag|guid|handover)')
-            if isinstance(value,dict): return {str(k):({'present':True,'sha256':hashlib.sha256(str(v).encode()).hexdigest(),'length':len(str(v))} if secret.search(str(k)) and v not in (None,'',0,False) else safe(v)) for k,v in value.items()}
-            if isinstance(value,list): return [safe(v) for v in value[:50]]
-            if isinstance(value,(str,int,float,bool)) or value is None: return value
-            return repr(value)[:200]
-          def try_msgpack(label,data):
-            try:
-              value=msgpack.unpackb(data,raw=False,strict_map_key=False)
-              report['decoders'].append({'label':label,'success':True,'value':safe(value)})
-            except Exception as exc:
-              report['decoders'].append({'label':label,'success':False,'error':type(exc).__name__+': '+str(exc)[:300]})
-          try_msgpack('raw-msgpack',raw)
-          for label,fn in [('gzip',gzip.decompress),('zlib',zlib.decompress)]:
-            try:
-              data=fn(raw); report['decoders'].append({'label':label,'success':True,'size':len(data),'first32Hex':data[:32].hex()}); try_msgpack(label+'-msgpack',data)
-            except Exception as exc: report['decoders'].append({'label':label,'success':False,'error':type(exc).__name__+': '+str(exc)[:300]})
-          candidates=[]
-          if len(raw)>=32 and len(raw)%16==0:
-            candidates.append(('aes-cbc-prefix-iv',raw[:16],raw[16:]))
-          if len(raw)>=32 and (len(raw)-16)%16==0:
-            candidates.append(('aes-cbc-suffix-iv',raw[-16:],raw[:-16]))
-          if len(raw)%16==0:
-            candidates.extend([('aes-cbc-zero-iv',bytes(16),raw),('aes-ecb',None,raw)])
-          for label,civ,ciphertext in candidates:
-            try:
-              if label=='aes-ecb': decrypted=AES.new(key,AES.MODE_ECB).decrypt(ciphertext)
-              else: decrypted=AES.new(key,AES.MODE_CBC,civ).decrypt(ciphertext)
-              variants=[('raw',decrypted)]
-              try: variants.append(('unpad',unpad(decrypted,16)))
-              except Exception: pass
-              for suffix,data in variants:
-                report['decoders'].append({'label':label+'-'+suffix,'success':True,'size':len(data),'first32Hex':data[:32].hex()})
-                try_msgpack(label+'-'+suffix+'-msgpack',data)
-            except Exception as exc: report['decoders'].append({'label':label,'success':False,'error':type(exc).__name__+': '+str(exc)[:300]})
-          Path('work/report').mkdir(parents=True,exist_ok=True)
+          response,decoded,error=post('/api/login',login_payload)
+          report={'schemaVersion':3,'derivedKeyLength':len(key),'derivedKeySha256':hashlib.sha256(key).hexdigest(),'login':{'httpStatus':response.status_code,'headers':{k.lower():v for k,v in response.headers.items() if k.lower().startswith('x-') or k.lower() in {'content-type','content-length'}},'decoded':decoded is not None,'decodeError':error,'response':safe(decoded)}}
+
+          payload=decoded.get('payload') if isinstance(decoded,dict) else None
+          user_id=payload.get('userId') if isinstance(payload,dict) else None
+          session_id=payload.get('sessionId') if isinstance(payload,dict) else None
+          ctag=decoded.get('ctag') if isinstance(decoded,dict) else None
+          if isinstance(user_id,int) and user_id>0 and isinstance(session_id,str) and session_id:
+            for label,path in [('gameConfig','/api/config/get_config'),('akamaiToken','/api/akamai/create_token'),('resourceConfig','/api/resource/get_config')]:
+              r,d,e=post(path,{'sm':'','lastHomeAccessTime':''},user_id,session_id,ctag if isinstance(ctag,str) else None)
+              report[label]={'httpStatus':r.status_code,'headers':{k.lower():v for k,v in r.headers.items() if k.lower().startswith('x-')},'decoded':d is not None,'decodeError':e,'response':safe(d)}
+
           Path('work/report/codec-probe.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           print(json.dumps(report,ensure_ascii=False,indent=2))
+      - name: Remove downloaded evidence
+        if: ${{ always() }}
+        run: rm -rf work/input
       - name: Upload codec probe
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: tw-live-codec-probe
