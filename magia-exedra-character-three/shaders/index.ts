@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import type { MaterialFeatureProfile } from '../renderProfile';
+import type { OfficialMaterialProfile } from '../materialProfile';
 
 export * from './userdata'
 export * from './general'
@@ -17,6 +18,7 @@ export interface MaterialCreationOptions {
     alphaSrc?: 'ctrl' | 'shadow';
     materialNames?: string[];
     featureProfile?: MaterialFeatureProfile;
+    materialProfiles?: OfficialMaterialProfile[];
     specularGradientMap?: string;
 }
 
