@@ -24,6 +24,7 @@ import {
     getOfficialMaterialProfiles,
     type OfficialMaterialProfile,
 } from './materialProfile';
+import { createFaceDirectionReference, getOfficialFaceProfile } from './faceProfile';
 
 const loadingManager = new THREE.LoadingManager();
 loadingManager.setURLModifier((url) => {
@@ -249,13 +250,21 @@ export async function loadCharacter(
                     let textures: THREE.Texture[]
 
                     if (name.includes('face')) {
-                        const result = await createFaceMaterial({
-                            ...sharedMaterialOptions,
-                            shadowMap: shadowMap!,
-                            eyehighlightMap: ObjFindByKey(texturePathUrl, path => path.includes('eye'))!,
-                        })
-                        material = result.material
-                        textures = result.textures
+              const faceProfile = getOfficialFaceProfile(characterId)
+              const faceReference = createFaceDirectionReference(modelObject, characterProfile)
+              const result = await createFaceMaterial({
+                  ...sharedMaterialOptions,
+                  shadowMap: shadowMap!,
+                  eyehighlightMap: ObjFindByKey(texturePathUrl, path => path.includes('eye'))!,
+                  faceProfile,
+                  faceReference,
+              })
+              material = result.material
+              textures = result.textures
+              if (result.updateFaceDirectionReference) {
+                  userData.animationLoops.push(result.updateFaceDirectionReference)
+              }
+              console.log('Official face profile/reference:', faceProfile, faceReference)
                     } else {
                         let alphaSrc: 'ctrl' | 'shadow' | undefined
                         if ((characterId == 113701 || characterId == 113801) && name.includes('body')) {
