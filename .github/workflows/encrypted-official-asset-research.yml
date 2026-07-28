@@ -116,9 +116,8 @@ jobs:
             --log-output both --log-level verbose \
             > /tmp/private-evidence/assetstudio-dump.log 2>&1 || true
 
-          # SplitObjects does not accept --load-all. Export each official stage
-          # bundle independently so a single malformed dependency cannot abort the
-          # other stage families.
+          # SplitObjects does not accept --load-all. Export each selected official
+          # stage independently so a malformed dependency cannot abort other sets.
           find "$input" -type f \( \
               -path '*/battle/stage/*' -o \
               -path '*/dungeon/bg/*' -o \
@@ -136,14 +135,16 @@ jobs:
                 > "/tmp/private-evidence/stage-export/$safe.log" 2>&1 || true
           done
 
-          ashley="$input/battle/character/chara_110701_battle_unit"
-          if [[ -f "$ashley" ]]; then
-            dotnet "$cli" "$ashley" -m splitObjects \
-              --unity-version 2022.3.21f1 \
-              -o /tmp/private-evidence/character-export/chara_110701_battle_unit \
-              --log-output both --log-level verbose \
-              > /tmp/private-evidence/character-export/chara_110701_battle_unit.log 2>&1 || true
-          fi
+          for id in 100107 110701; do
+            character="$input/battle/character/chara_${id}_battle_unit"
+            if [[ -f "$character" ]]; then
+              dotnet "$cli" "$character" -m splitObjects \
+                --unity-version 2022.3.21f1 \
+                -o "/tmp/private-evidence/character-export/chara_${id}_battle_unit" \
+                --log-output both --log-level verbose \
+                > "/tmp/private-evidence/character-export/chara_${id}_battle_unit.log" 2>&1 || true
+            fi
+          done
 
       - name: Build private evidence index
         if: ${{ always() }}
@@ -155,7 +156,7 @@ jobs:
           root.mkdir(parents=True, exist_ok=True)
           files = []
           hits = []
-          terms = re.compile(r'(?i)(110701|11070101|ashley|アシュリー|redrive|angel.?ring|yuugen|face.?shadow|nose.?shadow|matcap|gem|aniso|cosmic|fresnel|rim|control.?map|specular|reDriveVolume|cinemachine|timeline|spawn|foothold)')
+          terms = re.compile(r'(?i)(100107|110701|11070101|madoka|ashley|鹿目|アシュリー|redrive|angel.?ring|yuugen|face.?shadow|nose.?shadow|matcap|gem|aniso|cosmic|fresnel|rim|control.?map|specular|reDriveVolume|cinemachine|timeline|spawn|foothold)')
           for path in root.rglob('*'):
             if not path.is_file():
               continue
@@ -177,6 +178,137 @@ jobs:
             if len(hits) >= 50000:
               break
           (root / 'evidence-index.json').write_text(json.dumps({'schemaVersion': 1, 'files': files, 'hits': hits}, ensure_ascii=False, indent=2), encoding='utf-8')
+
+      - name: Build sanitized scalar and object metadata
+        if: ${{ always() }}
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib, json, re
+
+          private = Path('/tmp/private-evidence')
+          output = Path('/tmp/sanitized-official-metadata')
+          output.mkdir(parents=True, exist_ok=True)
+
+          def sha256(path):
+            h = hashlib.sha256()
+            with path.open('rb') as stream:
+              for block in iter(lambda: stream.read(1024 * 1024), b''):
+                h.update(block)
+            return h.hexdigest()
+
+          # Keep only non-secret catalog/download fields. CDN tokens, crypto keys,
+          # signatures and raw bytes never enter this artifact.
+          report_path = private / 'source/download-report.json'
+          safe_downloads = []
+          if report_path.exists():
+            report = json.loads(report_path.read_text(encoding='utf-8'))
+            for item in report.get('downloaded', []):
+              safe_downloads.append({
+                key: item.get(key) for key in (
+                  'full_path', 'selected_reason', 'encryptedSize',
+                  'decryptedSize', 'decryptedSha256', 'unityFs', 'output'
+                )
+              })
+            (output / 'download-summary.json').write_text(json.dumps({
+              'schemaVersion': 1,
+              'selectedCount': report.get('selectedCount'),
+              'downloadedCount': report.get('downloadedCount'),
+              'failureCount': report.get('failureCount'),
+              'totalBytes': report.get('totalBytes'),
+              'downloaded': safe_downloads,
+              'failures': report.get('failures', []),
+            }, ensure_ascii=False, indent=2), encoding='utf-8')
+
+          roots = [
+            private / 'assetstudio-dump',
+            private / 'character-export',
+            private / 'stage-export',
+            private / 'assetstudio-info',
+          ]
+          manifest = []
+          for root in roots:
+            if not root.exists():
+              continue
+            for path in root.rglob('*'):
+              if path.is_file():
+                manifest.append({
+                  'path': path.relative_to(private).as_posix(),
+                  'size': path.stat().st_size,
+                  'sha256': sha256(path),
+                })
+          (output / 'export-manifest.json').write_text(
+            json.dumps({'schemaVersion': 1, 'files': manifest}, ensure_ascii=False, indent=2),
+            encoding='utf-8',
+          )
+
+          groups = {
+            'angelring-and-materials': re.compile(
+              r'(?i)(100107|110701|redrive|angel.?ring|yuugen|_isHair|headOffset|faceForward|faceUp|faceRight|_FacePosition|_AngelRing|_UseRim|_Rim|_Fresnel|_Control|_Specular|MatCap|Aniso|Gem|Cosmic|OutlineOffset)'
+            ),
+            'stage-light-camera': re.compile(
+              r'(?i)(battle/stage|field/bg|dungeon/(bg|level)|gallery/bg3d|ReDriveVolume|Cinemachine|Timeline|Camera|Light|ReflectionProbe|Fog|Bloom|PostExposure|Contrast|Saturation|spawn|foothold|position|rotation)'
+            ),
+            'animation-avatar': re.compile(
+              r'(?i)(100107|110701|AnimatorController|AnimationClip|Avatar|Wait_L|CommonWait_L|Standby|Victory|weapon|Hip|Head|Root)'
+            ),
+          }
+          secret = re.compile(r'(?i)(token|signature|crypto.?key|akamai).{0,12}[:=].*')
+          url_query = re.compile(r'https?://\S+\?\S+')
+
+          for group_name, pattern in groups.items():
+            matches = []
+            for root in roots:
+              if not root.exists():
+                continue
+              for path in root.rglob('*'):
+                if not path.is_file() or path.stat().st_size > 12_000_000:
+                  continue
+                try:
+                  raw = path.read_bytes()
+                  if raw and sum(32 <= b < 127 or b in (9, 10, 13) for b in raw[:20000]) / min(len(raw), 20000) < 0.70:
+                    continue
+                  lines = raw.decode('utf-8', errors='ignore').splitlines()
+                except Exception:
+                  continue
+                for index, line in enumerate(lines):
+                  if not pattern.search(line):
+                    continue
+                  context = []
+                  for number in range(max(0, index - 2), min(len(lines), index + 3)):
+                    value = lines[number].strip()[:1000]
+                    value = secret.sub('[REDACTED SECRET FIELD]', value)
+                    value = url_query.sub('[REDACTED URL QUERY]', value)
+                    context.append({'line': number + 1, 'text': value})
+                  matches.append({
+                    'file': path.relative_to(private).as_posix(),
+                    'matchLine': index + 1,
+                    'context': context,
+                  })
+                  if len(matches) >= 8000:
+                    break
+                if len(matches) >= 8000:
+                  break
+              if len(matches) >= 8000:
+                break
+            (output / f'{group_name}.json').write_text(
+              json.dumps({'schemaVersion': 1, 'matches': matches}, ensure_ascii=False, indent=2),
+              encoding='utf-8',
+            )
+
+          (output / 'README.txt').write_text(
+            'Sanitized metadata only. No AssetBundle, model, texture, audio, token, signature or crypto key is included.\n',
+            encoding='utf-8',
+          )
+
+      - name: Upload sanitized official metadata
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanitized-official-material-stage-metadata
+          path: /tmp/sanitized-official-metadata
+          retention-days: 7
+          if-no-files-found: error
 
       - name: Encrypt every private byte before artifact upload
         if: ${{ always() }}
