@@ -1,0 +1,91 @@
+name: Apply Head-direction face shading
+run-name: Wire official face profiles and animated Head axes into Face material
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths: ['.github/workflows/apply-face-direction-shading.yml']
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Magius3Dviewer
+        uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+          fetch-depth: 0
+
+      - name: Patch Face material creation
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path=Path('magia-exedra-character-three/loader.ts')
+          text=path.read_text(encoding='utf-8')
+          anchor="import {\n    getOfficialMaterialProfiles,\n    type OfficialMaterialProfile,\n} from './materialProfile';\n"
+          face_import="import { createFaceDirectionReference, getOfficialFaceProfile } from './faceProfile';\n"
+          if face_import not in text:
+            if anchor not in text: raise SystemExit('loader import anchor missing')
+            text=text.replace(anchor,anchor+face_import,1)
+
+          old='''                    if (name.includes('face')) {
+                          const result = await createFaceMaterial({
+                              ...sharedMaterialOptions,
+                              shadowMap: shadowMap!,
+                              eyehighlightMap: ObjFindByKey(texturePathUrl, path => path.includes('eye'))!,
+                          })
+                          material = result.material
+                          textures = result.textures
+                      } else {
+          '''
+          new='''                    if (name.includes('face')) {
+                          const faceProfile = getOfficialFaceProfile(characterId)
+                          const faceReference = createFaceDirectionReference(modelObject, characterProfile)
+                          const result = await createFaceMaterial({
+                              ...sharedMaterialOptions,
+                              shadowMap: shadowMap!,
+                              eyehighlightMap: ObjFindByKey(texturePathUrl, path => path.includes('eye'))!,
+                              faceProfile,
+                              faceReference,
+                          })
+                          material = result.material
+                          textures = result.textures
+                          if (result.updateFaceDirectionReference) {
+                              userData.animationLoops.push(result.updateFaceDirectionReference)
+                          }
+                          console.log('Official face profile/reference:', faceProfile, faceReference)
+                      } else {
+          '''
+          if old in text:
+            text=text.replace(old,new,1)
+          elif 'Official face profile/reference' not in text:
+            raise SystemExit('current Face material block does not match expected source')
+          path.write_text(text,encoding='utf-8')
+
+      - name: Commit and push face runtime integration
+        id: commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add magia-exedra-character-three/loader.ts
+          if ! git diff --cached --quiet; then
+            git commit -m 'feat(face): bind official profiles and animated Head axes'
+            git push origin HEAD:magius3dviewer
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        env:
+          SOURCE_SHA: ${{ steps.commit.outputs.sha }}
+        with:
+          script: |
+            const status='${{ job.status }}';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:process.env.SOURCE_SHA||context.sha,state:status==='success'?'success':'failure',context:'Official Head-direction face shading',description:status==='success'?'Face SDF profiles wired':'Face runtime integration failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
