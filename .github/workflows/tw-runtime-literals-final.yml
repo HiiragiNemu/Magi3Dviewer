@@ -14,22 +14,24 @@ permissions:
 
 concurrency:
   group: tw-runtime-literals-final
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   query:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 80
     steps:
       - uses: actions/checkout@v5
-      - name: Download and unpack Taiwan client
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '9.0.x'
+      - name: Download client and Cpp2IL runtime
         shell: bash
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y unzip python3-pip
-          python -m pip install --disable-pip-version-check pyelftools
-          mkdir -p work/source work/xapk work/unpacked work/report
+          sudo apt-get install -y unzip
+          mkdir -p work/source work/xapk work/unpacked work/tool work/query/runtime work/report
           curl -fL --retry 5 --retry-all-errors -A 'Mozilla/5.0' \
             'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
             -o work/source/client.xapk
@@ -39,100 +41,161 @@ jobs:
             < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
           test -s work/unpacked/lib/arm64-v8a/libil2cpp.so
           test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
-      - name: Resolve runtime string usage slots
-        shell: python
+          curl -fL --retry 4 --retry-all-errors \
+            'https://nightly.link/SamboyCoding/Cpp2IL/workflows/dotnet-core/development/Cpp2IL-net9-linux-x64.zip' \
+            -o work/tool/cpp2il.zip
+          unzip -q work/tool/cpp2il.zip -d work/tool/extracted
+          find work/tool/extracted -type f -printf '%P\t%s\n' | sort > work/report/cpp2il-runtime-inventory.tsv
+          find work/tool/extracted -type f \( -name '*.dll' -o -name '*.json' \) -exec cp -n '{}' work/query/runtime/ \;
+          test -s work/query/runtime/LibCpp2IL.dll
+      - name: Build reflection-only query
+        shell: bash
         run: |
-          from pathlib import Path
-          import json,struct
-          from elftools.elf.elffile import ELFFile
-          from elftools.elf.relocation import RelocationSection
+          set -euo pipefail
+          cat > work/query/RuntimeLiteralQuery.csproj <<'EOF'
+          <Project Sdk="Microsoft.NET.Sdk">
+            <PropertyGroup>
+              <OutputType>Exe</OutputType>
+              <TargetFramework>net9.0</TargetFramework>
+              <ImplicitUsings>enable</ImplicitUsings>
+              <Nullable>enable</Nullable>
+            </PropertyGroup>
+          </Project>
+          EOF
+          cat > work/query/Program.cs <<'EOF'
+          using System.Reflection;
+          using System.Text.Json;
 
-          binary_path=Path('work/unpacked/lib/arm64-v8a/libil2cpp.so')
-          metadata=Path('work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat').read_bytes()
-          magic,version=struct.unpack_from('<II',metadata,0)
-          if magic != 0xFAB11BAF: raise SystemExit(f'bad metadata magic {magic:#x}')
-          literal_offset,literal_size,literal_data_offset,literal_data_size=struct.unpack_from('<IIII',metadata,8)
-          slots={
-              'systemMonitorOrEmpty':0x9B7A4F0,
-              'msgPackDefaultCryptKey':0x9BA5660,
-              'appMsgPackCryptKey':0x9BCB028,
-              'appCryptoHashKeyInput':0x9BCAF80,
-              'appCryptoHashSaltInput':0x9BCAF88,
-              'appCryptoSeedInput':0x9BCAF90,
-              'guestApiOrigin':0x9B83D68,
-              'guestLoginSuffix':0x9B83D50,
-              'guestRegisterSuffix':0x9B84008,
-              'guestUserAgentHeader':0x9B83D58,
-              'guestSavedGuidKey':0x9B7A538,
-              'guestSavedUuidKey':0x9B831F8,
-              'guestCallbackType':0x9B83FC0,
-              'sdkScheme':0x9B8CAD0,
-              'sdkPackage':0x9B93118,
-              'productionDomainPart':0x9B8CAC0,
-              'sdkRequestSignSalt':0x9C09490,
+          if (args.Length != 4)
+              throw new ArgumentException("runtime-dir binary metadata output");
+
+          var runtimeDir = Path.GetFullPath(args[0]);
+          var binary = File.ReadAllBytes(args[1]);
+          var metadata = File.ReadAllBytes(args[2]);
+          var output = args[3];
+
+          AppDomain.CurrentDomain.AssemblyResolve += (_, eventArgs) =>
+          {
+              var simpleName = new AssemblyName(eventArgs.Name).Name;
+              var candidate = Path.Combine(runtimeDir, simpleName + ".dll");
+              return File.Exists(candidate) ? Assembly.LoadFrom(candidate) : null;
+          };
+
+          var libAssembly = Assembly.LoadFrom(Path.Combine(runtimeDir, "LibCpp2IL.dll"));
+          foreach (var dependency in Directory.EnumerateFiles(runtimeDir, "*.dll"))
+          {
+              try { Assembly.LoadFrom(dependency); } catch { }
           }
-          required={'appMsgPackCryptKey','appCryptoHashKeyInput','appCryptoHashSaltInput','appCryptoSeedInput'}
-          wanted=set(slots.values())
 
-          def map_va(elf,address):
-              for segment in elf.iter_segments():
-                  if segment['p_type']!='PT_LOAD': continue
-                  start=int(segment['p_vaddr']); filesz=int(segment['p_filesz']); memsz=int(segment['p_memsz'])
-                  if start<=address<start+memsz:
-                      delta=address-start
-                      return None if delta>=filesz else int(segment['p_offset'])+delta
-              return None
+          var unityAssembly = AppDomain.CurrentDomain.GetAssemblies()
+              .FirstOrDefault(a => a.GetType("AssetRipper.Primitives.UnityVersion") != null)
+              ?? Assembly.LoadFrom(Path.Combine(runtimeDir, "AssetRipper.Primitives.dll"));
+          var unityType = unityAssembly.GetType("AssetRipper.Primitives.UnityVersion", true)!;
+          var unityVersionType = unityAssembly.GetType("AssetRipper.Primitives.UnityVersionType", true)!;
+          var finalEnum = Enum.Parse(unityVersionType, "Final");
+          var unityVersion = Activator.CreateInstance(
+              unityType,
+              new object[] { 2022, 3, 62, finalEnum, 3 }
+          )!;
 
-          with binary_path.open('rb') as stream:
-              elf=ELFFile(stream); usage_pointers={}; relocation_info={}
-              for section in elf.iter_sections():
-                  if not isinstance(section,RelocationSection): continue
-                  symtab=elf.get_section(section['sh_link']) if section['sh_link'] else None
-                  for rel in section.iter_relocations():
-                      slot=int(rel['r_offset'])
-                      if slot not in wanted: continue
-                      addend=int(rel.entry.get('r_addend',0)); symval=0; symidx=int(rel['r_info_sym']); symname=''
-                      if symtab is not None and symidx:
-                          symbol=symtab.get_symbol(symidx); symval=int(symbol['st_value']); symname=symbol.name
-                      usage_pointers[slot]=(symval+addend)&0xffffffffffffffff
-                      relocation_info[slot]={'section':section.name,'type':int(rel['r_info_type']),'addend':addend,'symbol':symname}
+          var builderType = libAssembly.GetType("LibCpp2IL.LibCpp2IlContextBuilder", true)!;
+          var build = builderType.GetMethods(BindingFlags.Public | BindingFlags.Static)
+              .Single(m => m.Name == "Build" && m.GetParameters().Length == 3);
+          var context = build.Invoke(null, new[] { binary, metadata, unityVersion })!;
+          var getLiteral = context.GetType().GetMethod(
+              "GetLiteralByAddress",
+              BindingFlags.Public | BindingFlags.Instance,
+              binder: null,
+              types: new[] { typeof(ulong) },
+              modifiers: null
+          ) ?? throw new MissingMethodException("GetLiteralByAddress(ulong)");
 
-              results={}
-              for name,slot in slots.items():
-                  record={'slot':f'0x{slot:X}','relocation':relocation_info.get(slot)}
-                  try:
-                      usage=usage_pointers.get(slot)
-                      if usage is None: raise ValueError('no relocation for slot')
-                      record['usageAddress']=f'0x{usage:X}'
-                      raw=map_va(elf,usage)
-                      if raw is None: raise ValueError('usage pointer is not file-backed')
-                      stream.seek(raw+16)
-                      encoded=struct.unpack('<I',stream.read(4))[0]
-                      usage_type=(encoded&0xE0000000)>>29
-                      source_offset=(encoded&0x1FFFFFFF)>>1
-                      record.update({'token':f'0x{encoded:08X}','usageType':usage_type,'sourceOffset':source_offset})
-                      if usage_type != 5: raise ValueError(f'usage type is {usage_type}, expected 5')
-                      descriptor=literal_offset+source_offset
-                      if descriptor<literal_offset or descriptor+8>literal_offset+literal_size:
-                          raise ValueError('literal descriptor byte offset is out of bounds')
-                      length,data_index=struct.unpack_from('<II',metadata,descriptor)
-                      data_start=literal_data_offset+data_index; data_stop=data_start+length
-                      if data_stop>literal_data_offset+literal_data_size: raise ValueError('literal data is out of bounds')
-                      record.update({'length':length,'dataIndex':data_index,'value':metadata[data_start:data_stop].decode('utf-8',errors='strict')})
-                  except Exception as exc:
-                      record['error']=repr(exc)
-                  results[name]=record
-
-          missing=sorted(name for name in required if 'value' not in results[name])
-          report={'schemaVersion':2,'metadataVersion':version,'xapkSha256':'9ed2f73182e0e6369f757124570b36cac3ba8dcd6a545a6e4e19881d53ff084a','missingRequired':missing,'values':results}
-          Path('work/report/runtime-literals.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          Path('work/report/runtime-literals.txt').write_text('\n'.join(f"{name}\t{item.get('slot')}\t{item.get('token')}\t{item.get('value')!r}\t{item.get('error','')}" for name,item in results.items())+'\n',encoding='utf-8')
-          print(json.dumps(report,ensure_ascii=False,indent=2))
+          var slots = new Dictionary<string, ulong>
+          {
+              ["systemMonitorOrEmpty"] = 0x9B7A4F0,
+              ["msgPackDefaultCryptKey"] = 0x9BA5660,
+              ["appMsgPackCryptKey"] = 0x9BCB028,
+              ["appCryptoHashKeyInput"] = 0x9BCAF80,
+              ["appCryptoHashSaltInput"] = 0x9BCAF88,
+              ["appCryptoSeedInput"] = 0x9BCAF90,
+              ["guestApiOrigin"] = 0x9B83D68,
+              ["guestLoginSuffix"] = 0x9B83D50,
+              ["guestRegisterSuffix"] = 0x9B84008,
+              ["guestUserAgentHeader"] = 0x9B83D58,
+              ["guestSavedGuidKey"] = 0x9B7A538,
+              ["guestSavedUuidKey"] = 0x9B831F8,
+              ["guestCallbackType"] = 0x9B83FC0,
+              ["sdkScheme"] = 0x9B8CAD0,
+              ["sdkPackage"] = 0x9B93118,
+              ["productionDomainPart"] = 0x9B8CAC0,
+              ["sdkRequestSignSalt"] = 0x9C09490,
+          };
+          var values = new List<object>();
+          foreach (var pair in slots)
+          {
+              object? value = null;
+              string? error = null;
+              try { value = getLiteral.Invoke(context, new object[] { pair.Value }); }
+              catch (Exception exception)
+              {
+                  var actual = exception is TargetInvocationException tie && tie.InnerException != null
+                      ? tie.InnerException
+                      : exception;
+                  error = actual.GetType().Name + ": " + actual.Message;
+              }
+              values.Add(new
+              {
+                  name = pair.Key,
+                  address = $"0x{pair.Value:X}",
+                  value,
+                  error,
+              });
+          }
+          var report = new
+          {
+              schemaVersion = 3,
+              client = new
+              {
+                  package = "tw.sonet.magiaexedra",
+                  appVersion = "1.0.5",
+                  unityVersion = "2022.3.62f3",
+              },
+              values,
+          };
+          File.WriteAllText(
+              output,
+              JsonSerializer.Serialize(report, new JsonSerializerOptions { WriteIndented = true }) + "\n"
+          );
+          EOF
+          dotnet build work/query/RuntimeLiteralQuery.csproj --configuration Release --nologo \
+            > work/report/build.log 2>&1
+          cp work/query/runtime/* work/query/bin/Release/net9.0/
+      - name: Query exact runtime literals
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet work/query/bin/Release/net9.0/RuntimeLiteralQuery.dll \
+            work/query/bin/Release/net9.0 \
+            work/unpacked/lib/arm64-v8a/libil2cpp.so \
+            work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat \
+            work/report/runtime-literals.json \
+            > work/report/query.log 2>&1
+          test -s work/report/runtime-literals.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('work/report/runtime-literals.json').read_text(encoding='utf-8'))
+          values={item['name']:item for item in report['values']}
+          required=('appMsgPackCryptKey','appCryptoHashKeyInput','appCryptoHashSaltInput','appCryptoSeedInput')
+          missing=[name for name in required if values[name].get('value') is None]
+          Path('work/report/runtime-literals.txt').write_text('\n'.join(f"{item['name']}\t{item['address']}\t{item.get('value')!r}\t{item.get('error') or ''}" for item in report['values'])+'\n',encoding='utf-8')
+          print(Path('work/report/runtime-literals.txt').read_text(encoding='utf-8'))
           if missing: raise SystemExit(f'missing required literals: {missing}')
+          PY
       - name: Remove raw/full materials
         if: ${{ always() }}
         run: |
-          rm -rf work/source work/xapk work/unpacked
+          rm -rf work/source work/xapk work/unpacked work/tool work/query
           find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
       - name: Upload runtime literals
         if: ${{ always() }}
