@@ -1,0 +1,104 @@
+name: Probe Taiwan response codec
+run-name: Identify live login response framing and encryption
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-live-codec-probe.yml'
+      - 'analysis-requests/tw-live-codec-probe.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-live-codec-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+      - name: Send disposable login request and inspect response
+        shell: python
+        run: |
+          import base64,gzip,hashlib,json,os,re,time,uuid,zlib
+          from pathlib import Path
+          import msgpack,requests
+          from Crypto.Cipher import AES
+          from Crypto.Util.Padding import pad,unpad
+
+          host='https://app-mme.so-net.tw'; key=b'/TZh+1VxrtkNiDEH'; app='1.0.5'; unity='2022.3.62f3'
+          client_uuid=uuid.uuid4().hex
+          payload={
+            'appVersion':app,'urlParam':'','deviceModel':'Codec Probe','osType':2,'osVersion':'Android 14','storeType':2,
+            'graphicsDeviceId':0,'graphicsDeviceVendorId':0,'processorCount':8,'processorType':'arm64-v8a','supportedRenderTargetCount':4,
+            'supports3DTextures':True,'supportsAccelerometer':True,'supportsComputeShaders':True,'supportsGyroscope':True,
+            'supportsImageEffects':True,'supportsInstancing':True,'supportsLocationService':True,'supportsRenderTextures':True,
+            'supportsRenderToCubemap':True,'supportsShadows':True,'supportsSparseTextures':False,'supportsStencil':1,'supportsVibration':True,
+            'uuid':client_uuid,'xuid':0,'jwttoken':'','sm':'',
+          }
+          envelope={'payload':payload,'uuid':client_uuid,'userId':0,'sessionId':'','actionToken':None,'ctag':None,'actionTime':int((time.time()+11644473600)*10_000_000)}
+          plain=msgpack.packb(envelope,use_bin_type=True); iv=os.urandom(16); body=iv+AES.new(key,AES.MODE_CBC,iv).encrypt(pad(plain,16)); signature=base64.b64encode(hashlib.sha1(body).digest()).decode()
+          headers={'Accept':'*/*','Content-Type':'application/x-msgpack','x-region':'TW','x-language':'zh_TW','x-timezone-offset':'28800','x-app-version':app,'X-GAME-SERVER-URL':host,'X-post-signature':signature,'X-Unity-Version':unity}
+          response=requests.post(host+'/api/login',headers=headers,data=body,timeout=30)
+          raw=response.content
+          report={
+            'schemaVersion':1,'httpStatus':response.status_code,'size':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),
+            'first64Hex':raw[:64].hex(),'last32Hex':raw[-32:].hex(),
+            'headers':{k.lower():v for k,v in response.headers.items() if k.lower() in {'content-type','content-length','content-encoding','transfer-encoding'} or k.lower().startswith('x-')},
+            'decoders':[],
+          }
+          def safe(value):
+            secret=re.compile(r'(?i)(uuid|user.?id|session|token|jwt|ctag|guid|handover)')
+            if isinstance(value,dict): return {str(k):({'present':True,'sha256':hashlib.sha256(str(v).encode()).hexdigest(),'length':len(str(v))} if secret.search(str(k)) and v not in (None,'',0,False) else safe(v)) for k,v in value.items()}
+            if isinstance(value,list): return [safe(v) for v in value[:50]]
+            if isinstance(value,(str,int,float,bool)) or value is None: return value
+            return repr(value)[:200]
+          def try_msgpack(label,data):
+            try:
+              value=msgpack.unpackb(data,raw=False,strict_map_key=False)
+              report['decoders'].append({'label':label,'success':True,'value':safe(value)})
+            except Exception as exc:
+              report['decoders'].append({'label':label,'success':False,'error':type(exc).__name__+': '+str(exc)[:300]})
+          try_msgpack('raw-msgpack',raw)
+          for label,fn in [('gzip',gzip.decompress),('zlib',zlib.decompress)]:
+            try:
+              data=fn(raw); report['decoders'].append({'label':label,'success':True,'size':len(data),'first32Hex':data[:32].hex()}); try_msgpack(label+'-msgpack',data)
+            except Exception as exc: report['decoders'].append({'label':label,'success':False,'error':type(exc).__name__+': '+str(exc)[:300]})
+          candidates=[]
+          if len(raw)>=32 and len(raw)%16==0:
+            candidates.append(('aes-cbc-prefix-iv',raw[:16],raw[16:]))
+          if len(raw)>=32 and (len(raw)-16)%16==0:
+            candidates.append(('aes-cbc-suffix-iv',raw[-16:],raw[:-16]))
+          if len(raw)%16==0:
+            candidates.extend([('aes-cbc-zero-iv',bytes(16),raw),('aes-ecb',None,raw)])
+          for label,civ,ciphertext in candidates:
+            try:
+              if label=='aes-ecb': decrypted=AES.new(key,AES.MODE_ECB).decrypt(ciphertext)
+              else: decrypted=AES.new(key,AES.MODE_CBC,civ).decrypt(ciphertext)
+              variants=[('raw',decrypted)]
+              try: variants.append(('unpad',unpad(decrypted,16)))
+              except Exception: pass
+              for suffix,data in variants:
+                report['decoders'].append({'label':label+'-'+suffix,'success':True,'size':len(data),'first32Hex':data[:32].hex()})
+                try_msgpack(label+'-'+suffix+'-msgpack',data)
+            except Exception as exc: report['decoders'].append({'label':label,'success':False,'error':type(exc).__name__+': '+str(exc)[:300]})
+          Path('work/report').mkdir(parents=True,exist_ok=True)
+          Path('work/report/codec-probe.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+      - name: Upload codec probe
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-live-codec-probe
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
