@@ -22,6 +22,17 @@ TARGET_METHOD_FRAGMENTS = (
     "A2.ResourceManager.GoogleCloudCdnHelper::public static string CreateSignedUrl",
     "A2.ResourceManager.GoogleCloudCdnHelper::private static byte[] ComputeHash",
     "A2.ResourceManager.ResourceGcsSignedUrlModel::public void .ctor",
+    "HTTPComm.SystemMonitor::public static string GetInfo",
+    "A2.GameLib.Login.SignatureProvider::public static string GGLXUID",
+    "A2.GameLib.Login.SignatureProvider::public static void SetXUID",
+    "A2.GameLib.Login.LoginReq::public static LoginReq Create",
+    "SonetGameLib.TW_GameLibSns::public static void GuestLogin",
+    "SonetGameLib.TW_GameLibSns::public static string getNowUUID",
+    "A2.GameLib.Initializer::public static bool Initialize",
+    "ReDrive.ProductionDomainConfig::public string get_DefaultGameServerFQDN",
+    "ReDrive.ProductionDomainConfig::public string get_DefaultHostName",
+    "ReDrive.ProductionDomainConfig::public string get_RemoteGameServerDomain",
+    "ReDrive.ProductionDomainConfig::public string get_AppScheme",
 )
 TARGET_TYPES = {
     "APISigning",
@@ -34,6 +45,18 @@ TARGET_TYPES = {
     "ResourceRemoteUrl",
     "GoogleCloudCdnHelper",
     "ResourceApi",
+    "SystemMonitor",
+    "SignatureProvider",
+    "LoginReq",
+    "LoginRes",
+    "TW_GameLibSns",
+    "Initializer",
+    "ProductionDomainConfig",
+    "StagingDomainConfig",
+    "ReviewDomainConfig",
+    "QaDomainConfig",
+    "JudgementDomainConfig",
+    "DevelopmentDomainConfig",
 }
 NS_RE = re.compile(r"^// Namespace:\s*(.*)$", re.M)
 TYPE_RE = re.compile(
