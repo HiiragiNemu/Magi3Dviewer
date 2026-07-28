@@ -1,0 +1,99 @@
+name: Inventory all official 3D stage bundles
+run-name: Enumerate Battle, Field, Dungeon, Gallery and ADV 3D assets
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths:
+      - '.github/workflows/inventory-all-official-stages.yml'
+      - '.github/stage-inventory-trigger.txt'
+
+permissions:
+  contents: read
+  actions: write
+  statuses: write
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout catalog protocol adapter
+        uses: actions/checkout@v5
+        with:
+          ref: automation/encrypted-official-assets
+          path: research
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install protocol dependencies
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+
+      - name: Enumerate official stage catalog
+        shell: python
+        run: |
+          from pathlib import Path
+          import collections, importlib.util, json, re, requests, sys
+
+          module_path=Path('research/.github/research-executor/download_targeted_assets_v2.py')
+          spec=importlib.util.spec_from_file_location('catalog_adapter',module_path)
+          module=importlib.util.module_from_spec(spec);sys.modules[spec.name]=module;spec.loader.exec_module(module)
+          entries,headers,token,metadata=module.get_catalog(requests.Session())
+          prefixes={
+            'battle':'battle/stage/',
+            'field':'field/bg/',
+            'dungeon-bg':'dungeon/bg/',
+            'dungeon-level':'dungeon/level/',
+            'gallery':'gallery/bg3d_gallery',
+          }
+          selected=[]
+          for entry in entries:
+            normalized=entry.full_path.replace('\\','/').lstrip('/')
+            family=next((name for name,prefix in prefixes.items() if normalized.lower().startswith(prefix)),None)
+            if not family:continue
+            selected.append({
+              'family':family,
+              'pathId':entry.path_id,
+              'path':entry.path,
+              'name':entry.name,
+              'fullPath':normalized,
+              'revision':entry.revision,
+              'encrypted':entry.encrypted,
+            })
+          selected.sort(key=lambda item:item['fullPath'].lower())
+          by_family=collections.Counter(item['family'] for item in selected)
+          # Stable shards make the future downloader resumable and bounded.
+          for index,item in enumerate(selected):item['shard']=index//20
+          payload={
+            'schemaVersion':1,
+            'metadata':metadata,
+            'prefixes':prefixes,
+            'entryCount':len(selected),
+            'familyCounts':dict(sorted(by_family.items())),
+            'shardSize':20,
+            'shardCount':(len(selected)+19)//20,
+            'entries':selected,
+          }
+          out=Path('/tmp/official-stage-inventory');out.mkdir(parents=True,exist_ok=True)
+          (out/'official-stage-bundle-inventory.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
+          (out/'README.md').write_text('# Official 3D stage bundle inventory\n\nSanitized catalog paths and revisions for every Battle, Field, Dungeon and Gallery 3D stage. No AssetBundle bytes or credentials are included.\n',encoding='utf-8')
+          if len(selected)<10:raise SystemExit(f'Unexpectedly small stage catalog: {len(selected)}')
+
+      - name: Upload stage inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-all-stage-bundle-inventory
+          path: /tmp/official-stage-inventory
+          retention-days: 14
+
+      - name: Publish inventory status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status='${{ job.status }}';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:status==='success'?'success':'failure',context:'Official all-stage inventory',description:status==='success'?'All official 3D stage paths catalogued':'Stage inventory failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
