@@ -1,0 +1,91 @@
+name: Recover Taiwan So-net managed SDK
+run-name: Decompile SonetAccountModels and guest login endpoints
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-sonet-managed-sdk.yml'
+      - 'tools/research/extract_tw_sonet_assemblies.py'
+      - 'analysis-requests/tw-sonet-managed-sdk.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-sonet-managed-sdk
+  cancel-in-progress: true
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '9.0.x'
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip zip
+          dotnet tool install ilspycmd --tool-path work/dotnet-tools
+      - name: Download and merge Taiwan XAPK
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/source work/xapk work/merged work/report work/cpp2il work/output
+          curl -fL --retry 5 --retry-all-errors \
+            -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/merged; done \
+            < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          (
+            cd work/merged
+            zip -qr ../client.synthetic.apk AndroidManifest.xml assets/bin/Data lib/arm64-v8a/libil2cpp.so
+          )
+      - name: Recover all managed assemblies
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL --retry 4 --retry-all-errors \
+            'https://nightly.link/SamboyCoding/Cpp2IL/workflows/dotnet-core/development/Cpp2IL-net9-linux-x64.zip' \
+            -o work/cpp2il/tool.zip
+          unzip -q work/cpp2il/tool.zip -d work/cpp2il/extracted
+          exe=$(find work/cpp2il/extracted -type f -name Cpp2IL -print -quit)
+          test -n "$exe"
+          chmod +x "$exe"
+          NO_COLOR=true "$exe" \
+            --game-path=work/client.synthetic.apk \
+            --output-as=dll_il_recovery \
+            --output-to=work/output \
+            > work/report/cpp2il.log 2>&1
+          python tools/research/extract_tw_sonet_assemblies.py \
+            --ilspy work/dotnet-tools/ilspycmd \
+            --assembly-root work/output \
+            --out work/report/sonet-managed
+          grep -R -n -i -E \
+            'https?://|mme-sdk|so-net\.tw|Guest|Register|Init\(|RestClient|Post<|Put<|Jwt|uuid|token|deviceid|gameid|xuid|guid|localcountry|SystemMonitor|GetInfo' \
+            work/report/sonet-managed \
+            > work/report/sonet-managed-focused.txt || true
+      - name: Remove raw and full generated materials
+        if: ${{ always() }}
+        run: |
+          rm -rf work/source work/xapk work/merged work/client.synthetic.apk work/cpp2il work/output work/dotnet-tools
+          if find work/report -type f \( -name '*.apk' -o -name '*.xapk' -o -name '*.so' -o -name '*.dll' \) | grep -q .; then
+            echo 'raw/full generated material remained' >&2
+            exit 1
+          fi
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+      - name: Upload managed SDK evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-sonet-managed-sdk
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
