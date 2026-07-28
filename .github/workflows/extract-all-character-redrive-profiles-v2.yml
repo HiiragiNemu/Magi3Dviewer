@@ -1,0 +1,200 @@
+name: Extract all official character ReDrive profiles v2
+run-name: Recover exact controller, valid keyword and material property profiles for every character
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths:
+      - '.github/workflows/extract-all-character-redrive-profiles-v2.yml'
+      - '.github/all-character-profile-v2-trigger.txt'
+
+permissions:
+  contents: read
+  actions: write
+  statuses: write
+
+concurrency:
+  group: extract-all-character-redrive-profiles-v2
+  cancel-in-progress: true
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: Checkout current official downloader
+        uses: actions/checkout@v5
+        with:
+          ref: automation/encrypted-official-assets
+          path: research
+
+      - name: Set up Python and .NET
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install protocol dependencies
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+
+      - name: Download all official battle character bundles
+        shell: bash
+        run: |
+          cat > /tmp/download_all_characters.py <<'PY'
+          import importlib.util,re,sys
+          from pathlib import Path
+          module_path=Path('research/.github/research-executor/download_targeted_assets_v2.py')
+          spec=importlib.util.spec_from_file_location('downloader',module_path)
+          module=importlib.util.module_from_spec(spec);sys.modules[spec.name]=module;spec.loader.exec_module(module)
+          pattern=re.compile(r'(?i)^battle/character/chara_\d+_battle_unit/?$')
+          def select(entries):
+            selected=[];seen=set()
+            for entry in entries:
+              value=entry.full_path.replace('\\','/').strip('/')
+              if not pattern.match(value) or value.lower() in seen:continue
+              seen.add(value.lower());entry.selected_reason='all-character-redrive-v2';selected.append(entry)
+            if not 80<=len(selected)<=180:raise RuntimeError(f'Unexpected character count {len(selected)}')
+            return selected
+          module.base.select=select
+          module.base.main()
+          PY
+          python /tmp/download_all_characters.py --out /tmp/all-character-source
+
+      - name: Build AssetStudioModCLI
+        run: |
+          git clone --depth 1 --branch AssetStudioMod https://github.com/aelurum/AssetStudio.git /tmp/AssetStudio
+          dotnet publish /tmp/AssetStudio/AssetStudioCLI/AssetStudioCLI.csproj \
+            --configuration Release --framework net8.0 --runtime linux-x64 \
+            --self-contained false -p:SolutionDir=/tmp/AssetStudio/ \
+            --output /tmp/assetstudio-cli
+
+      - name: Dump official character controller and Material metadata
+        run: |
+          mkdir -p /tmp/all-character-dump
+          dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll \
+            /tmp/all-character-source/raw/AssetBundles \
+            -m dump -t monoBehaviour,material \
+            --unity-version 2022.3.21f1 --load-all \
+            -g fileName -f assetName_pathID \
+            -o /tmp/all-character-dump \
+            --log-output both --log-level info \
+            > /tmp/all-character-dump.log 2>&1
+
+      - name: Build exact sanitized profile database
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,re
+          root=Path('/tmp/all-character-dump')
+          out=Path('/tmp/all-character-redrive-profiles-v2');out.mkdir(parents=True,exist_ok=True)
+          char_re=re.compile(r'chara_(\d+)_battle_unit',re.I)
+
+          def number(text,name):
+            m=re.search(rf'(?m)^\s*(?:int|float|UInt8|bool) {re.escape(name)} = ([^\r\n]+)',text)
+            if not m:return None
+            raw=m.group(1).strip()
+            if raw in ('True','False'):return raw=='True'
+            try:return float(raw) if any(c in raw.lower() for c in '.e') else int(raw)
+            except:return raw
+
+          def keyword_block(text,start_name,end_name):
+            start=text.find(f'vector {start_name}')
+            if start<0:return []
+            end=text.find(f'vector {end_name}',start+1) if end_name else -1
+            if end<0:end=text.find('unsigned int m_LightmapFlags',start+1)
+            if end<0:end=len(text)
+            return re.findall(r'(?m)^\s*string data = "([^"]+)"',text[start:end])
+
+          def pairs(text):
+            floats={k:float(v) for k,v in re.findall(r'string first = "([^"]+)"\s+float second = ([^\r\n]+)',text)}
+            colors={}
+            for m in re.finditer(r'string first = "([^"]+)"\s+ColorRGBA second\s+float r = ([^\r\n]+)\s+float g = ([^\r\n]+)\s+float b = ([^\r\n]+)\s+float a = ([^\r\n]+)',text):
+              colors[m.group(1)]=[float(m.group(i)) for i in range(2,6)]
+            textures={}
+            for m in re.finditer(r'string first = "([^"]+)"\s+UnityTexEnv second\s+PPtr<Texture> m_Texture\s+int m_FileID = ([^\r\n]+)\s+SInt64 m_PathID = ([^\r\n]+)',text):
+              textures[m.group(1)]={'fileId':int(m.group(2)),'pathId':int(m.group(3))}
+            return floats,colors,textures
+
+          profiles={}
+          for path in root.rglob('*.txt'):
+            match=char_re.search(path.as_posix())
+            if not match:continue
+            cid=int(match.group(1));text=path.read_text(encoding='utf-8',errors='ignore')
+            profile=profiles.setdefault(str(cid),{'characterId':cid,'controllers':[],'materials':[]})
+            if 'ReDriveToonMaterialController' in path.name:
+              profile['controllers'].append({
+                'faceForwardDirection':number(text,'faceForwardDirection'),
+                'faceUpDirection':number(text,'faceUpDirection'),
+                'faceRightDirection':number(text,'faceRightDirection'),
+                'headOffset':number(text,'headOffset'),
+                'isCharacter':number(text,'IsCharacter'),
+                'characterCancelPerspective':number(text,'CharacterCancelPerspective'),
+                'additionalLightInfluenceByLuminance':number(text,'AdditionalLightInfluenceByLuminance'),
+                'source':path.relative_to(root).as_posix(),
+              })
+            elif text.startswith('Material Base'):
+              name_m=re.search(r'(?m)^\s*string m_Name = "([^"]+)"',text)
+              floats,colors,textures=pairs(text)
+              profile['materials'].append({
+                'name':name_m.group(1) if name_m else path.stem,
+                'validKeywords':keyword_block(text,'m_ValidKeywords','m_InvalidKeywords'),
+                'invalidKeywords':keyword_block(text,'m_InvalidKeywords',None),
+                'floats':floats,'colors':colors,'textures':textures,
+                'source':path.relative_to(root).as_posix(),
+              })
+
+          summary=[]
+          for key,profile in sorted(profiles.items(),key=lambda item:int(item[0])):
+            selected=next((x for x in profile['controllers'] if x.get('isCharacter')==1),None) or (profile['controllers'][0] if profile['controllers'] else None)
+            hair=[m for m in profile['materials'] if m['floats'].get('_IsHair')==1 or '_IS_HAIR' in m['validKeywords'] or 'hair' in m['name'].lower()]
+            profile['selectedController']=selected
+            profile['hairMaterials']=hair
+            profile['features']={
+              'angelRingValidKeyword':any('_USE_ANGEL_RING' in m['validKeywords'] for m in hair),
+              'angelRingInvalidSerializedKeyword':any('_USE_ANGEL_RING' in m['invalidKeywords'] for m in hair),
+              'yuugenHighlight':any(m['floats'].get('_YuugenHighlight',0)>0.5 for m in hair),
+              'rimLight':any('_USE_RIM_LIGHT' in m['validKeywords'] or m['floats'].get('_UseRimLight',0)>0.5 for m in hair),
+              'depthTexRimShadow':any('_USE_DEPTHTEX_RIM_SHADOW' in m['validKeywords'] for m in hair),
+              'bakedNormal':any('_USE_BAKED_NORMAL' in m['validKeywords'] for m in hair),
+            }
+            summary.append({
+              'characterId':profile['characterId'],
+              'controllerCount':len(profile['controllers']),
+              'materialCount':len(profile['materials']),
+              'hairMaterialCount':len(hair),
+              'headOffset':selected.get('headOffset') if selected else None,
+              'faceForwardDirection':selected.get('faceForwardDirection') if selected else None,
+              'faceUpDirection':selected.get('faceUpDirection') if selected else None,
+              'faceRightDirection':selected.get('faceRightDirection') if selected else None,
+              **profile['features'],
+            })
+
+          payload={'schemaVersion':2,'characterCount':len(profiles),'summary':summary,'characters':profiles}
+          (out/'official-character-redrive-profiles-v2.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          (out/'README.md').write_text('# Official character ReDrive profiles v2\n\nPreserves Unity `m_ValidKeywords` and `m_InvalidKeywords` separately. Invalid serialized keywords are evidence, not automatically classified as active local variants. No proprietary binary assets are included.\n',encoding='utf-8')
+          if len(profiles)<80:raise SystemExit(f'Insufficient character coverage {len(profiles)}')
+
+      - name: Delete proprietary downloaded binaries
+        if: ${{ always() }}
+        run: rm -rf /tmp/all-character-source /tmp/all-character-dump /tmp/AssetStudio /tmp/assetstudio-cli
+
+      - name: Upload exact all-character profile database
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-all-character-redrive-profiles-v2
+          path: /tmp/all-character-redrive-profiles-v2
+          retention-days: 7
+          if-no-files-found: error
+
+      - name: Publish profile status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status='${{ job.status }}';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:status==='success'?'success':'failure',context:'Official all-character ReDrive profiles v2',description:status==='success'?'Valid/invalid keyword-aware character database generated':'Profile extraction v2 failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
