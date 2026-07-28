@@ -20,7 +20,11 @@ DECL=re.compile(r'^\s*((?:public|private|protected|internal)[^\n{]+\([^\n]*\))\s
 GENERIC_RVA=re.compile(r'\|-RVA: 0x([0-9A-Fa-f]+)[^\n]*\n\s*\|-([^\n]+)')
 
 def normalize_type(value:str)->str:
- return value.split('//',1)[0].strip().split('<',1)[0].strip()
+ value=value.split('//',1)[0].strip()
+ # Strip only the trailing generic argument list. Do not truncate compiler names
+ # such as ``<>c__DisplayClass8_0<TReq, TRes>`` at their leading ``<>``.
+ value=re.sub(r'<[A-Za-z_][^<>]*>$','',value).strip()
+ return value
 
 def safe_name(value:str)->str:
  return re.sub(r'[^A-Za-z0-9_.-]+','_',value)[:220]
@@ -78,9 +82,10 @@ def main():
   ('A2.Crypto','BasicCrypto','CreateRijndaelManagedForEncrypt'),
   ('A2.Crypto','BasicCrypto','CreateRijndaelManagedForEnCrypt'),
  })
- diagnostic={'methodCount':len(methods),'selectedCount':len(selected),'missingMandatory':missing,'rijndaelHelperPresent':helper_present}
+ closure_present=any('DisplayClass8_0' in m['type'] for m in selected)
+ diagnostic={'methodCount':len(methods),'selectedCount':len(selected),'missingMandatory':missing,'rijndaelHelperPresent':helper_present,'responseClosurePresent':closure_present}
  (args.out/'selection-diagnostic.json').write_text(json.dumps(diagnostic,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
- if missing or not helper_present: raise SystemExit(f'crypto selection incomplete: {diagnostic}')
+ if missing or not helper_present or not closure_present: raise SystemExit(f'crypto selection incomplete: {diagnostic}')
  (args.out/'targets.json').write_text(json.dumps(selected,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  for i,m in enumerate(selected):
   label=f"{m['namespace']}.{m['type']}.{m['name']}-{i}"; path=args.out/f'{safe_name(label)}.txt'
