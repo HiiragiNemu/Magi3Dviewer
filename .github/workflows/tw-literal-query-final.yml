@@ -48,7 +48,6 @@ jobs:
           source_root=$(find work/source -maxdepth 1 -type d -name 'Cpp2IL-*' -print -quit)
           test -n "$source_root"
           mv "$source_root" work/cpp2il-source
-          test -s work/cpp2il-source/LibCpp2IL/LibCpp2IL.csproj
       - name: Build literal query
         shell: bash
         run: |
@@ -93,20 +92,46 @@ jobs:
               ["sdkUserAgentHeader"] = 0x9B83D58,
               ["productionDomainPart"] = 0x9B8CAC0,
           };
-          var values = slots.Select(pair => new
+          var offsets = new long[] { 0, 0x4000, -0x4000 };
+          var values = new List<object>();
+          foreach (var pair in slots)
           {
-              name = pair.Key,
-              address = $"0x{pair.Value:X}",
-              value = context.GetLiteralByAddress(pair.Value)
-          }).ToArray();
+              foreach (var delta in offsets)
+              {
+                  var address = unchecked((ulong)((long)pair.Value + delta));
+                  var usage = context.GetAnyGlobalByAddress(address);
+                  object? resolved = null;
+                  string? usageType = null;
+                  uint? rawValue = null;
+                  string? error = null;
+                  try
+                  {
+                      usageType = usage?.Type.ToString();
+                      rawValue = usage?.RawValue;
+                      resolved = usage?.Value;
+                  }
+                  catch (Exception ex)
+                  {
+                      error = ex.GetType().Name + ": " + ex.Message;
+                  }
+                  values.Add(new
+                  {
+                      name = pair.Key,
+                      baseAddress = $"0x{pair.Value:X}",
+                      delta,
+                      queryAddress = $"0x{address:X}",
+                      literal = context.GetLiteralByAddress(address),
+                      usageType,
+                      rawValue,
+                      resolved,
+                      error,
+                  });
+              }
+          }
           File.WriteAllText(args[2], JsonSerializer.Serialize(values, new JsonSerializerOptions { WriteIndented = true }));
           EOF
-          set +e
           dotnet build work/query/LiteralQuery.csproj --configuration Release --framework net9.0 --nologo > work/report/build.log 2>&1
-          status=$?
-          set -e
           cat work/report/build.log
-          test "$status" -eq 0
       - name: Query exact runtime strings
         shell: bash
         run: |
@@ -116,7 +141,6 @@ jobs:
             work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat \
             work/report/runtime-literals.json \
             > work/report/query.log 2>&1
-          cat work/report/query.log
           test -s work/report/runtime-literals.json
           cat work/report/runtime-literals.json
       - name: Remove raw files and source tree
