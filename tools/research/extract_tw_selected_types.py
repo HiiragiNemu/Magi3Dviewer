@@ -41,6 +41,10 @@ PATTERNS = (
     r"(^|\.)LoginRes$",
     r"(^|\.)SignatureProvider$",
     r"(^|\.)LoginHelper$",
+    r"(^|\.)SystemMonitor$",
+    r"(^|\.)TW_GameLibSns$",
+    r"(^|\.)Initializer$",
+    r"(^|\.)WGL.*NativeAPI$",
     r"(^|\.)ProductionDomainConfig$",
     r"(^|\.)StagingDomainConfig$",
     r"(^|\.)ReviewDomainConfig$",
@@ -85,7 +89,7 @@ def main() -> None:
         if any(re.search(pattern, value) for pattern in PATTERNS):
             type_names.append(value)
 
-    type_names = list(dict.fromkeys(type_names))[:130]
+    type_names = list(dict.fromkeys(type_names))[:170]
     records: list[dict[str, object]] = []
     for index, type_name in enumerate(type_names):
         safe = re.sub(r"[^A-Za-z0-9_.-]+", "_", type_name)[:180]
