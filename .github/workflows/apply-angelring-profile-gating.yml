@@ -1,5 +1,5 @@
 name: Apply character-specific AngelRing gating
-run-name: Remove unsupported global hair band and update regressions
+run-name: Remove unsupported global hair band from Magius3Dviewer
 
 on:
   workflow_dispatch:
@@ -9,6 +9,11 @@ on:
 
 permissions:
   contents: write
+  statuses: write
+
+concurrency:
+  group: apply-character-angelring-gating
+  cancel-in-progress: true
 
 jobs:
   apply:
@@ -20,61 +25,59 @@ jobs:
           ref: magius3dviewer
           fetch-depth: 0
 
-      - name: Patch loader and two-character regression
+      - name: Gate Hair Shader by recovered character profile
         shell: python
         run: |
           from pathlib import Path
 
-          loader = Path('magia-exedra-character-three/loader.ts')
-          text = loader.read_text(encoding='utf-8')
+          path = Path('magia-exedra-character-three/loader.ts')
+          text = path.read_text(encoding='utf-8')
           old = '''                            if (name.includes('hair')) {
-                                  const angelRingReference = createAngelRingReference(
-                                      modelObject,
-                                      mesh,
-                                      characterProfile,
-                                  )
-                                  const hairResult = await createHairMaterial({
+                                  const angelRingReference = createAngelRingReference(modelObject, mesh, characterProfile)
+                                  const result = await createHairMaterial({
                                       ...sharedMaterialOptions,
                                       alphaSrc,
                                       angelRingReference,
                                   })
-                                  material = hairResult.material
-                                  textures = hairResult.textures
-                                  alphaTex = hairResult.alphaTex
-                                  if (hairResult.updateAngelRingReference) {
-                                      userData.animationLoops.push(hairResult.updateAngelRingReference)
+                                  material = result.material
+                                  textures = result.textures
+                                  alphaTex = result.alphaTex
+                                  if (result.updateAngelRingReference) {
+                                      userData.animationLoops.push(result.updateAngelRingReference)
                                   }
                                   console.log('AngelRing reference:', angelRingReference)
                               } else {
-                                  ({ material, textures, alphaTex } = await createGeneralMaterial({
+                                  const result = await createGeneralMaterial({
                                       ...sharedMaterialOptions,
                                       alphaSrc,
-                                  }))
+                                  })
+                                  material = result.material
+                                  textures = result.textures
+                                  alphaTex = result.alphaTex
                               }
           '''
           new = '''                            if (name.includes('hair')) {
-                                  const angelRingReference = createAngelRingReference(
-                                      modelObject,
-                                      mesh,
-                                      characterProfile,
-                                  )
+                                  const angelRingReference = createAngelRingReference(modelObject, mesh, characterProfile)
                                   if (angelRingReference) {
-                                      const hairResult = await createHairMaterial({
+                                      const result = await createHairMaterial({
                                           ...sharedMaterialOptions,
                                           alphaSrc,
                                           angelRingReference,
                                       })
-                                      material = hairResult.material
-                                      textures = hairResult.textures
-                                      alphaTex = hairResult.alphaTex
-                                      if (hairResult.updateAngelRingReference) {
-                                          userData.animationLoops.push(hairResult.updateAngelRingReference)
+                                      material = result.material
+                                      textures = result.textures
+                                      alphaTex = result.alphaTex
+                                      if (result.updateAngelRingReference) {
+                                          userData.animationLoops.push(result.updateAngelRingReference)
                                       }
                                   } else {
-                                      ({ material, textures, alphaTex } = await createGeneralMaterial({
+                                      const result = await createGeneralMaterial({
                                           ...sharedMaterialOptions,
                                           alphaSrc,
-                                      }))
+                                      })
+                                      material = result.material
+                                      textures = result.textures
+                                      alphaTex = result.alphaTex
                                   }
                                   console.log('AngelRing profile/reference:', {
                                       enabled: characterProfile.angelRingEnabled,
@@ -82,44 +85,109 @@ jobs:
                                       reference: angelRingReference,
                                   })
                               } else {
-                                  ({ material, textures, alphaTex } = await createGeneralMaterial({
+                                  const result = await createGeneralMaterial({
                                       ...sharedMaterialOptions,
                                       alphaSrc,
-                                  }))
+                                  })
+                                  material = result.material
+                                  textures = result.textures
+                                  alphaTex = result.alphaTex
                               }
           '''
-          if old not in text:
-              raise SystemExit('Loader AngelRing block no longer matches the expected source')
-          loader.write_text(text.replace(old, new), encoding='utf-8')
+          if old in text:
+              path.write_text(text.replace(old, new), encoding='utf-8')
+          elif "enabled: characterProfile.angelRingEnabled" not in text:
+              raise SystemExit('Current loader Hair block is unknown; refusing a blind patch')
 
-          smoke = Path('scripts/smoke-angelring-two-character.mjs')
-          text = smoke.read_text(encoding='utf-8')
+      - name: Replace two-character regression with capability-aware checks
+        shell: python
+        run: |
+          from pathlib import Path
+          path = Path('scripts/smoke-angelring-two-character.mjs')
+          text = path.read_text(encoding='utf-8')
           text = text.replace(
               "async function testCharacter(selectorValue, expectedResourceId, label) {",
               "async function testCharacter(selectorValue, expectedResourceId, label, expectedRing) {",
           )
+          old_wait = '''  await page.waitForFunction(
+              () => {
+                const character = window.scene?.characterSelected?.character
+                if (!character) return false
+                return (character.userData.meshes ?? [])
+                  .filter(mesh => mesh.name.toLowerCase().includes('hair'))
+                  .some(mesh => {
+                    const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
+                    return materials.some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))
+                  })
+              },
+              { timeout: 180_000 },
+            )
+          '''
+          new_wait = '''  await page.waitForFunction(
+              expected => {
+                const character = window.scene?.characterSelected?.character
+                if (!character) return false
+                const present = (character.userData.meshes ?? [])
+                  .filter(mesh => mesh.name.toLowerCase().includes('hair'))
+                  .some(mesh => {
+                    const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
+                    return materials.some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))
+                  })
+                return present === expected
+              },
+              { timeout: 180_000 },
+              expectedRing,
+            )
+          '''
+          if old_wait in text:
+              text = text.replace(old_wait, new_wait)
+
           text = text.replace(
-              "  await page.waitForFunction(\n    () => {\n      const character = window.scene?.characterSelected?.character\n      if (!character) return false\n      return (character.userData.meshes ?? [])\n        .filter(mesh => mesh.name.toLowerCase().includes('hair'))\n        .some(mesh => {\n          const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]\n          return materials.some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))\n        })\n    },\n    { timeout: 180_000 },\n  )\n",
-              "  await page.waitForFunction(\n    expected => {\n      const character = window.scene?.characterSelected?.character\n      if (!character) return false\n      const present = (character.userData.meshes ?? [])\n        .filter(mesh => mesh.name.toLowerCase().includes('hair'))\n        .some(mesh => {\n          const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]\n          return materials.some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))\n        })\n      return present === expected\n    },\n    { timeout: 180_000 },\n    expectedRing,\n  )\n",
-          )
-          text = text.replace(
-              "const madoka = await testCharacter('100107', 100107, 'madoka')\nconst ashley = await testCharacter('110701', 110701, 'ashley')\nconst failures = []\nfor (const [name, result] of Object.entries({ madoka, ashley })) {\n  const { front, back } = result\n",
-              "const madoka = await testCharacter('100107', 100107, 'madoka', true)\nconst ashley = await testCharacter('110701', 110701, 'ashley', false)\nconst failures = []\nfor (const [name, result] of Object.entries({ madoka })) {\n  const { front, back } = result\n",
+              "const madoka = await testCharacter('100107', 100107, 'madoka')",
+              "const madoka = await testCharacter('100107', 100107, 'madoka', true)",
+          ).replace(
+              "const ashley = await testCharacter('110701', 110701, 'ashley')",
+              "const ashley = await testCharacter('110701', 110701, 'ashley', false)",
+          ).replace(
+              "for (const [name, result] of Object.entries({ madoka, ashley })) {",
+              "for (const [name, result] of Object.entries({ madoka })) {",
           )
           marker = "if (pageErrors.length) failures.push(`page errors: ${pageErrors.join(' | ')}`)"
-          addition = "if (ashley.front.shaderCount !== 0 || ashley.back.shaderCount !== 0) failures.push(`ashley: unsupported AngelRing shader still attached (${ashley.front.shaderCount}/${ashley.back.shaderCount})`)\n"
-          if marker not in text:
-              raise SystemExit('Smoke-test failure marker not found')
-          text = text.replace(marker, addition + marker)
-          smoke.write_text(text, encoding='utf-8')
+          check = "if (ashley.front.shaderCount !== 0 || ashley.back.shaderCount !== 0) failures.push(`ashley: unsupported AngelRing shader attached (${ashley.front.shaderCount}/${ashley.back.shaderCount})`)\n"
+          if check.strip() not in text and marker in text:
+              text = text.replace(marker, check + marker)
+          path.write_text(text, encoding='utf-8')
 
-      - name: Commit character-specific gating
+      - name: Commit and push gated Viewer source
+        id: commit
         shell: bash
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add magia-exedra-character-three/loader.ts scripts/smoke-angelring-two-character.mjs
-          git diff --cached --quiet && exit 0
-          git commit -m 'fix(shader): attach AngelRing only to supported character profiles'
+          if git diff --cached --quiet; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m 'fix(shader): attach AngelRing only to recovered character profiles'
           git push origin HEAD:magius3dviewer
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "source_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish gating status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        env:
+          SOURCE_SHA: ${{ steps.commit.outputs.source_sha }}
+        with:
+          script: |
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: process.env.SOURCE_SHA || context.sha,
+              state: '${{ job.status }}' === 'success' ? 'success' : 'failure',
+              context: 'Character-specific AngelRing gating',
+              description: '${{ job.status }}' === 'success' ? 'Unsupported global hair band removed' : 'Gating patch failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
