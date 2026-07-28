@@ -14,19 +14,17 @@ permissions:
 jobs:
   map:
     runs-on: ubuntu-latest
-    timeout-minutes: 80
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: '6.0.x'
-      - name: Download client and Il2CppDumper
+      - name: Download and unpack Taiwan client
         shell: bash
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y unzip jq
-          mkdir -p work/source work/xapk work/unpacked work/tool work/output work/report
+          sudo apt-get install -y unzip python3-pip
+          python -m pip install --disable-pip-version-check pyelftools
+          mkdir -p work/source work/xapk work/unpacked work/report
           curl -fL --retry 5 --retry-all-errors -A 'Mozilla/5.0' \
             'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
             -o work/source/client.xapk
@@ -34,60 +32,69 @@ jobs:
           unzip -q work/source/client.xapk -d work/xapk
           while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
             < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
-          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' https://api.github.com/repos/Perfare/Il2CppDumper/releases/latest)
-          asset=$(jq -r '[.assets[] | select(.name | test("net6.*\\.zip$";"i"))][0].browser_download_url // empty' <<< "$release")
-          curl -fL --retry 4 "$asset" -o work/tool/tool.zip
-          unzip -q work/tool/tool.zip -d work/tool/extracted
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          path=next(Path('work/tool/extracted').rglob('config.json'))
-          data=json.loads(path.read_text(encoding='utf-8'))
-          data['GenerateScript']=True
-          data['GenerateDummyDll']=False
-          data['RequireAnyKey']=False
-          path.write_text(json.dumps(data,indent=2),encoding='utf-8')
-          PY
-      - name: Generate and filter address mapping
-        shell: bash
+          test -s work/unpacked/lib/arm64-v8a/libil2cpp.so
+          test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
+      - name: Decode post-v27 metadata usage slots
+        shell: python
         run: |
-          set -euo pipefail
-          dll=$(find work/tool/extracted -type f -name Il2CppDumper.dll -print -quit)
-          tool_dir=$(dirname "$dll")
-          (cd "$tool_dir" && dotnet ./Il2CppDumper.dll \
-            "$GITHUB_WORKSPACE/work/unpacked/lib/arm64-v8a/libil2cpp.so" \
-            "$GITHUB_WORKSPACE/work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat" \
-            "$GITHUB_WORKSPACE/work/output" </dev/null) > work/report/dumper.log 2>&1
-          test -s work/output/stringliteral.json
-          python - <<'PY'
-          import json,re
           from pathlib import Path
-          rows=json.loads(Path('work/output/stringliteral.json').read_text(encoding='utf-8'))
-          wanted={int(x,16) for x in '''
+          import json,struct
+          from elftools.elf.elffile import ELFFile
+
+          binary_path=Path('work/unpacked/lib/arm64-v8a/libil2cpp.so')
+          metadata_path=Path('work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat')
+          metadata=metadata_path.read_bytes()
+          magic,version=struct.unpack_from('<II',metadata,0)
+          assert magic==0xFAB11BAF
+          literal_offset,literal_size,literal_data_offset,literal_data_size=struct.unpack_from('<IIII',metadata,8)
+          literal_records=[]
+          for pos in range(literal_offset,literal_offset+literal_size,8):
+              length,index=struct.unpack_from('<II',metadata,pos)
+              start=literal_data_offset+index
+              raw=metadata[start:start+length]
+              literal_records.append(raw.decode('utf-8',errors='replace'))
+
+          wanted=[int(x,16) for x in '''
           9B7A4F0 9B7A538 9B79C68 9B81818 9B831F8 9B830F0
           9B83D20 9B83D38 9B83D50 9B83D58 9B83D68
           9B83FB8 9B83FC0 9B83FD8 9B83FE0 9B83FE8 9B83FF0 9B83FF8 9B84008
           9B8CAC0 9B8CAC8 9B8CAD0 9B8CAD8 9B8CAE0 9B8CAE8 9B8CAF0 9B8CAF8
           9B93110 9B93118 9C09490
-          '''.split()}
-          terms=re.compile(r'(?i)(https?://|so-net|mme|guest|register|jwt|uuid|token|member|api|user-agent|sonet|app-mme|stg-app|review-app|dev-app|tw-sonet|^[.]$|^$)')
-          out=[]
-          for row in rows:
-              raw=row.get('Address')
-              try:
-                  address=int(str(raw),0)
-              except ValueError:
-                  try: address=int(str(raw),16)
-                  except ValueError: continue
-              value=str(row.get('Value',''))
-              if address in wanted or terms.search(value):
-                  out.append({'address':f'0x{address:X}','value':value})
-          Path('work/report/string-address-map.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          Path('work/report/string-address-map.txt').write_text('\n'.join(f"{x['address']}\t{x['value']}" for x in out)+'\n',encoding='utf-8')
-          PY
+          '''.split()]
+
+          def raw_offset(elf,address:int)->int:
+              for segment in elf.iter_segments():
+                  if segment['p_type']!='PT_LOAD': continue
+                  start=int(segment['p_vaddr']); size=int(segment['p_filesz'])
+                  if start<=address<start+size:
+                      return int(segment['p_offset'])+(address-start)
+              raise KeyError(f'VA not mapped: 0x{address:X}')
+
+          results=[]
+          with binary_path.open('rb') as stream:
+              elf=ELFFile(stream)
+              for address in wanted:
+                  try:
+                      offset=raw_offset(elf,address)
+                      stream.seek(offset)
+                      encoded=struct.unpack('<Q',stream.read(8))[0]
+                      encoded32=encoded & 0xffffffff
+                      usage_type=(encoded32 & 0xE0000000)>>29
+                      index=(encoded32 & 0x1FFFFFFF)>>1
+                      value=None
+                      if usage_type==5 and index<len(literal_records): value=literal_records[index]
+                      results.append({
+                          'address':f'0x{address:X}','fileOffset':f'0x{offset:X}',
+                          'encoded':f'0x{encoded:016X}','usageType':usage_type,
+                          'index':index,'value':value,
+                      })
+                  except Exception as exc:
+                      results.append({'address':f'0x{address:X}','error':repr(exc)})
+          Path('work/report/string-address-map.json').write_text(json.dumps({'metadataVersion':version,'results':results},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('work/report/string-address-map.txt').write_text('\n'.join(f"{r['address']}\t{r.get('encoded','')}\ttype={r.get('usageType','')}\tindex={r.get('index','')}\t{r.get('value')!r}\t{r.get('error','')}" for r in results)+'\n',encoding='utf-8')
       - name: Remove raw files
         if: ${{ always() }}
-        run: rm -rf work/source work/xapk work/unpacked work/tool work/output
+        run: rm -rf work/source work/xapk work/unpacked
       - name: Upload address map
         uses: actions/upload-artifact@v4
         with:
