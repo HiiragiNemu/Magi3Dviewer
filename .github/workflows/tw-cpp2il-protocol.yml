@@ -1,5 +1,5 @@
 name: Recover Taiwan protocol method bodies
-run-name: Cpp2IL and targeted ARM64 analysis for Taiwan client
+run-name: Cpp2IL and exact ARM64 xrefs for Taiwan client
 
 on:
   workflow_dispatch:
@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/tw-cpp2il-protocol.yml'
       - 'tools/research/curate_tw_cpp2il.py'
+      - 'tools/research/scan_tw_arm64_xrefs.py'
       - 'analysis-requests/tw-cpp2il-protocol.txt'
 
 permissions:
@@ -35,7 +36,8 @@ jobs:
       - name: Install analysis tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip zip jq file binutils-aarch64-linux-gnu
+          sudo apt-get install -y unzip zip jq file binutils-aarch64-linux-gnu python3-pip
+          python -m pip install --disable-pip-version-check pyelftools
           dotnet tool install ilspycmd --tool-path work/dotnet-tools
 
       - name: Download and merge public Taiwan split APKs
@@ -82,11 +84,29 @@ jobs:
             work/merged/lib/arm64-v8a/libil2cpp.so \
             work/merged/assets/bin/Data/Managed/Metadata/global-metadata.dat \
             work/il2cpp-output \
-            > work/report/il2cpp-dumper.log 2>&1
+            </dev/null > work/report/il2cpp-dumper.log 2>&1
           status=$?
           set -e
           echo "exit_status=$status" >> work/report/il2cpp-dumper.log
           test -s work/il2cpp-output/dump.cs
+
+      - name: Find exact protocol call sites
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/xrefs work/xref-disassembly
+          binary=work/merged/lib/arm64-v8a/libil2cpp.so
+          python tools/research/scan_tw_arm64_xrefs.py \
+            --binary "$binary" \
+            --dump work/il2cpp-output/dump.cs \
+            --out work/xrefs
+          while IFS=$'\t' read -r safe start stop display; do
+            aarch64-linux-gnu-objdump -d -C \
+              --start-address=$((16#$start)) \
+              --stop-address=$((16#$stop)) \
+              "$binary" > "work/xref-disassembly/${safe}.txt" 2>&1 || true
+          done < work/xrefs/protocol-caller-ranges.tsv
+          cp work/xrefs/* work/report/
 
       - name: Disassemble protocol-critical methods
         shell: bash
@@ -102,10 +122,10 @@ jobs:
           AppResourceSettings.GetFileNameHashSalt	4E13FCC	4E1400C
           AppSettings.InitializeConnection	4E160E8	4E16534
           AppSettings.SetAppVersionHeader	4E174DC	4E17604
-          AppUrl.GetGameServerUrl	4E11024	4E13070
+          AppUrl.GetGameServerUrl	4E11024	4E1106C
           AppUrl.StaticConstructor	4E18588	4E18768
           AppUrl.SetAppUrlData	4E18768	4E187C8
-          LocalizeApi.SetApiRequestHeader	47E99BC	47EB2AC
+          LocalizeApi.SetApiRequestHeader	47E99BC	47E9B9C
           ResourceApi.ResetAppServerUrl	476334C	4763534
           ResourceApi.GetAppResourceUrl	4763534	476362C
           ResourceApi.GetMasterDataApiPath	476362C	4763724
@@ -119,8 +139,10 @@ jobs:
           ResourceApi.GetGcsSignedUrlList	47653F4	4765640
           PokkeMsgPackAPI.Object.Ctor	6FC5248	6FC5258
           PokkeMsgPackAPI.Object.OnRequestStart	6FC5258	6FC5414
+          PokkeMsgPackAPI.Object.OnEncoded	6FC58A0	6FC58C0
           PokkeMsgPackAPI.Shared.Ctor	6FC5A90	6FC5B70
           PokkeMsgPackAPI.Shared.OnRequestStart	6FC5B70	6FC5D4C
+          PokkeMsgPackAPI.Shared.OnEncoded	6FC62E8	6FC6308
           EOF
           while IFS=$'\t' read -r name start stop; do
             safe=$(tr -cs 'A-Za-z0-9._-' '_' <<< "$name")
@@ -130,40 +152,24 @@ jobs:
               "$binary" > "work/disassembly/${safe}.txt" 2>&1 || true
           done < work/targets.tsv
 
-      - name: Download and run Cpp2IL IL recovery
+      - name: Run current Cpp2IL IL recovery
         id: cpp2il
         continue-on-error: true
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p work/cpp2il-tool work/cpp2il-output
-          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' \
-            https://api.github.com/repos/SamboyCoding/Cpp2IL/releases/latest)
-          jq -r '.assets[].name' <<< "$release" > work/report/cpp2il-release-assets.txt
-          asset=$(jq -r '[.assets[] | select(.name | test("linux.*x64.*\\.(zip|tar\\.gz)$"; "i"))][0].browser_download_url // [.assets[] | select(.name | test("linux.*\\.zip$"; "i"))][0].browser_download_url // empty' <<< "$release")
-          test -n "$asset"
-          curl -fL --retry 4 "$asset" -o work/cpp2il-tool/package
-          if file work/cpp2il-tool/package | grep -qi 'gzip'; then
-            tar -xzf work/cpp2il-tool/package -C work/cpp2il-tool
-          else
-            unzip -q work/cpp2il-tool/package -d work/cpp2il-tool/extracted
-          fi
-          executable=$(find work/cpp2il-tool -type f \( -name 'Cpp2IL' -o -name 'Cpp2IL-Linux' \) -print -quit)
-          dll=$(find work/cpp2il-tool -type f -name 'Cpp2IL.dll' -print -quit)
-          if [[ -n "$executable" ]]; then
-            chmod +x "$executable"
-            command=("$executable")
-          elif [[ -n "$dll" ]]; then
-            command=(dotnet "$dll")
-          else
-            echo 'Cpp2IL executable not found' >&2
-            exit 1
-          fi
-          NO_COLOR=true "${command[@]}" \
+          curl -fL --retry 4 --retry-all-errors \
+            'https://nightly.link/SamboyCoding/Cpp2IL/workflows/dotnet-core/development/Cpp2IL-net9-linux-x64.zip' \
+            -o work/cpp2il-tool/package.zip
+          unzip -q work/cpp2il-tool/package.zip -d work/cpp2il-tool/extracted
+          executable=$(find work/cpp2il-tool/extracted -type f -name 'Cpp2IL' -print -quit)
+          test -n "$executable"
+          chmod +x "$executable"
+          NO_COLOR=true "$executable" \
             --game-path=work/tw.synthetic.apk \
             --output-as=dll_il_recovery \
             --output-to=work/cpp2il-output \
-            --low-memory-mode \
             --verbose \
             > work/report/cpp2il.log 2>&1
           find work/cpp2il-output -type f -printf '%P\t%s\n' | sort > work/report/cpp2il-output-inventory.tsv
@@ -195,6 +201,8 @@ jobs:
             --cpp2il-root work/cpp2il-output \
             --out work/report/curated
           cp work/disassembly/*-annotated.txt work/report/curated/ 2>/dev/null || true
+          mkdir -p work/report/curated/xref-callers
+          cp work/xref-disassembly/*.txt work/report/curated/xref-callers/ 2>/dev/null || true
           grep -R -n -i -E \
             'OnSign|X-post-signature|x-app-version|X-GAME-SERVER-URL|get_gcs_signed_url_list|get_resource_|AppResourceUrl|MasterDataApiPath|GameServerUrl' \
             work/report/curated \
@@ -208,7 +216,7 @@ jobs:
             work/source work/xapk work/merged work/tw.synthetic.apk \
             work/il2cpp-tool work/il2cpp-output \
             work/cpp2il-tool work/cpp2il-output work/decompiled \
-            work/dotnet-tools work/disassembly
+            work/dotnet-tools work/disassembly work/xref-disassembly work/xrefs
           if find work/report -type f \( \
             -name '*.apk' -o -name '*.xapk' -o -name '*.so' -o \
             -name 'global-metadata.dat' -o -name 'dump.cs' -o -name '*.dll' \
