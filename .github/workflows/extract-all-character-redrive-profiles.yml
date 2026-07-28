@@ -1,0 +1,173 @@
+name: Extract all official character ReDrive profiles
+run-name: Recover AngelRing, Head axes, material keywords and Shader scalars for all characters
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths:
+      - '.github/workflows/extract-all-character-redrive-profiles.yml'
+      - '.github/all-character-profile-trigger.txt'
+
+permissions:
+  contents: read
+  actions: write
+  statuses: write
+
+concurrency:
+  group: extract-all-character-redrive-profiles
+  cancel-in-progress: true
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: Checkout official downloader executor
+        uses: actions/checkout@v5
+        with:
+          ref: automation/encrypted-official-assets
+          path: research
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install protocol dependencies
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+
+      - name: Download every battle character model bundle
+        shell: bash
+        run: |
+          cat > /tmp/download_all_characters.py <<'PY'
+          import importlib.util, re, sys
+          from pathlib import Path
+          module_path=Path('research/.github/research-executor/download_targeted_assets_v2.py')
+          spec=importlib.util.spec_from_file_location('downloader',module_path)
+          module=importlib.util.module_from_spec(spec);sys.modules[spec.name]=module;spec.loader.exec_module(module)
+          pattern=re.compile(r'(?i)^battle/character/chara_\d+_battle_unit/?$')
+          def select(entries):
+            selected=[]; seen=set()
+            for entry in entries:
+              value=entry.full_path.replace('\\','/').strip('/')
+              if not pattern.match(value): continue
+              if value.lower() in seen: continue
+              seen.add(value.lower());entry.selected_reason='all-character-profile';selected.append(entry)
+            if not 80 <= len(selected) <= 160:
+              raise RuntimeError(f'Unexpected character bundle count: {len(selected)}')
+            return selected
+          module.base.select=select
+          module.base.main()
+          PY
+          python /tmp/download_all_characters.py --out /tmp/all-character-source
+
+      - name: Build AssetStudioModCLI
+        run: |
+          git clone --depth 1 --branch AssetStudioMod \
+            https://github.com/aelurum/AssetStudio.git /tmp/AssetStudio
+          dotnet publish /tmp/AssetStudio/AssetStudioCLI/AssetStudioCLI.csproj \
+            --configuration Release \
+            --framework net8.0 \
+            --runtime linux-x64 \
+            --self-contained false \
+            -p:SolutionDir=/tmp/AssetStudio/ \
+            --output /tmp/assetstudio-cli
+
+      - name: Dump character controllers and materials
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/all-character-dump
+          dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll \
+            /tmp/all-character-source/raw/AssetBundles \
+            -m dump \
+            -t monoBehaviour,material \
+            --unity-version 2022.3.21f1 --load-all \
+            -g fileName -f assetName_pathID \
+            -o /tmp/all-character-dump \
+            --log-output both --log-level info \
+            > /tmp/all-character-dump.log 2>&1
+
+      - name: Build machine-readable official profile database
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,re,hashlib
+          root=Path('/tmp/all-character-dump')
+          out=Path('/tmp/all-character-redrive-profiles');out.mkdir(parents=True,exist_ok=True)
+
+          controller_re=re.compile(r'ReDriveToonMaterialController',re.I)
+          char_re=re.compile(r'chara_(\d+)_battle_unit',re.I)
+          def number(text,name):
+            m=re.search(rf'(?m)^\s*(?:int|float|UInt8) {re.escape(name)} = ([^\r\n]+)',text)
+            if not m:return None
+            raw=m.group(1).strip()
+            try:return float(raw) if any(c in raw.lower() for c in '.e') else int(raw)
+            except:return raw
+          def material(text,path):
+            name_m=re.search(r'(?m)^\s*string m_Name = "([^"]+)"',text)
+            name=name_m.group(1) if name_m else path.stem
+            keywords=re.findall(r'(?m)^\s*string data = "([^"]+)"',text)
+            floats={k:float(v) for k,v in re.findall(r'string first = "([^"]+)"\s+float second = ([^\r\n]+)',text)}
+            colors={}
+            for m in re.finditer(r'string first = "([^"]+)"\s+ColorRGBA second\s+float r = ([^\r\n]+)\s+float g = ([^\r\n]+)\s+float b = ([^\r\n]+)\s+float a = ([^\r\n]+)',text):
+              colors[m.group(1)]=[float(m.group(i)) for i in range(2,6)]
+            textures={}
+            for m in re.finditer(r'string first = "([^"]+)"\s+UnityTexEnv second\s+PPtr<Texture> m_Texture\s+int m_FileID = ([^\r\n]+)\s+SInt64 m_PathID = ([^\r\n]+)',text):
+              textures[m.group(1)]={'fileId':int(m.group(2)),'pathId':int(m.group(3))}
+            return {'name':name,'keywords':keywords,'floats':floats,'colors':colors,'textures':textures,'source':path.relative_to(root).as_posix()}
+
+          profiles={};materials=[];controllers=[]
+          for path in root.rglob('*.txt'):
+            text=path.read_text(encoding='utf-8',errors='ignore')
+            match=char_re.search(path.as_posix())
+            if not match: continue
+            cid=int(match.group(1));profile=profiles.setdefault(str(cid),{'characterId':cid,'controllers':[],'materials':[]})
+            if controller_re.search(path.name):
+              item={'faceForwardDirection':number(text,'faceForwardDirection'),'faceUpDirection':number(text,'faceUpDirection'),'faceRightDirection':number(text,'faceRightDirection'),'headOffset':number(text,'headOffset'),'isCharacter':number(text,'IsCharacter'),'characterCancelPerspective':number(text,'CharacterCancelPerspective'),'additionalLightInfluenceByLuminance':number(text,'AdditionalLightInfluenceByLuminance'),'source':path.relative_to(root).as_posix()}
+              profile['controllers'].append(item);controllers.append({'characterId':cid,**item})
+            elif re.search(r'(?i)\bMaterial\b',text[:100]) or 'm_SavedProperties' in text:
+              item=material(text,path);profile['materials'].append(item);materials.append({'characterId':cid,**item})
+
+          summary=[]
+          for key,profile in sorted(profiles.items(),key=lambda x:int(x[0])):
+            char_controllers=[x for x in profile['controllers'] if x.get('isCharacter')==1]
+            selected=char_controllers[0] if char_controllers else (profile['controllers'][0] if profile['controllers'] else None)
+            hair=[m for m in profile['materials'] if m['floats'].get('_IsHair')==1 or '_IS_HAIR' in m['keywords'] or 'hair' in m['name'].lower()]
+            profile['selectedController']=selected
+            profile['hairMaterials']=hair
+            profile['angelRingEnabled']=any('_USE_ANGEL_RING' in m['keywords'] for m in hair)
+            profile['yuugenHighlight']=any(m['floats'].get('_YuugenHighlight',0)>0.5 for m in hair)
+            summary.append({'characterId':profile['characterId'],'controllerCount':len(profile['controllers']),'materialCount':len(profile['materials']),'hairMaterialCount':len(hair),'angelRingEnabled':profile['angelRingEnabled'],'yuugenHighlight':profile['yuugenHighlight'],'headOffset':selected.get('headOffset') if selected else None})
+
+          payload={'schemaVersion':1,'characterCount':len(profiles),'controllerCount':len(controllers),'materialCount':len(materials),'summary':summary,'characters':profiles}
+          data=json.dumps(payload,ensure_ascii=False,indent=2)+'\n'
+          (out/'official-character-redrive-profiles.json').write_text(data,encoding='utf-8')
+          (out/'README.md').write_text('# Official character ReDrive profiles\n\nSanitized serialized controller and material scalar metadata for every downloaded battle character. No model, texture, audio, AssetBundle or credentials are included.\n',encoding='utf-8')
+          if len(profiles)<80: raise SystemExit(f'Insufficient profile coverage: {len(profiles)}')
+
+      - name: Delete downloaded proprietary binaries before upload
+        if: ${{ always() }}
+        run: rm -rf /tmp/all-character-source /tmp/all-character-dump /tmp/AssetStudio /tmp/assetstudio-cli
+
+      - name: Upload official character profile database
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-all-character-redrive-profiles
+          path: /tmp/all-character-redrive-profiles
+          retention-days: 7
+          if-no-files-found: error
+
+      - name: Publish extraction status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status='${{ job.status }}';
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:status==='success'?'success':'failure',context:'Official all-character ReDrive profiles',description:status==='success'?'All character controller/material profiles generated':'All-character profile extraction failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
