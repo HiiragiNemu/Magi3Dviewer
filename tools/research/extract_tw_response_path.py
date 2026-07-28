@@ -5,8 +5,11 @@ import argparse
 import bisect
 import json
 import re
+import struct
 import subprocess
 from pathlib import Path
+
+from elftools.elf.elffile import ELFFile
 
 TARGET_ADDRESSES = {
     0x8853128: "OnRequestStart preflight factory",
@@ -26,6 +29,14 @@ TARGET_ADDRESSES = {
     0x6540D04: "response logical error helper",
     0x475B020: "response callback dispatcher",
 }
+
+CRYPTO_IDENTITIES = (
+    ("A2.Crypto", "BasicCrypto", "Decrypt"),
+    ("A2.Crypto", "Hash", "HashString"),
+    ("ReDrive.Config", "AppMsgPackConfig", "GetCryptKey"),
+    ("A2.Http", "MsgPackDefaultConfig", "GetCryptKey"),
+    ("ReDrive.Config", "AppCryptoConfig", "get_CryptoKey"),
+)
 
 NS = re.compile(r"^// Namespace:\s*(.*)$", re.M)
 TYPE = re.compile(
@@ -48,6 +59,11 @@ def safe_name(value: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", value)[:220]
 
 
+def method_name(signature: str) -> str:
+    match = re.search(r"([A-Za-z_<>][A-Za-z0-9_<>]*)\s*\(", signature)
+    return match.group(1) if match else ""
+
+
 def parse_methods(text: str) -> list[dict[str, object]]:
     namespaces = [(match.start(), match.group(1).strip()) for match in NS.finditer(text)]
     types = [(match.start(), match.group(1).strip()) for match in TYPE.finditer(text)]
@@ -60,13 +76,15 @@ def parse_methods(text: str) -> list[dict[str, object]]:
         type_index = bisect.bisect_right(type_positions, position) - 1
         namespace = namespaces[ns_index][1] if ns_index >= 0 else ""
         raw_type = types[type_index][1] if type_index >= 0 else ""
+        signature = match.group(2).strip()
         result.append(
             {
                 "rva": int(match.group(1), 16),
                 "namespace": namespace,
                 "type": normalize_type(raw_type),
                 "rawType": raw_type,
-                "signature": match.group(2).strip(),
+                "name": method_name(signature),
+                "signature": signature,
                 "sourcePosition": position,
             }
         )
@@ -83,57 +101,70 @@ def parse_methods(text: str) -> list[dict[str, object]]:
     return ordered
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--dump", type=Path, required=True)
-    parser.add_argument("--binary", type=Path, required=True)
-    parser.add_argument("--out", type=Path, required=True)
-    args = parser.parse_args()
-    args.out.mkdir(parents=True, exist_ok=True)
+def sign_extend_26(value: int) -> int:
+    return value - (1 << 26) if value & (1 << 25) else value
 
-    text = args.dump.read_text(encoding="utf-8", errors="ignore")
-    methods = parse_methods(text)
+
+def scan_direct_xrefs(
+    binary: Path,
+    methods: list[dict[str, object]],
+    target_methods: dict[int, dict[str, object]],
+) -> list[dict[str, object]]:
     starts = [int(method["rva"]) for method in methods]
-    mappings: list[dict[str, object]] = []
-    selected: dict[int, dict[str, object]] = {}
-    for address, role in TARGET_ADDRESSES.items():
-        index = bisect.bisect_right(starts, address) - 1
-        if index < 0:
-            mappings.append({"address": f"0x{address:X}", "role": role, "method": None})
-            continue
-        method = methods[index]
-        inside = int(method["rva"]) <= address < int(method["endRva"])
-        record = {
-            "address": f"0x{address:X}",
-            "role": role,
-            "insideMethod": inside,
-            "offsetFromMethod": address - int(method["rva"]),
-            "method": method,
-        }
-        mappings.append(record)
-        if inside:
-            selected[int(method["rva"])] = method
+    targets = set(target_methods)
+    results: list[dict[str, object]] = []
+    with binary.open("rb") as stream:
+        elf = ELFFile(stream)
+        for segment in elf.iter_segments():
+            if segment["p_type"] != "PT_LOAD" or not (int(segment["p_flags"]) & 1):
+                continue
+            data = segment.data()
+            base = int(segment["p_vaddr"])
+            for offset in range(0, len(data) - 3, 4):
+                instruction = struct.unpack_from("<I", data, offset)[0]
+                if instruction & 0xFC000000 != 0x94000000:
+                    continue
+                call_rva = base + offset
+                destination = call_rva + (sign_extend_26(instruction & 0x03FFFFFF) << 2)
+                if destination not in targets:
+                    continue
+                caller_index = bisect.bisect_right(starts, call_rva) - 1
+                caller = methods[caller_index] if caller_index >= 0 else None
+                inside = bool(
+                    caller
+                    and int(caller["rva"]) <= call_rva < int(caller["endRva"])
+                )
+                results.append(
+                    {
+                        "callRva": f"0x{call_rva:X}",
+                        "targetRva": f"0x{destination:X}",
+                        "target": target_methods[destination],
+                        "callerInsideMethod": inside,
+                        "caller": caller,
+                    }
+                )
+    return results
 
-    (args.out / "response-address-map.json").write_text(
-        json.dumps(mappings, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
 
-    type_keys: set[tuple[str, str]] = set()
-    for method in selected.values():
-        type_keys.add((str(method["namespace"]), str(method["type"])))
+def write_disassembly(
+    binary: Path,
+    out: Path,
+    methods: dict[int, dict[str, object]],
+) -> None:
+    directory = out / "disassembly"
+    directory.mkdir(exist_ok=True)
+    for method in methods.values():
         label = safe_name(
             f"{method['namespace']}.{method['type']}.{method['signature']}"
         )
-        target = args.out / "disassembly" / f"{label}.txt"
-        target.parent.mkdir(exist_ok=True)
+        target = directory / f"{label}.txt"
         completed = subprocess.run(
             [
                 "aarch64-linux-gnu-objdump",
                 "-d",
                 f"--start-address=0x{int(method['rva']):X}",
                 f"--stop-address=0x{int(method['endRva']):X}",
-                str(args.binary),
+                str(binary),
             ],
             text=True,
             stdout=subprocess.PIPE,
@@ -147,23 +178,30 @@ def main() -> None:
             encoding="utf-8",
         )
 
-    # Copy bounded complete type blocks for the mapped methods.
+
+def write_type_blocks(
+    text: str,
+    out: Path,
+    type_keys: set[tuple[str, str]],
+) -> None:
     type_matches = list(TYPE.finditer(text))
-    index_records: list[dict[str, object]] = []
-    type_dir = args.out / "types"
-    type_dir.mkdir(exist_ok=True)
+    namespace_matches = list(NS.finditer(text))
+    namespace_positions = [match.start() for match in namespace_matches]
+    records: list[dict[str, object]] = []
+    directory = out / "types"
+    directory.mkdir(exist_ok=True)
     for index, match in enumerate(type_matches):
         start = match.start()
         stop = type_matches[index + 1].start() if index + 1 < len(type_matches) else len(text)
-        ns_matches = list(NS.finditer(text, 0, start))
-        namespace = ns_matches[-1].group(1).strip() if ns_matches else ""
+        ns_index = bisect.bisect_right(namespace_positions, start) - 1
+        namespace = namespace_matches[ns_index].group(1).strip() if ns_index >= 0 else ""
         type_name = normalize_type(match.group(1).strip())
         if (namespace, type_name) not in type_keys:
             continue
         block = text[start:stop][:800_000]
         filename = safe_name(f"{namespace}.{type_name}") + ".cs.txt"
-        (type_dir / filename).write_text(block, encoding="utf-8")
-        index_records.append(
+        (directory / filename).write_text(block, encoding="utf-8")
+        records.append(
             {
                 "namespace": namespace,
                 "type": type_name,
@@ -171,10 +209,96 @@ def main() -> None:
                 "bytes": len(block.encode("utf-8")),
             }
         )
-    (type_dir / "index.json").write_text(
-        json.dumps(index_records, ensure_ascii=False, indent=2) + "\n",
+    (directory / "index.json").write_text(
+        json.dumps(records, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dump", type=Path, required=True)
+    parser.add_argument("--binary", type=Path, required=True)
+    parser.add_argument("--out", type=Path, required=True)
+    args = parser.parse_args()
+    args.out.mkdir(parents=True, exist_ok=True)
+
+    text = args.dump.read_text(encoding="utf-8", errors="ignore")
+    methods = parse_methods(text)
+    starts = [int(method["rva"]) for method in methods]
+    selected: dict[int, dict[str, object]] = {}
+    mappings: list[dict[str, object]] = []
+    for address, role in TARGET_ADDRESSES.items():
+        index = bisect.bisect_right(starts, address) - 1
+        method = methods[index] if index >= 0 else None
+        inside = bool(
+            method and int(method["rva"]) <= address < int(method["endRva"])
+        )
+        mappings.append(
+            {
+                "address": f"0x{address:X}",
+                "role": role,
+                "insideMethod": inside,
+                "offsetFromMethod": address - int(method["rva"]) if method else None,
+                "method": method,
+            }
+        )
+        if inside and method:
+            selected[int(method["rva"])] = method
+    (args.out / "response-address-map.json").write_text(
+        json.dumps(mappings, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    crypto_targets: dict[int, dict[str, object]] = {}
+    for method in methods:
+        identity = (
+            str(method["namespace"]),
+            str(method["type"]),
+            str(method["name"]),
+        )
+        if identity in CRYPTO_IDENTITIES:
+            crypto_targets[int(method["rva"])] = method
+    missing_identities = [
+        identity
+        for identity in CRYPTO_IDENTITIES
+        if not any(
+            (str(method["namespace"]), str(method["type"]), str(method["name"]))
+            == identity
+            for method in crypto_targets.values()
+        )
+    ]
+    xrefs = scan_direct_xrefs(args.binary, methods, crypto_targets)
+    for xref in xrefs:
+        caller = xref.get("caller")
+        if isinstance(caller, dict) and xref.get("callerInsideMethod"):
+            selected[int(caller["rva"])] = caller
+    for method in crypto_targets.values():
+        selected[int(method["rva"])] = method
+    (args.out / "response-crypto-xrefs.json").write_text(
+        json.dumps(
+            {
+                "targetMethods": {
+                    f"0x{address:X}": method
+                    for address, method in sorted(crypto_targets.items())
+                },
+                "missingIdentities": missing_identities,
+                "xrefCount": len(xrefs),
+                "xrefs": xrefs,
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    write_disassembly(args.binary, args.out, selected)
+    type_keys = {
+        (str(method["namespace"]), str(method["type"]))
+        for method in selected.values()
+    }
+    write_type_blocks(text, args.out, type_keys)
 
 
 if __name__ == "__main__":
