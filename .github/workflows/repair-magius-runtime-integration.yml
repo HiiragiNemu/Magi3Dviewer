@@ -1,5 +1,5 @@
 name: Repair Magius runtime integration
-run-name: Fix capability-gated Hair shader and ReDriveVolume stage call placement
+run-name: Structurally fix capability-gated Hair and ReDriveVolume stage runtime
 
 on:
   workflow_dispatch:
@@ -30,33 +30,16 @@ jobs:
         run: |
           from pathlib import Path
 
-          path = Path('magia-exedra-character-three/loader.ts')
-          text = path.read_text(encoding='utf-8')
-          old = '''                            if (name.includes('hair')) {
-                                  const angelRingReference = createAngelRingReference(modelObject, mesh, characterProfile)
-                                  const result = await createHairMaterial({
-                                      ...sharedMaterialOptions,
-                                      alphaSrc,
-                                      angelRingReference,
-                                  })
-                                  material = result.material
-                                  textures = result.textures
-                                  alphaTex = result.alphaTex
-                                  if (result.updateAngelRingReference) {
-                                      userData.animationLoops.push(result.updateAngelRingReference)
-                                  }
-                                  console.log('AngelRing reference:', angelRingReference)
-                              } else {
-                                  const result = await createGeneralMaterial({
-                                      ...sharedMaterialOptions,
-                                      alphaSrc,
-                                  })
-                                  material = result.material
-                                  textures = result.textures
-                                  alphaTex = result.alphaTex
-                              }
-          '''
-          new = '''                            if (name.includes('hair')) {
+          path=Path('magia-exedra-character-three/loader.ts')
+          text=path.read_text(encoding='utf-8')
+          marker="                            if (name.includes('hair')) {"
+          if 'AngelRing capability/reference' not in text:
+            start=text.index(marker)
+            outer_else=text.index(
+              "                            } else {\n                                const result = await createGeneralMaterial",
+              start,
+            )
+            replacement='''                            if (name.includes('hair')) {
                                   const angelRingReference = createAngelRingReference(modelObject, mesh, characterProfile)
                                   if (angelRingReference) {
                                       const result = await createHairMaterial({
@@ -83,84 +66,51 @@ jobs:
                                       enabled: characterProfile.angelRingEnabled,
                                       reference: angelRingReference,
                                   })
-                              } else {
-                                  const result = await createGeneralMaterial({
-                                      ...sharedMaterialOptions,
-                                      alphaSrc,
-                                  })
-                                  material = result.material
-                                  textures = result.textures
-                                  alphaTex = result.alphaTex
-                              }
           '''
-          if old in text:
-              text = text.replace(old, new, 1)
-          elif "AngelRing capability/reference" not in text:
-              raise SystemExit('Current Hair loader block is not the expected source')
-          path.write_text(text, encoding='utf-8')
+            text=text[:start]+replacement+text[outer_else:]
+          path.write_text(text,encoding='utf-8')
 
       - name: Place ReDriveVolume runtime call inside stage profile function
         shell: python
         run: |
           from pathlib import Path
+          import re
 
-          path = Path('src/viewer/stages.ts')
-          text = path.read_text(encoding='utf-8')
-          broken = '''    }
-          }
-              applyReDriveVolumeRuntime(
-              profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
+          path=Path('src/viewer/stages.ts')
+          text=path.read_text(encoding='utf-8')
+          start=text.index('async function applyStageRenderProfile')
+          restore=text.index('function restoreSceneProfile',start)
+          section=text[start:restore]
+          section=re.sub(
+            r'\n}\n\s*applyReDriveVolumeRuntime\(\s*profile\.reDriveVolume as ReDriveVolumeRuntimeProfile \| undefined,\s*\)\s*$',
+            '\n    applyReDriveVolumeRuntime(\n        profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,\n    )\n}\n\n',
+            section,
+            flags=re.S,
           )
-
-          function restoreSceneProfile() {
-          '''
-          fixed = '''    }
-              applyReDriveVolumeRuntime(
-                  profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
-              )
-          }
-
-          function restoreSceneProfile() {
-          '''
-          if broken in text:
-              text = text.replace(broken, fixed, 1)
-          else:
-              outside = text.find('\n}\n    applyReDriveVolumeRuntime(')
-              if outside >= 0:
-                  start = outside + 2
-                  end = text.find('\n\nfunction restoreSceneProfile()', start)
-                  if end < 0:
-                      raise SystemExit('Could not locate broken runtime call end')
-                  block = text[start:end].strip()
-                  text = text[:outside] + '\n    ' + block.replace('\n', '\n    ') + '\n}' + text[end:]
-              elif 'applyReDriveVolumeRuntime(' not in text:
-                  marker = '\n}\n\nfunction restoreSceneProfile()'
-                  if marker not in text:
-                      raise SystemExit('Stage render-profile function boundary not found')
-                  call = '''
-              applyReDriveVolumeRuntime(
-                  profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
-              )
-          }
-
-          function restoreSceneProfile()'''
-                  text = text.replace(marker, call, 1)
-          path.write_text(text, encoding='utf-8')
+          if 'applyReDriveVolumeRuntime(' not in section:
+            close=section.rfind('\n}')
+            if close<0: raise SystemExit('applyStageRenderProfile closing brace not found')
+            section=(section[:close]
+              +'\n    applyReDriveVolumeRuntime(\n'
+              +'        profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,\n'
+              +'    )'
+              +section[close:])
+          if section.count('applyReDriveVolumeRuntime(')!=1:
+            raise SystemExit(f'Unexpected runtime call count {section.count("applyReDriveVolumeRuntime(")}')
+          text=text[:start]+section+text[restore:]
+          path.write_text(text,encoding='utf-8')
 
       - name: Validate repaired source shape
         shell: bash
         run: |
           set -euo pipefail
           grep -F "AngelRing capability/reference" magia-exedra-character-three/loader.ts
-          grep -F "applyReDriveVolumeRuntime(" src/viewer/stages.ts
           python - <<'PY'
           from pathlib import Path
           text=Path('src/viewer/stages.ts').read_text(encoding='utf-8')
-          function=text[text.index('async function applyStageRenderProfile'):text.index('function restoreSceneProfile')]
-          if 'applyReDriveVolumeRuntime(' not in function:
-              raise SystemExit('ReDriveVolume call is not inside applyStageRenderProfile')
-          if text.count('function restoreSceneProfile') != 1:
-              raise SystemExit('Unexpected restoreSceneProfile count')
+          section=text[text.index('async function applyStageRenderProfile'):text.index('function restoreSceneProfile')]
+          assert section.count('applyReDriveVolumeRuntime(')==1, section
+          assert section.rstrip().endswith('}'), section[-1000:]
           PY
 
       - name: Commit and push repaired integration
@@ -171,12 +121,10 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add magia-exedra-character-three/loader.ts src/viewer/stages.ts
-          if git diff --cached --quiet; then
-            echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-            exit 0
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix(runtime): gate Hair feature and scope stage volume call'
+            git push origin HEAD:magius3dviewer
           fi
-          git commit -m 'fix(runtime): gate Hair feature and apply stage volume in scope'
-          git push origin HEAD:magius3dviewer
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Publish repair status
@@ -187,4 +135,4 @@ jobs:
         with:
           script: |
             const status='${{ job.status }}';
-            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:process.env.SOURCE_SHA||context.sha,state:status==='success'?'success':'failure',context:'Magius runtime integration repair',description:status==='success'?'Hair gating and ReDriveVolume call repaired':'Runtime integration repair failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:process.env.SOURCE_SHA||context.sha,state:status==='success'?'success':'failure',context:'Magius runtime integration repair',description:status==='success'?'Hair gating and stage volume scoping repaired':'Runtime integration repair failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
