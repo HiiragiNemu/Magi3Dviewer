@@ -5,7 +5,8 @@ from pathlib import Path
 
 TARGETS=(
  ('A2.Crypto','Hash','HashBytes'),('A2.Crypto','Hash','HashString'),('A2.Crypto','Hash','GetSalt'),('A2.Crypto','Hash','GetHashKey'),
- ('A2.Crypto','BasicCrypto','Encrypt'),('A2.Crypto','BasicCrypto','CreateRijndaelManagedForEncrypt'),('A2.Crypto','BasicCrypto','Decrypt'),
+ ('A2.Crypto','BasicCrypto','Encrypt'),('A2.Crypto','BasicCrypto','CreateRijndaelManagedForEncrypt'),('A2.Crypto','BasicCrypto','CreateRijndaelManagedForEnCrypt'),('A2.Crypto','BasicCrypto','Decrypt'),
+ ('A2.Http','RequestEncoder','EncodeRequetContainer'),('A2.Http','RequestEncoder','EncodeRequestContainer'),
  ('ReDrive.Config','AppCryptoConfig','get_HashKey'),('ReDrive.Config','AppCryptoConfig','get_HashSalt'),('ReDrive.Config','AppCryptoConfig','get_CryptoKey'),('ReDrive.Config','AppCryptoConfig','GetHashAlgorithm'),('ReDrive.Config','AppCryptoConfig','Convert'),
  ('ReDrive.Config','AppMsgPackConfig','GetCryptKey'),
 )
@@ -16,9 +17,7 @@ METHOD=re.compile(r'^\s*// RVA: 0x([0-9A-Fa-f]+).*\n\s*([^\n{]+\([^\n]*\))\s*\{\
 def main():
  ap=argparse.ArgumentParser(); ap.add_argument('--dump',type=Path,required=True); ap.add_argument('--binary',type=Path,required=True); ap.add_argument('--out',type=Path,required=True); args=ap.parse_args(); args.out.mkdir(parents=True,exist_ok=True)
  text=args.dump.read_text(encoding='utf-8',errors='ignore'); lines=text.splitlines(True)
- namespace=''; typ=''; offset=0; methods=[]
- # Track namespace/type by textual position.
- ns_positions=[]; type_positions=[]
+ namespace=''; typ=''; offset=0; methods=[]; ns_positions=[]; type_positions=[]
  for line in lines:
   stripped=line.strip(); m=NS.match(stripped)
   if m: namespace=m.group(1).strip(); ns_positions.append((offset,namespace))
