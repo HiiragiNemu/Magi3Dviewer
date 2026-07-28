@@ -22,23 +22,26 @@ export interface CharacterReDriveProfile {
  *
  * 0 X, 1 Y, 2 Z, 3 negX, 4 negY, 5 negZ.
  *
- * Ashley's official serialized controller stores forward=3, up=1, right=2 and
- * headOffset=0.2. These values are applied in Head-local space and reproduce the
- * material's bind-pose world directions: forward +Z, up +Y, right +X.
+ * Ashley serializes forward=3, up=1, right=2 and headOffset=0.2. The serialized
+ * forward vector points into the face under the exported FBX/Three handedness;
+ * camera-facing and shading calculations require the outward inverse (+X). This
+ * conversion is verified by the browser front/back regression: local +X maps to
+ * the visible face direction, while local -X maps to the rear hair.
  */
 const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
     [110701, {
         characterId: 110701,
         source: 'official-export',
         headBoneName: 'Head',
-        faceForwardAxis: '-x',
+        faceForwardAxis: 'x',
         faceUpAxis: 'y',
         faceRightAxis: 'z',
         headOffset: 0.2,
         hairUvAngelRing: false,
         notes: [
             'Ashley Taylor / chara_110701_battle_unit.',
-            'ReDriveToonMaterialController: forward=negX, up=Y, right=Z, headOffset=0.2.',
+            'Native controller: forward=negX, up=Y, right=Z, headOffset=0.2.',
+            'Web outward face direction is the inverse of the native serialized forward axis.',
             'Hair material: _IsHair=1, _YuugenHighlight=0, _UseRimLight=1.',
             'FBX material graph confirms Aniso, Gem/MatCap and material-specific OutlineOffset variants.',
         ],
@@ -47,16 +50,16 @@ const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
 
 /**
  * Generic values remain explicitly estimated. The direction fallback follows
- * the dominant Unity humanoid orientation observed in the current corpus, but
- * each character should ultimately receive its serialized controller profile.
+ * the visible outward direction of the current FBX corpus. Each character should
+ * ultimately receive its serialized controller profile and conversion metadata.
  */
 const DEFAULT_PROFILE: Omit<CharacterReDriveProfile, 'characterId'> = {
     source: 'estimated',
     headBoneName: 'Head',
-    faceForwardAxis: '-x',
+    faceForwardAxis: 'x',
     faceUpAxis: 'y',
     faceRightAxis: 'z',
-    notes: ['Generic Unity humanoid Head-axis fallback; replace with an official exported profile.'],
+    notes: ['Generic Unity humanoid outward Head-axis fallback; replace with an official exported profile.'],
 };
 
 export function getCharacterReDriveProfile(characterId: number): CharacterReDriveProfile {
