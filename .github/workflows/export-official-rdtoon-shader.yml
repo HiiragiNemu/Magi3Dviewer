@@ -1,5 +1,5 @@
 name: Export official ReDriveToon Shader assets
-run-name: Export ShaderLab and compiled ReDriveToon shader payloads
+run-name: Recover ShaderLab, serialized Shader objects and compiled variant metadata
 
 on:
   workflow_dispatch:
@@ -23,141 +23,160 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:
-      - name: Checkout official downloader executor
+      - name: Checkout current official downloader
         uses: actions/checkout@v5
         with:
           ref: automation/encrypted-official-assets
           path: research
 
-      - name: Set up Python
+      - name: Set up Python and .NET
         uses: actions/setup-python@v6
         with:
-          python-version: '3.13'
+          python-version: '3.12'
 
       - name: Set up .NET 8
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '8.0.x'
 
-      - name: Install protocol dependencies
-        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+      - name: Install extraction dependencies
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome UnityPy==1.23.0
 
-      - name: Download root Android and Shader bundles
+      - name: Download root Android and ReDriveToon Shader bundles
         run: |
-          python research/.github/research-executor/download_targeted_assets.py \
-            --out /tmp/official-source
+          python research/.github/research-executor/download_targeted_assets.py --out /tmp/official-source
+          find /tmp/official-source/raw/AssetBundles -type f -printf '%P %s bytes\n' | sort > /tmp/downloaded-assets.txt
+          test -f /tmp/official-source/raw/AssetBundles/shader/redrive_toon
 
       - name: Build AssetStudioModCLI
         run: |
-          git clone --depth 1 --branch AssetStudioMod \
-            https://github.com/aelurum/AssetStudio.git /tmp/AssetStudio
+          git clone --depth 1 --branch AssetStudioMod https://github.com/aelurum/AssetStudio.git /tmp/AssetStudio
           dotnet publish /tmp/AssetStudio/AssetStudioCLI/AssetStudioCLI.csproj \
-            --configuration Release \
-            --framework net8.0 \
-            --runtime linux-x64 \
-            --self-contained false \
-            -p:SolutionDir=/tmp/AssetStudio/ \
+            --configuration Release --framework net8.0 --runtime linux-x64 \
+            --self-contained false -p:SolutionDir=/tmp/AssetStudio/ \
             --output /tmp/assetstudio-cli
 
-      - name: Record CLI command schema
+      - name: Run corrected AssetStudio Shader export modes
         shell: bash
         run: |
           set +e
-          mkdir -p /tmp/shader-export/logs
-          dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll --help \
-            > /tmp/shader-export/logs/help.txt 2>&1
-          dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll \
-            > /tmp/shader-export/logs/no-args.txt 2>&1
+          mkdir -p /tmp/shader-evidence/{assetstudio-export,assetstudio-raw,assetstudio-dump,logs}
+          shader=/tmp/official-source/raw/AssetBundles/shader/redrive_toon
+          android=/tmp/official-source/raw/AssetBundles/Android
+          for input in "$shader" "$android"; do
+            label=$(basename "$input")
+            dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll "$input" \
+              -m export -t shader --unity-version 2022.3.21f1 \
+              -g fileName -f assetName_pathID -o "/tmp/shader-evidence/assetstudio-export/$label" \
+              --log-output both --log-level verbose \
+              > "/tmp/shader-evidence/logs/$label-export.txt" 2>&1
+            echo $? > "/tmp/shader-evidence/logs/$label-export.exit"
+
+            dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll "$input" \
+              -m exportRaw -t shader --unity-version 2022.3.21f1 --load-all \
+              -g fileName -f assetName_pathID -o "/tmp/shader-evidence/assetstudio-raw/$label" \
+              --log-output both --log-level verbose \
+              > "/tmp/shader-evidence/logs/$label-exportRaw.txt" 2>&1
+            echo $? > "/tmp/shader-evidence/logs/$label-exportRaw.exit"
+
+            dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll "$input" \
+              -m dump -t shader --unity-version 2022.3.21f1 --load-all \
+              -g fileName -f assetName_pathID -o "/tmp/shader-evidence/assetstudio-dump/$label" \
+              --log-output both --log-level verbose \
+              > "/tmp/shader-evidence/logs/$label-dump.txt" 2>&1
+            echo $? > "/tmp/shader-evidence/logs/$label-dump.exit"
+          done
           true
 
-      - name: Export Shader assets through every supported representation
-        shell: bash
+      - name: Inventory and parse Shader objects with UnityPy
+        shell: python
         run: |
-          set +e
-          input=/tmp/official-source/raw/AssetBundles
-          mkdir -p /tmp/shader-export/export /tmp/shader-export/raw /tmp/shader-export/dump
+          from pathlib import Path
+          import collections, hashlib, json, re, traceback
+          import UnityPy
 
-          dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll \
-            "$input" -m export -t shader \
-            --unity-version 2022.3.21f1 --load-all \
-            -g fileName -f assetName_pathID \
-            -o /tmp/shader-export/export \
-            --log-output both --log-level verbose \
-            > /tmp/shader-export/logs/export.txt 2>&1
-          echo $? > /tmp/shader-export/logs/export.exit
+          inputs=[
+            Path('/tmp/official-source/raw/AssetBundles/shader/redrive_toon'),
+            Path('/tmp/official-source/raw/AssetBundles/Android'),
+          ]
+          out=Path('/tmp/shader-evidence/unitypy');out.mkdir(parents=True,exist_ok=True)
+          result={'schemaVersion':1,'unityPyVersion':UnityPy.__version__,'bundles':[],'shaderObjects':[],'failures':[]}
+          for source in inputs:
+            bundle={'path':source.name,'size':source.stat().st_size,'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'types':{},'containers':[]}
+            try:
+              env=UnityPy.load(str(source))
+              counts=collections.Counter(obj.type.name for obj in env.objects)
+              bundle['types']=dict(sorted(counts.items()))
+              bundle['containers']=sorted(str(key) for key in env.container.keys())[:10000]
+              for obj in env.objects:
+                if obj.type.name!='Shader':continue
+                record={'bundle':source.name,'pathId':obj.path_id,'name':None,'rawSize':None,'rawSha256':None,'tree':None,'treeError':None}
+                try:record['name']=obj.peek_name()
+                except Exception as exc:record['nameError']=repr(exc)
+                raw=obj.get_raw_data();record['rawSize']=len(raw);record['rawSha256']=hashlib.sha256(raw).hexdigest()
+                raw_path=out/f"{source.name}-Shader-{obj.path_id}.bin";raw_path.write_bytes(raw)
+                try:
+                  tree=obj.parse_as_dict();record['tree']=tree
+                  (out/f"{source.name}-Shader-{obj.path_id}.json").write_text(json.dumps(tree,ensure_ascii=False,indent=2,default=str),encoding='utf-8')
+                except Exception as exc:
+                  record['treeError']=repr(exc)
+                  record['traceback']=traceback.format_exc()[-12000:]
+                result['shaderObjects'].append(record)
+            except Exception as exc:
+              result['failures'].append({'bundle':source.name,'error':repr(exc),'traceback':traceback.format_exc()[-12000:]})
+            result['bundles'].append(bundle)
+          (out/'unitypy-shader-inventory.json').write_text(json.dumps(result,ensure_ascii=False,indent=2,default=str),encoding='utf-8')
 
-          dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll \
-            "$input" -m raw -t shader \
-            --unity-version 2022.3.21f1 --load-all \
-            -g fileName -f assetName_pathID \
-            -o /tmp/shader-export/raw \
-            --log-output both --log-level verbose \
-            > /tmp/shader-export/logs/raw.txt 2>&1
-          echo $? > /tmp/shader-export/logs/raw.exit
-
-          dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll \
-            "$input" -m dump -t shader \
-            --unity-version 2022.3.21f1 --load-all \
-            -g fileName -f assetName_pathID \
-            -o /tmp/shader-export/dump \
-            --log-output both --log-level verbose \
-            > /tmp/shader-export/logs/dump.txt 2>&1
-          echo $? > /tmp/shader-export/logs/dump.exit
-          true
-
-      - name: Sanitize and index exported Shader corpus
+      - name: Build sanitized Shader research corpus
         shell: python
         run: |
           from pathlib import Path
           import hashlib,json,re,shutil
-          root=Path('/tmp/shader-export')
-          out=Path('/tmp/sanitized-shader-export');out.mkdir(parents=True,exist_ok=True)
+          root=Path('/tmp/shader-evidence')
+          out=Path('/tmp/official-rdtoon-shader-export');out.mkdir(parents=True,exist_ok=True)
           secret=re.compile(r'(?i)(token|signature|crypto.?key|akamai).{0,64}[:=].*')
           query=re.compile(r'https?://\S+\?\S+')
-          shader_terms=re.compile(r'(?i)(redrive|rdtoon|angel.?ring|yuugen|self.?shadow|face.?gradient|specular.?gradient|depth.?tex|gem|cosmic|aniso|outline)')
+          terms=re.compile(r'(?i)(redrive|rdtoon|angel.?ring|yuugen|self.?shadow|face.?gradient|specular.?gradient|depth.?tex|gem|cosmic|aniso|outline|shaderfeature|keyword|subprogram|compressedblob)')
           manifest=[];hits=[]
-          for area in ('export','raw','dump','logs'):
-            source=root/area
-            if not source.exists():continue
-            for path in source.rglob('*'):
-              if not path.is_file():continue
-              rel=Path(area)/path.relative_to(source)
-              data=path.read_bytes()
-              # Exported Shader assets are textual on supported Unity formats;
-              # preserve unknown binary Shader blobs in the private artifact as
-              # hexadecimal metadata only, never publish arbitrary raw bundles.
-              try:text=data.decode('utf-8')
-              except UnicodeDecodeError:
-                record={'path':rel.as_posix(),'size':len(data),'sha256':hashlib.sha256(data).hexdigest(),'binary':True,'magic':data[:64].hex()}
-                manifest.append(record)
-                continue
-              safe='\n'.join(query.sub('[REDACTED URL QUERY]',secret.sub('[REDACTED SECRET FIELD]',line)) for line in text.splitlines())+'\n'
-              target=out/rel;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(safe,encoding='utf-8')
-              manifest.append({'path':rel.as_posix(),'size':len(safe.encode()),'sha256':hashlib.sha256(safe.encode()).hexdigest(),'binary':False})
-              for no,line in enumerate(safe.splitlines(),1):
-                if shader_terms.search(line):
-                  hits.append({'file':rel.as_posix(),'line':no,'text':line[:4000]})
-                  if len(hits)>=200000:break
-          index={'schemaVersion':1,'fileCount':len(manifest),'textFileCount':sum(not x.get('binary') for x in manifest),'binaryFileCount':sum(bool(x.get('binary')) for x in manifest),'files':manifest,'hits':hits}
-          (out/'shader-export-index.json').write_text(json.dumps(index,ensure_ascii=False,indent=2),encoding='utf-8')
-          if not manifest:raise SystemExit('No Shader export diagnostics produced')
+          for path in root.rglob('*'):
+            if not path.is_file():continue
+            rel=path.relative_to(root)
+            data=path.read_bytes()
+            try:text=data.decode('utf-8')
+            except UnicodeDecodeError:
+              # Raw Shader objects are retained because this artifact contains no
+              # AssetBundle/model/texture/audio data and is restricted to Shader class objects.
+              target=out/rel;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
+              manifest.append({'path':rel.as_posix(),'size':len(data),'sha256':hashlib.sha256(data).hexdigest(),'binary':True,'magic':data[:64].hex()})
+              continue
+            safe='\n'.join(query.sub('[REDACTED URL QUERY]',secret.sub('[REDACTED SECRET FIELD]',line)) for line in text.splitlines())+'\n'
+            target=out/rel;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(safe,encoding='utf-8')
+            manifest.append({'path':rel.as_posix(),'size':len(safe.encode()),'sha256':hashlib.sha256(safe.encode()).hexdigest(),'binary':False})
+            for no,line in enumerate(safe.splitlines(),1):
+              if terms.search(line):
+                hits.append({'file':rel.as_posix(),'line':no,'text':line[:4000]})
+                if len(hits)>=200000:break
+          index={'schemaVersion':2,'fileCount':len(manifest),'files':manifest,'hits':hits}
+          (out/'shader-research-index.json').write_text(json.dumps(index,ensure_ascii=False,indent=2),encoding='utf-8')
+          shutil.copy2('/tmp/downloaded-assets.txt',out/'downloaded-assets.txt')
+          if not manifest:raise SystemExit('No Shader research output generated')
 
-      - name: Delete downloaded proprietary AssetBundles
+      - name: Delete downloaded proprietary bundles and tool sources
         if: ${{ always() }}
         run: rm -rf /tmp/official-source /tmp/AssetStudio /tmp/assetstudio-cli
 
-      - name: Upload sanitized Shader export and command diagnostics
+      - name: Upload official Shader-only corpus
         uses: actions/upload-artifact@v4
         with:
-          name: official-rdtoon-shader-export
-          path: /tmp/sanitized-shader-export
+          name: official-rdtoon-shader-export-v2
+          path: /tmp/official-rdtoon-shader-export
           retention-days: 7
           if-no-files-found: error
 
-      - name: Publish export status
+      - name: Publish Shader extraction status
         if: ${{ always() }}
         uses: actions/github-script@v7
         with:
           script: |
             const status='${{ job.status }}';
-            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:status==='success'?'success':'failure',context:'Official ReDriveToon Shader asset export',description:status==='success'?'Shader export representations generated':'Shader export failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:context.sha,state:status==='success'?'success':'failure',context:'Official ReDriveToon Shader export v2',description:status==='success'?'Shader objects parsed through AssetStudio and UnityPy':'Shader extraction v2 failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
