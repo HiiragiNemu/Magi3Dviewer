@@ -10,12 +10,15 @@ from pathlib import Path
 PATTERNS = (
     r"(^|\.)AppUrl$", r"(^|\.)AppUrlData$", r"(^|\.)AppLocalizeSettings$",
     r"(^|\.)AppResourceSettings$", r"(^|\.)AppSettings$", r"(^|\.)AppPokkeConfig$",
+    r"(^|\.)AppCryptoConfig$", r"(^|\.)AppMsgPackConfig$",
     r"(^|\.)AppReqBase$", r"(^|\.)ReDriveMsgPackApiFactory$", r"(^|\.)APISigning$",
     r"(^|\.)ResourceApi$", r"(^|\.)ResourceRemoteUrl$", r"(^|\.)ResourceDownloader$",
+    r"(^|\.)ResourceMsgPackDataApi$", r"(^|\.)ResourceCrypto$",
     r"(^|\.)ResourceConfigData$", r"(^|\.)ResourceConfigModel$",
     r"(^|\.)ResourceGcsSignedUrlData$", r"(^|\.)ResourceGcsSignedUrlModel$",
     r"(^|\.)PokkeMsgPackAPIFactory$", r"(^|\.)PokkeMsgPackAPI$", r"(^|\.)PokkeMsgPackAPI`2$",
-    r"(^|\.)PokkeReqContainer$", r"(^|\.)PokkeUserInfo$", r"(^|\.)PokkeDefaultConfig$",
+    r"(^|\.)PokkeReqContainer$", r"(^|\.)PokkeResContainer$", r"(^|\.)PokkeUserInfo$",
+    r"(^|\.)PokkeDefaultConfig$", r"(^|\.)MsgPackDefaultConfig$", r"(^|\.)RequestEncoder$",
     r"(^|\.)Pokke.*(Encode|Decode|Encoder|Decoder|Crypt|Cipher).*$",
     r"(^|\.)LoginAPI$", r"(^|\.)LoginApi$", r"(^|\.)LoginApi\.Login$",
     r"(^|\.)LoginApi\.Login\.Request$", r"(^|\.)LoginApi\.Login\.Response$",
@@ -43,7 +46,7 @@ def main() -> None:
     for line in listed.stdout.splitlines():
         value=re.sub(r"^(Class|Struct|Interface|Enum)\s+","",line.strip())
         if value and any(re.search(pattern,value) for pattern in PATTERNS): type_names.append(value)
-    type_names=list(dict.fromkeys(type_names))[:220]
+    type_names=list(dict.fromkeys(type_names))[:260]
     records=[]
     for index,type_name in enumerate(type_names):
         safe=re.sub(r"[^A-Za-z0-9_.-]+","_",type_name)[:180]; target=args.out/f"{index:03d}-{safe}.cs"
