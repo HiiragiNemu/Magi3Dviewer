@@ -71,6 +71,7 @@ jobs:
               'productionDomainPart':0x9B8CAC0,
               'sdkRequestSignSalt':0x9C09490,
           }
+          required={'appMsgPackCryptKey','appCryptoHashKeyInput','appCryptoHashSaltInput','appCryptoSeedInput'}
           wanted=set(slots.values())
 
           def map_va(elf,address):
@@ -83,46 +84,51 @@ jobs:
               return None
 
           with binary_path.open('rb') as stream:
-              elf=ELFFile(stream); usage_pointers={}
+              elf=ELFFile(stream); usage_pointers={}; relocation_info={}
               for section in elf.iter_sections():
                   if not isinstance(section,RelocationSection): continue
                   symtab=elf.get_section(section['sh_link']) if section['sh_link'] else None
                   for rel in section.iter_relocations():
                       slot=int(rel['r_offset'])
                       if slot not in wanted: continue
-                      addend=int(rel.entry.get('r_addend',0)); symval=0; symidx=int(rel['r_info_sym'])
-                      if symtab is not None and symidx: symval=int(symtab.get_symbol(symidx)['st_value'])
+                      addend=int(rel.entry.get('r_addend',0)); symval=0; symidx=int(rel['r_info_sym']); symname=''
+                      if symtab is not None and symidx:
+                          symbol=symtab.get_symbol(symidx); symval=int(symbol['st_value']); symname=symbol.name
                       usage_pointers[slot]=(symval+addend)&0xffffffffffffffff
+                      relocation_info[slot]={'section':section.name,'type':int(rel['r_info_type']),'addend':addend,'symbol':symname}
 
               results={}
               for name,slot in slots.items():
-                  usage=usage_pointers.get(slot)
-                  if usage is None: raise SystemExit(f'no relocation for {name} slot {slot:#x}')
-                  raw=map_va(elf,usage)
-                  if raw is None: raise SystemExit(f'usage pointer is not file-backed: {name} {usage:#x}')
-                  stream.seek(raw+16)
-                  encoded=struct.unpack('<I',stream.read(4))[0]
-                  usage_type=(encoded&0xE0000000)>>29
-                  source_offset=(encoded&0x1FFFFFFF)>>1
-                  if usage_type != 5: raise SystemExit(f'{name} is usage type {usage_type}, token={encoded:#x}')
-                  descriptor=literal_offset+source_offset
-                  if descriptor<literal_offset or descriptor+8>literal_offset+literal_size:
-                      raise SystemExit(f'{name} literal descriptor offset out of bounds: {source_offset}')
-                  length,data_index=struct.unpack_from('<II',metadata,descriptor)
-                  data_start=literal_data_offset+data_index
-                  data_stop=data_start+length
-                  if data_stop>literal_data_offset+literal_data_size:
-                      raise SystemExit(f'{name} literal data out of bounds')
-                  value=metadata[data_start:data_stop].decode('utf-8',errors='strict')
-                  results[name]={
-                      'slot':f'0x{slot:X}','usageAddress':f'0x{usage:X}',
-                      'token':f'0x{encoded:08X}','sourceOffset':source_offset,
-                      'length':length,'dataIndex':data_index,'value':value,
-                  }
-          report={'schemaVersion':1,'metadataVersion':version,'xapkSha256':'9ed2f73182e0e6369f757124570b36cac3ba8dcd6a545a6e4e19881d53ff084a','values':results}
+                  record={'slot':f'0x{slot:X}','relocation':relocation_info.get(slot)}
+                  try:
+                      usage=usage_pointers.get(slot)
+                      if usage is None: raise ValueError('no relocation for slot')
+                      record['usageAddress']=f'0x{usage:X}'
+                      raw=map_va(elf,usage)
+                      if raw is None: raise ValueError('usage pointer is not file-backed')
+                      stream.seek(raw+16)
+                      encoded=struct.unpack('<I',stream.read(4))[0]
+                      usage_type=(encoded&0xE0000000)>>29
+                      source_offset=(encoded&0x1FFFFFFF)>>1
+                      record.update({'token':f'0x{encoded:08X}','usageType':usage_type,'sourceOffset':source_offset})
+                      if usage_type != 5: raise ValueError(f'usage type is {usage_type}, expected 5')
+                      descriptor=literal_offset+source_offset
+                      if descriptor<literal_offset or descriptor+8>literal_offset+literal_size:
+                          raise ValueError('literal descriptor byte offset is out of bounds')
+                      length,data_index=struct.unpack_from('<II',metadata,descriptor)
+                      data_start=literal_data_offset+data_index; data_stop=data_start+length
+                      if data_stop>literal_data_offset+literal_data_size: raise ValueError('literal data is out of bounds')
+                      record.update({'length':length,'dataIndex':data_index,'value':metadata[data_start:data_stop].decode('utf-8',errors='strict')})
+                  except Exception as exc:
+                      record['error']=repr(exc)
+                  results[name]=record
+
+          missing=sorted(name for name in required if 'value' not in results[name])
+          report={'schemaVersion':2,'metadataVersion':version,'xapkSha256':'9ed2f73182e0e6369f757124570b36cac3ba8dcd6a545a6e4e19881d53ff084a','missingRequired':missing,'values':results}
           Path('work/report/runtime-literals.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          Path('work/report/runtime-literals.txt').write_text('\n'.join(f"{name}\t{item['slot']}\t{item['token']}\t{item['value']!r}" for name,item in results.items())+'\n',encoding='utf-8')
+          Path('work/report/runtime-literals.txt').write_text('\n'.join(f"{name}\t{item.get('slot')}\t{item.get('token')}\t{item.get('value')!r}\t{item.get('error','')}" for name,item in results.items())+'\n',encoding='utf-8')
           print(json.dumps(report,ensure_ascii=False,indent=2))
+          if missing: raise SystemExit(f'missing required literals: {missing}')
       - name: Remove raw/full materials
         if: ${{ always() }}
         run: |
