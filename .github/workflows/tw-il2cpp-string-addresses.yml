@@ -33,7 +33,8 @@ jobs:
           while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
             < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
           test -s work/unpacked/lib/arm64-v8a/libil2cpp.so
-      - name: Dereference relocated Il2CppString objects
+          test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
+      - name: Decode relocated Il2CppMetadataUsage strings
         shell: python
         run: |
           from pathlib import Path
@@ -42,6 +43,14 @@ jobs:
           from elftools.elf.relocation import RelocationSection
 
           binary_path=Path('work/unpacked/lib/arm64-v8a/libil2cpp.so')
+          metadata=Path('work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat').read_bytes()
+          magic,version=struct.unpack_from('<II',metadata,0); assert magic==0xFAB11BAF
+          literal_offset,literal_size,literal_data_offset,literal_data_size=struct.unpack_from('<IIII',metadata,8)
+          literals=[]
+          for pos in range(literal_offset,literal_offset+literal_size,8):
+              length,index=struct.unpack_from('<II',metadata,pos)
+              literals.append(metadata[literal_data_offset+index:literal_data_offset+index+length].decode('utf-8',errors='replace'))
+
           wanted=[int(x,16) for x in '''
           9B7A4F0 9B7A538 9B79C68 9B81818 9B831F8 9B830F0
           9B83D20 9B83D38 9B83D50 9B83D58 9B83D68
@@ -57,48 +66,36 @@ jobs:
                   start=int(segment['p_vaddr']); filesz=int(segment['p_filesz']); memsz=int(segment['p_memsz'])
                   if start<=address<start+memsz:
                       delta=address-start
-                      if delta>=filesz: return None
-                      return int(segment['p_offset'])+delta
+                      return None if delta>=filesz else int(segment['p_offset'])+delta
               return None
 
           with binary_path.open('rb') as stream:
-              elf=ELFFile(stream)
-              relocation_values={}; relocation_details={}
+              elf=ELFFile(stream); pointers={}
               for section in elf.iter_sections():
                   if not isinstance(section,RelocationSection): continue
                   symbol_table=elf.get_section(section['sh_link']) if section['sh_link'] else None
                   for relocation in section.iter_relocations():
-                      offset=int(relocation['r_offset'])
-                      if offset not in wanted_set: continue
-                      addend=int(relocation.entry.get('r_addend',0)); symbol_value=0; symbol_name=''
+                      slot=int(relocation['r_offset'])
+                      if slot not in wanted_set: continue
+                      addend=int(relocation.entry.get('r_addend',0)); symbol_value=0
                       symbol_index=int(relocation['r_info_sym'])
                       if symbol_table is not None and symbol_index:
-                          symbol=symbol_table.get_symbol(symbol_index); symbol_value=int(symbol['st_value']); symbol_name=symbol.name
-                      pointer=(symbol_value+addend)&0xffffffffffffffff
-                      relocation_values[offset]=pointer
-                      relocation_details[offset]={'section':section.name,'type':int(relocation['r_info_type']),'addend':f'0x{addend & 0xffffffffffffffff:016X}','symbol':symbol_name}
-
+                          symbol_value=int(symbol_table.get_symbol(symbol_index)['st_value'])
+                      pointers[slot]=(symbol_value+addend)&0xffffffffffffffff
               results=[]
               for slot in wanted:
-                  pointer=relocation_values.get(slot,0)
-                  value=None; error=None; length=None; object_file_offset=None
+                  pointer=pointers.get(slot,0); raw=map_va(elf,pointer); encoded=None; usage_type=None; index=None; value=None; error=None
                   try:
-                      raw=map_va(elf,pointer)
-                      if raw is None: raise ValueError('string object pointer is not file-backed')
-                      object_file_offset=raw
+                      if raw is None: raise ValueError('metadata usage pointer is not file-backed')
                       stream.seek(raw+16)
-                      length=struct.unpack('<i',stream.read(4))[0]
-                      if not 0<=length<=100000: raise ValueError(f'invalid Il2CppString length {length}')
-                      value=stream.read(length*2).decode('utf-16le',errors='strict')
-                  except Exception as exc:
-                      error=repr(exc)
-                  results.append({
-                      'slotAddress':f'0x{slot:X}','stringObjectAddress':f'0x{pointer:X}',
-                      'objectFileOffset':None if object_file_offset is None else f'0x{object_file_offset:X}',
-                      'length':length,'value':value,'error':error,'relocation':relocation_details.get(slot),
-                  })
-          Path('work/report/string-address-map.json').write_text(json.dumps({'results':results},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          Path('work/report/string-address-map.txt').write_text('\n'.join(f"{r['slotAddress']}\t{r['stringObjectAddress']}\tlen={r['length']}\t{r['value']!r}\t{r['error'] or ''}" for r in results)+'\n',encoding='utf-8')
+                      encoded=struct.unpack('<I',stream.read(4))[0]
+                      usage_type=(encoded & 0xE0000000)>>29
+                      index=(encoded & 0x1FFFFFFF)>>1
+                      if usage_type==5 and index<len(literals): value=literals[index]
+                  except Exception as exc: error=repr(exc)
+                  results.append({'slotAddress':f'0x{slot:X}','usageAddress':f'0x{pointer:X}','encoded':None if encoded is None else f'0x{encoded:08X}','usageType':usage_type,'literalIndex':index,'value':value,'error':error})
+          Path('work/report/string-address-map.json').write_text(json.dumps({'metadataVersion':version,'literalCount':len(literals),'results':results},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('work/report/string-address-map.txt').write_text('\n'.join(f"{r['slotAddress']}\t{r['usageAddress']}\t{r['encoded']}\ttype={r['usageType']}\tindex={r['literalIndex']}\t{r['value']!r}\t{r['error'] or ''}" for r in results)+'\n',encoding='utf-8')
       - name: Remove raw files
         if: ${{ always() }}
         run: rm -rf work/source work/xapk work/unpacked
