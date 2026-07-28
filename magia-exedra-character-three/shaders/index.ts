@@ -10,6 +10,7 @@ export * from './face'
 export * from './outline'
 export * from './shadow'
 export * from './stylization'
+export * from './gem'
 
 export interface MaterialCreationOptions {
     colorMap: string;
