@@ -1,0 +1,135 @@
+name: Extract exact official ReDrive scalar profiles
+run-name: Recover material, ReDriveVolume and stage scalar metadata
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths: ['.github/profile-extract-trigger.txt']
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: extract-official-scalar-profiles
+  cancel-in-progress: true
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout current official downloader
+        uses: actions/checkout@v5
+        with:
+          ref: automation/encrypted-official-assets
+          path: research
+
+      - name: Set up Python and .NET
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install protocol dependencies
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+
+      - name: Download bounded official model, shader and stage bundles
+        run: |
+          python research/.github/research-executor/download_targeted_assets.py \
+            --out /tmp/official-source
+
+      - name: Build AssetStudioModCLI
+        run: |
+          git clone --depth 1 --branch AssetStudioMod \
+            https://github.com/aelurum/AssetStudio.git /tmp/AssetStudio
+          dotnet publish /tmp/AssetStudio/AssetStudioCLI/AssetStudioCLI.csproj \
+            --configuration Release \
+            --framework net8.0 \
+            --runtime linux-x64 \
+            --self-contained false \
+            -p:SolutionDir=/tmp/AssetStudio/ \
+            --output /tmp/assetstudio-cli
+
+      - name: Dump exact serialized metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/profile-dump
+          dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll \
+            /tmp/official-source/raw/AssetBundles \
+            -m dump \
+            -t monoBehaviour,material,avatar,animationClip,animatorController \
+            --unity-version 2022.3.21f1 --load-all \
+            -g fileName -f assetName_pathID \
+            -o /tmp/profile-dump \
+            --log-output both --log-level info \
+            > /tmp/profile-dump.log 2>&1
+
+      - name: Publish selected full scalar profiles only
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib, json, re, shutil
+
+          source = Path('/tmp/profile-dump')
+          out = Path('/tmp/official-scalar-profiles')
+          out.mkdir(parents=True, exist_ok=True)
+
+          include = re.compile(
+            r'(?i)('
+            r'ReDriveToonMaterialController|ReDriveToonPostProcessVolume|ReDrivePostProcessVolume|ReDriveVolume|'
+            r'GlobalVolumeController|CharacterDefault|PrefabLightmapData|FieldMapDataContainer|CameraBrain|'
+            r'CinemachineVirtualCamera|CinemachineVirtualCameraBase|'
+            r'mt_chara_100101_hair(?:_out)?|mt_chara_110701_hair(?:_out)?|'
+            r'CharacterAdditionalRimLightClip|PostProcessBloomClip|PostProcessColorAdjustmentsClip'
+            r')'
+          )
+          secret = re.compile(r'(?i)(token|signature|crypto.?key|akamai).{0,32}[:=].*')
+          query_url = re.compile(r'https?://\S+\?\S+')
+
+          manifest = []
+          for path in source.rglob('*.txt'):
+            if not include.search(path.name):
+              continue
+            text = path.read_text(encoding='utf-8', errors='ignore')
+            safe_lines = []
+            for line in text.splitlines():
+              line = secret.sub('[REDACTED SECRET FIELD]', line)
+              line = query_url.sub('[REDACTED URL QUERY]', line)
+              safe_lines.append(line)
+            safe = '\n'.join(safe_lines) + '\n'
+            relative = path.relative_to(source)
+            target = out / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(safe, encoding='utf-8')
+            manifest.append({
+              'path': relative.as_posix(),
+              'size': len(safe.encode('utf-8')),
+              'sha256': hashlib.sha256(safe.encode('utf-8')).hexdigest(),
+            })
+
+          (out / 'manifest.json').write_text(json.dumps({
+            'schemaVersion': 1,
+            'fileCount': len(manifest),
+            'files': manifest,
+          }, ensure_ascii=False, indent=2), encoding='utf-8')
+          (out / 'README.txt').write_text(
+            'Exact serialized scalar metadata only. No model, texture, audio, AssetBundle, token, signature, or crypto key is included.\n',
+            encoding='utf-8',
+          )
+          if len(manifest) < 12:
+            raise SystemExit(f'Expected at least 12 selected profiles, got {len(manifest)}')
+
+      - name: Upload exact scalar profile artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: exact-official-redrive-scalar-profiles
+          path: /tmp/official-scalar-profiles
+          retention-days: 7
+          if-no-files-found: error
