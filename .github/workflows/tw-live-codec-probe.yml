@@ -1,5 +1,5 @@
 name: Probe Taiwan response codec
-run-name: Validate recovered Taiwan request and response encryption
+run-name: Capture disposable encrypted Taiwan login response
 
 on:
   workflow_dispatch:
@@ -41,7 +41,7 @@ jobs:
           unzip -q work/input/crypto.zip -d work/input/crypto
           test -s work/input/codec/codec-types/ReDrive.Config.AppCryptoConfig.cs
           test -s work/input/crypto/crypto-literals.json
-      - name: Send disposable login and test Rijndael response variants
+      - name: Send disposable login and capture encrypted response
         shell: python
         run: |
           import base64,hashlib,hmac,json,os,re,time,uuid
@@ -56,101 +56,41 @@ jobs:
             match=re.search(rf'private const string {name} = "(.*?)";',source)
             if not match: raise RuntimeError(f'missing {name} in recovered AppCryptoConfig')
             return match.group(1)
-          hash_key=constant('hashKey')
-          hash_salt=constant('hashSalt')
-          crypto_key_seed=constant('cryptoKeySeed')
+          hash_key=constant('hashKey'); hash_salt=constant('hashSalt'); crypto_key_seed=constant('cryptoKeySeed')
           raw_values=json.loads(Path('work/input/crypto/crypto-literals.json').read_text(encoding='utf-8'))['values']
           raw_msgpack_key=raw_values['appMsgPackCryptKey']['value']
-          if not isinstance(raw_msgpack_key,str) or not raw_msgpack_key:
-            raise RuntimeError('recovered AppMsgPackConfig key is empty')
-
+          if not isinstance(raw_msgpack_key,str) or not raw_msgpack_key: raise RuntimeError('recovered AppMsgPackConfig key is empty')
           def centered_bytes(value,length):
             if length<=0 or len(value)<=length: return value
-            start=(len(value)-length)//2
-            return value[start:start+length]
+            start=(len(value)-length)//2; return value[start:start+length]
           def centered_text(value,length):
             if length<=0 or len(value)<=length: return value
-            start=(len(value)-length)//2
-            return value[start:start+length]
+            start=(len(value)-length)//2; return value[start:start+length]
           def derive(text,length):
             digest=hmac.new(hash_key.encode(),(hash_salt+text).encode(),hashlib.sha256).digest()
             result=centered_text(base64.b64encode(centered_bytes(digest,length)).decode(),length).encode()
             if len(result)!=length: raise RuntimeError(f'derived key length is {len(result)}, expected {length}')
             return result
-
           request_key=derive(raw_msgpack_key,16)
           response_keys=[]
           for source_name,raw_key in [('requestMessagePack',raw_msgpack_key),('defaultAppCrypto',crypto_key_seed)]:
-            for length in (16,24,32):
-              response_keys.append((f'{source_name}-{length}',derive(raw_key,length),length))
-
-          host='https://app-mme.so-net.tw'; app='1.0.5'; unity='2022.3.62f3'
-          client_uuid=uuid.uuid4().hex
-          common_headers={'Accept':'*/*','Content-Type':'application/x-msgpack','x-region':'TW','x-language':'zh_TW','x-timezone-offset':'28800','x-app-version':app,'X-GAME-SERVER-URL':host,'X-Unity-Version':unity}
-          secret=re.compile(r'(?i)(uuid|user.?id|session|token|jwt|ctag|guid|handover)')
-          def safe(value):
-            if isinstance(value,dict):
-              return {str(k):({'present':True,'sha256':hashlib.sha256(str(v).encode()).hexdigest(),'length':len(str(v))} if secret.search(str(k)) and v not in (None,'',0,False) else safe(v)) for k,v in value.items()}
-            if isinstance(value,list): return [safe(v) for v in value[:100]]
-            if isinstance(value,(str,int,float,bool)) or value is None: return value
-            return repr(value)[:200]
-          def decode_response(raw):
-            failures=[]
-            for label,key,block_size in response_keys:
-              try:
-                if len(raw)<block_size*2 or (len(raw)-block_size)%block_size:
-                  raise ValueError(f'encoded length {len(raw)} is incompatible with block size {block_size}')
-                codec=RijndaelCbc(key=key,iv=raw[:block_size],padding=Pkcs7Padding(block_size),block_size=block_size)
-                decrypted=codec.decrypt(raw[block_size:])
-                decoded=msgpack.unpackb(decrypted,raw=False,strict_map_key=False)
-                return decoded,label,failures
-              except Exception as exc:
-                failures.append({'key':label,'keySha256':hashlib.sha256(key).hexdigest(),'error':type(exc).__name__+': '+str(exc)[:300]})
-            return None,None,failures
-          def post(path,payload,user_id=0,session_id='',ctag=None):
-            envelope={'payload':payload,'uuid':client_uuid,'userId':user_id,'sessionId':session_id,'actionToken':None,'ctag':ctag,'actionTime':int((time.time()+11644473600)*10_000_000)}
-            plain=msgpack.packb(envelope,use_bin_type=True)
-            iv=os.urandom(16)
-            body=iv+AES.new(request_key,AES.MODE_CBC,iv).encrypt(pad(plain,16))
-            headers=dict(common_headers)
-            headers['X-post-signature']=base64.b64encode(hashlib.sha1(body).digest()).decode()
-            response=requests.post(host+path,headers=headers,data=body,timeout=30)
-            decoded,key_label,errors=decode_response(response.content)
-            return response,decoded,key_label,errors
-
-          login_payload={
-            'appVersion':app,'urlParam':'','deviceModel':'Codec Probe','osType':2,'osVersion':'Android 14','storeType':2,
-            'graphicsDeviceId':0,'graphicsDeviceVendorId':0,'processorCount':8,'processorType':'arm64-v8a','supportedRenderTargetCount':4,
-            'supports3DTextures':True,'supportsAccelerometer':True,'supportsComputeShaders':True,'supportsGyroscope':True,
-            'supportsImageEffects':True,'supportsInstancing':True,'supportsLocationService':True,'supportsRenderTextures':True,
-            'supportsRenderToCubemap':True,'supportsShadows':True,'supportsSparseTextures':False,'supportsStencil':1,'supportsVibration':True,
-            'uuid':client_uuid,'xuid':0,'jwttoken':'','sm':'',
-          }
-          response,decoded,response_key,decode_errors=post('/api/login',login_payload)
-          report={
-            'schemaVersion':5,
-            'requestKeySha256':hashlib.sha256(request_key).hexdigest(),
-            'login':{
-              'httpStatus':response.status_code,
-              'headers':{k.lower():v for k,v in response.headers.items() if k.lower().startswith('x-') or k.lower() in {'content-type','content-length'}},
-              'setCookiePresent':bool(response.headers.get('Set-Cookie')),
-              'setCookieName':response.headers.get('Set-Cookie','').split('=',1)[0] or None,
-              'decoded':decoded is not None,
-              'responseKey':response_key,
-              'decodeErrors':decode_errors,
-              'response':safe(decoded),
-            },
-          }
-
-          payload=decoded.get('payload') if isinstance(decoded,dict) else None
-          user_id=payload.get('userId') if isinstance(payload,dict) else None
-          session_id=payload.get('sessionId') if isinstance(payload,dict) else None
-          ctag=decoded.get('ctag') if isinstance(decoded,dict) else None
-          if isinstance(user_id,int) and user_id>0 and isinstance(session_id,str) and session_id:
-            for label,path in [('gameConfig','/api/config/get_config'),('akamaiToken','/api/akamai/create_token'),('resourceConfig','/api/resource/get_config')]:
-              r,d,k,e=post(path,{'sm':'','lastHomeAccessTime':''},user_id,session_id,ctag if isinstance(ctag,str) else None)
-              report[label]={'httpStatus':r.status_code,'headers':{name.lower():value for name,value in r.headers.items() if name.lower().startswith('x-')},'decoded':d is not None,'responseKey':k,'decodeErrors':e,'response':safe(d)}
-
+            for length in (16,24,32): response_keys.append((f'{source_name}-{length}',derive(raw_key,length),length))
+          host='https://app-mme.so-net.tw'; app='1.0.5'; unity='2022.3.62f3'; client_uuid=uuid.uuid4().hex
+          payload={'appVersion':app,'urlParam':'','deviceModel':'Codec Probe','osType':2,'osVersion':'Android 14','storeType':2,'graphicsDeviceId':0,'graphicsDeviceVendorId':0,'processorCount':8,'processorType':'arm64-v8a','supportedRenderTargetCount':4,'supports3DTextures':True,'supportsAccelerometer':True,'supportsComputeShaders':True,'supportsGyroscope':True,'supportsImageEffects':True,'supportsInstancing':True,'supportsLocationService':True,'supportsRenderTextures':True,'supportsRenderToCubemap':True,'supportsShadows':True,'supportsSparseTextures':False,'supportsStencil':1,'supportsVibration':True,'uuid':client_uuid,'xuid':0,'jwttoken':'','sm':''}
+          envelope={'payload':payload,'uuid':client_uuid,'userId':0,'sessionId':'','actionToken':None,'ctag':None,'actionTime':int((time.time()+11644473600)*10_000_000)}
+          plain=msgpack.packb(envelope,use_bin_type=True); iv=os.urandom(16); body=iv+AES.new(request_key,AES.MODE_CBC,iv).encrypt(pad(plain,16))
+          headers={'Accept':'*/*','Content-Type':'application/x-msgpack','x-region':'TW','x-language':'zh_TW','x-timezone-offset':'28800','x-app-version':app,'X-GAME-SERVER-URL':host,'X-Unity-Version':unity,'X-post-signature':base64.b64encode(hashlib.sha1(body).digest()).decode()}
+          response=requests.post(host+'/api/login',headers=headers,data=body,timeout=30); raw=response.content
+          Path('work/report/login-response.encrypted.bin').write_bytes(raw)
+          failures=[]; decoded=None; response_key=None
+          for label,key,block_size in response_keys:
+            try:
+              if len(raw)<block_size*2 or (len(raw)-block_size)%block_size: raise ValueError(f'encoded length {len(raw)} incompatible with block size {block_size}')
+              decrypted=RijndaelCbc(key=key,iv=raw[:block_size],padding=Pkcs7Padding(block_size),block_size=block_size).decrypt(raw[block_size:])
+              decoded=msgpack.unpackb(decrypted,raw=False,strict_map_key=False); response_key=label; break
+            except Exception as exc:
+              failures.append({'key':label,'keySha256':hashlib.sha256(key).hexdigest(),'error':type(exc).__name__+': '+str(exc)[:300]})
+          report={'schemaVersion':6,'requestKeySha256':hashlib.sha256(request_key).hexdigest(),'login':{'httpStatus':response.status_code,'size':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'headers':{k.lower():v for k,v in response.headers.items() if k.lower().startswith('x-') or k.lower() in {'content-type','content-length'}},'setCookiePresent':bool(response.headers.get('Set-Cookie')),'setCookieName':response.headers.get('Set-Cookie','').split('=',1)[0] or None,'decoded':decoded is not None,'responseKey':response_key,'decodeErrors':failures}}
           Path('work/report/codec-probe.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
           print(json.dumps(report,ensure_ascii=False,indent=2))
       - name: Remove downloaded evidence
