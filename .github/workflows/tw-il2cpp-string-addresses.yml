@@ -1,0 +1,96 @@
+name: Map Taiwan IL2CPP string addresses
+run-name: Resolve domain SDK URL and signing-salt slots
+
+on:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-il2cpp-string-addresses.yml'
+      - 'analysis-requests/tw-il2cpp-string-addresses.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '6.0.x'
+      - name: Download client and Il2CppDumper
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y unzip jq
+          mkdir -p work/source work/xapk work/unpacked work/tool work/output work/report
+          curl -fL --retry 5 --retry-all-errors -A 'Mozilla/5.0' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
+            < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' https://api.github.com/repos/Perfare/Il2CppDumper/releases/latest)
+          asset=$(jq -r '[.assets[] | select(.name | test("net6.*\\.zip$";"i"))][0].browser_download_url // empty' <<< "$release")
+          curl -fL --retry 4 "$asset" -o work/tool/tool.zip
+          unzip -q work/tool/tool.zip -d work/tool/extracted
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path=next(Path('work/tool/extracted').rglob('config.json'))
+          data=json.loads(path.read_text(encoding='utf-8'))
+          data['GenerateScript']=True
+          data['GenerateDummyDll']=False
+          data['RequireAnyKey']=False
+          path.write_text(json.dumps(data,indent=2),encoding='utf-8')
+          PY
+      - name: Generate and filter address mapping
+        shell: bash
+        run: |
+          set -euo pipefail
+          dll=$(find work/tool/extracted -type f -name Il2CppDumper.dll -print -quit)
+          tool_dir=$(dirname "$dll")
+          (cd "$tool_dir" && dotnet ./Il2CppDumper.dll \
+            "$GITHUB_WORKSPACE/work/unpacked/lib/arm64-v8a/libil2cpp.so" \
+            "$GITHUB_WORKSPACE/work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat" \
+            "$GITHUB_WORKSPACE/work/output" </dev/null) > work/report/dumper.log 2>&1
+          test -s work/output/stringliteral.json
+          python - <<'PY'
+          import json,re
+          from pathlib import Path
+          rows=json.loads(Path('work/output/stringliteral.json').read_text(encoding='utf-8'))
+          wanted={int(x,16) for x in '''
+          9B7A4F0 9B7A538 9B79C68 9B81818 9B831F8 9B830F0
+          9B83D20 9B83D38 9B83D50 9B83D58 9B83D68
+          9B83FB8 9B83FC0 9B83FD8 9B83FE0 9B83FE8 9B83FF0 9B83FF8 9B84008
+          9B8CAC0 9B8CAC8 9B8CAD0 9B8CAD8 9B8CAE0 9B8CAE8 9B8CAF0 9B8CAF8
+          9B93110 9B93118 9C09490
+          '''.split()}
+          terms=re.compile(r'(?i)(https?://|so-net|mme|guest|register|jwt|uuid|token|member|api|user-agent|sonet|app-mme|stg-app|review-app|dev-app|tw-sonet|^[.]$|^$)')
+          out=[]
+          for row in rows:
+              raw=row.get('Address')
+              try:
+                  address=int(str(raw),0)
+              except ValueError:
+                  try: address=int(str(raw),16)
+                  except ValueError: continue
+              value=str(row.get('Value',''))
+              if address in wanted or terms.search(value):
+                  out.append({'address':f'0x{address:X}','value':value})
+          Path('work/report/string-address-map.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('work/report/string-address-map.txt').write_text('\n'.join(f"{x['address']}\t{x['value']}" for x in out)+'\n',encoding='utf-8')
+          PY
+      - name: Remove raw files
+        if: ${{ always() }}
+        run: rm -rf work/source work/xapk work/unpacked work/tool work/output
+      - name: Upload address map
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-il2cpp-string-addresses
+          path: work/report
+          retention-days: 14
