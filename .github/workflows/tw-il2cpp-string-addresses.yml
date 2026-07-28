@@ -34,12 +34,13 @@ jobs:
             < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
           test -s work/unpacked/lib/arm64-v8a/libil2cpp.so
           test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
-      - name: Decode post-v27 metadata usage slots
+      - name: Decode relocated post-v27 metadata usage slots
         shell: python
         run: |
           from pathlib import Path
           import json,struct
           from elftools.elf.elffile import ELFFile
+          from elftools.elf.relocation import RelocationSection
 
           binary_path=Path('work/unpacked/lib/arm64-v8a/libil2cpp.so')
           metadata_path=Path('work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat')
@@ -51,8 +52,7 @@ jobs:
           for pos in range(literal_offset,literal_offset+literal_size,8):
               length,index=struct.unpack_from('<II',metadata,pos)
               start=literal_data_offset+index
-              raw=metadata[start:start+length]
-              literal_records.append(raw.decode('utf-8',errors='replace'))
+              literal_records.append(metadata[start:start+length].decode('utf-8',errors='replace'))
 
           wanted=[int(x,16) for x in '''
           9B7A4F0 9B7A538 9B79C68 9B81818 9B831F8 9B830F0
@@ -61,37 +61,59 @@ jobs:
           9B8CAC0 9B8CAC8 9B8CAD0 9B8CAD8 9B8CAE0 9B8CAE8 9B8CAF0 9B8CAF8
           9B93110 9B93118 9C09490
           '''.split()]
+          wanted_set=set(wanted)
 
-          def raw_offset(elf,address:int)->int:
+          def raw_value(elf,stream,address:int)->int:
               for segment in elf.iter_segments():
                   if segment['p_type']!='PT_LOAD': continue
-                  start=int(segment['p_vaddr']); size=int(segment['p_filesz'])
-                  if start<=address<start+size:
-                      return int(segment['p_offset'])+(address-start)
+                  start=int(segment['p_vaddr']); filesz=int(segment['p_filesz']); memsz=int(segment['p_memsz'])
+                  if start<=address<start+memsz:
+                      delta=address-start
+                      if delta>=filesz: return 0
+                      stream.seek(int(segment['p_offset'])+delta)
+                      return struct.unpack('<Q',stream.read(8))[0]
               raise KeyError(f'VA not mapped: 0x{address:X}')
 
-          results=[]
           with binary_path.open('rb') as stream:
               elf=ELFFile(stream)
+              relocation_values={}
+              relocation_details={}
+              for section in elf.iter_sections():
+                  if not isinstance(section,RelocationSection): continue
+                  symbol_table=elf.get_section(section['sh_link']) if section['sh_link'] else None
+                  for relocation in section.iter_relocations():
+                      offset=int(relocation['r_offset'])
+                      if offset not in wanted_set: continue
+                      addend=int(relocation.entry.get('r_addend',0))
+                      symbol_value=0; symbol_name=''
+                      symbol_index=int(relocation['r_info_sym'])
+                      if symbol_table is not None and symbol_index:
+                          symbol=symbol_table.get_symbol(symbol_index)
+                          symbol_value=int(symbol['st_value']); symbol_name=symbol.name
+                      # AArch64 RELATIVE stores the final image-relative value in the addend;
+                      # ABS64/GLOB_DAT use symbol value plus addend.
+                      relocated=(symbol_value+addend) & 0xffffffffffffffff
+                      relocation_values[offset]=relocated
+                      relocation_details[offset]={
+                          'section':section.name,'type':int(relocation['r_info_type']),
+                          'addend':f'0x{addend & 0xffffffffffffffff:016X}',
+                          'symbol':symbol_name,'symbolValue':f'0x{symbol_value:X}',
+                      }
+              results=[]
               for address in wanted:
-                  try:
-                      offset=raw_offset(elf,address)
-                      stream.seek(offset)
-                      encoded=struct.unpack('<Q',stream.read(8))[0]
-                      encoded32=encoded & 0xffffffff
-                      usage_type=(encoded32 & 0xE0000000)>>29
-                      index=(encoded32 & 0x1FFFFFFF)>>1
-                      value=None
-                      if usage_type==5 and index<len(literal_records): value=literal_records[index]
-                      results.append({
-                          'address':f'0x{address:X}','fileOffset':f'0x{offset:X}',
-                          'encoded':f'0x{encoded:016X}','usageType':usage_type,
-                          'index':index,'value':value,
-                      })
-                  except Exception as exc:
-                      results.append({'address':f'0x{address:X}','error':repr(exc)})
-          Path('work/report/string-address-map.json').write_text(json.dumps({'metadataVersion':version,'results':results},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          Path('work/report/string-address-map.txt').write_text('\n'.join(f"{r['address']}\t{r.get('encoded','')}\ttype={r.get('usageType','')}\tindex={r.get('index','')}\t{r.get('value')!r}\t{r.get('error','')}" for r in results)+'\n',encoding='utf-8')
+                  file_value=raw_value(elf,stream,address)
+                  encoded=relocation_values.get(address,file_value)
+                  encoded32=encoded & 0xffffffff
+                  usage_type=(encoded32 & 0xE0000000)>>29
+                  index=(encoded32 & 0x1FFFFFFF)>>1
+                  value=literal_records[index] if usage_type==5 and index<len(literal_records) else None
+                  results.append({
+                      'address':f'0x{address:X}','fileValue':f'0x{file_value:016X}',
+                      'encoded':f'0x{encoded:016X}','usageType':usage_type,
+                      'index':index,'value':value,'relocation':relocation_details.get(address),
+                  })
+          Path('work/report/string-address-map.json').write_text(json.dumps({'metadataVersion':version,'literalCount':len(literal_records),'results':results},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('work/report/string-address-map.txt').write_text('\n'.join(f"{r['address']}\t{r['encoded']}\ttype={r['usageType']}\tindex={r['index']}\t{r['value']!r}\t{r.get('relocation')}" for r in results)+'\n',encoding='utf-8')
       - name: Remove raw files
         if: ${{ always() }}
         run: rm -rf work/source work/xapk work/unpacked
