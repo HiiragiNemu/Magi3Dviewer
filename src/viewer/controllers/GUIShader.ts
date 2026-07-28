@@ -45,16 +45,16 @@ shadowFolder.add(ShadowTexOptions, 'transition', 0.001, 1, 0.001).name('Shadow s
 shadowFolder.add(ShadowTexOptions, 'amount', -1, 1, 0.01).name('Ambient shadow amount').onChange(updateMaterialShadow)
 shadowFolder.add(ShadowTexOptions, 'controlOffsetStrength', 0, 1, 0.01).name('Control R threshold offset').onChange(updateMaterialShadow)
 
-const angelRingFolder = guiShader.addFolder('AngelRing (UV3 + view normal)').close()
-angelRingFolder.add(angelRingOptions, 'enabled').name('Enabled').onChange(updateMaterialAngelRing)
+const angelRingFolder = guiShader.addFolder('AngelRing (official profile + smooth normals)').close()
+angelRingFolder.add(angelRingOptions, 'enabled').name('Enabled for supported profiles').onChange(updateMaterialAngelRing)
 angelRingFolder.addColor(angelRingOptions, 'color').name('Color').onChange(updateMaterialAngelRing)
 angelRingFolder.add(angelRingOptions, 'strength', 0, 2, 0.01).name('Strength').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'offsetU', 0, 1, 0.005).name('Normal projection U').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'offsetV', 0, 1, 0.005).name('UV3 / normal V blend').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'verticalOffset', -0.5, 0.5, 0.0025).name('Vertical offset').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'headVInfluence', 0, 1, 0.01).name('Head height correction').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'offsetU', 0, 1, 0.005).name('Front-normal wedge U').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'offsetV', 0, 1, 0.005).name('View-normal V scale').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'verticalOffset', -0.5, 0.5, 0.0025).name('Texture vertical offset').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'headVInfluence', 0, 1, 0.01).name('Head-offset correction').onChange(updateMaterialAngelRing)
 angelRingFolder.add(angelRingOptions, 'softness', 0.00025, 0.05, 0.00025).name('Map filtering').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'frontFadeStart', -1, 1, 0.01).name('Back fade start').onChange(updateMaterialAngelRing)
+angelRingFolder.add(angelRingOptions, 'frontFadeStart', -1, 1, 0.01).name('Rear fade start').onChange(updateMaterialAngelRing)
 angelRingFolder.add(angelRingOptions, 'frontFadeEnd', -1, 1, 0.01).name('Front fade end').onChange(updateMaterialAngelRing)
 angelRingFolder.add(angelRingOptions, 'mapGamma', 0.05, 3, 0.01).name('Map gamma').onChange(updateMaterialAngelRing)
 angelRingFolder.add(angelRingOptions, 'emission', 0, 2, 0.01).name('Additive brightness').onChange(updateMaterialAngelRing)
@@ -101,9 +101,9 @@ export function updateMaterialAngelRing() {
 }
 
 /**
- * A stronger neutral inspection baseline. Official battle/ADV lighting remains
- * stage-profile driven, but the default can no longer flatten the Control-map
- * shadows, gradient specular and AngelRing into an evenly lit pastel surface.
+ * A neutral inspection baseline. Official battle/ADV lighting remains
+ * stage-profile driven; this fallback keeps Control-map shadows, gradient
+ * specular, Gem/MatCap and supported AngelRing features readable.
  */
 export function applyRecoveredBaseline() {
     resetOfficialShadowPreset()
@@ -112,15 +112,15 @@ export function applyRecoveredBaseline() {
 
     Object.assign(guiOptions, {
         BgColor: '#30496f',
-        AmbientLightColor: '#829ac2',
-        DirectionalLightColor: '#ffe2d8',
-        AmbientLight: 0.26,
-        DirectionalLight: 4.25,
+        AmbientLightColor: '#7389ad',
+        DirectionalLightColor: '#ffe0d4',
+        AmbientLight: 0.18,
+        DirectionalLight: 4.85,
         LightAngle: -34,
         LightHeight: 4.6,
         LightDistance: 6.2,
-        Brightness: 1.03,
-        Contrast: 1.10,
+        Brightness: 1.02,
+        Contrast: 1.12,
         Saturation: 1.06,
         OutlineThickness: 0.0020,
         OutlineColor: '#554a67',
@@ -140,11 +140,11 @@ export function applyRecoveredBaseline() {
     scene.directionalLight.target.position.set(0, 1.30, 0)
     scene.directionalLight.target.updateMatrixWorld()
 
-    recoveredHemisphereLight.color.set('#a8c7ff')
-    recoveredHemisphereLight.groundColor.set('#403b55')
-    recoveredHemisphereLight.intensity = 0.54
-    recoveredFillLight.color.set('#7fa8ff')
-    recoveredFillLight.intensity = 0.34
+    recoveredHemisphereLight.color.set('#9abcf5')
+    recoveredHemisphereLight.groundColor.set('#322f44')
+    recoveredHemisphereLight.intensity = 0.42
+    recoveredFillLight.color.set('#719bf0')
+    recoveredFillLight.intensity = 0.24
     recoveredFillLight.position.set(-4.0, 2.7, -3.4)
     recoveredFillLight.target.position.set(0, 1.25, 0)
     recoveredFillLight.target.updateMatrixWorld()
@@ -155,11 +155,11 @@ export function applyRecoveredBaseline() {
         saturation: guiOptions.Saturation,
     })
     scene.renderer.toneMapping = THREE.ACESFilmicToneMapping
-    scene.renderer.toneMappingExposure = 1.08
+    scene.renderer.toneMappingExposure = 1.04
     scene.effects.bloomPass.enabled = true
-    scene.effects.bloomPass.strength = 0.12
-    scene.effects.bloomPass.radius = 0.34
-    scene.effects.bloomPass.threshold = 0.78
+    scene.effects.bloomPass.strength = 0.10
+    scene.effects.bloomPass.radius = 0.30
+    scene.effects.bloomPass.threshold = 0.80
 
     scene.characters
         .map(entry => entry.character)
