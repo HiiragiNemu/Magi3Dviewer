@@ -1,0 +1,149 @@
+name: Decompile selected Taiwan protocol types
+run-name: Recover Taiwan host, login and request encoding
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-selected-protocol-decompile.yml'
+      - 'tools/research/extract_tw_selected_types.py'
+      - 'analysis-requests/tw-selected-protocol-decompile.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-selected-protocol-decompile
+  cancel-in-progress: true
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            6.0.x
+            9.0.x
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip zip jq file
+          dotnet tool install ilspycmd --tool-path work/dotnet-tools
+
+      - name: Download and merge public Taiwan XAPK
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/source work/xapk work/merged work/report
+          curl -fL --retry 5 --retry-all-errors \
+            -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do
+            unzip -q -o "$apk" -d work/merged
+          done < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test -s work/merged/lib/arm64-v8a/libil2cpp.so
+          test -s work/merged/assets/bin/Data/Managed/Metadata/global-metadata.dat
+          test -s work/merged/assets/bin/Data/globalgamemanagers
+          (
+            cd work/merged
+            zip -qr ../client.synthetic.apk \
+              AndroidManifest.xml assets/bin/Data lib/arm64-v8a/libil2cpp.so
+          )
+
+      - name: Generate string and method maps
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/dumper work/dump
+          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' \
+            https://api.github.com/repos/Perfare/Il2CppDumper/releases/latest)
+          asset=$(jq -r '[.assets[] | select(.name | test("net6.*\\.zip$"; "i"))][0].browser_download_url // empty' <<< "$release")
+          test -n "$asset"
+          curl -fL --retry 4 "$asset" -o work/dumper/tool.zip
+          unzip -q work/dumper/tool.zip -d work/dumper/extracted
+          dll=$(find work/dumper/extracted -type f -name Il2CppDumper.dll -print -quit)
+          test -n "$dll"
+          set +e
+          dotnet "$dll" \
+            work/merged/lib/arm64-v8a/libil2cpp.so \
+            work/merged/assets/bin/Data/Managed/Metadata/global-metadata.dat \
+            work/dump </dev/null > work/report/il2cpp-dumper.log 2>&1
+          status=$?
+          set -e
+          echo "exit_status=$status" >> work/report/il2cpp-dumper.log
+          test -s work/dump/dump.cs
+          test -s work/dump/stringliteral.json
+          python - <<'PY'
+          from pathlib import Path
+          import json, re
+          source=json.loads(Path('work/dump/stringliteral.json').read_text(encoding='utf-8'))
+          terms=re.compile(r'(?i)(https?://|(?:[a-z0-9-]+\.)+(?:tw|jp|net|com|games)|/api/|resource|masterdata|akamai|gcs|magia|exedra|so-net|sonet|production|staging|feature|review|judgement|x-post-signature|x-game-server-url|x-app-version)')
+          values=[]
+          for item in source:
+              text=str(item.get('Value',''))
+              if terms.search(text):
+                  values.append(item)
+          Path('work/report/filtered-string-literals.json').write_text(json.dumps(values,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('work/report/filtered-string-literals.txt').write_text('\n'.join(f"{x.get('Address')}\t{x.get('Value')}" for x in values)+'\n',encoding='utf-8')
+          PY
+
+      - name: Recover managed method bodies
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/cpp2il work/cpp2il-output
+          curl -fL --retry 4 --retry-all-errors \
+            'https://nightly.link/SamboyCoding/Cpp2IL/workflows/dotnet-core/development/Cpp2IL-net9-linux-x64.zip' \
+            -o work/cpp2il/tool.zip
+          unzip -q work/cpp2il/tool.zip -d work/cpp2il/extracted
+          executable=$(find work/cpp2il/extracted -type f -name Cpp2IL -print -quit)
+          test -n "$executable"
+          chmod +x "$executable"
+          NO_COLOR=true "$executable" \
+            --game-path=work/client.synthetic.apk \
+            --output-as=dll_il_recovery \
+            --output-to=work/cpp2il-output \
+            > work/report/cpp2il.log 2>&1
+          assembly=$(find work/cpp2il-output -type f -name Assembly-CSharp.dll -print -quit)
+          test -n "$assembly"
+          python tools/research/extract_tw_selected_types.py \
+            --ilspy work/dotnet-tools/ilspycmd \
+            --assembly "$assembly" \
+            --out work/report/selected-types
+          grep -R -n -i -E \
+            'https?://|GameServer|ProductionHost|/api/login|DefaultSignHandler|APISigning|MessagePack|AES|Encrypt|Serialize|ResourceConfig|gcs_signed_url|webResourcesUrl|masterDataApiPath|sm|lastHomeAccessTime' \
+            work/report/selected-types \
+            > work/report/selected-focused-grep.txt || true
+
+      - name: Remove raw/full generated material
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          rm -rf work/source work/xapk work/merged work/client.synthetic.apk \
+            work/dumper work/dump work/cpp2il work/cpp2il-output work/dotnet-tools
+          if find work/report -type f \( \
+            -name '*.apk' -o -name '*.xapk' -o -name '*.so' -o \
+            -name '*.dll' -o -name 'dump.cs' -o -name 'global-metadata.dat' \
+          \) | grep -q .; then
+            echo 'raw or full generated client material remained' >&2
+            exit 1
+          fi
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+
+      - name: Upload selected protocol evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-selected-protocol-evidence
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
