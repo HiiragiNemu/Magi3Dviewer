@@ -1,0 +1,113 @@
+name: Parse Taiwan IL2CPP metadata literals
+run-name: Recover production domains from global metadata
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-metadata-literals.yml'
+      - 'analysis-requests/tw-metadata-literals.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-metadata-literals
+  cancel-in-progress: true
+
+jobs:
+  parse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - name: Download and unpack Taiwan metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y unzip
+          mkdir -p work/source work/xapk work/unpacked work/report
+          curl -fL --retry 5 --retry-all-errors \
+            -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
+            < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
+      - name: Parse string literals and metadata strings
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,re,struct,hashlib
+
+          path=Path('work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat')
+          data=path.read_bytes()
+          magic,version=struct.unpack_from('<II',data,0)
+          if magic != 0xFAB11BAF:
+              raise SystemExit(f'Unexpected metadata magic {magic:#x}')
+          literal_offset,literal_size,literal_data_offset,literal_data_size=struct.unpack_from('<IIII',data,8)
+          if literal_offset+literal_size>len(data) or literal_data_offset+literal_data_size>len(data):
+              raise SystemExit('Invalid literal table bounds')
+          records=[]
+          for offset in range(literal_offset,literal_offset+literal_size,8):
+              length,index=struct.unpack_from('<II',data,offset)
+              start=literal_data_offset+index
+              stop=start+length
+              if stop>literal_data_offset+literal_data_size: continue
+              raw=data[start:stop]
+              text=raw.decode('utf-8',errors='replace')
+              records.append({'tableOffset':offset,'dataIndex':index,'length':length,'value':text})
+          # The metadata name/string heap follows immediately after literal-data descriptors.
+          # Parse every NUL-terminated UTF-8 value as a second evidence source.
+          header_values=struct.unpack_from('<'+'I'*68,data,0)
+          string_offset,string_size=header_values[6],header_values[7]
+          heap=[]
+          if 0 <= string_offset < len(data) and string_offset+string_size <= len(data):
+              blob=data[string_offset:string_offset+string_size]
+              cursor=0
+              while cursor < len(blob):
+                  end=blob.find(b'\0',cursor)
+                  if end<0: end=len(blob)
+                  if end>cursor:
+                      text=blob[cursor:end].decode('utf-8',errors='replace')
+                      heap.append({'dataIndex':cursor,'value':text})
+                  cursor=end+1
+          terms=re.compile(r'(?i)(https?://|(?:[a-z0-9-]+\.)+(?:tw|jp|net|com|games)(?::\d+)?|so-net|sonet|mme|magia|exedra|api|resource|masterdata|akamai|gcs|production|staging|review|judgement|localhost|reflector)')
+          filtered=[item for item in records if terms.search(item['value'])]
+          filtered_heap=[item for item in heap if terms.search(item['value'])]
+          report={
+              'schemaVersion':1,
+              'metadataVersion':version,
+              'sha256':hashlib.sha256(data).hexdigest(),
+              'stringLiteralOffset':literal_offset,
+              'stringLiteralSize':literal_size,
+              'stringLiteralDataOffset':literal_data_offset,
+              'stringLiteralDataSize':literal_data_size,
+              'literalCount':len(records),
+              'filteredLiterals':filtered,
+              'filteredStringHeap':filtered_heap,
+          }
+          Path('work/report/metadata-literals.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          lines=[]
+          for item in filtered:
+              lines.append(f"literal:{item['dataIndex']}\t{item['value']}")
+          for item in filtered_heap:
+              lines.append(f"heap:{item['dataIndex']}\t{item['value']}")
+          Path('work/report/metadata-literals.txt').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+          if not records:
+              raise SystemExit('No metadata string literals parsed')
+      - name: Remove raw client
+        if: ${{ always() }}
+        run: rm -rf work/source work/xapk work/unpacked
+      - name: Upload metadata literals
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-metadata-literals
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
