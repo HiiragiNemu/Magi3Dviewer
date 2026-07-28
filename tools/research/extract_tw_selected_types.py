@@ -37,6 +37,17 @@ PATTERNS = (
     r"(^|\.)Title.*Login.*$",
     r"(^|\.)Login.*UseCase.*$",
     r"(^|\.)Login.*Sequence.*$",
+    r"(^|\.)LoginReq$",
+    r"(^|\.)LoginRes$",
+    r"(^|\.)SignatureProvider$",
+    r"(^|\.)LoginHelper$",
+    r"(^|\.)ProductionDomainConfig$",
+    r"(^|\.)StagingDomainConfig$",
+    r"(^|\.)ReviewDomainConfig$",
+    r"(^|\.)QaDomainConfig$",
+    r"(^|\.)JudgementDomainConfig$",
+    r"(^|\.)DevelopmentDomainConfig$",
+    r"(^|\.)IAppDomainConfig$",
 )
 
 
@@ -74,15 +85,12 @@ def main() -> None:
         if any(re.search(pattern, value) for pattern in PATTERNS):
             type_names.append(value)
 
-    # Stable unique order and a hard bound against accidental whole-assembly export.
-    type_names = list(dict.fromkeys(type_names))[:100]
+    type_names = list(dict.fromkeys(type_names))[:130]
     records: list[dict[str, object]] = []
     for index, type_name in enumerate(type_names):
         safe = re.sub(r"[^A-Za-z0-9_.-]+", "_", type_name)[:180]
         target = args.out / f"{index:03d}-{safe}.cs"
-        result = run(
-            [str(args.ilspy), "-t", type_name, str(args.assembly)]
-        )
+        result = run([str(args.ilspy), "-t", type_name, str(args.assembly)])
         text = result.stdout
         if len(text) > 1_000_000:
             text = text[:1_000_000] + "\n// truncated\n"
