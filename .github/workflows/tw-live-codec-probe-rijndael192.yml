@@ -1,0 +1,90 @@
+name: Probe Taiwan Rijndael-192 response keys
+run-name: Test converted 24-byte response key candidates
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-live-codec-probe-rijndael192.yml'
+      - 'analysis-requests/tw-live-codec-probe-rijndael192.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-live-codec-probe-rijndael192
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome py3rijndael
+      - name: Test 24-byte response codecs
+        shell: python
+        run: |
+          from __future__ import annotations
+          import base64,hashlib,hmac,json,os,re,time,uuid
+          from pathlib import Path
+          from typing import Any
+          import msgpack,requests
+          from Crypto.Cipher import AES
+          from Crypto.Util.Padding import pad
+          from py3rijndael import RijndaelCbc,Pkcs7Padding
+
+          HOST='https://app-mme.so-net.tw'; APP='1.0.5'; UNITY='2022.3.62f3'
+          RAW_HASH_KEY=("*0h>%iZAAdrw[R5l(S+nEmzLp?|ld5QC.n(r'$l9JhqAYl#Iq+o5xK3'9m^872WbH@uIG0~6&" "zujCBC;zigI%o..,p2ZkQAO,iLjJjW;um1c}mrCSLPJ6$WwKS$=YX:<")
+          HASH_KEY=RAW_HASH_KEY[1::2]; HASH_SALT='Q?p%y):^p(N;}{5*'[1::2]; CRYPTO_SEED='a+Bb]NW?[,4]{fU='[1::2]
+          RAW={'app-alphanumeric':'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789','default-2D':'2D','app-crypto-seed':CRYPTO_SEED}
+          def cb(v:bytes,n:int)->bytes:
+            if n<=0 or len(v)<=n:return v
+            i=(len(v)-n)//2;return v[i:i+n]
+          def ct(v:str,n:int)->str:
+            if n<=0 or len(v)<=n:return v
+            i=(len(v)-n)//2;return v[i:i+n]
+          def derive(raw:str,n:int)->bytes:
+            d=hmac.new(HASH_KEY.encode(),(HASH_SALT+raw).encode(),hashlib.sha256).digest()
+            return ct(base64.b64encode(cb(d,n)).decode(),n).encode()
+          request_key=derive(RAW['app-alphanumeric'],16)
+          response_keys={f'{name}-24':derive(raw,24) for name,raw in RAW.items()}
+          response_keys.update({f'{name}-16':derive(raw,16) for name,raw in RAW.items()})
+          uid=uuid.uuid4().hex
+          payload={'appVersion':APP,'urlParam':'','deviceModel':'Rijndael192 Probe','osType':2,'osVersion':'Android 14','storeType':2,'graphicsDeviceId':0,'graphicsDeviceVendorId':0,'processorCount':8,'processorType':'arm64-v8a','supportedRenderTargetCount':4,'supports3DTextures':True,'supportsAccelerometer':True,'supportsComputeShaders':True,'supportsGyroscope':True,'supportsImageEffects':True,'supportsInstancing':True,'supportsLocationService':True,'supportsRenderTextures':True,'supportsRenderToCubemap':True,'supportsShadows':True,'supportsSparseTextures':False,'supportsStencil':1,'supportsVibration':True,'uuid':uid,'xuid':0,'jwttoken':'','sm':''}
+          envelope={'payload':payload,'uuid':uid,'userId':0,'sessionId':'','actionToken':None,'ctag':None,'actionTime':int((time.time()+11644473600)*10_000_000)}
+          packed=msgpack.packb(envelope,use_bin_type=True);iv=os.urandom(16);body=iv+AES.new(request_key,AES.MODE_CBC,iv).encrypt(pad(packed,16))
+          headers={'Accept':'*/*','Content-Type':'application/x-msgpack','x-region':'TW','x-language':'zh_TW','x-timezone-offset':'28800','x-app-version':APP,'X-GAME-SERVER-URL':HOST,'X-Unity-Version':UNITY,'X-post-signature':base64.b64encode(hashlib.sha1(body).digest()).decode()}
+          response=requests.post(HOST+'/api/login',headers=headers,data=body,timeout=30);raw=response.content
+          secret=re.compile(r'(?i)(uuid|user.?id|session|token|jwt|ctag|guid|cookie|handover)')
+          def sanitize(value:Any,field:str='')->Any:
+            if isinstance(value,dict):return {str(k):sanitize(v,str(k)) for k,v in value.items()}
+            if isinstance(value,list):return [sanitize(v,field) for v in value[:200]]
+            if secret.search(field) and value not in (None,'',0,False):
+              b=str(value).encode();return {'present':True,'length':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+            if isinstance(value,(str,int,float,bool)) or value is None:return value
+            return repr(value)[:500]
+          attempts=[];accepted=None
+          for label,key in response_keys.items():
+            block=len(key)
+            try:
+              if len(raw)<=block or (len(raw)-block)%block:raise ValueError(f'length {len(raw)} incompatible with block {block}')
+              plain=RijndaelCbc(key=key,iv=raw[:block],padding=Pkcs7Padding(block),block_size=block).decrypt(raw[block:])
+              decoded=msgpack.unpackb(plain,raw=False,strict_map_key=False)
+              item={'key':label,'keyText':key.decode(),'success':True,'sanitizedResponse':sanitize(decoded)};attempts.append(item);accepted=item;break
+            except Exception as exc:
+              attempts.append({'key':label,'keyText':key.decode(),'success':False,'error':type(exc).__name__+': '+str(exc)[:300]})
+          report={'schemaVersion':1,'requestKeyText':request_key.decode(),'httpStatus':response.status_code,'responseSize':len(raw),'responseSha256':hashlib.sha256(raw).hexdigest(),'first64Hex':raw[:64].hex(),'accepted':accepted is not None,'acceptedKey':accepted['key'] if accepted else None,'attempts':attempts}
+          Path('work/report').mkdir(parents=True,exist_ok=True);Path('work/report/probe.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');print(json.dumps(report,ensure_ascii=False,indent=2))
+          if accepted is None:raise SystemExit('no 16/24-byte candidate decoded response')
+      - if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-live-codec-probe-rijndael192
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
