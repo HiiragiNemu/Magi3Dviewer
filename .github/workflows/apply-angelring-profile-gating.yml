@@ -1,0 +1,125 @@
+name: Apply character-specific AngelRing gating
+run-name: Remove unsupported global hair band and update regressions
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths: ['.github/workflows/apply-angelring-profile-gating.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Magius3Dviewer source branch
+        uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+          fetch-depth: 0
+
+      - name: Patch loader and two-character regression
+        shell: python
+        run: |
+          from pathlib import Path
+
+          loader = Path('magia-exedra-character-three/loader.ts')
+          text = loader.read_text(encoding='utf-8')
+          old = '''                            if (name.includes('hair')) {
+                                  const angelRingReference = createAngelRingReference(
+                                      modelObject,
+                                      mesh,
+                                      characterProfile,
+                                  )
+                                  const hairResult = await createHairMaterial({
+                                      ...sharedMaterialOptions,
+                                      alphaSrc,
+                                      angelRingReference,
+                                  })
+                                  material = hairResult.material
+                                  textures = hairResult.textures
+                                  alphaTex = hairResult.alphaTex
+                                  if (hairResult.updateAngelRingReference) {
+                                      userData.animationLoops.push(hairResult.updateAngelRingReference)
+                                  }
+                                  console.log('AngelRing reference:', angelRingReference)
+                              } else {
+                                  ({ material, textures, alphaTex } = await createGeneralMaterial({
+                                      ...sharedMaterialOptions,
+                                      alphaSrc,
+                                  }))
+                              }
+          '''
+          new = '''                            if (name.includes('hair')) {
+                                  const angelRingReference = createAngelRingReference(
+                                      modelObject,
+                                      mesh,
+                                      characterProfile,
+                                  )
+                                  if (angelRingReference) {
+                                      const hairResult = await createHairMaterial({
+                                          ...sharedMaterialOptions,
+                                          alphaSrc,
+                                          angelRingReference,
+                                      })
+                                      material = hairResult.material
+                                      textures = hairResult.textures
+                                      alphaTex = hairResult.alphaTex
+                                      if (hairResult.updateAngelRingReference) {
+                                          userData.animationLoops.push(hairResult.updateAngelRingReference)
+                                      }
+                                  } else {
+                                      ({ material, textures, alphaTex } = await createGeneralMaterial({
+                                          ...sharedMaterialOptions,
+                                          alphaSrc,
+                                      }))
+                                  }
+                                  console.log('AngelRing profile/reference:', {
+                                      enabled: characterProfile.angelRingEnabled,
+                                      profile: characterProfile,
+                                      reference: angelRingReference,
+                                  })
+                              } else {
+                                  ({ material, textures, alphaTex } = await createGeneralMaterial({
+                                      ...sharedMaterialOptions,
+                                      alphaSrc,
+                                  }))
+                              }
+          '''
+          if old not in text:
+              raise SystemExit('Loader AngelRing block no longer matches the expected source')
+          loader.write_text(text.replace(old, new), encoding='utf-8')
+
+          smoke = Path('scripts/smoke-angelring-two-character.mjs')
+          text = smoke.read_text(encoding='utf-8')
+          text = text.replace(
+              "async function testCharacter(selectorValue, expectedResourceId, label) {",
+              "async function testCharacter(selectorValue, expectedResourceId, label, expectedRing) {",
+          )
+          text = text.replace(
+              "  await page.waitForFunction(\n    () => {\n      const character = window.scene?.characterSelected?.character\n      if (!character) return false\n      return (character.userData.meshes ?? [])\n        .filter(mesh => mesh.name.toLowerCase().includes('hair'))\n        .some(mesh => {\n          const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]\n          return materials.some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))\n        })\n    },\n    { timeout: 180_000 },\n  )\n",
+              "  await page.waitForFunction(\n    expected => {\n      const character = window.scene?.characterSelected?.character\n      if (!character) return false\n      const present = (character.userData.meshes ?? [])\n        .filter(mesh => mesh.name.toLowerCase().includes('hair'))\n        .some(mesh => {\n          const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]\n          return materials.some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))\n        })\n      return present === expected\n    },\n    { timeout: 180_000 },\n    expectedRing,\n  )\n",
+          )
+          text = text.replace(
+              "const madoka = await testCharacter('100107', 100107, 'madoka')\nconst ashley = await testCharacter('110701', 110701, 'ashley')\nconst failures = []\nfor (const [name, result] of Object.entries({ madoka, ashley })) {\n  const { front, back } = result\n",
+              "const madoka = await testCharacter('100107', 100107, 'madoka', true)\nconst ashley = await testCharacter('110701', 110701, 'ashley', false)\nconst failures = []\nfor (const [name, result] of Object.entries({ madoka })) {\n  const { front, back } = result\n",
+          )
+          marker = "if (pageErrors.length) failures.push(`page errors: ${pageErrors.join(' | ')}`)"
+          addition = "if (ashley.front.shaderCount !== 0 || ashley.back.shaderCount !== 0) failures.push(`ashley: unsupported AngelRing shader still attached (${ashley.front.shaderCount}/${ashley.back.shaderCount})`)\n"
+          if marker not in text:
+              raise SystemExit('Smoke-test failure marker not found')
+          text = text.replace(marker, addition + marker)
+          smoke.write_text(text, encoding='utf-8')
+
+      - name: Commit character-specific gating
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add magia-exedra-character-three/loader.ts scripts/smoke-angelring-two-character.mjs
+          git diff --cached --quiet && exit 0
+          git commit -m 'fix(shader): attach AngelRing only to supported character profiles'
+          git push origin HEAD:magius3dviewer
