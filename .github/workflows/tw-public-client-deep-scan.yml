@@ -1,0 +1,169 @@
+name: Deep scan Taiwan signer and protocol
+run-name: Recover Taiwan signer interface and network profile
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-public-client-deep-scan.yml'
+      - 'tools/research/scan_tw_protocol_deep.py'
+      - 'analysis-requests/tw-public-client-deep-scan.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-public-client-deep-scan
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout controller
+        uses: actions/checkout@v5
+
+      - name: Set up .NET 6 for Il2CppDumper
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Install inspection tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            unzip p7zip-full jq file default-jre-headless \
+            binutils binutils-aarch64-linux-gnu aapt apksigner
+
+      - name: Download and unpack public Taiwan XAPK
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/source work/xapk work/unpacked work/report
+          curl -fL --retry 5 --retry-all-errors \
+            -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/tw.sonet.magiaexedra.xapk
+          sha256sum work/source/tw.sonet.magiaexedra.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/tw.sonet.magiaexedra.xapk -d work/xapk
+          index=0
+          while IFS= read -r -d '' apk; do
+            index=$((index + 1))
+            name=$(basename "$apk" .apk | tr -cs 'A-Za-z0-9._-' '_')
+            target="work/unpacked/$(printf '%03d' "$index")-$name"
+            mkdir -p "$target"
+            unzip -q -o "$apk" -d "$target"
+            {
+              echo "===== $apk ====="
+              sha256sum "$apk"
+              aapt dump badging "$apk" 2>&1 | head -120 || true
+              apksigner verify --print-certs "$apk" 2>&1 || true
+            } >> work/report/apk-provenance.txt
+          done < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test "$index" -gt 0
+          find work/unpacked -type f -printf '%P\t%s\n' | sort > work/report/unpacked-inventory.tsv
+
+      - name: Inspect native signer library
+        shell: bash
+        run: |
+          set -euo pipefail
+          signer=$(find work/unpacked -type f -name 'libsigner.so' -print -quit)
+          test -n "$signer"
+          {
+            echo "path=$signer"
+            file "$signer"
+            sha256sum "$signer"
+          } > work/report/libsigner-provenance.txt
+          readelf -hSWlrdn "$signer" > work/report/libsigner-readelf.txt 2>&1 || true
+          readelf -Ws "$signer" > work/report/libsigner-symbols.txt 2>&1 || true
+          readelf -r "$signer" > work/report/libsigner-relocations.txt 2>&1 || true
+          nm -D -C "$signer" > work/report/libsigner-nm-dynamic.txt 2>&1 || true
+          aarch64-linux-gnu-objdump -T -C "$signer" > work/report/libsigner-dynamic-table.txt 2>&1 || true
+          aarch64-linux-gnu-objdump -d -C "$signer" > work/report/libsigner-disassembly.txt 2>&1 || true
+          aarch64-linux-gnu-objdump -s -j .rodata "$signer" > work/report/libsigner-rodata.txt 2>&1 || true
+          strings -a -t x -n 4 "$signer" > work/report/libsigner-strings.txt
+          grep -iE -n \
+            'Java_|JNI_OnLoad|sign|signature|hmac|sha(1|2|256|384|512)|ed25519|ecdsa|rsa|aes|base64|certificate|package|magia|sonet|post' \
+            work/report/libsigner-symbols.txt \
+            work/report/libsigner-nm-dynamic.txt \
+            work/report/libsigner-dynamic-table.txt \
+            work/report/libsigner-strings.txt \
+            > work/report/libsigner-focused-hits.txt || true
+
+      - name: Recover IL2CPP metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/il2cpp-tool work/il2cpp-output
+          metadata=$(find work/unpacked -type f -name 'global-metadata.dat' -print -quit)
+          binary=$(find work/unpacked -type f -path '*/arm64-v8a/libil2cpp.so' -print -quit)
+          test -n "$metadata"
+          test -n "$binary"
+          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' \
+            https://api.github.com/repos/Perfare/Il2CppDumper/releases/latest)
+          asset=$(jq -r '[.assets[] | select(.name | test("net6.*\\.zip$"; "i"))][0].browser_download_url // empty' <<< "$release")
+          test -n "$asset"
+          curl -fL --retry 4 "$asset" -o work/il2cpp-tool/tool.zip
+          unzip -q work/il2cpp-tool/tool.zip -d work/il2cpp-tool/extracted
+          dll=$(find work/il2cpp-tool/extracted -type f -name 'Il2CppDumper.dll' -print -quit)
+          test -n "$dll"
+          dotnet "$dll" "$binary" "$metadata" work/il2cpp-output \
+            > work/report/il2cpp-dumper.log 2>&1
+          test -s work/il2cpp-output/dump.cs
+
+      - name: Decompile Android Java/Kotlin layer
+        id: jadx
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/jadx-tool work/jadx-output
+          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' \
+            https://api.github.com/repos/skylot/jadx/releases/latest)
+          asset=$(jq -r '[.assets[] | select(.name | test("^jadx-[0-9].*\\.zip$"; "i"))][0].browser_download_url // empty' <<< "$release")
+          test -n "$asset"
+          curl -fL --retry 4 "$asset" -o work/jadx-tool/jadx.zip
+          unzip -q work/jadx-tool/jadx.zip -d work/jadx-tool/extracted
+          base_apk=$(find work/xapk -maxdepth 1 -type f -name 'tw.sonet.magiaexedra.apk' -print -quit)
+          test -n "$base_apk"
+          work/jadx-tool/extracted/bin/jadx \
+            --no-res --show-bad-code --threads-count 4 \
+            -d work/jadx-output "$base_apk" \
+            > work/report/jadx.log 2>&1
+
+      - name: Curate focused evidence
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/jadx-output work/il2cpp-output work/report
+          python tools/research/scan_tw_protocol_deep.py \
+            --root work/unpacked \
+            --il2cpp-output work/il2cpp-output \
+            --jadx-root work/jadx-output \
+            --report work/report
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+
+      - name: Remove raw client and complete decompilation outputs
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          rm -rf work/source work/xapk work/unpacked work/il2cpp-tool work/il2cpp-output work/jadx-tool work/jadx-output
+          if find work/report -type f \( \
+            -name '*.apk' -o -name '*.xapk' -o -name '*.so' -o \
+            -name 'global-metadata.dat' -o -name 'dump.cs' \
+          \) | grep -q .; then
+            echo 'Raw client material remained in report directory' >&2
+            exit 1
+          fi
+
+      - name: Upload curated deep evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-public-client-deep-protocol
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
