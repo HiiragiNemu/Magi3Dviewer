@@ -1,0 +1,75 @@
+name: Apply exact ReDriveVolume runtime
+run-name: Wire SH ambient, Timeline Rim and paraffin post process into official stages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths: ['.github/workflows/apply-redrive-volume-runtime.yml']
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Magius3Dviewer
+        uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+          fetch-depth: 0
+
+      - name: Patch stage loader
+        shell: python
+        run: |
+          from pathlib import Path
+          path=Path('src/viewer/stages.ts')
+          text=path.read_text(encoding='utf-8')
+          import_line="import { gui } from './controllers/GUI'\n"
+          runtime_import="import { applyReDriveVolumeRuntime, resetReDriveVolumeRuntime, type ReDriveVolumeRuntimeProfile } from './reDriveVolumeRuntime'\n"
+          if runtime_import not in text:
+            if import_line not in text: raise SystemExit('stage import anchor missing')
+            text=text.replace(import_line,import_line+runtime_import,1)
+
+          call='''    applyReDriveVolumeRuntime(
+              profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
+          )
+          '''
+          camera_end='''        scene.controls.update()
+              }
+          }
+          '''
+          if call not in text:
+            if camera_end not in text: raise SystemExit('applyStageRenderProfile end anchor missing')
+            text=text.replace(camera_end,camera_end+call,1)
+
+          reset='''    resetReDriveVolumeRuntime()
+          '''
+          restore_anchor='''function restoreSceneProfile() {
+          '''
+          if reset not in text[text.find(restore_anchor):text.find(restore_anchor)+200]:
+            if restore_anchor not in text: raise SystemExit('restoreSceneProfile anchor missing')
+            text=text.replace(restore_anchor,restore_anchor+reset,1)
+          path.write_text(text,encoding='utf-8')
+
+      - name: Commit runtime wiring
+        id: commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add src/viewer/stages.ts
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'feat(scene): apply exact ReDriveVolume runtime profiles'
+          git push origin HEAD:magius3dviewer
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        env:
+          SOURCE_SHA: ${{ steps.commit.outputs.sha }}
+        with:
+          script: |
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:process.env.SOURCE_SHA||context.sha,state:'${{ job.status }}'==='success'?'success':'failure',context:'Exact ReDriveVolume stage runtime',description:'${{ job.status }}'==='success'?'SH, Rim and paraffin runtime wired':'Stage runtime patch failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
