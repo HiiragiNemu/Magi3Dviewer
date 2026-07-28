@@ -22,16 +22,14 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: '9.0.x'
-      - name: Download Taiwan client and LibCpp2IL
+      - name: Download and unpack Taiwan client
         shell: bash
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install -y unzip
-          mkdir -p work/source work/xapk work/unpacked work/tool work/query/lib work/report
+          sudo apt-get install -y unzip python3-pip
+          python -m pip install --disable-pip-version-check pyelftools
+          mkdir -p work/source work/xapk work/unpacked work/report
           curl -fL --retry 5 --retry-all-errors -A 'Mozilla/5.0' \
             'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
             -o work/source/client.xapk
@@ -41,90 +39,94 @@ jobs:
             < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
           test -s work/unpacked/lib/arm64-v8a/libil2cpp.so
           test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
-          curl -fL --retry 4 --retry-all-errors \
-            'https://nightly.link/SamboyCoding/Cpp2IL/workflows/dotnet-core/development/Cpp2IL-net9-linux-x64.zip' \
-            -o work/tool/cpp2il.zip
-          unzip -q work/tool/cpp2il.zip -d work/tool/extracted
-          find work/tool/extracted -type f -name '*.dll' -exec cp -n '{}' work/query/lib/ \;
-          test -s work/query/lib/LibCpp2IL.dll
-          test -s work/query/lib/AssetRipper.Primitives.dll
-      - name: Build literal query
-        shell: bash
+      - name: Resolve runtime string usage slots
+        shell: python
         run: |
-          set -euo pipefail
-          cat > work/query/LiteralQuery.csproj <<'EOF'
-          <Project Sdk="Microsoft.NET.Sdk">
-            <PropertyGroup>
-              <OutputType>Exe</OutputType>
-              <TargetFramework>net9.0</TargetFramework>
-              <ImplicitUsings>enable</ImplicitUsings>
-              <Nullable>enable</Nullable>
-            </PropertyGroup>
-            <ItemGroup>
-              <Reference Include="LibCpp2IL"><HintPath>lib/LibCpp2IL.dll</HintPath><Private>true</Private></Reference>
-              <Reference Include="AssetRipper.Primitives"><HintPath>lib/AssetRipper.Primitives.dll</HintPath><Private>true</Private></Reference>
-            </ItemGroup>
-          </Project>
-          EOF
-          cat > work/query/Program.cs <<'EOF'
-          using System.Text.Json;
-          using AssetRipper.Primitives;
-          using LibCpp2IL;
+          from pathlib import Path
+          import json,struct
+          from elftools.elf.elffile import ELFFile
+          from elftools.elf.relocation import RelocationSection
 
-          if (args.Length != 3) throw new ArgumentException("binary metadata output");
-          LibCpp2IlMain.Settings.DisableMethodPointerMapping = true;
-          LibCpp2IlMain.Settings.DisableGlobalResolving = false;
-          LibCpp2IlMain.Settings.AllowManualMetadataAndCodeRegInput = false;
-          var context = LibCpp2IlContextBuilder.Build(
-              File.ReadAllBytes(args[0]),
-              File.ReadAllBytes(args[1]),
-              new UnityVersion(2022, 3, 62, UnityVersionType.Final, 3));
-          var slots = new Dictionary<string, ulong>
-          {
-              ["systemMonitorOrEmpty"] = 0x9B7A4F0,
-              ["msgPackDefaultCryptKey"] = 0x9BA5660,
-              ["appMsgPackCryptKey"] = 0x9BCB028,
-              ["appCryptoHashKeyInput"] = 0x9BCAF80,
-              ["appCryptoHashSaltInput"] = 0x9BCAF88,
-              ["appCryptoSeedInput"] = 0x9BCAF90,
-              ["guestApiOrigin"] = 0x9B83D68,
-              ["guestLoginSuffix"] = 0x9B83D50,
-              ["guestRegisterSuffix"] = 0x9B84008,
-              ["guestUserAgentHeader"] = 0x9B83D58,
-              ["guestSavedGuidKey"] = 0x9B7A538,
-              ["guestSavedUuidKey"] = 0x9B831F8,
-              ["guestCallbackType"] = 0x9B83FC0,
-              ["sdkScheme"] = 0x9B8CAD0,
-              ["sdkPackage"] = 0x9B93118,
-              ["productionDomainPart"] = 0x9B8CAC0,
-              ["sdkRequestSignSalt"] = 0x9C09490,
-          };
-          var values = slots.Select(pair => new
-          {
-              name = pair.Key,
-              address = $"0x{pair.Value:X}",
-              value = context.GetLiteralByAddress(pair.Value)
-          }).ToArray();
-          File.WriteAllText(args[2], JsonSerializer.Serialize(values, new JsonSerializerOptions { WriteIndented = true }));
-          EOF
-          dotnet build work/query/LiteralQuery.csproj --configuration Release --nologo \
-            > work/report/build.log 2>&1
-          find work/query/lib -maxdepth 1 -type f -name '*.dll' -exec cp -n '{}' work/query/bin/Release/net9.0/ \;
-      - name: Query runtime literals
-        shell: bash
-        run: |
-          set -euo pipefail
-          dotnet work/query/bin/Release/net9.0/LiteralQuery.dll \
-            work/unpacked/lib/arm64-v8a/libil2cpp.so \
-            work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat \
-            work/report/runtime-literals.json \
-            > work/report/query.log 2>&1
-          test -s work/report/runtime-literals.json
-          cat work/report/runtime-literals.json
+          binary_path=Path('work/unpacked/lib/arm64-v8a/libil2cpp.so')
+          metadata=Path('work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat').read_bytes()
+          magic,version=struct.unpack_from('<II',metadata,0)
+          if magic != 0xFAB11BAF: raise SystemExit(f'bad metadata magic {magic:#x}')
+          literal_offset,literal_size,literal_data_offset,literal_data_size=struct.unpack_from('<IIII',metadata,8)
+          slots={
+              'systemMonitorOrEmpty':0x9B7A4F0,
+              'msgPackDefaultCryptKey':0x9BA5660,
+              'appMsgPackCryptKey':0x9BCB028,
+              'appCryptoHashKeyInput':0x9BCAF80,
+              'appCryptoHashSaltInput':0x9BCAF88,
+              'appCryptoSeedInput':0x9BCAF90,
+              'guestApiOrigin':0x9B83D68,
+              'guestLoginSuffix':0x9B83D50,
+              'guestRegisterSuffix':0x9B84008,
+              'guestUserAgentHeader':0x9B83D58,
+              'guestSavedGuidKey':0x9B7A538,
+              'guestSavedUuidKey':0x9B831F8,
+              'guestCallbackType':0x9B83FC0,
+              'sdkScheme':0x9B8CAD0,
+              'sdkPackage':0x9B93118,
+              'productionDomainPart':0x9B8CAC0,
+              'sdkRequestSignSalt':0x9C09490,
+          }
+          wanted=set(slots.values())
+
+          def map_va(elf,address):
+              for segment in elf.iter_segments():
+                  if segment['p_type']!='PT_LOAD': continue
+                  start=int(segment['p_vaddr']); filesz=int(segment['p_filesz']); memsz=int(segment['p_memsz'])
+                  if start<=address<start+memsz:
+                      delta=address-start
+                      return None if delta>=filesz else int(segment['p_offset'])+delta
+              return None
+
+          with binary_path.open('rb') as stream:
+              elf=ELFFile(stream); usage_pointers={}
+              for section in elf.iter_sections():
+                  if not isinstance(section,RelocationSection): continue
+                  symtab=elf.get_section(section['sh_link']) if section['sh_link'] else None
+                  for rel in section.iter_relocations():
+                      slot=int(rel['r_offset'])
+                      if slot not in wanted: continue
+                      addend=int(rel.entry.get('r_addend',0)); symval=0; symidx=int(rel['r_info_sym'])
+                      if symtab is not None and symidx: symval=int(symtab.get_symbol(symidx)['st_value'])
+                      usage_pointers[slot]=(symval+addend)&0xffffffffffffffff
+
+              results={}
+              for name,slot in slots.items():
+                  usage=usage_pointers.get(slot)
+                  if usage is None: raise SystemExit(f'no relocation for {name} slot {slot:#x}')
+                  raw=map_va(elf,usage)
+                  if raw is None: raise SystemExit(f'usage pointer is not file-backed: {name} {usage:#x}')
+                  stream.seek(raw+16)
+                  encoded=struct.unpack('<I',stream.read(4))[0]
+                  usage_type=(encoded&0xE0000000)>>29
+                  source_offset=(encoded&0x1FFFFFFF)>>1
+                  if usage_type != 5: raise SystemExit(f'{name} is usage type {usage_type}, token={encoded:#x}')
+                  descriptor=literal_offset+source_offset
+                  if descriptor<literal_offset or descriptor+8>literal_offset+literal_size:
+                      raise SystemExit(f'{name} literal descriptor offset out of bounds: {source_offset}')
+                  length,data_index=struct.unpack_from('<II',metadata,descriptor)
+                  data_start=literal_data_offset+data_index
+                  data_stop=data_start+length
+                  if data_stop>literal_data_offset+literal_data_size:
+                      raise SystemExit(f'{name} literal data out of bounds')
+                  value=metadata[data_start:data_stop].decode('utf-8',errors='strict')
+                  results[name]={
+                      'slot':f'0x{slot:X}','usageAddress':f'0x{usage:X}',
+                      'token':f'0x{encoded:08X}','sourceOffset':source_offset,
+                      'length':length,'dataIndex':data_index,'value':value,
+                  }
+          report={'schemaVersion':1,'metadataVersion':version,'xapkSha256':'9ed2f73182e0e6369f757124570b36cac3ba8dcd6a545a6e4e19881d53ff084a','values':results}
+          Path('work/report/runtime-literals.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('work/report/runtime-literals.txt').write_text('\n'.join(f"{name}\t{item['slot']}\t{item['token']}\t{item['value']!r}" for name,item in results.items())+'\n',encoding='utf-8')
+          print(json.dumps(report,ensure_ascii=False,indent=2))
       - name: Remove raw/full materials
         if: ${{ always() }}
         run: |
-          rm -rf work/source work/xapk work/unpacked work/tool work/query
+          rm -rf work/source work/xapk work/unpacked
           find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
       - name: Upload runtime literals
         if: ${{ always() }}
