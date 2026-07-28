@@ -6,13 +6,27 @@ from pathlib import Path
 TARGETS=(
  'ReDrive.Config.AppCryptoConfig','ReDrive.Config.AppMsgPackConfig','ReDrive.Config.AppPokkeConfig',
  'A2.Http.MsgPackDefaultConfig','A2.Http.PokkeDefaultConfig','A2.Http.RequestEncoder',
- 'A2.Http.PokkeMsgPackAPI','A2.Http.PokkeMsgPackAPIFactory','A2.Http.PokkeReqContainer','A2.Http.PokkeResContainer',
+ 'A2.Http.PokkeMsgPackAPIFactory','A2.Http.PokkeReqContainer','A2.Http.PokkeResContainer',
  'A2.Crypto.BasicCrypto','A2.Crypto.Hash',
  'A2.ResourceManager.ResourceMsgPackDataApi','A2.ResourceManager.ResourceCrypto',
+)
+EXPLICIT_TYPES=(
+ 'A2.Http.PokkeMsgPackAPI`2',
+ 'A2.Http.PokkeMsgPackAPI`2+<>c__DisplayClass6_0',
+ 'A2.Http.PokkeMsgPackAPI`2+<>c__DisplayClass8_0',
+ 'A2.Http.PokkeMsgPackAPI`2+<>c__DisplayClass8_1',
+ 'A2.Http.PokkeAPI`2',
 )
 
 def run(command:list[str]):
  return subprocess.run(command,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,errors='replace',check=False,timeout=240)
+
+def write_result(args,target,type_name,records):
+ safe=re.sub(r'[^A-Za-z0-9_.-]+','_',type_name)
+ result=run([str(args.ilspy),'-t',type_name,str(args.assembly)])
+ path=args.out/f'{safe}.cs'
+ path.write_text(result.stdout[:3_000_000],encoding='utf-8')
+ records.append({'requested':target,'type':type_name,'file':path.name,'returnCode':result.returncode,'bytes':path.stat().st_size})
 
 def main():
  ap=argparse.ArgumentParser(); ap.add_argument('--ilspy',type=Path,required=True); ap.add_argument('--assembly',type=Path,required=True); ap.add_argument('--out',type=Path,required=True); args=ap.parse_args(); args.out.mkdir(parents=True,exist_ok=True)
@@ -26,14 +40,17 @@ def main():
   short=target.rsplit('.',1)[-1]
   candidates=[x for x in available if x==target or x.startswith(target+'`') or x.endswith('.'+short)]
   for type_name in dict.fromkeys(candidates):
-   safe=re.sub(r'[^A-Za-z0-9_.-]+','_',type_name)
-   result=run([str(args.ilspy),'-t',type_name,str(args.assembly)])
-   path=args.out/f'{safe}.cs'; path.write_text(result.stdout[:2_000_000],encoding='utf-8')
-   records.append({'requested':target,'type':type_name,'file':path.name,'returnCode':result.returncode,'bytes':path.stat().st_size})
+   write_result(args,target,type_name,records)
+ for type_name in EXPLICIT_TYPES:
+  write_result(args,type_name,type_name,records)
  (args.out/'type-list.txt').write_text(listed.stdout,encoding='utf-8')
  (args.out/'types.json').write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  found={record['requested'] for record in records if record['returnCode']==0}
- required={'A2.Crypto.BasicCrypto','A2.Crypto.Hash','ReDrive.Config.AppCryptoConfig','ReDrive.Config.AppMsgPackConfig','A2.Http.RequestEncoder'}
+ required={
+  'A2.Crypto.BasicCrypto','A2.Crypto.Hash','ReDrive.Config.AppCryptoConfig',
+  'ReDrive.Config.AppMsgPackConfig','A2.Http.RequestEncoder',
+  'A2.Http.PokkeMsgPackAPI`2','A2.Http.PokkeMsgPackAPI`2+<>c__DisplayClass8_0',
+ }
  missing=sorted(required-found)
  if missing: raise SystemExit(f'Missing required Taiwan codec types: {missing}')
 
