@@ -90,6 +90,7 @@ jobs:
               'appCryptoHashSalt':0x9BCAF88,
               'appCryptoKeySeed':0x9BCAF90,
               'appMsgPackCryptKey':0x9BCB028,
+              'msgPackDefaultCryptKey':0x9BA5660,
           }
           wanted=set(slots.values())
           def map_va(elf,address):
