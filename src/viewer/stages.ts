@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { fetchAndTryDecompressGzip } from 'magia-exedra-character-three/utils'
 import { scene } from './scene'
 import { gui } from './controllers/GUI'
+import { applyReDriveVolumeRuntime, resetReDriveVolumeRuntime, type ReDriveVolumeRuntimeProfile } from './reDriveVolumeRuntime'
 
 export type StageCategory = 'research' | 'battle' | 'field' | 'dungeon' | 'gallery' | 'adv'
 export type StageAssetType = 'gltf' | 'fbx'
@@ -541,8 +542,12 @@ async function applyStageRenderProfile(profile?: StageRenderProfile) {
         scene.controls.update()
     }
 }
+    applyReDriveVolumeRuntime(
+    profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
+)
 
 function restoreSceneProfile() {
+    resetReDriveVolumeRuntime()
     scene.scene.background = initialSceneState.background
     scene.scene.environment = initialSceneState.environment
     scene.scene.fog = initialSceneState.fog
