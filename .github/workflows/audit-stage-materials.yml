@@ -1,0 +1,51 @@
+name: Audit official stage material connections
+
+on:
+  push:
+    branches: ['main']
+    paths: ['.github/workflows/audit-stage-materials.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Magius3Dviewer source
+        uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+
+      - name: Parse official FBX material and texture graph
+        run: |
+          python scripts/audit-stage-materials.py \
+            --root public/stages/official \
+            --out /tmp/stage-material-audit.json
+
+      - name: Upload stage material audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage-material-audit
+          path: /tmp/stage-material-audit.json
+          retention-days: 7
+
+      - name: Publish audit status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status='${{ job.status }}';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: status === 'success' ? 'success' : 'failure',
+              context: 'Official stage FBX material audit',
+              description: status === 'success'
+                ? 'Official stage FBX texture graph audited'
+                : 'Stage material audit failed',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
