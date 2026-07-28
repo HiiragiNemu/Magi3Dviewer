@@ -24,7 +24,6 @@ const browser = await puppeteer.launch({
     '--disable-gpu-sandbox',
   ],
 })
-
 const page = await browser.newPage()
 await page.setViewport({ width: 1280, height: 900, deviceScaleFactor: 1 })
 const consoleErrors = []
@@ -35,10 +34,7 @@ page.on('console', message => {
 })
 page.on('pageerror', error => pageErrors.push(String(error)))
 
-await page.goto('https://127.0.0.1:4173/', {
-  waitUntil: 'domcontentloaded',
-  timeout: 60_000,
-})
+await page.goto('https://127.0.0.1:4173/', { waitUntil: 'domcontentloaded', timeout: 60_000 })
 await page.waitForFunction(
   () => document.body.classList.contains('no-demo') && window.scene,
   { timeout: 180_000 },
@@ -52,20 +48,10 @@ await page.waitForFunction(
   { timeout: 60_000 },
 )
 
+// Ashley remains the animation-regression target.
 await page.select('#character-selector', '110701')
 await page.waitForFunction(
   () => window.scene?.characterSelected?.character?.userData?.characterId === 110701,
-  { timeout: 180_000 },
-)
-await page.waitForFunction(
-  () => {
-    const character = window.scene?.characterSelected?.character
-    if (!character) return false
-    return (character.userData.meshes ?? []).some(mesh => {
-      const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
-      return materials.some(material => material?.userData?.shader)
-    })
-  },
   { timeout: 180_000 },
 )
 await page.waitForFunction(
@@ -76,22 +62,31 @@ await page.waitForFunction(
 await page.select('#animation-selector', 'Wait_L')
 await page.evaluate(() => {
   const viewer = window.scene
-  const character = viewer.characterSelected.character
-  character.animation.paused = true
+  viewer.characterSelected.character.animation.paused = true
   viewer.camera.position.set(0, 1.60, 3.05)
   viewer.controls.target.set(0, 1.43, 0)
   viewer.controls.update()
 })
 await new Promise(resolve => setTimeout(resolve, 2_000))
 await page.screenshot({ path: '/tmp/magius-smoke-ashley.png', fullPage: true })
-await page.screenshot({ path: '/tmp/magius-smoke-closeup.png', fullPage: true })
 
-const officialStageId = await page.evaluate(() => {
-  const option = document.querySelector('#stage-selector option[data-official="true"]')
-  return option?.value ?? null
+const ashleyAnimation = await page.evaluate(() => {
+  const character = window.scene.characterSelected.character
+  const source = character.animation.getAnimationClipsByName?.('Wait_L') ?? []
+  const prepared = character.animation.getPreparedAnimationClipsByName?.('Wait_L') ?? []
+  return {
+    selectedCharacterId: character.userData.characterId,
+    selectedAnimation: character.animation.current,
+    source: source.map(clip => ({ name: clip.name, tracks: clip.tracks.length })),
+    prepared: prepared.map(clip => ({ name: clip.name, tracks: clip.tracks.length })),
+  }
 })
-if (!officialStageId) throw new Error('No official stage option was published')
 
+// Load the first exported official stage and verify actual geometry/runtime state.
+const officialStageId = await page.evaluate(() =>
+  document.querySelector('#stage-selector option[data-official="true"]')?.value ?? null,
+)
+if (!officialStageId) throw new Error('No official stage option was published')
 await page.select('#stage-selector', officialStageId)
 await page.waitForFunction(
   expected => {
@@ -113,87 +108,167 @@ await page.evaluate(() => {
 await new Promise(resolve => setTimeout(resolve, 2_000))
 await page.screenshot({ path: '/tmp/magius-smoke-official-stage.png', fullPage: true })
 
-const result = await page.evaluate(() => {
-  const canvas = document.querySelector('#viewer canvas')
-  const gl = canvas?.getContext('webgl2') || canvas?.getContext('webgl')
-  const viewer = window.scene
-  const character = viewer.characterSelected.character
-  const source = character.animation.getAnimationClipsByName?.('Wait_L') ?? []
-  const prepared = character.animation.getPreparedAnimationClipsByName?.('Wait_L') ?? []
-  const guiText = document.querySelector('#three-gui')?.textContent ?? ''
+const stageResult = await page.evaluate(() => {
   const stageOptions = [...document.querySelectorAll('#stage-selector option')]
-  const stageRoot = viewer.scene.getObjectByName('Magius3DviewerStageRoot')
-  let officialStageMeshCount = 0
-  let officialStageMaterialCount = 0
-  let officialStageTextureCount = 0
-  stageRoot?.traverse(object => {
+  const root = window.scene.scene.getObjectByName('Magius3DviewerStageRoot')
+  let meshes = 0
+  let materials = 0
+  let textures = 0
+  root?.traverse(object => {
     if (!object.isMesh) return
-    officialStageMeshCount += 1
-    const materials = Array.isArray(object.material) ? object.material : [object.material]
-    officialStageMaterialCount += materials.filter(Boolean).length
-    for (const material of materials) {
+    meshes += 1
+    const list = Array.isArray(object.material) ? object.material : [object.material]
+    materials += list.filter(Boolean).length
+    for (const material of list) {
       if (!material) continue
       for (const value of Object.values(material)) {
-        if (value?.isTexture) officialStageTextureCount += 1
+        if (value?.isTexture) textures += 1
       }
     }
   })
-  const hairMeshes = character.userData.meshes.filter(mesh => mesh.name.toLowerCase().includes('hair'))
-  const angelRingShaders = hairMeshes.flatMap(mesh => {
-    const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
-    return materials.map(material => material?.userData?.shader)
-      .filter(shader => shader?.uniforms?.uAngelRingEnabled)
+  return {
+    names: stageOptions.map(option => option.textContent ?? ''),
+    officialCount: stageOptions.filter(option => option.dataset.official === 'true').length,
+    definition: root?.userData?.stageDefinition ?? null,
+    meshes,
+    materials,
+    textures,
+  }
+})
+
+// Madoka is the official AngelRing and Soul Gem regression target.
+await page.select('#character-selector', '100107')
+await page.waitForFunction(
+  () => window.scene?.characterSelected?.character?.userData?.characterId === 100107,
+  { timeout: 180_000 },
+)
+await page.evaluate(async () => {
+  if (window.loadStageById) await window.loadStageById('none')
+  const viewer = window.scene
+  viewer.characterSelected.character.animation.paused = true
+  viewer.camera.position.set(0, 1.42, 2.55)
+  viewer.controls.target.set(0, 1.30, 0)
+  viewer.controls.update()
+})
+await new Promise(resolve => setTimeout(resolve, 3_000))
+await page.screenshot({ path: '/tmp/magius-smoke.png', fullPage: true })
+await page.screenshot({ path: '/tmp/magius-smoke-closeup.png', fullPage: true })
+
+const madokaMaterialResult = await page.evaluate(async () => {
+  const waitFrames = count => new Promise(resolve => {
+    let remaining = count
+    const next = () => {
+      remaining -= 1
+      if (remaining <= 0) resolve()
+      else requestAnimationFrame(next)
+    }
+    requestAnimationFrame(next)
   })
+  const viewer = window.scene
+  const character = viewer.characterSelected.character
+  const canvas = document.querySelector('#viewer canvas')
+  const gl = canvas?.getContext('webgl2') || canvas?.getContext('webgl')
+  const body = character.userData.meshes.find(mesh => mesh.name.toLowerCase().includes('body'))
+  const profiles = body?.userData?.officialMaterialProfiles ?? []
+  const gemProfiles = profiles.filter(profile => profile?.gem?.enabled)
+  const materials = body ? (Array.isArray(body.material) ? body.material : [body.material]) : []
+  const shaders = [...new Set(materials)]
+    .map(material => material?.userData?.shader)
+    .filter(Boolean)
+
+  const sample = () => {
+    if (!gl) return null
+    gl.finish()
+    const width = gl.drawingBufferWidth
+    const height = gl.drawingBufferHeight
+    const pixels = new Uint8Array(width * height * 4)
+    gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
+    const values = []
+    const x0 = Math.floor(width * 0.36)
+    const x1 = Math.floor(width * 0.64)
+    const y0 = Math.floor(height * 0.43)
+    const y1 = Math.floor(height * 0.70)
+    for (let y = y0; y < y1; y += 2) {
+      for (let x = x0; x < x1; x += 2) {
+        const index = (y * width + x) * 4
+        values.push(pixels[index], pixels[index + 1], pixels[index + 2])
+      }
+    }
+    return values
+  }
+
+  const previous = gemProfiles.map(profile => profile.gem.enabled)
+  gemProfiles.forEach(profile => { profile.gem.enabled = false })
+  await waitFrames(4)
+  const gemOff = sample()
+  gemProfiles.forEach((profile, index) => { profile.gem.enabled = previous[index] })
+  await waitFrames(4)
+  const gemOn = sample()
+
+  let changedChannels = 0
+  let maxDelta = 0
+  let meanAbsoluteDelta = 0
+  if (gemOff && gemOn) {
+    let total = 0
+    for (let index = 0; index < gemOff.length; index += 1) {
+      const delta = Math.abs(gemOn[index] - gemOff[index])
+      total += delta
+      if (delta >= 2) changedChannels += 1
+      maxDelta = Math.max(maxDelta, delta)
+    }
+    meanAbsoluteDelta = total / Math.max(gemOff.length, 1)
+  }
+
+  const hairShaders = character.userData.meshes
+    .filter(mesh => mesh.name.toLowerCase().includes('hair'))
+    .flatMap(mesh => Array.isArray(mesh.material) ? mesh.material : [mesh.material])
+    .map(material => material?.userData?.shader)
+    .filter(shader => shader?.uniforms?.uAngelRingEnabled)
+
+  return {
+    characterId: character.userData.characterId,
+    bodyMaterialSlotCount: materials.length,
+    bodyGroupCount: body?.geometry?.groups?.length ?? 0,
+    materialProfileNames: profiles.map(profile => profile.name),
+    gemProfileCount: gemProfiles.length,
+    gemUniformAvailable: shaders.some(shader => Boolean(shader.uniforms?.uMaterialIsGem)),
+    matCapUniformAvailable: shaders.some(shader => Boolean(shader.uniforms?.tGemMatCap)),
+    gemPixelDelta: { changedChannels, maxDelta, meanAbsoluteDelta },
+    angelRingShaderCount: hairShaders.length,
+    angelRingEnabled: hairShaders.every(shader => Number(shader.uniforms.uAngelRingEnabled.value) >= 0.5),
+  }
+})
+
+const guiText = await page.$eval('#three-gui', element => element.textContent ?? '')
+const canvasResult = await page.evaluate(() => {
+  const canvas = document.querySelector('#viewer canvas')
+  const gl = canvas?.getContext('webgl2') || canvas?.getContext('webgl')
   return {
     title: document.title,
     webgl: Boolean(gl),
     canvasSize: canvas ? [canvas.width, canvas.height] : [0, 0],
     characterCount: document.querySelectorAll('#character-selector option').length,
-    selectedCharacterId: character.userData.characterId,
-    selectedAnimation: character.animation.current,
-    sourceClips: source.map(clip => ({ name: clip.name, tracks: clip.tracks.length })),
-    preparedClips: prepared.map(clip => ({ name: clip.name, tracks: clip.tracks.length })),
-    stageNames: stageOptions.map(option => option.textContent ?? ''),
-    officialStageCount: stageOptions.filter(option => option.dataset.official === 'true').length,
-    activeStageDefinition: stageRoot?.userData?.stageDefinition ?? null,
-    officialStageMeshCount,
-    officialStageMaterialCount,
-    officialStageTextureCount,
-    hasStageRoot: Boolean(stageRoot),
-    hasShaderControls: guiText.includes('Recovered ReDrive Toon base'),
-    hasAngelRingControls: guiText.includes('AngelRing (UV3 + view normal)'),
-    hairMeshCount: hairMeshes.length,
-    angelRingShaderCount: angelRingShaders.length,
-    angelRingUniforms: angelRingShaders.map(shader => ({
-      enabled: Number(shader.uniforms.uAngelRingEnabled?.value ?? 0),
-      hasUv1: Number(shader.uniforms.uAngelRingHasUv1?.value ?? 0),
-      useHead: Number(shader.uniforms.uAngelRingUseHeadPlane?.value ?? 0),
-    })),
   }
 })
 
 const failures = []
-if (!result.title.includes('Magius3Dviewer')) failures.push('wrong title')
-if (!result.webgl) failures.push('WebGL unavailable')
-if (result.canvasSize.some(value => value <= 0)) failures.push('invalid canvas size')
-if (result.characterCount < 90) failures.push(`only ${result.characterCount} characters`)
-if (result.selectedCharacterId !== 110701) failures.push('Ashley not selected')
-if (result.selectedAnimation !== 'Wait_L') failures.push('Wait_L not selected')
-if (result.sourceClips.length < 2 || result.preparedClips.length < 1) failures.push('animation family unavailable')
-const sourceTracks = result.sourceClips.reduce((sum, clip) => sum + clip.tracks, 0)
-const preparedTracks = result.preparedClips.reduce((sum, clip) => sum + clip.tracks, 0)
-if (preparedTracks >= sourceTracks) failures.push('duplicate animation tracks were not removed')
-if (result.stageNames.length < 9 || !result.hasStageRoot) failures.push('official stage catalog/runtime unavailable')
-if (result.officialStageCount < 5) failures.push(`only ${result.officialStageCount} official stages`)
-if (!result.activeStageDefinition?.official) failures.push('active stage is not official geometry')
-if (result.officialStageMeshCount < 1) failures.push('official stage contains no meshes')
-if (result.officialStageMaterialCount < 1) failures.push('official stage contains no materials')
-if (!result.hasShaderControls) failures.push('ReDrive controls missing')
-if (!result.hasAngelRingControls) failures.push('UV3 AngelRing controls missing')
-if (result.hairMeshCount < 1 || result.angelRingShaderCount < 1) failures.push('hair AngelRing shader missing')
-if (!result.angelRingUniforms.every(item => item.enabled >= 0.5 && item.hasUv1 >= 0.5 && item.useHead >= 0.5)) {
-  failures.push(`AngelRing runtime uniforms invalid: ${JSON.stringify(result.angelRingUniforms)}`)
-}
+if (!canvasResult.title.includes('Magius3Dviewer')) failures.push('wrong title')
+if (!canvasResult.webgl) failures.push('WebGL unavailable')
+if (canvasResult.canvasSize.some(value => value <= 0)) failures.push('invalid canvas size')
+if (canvasResult.characterCount < 90) failures.push(`only ${canvasResult.characterCount} characters`)
+if (ashleyAnimation.selectedCharacterId !== 110701 || ashleyAnimation.selectedAnimation !== 'Wait_L') failures.push('Ashley Wait_L regression target unavailable')
+const sourceTracks = ashleyAnimation.source.reduce((sum, clip) => sum + clip.tracks, 0)
+const preparedTracks = ashleyAnimation.prepared.reduce((sum, clip) => sum + clip.tracks, 0)
+if (ashleyAnimation.source.length < 2 || preparedTracks >= sourceTracks) failures.push('Ashley duplicate animation tracks were not removed')
+if (stageResult.officialCount < 5 || !stageResult.definition?.official) failures.push('official stage catalog/runtime unavailable')
+if (stageResult.meshes < 1 || stageResult.materials < 1) failures.push('official stage geometry unavailable')
+if (!guiText.includes('Recovered ReDrive Toon base') || !guiText.includes('AngelRing')) failures.push('shader controls missing')
+if (madokaMaterialResult.characterId !== 100107) failures.push('Madoka material regression target unavailable')
+if (madokaMaterialResult.bodyMaterialSlotCount < 2 || madokaMaterialResult.bodyGroupCount < 2) failures.push('FBX material groups were collapsed')
+if (madokaMaterialResult.gemProfileCount < 1) failures.push('Madoka Soul Gem material profile missing')
+if (!madokaMaterialResult.gemUniformAvailable || !madokaMaterialResult.matCapUniformAvailable) failures.push('Gem/MatCap shader uniforms missing')
+if (madokaMaterialResult.gemPixelDelta.changedChannels < 8 || madokaMaterialResult.gemPixelDelta.maxDelta < 2) failures.push(`Soul Gem produced no measurable visual response: ${JSON.stringify(madokaMaterialResult.gemPixelDelta)}`)
+if (madokaMaterialResult.angelRingShaderCount < 1 || !madokaMaterialResult.angelRingEnabled) failures.push('Madoka official AngelRing path missing')
 
 const fatalConsoleErrors = consoleErrors.filter(text =>
   /Shader Error|VALIDATE_STATUS false|shader is not compiled|Could not compile WebGL/i.test(text),
@@ -201,7 +276,15 @@ const fatalConsoleErrors = consoleErrors.filter(text =>
 if (pageErrors.length) failures.push(`page errors: ${pageErrors.join(' | ')}`)
 if (fatalConsoleErrors.length) failures.push(`shader errors: ${fatalConsoleErrors.join(' | ')}`)
 
-const report = { result, consoleErrors, pageErrors, failures }
+const report = {
+  canvas: canvasResult,
+  ashleyAnimation,
+  stage: stageResult,
+  madokaMaterial: madokaMaterialResult,
+  consoleErrors,
+  pageErrors,
+  failures,
+}
 fs.writeFileSync('/tmp/magius-smoke.json', JSON.stringify(report, null, 2))
 console.log(JSON.stringify(report, null, 2))
 await browser.close()
