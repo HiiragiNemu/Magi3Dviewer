@@ -274,8 +274,8 @@ export async function createHairMaterial(
                 );
                 rdAngelHybridUv.y += uAngelRingVerticalOffset;
 
-                // `_YuugenHighlight` / IsHairUVAngelRing uses the complete
-                // authored UV3; ordinary hair uses normal X + blended UV3 Y.
+                // YuugenHighlight / IsHairUVAngelRing uses the complete authored
+                // UV3; ordinary hair uses normal X + blended UV3 Y.
                 vec2 rdAngelUv = mix(
                     rdAngelHybridUv,
                     rdAngelUv1Unsigned,
