@@ -171,8 +171,14 @@ export async function createHairMaterial(
             shader.uniforms.uAngelRingFaceForward = { value: new THREE.Vector3(0, 0, 1) }
             shader.uniforms.uAngelRingBandHalfWidth = { value: reference?.bandHalfWidth ?? 0.045 }
             shader.uniforms.uAngelRingUvMode = { value: reference?.uvMode ? 1 : 0 }
-            shader.uniforms.uAngelRingHasUv1 = { value: options.angelRingHasUv1 ? 1 : 0 }
-            shader.uniforms.uAngelRingUv1Signed = { value: options.angelRingUv1Signed ? 1 : 0 }
+            // The current Exedra FBX corpus exports hair UV3 consistently. An
+            // explicit false can still disable it for an exceptional conversion.
+            shader.uniforms.uAngelRingHasUv1 = {
+                value: options.angelRingHasUv1 === false ? 0 : 1,
+            }
+            shader.uniforms.uAngelRingUv1Signed = {
+                value: options.angelRingUv1Signed === false ? 0 : 1,
+            }
             loadAngelRingOptions(shader)
             updateAngelRingReference()
 
