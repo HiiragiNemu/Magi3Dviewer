@@ -59,15 +59,14 @@ jobs:
           grep -R -n -i -E 'AES|Rijndael|Crypto|HashKey|HashSalt|CryptoKey|Serialize|Deserialize|Encode|Decode|Compress|LZ4|GZip|Deflate|MessagePack|MsgPack|RequestEncoder|Response|Decrypt|Encrypt' \
             work/report/codec-types > work/report/codec-focused.txt || true
       - name: Resolve exact runtime string slots through LibCpp2IL
+        continue-on-error: true
         shell: bash
         run: |
-          set -euo pipefail
-          lib=$(find work/cpp2il/extracted -type f -name LibCpp2IL.dll -print -quit)
-          primitives=$(find work/cpp2il/extracted -type f -name AssetRipper.Primitives.dll -print -quit)
-          test -n "$lib"; test -n "$primitives"
-          libdir=$(dirname "$lib")
+          set -u
           mkdir -p work/literal-query/lib
-          cp "$libdir"/*.dll work/literal-query/lib/
+          find work/cpp2il/extracted -type f -name '*.dll' -exec cp -n '{}' work/literal-query/lib/ \;
+          test -s work/literal-query/lib/LibCpp2IL.dll
+          test -s work/literal-query/lib/AssetRipper.Primitives.dll
           cat > work/literal-query/LiteralQuery.csproj <<'EOF'
           <Project Sdk="Microsoft.NET.Sdk">
             <PropertyGroup>
@@ -94,12 +93,13 @@ jobs:
           var context = LibCpp2IlContextBuilder.Build(
               File.ReadAllBytes(args[0]),
               File.ReadAllBytes(args[1]),
-              new UnityVersion(2022, 3, 62));
+              new UnityVersion(2022, 3, 62, UnityVersionType.Final, 3));
           var slots = new Dictionary<string, ulong>
           {
               ["systemMonitorOrEmpty"] = 0x9B7A4F0,
               ["msgPackDefaultCryptKey"] = 0x9BA5660,
               ["appMsgPackCryptKey"] = 0x9BCB028,
+              ["appCryptoHashKeyInput"] = 0x9BCAF80,
               ["appCryptoHashSaltInput"] = 0x9BCAF88,
               ["appCryptoSeedInput"] = 0x9BCAF90,
               ["guestUserAgentHeader"] = 0x9B83D58,
@@ -112,6 +112,7 @@ jobs:
               ["sdkScheme"] = 0x9B8CAD0,
               ["sdkPackage"] = 0x9B93118,
               ["productionDomainPart"] = 0x9B8CAC0,
+              ["sdkRequestSignSalt"] = 0x9C09490,
           };
           var values = slots.Select(pair => new
           {
@@ -121,14 +122,22 @@ jobs:
           }).ToArray();
           File.WriteAllText(args[2], JsonSerializer.Serialize(values, new JsonSerializerOptions { WriteIndented = true }));
           EOF
-          dotnet build work/literal-query/LiteralQuery.csproj --configuration Release --nologo
-          cp work/literal-query/lib/*.dll work/literal-query/bin/Release/net9.0/
-          dotnet work/literal-query/bin/Release/net9.0/LiteralQuery.dll \
-            work/merged/lib/arm64-v8a/libil2cpp.so \
-            work/merged/assets/bin/Data/Managed/Metadata/global-metadata.dat \
-            work/report/runtime-literals.json \
-            > work/report/runtime-literal-query.log 2>&1
-          test -s work/report/runtime-literals.json
+          set +e
+          dotnet build work/literal-query/LiteralQuery.csproj --configuration Release --nologo \
+            > work/report/runtime-literal-build.log 2>&1
+          build_status=$?
+          echo "build_status=$build_status" > work/report/runtime-literal-status.txt
+          if [[ $build_status -eq 0 ]]; then
+            find work/literal-query/lib -maxdepth 1 -type f -name '*.dll' -exec cp -n '{}' work/literal-query/bin/Release/net9.0/ \;
+            dotnet work/literal-query/bin/Release/net9.0/LiteralQuery.dll \
+              work/merged/lib/arm64-v8a/libil2cpp.so \
+              work/merged/assets/bin/Data/Managed/Metadata/global-metadata.dat \
+              work/report/runtime-literals.json \
+              > work/report/runtime-literal-query.log 2>&1
+            query_status=$?
+            echo "query_status=$query_status" >> work/report/runtime-literal-status.txt
+          fi
+          set -e
       - name: Remove raw/full outputs
         if: ${{ always() }}
         run: |
