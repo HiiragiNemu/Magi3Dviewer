@@ -25,10 +25,12 @@ jobs:
       - name: Checkout controller
         uses: actions/checkout@v5
 
-      - name: Set up .NET 9
+      - name: Set up .NET 6 and 9
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: |
+            6.0.x
+            9.0.x
 
       - name: Install analysis tools
         run: |
