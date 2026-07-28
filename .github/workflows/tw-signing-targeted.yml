@@ -1,5 +1,5 @@
 name: Target Taiwan API signing analysis
-run-name: Recover APISigning and GCS model fields
+run-name: Recover APISigning hash and GCS model fields
 
 on:
   workflow_dispatch:
@@ -8,6 +8,7 @@ on:
     paths:
       - '.github/workflows/tw-signing-targeted.yml'
       - 'tools/research/scan_tw_signing_targets.py'
+      - 'tools/research/scan_tw_signing_callees.py'
       - 'analysis-requests/tw-signing-targeted.txt'
 
 permissions:
@@ -78,21 +79,29 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p work/analysis work/report/disassembly
+          mkdir -p work/analysis work/callees work/report/disassembly
           python tools/research/scan_tw_signing_targets.py \
             --binary work/merged/lib/arm64-v8a/libil2cpp.so \
             --dump work/dump/dump.cs \
             --out work/analysis
+          python tools/research/scan_tw_signing_callees.py \
+            --binary work/merged/lib/arm64-v8a/libil2cpp.so \
+            --dump work/dump/dump.cs \
+            --out work/callees
           cp work/analysis/*.json work/report/
+          cp work/callees/*.json work/report/
           cp -r work/analysis/types work/report/
           cp work/analysis/disassembly-ranges.tsv work/report/
+          cp work/callees/signing-extra-ranges.tsv work/report/
+          cat work/analysis/disassembly-ranges.tsv work/callees/signing-extra-ranges.tsv \
+            | sort -u > work/all-ranges.tsv
           while IFS=$'\t' read -r safe start stop display; do
             aarch64-linux-gnu-objdump -d -C \
               --start-address=$((16#$start)) \
               --stop-address=$((16#$stop)) \
               work/merged/lib/arm64-v8a/libil2cpp.so \
               > "work/report/disassembly/${safe}.txt" 2>&1 || true
-          done < work/analysis/disassembly-ranges.tsv
+          done < work/all-ranges.tsv
           grep -R -n -i -E \
             'HMAC|SHA1|SHA256|SHA512|Base64|OnSign|APISigning|Expires|KeyName|Signature|encodedKey|keyName|signedUrl|webResourcesUrl|gcs' \
             work/report > work/report/focused-grep.txt || true
@@ -101,7 +110,7 @@ jobs:
         if: ${{ always() }}
         shell: bash
         run: |
-          rm -rf work/source work/xapk work/merged work/tool work/dump work/analysis
+          rm -rf work/source work/xapk work/merged work/tool work/dump work/analysis work/callees work/all-ranges.tsv
           if find work/report -type f \( -name '*.apk' -o -name '*.xapk' -o -name '*.so' -o -name 'dump.cs' -o -name 'global-metadata.dat' \) | grep -q .; then
             echo 'raw client material remained' >&2
             exit 1
