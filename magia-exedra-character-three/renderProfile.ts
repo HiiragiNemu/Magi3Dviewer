@@ -11,6 +11,10 @@ export interface CharacterReDriveProfile {
     faceRightAxis: ReDriveAxis;
     /** Official serialized ReDriveToonMaterialController value when known. */
     headOffset?: number;
+    /** Whether this character's hair material serializes the AngelRing feature. */
+    angelRingEnabled: boolean;
+    /** Optional profile override derived from official Head geometry and map scale. */
+    angelRingBandHalfWidth?: number;
     /** Official `_YuugenHighlight` / Hair UV AngelRing material mode. */
     hairUvAngelRing?: boolean;
     notes?: string[];
@@ -22,44 +26,62 @@ export interface CharacterReDriveProfile {
  *
  * 0 X, 1 Y, 2 Z, 3 negX, 4 negY, 5 negZ.
  *
- * Ashley serializes forward=3, up=1, right=2 and headOffset=0.2. The serialized
- * forward vector points into the face under the exported FBX/Three handedness;
- * camera-facing and shading calculations require the outward inverse (+X). This
- * conversion is verified by the browser front/back regression: local +X maps to
- * the visible face direction, while local -X maps to the rear hair.
+ * Do not infer AngelRing from the existence of `_AngelRingMap`: the common
+ * Shader property is serialized on every ReDriveToon material. Feature state is
+ * character/material specific. Ashley 110701 has no serialized
+ * `_USE_ANGEL_RING` keyword; Madoka 100107 does.
  */
 const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
+    [100107, {
+        characterId: 100107,
+        source: 'official-export',
+        headBoneName: 'Head',
+        faceForwardAxis: '-x',
+        faceUpAxis: 'y',
+        faceRightAxis: 'z',
+        headOffset: 0.167,
+        angelRingEnabled: true,
+        angelRingBandHalfWidth: 0.030,
+        hairUvAngelRing: false,
+        notes: [
+            '鹿目まどか / chara_100107_battle_unit.',
+            'Controller: forward=negX, up=Y, right=Z, headOffset=0.167.',
+            'Hair serializes `_USE_ANGEL_RING`; `_YuugenHighlight=0`.',
+        ],
+    }],
     [110701, {
         characterId: 110701,
         source: 'official-export',
         headBoneName: 'Head',
-        faceForwardAxis: 'x',
+        faceForwardAxis: '-x',
         faceUpAxis: 'y',
         faceRightAxis: 'z',
         headOffset: 0.2,
+        angelRingEnabled: false,
         hairUvAngelRing: false,
         notes: [
             'Ashley Taylor / chara_110701_battle_unit.',
-            'Native controller: forward=negX, up=Y, right=Z, headOffset=0.2.',
-            'Web outward face direction is the inverse of the native serialized forward axis.',
-            'Hair material: _IsHair=1, _YuugenHighlight=0, _UseRimLight=1.',
+            'Controller: forward=negX, up=Y, right=Z, headOffset=0.2.',
+            'Hair does not serialize `_USE_ANGEL_RING`; do not apply the global fake band.',
             'FBX material graph confirms Aniso, Gem/MatCap and material-specific OutlineOffset variants.',
         ],
     }],
 ]);
 
 /**
- * Generic values remain explicitly estimated. The direction fallback follows
- * the visible outward direction of the current FBX corpus. Each character should
- * ultimately receive its serialized controller profile and conversion metadata.
+ * Unknown characters default to no synthetic AngelRing. The former global
+ * fallback painted an unsupported white band on every hairstyle and was worse
+ * than omitting the feature. The all-character official profile database will
+ * replace these estimates incrementally.
  */
 const DEFAULT_PROFILE: Omit<CharacterReDriveProfile, 'characterId'> = {
     source: 'estimated',
     headBoneName: 'Head',
-    faceForwardAxis: 'x',
+    faceForwardAxis: '-x',
     faceUpAxis: 'y',
     faceRightAxis: 'z',
-    notes: ['Generic Unity humanoid outward Head-axis fallback; replace with an official exported profile.'],
+    angelRingEnabled: false,
+    notes: ['No official character profile loaded; AngelRing remains disabled.'],
 };
 
 export function getCharacterReDriveProfile(characterId: number): CharacterReDriveProfile {
@@ -143,16 +165,16 @@ function setBoxCorners(box: THREE.Box3): THREE.Vector3[] {
 
 /**
  * Build the official coordinate model (Head position + rotated face axes).
- *
- * Long hair and twin tails extend far below the Head. The fallback uses only
- * crown height above the Head bone; an official serialized `headOffset` always
- * takes precedence.
+ * Unknown or explicitly disabled characters return no reference, preventing the
+ * renderer from attaching the AngelRing shader path at all.
  */
 export function createAngelRingReference(
     root: THREE.Object3D,
     hairMesh: THREE.Mesh,
     profile: CharacterReDriveProfile,
 ): AngelRingReference | undefined {
+    if (!profile.angelRingEnabled) return undefined;
+
     const headBone = findCharacterHeadBone(root, profile);
     if (!headBone) return undefined;
 
@@ -182,7 +204,7 @@ export function createAngelRingReference(
 
     const crownHeight = THREE.MathUtils.clamp(maxUp, 0.08, 0.42);
     const estimatedOffset = THREE.MathUtils.clamp(crownHeight * 0.66, 0.055, 0.24);
-    const estimatedBandHalfWidth = THREE.MathUtils.clamp(crownHeight * 0.18, 0.024, 0.060);
+    const estimatedBandHalfWidth = THREE.MathUtils.clamp(crownHeight * 0.12, 0.020, 0.040);
 
     return {
         headBone,
@@ -190,7 +212,7 @@ export function createAngelRingReference(
         localRight: axisToVector(profile.faceRightAxis),
         localForward: axisToVector(profile.faceForwardAxis),
         headOffset: profile.headOffset ?? estimatedOffset,
-        bandHalfWidth: estimatedBandHalfWidth,
+        bandHalfWidth: profile.angelRingBandHalfWidth ?? estimatedBandHalfWidth,
         projectionRadius: THREE.MathUtils.clamp(radius, 0.12, 0.65),
         uvMode: profile.hairUvAngelRing ?? false,
         estimated: profile.headOffset == undefined,
