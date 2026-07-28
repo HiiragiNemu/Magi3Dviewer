@@ -1,6 +1,474 @@
 {
   "version": 2,
-  "generatedAt": null,
-  "sourceRevision": null,
-  "stages": []
+  "generatedAt": "2026-07-28",
+  "sourceRevision": "b63d986c8f2e088362e7f26214967c92",
+  "stages": [
+    {
+      "id": "battle-600-00-00-001",
+      "name": "[Official geometry/Battle] 600-00-00-001",
+      "category": "battle",
+      "official": true,
+      "assetBundleName": "battle/stage/bg/3d/600/00/00/001",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-00-00-001/bg_3d_600_00_00_001.fbx.gz",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "spawnPoints": [
+        {
+          "id": "actor-0",
+          "name": "Actor 0",
+          "role": "actor",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "renderProfile": {
+        "id": "bg_3d_600_00_00_001",
+        "source": "manual-research",
+        "backgroundColor": "#000000",
+        "fog": {
+          "color": "#000000",
+          "near": 35,
+          "far": 200
+        },
+        "ambientLight": {
+          "color": "#fff2ec",
+          "intensity": 1.0
+        },
+        "directionalLight": {
+          "color": "#ffd4c2",
+          "intensity": 2.0,
+          "position": [
+            -4,
+            7,
+            6
+          ],
+          "target": [
+            0,
+            1,
+            0
+          ],
+          "castShadow": true
+        },
+        "renderer": {
+          "toneMapping": "aces",
+          "exposure": 1.0
+        },
+        "colorFilter": {
+          "brightness": 1.02,
+          "contrast": 0.95,
+          "saturation": 1.15
+        },
+        "bloom": {
+          "enabled": true,
+          "strength": 0.35,
+          "radius": 0.7,
+          "threshold": 0.8
+        },
+        "reDriveVolume": {
+          "characterShadowTint": "#ccbfb8",
+          "characterLightingOverrideColor": "#ffbc9b",
+          "characterLightingOverrideRatio": 0.5,
+          "characterAdditionalRimLightColor": "#ffffff",
+          "characterAdditionalRimLightDirection": [
+            1,
+            -1
+          ],
+          "backgroundShadowStrengthAdditive": 0.25,
+          "backgroundPostExposure": 0.2,
+          "backgroundContrast": -5,
+          "backgroundSaturation": 5
+        }
+      },
+      "evidence": [
+        "AssetStudioModCLI splitObjects",
+        "official AssetBundle geometry; render profile remains under parameter recovery"
+      ]
+    },
+    {
+      "id": "battle-600-00-01-001",
+      "name": "[Official geometry/Battle] 600-00-01-001",
+      "category": "battle",
+      "official": true,
+      "assetBundleName": "battle/stage/bg/3d/600/00/01/001",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-00-01-001/bg_3d_600_00_01_001.fbx.gz",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "spawnPoints": [
+        {
+          "id": "actor-0",
+          "name": "Actor 0",
+          "role": "actor",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "renderProfile": {
+        "id": "bg_3d_600_00_01_001",
+        "source": "manual-research",
+        "backgroundColor": "#282828",
+        "fog": {
+          "color": "#282828",
+          "near": 10,
+          "far": 95
+        },
+        "ambientLight": {
+          "color": "#aaaacc",
+          "intensity": 0.95
+        },
+        "directionalLight": {
+          "color": "#968f77",
+          "intensity": 1.8,
+          "position": [
+            -4,
+            6,
+            5
+          ],
+          "target": [
+            0,
+            1,
+            0
+          ],
+          "castShadow": true
+        },
+        "renderer": {
+          "toneMapping": "aces",
+          "exposure": 1.0
+        },
+        "colorFilter": {
+          "brightness": 1.0,
+          "contrast": 1.1,
+          "saturation": 1.15
+        },
+        "bloom": {
+          "enabled": true,
+          "strength": 0.35,
+          "radius": 0.7,
+          "threshold": 0.8
+        },
+        "reDriveVolume": {
+          "characterShadowTint": "#ababcc",
+          "characterLightingOverrideColor": "#979277",
+          "characterLightingOverrideRatio": 0.25,
+          "backgroundShadowStrengthAdditive": 0.3
+        }
+      },
+      "evidence": [
+        "AssetStudioModCLI splitObjects",
+        "official AssetBundle geometry; render profile remains under parameter recovery"
+      ]
+    },
+    {
+      "id": "dungeon-intro-0001-001",
+      "name": "[Official geometry/Dungeon] Intro 0001-001",
+      "category": "dungeon",
+      "official": true,
+      "assetBundleName": "dungeon/level/10000/level/intro/0001/001",
+      "type": "fbx",
+      "url": "./stages/official/dungeon-intro-0001-001/level_intro_0001_001.fbx.gz",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "spawnPoints": [
+        {
+          "id": "actor-0",
+          "name": "Actor 0",
+          "role": "actor",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "renderProfile": {
+        "id": "level_intro_0001_001",
+        "source": "manual-research",
+        "backgroundColor": "#080b12",
+        "fog": {
+          "color": "#0b101a",
+          "near": 8,
+          "far": 100
+        },
+        "ambientLight": {
+          "color": "#8794b4",
+          "intensity": 0.8
+        },
+        "directionalLight": {
+          "color": "#d8e4ff",
+          "intensity": 1.45,
+          "position": [
+            -3,
+            6,
+            4
+          ],
+          "target": [
+            0,
+            1,
+            0
+          ],
+          "castShadow": true
+        },
+        "renderer": {
+          "toneMapping": "aces",
+          "exposure": 0.95
+        },
+        "colorFilter": {
+          "brightness": 0.95,
+          "contrast": 1.08,
+          "saturation": 0.95
+        },
+        "bloom": {
+          "enabled": true,
+          "strength": 0.22,
+          "radius": 0.55,
+          "threshold": 0.82
+        }
+      },
+      "evidence": [
+        "AssetStudioModCLI splitObjects",
+        "official AssetBundle geometry; render profile remains under parameter recovery"
+      ]
+    },
+    {
+      "id": "gallery-memory-room",
+      "name": "[Official geometry/Gallery] Memory light room",
+      "category": "gallery",
+      "official": true,
+      "assetBundleName": "gallery/bg3d/gallery",
+      "type": "fbx",
+      "url": "./stages/official/gallery-memory-room/bg3d_gallery.fbx.gz",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "spawnPoints": [
+        {
+          "id": "actor-0",
+          "name": "Actor 0",
+          "role": "actor",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "renderProfile": {
+        "id": "bg3d_gallery",
+        "source": "manual-research",
+        "backgroundColor": "#ffffff",
+        "fog": {
+          "color": "#ffffff",
+          "near": 5,
+          "far": 500
+        },
+        "ambientLight": {
+          "color": "#ffffff",
+          "intensity": 1.0
+        },
+        "directionalLight": {
+          "color": "#ffffff",
+          "intensity": 1.6,
+          "position": [
+            -4,
+            7,
+            5
+          ],
+          "target": [
+            0,
+            1,
+            0
+          ],
+          "castShadow": true
+        },
+        "renderer": {
+          "toneMapping": "aces",
+          "exposure": 0.75
+        },
+        "colorFilter": {
+          "brightness": 0.94,
+          "contrast": 0.95,
+          "saturation": 1.0
+        },
+        "bloom": {
+          "enabled": true,
+          "strength": 0.4,
+          "radius": 0.75,
+          "threshold": 0.9
+        },
+        "reDriveVolume": {
+          "characterLightingOverrideColor": "#ffffff",
+          "characterLightingOverrideRatio": 0.4,
+          "characterAdditionalRimLightColor": "#ffffff",
+          "characterAdditionalRimLightDirection": [
+            -1,
+            -1
+          ],
+          "backgroundPostExposure": -0.6,
+          "backgroundContrast": -5
+        }
+      },
+      "evidence": [
+        "AssetStudioModCLI splitObjects",
+        "official AssetBundle geometry; render profile remains under parameter recovery"
+      ]
+    },
+    {
+      "id": "gallery-memory-room-story",
+      "name": "[Official geometry/Gallery] Memory light room (story)",
+      "category": "gallery",
+      "official": true,
+      "assetBundleName": "gallery/bg3d/gallery/story",
+      "type": "fbx",
+      "url": "./stages/official/gallery-memory-room-story/bg3d_gallery_story.fbx.gz",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "spawnPoints": [
+        {
+          "id": "actor-0",
+          "name": "Actor 0",
+          "role": "actor",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "renderProfile": {
+        "id": "bg3d_gallery_story",
+        "source": "manual-research",
+        "backgroundColor": "#000000",
+        "fog": {
+          "color": "#000000",
+          "near": 5,
+          "far": 276.7146
+        },
+        "ambientLight": {
+          "color": "#ffffff",
+          "intensity": 0.9
+        },
+        "directionalLight": {
+          "color": "#ffffff",
+          "intensity": 1.5,
+          "position": [
+            -4,
+            7,
+            5
+          ],
+          "target": [
+            0,
+            1,
+            0
+          ],
+          "castShadow": true
+        },
+        "renderer": {
+          "toneMapping": "aces",
+          "exposure": 0.78
+        },
+        "colorFilter": {
+          "brightness": 0.95,
+          "contrast": 1.05,
+          "saturation": 1.0
+        },
+        "bloom": {
+          "enabled": true,
+          "strength": 0.4,
+          "radius": 0.75,
+          "threshold": 0.9
+        },
+        "reDriveVolume": {
+          "characterLightingOverrideColor": "#ffffff",
+          "characterLightingOverrideRatio": 0.4,
+          "characterAdditionalRimLightColor": "#ffffff",
+          "characterAdditionalRimLightDirection": [
+            -1,
+            -1
+          ],
+          "backgroundPostExposure": -0.5,
+          "backgroundContrast": 5
+        }
+      },
+      "evidence": [
+        "AssetStudioModCLI splitObjects",
+        "official AssetBundle geometry; render profile remains under parameter recovery"
+      ]
+    }
+  ]
 }
