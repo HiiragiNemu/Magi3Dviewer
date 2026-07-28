@@ -541,10 +541,10 @@ async function applyStageRenderProfile(profile?: StageRenderProfile) {
         scene.camera.updateProjectionMatrix()
         scene.controls.update()
     }
-}
     applyReDriveVolumeRuntime(
-    profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
-)
+        profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
+    )
+}
 
 function restoreSceneProfile() {
     resetReDriveVolumeRuntime()

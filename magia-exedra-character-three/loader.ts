@@ -274,19 +274,32 @@ export async function loadCharacter(
                             else if (meshMaterialNames.some(value => value.includes('alpha'))) alphaSrc = name.includes('hair') ? 'shadow' : 'ctrl'
 
                             if (name.includes('hair')) {
-                                const angelRingReference = createAngelRingReference(modelObject, mesh, characterProfile)
-                                const result = await createHairMaterial({
-                                    ...sharedMaterialOptions,
-                                    alphaSrc,
-                                    angelRingReference,
-                                })
-                                material = result.material
-                                textures = result.textures
-                                alphaTex = result.alphaTex
-                                if (result.updateAngelRingReference) {
-                                    userData.animationLoops.push(result.updateAngelRingReference)
-                                }
-                                console.log('AngelRing reference:', angelRingReference)
+                        const angelRingReference = createAngelRingReference(modelObject, mesh, characterProfile)
+                        if (angelRingReference) {
+                            const result = await createHairMaterial({
+                                ...sharedMaterialOptions,
+                                alphaSrc,
+                                angelRingReference,
+                            })
+                            material = result.material
+                            textures = result.textures
+                            alphaTex = result.alphaTex
+                            if (result.updateAngelRingReference) {
+                                userData.animationLoops.push(result.updateAngelRingReference)
+                            }
+                        } else {
+                            const result = await createGeneralMaterial({
+                                ...sharedMaterialOptions,
+                                alphaSrc,
+                            })
+                            material = result.material
+                            textures = result.textures
+                            alphaTex = result.alphaTex
+                        }
+                        console.log('AngelRing capability/reference:', {
+                            enabled: characterProfile.angelRingEnabled,
+                            reference: angelRingReference,
+                        })
                             } else {
                                 const result = await createGeneralMaterial({
                                     ...sharedMaterialOptions,
