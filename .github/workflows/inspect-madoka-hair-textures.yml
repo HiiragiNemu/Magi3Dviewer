@@ -30,13 +30,13 @@ jobs:
           import json, statistics
 
           root = Path('magia-exedra-character-three/models/chara_100107_battle_unit')
-          names = [
-              'chara_100107_hair_color.png',
-              'chara_100107_hair_shadow.png',
-              'chara_100107_hair_ctrl.png',
-          ]
-          shader = Path('magia-exedra-character-three/shaders/RDToon_AngelRingMap.png')
-          paths = [root / name for name in names] + [shader]
+          selected = []
+          for pattern in ('*hair*color*.png', '*hair*shadow*.png', '*hair*ctrl*.png'):
+              matches = sorted(root.glob(pattern))
+              if not matches:
+                  raise SystemExit(f'No texture matched {pattern}; available={sorted(x.name for x in root.glob("*.png"))}')
+              selected.append(matches[0])
+          paths = selected + [Path('magia-exedra-character-three/shaders/RDToon_AngelRingMap.png')]
           out = Path('/tmp/madoka-hair-textures')
           out.mkdir(parents=True, exist_ok=True)
           reports = []
