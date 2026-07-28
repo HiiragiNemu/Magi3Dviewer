@@ -1,0 +1,114 @@
+name: Apply AngelRing reference safety
+run-name: Disable unsupported Hair highlight and update capability regression
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths: ['.github/workflows/apply-angelring-reference-safety.yml']
+
+permissions:
+  contents: write
+  statuses: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Magius3Dviewer
+        uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+          fetch-depth: 0
+
+      - name: Disable AngelRing uniforms without an official character reference
+        shell: python
+        run: |
+          from pathlib import Path
+          path=Path('magia-exedra-character-three/shaders/hair.ts')
+          text=path.read_text(encoding='utf-8')
+          needle='''            loadAngelRingOptions(shader)
+            updateAngelRingReference()
+          '''
+          replacement='''            loadAngelRingOptions(shader)
+            // The shared ReDrive shader serializes AngelRing properties even for
+            // unsupported hair materials. Never render the old global fallback
+            // when an official character profile did not create a Head reference.
+            if (!reference) shader.uniforms.uAngelRingEnabled.value = 0
+            updateAngelRingReference()
+          '''
+          if replacement not in text:
+            if needle not in text: raise SystemExit('Hair Shader insertion point not found')
+            text=text.replace(needle,replacement,1)
+          path.write_text(text,encoding='utf-8')
+
+      - name: Make two-character regression capability-aware
+        shell: python
+        run: |
+          from pathlib import Path
+          path=Path('scripts/smoke-angelring-two-character.mjs')
+          text=path.read_text(encoding='utf-8')
+          text=text.replace(
+            "async function testCharacter(selectorValue, expectedResourceId, label) {",
+            "async function testCharacter(selectorValue, expectedResourceId, label, expectedRing) {",
+          )
+          wait_old='''  await page.waitForFunction(
+            () => {
+              const character = window.scene?.characterSelected?.character
+              if (!character) return false
+              return (character.userData.meshes ?? [])
+                .filter(mesh => mesh.name.toLowerCase().includes('hair'))
+                .some(mesh => {
+                  const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
+                  return materials.some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))
+                })
+            },
+            { timeout: 180_000 },
+          )
+          '''
+          wait_new='''  await page.waitForFunction(
+            expected => {
+              const character = window.scene?.characterSelected?.character
+              if (!character) return false
+              const enabled = (character.userData.meshes ?? [])
+                .filter(mesh => mesh.name.toLowerCase().includes('hair'))
+                .some(mesh => {
+                  const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
+                  return materials.some(material => Number(material?.userData?.shader?.uniforms?.uAngelRingEnabled?.value ?? 0) > 0.5)
+                })
+              return enabled === expected
+            },
+            { timeout: 180_000 },
+            expectedRing,
+          )
+          '''
+          if wait_old in text: text=text.replace(wait_old,wait_new,1)
+          text=text.replace("const madoka = await testCharacter('100107', 100107, 'madoka')","const madoka = await testCharacter('100107', 100107, 'madoka', true)")
+          text=text.replace("const ashley = await testCharacter('110701', 110701, 'ashley')","const ashley = await testCharacter('110701', 110701, 'ashley', false)")
+          text=text.replace("for (const [name, result] of Object.entries({ madoka, ashley })) {","for (const [name, result] of Object.entries({ madoka })) {")
+          marker="if (pageErrors.length) failures.push(`page errors: ${pageErrors.join(' | ')}`)"
+          check="if (ashley.front.shaderCount !== 0 || ashley.back.shaderCount !== 0 || ashley.front.changedChannels !== 0) failures.push(`ashley: unsupported AngelRing remains active (${JSON.stringify(ashley.front)})`)\n"
+          if check.strip() not in text:
+            if marker not in text: raise SystemExit('Regression insertion point not found')
+            text=text.replace(marker,check+marker,1)
+          path.write_text(text,encoding='utf-8')
+
+      - name: Commit and push safety correction
+        id: commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add magia-exedra-character-three/shaders/hair.ts scripts/smoke-angelring-two-character.mjs
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'fix(shader): disable unsupported global AngelRing bands'
+          git push origin HEAD:magius3dviewer
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        env:
+          SOURCE_SHA: ${{ steps.commit.outputs.sha }}
+        with:
+          script: |
+            await github.rest.repos.createCommitStatus({owner:context.repo.owner,repo:context.repo.repo,sha:process.env.SOURCE_SHA||context.sha,state:'${{ job.status }}'==='success'?'success':'failure',context:'AngelRing character-profile safety',description:'${{ job.status }}'==='success'?'Unsupported global hair band disabled':'Safety patch failed',target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`});
