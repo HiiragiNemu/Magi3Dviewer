@@ -60,15 +60,24 @@ jobs:
             work/unpacked/lib/arm64-v8a/libil2cpp.so \
             work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat \
             work/dump </dev/null > work/report/dumper.log 2>&1
-          status=$?
+          dumper_status=$?
           set -e
-          echo "exit_status=$status" >> work/report/dumper.log
+          echo "exit_status=$dumper_status" >> work/report/dumper.log
           test -s work/dump/dump.cs
+          set +e
           python tools/research/extract_tw_crypto_disassembly.py \
             --dump work/dump/dump.cs \
             --binary work/unpacked/lib/arm64-v8a/libil2cpp.so \
-            --out work/report/crypto-disasm
-          grep -R -n -E '\b(mov|movk|orr|str|bl)\b' work/report/crypto-disasm > work/report/instruction-focus.txt || true
+            --out work/report/crypto-disasm \
+            > work/report/extractor.log 2>&1
+          extractor_status=$?
+          set -e
+          echo "exit_status=$extractor_status" >> work/report/extractor.log
+          cat work/report/extractor.log
+          if [[ -d work/report/crypto-disasm ]]; then
+            grep -R -n -E '\b(mov|movk|orr|str|bl)\b' work/report/crypto-disasm > work/report/instruction-focus.txt || true
+          fi
+          test "$extractor_status" -eq 0
       - name: Extract direct crypto string slots
         shell: python
         run: |
