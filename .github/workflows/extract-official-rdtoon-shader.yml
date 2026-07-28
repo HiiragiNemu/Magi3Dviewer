@@ -1,0 +1,158 @@
+name: Extract official ReDriveToon shader source
+run-name: Recover ReDriveToon ShaderLab, compiled variants and property schema
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths:
+      - '.github/workflows/extract-official-rdtoon-shader.yml'
+      - '.github/shader-extract-trigger.txt'
+
+permissions:
+  contents: read
+  actions: write
+  statuses: write
+
+concurrency:
+  group: extract-official-rdtoon-shader
+  cancel-in-progress: true
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout official downloader executor
+        uses: actions/checkout@v5
+        with:
+          ref: automation/encrypted-official-assets
+          path: research
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install protocol dependencies
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+
+      - name: Download bounded official shader and reference bundles
+        run: |
+          python research/.github/research-executor/download_targeted_assets.py \
+            --out /tmp/official-source
+
+      - name: Build AssetStudioModCLI
+        run: |
+          git clone --depth 1 --branch AssetStudioMod \
+            https://github.com/aelurum/AssetStudio.git /tmp/AssetStudio
+          dotnet publish /tmp/AssetStudio/AssetStudioCLI/AssetStudioCLI.csproj \
+            --configuration Release \
+            --framework net8.0 \
+            --runtime linux-x64 \
+            --self-contained false \
+            -p:SolutionDir=/tmp/AssetStudio/ \
+            --output /tmp/assetstudio-cli
+
+      - name: Dump Shader, Material and TextAsset metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/rdtoon-dump
+          dotnet /tmp/assetstudio-cli/AssetStudioModCLI.dll \
+            /tmp/official-source/raw/AssetBundles \
+            -m dump \
+            -t shader,material,textAsset,monoBehaviour \
+            --unity-version 2022.3.21f1 --load-all \
+            -g fileName -f assetName_pathID \
+            -o /tmp/rdtoon-dump \
+            --log-output both --log-level info \
+            > /tmp/rdtoon-dump.log 2>&1
+
+      - name: Build sanitized ReDriveToon source corpus
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib, json, re, shutil
+
+          source = Path('/tmp/rdtoon-dump')
+          out = Path('/tmp/official-rdtoon-shader')
+          out.mkdir(parents=True, exist_ok=True)
+          include = re.compile(r'(?i)(redrive.*toon|rdtoon|angel.?ring|yuugen|self.?shadow|outline|stencil|selection.?highlight)')
+          property_names = re.compile(r'_[A-Za-z][A-Za-z0-9_]{2,}')
+          secret = re.compile(r'(?i)(token|signature|crypto.?key|akamai).{0,64}[:=].*')
+          url_query = re.compile(r'https?://\S+\?\S+')
+          manifest=[]
+          properties=set()
+          keywords=set()
+          snippets=[]
+
+          for path in source.rglob('*'):
+            if not path.is_file() or path.stat().st_size > 96_000_000:
+              continue
+            text = path.read_text(encoding='utf-8', errors='ignore')
+            if not include.search(path.name) and not include.search(text[:2_000_000]):
+              continue
+            safe=[]
+            for line in text.splitlines():
+              line=secret.sub('[REDACTED SECRET FIELD]', line)
+              line=url_query.sub('[REDACTED URL QUERY]', line)
+              safe.append(line)
+              properties.update(property_names.findall(line))
+              if re.search(r'(?i)(keyword|shader_feature|multi_compile)', line):
+                keywords.update(re.findall(r'_[A-Z][A-Z0-9_]{2,}', line))
+            safe_text='\n'.join(safe)+'\n'
+            rel=path.relative_to(source)
+            target=out/rel
+            target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_text(safe_text,encoding='utf-8')
+            manifest.append({'path':rel.as_posix(),'size':len(safe_text.encode()),'sha256':hashlib.sha256(safe_text.encode()).hexdigest()})
+            for no,line in enumerate(safe,1):
+              if include.search(line) or any(x in line for x in ('_AngelRingMap','_FacePositionWS','_FaceForwardDirection','_UseFaceGradientMap','_RdToonSelfShadowMapRT')):
+                snippets.append({'file':rel.as_posix(),'line':no,'text':line[:4000]})
+                if len(snippets)>=100000: break
+
+          result={
+            'schemaVersion':1,
+            'fileCount':len(manifest),
+            'files':manifest,
+            'properties':sorted(properties),
+            'keywords':sorted(keywords),
+            'snippets':snippets,
+          }
+          (out/'rdtoon-shader-index.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
+          (out/'README.md').write_text(
+            '# Official ReDriveToon shader extraction\n\nSanitized Shader/Material/TextAsset dumps from the bounded official source set. No model, texture, audio, AssetBundle, token, signature or crypto key is included.\n',
+            encoding='utf-8',
+          )
+          if not manifest:
+            raise SystemExit('No ReDriveToon shader corpus was extracted')
+
+      - name: Upload official ReDriveToon shader corpus
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-rdtoon-shader-corpus
+          path: /tmp/official-rdtoon-shader
+          retention-days: 7
+          if-no-files-found: error
+
+      - name: Publish extraction status
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status='${{ job.status }}';
+            await github.rest.repos.createCommitStatus({
+              owner:context.repo.owner,
+              repo:context.repo.repo,
+              sha:context.sha,
+              state:status==='success'?'success':'failure',
+              context:'Official ReDriveToon shader extraction',
+              description:status==='success'?'Sanitized official Shader corpus generated':'Shader extraction failed',
+              target_url:`${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
