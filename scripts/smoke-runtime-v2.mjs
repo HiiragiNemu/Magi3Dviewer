@@ -47,6 +47,10 @@ await page.waitForFunction(
   () => document.querySelector('#character-selector option[value="110701"]'),
   { timeout: 30_000 },
 )
+await page.waitForFunction(
+  () => document.querySelector('#stage-selector option[data-official="true"]'),
+  { timeout: 60_000 },
+)
 
 await page.select('#character-selector', '110701')
 await page.waitForFunction(
@@ -82,6 +86,33 @@ await new Promise(resolve => setTimeout(resolve, 2_000))
 await page.screenshot({ path: '/tmp/magius-smoke-ashley.png', fullPage: true })
 await page.screenshot({ path: '/tmp/magius-smoke-closeup.png', fullPage: true })
 
+const officialStageId = await page.evaluate(() => {
+  const option = document.querySelector('#stage-selector option[data-official="true"]')
+  return option?.value ?? null
+})
+if (!officialStageId) throw new Error('No official stage option was published')
+
+await page.select('#stage-selector', officialStageId)
+await page.waitForFunction(
+  expected => {
+    const root = window.scene?.scene?.getObjectByName('Magius3DviewerStageRoot')
+    const definition = root?.userData?.stageDefinition
+    let meshes = 0
+    root?.traverse(object => { if (object.isMesh) meshes += 1 })
+    return definition?.id === expected && definition?.official === true && meshes > 0
+  },
+  { timeout: 180_000 },
+  officialStageId,
+)
+await page.evaluate(() => {
+  const viewer = window.scene
+  viewer.camera.position.set(4.6, 3.2, 7.2)
+  viewer.controls.target.set(0, 0.8, 0)
+  viewer.controls.update()
+})
+await new Promise(resolve => setTimeout(resolve, 2_000))
+await page.screenshot({ path: '/tmp/magius-smoke-official-stage.png', fullPage: true })
+
 const result = await page.evaluate(() => {
   const canvas = document.querySelector('#viewer canvas')
   const gl = canvas?.getContext('webgl2') || canvas?.getContext('webgl')
@@ -91,6 +122,22 @@ const result = await page.evaluate(() => {
   const prepared = character.animation.getPreparedAnimationClipsByName?.('Wait_L') ?? []
   const guiText = document.querySelector('#three-gui')?.textContent ?? ''
   const stageOptions = [...document.querySelectorAll('#stage-selector option')]
+  const stageRoot = viewer.scene.getObjectByName('Magius3DviewerStageRoot')
+  let officialStageMeshCount = 0
+  let officialStageMaterialCount = 0
+  let officialStageTextureCount = 0
+  stageRoot?.traverse(object => {
+    if (!object.isMesh) return
+    officialStageMeshCount += 1
+    const materials = Array.isArray(object.material) ? object.material : [object.material]
+    officialStageMaterialCount += materials.filter(Boolean).length
+    for (const material of materials) {
+      if (!material) continue
+      for (const value of Object.values(material)) {
+        if (value?.isTexture) officialStageTextureCount += 1
+      }
+    }
+  })
   const hairMeshes = character.userData.meshes.filter(mesh => mesh.name.toLowerCase().includes('hair'))
   const angelRingShaders = hairMeshes.flatMap(mesh => {
     const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
@@ -108,7 +155,11 @@ const result = await page.evaluate(() => {
     preparedClips: prepared.map(clip => ({ name: clip.name, tracks: clip.tracks.length })),
     stageNames: stageOptions.map(option => option.textContent ?? ''),
     officialStageCount: stageOptions.filter(option => option.dataset.official === 'true').length,
-    hasStageRoot: Boolean(viewer.scene.getObjectByName('Magius3DviewerStageRoot')),
+    activeStageDefinition: stageRoot?.userData?.stageDefinition ?? null,
+    officialStageMeshCount,
+    officialStageMaterialCount,
+    officialStageTextureCount,
+    hasStageRoot: Boolean(stageRoot),
     hasShaderControls: guiText.includes('Recovered ReDrive Toon base'),
     hasAngelRingControls: guiText.includes('AngelRing (UV3 + view normal)'),
     hairMeshCount: hairMeshes.length,
@@ -132,7 +183,11 @@ if (result.sourceClips.length < 2 || result.preparedClips.length < 1) failures.p
 const sourceTracks = result.sourceClips.reduce((sum, clip) => sum + clip.tracks, 0)
 const preparedTracks = result.preparedClips.reduce((sum, clip) => sum + clip.tracks, 0)
 if (preparedTracks >= sourceTracks) failures.push('duplicate animation tracks were not removed')
-if (result.stageNames.length < 4 || !result.hasStageRoot) failures.push('stage runtime unavailable')
+if (result.stageNames.length < 9 || !result.hasStageRoot) failures.push('official stage catalog/runtime unavailable')
+if (result.officialStageCount < 5) failures.push(`only ${result.officialStageCount} official stages`)
+if (!result.activeStageDefinition?.official) failures.push('active stage is not official geometry')
+if (result.officialStageMeshCount < 1) failures.push('official stage contains no meshes')
+if (result.officialStageMaterialCount < 1) failures.push('official stage contains no materials')
 if (!result.hasShaderControls) failures.push('ReDrive controls missing')
 if (!result.hasAngelRingControls) failures.push('UV3 AngelRing controls missing')
 if (result.hairMeshCount < 1 || result.angelRingShaderCount < 1) failures.push('hair AngelRing shader missing')
