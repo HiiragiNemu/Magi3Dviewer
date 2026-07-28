@@ -1,0 +1,348 @@
+name: Discover Taiwan MessagePack key
+run-name: Match client literals against a live encrypted response
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-key-discovery.yml'
+      - 'analysis-requests/tw-key-discovery.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-key-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip
+          python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+      - name: Download and unpack Taiwan client metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/source work/xapk work/unpacked work/report
+          curl -fL --retry 5 --retry-all-errors -A 'Mozilla/5.0' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
+            < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
+      - name: Discover and verify the response key
+        shell: python
+        run: |
+          from __future__ import annotations
+
+          import base64
+          import hashlib
+          import hmac
+          import json
+          import os
+          import re
+          import struct
+          import time
+          import uuid
+          from pathlib import Path
+          from typing import Any
+
+          import msgpack
+          import requests
+          from Crypto.Cipher import AES
+          from Crypto.Util.Padding import pad, unpad
+
+          HOST = 'https://app-mme.so-net.tw'
+          APP_VERSION = '1.0.5'
+          UNITY_VERSION = '2022.3.62f3'
+          XAPK_SHA256 = '9ed2f73182e0e6369f757124570b36cac3ba8dcd6a545a6e4e19881d53ff084a'
+
+          RAW_HASH_KEY = (
+              "*0h>%iZAAdrw[R5l(S+nEmzLp?|ld5QC.n(r'$l9JhqAYl#Iq+o5xK3'9m^872WbH@uIG0~6&"
+              "zujCBC;zigI%o..,p2ZkQAO,iLjJjW;um1c}mrCSLPJ6$WwKS$=YX:<"
+          )
+          RAW_HASH_SALT = 'Q?p%y):^p(N;}{5*'
+          HASH_KEY = RAW_HASH_KEY[1::2]
+          HASH_SALT = RAW_HASH_SALT[1::2]
+
+          def centered_bytes(value: bytes, maximum: int) -> bytes:
+              if maximum >= 1 and len(value) > maximum:
+                  start = (len(value) - maximum) // 2
+                  return value[start:start + maximum]
+              return value
+
+          def centered_text(value: str, maximum: int) -> str:
+              if maximum >= 1 and len(value) > maximum:
+                  start = (len(value) - maximum) // 2
+                  return value[start:start + maximum]
+              return value
+
+          def derive(raw_key: str) -> bytes:
+              digest = hmac.new(
+                  HASH_KEY.encode('utf-8'),
+                  (HASH_SALT + raw_key).encode('utf-8'),
+                  hashlib.sha256,
+              ).digest()
+              encoded = base64.b64encode(centered_bytes(digest, 16)).decode('ascii')
+              result = centered_text(encoded, 16).encode('ascii')
+              if len(result) != 16:
+                  raise ValueError('derived key is not 16 bytes')
+              return result
+
+          def encode_request(payload: dict[str, Any], client_uuid: str, key: bytes) -> bytes:
+              envelope = {
+                  'payload': payload,
+                  'uuid': client_uuid,
+                  'userId': 0,
+                  'sessionId': '',
+                  'actionToken': None,
+                  'ctag': None,
+                  'actionTime': int((time.time() + 11_644_473_600) * 10_000_000),
+              }
+              packed = msgpack.packb(envelope, use_bin_type=True)
+              iv = os.urandom(16)
+              return iv + AES.new(key, AES.MODE_CBC, iv).encrypt(pad(packed, 16))
+
+          def decode_response(body: bytes, key: bytes) -> dict[str, Any]:
+              if len(body) <= 16 or len(body) % 16:
+                  raise ValueError(f'invalid encrypted response length {len(body)}')
+              plain = unpad(
+                  AES.new(key, AES.MODE_CBC, body[:16]).decrypt(body[16:]),
+                  16,
+              )
+              value = msgpack.unpackb(plain, raw=False, strict_map_key=False)
+              if not isinstance(value, dict):
+                  raise ValueError('decoded response is not a map')
+              expected = {'payload', 'status', 'errors', 'ctag'}
+              if not expected.intersection(str(key) for key in value):
+                  raise ValueError('decoded map does not look like a Pokke response')
+              return value
+
+          def make_login_payload(client_uuid: str) -> dict[str, Any]:
+              return {
+                  'appVersion': APP_VERSION,
+                  'urlParam': '',
+                  'deviceModel': 'Taiwan Key Discovery',
+                  'osType': 2,
+                  'osVersion': 'Android 14',
+                  'storeType': 2,
+                  'graphicsDeviceId': 0,
+                  'graphicsDeviceVendorId': 0,
+                  'processorCount': 8,
+                  'processorType': 'arm64-v8a',
+                  'supportedRenderTargetCount': 4,
+                  'supports3DTextures': True,
+                  'supportsAccelerometer': True,
+                  'supportsComputeShaders': True,
+                  'supportsGyroscope': True,
+                  'supportsImageEffects': True,
+                  'supportsInstancing': True,
+                  'supportsLocationService': True,
+                  'supportsRenderTextures': True,
+                  'supportsRenderToCubemap': True,
+                  'supportsShadows': True,
+                  'supportsSparseTextures': False,
+                  'supportsStencil': 1,
+                  'supportsVibration': True,
+                  'uuid': client_uuid,
+                  'xuid': 0,
+                  'jwttoken': '',
+                  'sm': '',
+              }
+
+          def headers(body: bytes) -> dict[str, str]:
+              return {
+                  'Accept': '*/*',
+                  'Content-Type': 'application/x-msgpack',
+                  'x-region': 'TW',
+                  'x-language': 'zh_TW',
+                  'x-timezone-offset': '28800',
+                  'x-app-version': APP_VERSION,
+                  'X-GAME-SERVER-URL': HOST,
+                  'X-Unity-Version': UNITY_VERSION,
+                  'X-post-signature': base64.b64encode(
+                      hashlib.sha1(body).digest()
+                  ).decode('ascii'),
+              }
+
+          metadata_path = Path(
+              'work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat'
+          )
+          metadata = metadata_path.read_bytes()
+          magic, metadata_version = struct.unpack_from('<II', metadata, 0)
+          if magic != 0xFAB11BAF:
+              raise SystemExit(f'bad metadata magic {magic:#x}')
+          literal_offset, literal_size, data_offset, data_size = struct.unpack_from(
+              '<IIII', metadata, 8
+          )
+          literals: list[str] = []
+          invalid_utf8 = 0
+          for position in range(literal_offset, literal_offset + literal_size, 8):
+              length, data_index = struct.unpack_from('<II', metadata, position)
+              start = data_offset + data_index
+              stop = start + length
+              if stop > data_offset + data_size:
+                  continue
+              try:
+                  value = metadata[start:stop].decode('utf-8', errors='strict')
+              except UnicodeDecodeError:
+                  invalid_utf8 += 1
+                  continue
+              literals.append(value)
+          candidates = list(dict.fromkeys(literals))
+
+          # First request only obtains a normal encrypted server response. Its
+          # request key does not participate in the offline candidate scan.
+          bootstrap_raw = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+          bootstrap_key = derive(bootstrap_raw)
+          first_uuid = uuid.uuid4().hex
+          first_body = encode_request(
+              make_login_payload(first_uuid), first_uuid, bootstrap_key
+          )
+          first_response = requests.post(
+              HOST + '/api/login',
+              headers=headers(first_body),
+              data=first_body,
+              timeout=30,
+          )
+          encrypted_response = first_response.content
+
+          matches: list[dict[str, Any]] = []
+          key_cache: dict[bytes, str] = {}
+          for raw_candidate in candidates:
+              try:
+                  key = derive(raw_candidate)
+              except (UnicodeEncodeError, ValueError):
+                  continue
+              if key in key_cache:
+                  continue
+              key_cache[key] = raw_candidate
+              try:
+                  decoded = decode_response(encrypted_response, key)
+              except Exception:
+                  continue
+              matches.append(
+                  {
+                      'rawKey': raw_candidate,
+                      'rawKeyLength': len(raw_candidate),
+                      'rawKeySha256': hashlib.sha256(
+                          raw_candidate.encode('utf-8')
+                      ).hexdigest(),
+                      'derivedKey': key.decode('ascii'),
+                      'derivedKeySha256': hashlib.sha256(key).hexdigest(),
+                      'firstDecodedKeys': sorted(str(item) for item in decoded.keys()),
+                  }
+              )
+
+          verified: list[dict[str, Any]] = []
+          SECRET = re.compile(
+              r'(?i)(uuid|user.?id|session|token|jwt|ctag|guid|cookie|handover)'
+          )
+
+          def sanitize(value: Any, field: str = '') -> Any:
+              if isinstance(value, dict):
+                  return {str(key): sanitize(item, str(key)) for key, item in value.items()}
+              if isinstance(value, list):
+                  return [sanitize(item, field) for item in value[:200]]
+              if SECRET.search(field) and value not in (None, '', 0, False):
+                  raw = str(value).encode('utf-8')
+                  return {
+                      'present': True,
+                      'length': len(raw),
+                      'sha256': hashlib.sha256(raw).hexdigest(),
+                  }
+              if isinstance(value, (str, int, float, bool)) or value is None:
+                  return value
+              return repr(value)[:500]
+
+          for match in matches:
+              raw_candidate = str(match['rawKey'])
+              key = derive(raw_candidate)
+              second_uuid = uuid.uuid4().hex
+              second_body = encode_request(
+                  make_login_payload(second_uuid), second_uuid, key
+              )
+              response = requests.post(
+                  HOST + '/api/login',
+                  headers=headers(second_body),
+                  data=second_body,
+                  timeout=30,
+              )
+              try:
+                  decoded = decode_response(response.content, key)
+              except Exception as exc:
+                  match['verificationError'] = type(exc).__name__ + ': ' + str(exc)[:300]
+                  continue
+              verified.append(
+                  {
+                      **match,
+                      'httpStatus': response.status_code,
+                      'responseSize': len(response.content),
+                      'responseSha256': hashlib.sha256(response.content).hexdigest(),
+                      'revisionHeaders': {
+                          key_name.lower(): header_value
+                          for key_name, header_value in response.headers.items()
+                          if key_name.lower().startswith('x-resource-revision')
+                          or key_name.lower() in {'x-server-version', 'x-app-version'}
+                      },
+                      'sanitizedResponse': sanitize(decoded),
+                  }
+              )
+
+          report = {
+              'schemaVersion': 1,
+              'client': {
+                  'package': 'tw.sonet.magiaexedra',
+                  'appVersion': APP_VERSION,
+                  'unityVersion': UNITY_VERSION,
+                  'xapkSha256': XAPK_SHA256,
+                  'metadataVersion': metadata_version,
+              },
+              'literalCount': len(literals),
+              'uniqueLiteralCount': len(candidates),
+              'uniqueDerivedKeyCount': len(key_cache),
+              'invalidUtf8LiteralCount': invalid_utf8,
+              'bootstrap': {
+                  'httpStatus': first_response.status_code,
+                  'responseSize': len(encrypted_response),
+                  'responseSha256': hashlib.sha256(encrypted_response).hexdigest(),
+              },
+              'offlineMatchCount': len(matches),
+              'verifiedMatchCount': len(verified),
+              'verifiedMatches': verified,
+          }
+          Path('work/report/key-discovery.json').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          if len(verified) != 1:
+              raise SystemExit(
+                  f'expected exactly one verified key, found {len(verified)}'
+              )
+      - name: Remove raw client and responses
+        if: ${{ always() }}
+        run: |
+          rm -rf work/source work/xapk work/unpacked
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+      - name: Upload sanitized key discovery
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-key-discovery
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
