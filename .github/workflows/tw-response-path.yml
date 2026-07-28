@@ -56,10 +56,14 @@ jobs:
           unzip -q work/tool/tool.zip -d work/tool/extracted
           dll=$(find work/tool/extracted -type f -name Il2CppDumper.dll -print -quit)
           test -n "$dll"
+          set +e
           dotnet "$dll" \
             work/unpacked/lib/arm64-v8a/libil2cpp.so \
             work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat \
             work/dump </dev/null > work/report/dumper.log 2>&1
+          status=$?
+          set -e
+          echo "exit_status=$status" >> work/report/dumper.log
           test -s work/dump/dump.cs
       - name: Map response-path methods
         shell: bash
