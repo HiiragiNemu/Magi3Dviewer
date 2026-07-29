@@ -121,6 +121,7 @@ export class SceneEffectsController {
 
     taaRenderPass: TAARenderPass
     ssaaRenderPass: SSAARenderPass
+    backgroundRenderPass: RenderPass
     renderPass: RenderPass
 
     outlinePass: OutlinePass
@@ -145,6 +146,11 @@ export class SceneEffectsController {
         this.ssaaRenderPass.stencilBuffer = true
         this.ssaaRenderPass.enabled = false
 
+        this.backgroundRenderPass = new RenderPass(
+            this.scene.backgroundScene,
+            this.scene.camera,
+        )
+        this.backgroundRenderPass.enabled = false
         this.renderPass = new RenderPass(this.scene.scene, this.scene.camera)
 
         this.outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), this.scene.scene, this.scene.camera)
@@ -176,6 +182,7 @@ export class SceneEffectsController {
         })
         this.composer = new EffectComposer(this.scene.renderer, this.renderTarget)
         this.composer.setPixelRatio(this.scene.getRenderPixelRatio())
+        this.composer.addPass(this.backgroundRenderPass)
         this.composer.addPass(this.taaRenderPass)
         this.composer.addPass(this.ssaaRenderPass)
         this.composer.addPass(this.renderPass)
@@ -186,6 +193,27 @@ export class SceneEffectsController {
         this.composer.addPass(this.outputPass)
         this.composer.addPass(this.fxaaPass)
         return [this.composer, this.renderTarget]
+    }
+
+    syncBackgroundSceneState() {
+        const enabled = this.scene.backgroundSceneEnabled
+        this.backgroundRenderPass.enabled = enabled
+        this.renderPass.clear = !enabled
+        // The stage/background pass must not leave its depth buffer behind.
+        // Otherwise the character pass is depth-rejected by the floor/sky
+        // geometry and only outline or a few foreground fragments remain,
+        // producing the purple-black "silhouette" regression.
+        this.renderPass.clearDepth = enabled
+
+        // Three's TAA/SSAA passes render a single scene into a freshly-cleared
+        // private target, so they cannot preserve the separately lit stage.
+        // Use the ordinary render pass while an official split-light stage is
+        // active; MSAA/SMAA/FXAA remain available.
+        if (enabled && (this.taaRenderPass.enabled || this.ssaaRenderPass.enabled)) {
+            this.taaRenderPass.enabled = false
+            this.ssaaRenderPass.enabled = false
+            this.renderPass.enabled = true
+        }
     }
 
     updateComposerMsaa(msaaSamples: number) {

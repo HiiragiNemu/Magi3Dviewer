@@ -23,8 +23,8 @@ const profileActions = {
 }
 guiShader.add(profileActions, 'ApplyRecoveredBaseline').name('Apply recovered ReDrive baseline')
 
-const toonFolder = guiShader.addFolder('Recovered ReDrive Toon base').close()
-toonFolder.add(toonStylizationOptions, 'officialLookEnabled').name('Enabled').onChange(updateMaterialStylization)
+const toonFolder = guiShader.addFolder('Legacy colour blend (debug only)').close()
+toonFolder.add(toonStylizationOptions, 'officialLookEnabled').name('Override exact scene lighting').onChange(updateMaterialStylization)
 toonFolder.add(toonStylizationOptions, 'lightingInfluence', 0, 1, 0.01).name('Physical light influence').onChange(updateMaterialStylization)
 toonFolder.add(toonStylizationOptions, 'albedoLift', -0.25, 0.5, 0.01).name('Albedo lift').onChange(updateMaterialStylization)
 toonFolder.add(toonStylizationOptions, 'brightness', 0.25, 2, 0.01).name('Brightness').onChange(updateMaterialStylization)
@@ -45,19 +45,11 @@ shadowFolder.add(ShadowTexOptions, 'transition', 0.001, 1, 0.001).name('Shadow s
 shadowFolder.add(ShadowTexOptions, 'amount', -1, 1, 0.01).name('Ambient shadow amount').onChange(updateMaterialShadow)
 shadowFolder.add(ShadowTexOptions, 'controlOffsetStrength', 0, 1, 0.01).name('Control R threshold offset').onChange(updateMaterialShadow)
 
-const angelRingFolder = guiShader.addFolder('AngelRing (official profile + smooth normals)').close()
-angelRingFolder.add(angelRingOptions, 'enabled').name('Enabled for supported profiles').onChange(updateMaterialAngelRing)
-angelRingFolder.addColor(angelRingOptions, 'color').name('Color').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'strength', 0, 2, 0.01).name('Strength').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'offsetU', 0, 1, 0.005).name('Front-normal wedge U').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'offsetV', 0, 1, 0.005).name('View-normal V scale').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'verticalOffset', -0.5, 0.5, 0.0025).name('Texture vertical offset').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'headVInfluence', 0, 1, 0.01).name('Head-offset correction').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'softness', 0.00025, 0.05, 0.00025).name('Map filtering').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'frontFadeStart', -1, 1, 0.01).name('Rear fade start').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'frontFadeEnd', -1, 1, 0.01).name('Front fade end').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'mapGamma', 0.05, 3, 0.01).name('Map gamma').onChange(updateMaterialAngelRing)
-angelRingFolder.add(angelRingOptions, 'emission', 0, 2, 0.01).name('Additive brightness').onChange(updateMaterialAngelRing)
+const angelRingFolder = guiShader.addFolder('AngelRing (official GLES projection)').close()
+angelRingFolder
+    .add(angelRingOptions, 'enabled')
+    .name('Diagnostic A/B toggle')
+    .onChange(updateMaterialAngelRing)
 
 const rimFolder = guiShader.addFolder('Timeline / scene additional Rim').close()
 rimFolder.add(toonStylizationOptions, 'rimEnabled').name('Enabled').onChange(updateMaterialStylization)
@@ -178,4 +170,7 @@ export function applyRecoveredBaseline() {
     gui.controllersRecursive().forEach(controller => controller.updateDisplay())
 }
 
-setTimeout(applyRecoveredBaseline, 0)
+// Do not auto-apply the experimental low-fill presentation. It was calibrated
+// for a texture-preserving shader path, and became a near-black silhouette
+// after that path was disabled. Keep it as an explicit inspection action until
+// the recovered GLES diffuse/SH implementation is complete.

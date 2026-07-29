@@ -25,3 +25,8 @@ dist-ssr
 
 # rollup visualizer
 /stats.html
+
+# Local visual-regression output and Python cache files.
+/artifacts/
+**/__pycache__/
+*.py[cod]

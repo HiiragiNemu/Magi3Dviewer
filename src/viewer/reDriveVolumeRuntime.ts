@@ -45,11 +45,21 @@ export interface ReDriveVolumeRuntimeProfile {
 const lightProbe = new THREE.LightProbe(new THREE.SphericalHarmonics3(), 0)
 lightProbe.name = 'OfficialReDriveSphericalHarmonics'
 scene.scene.add(lightProbe)
+const backgroundLightProbe =
+    new THREE.LightProbe(new THREE.SphericalHarmonics3(), 0)
+backgroundLightProbe.name = 'OfficialReDriveSphericalHarmonics:Background'
+scene.backgroundScene.add(backgroundLightProbe)
 
 const initial = {
     ambientIntensity: scene.ambientLight.intensity,
     hemisphereIntensity: recoveredHemisphereLight.intensity,
     fillIntensity: recoveredFillLight.intensity,
+    characterTint: toonStylizationOptions.characterTint,
+    characterShadowTint: toonStylizationOptions.characterShadowTint,
+    characterLightingOverrideColor:
+        toonStylizationOptions.characterLightingOverrideColor,
+    characterLightingOverrideRatio:
+        toonStylizationOptions.characterLightingOverrideRatio,
     rimEnabled: toonStylizationOptions.rimEnabled,
     rimColor: toonStylizationOptions.rimColor,
     rimStrength: toonStylizationOptions.rimStrength,
@@ -89,6 +99,7 @@ function updateCharacterUniforms() {
 function applySphericalHarmonics(values?: number[]) {
     if (!values || values.length !== 27) {
         lightProbe.intensity = 0
+        backgroundLightProbe.intensity = 0
         return
     }
 
@@ -99,9 +110,14 @@ function applySphericalHarmonics(values?: number[]) {
             values[coefficient + 9],
             values[coefficient + 18],
         )
+        backgroundLightProbe.sh.coefficients[coefficient].copy(
+            lightProbe.sh.coefficients[coefficient],
+        )
     }
     lightProbe.intensity = 1
+    backgroundLightProbe.intensity = 1
     scene.ambientLight.intensity = 0
+    scene.backgroundAmbientLight.intensity = 0
     recoveredHemisphereLight.intensity = 0
     recoveredFillLight.intensity = 0
 }
@@ -138,13 +154,31 @@ export function applyReDriveVolumeRuntime(profile?: ReDriveVolumeRuntimeProfile)
     applySphericalHarmonics(profile.shAmbient)
     applyParaffin(profile.paraffin)
 
+    if (profile.characterTint != undefined) {
+        toonStylizationOptions.characterTint =
+            `#${color(profile.characterTint).getHexString()}`
+    }
+    if (profile.characterShadowTint != undefined) {
+        toonStylizationOptions.characterShadowTint =
+            `#${color(profile.characterShadowTint).getHexString()}`
+    }
+    if (profile.characterLightingOverrideColor != undefined) {
+        toonStylizationOptions.characterLightingOverrideColor =
+            `#${color(profile.characterLightingOverrideColor).getHexString()}`
+    }
+    toonStylizationOptions.characterLightingOverrideRatio =
+        profile.characterLightingOverrideRatio ?? 0
+
     const rim = colorAndIntensity(profile.characterAdditionalRimLightColor)
     const rimOverride = profile.overrides?.characterAdditionalRimLightColor ?? profile.characterAdditionalRimLightColor != undefined
     toonStylizationOptions.rimEnabled = rimOverride && rim.intensity > 0.0001
     toonStylizationOptions.rimColor = `#${rim.color.getHexString()}`
     // Unity stores HDR colour magnitude in the RGB components.
     toonStylizationOptions.rimStrength = rim.intensity
-    if (profile.characterAdditionalRimLightDirection) {
+    if (
+        profile.characterAdditionalRimLightDirection
+        && profile.overrides?.characterAdditionalRimLightDirection !== false
+    ) {
         toonStylizationOptions.rimDirectionX = profile.characterAdditionalRimLightDirection[0]
         toonStylizationOptions.rimDirectionY = profile.characterAdditionalRimLightDirection[1]
     }
@@ -156,9 +190,18 @@ export function applyReDriveVolumeRuntime(profile?: ReDriveVolumeRuntimeProfile)
 export function resetReDriveVolumeRuntime() {
     lightProbe.intensity = 0
     lightProbe.sh.zero()
+    backgroundLightProbe.intensity = 0
+    backgroundLightProbe.sh.zero()
     scene.ambientLight.intensity = initial.ambientIntensity
+    scene.backgroundAmbientLight.intensity = initial.ambientIntensity
     recoveredHemisphereLight.intensity = initial.hemisphereIntensity
     recoveredFillLight.intensity = initial.fillIntensity
+    toonStylizationOptions.characterTint = initial.characterTint
+    toonStylizationOptions.characterShadowTint = initial.characterShadowTint
+    toonStylizationOptions.characterLightingOverrideColor =
+        initial.characterLightingOverrideColor
+    toonStylizationOptions.characterLightingOverrideRatio =
+        initial.characterLightingOverrideRatio
     scene.effects.paraffinPass.enabled = false
     scene.effects.paraffinPass.uniforms.uEnabled.value = 0
     toonStylizationOptions.rimEnabled = initial.rimEnabled

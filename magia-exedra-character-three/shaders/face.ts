@@ -3,11 +3,13 @@ import { MaterialUserData, type MaterialCreationOptions, type MaterialCreationRe
 import type { FaceDirectionReference, OfficialFaceProfile } from '../faceProfile';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 import FaceCtrlBase from './face_ctrl_base.png'
+import FaceCtrlNose from './face_ctrl_nose.png'
 import { injectToonStylization, ToonStylizationUniforms } from './stylization';
 
 interface FaceMaterialCreationOptions extends MaterialCreationOptions {
     shadowMap: string;
     eyehighlightMap: string;
+    noseGradientMap?: string;
     faceReference?: FaceDirectionReference;
     faceProfile: OfficialFaceProfile;
 }
@@ -38,16 +40,25 @@ export class FaceMaterialUniforms extends ToonStylizationUniforms {
 }
 
 export async function createFaceMaterial(options: FaceMaterialCreationOptions): Promise<FaceMaterialCreationResult> {
-    const [colorTex, shadowTex, ctrlTex, eyehighlightTex] = await Promise.all([
+    const [colorTex, shadowTex, ctrlTex, noseGradientTex, eyehighlightTex] = await Promise.all([
         loadTexture(options.colorMap, { colorSpace: THREE.SRGBColorSpace }),
         loadTexture(options.shadowMap, { colorSpace: THREE.SRGBColorSpace }),
         loadTexture(options.ctrlMap || FaceCtrlBase),
+        loadTexture(options.noseGradientMap || FaceCtrlNose),
         loadTexture(options.eyehighlightMap),
     ]);
 
-    MaximizeTextureQuality(colorTex, shadowTex, ctrlTex, eyehighlightTex);
+    MaximizeTextureQuality(
+        colorTex,
+        shadowTex,
+        ctrlTex,
+        noseGradientTex,
+        eyehighlightTex,
+    );
     ctrlTex.wrapS = THREE.ClampToEdgeWrapping
     ctrlTex.wrapT = THREE.ClampToEdgeWrapping
+    noseGradientTex.wrapS = THREE.ClampToEdgeWrapping
+    noseGradientTex.wrapT = THREE.ClampToEdgeWrapping
 
     const material = new THREE.MeshStandardMaterial({
         map: colorTex,
@@ -55,9 +66,9 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
         metalness: 0.0,
     });
 
-    const userData = new MaterialUserData()
-    material.userData = userData
-    let compiledShader: THREE.WebGLProgramParametersWithUniforms | undefined
+    material.userData = new MaterialUserData()
+    const compiledShaders =
+        new Set<THREE.WebGLProgramParametersWithUniforms>()
 
     const headQuaternion = new THREE.Quaternion()
     const forward = new THREE.Vector3(0, 0, 1)
@@ -65,16 +76,18 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
     const right = new THREE.Vector3(1, 0, 0)
 
     const updateFaceDirectionReference = () => {
-        if (!compiledShader || !options.faceReference) return
+        if (compiledShaders.size === 0 || !options.faceReference) return
         const reference = options.faceReference
         reference.headBone.updateWorldMatrix(true, false)
         reference.headBone.getWorldQuaternion(headQuaternion)
         forward.copy(reference.localForward).applyQuaternion(headQuaternion).normalize()
         up.copy(reference.localUp).applyQuaternion(headQuaternion).normalize()
         right.copy(reference.localRight).applyQuaternion(headQuaternion).normalize()
-        compiledShader.uniforms.uFaceForwardWS.value.copy(forward)
-        compiledShader.uniforms.uFaceUpWS.value.copy(up)
-        compiledShader.uniforms.uFaceRightWS.value.copy(right)
+        for (const shader of compiledShaders) {
+            shader.uniforms.uFaceForwardWS.value.copy(forward)
+            shader.uniforms.uFaceUpWS.value.copy(up)
+            shader.uniforms.uFaceRightWS.value.copy(right)
+        }
     }
 
     material.customProgramCacheKey = () => JSON.stringify({
@@ -84,21 +97,24 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
         hasReference: Boolean(options.faceReference),
     })
 
-    material.onBeforeCompile = (shader) => {
-        compiledShader = shader
+    material.onBeforeCompile = function (shader) {
+        compiledShaders.add(shader)
         if (!shader.defines) shader.defines = {};
 
+        const runtimeUserData = this.userData instanceof MaterialUserData
+            ? this.userData
+            : new MaterialUserData()
+        this.userData = runtimeUserData
         const uniforms = new FaceMaterialUniforms(shader)
         uniforms.loadGlobalOptions()
 
         shader.uniforms.tShadow = { value: shadowTex };
         shader.uniforms.tFaceGradient = { value: ctrlTex };
+        shader.uniforms.tNoseGradient = { value: noseGradientTex };
         shader.uniforms.tEyehighlight = { value: eyehighlightTex };
         shader.uniforms.uUseFaceGradient = { value: options.faceProfile.useFaceGradientMap ? 1 : 0 };
         shader.uniforms.uFaceGradientYOffset = { value: options.faceProfile.faceShadowGradientMapYOffset };
         shader.uniforms.uNoseGradientYOffset = { value: options.faceProfile.noseShadowGradientMapYOffset };
-        shader.uniforms.uFaceShadowOffset = { value: options.faceProfile.shadowOffset };
-        shader.uniforms.uFaceShadowFeather = { value: Math.max(options.faceProfile.shadowFeather, 0.018) };
         shader.uniforms.uCheekValue = { value: options.faceProfile.cheekValue };
         shader.uniforms.uHighlightBrightness = { value: 1.06 };
         shader.uniforms.uBlushStrength = { value: 0.17 };
@@ -139,12 +155,11 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
 
             uniform sampler2D tShadow;
             uniform sampler2D tFaceGradient;
+            uniform sampler2D tNoseGradient;
             uniform sampler2D tEyehighlight;
             uniform float uUseFaceGradient;
             uniform float uFaceGradientYOffset;
             uniform float uNoseGradientYOffset;
-            uniform float uFaceShadowOffset;
-            uniform float uFaceShadowFeather;
             uniform float uCheekValue;
             uniform float uHighlightBrightness;
             uniform float uBlushStrength;
@@ -161,55 +176,69 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
                 rdFaceLightVS = normalize(directionalLights[0].direction);
             #endif
 
-            float rdFaceForwardLight = dot(rdFaceLightVS, normalize(vFaceForwardVS));
-            float rdFaceSideLight = dot(rdFaceLightVS, normalize(vFaceRightVS));
-            float rdFaceHorizontalLength = max(
-                length(vec2(rdFaceSideLight, rdFaceForwardLight)),
-                0.0001
+            // Recovered from the Android ReDriveToon face-gradient variant.
+            // The two bias constants and the 0.985 threshold are part of the
+            // compiled official program, not viewer-tuned approximations.
+            vec3 rdFaceForward = normalize(vFaceForwardVS);
+            vec3 rdFaceRight = normalize(vFaceRightVS);
+            vec3 rdFaceBiasedLight = normalize(
+                rdFaceLightVS +
+                rdFaceForward * 0.111 +
+                rdFaceRight * 0.333
             );
-            rdFaceForwardLight /= rdFaceHorizontalLength;
-            rdFaceSideLight /= rdFaceHorizontalLength;
+            vec2 rdFaceDirection = vec2(
+                dot(rdFaceRight, rdFaceBiasedLight),
+                dot(rdFaceForward, rdFaceBiasedLight)
+            );
+            rdFaceDirection /= max(length(rdFaceDirection), 0.0000001);
 
-            // 0 at frontal light, 1 at light directly behind the head.
-            float rdFaceAngleThreshold =
-                acos(clamp(rdFaceForwardLight, -1.0, 1.0)) / 3.14159265359;
-            rdFaceAngleThreshold = clamp(
-                rdFaceAngleThreshold - uFaceShadowOffset * 0.10,
-                0.0,
-                1.0
+            // The Unity sampler mirrors the authored gradient when the light
+            // crosses the head's right axis. Spell the mirror out so the WebGL
+            // result does not depend on texture wrap metadata.
+            float rdFaceMirroredU = rdFaceDirection.x >= 0.0
+                ? vFaceUv.x
+                : 1.0 - vFaceUv.x;
+            float rdFaceGradient = texture2D(
+                tFaceGradient,
+                vec2(
+                    rdFaceMirroredU,
+                    clamp(vFaceUv.y + uFaceGradientYOffset, 0.0, 1.0)
+                )
+            ).r;
+            float rdNoseGradient = texture2D(
+                tNoseGradient,
+                vec2(
+                    rdFaceMirroredU,
+                    clamp(vFaceUv.y + uNoseGradientYOffset, 0.0, 1.0)
+                )
+            ).r;
+
+            // Official mix: nose values farthest from neutral 0.5 replace the
+            // face gradient most strongly.
+            float rdNoseMix = saturate(abs(rdNoseGradient - 0.5) * 2.0);
+            float rdCombinedGradient = mix(
+                rdFaceGradient,
+                rdNoseGradient,
+                rdNoseMix
+            );
+            float rdFaceThreshold =
+                0.985 - (rdFaceDirection.y * 0.5 + 0.5);
+            float rdCombinedFaceLight = smoothstep(
+                rdFaceThreshold - 0.01,
+                rdFaceThreshold,
+                rdCombinedGradient
+            );
+            rdCombinedFaceLight = mix(
+                1.0,
+                rdCombinedFaceLight,
+                saturate(uUseFaceGradient)
             );
 
-            vec2 rdFaceGradientUv = vec2(
-                rdFaceSideLight >= 0.0 ? 1.0 - vFaceUv.x : vFaceUv.x,
-                clamp(vFaceUv.y + uFaceGradientYOffset, 0.0, 1.0)
+            faceColor.rgb = mix(
+                faceShadow.rgb * uGlobalCharacterShadowTint,
+                faceColor.rgb,
+                rdCombinedFaceLight
             );
-            vec4 rdFaceGradient = texture2D(tFaceGradient, rdFaceGradientUv);
-            float rdFaceLit = smoothstep(
-                rdFaceAngleThreshold - uFaceShadowFeather,
-                rdFaceAngleThreshold + uFaceShadowFeather,
-                rdFaceGradient.r
-            );
-            rdFaceLit = mix(0.86, rdFaceLit, saturate(uUseFaceGradient));
-
-            // The common control map stores a second authored response in G.
-            // Constrain it to the central lower face so it behaves as nose/cheek
-            // modelling rather than painting a second hard half-face shadow.
-            vec2 rdNoseDelta = vec2(
-                (vFaceUv.x - 0.5) / 0.18,
-                (vFaceUv.y - (0.52 + uNoseGradientYOffset)) / 0.20
-            );
-            float rdNoseArea = exp(-dot(rdNoseDelta, rdNoseDelta) * 2.2);
-            float rdNoseLit = smoothstep(
-                rdFaceAngleThreshold - 0.04,
-                rdFaceAngleThreshold + 0.04,
-                rdFaceGradient.g
-            );
-            float rdCombinedFaceLight = min(
-                rdFaceLit,
-                mix(1.0, rdNoseLit, rdNoseArea * 0.32)
-            );
-
-            faceColor.rgb = mix(faceShadow.rgb, faceColor.rgb, rdCombinedFaceLight);
 
             float eyeMask = step(vFaceUv2.y, 0.5);
             float highlightIntensity =
@@ -227,13 +256,19 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
         );
 
         injectToonStylization(shader, uniforms);
-        userData.shader = shader;
-        userData.shaderUniforms = uniforms;
+        runtimeUserData.shader = shader;
+        runtimeUserData.shaderUniforms = uniforms;
     };
 
     return {
         material,
-        textures: [colorTex, shadowTex, ctrlTex, eyehighlightTex],
+        textures: [
+            colorTex,
+            shadowTex,
+            ctrlTex,
+            noseGradientTex,
+            eyehighlightTex,
+        ],
         updateFaceDirectionReference: options.faceReference
             ? updateFaceDirectionReference
             : undefined,

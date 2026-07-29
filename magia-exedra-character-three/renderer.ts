@@ -28,8 +28,11 @@ export function createRenderer(parameters?: THREE.WebGLRendererParameters) {
     renderer.setAnimationLoop((...args) => {
         if (renderPaused) return
         clockDelta = clock.getDelta()
-        animationLoop(...args)
+        // Unity updates the AnimationMixer and ReDrive material controller
+        // before drawing. Rendering first left Head-driven face/AngelRing
+        // uniforms one frame behind the visible pose.
         animationLoops.forEach(x => x())
+        animationLoop(...args)
     })
     renderer.setAnimationLoop = (callback: XRFrameRequestCallback | null) => {
         animationLoop = callback ?? (() => undefined)

@@ -2,9 +2,18 @@ import * as THREE from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { fetchAndTryDecompressGzip } from 'magia-exedra-character-three/utils'
-import { scene } from './scene'
+import { scene, recoveredFillLight, recoveredHemisphereLight } from './scene'
 import { gui } from './controllers/GUI'
-import { applyReDriveVolumeRuntime, resetReDriveVolumeRuntime, type ReDriveVolumeRuntimeProfile } from './reDriveVolumeRuntime'
+import {
+    applyStageMaterialBindings,
+    type StageMaterialBinding,
+} from './stageMaterialBindings'
+import {
+    applyReDriveVolumeRuntime,
+    resetReDriveVolumeRuntime,
+    type ReDriveVolumeRuntimeProfile,
+    type Rgba,
+} from './reDriveVolumeRuntime'
 
 export type StageCategory = 'research' | 'battle' | 'field' | 'dungeon' | 'gallery' | 'adv'
 export type StageAssetType = 'gltf' | 'fbx'
@@ -28,11 +37,28 @@ export interface StageSpawnPoint {
 }
 
 export interface StageLightProfile {
-    color: string
+    name?: string
+    type?: 'directional' | 'point' | 'spot'
+    /** Existing FBX node whose converted transform drives this light. */
+    anchorNode?: string
+    color: string | Rgba
     intensity: number
+    range?: number
+    outerAngleDegrees?: number
+    innerAngleDegrees?: number
+    cullingMask?: number
+    lightmapping?: number
+    role?: 'character-key' | 'background'
     position?: [number, number, number]
     target?: [number, number, number]
     castShadow?: boolean
+    shadow?: {
+        type: 0 | 1 | 2
+        strength: number
+        bias: number
+        normalBias: number
+        nearPlane?: number
+    }
 }
 
 export interface StageRenderProfile {
@@ -52,7 +78,11 @@ export interface StageRenderProfile {
         color: string
         intensity: number
     }
+    /** Three.js layer used by official background geometry and background-only lights. */
+    stageLayer?: number
     directionalLight?: StageLightProfile
+    /** Serialized Unity lights; directionalLight remains for procedural presets. */
+    lights?: StageLightProfile[]
     renderer?: {
         toneMapping?: 'none' | 'linear' | 'aces'
         exposure?: number
@@ -81,25 +111,7 @@ export interface StageRenderProfile {
      * lighting fields above are applied immediately; these source values remain
      * attached to stageRoot.userData and are not silently approximated.
      */
-    reDriveVolume?: {
-        skyboxIntensity?: number
-        reflectionProbe?: string
-        shAmbient?: number[]
-        characterTint?: string
-        characterShadowTint?: string
-        backgroundTint?: string
-        characterLightingOverrideColor?: string
-        characterLightingOverrideRatio?: number
-        characterLightingOverrideDirection?: [number, number, number]
-        characterAdditionalRimLightColor?: string
-        characterAdditionalRimLightDirection?: [number, number]
-        characterFaceAwayTint?: string
-        characterCancelPerspective?: number
-        backgroundShadowStrengthAdditive?: number
-        backgroundPostExposure?: number
-        backgroundContrast?: number
-        backgroundSaturation?: number
-    }
+    reDriveVolume?: ReDriveVolumeRuntimeProfile
 }
 
 export interface StageDefinition {
@@ -116,6 +128,7 @@ export interface StageDefinition {
     position?: [number, number, number]
     rotation?: [number, number, number]
     spawnPoints?: StageSpawnPoint[]
+    materialBindings?: StageMaterialBinding[]
     renderProfile?: StageRenderProfile
     credit?: string
     evidence?: string[]
@@ -148,7 +161,7 @@ const builtInStages: StageDefinition[] = [
 const stageSelector = document.getElementById('stage-selector') as HTMLSelectElement
 const stageRoot = new THREE.Group()
 stageRoot.name = 'Magius3DviewerStageRoot'
-scene.scene.add(stageRoot)
+scene.backgroundScene.add(stageRoot)
 
 const stageFolder = gui.addFolder('3D Stage').close()
 const stageActions = {
@@ -186,15 +199,32 @@ let activeProfileTextures: THREE.Texture[] = []
 
 const initialSceneState = {
     background: scene.scene.background,
+    backgroundSceneBackground: scene.backgroundScene.background,
     environment: scene.scene.environment,
+    backgroundSceneEnvironment: scene.backgroundScene.environment,
     fog: scene.scene.fog,
+    backgroundSceneFog: scene.backgroundScene.fog,
     ambientColor: scene.ambientLight.color.clone(),
     ambientIntensity: scene.ambientLight.intensity,
+    backgroundAmbientColor: scene.backgroundAmbientLight.color.clone(),
+    backgroundAmbientIntensity: scene.backgroundAmbientLight.intensity,
+    hemisphereColor: recoveredHemisphereLight.color.clone(),
+    hemisphereGroundColor: recoveredHemisphereLight.groundColor.clone(),
+    hemisphereIntensity: recoveredHemisphereLight.intensity,
+    fillColor: recoveredFillLight.color.clone(),
+    fillIntensity: recoveredFillLight.intensity,
+    fillPosition: recoveredFillLight.position.clone(),
+    fillTarget: recoveredFillLight.target.position.clone(),
     directionalColor: scene.directionalLight.color.clone(),
     directionalIntensity: scene.directionalLight.intensity,
     directionalPosition: scene.directionalLight.position.clone(),
     directionalTarget: scene.directionalLight.target.position.clone(),
     directionalCastShadow: scene.directionalLight.castShadow,
+    directionalLayersMask: scene.directionalLight.layers.mask,
+    directionalShadowBias: scene.directionalLight.shadow.bias,
+    directionalShadowNormalBias: scene.directionalLight.shadow.normalBias,
+    directionalShadowNear: scene.directionalLight.shadow.camera.near,
+    directionalShadowMapSize: scene.directionalLight.shadow.mapSize.clone(),
     toneMapping: scene.renderer.toneMapping,
     exposure: scene.renderer.toneMappingExposure,
     colorFilter: scene.getColorFilterCSS(),
@@ -207,6 +237,7 @@ const initialSceneState = {
     cameraFov: scene.camera.fov,
     cameraNear: scene.camera.near,
     cameraFar: scene.camera.far,
+    cameraLayersMask: scene.camera.layers.mask,
 }
 
 export async function setupStageSelector() {
@@ -251,6 +282,7 @@ export async function loadStageById(id: string) {
         clearStageObject()
         restoreSceneProfile()
         if (definition.id === 'none') {
+            scene.backgroundSceneEnabled = false
             currentStageId = definition.id
             activeStageDefinition = definition
             stageOptions.id = definition.id
@@ -263,11 +295,14 @@ export async function loadStageById(id: string) {
             ? createProceduralStage(definition.preset ?? 'studio')
             : await loadExternalStage(definition)
 
-        prepareStageObject(object)
+        prepareStageObject(object, definition.renderProfile?.stageLayer)
         object.name = `Stage:${definition.id}`
         activeStageObject = object
         activeStageDefinition = definition
         stageRoot.add(object)
+        scene.backgroundSceneEnabled = true
+        scene.scene.background = null
+        scene.backgroundScene.background = initialSceneState.background
 
         currentStageId = definition.id
         stageOptions.id = definition.id
@@ -289,7 +324,7 @@ export async function loadStageById(id: string) {
         object.rotation.x = rx
         object.rotation.z = rz
         updateStageTransform()
-        await applyStageRenderProfile(definition.renderProfile)
+        await applyStageRenderProfile(definition.renderProfile, object)
         stageFolder.controllersRecursive().forEach(controller => controller.updateDisplay())
     } catch (error) {
         console.error(`Could not load 3D stage "${definition.name}":`, error)
@@ -371,13 +406,15 @@ function clearStageObject() {
     stageRoot.userData.spawnPoints = []
 }
 
-function prepareStageObject(object: THREE.Object3D) {
+function prepareStageObject(object: THREE.Object3D, stageLayer?: number) {
     const maxAnisotropy = scene.renderer.capabilities.getMaxAnisotropy()
+    if (stageLayer != undefined) scene.camera.layers.enable(stageLayer)
     object.traverse(child => {
+        if (stageLayer != undefined) child.layers.set(stageLayer)
         const mesh = child as THREE.Mesh
         if (!mesh.isMesh) return
-        mesh.castShadow = true
-        mesh.receiveShadow = true
+        mesh.castShadow = mesh.userData.stageCastShadow ?? true
+        mesh.receiveShadow = mesh.userData.stageReceiveShadow ?? true
         mesh.frustumCulled = false
 
         const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
@@ -419,21 +456,30 @@ function disposeStageObject(object: THREE.Object3D) {
 }
 
 async function loadExternalStage(definition: StageDefinition): Promise<THREE.Object3D> {
+    let object: THREE.Object3D
     if (definition.type === 'group') {
         if (!definition.assets?.length) throw new Error(`Stage ${definition.id} has no asset parts`)
         const group = new THREE.Group()
         group.name = `StageParts:${definition.id}`
         const parts = await Promise.all(definition.assets.map(loadExternalStageAsset))
         parts.forEach(part => group.add(part))
-        return group
+        object = group
+    } else {
+        if (!definition.url) throw new Error(`Stage ${definition.id} has no URL`)
+        object = await loadExternalStageAsset({
+            id: definition.id,
+            type: definition.type as StageAssetType,
+            url: definition.url,
+        })
     }
 
-    if (!definition.url) throw new Error(`Stage ${definition.id} has no URL`)
-    return loadExternalStageAsset({
-        id: definition.id,
-        type: definition.type as StageAssetType,
-        url: definition.url,
-    })
+    const bindingResult = await applyStageMaterialBindings(
+        object,
+        definition.materialBindings,
+        scene.renderer,
+    )
+    activeProfileTextures.push(...bindingResult.textures)
+    return object
 }
 
 async function loadExternalStageAsset(definition: StageAssetDefinition): Promise<THREE.Object3D> {
@@ -465,23 +511,154 @@ async function loadProfileTexture(url: string, mapping: THREE.Mapping) {
     return texture
 }
 
-async function applyStageRenderProfile(profile?: StageRenderProfile) {
+function applyLightColor(light: THREE.Light, value: string | Rgba) {
+    if (Array.isArray(value)) {
+        light.color.setRGB(value[0], value[1], value[2])
+    } else {
+        light.color.set(value)
+    }
+}
+
+function configureShadow(light: THREE.Light, profile: StageLightProfile) {
+    const shadow = profile.shadow
+    light.castShadow = profile.castShadow ?? Boolean(shadow && shadow.type !== 0)
+    if (!light.castShadow || !('shadow' in light)) return
+
+    const shadowLight = light as THREE.DirectionalLight | THREE.PointLight | THREE.SpotLight
+    shadowLight.shadow.bias = -(shadow?.bias ?? 0) * 0.001
+    shadowLight.shadow.normalBias = shadow?.normalBias ?? 0
+    if (shadow?.nearPlane != undefined) shadowLight.shadow.camera.near = shadow.nearPlane
+    shadowLight.shadow.mapSize.set(1024, 1024)
+}
+
+function applyOfficialStageLights(
+    profiles: StageLightProfile[] | undefined,
+    stageObject: THREE.Object3D,
+    stageLayer?: number,
+) {
+    if (!profiles?.length) return
+
+    const direction = new THREE.Vector3()
+    const anchorPosition = new THREE.Vector3()
+    profiles.forEach((profile, index) => {
+        const type = profile.type ?? 'directional'
+        const anchor = profile.anchorNode
+            ? stageObject.getObjectByName(profile.anchorNode)
+            : undefined
+
+        if (type === 'directional' && profile.role === 'character-key') {
+            const light = scene.directionalLight
+            light.name = profile.name ?? light.name
+            applyLightColor(light, profile.color)
+            light.intensity = profile.intensity
+            configureShadow(light, profile)
+
+            if (anchor) {
+                anchor.getWorldPosition(anchorPosition)
+                anchor.getWorldDirection(direction).normalize()
+                light.position.copy(anchorPosition).addScaledVector(direction, -10)
+                light.target.position.copy(anchorPosition)
+            } else {
+                if (profile.position) light.position.set(...profile.position)
+                if (profile.target) light.target.position.set(...profile.target)
+            }
+            light.layers.enable(0)
+            if (stageLayer != undefined) light.layers.enable(stageLayer)
+            light.target.updateMatrixWorld()
+
+            // Unity's MainLight reaches both characters and the stage. A
+            // separate instance is required because the background scene is a
+            // distinct render pass used to enforce the original culling masks.
+            const stageLight = new THREE.DirectionalLight(
+                light.color,
+                light.intensity,
+            )
+            stageLight.name = `${profile.name ?? 'MainLight'}:Background`
+            applyLightColor(stageLight, profile.color)
+            configureShadow(stageLight, profile)
+            if (stageLayer != undefined) stageLight.layers.set(stageLayer)
+            if (anchor) {
+                anchor.add(stageLight)
+                stageLight.position.set(0, 0, 0)
+                stageLight.target.position.set(0, 0, 1)
+                anchor.add(stageLight.target)
+            } else {
+                stageObject.add(stageLight)
+                if (profile.position) stageLight.position.set(...profile.position)
+                if (profile.target) stageLight.target.position.set(...profile.target)
+                stageObject.add(stageLight.target)
+            }
+            return
+        }
+
+        let light: THREE.PointLight | THREE.SpotLight | THREE.DirectionalLight
+        if (type === 'point') {
+            light = new THREE.PointLight('#ffffff', profile.intensity, profile.range ?? 0)
+        } else if (type === 'spot') {
+            const outer = profile.outerAngleDegrees ?? 30
+            const inner = Math.min(profile.innerAngleDegrees ?? outer, outer)
+            light = new THREE.SpotLight(
+                '#ffffff',
+                profile.intensity,
+                profile.range ?? 0,
+                THREE.MathUtils.degToRad(outer * 0.5),
+                THREE.MathUtils.clamp(1 - inner / Math.max(outer, 0.001), 0, 1),
+            )
+        } else {
+            light = new THREE.DirectionalLight('#ffffff', profile.intensity)
+        }
+        light.name = profile.name ?? `OfficialStageLight:${index}`
+        applyLightColor(light, profile.color)
+        configureShadow(light, profile)
+        if (stageLayer != undefined) light.layers.set(stageLayer)
+
+        if (anchor) {
+            anchor.add(light)
+            light.position.set(0, 0, 0)
+            if (light instanceof THREE.SpotLight || light instanceof THREE.DirectionalLight) {
+                light.target.name = `${light.name}:Target`
+                light.target.position.set(0, 0, 1)
+                anchor.add(light.target)
+            }
+        } else {
+            stageObject.add(light)
+            if (profile.position) light.position.set(...profile.position)
+            if (
+                profile.target
+                && (light instanceof THREE.SpotLight || light instanceof THREE.DirectionalLight)
+            ) {
+                light.target.position.set(...profile.target)
+                stageObject.add(light.target)
+            }
+        }
+    })
+}
+
+async function applyStageRenderProfile(
+    profile?: StageRenderProfile,
+    stageObject?: THREE.Object3D,
+) {
     if (!profile) return
 
     if (profile.backgroundColor) {
-        scene.scene.background = new THREE.Color(profile.backgroundColor)
+        scene.backgroundScene.background =
+            new THREE.Color(profile.backgroundColor)
+        scene.scene.background = null
     }
     if (profile.backgroundTextureUrl) {
-        scene.scene.background = await loadProfileTexture(
+        scene.backgroundScene.background = await loadProfileTexture(
             profile.backgroundTextureUrl,
             THREE.EquirectangularReflectionMapping,
         )
+        scene.scene.background = null
     }
     if (profile.environmentTextureUrl) {
-        scene.scene.environment = await loadProfileTexture(
+        const environment = await loadProfileTexture(
             profile.environmentTextureUrl,
             THREE.EquirectangularReflectionMapping,
         )
+        scene.scene.environment = environment
+        scene.backgroundScene.environment = environment
     }
     if (profile.environmentIntensity != undefined) {
         ;(scene.scene as THREE.Scene & { environmentIntensity?: number }).environmentIntensity = profile.environmentIntensity
@@ -489,16 +666,21 @@ async function applyStageRenderProfile(profile?: StageRenderProfile) {
 
     if (profile.fog === null) {
         scene.scene.fog = null
+        scene.backgroundScene.fog = null
     } else if (profile.fog) {
         scene.scene.fog = new THREE.Fog(profile.fog.color, profile.fog.near, profile.fog.far)
+        scene.backgroundScene.fog =
+            new THREE.Fog(profile.fog.color, profile.fog.near, profile.fog.far)
     }
 
     if (profile.ambientLight) {
         scene.ambientLight.color.set(profile.ambientLight.color)
         scene.ambientLight.intensity = profile.ambientLight.intensity
+        scene.backgroundAmbientLight.color.set(profile.ambientLight.color)
+        scene.backgroundAmbientLight.intensity = profile.ambientLight.intensity
     }
     if (profile.directionalLight) {
-        scene.directionalLight.color.set(profile.directionalLight.color)
+        applyLightColor(scene.directionalLight, profile.directionalLight.color)
         scene.directionalLight.intensity = profile.directionalLight.intensity
         if (profile.directionalLight.position) {
             scene.directionalLight.position.set(...profile.directionalLight.position)
@@ -510,6 +692,9 @@ async function applyStageRenderProfile(profile?: StageRenderProfile) {
         if (profile.directionalLight.castShadow != undefined) {
             scene.directionalLight.castShadow = profile.directionalLight.castShadow
         }
+    }
+    if (stageObject) {
+        applyOfficialStageLights(profile.lights, stageObject, profile.stageLayer)
     }
 
     if (profile.renderer?.toneMapping) {
@@ -528,9 +713,30 @@ async function applyStageRenderProfile(profile?: StageRenderProfile) {
     if (profile.colorFilter) scene.setColorFilter(profile.colorFilter)
     if (profile.bloom) {
         scene.effects.bloomPass.enabled = profile.bloom.enabled
-        scene.effects.bloomPass.strength = profile.bloom.strength
-        scene.effects.bloomPass.radius = profile.bloom.radius
-        scene.effects.bloomPass.threshold = profile.bloom.threshold
+        if (profile.source === 'ReDriveVolume') {
+            // Unity/URP Bloom volume values are not numerically compatible with
+            // Three's UnrealBloomPass. Convert only recovered Unity profiles.
+            scene.effects.bloomPass.strength = THREE.MathUtils.clamp(
+                profile.bloom.strength * 0.08,
+                0,
+                0.35,
+            )
+            scene.effects.bloomPass.radius = THREE.MathUtils.clamp(
+                profile.bloom.radius * 0.5,
+                0,
+                1,
+            )
+            scene.effects.bloomPass.threshold = THREE.MathUtils.clamp(
+                0.52 + profile.bloom.threshold * 0.5,
+                0,
+                1,
+            )
+        } else {
+            // Manual research stages already store UnrealBloomPass units.
+            scene.effects.bloomPass.strength = profile.bloom.strength
+            scene.effects.bloomPass.radius = profile.bloom.radius
+            scene.effects.bloomPass.threshold = profile.bloom.threshold
+        }
     }
     if (profile.camera) {
         scene.camera.position.set(...profile.camera.position)
@@ -541,23 +747,59 @@ async function applyStageRenderProfile(profile?: StageRenderProfile) {
         scene.camera.updateProjectionMatrix()
         scene.controls.update()
     }
-    applyReDriveVolumeRuntime(
-        profile.reDriveVolume as ReDriveVolumeRuntimeProfile | undefined,
-    )
+    applyReDriveVolumeRuntime(profile.reDriveVolume)
 }
 
 function restoreSceneProfile() {
     resetReDriveVolumeRuntime()
     scene.scene.background = initialSceneState.background
+    scene.backgroundScene.background =
+        initialSceneState.backgroundSceneBackground
     scene.scene.environment = initialSceneState.environment
+    scene.backgroundScene.environment =
+        initialSceneState.backgroundSceneEnvironment
     scene.scene.fog = initialSceneState.fog
+    scene.backgroundScene.fog = initialSceneState.backgroundSceneFog
     scene.ambientLight.color.copy(initialSceneState.ambientColor)
     scene.ambientLight.intensity = initialSceneState.ambientIntensity
+    scene.backgroundAmbientLight.color.copy(
+        initialSceneState.backgroundAmbientColor,
+    )
+    scene.backgroundAmbientLight.intensity =
+        initialSceneState.backgroundAmbientIntensity
+    recoveredHemisphereLight.color.copy(initialSceneState.hemisphereColor)
+    recoveredHemisphereLight.groundColor.copy(
+        initialSceneState.hemisphereGroundColor,
+    )
+    recoveredHemisphereLight.intensity = initialSceneState.hemisphereIntensity
+    recoveredFillLight.color.copy(initialSceneState.fillColor)
+    recoveredFillLight.intensity = initialSceneState.fillIntensity
+    recoveredFillLight.position.copy(initialSceneState.fillPosition)
+    recoveredFillLight.target.position.copy(initialSceneState.fillTarget)
+    recoveredFillLight.target.updateMatrixWorld()
     scene.directionalLight.color.copy(initialSceneState.directionalColor)
     scene.directionalLight.intensity = initialSceneState.directionalIntensity
     scene.directionalLight.position.copy(initialSceneState.directionalPosition)
     scene.directionalLight.target.position.copy(initialSceneState.directionalTarget)
     scene.directionalLight.castShadow = initialSceneState.directionalCastShadow
+    scene.directionalLight.layers.mask = initialSceneState.directionalLayersMask
+    scene.directionalLight.shadow.bias = initialSceneState.directionalShadowBias
+    scene.directionalLight.shadow.normalBias =
+        initialSceneState.directionalShadowNormalBias
+    scene.directionalLight.shadow.camera.near =
+        initialSceneState.directionalShadowNear
+    if (
+        !scene.directionalLight.shadow.mapSize.equals(
+            initialSceneState.directionalShadowMapSize,
+        )
+    ) {
+        scene.directionalLight.shadow.map?.dispose()
+        scene.directionalLight.shadow.map = null
+        scene.directionalLight.shadow.mapSize.copy(
+            initialSceneState.directionalShadowMapSize,
+        )
+    }
+    scene.directionalLight.shadow.camera.updateProjectionMatrix()
     scene.directionalLight.target.updateMatrixWorld()
     scene.renderer.toneMapping = initialSceneState.toneMapping
     scene.renderer.toneMappingExposure = initialSceneState.exposure
@@ -571,6 +813,7 @@ function restoreSceneProfile() {
     scene.camera.fov = initialSceneState.cameraFov
     scene.camera.near = initialSceneState.cameraNear
     scene.camera.far = initialSceneState.cameraFar
+    scene.camera.layers.mask = initialSceneState.cameraLayersMask
     scene.camera.updateProjectionMatrix()
     scene.controls.update()
 }

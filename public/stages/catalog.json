@@ -10,7 +10,7 @@
       "official": true,
       "assetBundleName": "battle/stage/bg/3d/600/00/00/001",
       "type": "fbx",
-      "url": "./stages/official/battle-600-00-00-001/bg_3d_600_00_00_001.fbx.gz",
+      "url": "./stages/official/battle-600-00-00-001/bg_3d_600_00_00_001.fbxdata",
       "scale": 1,
       "position": [
         0,
@@ -109,7 +109,7 @@
       "official": true,
       "assetBundleName": "battle/stage/bg/3d/600/00/01/001",
       "type": "fbx",
-      "url": "./stages/official/battle-600-00-01-001/bg_3d_600_00_01_001.fbx.gz",
+      "url": "./stages/official/battle-600-00-01-001/bg_3d_600_00_01_001.fbxdata",
       "scale": 1,
       "position": [
         0,
@@ -138,37 +138,249 @@
           ]
         }
       ],
+      "materialBindings": [
+        {
+          "materialName": "mt_bg3d600A_01_01_rockAlpha",
+          "materialPattern": "^mt_bg3d600A_01_01_rockAlpha(?:\\.\\d+)?$",
+          "shading": "lit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_01_rockPropAlpha_col.png",
+          "normalMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_01_rockPropAlpha_nml.png",
+          "smoothnessMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_01_ground_smoothness.png",
+          "smoothness": 0.85,
+          "smoothnessChannel": "a",
+          "normalScale": 1,
+          "alphaTest": 0.5,
+          "alphaToCoverage": true,
+          "unlitness": 0.2,
+          "castShadow": false,
+          "receiveShadow": true
+        },
+        {
+          "materialName": "mt_bg3d600A_01_01_propA",
+          "materialPattern": "^mt_bg3d600A_01_01_propA(?:\\.\\d+)?$",
+          "shading": "lit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_01_rockPropAlpha_col.png",
+          "normalMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_01_rockPropAlpha_nml.png",
+          "smoothness": 0.5,
+          "normalScale": 1,
+          "castShadow": true,
+          "receiveShadow": true
+        },
+        {
+          "materialName": "mt_bg3d600A_01_01_propB",
+          "materialPattern": "^mt_bg3d600A_01_01_propB(?:\\.\\d+)?$",
+          "shading": "unlit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_01_rockPropAlpha_col.png",
+          "castShadow": true,
+          "receiveShadow": true
+        },
+        {
+          "materialName": "mt_bg3d600A_01_01_ground",
+          "materialPattern": "^mt_bg3d600A_01_01_ground(?:\\.\\d+)?$",
+          "shading": "lit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_03_groundA_col.png",
+          "blendMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_03_groundB_col.png",
+          "normalMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_03_groundB_nml.png",
+          "smoothnessMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_01_ground_smoothness.png",
+          "vertexColorBlend": true,
+          "smoothness": 0.7,
+          "smoothnessChannel": "a",
+          "metallic": 0.166,
+          "metallicFromSmoothnessMap": true,
+          "normalScale": 2,
+          "castShadow": false,
+          "receiveShadow": true
+        },
+        {
+          "materialName": "mt_bg3d600A_01_01_sky",
+          "materialPattern": "^mt_bg3d600A_01_01_sky(?:\\.\\d+)?$",
+          "shading": "unlit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_01_sky_col.png",
+          "castShadow": false,
+          "receiveShadow": false
+        },
+        {
+          "materialName": "mt_bg3d600A_01_01_anthonyAAlpha",
+          "materialPattern": "^mt_bg3d600A_01_01_anthonyAAlpha(?:\\.\\d+)?$",
+          "shading": "unlit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_03_anthonyAlpha_col.png",
+          "alphaTest": 0.5,
+          "alphaToCoverage": true,
+          "castShadow": false,
+          "receiveShadow": false,
+          "atlas": {
+            "columns": 6,
+            "rows": 3,
+            "offset": 0,
+            "framesPerSecond": 8
+          }
+        },
+        {
+          "materialName": "mt_bg3d600A_01_01_anthonyBAlpha",
+          "materialPattern": "^mt_bg3d600A_01_01_anthonyBAlpha(?:\\.\\d+)?$",
+          "shading": "unlit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_03_anthonyAlpha_col.png",
+          "alphaTest": 0.5,
+          "alphaToCoverage": true,
+          "castShadow": false,
+          "receiveShadow": false,
+          "atlas": {
+            "columns": 6,
+            "rows": 3,
+            "offset": 3,
+            "framesPerSecond": 8
+          }
+        }
+      ],
       "renderProfile": {
         "id": "bg_3d_600_00_01_001",
-        "source": "manual-research",
+        "source": "ReDriveVolume",
+        "stageLayer": 6,
         "backgroundColor": "#282828",
         "fog": {
           "color": "#282828",
           "near": 10,
           "far": 95
         },
-        "ambientLight": {
-          "color": "#aaaacc",
-          "intensity": 0.95
-        },
-        "directionalLight": {
-          "color": "#968f77",
-          "intensity": 1.8,
-          "position": [
-            -4,
-            6,
-            5
-          ],
-          "target": [
-            0,
-            1,
-            0
-          ],
-          "castShadow": true
-        },
+        "lights": [
+          {
+            "name": "MainLight",
+            "type": "directional",
+            "anchorNode": "MainLight",
+            "color": [1.0, 0.9760049, 0.9386792, 1.0],
+            "intensity": 1,
+            "cullingMask": 2147483647,
+            "lightmapping": 1,
+            "role": "character-key",
+            "castShadow": true,
+            "shadow": {
+              "type": 2,
+              "strength": 1,
+              "bias": 0,
+              "normalBias": 0,
+              "nearPlane": 0.1
+            }
+          },
+          {
+            "name": "BgCenterLight",
+            "type": "spot",
+            "anchorNode": "BgCenterLight",
+            "position": [0, 10.2, 0],
+            "color": [1.0, 0.95, 0.9809524, 1.0],
+            "intensity": 500,
+            "range": 40,
+            "outerAngleDegrees": 117.347824,
+            "innerAngleDegrees": 26,
+            "cullingMask": 64,
+            "lightmapping": 1,
+            "role": "background",
+            "castShadow": true,
+            "shadow": {
+              "type": 1,
+              "strength": 1,
+              "bias": 0.05,
+              "normalBias": 0.4,
+              "nearPlane": 0.2
+            }
+          },
+          {
+            "name": "BgFillLight",
+            "type": "spot",
+            "anchorNode": "BgFillLight",
+            "position": [0, 15.9, 0],
+            "color": [1.0, 0.99526566, 0.9490196, 1.0],
+            "intensity": 200,
+            "range": 50,
+            "outerAngleDegrees": 179,
+            "innerAngleDegrees": 179,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background",
+            "castShadow": true,
+            "shadow": {
+              "type": 1,
+              "strength": 1,
+              "bias": 0.05,
+              "normalBias": 0.4,
+              "nearPlane": 0.2
+            }
+          },
+          {
+            "name": "BgLightA001",
+            "type": "point",
+            "anchorNode": "BgLightA001",
+            "position": [-12.59, 5, -17],
+            "color": [1.0, 0.7885474, 0.752, 1.0],
+            "intensity": 100,
+            "range": 20,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background"
+          },
+          {
+            "name": "BgLightA002",
+            "type": "point",
+            "anchorNode": "BgLightA002",
+            "position": [-4.96, 5, -15.46],
+            "color": [1.0, 0.8254717, 0.8466981, 1.0],
+            "intensity": 100,
+            "range": 10,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background"
+          },
+          {
+            "name": "BgLightB001",
+            "type": "point",
+            "anchorNode": "BgLightB001",
+            "position": [14.25, 4.89, -16.72],
+            "color": [1.0, 0.9074746, 0.740566, 1.0],
+            "intensity": 120,
+            "range": 20,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background"
+          },
+          {
+            "name": "BgLightC001",
+            "type": "point",
+            "anchorNode": "BgLightC001",
+            "position": [5.7, 8.66, 9.2],
+            "color": [1.0, 0.95452344, 0.7783019, 1.0],
+            "intensity": 250,
+            "range": 20,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background"
+          },
+          {
+            "name": "BgLightD001",
+            "type": "point",
+            "anchorNode": "BgLightD001",
+            "position": [-10.72, 9.53, 12],
+            "color": [1.0, 0.7885474, 0.752, 1.0],
+            "intensity": 300,
+            "range": 20,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background"
+          },
+          {
+            "name": "BgLightD002",
+            "type": "point",
+            "anchorNode": "BgLightD002",
+            "position": [-3.65, 7.81, 8.57],
+            "color": [1.0, 0.7885474, 0.752, 1.0],
+            "intensity": 150,
+            "range": 10,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background"
+          }
+        ],
         "renderer": {
           "toneMapping": "aces",
-          "exposure": 1.0
+          "exposure": 1.148698355
         },
         "colorFilter": {
           "brightness": 1.0,
@@ -177,20 +389,54 @@
         },
         "bloom": {
           "enabled": true,
-          "strength": 0.35,
+          "strength": 1,
           "radius": 0.7,
           "threshold": 0.8
         },
         "reDriveVolume": {
-          "characterShadowTint": "#ababcc",
-          "characterLightingOverrideColor": "#979277",
+          "skyboxIntensity": 1,
+          "shAmbient": [
+            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
+            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8,
+            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
+            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8,
+            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
+            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8
+          ],
+          "characterShadowTint": [0.672, 0.672, 0.8, 1],
+          "characterLightingOverrideColor": [0.590619, 0.57112503, 0.46778384, 1],
           "characterLightingOverrideRatio": 0.25,
-          "backgroundShadowStrengthAdditive": 0.3
+          "characterAdditionalRimLightColor": [1, 1, 1, 1],
+          "characterAdditionalRimLightDirection": [1, -1],
+          "backgroundShadowStrengthAdditive": 0.3,
+          "backgroundPostExposure": 0.2,
+          "paraffin": {
+            "enabled": true,
+            "topColor": [0.40440553, 0.4024424, 0.426, 1],
+            "bottomColor": [0.5019608, 0.32627454, 0.32627454, 1],
+            "opacity": 0.3,
+            "width": 1.4,
+            "topBlendMode": 0,
+            "bottomBlendMode": 3
+          },
+          "overrides": {
+            "skyboxIntensity": true,
+            "shAmbient": true,
+            "characterShadowTint": true,
+            "characterLightingOverrideColor": true,
+            "characterLightingOverrideRatio": true,
+            "characterAdditionalRimLightColor": true,
+            "characterAdditionalRimLightDirection": false,
+            "backgroundShadowStrengthAdditive": true,
+            "backgroundPostExposure": true,
+            "paraffin": true
+          }
         }
       },
       "evidence": [
-        "AssetStudioModCLI splitObjects",
-        "official AssetBundle geometry; render profile remains under parameter recovery"
+        "JP 3.11.0 AssetStudioModCLI exact prefab export",
+        "JP ReDriveToonPostProcessVolume serialized values",
+        "JP Unity Light components and FBX anchor transforms"
       ]
     },
     {
@@ -200,7 +446,7 @@
       "official": true,
       "assetBundleName": "dungeon/level/10000/level/intro/0001/001",
       "type": "fbx",
-      "url": "./stages/official/dungeon-intro-0001-001/level_intro_0001_001.fbx.gz",
+      "url": "./stages/official/dungeon-intro-0001-001/level_intro_0001_001.fbxdata",
       "scale": 1,
       "position": [
         0,
@@ -285,7 +531,7 @@
       "official": true,
       "assetBundleName": "gallery/bg3d/gallery",
       "type": "fbx",
-      "url": "./stages/official/gallery-memory-room/bg3d_gallery.fbx.gz",
+      "url": "./stages/official/gallery-memory-room/bg3d_gallery.fbxdata",
       "scale": 1,
       "position": [
         0,
@@ -381,7 +627,7 @@
       "official": true,
       "assetBundleName": "gallery/bg3d/gallery/story",
       "type": "fbx",
-      "url": "./stages/official/gallery-memory-room-story/bg3d_gallery_story.fbx.gz",
+      "url": "./stages/official/gallery-memory-room-story/bg3d_gallery_story.fbxdata",
       "scale": 1,
       "position": [
         0,

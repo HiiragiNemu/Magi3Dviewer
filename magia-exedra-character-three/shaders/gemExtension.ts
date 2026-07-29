@@ -23,11 +23,17 @@ export async function extendMaterialWithOfficialGem(
     const resources = await loadOfficialGemResources(profiles);
     const previousCompile = material.onBeforeCompile;
     const previousKey = material.customProgramCacheKey.bind(material);
-    const initialProfile = profiles[0];
 
     material.onBeforeCompile = function (shader, renderer) {
         previousCompile.call(this, shader, renderer);
-        injectOfficialGemShader(shader, resources, initialProfile);
+        const profile =
+            this.userData instanceof Object &&
+            'officialMaterialProfile' in this.userData
+                ? this.userData.officialMaterialProfile as
+                    | OfficialMaterialProfile
+                    | undefined
+                : undefined
+        injectOfficialGemShader(shader, resources, profile ?? profiles[0]);
         // GeneralMaterial has already registered this shader in MaterialUserData.
         // The object is the same, so per-group updates can access the new uniforms.
         if (this.userData && typeof this.userData === 'object') {

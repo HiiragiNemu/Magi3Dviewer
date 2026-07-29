@@ -10,6 +10,8 @@ import {
     createDepthMaterial,
     createDistanceMaterial,
     extendMaterialWithOfficialGem,
+    setAngelRingCameraUniforms,
+    setOfficialAngelRingMaterialProfileUniforms,
     setOfficialMaterialProfileUniforms,
     MaterialUserData,
 } from './shaders'
@@ -71,10 +73,42 @@ function bindOfficialMaterialGroups(
     material: THREE.Material,
     profiles: OfficialMaterialProfile[],
 ) {
-    const slots = Math.max(profiles.length, 1)
-    mesh.material = slots > 1
-        ? Array.from({ length: slots }, () => material)
-        : material
+    const groups = mesh.geometry.groups
+    const highestGroupMaterialIndex = groups.reduce(
+        (highest, group) => Math.max(highest, group.materialIndex ?? 0),
+        0,
+    )
+    // Three.js does not render a material array when BufferGeometry has no draw
+    // groups. AssetStudio/FBXLoader commonly preserves the Unity material-name
+    // array while flattening the geometry into one ungrouped draw range. In
+    // that case use the shared material for the whole mesh; otherwise Body,
+    // Face, Hair and Weapon disappear and only their outline shells remain.
+    const slots = groups.length > 0
+        ? Math.max(profiles.length, highestGroupMaterialIndex + 1, 1)
+        : 1
+    const slotProfiles = profiles.length > 0
+        ? profiles
+        : getOfficialMaterialProfiles([material.name])
+    const materials = Array.from({ length: slots }, (_, index) => {
+        const slotMaterial = index === 0 ? material : material.clone()
+        if (index > 0) {
+            // Material.copy intentionally does not copy shader callbacks or
+            // custom cache keys. Copy them explicitly while keeping a distinct
+            // material id and a distinct uniform container per FBX draw group.
+            slotMaterial.onBeforeCompile = material.onBeforeCompile
+            slotMaterial.customProgramCacheKey =
+                material.customProgramCacheKey.bind(slotMaterial)
+            slotMaterial.userData = new MaterialUserData()
+        }
+        const userData = slotMaterial.userData instanceof MaterialUserData
+            ? slotMaterial.userData
+            : new MaterialUserData()
+        slotMaterial.userData = userData
+        userData.officialMaterialProfile =
+            slotProfiles[index] ?? slotProfiles[0]
+        return slotMaterial
+    })
+    mesh.material = materials.length > 1 ? materials : materials[0]
     mesh.userData.officialMaterialProfiles = profiles
 
     const previousOnBeforeRender = mesh.onBeforeRender
@@ -95,12 +129,19 @@ function bindOfficialMaterialGroups(
             renderMaterial,
             group,
         )
-        const userData = material.userData
+        const userData = renderMaterial.userData
         const shader = userData instanceof MaterialUserData
             ? userData.shader
             : userData?.shader
-        const index = group?.materialIndex ?? 0
-        setOfficialMaterialProfileUniforms(shader, profiles[index] ?? profiles[0])
+        // WebGLRenderer passes a BufferGeometry draw-group here. The current
+        // @types/three declaration incorrectly exposes it as THREE.Group.
+        const index = (
+            group as unknown as { materialIndex?: number } | null
+        )?.materialIndex ?? 0
+        const profile = slotProfiles[index] ?? slotProfiles[0]
+        setOfficialMaterialProfileUniforms(shader, profile)
+        setOfficialAngelRingMaterialProfileUniforms(shader, profile)
+        setAngelRingCameraUniforms(shader, renderer, camera)
     }
 }
 
@@ -154,10 +195,46 @@ export async function loadCharacter(
             return
         }
 
-        const fbxBlobUrl = URL.createObjectURL(fbxBlob)
         loadProgressCallback('Parsing geometry...')
-        fbxLoader.load(fbxBlobUrl, async modelObject => {
-            URL.revokeObjectURL(fbxBlobUrl)
+        let modelObject: THREE.Group
+        try {
+            // Parse the already-downloaded, already-decompressed buffer
+            // directly. Re-wrapping it in a blob URL made FBXLoader perform a
+            // second asynchronous request and could expose a stale/truncated
+            // blob to the parser after rapid preview rebuilds.
+            const fbxBuffer = await fbxBlob.arrayBuffer()
+            const fbxBytes = new Uint8Array(fbxBuffer)
+            const headerBytes = fbxBytes.subarray(0, Math.min(24, fbxBytes.length))
+            const headerAscii = new TextDecoder('ascii').decode(headerBytes)
+            const headerHex = Array.from(headerBytes, byte => byte.toString(16).padStart(2, '0')).join(' ')
+            const isBinaryFbx = headerAscii.startsWith('Kaydara FBX Binary')
+            const isAsciiFbx = headerAscii.startsWith('; FBX')
+
+            console.info('FBX payload diagnostic', {
+                url: fbxUrl,
+                byteLength: fbxBytes.byteLength,
+                headerAscii,
+                headerHex,
+                isBinaryFbx,
+                isAsciiFbx,
+            })
+
+            if (!isBinaryFbx && !isAsciiFbx) {
+                throw new Error(
+                    `Invalid FBX payload after download/decompression: ${fbxBytes.byteLength} bytes, header ${headerHex}`,
+                )
+            }
+
+            modelObject = fbxLoader.parse(
+                fbxBuffer,
+                new URL('.', fbxUrl).href,
+            )
+        } catch (error) {
+            loadProgressCallback('Parse FAILED')
+            reject(error)
+            return
+        }
+
             console.log(`Model "${modelObject.name}" loaded successfully`)
 
             modelObject.updateMatrixWorld(true)
@@ -228,7 +305,16 @@ export async function loadCharacter(
 
                     let colorMap = ObjFindByKey(meshTextures, path => path.includes('color'))
                     const shadowMap = ObjFindByKey(meshTextures, path => path.includes('shadow'))
-                    const ctrlMap = ObjFindByKey(meshTextures, path => path.includes('ctrl'))
+                    const ctrlMap = ObjFindByKey(
+                        meshTextures,
+                        path => {
+                            const lower = path.toLowerCase()
+                            return (
+                                lower.includes('ctrl') &&
+                                !lower.includes('face_ctrl_nose')
+                            )
+                        },
+                    )
                     if (!colorMap && shadowMap) colorMap = shadowMap
                     if (!colorMap) {
                         console.warn(`Could not find a color map for "${mesh.name}"`)
@@ -255,8 +341,14 @@ export async function loadCharacter(
               const result = await createFaceMaterial({
                   ...sharedMaterialOptions,
                   shadowMap: shadowMap!,
-                  eyehighlightMap: ObjFindByKey(texturePathUrl, path => path.includes('eye'))!,
-                  faceProfile,
+                           eyehighlightMap: ObjFindByKey(texturePathUrl, path => path.includes('eye'))!,
+                           noseGradientMap: ObjFindByKey(
+                               texturePathUrl,
+                               path => path
+                                   .toLowerCase()
+                                   .includes('face_ctrl_nose'),
+                           ),
+                           faceProfile,
                   faceReference,
               })
               material = result.material
@@ -285,10 +377,37 @@ export async function loadCharacter(
                             if (name.includes('hair')) {
                         const angelRingReference = createAngelRingReference(modelObject, mesh, characterProfile)
                         if (angelRingReference) {
+                            const requiresCharacterAngelRingMap =
+                                materialProfiles.some(
+                                    profile =>
+                                        profile.angelRing.map === 'character',
+                                )
+                            const angelRingMap = requiresCharacterAngelRingMap
+                                ? ObjFindByKey(
+                                    texturePathUrl,
+                                    path => {
+                                        const lower = path.toLowerCase()
+                                        return (
+                                            lower.includes('hair_highlight') ||
+                                            lower.includes('hairhighlight')
+                                        )
+                                    },
+                                )
+                                : undefined
+                            if (
+                                requiresCharacterAngelRingMap &&
+                                !angelRingMap
+                            ) {
+                                console.warn(
+                                    'Official character AngelRing map is missing:',
+                                    meshMaterialNames,
+                                )
+                            }
                             const result = await createHairMaterial({
                                 ...sharedMaterialOptions,
                                 alphaSrc,
                                 angelRingReference,
+                                angelRingMap,
                             })
                             material = result.material
                             textures = result.textures
@@ -359,10 +478,5 @@ export async function loadCharacter(
 
             loadProgressCallback('')
             if (!character.disposed) loadFinishCallback(character)
-        }, undefined, error => {
-            URL.revokeObjectURL(fbxBlobUrl)
-            loadProgressCallback('Parse FAILED')
-            reject(error)
-        })
     })
 }

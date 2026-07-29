@@ -1,0 +1,95 @@
+diff --git a/node_modules/three/examples/jsm/loaders/FBXLoader.js b/node_modules/three/examples/jsm/loaders/FBXLoader.js
+index 9fa1993..0892d67 100644
+--- a/node_modules/three/examples/jsm/loaders/FBXLoader.js
++++ b/node_modules/three/examples/jsm/loaders/FBXLoader.js
+@@ -2504,6 +2504,17 @@ class AnimationParser {
+ 	parse() {
+ 
+ 		const animationClips = [];
++		this.modelsByID = new Map();
++
++		sceneGraph.traverse( function ( child ) {
++
++			if ( child.ID !== undefined && ! this.modelsByID.has( child.ID ) ) {
++
++				this.modelsByID.set( child.ID, child );
++
++			}
++
++		}.bind( this ) );
+ 
+ 		const rawClips = this.parseClips();
+ 
+@@ -2736,6 +2747,7 @@ class AnimationParser {
+ 								const node = {
+ 
+ 									modelName: rawModel.attrName ? PropertyBinding.sanitizeNodeName( rawModel.attrName ) : '',
++									ID: rawModel.id,
+ 									morphName: fbxTree.Objects.Deformer[ deformerID ].attrName,
+ 
+ 								};
+@@ -2816,6 +2828,8 @@ class AnimationParser {
+ 	generateTracks( rawTracks ) {
+ 
+ 		const tracks = [];
++		const targetObject = this.modelsByID.get( rawTracks.ID );
++		const targetName = targetObject !== undefined ? targetObject.uuid : rawTracks.modelName;
+ 
+ 		let initialPosition = new Vector3();
+ 		let initialScale = new Vector3();
+@@ -2827,28 +2841,28 @@ class AnimationParser {
+ 
+ 		if ( rawTracks.T !== undefined && Object.keys( rawTracks.T.curves ).length > 0 ) {
+ 
+-			const positionTrack = this.generateVectorTrack( rawTracks.modelName, rawTracks.T.curves, initialPosition, 'position' );
++			const positionTrack = this.generateVectorTrack( targetName, rawTracks.T.curves, initialPosition, 'position' );
+ 			if ( positionTrack !== undefined ) tracks.push( positionTrack );
+ 
+ 		}
+ 
+ 		if ( rawTracks.R !== undefined && Object.keys( rawTracks.R.curves ).length > 0 ) {
+ 
+-			const rotationTrack = this.generateRotationTrack( rawTracks.modelName, rawTracks.R.curves, rawTracks.preRotation, rawTracks.postRotation, rawTracks.eulerOrder );
++			const rotationTrack = this.generateRotationTrack( targetName, rawTracks.R.curves, rawTracks.preRotation, rawTracks.postRotation, rawTracks.eulerOrder );
+ 			if ( rotationTrack !== undefined ) tracks.push( rotationTrack );
+ 
+ 		}
+ 
+ 		if ( rawTracks.S !== undefined && Object.keys( rawTracks.S.curves ).length > 0 ) {
+ 
+-			const scaleTrack = this.generateVectorTrack( rawTracks.modelName, rawTracks.S.curves, initialScale, 'scale' );
++			const scaleTrack = this.generateVectorTrack( targetName, rawTracks.S.curves, initialScale, 'scale' );
+ 			if ( scaleTrack !== undefined ) tracks.push( scaleTrack );
+ 
+ 		}
+ 
+ 		if ( rawTracks.DeformPercent !== undefined ) {
+ 
+-			const morphTrack = this.generateMorphTrack( rawTracks );
++			const morphTrack = this.generateMorphTrack( rawTracks, targetObject );
+ 			if ( morphTrack !== undefined ) tracks.push( morphTrack );
+ 
+ 		}
+@@ -2942,7 +2956,7 @@ class AnimationParser {
+ 
+ 	}
+ 
+-	generateMorphTrack( rawTracks ) {
++	generateMorphTrack( rawTracks, targetObject ) {
+ 
+ 		const curves = rawTracks.DeformPercent.curves.morph;
+ 		const values = curves.values.map( function ( val ) {
+@@ -2951,9 +2965,11 @@ class AnimationParser {
+ 
+ 		} );
+ 
+-		const morphNum = sceneGraph.getObjectByName( rawTracks.modelName ).morphTargetDictionary[ rawTracks.morphName ];
++		targetObject = targetObject !== undefined ? targetObject : sceneGraph.getObjectByName( rawTracks.modelName );
++		const targetName = targetObject !== undefined ? targetObject.uuid : rawTracks.modelName;
++		const morphNum = targetObject.morphTargetDictionary[ rawTracks.morphName ];
+ 
+-		return new NumberKeyframeTrack( rawTracks.modelName + '.morphTargetInfluences[' + morphNum + ']', curves.times, values );
++		return new NumberKeyframeTrack( targetName + '.morphTargetInfluences[' + morphNum + ']', curves.times, values );
+ 
+ 	}
+ 

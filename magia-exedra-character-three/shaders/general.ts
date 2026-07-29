@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { MaterialUserData, type MaterialCreationOptions, type MaterialCreationResult } from '.';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 import { injectToonStylization, ToonStylizationUniforms } from './stylization';
+import { setOfficialMaterialProfileUniforms } from './gem';
 
 export const ShadowTexOptions = {
     preMix: 0.82,
@@ -10,6 +11,10 @@ export const ShadowTexOptions = {
     transition: 0.22,
     amount: 0.28,
     controlOffsetStrength: 0.32,
+    /** Serialized ReDriveToon material defaults. */
+    shadowOffset: 0.3,
+    shadowFeather: 0.0,
+    shadowOffsetMapOffset: 0.0,
 }
 
 export const officialShadowPreset = {
@@ -46,6 +51,19 @@ export class GeneralMatrialUniforms extends ToonStylizationUniforms {
     get uControlOffsetStrength(): number | undefined { return this.getValue('uControlOffsetStrength') }
     set uControlOffsetStrength(value) { this.setValue('uControlOffsetStrength', value) }
 
+    get uRdShadowOffset(): number | undefined { return this.getValue('uRdShadowOffset') }
+    set uRdShadowOffset(value) { this.setValue('uRdShadowOffset', value) }
+
+    get uRdShadowFeather(): number | undefined { return this.getValue('uRdShadowFeather') }
+    set uRdShadowFeather(value) { this.setValue('uRdShadowFeather', value) }
+
+    get uRdShadowOffsetMapOffset(): number | undefined {
+        return this.getValue('uRdShadowOffsetMapOffset')
+    }
+    set uRdShadowOffsetMapOffset(value) {
+        this.setValue('uRdShadowOffsetMapOffset', value)
+    }
+
     loadGlobalOptions() {
         super.loadGlobalOptions()
         this.uShadowMix = 0.72
@@ -55,13 +73,20 @@ export class GeneralMatrialUniforms extends ToonStylizationUniforms {
         this.uShadowTransition = ShadowTexOptions.transition
         this.uShadowAmount = ShadowTexOptions.amount
         this.uControlOffsetStrength = ShadowTexOptions.controlOffsetStrength
+        this.uRdShadowOffset = ShadowTexOptions.shadowOffset
+        this.uRdShadowFeather = ShadowTexOptions.shadowFeather
+        this.uRdShadowOffsetMapOffset =
+            ShadowTexOptions.shadowOffsetMapOffset
     }
 }
 
 export const diffuseColorManipulationEndFlag = '// END diffuseColor manipulation'
 
 interface GeneralMaterialCreationOptions extends MaterialCreationOptions {
-    onBeforeCompile?: (shader: THREE.WebGLProgramParametersWithUniforms) => any;
+    onBeforeCompile?: (
+        this: THREE.Material,
+        shader: THREE.WebGLProgramParametersWithUniforms,
+    ) => any;
 }
 
 /**
@@ -117,9 +142,13 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
     });
     material.customProgramCacheKey = () => programCacheKey;
 
-    material.onBeforeCompile = (shader) => {
+    material.onBeforeCompile = function (shader) {
         if (!shader.defines) shader.defines = {};
 
+        const runtimeUserData = this.userData instanceof MaterialUserData
+            ? this.userData
+            : new MaterialUserData()
+        this.userData = runtimeUserData
         const uniforms = new GeneralMatrialUniforms(shader)
         uniforms.loadGlobalOptions()
         shader.uniforms.uMaterialAnisotropy = { value: anisotropy ? 1 : 0 }
@@ -152,6 +181,9 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             uniform float uShadowTransition;
             uniform float uShadowAmount;
             uniform float uControlOffsetStrength;
+            uniform float uRdShadowOffset;
+            uniform float uRdShadowFeather;
+            uniform float uRdShadowOffsetMapOffset;
             uniform float uMaterialAnisotropy;
             uniform float uMaterialSpecialJewel;
 
@@ -161,25 +193,22 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             /*glsl*/ `
             #include <map_fragment>
 
+            // Keep authored Base and Shadow textures separate until the exact
+            // ReDriveToon light threshold is evaluated after normal setup.
+            vec3 rdToonShadowColor = diffuseColor.rgb;
+            float rdToonControlR = 1.0;
+
             #ifdef HAS_CTRL
                 vec4 texCtrl = texture2D(tCtrl, vMapUv);
-                rdToonShadowOffset = texCtrl.r - 0.5;
+                rdToonControlR = texCtrl.r;
+                rdToonShadowOffset = texCtrl.r;
                 rdToonMetallicMask = texCtrl.g;
                 rdToonSpecularMask = texCtrl.b;
             #endif
 
             #ifdef HAS_SHADOW
                 vec4 texShadow = texture2D(tShadow, vMapUv);
-
-                float shadowMix;
-                #ifdef HAS_CTRL
-                    float authoredPreMix = mix(0.78, 1.0, texCtrl.r);
-                    shadowMix = mix(1.0, authoredPreMix, uShadowPreMix);
-                #else
-                    shadowMix = uShadowMix;
-                #endif
-
-                diffuseColor.rgb = mix(texShadow.rgb, diffuseColor.rgb, shadowMix);
+                rdToonShadowColor = texShadow.rgb;
             #endif
             `
         ).replace(
@@ -213,82 +242,84 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         ).replace(
             '#include <lights_physical_fragment>',
             /*glsl*/`
-            #ifdef HAS_SHADOW
-                vec3 o_diffuseColor = diffuseColor.rgb;
-                ReflectedLight o_reflectedLight = reflectedLight;
-                float o_roughnessFactor = roughnessFactor;
-                float o_metalnessFactor = metalnessFactor;
-
-                diffuseColor.rgb = vec3(uShadowTest);
-                roughnessFactor = 1.0;
-                metalnessFactor = 0.0;
-
-                float lightStrength;
-
-                if (0 == 0) {
-                    #include <lights_physical_fragment>
-                    #include <lights_fragment_begin>
-                    #include <lights_fragment_maps>
-                    #include <lights_fragment_end>
-
-                    lightStrength = reflectedLight.directDiffuse.r;
-
-                    float pixelShadowThreshold = clamp(
-                        uShadowThreshold - rdToonShadowOffset * uControlOffsetStrength,
-                        -0.25,
-                        0.95
-                    );
-                    float pixelShadowEnd = pixelShadowThreshold +
-                        (1.0 - pixelShadowThreshold) *
-                        max(uShadowTransition, 0.0001);
-
-                    lightStrength = smoothstep(
-                        pixelShadowThreshold,
-                        max(pixelShadowEnd, pixelShadowThreshold + 0.0001),
-                        lightStrength
-                    );
-
-                    float shadowStrength;
-                    if (uShadowAmount < 0.0) {
-                        shadowStrength =
-                            reflectedLight.indirectDiffuse.r *
-                            (1.0 + uShadowAmount);
-                    } else {
-                        shadowStrength =
-                            reflectedLight.indirectDiffuse.r +
-                            (1.0 - reflectedLight.indirectDiffuse.r) *
-                            uShadowAmount;
-                    }
-                    lightStrength =
-                        shadowStrength +
-                        lightStrength * (1.0 - shadowStrength);
-                }
-
-                diffuseColor.rgb = o_diffuseColor;
-                reflectedLight = o_reflectedLight;
-                roughnessFactor = o_roughnessFactor;
-                metalnessFactor = o_metalnessFactor;
-
-                diffuseColor.rgb = mix(
-                    texShadow.rgb,
-                    diffuseColor.rgb,
-                    lightStrength
-                );
-            #endif
-
-            ${diffuseColorManipulationEndFlag}
-
+            // Keep a single Three lighting accumulation for compatibility with
+            // extensions, but do not use its N.L-weighted diffuse as the final
+            // ReDriveToon colour.
             #include <lights_physical_fragment>
             `
         ).replace(
             '#include <opaque_fragment>',
             /*glsl*/ `
+            // JP 3.11 ReDriveToon forward pass:
+            //   halfLambert = N.L * 0.5 + 0.5
+            //   Control R shifts the local shadow ramp
+            //   ShadowOffset/Feather selects Base versus Shadow texture
+            // Missing self/depth/global shadow masks deliberately remain 1.0
+            // until their dedicated passes are ported.
+            vec3 rdToonMainLightDirection =
+                normalize(vec3(-0.32, 0.68, 0.66));
+            vec3 rdToonMainLightColor = vec3(0.0);
+            #if NUM_DIR_LIGHTS > 0
+                rdToonMainLightDirection =
+                    normalize(directionalLights[0].direction);
+                rdToonMainLightColor = directionalLights[0].color;
+            #endif
+
+            float rdToonHalfLambert = saturate(
+                dot(normal, rdToonMainLightDirection) * 0.5 + 0.5
+            );
+            float rdToonControl = saturate(
+                rdToonControlR + uRdShadowOffsetMapOffset
+            );
+            float rdToonRamp = saturate(
+                rdToonHalfLambert - (1.0 - rdToonControl)
+            );
+            float rdToonRampLow = saturate(
+                uRdShadowOffset - uRdShadowFeather * 0.5
+            );
+            float rdToonRampHigh = saturate(
+                uRdShadowOffset + uRdShadowFeather * 0.5
+            );
+            float rdToonBaseWeight = step(rdToonRampLow, rdToonRamp);
+            if (rdToonRampHigh > rdToonRampLow + 0.00001) {
+                rdToonBaseWeight = smoothstep(
+                    rdToonRampLow,
+                    rdToonRampHigh,
+                    rdToonRamp
+                );
+            }
+
+            vec3 rdToonBaseColor = diffuseColor.rgb;
+            diffuseColor.rgb = mix(
+                rdToonShadowColor * uGlobalCharacterShadowTint,
+                rdToonBaseColor,
+                rdToonBaseWeight
+            );
+
+            ${diffuseColorManipulationEndFlag}
+
+            // The official shader uses SH + main-light colour as a colour
+            // multiplier. N.L has already selected the toon texture and must not
+            // darken it a second time through MeshStandard's physical diffuse.
+            vec3 rdToonAmbientColor = vec3(0.0);
+            #if defined(RE_IndirectDiffuse)
+                rdToonAmbientColor = irradiance;
+            #endif
+            vec3 rdToonSceneLightColor = max(
+                clamp(
+                    rdToonAmbientColor + rdToonMainLightColor,
+                    vec3(0.0),
+                    vec3(1.0)
+                ),
+                vec3(0.1)
+            );
+            outgoingLight =
+                diffuseColor.rgb * rdToonSceneLightColor +
+                totalEmissiveRadiance;
+
             #ifdef HAS_CTRL
                 vec3 rdViewDirection = normalize(vViewPosition);
-                vec3 rdLightDirection = normalize(vec3(-0.32, 0.68, 0.66));
-                #if NUM_DIR_LIGHTS > 0
-                    rdLightDirection = normalize(directionalLights[0].direction);
-                #endif
+                vec3 rdLightDirection = rdToonMainLightDirection;
                 vec3 rdHalfDirection = normalize(rdViewDirection + rdLightDirection);
                 float rdNdotH = saturate(dot(normal, rdHalfDirection));
 
@@ -338,11 +369,16 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             `
         );
 
-        options.onBeforeCompile?.(shader);
+        options.onBeforeCompile?.call(this, shader);
         injectToonStylization(shader, uniforms);
+        setOfficialMaterialProfileUniforms(
+            shader,
+            runtimeUserData.officialMaterialProfile ??
+                options.materialProfiles?.[0],
+        )
 
-        userData.shader = shader;
-        userData.shaderUniforms = uniforms;
+        runtimeUserData.shader = shader;
+        runtimeUserData.shaderUniforms = uniforms;
     };
 
     return {

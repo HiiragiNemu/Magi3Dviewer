@@ -29,6 +29,14 @@ export class MagiaExedraScene3D {
 
     renderer: THREE.WebGLRenderer
     scene: THREE.Scene
+    /**
+     * Official background-only lights use Unity culling masks. Three.js light
+     * layers are camera-global, so the stage is rendered in a separate scene
+     * and composited before characters instead.
+     */
+    backgroundScene: THREE.Scene
+    backgroundSceneEnabled = false
+    backgroundAmbientLight: THREE.AmbientLight
     static defaultPixelRatio = 1
     private _pixelRatio = MagiaExedraScene3D.defaultPixelRatio
 
@@ -115,6 +123,12 @@ export class MagiaExedraScene3D {
         this.setColorFilter(MagiaExedraScene3D.colorFilter)
 
         this.scene = new THREE.Scene();
+        this.backgroundScene = new THREE.Scene();
+        this.backgroundAmbientLight = new THREE.AmbientLight(
+            MagiaExedraScene3D.ambientLightInitialColor,
+            MagiaExedraScene3D.ambientLightInitialIntensity,
+        )
+        this.backgroundScene.add(this.backgroundAmbientLight)
         // scene.background = new THREE.Color(0x333333);
 
         this.ambientLight = new THREE.AmbientLight(MagiaExedraScene3D.ambientLightInitialColor, MagiaExedraScene3D.ambientLightInitialIntensity);
@@ -181,6 +195,7 @@ export class MagiaExedraScene3D {
             this.transformControlsHelper.visible = this.characterSelectionVisible
 
             this.perfRender.start()
+            this.effects.syncBackgroundSceneState()
             if (this.shouldUseComposer) {
                 if (this.effects.taaRenderPass.enabled) {
                     if (this.taaCount < 1) {
@@ -195,7 +210,21 @@ export class MagiaExedraScene3D {
                 }
                 this.effects.composer.render();
             } else {
-                this.renderer.render(this.scene, this.camera);
+                if (this.backgroundSceneEnabled) {
+                    const autoClear = this.renderer.autoClear
+                    this.renderer.autoClear = true
+                    this.renderer.render(this.backgroundScene, this.camera)
+                    // Background geometry uses independent lighting but not a
+                    // shared depth hierarchy. Clear depth before drawing the
+                    // character scene so the stage cannot occlude its colour
+                    // pass while leaving only the outline visible.
+                    this.renderer.clearDepth()
+                    this.renderer.autoClear = false
+                    this.renderer.render(this.scene, this.camera)
+                    this.renderer.autoClear = autoClear
+                } else {
+                    this.renderer.render(this.scene, this.camera);
+                }
             }
             this.perfRender.stop()
         })

@@ -2,6 +2,13 @@ import * as THREE from 'three';
 import { MaterialUserData, ShaderUniformsController } from './userdata';
 
 export interface ToonStylizationOptions {
+    /** ReDriveVolume character globals. These remain active independently. */
+    characterTint: string;
+    characterShadowTint: string;
+    characterLightingOverrideColor: string;
+    characterLightingOverrideRatio: number;
+
+    /** Legacy Web approximation retained only as an explicit inspection tool. */
     officialLookEnabled: boolean;
     lightingInfluence: number;
     albedoLift: number;
@@ -37,6 +44,15 @@ export interface ToonStylizationOptions {
  * animation attributes, not to a permanently enabled global beauty filter.
  */
 export const toonStylizationOptions: ToonStylizationOptions = {
+    characterTint: '#ffffff',
+    characterShadowTint: '#ffffff',
+    characterLightingOverrideColor: '#ffffff',
+    characterLightingOverrideRatio: 0,
+
+    // Until the recovered GLES diffuse/SH path replaces Three.js PBR in full,
+    // preserve the authored colour/shadow textures as a safety baseline. Turning
+    // this off while also lowering ambient/fill lighting caused the near-black
+    // purple silhouette regression.
     officialLookEnabled: true,
     lightingInfluence: 0.24,
     albedoLift: 0.00,
@@ -100,6 +116,17 @@ export class ToonStylizationUniforms extends ShaderUniformsController {
     loadGlobalOptions() {
         const options = toonStylizationOptions;
 
+        this.setColor('uGlobalCharacterTint', options.characterTint);
+        this.setColor('uGlobalCharacterShadowTint', options.characterShadowTint);
+        this.setColor(
+            'uGlobalCharacterLightingOverrideColor',
+            options.characterLightingOverrideColor,
+        );
+        this.setValue(
+            'uGlobalCharacterLightingOverrideRatio',
+            options.characterLightingOverrideRatio,
+        );
+
         this.setValue('uOfficialLookEnabled', options.officialLookEnabled ? 1 : 0);
         this.setValue('uLightingInfluence', options.lightingInfluence);
         this.setValue('uAlbedoLift', options.albedoLift);
@@ -145,6 +172,11 @@ export function injectToonStylization(
     uniforms.loadGlobalOptions();
 
     shader.fragmentShader = /* glsl */ `
+        uniform vec3 uGlobalCharacterTint;
+        uniform vec3 uGlobalCharacterShadowTint;
+        uniform vec3 uGlobalCharacterLightingOverrideColor;
+        uniform float uGlobalCharacterLightingOverrideRatio;
+
         uniform float uOfficialLookEnabled;
         uniform float uLightingInfluence;
         uniform float uAlbedoLift;
@@ -266,6 +298,20 @@ export function injectToonStylization(
             max(rdToonOfficial, vec3(0.0)),
             saturate(uOfficialLookEnabled)
         );
+
+        // ReDriveToon applies the scene lighting override to the accumulated
+        // main-light + SH colour, then multiplies the material result. Three.js
+        // exposes the accumulated result here, so blend toward the same authored
+        // target while preserving its shadow/specular computation.
+        outgoingLight = mix(
+            outgoingLight,
+            diffuseColor.rgb * max(
+                uGlobalCharacterLightingOverrideColor,
+                vec3(0.1)
+            ),
+            saturate(uGlobalCharacterLightingOverrideRatio)
+        );
+        outgoingLight *= uGlobalCharacterTint;
 
         float rdToonNdotV = saturate(dot(normal, geometryViewDir));
         float rdToonEdge = 1.0 - rdToonNdotV;
