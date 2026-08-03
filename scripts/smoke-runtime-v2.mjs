@@ -90,7 +90,9 @@ if (!officialStageId) throw new Error('No official stage option was published')
 await page.select('#stage-selector', officialStageId)
 await page.waitForFunction(
   expected => {
-    const root = window.scene?.scene?.getObjectByName('Magius3DviewerStageRoot')
+    const viewer = window.scene
+    const root = viewer?.backgroundScene?.getObjectByName('Magius3DviewerStageRoot')
+      ?? viewer?.scene?.getObjectByName('Magius3DviewerStageRoot')
     const definition = root?.userData?.stageDefinition
     let meshes = 0
     root?.traverse(object => { if (object.isMesh) meshes += 1 })
@@ -110,7 +112,9 @@ await page.screenshot({ path: '/tmp/magius-smoke-official-stage.png', fullPage: 
 
 const stageResult = await page.evaluate(() => {
   const stageOptions = [...document.querySelectorAll('#stage-selector option')]
-  const root = window.scene.scene.getObjectByName('Magius3DviewerStageRoot')
+  const viewer = window.scene
+  const root = viewer.backgroundScene?.getObjectByName('Magius3DviewerStageRoot')
+    ?? viewer.scene?.getObjectByName('Magius3DviewerStageRoot')
   let meshes = 0
   let materials = 0
   let textures = 0
