@@ -139,6 +139,11 @@ async function measureAngelRing() {
     let minY = y1
     let maxY = y0
     const rows = new Map()
+    let sumX = 0
+    let sumY = 0
+    let sumXX = 0
+    let sumYY = 0
+    let sumXY = 0
 
     for (let y = y0; y < y1; y += 1) {
       for (let x = x0; x < x1; x += 1) {
@@ -157,6 +162,11 @@ async function measureAngelRing() {
           minY = Math.min(minY, y)
           maxY = Math.max(maxY, y)
           rows.set(y, (rows.get(y) ?? 0) + 1)
+          sumX += x
+          sumY += y
+          sumXX += x * x
+          sumYY += y * y
+          sumXY += x * y
         }
         if (signed >= 4) brightenedPixels += 1
       }
@@ -166,6 +176,26 @@ async function measureAngelRing() {
     const bboxHeight = changedPixels ? maxY - minY + 1 : 0
     const activeRows = [...rows.values()].filter(value => value >= 6).length
     const dominantRowWidth = rows.size ? Math.max(...rows.values()) : 0
+    const meanX = changedPixels ? sumX / changedPixels : 0
+    const meanY = changedPixels ? sumY / changedPixels : 0
+    const covarianceXX = changedPixels
+      ? sumXX / changedPixels - meanX * meanX
+      : 0
+    const covarianceYY = changedPixels
+      ? sumYY / changedPixels - meanY * meanY
+      : 0
+    const covarianceXY = changedPixels
+      ? sumXY / changedPixels - meanX * meanY
+      : 0
+    const principalAxisAngleDegrees = Math.abs(
+      0.5 * Math.atan2(
+        2 * covarianceXY,
+        covarianceXX - covarianceYY,
+      ) * 180 / Math.PI,
+    )
+    const xyCorrelation = covarianceXX > 0 && covarianceYY > 0
+      ? covarianceXY / Math.sqrt(covarianceXX * covarianceYY)
+      : 0
 
     return {
       shaderCount: shaders.length,
@@ -197,6 +227,9 @@ async function measureAngelRing() {
       bboxAspect: bboxWidth / Math.max(bboxHeight, 1),
       activeRows,
       dominantRowWidth,
+          principalAxisAngleDegrees,
+          xyCorrelation,
+          centroid: { x: meanX, y: meanY },
     }
   })
 }
@@ -226,6 +259,8 @@ function validateCharacter(label, result, failures) {
   if (front.brightenedPixels < 40) failures.push(`${label}: only ${front.brightenedPixels} brightened pixels`)
   if (front.maxDelta < 7) failures.push(`${label}: maximum delta ${front.maxDelta}`)
   if (front.bboxAspect < 1.6) failures.push(`${label}: highlight is not a horizontal strip; aspect ${front.bboxAspect.toFixed(3)}`)
+  if (front.principalAxisAngleDegrees > 16) failures.push(`${label}: highlight principal axis is tilted ${front.principalAxisAngleDegrees.toFixed(2)} degrees`)
+  if (Math.abs(front.xyCorrelation) > 0.38) failures.push(`${label}: highlight has excessive diagonal correlation ${front.xyCorrelation.toFixed(3)}`)
   if (front.activeRows > Math.max(90, front.bboxWidth * 0.65)) failures.push(`${label}: highlight is vertically scattered across ${front.activeRows} rows`)
   if (frontBackMeanRatio < 1.8) failures.push(`${label}: rear effect too strong; front/back ratio ${frontBackMeanRatio.toFixed(3)}`)
   if (back.brightenedPixels > front.brightenedPixels * 0.38 + 20) failures.push(`${label}: rear brightening ${back.brightenedPixels} versus front ${front.brightenedPixels}`)

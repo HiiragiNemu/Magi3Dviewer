@@ -82,4 +82,20 @@ assert.ok(ringShape(0.5).upper > 0);
 assert.ok(Math.abs(ringShape(1).lower) < 1e-7);
 assert.ok(Math.abs(ringShape(1).upper) < 1e-7);
 
+assert.match(
+    shaderSource,
+    /rdAngelProjectedUpLength\s*=\s*length\(rdAngelProjectedUp\)/,
+    'projected Head Up must be measured in two-dimensional screen space',
+);
+assert.match(
+    shaderSource,
+    /rdAngelProjectedUp\s*\/\s*rdAngelProjectedUpLength/,
+    'projected Head Up must be normalized before rotating AngelRing coordinates',
+);
+assert.match(
+    shaderSource,
+    /rdAngelProjectedRight\s*=\s*vec2\(/,
+    'AngelRing must derive an orthonormal projected right axis',
+);
+
 console.log('Official AngelRing projection invariants passed.');

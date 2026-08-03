@@ -449,17 +449,32 @@ export async function createHairMaterial(
                             ) /
                             (rdAngelRectHalf * 2.0) -
                             vec2(0.5);
+                        // A normalized 3D Head-Up vector does not imply a
+                        // normalized 2D screen axis. When the head pitches
+                        // towards the camera, FaceUp.xy becomes short; using it
+                        // directly scales and clips the projected map into a
+                        // diagonal stripe. Normalize the projected axis in the
+                        // same aspect-correct coordinate space as the ring box.
+                        vec2 rdAngelProjectedUp = rdAngelFaceUpVS.xy;
+                        float rdAngelProjectedUpLength =
+                            length(rdAngelProjectedUp);
+                        rdAngelProjectedUp =
+                            rdAngelProjectedUpLength > 0.00001
+                                ? rdAngelProjectedUp /
+                                    rdAngelProjectedUpLength
+                                : vec2(0.0, 1.0);
+                        vec2 rdAngelProjectedRight = vec2(
+                            rdAngelProjectedUp.y,
+                            -rdAngelProjectedUp.x
+                        );
                         vec2 rdAngelRotated = vec2(
                             dot(
                                 rdAngelRectCoordinate,
-                                vec2(
-                                    rdAngelFaceUpVS.y,
-                                    -rdAngelFaceUpVS.x
-                                )
+                                rdAngelProjectedRight
                             ),
                             dot(
                                 rdAngelRectCoordinate,
-                                rdAngelFaceUpVS.xy
+                                rdAngelProjectedUp
                             )
                         ) + vec2(0.5);
                         float rdAngelArch = sin(
