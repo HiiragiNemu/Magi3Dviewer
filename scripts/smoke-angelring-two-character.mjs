@@ -70,41 +70,36 @@ async function selectCharacter(selectorValue, expectedResourceId) {
     { timeout: 180_000 },
     expectedResourceId,
   )
+  await page.waitForFunction(
+    () => {
+      const character = window.scene?.characterSelected?.character
+      return character?.userData?.meshes
+        ?.filter(mesh => mesh.name.toLowerCase().includes('hair'))
+        .some(mesh => (Array.isArray(mesh.material) ? mesh.material : [mesh.material])
+          .some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled)))
+    },
+    { timeout: 180_000 },
+  )
   await new Promise(resolve => setTimeout(resolve, 2_000))
 }
 
-async function countAngelRingShaders() {
-  return page.evaluate(() => {
-    const character = window.scene?.characterSelected?.character
-    if (!character) return 0
-    return (character.userData.meshes ?? [])
-      .filter(mesh => mesh.name.toLowerCase().includes('hair'))
-      .flatMap(mesh => Array.isArray(mesh.material) ? mesh.material : [mesh.material])
-      .filter(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled))
-      .length
-  })
-}
-
-async function measureMadokaRing() {
+async function measureAngelRing() {
   return page.evaluate(async () => {
-    const waitFrames = count => new Promise(resolve => {
-      let remaining = count
-      const next = () => {
-        remaining -= 1
-        if (remaining <= 0) resolve()
-        else requestAnimationFrame(next)
-      }
-      requestAnimationFrame(next)
-    })
+    const waitForRender = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds))
     const canvas = document.querySelector('#viewer canvas')
     const gl = canvas?.getContext('webgl2') || canvas?.getContext('webgl')
     if (!gl) throw new Error('WebGL unavailable')
+
     const character = window.scene.characterSelected.character
-    const shaders = character.userData.meshes
+    const hairMeshes = character.userData.meshes
       .filter(mesh => mesh.name.toLowerCase().includes('hair'))
+    const shaders = hairMeshes
       .flatMap(mesh => Array.isArray(mesh.material) ? mesh.material : [mesh.material])
       .map(material => material?.userData?.shader)
       .filter(shader => shader?.uniforms?.uAngelRingEnabled)
+    const activeProfiles = hairMeshes
+      .flatMap(mesh => mesh.userData?.officialMaterialProfiles ?? [])
+      .filter(profile => profile?.angelRing?.enabled && profile?.angelRing?.map !== 'none')
 
     const sample = () => {
       gl.finish()
@@ -112,15 +107,15 @@ async function measureMadokaRing() {
       const height = gl.drawingBufferHeight
       const pixels = new Uint8Array(width * height * 4)
       gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
-      return { width, height, pixels: Array.from(pixels) }
+      return { width, height, pixels }
     }
 
     const original = shaders.map(shader => Number(shader.uniforms.uAngelRingEnabled.value))
     shaders.forEach(shader => { shader.uniforms.uAngelRingEnabled.value = 0 })
-    await waitFrames(4)
+    await waitForRender(1_200)
     const off = sample()
     shaders.forEach((shader, index) => { shader.uniforms.uAngelRingEnabled.value = original[index] })
-    await waitFrames(4)
+    await waitForRender(1_200)
     const on = sample()
 
     const x0 = Math.floor(on.width * 0.24)
@@ -166,7 +161,16 @@ async function measureMadokaRing() {
 
     return {
       shaderCount: shaders.length,
+      activeMaterialProfileCount: activeProfiles.length,
+      activeMaterialProfiles: activeProfiles.map(profile => ({
+        name: profile.name,
+        map: profile.angelRing.map,
+        uvMode: profile.angelRing.uvMode,
+      })),
       uniforms: shaders.map(shader => ({
+        globalEnabled: Number(shader.uniforms.uAngelRingEnabled?.value ?? 0),
+        materialEnabled: Number(shader.uniforms.uAngelRingMaterialEnabled?.value ?? 0),
+        mapKind: Number(shader.uniforms.uAngelRingMapKind?.value ?? 0),
         useHeadPlane: Number(shader.uniforms.uAngelRingUseHeadPlane?.value ?? 0),
         position: shader.uniforms.uAngelRingPlanePosition?.value?.toArray?.() ?? null,
         forward: shader.uniforms.uAngelRingFaceForward?.value?.toArray?.() ?? null,
@@ -189,55 +193,48 @@ async function measureMadokaRing() {
   })
 }
 
-await selectCharacter('100107', 100107)
-await page.waitForFunction(
-  () => {
-    const character = window.scene?.characterSelected?.character
-    return character?.userData?.meshes
-      ?.filter(mesh => mesh.name.toLowerCase().includes('hair'))
-      .some(mesh => (Array.isArray(mesh.material) ? mesh.material : [mesh.material])
-        .some(material => Boolean(material?.userData?.shader?.uniforms?.uAngelRingEnabled)))
-  },
-  { timeout: 180_000 },
-)
-await setView(false)
-const madokaFront = await measureMadokaRing()
-await page.screenshot({ path: '/tmp/magius-angelring-madoka-front.png', fullPage: true })
-await setView(true)
-const madokaBack = await measureMadokaRing()
-await page.screenshot({ path: '/tmp/magius-angelring-madoka-back.png', fullPage: true })
+async function inspectCharacter(selectorValue, resourceId, slug) {
+  await selectCharacter(selectorValue, resourceId)
+  await setView(false)
+  const front = await measureAngelRing()
+  await page.screenshot({ path: `/tmp/magius-angelring-${slug}-front.png`, fullPage: true })
+  await setView(true)
+  const back = await measureAngelRing()
+  await page.screenshot({ path: `/tmp/magius-angelring-${slug}-back.png`, fullPage: true })
+  return {
+    resourceId,
+    front,
+    back,
+    frontBackMeanRatio: front.meanAbsoluteDelta / Math.max(back.meanAbsoluteDelta, 0.0001),
+  }
+}
 
-await selectCharacter('110701', 110701)
-const ashleyShaderCount = await countAngelRingShaders()
-await page.screenshot({ path: '/tmp/magius-angelring-ashley-disabled.png', fullPage: true })
+function validateCharacter(label, result, failures) {
+  const { front, back, frontBackMeanRatio } = result
+  if (front.shaderCount <= 0) failures.push(`${label}: no AngelRing shader`)
+  if (front.activeMaterialProfileCount <= 0) failures.push(`${label}: no official AngelRing material profile`)
+  if (!front.uniforms.every(item => item.useHeadPlane >= 0.5)) failures.push(`${label}: no official Head reference`)
+  if (front.changedPixels < 70) failures.push(`${label}: only ${front.changedPixels} changed pixels`)
+  if (front.brightenedPixels < 40) failures.push(`${label}: only ${front.brightenedPixels} brightened pixels`)
+  if (front.maxDelta < 7) failures.push(`${label}: maximum delta ${front.maxDelta}`)
+  if (front.bboxAspect < 1.6) failures.push(`${label}: highlight is not a horizontal strip; aspect ${front.bboxAspect.toFixed(3)}`)
+  if (front.activeRows > Math.max(90, front.bboxWidth * 0.65)) failures.push(`${label}: highlight is vertically scattered across ${front.activeRows} rows`)
+  if (frontBackMeanRatio < 1.8) failures.push(`${label}: rear effect too strong; front/back ratio ${frontBackMeanRatio.toFixed(3)}`)
+  if (back.brightenedPixels > front.brightenedPixels * 0.38 + 20) failures.push(`${label}: rear brightening ${back.brightenedPixels} versus front ${front.brightenedPixels}`)
+}
 
-const frontBackMeanRatio = madokaFront.meanAbsoluteDelta / Math.max(madokaBack.meanAbsoluteDelta, 0.0001)
+const madoka = await inspectCharacter('100107', 100107, 'madoka')
+const ashley = await inspectCharacter('110701', 110701, 'ashley')
+
 const failures = []
-if (madokaFront.shaderCount <= 0) failures.push('madoka: no AngelRing shader')
-if (!madokaFront.uniforms.every(item => item.useHeadPlane >= 0.5)) failures.push('madoka: no official Head reference')
-if (madokaFront.changedPixels < 70) failures.push(`madoka: only ${madokaFront.changedPixels} changed pixels`)
-if (madokaFront.brightenedPixels < 40) failures.push(`madoka: only ${madokaFront.brightenedPixels} brightened pixels`)
-if (madokaFront.maxDelta < 7) failures.push(`madoka: maximum delta ${madokaFront.maxDelta}`)
-if (madokaFront.bboxAspect < 1.6) failures.push(`madoka: highlight is not a horizontal strip; aspect ${madokaFront.bboxAspect.toFixed(3)}`)
-if (madokaFront.activeRows > Math.max(90, madokaFront.bboxWidth * 0.65)) failures.push(`madoka: highlight is vertically scattered across ${madokaFront.activeRows} rows`)
-if (frontBackMeanRatio < 1.8) failures.push(`madoka: rear effect too strong; front/back ratio ${frontBackMeanRatio.toFixed(3)}`)
-if (madokaBack.brightenedPixels > madokaFront.brightenedPixels * 0.38 + 20) failures.push(`madoka: rear brightening ${madokaBack.brightenedPixels} versus front ${madokaFront.brightenedPixels}`)
-if (ashleyShaderCount !== 0) failures.push(`ashley: unsupported global AngelRing shader count ${ashleyShaderCount}`)
+validateCharacter('madoka', madoka, failures)
+validateCharacter('ashley', ashley, failures)
 if (pageErrors.length) failures.push(`page errors: ${pageErrors.join(' | ')}`)
 if (shaderErrors.length) failures.push(`shader errors: ${shaderErrors.join(' | ')}`)
 
 const report = {
-  madoka: {
-    resourceId: 100107,
-    front: madokaFront,
-    back: madokaBack,
-    frontBackMeanRatio,
-  },
-  ashley: {
-    resourceId: 110701,
-    expectedAngelRing: false,
-    shaderCount: ashleyShaderCount,
-  },
+  madoka,
+  ashley,
   pageErrors,
   shaderErrors,
   failures,
