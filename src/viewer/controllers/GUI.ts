@@ -6,6 +6,7 @@ import type { SceneComposerAntiAliasing } from 'magia-exedra-character-three/sce
 import { presetExport, presetImport } from './presets';
 import { themeDarkBgColor } from './theme';
 import { CharacterMeshController } from 'magia-exedra-character-three/character';
+import { translateUiText } from '../localization/zhCN';
 
 export const threeGuiContainer = document.getElementById('three-gui')!
 
@@ -47,7 +48,7 @@ export const guiOptions = {
             if (!guiExport) return
             const el = guiExport.domElement.getElementsByClassName('name')[0]
             const oldText = el.textContent
-            el.textContent = '已复制到剪贴板！'
+            el.textContent = translateUiText('Copied to clipboard!')
             guiExport.disable()
             setTimeout(() => {
                 el.textContent = oldText
@@ -75,10 +76,8 @@ setTimeout(() => {
     gui.add(guiOptions, 'Reset').name('Reset everything')
 }, 0);
 
-
 export function isGuiClosed(gui: GUI) {
     return gui.domElement.classList.contains('closed')
 }
-
 
 Object.assign(window, { gui, guiOptions })
