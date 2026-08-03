@@ -1,17 +1,18 @@
 name: Trigger guarded Magius3Dviewer repair
 
 on:
-  issues:
+  pull_request:
     types: [opened]
+    branches: ['main']
 
 permissions:
   actions: write
   contents: read
-  issues: read
+  pull-requests: read
 
 jobs:
   dispatch:
-    if: github.event.issue.title == '[automation] Repair Magius3Dviewer portrait release'
+    if: github.event.pull_request.title == '[automation] Repair Magius3Dviewer portrait release'
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch the one-time repair workflow
