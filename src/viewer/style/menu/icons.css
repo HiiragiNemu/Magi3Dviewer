@@ -24,6 +24,25 @@
     filter: invert(1);
 }
 
+#language-toggle {
+    width: 48px;
+    height: 48px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 48px;
+    text-align: center;
+}
+
+.theme-light #language-toggle {
+    color: #111;
+}
+
+#language-toggle:hover {
+    opacity: 0.7;
+}
+
 .theme-light #menu-icons>*>img,
 .theme-light #menu-icons>*>button>img {
     filter: initial;
