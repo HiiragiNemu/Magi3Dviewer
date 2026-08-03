@@ -37,7 +37,7 @@ const characterGlobalFolder = gui.addFolder('Characters (Global)').close()
 characterGlobalFolder.add(guiOptions, 'OutlineVisible').onChange(() => updateCharacterOutline('OutlineVisible', guiOptions))
 characterGlobalFolder.add(guiOptions, 'OutlineThickness', 0, 0.01).onChange(() => updateCharacterOutline('OutlineThickness', guiOptions))
 characterGlobalFolder.addColor(guiOptions, 'OutlineColor').onChange(() => updateCharacterOutline('OutlineColor', guiOptions))
-characterGlobalFolder.add(guiOptions, 'OutlineAlwaysVisible').onChange(() => updateCharacterOutline('OutlineAlwaysVisible', guiOptions)).domElement.title = '即使网格部件被隐藏也显示其描边'
+characterGlobalFolder.add(guiOptions, 'OutlineAlwaysVisible').onChange(() => updateCharacterOutline('OutlineAlwaysVisible', guiOptions)).domElement.title = 'Show outline even when mesh is hidden'
 
 const characterArrangementActions = {
     ArrangeLine: () => arrangeCharacters('line'),
