@@ -5,6 +5,7 @@ import type { Vector3Like } from "three"
 import { deselectCharacter, displayProgress, hideAllDemoItems } from "../"
 import type MagiaExedraCharacter3D from "magia-exedra-character-three/character"
 import type { StagePreset } from "../stages"
+import { translateUiText } from "../localization/zhCN"
 
 const dialogContainer = document.getElementById('preset-dialog-container') as HTMLDivElement
 const dialogOverlay = document.getElementById('preset-dialog-overlay') as HTMLDivElement
@@ -72,7 +73,7 @@ export async function presetExport(): Promise<boolean> {
         await navigator.clipboard.writeText(presetUrl);
         return true
     } catch (e) {
-        await showDialog('请复制以下预设链接：', presetUrl)
+        await showDialog(translateUiText('Please copy the preset link below:'), presetUrl)
         return false
     }
 }
@@ -84,7 +85,7 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
     if (!presetUrl) {
         try {
             if (hasPendingClipboardPermissionApproval) {
-                throw new Error('正在等待剪贴板读取权限，请稍候')
+                throw new Error(translateUiText('Waiting for clipboard read permission; try again shortly'))
             }
             hasPendingClipboardPermissionApproval = true
             let clipboardUrl
@@ -96,7 +97,7 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
             preset = parsePresetUrl(clipboardUrl)
         } catch (e) {
             console.log('Auto parse clipboard failed, asking user input')
-            presetUrl = await showDialog('请输入预设链接：')
+            presetUrl = await showDialog(translateUiText('Enter preset link:'))
         }
     }
 
@@ -112,7 +113,7 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
 
     const total = preset.characters.length
     if (ask) {
-        if (!window.confirm(`是否导入包含 ${total} 个角色的预设？`)) return
+        if (!window.confirm(translateUiText(`Import preset with ${total} characters?`))) return
     }
 
     hideAllDemoItems()
@@ -208,7 +209,7 @@ export function parsePresetUrl(presetUrl: string): ViewerPreset {
 
     const presetJson = decompressFromEncodedURIComponent(presetQueryParam)
     const preset: ViewerPreset | null | undefined = JSON.parse(presetJson)
-    if (!preset) throw new Error('预设内容无效')
+    if (!preset) throw new Error(translateUiText('Invalid preset content'))
     return preset
 }
 
