@@ -1,5 +1,5 @@
 name: Deploy Magius3Dviewer
-run-name: Validate all-character animation, Shader and stage runtime
+run-name: Validate dependencies, all-character animation, Shader and stage runtime
 
 on:
   push:
@@ -45,8 +45,8 @@ jobs:
             const sha = process.env.SOURCE_SHA || context.sha;
             const checks = [
               ['Magius3Dviewer all-character animation audit', 'Animation audit is running'],
-              ['Magius3Dviewer production build', 'Release tests and production build are running'],
-              ['Magius3Dviewer WebGL smoke test', 'Browser rendering checks are waiting'],
+              ['Magius3Dviewer production build', 'Dependency audit, release tests and production build are running'],
+              ['Magius3Dviewer WebGL smoke test', 'Landscape and portrait browser rendering checks are waiting'],
               ['Magius3Dviewer GitHub Pages deployment', 'Pages deployment is waiting'],
             ];
             for (const [contextName, description] of checks) {
@@ -89,12 +89,32 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Require a clean npm dependency audit
+        id: dependency_audit
+        shell: bash
+        run: |
+          set -o pipefail
+          npm audit --audit-level=low 2>&1 | tee /tmp/magius-npm-audit.log
+
+      - name: Upload npm audit evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: magius-npm-audit
+          path: /tmp/magius-npm-audit.log
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Build Magius3Dviewer
         id: build
         shell: bash
         run: |
           set -o pipefail
           npm run build 2>&1 | tee /tmp/magius-build.log
+          if grep -q 'Some chunks are larger than' /tmp/magius-build.log; then
+            echo 'Vite still reports an oversized JavaScript chunk.' >&2
+            exit 1
+          fi
 
       - name: Upload build diagnostic
         if: ${{ always() }}
@@ -106,11 +126,11 @@ jobs:
           retention-days: 3
 
       - name: Install browser smoke-test driver
-        if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' }}
+        if: ${{ steps.animation_audit.outcome == 'success' && steps.dependency_audit.outcome == 'success' && steps.build.outcome == 'success' }}
         run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
 
-      - name: Run animation, Shader, stage and two-character AngelRing tests
-        if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' }}
+      - name: Run animation, Shader, stage and AngelRing tests
+        if: ${{ steps.animation_audit.outcome == 'success' && steps.dependency_audit.outcome == 'success' && steps.build.outcome == 'success' }}
         id: smoke
         shell: bash
         run: |
@@ -121,6 +141,10 @@ jobs:
           sleep 4
           node scripts/smoke-runtime-v2.mjs
           node scripts/smoke-angelring-two-character.mjs
+          MAGIUS_VIEWPORT_WIDTH=698 \
+          MAGIUS_VIEWPORT_HEIGHT=1536 \
+          MAGIUS_ARTIFACT_SUFFIX=portrait \
+            node scripts/smoke-angelring-two-character.mjs
 
       - name: Upload WebGL smoke evidence
         if: ${{ always() && steps.smoke.outcome != 'skipped' }}
@@ -137,22 +161,27 @@ jobs:
             /tmp/magius-angelring-ashley-front.png
             /tmp/magius-angelring-ashley-back.png
             /tmp/magius-angelring-two-character.json
+            /tmp/magius-angelring-madoka-front-portrait.png
+            /tmp/magius-angelring-madoka-back-portrait.png
+            /tmp/magius-angelring-ashley-front-portrait.png
+            /tmp/magius-angelring-ashley-back-portrait.png
+            /tmp/magius-angelring-two-character-portrait.json
             /tmp/magius-preview.log
           if-no-files-found: warn
           retention-days: 3
 
       - name: Setup Pages
-        if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
+        if: ${{ steps.animation_audit.outcome == 'success' && steps.dependency_audit.outcome == 'success' && steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
         uses: actions/configure-pages@v5
 
       - name: Upload production artifact
-        if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
+        if: ${{ steps.animation_audit.outcome == 'success' && steps.dependency_audit.outcome == 'success' && steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
 
       - name: Deploy Magius3Dviewer
-        if: ${{ steps.animation_audit.outcome == 'success' && steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
+        if: ${{ steps.animation_audit.outcome == 'success' && steps.dependency_audit.outcome == 'success' && steps.build.outcome == 'success' && steps.smoke.outcome == 'success' }}
         id: deployment
         uses: actions/deploy-pages@v4
 
@@ -162,6 +191,7 @@ jobs:
         env:
           SOURCE_SHA: ${{ steps.revision.outputs.sha }}
           ANIMATION: ${{ steps.animation_audit.outcome }}
+          AUDIT: ${{ steps.dependency_audit.outcome }}
           BUILD: ${{ steps.build.outcome }}
           SMOKE: ${{ steps.smoke.outcome }}
           DEPLOY: ${{ steps.deployment.outcome }}
@@ -169,10 +199,13 @@ jobs:
           script: |
             const target_url = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const sha = process.env.SOURCE_SHA || context.sha;
+            const productionOutcome = process.env.AUDIT === 'success' && process.env.BUILD === 'success'
+              ? 'success'
+              : 'failure';
             const checks = [
               ['Magius3Dviewer all-character animation audit', process.env.ANIMATION, 'All FBX animation families parsed and generic binding correction verified'],
-              ['Magius3Dviewer production build', process.env.BUILD, 'Release tests and production TypeScript/Vite build completed'],
-              ['Magius3Dviewer WebGL smoke test', process.env.SMOKE, 'Madoka/Ashley frontal AngelRing and rear suppression rendered in Chromium'],
+              ['Magius3Dviewer production build', productionOutcome, 'Zero npm audit findings; release tests and chunked production build completed'],
+              ['Magius3Dviewer WebGL smoke test', process.env.SMOKE, 'Madoka/Ashley AngelRing rendered correctly in landscape and phone portrait viewports'],
               ['Magius3Dviewer GitHub Pages deployment', process.env.DEPLOY, 'Magius3Dviewer deployed'],
             ];
             for (const [contextName, outcome, successText] of checks) {
