@@ -1,0 +1,23 @@
+name: Trigger guarded Magius3Dviewer repair
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  actions: write
+  contents: read
+  issues: read
+
+jobs:
+  dispatch:
+    if: github.event.issue.title == '[automation] Repair Magius3Dviewer portrait release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch the one-time repair workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run repair-magius-release.yml \
+            --repo "${{ github.repository }}" \
+            --ref main
