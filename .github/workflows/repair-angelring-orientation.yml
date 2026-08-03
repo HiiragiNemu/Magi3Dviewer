@@ -1,11 +1,9 @@
 name: Repair AngelRing projected orientation
 
-# Existing-workflow push trigger: 2026-08-04
 on:
-  push:
-    branches: ['main']
-    paths:
-      - '.github/workflows/repair-angelring-orientation.yml'
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: write
@@ -16,6 +14,7 @@ concurrency:
 
 jobs:
   repair:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.title == '[internal] Repair AngelRing orientation'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout release source branch
