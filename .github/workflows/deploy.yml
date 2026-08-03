@@ -35,6 +35,32 @@ jobs:
         id: revision
         run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
+      - name: Publish pending source statuses
+        uses: actions/github-script@v7
+        env:
+          SOURCE_SHA: ${{ steps.revision.outputs.sha }}
+        with:
+          script: |
+            const target_url = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const sha = process.env.SOURCE_SHA || context.sha;
+            const checks = [
+              ['Magius3Dviewer all-character animation audit', 'Animation audit is running'],
+              ['Magius3Dviewer production build', 'Release tests and production build are running'],
+              ['Magius3Dviewer WebGL smoke test', 'Browser rendering checks are waiting'],
+              ['Magius3Dviewer GitHub Pages deployment', 'Pages deployment is waiting'],
+            ];
+            for (const [contextName, description] of checks) {
+              await github.rest.repos.createCommitStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                sha,
+                state: 'pending',
+                context: contextName,
+                description,
+                target_url,
+              });
+            }
+
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
@@ -145,7 +171,7 @@ jobs:
             const sha = process.env.SOURCE_SHA || context.sha;
             const checks = [
               ['Magius3Dviewer all-character animation audit', process.env.ANIMATION, 'All FBX animation families parsed and generic binding correction verified'],
-              ['Magius3Dviewer production build', process.env.BUILD, 'Production TypeScript/Vite build completed'],
+              ['Magius3Dviewer production build', process.env.BUILD, 'Release tests and production TypeScript/Vite build completed'],
               ['Magius3Dviewer WebGL smoke test', process.env.SMOKE, 'Madoka/Ashley frontal AngelRing and rear suppression rendered in Chromium'],
               ['Magius3Dviewer GitHub Pages deployment', process.env.DEPLOY, 'Magius3Dviewer deployed'],
             ];
