@@ -10,15 +10,15 @@ miscFolder.add(guiOptions, 'Axes').onChange(value => scene.axesHelper.visible = 
 miscFolder.add(guiOptions, 'PixelRatio', 0.2, 2, 0.1).onChange(value => scene.pixelRatio = value)
 
 miscFolder.add(guiOptions, 'UseEffectComposer', ['Auto', 'Always', 'Never']).onChange(value => { scene.composerEnabled = value; updateAntiAliasingGUI() }).domElement.title =
-    `自动：仅在绘制选择描边等必要情况使用后期合成器。
-始终：始终通过后期合成器渲染，并停用直接渲染。
-从不：停用后期合成器并始终直接渲染（这会导致选择描边不可见）。
+    `Auto: Use effect composer only when needed to render selection outlines.
+Always: Always use effect composer for rendering, disable direct rendering.
+Never: Disable effect composer, always use direct rendering (This will cause selection outlines not visible).
 
-强制启用后期合成器并使用高等级抗锯齿可改善画质，但会降低性能。`;
+Force enabling the effect composer with high levels of antialiasing can produce greater image quality, at the cost of degraded performance.`;
 
 const guiAntiAliasing = miscFolder.add(guiOptions, 'AntiAliasing', ['None', 'MSAA', 'TAA', 'SSAA', 'SMAA', 'FXAA']).name('AntiAliasing(Composer)').onChange(updateAntiAliasing)
-guiAntiAliasing.domElement.title = `后期合成器使用的抗锯齿方式。
-此选项不影响始终采用默认 MSAA 的直接渲染。`;
+guiAntiAliasing.domElement.title = `Anti-aliasing method used for the effect composer.
+This option does not affect direct rendering that always uses default MSAA.`;
 
 const guiAntiAliasingLevel = createSquareExponentController(miscFolder, guiOptions, 'AntiAliasingLevel', 1, 8).onChange(updateAntiAliasing).hide()
 
