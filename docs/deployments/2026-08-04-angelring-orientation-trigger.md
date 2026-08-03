@@ -10,3 +10,5 @@ The protected deployment must pass:
 - desktop WebGL runtime tests;
 - 698 x 1536 portrait WebGL AngelRing tests, including principal-axis angle and diagonal-correlation limits;
 - GitHub Pages publication.
+
+This second direct-main trigger runs after the release-branch repository-dispatch request has completed, preventing the Pages concurrency group from cancelling one validation run in favor of another.
