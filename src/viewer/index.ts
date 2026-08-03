@@ -20,6 +20,10 @@ const animationSlider = document.getElementById('animation-slider') as HTMLInput
 const fullscreenBtn = document.getElementById('fullscreen-btn') as HTMLButtonElement
 
 const loadProgressEl = document.getElementById('load-progress')!
+let lastProgressText = ''
+document.addEventListener('magius:localechange', () => {
+    if (lastProgressText) loadProgressEl.textContent = translateUiText(lastProgressText)
+})
 
 const perfStatJsContainer = document.getElementById('perf-stat-js') as HTMLDivElement
 
@@ -80,7 +84,7 @@ export function setupViewer() {
 }
 
 function setupCharacterAddSelector() {
-    initSelector(characterAddSelector, { '< 请选择要添加的角色 >': '', ...characterSelectDict });
+    initSelector(characterAddSelector, { '< Select a character to add >': '', ...characterSelectDict });
     characterAddSelector.value = ''
 
     characterAddSelector.addEventListener('focus', () => {
@@ -192,10 +196,8 @@ async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneC
             loadProgressCallback: displayProgress,
             loadFinishCallback: () => {
                 if (loadedSceneCharacter?.character) {
-                    // character outlines are added after texture load. apply global character outlines
                     updateCharacterOutline(loadedSceneCharacter.character, guiOptions)
-                    // mesh visibility may change after textures loaded. update it.
-                    if (scene.characterSelected == loadedSceneCharacter) { // the user may select another chatacter when textures are loading
+                    if (scene.characterSelected == loadedSceneCharacter) {
                         updateCharacterController(loadedSceneCharacter.character)
                     }
                 }
@@ -235,7 +237,7 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
         character.animations.reduce((obj, name) => {
             obj[name] = name
             return obj
-        }, { '<无动作>': '' } as Record<string, string>),
+        }, { '<No animation>': '' } as Record<string, string>),
         value => {
             if (value) {
                 character.animation.play(value, true)
@@ -280,6 +282,7 @@ function calculateNewCharacterPosition(newCharacter: SceneCharacter): THREE.Vect
 }
 
 export function displayProgress(text: string) {
+    lastProgressText = text
     if (text) {
         loadProgressEl.style.removeProperty('display')
         loadProgressEl.textContent = translateUiText(text)
