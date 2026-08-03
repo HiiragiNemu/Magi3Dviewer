@@ -15,9 +15,11 @@ permissions:
   statuses: write
   issues: write
 
+# Multiple sources may legitimately request the same release validation. Queue
+# them instead of cancelling a long-running all-character/WebGL gate midway.
 concurrency:
   group: magius3dviewer-pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
