@@ -2,7 +2,7 @@ name: Trigger guarded Magius3Dviewer repair
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
     branches: ['main']
 
 permissions:
@@ -11,14 +11,26 @@ permissions:
   pull-requests: read
 
 jobs:
-  dispatch:
+  guarded-repair-control:
     if: github.event.pull_request.title == '[automation] Repair Magius3Dviewer portrait release'
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch the one-time repair workflow
+        if: github.event.action == 'opened'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh workflow run repair-magius-release.yml \
             --repo "${{ github.repository }}" \
             --ref main
+
+      - name: Report latest repair workflow runs
+        if: github.event.action == 'synchronize'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run list \
+            --repo "${{ github.repository }}" \
+            --workflow repair-magius-release.yml \
+            --limit 5 \
+            --json databaseId,status,conclusion,headSha,createdAt,url,name
