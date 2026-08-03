@@ -59,6 +59,7 @@ export const zhCnUiText: Readonly<Record<string, string>> = {
     'Enter preset link:': '请输入预设链接：',
     'Invalid preset content': '预设内容无效',
     'Photo capture failed': '拍照失败',
+    'Show outline even when mesh is hidden': '即使网格部件被隐藏也显示其描边',
     'Show outline even when mesh parts are hidden': '即使网格部件被隐藏也显示其描边',
     'Copied to clipboard!': '已复制到剪贴板！',
 
@@ -200,8 +201,8 @@ const uiTextPatterns: ReadonlyArray<readonly [RegExp, string]> = [
     [/^Loading textures\.\.\.$/, '正在加载贴图……'],
     [/^Loading (\d+) \/ (\d+) models\.\.\.$/, '正在加载模型：$1 / $2……'],
     [/^Import preset with (\d+) characters\?$/, '是否导入包含 $1 个角色的预设？'],
-    [/^Auto: use the effect composer only when required[\s\S]*$/, '自动：仅在绘制选择描边等必要情况使用后期合成器。\n始终：始终通过后期合成器渲染，并停用直接渲染。\n从不：停用后期合成器并始终直接渲染（这会导致选择描边不可见）。\n\n强制启用后期合成器并使用高等级抗锯齿可改善画质，但会降低性能。'],
-    [/^Anti-aliasing method used by the effect composer[\s\S]*$/, '后期合成器使用的抗锯齿方式。\n此选项不影响始终采用默认 MSAA 的直接渲染。'],
+    [/^Auto: Use effect composer only when needed[\s\S]*$/, '自动：仅在绘制选择描边等必要情况使用后期合成器。\n始终：始终通过后期合成器渲染，并停用直接渲染。\n从不：停用后期合成器并始终直接渲染（这会导致选择描边不可见）。\n\n强制启用后期合成器并使用高等级抗锯齿可改善画质，但会降低性能。'],
+    [/^Anti-aliasing method used for the effect composer[\s\S]*$/, '后期合成器使用的抗锯齿方式。\n此选项不影响始终采用默认 MSAA 的直接渲染。'],
 ]
 
 let currentLocale: UiLocale = detectInitialLocale()
@@ -307,9 +308,10 @@ function translateTextNode(node: Text) {
 
     const start = canonical.indexOf(trimmed)
     const translated = translateUiText(trimmed)
-    node.nodeValue = canonical.slice(0, start)
+    const nextValue = canonical.slice(0, start)
         + translated
         + canonical.slice(start + trimmed.length)
+    if (node.nodeValue !== nextValue) node.nodeValue = nextValue
 }
 
 function translateElementAttributes(element: Element) {
@@ -327,7 +329,10 @@ function translateElementAttributes(element: Element) {
             originals.set(attribute, element.getAttribute(attribute) ?? '')
         }
         const canonical = originals.get(attribute) ?? ''
-        element.setAttribute(attribute, translateUiText(canonical))
+        const translated = translateUiText(canonical)
+        if (element.getAttribute(attribute) !== translated) {
+            element.setAttribute(attribute, translated)
+        }
     }
 }
 
