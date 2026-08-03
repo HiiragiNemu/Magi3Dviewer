@@ -1,0 +1,204 @@
+name: Repair AngelRing projected orientation
+
+on:
+  push:
+    branches: ['main']
+    paths:
+      - '.github/workflows/repair-angelring-orientation.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-angelring-orientation
+  cancel-in-progress: true
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout release source branch
+        uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Normalize projected Head axis and strengthen visual gate
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          hair_path = Path('magia-exedra-character-three/shaders/hair.ts')
+          hair = hair_path.read_text(encoding='utf-8')
+          old = '''                        vec2 rdAngelRotated = vec2(
+                            dot(
+                                rdAngelRectCoordinate,
+                                vec2(
+                                    rdAngelFaceUpVS.y,
+                                    -rdAngelFaceUpVS.x
+                                )
+                            ),
+                            dot(
+                                rdAngelRectCoordinate,
+                                rdAngelFaceUpVS.xy
+                            )
+                        ) + vec2(0.5);'''
+          new = '''                        // A normalized 3D Head-Up vector does not imply a
+                        // normalized 2D screen axis. When the head pitches
+                        // towards the camera, FaceUp.xy becomes short; using it
+                        // directly scales and clips the projected map into a
+                        // diagonal stripe. Normalize the projected axis in the
+                        // same aspect-correct coordinate space as the ring box.
+                        vec2 rdAngelProjectedUp = rdAngelFaceUpVS.xy;
+                        float rdAngelProjectedUpLength =
+                            length(rdAngelProjectedUp);
+                        rdAngelProjectedUp =
+                            rdAngelProjectedUpLength > 0.00001
+                                ? rdAngelProjectedUp /
+                                    rdAngelProjectedUpLength
+                                : vec2(0.0, 1.0);
+                        vec2 rdAngelProjectedRight = vec2(
+                            rdAngelProjectedUp.y,
+                            -rdAngelProjectedUp.x
+                        );
+                        vec2 rdAngelRotated = vec2(
+                            dot(
+                                rdAngelRectCoordinate,
+                                rdAngelProjectedRight
+                            ),
+                            dot(
+                                rdAngelRectCoordinate,
+                                rdAngelProjectedUp
+                            )
+                        ) + vec2(0.5);'''
+          if old not in hair:
+              raise SystemExit('Expected unnormalized AngelRing basis was not found')
+          hair_path.write_text(hair.replace(old, new, 1), encoding='utf-8')
+
+          static_path = Path('angelRingHeadLock.test.mjs')
+          static = static_path.read_text(encoding='utf-8')
+          marker = "console.log('Official AngelRing projection invariants passed.');"
+          addition = r'''assert.match(
+              shaderSource,
+              /rdAngelProjectedUpLength\s*=\s*length\(rdAngelProjectedUp\)/,
+              'projected Head Up must be measured in two-dimensional screen space',
+          );
+          assert.match(
+              shaderSource,
+              /rdAngelProjectedUp\s*\/\s*rdAngelProjectedUpLength/,
+              'projected Head Up must be normalized before rotating AngelRing coordinates',
+          );
+          assert.match(
+              shaderSource,
+              /rdAngelProjectedRight\s*=\s*vec2\(/,
+              'AngelRing must derive an orthonormal projected right axis',
+          );
+
+          '''
+          if 'rdAngelProjectedUpLength' not in static:
+              if marker not in static:
+                  raise SystemExit('AngelRing static-test insertion point was not found')
+              static = static.replace(marker, addition + marker, 1)
+              static_path.write_text(static, encoding='utf-8')
+
+          smoke_path = Path('scripts/smoke-angelring-two-character.mjs')
+          smoke = smoke_path.read_text(encoding='utf-8')
+          old_state = '''    const rows = new Map()'''
+          new_state = '''    const rows = new Map()
+              let sumX = 0
+              let sumY = 0
+              let sumXX = 0
+              let sumYY = 0
+              let sumXY = 0'''
+          if 'let sumXX = 0' not in smoke:
+              if old_state not in smoke:
+                  raise SystemExit('Smoke-test accumulator insertion point was not found')
+              smoke = smoke.replace(old_state, new_state, 1)
+
+          old_pixel = '''          rows.set(y, (rows.get(y) ?? 0) + 1)'''
+          new_pixel = '''          rows.set(y, (rows.get(y) ?? 0) + 1)
+                    sumX += x
+                    sumY += y
+                    sumXX += x * x
+                    sumYY += y * y
+                    sumXY += x * y'''
+          if 'sumXY += x * y' not in smoke:
+              if old_pixel not in smoke:
+                  raise SystemExit('Smoke-test changed-pixel insertion point was not found')
+              smoke = smoke.replace(old_pixel, new_pixel, 1)
+
+          old_metrics = '''    const dominantRowWidth = rows.size ? Math.max(...rows.values()) : 0'''
+          new_metrics = '''    const dominantRowWidth = rows.size ? Math.max(...rows.values()) : 0
+              const meanX = changedPixels ? sumX / changedPixels : 0
+              const meanY = changedPixels ? sumY / changedPixels : 0
+              const covarianceXX = changedPixels
+                ? sumXX / changedPixels - meanX * meanX
+                : 0
+              const covarianceYY = changedPixels
+                ? sumYY / changedPixels - meanY * meanY
+                : 0
+              const covarianceXY = changedPixels
+                ? sumXY / changedPixels - meanX * meanY
+                : 0
+              const principalAxisAngleDegrees = Math.abs(
+                0.5 * Math.atan2(
+                  2 * covarianceXY,
+                  covarianceXX - covarianceYY,
+                ) * 180 / Math.PI,
+              )
+              const xyCorrelation = covarianceXX > 0 && covarianceYY > 0
+                ? covarianceXY / Math.sqrt(covarianceXX * covarianceYY)
+                : 0'''
+          if 'principalAxisAngleDegrees' not in smoke:
+              if old_metrics not in smoke:
+                  raise SystemExit('Smoke-test metric insertion point was not found')
+              smoke = smoke.replace(old_metrics, new_metrics, 1)
+
+          old_return = '''      dominantRowWidth,'''
+          new_return = '''      dominantRowWidth,
+                    principalAxisAngleDegrees,
+                    xyCorrelation,
+                    centroid: { x: meanX, y: meanY },'''
+          if 'centroid: { x: meanX, y: meanY }' not in smoke:
+              if old_return not in smoke:
+                  raise SystemExit('Smoke-test return insertion point was not found')
+              smoke = smoke.replace(old_return, new_return, 1)
+
+          old_validation = '''  if (front.bboxAspect < 1.6) failures.push(`${label}: highlight is not a horizontal strip; aspect ${front.bboxAspect.toFixed(3)}`)'''
+          new_validation = '''  if (front.bboxAspect < 1.6) failures.push(`${label}: highlight is not a horizontal strip; aspect ${front.bboxAspect.toFixed(3)}`)
+            if (front.principalAxisAngleDegrees > 16) failures.push(`${label}: highlight principal axis is tilted ${front.principalAxisAngleDegrees.toFixed(2)} degrees`)
+            if (Math.abs(front.xyCorrelation) > 0.38) failures.push(`${label}: highlight has excessive diagonal correlation ${front.xyCorrelation.toFixed(3)}`)'''
+          if 'highlight principal axis is tilted' not in smoke:
+              if old_validation not in smoke:
+                  raise SystemExit('Smoke-test validation insertion point was not found')
+              smoke = smoke.replace(old_validation, new_validation, 1)
+          smoke_path.write_text(smoke, encoding='utf-8')
+          PY
+
+      - name: Install, audit and build
+        run: |
+          npm ci
+          npm audit --audit-level=low
+          npm run build
+          git diff --check
+
+      - name: Commit release repair
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo 'No source changes were required.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add magia-exedra-character-three/shaders/hair.ts angelRingHeadLock.test.mjs scripts/smoke-angelring-two-character.mjs
+          git commit -m 'fix(shader): normalize projected AngelRing head axis'
+          git push origin HEAD:magius3dviewer
