@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch the one-time repair workflow
-        if: github.event.action == 'opened'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -29,6 +28,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          sleep 3
           gh run list \
             --repo "${{ github.repository }}" \
             --workflow repair-magius-release.yml \
