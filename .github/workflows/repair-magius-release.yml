@@ -98,8 +98,8 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          npm install --package-lock-only 2>&1 | tee /tmp/npm-lock-refresh.log
-          npm audit fix --package-lock-only 2>&1 | tee -a /tmp/npm-lock-refresh.log
+          npm install --package-lock-only --ignore-scripts 2>&1 | tee /tmp/npm-lock-refresh.log
+          npm audit fix --package-lock-only --ignore-scripts 2>&1 | tee -a /tmp/npm-lock-refresh.log
 
       - name: Verify zero audit findings
         shell: bash
