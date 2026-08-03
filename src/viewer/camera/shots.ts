@@ -4,6 +4,7 @@ import { cameraVideo, getCameraVideoResolution, isCameraEnabled } from './camera
 import { setRenderPaused } from 'magia-exedra-character-three/renderer';
 import { btnCameraShot } from '.';
 import { bgImageEl, isBackgroundImageVisible } from '../controllers';
+import { translateUiText } from '../localization/zhCN';
 
 const cameraSaveContainer = document.getElementById('camera-save-container') as HTMLDivElement
 const cameraSaveImg = document.getElementById('camera-save-img') as HTMLImageElement
@@ -64,7 +65,7 @@ export function savePhoto() {
         }
     }
     else {
-        window.alert('拍照失败')
+        window.alert(translateUiText('Photo capture failed'))
         resumeViewer()
         btnCameraShot.classList.remove('shoting')
     }
