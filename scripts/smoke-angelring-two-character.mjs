@@ -25,7 +25,15 @@ const browser = await puppeteer.launch({
   ],
 })
 const page = await browser.newPage()
-await page.setViewport({ width: 1100, height: 900, deviceScaleFactor: 1 })
+const viewportWidth = Number.parseInt(process.env.MAGIUS_VIEWPORT_WIDTH ?? '1100', 10)
+const viewportHeight = Number.parseInt(process.env.MAGIUS_VIEWPORT_HEIGHT ?? '900', 10)
+const artifactSuffix = process.env.MAGIUS_ARTIFACT_SUFFIX
+  ? `-${process.env.MAGIUS_ARTIFACT_SUFFIX.replace(/[^a-z0-9_-]+/gi, '-')}`
+  : ''
+if (!Number.isFinite(viewportWidth) || !Number.isFinite(viewportHeight) || viewportWidth <= 0 || viewportHeight <= 0) {
+  throw new Error(`Invalid smoke-test viewport: ${viewportWidth}x${viewportHeight}`)
+}
+await page.setViewport({ width: viewportWidth, height: viewportHeight, deviceScaleFactor: 1 })
 
 const pageErrors = []
 const shaderErrors = []
@@ -197,10 +205,10 @@ async function inspectCharacter(selectorValue, resourceId, slug) {
   await selectCharacter(selectorValue, resourceId)
   await setView(false)
   const front = await measureAngelRing()
-  await page.screenshot({ path: `/tmp/magius-angelring-${slug}-front.png`, fullPage: true })
+  await page.screenshot({ path: `/tmp/magius-angelring-${slug}-front${artifactSuffix}.png`, fullPage: true })
   await setView(true)
   const back = await measureAngelRing()
-  await page.screenshot({ path: `/tmp/magius-angelring-${slug}-back.png`, fullPage: true })
+  await page.screenshot({ path: `/tmp/magius-angelring-${slug}-back${artifactSuffix}.png`, fullPage: true })
   return {
     resourceId,
     front,
@@ -233,13 +241,14 @@ if (pageErrors.length) failures.push(`page errors: ${pageErrors.join(' | ')}`)
 if (shaderErrors.length) failures.push(`shader errors: ${shaderErrors.join(' | ')}`)
 
 const report = {
+  viewport: { width: viewportWidth, height: viewportHeight },
   madoka,
   ashley,
   pageErrors,
   shaderErrors,
   failures,
 }
-fs.writeFileSync('/tmp/magius-angelring-two-character.json', JSON.stringify(report, null, 2))
+fs.writeFileSync(`/tmp/magius-angelring-two-character${artifactSuffix}.json`, JSON.stringify(report, null, 2))
 console.log(JSON.stringify(report, null, 2))
 await browser.close()
 if (failures.length) process.exit(1)

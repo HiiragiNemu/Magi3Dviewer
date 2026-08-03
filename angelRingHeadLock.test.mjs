@@ -21,6 +21,16 @@ assert.match(
 );
 assert.match(
     shaderSource,
+    /uAngelRingAspectFix\.value\.set\(height \/ width, 1\)/,
+    'portrait-safe AngelRing projection must use inverse display aspect',
+);
+assert.doesNotMatch(
+    shaderSource,
+    /uAngelRingAspectFix\.value\.set\(width \/ height, 1\)/,
+    'width / height collapses AngelRing horizontally on portrait screens',
+);
+assert.match(
+    shaderSource,
     /mat3\(viewMatrix\) \* uAngelRingFaceUp/,
     'Head Up must be transformed into view space',
 );

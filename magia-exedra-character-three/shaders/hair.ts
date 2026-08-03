@@ -132,7 +132,11 @@ export function setAngelRingCameraUniforms(
     const width = Math.max(viewportSize.x, 1);
     const height = Math.max(viewportSize.y, 1);
     shader.uniforms.uAngelRingViewportSize.value.set(width, height);
-    shader.uniforms.uAngelRingAspectFix.value.set(width / height, 1);
+    // Fragment coordinates are normalized independently by viewport size.
+    // Use inverse display aspect so one normalized X unit represents the same
+    // physical screen distance as one normalized Y unit. width / height
+    // collapses the projected ring into a diagonal stripe on portrait screens.
+    shader.uniforms.uAngelRingAspectFix.value.set(height / width, 1);
 
     let cameraFix = 1;
     let orthographic = 0;
