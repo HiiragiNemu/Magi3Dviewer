@@ -72,7 +72,7 @@ export async function presetExport(): Promise<boolean> {
         await navigator.clipboard.writeText(presetUrl);
         return true
     } catch (e) {
-        await showDialog('Please copy the preset:', presetUrl)
+        await showDialog('请复制以下预设链接：', presetUrl)
         return false
     }
 }
@@ -84,7 +84,7 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
     if (!presetUrl) {
         try {
             if (hasPendingClipboardPermissionApproval) {
-                throw new Error('A clipboard permission request is ongoing')
+                throw new Error('正在等待剪贴板读取权限，请稍候')
             }
             hasPendingClipboardPermissionApproval = true
             let clipboardUrl
@@ -96,7 +96,7 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
             preset = parsePresetUrl(clipboardUrl)
         } catch (e) {
             console.log('Auto parse clipboard failed, asking user input')
-            presetUrl = await showDialog('Enter preset:')
+            presetUrl = await showDialog('请输入预设链接：')
         }
     }
 
@@ -112,7 +112,7 @@ export async function presetImport(presetUrl?: string | null, ask = false) {
 
     const total = preset.characters.length
     if (ask) {
-        if (!window.confirm(`Import preset with ${total} character(s)?`)) return
+        if (!window.confirm(`是否导入包含 ${total} 个角色的预设？`)) return
     }
 
     hideAllDemoItems()
@@ -208,7 +208,7 @@ export function parsePresetUrl(presetUrl: string): ViewerPreset {
 
     const presetJson = decompressFromEncodedURIComponent(presetQueryParam)
     const preset: ViewerPreset | null | undefined = JSON.parse(presetJson)
-    if (!preset) throw new Error('Preset not valid')
+    if (!preset) throw new Error('预设内容无效')
     return preset
 }
 

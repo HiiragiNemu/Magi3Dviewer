@@ -1,7 +1,10 @@
 {
-  "version": 2,
-  "generatedAt": "2026-07-28",
+  "version": 4,
+  "generatedAt": "2026-07-30",
   "sourceRevision": "b63d986c8f2e088362e7f26214967c92",
+  "entries": [
+    "./stages/catalog/battle-608-00-00-001.json"
+  ],
   "stages": [
     {
       "id": "battle-600-00-00-001",
@@ -440,6 +443,418 @@
       ]
     },
     {
+      "id": "battle-600-00-01-002",
+      "name": "[Official dynamic/Battle] 600-00-01-002",
+      "category": "battle",
+      "official": true,
+      "assetBundleName": "battle/stage/bg/3d/600/00/01/002",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-00-01-002/bg_3d_600_00_01_002-animated.fbxdata",
+      "scale": 1,
+      "position": [0, 0, 0],
+      "rotation": [0, 0, 0],
+      "spawnPoints": [
+        {
+          "id": "actor-0",
+          "name": "Actor 0",
+          "role": "actor",
+          "position": [0, 0, 0],
+          "rotation": [0, 0, 0]
+        }
+      ],
+      "materialBindings": [
+        {
+          "materialName": "mt_bg3d600A_01_02_adelbertAAlpha",
+          "materialPattern": "^mt_bg3d600A_01_02_adelbertAAlpha(?:\\.\\d+)?$",
+          "shading": "unlit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_adelbertAlpha_col.png",
+          "alphaTest": 0.5,
+          "alphaToCoverage": true,
+          "castShadow": false,
+          "receiveShadow": false,
+          "atlas": {
+            "columns": 5,
+            "rows": 3,
+            "offset": 0,
+            "framesPerSecond": 8
+          }
+        },
+        {
+          "materialName": "mt_bg3d600A_01_02_adelbertBAlpha",
+          "materialPattern": "^mt_bg3d600A_01_02_adelbertBAlpha(?:\\.\\d+)?$",
+          "shading": "unlit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_adelbertAlpha_col.png",
+          "alphaTest": 0.5,
+          "alphaToCoverage": true,
+          "castShadow": false,
+          "receiveShadow": false,
+          "atlas": {
+            "columns": 5,
+            "rows": 3,
+            "offset": 3,
+            "framesPerSecond": 8
+          }
+        },
+        {
+          "materialName": "mt_bg3d600A_01_02_anthonyAAlpha",
+          "materialPattern": "^mt_bg3d600A_01_02_anthonyAAlpha(?:\\.\\d+)?$",
+          "shading": "unlit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_03_anthonyAlpha_col.png",
+          "alphaTest": 0.5,
+          "alphaToCoverage": true,
+          "castShadow": false,
+          "receiveShadow": false,
+          "atlas": {
+            "columns": 6,
+            "rows": 3,
+            "offset": 0,
+            "framesPerSecond": 8
+          }
+        },
+        {
+          "materialName": "mt_bg3d600A_01_02_anthonyBAlpha",
+          "materialPattern": "^mt_bg3d600A_01_02_anthonyBAlpha(?:\\.\\d+)?$",
+          "shading": "unlit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_03_anthonyAlpha_col.png",
+          "alphaTest": 0.5,
+          "alphaToCoverage": true,
+          "castShadow": false,
+          "receiveShadow": false,
+          "atlas": {
+            "columns": 6,
+            "rows": 3,
+            "offset": 1,
+            "framesPerSecond": 8
+          }
+        },
+        {
+          "materialName": "mt_bg3d600A_01_02_ground",
+          "materialPattern": "^mt_bg3d600A_01_02_ground(?:\\.\\d+)?$",
+          "shading": "lit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_03_groundA_col.png",
+          "blendMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_03_groundB_col.png",
+          "normalMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_03_groundB_nml.png",
+          "smoothnessMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_01_ground_smoothness.png",
+          "vertexColorBlend": true,
+          "smoothness": 0.7,
+          "smoothnessChannel": "a",
+          "metallic": 0,
+          "metallicFromSmoothnessMap": true,
+          "normalScale": 2,
+          "unlitness": 0,
+          "castShadow": false,
+          "receiveShadow": true
+        },
+        {
+          "materialName": "mt_bg3d600A_01_02_propA",
+          "materialPattern": "^mt_bg3d600A_01_02_propA(?:\\.\\d+)?$",
+          "shading": "lit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_propAlpha_col.png",
+          "normalMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_propAlpha_nml.png",
+          "smoothness": 0,
+          "normalScale": 1,
+          "unlitness": 0.4,
+          "castShadow": true,
+          "receiveShadow": true
+        },
+        {
+          "materialName": "mt_bg3d600A_01_02_propBAlpha",
+          "materialPattern": "^mt_bg3d600A_01_02_propBAlpha(?:\\.\\d+)?$",
+          "shading": "unlit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_propAlpha_col.png",
+          "alphaTest": 0.5,
+          "alphaToCoverage": true,
+          "castShadow": false,
+          "receiveShadow": false
+        },
+        {
+          "materialName": "mt_bg3d600A_01_02_propC",
+          "materialPattern": "^mt_bg3d600A_01_02_propC(?:\\.\\d+)?$",
+          "shading": "lit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_propAlpha_col.png",
+          "normalMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_propAlpha_nml.png",
+          "matCapMapUrl": "./stages/official/battle-600-00-01-002/matcap.png",
+          "matCapIntensity": 1,
+          "smoothness": 1,
+          "normalScale": 1,
+          "unlitness": 0.4,
+          "castShadow": true,
+          "receiveShadow": true
+        },
+        {
+          "materialName": "mt_bg3d600A_01_02_rockAlpha",
+          "materialPattern": "^mt_bg3d600A_01_02_rockAlpha(?:\\.\\d+)?$",
+          "shading": "lit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_rockAlpha_col.png",
+          "normalMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_rockAlpha_nml.png",
+          "smoothnessMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_01_ground_smoothness.png",
+          "smoothness": 0.5,
+          "smoothnessChannel": "a",
+          "normalScale": 1,
+          "alphaTest": 0.5,
+          "alphaToCoverage": true,
+          "castShadow": false,
+          "receiveShadow": true
+        },
+        {
+          "materialName": "mt_bg3d600A_01_02_sky",
+          "materialPattern": "^mt_bg3d600A_01_02_sky(?:\\.\\d+)?$",
+          "shading": "unlit",
+          "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_01_sky_col.png",
+          "castShadow": false,
+          "receiveShadow": false
+        }
+      ],
+      "renderProfile": {
+        "id": "bg_3d_600_00_01_002",
+        "source": "ReDriveVolume",
+        "stageLayer": 6,
+        "backgroundColor": "#282828",
+        "environmentIntensity": 1,
+        "lightmap": {
+          "textureUrl": "./stages/official/battle-600-00-01-002/Lightmap-0-comp-light.png",
+          "bindingsUrl": "./stages/official/battle-600-00-01-002/lightmap-bindings.json",
+          "encoding": "unity-rgbm-linear",
+          "intensity": 1
+        },
+        "fog": {
+          "color": "#282828",
+          "near": 0,
+          "far": 520
+        },
+        "lights": [
+          {
+            "name": "MainLight",
+            "type": "directional",
+            "anchorNode": "MainLight",
+            "color": [1, 0.9764706, 0.9372549, 1],
+            "intensity": 1,
+            "cullingMask": 2147483647,
+            "lightmapping": 1,
+            "role": "character-key",
+            "position": [0, 0, 0],
+            "target": [-0.4131759, -0.76604437, -0.492404],
+            "castShadow": true,
+            "shadow": {
+              "type": 2,
+              "strength": 1,
+              "bias": 0,
+              "normalBias": 0,
+              "nearPlane": 0.1
+            }
+          },
+          {
+            "name": "BgCenterLight",
+            "type": "spot",
+            "anchorNode": "BgCenterLight",
+            "color": [1, 0.95, 0.9809524, 1],
+            "intensity": 500,
+            "range": 40,
+            "outerAngleDegrees": 117.347824,
+            "innerAngleDegrees": 26,
+            "cullingMask": 64,
+            "lightmapping": 1,
+            "role": "background",
+            "position": [0, 10.2, 0],
+            "target": [0, 9.2, 0],
+            "castShadow": true,
+            "shadow": {
+              "type": 1,
+              "strength": 1,
+              "bias": 0.05,
+              "normalBias": 0.4,
+              "nearPlane": 0.2
+            }
+          },
+          {
+            "name": "BgFillLight",
+            "type": "spot",
+            "anchorNode": "BgFillLight",
+            "color": [1, 0.99526566, 0.9490196, 1],
+            "intensity": 600,
+            "range": 70,
+            "outerAngleDegrees": 179,
+            "innerAngleDegrees": 179,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background",
+            "position": [0, 25, 0],
+            "target": [0, 24, 0],
+            "castShadow": true,
+            "shadow": {
+              "type": 1,
+              "strength": 1,
+              "bias": 0.05,
+              "normalBias": 0.4,
+              "nearPlane": 0.2
+            }
+          },
+          {
+            "name": "BgLightA",
+            "type": "point",
+            "anchorNode": "BgLightA",
+            "color": [1, 0.7885474, 0.752, 1],
+            "intensity": 150,
+            "range": 20,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background",
+            "position": [-6.49, 6.92, -16.15],
+            "castShadow": false
+          },
+          {
+            "name": "BgLightB",
+            "type": "point",
+            "anchorNode": "BgLightB",
+            "color": [1, 0.9074746, 0.740566, 1],
+            "intensity": 120,
+            "range": 30,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background",
+            "position": [13.88, 5.76, -11.88],
+            "castShadow": false
+          },
+          {
+            "name": "BgLightC",
+            "type": "point",
+            "anchorNode": "BgLightC",
+            "color": [1, 0.95452344, 0.7783019, 1],
+            "intensity": 250,
+            "range": 30,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background",
+            "position": [8.25, 8.28, 14.84],
+            "castShadow": false
+          },
+          {
+            "name": "BgLightD",
+            "type": "point",
+            "anchorNode": "BgLightD",
+            "color": [1, 0.7885474, 0.752, 1],
+            "intensity": 200,
+            "range": 30,
+            "cullingMask": 64,
+            "lightmapping": 2,
+            "role": "background",
+            "position": [-11.72, 6.89, 10.14],
+            "castShadow": false
+          }
+        ],
+        "renderer": {
+          "toneMapping": "aces",
+          "exposure": 1
+        },
+        "colorFilter": {
+          "brightness": 1,
+          "contrast": 1.1,
+          "saturation": 1.15
+        },
+        "bloom": {
+          "enabled": true,
+          "strength": 1,
+          "radius": 0.7,
+          "threshold": 0.8
+        },
+        "reDriveVolume": {
+          "skyboxIntensity": 1,
+          "shAmbient": [
+            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
+            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8,
+            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
+            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8,
+            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
+            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8
+          ],
+          "characterShadowTint": [0.672, 0.672, 0.8, 1],
+          "characterLightingOverrideColor": [0.590619, 0.57112503, 0.46778384, 1],
+          "characterLightingOverrideRatio": 0.25,
+          "characterAdditionalRimLightColor": [1, 1, 1, 1],
+          "characterAdditionalRimLightDirection": [1, -1],
+          "backgroundShadowStrengthAdditive": 0.3,
+          "backgroundPostExposure": 0.2,
+          "backgroundContrast": 0.25,
+          "backgroundSaturation": 5,
+          "paraffin": {
+            "enabled": true,
+            "topColor": [0.40440553, 0.4024424, 0.426, 1],
+            "bottomColor": [0.5, 0.325, 0.325, 1],
+            "opacity": 0.2,
+            "width": 1.4,
+            "topBlendMode": 0,
+            "bottomBlendMode": 3
+          },
+          "overrides": {
+            "skyboxMaterial": true,
+            "skyboxIntensity": true,
+            "reflectionProbe": true,
+            "fogColor": true,
+            "fogRange": true,
+            "shAmbient": true,
+            "characterTint": false,
+            "characterShadowTint": true,
+            "backgroundTint": false,
+            "characterLightingOverrideColor": true,
+            "characterLightingOverrideRatio": true,
+            "characterLightingOverrideDirection": false,
+            "characterAdditionalRimLightColor": true,
+            "characterAdditionalRimLightDirection": false,
+            "characterFaceAwayTint": false,
+            "characterCancelPerspective": false,
+            "backgroundShadowStrengthAdditive": true,
+            "backgroundPostExposure": true,
+            "backgroundContrast": false,
+            "backgroundSaturation": true,
+            "backgroundBackgroundTint": false,
+            "useFixedLightDirection": true,
+            "paraffin": true,
+            "screenTexture": false,
+            "lightScreen": false
+          }
+        }
+      },
+      "runtime": {
+        "clipNames": [
+          "bg3d600A_01_02_circleA",
+          "bg3d600A_01_02_window",
+          "bg3d600A_01_02_window02",
+          "bg3d600A_01_02_circleCD",
+          "bg3d600A_01_02_circleE"
+        ],
+        "autoplay": true,
+        "loop": true,
+        "timeScale": 1,
+        "voiceTracks": []
+      },
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "clipNames": [
+          "bg3d600A_01_02_circleA",
+          "bg3d600A_01_02_window",
+          "bg3d600A_01_02_window02",
+          "bg3d600A_01_02_circleCD",
+          "bg3d600A_01_02_circleE"
+        ],
+        "missing": [],
+        "evidence": [
+          "3 Animator components",
+          "1 AnimatorController with five active default layers",
+          "5 looping AnimationClip assets exported into the web FBX",
+          "Four official 8 FPS flipbook materials are active on the shared runtime clock"
+        ]
+      },
+      "evidence": [
+        "JP 3.11.0 15-file AssetBundle Manifest dependency closure",
+        "JP AssetStudioModCLI 2022.3.62f2 splitObjects export",
+        "11 official serialized Material profiles",
+        "7 Light plus UniversalAdditionalLightData profiles",
+        "104 renderer lightmap bindings",
+        "ReDriveVolume, Global Volume and five Animator layer clips"
+      ]
+    },
+    {
       "id": "dungeon-intro-0001-001",
       "name": "[Official geometry/Dungeon] Intro 0001-001",
       "category": "dungeon",
@@ -563,19 +978,20 @@
       "renderProfile": {
         "id": "bg3d_gallery",
         "source": "manual-research",
-        "backgroundColor": "#ffffff",
+        "backgroundColor": "#d9e7ee",
         "fog": {
-          "color": "#ffffff",
-          "near": 5,
-          "far": 500
+          "color": "#d9e7ee",
+          "near": 80,
+          "far": 500,
+          "affectsCharacters": false
         },
         "ambientLight": {
-          "color": "#ffffff",
-          "intensity": 1.0
+          "color": "#d7e8ef",
+          "intensity": 0.24
         },
         "directionalLight": {
-          "color": "#ffffff",
-          "intensity": 1.6,
+          "color": "#f6f0e8",
+          "intensity": 0.78,
           "position": [
             -4,
             7,
@@ -590,29 +1006,18 @@
         },
         "renderer": {
           "toneMapping": "aces",
-          "exposure": 0.75
+          "exposure": 0.82
         },
         "colorFilter": {
-          "brightness": 0.94,
-          "contrast": 0.95,
+          "brightness": 1.0,
+          "contrast": 1.02,
           "saturation": 1.0
         },
         "bloom": {
           "enabled": true,
-          "strength": 0.4,
-          "radius": 0.75,
-          "threshold": 0.9
-        },
-        "reDriveVolume": {
-          "characterLightingOverrideColor": "#ffffff",
-          "characterLightingOverrideRatio": 0.4,
-          "characterAdditionalRimLightColor": "#ffffff",
-          "characterAdditionalRimLightDirection": [
-            -1,
-            -1
-          ],
-          "backgroundPostExposure": -0.6,
-          "backgroundContrast": -5
+          "strength": 0.08,
+          "radius": 0.35,
+          "threshold": 1.0
         }
       },
       "evidence": [
@@ -662,16 +1067,17 @@
         "backgroundColor": "#000000",
         "fog": {
           "color": "#000000",
-          "near": 5,
-          "far": 276.7146
+          "near": 80,
+          "far": 276.7146,
+          "affectsCharacters": false
         },
         "ambientLight": {
-          "color": "#ffffff",
-          "intensity": 0.9
+          "color": "#d7e8ef",
+          "intensity": 0.2
         },
         "directionalLight": {
-          "color": "#ffffff",
-          "intensity": 1.5,
+          "color": "#f6f0e8",
+          "intensity": 0.72,
           "position": [
             -4,
             7,
@@ -686,7 +1092,7 @@
         },
         "renderer": {
           "toneMapping": "aces",
-          "exposure": 0.78
+          "exposure": 0.8
         },
         "colorFilter": {
           "brightness": 0.95,
@@ -695,20 +1101,9 @@
         },
         "bloom": {
           "enabled": true,
-          "strength": 0.4,
-          "radius": 0.75,
-          "threshold": 0.9
-        },
-        "reDriveVolume": {
-          "characterLightingOverrideColor": "#ffffff",
-          "characterLightingOverrideRatio": 0.4,
-          "characterAdditionalRimLightColor": "#ffffff",
-          "characterAdditionalRimLightDirection": [
-            -1,
-            -1
-          ],
-          "backgroundPostExposure": -0.5,
-          "backgroundContrast": 5
+          "strength": 0.08,
+          "radius": 0.35,
+          "threshold": 1.0
         }
       },
       "evidence": [

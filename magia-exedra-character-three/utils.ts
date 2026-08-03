@@ -15,14 +15,20 @@ export function ObjFilterByKey<T>(obj: Record<string, T>, predicate: (value: str
         }, {} as Record<string, T>)
 }
 
-/** Fetch the URL, decompress if it is gzip compressed */
-export async function fetchAndTryDecompressGzip(url: string, onDownload?: (e: ProgressEvent) => any, onDecompress?: () => any): Promise<Blob> {
-    const response = await fetch(url)
+/** Fetch the URL, decompress if it is gzip compressed. */
+export async function fetchAndTryDecompressGzip(
+    url: string,
+    onDownload?: (e: ProgressEvent) => any,
+    onDecompress?: () => any,
+    signal?: AbortSignal,
+): Promise<Blob> {
+    const response = await fetch(url, { signal })
     if (!response.ok) {
         throw new Error(`Failed to download ${url}: HTTP ${response.status}`)
     }
 
     const arrayBuffer = await response.arrayBuffer()
+    signal?.throwIfAborted()
     const byteArray = new Uint8Array(arrayBuffer)
     const total = Number(response.headers.get('content-length')) || byteArray.byteLength
     onDownload?.(new ProgressEvent('progress', {
@@ -41,6 +47,7 @@ export async function fetchAndTryDecompressGzip(url: string, onDownload?: (e: Pr
         console.log('Decompressing gzip in JavaScript, the server did not set `Content-Encoding: gzip` to let it decompress by the browser.')
         onDecompress?.()
         finalData = await decompressGzip(byteArray)
+        signal?.throwIfAborted()
     } else {
         finalData = byteArray
     }

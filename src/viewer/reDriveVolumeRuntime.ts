@@ -170,17 +170,32 @@ export function applyReDriveVolumeRuntime(profile?: ReDriveVolumeRuntimeProfile)
         profile.characterLightingOverrideRatio ?? 0
 
     const rim = colorAndIntensity(profile.characterAdditionalRimLightColor)
-    const rimOverride = profile.overrides?.characterAdditionalRimLightColor ?? profile.characterAdditionalRimLightColor != undefined
-    toonStylizationOptions.rimEnabled = rimOverride && rim.intensity > 0.0001
+    const rimColorOverride =
+        profile.overrides?.characterAdditionalRimLightColor
+        ?? profile.characterAdditionalRimLightColor != undefined
+    const rimDirectionOverride =
+        profile.overrides?.characterAdditionalRimLightDirection
+        ?? profile.characterAdditionalRimLightDirection != undefined
+    const rimDirection = profile.characterAdditionalRimLightDirection
+    const validRimDirection =
+        rimDirection != undefined
+        && rimDirection.length === 2
+        && rimDirection.every(Number.isFinite)
+    // Additional Rim is a directional runtime/Timeline effect. A serialized
+    // HDR colour by itself is only a default value, not proof that the effect
+    // is active. Requiring both effective overrides prevents a static white
+    // rim from washing out every character in the stage.
+    toonStylizationOptions.rimEnabled =
+        rimColorOverride
+        && rimDirectionOverride
+        && validRimDirection
+        && rim.intensity > 0.0001
     toonStylizationOptions.rimColor = `#${rim.color.getHexString()}`
     // Unity stores HDR colour magnitude in the RGB components.
     toonStylizationOptions.rimStrength = rim.intensity
-    if (
-        profile.characterAdditionalRimLightDirection
-        && profile.overrides?.characterAdditionalRimLightDirection !== false
-    ) {
-        toonStylizationOptions.rimDirectionX = profile.characterAdditionalRimLightDirection[0]
-        toonStylizationOptions.rimDirectionY = profile.characterAdditionalRimLightDirection[1]
+    if (validRimDirection && rimDirectionOverride) {
+        toonStylizationOptions.rimDirectionX = rimDirection[0]
+        toonStylizationOptions.rimDirectionY = rimDirection[1]
     }
 
     scene.scene.userData.reDriveVolumeRuntime = profile

@@ -96,6 +96,11 @@ export function setOfficialAngelRingMaterialProfileUniforms(
     );
     setNumberUniform(shader, 'uAngelRingMapKind', mapKind);
     setNumberUniform(shader, 'uAngelRingUvMode', angelRing?.uvMode ? 1 : 0);
+    setNumberUniform(
+        shader,
+        'uHairDepthRimEnabled',
+        angelRing?.isHair ? 1 : 0,
+    );
     const color = angelRing?.rimLightColor ?? [1, 1, 1];
     setColorUniform(
         shader,
@@ -147,15 +152,17 @@ export function setAngelRingCameraUniforms(
 }
 
 /**
- * Exact AngelRing coordinate path recovered from the JP 3.11 GLES program.
+ * Head-locked AngelRing reconstruction.
  *
- * Projected mode:
- * - projects `Head.position + FaceUp * headOffset` into screen space;
- * - applies the official camera-distance, aspect, FOV/ortho, and head-axis warp;
- * - samples the common (or character-specific) `_AngelRingMap` red channel.
+ * The material controller fixes the ring origin to
+ * `Head.position + FaceUp * headOffset`. JP 3.11's compiled forward pass then
+ * projects that origin into screen space, rotates the fragment coordinate by
+ * the Head Up axis in view space, and bends V with `sin(pi * U)`. This is not a
+ * flat world-space band and it intentionally remains continuous through a
+ * 360-degree camera orbit; deep shadow attenuates it through character light.
  *
- * `_YuugenHighlight` mode samples the character-authored map directly with the
- * base hair UV and keeps its RGB colour. No guessed world-space strip remains.
+ * `_YuugenHighlight` mode remains character-authored and samples the material
+ * map directly with the base hair UV.
  */
 export async function createHairMaterial(
     options: HairMaterialCreationOptions,
@@ -250,8 +257,9 @@ export async function createHairMaterial(
             };
             shader.uniforms.uAngelRingFovOrOrthoFix = { value: 1 };
             shader.uniforms.uAngelRingOrthographic = { value: 0 };
+            shader.uniforms.uHairDepthRimEnabled = { value: 0 };
 
-            // Compatibility diagnostics; these do not drive the recovered math.
+            // Kept for the diagnostics UI and for the geometry-locked shader.
             shader.uniforms.uAngelRingUseHeadPlane = { value: 1 };
             shader.uniforms.uAngelRingPlanePosition = {
                 value: new THREE.Vector3(),
@@ -282,8 +290,12 @@ export async function createHairMaterial(
             updateAngelRingReference();
 
             shader.vertexShader = /* glsl */ `
-                varying vec3 vAngelRingFaceClipXYW;
                 uniform vec3 uAngelRingFacePosition;
+                uniform vec3 uAngelRingFaceUp;
+                uniform vec3 uAngelRingFaceForward;
+                varying vec3 vAngelRingFaceClip;
+                varying vec3 vAngelRingFaceUpVS;
+                varying vec3 vAngelRingFaceForwardVS;
                 ${shader.vertexShader}
             `.replace(
                 '#include <project_vertex>',
@@ -293,12 +305,21 @@ export async function createHairMaterial(
                     projectionMatrix *
                     viewMatrix *
                     vec4(uAngelRingFacePosition, 1.0);
-                vAngelRingFaceClipXYW = rdAngelFaceClip.xyw;
+                vAngelRingFaceClip = vec3(
+                    rdAngelFaceClip.xy,
+                    rdAngelFaceClip.w
+                );
+                vAngelRingFaceUpVS =
+                    mat3(viewMatrix) * uAngelRingFaceUp;
+                vAngelRingFaceForwardVS =
+                    mat3(viewMatrix) * uAngelRingFaceForward;
                 `,
             );
 
             shader.fragmentShader = /* glsl */ `
-                varying vec3 vAngelRingFaceClipXYW;
+                varying vec3 vAngelRingFaceClip;
+                varying vec3 vAngelRingFaceUpVS;
+                varying vec3 vAngelRingFaceForwardVS;
                 uniform sampler2D tAngelRingCommon;
                 uniform sampler2D tAngelRingCharacter;
                 uniform float uAngelRingEnabled;
@@ -313,6 +334,13 @@ export async function createHairMaterial(
                 uniform vec2 uAngelRingAspectFix;
                 uniform float uAngelRingFovOrOrthoFix;
                 uniform float uAngelRingOrthographic;
+                uniform vec3 uAngelRingPlanePosition;
+                uniform vec3 uAngelRingPlaneUp;
+                uniform vec3 uAngelRingPlaneRight;
+                uniform vec3 uAngelRingPlaneForward;
+                uniform float uAngelRingBandHalfWidth;
+                uniform float uAngelRingProjectionRadius;
+                uniform float uHairDepthRimEnabled;
                 ${shader.fragmentShader}
             `.replace(
                 '#include <opaque_fragment>',
@@ -355,97 +383,99 @@ export async function createHairMaterial(
                             uAngelRingColor *
                             rdAngelCurrentLighting;
                     } else {
-                        vec2 rdAngelFaceCenter =
-                            vAngelRingFaceClipXYW.xy /
-                            max(abs(vAngelRingFaceClipXYW.z), 0.00001);
-                        rdAngelFaceCenter =
-                            rdAngelFaceCenter * 0.5 + vec2(0.5);
-
+                        // Exact readable port of JP 3.11 lines 932-982:
+                        // face-position projection, view-space Head axes,
+                        // camera-distance scale, rotation, and sin-shaped
+                        // tapered map V. There is no front/rear kill gate.
                         vec2 rdAngelFragmentUv =
                             gl_FragCoord.xy /
                             max(uAngelRingViewportSize, vec2(1.0));
-                        vec3 rdAngelFaceUpVs = normalize(
-                            mat3(viewMatrix) * uAngelRingFaceUp
+                        float rdAngelFaceW = max(
+                            abs(vAngelRingFaceClip.z),
+                            0.000001
                         );
-                        vec3 rdAngelFaceForwardVs = normalize(
-                            mat3(viewMatrix) * uAngelRingFaceForward
+                        vec2 rdAngelFaceUv =
+                            vAngelRingFaceClip.xy /
+                            rdAngelFaceW;
+                        rdAngelFaceUv =
+                            rdAngelFaceUv * 0.5 + vec2(0.5);
+
+                        vec3 rdAngelFaceUpVS =
+                            normalize(vAngelRingFaceUpVS);
+                        vec3 rdAngelFaceForwardVS =
+                            normalize(vAngelRingFaceForwardVS);
+                        float rdAngelInverseDistance = 1.0 / max(
+                            distance(
+                                cameraPosition,
+                                uAngelRingFacePosition
+                            ),
+                            0.0001
                         );
-                        float rdAngelFacing =
-                            rdAngelFaceForwardVs.z * -0.5 + 0.5;
-                        float rdAngelInverseDistance =
-                            1.0 /
-                            max(
-                                distance(
-                                    uAngelRingFacePosition,
-                                    cameraPosition
-                                ),
-                                0.00001
-                            );
-                        float rdAngelDistanceScale = mix(
+                        rdAngelInverseDistance = mix(
                             rdAngelInverseDistance,
                             0.875,
-                            uAngelRingOrthographic
+                            step(0.5, uAngelRingOrthographic)
                         );
-                        vec2 rdAngelCameraScale =
+                        vec2 rdAngelUnitScale =
                             uAngelRingAspectFix *
                             uAngelRingFovOrOrthoFix *
-                            rdAngelDistanceScale;
-                        vec2 rdAngelBoxMin =
-                            rdAngelFaceCenter - rdAngelCameraScale * 10.0;
-                        vec2 rdAngelBoxMax =
-                            rdAngelFaceCenter + rdAngelCameraScale * 10.0;
+                            rdAngelInverseDistance;
+                        vec2 rdAngelRectHalf = max(
+                            rdAngelUnitScale * 10.0,
+                            vec2(0.000001)
+                        );
 
-                        vec2 rdAngelViewOffset = vec2(
+                        float rdAngelBackFactor =
+                            rdAngelFaceForwardVS.z * -0.5 + 0.5;
+                        vec2 rdAngelViewShift = vec2(
                             sin(
-                                rdAngelFaceUpVs.y *
+                                rdAngelFaceUpVS.y *
                                 1.5707963267948966
                             ) *
-                            15.0 *
-                            rdAngelFacing *
-                            rdAngelFacing,
-                            -3.0 * rdAngelFaceUpVs.z
-                        );
-                        vec2 rdAngelProjected =
-                            rdAngelFragmentUv +
-                            rdAngelViewOffset *
-                            uAngelRingAspectFix *
-                            uAngelRingFovOrOrthoFix *
-                            rdAngelDistanceScale;
-                        vec2 rdAngelUv =
-                            (rdAngelProjected - rdAngelBoxMin) /
-                            max(
-                                rdAngelBoxMax - rdAngelBoxMin,
-                                vec2(0.00001)
-                            );
-
-                        vec2 rdAngelCentered = rdAngelUv - vec2(0.5);
-                        rdAngelUv = vec2(
+                            rdAngelBackFactor *
+                            rdAngelBackFactor *
+                            15.0,
+                            rdAngelFaceUpVS.z * -3.0
+                        ) * rdAngelUnitScale;
+                        vec2 rdAngelRectCoordinate =
+                            (
+                                rdAngelFragmentUv +
+                                rdAngelViewShift -
+                                (rdAngelFaceUv - rdAngelRectHalf)
+                            ) /
+                            (rdAngelRectHalf * 2.0) -
+                            vec2(0.5);
+                        vec2 rdAngelRotated = vec2(
                             dot(
-                                rdAngelCentered,
+                                rdAngelRectCoordinate,
                                 vec2(
-                                    rdAngelFaceUpVs.y,
-                                    -rdAngelFaceUpVs.x
+                                    rdAngelFaceUpVS.y,
+                                    -rdAngelFaceUpVS.x
                                 )
                             ),
                             dot(
-                                rdAngelCentered,
-                                rdAngelFaceUpVs.xy
+                                rdAngelRectCoordinate,
+                                rdAngelFaceUpVS.xy
                             )
                         ) + vec2(0.5);
-
-                        float rdAngelArc =
-                            sin(3.141592653589793 * rdAngelUv.x);
-                        float rdAngelLower =
-                            rdAngelUv.y - 0.415 * rdAngelArc;
-                        float rdAngelUpper =
-                            rdAngelUv.y + 0.5 * rdAngelArc;
-                        float rdAngelWarpedV = mix(
-                            rdAngelLower,
-                            rdAngelUpper,
-                            rdAngelFaceUpVs.z * 0.5 + 0.5
+                        float rdAngelArch = sin(
+                            rdAngelRotated.x *
+                            3.14159265358979323846
                         );
-                        vec2 rdAngelMapUv =
-                            vec2(rdAngelUv.x, rdAngelWarpedV);
+                        float rdAngelLowerV =
+                            rdAngelRotated.y -
+                            rdAngelArch * 0.414999992;
+                        float rdAngelUpperV =
+                            rdAngelRotated.y +
+                            rdAngelArch * 0.5;
+                        vec2 rdAngelMapUv = vec2(
+                            rdAngelRotated.x,
+                            mix(
+                                rdAngelLowerV,
+                                rdAngelUpperV,
+                                rdAngelFaceUpVS.z * 0.5 + 0.5
+                            )
+                        );
                         float rdAngelCommon = texture2D(
                             tAngelRingCommon,
                             rdAngelMapUv
@@ -474,6 +504,36 @@ export async function createHairMaterial(
                     // lighting and before tone mapping/fog.
                     gl_FragColor.rgb +=
                         rdAngelContribution * rdAngelActive;
+                }
+
+                // ReDriveToon's hair depth-rim is separate from AngelRing.
+                // Until the official CameraDepthTexture offset pass is ported,
+                // preserve its observed soft, asymmetric and scene-tinted
+                // response rather than substituting a hard global Fresnel.
+                if (uHairDepthRimEnabled > 0.5) {
+                    vec3 rdHairViewDirection =
+                        normalize(vViewPosition);
+                    float rdHairNdotV = saturate(
+                        dot(normal, rdHairViewDirection)
+                    );
+                    float rdHairEdge = smoothstep(
+                        0.55,
+                        0.93,
+                        1.0 - rdHairNdotV
+                    );
+                    float rdHairLightSide = saturate(
+                        dot(normal, rdToonMainLightDirection) *
+                        0.5 + 0.5
+                    );
+                    float rdHairDepthRim =
+                        rdHairEdge *
+                        mix(0.15, 1.0, rdHairLightSide) *
+                        (rdToonBaseWeight * 0.8 + 0.2);
+                    gl_FragColor.rgb +=
+                        uAngelRingColor *
+                        rdToonSceneLightColor *
+                        rdHairDepthRim *
+                        0.16;
                 }
                 `,
             );

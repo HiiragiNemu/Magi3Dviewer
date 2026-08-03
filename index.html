@@ -5,13 +5,13 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <title>Magius3Dviewer | Magia Exedra Official-Style 3D Shader Viewer</title>
-    <meta name="description" content="Magius3Dviewer is an independent Magia Exedra WebGL 3D viewer with official-style ReDriveToon shading, AngelRing hair highlights, multi-character staging and selectable 3D scenes, based on the original Magi3Dviewer project.">
+    <title>Magius3Dviewer｜Magia Exedra 官方风格 3D 着色器查看器</title>
+    <meta name="description" content="Magius3Dviewer 是独立的 Magia Exedra WebGL 3D 查看器，研究并复现 ReDriveToon、AngelRing、多角色编排与可切换 3D 场景；项目基于原始 Magi3Dviewer。">
     <meta name="keywords" content="Magius3Dviewer, Magia Exedra, ReDriveToon, AngelRing, Rim Light, Fresnel, Madoka Magica, Magia Record, 3D Models, Three.js, WebGL, 魔法少女小圆, 魔法纪录, 3D模型, Shader">
     <meta name="author" content="haojiezhe12345; HiiragiNemu">
 
     <meta property="og:title" content="Magius3Dviewer">
-    <meta property="og:description" content="Magia Exedra 3D viewer with official-style ReDriveToon, AngelRing and scene staging controls.">
+    <meta property="og:description" content="研究并复现 ReDriveToon、AngelRing 与场景编排控制的 Magia Exedra 3D 查看器。">
     <meta property="og:image" content="https://hiiraginemu.github.io/Magi3Dviewer/demo.jpg">
     <meta property="og:image:width" content="768">
     <meta property="og:image:height" content="1152">
@@ -22,7 +22,7 @@
             "@type": "WebPage",
             "name": "Magius3Dviewer",
             "image": "https://hiiraginemu.github.io/Magi3Dviewer/demo.jpg",
-            "description": "Magia Exedra 3D viewer with official-style ReDriveToon, AngelRing and scene staging controls."
+            "description": "研究并复现 ReDriveToon、AngelRing 与场景编排控制的 Magia Exedra 3D 查看器。"
         }
     </script>
 </head>
@@ -32,13 +32,13 @@
         <div id="viewer"></div>
 
         <div id="stat">
-            <span class="demo">Magius3Dviewer is loading the official-style shader and character model...</span>
+            <span class="demo">Magius3Dviewer 正在加载官方风格着色器与角色模型……</span>
             <div style="text-align: center;">
                 <span id="load-progress"></span>
             </div>
         </div>
 
-        <img id="demo-screenshot" class="demo" src="./demo.jpg" alt="Magius3Dviewer demo screenshot">
+        <img id="demo-screenshot" class="demo" src="./demo.jpg" alt="Magius3Dviewer 演示截图">
 
         <img id="bg-image">
 
@@ -49,16 +49,16 @@
             <div id="perf-stat-js"></div>
         </div>
 
-        <button id="camera-shot-btn" title="Take a photo"><img src="src/icons/camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+        <button id="camera-shot-btn" title="拍照"><img src="src/icons/camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
 
         <div id="menu">
             <div id="menu-controls">
                 <div>
-                    <img src="src/icons/accessibility_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Model">
-                    <select id="character-selector" class="target-true" title="Choose model"></select>
-                    <button id="character-add-cross-btn" class="target-true" title="Remove selected model">❌</button>
-                    <span class="target-false">&lt;No target selected&gt;</span>
-                    <span class="button-dropdown" title="Add model">
+                    <img src="src/icons/accessibility_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="角色模型">
+                    <select id="character-selector" class="target-true" title="选择角色模型"></select>
+                    <button id="character-add-cross-btn" class="target-true" title="移除当前角色模型">❌</button>
+                    <span class="target-false">&lt;未选择角色&gt;</span>
+                    <span class="button-dropdown" title="添加角色模型">
                         <button tabindex="-1">➕</button>
                         <div>
                             <select id="character-add-selector"></select>
@@ -67,17 +67,17 @@
                 </div>
 
                 <div>
-                    <img src="src/icons/emoji_people_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Animation">
-                    <select id="animation-selector" class="target-true" title="Choose animation"></select>
-                    <button id="animation-play" class="target-true" style="display: none;" title="Play animation"><img src="src/icons/play_arrow_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
-                    <button id="animation-pause" class="target-true" title="Pause animation"><img src="src/icons/pause_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
+                    <img src="src/icons/emoji_people_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="动作">
+                    <select id="animation-selector" class="target-true" title="选择动作"></select>
+                    <button id="animation-play" class="target-true" style="display: none;" title="播放动作"><img src="src/icons/play_arrow_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
+                    <button id="animation-pause" class="target-true" title="暂停动作"><img src="src/icons/pause_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
                     <input id="animation-slider" class="target-true" type="range">
-                    <span class="target-false">&lt;No target selected&gt;</span>
+                    <span class="target-false">&lt;未选择角色&gt;</span>
                 </div>
 
                 <div>
-                    <img src="src/icons/wallpaper_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="3D Stage">
-                    <select id="stage-selector" title="Choose 3D stage"></select>
+                    <img src="src/icons/wallpaper_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="3D 场景">
+                    <select id="stage-selector" title="选择 3D 场景"></select>
                 </div>
 
                 <div class="spacer"></div>
@@ -86,51 +86,51 @@
             </div>
 
             <div id="menu-icons">
-                <a href="https://github.com/HiiragiNemu/Magi3Dviewer/tree/magius3dviewer" target="_blank" title="Visit the Magius3Dviewer source branch"><img src="src/icons/GitHub_Invertocat_Black.svg"></a>
+                <a href="https://github.com/HiiragiNemu/Magi3Dviewer/tree/magius3dviewer" target="_blank" title="查看 Magius3Dviewer 源代码分支"><img src="src/icons/GitHub_Invertocat_Black.svg"></a>
 
-                <button id="theme-set-light" title="Use light theme"><img src="src/icons/light_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-                <button id="theme-set-dark" title="Use dark theme"><img src="src/icons/dark_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                <button id="theme-set-light" title="使用浅色主题"><img src="src/icons/light_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                <button id="theme-set-dark" title="使用深色主题"><img src="src/icons/dark_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
 
-                <div id="background-select" class="icon-hover-container" title="Change background">
+                <div id="background-select" class="icon-hover-container" title="更换背景">
                     <button><img src="src/icons/wallpaper_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                     <div class="icon-hover-popitem">
                         <div id="background-list">
                             <button id="background-clear"><img src="src/icons/block_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                         </div>
-                        <button id="background-choose-file"><img src="src/icons/add_photo_alternate_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg">Choose from album</button>
+                        <button id="background-choose-file"><img src="src/icons/add_photo_alternate_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg">从本地相册选择</button>
                     </div>
                 </div>
 
-                <div id="camera-mode-selector" class="icon-hover-container" title="Select camera mode">
+                <div id="camera-mode-selector" class="icon-hover-container" title="选择相机模式">
                     <button><img src="src/icons/photo_camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                     <div id="camera-mode-list" class="icon-hover-popitem center">
-                        <button id="camera-mode-background">Camera background</button>
+                        <button id="camera-mode-background">摄像头背景</button>
                         <!-- <button id="camera-mode-ar">AR</button> -->
                     </div>
                 </div>
-                <button id="camera-off" title="Turn off camera background"><img src="src/icons/no_photography_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                <button id="camera-off" title="关闭摄像头背景"><img src="src/icons/no_photography_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
 
-                <button id="fullscreen-btn" title="Fullscreen"><img src="src/icons/fullscreen_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                <button id="fullscreen-btn" title="全屏"><img src="src/icons/fullscreen_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
 
-                <button id="transform-set-translate" title="Adjust character position" style="display: none;"><img src="src/icons/drag_pan_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-                <button id="transform-set-rotate" title="Adjust character rotation" style="display: none;"><img src="src/icons/360_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                <button id="transform-set-translate" title="调整角色位置" style="display: none;"><img src="src/icons/drag_pan_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                <button id="transform-set-rotate" title="调整角色旋转" style="display: none;"><img src="src/icons/360_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
             </div>
         </div>
 
         <div id="preset-dialog-container" style="display: none;">
             <div id="preset-dialog-overlay"></div>
             <div id="preset-dialog">
-                <div id="preset-dialog-title">Preset</div>
+                <div id="preset-dialog-title">预设</div>
                 <textarea id="preset-dialog-textarea"></textarea>
-                <button id="preset-dialog-button-ok">OK</button>
+                <button id="preset-dialog-button-ok">确定</button>
             </div>
         </div>
 
         <div id="camera-save-container">
             <img id="camera-save-img">
             <div id="camera-save-actions">
-                <button id="camera-save-close">Close</button>
-                <button id="camera-save-download">Download</button>
+                <button id="camera-save-close">关闭</button>
+                <button id="camera-save-download">下载</button>
             </div>
         </div>
     </div>

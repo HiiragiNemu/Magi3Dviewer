@@ -64,7 +64,7 @@ export function savePhoto() {
         }
     }
     else {
-        window.alert('Failed to take photo')
+        window.alert('拍照失败')
         resumeViewer()
         btnCameraShot.classList.remove('shoting')
     }

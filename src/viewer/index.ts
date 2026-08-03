@@ -8,6 +8,7 @@ import { guiOptions, setupBackgroundImageSelector, updateCharacterController, up
 import { type TransformControlsMode } from 'three/examples/jsm/Addons.js';
 import { presetImport } from './controllers/presets';
 import { setupCameraModeButtons } from './camera'
+import { translateUiText } from './localization/zhCN'
 
 const characterSelector = document.getElementById('character-selector') as HTMLSelectElement
 const characterAddCrossBtn = document.getElementById('character-add-cross-btn') as HTMLButtonElement
@@ -79,7 +80,7 @@ export function setupViewer() {
 }
 
 function setupCharacterAddSelector() {
-    initSelector(characterAddSelector, { '< Select a character to add >': '', ...characterSelectDict });
+    initSelector(characterAddSelector, { '< 请选择要添加的角色 >': '', ...characterSelectDict });
     characterAddSelector.value = ''
 
     characterAddSelector.addEventListener('focus', () => {
@@ -234,7 +235,7 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
         character.animations.reduce((obj, name) => {
             obj[name] = name
             return obj
-        }, { '<None>': '' } as Record<string, string>),
+        }, { '<无动作>': '' } as Record<string, string>),
         value => {
             if (value) {
                 character.animation.play(value, true)
@@ -281,7 +282,7 @@ function calculateNewCharacterPosition(newCharacter: SceneCharacter): THREE.Vect
 export function displayProgress(text: string) {
     if (text) {
         loadProgressEl.style.removeProperty('display')
-        loadProgressEl.textContent = text
+        loadProgressEl.textContent = translateUiText(text)
     } else {
         loadProgressEl.style.display = 'none'
     }

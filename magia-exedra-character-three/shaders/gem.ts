@@ -37,6 +37,12 @@ export function setOfficialMaterialProfileUniforms(
     set('uMaterialOutlineOffset', value.outlineOffset ? 1 : 0);
     set('uMaterialSkinOutlineOffset', value.skinOutlineOffset ? 1 : 0);
     set('uMaterialIsGem', gem.enabled ? 1 : 0);
+    // GeneralMaterial is shared by every recovered FBX draw group.  The
+    // compile-time feature profile is deliberately an aggregate so the shader
+    // variant contains the jewel branch, but the actual switch must follow the
+    // material slot selected by loader.onBeforeRender.  Keeping this beside
+    // uMaterialIsGem also guarantees non-gem groups reset the boost to zero.
+    set('uMaterialSpecialJewel', gem.enabled ? 1 : 0);
     set('uGemUseMatCap', gem.useMatCap ? 1 : 0);
     set('uGemMatCapIntensity', gem.matCapIntensity);
     set('uGemMaskMatcapMetallic', gem.maskMatcapMetallic ? 1 : 0);

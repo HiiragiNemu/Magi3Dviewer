@@ -19,6 +19,7 @@ export interface StageMaterialBinding {
     normalMapUrl?: string
     smoothnessMapUrl?: string
     blendMapUrl?: string
+    matCapMapUrl?: string
     vertexColorBlend?: boolean
     smoothness?: number
     smoothnessChannel?: 'r' | 'g' | 'b' | 'a'
@@ -29,6 +30,7 @@ export interface StageMaterialBinding {
     alphaToCoverage?: boolean
     transparent?: boolean
     unlitness?: number
+    matCapIntensity?: number
     castShadow?: boolean
     receiveShadow?: boolean
     side?: 'front' | 'back' | 'double'
@@ -58,6 +60,7 @@ export async function applyStageMaterialBindings(
     object: THREE.Object3D,
     bindings: StageMaterialBinding[] | undefined,
     renderer: THREE.WebGLRenderer,
+    signal?: AbortSignal,
 ): Promise<StageMaterialBindingResult> {
     if (!bindings?.length) {
         return { textures: [], matchedMaterials: [], unmatchedBindings: [] }
@@ -69,12 +72,18 @@ export async function applyStageMaterialBindings(
     const matchedBindings = new Set<StageMaterialBinding>()
     const matchedMaterials = new Set<string>()
     const maxAnisotropy = renderer.capabilities.getMaxAnisotropy()
+    const createdMaterials = new Set<THREE.Material>()
+    const sourceMaterialsToDispose = new Set<THREE.Material>()
 
     const loadTexture = (url: string, kind: LoadedTextureKind) => {
         const cacheKey = `${kind}:${new URL(url, document.baseURI).href}`
         let promise = textureCache.get(cacheKey)
         if (!promise) {
             promise = textureLoader.loadAsync(new URL(url, document.baseURI).href).then(texture => {
+                if (signal?.aborted) {
+                    texture.dispose()
+                    signal.throwIfAborted()
+                }
                 texture.name = `StageTexture:${url}`
                 texture.colorSpace = kind === 'color'
                     ? THREE.SRGBColorSpace
@@ -94,50 +103,104 @@ export async function applyStageMaterialBindings(
         binding.normalMapUrl ? loadTexture(binding.normalMapUrl, 'data') : undefined,
         binding.smoothnessMapUrl ? loadTexture(binding.smoothnessMapUrl, 'data') : undefined,
         binding.blendMapUrl ? loadTexture(binding.blendMapUrl, 'color') : undefined,
+        binding.matCapMapUrl ? loadTexture(binding.matCapMapUrl, 'color') : undefined,
     ].filter((promise): promise is Promise<THREE.Texture> => Boolean(promise)))
-    await Promise.all(texturePromises)
 
     const resolveTexture = async (url: string | undefined, kind: LoadedTextureKind) => {
         if (!url) return undefined
         return loadTexture(url, kind)
     }
 
-    const materialPromises: Promise<void>[] = []
-    object.traverse(child => {
-        const mesh = child as THREE.Mesh
-        if (!mesh.isMesh) return
+    interface MeshMaterialPlan {
+        mesh: THREE.Mesh
+        outputMaterials: THREE.Material[]
+        bindings: StageMaterialBinding[]
+        operations: Promise<void>[]
+        usesMaterialArray: boolean
+    }
 
-        const sourceMaterials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
-        const outputMaterials = [...sourceMaterials]
-        sourceMaterials.forEach((sourceMaterial, index) => {
-            const binding = bindings.find(entry => matchesMaterial(entry, sourceMaterial.name))
-            if (!binding) return
+    const plans: MeshMaterialPlan[] = []
+    try {
+        const textureResults = await Promise.allSettled(texturePromises)
+        const textureFailure = textureResults.find(
+            result => result.status === 'rejected',
+        )
+        if (textureFailure?.status === 'rejected') throw textureFailure.reason
+        signal?.throwIfAborted()
 
-            materialPromises.push((async () => {
-                const material = await createBoundMaterial(binding, mesh, {
-                    baseMap: await resolveTexture(binding.baseMapUrl, 'color'),
-                    normalMap: await resolveTexture(binding.normalMapUrl, 'data'),
-                    smoothnessMap: await resolveTexture(binding.smoothnessMapUrl, 'data'),
-                    blendMap: await resolveTexture(binding.blendMapUrl, 'color'),
-                    ownedTextures,
-                })
-                material.name = sourceMaterial.name
-                outputMaterials[index] = material
-                mesh.userData.stageCastShadow = binding.castShadow
-                    ?? mesh.userData.stageCastShadow
-                mesh.userData.stageReceiveShadow = binding.receiveShadow
-                    ?? mesh.userData.stageReceiveShadow
-                matchedBindings.add(binding)
-                matchedMaterials.add(sourceMaterial.name)
-                sourceMaterial.dispose()
-            })())
+        object.traverse(child => {
+            const mesh = child as THREE.Mesh
+            if (!mesh.isMesh) return
+
+            const usesMaterialArray = Array.isArray(mesh.material)
+            const sourceMaterials: THREE.Material[] =
+                Array.isArray(mesh.material)
+                    ? [...mesh.material]
+                    : [mesh.material]
+            const outputMaterials = [...sourceMaterials]
+            const plan: MeshMaterialPlan = {
+                mesh,
+                outputMaterials,
+                bindings: [],
+                operations: [],
+                usesMaterialArray,
+            }
+
+            sourceMaterials.forEach((sourceMaterial, index) => {
+                const binding = bindings.find(
+                    entry => matchesMaterial(entry, sourceMaterial.name),
+                )
+                if (!binding) return
+                plan.bindings.push(binding)
+                sourceMaterialsToDispose.add(sourceMaterial)
+
+                plan.operations.push((async () => {
+                    const material = await createBoundMaterial(binding, mesh, {
+                        baseMap: await resolveTexture(binding.baseMapUrl, 'color'),
+                        normalMap: await resolveTexture(binding.normalMapUrl, 'data'),
+                        smoothnessMap: await resolveTexture(binding.smoothnessMapUrl, 'data'),
+                        blendMap: await resolveTexture(binding.blendMapUrl, 'color'),
+                        matCapMap: await resolveTexture(binding.matCapMapUrl, 'color'),
+                        ownedTextures,
+                    })
+                    createdMaterials.add(material)
+                    signal?.throwIfAborted()
+                    material.name = sourceMaterial.name
+                    outputMaterials[index] = material
+                    matchedBindings.add(binding)
+                    matchedMaterials.add(sourceMaterial.name)
+                })())
+            })
+            if (plan.operations.length > 0) plans.push(plan)
         })
 
-        Promise.all(materialPromises).then(() => {
-            mesh.material = Array.isArray(mesh.material) ? outputMaterials : outputMaterials[0]
+        const materialResults = await Promise.allSettled(
+            plans.flatMap(plan => plan.operations),
+        )
+        const materialFailure = materialResults.find(
+            result => result.status === 'rejected',
+        )
+        if (materialFailure?.status === 'rejected') throw materialFailure.reason
+        signal?.throwIfAborted()
+
+        plans.forEach(plan => {
+            plan.mesh.material = plan.usesMaterialArray
+                ? plan.outputMaterials
+                : plan.outputMaterials[0]
+            applyDeterministicMeshShadowPolicy(plan.mesh, plan.bindings)
         })
-    })
-    await Promise.all(materialPromises)
+        // FBXLoader may share one Texture instance across multiple materials.
+        // Replacing one material must not dispose a texture that is still used
+        // by an unmatched material elsewhere in the stage hierarchy.
+        const retainedTextures = collectObjectMaterialTextures(object)
+        sourceMaterialsToDispose.forEach(material => {
+            disposeMaterialAndUnreferencedTextures(material, retainedTextures)
+        })
+    } catch (error) {
+        createdMaterials.forEach(disposeMaterialAndTextures)
+        ownedTextures.forEach(texture => texture.dispose())
+        throw error
+    }
 
     const unmatchedBindings = bindings
         .filter(binding => !matchedBindings.has(binding))
@@ -159,6 +222,70 @@ export async function applyStageMaterialBindings(
     }
 }
 
+function applyDeterministicMeshShadowPolicy(
+    mesh: THREE.Mesh,
+    bindings: StageMaterialBinding[],
+) {
+    const castValues = bindings
+        .map(binding => binding.castShadow)
+        .filter((value): value is boolean => value != undefined)
+    const receiveValues = bindings
+        .map(binding => binding.receiveShadow)
+        .filter((value): value is boolean => value != undefined)
+
+    if (castValues.length > 0) {
+        mesh.userData.stageCastShadow = castValues.some(Boolean)
+    }
+    if (receiveValues.length > 0) {
+        mesh.userData.stageReceiveShadow = receiveValues.some(Boolean)
+    }
+    if (
+        new Set(castValues).size > 1
+        || new Set(receiveValues).size > 1
+    ) {
+        console.warn(
+            `Stage mesh "${mesh.name}" has mixed per-material shadow flags; `
+            + 'using the conservative mesh-wide union.',
+        )
+    }
+}
+
+function disposeMaterialAndTextures(material: THREE.Material) {
+    Object.values(material).forEach(value => {
+        if (value instanceof THREE.Texture) value.dispose()
+    })
+    material.dispose()
+}
+
+function disposeMaterialAndUnreferencedTextures(
+    material: THREE.Material,
+    retainedTextures: ReadonlySet<THREE.Texture>,
+) {
+    Object.values(material).forEach(value => {
+        if (value instanceof THREE.Texture && !retainedTextures.has(value)) {
+            value.dispose()
+        }
+    })
+    material.dispose()
+}
+
+function collectObjectMaterialTextures(object: THREE.Object3D) {
+    const textures = new Set<THREE.Texture>()
+    object.traverse(child => {
+        const mesh = child as THREE.Mesh
+        if (!mesh.isMesh) return
+        const materials = Array.isArray(mesh.material)
+            ? mesh.material
+            : [mesh.material]
+        materials.forEach(material => {
+            Object.values(material).forEach(value => {
+                if (value instanceof THREE.Texture) textures.add(value)
+            })
+        })
+    })
+    return textures
+}
+
 function matchesMaterial(binding: StageMaterialBinding, materialName: string) {
     if (binding.materialName === materialName) return true
     if (!binding.materialPattern) return false
@@ -170,6 +297,7 @@ interface BoundTextureSet {
     normalMap?: THREE.Texture
     smoothnessMap?: THREE.Texture
     blendMap?: THREE.Texture
+    matCapMap?: THREE.Texture
     ownedTextures: Set<THREE.Texture>
 }
 
@@ -190,7 +318,7 @@ async function createBoundMaterial(
     if (binding.shading === 'unlit') {
         const material = new THREE.MeshBasicMaterial(common)
         material.alphaToCoverage = binding.alphaToCoverage ?? false
-        installAtlasAnimation(material, map, binding.atlas)
+        installAtlasAnimation(material, map, binding.atlas, mesh)
         return material
     }
 
@@ -213,7 +341,7 @@ async function createBoundMaterial(
         console.warn(`Stage material ${binding.materialName ?? binding.materialPattern} requested vertex-color blending, but its mesh has no color attribute`)
     }
     installOfficialLitExtensions(material, binding, textures)
-    installAtlasAnimation(material, map, binding.atlas)
+    installAtlasAnimation(material, map, binding.atlas, mesh)
     return material
 }
 
@@ -238,6 +366,7 @@ function installAtlasAnimation(
     material: THREE.Material,
     map: THREE.Texture | undefined,
     atlas: StageAtlasProfile | undefined,
+    mesh: THREE.Object3D,
 ) {
     if (!map || !atlas) return
     const frameCount = Math.max(1, atlas.columns * atlas.rows)
@@ -245,11 +374,25 @@ function installAtlasAnimation(
     const framesPerSecond = atlas.framesPerSecond ?? 0
     material.userData.stageAtlas = { ...atlas }
     material.onBeforeRender = () => {
+        const runtimeTime = findStageRuntimeTime(mesh)
         const elapsedFrame = framesPerSecond > 0
-            ? Math.floor(performance.now() * 0.001 * framesPerSecond)
+            ? Math.floor(
+                (runtimeTime ?? performance.now() * 0.001)
+                * framesPerSecond,
+            )
             : 0
         setAtlasFrame(map, atlas, (frameOffset + elapsedFrame) % frameCount)
     }
+}
+
+function findStageRuntimeTime(object: THREE.Object3D) {
+    let current: THREE.Object3D | null = object
+    while (current) {
+        const value = current.userData.stageRuntimeTime
+        if (typeof value === 'number' && Number.isFinite(value)) return value
+        current = current.parent
+    }
+    return undefined
 }
 
 function setAtlasFrame(texture: THREE.Texture, atlas: StageAtlasProfile, frame: number) {
@@ -270,12 +413,14 @@ function installOfficialLitExtensions(
 ) {
     const blendMap = binding.vertexColorBlend ? textures.blendMap : undefined
     const smoothnessMap = textures.smoothnessMap
+    const matCapMap = textures.matCapMap
     const smoothness = binding.smoothness ?? 1
     const smoothnessChannel = binding.smoothnessChannel ?? 'r'
     const unlitness = binding.unlitness ?? 0
     material.userData.stageBlendMap = blendMap
     material.userData.stageSmoothnessMap = smoothnessMap
     material.userData.stageSmoothness = smoothness
+    material.userData.stageMatCapMap = matCapMap
     // This must be present before program parameter collection so Three emits
     // USE_ROUGHNESSMAP and vRoughnessMapUv for our smoothness interpretation.
     if (smoothnessMap) material.roughnessMap = smoothnessMap
@@ -338,6 +483,50 @@ float roughnessFactor = clamp( 1.0 - stageSmoothness, 0.04, 1.0 );`,
             }
         }
 
+        if (matCapMap) {
+            shader.uniforms.uStageMatCapMap = { value: matCapMap }
+            shader.uniforms.uStageMatCapIntensity = {
+                value: binding.matCapIntensity ?? 1,
+            }
+            shader.fragmentShader = shader.fragmentShader
+                .replace(
+                    '#include <common>',
+                    `#include <common>
+uniform sampler2D uStageMatCapMap;
+uniform float uStageMatCapIntensity;`,
+                )
+                .replace(
+                    '#include <opaque_fragment>',
+                    `vec3 stageMatCapViewDir = normalize( vViewPosition );
+float stageMatCapHorizontalLengthSq = dot(
+    stageMatCapViewDir.xz,
+    stageMatCapViewDir.xz
+);
+vec3 stageMatCapX = stageMatCapHorizontalLengthSq > 1e-6
+    ? vec3(
+        stageMatCapViewDir.z,
+        0.0,
+        -stageMatCapViewDir.x
+    ) * inversesqrt( stageMatCapHorizontalLengthSq )
+    : vec3( 1.0, 0.0, 0.0 );
+vec3 stageMatCapY = cross( stageMatCapViewDir, stageMatCapX );
+vec2 stageMatCapUv = vec2(
+    dot( stageMatCapX, normal ),
+    dot( stageMatCapY, normal )
+) * 0.495 + 0.5;
+vec3 stageMatCapColor = texture2D(
+    uStageMatCapMap,
+    stageMatCapUv
+).rgb;
+outgoingLight = mix(
+    outgoingLight,
+    diffuseColor.rgb * stageMatCapColor,
+    clamp( uStageMatCapIntensity, 0.0, 1.0 )
+);
+#include <opaque_fragment>`,
+                )
+        }
+
         if (unlitness > 0) {
             shader.uniforms.uStageUnlitness = { value: unlitness }
             shader.fragmentShader = shader.fragmentShader
@@ -358,6 +547,7 @@ uniform float uStageUnlitness;`,
         blendMap ? 'vertex-blend' : 'single-map',
         smoothnessMap ? 'smoothness-inversion' : 'constant-roughness',
         binding.metallicFromSmoothnessMap ? 'metallic-red' : 'metallic-constant',
+        matCapMap ? `matcap-${binding.matCapIntensity ?? 1}` : 'no-matcap',
         unlitness > 0 ? `unlit-mix-${unlitness}` : 'fully-lit',
     ].join(':')
     material.needsUpdate = true

@@ -1,0 +1,360 @@
+{
+  "id": "battle-608-00-00-001",
+  "name": "[Official dynamic partial/Battle] 608-00-00-001",
+  "category": "battle",
+  "official": true,
+  "assetBundleName": "battle/stage/bg_3d_608_00_00_001",
+  "type": "fbx",
+  "url": "./stages/official/battle-608-00-00-001/bg_3d_608_00_00_001-animated.fbxdata",
+  "scale": 1,
+  "position": [0, 0, 0],
+  "rotation": [0, 0, 0],
+  "spawnPoints": [
+    {
+      "id": "actor-0",
+      "name": "Actor 0",
+      "role": "actor",
+      "position": [0, 0, 0],
+      "rotation": [0, 0, 0]
+    }
+  ],
+  "materialBindings": [
+    {
+      "materialName": "bg3d608_00_blue_ChairCD",
+      "materialPattern": "^bg3d608_00_blue_ChairCD(?:\\.\\d+)?$",
+      "shading": "lit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+      "smoothness": 0.1,
+      "unlitness": 0.3,
+      "castShadow": true,
+      "receiveShadow": true
+    },
+    {
+      "materialName": "bg3d608_00_blue_Fish",
+      "materialPattern": "^bg3d608_00_blue_Fish(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+      "smoothness": 0,
+      "unlitness": 1,
+      "castShadow": false,
+      "receiveShadow": false
+    },
+    {
+      "materialName": "bg3d608_00_blue_Ground",
+      "materialPattern": "^bg3d608_00_blue_Ground(?:\\.\\d+)?$",
+      "shading": "lit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_ground_col.png",
+      "smoothness": 0.5,
+      "unlitness": 0.2,
+      "castShadow": true,
+      "receiveShadow": true
+    },
+    {
+      "materialName": "bg3d608_00_blue_Object",
+      "materialPattern": "^bg3d608_00_blue_Object(?:\\.\\d+)?$",
+      "shading": "lit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+      "smoothness": 0.2,
+      "unlitness": 0.4,
+      "castShadow": false,
+      "receiveShadow": true
+    },
+    {
+      "materialName": "bg3d608_00_blue_ObjectB",
+      "materialPattern": "^bg3d608_00_blue_ObjectB(?:\\.\\d+)?$",
+      "shading": "lit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+      "smoothness": 0.5,
+      "unlitness": 0.75,
+      "castShadow": false,
+      "receiveShadow": true
+    },
+    {
+      "materialName": "mt_bg3d608_00_blue_sky",
+      "materialPattern": "^mt_bg3d608_00_blue_sky(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_sky_col.png",
+      "side": "double",
+      "smoothness": 1,
+      "unlitness": 0.2,
+      "castShadow": false,
+      "receiveShadow": false
+    },
+    {
+      "materialName": "mt_bg3d608_00_red_MusicNoteA",
+      "materialPattern": "^mt_bg3d608_00_red_MusicNoteA(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+      "alphaTest": 0.01,
+      "alphaToCoverage": true,
+      "transparent": true,
+      "unlitness": 1,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "double"
+    },
+    {
+      "materialName": "mt_bg3d608_00_red_MusicNoteB",
+      "materialPattern": "^mt_bg3d608_00_red_MusicNoteB(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+      "alphaTest": 0.01,
+      "alphaToCoverage": true,
+      "transparent": true,
+      "smoothness": 0.3,
+      "unlitness": 1,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "double"
+    },
+    {
+      "materialName": "mt_bg3d608_00_red_MusicNoteC",
+      "materialPattern": "^mt_bg3d608_00_red_MusicNoteC(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_circlenote_col.png",
+      "alphaTest": 0.01,
+      "alphaToCoverage": true,
+      "transparent": true,
+      "smoothness": 0.3,
+      "unlitness": 1,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "double"
+    },
+    {
+      "materialName": "mt_bg3d608_00_red_violinCol",
+      "materialPattern": "^mt_bg3d608_00_red_violinCol(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violin_sprite.png",
+      "alphaTest": 0.01,
+      "alphaToCoverage": true,
+      "transparent": true,
+      "unlitness": 1,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "double"
+    },
+    {
+      "materialName": "mt_bg3d608_00_red_violinShdLine",
+      "materialPattern": "^mt_bg3d608_00_red_violinShdLine(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violinLineShd_sprite.png",
+      "alphaTest": 0.01,
+      "alphaToCoverage": true,
+      "transparent": true,
+      "unlitness": 1,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "double"
+    },
+    {
+      "materialName": "mt_mt_bg3d608_00_red_Object",
+      "materialPattern": "^mt_mt_bg3d608_00_red_Object(?:\\.\\d+)?$",
+      "shading": "lit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_objects_col.png",
+      "matCapMapUrl": "./stages/official/battle-608-00-00-001/matcap.png",
+      "matCapIntensity": 1,
+      "smoothness": 0.2,
+      "unlitness": 0.4,
+      "castShadow": false,
+      "receiveShadow": true
+    },
+    {
+      "materialName": "mt_mt_bg3d608_00_red_Roof",
+      "materialPattern": "^mt_mt_bg3d608_00_red_Roof(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_ground_col.png",
+      "smoothness": 0.5,
+      "unlitness": 1,
+      "castShadow": false,
+      "receiveShadow": false
+    }
+  ],
+  "renderProfile": {
+    "id": "bg_3d_608_00_00_001",
+    "source": "ReDriveVolume",
+    "stageLayer": 6,
+    "backgroundColor": "#56dbfa",
+    "fog": {
+      "color": "#56dbfa",
+      "near": 10,
+      "far": 400
+    },
+    "lights": [
+      {
+        "name": "VolumeLight",
+        "type": "spot",
+        "anchorNode": "VolumeLight",
+        "position": [0, 30, 0],
+        "target": [0, 0, 0],
+        "color": [0.3160377, 0.7141651, 1, 1],
+        "intensity": 0.3,
+        "range": 30,
+        "outerAngleDegrees": 90,
+        "innerAngleDegrees": 90,
+        "cullingMask": 4294967295,
+        "lightmapping": 1,
+        "role": "background",
+        "castShadow": false
+      },
+      {
+        "name": "FillLight",
+        "type": "point",
+        "anchorNode": "FillLight",
+        "position": [0, 11, 0],
+        "color": [0.44001427, 0.8666653, 0.9056604, 1],
+        "intensity": 600,
+        "range": 60,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "castShadow": false
+      },
+      {
+        "name": "MainLight",
+        "type": "directional",
+        "anchorNode": "MainLight",
+        "position": [0, 5, 0],
+        "target": [-0.41317597, 4.23395568, -0.49240401],
+        "color": [0.8869565, 1, 0.9782609, 1],
+        "intensity": 1,
+        "cullingMask": 2147483647,
+        "lightmapping": 1,
+        "role": "character-key",
+        "castShadow": true,
+        "shadow": {
+          "type": 2,
+          "strength": 1,
+          "bias": 0,
+          "normalBias": 0,
+          "nearPlane": 0.1
+        }
+      }
+    ],
+    "renderer": {
+      "toneMapping": "aces",
+      "exposure": 1.148698355
+    },
+    "colorFilter": {
+      "brightness": 1,
+      "contrast": 1.1,
+      "saturation": 1.15
+    },
+    "bloom": {
+      "enabled": true,
+      "strength": 1,
+      "radius": 0.75,
+      "threshold": 0.8
+    },
+    "reDriveVolume": {
+      "skyboxIntensity": 1,
+      "shAmbient": [
+        0.060730126, 2.2054808e-10, 0, -8.087256e-11, 0, 7.228495e-11, 2.4680048e-8, 0, -1.0990876e-8,
+        0.060730126, 2.2054808e-10, 0, -8.087256e-11, 0, 7.228495e-11, 2.4680048e-8, 0, -1.0990876e-8,
+        0.060730126, 2.2054808e-10, 0, -8.087256e-11, 0, 7.228495e-11, 2.4680048e-8, 0, -1.0990876e-8
+      ],
+      "characterShadowTint": [0.85, 0.9086956, 1, 1],
+      "characterLightingOverrideColor": [1, 1, 1, 1],
+      "characterLightingOverrideRatio": 0.5,
+      "characterAdditionalRimLightColor": [1, 1, 1, 1],
+      "characterAdditionalRimLightDirection": [1, -1],
+      "backgroundShadowStrengthAdditive": 0.5,
+      "paraffin": {
+        "enabled": true,
+        "topColor": [0.08139099, 0, 0.8301887, 1],
+        "bottomColor": [0.36078432, 0.85882354, 0.718218, 1],
+        "opacity": 0.3,
+        "width": 1.5,
+        "topBlendMode": 2,
+        "bottomBlendMode": 2
+      },
+      "overrides": {
+        "skyboxIntensity": true,
+        "shAmbient": true,
+        "characterShadowTint": true,
+        "characterLightingOverrideColor": true,
+        "characterLightingOverrideRatio": true,
+        "characterAdditionalRimLightColor": true,
+        "characterAdditionalRimLightDirection": false,
+        "backgroundShadowStrengthAdditive": true,
+        "paraffin": true
+      }
+    }
+  },
+  "runtime": {
+    "clipNames": [
+      "bg3d608_00_blue_FishAnimation",
+      "bg3d608_00_blue_Fish_RotateAnimation"
+    ],
+    "autoplay": true,
+    "loop": true,
+    "timeScale": 1,
+    "voiceTracks": [],
+    "rotators": [
+      {
+        "objectName": "chair_grp",
+        "degreesPerSecond": [0, 1, 0],
+        "space": "self"
+      }
+    ]
+  },
+  "dynamic": {
+    "expected": true,
+    "status": "partial",
+    "clipNames": [
+      "bg3d608_00_blue_FishAnimation",
+      "bg3d608_00_blue_Fish_RotateAnimation"
+    ],
+    "missing": [
+      "six Unity ParticleSystem and ParticleSystemRenderer reconstructions",
+      "bg3d608_00_blue_Fish two-layer UV scroll at -0.01 U/second",
+      "volumetric spot-light beam and dust runtime",
+      "20 renderer lightmap offset/scale bindings and secondary UV verification",
+      "reflection probe cubemap conversion and box projection",
+      "Unity component light-state and red/blue material-state runtime",
+      "vignette and exact Unity post-processing parity"
+    ],
+    "evidence": [
+      "Two exact Three.js-loadable clips: 4 s/12 tracks and 1 s/1 track",
+      "LinearRotater.Update native RVA 0x0459C144: localRotation *= Quaternion.Euler(rotation * Time.deltaTime)",
+      "Six ParticleSystem plus six ParticleSystemRenderer component dumps",
+      "Fish material _MULTI_UV_SCROLL with both scroll speeds [-0.01,0]",
+      "One 1024x1024 RGBA baked lightmap and 20 renderer bindings",
+      "One realtime ReflectionProbe and ReDriveVolume serialized profile",
+      "No TimelineAsset or PlayableDirector exists in the 15-file closure"
+    ]
+  },
+  "evidence": [
+    "JP 3.11.0 AssetBundle dependency closure (15 files, 17,074,895 bytes)",
+    "AssetStudio.ModelConverter exact AnimationClip export with verified root-path repair",
+    "Three.js FBXLoader semantic audit: 360 nodes, 118 meshes, 13 materials, 2 exact clips",
+    "JP ReDriveVolume, Unity Light, lightmap, ReflectionProbe, ParticleSystem and LinearRotater dumps",
+    "This entry is intentionally marked dynamic partial; an animated FBX is not scene-complete"
+  ],
+  "packageEvidence": {
+    "fileCount": 16,
+    "totalBytes": 13414281,
+    "sourceFbxSha256": "56de2bad6245358b23288819bcf6ee728e7d4614ed3de61f1811a1e35562c154",
+    "closureManifestSha256": "b811ba915de151a66077c1951482432313c25165267844d60a8a90f65cf40fb8",
+    "animationAuditSha256": "4aec900bfc86bf4bc7eec943464329a73f3e3c5193c5b7161956926b9fcfced8",
+    "lightingDynamicAuditSha256": "0d28591dcbe8c20453f3af9edb3e9e7defb4b6014540d8414da171cf9c5e9c2c",
+    "files": {
+      "bg_3d_608_00_00_001-animated.fbxdata": "56de2bad6245358b23288819bcf6ee728e7d4614ed3de61f1811a1e35562c154",
+      "bg3d608_00_blue_ground_col.png": "85ee96ef96b44cdef3c4f4c9626cc8bc798d38b4e68f5b5716c31c287d5f7cf3",
+      "bg3d608_00_blue_objects_col.png": "236ca25c7c51de9e019957f6dc31f66757b33811cce0af984ed73a25e76f6916",
+      "bg3d608_00_blue_objects_uvscroll_col.png": "356abe05b03915b9c565e43e54049cf4763dbfae347de77260c8cfded740e9b3",
+      "bg3d608_00_blue_sky_col.png": "2f59751ce5ca3e78ca7eb749208e32063fbdc1c9d17fe5d8f77b23fd59c182fb",
+      "bg3d608_00_red_circlenote_col.png": "1dccee65fe1e78f23d20d424a842b695e21f8a73c4f4b49c372c8ebcbb0f4935",
+      "bg3d608_00_red_ground_col.png": "e89d59038b3aab3ff593c12f9d0204ea4407f707515cc8b1713480e4ea9d0996",
+      "bg3d608_00_red_musicNote_col.png": "66c9c27beea242d633fd92460a1385beab009f43b8faaaefd0222c83addeab6d",
+      "bg3d608_00_red_objects_col.png": "4c7f11e4be384418545fadc186ae05fde5fc9a19f11ab9fe2720e6cc6ea4bd8f",
+      "bg3d608_00_red_sky_col.png": "6549cd088c7f5d927c782663740d9e077f9805b1ab9cfdde298380a4f6ae97ca",
+      "bg3d608_00_red_violin_sprite.png": "91083e3aaaf57f155d5c0149db6aceb04bc4317ea33d6827fd17cfab9bdedb8d",
+      "bg3d608_00_red_violinLineShd_sprite.png": "ca3297ce50cc20f30a6bc55d37a4cbdf9e6114a4de911840f8b1aca1c6e45158",
+      "cloud_noise_tex.png": "e812f1a8733ee1f401bae75b407fb0b076548255ad845c6dfc1ca3f43df751dd",
+      "Lightmap-0_comp_light.png": "f7214703ffca043dd2c71bf8f0f2b262fe2ca5a7670797bf4f5378d012a4032d",
+      "matcap.png": "1f14556c9d23a64ab2d133e4cbff15139af4091b2f04aea391942838c19b70e5",
+      "simple_noise_tex.png": "b6c830aa7ed7b6db24fd99f472d4fda0a88b8aaf13bc19324d5998b1c5c201a8"
+    }
+  }
+}

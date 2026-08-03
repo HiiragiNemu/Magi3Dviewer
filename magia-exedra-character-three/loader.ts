@@ -27,6 +27,7 @@ import {
     type OfficialMaterialProfile,
 } from './materialProfile';
 import { createFaceDirectionReference, getOfficialFaceProfile } from './faceProfile';
+import { restoreOfficialSubmeshGroups } from './submeshGroups';
 
 const loadingManager = new THREE.LoadingManager();
 loadingManager.setURLModifier((url) => {
@@ -266,9 +267,19 @@ export async function loadCharacter(
                     mesh.receiveShadow = true
 
                     const meshMaterialNames = getMaterialNames(mesh)
+                    const restoredSubmeshGroups = restoreOfficialSubmeshGroups(
+                        mesh,
+                        characterId,
+                        meshMaterialNames.length,
+                    )
                     const materialProfiles = getOfficialMaterialProfiles(meshMaterialNames)
                     const featureProfile = inferMaterialFeatures(meshMaterialNames)
-                    console.log(`Material slots of "${mesh.name}":`, meshMaterialNames, materialProfiles)
+                    console.log(
+                        `Material slots of "${mesh.name}":`,
+                        meshMaterialNames,
+                        materialProfiles,
+                        restoredSubmeshGroups,
+                    )
 
                     const name = mesh.name
                         .replace('_Mesh', '')

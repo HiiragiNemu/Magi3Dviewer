@@ -47,7 +47,7 @@ export const guiOptions = {
             if (!guiExport) return
             const el = guiExport.domElement.getElementsByClassName('name')[0]
             const oldText = el.textContent
-            el.textContent = 'Copied to clipbaord!'
+            el.textContent = '已复制到剪贴板！'
             guiExport.disable()
             setTimeout(() => {
                 el.textContent = oldText

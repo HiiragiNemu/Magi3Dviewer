@@ -134,6 +134,12 @@ export class SceneEffectsController {
     smaaPass: SMAAPass
     outputPass: OutputPass
     fxaaPass: FXAAPass
+    requestedAntiAliasing: SceneComposerAntiAliasing = 'None'
+    requestedAntiAliasingLevel = 2
+    effectiveAntiAliasing: SceneComposerAntiAliasing = 'None'
+    effectiveAntiAliasingLevel = 2
+    antiAliasingFallbackReason?: string
+    private lastBackgroundSceneEnabled?: boolean
 
     constructor(scene: MagiaExedraScene3D) {
         this.scene = scene
@@ -205,14 +211,9 @@ export class SceneEffectsController {
         // producing the purple-black "silhouette" regression.
         this.renderPass.clearDepth = enabled
 
-        // Three's TAA/SSAA passes render a single scene into a freshly-cleared
-        // private target, so they cannot preserve the separately lit stage.
-        // Use the ordinary render pass while an official split-light stage is
-        // active; MSAA/SMAA/FXAA remain available.
-        if (enabled && (this.taaRenderPass.enabled || this.ssaaRenderPass.enabled)) {
-            this.taaRenderPass.enabled = false
-            this.ssaaRenderPass.enabled = false
-            this.renderPass.enabled = true
+        if (this.lastBackgroundSceneEnabled !== enabled) {
+            this.lastBackgroundSceneEnabled = enabled
+            this.applyEffectiveAntiAliasing()
         }
     }
 
@@ -223,12 +224,52 @@ export class SceneEffectsController {
     }
 
     setAntiAliasing(aa: SceneComposerAntiAliasing, level: number) {
+        this.requestedAntiAliasing = aa
+        this.requestedAntiAliasingLevel = level
+        this.applyEffectiveAntiAliasing()
+    }
+
+    getAntiAliasingState() {
+        return {
+            requested: this.requestedAntiAliasing,
+            requestedLevel: this.requestedAntiAliasingLevel,
+            effective: this.effectiveAntiAliasing,
+            effectiveLevel: this.effectiveAntiAliasingLevel,
+            fallbackReason: this.antiAliasingFallbackReason ?? null,
+            renderTargetSamples: this.renderTarget.samples,
+        }
+    }
+
+    private applyEffectiveAntiAliasing() {
+        // Three's TAA/SSAA passes render one scene into a private target and
+        // cannot retain the separately lit background pass. Keep the user's
+        // requested mode intact and use a reversible SMAA fallback while a
+        // split-light stage is active.
+        const needsSplitSceneFallback =
+            this.scene.backgroundSceneEnabled
+            && (
+                this.requestedAntiAliasing === 'TAA'
+                || this.requestedAntiAliasing === 'SSAA'
+            )
+        const aa = needsSplitSceneFallback
+            ? 'SMAA'
+            : this.requestedAntiAliasing
+        const level = aa === 'TAA' || aa === 'SSAA'
+            ? THREE.MathUtils.clamp(
+                Math.round(this.requestedAntiAliasingLevel),
+                0,
+                5,
+            )
+            : this.requestedAntiAliasingLevel
+
         this.taaRenderPass.enabled = false
         this.ssaaRenderPass.enabled = false
         this.renderPass.enabled = false
         this.smaaPass.enabled = false
         this.fxaaPass.enabled = false
 
+        this.taaRenderPass.accumulate = false
+        this.scene.taaCount = 0
         if (aa != 'MSAA' && this.renderTarget.samples > 0) this.updateComposerMsaa(0)
         if (aa == 'TAA') {
             this.taaRenderPass.enabled = true
@@ -238,9 +279,17 @@ export class SceneEffectsController {
             this.ssaaRenderPass.sampleLevel = level
         } else {
             this.renderPass.enabled = true
-            if (aa == 'MSAA') this.updateComposerMsaa(level)
+            if (aa == 'MSAA' && this.renderTarget.samples !== level) {
+                this.updateComposerMsaa(level)
+            }
             else if (aa == 'SMAA') this.smaaPass.enabled = true
             else if (aa == 'FXAA') this.fxaaPass.enabled = true
         }
+
+        this.effectiveAntiAliasing = aa
+        this.effectiveAntiAliasingLevel = level
+        this.antiAliasingFallbackReason = needsSplitSceneFallback
+            ? 'split-light-stage-does-not-support-three-taa-ssaa'
+            : undefined
     }
 }
