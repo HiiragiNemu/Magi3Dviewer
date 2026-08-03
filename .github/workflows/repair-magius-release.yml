@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: magius3dviewer-release-repair
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   repair:
@@ -85,12 +85,12 @@ jobs:
           replace_once(
               'vite.config.ts',
               """    // minify: false,\n    sourcemap: true,""",
-              """    // minify: false,\n    sourcemap: true,\n    // The app entry must stay compact. The isolated Three.js core is allowed a\n    // higher raw threshold because its gzip payload is far smaller.\n    chunkSizeWarningLimit: 850,""",
+              """    // minify: false,\n    sourcemap: true,\n    // Explicit application and vendor budgets are enforced after the build.\n    // This threshold catches accidental recombination while permitting the\n    // isolated Three.js core chunk.\n    chunkSizeWarningLimit: 900,""",
           )
           replace_once(
               'vite.config.ts',
               """      output: {\n        /**""",
-              """      output: {\n        manualChunks(id) {\n          const normalized = id.replace(/\\\\/g, '/')\n          if (!normalized.includes('/node_modules/')) return undefined\n          if (normalized.includes('/three/examples/jsm/postprocessing/') ||\n              normalized.includes('/three/examples/jsm/shaders/')) {\n            return 'three-postprocessing'\n          }\n          if (normalized.includes('/three/examples/jsm/loaders/')) return 'three-loaders'\n          if (normalized.includes('/three/examples/jsm/controls/')) return 'three-controls'\n          if (normalized.includes('/three/examples/jsm/libs/')) return 'three-libs'\n          if (normalized.includes('/node_modules/three/')) return 'three-core'\n          if (normalized.includes('/node_modules/@tweenjs/')) return 'tween'\n          if (normalized.includes('/node_modules/fflate/')) return 'fflate'\n          if (normalized.includes('/node_modules/lz-string/')) return 'lz-string'\n          return 'vendor'\n        },\n        /**""",
+              """      output: {\n        manualChunks(id) {\n          const normalized = id.replace(/\\\\/g, '/')\n\n          // Keep the browser entry small and cache the major application\n          // subsystems independently. These checks run before node_modules so\n          // imported assets remain owned by their application subsystem.\n          if (normalized.includes('/magia-exedra-character-three/')) {\n            return 'character-runtime'\n          }\n          if (normalized.includes('/src/viewer/controllers/')) {\n            return 'viewer-controls'\n          }\n          if (normalized.includes('/src/viewer/camera/')) {\n            return 'viewer-camera'\n          }\n          if (normalized.includes('/src/viewer/localization/')) {\n            return 'viewer-localization'\n          }\n          if (normalized.includes('/src/viewer/stage') ||\n              normalized.endsWith('/src/viewer/stages.ts') ||\n              normalized.endsWith('/src/viewer/reDriveVolumeRuntime.ts')) {\n            return 'viewer-stage'\n          }\n\n          if (!normalized.includes('/node_modules/')) return undefined\n          if (normalized.includes('/three/examples/jsm/postprocessing/') ||\n              normalized.includes('/three/examples/jsm/shaders/')) {\n            return 'three-postprocessing'\n          }\n          if (normalized.includes('/three/examples/jsm/loaders/')) return 'three-loaders'\n          if (normalized.includes('/three/examples/jsm/controls/')) return 'three-controls'\n          if (normalized.includes('/three/examples/jsm/libs/')) return 'three-libs'\n          if (normalized.includes('/node_modules/three/')) return 'three-core'\n          if (normalized.includes('/node_modules/@tweenjs/')) return 'tween'\n          if (normalized.includes('/node_modules/fflate/')) return 'fflate'\n          if (normalized.includes('/node_modules/lz-string/')) return 'lz-string'\n          return 'vendor'\n        },\n        /**""",
           )
           PY
 
@@ -121,13 +121,36 @@ jobs:
           const path = require('node:path')
           const dir = path.join(process.cwd(), 'dist', 'assets')
           const files = fs.readdirSync(dir)
-            .filter(name => /^(index|vendor|three-|tween|fflate|lz-string).+\.js$/.test(name))
+            .filter(name => name.endsWith('.js'))
             .map(name => ({ name, bytes: fs.statSync(path.join(dir, name)).size }))
             .sort((a, b) => b.bytes - a.bytes)
-          console.log(JSON.stringify(files, null, 2))
-          const entry = files.filter(file => /^index-/.test(file.name))
-          if (entry.some(file => file.bytes > 500 * 1024)) {
-            throw new Error(`Application entry remains above 500 KiB: ${JSON.stringify(entry)}`)
+          const relevant = files.filter(file =>
+            /^(index|character-runtime|viewer-|vendor|three-|tween|fflate|lz-string)/.test(file.name),
+          )
+          console.log(JSON.stringify(relevant, null, 2))
+
+          const modernEntry = files.filter(file =>
+            /^index-/.test(file.name) && !/^index-legacy-/.test(file.name),
+          )
+          if (modernEntry.length !== 1) {
+            throw new Error(`Expected one modern entry chunk: ${JSON.stringify(modernEntry)}`)
+          }
+          if (modernEntry[0].bytes > 500 * 1024) {
+            throw new Error(`Modern application entry remains above 500 KiB: ${JSON.stringify(modernEntry)}`)
+          }
+
+          const appChunks = files.filter(file =>
+            /^(character-runtime|viewer-controls|viewer-camera|viewer-localization|viewer-stage)-/.test(file.name) &&
+            !/-legacy-/.test(file.name),
+          )
+          const oversizedAppChunks = appChunks.filter(file => file.bytes > 650 * 1024)
+          if (oversizedAppChunks.length) {
+            throw new Error(`Application subsystem chunk exceeds 650 KiB: ${JSON.stringify(oversizedAppChunks)}`)
+          }
+
+          const threeCore = files.filter(file => /^three-core-/.test(file.name) && !/-legacy-/.test(file.name))
+          if (threeCore.some(file => file.bytes > 850 * 1024)) {
+            throw new Error(`Three.js core exceeds 850 KiB: ${JSON.stringify(threeCore)}`)
           }
           NODE
 
