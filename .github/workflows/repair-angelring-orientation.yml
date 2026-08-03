@@ -1,5 +1,6 @@
 name: Repair AngelRing projected orientation
 
+# Existing-workflow push trigger: 2026-08-04
 on:
   push:
     branches: ['main']
