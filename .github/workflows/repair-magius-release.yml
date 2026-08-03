@@ -1,0 +1,165 @@
+name: Repair Magius3Dviewer release
+run-name: Fix portrait AngelRing, npm audit and production chunks
+
+on:
+  push:
+    branches: ['main']
+    paths: ['.github/workflows/repair-magius-release.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: magius3dviewer-release-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout release source branch
+        uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Apply deterministic source repairs
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str) -> None:
+              file = Path(path)
+              text = file.read_text(encoding='utf-8')
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected one match, found {count}')
+              file.write_text(text.replace(old, new, 1), encoding='utf-8', newline='\n')
+
+          replace_once(
+              'magia-exedra-character-three/shaders/hair.ts',
+              "    shader.uniforms.uAngelRingAspectFix.value.set(width / height, 1);",
+              """    // Fragment coordinates are normalized independently by viewport size.\n    // Use inverse display aspect so one normalized X unit represents the same\n    // physical screen distance as one normalized Y unit. width / height\n    // collapses the projected ring into a diagonal stripe on portrait screens.\n    shader.uniforms.uAngelRingAspectFix.value.set(height / width, 1);""",
+          )
+
+          replace_once(
+              'angelRingHeadLock.test.mjs',
+              """assert.match(\n    shaderSource,\n    /gl_FragCoord\\.xy\\s*\\/\\s*max\\(uAngelRingViewportSize/,\n    'official projection must use fragment screen position',\n);""",
+              """assert.match(\n    shaderSource,\n    /gl_FragCoord\\.xy\\s*\\/\\s*max\\(uAngelRingViewportSize/,\n    'official projection must use fragment screen position',\n);\nassert.match(\n    shaderSource,\n    /uAngelRingAspectFix\\.value\\.set\\(height \\/ width, 1\\)/,\n    'portrait-safe AngelRing projection must use inverse display aspect',\n);\nassert.doesNotMatch(\n    shaderSource,\n    /uAngelRingAspectFix\\.value\\.set\\(width \\/ height, 1\\)/,\n    'width / height collapses AngelRing horizontally on portrait screens',\n);""",
+          )
+
+          replace_once(
+              'scripts/smoke-angelring-two-character.mjs',
+              """const page = await browser.newPage()\nawait page.setViewport({ width: 1100, height: 900, deviceScaleFactor: 1 })""",
+              """const page = await browser.newPage()\nconst viewportWidth = Number.parseInt(process.env.MAGIUS_VIEWPORT_WIDTH ?? '1100', 10)\nconst viewportHeight = Number.parseInt(process.env.MAGIUS_VIEWPORT_HEIGHT ?? '900', 10)\nconst artifactSuffix = process.env.MAGIUS_ARTIFACT_SUFFIX\n  ? `-${process.env.MAGIUS_ARTIFACT_SUFFIX.replace(/[^a-z0-9_-]+/gi, '-')}`\n  : ''\nif (!Number.isFinite(viewportWidth) || !Number.isFinite(viewportHeight) || viewportWidth <= 0 || viewportHeight <= 0) {\n  throw new Error(`Invalid smoke-test viewport: ${viewportWidth}x${viewportHeight}`)\n}\nawait page.setViewport({ width: viewportWidth, height: viewportHeight, deviceScaleFactor: 1 })""",
+          )
+          replace_once(
+              'scripts/smoke-angelring-two-character.mjs',
+              """await page.screenshot({ path: `/tmp/magius-angelring-${slug}-front.png`, fullPage: true })""",
+              """await page.screenshot({ path: `/tmp/magius-angelring-${slug}-front${artifactSuffix}.png`, fullPage: true })""",
+          )
+          replace_once(
+              'scripts/smoke-angelring-two-character.mjs',
+              """await page.screenshot({ path: `/tmp/magius-angelring-${slug}-back.png`, fullPage: true })""",
+              """await page.screenshot({ path: `/tmp/magius-angelring-${slug}-back${artifactSuffix}.png`, fullPage: true })""",
+          )
+          replace_once(
+              'scripts/smoke-angelring-two-character.mjs',
+              """const report = {\n  madoka,""",
+              """const report = {\n  viewport: { width: viewportWidth, height: viewportHeight },\n  madoka,""",
+          )
+          replace_once(
+              'scripts/smoke-angelring-two-character.mjs',
+              """fs.writeFileSync('/tmp/magius-angelring-two-character.json', JSON.stringify(report, null, 2))""",
+              """fs.writeFileSync(`/tmp/magius-angelring-two-character${artifactSuffix}.json`, JSON.stringify(report, null, 2))""",
+          )
+
+          replace_once(
+              'vite.config.ts',
+              """    // minify: false,\n    sourcemap: true,""",
+              """    // minify: false,\n    sourcemap: true,\n    // The app entry must stay compact. The isolated Three.js core is allowed a\n    // higher raw threshold because its gzip payload is far smaller.\n    chunkSizeWarningLimit: 850,""",
+          )
+          replace_once(
+              'vite.config.ts',
+              """      output: {\n        /**""",
+              """      output: {\n        manualChunks(id) {\n          const normalized = id.replace(/\\\\/g, '/')\n          if (!normalized.includes('/node_modules/')) return undefined\n          if (normalized.includes('/three/examples/jsm/postprocessing/') ||\n              normalized.includes('/three/examples/jsm/shaders/')) {\n            return 'three-postprocessing'\n          }\n          if (normalized.includes('/three/examples/jsm/loaders/')) return 'three-loaders'\n          if (normalized.includes('/three/examples/jsm/controls/')) return 'three-controls'\n          if (normalized.includes('/three/examples/jsm/libs/')) return 'three-libs'\n          if (normalized.includes('/node_modules/three/')) return 'three-core'\n          if (normalized.includes('/node_modules/@tweenjs/')) return 'tween'\n          if (normalized.includes('/node_modules/fflate/')) return 'fflate'\n          if (normalized.includes('/node_modules/lz-string/')) return 'lz-string'\n          return 'vendor'\n        },\n        /**""",
+          )
+          PY
+
+      - name: Refresh lockfile within declared semver ranges
+        shell: bash
+        run: |
+          set -o pipefail
+          npm install --package-lock-only 2>&1 | tee /tmp/npm-lock-refresh.log
+          npm audit fix --package-lock-only 2>&1 | tee -a /tmp/npm-lock-refresh.log
+
+      - name: Verify zero audit findings
+        shell: bash
+        run: |
+          npm ci
+          npm audit --audit-level=low
+
+      - name: Verify release tests and production chunks
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee /tmp/magius-repair-build.log
+          if grep -q 'Some chunks are larger than' /tmp/magius-repair-build.log; then
+            echo 'Vite still reports an oversized JavaScript chunk.' >&2
+            exit 1
+          fi
+          node - <<'NODE'
+          const fs = require('node:fs')
+          const path = require('node:path')
+          const dir = path.join(process.cwd(), 'dist', 'assets')
+          const files = fs.readdirSync(dir)
+            .filter(name => /^(index|vendor|three-|tween|fflate|lz-string).+\.js$/.test(name))
+            .map(name => ({ name, bytes: fs.statSync(path.join(dir, name)).size }))
+            .sort((a, b) => b.bytes - a.bytes)
+          console.log(JSON.stringify(files, null, 2))
+          const entry = files.filter(file => /^index-/.test(file.name))
+          if (entry.some(file => file.bytes > 500 * 1024)) {
+            throw new Error(`Application entry remains above 500 KiB: ${JSON.stringify(entry)}`)
+          }
+          NODE
+
+      - name: Commit repaired release source
+        id: commit
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            magia-exedra-character-three/shaders/hair.ts \
+            angelRingHeadLock.test.mjs \
+            scripts/smoke-angelring-two-character.mjs \
+            vite.config.ts \
+            package-lock.json
+          if git diff --cached --quiet; then
+            echo 'No source changes were produced.' >&2
+            exit 1
+          fi
+          git commit -m 'fix: restore portrait AngelRing and harden release dependencies'
+          git push origin HEAD:magius3dviewer
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Request protected Pages deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              event_type: 'deploy-magius3dviewer',
+              client_payload: { source_sha: process.env.SOURCE_SHA },
+            });
+        env:
+          SOURCE_SHA: ${{ steps.commit.outputs.sha }}
