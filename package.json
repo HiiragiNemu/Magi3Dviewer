@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
+    "build": "npm run test:release && tsc && vite build",
     "test:release": "node --test angelRingHeadLock.test.mjs materialProfileUniforms.test.mjs stageLighting.test.mjs stageLightmaps.test.mjs stageMaterialBindings.test.mjs stageRuntime.test.mjs submeshGroups.test.mjs uiLocalization.test.mjs",
     "postinstall": "patch-package",
     "preview": "vite preview --host"
