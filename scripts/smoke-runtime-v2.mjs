@@ -74,11 +74,30 @@ const ashleyAnimation = await page.evaluate(() => {
   const character = window.scene.characterSelected.character
   const source = character.animation.getAnimationClipsByName?.('Wait_L') ?? []
   const prepared = character.animation.getPreparedAnimationClipsByName?.('Wait_L') ?? []
+  const familyName = name => name
+    .replace(/_weapon_[a-z0-9]+(?=_|$)/gi, '')
+    .replace(/_\d+$/g, '')
+  const preparedTrackOwners = new Map()
+  const duplicatePreparedBindings = []
+  for (const clip of prepared) {
+    for (const track of clip.tracks) {
+      const owner = preparedTrackOwners.get(track.name)
+      if (owner) {
+        duplicatePreparedBindings.push({ track: track.name, owners: [owner, clip.name] })
+      } else {
+        preparedTrackOwners.set(track.name, clip.name)
+      }
+    }
+  }
   return {
     selectedCharacterId: character.userData.characterId,
     selectedAnimation: character.animation.current,
     source: source.map(clip => ({ name: clip.name, tracks: clip.tracks.length })),
     prepared: prepared.map(clip => ({ name: clip.name, tracks: clip.tracks.length })),
+    sourceFamilies: [...new Set(source.map(clip => familyName(clip.name)))],
+    preparedFamilies: [...new Set(prepared.map(clip => familyName(clip.name)))],
+    duplicatePreparedBindingCount: duplicatePreparedBindings.length,
+    duplicatePreparedBindings: duplicatePreparedBindings.slice(0, 20),
   }
 })
 
@@ -159,15 +178,7 @@ await page.screenshot({ path: '/tmp/magius-smoke.png', fullPage: true })
 await page.screenshot({ path: '/tmp/magius-smoke-closeup.png', fullPage: true })
 
 const madokaMaterialResult = await page.evaluate(async () => {
-  const waitFrames = count => new Promise(resolve => {
-    let remaining = count
-    const next = () => {
-      remaining -= 1
-      if (remaining <= 0) resolve()
-      else requestAnimationFrame(next)
-    }
-    requestAnimationFrame(next)
-  })
+  const waitForRender = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds))
   const viewer = window.scene
   const character = viewer.characterSelected.character
   const canvas = document.querySelector('#viewer canvas')
@@ -188,26 +199,33 @@ const madokaMaterialResult = await page.evaluate(async () => {
     const pixels = new Uint8Array(width * height * 4)
     gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
     const values = []
-    const x0 = Math.floor(width * 0.36)
-    const x1 = Math.floor(width * 0.64)
-    const y0 = Math.floor(height * 0.43)
-    const y1 = Math.floor(height * 0.70)
-    for (let y = y0; y < y1; y += 2) {
-      for (let x = x0; x < x1; x += 2) {
+    // Compare the complete WebGL frame. The Soul Gem occupies a small chest
+    // draw group below the old crop, so a fixed upper-body rectangle could
+    // report a false zero even when the material branch rendered correctly.
+    for (let y = 0; y < height; y += 2) {
+      for (let x = 0; x < width; x += 2) {
         const index = (y * width + x) * 4
         values.push(pixels[index], pixels[index + 1], pixels[index + 2])
       }
     }
     return values
   }
+  const gemUniformState = () => shaders.map(shader => ({
+    isGem: Number(shader?.uniforms?.uMaterialIsGem?.value ?? -1),
+    specialJewel: Number(shader?.uniforms?.uMaterialSpecialJewel?.value ?? -1),
+  }))
 
   const previous = gemProfiles.map(profile => profile.gem.enabled)
   gemProfiles.forEach(profile => { profile.gem.enabled = false })
-  await waitFrames(4)
+  // The CI SwiftShader scene may render at only 1-4 FPS. Waiting four RAF
+  // callbacks did not guarantee that a Three.js draw occurred after mutation.
+  await waitForRender(1_800)
   const gemOff = sample()
+  const uniformsOff = gemUniformState()
   gemProfiles.forEach((profile, index) => { profile.gem.enabled = previous[index] })
-  await waitFrames(4)
+  await waitForRender(1_800)
   const gemOn = sample()
+  const uniformsOn = gemUniformState()
 
   let changedChannels = 0
   let maxDelta = 0
@@ -237,6 +255,7 @@ const madokaMaterialResult = await page.evaluate(async () => {
     gemProfileCount: gemProfiles.length,
     gemUniformAvailable: shaders.some(shader => Boolean(shader.uniforms?.uMaterialIsGem)),
     matCapUniformAvailable: shaders.some(shader => Boolean(shader.uniforms?.tGemMatCap)),
+    gemUniformState: { off: uniformsOff, on: uniformsOn },
     gemPixelDelta: { changedChannels, maxDelta, meanAbsoluteDelta },
     angelRingShaderCount: hairShaders.length,
     angelRingEnabled: hairShaders.every(shader => Number(shader.uniforms.uAngelRingEnabled.value) >= 0.5),
@@ -263,10 +282,18 @@ if (canvasResult.characterCount < 90) failures.push(`only ${canvasResult.charact
 if (ashleyAnimation.selectedCharacterId !== 110701 || ashleyAnimation.selectedAnimation !== 'Wait_L') failures.push('Ashley Wait_L regression target unavailable')
 const sourceTracks = ashleyAnimation.source.reduce((sum, clip) => sum + clip.tracks, 0)
 const preparedTracks = ashleyAnimation.prepared.reduce((sum, clip) => sum + clip.tracks, 0)
-if (ashleyAnimation.source.length < 2 || preparedTracks >= sourceTracks) failures.push('Ashley duplicate animation tracks were not removed')
+const ashleyWrongFamily = [...ashleyAnimation.sourceFamilies, ...ashleyAnimation.preparedFamilies]
+  .some(family => family !== 'Wait_L')
+if (
+  ashleyAnimation.source.length < 2 ||
+  ashleyAnimation.prepared.length < 1 ||
+  preparedTracks > sourceTracks ||
+  ashleyWrongFamily
+) failures.push('Ashley Wait_L animation family preparation is invalid')
+if (ashleyAnimation.duplicatePreparedBindingCount > 0) failures.push('Ashley duplicate animation tracks remain after preparation')
 if (stageResult.officialCount < 5 || !stageResult.definition?.official) failures.push('official stage catalog/runtime unavailable')
 if (stageResult.meshes < 1 || stageResult.materials < 1) failures.push('official stage geometry unavailable')
-if (!guiText.includes('Recovered ReDrive Toon base') || !guiText.includes('AngelRing')) failures.push('shader controls missing')
+if (!guiText.includes('Apply recovered ReDrive baseline') || !guiText.includes('AngelRing (official GLES projection)')) failures.push('shader controls missing')
 if (madokaMaterialResult.characterId !== 100107) failures.push('Madoka material regression target unavailable')
 if (madokaMaterialResult.bodyMaterialSlotCount < 2 || madokaMaterialResult.bodyGroupCount < 2) failures.push('FBX material groups were collapsed')
 if (madokaMaterialResult.gemProfileCount < 1) failures.push('Madoka Soul Gem material profile missing')
