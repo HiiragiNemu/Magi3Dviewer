@@ -47,7 +47,9 @@ export function applyOfficialStageAlphaCutoutFixes() {
     const stageRoot = scene.backgroundScene.getObjectByName(
         'Magius3DviewerStageRoot',
     )
-    const stageId = stageRoot?.userData.stageDefinition?.id
+    if (!stageRoot) return 0
+
+    const stageId = stageRoot.userData.stageDefinition?.id
     if (typeof stageId !== 'string') return 0
 
     const stageObject = stageRoot.getObjectByName(`Stage:${stageId}`)
