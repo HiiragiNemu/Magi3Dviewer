@@ -39,10 +39,10 @@ jobs:
       - name: Run release tests and production build
         run: npm run build
 
-      - name: Install browser validation driver
-        run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+      - name: Install browser validation drivers
+        run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0 pngjs@7.0.0
 
-      - name: Validate portrait official-stage alpha cutouts
+      - name: Validate composed portrait official-stage screenshots
         shell: bash
         run: |
           set -euo pipefail
@@ -50,7 +50,7 @@ jobs:
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
           sleep 4
-          node scripts/smoke-stage-alpha-cutouts.mjs
+          node scripts/smoke-stage-alpha-cutouts-v2.mjs
 
       - name: Upload portrait stage evidence
         if: ${{ always() }}
@@ -58,8 +58,8 @@ jobs:
         with:
           name: magius-stage-alpha-cutout-validation
           path: |
-            /tmp/magius-stage-alpha-cutout.json
-            /tmp/magius-stage-cutout-*.png
+            /tmp/magius-stage-alpha-cutout-v2.json
+            /tmp/magius-stage-cutout-v2-*.png
             /tmp/magius-stage-cutout-preview.log
           if-no-files-found: warn
           retention-days: 7
