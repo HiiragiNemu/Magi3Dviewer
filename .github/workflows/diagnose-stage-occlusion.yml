@@ -1,10 +1,6 @@
 name: Diagnose official stage occlusion
 
 on:
-  push:
-    branches: ['main']
-    paths:
-      - '.github/workflows/diagnose-stage-occlusion.yml'
   pull_request:
     branches: ['main']
     types: [opened, synchronize]
@@ -25,12 +21,12 @@ jobs:
   diagnose:
     if: ${{ github.event_name != 'pull_request' || github.head_ref == 'automation/trigger-stage-occlusion' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
-      - name: Checkout isolated diagnostic source
+      - name: Checkout isolated material diagnostic source
         uses: actions/checkout@v5
         with:
-          ref: automation/stage-occlusion-source
+          ref: automation/stage-material-diagnostic-source
 
       - name: Set up Node
         uses: actions/setup-node@v6
@@ -44,10 +40,10 @@ jobs:
       - name: Build production candidate
         run: npm run build
 
-      - name: Install browser diagnostic driver
-        run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+      - name: Install browser diagnostic drivers
+        run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0 pngjs@7.0.0
 
-      - name: Diagnose final composed stage canvas
+      - name: Isolate remaining material groups that write transparent depth
         id: diagnostic
         continue-on-error: true
         shell: bash
@@ -57,38 +53,38 @@ jobs:
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
           sleep 4
-          node scripts/diagnose-stage-occlusion-canvas.mjs
+          node scripts/diagnose-stage-material-groups.mjs
 
-      - name: Upload stage occlusion evidence
+      - name: Upload stage material evidence
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: magius-stage-occlusion-diagnostic
+          name: magius-stage-material-group-diagnostic
           path: |
-            /tmp/magius-stage-occlusion.json
-            /tmp/magius-stage-occlusion-*.png
+            /tmp/magius-stage-material-groups.json
+            /tmp/stage-material-*-baseline.png
             /tmp/magius-stage-preview.log
           if-no-files-found: warn
           retention-days: 7
 
-      - name: Persist machine-readable report
+      - name: Persist machine-readable material report
         if: ${{ always() }}
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
             const branch = 'automation/stage-occlusion-diagnostic';
-            const path = 'reports/latest-stage-occlusion.json';
+            const path = 'reports/latest-stage-material-groups.json';
             let payload;
-            if (fs.existsSync('/tmp/magius-stage-occlusion.json')) {
-              payload = fs.readFileSync('/tmp/magius-stage-occlusion.json', 'utf8');
+            if (fs.existsSync('/tmp/magius-stage-material-groups.json')) {
+              payload = fs.readFileSync('/tmp/magius-stage-material-groups.json', 'utf8');
             } else {
               payload = JSON.stringify({
                 generatedAt: new Date().toISOString(),
                 diagnosticOutcome: '${{ steps.diagnostic.outcome }}',
                 previewLog: fs.existsSync('/tmp/magius-stage-preview.log')
                   ? fs.readFileSync('/tmp/magius-stage-preview.log', 'utf8')
-                  : 'No diagnostic report or preview log was produced',
+                  : 'No material diagnostic report or preview log was produced',
               }, null, 2) + '\n';
             }
             let branchSha;
@@ -131,7 +127,7 @@ jobs:
               repo: context.repo.repo,
               path,
               branch,
-              message: 'diagnostic: update official stage occlusion report',
+              message: 'diagnostic: update official stage material-group report',
               content: Buffer.from(payload).toString('base64'),
               sha: existingSha,
             });
