@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 env:
   NODE_VERSION: '22'
@@ -60,9 +60,73 @@ jobs:
             /tmp/magius-stage-occlusion.json
             /tmp/magius-stage-occlusion-*.png
             /tmp/magius-stage-preview.log
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 7
 
+      - name: Persist machine-readable report
+        if: ${{ always() }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const branch = 'automation/stage-occlusion-diagnostic';
+            const path = 'reports/latest-stage-occlusion.json';
+            let payload;
+            if (fs.existsSync('/tmp/magius-stage-occlusion.json')) {
+              payload = fs.readFileSync('/tmp/magius-stage-occlusion.json', 'utf8');
+            } else {
+              payload = JSON.stringify({
+                generatedAt: new Date().toISOString(),
+                diagnosticOutcome: '${{ steps.diagnostic.outcome }}',
+                previewLog: fs.existsSync('/tmp/magius-stage-preview.log')
+                  ? fs.readFileSync('/tmp/magius-stage-preview.log', 'utf8')
+                  : 'No diagnostic report or preview log was produced',
+              }, null, 2) + '\n';
+            }
+            let branchSha;
+            try {
+              const ref = await github.rest.git.getRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/${branch}`,
+              });
+              branchSha = ref.data.object.sha;
+            } catch (error) {
+              if (error.status !== 404) throw error;
+              const base = await github.rest.repos.getBranch({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                branch: 'main',
+              });
+              branchSha = base.data.commit.sha;
+              await github.rest.git.createRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `refs/heads/${branch}`,
+                sha: branchSha,
+              });
+            }
+            let existingSha;
+            try {
+              const existing = await github.rest.repos.getContent({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                path,
+                ref: branch,
+              });
+              if (!Array.isArray(existing.data)) existingSha = existing.data.sha;
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+            await github.rest.repos.createOrUpdateFileContents({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path,
+              branch,
+              message: 'diagnostic: update official stage occlusion report',
+              content: Buffer.from(payload).toString('base64'),
+              sha: existingSha,
+            });
+
       - name: Keep diagnostic non-deploying
-        run: |
-          echo 'Diagnostic completed. This workflow never deploys Pages.'
+        run: echo 'Diagnostic completed. This workflow never deploys Pages.'
