@@ -13,6 +13,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: stage-occlusion-diagnostic
+  cancel-in-progress: true
+
 env:
   NODE_VERSION: '22'
 
@@ -21,12 +25,12 @@ jobs:
   diagnose:
     if: ${{ github.event_name != 'pull_request' || github.head_ref == 'automation/trigger-stage-occlusion' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
-      - name: Checkout Magius3Dviewer source branch
+      - name: Checkout isolated diagnostic source
         uses: actions/checkout@v5
         with:
-          ref: magius3dviewer
+          ref: automation/stage-occlusion-source
 
       - name: Set up Node
         uses: actions/setup-node@v6
@@ -53,7 +57,7 @@ jobs:
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
           sleep 4
-          node scripts/diagnose-stage-occlusion.mjs
+          node scripts/diagnose-stage-occlusion-fast.mjs
 
       - name: Upload stage occlusion evidence
         if: ${{ always() }}
