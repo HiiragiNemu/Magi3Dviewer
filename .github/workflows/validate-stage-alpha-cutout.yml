@@ -1,0 +1,64 @@
+name: Validate stage alpha cutout
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [opened, synchronize]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: '22'
+
+jobs:
+  validate:
+    if: ${{ github.event_name != 'pull_request' || github.head_ref == 'fix/stage-alpha-cutout-20260804' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout candidate source
+        uses: actions/checkout@v5
+        with:
+          ref: fix/stage-alpha-cutout-20260804
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Require zero dependency vulnerabilities
+        run: npm audit --audit-level=low
+
+      - name: Run release tests and production build
+        run: npm run build
+
+      - name: Install browser validation driver
+        run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+
+      - name: Validate portrait official-stage alpha cutouts
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run preview -- --host 127.0.0.1 --port 4173 > /tmp/magius-stage-cutout-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          sleep 4
+          node scripts/smoke-stage-alpha-cutouts.mjs
+
+      - name: Upload portrait stage evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: magius-stage-alpha-cutout-validation
+          path: |
+            /tmp/magius-stage-alpha-cutout.json
+            /tmp/magius-stage-cutout-*.png
+            /tmp/magius-stage-cutout-preview.log
+          if-no-files-found: warn
+          retention-days: 7
