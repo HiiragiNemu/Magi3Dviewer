@@ -206,3 +206,5 @@ assert.match(
             -H 'X-GitHub-Api-Version: 2022-11-28' \
             https://api.github.com/repos/${{ github.repository }}/dispatches \
             -d '{"event_type":"deploy-magius3dviewer"}'
+
+# trigger: 2026-08-04T00:38Z
