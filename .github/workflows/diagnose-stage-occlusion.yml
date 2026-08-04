@@ -47,7 +47,7 @@ jobs:
       - name: Install browser diagnostic driver
         run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
 
-      - name: Diagnose large gray stage occluders
+      - name: Diagnose final composed stage canvas
         id: diagnostic
         continue-on-error: true
         shell: bash
@@ -57,7 +57,7 @@ jobs:
           preview_pid=$!
           trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
           sleep 4
-          node scripts/diagnose-stage-occlusion-fast.mjs
+          node scripts/diagnose-stage-occlusion-canvas.mjs
 
       - name: Upload stage occlusion evidence
         if: ${{ always() }}
