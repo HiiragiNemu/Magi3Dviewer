@@ -13,6 +13,7 @@ permissions:
 env:
   NODE_VERSION: '22'
 
+# This workflow is diagnostic-only and never receives Pages permissions.
 jobs:
   diagnose:
     runs-on: ubuntu-latest
