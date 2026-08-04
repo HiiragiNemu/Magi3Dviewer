@@ -10,14 +10,22 @@ interface StageAlphaCutoutRule {
 /**
  * AssetStudio's FBX material export does not retain Unity's alpha-clipping
  * keyword. The affected materials use RGBA `*Alpha_col` atlases on large
- * front/back tree cards. Rendering those cards with alphaTest=0 turns the
- * transparent atlas background into an opaque rectangle that can cover most
- * or all of the camera view.
+ * front/back tree and prop cards. Rendering those cards with alphaTest=0 lets
+ * fully transparent fragments write depth. The final canvas then shows the
+ * page's #444 background while characters and scene geometry behind the card
+ * disappear.
  *
- * Keep this list deliberately narrow. Other stage textures may use the alpha
- * channel for smoothness or blend masks and must not be globally clipped.
+ * Keep this list deliberately narrow. Every rule below is tied to a catalog
+ * material that reuses a proven Alpha atlas but omitted Unity cutout state.
+ * Other stage textures may use alpha for smoothness or blend masks and must not
+ * be globally clipped.
  */
 const OFFICIAL_STAGE_ALPHA_CUTOUT_RULES: StageAlphaCutoutRule[] = [
+    {
+        stageId: 'battle-600-00-01-001',
+        materialPattern: /^mt_bg3d600A_01_01_propA(?:\.\d+)?$/,
+        alphaTest: 0.5,
+    },
     {
         stageId: 'battle-600-00-01-001',
         materialPattern: /^mt_bg3d600A_01_01_propB(?:\.\d+)?$/,
@@ -26,6 +34,11 @@ const OFFICIAL_STAGE_ALPHA_CUTOUT_RULES: StageAlphaCutoutRule[] = [
     {
         stageId: 'battle-600-00-01-002',
         materialPattern: /^mt_bg3d600A_01_02_propA(?:\.\d+)?$/,
+        alphaTest: 0.5,
+    },
+    {
+        stageId: 'battle-600-00-01-002',
+        materialPattern: /^mt_bg3d600A_01_02_propC(?:\.\d+)?$/,
         alphaTest: 0.5,
     },
 ]
@@ -71,6 +84,8 @@ export function applyOfficialStageAlphaCutoutFixes() {
         const requiresUpdate =
             material.alphaTest !== alphaTest
             || material.alphaToCoverage !== true
+            || material.transparent !== false
+            || material.depthWrite !== true
 
         material.alphaTest = alphaTest
         material.alphaToCoverage = true
