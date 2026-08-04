@@ -1,0 +1,195 @@
+name: Patch AngelRing perspective projection (PR trigger)
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [synchronize]
+
+permissions:
+  contents: write
+
+env:
+  TARGET_BRANCH: magius3dviewer
+
+jobs:
+  patch:
+    if: ${{ github.event.pull_request.head.ref == 'automation/repair-angelring-orientation' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout release source
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+
+      - name: Apply perspective-correct AngelRing projection
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_exact(path: Path, old: str, new: str, count: int = 1):
+              text = path.read_text(encoding='utf-8')
+              actual = text.count(old)
+              if actual != count:
+                  raise SystemExit(f'{path}: expected {count} occurrence(s), found {actual}: {old[:100]!r}')
+              path.write_text(text.replace(old, new, count), encoding='utf-8')
+
+          hair = Path('magia-exedra-character-three/shaders/hair.ts')
+          replace_exact(
+              hair,
+              '''                varying vec3 vAngelRingFaceClip;
+                varying vec3 vAngelRingFaceUpVS;
+                varying vec3 vAngelRingFaceForwardVS;''',
+              '''                varying vec3 vAngelRingFaceClip;
+                varying vec3 vAngelRingFaceUpClip;
+                varying vec3 vAngelRingFaceUpVS;
+                varying vec3 vAngelRingFaceForwardVS;''',
+              count=2,
+          )
+          replace_exact(
+              hair,
+              '''                vAngelRingFaceClip = vec3(
+                    rdAngelFaceClip.xy,
+                    rdAngelFaceClip.w
+                );
+                vAngelRingFaceUpVS =
+                    mat3(viewMatrix) * uAngelRingFaceUp;''',
+              '''                vAngelRingFaceClip = vec3(
+                    rdAngelFaceClip.xy,
+                    rdAngelFaceClip.w
+                );
+                vec4 rdAngelFaceUpClip =
+                    projectionMatrix *
+                    viewMatrix *
+                    vec4(
+                        uAngelRingFacePosition + uAngelRingFaceUp,
+                        1.0
+                    );
+                vAngelRingFaceUpClip = vec3(
+                    rdAngelFaceUpClip.xy,
+                    rdAngelFaceUpClip.w
+                );
+                vAngelRingFaceUpVS =
+                    mat3(viewMatrix) * uAngelRingFaceUp;''',
+          )
+          replace_exact(
+              hair,
+              '''                        // A normalized 3D Head-Up vector does not imply a
+                        // normalized 2D screen axis. When the head pitches
+                        // towards the camera, FaceUp.xy becomes short; using it
+                        // directly scales and clips the projected map into a
+                        // diagonal stripe. Normalize the projected axis in the
+                        // same aspect-correct coordinate space as the ring box.
+                        vec2 rdAngelProjectedUp = rdAngelFaceUpVS.xy;
+                        float rdAngelProjectedUpLength =
+                            length(rdAngelProjectedUp);
+                        rdAngelProjectedUp =
+                            rdAngelProjectedUpLength > 0.00001
+                                ? rdAngelProjectedUp /
+                                    rdAngelProjectedUpLength
+                                : vec2(0.0, 1.0);''',
+              '''                        // Project the Head origin and Head-Up endpoint
+                        // through the complete camera matrix before deriving
+                        // the two-dimensional orientation. This preserves the
+                        // correct axis under pitch, FOV and portrait aspect.
+                        float rdAngelFaceUpW = max(
+                            abs(vAngelRingFaceUpClip.z),
+                            0.000001
+                        );
+                        vec2 rdAngelFaceUpUv =
+                            vAngelRingFaceUpClip.xy /
+                            rdAngelFaceUpW;
+                        rdAngelFaceUpUv =
+                            rdAngelFaceUpUv * 0.5 + vec2(0.5);
+                        vec2 rdAngelProjectedUp =
+                            (rdAngelFaceUpUv - rdAngelFaceUv) /
+                            max(rdAngelRectHalf, vec2(0.000001));
+                        float rdAngelProjectedUpLength =
+                            length(rdAngelProjectedUp);
+                        rdAngelProjectedUp =
+                            rdAngelProjectedUpLength > 0.00001
+                                ? rdAngelProjectedUp /
+                                    rdAngelProjectedUpLength
+                                : vec2(0.0, 1.0);''',
+          )
+
+          invariant = Path('angelRingHeadLock.test.mjs')
+          replace_exact(
+              invariant,
+              '''assert.match(
+    shaderSource,
+    /mat3\\(viewMatrix\\) \\* uAngelRingFaceUp/,
+    'Head Up must be transformed into view space',
+);''',
+              '''assert.match(
+    shaderSource,
+    /vAngelRingFaceUpClip/,
+    'Head Up endpoint must be projected through the full camera matrix',
+);
+assert.match(
+    shaderSource,
+    /rdAngelFaceUpUv - rdAngelFaceUv/,
+    'screen-space Head Up must come from two perspective-divided points',
+);
+assert.match(
+    shaderSource,
+    /mat3\\(viewMatrix\\) \\* uAngelRingFaceUp/,
+    'Head Up view-space component remains required by the official curve blend',
+);''',
+          )
+
+          for script_name in (
+              'scripts/smoke-runtime-v2.mjs',
+              'scripts/smoke-angelring-two-character.mjs',
+          ):
+              script = Path(script_name)
+              text = script.read_text(encoding='utf-8')
+              old = "page.on('pageerror', error => pageErrors.push(String(error)))"
+              if old in text and 'requestfailed' not in text:
+                  text = text.replace(
+                      old,
+                      old + "\npage.on('requestfailed', request => {\n  console.error(`[browser:requestfailed] ${request.method()} ${request.url()} :: ${request.failure()?.errorText ?? 'unknown'}`)\n})",
+                      1,
+                  )
+              old_wait = "() => document.body.classList.contains('no-demo') && window.scene,"
+              new_wait = "() => window.scene && document.querySelector('#character-selector option[value=\"100107\"]'),"
+              if old_wait not in text:
+                  raise SystemExit(f'{script}: readiness anchor missing')
+              script.write_text(text.replace(old_wait, new_wait, 1), encoding='utf-8')
+          PY
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Validate patch
+        run: |
+          npm ci
+          npm run build
+
+      - name: Commit and push release-source patch
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add magia-exedra-character-three/shaders/hair.ts \
+                  angelRingHeadLock.test.mjs \
+                  scripts/smoke-runtime-v2.mjs \
+                  scripts/smoke-angelring-two-character.mjs
+          git commit -m 'fix: project AngelRing Head Up through camera matrix'
+          git push origin HEAD:${TARGET_BRANCH}
+
+      - name: Request protected deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl --fail-with-body \
+            -X POST \
+            -H 'Accept: application/vnd.github+json' \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            https://api.github.com/repos/${{ github.repository }}/dispatches \
+            -d '{"event_type":"deploy-magius3dviewer"}'
