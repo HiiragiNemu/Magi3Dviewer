@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   repair:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.title == '[internal] Repair AngelRing orientation'
+    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.event.pull_request.head.ref, 'automation/repair-angelring-') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout release source branch
@@ -24,162 +24,150 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Apply perspective-correct projection and smoke diagnostics
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_exact(path: Path, old: str, new: str, count: int = 1):
+              text = path.read_text(encoding='utf-8')
+              actual = text.count(old)
+              if actual != count:
+                  raise SystemExit(
+                      f'{path}: expected {count} occurrence(s), found {actual}: {old[:120]!r}'
+                  )
+              path.write_text(text.replace(old, new, count), encoding='utf-8')
+
+          hair = Path('magia-exedra-character-three/shaders/hair.ts')
+          replace_exact(
+              hair,
+              '''                varying vec3 vAngelRingFaceClip;
+                varying vec3 vAngelRingFaceUpVS;
+                varying vec3 vAngelRingFaceForwardVS;''',
+              '''                varying vec3 vAngelRingFaceClip;
+                varying vec3 vAngelRingFaceUpClip;
+                varying vec3 vAngelRingFaceUpVS;
+                varying vec3 vAngelRingFaceForwardVS;''',
+              count=2,
+          )
+          replace_exact(
+              hair,
+              '''                vAngelRingFaceClip = vec3(
+                    rdAngelFaceClip.xy,
+                    rdAngelFaceClip.w
+                );
+                vAngelRingFaceUpVS =
+                    mat3(viewMatrix) * uAngelRingFaceUp;''',
+              '''                vAngelRingFaceClip = vec3(
+                    rdAngelFaceClip.xy,
+                    rdAngelFaceClip.w
+                );
+                vec4 rdAngelFaceUpClip =
+                    projectionMatrix *
+                    viewMatrix *
+                    vec4(
+                        uAngelRingFacePosition + uAngelRingFaceUp,
+                        1.0
+                    );
+                vAngelRingFaceUpClip = vec3(
+                    rdAngelFaceUpClip.xy,
+                    rdAngelFaceUpClip.w
+                );
+                vAngelRingFaceUpVS =
+                    mat3(viewMatrix) * uAngelRingFaceUp;''',
+          )
+          replace_exact(
+              hair,
+              '''                        // A normalized 3D Head-Up vector does not imply a
+                        // normalized 2D screen axis. When the head pitches
+                        // towards the camera, FaceUp.xy becomes short; using it
+                        // directly scales and clips the projected map into a
+                        // diagonal stripe. Normalize the projected axis in the
+                        // same aspect-correct coordinate space as the ring box.
+                        vec2 rdAngelProjectedUp = rdAngelFaceUpVS.xy;
+                        float rdAngelProjectedUpLength =
+                            length(rdAngelProjectedUp);
+                        rdAngelProjectedUp =
+                            rdAngelProjectedUpLength > 0.00001
+                                ? rdAngelProjectedUp /
+                                    rdAngelProjectedUpLength
+                                : vec2(0.0, 1.0);''',
+              '''                        // Project both the Head origin and its Up endpoint
+                        // through the complete camera matrix. Using only
+                        // FaceUp.xy omits perspective division and turns the
+                        // highlight into a diagonal band under pitch/portrait.
+                        float rdAngelFaceUpW = max(
+                            abs(vAngelRingFaceUpClip.z),
+                            0.000001
+                        );
+                        vec2 rdAngelFaceUpUv =
+                            vAngelRingFaceUpClip.xy /
+                            rdAngelFaceUpW;
+                        rdAngelFaceUpUv =
+                            rdAngelFaceUpUv * 0.5 + vec2(0.5);
+                        vec2 rdAngelProjectedUp =
+                            (rdAngelFaceUpUv - rdAngelFaceUv) /
+                            max(rdAngelRectHalf, vec2(0.000001));
+                        float rdAngelProjectedUpLength =
+                            length(rdAngelProjectedUp);
+                        rdAngelProjectedUp =
+                            rdAngelProjectedUpLength > 0.00001
+                                ? rdAngelProjectedUp /
+                                    rdAngelProjectedUpLength
+                                : vec2(0.0, 1.0);''',
+          )
+
+          invariant = Path('angelRingHeadLock.test.mjs')
+          replace_exact(
+              invariant,
+              '''assert.match(
+    shaderSource,
+    /mat3\\(viewMatrix\\) \\* uAngelRingFaceUp/,
+    'Head Up must be transformed into view space',
+);''',
+              '''assert.match(
+    shaderSource,
+    /vAngelRingFaceUpClip/,
+    'Head Up endpoint must be projected through the full camera matrix',
+);
+assert.match(
+    shaderSource,
+    /rdAngelFaceUpUv - rdAngelFaceUv/,
+    'screen-space Head Up must come from two perspective-divided points',
+);
+assert.match(
+    shaderSource,
+    /mat3\\(viewMatrix\\) \\* uAngelRingFaceUp/,
+    'Head Up view-space component remains required by the official curve blend',
+);''',
+          )
+
+          for script_name in (
+              'scripts/smoke-runtime-v2.mjs',
+              'scripts/smoke-angelring-two-character.mjs',
+          ):
+              script = Path(script_name)
+              text = script.read_text(encoding='utf-8')
+              old_error = "page.on('pageerror', error => pageErrors.push(String(error)))"
+              if old_error in text and 'browser:requestfailed' not in text:
+                  text = text.replace(
+                      old_error,
+                      old_error + "\npage.on('requestfailed', request => {\n  console.error(`[browser:requestfailed] ${request.method()} ${request.url()} :: ${request.failure()?.errorText ?? 'unknown'}`)\n})",
+                      1,
+                  )
+              old_wait = "() => document.body.classList.contains('no-demo') && window.scene,"
+              new_wait = "() => window.scene && document.querySelector('#character-selector option[value=\"100107\"]'),"
+              if old_wait not in text:
+                  raise SystemExit(f'{script}: readiness anchor missing')
+              script.write_text(text.replace(old_wait, new_wait, 1), encoding='utf-8')
+          PY
+
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
-
-      - name: Apply structural Shader and visual-gate repair
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          import textwrap
-
-          hair_path = Path('magia-exedra-character-three/shaders/hair.ts')
-          hair = hair_path.read_text(encoding='utf-8')
-          pattern = re.compile(
-              r'(?ms)^(?P<indent>[ \t]+)vec2 rdAngelRotated\s*=\s*vec2\('
-              r'\s*dot\(\s*rdAngelRectCoordinate,\s*vec2\('
-              r'\s*rdAngelFaceUpVS\.y,\s*-rdAngelFaceUpVS\.x\s*\)\s*\),'
-              r'\s*dot\(\s*rdAngelRectCoordinate,\s*rdAngelFaceUpVS\.xy\s*\)'
-              r'\s*\)\s*\+\s*vec2\(0\.5\);'
-          )
-          match = pattern.search(hair)
-          if not match:
-              raise SystemExit('Unnormalized AngelRing rotation basis was not found structurally')
-          replacement = textwrap.indent(textwrap.dedent('''
-              // A normalized 3D Head-Up vector does not imply a
-              // normalized 2D screen axis. When the head pitches
-              // towards the camera, FaceUp.xy becomes short; using it
-              // directly scales and clips the projected map into a
-              // diagonal stripe. Normalize the projected axis in the
-              // same aspect-correct coordinate space as the ring box.
-              vec2 rdAngelProjectedUp = rdAngelFaceUpVS.xy;
-              float rdAngelProjectedUpLength =
-                  length(rdAngelProjectedUp);
-              rdAngelProjectedUp =
-                  rdAngelProjectedUpLength > 0.00001
-                      ? rdAngelProjectedUp /
-                          rdAngelProjectedUpLength
-                      : vec2(0.0, 1.0);
-              vec2 rdAngelProjectedRight = vec2(
-                  rdAngelProjectedUp.y,
-                  -rdAngelProjectedUp.x
-              );
-              vec2 rdAngelRotated = vec2(
-                  dot(
-                      rdAngelRectCoordinate,
-                      rdAngelProjectedRight
-                  ),
-                  dot(
-                      rdAngelRectCoordinate,
-                      rdAngelProjectedUp
-                  )
-              ) + vec2(0.5);
-          ''').strip(), match.group('indent'))
-          hair = hair[:match.start()] + replacement + hair[match.end():]
-          hair_path.write_text(hair, encoding='utf-8')
-
-          static_path = Path('angelRingHeadLock.test.mjs')
-          static = static_path.read_text(encoding='utf-8')
-          if 'rdAngelProjectedUpLength' not in static:
-              marker = "console.log('Official AngelRing projection invariants passed.');"
-              if marker not in static:
-                  raise SystemExit('AngelRing static-test insertion point was not found')
-              addition = r'''assert.match(
-              shaderSource,
-              /rdAngelProjectedUpLength\s*=\s*length\(rdAngelProjectedUp\)/,
-              'projected Head Up must be measured in two-dimensional screen space',
-          );
-          assert.match(
-              shaderSource,
-              /rdAngelProjectedUp\s*\/\s*rdAngelProjectedUpLength/,
-              'projected Head Up must be normalized before rotating AngelRing coordinates',
-          );
-          assert.match(
-              shaderSource,
-              /rdAngelProjectedRight\s*=\s*vec2\(/,
-              'AngelRing must derive an orthonormal projected right axis',
-          );
-
-          '''
-              static_path.write_text(static.replace(marker, addition + marker, 1), encoding='utf-8')
-
-          smoke_path = Path('scripts/smoke-angelring-two-character.mjs')
-          smoke = smoke_path.read_text(encoding='utf-8')
-          replacements = [
-              (
-                  '    const rows = new Map()',
-                  '''    const rows = new Map()
-              let sumX = 0
-              let sumY = 0
-              let sumXX = 0
-              let sumYY = 0
-              let sumXY = 0''',
-                  'let sumXX = 0',
-              ),
-              (
-                  '          rows.set(y, (rows.get(y) ?? 0) + 1)',
-                  '''          rows.set(y, (rows.get(y) ?? 0) + 1)
-                    sumX += x
-                    sumY += y
-                    sumXX += x * x
-                    sumYY += y * y
-                    sumXY += x * y''',
-                  'sumXY += x * y',
-              ),
-              (
-                  '    const dominantRowWidth = rows.size ? Math.max(...rows.values()) : 0',
-                  '''    const dominantRowWidth = rows.size ? Math.max(...rows.values()) : 0
-              const meanX = changedPixels ? sumX / changedPixels : 0
-              const meanY = changedPixels ? sumY / changedPixels : 0
-              const covarianceXX = changedPixels
-                ? sumXX / changedPixels - meanX * meanX
-                : 0
-              const covarianceYY = changedPixels
-                ? sumYY / changedPixels - meanY * meanY
-                : 0
-              const covarianceXY = changedPixels
-                ? sumXY / changedPixels - meanX * meanY
-                : 0
-              const principalAxisAngleDegrees = Math.abs(
-                0.5 * Math.atan2(
-                  2 * covarianceXY,
-                  covarianceXX - covarianceYY,
-                ) * 180 / Math.PI,
-              )
-              const xyCorrelation = covarianceXX > 0 && covarianceYY > 0
-                ? covarianceXY / Math.sqrt(covarianceXX * covarianceYY)
-                : 0''',
-                  'principalAxisAngleDegrees',
-              ),
-              (
-                  '      dominantRowWidth,',
-                  '''      dominantRowWidth,
-                    principalAxisAngleDegrees,
-                    xyCorrelation,
-                    centroid: { x: meanX, y: meanY },''',
-                  'centroid: { x: meanX, y: meanY }',
-              ),
-              (
-                  '  if (front.bboxAspect < 1.6) failures.push(`${label}: highlight is not a horizontal strip; aspect ${front.bboxAspect.toFixed(3)}`)',
-                  '''  if (front.bboxAspect < 1.6) failures.push(`${label}: highlight is not a horizontal strip; aspect ${front.bboxAspect.toFixed(3)}`)
-            if (front.principalAxisAngleDegrees > 16) failures.push(`${label}: highlight principal axis is tilted ${front.principalAxisAngleDegrees.toFixed(2)} degrees`)
-            if (Math.abs(front.xyCorrelation) > 0.38) failures.push(`${label}: highlight has excessive diagonal correlation ${front.xyCorrelation.toFixed(3)}`)''',
-                  'highlight principal axis is tilted',
-              ),
-          ]
-          for old, new, sentinel in replacements:
-              if sentinel in smoke:
-                  continue
-              if old not in smoke:
-                  raise SystemExit(f'Smoke-test insertion point missing: {old}')
-              smoke = smoke.replace(old, new, 1)
-          smoke_path.write_text(smoke, encoding='utf-8')
-          PY
 
       - name: Install, audit and build
         run: |
@@ -193,10 +181,21 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add magia-exedra-character-three/shaders/hair.ts angelRingHeadLock.test.mjs scripts/smoke-angelring-two-character.mjs
-          if git diff --cached --quiet; then
-            echo 'No source changes were required.'
-            exit 0
-          fi
-          git commit -m 'fix(shader): normalize projected AngelRing head axis'
+          git add magia-exedra-character-three/shaders/hair.ts \
+                  angelRingHeadLock.test.mjs \
+                  scripts/smoke-runtime-v2.mjs \
+                  scripts/smoke-angelring-two-character.mjs
+          git commit -m 'fix: project AngelRing Head Up through camera matrix'
           git push origin HEAD:magius3dviewer
+
+      - name: Request protected deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl --fail-with-body \
+            -X POST \
+            -H 'Accept: application/vnd.github+json' \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H 'X-GitHub-Api-Version: 2022-11-28' \
+            https://api.github.com/repos/${{ github.repository }}/dispatches \
+            -d '{"event_type":"deploy-magius3dviewer"}'
