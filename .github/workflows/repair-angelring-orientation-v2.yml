@@ -3,6 +3,8 @@ name: Repair AngelRing orientation v2
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    paths:
+      - 'docs/ANGELRING_PERSPECTIVE_V3_TRIGGER.md'
   workflow_dispatch:
 
 permissions:
@@ -14,162 +16,34 @@ concurrency:
 
 jobs:
   repair:
-    if: ${{ github.event_name == 'workflow_dispatch' || startsWith(github.event.pull_request.head.ref, 'automation/repair-angelring-') }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout release source branch
+      - name: Checkout automation source
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          path: automation
+
+      - name: Checkout release source
         uses: actions/checkout@v5
         with:
           ref: magius3dviewer
+          path: release
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Apply perspective-correct projection and smoke diagnostics
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          def replace_exact(path: Path, old: str, new: str, count: int = 1):
-              text = path.read_text(encoding='utf-8')
-              actual = text.count(old)
-              if actual != count:
-                  raise SystemExit(
-                      f'{path}: expected {count} occurrence(s), found {actual}: {old[:120]!r}'
-                  )
-              path.write_text(text.replace(old, new, count), encoding='utf-8')
-
-          hair = Path('magia-exedra-character-three/shaders/hair.ts')
-          replace_exact(
-              hair,
-              '''                varying vec3 vAngelRingFaceClip;
-                varying vec3 vAngelRingFaceUpVS;
-                varying vec3 vAngelRingFaceForwardVS;''',
-              '''                varying vec3 vAngelRingFaceClip;
-                varying vec3 vAngelRingFaceUpClip;
-                varying vec3 vAngelRingFaceUpVS;
-                varying vec3 vAngelRingFaceForwardVS;''',
-              count=2,
-          )
-          replace_exact(
-              hair,
-              '''                vAngelRingFaceClip = vec3(
-                    rdAngelFaceClip.xy,
-                    rdAngelFaceClip.w
-                );
-                vAngelRingFaceUpVS =
-                    mat3(viewMatrix) * uAngelRingFaceUp;''',
-              '''                vAngelRingFaceClip = vec3(
-                    rdAngelFaceClip.xy,
-                    rdAngelFaceClip.w
-                );
-                vec4 rdAngelFaceUpClip =
-                    projectionMatrix *
-                    viewMatrix *
-                    vec4(
-                        uAngelRingFacePosition + uAngelRingFaceUp,
-                        1.0
-                    );
-                vAngelRingFaceUpClip = vec3(
-                    rdAngelFaceUpClip.xy,
-                    rdAngelFaceUpClip.w
-                );
-                vAngelRingFaceUpVS =
-                    mat3(viewMatrix) * uAngelRingFaceUp;''',
-          )
-          replace_exact(
-              hair,
-              '''                        // A normalized 3D Head-Up vector does not imply a
-                        // normalized 2D screen axis. When the head pitches
-                        // towards the camera, FaceUp.xy becomes short; using it
-                        // directly scales and clips the projected map into a
-                        // diagonal stripe. Normalize the projected axis in the
-                        // same aspect-correct coordinate space as the ring box.
-                        vec2 rdAngelProjectedUp = rdAngelFaceUpVS.xy;
-                        float rdAngelProjectedUpLength =
-                            length(rdAngelProjectedUp);
-                        rdAngelProjectedUp =
-                            rdAngelProjectedUpLength > 0.00001
-                                ? rdAngelProjectedUp /
-                                    rdAngelProjectedUpLength
-                                : vec2(0.0, 1.0);''',
-              '''                        // Project both the Head origin and its Up endpoint
-                        // through the complete camera matrix. Using only
-                        // FaceUp.xy omits perspective division and turns the
-                        // highlight into a diagonal band under pitch/portrait.
-                        float rdAngelFaceUpW = max(
-                            abs(vAngelRingFaceUpClip.z),
-                            0.000001
-                        );
-                        vec2 rdAngelFaceUpUv =
-                            vAngelRingFaceUpClip.xy /
-                            rdAngelFaceUpW;
-                        rdAngelFaceUpUv =
-                            rdAngelFaceUpUv * 0.5 + vec2(0.5);
-                        vec2 rdAngelProjectedUp =
-                            (rdAngelFaceUpUv - rdAngelFaceUv) /
-                            max(rdAngelRectHalf, vec2(0.000001));
-                        float rdAngelProjectedUpLength =
-                            length(rdAngelProjectedUp);
-                        rdAngelProjectedUp =
-                            rdAngelProjectedUpLength > 0.00001
-                                ? rdAngelProjectedUp /
-                                    rdAngelProjectedUpLength
-                                : vec2(0.0, 1.0);''',
-          )
-
-          invariant = Path('angelRingHeadLock.test.mjs')
-          replace_exact(
-              invariant,
-              '''assert.match(
-    shaderSource,
-    /mat3\\(viewMatrix\\) \\* uAngelRingFaceUp/,
-    'Head Up must be transformed into view space',
-);''',
-              '''assert.match(
-    shaderSource,
-    /vAngelRingFaceUpClip/,
-    'Head Up endpoint must be projected through the full camera matrix',
-);
-assert.match(
-    shaderSource,
-    /rdAngelFaceUpUv - rdAngelFaceUv/,
-    'screen-space Head Up must come from two perspective-divided points',
-);
-assert.match(
-    shaderSource,
-    /mat3\\(viewMatrix\\) \\* uAngelRingFaceUp/,
-    'Head Up view-space component remains required by the official curve blend',
-);''',
-          )
-
-          for script_name in (
-              'scripts/smoke-runtime-v2.mjs',
-              'scripts/smoke-angelring-two-character.mjs',
-          ):
-              script = Path(script_name)
-              text = script.read_text(encoding='utf-8')
-              old_error = "page.on('pageerror', error => pageErrors.push(String(error)))"
-              if old_error in text and 'browser:requestfailed' not in text:
-                  text = text.replace(
-                      old_error,
-                      old_error + "\npage.on('requestfailed', request => {\n  console.error(`[browser:requestfailed] ${request.method()} ${request.url()} :: ${request.failure()?.errorText ?? 'unknown'}`)\n})",
-                      1,
-                  )
-              old_wait = "() => document.body.classList.contains('no-demo') && window.scene,"
-              new_wait = "() => window.scene && document.querySelector('#character-selector option[value=\"100107\"]'),"
-              if old_wait not in text:
-                  raise SystemExit(f'{script}: readiness anchor missing')
-              script.write_text(text.replace(old_wait, new_wait, 1), encoding='utf-8')
-          PY
+      - name: Apply perspective-correct AngelRing patch
+        run: python automation/.github/scripts/patch_angelring_perspective.py release
 
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: release/package-lock.json
 
       - name: Install, audit and build
+        working-directory: release
         run: |
           npm ci
           npm audit --audit-level=low
@@ -177,7 +51,7 @@ assert.match(
           git diff --check
 
       - name: Commit release repair
-        shell: bash
+        working-directory: release
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -185,8 +59,12 @@ assert.match(
                   angelRingHeadLock.test.mjs \
                   scripts/smoke-runtime-v2.mjs \
                   scripts/smoke-angelring-two-character.mjs
-          git commit -m 'fix: project AngelRing Head Up through camera matrix'
-          git push origin HEAD:magius3dviewer
+          if git diff --cached --quiet; then
+            echo 'No source changes were required.'
+          else
+            git commit -m 'fix: project AngelRing Head Up through camera matrix'
+            git push origin HEAD:magius3dviewer
+          fi
 
       - name: Request protected deployment
         env:
