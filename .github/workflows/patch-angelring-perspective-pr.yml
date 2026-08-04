@@ -3,7 +3,7 @@ name: Patch AngelRing perspective projection (PR trigger)
 on:
   pull_request:
     branches: ['main']
-    types: [synchronize]
+    types: [opened, synchronize]
 
 permissions:
   contents: write
@@ -13,7 +13,7 @@ env:
 
 jobs:
   patch:
-    if: ${{ github.event.pull_request.head.ref == 'automation/repair-angelring-orientation' }}
+    if: ${{ startsWith(github.event.pull_request.head.ref, 'automation/repair-angelring-') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout release source
