@@ -33,11 +33,13 @@ export default defineConfig({
           if (normalized.includes('/magia-exedra-character-three/')) {
             return 'character-runtime'
           }
-          if (normalized.includes('/src/viewer/controllers/')) {
+          // Camera helpers and GUI controllers import one another. Keeping
+          // them in separate manual chunks created a Rollup cycle
+          // (viewer-camera -> viewer-controls -> viewer-camera) and could stop
+          // the production entry before window.scene was initialized.
+          if (normalized.includes('/src/viewer/controllers/') ||
+              normalized.includes('/src/viewer/camera/')) {
             return 'viewer-controls'
-          }
-          if (normalized.includes('/src/viewer/camera/')) {
-            return 'viewer-camera'
           }
           if (normalized.includes('/src/viewer/localization/')) {
             return 'viewer-localization'
