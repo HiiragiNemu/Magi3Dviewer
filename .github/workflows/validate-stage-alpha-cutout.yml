@@ -12,6 +12,7 @@ permissions:
 env:
   NODE_VERSION: '22'
 
+# Guarded validation only; this workflow never deploys Pages.
 jobs:
   validate:
     if: ${{ github.event_name != 'pull_request' || github.head_ref == 'fix/stage-alpha-cutout-20260804' }}
