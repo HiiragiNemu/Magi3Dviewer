@@ -11,11 +11,13 @@ const mainSource = fs.readFileSync(
   'utf8',
 )
 
-test('fixes only the two proven opaque alpha-card materials', () => {
+test('fixes only the four catalog-proven opaque alpha-card materials', () => {
   assert.match(source, /battle-600-00-01-001/)
+  assert.match(source, /mt_bg3d600A_01_01_propA/)
   assert.match(source, /mt_bg3d600A_01_01_propB/)
   assert.match(source, /battle-600-00-01-002/)
   assert.match(source, /mt_bg3d600A_01_02_propA/)
+  assert.match(source, /mt_bg3d600A_01_02_propC/)
   assert.doesNotMatch(
     source,
     /baseMapUrl.*Alpha|map\.name.*Alpha/i,
