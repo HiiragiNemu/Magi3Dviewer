@@ -31,8 +31,18 @@ assert.doesNotMatch(
 );
 assert.match(
     shaderSource,
+    /vAngelRingFaceUpClip/,
+    'Head Up endpoint must be projected through the full camera matrix',
+);
+assert.match(
+    shaderSource,
+    /rdAngelFaceUpUv - rdAngelFaceUv/,
+    'screen-space Head Up must come from two perspective-divided points',
+);
+assert.match(
+    shaderSource,
     /mat3\(viewMatrix\) \* uAngelRingFaceUp/,
-    'Head Up must be transformed into view space',
+    'Head Up view-space component remains required by the official curve blend',
 );
 assert.match(
     shaderSource,

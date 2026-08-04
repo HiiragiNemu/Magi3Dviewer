@@ -298,6 +298,7 @@ export async function createHairMaterial(
                 uniform vec3 uAngelRingFaceUp;
                 uniform vec3 uAngelRingFaceForward;
                 varying vec3 vAngelRingFaceClip;
+                varying vec3 vAngelRingFaceUpClip;
                 varying vec3 vAngelRingFaceUpVS;
                 varying vec3 vAngelRingFaceForwardVS;
                 ${shader.vertexShader}
@@ -313,6 +314,17 @@ export async function createHairMaterial(
                     rdAngelFaceClip.xy,
                     rdAngelFaceClip.w
                 );
+                vec4 rdAngelFaceUpClip =
+                    projectionMatrix *
+                    viewMatrix *
+                    vec4(
+                        uAngelRingFacePosition + uAngelRingFaceUp,
+                        1.0
+                    );
+                vAngelRingFaceUpClip = vec3(
+                    rdAngelFaceUpClip.xy,
+                    rdAngelFaceUpClip.w
+                );
                 vAngelRingFaceUpVS =
                     mat3(viewMatrix) * uAngelRingFaceUp;
                 vAngelRingFaceForwardVS =
@@ -322,6 +334,7 @@ export async function createHairMaterial(
 
             shader.fragmentShader = /* glsl */ `
                 varying vec3 vAngelRingFaceClip;
+                varying vec3 vAngelRingFaceUpClip;
                 varying vec3 vAngelRingFaceUpVS;
                 varying vec3 vAngelRingFaceForwardVS;
                 uniform sampler2D tAngelRingCommon;
@@ -449,13 +462,22 @@ export async function createHairMaterial(
                             ) /
                             (rdAngelRectHalf * 2.0) -
                             vec2(0.5);
-                        // A normalized 3D Head-Up vector does not imply a
-                        // normalized 2D screen axis. When the head pitches
-                        // towards the camera, FaceUp.xy becomes short; using it
-                        // directly scales and clips the projected map into a
-                        // diagonal stripe. Normalize the projected axis in the
-                        // same aspect-correct coordinate space as the ring box.
-                        vec2 rdAngelProjectedUp = rdAngelFaceUpVS.xy;
+                        // Project both the Head origin and its Up endpoint
+                        // through the complete camera matrix. Using only
+                        // FaceUp.xy omits perspective division and turns the
+                        // highlight into a diagonal band under pitch/portrait.
+                        float rdAngelFaceUpW = max(
+                            abs(vAngelRingFaceUpClip.z),
+                            0.000001
+                        );
+                        vec2 rdAngelFaceUpUv =
+                            vAngelRingFaceUpClip.xy /
+                            rdAngelFaceUpW;
+                        rdAngelFaceUpUv =
+                            rdAngelFaceUpUv * 0.5 + vec2(0.5);
+                        vec2 rdAngelProjectedUp =
+                            (rdAngelFaceUpUv - rdAngelFaceUv) /
+                            max(rdAngelRectHalf, vec2(0.000001));
                         float rdAngelProjectedUpLength =
                             length(rdAngelProjectedUp);
                         rdAngelProjectedUp =

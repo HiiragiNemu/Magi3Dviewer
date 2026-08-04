@@ -33,10 +33,13 @@ page.on('console', message => {
   if (message.type() === 'error') consoleErrors.push(text)
 })
 page.on('pageerror', error => pageErrors.push(String(error)))
+page.on('requestfailed', request => {
+  console.error(`[browser:requestfailed] ${request.method()} ${request.url()} :: ${request.failure()?.errorText ?? 'unknown'}`)
+})
 
 await page.goto('https://127.0.0.1:4173/', { waitUntil: 'domcontentloaded', timeout: 60_000 })
 await page.waitForFunction(
-  () => document.body.classList.contains('no-demo') && window.scene,
+  () => window.scene && document.querySelector('#character-selector option[value="100107"]'),
   { timeout: 180_000 },
 )
 await page.waitForFunction(
