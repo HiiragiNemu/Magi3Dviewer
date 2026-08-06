@@ -1,0 +1,187 @@
+name: Patch manifest-driven stage reconstruction
+
+on:
+  push:
+    branches: ['main']
+    paths:
+      - '.github/workflows/patch-manifest-driven-stage-reconstruction.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  TARGET_BRANCH: feature/manifest-driven-stage-reconstruction-20260807
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout reconstruction branch
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+
+      - name: Apply manifest provenance runtime and authoritative bundle IDs
+        shell: python
+        run: |
+          from pathlib import Path
+
+          stages_path = Path('src/viewer/stages.ts')
+          stages = stages_path.read_text(encoding='utf-8')
+
+          def replace_once(text: str, old: str, new: str, label: str) -> str:
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected 1 match, found {count}')
+              return text.replace(old, new, 1)
+
+          if "from './stageBundleProvenance'" not in stages:
+              stages = replace_once(
+                  stages,
+                  """import {
+              createStageRuntimeController,
+              type StageRuntimeController,
+              type StageRuntimeProfile,
+          } from './stageRuntime'
+          """,
+                  """import {
+              createStageRuntimeController,
+              type StageRuntimeController,
+              type StageRuntimeProfile,
+          } from './stageRuntime'
+          import {
+              normalizeStageBundleProvenance,
+              validateStageBundleProvenance,
+              type StageBundleProvenance,
+          } from './stageBundleProvenance'
+          """,
+                  'stage provenance import',
+              )
+
+          if 'bundleProvenance?: StageBundleProvenance' not in stages:
+              stages = replace_once(
+                  stages,
+                  """    official?: boolean
+              assetBundleName?: string
+              type: 'procedural' | 'gltf' | 'fbx' | 'group'
+          """,
+                  """    official?: boolean
+              assetBundleName?: string
+              /** Exact private/export dependency evidence for this packaged stage. */
+              bundleProvenance?: StageBundleProvenance
+              type: 'procedural' | 'gltf' | 'fbx' | 'group'
+          """,
+                  'StageDefinition bundleProvenance',
+              )
+
+          if 'validateStageBundleProvenance(\n                    stage.bundleProvenance' not in stages:
+              stages = replace_once(
+                  stages,
+                  """            const catalogStages = [
+                  ...(catalog.stages ?? []),
+                  ...modularStages,
+              ].filter((stage, index, all) =>
+                  all.findIndex(candidate => candidate.id === stage.id) === index
+              )
+              definitions = [
+          """,
+                  """            const catalogStages = [
+                  ...(catalog.stages ?? []),
+                  ...modularStages,
+              ].filter((stage, index, all) =>
+                  all.findIndex(candidate => candidate.id === stage.id) === index
+              )
+              for (const stage of catalogStages) {
+                  if (!stage.bundleProvenance) continue
+                  stage.bundleProvenance = normalizeStageBundleProvenance(
+                      stage.bundleProvenance,
+                  )
+                  validateStageBundleProvenance(
+                      stage.bundleProvenance,
+                      stage.assetBundleName,
+                  )
+              }
+              definitions = [
+          """,
+                  'catalog provenance validation',
+              )
+
+          if stages.count('stageRoot.userData.bundleProvenance') == 0:
+              stages = replace_once(
+                  stages,
+                  """            stageRoot.userData.stageDefinition = definition
+              stageRoot.userData.stageDynamic = definition.dynamic ?? null
+              return
+          """,
+                  """            stageRoot.userData.stageDefinition = definition
+              stageRoot.userData.bundleProvenance = definition.bundleProvenance ?? null
+              stageRoot.userData.stageDynamic = definition.dynamic ?? null
+              return
+          """,
+                  'none-stage provenance debug state',
+              )
+              stages = replace_once(
+                  stages,
+                  """        stageSelector.value = definition.id
+              stageRoot.userData.stageDefinition = definition
+              stageRoot.userData.reDriveVolume = definition.renderProfile?.reDriveVolume ?? null
+          """,
+                  """        stageSelector.value = definition.id
+              stageRoot.userData.stageDefinition = definition
+              stageRoot.userData.bundleProvenance = definition.bundleProvenance ?? null
+              stageRoot.userData.reDriveVolume = definition.renderProfile?.reDriveVolume ?? null
+          """,
+                  'loaded-stage provenance debug state',
+              )
+          elif stages.count('stageRoot.userData.bundleProvenance') != 2:
+              raise SystemExit(
+                  'expected either zero or two stageRoot bundleProvenance assignments'
+              )
+
+          stages_path.write_text(stages, encoding='utf-8')
+
+          catalog_path = Path('public/stages/catalog.json')
+          catalog = catalog_path.read_text(encoding='utf-8')
+          corrections = {
+              'battle/stage/bg/3d/600/00/00/001': 'battle/stage/bg_3d_600_00_00_001',
+              'battle/stage/bg/3d/600/00/01/001': 'battle/stage/bg_3d_600_00_01_001',
+              'battle/stage/bg/3d/600/00/01/002': 'battle/stage/bg_3d_600_00_01_002',
+          }
+          for old, new in corrections.items():
+              old_json = f'"assetBundleName": "{old}"'
+              new_json = f'"assetBundleName": "{new}"'
+              if old_json in catalog:
+                  catalog = catalog.replace(old_json, new_json, 1)
+              elif new_json not in catalog:
+                  raise SystemExit(f'catalog bundle identifier missing: {old}')
+          if '/bg/3d/' in catalog:
+              raise SystemExit('synthetic /bg/3d/ AssetBundle name remains in official catalog')
+          catalog_path.write_text(catalog, encoding='utf-8')
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run complete release validation and build
+        run: npm run build
+
+      - name: Commit validated reconstruction patch
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add src/viewer/stages.ts public/stages/catalog.json
+          if git diff --cached --quiet; then
+            echo 'Manifest-driven stage patch already applied.'
+            exit 0
+          fi
+          git commit -m 'feat: validate official stages against AssetBundle roots'
+          git push origin HEAD:${TARGET_BRANCH}
