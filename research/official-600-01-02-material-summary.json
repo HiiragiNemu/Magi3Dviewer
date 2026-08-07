@@ -21,6 +21,100 @@
     ]
   },
   "materialCount": 11,
+  "deltaCount": 7,
+  "deltas": [
+    {
+      "name": "mt_bg3d600A_01_02_adelbertAAlpha",
+      "mismatch": {
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_adelbertBAlpha",
+      "mismatch": {
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_anthonyAAlpha",
+      "mismatch": {
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_anthonyBAlpha",
+      "mismatch": {
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_propBAlpha",
+      "mismatch": {
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_sky",
+      "mismatch": {
+        "receiveShadow": {
+          "expected": true,
+          "actual": false
+        },
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
+      }
+    },
+    {
+      "name": "SkyBox_bg3d600A_01_02",
+      "mismatch": {
+        "binding": {
+          "expected": "present",
+          "actual": null
+        }
+      }
+    }
+  ],
   "materials": [
     {
       "name": "mt_bg3d600A_01_02_adelbertAAlpha",
@@ -68,6 +162,12 @@
           "g": 0.0,
           "b": 0.0,
           "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 5.0,
+          "g": 3.0,
+          "b": 0.0,
+          "a": 0.0
         }
       },
       "textures": {
@@ -152,6 +252,16 @@
           "offset": 0,
           "framesPerSecond": 8
         }
+      },
+      "runtimeDelta": {
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
       }
     },
     {
@@ -200,6 +310,12 @@
           "g": 0.0,
           "b": 0.0,
           "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 5.0,
+          "g": 3.0,
+          "b": 0.0,
+          "a": 0.0
         }
       },
       "textures": {
@@ -284,6 +400,16 @@
           "offset": 3,
           "framesPerSecond": 8
         }
+      },
+      "runtimeDelta": {
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
       }
     },
     {
@@ -332,6 +458,12 @@
           "g": 0.0,
           "b": 0.0,
           "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 6.0,
+          "g": 3.0,
+          "b": 0.0,
+          "a": 0.0
         }
       },
       "textures": {
@@ -416,6 +548,16 @@
           "offset": 0,
           "framesPerSecond": 8
         }
+      },
+      "runtimeDelta": {
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
       }
     },
     {
@@ -464,6 +606,12 @@
           "g": 0.0,
           "b": 0.0,
           "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 6.0,
+          "g": 3.0,
+          "b": 0.0,
+          "a": 0.0
         }
       },
       "textures": {
@@ -548,6 +696,16 @@
           "offset": 1,
           "framesPerSecond": 8
         }
+      },
+      "runtimeDelta": {
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
       }
     },
     {
@@ -596,6 +754,12 @@
           "g": 0.0,
           "b": 0.0,
           "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 2.0,
+          "g": 2.0,
+          "b": 0.0,
+          "a": 0.0
         }
       },
       "textures": {
@@ -682,7 +846,8 @@
         "unlitness": 0,
         "castShadow": false,
         "receiveShadow": true
-      }
+      },
+      "runtimeDelta": {}
     },
     {
       "name": "mt_bg3d600A_01_02_propA",
@@ -727,6 +892,12 @@
           "g": 0.0,
           "b": 0.0,
           "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 2.0,
+          "g": 2.0,
+          "b": 0.0,
+          "a": 0.0
         }
       },
       "textures": {
@@ -807,7 +978,8 @@
         "unlitness": 0.4,
         "castShadow": true,
         "receiveShadow": true
-      }
+      },
+      "runtimeDelta": {}
     },
     {
       "name": "mt_bg3d600A_01_02_propBAlpha",
@@ -854,6 +1026,12 @@
           "g": 0.0,
           "b": 0.0,
           "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 2.0,
+          "g": 2.0,
+          "b": 0.0,
+          "a": 0.0
         }
       },
       "textures": {
@@ -932,6 +1110,16 @@
         "alphaToCoverage": true,
         "castShadow": false,
         "receiveShadow": false
+      },
+      "runtimeDelta": {
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
       }
     },
     {
@@ -979,6 +1167,12 @@
           "g": 0.0,
           "b": 0.0,
           "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 2.0,
+          "g": 2.0,
+          "b": 0.0,
+          "a": 0.0
         }
       },
       "textures": {
@@ -1061,7 +1255,8 @@
         "unlitness": 0.4,
         "castShadow": true,
         "receiveShadow": true
-      }
+      },
+      "runtimeDelta": {}
     },
     {
       "name": "mt_bg3d600A_01_02_rockAlpha",
@@ -1109,6 +1304,12 @@
           "g": 0.0,
           "b": 0.0,
           "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 2.0,
+          "g": 2.0,
+          "b": 0.0,
+          "a": 0.0
         }
       },
       "textures": {
@@ -1192,7 +1393,8 @@
         "alphaToCoverage": true,
         "castShadow": false,
         "receiveShadow": true
-      }
+      },
+      "runtimeDelta": {}
     },
     {
       "name": "mt_bg3d600A_01_02_sky",
@@ -1237,6 +1439,12 @@
           "g": 0.0,
           "b": 0.0,
           "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 2.0,
+          "g": 2.0,
+          "b": 0.0,
+          "a": 0.0
         }
       },
       "textures": {
@@ -1313,6 +1521,20 @@
         "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_01_sky_col.png",
         "castShadow": false,
         "receiveShadow": false
+      },
+      "runtimeDelta": {
+        "receiveShadow": {
+          "expected": true,
+          "actual": false
+        },
+        "unlitness": {
+          "expected": 1.0,
+          "actual": 0
+        },
+        "smoothness": {
+          "expected": 0.0,
+          "actual": 0.5
+        }
       }
     },
     {
@@ -1346,7 +1568,13 @@
         }
       },
       "textures": {},
-      "currentWebBinding": null
+      "currentWebBinding": null,
+      "runtimeDelta": {
+        "binding": {
+          "expected": "present",
+          "actual": null
+        }
+      }
     }
   ]
 }
