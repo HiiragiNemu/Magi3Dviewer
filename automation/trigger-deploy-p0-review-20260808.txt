@@ -1,5 +1,5 @@
-Deploy preview/p0-20260808 verbatim after the 2026-08-08 P0 runtime correction batch.
-Expected preview source at trigger time: a0a1120c6e6882dcbc08843b70a6b669f8cf9365 or a fast-forward descendant.
-Visible targets: stage 608 violin 4x4 / 8 FPS flipbook reconstruction; current-JP ReDrive MatCap blend; current-JP Fresnel threshold/mask/cubic arithmetic.
+Deploy preview/p0-20260808 verbatim after the second 2026-08-08 P0 runtime correction batch.
+Expected preview source at trigger time: 4bd7dd7b7525230b543667fccc36a5dd1c90ba27 or a fast-forward descendant.
+Visible targets: stage 608 violin 4x4 / 8 FPS flipbook reconstruction; current-JP 608 opaque/transparent, Cull, AlphaToMask and ZWrite states; current-JP ReDrive MatCap blend; current-JP Fresnel threshold/mask/cubic arithmetic.
 Do not rewrite preview from older feature branches. Rebuild the unchanged magius3dviewer release root and publish the experimental candidate only under review/p0-20260808.
 This remains a human-review snapshot, not a full parity claim.
