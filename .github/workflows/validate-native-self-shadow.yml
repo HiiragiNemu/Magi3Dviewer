@@ -1,0 +1,49 @@
+name: Validate native ReDrive self shadow
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'automation/trigger-native-self-shadow.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-apply:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      TARGET_BRANCH: feature/native-self-shadow-20260807
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+      - name: Apply native ReDrive self-shadow pass
+        run: python scripts/apply_native_self_shadow_patch.py
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run complete production build
+        run: npm run build
+      - name: Persist validated self-shadow implementation
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add \
+            package.json \
+            nativeSelfShadow.test.mjs \
+            magia-exedra-character-three/scene/index.ts \
+            magia-exedra-character-three/scene/selfShadow.ts \
+            magia-exedra-character-three/shaders/stylization.ts \
+            magia-exedra-character-three/shaders/general.ts \
+            magia-exedra-character-three/shaders/face.ts
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'feat: port native ReDrive character self shadow pass'
+          git push origin HEAD:${TARGET_BRANCH}
