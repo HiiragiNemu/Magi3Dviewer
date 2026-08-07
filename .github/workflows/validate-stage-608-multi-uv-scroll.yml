@@ -1,0 +1,51 @@
+name: Validate stage 608 multi-UV scroll
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'automation/trigger-stage-608-multi-uv-scroll.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-apply:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TARGET_BRANCH: feature/stage-608-multi-uv-scroll-20260807
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+      - name: Apply evidence-driven stage 608 multi-UV patch
+        run: python scripts/apply_stage_608_multi_uv_scroll_patch.py
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run complete production build
+        run: npm run build
+      - name: Verify exact JP Fish parameters were emitted
+        shell: bash
+        run: |
+          grep -q 'bg3d608_00_blue_objects_uvscroll_col.png' public/stages/catalog/battle-608-00-00-001.json
+          grep -q -- '-0.009999999776482582' public/stages/catalog/battle-608-00-00-001.json
+          grep -q 'additiveToMultiply' src/viewer/stageMaterialBindings.ts
+          grep -q 'uStageMultiUvTexture' src/viewer/stageMaterialBindings.ts
+      - name: Persist validated source changes
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add \
+            src/viewer/stageMaterialBindings.ts \
+            public/stages/catalog/battle-608-00-00-001.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'feat: restore stage 608 Fish multi-UV scroll'
+          git push origin HEAD:${TARGET_BRANCH}
