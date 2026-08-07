@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "source": "current-JP-AssetBundle-closure-to-public-Viewer-Texture2D-parity",
+  "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+  "stageBundle": "battle/stage/bg_3d_608_00_00_001",
+  "targetBranchPurpose": "P0.3 phase-2 stacked visual-regression candidate",
+  "boundMaterialCount": 13,
+  "uniqueViewerTextureCount": 9,
+  "replacementCount": 9,
+  "unchangedCount": 0,
+  "replacements": [
+    {
+      "repoPath": "public/stages/official/battle-608-00-00-001/bg3d608_00_blue_ground_col.png",
+      "materials": [
+        "bg3d608_00_blue_Ground"
+      ],
+      "officialTextureName": "bg3d608_00_blue_ground_col",
+      "officialSourceBundle": "texture/bg/efd676b5b84a41d4ebf49af3a5680084",
+      "size": [
+        1024,
+        1024
+      ],
+      "officialPixelSha256": "ba6e4fac126b7a3436c2a5ae674af16ba0694a52f448410f66525286a777da00",
+      "beforePixelSha256": "84c3de27af10b50bdc90111b75d30575795a4faf38caac3dde366bac06bba5ae",
+      "beforeFileSha256": "85ee96ef96b44cdef3c4f4c9626cc8bc798d38b4e68f5b5716c31c287d5f7cf3",
+      "officialToBeforeExactTransformMatch": null,
+      "afterPixelSha256": "ba6e4fac126b7a3436c2a5ae674af16ba0694a52f448410f66525286a777da00",
+      "afterFileSha256": "556fecd4da8bc8db321e9087d6108704c43a19c7a39985bbb46cdf6aa81300fe"
+    },
+    {
+      "repoPath": "public/stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+      "materials": [
+        "bg3d608_00_blue_ChairCD",
+        "bg3d608_00_blue_Fish",
+        "bg3d608_00_blue_Object",
+        "bg3d608_00_blue_ObjectB"
+      ],
+      "officialTextureName": "bg3d608_00_blue_objects_col",
+      "officialSourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+      "size": [
+        512,
+        512
+      ],
+      "officialPixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+      "beforePixelSha256": "0ca2bbf21624cab7b0e7b3b2c5a5d252a83a8f68a4650d1362f1dd4263f571c6",
+      "beforeFileSha256": "236ca25c7c51de9e019957f6dc31f66757b33811cce0af984ed73a25e76f6916",
+      "officialToBeforeExactTransformMatch": null,
+      "afterPixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+      "afterFileSha256": "50aa3ebbb28026e55f6ba16d543a97e0ef13425057b016539c8d453cfe5c177a"
+    },
+    {
+      "repoPath": "public/stages/official/battle-608-00-00-001/bg3d608_00_blue_sky_col.png",
+      "materials": [
+        "mt_bg3d608_00_blue_sky"
+      ],
+      "officialTextureName": "bg3d608_00_blue_sky_col",
+      "officialSourceBundle": "texture/bg/186adf1125c7ab4468afb72c4f957424",
+      "size": [
+        1024,
+        1024
+      ],
+      "officialPixelSha256": "3a3710737c735fd95c0b904421d80c1e561049c8d0959298943d943655bf46bf",
+      "beforePixelSha256": "13eae3e00d5be82d567c521e5f0ab34c795078b6260a457f110adc02749cc2c6",
+      "beforeFileSha256": "2f59751ce5ca3e78ca7eb749208e32063fbdc1c9d17fe5d8f77b23fd59c182fb",
+      "officialToBeforeExactTransformMatch": null,
+      "afterPixelSha256": "3a3710737c735fd95c0b904421d80c1e561049c8d0959298943d943655bf46bf",
+      "afterFileSha256": "8514157b454b043445b49736a0d81d755fd10815fd0520619e733dd0dff0a43d"
+    },
+    {
+      "repoPath": "public/stages/official/battle-608-00-00-001/bg3d608_00_red_circlenote_col.png",
+      "materials": [
+        "mt_bg3d608_00_red_MusicNoteC"
+      ],
+      "officialTextureName": "bg3d608_00_red_circlenote_col",
+      "officialSourceBundle": "texture/bg/12b6c395b65398146b34eacb3110054d",
+      "size": [
+        1024,
+        1024
+      ],
+      "officialPixelSha256": "475481072c726a1932f92c3b8e7c206674b05de3878028474fa5becb50bf27df",
+      "beforePixelSha256": "2020983df93aedf2810f437f78253a7de290d918bddf53383450e2f843b9ef11",
+      "beforeFileSha256": "1dccee65fe1e78f23d20d424a842b695e21f8a73c4f4b49c372c8ebcbb0f4935",
+      "officialToBeforeExactTransformMatch": null,
+      "afterPixelSha256": "475481072c726a1932f92c3b8e7c206674b05de3878028474fa5becb50bf27df",
+      "afterFileSha256": "2c3f1647c19a798a9979c5aacf4790c9cf5dc84a92f2038ab37afa3a60aff916"
+    },
+    {
+      "repoPath": "public/stages/official/battle-608-00-00-001/bg3d608_00_red_ground_col.png",
+      "materials": [
+        "mt_mt_bg3d608_00_red_Roof"
+      ],
+      "officialTextureName": "bg3d608_00_red_ground_col",
+      "officialSourceBundle": "texture/bg/794f71efa5afc23468f2a73c8b563dc8",
+      "size": [
+        1024,
+        1024
+      ],
+      "officialPixelSha256": "55a38f7e92c398f2244f18ff83aa27f3305d5520cb8b7741d8b3e2ccd40645f2",
+      "beforePixelSha256": "c3033cb2603a3268b8a15ec461292114109076956a4f4b062bfd9e1d5ff8f221",
+      "beforeFileSha256": "e89d59038b3aab3ff593c12f9d0204ea4407f707515cc8b1713480e4ea9d0996",
+      "officialToBeforeExactTransformMatch": null,
+      "afterPixelSha256": "55a38f7e92c398f2244f18ff83aa27f3305d5520cb8b7741d8b3e2ccd40645f2",
+      "afterFileSha256": "8ae105c5c7b7a8e5c568eb84e94bd3d883168cf79d84fe120a1a562d16675f4d"
+    },
+    {
+      "repoPath": "public/stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+      "materials": [
+        "mt_bg3d608_00_red_MusicNoteA",
+        "mt_bg3d608_00_red_MusicNoteB"
+      ],
+      "officialTextureName": "bg3d608_00_red_musicNote_col",
+      "officialSourceBundle": "texture/bg/90d984104c9b6f646bc4139b675d732f",
+      "size": [
+        1024,
+        256
+      ],
+      "officialPixelSha256": "403f0a3875fc0be31d739491169a35d9ba9f377eb6240c85a86c1a3fa4e25c05",
+      "beforePixelSha256": "f0bfe6dfe49556caf4b8c245a5505033feab2f3bbb5697e4e933bdc52def2c43",
+      "beforeFileSha256": "66c9c27beea242d633fd92460a1385beab009f43b8faaaefd0222c83addeab6d",
+      "officialToBeforeExactTransformMatch": null,
+      "afterPixelSha256": "403f0a3875fc0be31d739491169a35d9ba9f377eb6240c85a86c1a3fa4e25c05",
+      "afterFileSha256": "42f6f990afdf67e4513f1245bede02aac65e83b47b272994181bee3bd832a86f"
+    },
+    {
+      "repoPath": "public/stages/official/battle-608-00-00-001/bg3d608_00_red_objects_col.png",
+      "materials": [
+        "mt_mt_bg3d608_00_red_Object"
+      ],
+      "officialTextureName": "bg3d608_00_red_objects_col",
+      "officialSourceBundle": "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+      "size": [
+        512,
+        512
+      ],
+      "officialPixelSha256": "9ceab71495cc33aaa0ea594c44ca444292f57280cbadd911323d05928d232442",
+      "beforePixelSha256": "262228786248285b12a7ffa0b06af68c436afe6e711d705f2373f139e79a10b6",
+      "beforeFileSha256": "4c7f11e4be384418545fadc186ae05fde5fc9a19f11ab9fe2720e6cc6ea4bd8f",
+      "officialToBeforeExactTransformMatch": null,
+      "afterPixelSha256": "9ceab71495cc33aaa0ea594c44ca444292f57280cbadd911323d05928d232442",
+      "afterFileSha256": "20bee550b43355dcbff9eaf81d0b586d3a7f7afb088f5ff4724f6b795b2289f6"
+    },
+    {
+      "repoPath": "public/stages/official/battle-608-00-00-001/bg3d608_00_red_violinLineShd_sprite.png",
+      "materials": [
+        "mt_bg3d608_00_red_violinShdLine"
+      ],
+      "officialTextureName": "bg3d608_00_red_violinLineShd_sprite",
+      "officialSourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "size": [
+        2048,
+        512
+      ],
+      "officialPixelSha256": "83caea8b417aa9f09d4518ddb60aac3119575e2bfe82e9248f610ce321f71aec",
+      "beforePixelSha256": "6b67ee2077abdaa19d07381253835004a0611591292b14d7c5e4679705f6380c",
+      "beforeFileSha256": "ca3297ce50cc20f30a6bc55d37a4cbdf9e6114a4de911840f8b1aca1c6e45158",
+      "officialToBeforeExactTransformMatch": null,
+      "afterPixelSha256": "83caea8b417aa9f09d4518ddb60aac3119575e2bfe82e9248f610ce321f71aec",
+      "afterFileSha256": "50a7337aab9690e6e68f563cc0c3568c57b0935abd58a2f083b1903a828e6e6e"
+    },
+    {
+      "repoPath": "public/stages/official/battle-608-00-00-001/bg3d608_00_red_violin_sprite.png",
+      "materials": [
+        "mt_bg3d608_00_red_violinCol"
+      ],
+      "officialTextureName": "bg3d608_00_red_violin_sprite",
+      "officialSourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "size": [
+        1024,
+        1024
+      ],
+      "officialPixelSha256": "62783dc10c16daf88cc5c8c81009eb39d0a9207beedb50212e6686aa6b027790",
+      "beforePixelSha256": "085a7bcd2915e31ebd84490c2385e20d24f7d6dec30a00cb6e74ea4bd231bb7c",
+      "beforeFileSha256": "91083e3aaaf57f155d5c0149db6aceb04bc4317ea33d6827fd17cfab9bdedb8d",
+      "officialToBeforeExactTransformMatch": null,
+      "afterPixelSha256": "62783dc10c16daf88cc5c8c81009eb39d0a9207beedb50212e6686aa6b027790",
+      "afterFileSha256": "9b09792a97bd09f4817223ae4e0f7707fc52d4229dcb814b16e3a338c89862bc"
+    }
+  ],
+  "unchanged": [],
+  "privacyBoundary": "Raw current-JP AssetBundle bytes were transient runner inputs and are not committed. Only individual decoded Texture2D PNGs required by existing public Viewer bindings and compact hash/provenance evidence are persisted.",
+  "fidelityBoundary": "This proves decoded Texture2D pixel identity only. It does not by itself prove shader, sampler, UV, colorspace, renderQueue, ReflectionProbe or runtime parity."
+}
