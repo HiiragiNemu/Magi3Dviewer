@@ -14,18 +14,8 @@ import extract_official_100101_material_properties as base
 import extract_targeted_redrive_formula_windows as targeted
 
 OUT = Path('research/official-redrive-self-shadow-receiver-trace.json')
-TARGET_CHUNK_SHA256 = '65536f9156cf560226d40a4094f1a27c448f6b2bfca1a8d6a77a8de89ee4f62a'
-RADIUS = 9000
-
-NEEDLES = (
-    b'texture(_RdToonSelfShadowMapRT',
-    b'textureLod(_RdToonSelfShadowMapRT',
-    b'texelFetch(_RdToonSelfShadowMapRT',
-    b'_RdToonSelfShadowWorldToClip *',
-    b'_RdToonGlobalSelfShadowDepthBias',
-    b'_RdToonSelfShadowUseNdotLFix',
-    b'_ReceiveSelfShadow',
-)
+RADIUS = 7000
+SAMPLER = b'_RdToonSelfShadowMapRT'
 
 
 def occurrences(data: bytes, needle: bytes):
@@ -63,51 +53,68 @@ def main():
         env = UnityPy.load(*(str(p) for p in downloaded))
         material, pointer, reader, shader = modern.material_shader(env)
         chunks = targeted.reconstruct_chunks(shader)
-        chunk = next((x for x in chunks if x['decodedSha256'] == TARGET_CHUNK_SHA256), None)
-        if chunk is None: raise RuntimeError('target current-JP shader chunk missing')
-        data = chunk['decoded']
+
         hits = []
-        for needle in NEEDLES:
-            positions = list(occurrences(data, needle))
-            for pos in positions:
-                window = data[max(0,pos-5000):min(len(data),pos+5000)].lower()
+        for chunk in chunks:
+            data = chunk['decoded']
+            for pos in occurrences(data, SAMPLER):
+                near = data[max(0,pos-2200):min(len(data),pos+2200)]
+                lower = near.lower()
+                # Uniform declarations contain the name but no executable texture call.
+                # Combined-sampler GLSL can spell the call as texture(sampler2D(texture,sampler),uv),
+                # so score proximity instead of assuming one literal syntax.
+                texture_calls = lower.count(b'texture(') + lower.count(b'texturelod(') + lower.count(b'texelfetch(')
                 executable_score = (
-                    window.count(b'texture(') * 20 +
-                    window.count(b'void main') * 4 +
-                    window.count(b'clamp(') * 2 +
-                    window.count(b'dot(') * 2 +
-                    window.count(b'if(')
+                    texture_calls * 100 +
+                    lower.count(b'clamp(') * 5 +
+                    lower.count(b'dot(') * 4 +
+                    lower.count(b'if(') * 3 +
+                    lower.count(b'_rdtoonselfshadowworldtoclip') * 8 +
+                    lower.count(b'_rdtoonglobalselfshadowdepthbias') * 8 +
+                    lower.count(b'_rdtoonselfshadowusendotlfix') * 8 +
+                    lower.count(b'_receiveselfshadow') * 8
                 )
                 hits.append({
-                    'needle': needle.decode('ascii'),
+                    'chunkIndex': chunk['chunkIndex'],
+                    'platform': chunk['platform'],
+                    'decodedSha256': chunk['decodedSha256'],
                     'offset': pos,
+                    'textureCallsNear': texture_calls,
                     'score': executable_score,
                 })
-        hits.sort(key=lambda x:(-x['score'], x['offset'], x['needle']))
-        # keep unique centers; prefer actual sampler calls first
-        selected_hits=[]; seen=[]
+        hits.sort(key=lambda x:(-x['textureCallsNear'], -x['score'], x['chunkIndex'], x['offset']))
+
+        selected_hits=[]; seen=set()
         for hit in hits:
-            if any(abs(hit['offset']-p)<1200 for p in seen): continue
-            selected_hits.append({**hit, **render(data, hit['offset'])})
-            seen.append(hit['offset'])
-            if len(selected_hits)>=8: break
-        if not selected_hits: raise RuntimeError('no self-shadow executable candidates found')
+            # collapse duplicate variants by the local executable bytes
+            chunk = next(x for x in chunks if x['chunkIndex'] == hit['chunkIndex'])
+            data = chunk['decoded']
+            lo=max(0,hit['offset']-1600); hi=min(len(data),hit['offset']+1600)
+            local_sha=hashlib.sha256(data[lo:hi]).hexdigest()
+            if local_sha in seen: continue
+            seen.add(local_sha)
+            selected_hits.append({**hit, 'localSha256': local_sha, **render(data, hit['offset'])})
+            if len(selected_hits)>=12: break
+        if not selected_hits: raise RuntimeError('no self-shadow sampler occurrences found')
         report={
-            'schemaVersion':1,
-            'source':'official-jp-current-ReDriveToon-compiled-GLSL',
+            'schemaVersion':2,
+            'source':'official-jp-current-ReDriveToon-compiled-GLSL-all-variants',
             'metadata':metadata,
             'material':str(getattr(material,'m_Name','')),
             'shaderPathId':int(getattr(pointer,'m_PathID',0) or 0),
             'shaderSerializedFile':str(getattr(getattr(reader,'assets_file',None),'name','')),
-            'chunkIndex':chunk['chunkIndex'],
-            'decodedSha256':chunk['decodedSha256'],
-            'allHitSummary':hits,
+            'chunkCount':len(chunks),
+            'allSamplerHitSummary':hits,
             'selectedExecutableWindows':selected_hits,
         }
         OUT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
         print(json.dumps({
-            'hitCount':len(hits),
-            'selected':[{k:h[k] for k in ('needle','offset','score')} for h in selected_hits]
+            'chunkCount':len(chunks), 'hitCount':len(hits),
+            'samplerHitsWithTextureCalls':sum(h['textureCallsNear']>0 for h in hits),
+            'selected':[
+                {k:h[k] for k in ('chunkIndex','decodedSha256','offset','textureCallsNear','score')}
+                for h in selected_hits
+            ]
         },indent=2))
 
 if __name__=='__main__': main()
