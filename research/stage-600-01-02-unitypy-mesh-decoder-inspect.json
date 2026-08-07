@@ -1,0 +1,97 @@
+{
+  "sourceRevision": "61ad830ca038a9efd58e67170a61c85e",
+  "unityPyVersion": "1.25.3",
+  "meshClass": "UnityPy.classes.generated.Mesh",
+  "meshMethods": [
+    "export",
+    "save",
+    "set_object_reader"
+  ],
+  "meshClassSource": "@unitypy_define\nclass Mesh(NamedObject):\n    m_BindPose: List[Matrix4x4f]\n    m_CompressedMesh: CompressedMesh\n    m_IndexBuffer: List[int]\n    m_LocalAABB: AABB\n    m_MeshCompression: int\n    m_Name: str\n    m_SubMeshes: List[SubMesh]\n    m_BakedConvexCollisionMesh: Optional[List[int]] = None\n    m_BakedTriangleCollisionMesh: Optional[List[int]] = None\n    m_BoneNameHashes: Optional[List[int]] = None\n    m_BonesAABB: Optional[List[MinMaxAABB]] = None\n    m_CollisionTriangles: Optional[List[int]] = None\n    m_CollisionVertexCount: Optional[int] = None\n    m_Colors: Optional[List[ColorRGBA]] = None\n    m_CookingOptions: Optional[int] = None\n    m_IndexFormat: Optional[int] = None\n    m_IsReadable: Optional[bool] = None\n    m_KeepIndices: Optional[bool] = None\n    m_KeepVertices: Optional[bool] = None\n    m_MeshLodInfo: Optional[MeshLodInfo] = None\n    m_MeshMetrics_0_: Optional[float] = None\n    m_MeshMetrics_1_: Optional[float] = None\n    m_MeshUsageFlags: Optional[int] = None\n    m_Normals: Optional[List[Vector3f]] = None\n    m_PreBakeConvexCollisionMesh: Optional[bool] = None\n    m_PreBakeTriangleCollisionMesh: Optional[bool] = None\n    m_RootBoneNameHash: Optional[int] = None\n    m_ShapeVertices: Optional[List[MeshBlendShapeVertex]] = None\n    m_Shapes: Optional[Union[BlendShapeData, List[MeshBlendShape]]] = None\n    m_Skin: Optional[Union[List[BoneInfluence], List[BoneWeights4]]] = None\n    m_StreamCompression: Optional[int] = None\n    m_StreamData: Optional[StreamingInfo] = None\n    m_Tangents: Optional[List[Vector4f]] = None\n    m_UV: Optional[List[Vector2f]] = None\n    m_UV1: Optional[List[Vector2f]] = None\n    m_Use16BitIndices: Optional[int] = None\n    m_VariableBoneCountWeights: Optional[VariableBoneCountWeights] = None\n    m_VertexData: Optional[VertexData] = None\n    m_Vertices: Optional[List[Vector3f]] = None\n",
+  "meshExportModule": "UnityPy.classes.legacy_patch.Mesh",
+  "meshExportSource": "def _Mesh_export(self: Mesh, format: str = \"obj\"):\n    from ...export.MeshExporter import export_mesh\n\n    return export_mesh(self, format)\n",
+  "streamData": {
+    "type": "StreamingInfo",
+    "repr": "StreamingInfo(offset=218368, path='archive:/CAB-2af2a57d55ccf6b83cc7f7158c011baa/CAB-2af2a57d55ccf6b83cc7f7158c011baa.resS', size=11520)",
+    "fields": {
+      "offset": "218368",
+      "path": "'archive:/CAB-2af2a57d55ccf6b83cc7f7158c011baa/CAB-2af2a57d55ccf6b83cc7f7158c011baa.resS'",
+      "size": "11520"
+    }
+  },
+  "streamDataMethods": [],
+  "streamDataClassSource": "@unitypy_define\nclass StreamingInfo:\n    offset: int\n    path: str\n    size: int\n",
+  "assetsFileClass": "UnityPy.files.SerializedFile.SerializedFile",
+  "assetsFileMethods": [
+    "read_files"
+  ],
+  "vertexDataClass": "UnityPy.classes.generated.VertexData",
+  "vertexDataMethods": [],
+  "vertexDataClassSource": "@unitypy_define\nclass VertexData:\n    m_DataSize: bytes\n    m_VertexCount: int\n    m_Channels: Optional[List[ChannelInfo]] = None\n    m_CurrentChannels: Optional[int] = None\n    m_Streams: Optional[List[StreamInfo]] = None\n    m_Streams_0_: Optional[StreamInfo] = None\n    m_Streams_1_: Optional[StreamInfo] = None\n    m_Streams_2_: Optional[StreamInfo] = None\n    m_Streams_3_: Optional[StreamInfo] = None\n",
+  "vertexDataFields": {
+    "m_Channels": {
+      "type": "list",
+      "length": 14,
+      "sample": [
+        "ChannelInfo(dimension=3, format=0, offset=0, stream=0)",
+        "ChannelInfo(dimension=52, format=1, offset=12, stream=0)",
+        "ChannelInfo(dimension=4, format=1, offset=20, stream=0)",
+        "ChannelInfo(dimension=0, format=0, offset=0, stream=0)",
+        "ChannelInfo(dimension=2, format=1, offset=28, stream=0)",
+        "ChannelInfo(dimension=2, format=0, offset=32, stream=0)",
+        "ChannelInfo(dimension=0, format=0, offset=0, stream=0)",
+        "ChannelInfo(dimension=0, format=0, offset=0, stream=0)"
+      ]
+    },
+    "m_CurrentChannels": {
+      "type": "NoneType",
+      "repr": "None"
+    },
+    "m_DataSize": {
+      "type": "bytes",
+      "length": 0,
+      "headHex": ""
+    },
+    "m_Streams": {
+      "type": "NoneType",
+      "repr": "None"
+    },
+    "m_Streams_0_": {
+      "type": "NoneType",
+      "repr": "None"
+    },
+    "m_Streams_1_": {
+      "type": "NoneType",
+      "repr": "None"
+    },
+    "m_Streams_2_": {
+      "type": "NoneType",
+      "repr": "None"
+    },
+    "m_Streams_3_": {
+      "type": "NoneType",
+      "repr": "None"
+    },
+    "m_VertexCount": {
+      "type": "int",
+      "repr": "288",
+      "fields": {}
+    }
+  },
+  "meshObjectDirMatches": [
+    "m_BakedTriangleCollisionMesh",
+    "m_CollisionTriangles",
+    "m_CollisionVertexCount",
+    "m_IndexBuffer",
+    "m_IndexFormat",
+    "m_IsReadable",
+    "m_PreBakeTriangleCollisionMesh",
+    "m_StreamCompression",
+    "m_StreamData",
+    "m_UV",
+    "m_UV1",
+    "m_VertexData",
+    "object_reader",
+    "set_object_reader"
+  ]
+}

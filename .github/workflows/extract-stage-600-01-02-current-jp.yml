@@ -1,0 +1,92 @@
+name: Extract stage 600-01-02 current JP
+
+on:
+  push:
+    branches:
+      - research/stage-600-01-02-current-jp-20260808
+    paths:
+      - automation/trigger-stage-600-01-02-current-jp-20260808.txt
+  pull_request:
+    branches:
+      - research/stage-608-official-material-properties-20260807
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-24.04
+    env:
+      STAGE600_UV1_SOURCE_OUT: /tmp/stage600-uv1-source.json
+      STAGE600_MESHFILTER_HIERARCHY_OUT: /tmp/stage600-meshfilter-hierarchy.json
+      STAGE600_UV1_COMPANION_OUT: /tmp/stage600-uv1-companion.json
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: research/stage-600-01-02-current-jp-20260808
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install extractor dependencies
+        run: python -m pip install requests msgpack pycryptodome UnityPy lz4
+      - name: Install project dependencies for production FBXLoader audit
+        run: npm ci
+      - name: Extract current-JP 600-01-02 material properties
+        run: python scripts/extract_official_600_01_02_material_properties.py
+      - name: Summarize actionable current-JP parity fields
+        run: python scripts/summarize_official_600_01_02_material_properties.py
+      - name: Audit exported FBX material-name provenance
+        run: python scripts/audit_stage_600_fbx_material_names.py
+      - name: Audit current-JP versus exported FBX raw UV channels
+        run: python scripts/audit_stage_600_uv_channels.py
+      - name: Inspect recoverable Unity mesh UV1 arrays
+        run: python scripts/inspect_stage_600_unity_mesh_uv1.py
+      - name: Inspect UnityPy mesh decoder API
+        run: python scripts/inspect_unitypy_mesh_decoder.py
+      - name: Decode streamed current-JP UV1 with UnityPy MeshHandler
+        run: python scripts/extract_stage_600_uv1_source.py
+      - name: Bind official Mesh PathIDs to GameObject hierarchy
+        run: python scripts/extract_stage_600_meshfilter_hierarchy.py
+      - name: Prove FBX polygon-corner mapping and build UV1 companion candidate
+        run: node scripts/build_stage_600_uv1_companion.mjs
+      - name: Report UV1 companion candidate size
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s "$STAGE600_UV1_SOURCE_OUT"
+          test -s "$STAGE600_MESHFILTER_HIERARCHY_OUT"
+          test -s "$STAGE600_UV1_COMPANION_OUT"
+          wc -c "$STAGE600_UV1_SOURCE_OUT" "$STAGE600_MESHFILTER_HIERARCHY_OUT" "$STAGE600_UV1_COMPANION_OUT"
+      - name: Parse exported FBX with the actual Three FBXLoader
+        run: node scripts/audit_stage_600_three_fbx_uv.mjs
+      - name: Persist evidence
+        shell: bash --noprofile --norc -e -o pipefail {0}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          test -s research/official-600-01-02-material-properties.json
+          test -s research/official-600-01-02-material-summary.json
+          test -s research/stage-600-01-02-fbx-material-name-audit.json
+          test -s research/stage-600-01-02-uv-channel-audit.json
+          test -s research/stage-600-01-02-unity-mesh-uv1-inspect.json
+          test -s research/stage-600-01-02-unitypy-mesh-decoder-inspect.json
+          test -s research/stage-600-01-02-uv1-fbx-mapping.json
+          test -s research/stage-600-01-02-three-fbx-uv-audit.json
+          git add \
+            research/official-600-01-02-material-properties.json \
+            research/official-600-01-02-material-summary.json \
+            research/stage-600-01-02-fbx-material-name-audit.json \
+            research/stage-600-01-02-uv-channel-audit.json \
+            research/stage-600-01-02-unity-mesh-uv1-inspect.json \
+            research/stage-600-01-02-unitypy-mesh-decoder-inspect.json \
+            research/stage-600-01-02-uv1-fbx-mapping.json \
+            research/stage-600-01-02-three-fbx-uv-audit.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: persist exact stage 600 UV1 mapping evidence'
+          git push origin HEAD:research/stage-600-01-02-current-jp-20260808
