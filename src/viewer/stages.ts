@@ -7,6 +7,11 @@ import { gui } from './controllers/GUI'
 import { loadStageCatalogTree } from './stageCatalog'
 import { resolveStageAnchor } from './stageHierarchy'
 import {
+    setupStageFidelityPanel,
+    updateStageFidelityPanel,
+    type StageFidelityComponentEvidence,
+} from './stageFidelity'
+import {
     applyStageMaterialBindings,
     type StageMaterialBinding,
 } from './stageMaterialBindings'
@@ -165,6 +170,11 @@ export interface StageDefinition {
     materialBindings?: StageMaterialBinding[]
     renderProfile?: StageRenderProfile
     runtime?: StageRuntimeProfile
+    fidelity?: {
+        components?: StageFidelityComponentEvidence
+        sourceRevision?: string
+        generated?: boolean
+    }
     /**
      * Official Exedra stages are normally living scenes rather than static
      * meshes. This field prevents a geometry-only export from being mistaken
@@ -335,6 +345,7 @@ const initialSceneState = {
 }
 
 export async function setupStageSelector() {
+    setupStageFidelityPanel()
     try {
         const loaded = await loadStageCatalogTree<StageDefinition>(
             './stages/catalog.json',
@@ -449,6 +460,7 @@ export async function loadStageById(id: string) {
             stageRoot.userData.stageDefinition = definition
             stageRoot.userData.bundleProvenance = definition.bundleProvenance ?? null
             stageRoot.userData.stageDynamic = definition.dynamic ?? null
+            updateStageFidelityPanel(definition)
             return
         }
 
@@ -470,6 +482,7 @@ export async function loadStageById(id: string) {
         stageSelector.value = definition.id
         stageRoot.userData.stageDefinition = definition
         stageRoot.userData.bundleProvenance = definition.bundleProvenance ?? null
+        updateStageFidelityPanel(definition)
         stageRoot.userData.reDriveVolume = definition.renderProfile?.reDriveVolume ?? null
         stageRoot.userData.spawnPoints = definition.spawnPoints ?? []
         stageRoot.userData.stageRuntime = activeStageRuntime?.getDebugState() ?? null
