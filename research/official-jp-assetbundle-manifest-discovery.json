@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "source": "official-jp-current-resource-api-bounded-discovery",
-  "purpose": "Discover the current JP AssetBundleManifest/root-catalog route after the historical normalized fullPath='android' assumption stopped matching. This report intentionally persists only schema/header/candidate evidence, never auth tokens or the full catalog.",
+  "purpose": "Discover the current JP AssetBundle dependency route after the historical normalized fullPath='android' AssetBundleManifest assumption stopped matching. The current catalog schema itself exposes a dependencies field, so the exact 608 target record is retained as bounded evidence. No auth token or full catalog is persisted.",
   "metadata": {
     "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
     "catalogEntryCount": 16586,
@@ -31,6 +31,29 @@
     "pathMappingKeyUnion": [
       "path",
       "pathId"
+    ],
+    "dependencyShapes": {
+      "str": 16586
+    },
+    "targetStageRecords": [
+      {
+        "name": "3d_608_00_00_001",
+        "pathId": 85,
+        "label": "",
+        "dependencies": "shader/common/texture/cloud_noise,texture/bg/794f71efa5afc23468f2a73c8b563dc8,texture/bg/7c22553094ea521428b51081ae85d860,texture/bg/4609884769b92f6409f2592fe0524817,shader/bg_uber,texture/bg/efd676b5b84a41d4ebf49af3a5680084,texture/bg/5bec58544f3f8d34994548212c9a6405,texture/bg/12b6c395b65398146b34eacb3110054d,shader/common/texture/simple_noise,texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc,texture/bg/90d984104c9b6f646bc4139b675d732f,texture/bg/392aec77248a2064eaea814e641f6183,texture/bg/e99618be318e5644e84edc49bec76510,texture/bg/186adf1125c7ab4468afb72c4f957424",
+        "resolvedPath": "battle/stage/bg_",
+        "keys": [
+          "cryptoKey",
+          "dependencies",
+          "expireType",
+          "label",
+          "language",
+          "name",
+          "pathId"
+        ],
+        "fullPath": "battle/stage/bg_3d_608_00_00_001",
+        "dependencyValueTypes": null
+      }
     ],
     "termCandidates": [],
     "pathTermCandidates": [],
@@ -65,6 +88,8 @@
         "path",
         "pathId"
       ],
+      "dependencyShapes": {},
+      "targetStageRecords": [],
       "termCandidates": [],
       "pathTermCandidates": [],
       "unresolvedNameSamples": []
