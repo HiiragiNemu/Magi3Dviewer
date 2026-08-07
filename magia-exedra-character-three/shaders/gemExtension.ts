@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import type { OfficialMaterialProfile } from '../materialProfile';
+import { requestReDriveCameraDepth } from '../scene/cameraDepth';
 import {
     injectOfficialGemShader,
     loadOfficialGemResources,
@@ -22,6 +23,9 @@ export async function extendMaterialWithOfficialGem(
     matCapUrl?: string,
 ): Promise<ExtendedGemMaterial> {
     const resources = await loadOfficialGemResources(profiles, matCapUrl);
+    if (profiles.some(profile => profile.gem.enabled && profile.gem.useDepthDiff)) {
+        requestReDriveCameraDepth();
+    }
     const previousCompile = material.onBeforeCompile;
     const previousKey = material.customProgramCacheKey.bind(material);
 
@@ -43,7 +47,7 @@ export async function extendMaterialWithOfficialGem(
         }
     };
     material.customProgramCacheKey = () =>
-        `${previousKey()}|official-gem-v3|${matCapUrl ? 'character-matcap' : 'fallback-matcap'}|${profiles.map(x => x.name).join('|')}`;
+        `${previousKey()}|official-gem-v4-depthdiff|${matCapUrl ? 'character-matcap' : 'fallback-matcap'}|${profiles.map(x => x.name).join('|')}`;
     material.needsUpdate = true;
 
     return { resources, profiles };
