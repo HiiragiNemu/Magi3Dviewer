@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-assetbundle",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "bundle": "battle/stage/bg_3d_608_00_00_001",
+  "probeCount": 1,
+  "probes": [
+    {
+      "pathId": 3318311746613360191,
+      "gameObjectPathId": 3865853983000055812,
+      "gameObjectName": "Reflection Probe",
+      "hierarchyPath": "bg_3d_608_00_00_001/Reflection Probe",
+      "transform": {
+        "pathId": 251529881418729372,
+        "gameObjectPathId": 3865853983000055812,
+        "fatherTransformPathId": 4542248385352207969,
+        "localPosition": {
+          "x": 0.0,
+          "y": 0.5,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": -0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      },
+      "boxSize": {
+        "x": 70.0,
+        "y": 70.0,
+        "z": 70.0
+      },
+      "boxOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "nearClip": 0.30000001192092896,
+      "farClip": 10000.0,
+      "intensity": null,
+      "blendDistance": 1.0,
+      "hdr": true,
+      "boxProjection": true,
+      "mode": 2,
+      "refreshMode": 1,
+      "timeSlicingMode": 2,
+      "resolution": 64,
+      "importance": 1,
+      "clearFlags": 2,
+      "backgroundColor": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+      },
+      "cullingMask": {
+        "m_Bits": 2147483648
+      },
+      "bakedTexture": {
+        "fileId": 0,
+        "pathId": 0,
+        "localCubemapName": null
+      },
+      "customBakedTexture": {
+        "fileId": 0,
+        "pathId": 1016455745504271734,
+        "localCubemapName": "ReflectionProbe-0"
+      },
+      "typetreeKeys": [
+        "m_BackGroundColor",
+        "m_BakedTexture",
+        "m_BlendDistance",
+        "m_BoxOffset",
+        "m_BoxProjection",
+        "m_BoxSize",
+        "m_ClearFlags",
+        "m_CullingMask",
+        "m_CustomBakedTexture",
+        "m_Enabled",
+        "m_FarClip",
+        "m_GameObject",
+        "m_HDR",
+        "m_Importance",
+        "m_IntensityMultiplier",
+        "m_Mode",
+        "m_NearClip",
+        "m_RefreshMode",
+        "m_RenderDynamicObjects",
+        "m_Resolution",
+        "m_ShadowDistance",
+        "m_TimeSlicingMode",
+        "m_Type",
+        "m_UpdateFrequency",
+        "m_UseOcclusionCulling"
+      ]
+    }
+  ]
+}
