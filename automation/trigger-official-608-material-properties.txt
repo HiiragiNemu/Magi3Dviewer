@@ -1,4 +1,4 @@
 Trigger bounded current-JP stage 608 Material saved-property extraction.
-Resolve every non-null current-JP 608 _BaseMap/_MainTex/_ScrollTexture dependency through the exact 15-bundle closure and compare decoded pixel SHA against the explicit `origin/magius3dviewer` public Viewer binding. Trace suspect cutout Materials through Renderer -> material slot -> Mesh and exact TextureSettings/wrap state. Also extract only bounded current-JP `shader/bg_uber` compiled GLSL neighborhoods for `_UseMeshUV`, BaseMap/MainTex/ST selection, billboard, alpha-clip and vertex-color dataflow.
+Resolve every non-null current-JP 608 _BaseMap/_MainTex/_ScrollTexture dependency through the exact 15-bundle closure and compare decoded pixel SHA against explicit `origin/magius3dviewer`. Classify every mismatch against exact identity/flip-Y/flip-X/flip-XY pixel hashes before treating it as wrong content. Keep bounded `shader/bg_uber` compiled windows for BaseMap UV/ST, billboard, alpha clip and vertex-color dataflow.
 DO NOT MERGE: automation trigger only.
-Rerun 2026-08-08 after correcting the persisted binding-diff filename and adding the bounded bg_uber extractor.
+Rerun 2026-08-08 orientation-classification pass.
