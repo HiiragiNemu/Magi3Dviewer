@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install bounded extractor dependencies
-        run: python -m pip install requests msgpack pycryptodome UnityPy
+        run: python -m pip install requests msgpack pycryptodome UnityPy lz4
       - name: Extract exact stage 608 Material saved properties
         run: python scripts/extract_official_608_material_properties.py
       - name: Extract current-JP GameObject active and Renderer enabled states
@@ -45,6 +45,8 @@ jobs:
           test -s research/official-608-material-texture-resolution.json
       - name: Trace target Renderers, Mesh UV diagnostics and TextureSettings
         run: python scripts/extract_official_608_sprite_renderer_mesh_uv.py
+      - name: Extract bounded current-JP bg_uber compiled formula windows
+        run: python scripts/extract_official_608_bg_uber_formula_windows.py
       - name: Inspect ReflectionProbe Cubemap payloads
         run: python scripts/inspect_official_608_cubemap_payloads.py
       - name: Decode ReflectionProbe Cubemap face chains
@@ -83,6 +85,7 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           test -s research/official-608-material-texture-resolution.json
+          test -s research/official-608-bg-uber-formula-windows.json
           git add \
             research/official-608-material-properties.json \
             research/official-608-gameobject-states.json \
@@ -91,6 +94,7 @@ jobs:
             research/official-608-external-files.json \
             research/official-608-material-texture-resolution.json \
             research/official-608-sprite-renderer-mesh-uv.json \
+            research/official-608-bg-uber-formula-windows.json \
             research/official-608-cubemap-payloads.json \
             research/official-608-cubemap-face-decode.json \
             research/official-608-reflection-probes.json \
@@ -104,7 +108,7 @@ jobs:
             research/official-608-particle-enabled-modules.json \
             research/official-608-particle-stage-root-profiles.json \
             research/release-stage-runtime-hooks.json \
-            research/official-608-material-binding-diff.json
+            research/official-608-vs-release-material-bindings.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'research: persist exact current-JP 608 renderer and texture parity'
+          git commit -m 'research: persist exact current-JP 608 renderer texture and bg_uber evidence'
           git push origin HEAD:${TARGET_BRANCH}
