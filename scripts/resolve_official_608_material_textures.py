@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import hashlib
+import io
 import json
+import subprocess
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -19,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TARGET_STAGE_BUNDLE = 'battle/stage/bg_3d_608_00_00_001'
 MATERIAL_REPORT = ROOT / 'research' / 'official-608-material-properties.json'
 EXTERNAL_REPORT = ROOT / 'research' / 'official-608-external-files.json'
-WEB_CATALOG = ROOT / 'public' / 'stages' / 'catalog' / 'battle-608-00-00-001.json'
+WEB_CATALOG_PATH = 'public/stages/catalog/battle-608-00-00-001.json'
 OUTPUT = ROOT / 'research' / 'official-608-material-texture-resolution.json'
 TARGET_PROPERTIES = {'_BaseMap', '_MainTex', '_ScrollTexture', '_ScrollTexutre'}
 
@@ -28,35 +31,69 @@ def sha256(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
 
 
+def git_show(ref: str, path: str) -> bytes:
+    result = subprocess.run(
+        ['git', 'show', f'{ref}:{path}'],
+        cwd=ROOT,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(
+            f'git show failed for {ref}:{path}: '
+            + result.stderr.decode('utf-8', errors='replace')
+        )
+    return result.stdout
+
+
 def internal_file_name(obj: Any) -> str:
     value = str(getattr(getattr(obj, 'assets_file', None), 'name', ''))
     return value.replace('\\', '/').rsplit('/', 1)[-1].lower()
 
 
-def web_texture(url: str | None) -> dict[str, Any] | None:
+def viewer_texture(ref: str, url: str | None) -> dict[str, Any] | None:
     if not url:
         return None
     relative = url.strip()
-    if relative.startswith('./'):
+    while relative.startswith('./'):
         relative = relative[2:]
-    path = ROOT / 'public' / relative
-    if not path.is_file():
-        return {'url': url, 'exists': False}
-    with Image.open(path) as image:
+    repo_path = f'public/{relative}'
+    try:
+        raw = git_show(ref, repo_path)
+    except RuntimeError as exc:
+        return {
+            'url': url,
+            'repoPath': repo_path,
+            'ref': ref,
+            'exists': False,
+            'error': str(exc),
+        }
+    with Image.open(io.BytesIO(raw)) as image:
         rgba = image.convert('RGBA')
         return {
             'url': url,
+            'repoPath': repo_path,
+            'ref': ref,
             'exists': True,
             'size': list(rgba.size),
             'pixelSha256': sha256(rgba.tobytes()),
-            'pngSha256': sha256(path.read_bytes()),
+            'fileSha256': sha256(raw),
         }
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--viewer-ref', required=True)
+    return parser.parse_args()
+
+
 def main() -> int:
+    args = parse_args()
+    viewer_ref = args.viewer_ref
     material_report = json.loads(MATERIAL_REPORT.read_text(encoding='utf-8'))
     external_report = json.loads(EXTERNAL_REPORT.read_text(encoding='utf-8'))
-    catalog = json.loads(WEB_CATALOG.read_text(encoding='utf-8'))
+    catalog = json.loads(git_show(viewer_ref, WEB_CATALOG_PATH).decode('utf-8'))
 
     current_revision = material_report['metadata']['assetBundleRevision']
     if external_report['metadata']['assetBundleRevision'] != current_revision:
@@ -99,16 +136,22 @@ def main() -> int:
         entries, request_headers, token, metadata = base.catalog(session)
         if metadata.get('assetBundleRevision') != current_revision:
             raise RuntimeError(
-                f'current JP AssetBundle revision changed: evidence={current_revision}, catalog={metadata.get("assetBundleRevision")}'
+                f'current JP AssetBundle revision changed: evidence={current_revision}, '
+                f'catalog={metadata.get("assetBundleRevision")}'
             )
-        by_name = {closure.normalize_name(entry.full_path).lower(): entry for entry in entries}
+        by_name = {
+            closure.normalize_name(entry.full_path).lower(): entry
+            for entry in entries
+        }
         dependencies, _record = closure.current_dependencies(metadata)
         order = [TARGET_STAGE_BUNDLE, *dependencies]
         selected_entries = []
         for name in order:
             entry = by_name.get(name.lower())
             if entry is None:
-                raise RuntimeError(f'current JP closure dependency missing from catalog: {name}')
+                raise RuntimeError(
+                    f'current JP closure dependency missing from catalog: {name}'
+                )
             selected_entries.append(entry)
 
         paths = [
@@ -120,7 +163,10 @@ def main() -> int:
         closure_objects: dict[tuple[str, int], tuple[Any, Any]] = {}
         for entry, path in paths:
             env = UnityPy.load(str(path))
-            is_root = closure.normalize_name(entry.full_path).lower() == TARGET_STAGE_BUNDLE.lower()
+            is_root = (
+                closure.normalize_name(entry.full_path).lower()
+                == TARGET_STAGE_BUNDLE.lower()
+            )
             for obj in env.objects:
                 path_id = int(getattr(obj, 'path_id', 0) or 0)
                 cab = internal_file_name(obj)
@@ -132,9 +178,8 @@ def main() -> int:
 
         def resolve(file_id: int, path_id: int) -> dict[str, Any]:
             key = (file_id, path_id)
-            cached = decoded_cache.get(key)
-            if cached is not None:
-                return cached
+            if key in decoded_cache:
+                return decoded_cache[key]
             if file_id == 0:
                 match = root_local.get(path_id)
                 target_cab = None
@@ -150,6 +195,7 @@ def main() -> int:
                 }
                 decoded_cache[key] = result
                 return result
+
             entry, obj = match
             type_name = str(getattr(getattr(obj, 'type', None), 'name', ''))
             tree = obj.read_typetree()
@@ -209,19 +255,27 @@ def main() -> int:
             (row for row in material['textures'] if row['property'] == '_MainTex'),
             None,
         )
-        web_base = web_texture(binding.get('baseMapUrl')) if binding else None
+        web_base = viewer_texture(
+            viewer_ref,
+            binding.get('baseMapUrl') if binding else None,
+        )
         official_base_hash = (
             official_base.get('resolvedTexture', {}).get('pixelSha256')
             if official_base else None
         )
-        web_hash = web_base.get('pixelSha256') if isinstance(web_base, dict) else None
+        web_hash = (
+            web_base.get('pixelSha256')
+            if isinstance(web_base, dict) and web_base.get('exists')
+            else None
+        )
         comparisons.append({
             'material': name,
             'webBindingPresent': binding is not None,
             'officialBaseMap': official_base,
             'officialMainTex': official_main,
             'baseAndMainSamePointer': (
-                official_base is not None and official_main is not None
+                official_base is not None
+                and official_main is not None
                 and official_base['fileId'] == official_main['fileId']
                 and official_base['pathId'] == official_main['pathId']
             ),
@@ -232,7 +286,15 @@ def main() -> int:
             ),
         })
 
-    mismatches = [row for row in comparisons if row['baseMapPixelMatch'] is False]
+    mismatches = [
+        row for row in comparisons
+        if row['baseMapPixelMatch'] is False
+    ]
+    missing_viewer_files = [
+        row for row in comparisons
+        if isinstance(row.get('webBaseMap'), dict)
+        and row['webBaseMap'].get('exists') is False
+    ]
     unresolved = [
         {
             'material': material['material'],
@@ -243,32 +305,58 @@ def main() -> int:
         for tex in material['textures']
         if not tex['resolvedTexture'].get('resolved')
     ]
+
     report = {
-        'schemaVersion': 1,
-        'source': 'official-jp-current-assetbundle-catalog-dependencies-vs-public-viewer-pixels',
+        'schemaVersion': 2,
+        'source': (
+            'official-jp-current-assetbundle-catalog-dependencies-'
+            'vs-explicit-release-ref-public-viewer-pixels'
+        ),
         'metadata': material_report['metadata'],
         'bundle': TARGET_STAGE_BUNDLE,
+        'viewerRef': viewer_ref,
+        'viewerCatalogPath': WEB_CATALOG_PATH,
         'materialCount': len(official_materials),
         'comparisonCount': len(comparisons),
         'baseMapPixelMismatchCount': len(mismatches),
+        'missingViewerTextureFileCount': len(missing_viewer_files),
         'unresolvedTexturePointerCount': len(unresolved),
         'baseMapPixelMismatches': mismatches,
+        'missingViewerTextureFiles': missing_viewer_files,
         'unresolvedTexturePointers': unresolved,
         'comparisons': comparisons,
         'privacyBoundary': (
-            'Raw current-JP AssetBundles remain transient. Only bounded texture dependency names, dimensions and decoded pixel hashes are persisted.'
+            'Raw current-JP AssetBundles remain transient. Only bounded texture '
+            'dependency names, dimensions and decoded pixel hashes are persisted.'
         ),
     }
-    OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2) + '\n',
+        encoding='utf-8',
+    )
+    if not OUTPUT.is_file():
+        raise RuntimeError(f'failed to persist comparator output: {OUTPUT}')
+
     print(json.dumps({
+        'output': str(OUTPUT.relative_to(ROOT)),
+        'outputBytes': OUTPUT.stat().st_size,
+        'viewerRef': viewer_ref,
         'materialCount': report['materialCount'],
         'baseMapPixelMismatchCount': report['baseMapPixelMismatchCount'],
+        'missingViewerTextureFileCount': report['missingViewerTextureFileCount'],
         'unresolvedTexturePointerCount': report['unresolvedTexturePointerCount'],
         'baseMapPixelMismatches': [
             {
                 'material': row['material'],
-                'official': row['officialBaseMap']['resolvedTexture'].get('name') if row.get('officialBaseMap') else None,
-                'officialHash': row['officialBaseMap']['resolvedTexture'].get('pixelSha256') if row.get('officialBaseMap') else None,
+                'official': (
+                    row['officialBaseMap']['resolvedTexture'].get('name')
+                    if row.get('officialBaseMap') else None
+                ),
+                'officialHash': (
+                    row['officialBaseMap']['resolvedTexture'].get('pixelSha256')
+                    if row.get('officialBaseMap') else None
+                ),
                 'web': row['webBaseMap'],
             }
             for row in mismatches
