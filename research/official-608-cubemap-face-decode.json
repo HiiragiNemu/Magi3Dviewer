@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-assetbundle",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "bundle": "battle/stage/bg_3d_608_00_00_001",
+  "cubemap": "ReflectionProbe-0",
+  "textureFormat": 47,
+  "width": 64,
+  "height": 64,
+  "mipCount": 7,
+  "faceCount": 6,
+  "completeImageSizePerFace": 5488,
+  "payloadByteCount": 32928,
+  "layoutEvidence": "payloadByteCount == m_CompleteImageSize * m_ImageCount; each 5488-byte ETC2_RGBA8 face chain decodes independently at 64x64",
+  "faces": [
+    {
+      "serializedIndex": 0,
+      "assumedUnityFace": "positive-x",
+      "compressedByteCountWithMips": 5488,
+      "compressedSha256": "2a737a44de6bdf3c96a84d9a72808a124fb544f13ba7b4dbf9245652b020d9ad",
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "pixelSha256": "bd66d524d40c0fb87494bc047a46899faf0ddf1f8febe45a2e71e156fe2f2100",
+      "averageRgba8": [
+        0.0,
+        0.0,
+        0.0,
+        7.0
+      ],
+      "centerRgba8": [
+        0,
+        0,
+        0,
+        7
+      ]
+    },
+    {
+      "serializedIndex": 1,
+      "assumedUnityFace": "negative-x",
+      "compressedByteCountWithMips": 5488,
+      "compressedSha256": "cad30dfc1d6ca4aae0680c314975b940f73918646bbbe4f64e668b1635a186b6",
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "pixelSha256": "bd66d524d40c0fb87494bc047a46899faf0ddf1f8febe45a2e71e156fe2f2100",
+      "averageRgba8": [
+        0.0,
+        0.0,
+        0.0,
+        7.0
+      ],
+      "centerRgba8": [
+        0,
+        0,
+        0,
+        7
+      ]
+    },
+    {
+      "serializedIndex": 2,
+      "assumedUnityFace": "positive-y",
+      "compressedByteCountWithMips": 5488,
+      "compressedSha256": "3b1f2fb903e358ee0e0745ad34f43f790528b9d3b76a5fbc798e0e4128bf3678",
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "pixelSha256": "bd66d524d40c0fb87494bc047a46899faf0ddf1f8febe45a2e71e156fe2f2100",
+      "averageRgba8": [
+        0.0,
+        0.0,
+        0.0,
+        7.0
+      ],
+      "centerRgba8": [
+        0,
+        0,
+        0,
+        7
+      ]
+    },
+    {
+      "serializedIndex": 3,
+      "assumedUnityFace": "negative-y",
+      "compressedByteCountWithMips": 5488,
+      "compressedSha256": "d9cf61b174cc263cc87a79410fe942ae91ca9ebfe18a6bcf3e0759d19e02eb80",
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "pixelSha256": "bd66d524d40c0fb87494bc047a46899faf0ddf1f8febe45a2e71e156fe2f2100",
+      "averageRgba8": [
+        0.0,
+        0.0,
+        0.0,
+        7.0
+      ],
+      "centerRgba8": [
+        0,
+        0,
+        0,
+        7
+      ]
+    },
+    {
+      "serializedIndex": 4,
+      "assumedUnityFace": "positive-z",
+      "compressedByteCountWithMips": 5488,
+      "compressedSha256": "67f2ffeeb145da7d5ab0fc15900d4c98c88c397dd0c4d0da932f49420ab4a514",
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "pixelSha256": "004e0a8931c943a3b0c26c918aaf455374a62d3938f7ba8127aab491a8bd8764",
+      "averageRgba8": [
+        0.6884765625,
+        1.14501953125,
+        1.36962890625,
+        7.44091796875
+      ],
+      "centerRgba8": [
+        0,
+        0,
+        0,
+        6
+      ]
+    },
+    {
+      "serializedIndex": 5,
+      "assumedUnityFace": "negative-z",
+      "compressedByteCountWithMips": 5488,
+      "compressedSha256": "8febaed0a31b01b58d354ad1c43e8d30d6a1bc12fa2fe77d32a4c9b04851c850",
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA",
+      "pixelSha256": "bd66d524d40c0fb87494bc047a46899faf0ddf1f8febe45a2e71e156fe2f2100",
+      "averageRgba8": [
+        0.0,
+        0.0,
+        0.0,
+        7.0
+      ],
+      "centerRgba8": [
+        0,
+        0,
+        0,
+        7
+      ]
+    }
+  ]
+}
