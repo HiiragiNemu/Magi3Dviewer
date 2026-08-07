@@ -67,8 +67,8 @@ def main() -> int:
                 if go_id:
                     transform_by_go[go_id] = path_id
 
-        def hierarchy_for_go(go_id: int) -> str:
-            names = []
+        def transform_chain_for_go(go_id: int) -> list[dict[str, Any]]:
+            chain = []
             transform_id = transform_by_go.get(go_id, 0)
             seen = set()
             while transform_id and transform_id not in seen:
@@ -77,9 +77,18 @@ def main() -> int:
                 if not tr:
                     break
                 current_go = int(tr.get('gameObjectPathId') or 0)
-                names.append(game_objects.get(current_go) or f'GameObject:{current_go}')
+                chain.append({
+                    **tr,
+                    'gameObjectName': game_objects.get(current_go) or f'GameObject:{current_go}',
+                })
                 transform_id = int(tr.get('fatherTransformPathId') or 0)
-            return '/'.join(reversed(names))
+            return list(reversed(chain))
+
+        def hierarchy_for_go(go_id: int) -> str:
+            return '/'.join(
+                str(item.get('gameObjectName') or '')
+                for item in transform_chain_for_go(go_id)
+            )
 
         for obj, type_name, tree in parsed_objects:
             if type_name not in {'ParticleSystem', 'ParticleSystemRenderer'}:
@@ -93,6 +102,7 @@ def main() -> int:
                 'gameObjectName': game_objects.get(go_id, ''),
                 'hierarchyPath': hierarchy_for_go(go_id),
                 'transform': transforms.get(transform_id),
+                'transformChain': transform_chain_for_go(go_id),
                 'typetree': base.jsonable(tree),
             }
             components.append(record)
@@ -102,7 +112,7 @@ def main() -> int:
             for name in ('ParticleSystem', 'ParticleSystemRenderer')
         }
         report = {
-            'schemaVersion': 1,
+            'schemaVersion': 2,
             'source': 'official-jp-current-root-stage-bundle',
             'metadata': metadata,
             'bundle': TARGET_BUNDLE,
@@ -118,6 +128,20 @@ def main() -> int:
             'componentCount': report['componentCount'],
             'typeCounts': report['typeCounts'],
             'hierarchies': sorted(set(item['hierarchyPath'] for item in components)),
+            'parentChains': {
+                item['hierarchyPath']: [
+                    {
+                        'name': tr['gameObjectName'],
+                        'pathId': tr['pathId'],
+                        'position': tr['localPosition'],
+                        'rotation': tr['localRotation'],
+                        'scale': tr['localScale'],
+                    }
+                    for tr in item['transformChain']
+                ]
+                for item in components
+                if item['type'] == 'ParticleSystem'
+            },
         }, ensure_ascii=False, indent=2))
     return 0
 
