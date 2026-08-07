@@ -152,6 +152,10 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         const uniforms = new GeneralMatrialUniforms(shader)
         uniforms.loadGlobalOptions()
         shader.uniforms.uMaterialAnisotropy = { value: anisotropy ? 1 : 0 }
+        shader.uniforms.uMaterialAnisoMaskByMetallic = { value: 0 }
+        shader.uniforms.uMaterialAnisoColor = { value: new THREE.Color(1, 1, 1) }
+        shader.uniforms.uMaterialAnisoThreshold = { value: 0.9 }
+        shader.uniforms.uMaterialAnisoFeather = { value: 0 }
         shader.uniforms.uMaterialSpecialJewel = { value: specialJewel ? 1 : 0 }
 
         if (shadowTex) {
@@ -185,6 +189,10 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             uniform float uRdShadowFeather;
             uniform float uRdShadowOffsetMapOffset;
             uniform float uMaterialAnisotropy;
+            uniform float uMaterialAnisoMaskByMetallic;
+            uniform vec3 uMaterialAnisoColor;
+            uniform float uMaterialAnisoThreshold;
+            uniform float uMaterialAnisoFeather;
             uniform float uMaterialSpecialJewel;
 
             ${shader.fragmentShader}
@@ -338,6 +346,25 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                     rdAnisoNdotH,
                     saturate(uMaterialAnisotropy)
                 );
+                float rdAnisoStart = clamp(
+                    uMaterialAnisoThreshold - uMaterialAnisoFeather,
+                    0.0, 1.0
+                );
+                float rdAnisoEnd = max(
+                    rdAnisoStart + 0.00001,
+                    clamp(
+                        uMaterialAnisoThreshold + uMaterialAnisoFeather,
+                        0.0, 1.0
+                    )
+                );
+                float rdAnisoBand = uMaterialAnisoFeather > 0.00001
+                    ? smoothstep(rdAnisoStart, rdAnisoEnd, rdAnisoNdotH)
+                    : step(uMaterialAnisoThreshold, rdAnisoNdotH);
+                rdAnisoBand *= mix(
+                    1.0,
+                    rdToonMetallicMask,
+                    saturate(uMaterialAnisoMaskByMetallic)
+                );
 
                 float rdSpecularGradient = pow(
                     rdSpecularCoordinate,
@@ -370,6 +397,18 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                     max(diffuseColor.rgb, vec3(0.04)),
                     saturate(rdToonMetallicMask * uMetallicResponse)
                 );
+                // Exact current-JP per-material Aniso colour/threshold are
+                // recovered. The directional coordinate remains the current
+                // Web approximation until the compiled ReDrive subprogram is
+                // decoded; keep that uncertainty local to this one term.
+                float rdAnisoInfluence =
+                    saturate(uMaterialAnisotropy) * rdAnisoBand;
+                rdSpecularColor = mix(
+                    rdSpecularColor,
+                    uMaterialAnisoColor,
+                    rdAnisoInfluence
+                );
+                rdSpecular *= mix(1.0, 1.22, rdAnisoInfluence);
                 outgoingLight += rdSpecularColor * rdSpecular;
             #endif
 

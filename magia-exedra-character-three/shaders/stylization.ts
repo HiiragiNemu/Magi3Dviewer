@@ -160,6 +160,7 @@ export class ToonStylizationUniforms extends ShaderUniformsController {
         this.setValue('uFresnelStrength', options.fresnelStrength);
         this.setValue('uFresnelThreshold', options.fresnelThreshold);
         this.setValue('uFresnelFeather', options.fresnelFeather);
+        this.setValue('uFresnelMaskByMetallic', 0);
     }
 }
 
@@ -206,6 +207,7 @@ export function injectToonStylization(
         uniform float uFresnelStrength;
         uniform float uFresnelThreshold;
         uniform float uFresnelFeather;
+        uniform float uFresnelMaskByMetallic;
 
         float rdToonShadowOffset = 0.0;
         float rdToonMetallicMask = 0.0;
@@ -353,6 +355,11 @@ export function injectToonStylization(
             rdToonFresnelStart,
             rdToonFresnelEnd,
             rdToonEdge
+        );
+        rdToonFresnelMask *= mix(
+            1.0,
+            rdToonMetallicMask,
+            saturate(uFresnelMaskByMetallic)
         );
         outgoingLight +=
             uFresnelColor *

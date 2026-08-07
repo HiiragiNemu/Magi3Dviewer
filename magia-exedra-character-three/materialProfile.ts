@@ -1,3 +1,27 @@
+export interface OfficialAnisotropyProfile {
+    /** Serialized `_IsAniso`. */
+    enabled: boolean;
+    /** Serialized `_AnisoMaskByMetallic`. */
+    maskByMetallic: boolean;
+    /** Serialized `_AnisoColor` RGB. */
+    color: readonly [number, number, number];
+    /** Serialized `_AnisoThreshold`. */
+    threshold: number;
+    /** Serialized `_AnisoFeather`. */
+    feather: number;
+}
+
+export interface OfficialFresnelProfile {
+    /** Serialized `_UseFresnel`; Timeline may override this per renderer later. */
+    enabled: boolean;
+    /** Serialized `_FresnelMaskByMetallic`. */
+    maskByMetallic: boolean;
+    /** Serialized `_FresnelColor` RGB. */
+    color: readonly [number, number, number];
+    threshold: number;
+    feather: number;
+}
+
 export interface OfficialGemProfile {
     enabled: boolean;
     useMatCap: boolean;
@@ -35,12 +59,39 @@ export interface OfficialAngelRingMaterialProfile {
 export interface OfficialMaterialProfile {
     name: string;
     source: 'official-export' | 'name-convention' | 'default';
+    /** Legacy aggregate flag retained for existing feature-variant selection. */
     anisotropy: boolean;
+    anisotropyProfile: OfficialAnisotropyProfile;
+    fresnel: OfficialFresnelProfile;
     outlineOffset: boolean;
     skinOutlineOffset: boolean;
     gem: OfficialGemProfile;
     angelRing: OfficialAngelRingMaterialProfile;
 }
+
+const ANISO_DISABLED: OfficialAnisotropyProfile = {
+    enabled: false,
+    maskByMetallic: false,
+    color: [1, 1, 1],
+    threshold: 0.9,
+    feather: 0,
+};
+
+const GENERIC_ANISO: OfficialAnisotropyProfile = {
+    enabled: true,
+    maskByMetallic: false,
+    color: [1, 1, 1],
+    threshold: 0.9,
+    feather: 0,
+};
+
+const FRESNEL_DISABLED: OfficialFresnelProfile = {
+    enabled: false,
+    maskByMetallic: false,
+    color: [1, 1, 1],
+    threshold: 0.5,
+    feather: 0.25,
+};
 
 const GEM_DISABLED: OfficialGemProfile = {
     enabled: false,
@@ -181,6 +232,21 @@ function getOfficialAngelRingMaterialProfile(
 }
 
 const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
+    ['mt_chara_100101_body_aniso', {
+        source: 'official-export',
+        anisotropy: true,
+        anisotropyProfile: {
+            enabled: true,
+            maskByMetallic: false,
+            color: [
+                0.7519999742507935,
+                0.2753385901451111,
+                0.4024481475353241,
+            ],
+            threshold: 0.9139999747276306,
+            feather: 0,
+        },
+    }],
     ['mt_chara_100101_body_sj', {
         source: 'official-export',
         gem: {
@@ -204,6 +270,17 @@ const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
     }],
     ['mt_chara_100101_weapon_a_sj', {
         source: 'official-export',
+        fresnel: {
+            enabled: true,
+            maskByMetallic: true,
+            color: [
+                1,
+                0.5047169923782349,
+                0.9053794741630554,
+            ],
+            threshold: 0.6000000238418579,
+            feather: 0.20000000298023224,
+        },
         gem: {
             enabled: true,
             useMatCap: true,
@@ -269,6 +346,10 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
             ? 'name-convention'
             : 'default',
         anisotropy: normalized.includes('aniso'),
+        anisotropyProfile: {
+            ...(normalized.includes('aniso') ? GENERIC_ANISO : ANISO_DISABLED),
+        },
+        fresnel: { ...FRESNEL_DISABLED },
         outlineOffset: normalized.includes('outlineoffset'),
         skinOutlineOffset: normalized.includes('outlineoffset_skin'),
         gem: copyGem(inferredGem ? GENERIC_GEM : GEM_DISABLED),
@@ -280,6 +361,12 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         ...base,
         ...official,
         name: normalized,
+        anisotropyProfile: official.anisotropyProfile
+            ? { ...official.anisotropyProfile }
+            : { ...base.anisotropyProfile },
+        fresnel: official.fresnel
+            ? { ...official.fresnel }
+            : { ...base.fresnel },
         gem: official.gem ? copyGem(official.gem as OfficialGemProfile) : base.gem,
         angelRing: official.angelRing
             ? { ...official.angelRing }
