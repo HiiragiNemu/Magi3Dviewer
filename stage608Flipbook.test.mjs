@@ -20,9 +20,10 @@ for (const name of [
     framesPerSecond: 8,
   }, `${name} must match current-JP _FLIPBOOK material properties`);
   assert.equal(binding.alphaTest, 0.5);
-  assert.equal(binding.alphaToCoverage, true);
 }
 
+// AlphaToMask, ZWrite, Surface and Cull intentionally belong to the separate
+// current-JP render-state gate because the two violin materials differ there.
 const source = fs.readFileSync('src/viewer/stageMaterialBindings.ts', 'utf8');
 for (const token of [
   'texture.repeat.set(1 / atlas.columns, 1 / atlas.rows)',
