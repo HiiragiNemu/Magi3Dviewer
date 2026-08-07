@@ -9,6 +9,10 @@ import ts from 'typescript'
 const repositoryRoot = dirname(fileURLToPath(import.meta.url))
 const nonce = `${process.pid}-${Date.now()}`
 const mockPath = join(repositoryRoot, `.stage-runtime-renderer-${nonce}.mjs`)
+const particleRuntimePath = join(
+    repositoryRoot,
+    `.stage-particle-runtime-under-test-${nonce}.mjs`,
+)
 const runtimePath = join(repositoryRoot, `.stage-runtime-under-test-${nonce}.mjs`)
 
 writeFileSync(mockPath, `
@@ -25,11 +29,34 @@ export function getClockDelta() {
 }
 `, 'utf8')
 
-const sourcePath = join(repositoryRoot, 'src', 'viewer', 'stageRuntime.ts')
-const source = readFileSync(sourcePath, 'utf8').replace(
-    "'magia-exedra-character-three/renderer'",
-    `'./${basename(mockPath)}'`,
+const particleSourcePath = join(
+    repositoryRoot,
+    'src',
+    'viewer',
+    'stageParticleRuntime.ts',
 )
+const particleCompiled = ts.transpileModule(
+    readFileSync(particleSourcePath, 'utf8'),
+    {
+        compilerOptions: {
+            module: ts.ModuleKind.ES2022,
+            target: ts.ScriptTarget.ES2022,
+        },
+        fileName: particleSourcePath,
+    },
+)
+writeFileSync(particleRuntimePath, particleCompiled.outputText, 'utf8')
+
+const sourcePath = join(repositoryRoot, 'src', 'viewer', 'stageRuntime.ts')
+const source = readFileSync(sourcePath, 'utf8')
+    .replace(
+        "'magia-exedra-character-three/renderer'",
+        `'./${basename(mockPath)}'`,
+    )
+    .replaceAll(
+        "'./stageParticleRuntime'",
+        `'./${basename(particleRuntimePath)}'`,
+    )
 const compiled = ts.transpileModule(source, {
     compilerOptions: {
         module: ts.ModuleKind.ES2022,
@@ -44,6 +71,7 @@ const rendererMock = await import(pathToFileURL(mockPath).href)
 
 after(() => {
     rmSync(runtimePath, { force: true })
+    rmSync(particleRuntimePath, { force: true })
     rmSync(mockPath, { force: true })
 })
 
@@ -190,6 +218,38 @@ test('missing runtime profile remains a true static-stage no-op', () => {
     assert.equal(runtime.createStageRuntimeController(root, undefined), undefined)
     assert.equal(rendererMock.loops.length, loopCount)
     assert.equal(root.userData.stageRuntimeTime, undefined)
+})
+
+test('608 exact serialized particle evidence opts into an explicitly approximate runtime', () => {
+    const root = new THREE.Group()
+    root.name = 'Stage:battle-608-00-00-001'
+    const loopCount = rendererMock.loops.length
+
+    const controller = runtime.createStageRuntimeController(root, undefined)
+    assert.ok(controller)
+    assert.equal(rendererMock.loops.length, loopCount + 1)
+
+    const particles = controller.getDebugState().particles
+    assert.ok(particles)
+    assert.equal(particles.source, 'official-jp-current-assetbundle')
+    assert.equal(
+        particles.fidelity,
+        'serialized-parameter-driven-approximation',
+    )
+    assert.equal(particles.assetBundleRevision, '61ad830ca038a9efd58e67170a61c85e')
+    assert.equal(particles.textureName, 'bg3d608_00_blue_bubble_col')
+    assert.equal(
+        particles.texturePixelSha256,
+        '57fe4cf6e45c3061955dae3bfd8d923837a275085fa1678ada13f6f1d3471f1e',
+    )
+    assert.equal(particles.systemCount, 6)
+    assert.equal(particles.maxParticles, 300)
+    assert.equal(particles.loaded, false)
+    assert.match(particles.loadError, /document unavailable/)
+    assert.ok(particles.deferred.some(item => item.includes('autoRandomSeed')))
+
+    controller.dispose()
+    assert.equal(rendererMock.loops.length, loopCount)
 })
 
 test('non-looping runtime clamps at the shared timeline end and publishes live state', () => {
