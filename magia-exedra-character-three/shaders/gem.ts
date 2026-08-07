@@ -141,10 +141,10 @@ export function injectOfficialGemShader(
             vec3 rdGemView = normalize(geometryViewDir);
             float rdGemNdotV = saturate(dot(rdGemNormalVs, rdGemView));
 
-            // MatCap lives in view space.  Mapping normal.xy directly made
-            // highlights stick to the model instead of the camera and erased
-            // the rotating/glassy response of Soul Gems.  Build the same
-            // camera-facing tangent basis used by conventional MatCap shading.
+            // MatCap lives in view space. The current Web coordinate reconstruction
+            // remains approximate until the varying feeding native vs_TEXCOORD5 is
+            // completely mapped; the blend below is now the exact current-JP
+            // ReDriveToon executable formula.
             vec3 rdGemViewAxis = normalize(rdGemView);
             vec3 rdGemMatCapX = vec3(rdGemViewAxis.z, 0.0, -rdGemViewAxis.x);
             if (dot(rdGemMatCapX, rdGemMatCapX) < 0.0001) {
@@ -162,7 +162,6 @@ export function injectOfficialGemShader(
                 vec2(0.998)
             );
             vec3 rdGemMatCap = texture2D(tGemMatCap, rdGemMatCapUv).rgb;
-            float rdGemMatCapLuma = dot(rdGemMatCap, vec3(0.2126, 0.7152, 0.0722));
             float rdGemMatCapMask = mix(
                 1.0,
                 rdToonMetallicMask,
@@ -223,14 +222,25 @@ export function injectOfficialGemShader(
             rdGemBase *= 0.84 + rdGemInternal;
 
             if (uGemUseMatCap > 0.5) {
-                vec3 rdGemReflection = mix(
-                    rdGemTint * rdGemMatCapLuma,
-                    rdGemMatCap,
-                    0.64
+                // Current-JP ReDriveToon executable MatCap blend, per channel:
+                // base<=0.5 => base*matcap; base>0.5 =>
+                // 1 - 2*(1-base)*(1-matcap). The serialized MatCapIntensity and
+                // Control B/G masks then interpolate/extrapolate from base.
+                vec3 rdGemMatCapLow = rdGemMatCap * rdGemBase;
+                vec3 rdGemMatCapHigh =
+                    vec3(1.0) -
+                    (vec3(1.0) - rdGemBase) *
+                    (vec3(1.0) - rdGemMatCap) * 2.0;
+                vec3 rdGemMatCapBlend = mix(
+                    rdGemMatCapLow,
+                    rdGemMatCapHigh,
+                    step(vec3(0.5), rdGemBase)
                 );
-                rdGemBase += rdGemReflection *
-                    uGemMatCapIntensity *
-                    rdGemMatCapMask * 0.34;
+                float rdGemMatCapFactor =
+                    uGemMatCapIntensity * rdGemMatCapMask;
+                rdGemBase +=
+                    rdGemMatCapFactor *
+                    (rdGemMatCapBlend - rdGemBase);
             }
 
             // Exact current-JP compiled predicate:
