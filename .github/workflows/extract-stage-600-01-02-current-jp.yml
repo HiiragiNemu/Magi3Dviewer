@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       STAGE600_UV1_SOURCE_OUT: /tmp/stage600-uv1-source.json
+      STAGE600_MESHFILTER_HIERARCHY_OUT: /tmp/stage600-meshfilter-hierarchy.json
       STAGE600_UV1_COMPANION_OUT: /tmp/stage600-uv1-companion.json
     steps:
       - uses: actions/checkout@v5
@@ -50,6 +51,8 @@ jobs:
         run: python scripts/inspect_unitypy_mesh_decoder.py
       - name: Decode streamed current-JP UV1 with UnityPy MeshHandler
         run: python scripts/extract_stage_600_uv1_source.py
+      - name: Bind official Mesh PathIDs to GameObject hierarchy
+        run: python scripts/extract_stage_600_meshfilter_hierarchy.py
       - name: Prove FBX polygon-corner mapping and build UV1 companion candidate
         run: node scripts/build_stage_600_uv1_companion.mjs
       - name: Report UV1 companion candidate size
@@ -57,8 +60,9 @@ jobs:
         run: |
           set -euo pipefail
           test -s "$STAGE600_UV1_SOURCE_OUT"
+          test -s "$STAGE600_MESHFILTER_HIERARCHY_OUT"
           test -s "$STAGE600_UV1_COMPANION_OUT"
-          wc -c "$STAGE600_UV1_SOURCE_OUT" "$STAGE600_UV1_COMPANION_OUT"
+          wc -c "$STAGE600_UV1_SOURCE_OUT" "$STAGE600_MESHFILTER_HIERARCHY_OUT" "$STAGE600_UV1_COMPANION_OUT"
       - name: Parse exported FBX with the actual Three FBXLoader
         run: node scripts/audit_stage_600_three_fbx_uv.mjs
       - name: Persist evidence
