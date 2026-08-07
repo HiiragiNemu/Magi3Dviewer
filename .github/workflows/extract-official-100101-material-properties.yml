@@ -14,7 +14,7 @@ jobs:
   extract:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 45
     env:
       TARGET_BRANCH: research/100101-official-material-properties-20260807
     steps:
@@ -31,9 +31,11 @@ jobs:
         run: python scripts/run_official_100101_material_properties.py
       - name: Record UnityPy modern Shader-export compatibility result
         run: python scripts/extract_official_100101_shader_formula_evidence.py
-      - name: Resolve SJ MatCap through Android root manifest dependency closure
+      - name: Inspect modern ReDrive Shader serialized blob tables
+        run: python scripts/inspect_modern_redrive_shader_blob.py
+      - name: Probe SJ MatCap across character plus shader workspace
         run: python scripts/resolve_official_100101_matcap_dependency.py
-      - name: Persist bounded Material/MatCap evidence only
+      - name: Persist bounded Material/Shader/MatCap evidence only
         shell: bash
         run: |
           git config user.name github-actions[bot]
@@ -41,7 +43,8 @@ jobs:
           git add \
             research/official-100101-material-properties.json \
             research/official-100101-redrive-shader-evidence.json \
+            research/official-redrive-modern-shader-blob.json \
             research/official-100101-matcap-resolution.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'research: resolve official 100101 SJ MatCap dependency'
+          git commit -m 'research: inspect modern ReDrive Shader and SJ MatCap dependencies'
           git push origin HEAD:${TARGET_BRANCH}
