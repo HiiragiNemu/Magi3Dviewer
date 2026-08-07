@@ -1,0 +1,2872 @@
+{
+  "schemaVersion": 1,
+  "source": "public/stages/official/battle-600-00-01-002/bg_3d_600_00_01_002-animated.fbxdata",
+  "meshCount": 158,
+  "meshesWithUv": 158,
+  "meshesWithUv1": 0,
+  "meshesWithUv2": 0,
+  "uniqueAttributeSets": [
+    "color,normal,position,uv",
+    "normal,position,uv"
+  ],
+  "materialNames": [
+    "mt_bg3d600A_01_02_adelbertAAlpha",
+    "mt_bg3d600A_01_02_adelbertBAlpha",
+    "mt_bg3d600A_01_02_anthonyAAlpha",
+    "mt_bg3d600A_01_02_anthonyBAlpha",
+    "mt_bg3d600A_01_02_ground",
+    "mt_bg3d600A_01_02_propA",
+    "mt_bg3d600A_01_02_propBAlpha",
+    "mt_bg3d600A_01_02_propC",
+    "mt_bg3d600A_01_02_rockAlpha",
+    "mt_bg3d600A_01_02_sky"
+  ],
+  "meshes": [
+    {
+      "nodeName": "circleA_geo1",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 192,
+      "uvCount": 192,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "circleA_geo2",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 192,
+      "uvCount": 192,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "circleA_geo3",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 192,
+      "uvCount": 192,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "circleC_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 960,
+      "uvCount": 960,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "circleD_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 960,
+      "uvCount": 960,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "circleE_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 240,
+      "uvCount": 240,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeAABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 915,
+      "uvCount": 915,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeAAFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 915,
+      "uvCount": 915,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeAABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 915,
+      "uvCount": 915,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeAAFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 915,
+      "uvCount": 915,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeAABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 915,
+      "uvCount": 915,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeAAFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 915,
+      "uvCount": 915,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeABBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 915,
+      "uvCount": 915,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeABchainBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1668,
+      "uvCount": 1668,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeABchainFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1668,
+      "uvCount": 1668,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeABFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 915,
+      "uvCount": 915,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeACBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 915,
+      "uvCount": 915,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeACchainBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 909,
+      "uvCount": 909,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeACchainFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 909,
+      "uvCount": 909,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeACFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 915,
+      "uvCount": 915,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 843,
+      "uvCount": 843,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBAFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 843,
+      "uvCount": 843,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 843,
+      "uvCount": 843,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBAFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 843,
+      "uvCount": 843,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 843,
+      "uvCount": 843,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBAFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 843,
+      "uvCount": 843,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBBBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 843,
+      "uvCount": 843,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBBchainBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1452,
+      "uvCount": 1452,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBBchainFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1452,
+      "uvCount": 1452,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBBFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 843,
+      "uvCount": 843,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBCBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 843,
+      "uvCount": 843,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBCchainBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1668,
+      "uvCount": 1668,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBCchainFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1668,
+      "uvCount": 1668,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeBCFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 843,
+      "uvCount": 843,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCAFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCAFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCAFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCBBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCBchainBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 345,
+      "uvCount": 345,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCBchainFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 345,
+      "uvCount": 345,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCBFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCCBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCCchainBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1452,
+      "uvCount": 1452,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCCchainFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1452,
+      "uvCount": 1452,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCCFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCDBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCDchainBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 558,
+      "uvCount": 558,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCDchainFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 558,
+      "uvCount": 558,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "treeCDFront_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 462,
+      "uvCount": 462,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowAA001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowAB001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowAB002_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowAB003_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowAC001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowAD001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowAE001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowAE002_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowBA001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowBA002_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowBB001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowBC001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowBD001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowBE001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowBF001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowBG001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowBH001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCA001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCB001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCC001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCD001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCE001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCE002_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCE003_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCE004_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCF001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCG001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCG002_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCH001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCI001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCJ001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCL001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCM001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCN001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCO001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCP001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCQ001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowCR001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowDA001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowDB001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowDC001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowDC002_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "windowDD001_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ground_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_ground"
+      ],
+      "attributeNames": [
+        "color",
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 948,
+      "uvCount": 948,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "adelbertAAA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_adelbertAAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "adelbertAAB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_adelbertBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "anthonyAAA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_anthonyAAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "anthonyAAB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_anthonyBAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 6,
+      "uvCount": 6,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAC_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAD_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAE_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAF_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAG_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAH_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAI_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAJ_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "butterflySignAAK_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propA"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1752,
+      "uvCount": 1752,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 768,
+      "uvCount": 768,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 273,
+      "uvCount": 273,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockC_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 336,
+      "uvCount": 336,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockD_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 492,
+      "uvCount": 492,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockE_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 405,
+      "uvCount": 405,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockF_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 285,
+      "uvCount": 285,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockG_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockEdge_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "color",
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 609,
+      "uvCount": 609,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockH_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockI_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockJ_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockK_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockL_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockM_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockN_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockO_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockP_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "rockQ_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_rockAlpha"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 384,
+      "uvCount": 384,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "sky_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_sky"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 1020,
+      "uvCount": 1020,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 27183,
+      "uvCount": 27183,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 4017,
+      "uvCount": 4017,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 20910,
+      "uvCount": 20910,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraBBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 3090,
+      "uvCount": 3090,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 27183,
+      "uvCount": 27183,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 4017,
+      "uvCount": 4017,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 20910,
+      "uvCount": 20910,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraBBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 3090,
+      "uvCount": 3090,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 27183,
+      "uvCount": 27183,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 4017,
+      "uvCount": 4017,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 20910,
+      "uvCount": 20910,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraBBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 3090,
+      "uvCount": 3090,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 27183,
+      "uvCount": 27183,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 4017,
+      "uvCount": 4017,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 20910,
+      "uvCount": 20910,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraBBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 3090,
+      "uvCount": 3090,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 27183,
+      "uvCount": 27183,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 4017,
+      "uvCount": 4017,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 20910,
+      "uvCount": 20910,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraBBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 3090,
+      "uvCount": 3090,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 27183,
+      "uvCount": 27183,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 4017,
+      "uvCount": 4017,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 20910,
+      "uvCount": 20910,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraBBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 3090,
+      "uvCount": 3090,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraA_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 27183,
+      "uvCount": 27183,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraABack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 4017,
+      "uvCount": 4017,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraB_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 20910,
+      "uvCount": 20910,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    },
+    {
+      "nodeName": "ibaraBBack_geo",
+      "materialNames": [
+        "mt_bg3d600A_01_02_propC"
+      ],
+      "attributeNames": [
+        "normal",
+        "position",
+        "uv"
+      ],
+      "vertexCount": 3090,
+      "uvCount": 3090,
+      "uv1Count": 0,
+      "uv2Count": 0,
+      "hasUv": true,
+      "hasUv1": false,
+      "hasUv2": false
+    }
+  ]
+}
