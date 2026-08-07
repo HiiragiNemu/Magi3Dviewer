@@ -1,0 +1,264 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-modern-ReDrive-Shader-predicate-trace",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "material": "mt_chara_100101_body_SJ",
+  "shaderPathId": 7704691985981102055,
+  "shaderSerializedFile": "CAB-d4292dd62db4a15308122929284b3327",
+  "chunkIndex": 2,
+  "platform": 9,
+  "decodedSha256": "65536f9156cf560226d40a4094f1a27c448f6b2bfca1a8d6a77a8de89ee4f62a",
+  "decodedLength": 1032408,
+  "selectedUseOffset": 334276,
+  "selectedUseContext": [
+    {
+      "offset": 333412,
+      "text": "    u_xlat60 = dot(u_xlat24.xyz, u_xlat24.xyz);"
+    },
+    {
+      "offset": 333460,
+      "text": "    u_xlat60 = inversesqrt(u_xlat60);"
+    },
+    {
+      "offset": 333498,
+      "text": "    u_xlat24.xyz = vec3(u_xlat60) * u_xlat24.xyz;"
+    },
+    {
+      "offset": 333548,
+      "text": "    u_xlat9.x = hlslcc_mtx4x4unity_MatrixV[0].z;"
+    },
+    {
+      "offset": 333597,
+      "text": "    u_xlat9.y = hlslcc_mtx4x4unity_MatrixV[1].z;"
+    },
+    {
+      "offset": 333646,
+      "text": "    u_xlat9.z = hlslcc_mtx4x4unity_MatrixV[2].z;"
+    },
+    {
+      "offset": 333695,
+      "text": "    u_xlat9.xyz = u_xlat9.xyz * vec3(2.0, 2.0, 2.0) + u_xlat24.xyz;"
+    },
+    {
+      "offset": 333763,
+      "text": "    u_xlat60 = dot(u_xlat9.xyz, u_xlat9.xyz);"
+    },
+    {
+      "offset": 333809,
+      "text": "    u_xlat60 = inversesqrt(u_xlat60);"
+    },
+    {
+      "offset": 333847,
+      "text": "    u_xlat9.xyz = vec3(u_xlat60) * u_xlat9.xyz;"
+    },
+    {
+      "offset": 333895,
+      "text": "    u_xlat16_58 = (-u_xlat5.x) + 1.0;"
+    },
+    {
+      "offset": 333933,
+      "text": "    u_xlat60 = dot(u_xlat6.xyz, u_xlat16_10.xyz);"
+    },
+    {
+      "offset": 333983,
+      "text": "    u_xlat60 = u_xlat60 * 0.5 + 0.5;"
+    },
+    {
+      "offset": 334020,
+      "text": "    u_xlat16_10.x = u_xlat16_2.x + _ShadowOffsetMapOffset;"
+    },
+    {
+      "offset": 334079,
+      "text": "    u_xlat16_10.x = clamp(u_xlat16_10.x, 0.0, 1.0);"
+    },
+    {
+      "offset": 334131,
+      "text": "    u_xlat16_10.x = (-u_xlat16_10.x) + 1.0;"
+    },
+    {
+      "offset": 334175,
+      "text": "    u_xlat16_10.x = u_xlat60 + (-u_xlat16_10.x);"
+    },
+    {
+      "offset": 334224,
+      "text": "    u_xlat16_10.x = clamp(u_xlat16_10.x, 0.0, 1.0);"
+    },
+    {
+      "offset": 334276,
+      "text": "    u_xlatb2.x = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_UseGemDepthDiff);"
+    },
+    {
+      "offset": 334343,
+      "text": "    u_xlatb2.x = u_xlatb2.x && u_xlatb59;"
+    },
+    {
+      "offset": 334385,
+      "text": "    if(u_xlatb2.x){"
+    },
+    {
+      "offset": 334405,
+      "text": "        u_xlatb2.x = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(unity_OrthoParams.w);"
+    },
+    {
+      "offset": 334479,
+      "text": "        u_xlat59 = (-_ProjectionParams.y) + _ProjectionParams.z;"
+    },
+    {
+      "offset": 334544,
+      "text": "        u_xlat60 = hlslcc_FragCoord.z * u_xlat59 + _ProjectionParams.y;"
+    },
+    {
+      "offset": 334616,
+      "text": "        u_xlat5.x = _ZBufferParams.z * hlslcc_FragCoord.z + _ZBufferParams.w;"
+    },
+    {
+      "offset": 334694,
+      "text": "        u_xlat5.x = float(1.0) / u_xlat5.x;"
+    },
+    {
+      "offset": 334738,
+      "text": "        u_xlat60 = (u_xlatb2.x) ? u_xlat60 : u_xlat5.x;"
+    },
+    {
+      "offset": 334794,
+      "text": "        u_xlatu11.xy = uvec2(hlslcc_FragCoord.xy);"
+    },
+    {
+      "offset": 334845,
+      "text": "        u_xlatu11.z = uint(uint(0u));"
+    },
+    {
+      "offset": 334883,
+      "text": "        u_xlatu11.w = uint(uint(0u));"
+    },
+    {
+      "offset": 334921,
+      "text": "        u_xlat5.x = texelFetch(_CameraDepthTexture, ivec2(u_xlatu11.xy), int(u_xlatu11.w)).x;"
+    },
+    {
+      "offset": 335015,
+      "text": "        u_xlat59 = u_xlat5.x * u_xlat59 + _ProjectionParams.y;"
+    },
+    {
+      "offset": 335078,
+      "text": "        u_xlat5.x = _ZBufferParams.z * u_xlat5.x + _ZBufferParams.w;"
+    },
+    {
+      "offset": 335147,
+      "text": "        u_xlat5.x = float(1.0) / u_xlat5.x;"
+    },
+    {
+      "offset": 335191,
+      "text": "        u_xlat2.x = (u_xlatb2.x) ? u_xlat59 : u_xlat5.x;"
+    },
+    {
+      "offset": 335248,
+      "text": "        u_xlat59 = u_xlat60 + -0.00999999978;"
+    },
+    {
+      "offset": 335294,
+      "text": "        u_xlat2.x = (-u_xlat59) + u_xlat2.x;"
+    }
+  ],
+  "predecessorVariable": "u_xlatb59",
+  "backwardSearchBytes": 131072,
+  "assignmentsNearestFirst": [
+    {
+      "offset": 330923,
+      "expression": "vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_Transparency)",
+      "distanceBytes": 3353,
+      "context": [
+        {
+          "offset": 330244,
+          "text": "    u_xlat16_0.xyz = texture(_BaseMap, vs_TEXCOORD0.xy, _GlobalMipBias.x).xyz;"
+        },
+        {
+          "offset": 330323,
+          "text": "    u_xlat16_1.xyz = u_xlat16_0.xyz * _BaseColor.xyz;"
+        },
+        {
+          "offset": 330377,
+          "text": "    u_xlat16_0 = texture(_ShadowTex, vs_TEXCOORD0.xy, _GlobalMipBias.x);"
+        },
+        {
+          "offset": 330450,
+          "text": "    u_xlat16_2.xyz = texture(_ControlMap, vs_TEXCOORD0.xy, _GlobalMipBias.x).xyw;"
+        },
+        {
+          "offset": 330532,
+          "text": "    u_xlat16_3.xyz = texture(_EmissionMap, vs_TEXCOORD0.xy, _GlobalMipBias.x).xyz;"
+        },
+        {
+          "offset": 330615,
+          "text": "    u_xlat4.xyz = u_xlat16_3.xyz * _EmissionColor.xyz;"
+        },
+        {
+          "offset": 330670,
+          "text": "    u_xlat5.xy = _Time.yy * vec2(_DissolveScroll.x, _DissolveScroll.y);"
+        },
+        {
+          "offset": 330742,
+          "text": "    u_xlat5.xy = vec2(vec2(_DissolveTilling, _DissolveTilling)) * vs_TEXCOORD0.xy + u_xlat5.xy;"
+        },
+        {
+          "offset": 330838,
+          "text": "    u_xlat5.xy = fract(u_xlat5.xy);"
+        },
+        {
+          "offset": 330874,
+          "text": "    u_xlat16_58 = u_xlat16_0.w * _ShadowColor.w;"
+        },
+        {
+          "offset": 330923,
+          "text": "    u_xlatb59 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_Transparency);"
+        },
+        {
+          "offset": 330986,
+          "text": "    u_xlatb60 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_AlphaClipping);"
+        },
+        {
+          "offset": 331050,
+          "text": "    u_xlatb61 = u_xlatb59 || u_xlatb60;"
+        },
+        {
+          "offset": 331090,
+          "text": "    u_xlat16_5.x = texture(_DissolveTex, u_xlat5.xy, _GlobalMipBias.x).x;"
+        },
+        {
+          "offset": 331164,
+          "text": "    u_xlat16_6.x = _IsDissolve * 0.5;"
+        },
+        {
+          "offset": 331202,
+          "text": "    u_xlat5.x = (-u_xlat16_5.x) + 1.0;"
+        },
+        {
+          "offset": 331241,
+          "text": "    u_xlat57 = (-u_xlat16_0.w) * _ShadowColor.w + 1.0;"
+        },
+        {
+          "offset": 331296,
+          "text": "    u_xlat57 = (-u_xlat5.x) * u_xlat57 + (-u_xlat16_58);"
+        },
+        {
+          "offset": 331353,
+          "text": "    u_xlat57 = u_xlat57 + 1.0;"
+        },
+        {
+          "offset": 331384,
+          "text": "    u_xlat57 = u_xlat16_6.x * u_xlat57 + u_xlat16_58;"
+        },
+        {
+          "offset": 331438,
+          "text": "    u_xlat57 = (u_xlatb61) ? u_xlat57 : 1.0;"
+        }
+      ]
+    }
+  ],
+  "boundedEvidenceSha256": "6db0b5ce089a9e5206f6885d8d37d438dc3188db56c498a06c762bb8ce0277b2",
+  "interpretation": "Bounded current-JP compiled GLSL trace only. The nearest reaching assignment must be interpreted with its control-flow context before Web parity is claimed; this report does not infer semantics from the temporary compiler variable name itself."
+}
