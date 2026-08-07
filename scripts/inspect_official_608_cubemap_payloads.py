@@ -76,6 +76,8 @@ def main() -> int:
                 parsed_error = repr(exc)
 
             capability = {}
+            streamed_image_data = None
+            streamed_image_data_error = None
             if parsed is not None:
                 for attr in ('image', 'images'):
                     try:
@@ -96,7 +98,22 @@ def main() -> int:
                             capability[attr] = {
                                 'type': type(value).__name__,
                                 'size': getattr(value, 'size', None),
+                                'mode': getattr(value, 'mode', None),
+                                'pixelSha256': hashlib.sha256(value.tobytes()).hexdigest()
+                                    if hasattr(value, 'tobytes') else None,
                             }
+                get_image_data = getattr(parsed, 'get_image_data', None)
+                if callable(get_image_data):
+                    capability['get_image_data'] = {'callable': True}
+                    try:
+                        streamed_image_data = get_image_data()
+                    except Exception as exc:
+                        streamed_image_data_error = repr(exc)
+                        capability['get_image_data']['error'] = streamed_image_data_error
+                    else:
+                        capability['get_image_data']['result'] = byte_summary(streamed_image_data)
+                else:
+                    capability['get_image_data'] = {'callable': False}
 
             image_data = None
             stream_data = None
@@ -130,6 +147,8 @@ def main() -> int:
                 'colorSpace': tree.get('m_ColorSpace') if isinstance(tree, dict) else None,
                 'completeImageSize': tree.get('m_CompleteImageSize') if isinstance(tree, dict) else None,
                 'imageData': byte_summary(image_data),
+                'streamedImageData': byte_summary(streamed_image_data),
+                'streamedImageDataError': streamed_image_data_error,
                 'streamData': stream_summary(stream_data),
                 'rawObject': byte_summary(raw),
                 'rawObjectError': raw_error,
