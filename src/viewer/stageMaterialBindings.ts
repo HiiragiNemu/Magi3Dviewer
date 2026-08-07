@@ -9,6 +9,25 @@ export interface StageAtlasProfile {
     framesPerSecond?: number
 }
 
+export interface StageMultiUvScrollLayer {
+    tiling: [number, number]
+    offset: [number, number]
+    speed: [number, number]
+    color?: [number, number, number, number]
+    opacity?: number
+}
+
+export interface StageMultiUvScrollProfile {
+    /** Separately serialized Unity `_ScrollTexture` / `_ScrollTexutre`. */
+    textureUrl: string
+    first: StageMultiUvScrollLayer
+    second: StageMultiUvScrollLayer
+    /** Serialized `_Additive_to_Multiply`: 0 additive, 1 multiply. */
+    additiveToMultiply: number
+    /** `_DropFrame_MultiScroll`; exact dropped-frame quantization is deferred. */
+    dropFrame?: boolean
+}
+
 export interface StageMaterialBinding {
     /** Exact FBX material name. */
     materialName?: string
@@ -35,6 +54,7 @@ export interface StageMaterialBinding {
     receiveShadow?: boolean
     side?: 'front' | 'back' | 'double'
     atlas?: StageAtlasProfile
+    multiUvScroll?: StageMultiUvScrollProfile
 }
 
 export interface StageMaterialBindingResult {
@@ -104,6 +124,9 @@ export async function applyStageMaterialBindings(
         binding.smoothnessMapUrl ? loadTexture(binding.smoothnessMapUrl, 'data') : undefined,
         binding.blendMapUrl ? loadTexture(binding.blendMapUrl, 'color') : undefined,
         binding.matCapMapUrl ? loadTexture(binding.matCapMapUrl, 'color') : undefined,
+        binding.multiUvScroll?.textureUrl
+            ? loadTexture(binding.multiUvScroll.textureUrl, 'color')
+            : undefined,
     ].filter((promise): promise is Promise<THREE.Texture> => Boolean(promise)))
 
     const resolveTexture = async (url: string | undefined, kind: LoadedTextureKind) => {
@@ -161,6 +184,10 @@ export async function applyStageMaterialBindings(
                         smoothnessMap: await resolveTexture(binding.smoothnessMapUrl, 'data'),
                         blendMap: await resolveTexture(binding.blendMapUrl, 'color'),
                         matCapMap: await resolveTexture(binding.matCapMapUrl, 'color'),
+                        multiUvScrollMap: await resolveTexture(
+                            binding.multiUvScroll?.textureUrl,
+                            'color',
+                        ),
                         ownedTextures,
                     })
                     createdMaterials.add(material)
@@ -298,6 +325,7 @@ interface BoundTextureSet {
     smoothnessMap?: THREE.Texture
     blendMap?: THREE.Texture
     matCapMap?: THREE.Texture
+    multiUvScrollMap?: THREE.Texture
     ownedTextures: Set<THREE.Texture>
 }
 
@@ -319,6 +347,12 @@ async function createBoundMaterial(
         const material = new THREE.MeshBasicMaterial(common)
         material.alphaToCoverage = binding.alphaToCoverage ?? false
         installAtlasAnimation(material, map, binding.atlas, mesh)
+        installMultiUvScroll(
+            material,
+            binding.multiUvScroll,
+            textures.multiUvScrollMap,
+            mesh,
+        )
         return material
     }
 
@@ -342,7 +376,167 @@ async function createBoundMaterial(
     }
     installOfficialLitExtensions(material, binding, textures)
     installAtlasAnimation(material, map, binding.atlas, mesh)
+    installMultiUvScroll(
+        material,
+        binding.multiUvScroll,
+        textures.multiUvScrollMap,
+        mesh,
+    )
     return material
+}
+
+function installMultiUvScroll(
+    material: THREE.Material,
+    profile: StageMultiUvScrollProfile | undefined,
+    scrollTexture: THREE.Texture | undefined,
+    mesh: THREE.Object3D,
+) {
+    if (!profile || !scrollTexture) return
+
+    scrollTexture.wrapS = THREE.RepeatWrapping
+    scrollTexture.wrapT = THREE.RepeatWrapping
+    scrollTexture.needsUpdate = true
+
+    const firstColor = profile.first.color ?? [1, 1, 1, 1]
+    const secondColor = profile.second.color ?? [1, 1, 1, 1]
+    const baseCacheKey = material.customProgramCacheKey()
+    const previousOnBeforeCompile = material.onBeforeCompile
+    const previousOnBeforeRender = material.onBeforeRender
+    let timeUniform: THREE.IUniform<number> | undefined
+
+    material.userData.stageMultiUvScroll = {
+        ...profile,
+        timingMode: profile.dropFrame
+            ? 'continuous-until-dropped-frame-time-is-recovered'
+            : 'continuous',
+    }
+    material.customProgramCacheKey = () =>
+        `${baseCacheKey}:stage-multi-uv:${JSON.stringify(profile)}`
+
+    material.onBeforeCompile = function (shader, renderer) {
+        shader.uniforms.uStageMultiUvTexture = { value: scrollTexture }
+        shader.uniforms.uStageMultiUvTime = { value: 0 }
+        shader.uniforms.uStageMultiUvFirstTiling = {
+            value: new THREE.Vector2(...profile.first.tiling),
+        }
+        shader.uniforms.uStageMultiUvFirstOffset = {
+            value: new THREE.Vector2(...profile.first.offset),
+        }
+        shader.uniforms.uStageMultiUvFirstSpeed = {
+            value: new THREE.Vector2(...profile.first.speed),
+        }
+        shader.uniforms.uStageMultiUvFirstColor = {
+            value: new THREE.Vector4(...firstColor),
+        }
+        shader.uniforms.uStageMultiUvFirstOpacity = {
+            value: profile.first.opacity ?? 1,
+        }
+        shader.uniforms.uStageMultiUvSecondTiling = {
+            value: new THREE.Vector2(...profile.second.tiling),
+        }
+        shader.uniforms.uStageMultiUvSecondOffset = {
+            value: new THREE.Vector2(...profile.second.offset),
+        }
+        shader.uniforms.uStageMultiUvSecondSpeed = {
+            value: new THREE.Vector2(...profile.second.speed),
+        }
+        shader.uniforms.uStageMultiUvSecondColor = {
+            value: new THREE.Vector4(...secondColor),
+        }
+        shader.uniforms.uStageMultiUvSecondOpacity = {
+            value: profile.second.opacity ?? 1,
+        }
+        shader.uniforms.uStageMultiUvAdditiveToMultiply = {
+            value: profile.additiveToMultiply,
+        }
+        timeUniform = shader.uniforms.uStageMultiUvTime as THREE.IUniform<number>
+
+        shader.fragmentShader = shader.fragmentShader
+            .replace(
+                '#include <map_pars_fragment>',
+                `#include <map_pars_fragment>
+uniform sampler2D uStageMultiUvTexture;
+uniform float uStageMultiUvTime;
+uniform vec2 uStageMultiUvFirstTiling;
+uniform vec2 uStageMultiUvFirstOffset;
+uniform vec2 uStageMultiUvFirstSpeed;
+uniform vec4 uStageMultiUvFirstColor;
+uniform float uStageMultiUvFirstOpacity;
+uniform vec2 uStageMultiUvSecondTiling;
+uniform vec2 uStageMultiUvSecondOffset;
+uniform vec2 uStageMultiUvSecondSpeed;
+uniform vec4 uStageMultiUvSecondColor;
+uniform float uStageMultiUvSecondOpacity;
+uniform float uStageMultiUvAdditiveToMultiply;`,
+            )
+            .replace(
+                '#include <map_fragment>',
+                `#include <map_fragment>
+#ifdef USE_MAP
+    vec2 rdStageUv1 =
+        vMapUv * uStageMultiUvFirstTiling +
+        uStageMultiUvFirstOffset +
+        uStageMultiUvFirstSpeed * uStageMultiUvTime;
+    vec2 rdStageUv2 =
+        vMapUv * uStageMultiUvSecondTiling +
+        uStageMultiUvSecondOffset +
+        uStageMultiUvSecondSpeed * uStageMultiUvTime;
+    vec4 rdStageScroll1 =
+        texture2D(uStageMultiUvTexture, rdStageUv1) *
+        uStageMultiUvFirstColor;
+    vec4 rdStageScroll2 =
+        texture2D(uStageMultiUvTexture, rdStageUv2) *
+        uStageMultiUvSecondColor;
+    float rdStageAlpha1 = saturate(
+        rdStageScroll1.a * uStageMultiUvFirstOpacity
+    );
+    float rdStageAlpha2 = saturate(
+        rdStageScroll2.a * uStageMultiUvSecondOpacity
+    );
+
+    // The two texture inputs, ST, colors, opacities and speeds are exact
+    // serialized JP Material values. The final additive/multiply interpolation
+    // remains an explicit Web approximation until the compiled background
+    // shader subprogram is decoded.
+    vec3 rdStageAdditive = diffuseColor.rgb +
+        rdStageScroll1.rgb * rdStageAlpha1 +
+        rdStageScroll2.rgb * rdStageAlpha2;
+    vec3 rdStageMultiply = diffuseColor.rgb *
+        mix(vec3(1.0), rdStageScroll1.rgb, rdStageAlpha1) *
+        mix(vec3(1.0), rdStageScroll2.rgb, rdStageAlpha2);
+    diffuseColor.rgb = mix(
+        rdStageAdditive,
+        rdStageMultiply,
+        saturate(uStageMultiUvAdditiveToMultiply)
+    );
+#endif`,
+            )
+
+        previousOnBeforeCompile.call(this, shader, renderer)
+    }
+
+    material.onBeforeRender = function (
+        renderer,
+        scene,
+        camera,
+        geometry,
+        object,
+        group,
+    ) {
+        previousOnBeforeRender.call(
+            this,
+            renderer,
+            scene,
+            camera,
+            geometry,
+            object,
+            group,
+        )
+        if (timeUniform) {
+            timeUniform.value =
+                findStageRuntimeTime(mesh) ?? performance.now() * 0.001
+        }
+    }
 }
 
 function createAtlasTexture(
