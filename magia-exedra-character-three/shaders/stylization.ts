@@ -344,25 +344,35 @@ export function injectToonStylization(
         outgoingLight +=
             uRimColor * rdToonRimMask * uRimStrength * uRimEnabled;
 
-        float rdToonFresnelStart = clamp(
-            uFresnelThreshold - uFresnelFeather,
-            0.0,
-            1.0
-        );
-        float rdToonFresnelEnd = max(
-            rdToonFresnelStart + 0.0001,
-            clamp(uFresnelThreshold + uFresnelFeather, 0.0, 1.0)
-        );
-        float rdToonFresnelMask = smoothstep(
-            rdToonFresnelStart,
-            rdToonFresnelEnd,
-            rdToonEdge
-        );
-        rdToonFresnelMask *= mix(
+        // Current-JP ReDriveToon executable arithmetic. Metallic masking is
+        // applied to the Fresnel coordinate before thresholding; the authored
+        // band is centred on (1-threshold) with +/- feather/2 and uses the
+        // explicit cubic x*x*(3-2*x) interpolation.
+        float rdToonFresnelMetallicScale = mix(
             1.0,
             rdToonMetallicMask,
             saturate(uFresnelMaskByMetallic)
         );
+        float rdToonFresnelInput =
+            rdToonEdge * rdToonFresnelMetallicScale;
+        float rdToonFresnelCenter = 1.0 - uFresnelThreshold;
+        float rdToonFresnelLow =
+            rdToonFresnelCenter - uFresnelFeather * 0.5;
+        float rdToonFresnelHigh =
+            rdToonFresnelCenter + uFresnelFeather * 0.5;
+        float rdToonFresnelMask = step(
+            rdToonFresnelCenter,
+            rdToonFresnelInput
+        );
+        if (rdToonFresnelHigh > rdToonFresnelLow + 0.000001) {
+            float rdToonFresnelT = saturate(
+                (rdToonFresnelInput - rdToonFresnelLow) /
+                (rdToonFresnelHigh - rdToonFresnelLow)
+            );
+            rdToonFresnelMask =
+                rdToonFresnelT * rdToonFresnelT *
+                (3.0 - 2.0 * rdToonFresnelT);
+        }
         outgoingLight +=
             uFresnelColor *
             rdToonFresnelMask *
