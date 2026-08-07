@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "npm run test:release && tsc && vite build",
-    "test:release": "node --test reDriveBackgroundRuntime.test.mjs angelRingHeadLock.test.mjs materialProfileUniforms.test.mjs stageAlphaCutoutFixes.test.mjs stageBundleCatalog.test.mjs stageBundleProvenance.test.mjs stageLighting.test.mjs stageLightmaps.test.mjs stageMaterialBindings.test.mjs stageRuntime.test.mjs submeshGroups.test.mjs uiLocalization.test.mjs",
+    "test:release": "node --test stageBundleMultiManifest.test.mjs reDriveBackgroundRuntime.test.mjs angelRingHeadLock.test.mjs materialProfileUniforms.test.mjs stageAlphaCutoutFixes.test.mjs stageBundleCatalog.test.mjs stageBundleProvenance.test.mjs stageLighting.test.mjs stageLightmaps.test.mjs stageMaterialBindings.test.mjs stageRuntime.test.mjs submeshGroups.test.mjs uiLocalization.test.mjs",
     "postinstall": "patch-package",
     "preview": "vite preview --host"
   },
