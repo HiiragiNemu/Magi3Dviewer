@@ -1,0 +1,160 @@
+name: Deploy P0 manual-review site
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'automation/trigger-deploy-p0-review-20260808.txt'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-p0-review-20260808
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      RELEASE_BRANCH: magius3dviewer
+      PREVIEW_BRANCH: preview/p0-20260808
+      REVIEW_SUBPATH: review/p0-20260808
+    steps:
+      - name: Checkout unchanged release source
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ env.RELEASE_BRANCH }}
+          fetch-depth: 1
+          path: release
+
+      - name: Checkout current P0 preview verbatim
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ env.PREVIEW_BRANCH }}
+          fetch-depth: 1
+          path: review
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            release/package-lock.json
+            review/package-lock.json
+
+      - name: Record immutable review sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          release_sha="$(git -C release rev-parse HEAD)"
+          preview_sha="$(git -C review rev-parse HEAD)"
+          printf '%s\n' \
+            "release=${RELEASE_BRANCH}@${release_sha}" \
+            "preview=${PREVIEW_BRANCH}@${preview_sha}" \
+            > /tmp/p0-review-sources.txt
+
+      - name: Install and build unchanged release root
+        shell: bash
+        working-directory: release
+        run: |
+          set -euo pipefail
+          npm ci
+          npm audit --audit-level=high
+          npm run build
+
+      - name: Install P0 review dependencies
+        shell: bash
+        working-directory: review
+        run: |
+          set -euo pipefail
+          npm ci
+          npm audit --audit-level=high
+
+      - name: Gate proven ReDrive executable formulas
+        shell: bash
+        working-directory: review
+        run: |
+          set -euo pipefail
+          node exactReDriveFormulaParity.test.mjs
+          node officialMaterialFresnelAniso.test.mjs
+          node nativeSelfShadow.test.mjs
+
+      - name: Gate stage 608 current-JP flipbook and render states
+        shell: bash
+        working-directory: review
+        run: |
+          set -euo pipefail
+          node stage608Flipbook.test.mjs
+          node stage608RenderState.test.mjs
+          node stageMaterialBindings.test.mjs
+
+      - name: Build current P0 review candidate
+        shell: bash
+        working-directory: review
+        run: |
+          set -euo pipefail
+          npm run build
+
+      - name: Assemble one Pages artifact with stable root and isolated review path
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf site
+          mkdir -p "site/${REVIEW_SUBPATH}" site/review
+          cp -a release/dist/. site/
+          cp -a review/dist/. "site/${REVIEW_SUBPATH}/"
+          cp /tmp/p0-review-sources.txt "site/${REVIEW_SUBPATH}/review-sources.txt"
+          release_sha="$(git -C release rev-parse HEAD)"
+          preview_sha="$(git -C review rev-parse HEAD)"
+          cat > site/review/index.html <<EOF
+          <!doctype html>
+          <html lang="en">
+          <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Magi3Dviewer manual review</title></head>
+          <body>
+            <main>
+              <h1>Magi3Dviewer manual review</h1>
+              <p>The repository root is rebuilt from the unchanged release branch. Experimental work is isolated below this page.</p>
+              <p><a href="./p0-20260808/">Open P0 2026-08-08 review viewer</a></p>
+              <pre>release ${release_sha}\npreview ${preview_sha}</pre>
+            </main>
+          </body>
+          </html>
+          EOF
+          test -s site/index.html
+          test -s "site/${REVIEW_SUBPATH}/index.html"
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload combined production + review Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy combined Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify public production and review routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          root_url="${{ steps.deployment.outputs.page_url }}"
+          review_url="${root_url%/}/${REVIEW_SUBPATH}/"
+          for attempt in $(seq 1 30); do
+            root_code="$(curl -L -sS -o /dev/null -w '%{http_code}' "${root_url}" || true)"
+            review_code="$(curl -L -sS -o /dev/null -w '%{http_code}' "${review_url}" || true)"
+            if [ "${root_code}" = 200 ] && [ "${review_code}" = 200 ]; then
+              printf 'production=%s\nreview=%s\n' "${root_url}" "${review_url}" | tee /tmp/pages-review-url.txt
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Pages routes did not both return HTTP 200 after deployment" >&2
+          exit 1
