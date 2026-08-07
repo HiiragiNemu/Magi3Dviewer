@@ -2,3 +2,4 @@ Validate feature/exact-gem-depthdiff-predicate-20260808 against current-JP compi
 The proven mt_chara_100101_weapon_a_sj state is _UseGemDepthDiff=1 and _Transparency=0, therefore the compiled GemDepthDiff branch is inactive and the old Web NdotV proxy must be removed.
 The active _Transparency!=0 CameraDepthTexture branch remains explicitly deferred.
 DO NOT MERGE: automation trigger only.
+Rerun after fixing the validation test regex syntax; no renderer semantics changed.
