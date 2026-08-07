@@ -1,2 +1,3 @@
 Validate root-relative FBX parsing plus self-shadow caster-pass sampler isolation with release build/tests and strict fixed 100107 + battle-608-00-00-001 Chromium regression.
 Fail the gate if any Framebuffer/active Texture feedback-loop warning remains; persist run ID for manual screenshot artifact review.
+Final pass after correcting the patcher's own duplicate-null verification bug; require every status field to be zero.
