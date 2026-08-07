@@ -129,6 +129,17 @@ export class ReDriveSelfShadowController {
     private readonly pelvis = new THREE.Vector3()
     private readonly shadowPelvis = new THREE.Vector3()
     private readonly rootPosition = new THREE.Vector3()
+    private readonly cameraViewProjection = new THREE.Matrix4()
+    private readonly cameraFrustum = new THREE.Frustum()
+    private readonly casterBounds = new THREE.Box3()
+    private readonly casterHalfExtents = new THREE.Vector3(
+        officialReDriveSelfShadowSettings.charaBoundSize[0]
+            * officialReDriveSelfShadowSettings.boundSize * 0.5,
+        officialReDriveSelfShadowSettings.charaBoundSize[1]
+            * officialReDriveSelfShadowSettings.boundSize * 0.5,
+        officialReDriveSelfShadowSettings.charaBoundSize[2]
+            * officialReDriveSelfShadowSettings.boundSize * 0.5,
+    )
     private readonly forward = new THREE.Vector3(0, 0, 1)
     private readonly previousClearColor = new THREE.Color()
     private disposed = false
@@ -139,7 +150,10 @@ export class ReDriveSelfShadowController {
         const depthTexture = new THREE.DepthTexture(
             resolution,
             resolution,
-            THREE.UnsignedIntType,
+            // Native OnCameraSetup allocates the self-shadow RT with a
+            // 16-bit shadow depth format. Keep the Web target at the same
+            // precision instead of silently upgrading to 32-bit.
+            THREE.UnsignedShortType,
         )
         depthTexture.format = THREE.DepthFormat
         depthTexture.minFilter = THREE.NearestFilter
@@ -178,6 +192,17 @@ export class ReDriveSelfShadowController {
         }
 
         this.scene.camera.updateMatrixWorld(true)
+        // Native RenderCharacterSelfShadowmapRT calculates the main camera
+        // frustum first, then calls GeometryUtility.TestPlanesAABB for a
+        // pelvis-centred Bounds whose size is charaBoundSize * boundSize.
+        this.cameraViewProjection.multiplyMatrices(
+            this.scene.camera.projectionMatrix,
+            this.scene.camera.matrixWorldInverse,
+        )
+        this.cameraFrustum.setFromProjectionMatrix(
+            this.cameraViewProjection,
+            THREE.WebGLCoordinateSystem,
+        )
         if (officialReDriveSelfShadowSettings.useMainLightAsCastShadowDirection) {
             this.scene.directionalLight.updateMatrixWorld(true)
             // Native: mainLight.worldToLocalMatrix * RotateY(pi).
@@ -199,6 +224,8 @@ export class ReDriveSelfShadowController {
         this.boundsView.multiplyMatrices(this.flipZ, this.shadowView)
 
         let count = 0
+        let frustumRejected = 0
+        let rangeRejected = 0
         let left = Infinity
         let right = -Infinity
         let bottom = Infinity
@@ -212,8 +239,17 @@ export class ReDriveSelfShadowController {
             const root = character.object
             root.updateMatrixWorld(true)
             this.getPelvisWorldPosition(root, this.pelvis)
+            this.casterBounds.min.copy(this.pelvis).sub(this.casterHalfExtents)
+            this.casterBounds.max.copy(this.pelvis).add(this.casterHalfExtents)
+            if (!this.cameraFrustum.intersectsBox(this.casterBounds)) {
+                frustumRejected++
+                continue
+            }
             this.shadowPelvis.copy(this.pelvis).applyMatrix4(this.boundsView)
-            if (this.shadowPelvis.z - bound > range) continue
+            if (this.shadowPelvis.z - bound > range) {
+                rangeRejected++
+                continue
+            }
             count++
             left = Math.min(left, this.shadowPelvis.x - bound)
             right = Math.max(right, this.shadowPelvis.x + bound)
@@ -272,15 +308,28 @@ export class ReDriveSelfShadowController {
 
         this.renderCharactersToDepth(characters)
         reDriveSelfShadowUniformState.enabled.value = 1
-        this.scene.scene.userData.reDriveSelfShadow = this.getDebugState()
+        this.scene.scene.userData.reDriveSelfShadow = this.getDebugState({
+            acceptedCasters: count,
+            frustumRejected,
+            rangeRejected,
+        })
     }
 
-    getDebugState() {
+    getDebugState(culling?: {
+        acceptedCasters: number
+        frustumRejected: number
+        rangeRejected: number
+    }) {
         return {
             ...officialReDriveSelfShadowSettings,
             enabled: reDriveSelfShadowUniformState.enabled.value > 0.5,
             source: 'TW-native-ReDriveToonSelfShadowPass',
             depthBiasEffective: reDriveSelfShadowUniformState.depthBias.value,
+            depthFormat: '16-bit',
+            nativeFrustumAabb: {
+                size: officialReDriveSelfShadowSettings.charaBoundSize,
+                ...(culling ?? {}),
+            },
             worldToClip: reDriveSelfShadowUniformState.worldToClip.value.toArray(),
             lightDirection: reDriveSelfShadowUniformState.lightDirection.value.toArray(),
         }
