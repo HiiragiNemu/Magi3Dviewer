@@ -20,7 +20,7 @@ def patch_profile() -> None:
     text = replace_once(
         text,
         "export interface OfficialGemProfile {\n    enabled: boolean;\n    useMatCap: boolean;\n",
-        "export type OfficialGemMatCapSource = 'character-or-fallback' | 'soft-metallic';\n\nexport interface OfficialGemProfile {\n    enabled: boolean;\n    useMatCap: boolean;\n    /** Exact serialized MatCap dependency when recovered; otherwise character package/fallback. */\n    matCapSource: OfficialGemMatCapSource;\n",
+        "export type OfficialGemMatCapSource = 'character-or-fallback' | 'soft-metallic';\n\nexport interface OfficialGemProfile {\n    enabled: boolean;\n    useMatCap: boolean;\n    /** Exact serialized MatCap dependency when recovered; omitted means existing character/fallback path. */\n    matCapSource?: OfficialGemMatCapSource;\n",
         'gem matcap source field',
     )
     text = text.replace(
