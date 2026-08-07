@@ -6,6 +6,10 @@ on:
       - fix/stage-608-exact-render-state-20260808
     paths:
       - automation/trigger-stage-608-exact-render-state-20260808.txt
+  pull_request:
+    branches:
+      - preview/p0-20260808
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: write
