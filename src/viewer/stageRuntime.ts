@@ -4,6 +4,14 @@ import {
     getClockDelta,
     removeAnimationLoop,
 } from 'magia-exedra-character-three/renderer'
+import {
+    createOfficialStageParticleRuntimeController,
+    hasOfficialStageParticleRuntime,
+} from './stageParticleRuntime'
+import type {
+    OfficialStageParticleRuntimeDebugState,
+    OfficialStageParticleRuntimeController,
+} from './stageParticleRuntime'
 
 /**
  * Declarative voice metadata for the shared stage clock.
@@ -83,6 +91,7 @@ export interface StageRuntimeDebugState {
     activeRotatorNames: string[]
     missingRotatorNames: string[]
     ambiguousRotatorNames: string[]
+    particles?: OfficialStageParticleRuntimeDebugState
 }
 
 interface ActiveStageRotator {
@@ -99,11 +108,12 @@ function unique(values: string[] | undefined) {
 }
 
 /**
- * Owns the animation and future voice timeline for one loaded stage root.
+ * Owns the animation, bounded official particle effects and future voice
+ * timeline for one loaded stage root.
  *
- * A controller is registered with the renderer only when explicitly created
- * from a runtime profile. Static stages therefore retain their existing
- * behaviour and incur no animation-loop work.
+ * A controller is registered with the renderer when either a declarative
+ * runtime profile or a proven built-in official particle runtime exists.
+ * Static stages with neither remain a true no-op.
  */
 export class StageRuntimeController {
     private readonly root: THREE.Object3D
@@ -115,6 +125,7 @@ export class StageRuntimeController {
     private readonly activeRotators: ActiveStageRotator[]
     private readonly missingRotatorNames: string[]
     private readonly ambiguousRotatorNames: string[]
+    private readonly particleRuntime?: OfficialStageParticleRuntimeController
     private readonly animationLoop: () => void
     private readonly afterUpdate?: () => void
     private _time: number
@@ -185,6 +196,10 @@ export class StageRuntimeController {
         this._paused = profile.autoplay === false
         this.mixer?.setTime(this._time)
         this.applyRotatorDelta(this._time)
+        this.particleRuntime = createOfficialStageParticleRuntimeController(
+            root,
+            this._time,
+        )
         this.runAfterUpdate()
         this.publishTime()
 
@@ -229,6 +244,7 @@ export class StageRuntimeController {
         this._time = finiteNonNegative(time, this._time)
         this.mixer?.setTime(this._time)
         this.applyRotatorDelta(this._time - previousTime)
+        this.particleRuntime?.seek(this._time)
         this.runAfterUpdate()
         this.publishTime()
     }
@@ -258,7 +274,9 @@ export class StageRuntimeController {
             this._time += scaledDelta
             this.mixer?.update(scaledDelta)
         }
-        this.applyRotatorDelta(this._time - previousTime)
+        const appliedDelta = this._time - previousTime
+        this.applyRotatorDelta(appliedDelta)
+        this.particleRuntime?.update(appliedDelta)
         this.runAfterUpdate()
         this.publishTime()
     }
@@ -336,6 +354,7 @@ export class StageRuntimeController {
                 this.activeRotators.map(rotator => rotator.profile.objectName),
             missingRotatorNames: [...this.missingRotatorNames],
             ambiguousRotatorNames: [...this.ambiguousRotatorNames],
+            particles: this.particleRuntime?.getDebugState(),
         }
     }
 
@@ -343,6 +362,7 @@ export class StageRuntimeController {
         if (this._disposed) return
 
         removeAnimationLoop(this.animationLoop)
+        this.particleRuntime?.dispose()
         this.mixer?.stopAllAction()
         this.mixer?.uncacheRoot(this.root)
         delete this.root.userData.stageRuntimeTime
@@ -399,15 +419,17 @@ export class StageRuntimeController {
 }
 
 /**
- * Keeps the absence of a runtime profile a true no-op for existing static
- * stages while giving the stage loader a concise integration point.
+ * Keeps static stages without a declared runtime or proven built-in particle
+ * runtime as a true no-op while allowing bounded official effects such as the
+ * six current-JP 608 Eff_Bubbles systems to share the same stage clock.
  */
 export function createStageRuntimeController(
     root: THREE.Object3D,
     profile?: StageRuntimeProfile,
     afterUpdate?: () => void,
 ) {
-    return profile == undefined
-        ? undefined
-        : new StageRuntimeController(root, profile, afterUpdate)
+    if (profile == undefined && !hasOfficialStageParticleRuntime(root.name)) {
+        return undefined
+    }
+    return new StageRuntimeController(root, profile ?? {}, afterUpdate)
 }
