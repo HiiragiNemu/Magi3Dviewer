@@ -213,9 +213,15 @@ def main() -> int:
                 image = getattr(texture, 'image', None)
                 if image is not None:
                     rgba = image.convert('RGBA')
+                    flip_y = rgba.transpose(Image.Transpose.FLIP_TOP_BOTTOM)
+                    flip_x = rgba.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+                    flip_xy = flip_y.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
                     result.update({
                         'size': list(rgba.size),
                         'pixelSha256': sha256(rgba.tobytes()),
+                        'pixelSha256FlipY': sha256(flip_y.tobytes()),
+                        'pixelSha256FlipX': sha256(flip_x.tobytes()),
+                        'pixelSha256FlipXY': sha256(flip_xy.tobytes()),
                     })
                 if isinstance(tree, dict):
                     result.update({
@@ -268,8 +274,21 @@ def main() -> int:
             if isinstance(web_base, dict) and web_base.get('exists')
             else None
         )
+        transform_match = None
+        if official_base and web_hash:
+            resolved = official_base.get('resolvedTexture', {})
+            for transform, key in (
+                ('identity', 'pixelSha256'),
+                ('flip-y', 'pixelSha256FlipY'),
+                ('flip-x', 'pixelSha256FlipX'),
+                ('flip-xy', 'pixelSha256FlipXY'),
+            ):
+                if resolved.get(key) == web_hash:
+                    transform_match = transform
+                    break
         comparisons.append({
             'material': name,
+            'officialToViewerExactTransformMatch': transform_match,
             'webBindingPresent': binding is not None,
             'officialBaseMap': official_base,
             'officialMainTex': official_main,
@@ -289,6 +308,14 @@ def main() -> int:
     mismatches = [
         row for row in comparisons
         if row['baseMapPixelMatch'] is False
+    ]
+    orientation_only = [
+        row for row in mismatches
+        if row.get('officialToViewerExactTransformMatch') in {'flip-y', 'flip-x', 'flip-xy'}
+    ]
+    content_mismatches = [
+        row for row in mismatches
+        if row.get('officialToViewerExactTransformMatch') is None
     ]
     missing_viewer_files = [
         row for row in comparisons
@@ -319,6 +346,10 @@ def main() -> int:
         'materialCount': len(official_materials),
         'comparisonCount': len(comparisons),
         'baseMapPixelMismatchCount': len(mismatches),
+        'orientationOnlyMismatchCount': len(orientation_only),
+        'contentMismatchCount': len(content_mismatches),
+        'orientationOnlyMismatches': orientation_only,
+        'contentMismatches': content_mismatches,
         'missingViewerTextureFileCount': len(missing_viewer_files),
         'unresolvedTexturePointerCount': len(unresolved),
         'baseMapPixelMismatches': mismatches,
@@ -344,6 +375,9 @@ def main() -> int:
         'viewerRef': viewer_ref,
         'materialCount': report['materialCount'],
         'baseMapPixelMismatchCount': report['baseMapPixelMismatchCount'],
+        'orientationOnlyMismatchCount': report['orientationOnlyMismatchCount'],
+        'contentMismatchCount': report['contentMismatchCount'],
+        'contentMismatchMaterials': [row['material'] for row in content_mismatches],
         'missingViewerTextureFileCount': report['missingViewerTextureFileCount'],
         'unresolvedTexturePointerCount': report['unresolvedTexturePointerCount'],
         'baseMapPixelMismatches': [
