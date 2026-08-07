@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-assetbundle",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "bundle": "battle/stage/bg_3d_608_00_00_001",
+  "dynamicMaterialCount": 1,
+  "dynamicMaterials": [
+    {
+      "name": "bg3d608_00_blue_Fish",
+      "pathId": -3699146351986273041,
+      "validKeywords": [
+        "_MULTI_UV_SCROLL"
+      ],
+      "renderQueue": 3000,
+      "floats": {
+        "_FlipbookOffset": 0.0,
+        "_MatCapIntensity": 1.0,
+        "_1stOpacity": 1.0,
+        "_AlphaClip": 1.0,
+        "_USE_MULTI_UV_SCROLL": 1.0,
+        "_FlipbookFrameRate": 8.0,
+        "_DropFrame_MultiScroll": 1.0,
+        "_Additive_to_Multiply": 0.9800000190734863,
+        "_Alpha_Clip": 0.5,
+        "_UseFlipbook": 0.0,
+        "_UseMatCap": 0.0,
+        "_Smoothness": 0.0,
+        "_Unlitness": 1.0,
+        "_2ndOpacity": 1.0,
+        "_Metallic": 0.0
+      },
+      "vectorsAndColors": {
+        "_1stOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_BaseColor": {
+          "r": 0.9245283007621765,
+          "g": 0.9245283007621765,
+          "b": 0.9245283007621765,
+          "a": 1.0
+        },
+        "_2ndTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stScrollSpeed": {
+          "r": -0.009999999776482582,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_Color": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_1stTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_UV_Scroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndScrollSpeed": {
+          "r": -0.009999999776482582,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "textures": {
+        "_MatCapTex": {
+          "property": "_MatCapTex",
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_ScrollTexutre": {
+          "property": "_ScrollTexutre",
+          "fileId": 5,
+          "pathId": -8456137164679184744,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "property": "_Blend2ndTex",
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "property": "_MainTex",
+          "fileId": 4,
+          "pathId": 9046177032241614915,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_ScrollTexture": {
+          "property": "_ScrollTexture",
+          "fileId": 5,
+          "pathId": -8456137164679184744,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BaseMap": {
+          "property": "_BaseMap",
+          "fileId": 4,
+          "pathId": 9046177032241614915,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "property": "_BlendTex",
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "localTextures": [
+    {
+      "type": "Cubemap",
+      "name": "ReflectionProbe-0",
+      "pathId": 1016455745504271734,
+      "width": 64,
+      "height": 64,
+      "textureFormat": 47,
+      "imageCount": 6,
+      "dimension": 2
+    },
+    {
+      "type": "Cubemap",
+      "name": "ReflectionProbe-1",
+      "pathId": 4939737858652595000,
+      "width": 64,
+      "height": 64,
+      "textureFormat": 47,
+      "imageCount": 6,
+      "dimension": 2
+    },
+    {
+      "type": "Texture2D",
+      "name": "bg3d608_00_red_violin_sprite",
+      "pathId": -4587267788711311578,
+      "width": 1024,
+      "height": 1024,
+      "textureFormat": 51,
+      "imageCount": 1,
+      "dimension": 2
+    },
+    {
+      "type": "Texture2D",
+      "name": "bg3d608_00_red_violinLineShd_sprite",
+      "pathId": -7311903068602794106,
+      "width": 2048,
+      "height": 512,
+      "textureFormat": 51,
+      "imageCount": 1,
+      "dimension": 2
+    },
+    {
+      "type": "Texture2D",
+      "name": "Lightmap-0_comp_light",
+      "pathId": 2453087261145702840,
+      "width": 1024,
+      "height": 1024,
+      "textureFormat": 47,
+      "imageCount": 1,
+      "dimension": 2
+    }
+  ]
+}
