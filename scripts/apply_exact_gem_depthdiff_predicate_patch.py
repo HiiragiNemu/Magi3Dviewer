@@ -76,8 +76,8 @@ def patch_gem() -> None:
 '''
     new = '''            // Exact current-JP compiled predicate:
             //   (_UseGemDepthDiff != 0) && (_Transparency != 0)
-            // `mt_chara_100101_weapon_a_sj` has `_UseGemDepthDiff=1` but
-            // `_Transparency=0`, so its official GemDepthDiff contribution is
+            // mt_chara_100101_weapon_a_sj has _UseGemDepthDiff=1 but
+            // _Transparency=0, so its official GemDepthDiff contribution is
             // exactly zero. Do not substitute the previous NdotV proxy.
             // The active transparent CameraDepthTexture formula is recovered,
             // but remains deferred until a proven material actually enters it
@@ -107,7 +107,7 @@ def patch_test() -> None:
     )
     append = '''\n
 test('100101 weapon GemDepthDiff follows exact current-JP transparency predicate', () => {
-  assert.match(gem, /uGemUseDepthDiff \* uGemTransparency/)
+  assert.match(gem, /uGemUseDepthDiff \\* uGemTransparency/)
   assert.match(gem, /official GemDepthDiff contribution is/)
   assert.doesNotMatch(gem, /rdGemDepthProxy/)
 })
