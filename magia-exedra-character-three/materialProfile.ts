@@ -33,6 +33,8 @@ export interface OfficialGemProfile {
     maskMatcapMetallic: boolean;
     maskMatcapSpecular: boolean;
     useDepthDiff: boolean;
+    /** Serialized `_Transparency`; compiled GemDepthDiff also requires this to be non-zero. */
+    transparency?: boolean;
     firstHighlightSize: number;
     firstShadowSize: number;
     secondHighlightSize: number;
@@ -296,6 +298,10 @@ const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
             maskMatcapMetallic: true,
             maskMatcapSpecular: false,
             useDepthDiff: true,
+            // Exact current-JP saved property. The compiled Shader gates
+            // GemDepthDiff on `_UseGemDepthDiff && _Transparency`, so
+            // this material does not execute the depth-difference branch.
+            transparency: false,
             firstHighlightSize: 0,
             firstShadowSize: 0,
             secondHighlightSize: 0.59,
