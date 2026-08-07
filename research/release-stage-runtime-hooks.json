@@ -1,0 +1,907 @@
+{
+  "schemaVersion": 1,
+  "ref": "origin/magius3dviewer",
+  "sha": "da8228b9fdcf34d68abb1e78ce9d527678b592dd",
+  "patterns": {
+    "renderProfile": [
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "6:} from './renderProfile'"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "24:} from './renderProfile';"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "9:import type { AngelRingReference } from '../renderProfile';"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "2:import type { MaterialFeatureProfile } from '../renderProfile';"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "45:      \"renderProfile\": {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "239:      \"renderProfile\": {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "752:      \"renderProfile\": {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "1162:      \"renderProfile\": {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "1247:      \"renderProfile\": {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "1333:      \"renderProfile\": {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "237:  \"renderProfile\": {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "15:  assert.equal(stage.renderProfile.source, 'manual-research')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "16:  assert.equal(stage.renderProfile.directionalLight.intensity, 0.85)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "17:  assert.equal(stage.renderProfile.ambientLight.intensity, 0.4)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "18:  assert.equal(stage.renderProfile.renderer.exposure, 0.85)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "19:  assert.equal(stage.renderProfile.bloom.enabled, false)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "20:  assert.equal(stage.renderProfile.reDriveVolume, undefined)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "7:    'magia-exedra-character-three/renderProfile.ts',"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "13:        + '<jp-redrive-character-evidence.json> [renderProfile.ts]',"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "38:    renderProfile?: {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "168:            ?? definition.renderProfile?.lights?.length,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "240:    addRow(overview, 'Render profile', definition.renderProfile?.source)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "242:    addRow(overview, 'Lightmap', definition.renderProfile?.lightmap ? 'Yes' : 'No')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "243:    addRow(overview, 'Environment map', definition.renderProfile?.environmentTextureUrl ? 'Yes' : 'No')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "171:    renderProfile?: StageRenderProfile"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "442:                definition.renderProfile,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "468:        prepareStageObject(object, definition.renderProfile?.stageLayer)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "486:        stageRoot.userData.reDriveVolume = definition.renderProfile?.reDriveVolume ?? null"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "548:            definition.renderProfile,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "73:assert.equal(memoryRoom.renderProfile.fog.affectsCharacters, false)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "74:assert.ok(memoryRoom.renderProfile.ambientLight.intensity <= 0.3)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "75:assert.ok(memoryRoom.renderProfile.directionalLight.intensity <= 0.8)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "76:assert.ok(memoryRoom.renderProfile.bloom.strength <= 0.1)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "78:    memoryRoom.renderProfile.reDriveVolume,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "104:const stage608Lights = officialStage608.renderProfile.lights"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "114:const stage608Volume = officialStage608.renderProfile.reDriveVolume"
+      }
+    ],
+    "rotators": [
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "444:    \"rotators\": ["
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "46:    rotators?: StageRotatorProfile[]"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "143:        const requestedRotators = profile.rotators ?? []"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "334:                (this.profile.rotators ?? []).map(rotator => rotator.objectName),"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "109:        rotators: [{"
+      }
+    ],
+    "materialBindings": [
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "145:      \"materialBindings\": ["
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "609:      \"materialBindings\": ["
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "37:  \"materialBindings\": ["
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "170:    materialBindings?: StageMaterialBinding[]"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "658:        materialBindings:"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "878:            definition.materialBindings,"
+      }
+    ],
+    "StageMaterialBinding": [
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "31:export interface StageMaterialBinding {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "60:export interface StageMaterialBindingResult {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "79:export async function applyStageMaterialBindings("
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "81:    bindings: StageMaterialBinding[] | undefined,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "84:): Promise<StageMaterialBindingResult> {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "92:    const matchedBindings = new Set<StageMaterialBinding>()"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "140:        bindings: StageMaterialBinding[]"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "254:    bindings: StageMaterialBinding[],"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "316:function matchesMaterial(binding: StageMaterialBinding, materialName: string) {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "333:    binding: StageMaterialBinding,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "605:    binding: StageMaterialBinding,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "15:    applyStageMaterialBindings,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "16:    type StageMaterialBinding,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "170:    materialBindings?: StageMaterialBinding[]"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "876:        const bindingResult = await applyStageMaterialBindings("
+      }
+    ],
+    "stageMaterialBindings": [
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "9:    \"test:release\": \"node --test nativeSelfShadow.test.mjs officialMaterialFresnelAniso.test.mjs sceneGemSpecularFix.test.mjs stageFidelity.test.mjs stageHierarchy.test.mjs reDriveSkyboxIntensity.test.mjs stageCatalog.test.mjs stageBundleMultiManifest.test.mjs reDriveBackgroundRuntime.test.mjs angelRingHeadLock.test.mjs materialProfileUniforms.test.mjs stageAlphaCutoutFixes.test.mjs stageBundleCatalog.test.mjs stageBundleProvenance.test.mjs stageLighting.test.mjs stageLightmaps.test.mjs stageM"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "91:      stageObject.userData.stageMaterialBindings?.matchedMaterials ?? [],"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "149:      materialBindingDebug: stageObject.userData.stageMaterialBindings ?? null,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "236:    object.userData.stageMaterialBindings = {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "243:    console.log('Applied official stage material bindings:', object.userData.stageMaterialBindings)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "17:} from './stageMaterialBindings'"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "659:            activeStageObject?.userData.stageMaterialBindings ?? null,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "5:    new URL('./src/viewer/stageMaterialBindings.ts', import.meta.url),"
+      }
+    ],
+    "ParticleSystem": [
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "464:      \"six Unity ParticleSystem and ParticleSystemRenderer reconstructions\","
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "475:      \"Six ParticleSystem plus six ParticleSystemRenderer component dumps\","
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "487:    \"JP ReDriveVolume, Unity Light, lightmap, ReflectionProbe, ParticleSystem and LinearRotater dumps\","
+      }
+    ],
+    "particle": [
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "6:    particleSystemCount?: number"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "183:        ['particleSystemCount', 'Particle'],"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "181:     * for a completed scene reconstruction while clip/particle/Timeline"
+      }
+    ],
+    "runtime": [
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "104:        const runtimeUserData = this.userData instanceof MaterialUserData"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "107:        this.userData = runtimeUserData"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "262:        runtimeUserData.shader = shader;"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "263:        runtimeUserData.shaderUniforms = uniforms;"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "148:        const runtimeUserData = this.userData instanceof MaterialUserData"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "151:        this.userData = runtimeUserData"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "427:            runtimeUserData.officialMaterialProfile ??"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "431:        runtimeUserData.shader = shader;"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "432:        runtimeUserData.shaderUniforms = uniforms;"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "6:     * Three's runtime onBeforeRender final argument is the BufferGeometry draw"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "8:     * it as Object3D Group. Expose the runtime field used for per-slot ReDrive"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "10:const runtimePath = join(root, `.official-material-profile-${process.pid}-${Date.now()}.mjs`)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "16:writeFileSync(runtimePath, compiled.outputText, 'utf8')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "17:const profiles = await import(pathToFileURL(runtimePath).href)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "18:after(() => rmSync(runtimePath, { force: true }))"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "2506:        \"regenerator-runtime\": \"^0.14.1\","
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "3766:    \"node_modules/regenerator-runtime\": {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "3768:      \"resolved\": \"https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz\","
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "101:          \"scene runtime component audit\""
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "1085:      \"runtime\": {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "1113:          \"Four official 8 FPS flipbook materials are active on the shared runtime clock\""
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "435:  \"runtime\": {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "465:      \"volumetric spot-light beam and dust runtime\","
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "468:      \"Unity component light-state and red/blue material-state runtime\","
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "6:const runtime = readFileSync('src/viewer/reDriveVolumeRuntime.ts', 'utf8')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "26:  assert.match(runtime, /function applyBackgroundColorAdjustments/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "27:  assert.match(runtime, /profile\\.backgroundPostExposure/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "28:  assert.match(runtime, /profile\\.backgroundContrast/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "29:  assert.match(runtime, /profile\\.backgroundSaturation/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "30:  assert.match(runtime, /profile\\.backgroundBackgroundTint/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "5:const runtime = readFileSync('src/viewer/reDriveVolumeRuntime.ts', 'utf8')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "8:  assert.match(runtime, /function applySkyboxIntensity/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "9:  assert.match(runtime, /profileOverride\\([\\s\\S]*?'skyboxIntensity'/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "10:  assert.match(runtime, /environmentIntensity = intensity/g)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "11:  assert.match(runtime, /backgroundIntensity = intensity/g)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "15:  assert.match(runtime, /sceneEnvironmentIntensity/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "16:  assert.match(runtime, /backgroundSceneEnvironmentIntensity/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "17:  assert.match(runtime, /sceneBackgroundIntensity/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "18:  assert.match(runtime, /backgroundSceneBackgroundIntensity/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "19:  assert.match(runtime, /delete scene\\.scene\\.userData\\.reDriveSkyboxIntensity/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "107:// Load the first exported official stage and verify actual geometry/runtime state."
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "297:if (stageResult.officialCount < 5 || !stageResult.definition?.official) failures.push('official stage catalog/runtime unavailable')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "296:    // Additional Rim is a directional runtime/Timeline effect. A serialized"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "45:    runtime?: {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "171:            ?? definition.runtime?.clipNames?.length"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "244:    addRow(overview, 'Runtime clips', definition.runtime?.clipNames?.length ?? definition.dynamic?.clipNames?.length)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "571:        const runtimeTime = findStageRuntimeTime(mesh)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "574:                (runtimeTime ?? performance.now() * 0.001)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "105: * from a runtime profile. Static stages therefore retain their existing"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "380:            console.warn('Stage runtime post-update hook failed:', error)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "402: * Keeps the absence of a runtime profile a true no-op for existing static"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "172:    runtime?: StageRuntimeProfile"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "555:            definition.runtime,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "569:            console.log('Started official stage runtime:', debugState)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "665:        runtime: getCurrentStageRuntimeDebugState() ?? null,"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "10:const runtimePath = join(root, `.stage-bundle-multi-manifest-${process.pid}-${Date.now()}.mjs`)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "15:writeFileSync(runtimePath, compiled.outputText, 'utf8')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "16:const api = await import(pathToFileURL(runtimePath).href)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "17:after(() => rmSync(runtimePath, { force: true }))"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "10:const runtimePath = join(repositoryRoot, `.stage-bundle-provenance-${process.pid}-${Date.now()}.mjs`)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "19:writeFileSync(runtimePath, compiled.outputText, 'utf8')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "20:const api = await import(pathToFileURL(runtimePath).href)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "22:after(() => rmSync(runtimePath, { force: true }))"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "10:const runtimePath = join(root, `.stage-catalog-${process.pid}-${Date.now()}.mjs`)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "15:writeFileSync(runtimePath, compiled.outputText, 'utf8')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "16:const api = await import(pathToFileURL(runtimePath).href)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "17:after(() => rmSync(runtimePath, { force: true }))"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "24:test('stage runtime updates the fidelity inspector only after resolved stage definitions', () => {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "11:const runtimePath = join(root, `.stage-hierarchy-${process.pid}-${Date.now()}.mjs`)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "16:writeFileSync(runtimePath, compiled.outputText, 'utf8')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "17:const api = await import(pathToFileURL(runtimePath).href)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "18:after(() => rmSync(runtimePath, { force: true }))"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "106:const runtime608Lights = stage608Lights.filter(light => light.lightmapping !== 2)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "108:assert.ok(runtime608Lights.length > 0, 'fixture must preserve Mixed/Realtime lights')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "11:const runtimePath = join("
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "22:writeFileSync(runtimePath, compiled.outputText, 'utf8')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "23:const lightmaps = await import(pathToFileURL(runtimePath).href)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "26:    rmSync(runtimePath, { force: true })"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "11:const mockPath = join(repositoryRoot, `.stage-runtime-renderer-${nonce}.mjs`)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "12:const runtimePath = join(repositoryRoot, `.stage-runtime-under-test-${nonce}.mjs`)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "40:writeFileSync(runtimePath, compiled.outputText, 'utf8')"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "42:const runtime = await import(pathToFileURL(runtimePath).href)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "46:    rmSync(runtimePath, { force: true })"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "84:test('stage runtime selects five exact clips and advances one shared clock', () => {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "86:    const controller = new runtime.StageRuntimeController(root, {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "129:    // A paused runtime must not advance either the mixer or shared clock."
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "186:test('missing runtime profile remains a true static-stage no-op', () => {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "190:    assert.equal(runtime.createStageRuntimeController(root, undefined), undefined)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "195:test('non-looping runtime clamps at the shared timeline end and publishes live state', () => {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "198:    const controller = new runtime.StageRuntimeController(root, {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "243:    const controller = new runtime.StageRuntimeController(root, {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "9:const runtime = await readFile("
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "34:test('runtime refuses partial group recovery and restores contiguous official ranges', () => {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "35:    assert.match(runtime, /counts\\.length !== materialSlotCount/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "36:    assert.match(runtime, /recoveredCount !== drawCount/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "37:    assert.match(runtime, /geometry\\.clearGroups\\(\\)/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "38:    assert.match(runtime, /geometry\\.addGroup\\(start, count, materialIndex\\)/)"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "18:test('runtime localization supports persistent English and Simplified Chinese switching', async () => {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "44:test('dialogs, selectors, tooltips and alerts use canonical English plus runtime translation', async () => {"
+      },
+      {
+        "path": "origin/magius3dviewer",
+        "line": 0,
+        "text": "34:            return 'character-runtime'"
+      }
+    ]
+  },
+  "candidateFiles": [
+    "origin/magius3dviewer"
+  ],
+  "note": "Bounded git-grep of the release branch to locate existing stage runtime extension points. This is repository code only; no private game payload is included."
+}
