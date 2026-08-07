@@ -350,12 +350,20 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                     ).r;
                 #endif
 
+                float rdSpecularMask = smoothstep(
+                    0.04,
+                    0.96,
+                    rdToonSpecularMask
+                );
                 float rdSpecular =
                     rdSpecularGradient *
-                    rdToonSpecularMask *
+                    rdSpecularMask *
                     uOfficialSpecularStrength;
                 rdSpecular *= mix(1.0, 1.18, saturate(uMaterialAnisotropy));
                 rdSpecular *= mix(1.0, 1.35, saturate(uMaterialSpecialJewel));
+                // Preserve a strong authored highlight without feeding
+                // unbounded HDR values into scene Bloom/tone mapping.
+                rdSpecular = min(rdSpecular, 1.5);
 
                 vec3 rdSpecularColor = mix(
                     vec3(1.0),

@@ -19,8 +19,9 @@ export interface ExtendedGemMaterial {
 export async function extendMaterialWithOfficialGem(
     material: THREE.Material,
     profiles: OfficialMaterialProfile[],
+    matCapUrl?: string,
 ): Promise<ExtendedGemMaterial> {
-    const resources = await loadOfficialGemResources(profiles);
+    const resources = await loadOfficialGemResources(profiles, matCapUrl);
     const previousCompile = material.onBeforeCompile;
     const previousKey = material.customProgramCacheKey.bind(material);
 
@@ -41,7 +42,8 @@ export async function extendMaterialWithOfficialGem(
             this.userData.officialMaterialProfiles = profiles;
         }
     };
-    material.customProgramCacheKey = () => `${previousKey()}|official-gem-v2|${profiles.map(x => x.name).join('|')}`;
+    material.customProgramCacheKey = () =>
+        `${previousKey()}|official-gem-v3|${matCapUrl ? 'character-matcap' : 'fallback-matcap'}|${profiles.map(x => x.name).join('|')}`;
     material.needsUpdate = true;
 
     return { resources, profiles };

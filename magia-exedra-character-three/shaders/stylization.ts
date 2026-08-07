@@ -64,7 +64,10 @@ export const toonStylizationOptions: ToonStylizationOptions = {
     highlightTint: '#ffe7e0',
     highlightTintStrength: 0.015,
     specularStrength: 0.72,
-    metallicResponse: 0.12,
+    // Control G is the authored Metallic mask.  Keep it out of the old
+    // normal-Y colour gradient and use it mainly to tint the recovered
+    // Control-B/specular-gradient response.
+    metallicResponse: 0.62,
 
     // Official additional Rim is scene/Timeline driven. Keep the implementation
     // available for imported tracks, but do not bake it into every character.
@@ -256,19 +259,9 @@ export function injectToonStylization(
             rdToonHighlightMask *
             uHighlightTintStrength;
 
-        float rdToonMetalGradientPosition = saturate(normal.y * 0.5 + 0.5);
-        vec3 rdToonMetalGradient = mix(
-            uShadowTint,
-            uHighlightTint,
-            smoothstep(0.05, 0.95, rdToonMetalGradientPosition)
-        );
-        vec3 rdToonMetalColor =
-            rdToonMetalGradient * mix(rdToonAlbedo, vec3(1.0), 0.20);
-        rdToonOfficial = mix(
-            rdToonOfficial,
-            rdToonMetalColor,
-            saturate(rdToonMetallicMask * uMetallicResponse)
-        );
+        // Do not invent a world-up metallic colour gradient.  Official
+        // Control G marks the material response; its view-dependent colour
+        // is applied by the recovered specular-gradient branch below.
 
         // General materials with the recovered SpecularGradientMap already add
         // the authored Control-B highlight. Keep the legacy Three specular path

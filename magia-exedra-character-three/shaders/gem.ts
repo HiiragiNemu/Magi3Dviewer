@@ -11,11 +11,17 @@ export interface OfficialGemResources {
 
 export async function loadOfficialGemResources(
     profiles: OfficialMaterialProfile[] | undefined,
+    matCapUrl?: string,
 ): Promise<OfficialGemResources> {
     if (!profiles?.some(profile => profile.gem.enabled && profile.gem.useMatCap)) {
         return { textures: [] };
     }
-    const matCap = await loadTexture(DefaultGemMatCap, { colorSpace: THREE.NoColorSpace });
+    // Character bundles may ship their own Gem MatCap.  Use that exact
+    // texture first; the historical 109801 texture is only a fallback for
+    // bundles where no dedicated MatCap was exported.
+    const matCap = await loadTexture(matCapUrl ?? DefaultGemMatCap, {
+        colorSpace: THREE.NoColorSpace,
+    });
     matCap.wrapS = THREE.ClampToEdgeWrapping;
     matCap.wrapT = THREE.ClampToEdgeWrapping;
     MaximizeTextureQuality(matCap);
@@ -100,7 +106,26 @@ export function injectOfficialGemShader(
             vec3 rdGemView = normalize(geometryViewDir);
             float rdGemNdotV = saturate(dot(rdGemNormalVs, rdGemView));
 
-            vec2 rdGemMatCapUv = rdGemNormalVs.xy * 0.5 + 0.5;
+            // MatCap lives in view space.  Mapping normal.xy directly made
+            // highlights stick to the model instead of the camera and erased
+            // the rotating/glassy response of Soul Gems.  Build the same
+            // camera-facing tangent basis used by conventional MatCap shading.
+            vec3 rdGemViewAxis = normalize(rdGemView);
+            vec3 rdGemMatCapX = vec3(rdGemViewAxis.z, 0.0, -rdGemViewAxis.x);
+            if (dot(rdGemMatCapX, rdGemMatCapX) < 0.0001) {
+                rdGemMatCapX = vec3(1.0, 0.0, 0.0);
+            } else {
+                rdGemMatCapX = normalize(rdGemMatCapX);
+            }
+            vec3 rdGemMatCapY = normalize(cross(rdGemViewAxis, rdGemMatCapX));
+            vec2 rdGemMatCapUv = clamp(
+                vec2(
+                    dot(rdGemMatCapX, rdGemNormalVs),
+                    dot(rdGemMatCapY, rdGemNormalVs)
+                ) * 0.495 + 0.5,
+                vec2(0.002),
+                vec2(0.998)
+            );
             vec3 rdGemMatCap = texture2D(tGemMatCap, rdGemMatCapUv).rgb;
             float rdGemMatCapLuma = dot(rdGemMatCap, vec3(0.2126, 0.7152, 0.0722));
             float rdGemMatCapMask = mix(
