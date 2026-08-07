@@ -1,1 +1,0 @@
-Trigger the same-repository draft PR validation that generates the exact current-JP stage 600 UV1 payload only if absent, production-builds it, persists it after all gates pass, and then revalidates the persisted candidate idempotently.
