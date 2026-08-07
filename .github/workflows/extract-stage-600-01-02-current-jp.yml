@@ -1,0 +1,36 @@
+name: Extract stage 600-01-02 current JP
+
+on:
+  pull_request:
+    branches:
+      - research/stage-608-official-material-properties-20260807
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: research/stage-600-01-02-current-jp-20260808
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install extractor dependencies
+        run: python -m pip install requests msgpack pycryptodome UnityPy lz4
+      - name: Extract current-JP 600-01-02 material properties
+        run: python scripts/extract_official_600_01_02_material_properties.py
+      - name: Persist evidence
+        shell: bash --noprofile --norc -e -o pipefail {0}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          test -s research/official-600-01-02-material-properties.json
+          git add research/official-600-01-02-material-properties.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: persist current-JP 600-01-02 materials'
+          git push origin HEAD:research/stage-600-01-02-current-jp-20260808
