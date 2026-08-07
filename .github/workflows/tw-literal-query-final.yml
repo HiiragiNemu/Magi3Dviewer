@@ -1,0 +1,158 @@
+name: Query Taiwan runtime literals
+run-name: Resolve crypto keys and So-net URLs through LibCpp2IL
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-literal-query-final.yml'
+      - 'analysis-requests/tw-literal-query-final.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-literal-query-final
+  cancel-in-progress: false
+
+jobs:
+  query:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '9.0.x'
+      - name: Download LibCpp2IL source and Taiwan client
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y unzip
+          mkdir -p work/source work/xapk work/unpacked work/query work/report
+          curl -fL --retry 5 --retry-all-errors -A 'Mozilla/5.0' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
+            < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test -s work/unpacked/lib/arm64-v8a/libil2cpp.so
+          test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
+          curl -fL --retry 5 --retry-all-errors \
+            'https://codeload.github.com/SamboyCoding/Cpp2IL/zip/3381214fc401d17053b2184dc2be63f3ca7e417c' \
+            -o work/source/cpp2il-source.zip
+          unzip -q work/source/cpp2il-source.zip -d work/source
+          source_root=$(find work/source -maxdepth 1 -type d -name 'Cpp2IL-*' -print -quit)
+          test -n "$source_root"
+          mv "$source_root" work/cpp2il-source
+      - name: Build literal query
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > work/query/LiteralQuery.csproj <<'EOF'
+          <Project Sdk="Microsoft.NET.Sdk">
+            <PropertyGroup>
+              <OutputType>Exe</OutputType>
+              <TargetFramework>net9.0</TargetFramework>
+              <ImplicitUsings>enable</ImplicitUsings>
+              <Nullable>enable</Nullable>
+            </PropertyGroup>
+            <ItemGroup>
+              <ProjectReference Include="../cpp2il-source/LibCpp2IL/LibCpp2IL.csproj" />
+            </ItemGroup>
+          </Project>
+          EOF
+          cat > work/query/Program.cs <<'EOF'
+          using System.Text.Json;
+          using AssetRipper.Primitives;
+          using LibCpp2IL;
+
+          if (args.Length != 3) throw new ArgumentException("binary metadata output");
+          LibCpp2IlMain.Settings.DisableMethodPointerMapping = true;
+          LibCpp2IlMain.Settings.DisableGlobalResolving = false;
+          LibCpp2IlMain.Settings.AllowManualMetadataAndCodeRegInput = false;
+          var context = LibCpp2IlContextBuilder.Build(
+              File.ReadAllBytes(args[0]),
+              File.ReadAllBytes(args[1]),
+              UnityVersion.Parse("2022.3.62f3"));
+          var slots = new Dictionary<string, ulong>
+          {
+              ["appCryptoHashKey"] = 0x9BCAF80,
+              ["appCryptoHashSalt"] = 0x9BCAF88,
+              ["appCryptoKeySeed"] = 0x9BCAF90,
+              ["appMsgPackCryptKey"] = 0x9BCB028,
+              ["msgPackDefaultCryptKey"] = 0x9BA5660,
+              ["systemMonitorInfo"] = 0x9B7A4F0,
+              ["sdkApiOrigin"] = 0x9B83D68,
+              ["sdkLoginSuffix"] = 0x9B83D50,
+              ["sdkRegisterSuffix"] = 0x9B84008,
+              ["sdkUserAgentHeader"] = 0x9B83D58,
+              ["productionDomainPart"] = 0x9B8CAC0,
+          };
+          var offsets = new long[] { 0, 0x4000, -0x4000 };
+          var values = new List<object>();
+          foreach (var pair in slots)
+          {
+              foreach (var delta in offsets)
+              {
+                  var address = unchecked((ulong)((long)pair.Value + delta));
+                  var usage = context.GetAnyGlobalByAddress(address);
+                  object? resolved = null;
+                  string? usageType = null;
+                  uint? rawValue = null;
+                  string? error = null;
+                  try
+                  {
+                      usageType = usage?.Type.ToString();
+                      rawValue = usage?.RawValue;
+                      resolved = usage?.Value;
+                  }
+                  catch (Exception ex)
+                  {
+                      error = ex.GetType().Name + ": " + ex.Message;
+                  }
+                  values.Add(new
+                  {
+                      name = pair.Key,
+                      baseAddress = $"0x{pair.Value:X}",
+                      delta,
+                      queryAddress = $"0x{address:X}",
+                      literal = context.GetLiteralByAddress(address),
+                      usageType,
+                      rawValue,
+                      resolved,
+                      error,
+                  });
+              }
+          }
+          File.WriteAllText(args[2], JsonSerializer.Serialize(values, new JsonSerializerOptions { WriteIndented = true }));
+          EOF
+          dotnet build work/query/LiteralQuery.csproj --configuration Release --framework net9.0 --nologo > work/report/build.log 2>&1
+          cat work/report/build.log
+      - name: Query exact runtime strings
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet work/query/bin/Release/net9.0/LiteralQuery.dll \
+            work/unpacked/lib/arm64-v8a/libil2cpp.so \
+            work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat \
+            work/report/runtime-literals.json \
+            > work/report/query.log 2>&1
+          test -s work/report/runtime-literals.json
+          cat work/report/runtime-literals.json
+      - name: Remove raw files and source tree
+        if: ${{ always() }}
+        run: |
+          rm -rf work/source work/xapk work/unpacked work/cpp2il-source work/query
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+      - name: Upload literal results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-literal-query-final
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
