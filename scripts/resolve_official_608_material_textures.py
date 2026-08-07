@@ -298,8 +298,21 @@ def main() -> int:
                 if resolved.get(key) == web_hash:
                     transform_match = transform
                     break
+        transform_match = None
+        if official_base and web_hash:
+            resolved = official_base.get('resolvedTexture', {})
+            for transform, key in (
+                ('identity', 'pixelSha256'),
+                ('flip-y', 'pixelSha256FlipY'),
+                ('flip-x', 'pixelSha256FlipX'),
+                ('flip-xy', 'pixelSha256FlipXY'),
+            ):
+                if resolved.get(key) == web_hash:
+                    transform_match = transform
+                    break
         comparisons.append({
             'material': name,
+            'officialToViewerExactTransformMatch': transform_match,
             'officialToViewerExactTransformMatch': transform_match,
             'officialToViewerExactTransformMatch': transform_match,
             'webBindingPresent': binding is not None,
@@ -321,6 +334,14 @@ def main() -> int:
     mismatches = [
         row for row in comparisons
         if row['baseMapPixelMatch'] is False
+    ]
+    orientation_only = [
+        row for row in mismatches
+        if row.get('officialToViewerExactTransformMatch') in {'flip-y', 'flip-x', 'flip-xy'}
+    ]
+    content_mismatches = [
+        row for row in mismatches
+        if row.get('officialToViewerExactTransformMatch') is None
     ]
     orientation_only = [
         row for row in mismatches

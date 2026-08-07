@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "source": "official-jp-current-608-15-bundle-closure-bounded-animation-audit",
   "metadata": {
     "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
@@ -12,9 +12,7 @@
       "name": "3d_608_00_00_001",
       "pathId": 85,
       "label": "",
-      "revision": "vR1d",
       "dependencies": "shader/common/texture/cloud_noise,texture/bg/794f71efa5afc23468f2a73c8b563dc8,texture/bg/7c22553094ea521428b51081ae85d860,texture/bg/4609884769b92f6409f2592fe0524817,shader/bg_uber,texture/bg/efd676b5b84a41d4ebf49af3a5680084,texture/bg/5bec58544f3f8d34994548212c9a6405,texture/bg/12b6c395b65398146b34eacb3110054d,shader/common/texture/simple_noise,texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc,texture/bg/90d984104c9b6f646bc4139b675d732f,texture/bg/392aec77248a2064eaea814e641f6183,texture/bg/e99618be318e5644e84edc49bec76510,texture/bg/186adf1125c7ab4468afb72c4f957424",
-      "size": 5836492,
       "resolvedPath": "battle/stage/bg_",
       "keys": [
         "cryptoKey",
@@ -23,9 +21,7 @@
         "label",
         "language",
         "name",
-        "pathId",
-        "revision",
-        "size"
+        "pathId"
       ],
       "fullPath": "battle/stage/bg_3d_608_00_00_001",
       "dependencyValueTypes": null
@@ -34,8 +30,9 @@
     "dependencyCount": 14
   },
   "animationClipCount": 2,
-  "focusedAnimationClipCount": 2,
   "animatorCount": 14,
+  "legacyAnimationCount": 13,
+  "animatorControllerCount": 2,
   "playableDirectorCount": 0,
   "typeCounts": {
     "Animation": 13,
@@ -61,7 +58,7 @@
     "Texture2D": 17,
     "Transform": 359
   },
-  "focusedAnimationClips": [
+  "animationClips": [
     {
       "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
@@ -88,6 +85,962 @@
         {
           "jsonPath": "m_Name",
           "value": "bg3d608_00_blue_FishAnimation"
+        },
+        {
+          "jsonPath": "m_MuscleClipSize",
+          "value": 10132
+        },
+        {
+          "jsonPath": "m_MuscleClip",
+          "m_StartTime": 0.0,
+          "m_StopTime": 4.0,
+          "m_OrientationOffsetY": 0.0,
+          "m_Level": 0.0,
+          "m_CycleOffset": 0.0,
+          "m_AverageAngularSpeed": 0.0,
+          "m_Mirror": false,
+          "m_LoopTime": true,
+          "m_LoopBlend": false,
+          "m_LoopBlendOrientation": false,
+          "m_LoopBlendPositionY": false,
+          "m_LoopBlendPositionXZ": false,
+          "m_StartAtOrigin": true,
+          "m_KeepOriginalOrientation": false,
+          "m_KeepOriginalPositionY": true,
+          "m_KeepOriginalPositionXZ": false,
+          "m_HeightFromFeet": false
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtPosition",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtPosition.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtPosition.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtPosition.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtWeight",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtWeight.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtWeight.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtWeight.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtWeight.w",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0]",
+          "m_WeightT": 0.0,
+          "m_WeightR": 0.0,
+          "m_HintWeightT": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_WeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_WeightR",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_HintT",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_HintT.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_HintT.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_HintT.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_HintWeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1]",
+          "m_WeightT": 0.0,
+          "m_WeightR": 0.0,
+          "m_HintWeightT": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_WeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_WeightR",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_HintT",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_HintT.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_HintT.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_HintT.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_HintWeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2]",
+          "m_WeightT": 0.0,
+          "m_WeightR": 0.0,
+          "m_HintWeightT": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_WeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_WeightR",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_HintT",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_HintT.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_HintT.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_HintT.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_HintWeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3]",
+          "m_WeightT": 0.0,
+          "m_WeightR": 0.0,
+          "m_HintWeightT": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_WeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_WeightR",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_HintT",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_HintT.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_HintT.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_HintT.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_HintWeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose",
+          "m_Override": 0.0,
+          "m_CloseOpen": 0.0,
+          "m_InOut": 0.0,
+          "m_Grab": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[0]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[1]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[2]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[3]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[4]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[5]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[6]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[7]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[8]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[9]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[10]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[11]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[12]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[13]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[14]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[15]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[16]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[17]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[18]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[19]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_Override",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_CloseOpen",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_InOut",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_Grab",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose",
+          "m_Override": 0.0,
+          "m_CloseOpen": 0.0,
+          "m_InOut": 0.0,
+          "m_Grab": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[0]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[1]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[2]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[3]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[4]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[5]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[6]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[7]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[8]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[9]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[10]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[11]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[12]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[13]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[14]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[15]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[16]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[17]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[18]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[19]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_Override",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_CloseOpen",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_InOut",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_Grab",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[0]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[1]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[2]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[3]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[4]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[5]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[6]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[7]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[8]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[9]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[10]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[11]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[12]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[13]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[14]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[15]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[16]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[17]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[18]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[19]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[20]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[21]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[22]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[23]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[24]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[25]",
+          "value": 0.0
         }
       ]
     },
@@ -117,30 +1070,964 @@
         {
           "jsonPath": "m_Name",
           "value": "bg3d608_00_blue_Fish_RotateAnimation"
+        },
+        {
+          "jsonPath": "m_MuscleClipSize",
+          "value": 2764
+        },
+        {
+          "jsonPath": "m_MuscleClip",
+          "m_StartTime": 0.0,
+          "m_StopTime": 1.0,
+          "m_OrientationOffsetY": 0.0,
+          "m_Level": 0.0,
+          "m_CycleOffset": 0.0,
+          "m_AverageAngularSpeed": 0.0,
+          "m_Mirror": false,
+          "m_LoopTime": true,
+          "m_LoopBlend": false,
+          "m_LoopBlendOrientation": false,
+          "m_LoopBlendPositionY": false,
+          "m_LoopBlendPositionXZ": false,
+          "m_StartAtOrigin": true,
+          "m_KeepOriginalOrientation": false,
+          "m_KeepOriginalPositionY": true,
+          "m_KeepOriginalPositionXZ": false,
+          "m_HeightFromFeet": false
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RootX.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtPosition",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtPosition.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtPosition.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtPosition.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtWeight",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtWeight.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtWeight.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtWeight.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LookAtWeight.w",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0]",
+          "m_WeightT": 0.0,
+          "m_WeightR": 0.0,
+          "m_HintWeightT": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_X.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_WeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_WeightR",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_HintT",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_HintT.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_HintT.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_HintT.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[0].m_HintWeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1]",
+          "m_WeightT": 0.0,
+          "m_WeightR": 0.0,
+          "m_HintWeightT": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_X.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_WeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_WeightR",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_HintT",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_HintT.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_HintT.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_HintT.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[1].m_HintWeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2]",
+          "m_WeightT": 0.0,
+          "m_WeightR": 0.0,
+          "m_HintWeightT": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_X.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_WeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_WeightR",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_HintT",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_HintT.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_HintT.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_HintT.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[2].m_HintWeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3]",
+          "m_WeightT": 0.0,
+          "m_WeightR": 0.0,
+          "m_HintWeightT": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_X.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_WeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_WeightR",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_HintT",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_HintT.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_HintT.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_HintT.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_GoalArray[3].m_HintWeightT",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose",
+          "m_Override": 0.0,
+          "m_CloseOpen": 0.0,
+          "m_InOut": 0.0,
+          "m_Grab": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_GrabX.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[0]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[1]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[2]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[3]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[4]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[5]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[6]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[7]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[8]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[9]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[10]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[11]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[12]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[13]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[14]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[15]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[16]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[17]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[18]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_DoFArray[19]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_Override",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_CloseOpen",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_InOut",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_LeftHandPose.m_Grab",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose",
+          "m_Override": 0.0,
+          "m_CloseOpen": 0.0,
+          "m_InOut": 0.0,
+          "m_Grab": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX"
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.t",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.t.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.t.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.t.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.q",
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.q.x",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.q.y",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.q.z",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.q.w",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.s",
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.s.x",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.s.y",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_GrabX.s.z",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[0]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[1]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[2]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[3]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[4]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[5]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[6]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[7]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[8]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[9]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[10]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[11]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[12]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[13]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[14]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[15]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[16]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[17]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[18]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_DoFArray[19]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_Override",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_CloseOpen",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_InOut",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_RightHandPose.m_Grab",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[0]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[1]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[2]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[3]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[4]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[5]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[6]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[7]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[8]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[9]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[10]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[11]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[12]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[13]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[14]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[15]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[16]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[17]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[18]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[19]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[20]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[21]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[22]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[23]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[24]",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_MuscleClip.m_DeltaPose.m_DoFArray[25]",
+          "value": 0.0
         }
       ]
-    }
-  ],
-  "allAnimationClips": [
-    {
-      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
-      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
-      "pathId": "2684642024606766010",
-      "name": "bg3d608_00_blue_FishAnimation",
-      "sampleRate": 30.0,
-      "wrapMode": 0,
-      "legacy": false,
-      "compressed": false
-    },
-    {
-      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
-      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
-      "pathId": "6827708826499008501",
-      "name": "bg3d608_00_blue_Fish_RotateAnimation",
-      "sampleRate": 60.0,
-      "wrapMode": 0,
-      "legacy": false,
-      "compressed": false
     }
   ],
   "animators": [
@@ -149,10 +2036,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "-6956890630890994406",
       "name": "",
+      "gameObjectPathId": "3477213939316707228",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-6459674105681624706"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -161,10 +2071,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "-6050283805682228920",
       "name": "",
+      "gameObjectPathId": "-5200768649493806859",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_006/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -173,10 +2106,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "-6016629112425222986",
       "name": "",
+      "gameObjectPathId": "-5859436925455015367",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_009/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -185,10 +2141,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "-3431411410230894173",
       "name": "",
+      "gameObjectPathId": "869753649786994214",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_001/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -197,10 +2176,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "-1759418740517493184",
       "name": "",
+      "gameObjectPathId": "7055052880652246534",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_004/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -209,10 +2211,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "-1431669467788784909",
       "name": "",
+      "gameObjectPathId": "7035282492237054894",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_010/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -221,10 +2246,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "-228146860041696626",
       "name": "",
+      "gameObjectPathId": "4208511514214893243",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp/bg3d608_00_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -233,10 +2281,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "3869081000987277117",
       "name": "",
+      "gameObjectPathId": "-4349266016180881204",
+      "hierarchyPath": "bg_3d_608_00_00_001/Global Volume",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "0"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -245,10 +2316,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "5058041559062782444",
       "name": "",
+      "gameObjectPathId": "-4483739852579148329",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_005/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -257,10 +2351,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "5165498737366280478",
       "name": "",
+      "gameObjectPathId": "-921477508174448700",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_008/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -269,10 +2386,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "5287611618059090928",
       "name": "",
+      "gameObjectPathId": "-3850452176268441413",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_011/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -281,10 +2421,33 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "6331919082090758306",
       "name": "",
+      "gameObjectPathId": "-8938518877495254321",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_007/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
           "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
         }
       ]
     },
@@ -293,6 +2456,88 @@
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
       "pathId": "6550541916261909555",
       "name": "",
+      "gameObjectPathId": "7930185312942637217",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_002/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "8879519179263967025",
+      "name": "",
+      "gameObjectPathId": "7249654986810043357",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_003/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "controller": {
+        "fileId": 0,
+        "pathId": "-1416377339634423174"
+      },
+      "avatar": {
+        "fileId": 0,
+        "pathId": "0"
+      },
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        },
+        {
+          "jsonPath": "m_ApplyRootMotion",
+          "value": false
+        },
+        {
+          "jsonPath": "m_AllowConstantClipSamplingOptimization",
+          "value": true
+        },
+        {
+          "jsonPath": "m_KeepAnimatorStateOnDisable",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "legacyAnimations": [
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-8085367925908336959",
+      "name": "",
+      "gameObjectPathId": "7249654986810043357",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_003/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
@@ -303,8 +2548,260 @@
     {
       "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
       "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
-      "pathId": "8879519179263967025",
+      "pathId": "-6668224047576927938",
       "name": "",
+      "gameObjectPathId": "-5859436925455015367",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_009/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-5523534231602671596",
+      "name": "",
+      "gameObjectPathId": "-921477508174448700",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_008/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-711039801686663308",
+      "name": "",
+      "gameObjectPathId": "7930185312942637217",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_002/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "892762465379962946",
+      "name": "",
+      "gameObjectPathId": "4208511514214893243",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp/bg3d608_00_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "1172527328132728863",
+      "name": "",
+      "gameObjectPathId": "7055052880652246534",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_004/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "2880826994282466893",
+      "name": "",
+      "gameObjectPathId": "869753649786994214",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_001/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "3412606999688989602",
+      "name": "",
+      "gameObjectPathId": "-5200768649493806859",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_006/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "3845712071005924117",
+      "name": "",
+      "gameObjectPathId": "3477213939316707228",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "6827708826499008501"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "4517872548658948335",
+      "name": "",
+      "gameObjectPathId": "-8938518877495254321",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_007/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "5395009929521645986",
+      "name": "",
+      "gameObjectPathId": "-3850452176268441413",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_011/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "6871412815671865151",
+      "name": "",
+      "gameObjectPathId": "-4483739852579148329",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_005/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "8882569324097356065",
+      "name": "",
+      "gameObjectPathId": "7035282492237054894",
+      "hierarchyPath": "bg_3d_608_00_00_001/bg3d608_00_blue_Fish/bg3d6020_03_blue_Fish_grp_010/bg3d6020_03_blue_Fish_grp",
+      "enabled": 1,
+      "playAutomatically": true,
+      "wrapMode": 0,
+      "defaultAnimation": {
+        "fileId": 0,
+        "pathId": "2684642024606766010"
+      },
+      "animations": [],
       "focusMatches": [
         {
           "jsonPath": "m_Enabled",
@@ -313,7 +2810,555 @@
       ]
     }
   ],
+  "animatorControllers": [
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-6459674105681624706",
+      "name": "bg3d608_00_blue_Fish_Rotate_geo_AnimationController",
+      "motionAndStatePointers": [
+        {
+          "jsonPath": "m_AnimationClips[0]",
+          "fileId": 0,
+          "pathId": "6827708826499008501"
+        }
+      ],
+      "focusMatches": [
+        {
+          "jsonPath": "$",
+          "m_Name": "bg3d608_00_blue_Fish_Rotate_geo_AnimationController",
+          "m_ControllerSize": 888,
+          "m_MultiThreadedStateMachine": true
+        },
+        {
+          "jsonPath": "m_Name",
+          "value": "bg3d608_00_blue_Fish_Rotate_geo_AnimationController"
+        },
+        {
+          "jsonPath": "m_Controller.m_LayerArray[0].data.m_StateMachineIndex",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_LayerArray[0].data.m_StateMachineSynchronizedLayerIndex",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data",
+          "m_DefaultState": 0,
+          "m_SynchronizedLayerCount": 1
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data",
+          "m_NameID": 498578376,
+          "m_PathID": 1360692262,
+          "m_FullPathID": 1360692262,
+          "m_TagID": 0,
+          "m_SpeedParamID": 0,
+          "m_MirrorParamID": 0,
+          "m_CycleOffsetParamID": 0,
+          "m_TimeParamID": 0,
+          "m_Speed": 0.0020000000949949026,
+          "m_CycleOffset": 0.0,
+          "m_IKOnFeet": false,
+          "m_WriteDefaultValues": true,
+          "m_Loop": true,
+          "m_Mirror": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantIndexArray[0]",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data",
+          "m_BlendType": 0,
+          "m_BlendEventID": 4294967295,
+          "m_BlendEventYID": 4294967295,
+          "m_ClipID": 0,
+          "m_Duration": 1.0,
+          "m_CycleOffset": 0.0,
+          "m_Mirror": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendType",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendEventID",
+          "value": 4294967295
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendEventYID",
+          "value": 4294967295
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Blend1dData"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Blend1dData.data"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Blend2dData"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Blend2dData.data"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendDirectData"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendDirectData.data",
+          "m_NormalizedBlendValues": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendDirectData.data.m_NormalizedBlendValues",
+          "value": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_ClipID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Duration",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_CycleOffset",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Mirror",
+          "value": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_NameID",
+          "value": 498578376
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_PathID",
+          "value": 1360692262
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_FullPathID",
+          "value": 1360692262
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_TagID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_SpeedParamID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_MirrorParamID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_CycleOffsetParamID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_TimeParamID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_Speed",
+          "value": 0.0020000000949949026
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_CycleOffset",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_IKOnFeet",
+          "value": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_WriteDefaultValues",
+          "value": true
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_Loop",
+          "value": true
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_Mirror",
+          "value": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data",
+          "m_FullPathID": 756556552,
+          "m_IsEntry": true
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data.m_TransitionConstantArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data.m_TransitionConstantArray[0].data",
+          "m_Destination": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data.m_TransitionConstantArray[0].data.m_Destination",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data.m_FullPathID",
+          "value": 756556552
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data.m_IsEntry",
+          "value": true
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data",
+          "m_FullPathID": 756556552,
+          "m_IsEntry": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data.m_TransitionConstantArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data.m_TransitionConstantArray[0].data",
+          "m_Destination": 30000
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data.m_TransitionConstantArray[0].data.m_Destination",
+          "value": 30000
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data.m_FullPathID",
+          "value": 756556552
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data.m_IsEntry",
+          "value": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_DefaultState",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SynchronizedLayerCount",
+          "value": 1
+        },
+        {
+          "jsonPath": "m_AnimationClips[0]",
+          "m_FileID": 0,
+          "m_PathID": 6827708826499008501
+        },
+        {
+          "jsonPath": "m_AnimationClips[0].m_FileID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_AnimationClips[0].m_PathID",
+          "value": 6827708826499008501
+        },
+        {
+          "jsonPath": "m_StateMachineBehaviourVectorDescription"
+        },
+        {
+          "jsonPath": "m_MultiThreadedStateMachine",
+          "value": true
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-1416377339634423174",
+      "name": "bg3d608_00_blue_FishAnimationController",
+      "motionAndStatePointers": [
+        {
+          "jsonPath": "m_AnimationClips[0]",
+          "fileId": 0,
+          "pathId": "2684642024606766010"
+        }
+      ],
+      "focusMatches": [
+        {
+          "jsonPath": "$",
+          "m_Name": "bg3d608_00_blue_FishAnimationController",
+          "m_ControllerSize": 888,
+          "m_MultiThreadedStateMachine": true
+        },
+        {
+          "jsonPath": "m_Name",
+          "value": "bg3d608_00_blue_FishAnimationController"
+        },
+        {
+          "jsonPath": "m_Controller.m_LayerArray[0].data.m_StateMachineIndex",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_LayerArray[0].data.m_StateMachineSynchronizedLayerIndex",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data",
+          "m_DefaultState": 0,
+          "m_SynchronizedLayerCount": 1
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data",
+          "m_NameID": 1154784000,
+          "m_PathID": 3172610072,
+          "m_FullPathID": 3172610072,
+          "m_TagID": 0,
+          "m_SpeedParamID": 0,
+          "m_MirrorParamID": 0,
+          "m_CycleOffsetParamID": 0,
+          "m_TimeParamID": 0,
+          "m_Speed": 0.550000011920929,
+          "m_CycleOffset": 0.0,
+          "m_IKOnFeet": false,
+          "m_WriteDefaultValues": true,
+          "m_Loop": true,
+          "m_Mirror": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantIndexArray[0]",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data",
+          "m_BlendType": 0,
+          "m_BlendEventID": 4294967295,
+          "m_BlendEventYID": 4294967295,
+          "m_ClipID": 0,
+          "m_Duration": 1.0,
+          "m_CycleOffset": 0.0,
+          "m_Mirror": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendType",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendEventID",
+          "value": 4294967295
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendEventYID",
+          "value": 4294967295
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Blend1dData"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Blend1dData.data"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Blend2dData"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Blend2dData.data"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendDirectData"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendDirectData.data",
+          "m_NormalizedBlendValues": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_BlendDirectData.data.m_NormalizedBlendValues",
+          "value": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_ClipID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Duration",
+          "value": 1.0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_CycleOffset",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_BlendTreeConstantArray[0].data.m_NodeArray[0].data.m_Mirror",
+          "value": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_NameID",
+          "value": 1154784000
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_PathID",
+          "value": 3172610072
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_FullPathID",
+          "value": 3172610072
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_TagID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_SpeedParamID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_MirrorParamID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_CycleOffsetParamID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_TimeParamID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_Speed",
+          "value": 0.550000011920929
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_CycleOffset",
+          "value": 0.0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_IKOnFeet",
+          "value": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_WriteDefaultValues",
+          "value": true
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_Loop",
+          "value": true
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_StateConstantArray[0].data.m_Mirror",
+          "value": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data",
+          "m_FullPathID": 756556552,
+          "m_IsEntry": true
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data.m_TransitionConstantArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data.m_TransitionConstantArray[0].data",
+          "m_Destination": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data.m_TransitionConstantArray[0].data.m_Destination",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data.m_FullPathID",
+          "value": 756556552
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[0].data.m_IsEntry",
+          "value": true
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data",
+          "m_FullPathID": 756556552,
+          "m_IsEntry": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data.m_TransitionConstantArray[0]"
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data.m_TransitionConstantArray[0].data",
+          "m_Destination": 30000
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data.m_TransitionConstantArray[0].data.m_Destination",
+          "value": 30000
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data.m_FullPathID",
+          "value": 756556552
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SelectorStateConstantArray[1].data.m_IsEntry",
+          "value": false
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_DefaultState",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_Controller.m_StateMachineArray[0].data.m_SynchronizedLayerCount",
+          "value": 1
+        },
+        {
+          "jsonPath": "m_AnimationClips[0]",
+          "m_FileID": 0,
+          "m_PathID": 2684642024606766010
+        },
+        {
+          "jsonPath": "m_AnimationClips[0].m_FileID",
+          "value": 0
+        },
+        {
+          "jsonPath": "m_AnimationClips[0].m_PathID",
+          "value": 2684642024606766010
+        },
+        {
+          "jsonPath": "m_StateMachineBehaviourVectorDescription"
+        },
+        {
+          "jsonPath": "m_MultiThreadedStateMachine",
+          "value": true
+        }
+      ]
+    }
+  ],
   "playableDirectors": [],
-  "interpretation": "This is bounded current-JP serialized AnimationClip/Animator/PlayableDirector evidence. Focus matches only expose paths/attributes and a small keyframe prefix for 608 red/blue, violin/chair/music and visibility/material-related bindings. It does not infer runtime state for hashed/compressed bindings that cannot yet be mapped to hierarchy paths.",
-  "privacyBoundary": "Raw current-JP AssetBundles are transient. No complete dump or AssetBundle bytes are persisted."
+  "interpretation": "Exact current-JP serialized ownership and pointer evidence for AnimationClip, Animation, Animator and AnimatorController across the 15-bundle 608 closure. Hierarchy paths are resolved for root-stage components. Bounded focus/keyframe snippets do not infer hashed compressed-curve semantics.",
+  "privacyBoundary": "Raw current-JP AssetBundles remain transient; no complete dump is persisted."
 }
