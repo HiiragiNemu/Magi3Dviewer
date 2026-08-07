@@ -1,0 +1,1352 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "61ad830ca038a9efd58e67170a61c85e",
+  "unityVersion": "2022.3.62f2",
+  "stageCurrentStatus": {
+    "expected": true,
+    "status": "recovered",
+    "clipNames": [
+      "bg3d600A_01_02_circleA",
+      "bg3d600A_01_02_window",
+      "bg3d600A_01_02_window02",
+      "bg3d600A_01_02_circleCD",
+      "bg3d600A_01_02_circleE"
+    ],
+    "missing": [],
+    "evidence": [
+      "3 Animator components",
+      "1 AnimatorController with five active default layers",
+      "5 looping AnimationClip assets exported into the web FBX",
+      "Four official 8 FPS flipbook materials are active on the shared runtime clock"
+    ]
+  },
+  "materialCount": 11,
+  "materials": [
+    {
+      "name": "mt_bg3d600A_01_02_adelbertAAlpha",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_FLIPBOOK"
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 1.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend2ndTexScale": 1.0,
+        "_BlendTexScale": 1.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NormalStrength": 1.0,
+        "_ReceiveShadows": 0.0,
+        "_ReflectionValue": 1.0,
+        "_Smoothness": 0.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseFlipbook": 1.0,
+        "_UseMatCap": 0.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {
+        "_BaseMap": {
+          "fileId": 7,
+          "pathId": 409183385978408404,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "fileId": 7,
+          "pathId": 409183385978408404,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "currentWebBinding": {
+        "materialName": "mt_bg3d600A_01_02_adelbertAAlpha",
+        "materialPattern": "^mt_bg3d600A_01_02_adelbertAAlpha(?:\\.\\d+)?$",
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_adelbertAlpha_col.png",
+        "alphaTest": 0.5,
+        "alphaToCoverage": true,
+        "castShadow": false,
+        "receiveShadow": false,
+        "atlas": {
+          "columns": 5,
+          "rows": 3,
+          "offset": 0,
+          "framesPerSecond": 8
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_adelbertBAlpha",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_FLIPBOOK"
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 1.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend2ndTexScale": 1.0,
+        "_BlendTexScale": 1.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 3.0,
+        "_FogInfluence": 1.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NormalStrength": 1.0,
+        "_ReceiveShadows": 0.0,
+        "_ReflectionValue": 1.0,
+        "_Smoothness": 0.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseFlipbook": 1.0,
+        "_UseMatCap": 0.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {
+        "_BaseMap": {
+          "fileId": 7,
+          "pathId": 409183385978408404,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "fileId": 7,
+          "pathId": 409183385978408404,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "currentWebBinding": {
+        "materialName": "mt_bg3d600A_01_02_adelbertBAlpha",
+        "materialPattern": "^mt_bg3d600A_01_02_adelbertBAlpha(?:\\.\\d+)?$",
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_adelbertAlpha_col.png",
+        "alphaTest": 0.5,
+        "alphaToCoverage": true,
+        "castShadow": false,
+        "receiveShadow": false,
+        "atlas": {
+          "columns": 5,
+          "rows": 3,
+          "offset": 3,
+          "framesPerSecond": 8
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_anthonyAAlpha",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_FLIPBOOK"
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 1.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend2ndTexScale": 1.0,
+        "_BlendTexScale": 1.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NormalStrength": 1.0,
+        "_ReceiveShadows": 0.0,
+        "_ReflectionValue": 1.0,
+        "_Smoothness": 0.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseFlipbook": 1.0,
+        "_UseMatCap": 0.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {
+        "_BaseMap": {
+          "fileId": 5,
+          "pathId": -3235572434319895935,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "fileId": 5,
+          "pathId": -3235572434319895935,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "currentWebBinding": {
+        "materialName": "mt_bg3d600A_01_02_anthonyAAlpha",
+        "materialPattern": "^mt_bg3d600A_01_02_anthonyAAlpha(?:\\.\\d+)?$",
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_03_anthonyAlpha_col.png",
+        "alphaTest": 0.5,
+        "alphaToCoverage": true,
+        "castShadow": false,
+        "receiveShadow": false,
+        "atlas": {
+          "columns": 6,
+          "rows": 3,
+          "offset": 0,
+          "framesPerSecond": 8
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_anthonyBAlpha",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_FLIPBOOK"
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 1.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend2ndTexScale": 1.0,
+        "_BlendTexScale": 1.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 1.0,
+        "_FogInfluence": 1.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NormalStrength": 1.0,
+        "_ReceiveShadows": 0.0,
+        "_ReflectionValue": 1.0,
+        "_Smoothness": 0.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseFlipbook": 1.0,
+        "_UseMatCap": 0.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {
+        "_BaseMap": {
+          "fileId": 5,
+          "pathId": -3235572434319895935,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "fileId": 5,
+          "pathId": -3235572434319895935,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "currentWebBinding": {
+        "materialName": "mt_bg3d600A_01_02_anthonyBAlpha",
+        "materialPattern": "^mt_bg3d600A_01_02_anthonyBAlpha(?:\\.\\d+)?$",
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_03_anthonyAlpha_col.png",
+        "alphaTest": 0.5,
+        "alphaToCoverage": true,
+        "castShadow": false,
+        "receiveShadow": false,
+        "atlas": {
+          "columns": 6,
+          "rows": 3,
+          "offset": 1,
+          "framesPerSecond": 8
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_ground",
+      "renderQueue": 2000,
+      "validKeywords": [
+        "_METALLICSPECGLOSSMAP",
+        "_VERTEX_COLOR_BLEND"
+      ],
+      "floats": {
+        "_AlphaClip": 0.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend2ndTexScale": 1.0,
+        "_BlendTexScale": 1.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NormalStrength": 2.0,
+        "_ReceiveShadows": 1.0,
+        "_ReflectionValue": 1.0,
+        "_Smoothness": 0.699999988079071,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 1.0,
+        "_Unlitness": 0.0,
+        "_UseFlipbook": 0.0,
+        "_UseMatCap": 0.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {
+        "_BaseMap": {
+          "fileId": 11,
+          "pathId": 4898203225825602498,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "fileId": 8,
+          "pathId": 5168115229173093267,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "fileId": 11,
+          "pathId": 4898203225825602498,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "currentWebBinding": {
+        "materialName": "mt_bg3d600A_01_02_ground",
+        "materialPattern": "^mt_bg3d600A_01_02_ground(?:\\.\\d+)?$",
+        "shading": "lit",
+        "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_03_groundA_col.png",
+        "blendMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_03_groundB_col.png",
+        "normalMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_03_groundB_nml.png",
+        "smoothnessMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_01_ground_smoothness.png",
+        "vertexColorBlend": true,
+        "smoothness": 0.7,
+        "smoothnessChannel": "a",
+        "metallic": 0,
+        "metallicFromSmoothnessMap": true,
+        "normalScale": 2,
+        "unlitness": 0,
+        "castShadow": false,
+        "receiveShadow": true
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_propA",
+      "renderQueue": 2000,
+      "validKeywords": [],
+      "floats": {
+        "_AlphaClip": 0.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend2ndTexScale": 1.0,
+        "_BlendTexScale": 1.0,
+        "_CastShadows": 1.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NormalStrength": 1.0,
+        "_ReceiveShadows": 1.0,
+        "_ReflectionValue": 1.0,
+        "_Smoothness": 0.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 0.4000000059604645,
+        "_UseFlipbook": 0.0,
+        "_UseMatCap": 0.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {
+        "_BaseMap": {
+          "fileId": 2,
+          "pathId": 3201510656079983699,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "fileId": 2,
+          "pathId": 3201510656079983699,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "currentWebBinding": {
+        "materialName": "mt_bg3d600A_01_02_propA",
+        "materialPattern": "^mt_bg3d600A_01_02_propA(?:\\.\\d+)?$",
+        "shading": "lit",
+        "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_propAlpha_col.png",
+        "normalMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_propAlpha_nml.png",
+        "smoothness": 0,
+        "normalScale": 1,
+        "unlitness": 0.4,
+        "castShadow": true,
+        "receiveShadow": true
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_propBAlpha",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 1.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend2ndTexScale": 1.0,
+        "_BlendTexScale": 1.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NormalStrength": 1.0,
+        "_ReceiveShadows": 0.0,
+        "_ReflectionValue": 1.0,
+        "_Smoothness": 0.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseFlipbook": 0.0,
+        "_UseMatCap": 0.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {
+        "_BaseMap": {
+          "fileId": 2,
+          "pathId": 3201510656079983699,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "fileId": 2,
+          "pathId": 3201510656079983699,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "currentWebBinding": {
+        "materialName": "mt_bg3d600A_01_02_propBAlpha",
+        "materialPattern": "^mt_bg3d600A_01_02_propBAlpha(?:\\.\\d+)?$",
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_propAlpha_col.png",
+        "alphaTest": 0.5,
+        "alphaToCoverage": true,
+        "castShadow": false,
+        "receiveShadow": false
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_propC",
+      "renderQueue": 2000,
+      "validKeywords": [
+        "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+      ],
+      "floats": {
+        "_AlphaClip": 0.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend2ndTexScale": 1.0,
+        "_BlendTexScale": 1.0,
+        "_CastShadows": 1.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NormalStrength": 1.0,
+        "_ReceiveShadows": 1.0,
+        "_ReflectionValue": 1.0,
+        "_Smoothness": 1.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 0.4000000059604645,
+        "_UseFlipbook": 0.0,
+        "_UseMatCap": 1.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {
+        "_BaseMap": {
+          "fileId": 2,
+          "pathId": 3201510656079983699,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "fileId": 2,
+          "pathId": 3201510656079983699,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "fileId": 4,
+          "pathId": 6349455136871002801,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "currentWebBinding": {
+        "materialName": "mt_bg3d600A_01_02_propC",
+        "materialPattern": "^mt_bg3d600A_01_02_propC(?:\\.\\d+)?$",
+        "shading": "lit",
+        "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_propAlpha_col.png",
+        "normalMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_propAlpha_nml.png",
+        "matCapMapUrl": "./stages/official/battle-600-00-01-002/matcap.png",
+        "matCapIntensity": 1,
+        "smoothness": 1,
+        "normalScale": 1,
+        "unlitness": 0.4,
+        "castShadow": true,
+        "receiveShadow": true
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_rockAlpha",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_METALLICSPECGLOSSMAP"
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 1.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend2ndTexScale": 1.0,
+        "_BlendTexScale": 1.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NormalStrength": 1.0,
+        "_ReceiveShadows": 1.0,
+        "_ReflectionValue": 1.0,
+        "_Smoothness": 0.5,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 0.0,
+        "_UseFlipbook": 0.0,
+        "_UseMatCap": 0.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {
+        "_BaseMap": {
+          "fileId": 12,
+          "pathId": 167819843701094973,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "fileId": 12,
+          "pathId": 167819843701094973,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "currentWebBinding": {
+        "materialName": "mt_bg3d600A_01_02_rockAlpha",
+        "materialPattern": "^mt_bg3d600A_01_02_rockAlpha(?:\\.\\d+)?$",
+        "shading": "lit",
+        "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_rockAlpha_col.png",
+        "normalMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_02_rockAlpha_nml.png",
+        "smoothnessMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_01_ground_smoothness.png",
+        "smoothness": 0.5,
+        "smoothnessChannel": "a",
+        "normalScale": 1,
+        "alphaTest": 0.5,
+        "alphaToCoverage": true,
+        "castShadow": false,
+        "receiveShadow": true
+      }
+    },
+    {
+      "name": "mt_bg3d600A_01_02_sky",
+      "renderQueue": 2000,
+      "validKeywords": [],
+      "floats": {
+        "_AlphaClip": 0.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend2ndTexScale": 1.0,
+        "_BlendTexScale": 1.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 0.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NormalStrength": 1.0,
+        "_ReceiveShadows": 1.0,
+        "_ReflectionValue": 1.0,
+        "_Smoothness": 0.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseFlipbook": 0.0,
+        "_UseMatCap": 0.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {
+        "_BaseMap": {
+          "fileId": 6,
+          "pathId": -5600093076400639242,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_Blend2ndTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_BlendTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MainTex": {
+          "fileId": 6,
+          "pathId": -5600093076400639242,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      },
+      "currentWebBinding": {
+        "materialName": "mt_bg3d600A_01_02_sky",
+        "materialPattern": "^mt_bg3d600A_01_02_sky(?:\\.\\d+)?$",
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-600-00-01-002/bg3d600A_01_01_sky_col.png",
+        "castShadow": false,
+        "receiveShadow": false
+      }
+    },
+    {
+      "name": "SkyBox_bg3d600A_01_02",
+      "renderQueue": -1,
+      "validKeywords": [],
+      "floats": {
+        "_AlphaClip": 0.0,
+        "_AlphaToMask": 0.0,
+        "_Cull": 2.0,
+        "_DstBlend": 0.0,
+        "_Metallic": 0.0,
+        "_ReceiveShadows": 1.0,
+        "_Smoothness": 0.5,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_ZWrite": 1.0
+      },
+      "colors": {
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        }
+      },
+      "textures": {},
+      "currentWebBinding": null
+    }
+  ]
+}
