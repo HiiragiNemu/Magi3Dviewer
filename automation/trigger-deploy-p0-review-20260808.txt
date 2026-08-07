@@ -1,5 +1,6 @@
-Deploy preview/p0-20260808 verbatim after the third 2026-08-08 P0 runtime correction batch.
-Expected preview source at trigger time: 49de8156b62a32869558d7ff87148de2c7f3e6f5 or a fast-forward descendant.
-Visible targets already in preview: stage 608 violin 4x4 / 8 FPS flipbook reconstruction; current-JP 608 opaque/transparent, Cull, AlphaToMask and ZWrite states; current-JP ReDrive MatCap blend; current-JP Fresnel threshold/mask/cubic arithmetic; current-JP ReDrive self-shadow receiver using comparison sampling, depth bias, two-unit range fade and NdotLFix.
+Deploy preview/p0-20260808 verbatim after the Stage 600 current-JP UV1 baked-lightmap recovery batch.
+Expected preview source: ecfbfefd96372b0fff9d782f3ab9390551532f49.
+The Stage 600 payload already passed dedicated CI twice. Persisted-state run 31219171090 / job 92999606353 skipped all current-JP generation, passed the exact 158-node UV1 companion tests, the existing 104 baked-lightmap binding tests, all prior P0 regression gates and production build, and produced no diff.
+Visible targets: stage 608 violin 4x4 / 8 FPS flipbook reconstruction; current-JP 608 opaque/transparent, Cull, AlphaToMask and ZWrite states; current-JP ReDrive MatCap/Fresnel; current-JP comparison-sampler self-shadow receiver; stage 600 exact streamed UV1 restored before baked-lightmap binding.
 Do not rewrite preview from older feature branches. Rebuild the unchanged magius3dviewer release root and publish the experimental candidate only under review/p0-20260808.
 This remains a human-review snapshot, not a full parity claim.
