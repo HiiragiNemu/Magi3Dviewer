@@ -1,0 +1,2401 @@
+{
+  "character": "100107",
+  "stage": "battle-608-00-00-001",
+  "stageDisabled": false,
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "clientWidth": 1920,
+    "clientHeight": 1080
+  },
+  "webgl": {
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "vendor": "Google Inc. (Google)"
+  },
+  "bodyClasses": [
+    "no-demo"
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "consoleWarnings": [
+    {
+      "type": "warning",
+      "text": "[GroupMarkerNotSet(crbug.com/242999)!:A0A02000FC3B0000]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader (about:flags#enable-unsafe-swiftshader) flag to opt in to lower security guarantees for trusted content."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: too many errors, no more errors will be reported to the console for this context."
+    }
+  ],
+  "allConsole": [
+    {
+      "type": "log",
+      "text": "Imported character files: {../../node_modules/magia-exedra-character-three/models/chara_100101_battle_unit/RDToon_metallic_gradient_map.png: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAA…9LTNB83T3WXtFVeX5iQbYLHMEEV8bG1gAAAAASUVORK5CYII=, ../../node_modules/magia-exedra-character-three/models/chara_100101_battle_unit/VisualRoot.fbx.gz: https://127.0.0.1:4173/assets/VisualRoot.fbx-CY5L7625.fbxdata, ../../node_modules/magia-exedra-character-three/models/chara_100101_battle_unit/chara_100101_acc_color.png: https://127.0.0.1:4173/assets/chara_100101_acc_color-DPp_iyGq.png, ../../node_modules/magia-exedra-character-three/models/chara_100101_battle_unit/chara_100101_acc_ctrl.png: https://127.0.0.1:4173/assets/chara_100101_acc_ctrl-DkjIVp5l.png, ../../node_modules/magia-exedra-character-three/models/chara_100101_battle_unit/chara_100101_acc_shadow.png: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAA…AIAEAgCABAIAgAQCAoA+k6AqwdnmU9AAAAABJRU5ErkJggg==}"
+    },
+    {
+      "type": "log",
+      "text": "MaxAnisotropy: 16"
+    },
+    {
+      "type": "log",
+      "text": "100101 - Madoka Kaname (Magical Girl)\n100107 - 鹿目まどか/魔法少女\n113701 - アルティメットまどか/魔法少女\n100106 - 鹿目まどか/水着\n100103 - 鹿目まどか/晴着\n100102 - 鹿目まどか/制服\n100202 - 暁美ほむら/魔法少女\n100201 - 暁美ほむら/魔法少女(眼鏡)\n100203 - 暁美ほむら/魔法少女(リボン)\n100205 - 暁美ほむら/制服(眼鏡)\n113801 - 悪魔ほむら/魔法少女\n100207 - 暁美ほむら/水着\n100301 - 巴マミ/魔法少女\n100303 - 巴マミ/水着\n113901 - ホーリーマミ/魔法少女\n100302 - 巴マミ/ハロウィン\n100304 - 巴マミ/パティシエール\n100305 - 巴マミ/ドッペル\n100401 - 美樹さやか/魔法少女\n100402 - 美樹さやか/水着\n100403 - 美樹さやか/クリスマス\n100501 - 佐倉杏子/魔法少女\n100503 - 佐倉杏子/クリスマス\n100504 - 佐倉杏子/パティシエール\n100502 - 佐倉杏子/水着\n100601 - 百江なぎさ/魔法少女\n100701 - 愛生まばゆ/魔法少女\n100702 - 愛生まばゆ/魔法少女2\n100801 - 環いろは/魔法少女\n100805 - 環いろは/魔法少女(ドッペル)\n100804 - 環いろは/水着\n100901 - 七海やちよ/魔法少女\n101001 - 由比鶴乃/魔法少女\n101101 - 二葉さな/魔法少女\n101201 - 深月フェリシア/魔法少女\n101301 - 梓みふゆ/魔法少女\n101401 - 十咎ももこ/魔法少女\n101501 - 水波レナ/魔法少女\n101601 - 秋野かえで/魔法少女\n101701 - 御園かりん/魔法少女\n101801 - 竜城明日香/魔法少女\n101901 - 里見灯花/魔法少女\n102001 - 柊ねむ/魔法少女\n102101 - アリナ・グレイ/魔法少女\n102102 - アリナ・グレイ/ハロウィン\n102201 - 環うい/魔法少女\n102301 - 和泉十七夜/魔法少女\n102401 - 八雲みたま/魔法少女\n102501 - 天音月夜/魔法少女\n102601 - 天音月咲/魔法少女\n105801 - 空穂夏希/魔法少女\n105901 - 都ひなの/魔法少女\n106101 - 常盤ななか/魔法少女\n106201 - 木崎衣美里/魔法少女\n106701 - 夏目かこ/魔法少女\n106801 - 純美雨/魔法少女\n106901 - 伊吹れいら/魔法少女\n107001 - 桑水せいか/魔法少女\n107101 - 相野みと/魔法少女\n107201 - 粟根こころ/魔法少女\n107401 - 更紗帆奈/魔法少女\n107601 - 眞尾ひみか/魔法少女\n108001 - 五十鈴れん/魔法少女\n108002 - 五十鈴れん/クリスマス\n108101 - 静海このは/魔法少女\n108201 - 遊佐葉月/魔法少女\n108301 - 三栗あやめ/魔法少女\n108401 - 加賀見まさら/魔法少女\n108601 - 綾野梨花/魔法少女\n108602 - 綾野梨花/クリスマス\n109001 - 千秋理子/魔法少女\n109201 - 安名メル/魔法少女\n109801 - 万年桜のウワサ/魔法少女\n110401 - 雪野かなえ/魔法少女\n110701 - アシュリー・テイラー/魔法少女\n111401 - 入名クシュ/魔法少女\n111501 - タルト/魔法少女\n114401 - タルトver.Final\n111601 - リズ・ホークウッド/魔法少女\n111701 - メリッサ・ド・ヴィニョル/魔法少女\n112001 - コルボー/魔法少女\n112401 - 美国織莉子/魔法少女\n112501 - 呉キリカ/魔法少女\n112601 - 千歳ゆま/魔法少女\n113301 - 浅古小糸/魔法少女\n114501 - 夜明すみれ/魔法少女\n114601 - 日暮ふうか/魔法少女\n114901 - 斧乃木余接/魔法少女 (WIP)\n115001 - 八九寺真宵/魔法少女\n115101 - 忍野忍/魔法少女\n115201 - まどか先輩/魔法少女 (WIP)"
+    },
+    {
+      "type": "log",
+      "text": "Loading model: {../../node_modules/magia-exedra-character-three/models/chara_100107_battle_unit/VisualRoot.fbx.gz: https://127.0.0.1:4173/assets/VisualRoot.fbx-Dsv0y9Ia.fbxdata}"
+    },
+    {
+      "type": "warning",
+      "text": "[GroupMarkerNotSet(crbug.com/242999)!:A0A02000FC3B0000]Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader (about:flags#enable-unsafe-swiftshader) flag to opt in to lower security guarantees for trusted content."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "log",
+      "text": "Decompressing gzip in JavaScript, the server did not set `Content-Encoding: gzip` to let it decompress by the browser."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "log",
+      "text": "Loaded stage catalog tree: {version: 4, generatedAt: 2026-07-30, sourceRevision: b63d986c8f2e088362e7f26214967c92, catalogs: 2, entries: 1}"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    },
+    {
+      "type": "info",
+      "text": "FBX payload diagnostic {url: https://127.0.0.1:4173/assets/VisualRoot.fbx-Dsv0y9Ia.fbxdata, byteLength: 11810064, headerAscii: Kaydara FBX Binary  \u0000\u001a\u0000„, headerHex: 4b 61 79 64 61 72 61 20 46 42 58 20 42 69 6e 61 72 79 20 20 00 1a 00 84, isBinaryFbx: true}"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_acc_color.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_acc_ctrl.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_acc_shadow.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/RDToon_metallic_gradient_map.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_body_color.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_body_ctrl.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_body_shadow.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_face_color.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_eyehighlight_ctrl.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_face_shadow.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_hair_color.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_hair_ctrl.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_hair_shadow.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_weapon_a_color.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_weapon_a_ctrl.png"
+    },
+    {
+      "type": "log",
+      "text": "Prevented auto-load for: https://127.0.0.1:4173/assets/chara_100101_weapon_a_shadow.png"
+    },
+    {
+      "type": "log",
+      "text": "Model \"chara_100107_battle_unit\" loaded successfully"
+    },
+    {
+      "type": "log",
+      "text": "Using textures: {../../node_modules/magia-exedra-character-three/models/chara_100107_battle_unit/RDToon_metallic_gradient_map.png: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAA…9LTNB83T3WXtFVeX5iQbYLHMEEV8bG1gAAAAASUVORK5CYII=, ../../node_modules/magia-exedra-character-three/models/chara_100107_battle_unit/chara_100101_acc_color.png: https://127.0.0.1:4173/assets/chara_100101_acc_color-DPp_iyGq.png, ../../node_modules/magia-exedra-character-three/models/chara_100107_battle_unit/chara_100101_acc_ctrl.png: https://127.0.0.1:4173/assets/chara_100101_acc_ctrl-DkjIVp5l.png, ../../node_modules/magia-exedra-character-three/models/chara_100107_battle_unit/chara_100101_acc_shadow.png: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAA…AIAEAgCABAIAgAQCAoA+k6AqwdnmU9AAAAABJRU5ErkJggg==, ../../node_modules/magia-exedra-character-three/models/chara_100107_battle_unit/chara_100101_body_color.png: https://127.0.0.1:4173/assets/chara_100101_body_color-D1dRnWV5.png}"
+    },
+    {
+      "type": "log",
+      "text": "ReDrive character profile: {characterId: 100107, styleId: 100101, source: official-export, headBoneName: Head, faceForwardAxis: -x}"
+    },
+    {
+      "type": "log",
+      "text": "Material slots of \"Acc_Mesh\": [mt_chara_100101_acc] [Object] undefined"
+    },
+    {
+      "type": "log",
+      "text": "Material slots of \"Body_Mesh\": [mt_chara_100101_body, mt_chara_100101_body_Aniso, mt_chara_100101_body_SJ] [Object, Object, Object] {source: jp-unity-m-submeshes, characterId: 100107, meshName: Body_Mesh, counts: Array(3), drawCount: 35244}"
+    },
+    {
+      "type": "log",
+      "text": "Material slots of \"Face_Mesh\": [mt_chara_100101_face, mt_chara_100101_eyebrow_mask, mt_chara_100101_eye_mask] [Object, Object, Object] {source: jp-unity-m-submeshes, characterId: 100107, meshName: Face_Mesh, counts: Array(3), drawCount: 8184}"
+    },
+    {
+      "type": "log",
+      "text": "Material slots of \"Hair_Mesh\": [mt_chara_100101_hair_out, mt_chara_100101_hair] [Object, Object] {source: jp-unity-m-submeshes, characterId: 100107, meshName: Hair_Mesh, counts: Array(2), drawCount: 8970}"
+    },
+    {
+      "type": "log",
+      "text": "Material slots of \"weapon_a_mesh\": [mt_chara_100101_weapon_a, mt_chara_100101_weapon_a_sj] [Object, Object] {source: jp-unity-m-submeshes, characterId: 100107, meshName: weapon_a_mesh, counts: Array(2), drawCount: 3162}"
+    },
+    {
+      "type": "log",
+      "text": "Material slots of \"weapon_b_mesh\": [mt_chara_100101_weapon_a, mt_chara_100101_weapon_a_alpha, mt_chara_100101_weapon_a_sj] [Object, Object, Object] {source: jp-unity-m-submeshes, characterId: 100107, meshName: weapon_b_mesh, counts: Array(3), drawCount: 4293}"
+    },
+    {
+      "type": "log",
+      "text": "Playing animation family: CommonWait_L [CommonWait_L, CommonWait_L_1]"
+    },
+    {
+      "type": "log",
+      "text": "Set scene selected character (with object): {loading: false, removed: false, pending: undefined, character: ma}"
+    },
+    {
+      "type": "log",
+      "text": "Official face profile/reference: {characterId: 100107, source: official-export, useFaceGradientMap: true, faceShadowGradientMapYOffset: 0.0044, noseShadowGradientMapYOffset: 0} {headBone: Mu, localForward: L, localUp: L, localRight: L}"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "log",
+      "text": "AngelRing capability/reference: {enabled: true, reference: Object}"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "warning",
+      "text": "THREE.Material: parameter 'normalMap' has value of undefined."
+    },
+    {
+      "type": "log",
+      "text": "Applied official stage material bindings: {matchedMaterials: Array(13), unmatchedBindings: Array(0)}"
+    },
+    {
+      "type": "log",
+      "text": "Started official stage runtime: {disposed: false, playing: true, paused: false, time: 0, timeScale: 1}"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x674006a2900] GL_INVALID_OPERATION: glDrawArrays: Feedback loop formed between Framebuffer and active Texture."
+    },
+    {
+      "type": "warning",
+      "text": "WebGL: too many errors, no more errors will be reported to the console for this context."
+    }
+  ]
+}
