@@ -43,6 +43,8 @@ jobs:
         run: python scripts/extract_official_608_particles.py
       - name: Summarize executable particle profiles
         run: python scripts/summarize_official_608_particles.py
+      - name: Resolve particle renderer Material and Texture dependencies
+        run: python scripts/resolve_official_608_particle_material.py
       - name: Persist bounded stage evidence only
         shell: bash
         run: |
@@ -56,7 +58,8 @@ jobs:
             research/official-608-cubemap-face-decode.json \
             research/official-608-reflection-probes.json \
             research/official-608-particle-systems.json \
-            research/official-608-particle-summary.json
+            research/official-608-particle-summary.json \
+            research/official-608-particle-material.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'research: record official 608 Material, Probe and particle evidence'
           git push origin HEAD:${TARGET_BRANCH}
