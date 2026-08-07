@@ -45,8 +45,16 @@ jobs:
         run: python scripts/summarize_official_608_particles.py
       - name: Resolve particle renderer Material and stage-local dependency evidence
         run: python scripts/resolve_official_608_particle_material.py
-      - name: Resolve exact particle BaseMap through current JP root manifest closure
-        run: python scripts/resolve_official_608_particle_texture.py
+      - name: Diagnose current JP root AssetBundleManifest route
+        run: python scripts/diagnose_current_jp_assetbundle_manifest.py
+      - name: Diff current JP Materials against release materialBindings
+        shell: bash
+        run: |
+          VIEWER_REF="$(git rev-parse origin/magius3dviewer)"
+          git show "${VIEWER_REF}:public/stages/catalog/battle-608-00-00-001.json" > /tmp/release-608.json
+          python scripts/diff_official_608_material_bindings.py \
+            --viewer-catalog /tmp/release-608.json \
+            --viewer-ref "${VIEWER_REF}"
       - name: Persist bounded stage evidence only
         shell: bash
         run: |
@@ -62,8 +70,8 @@ jobs:
             research/official-608-particle-systems.json \
             research/official-608-particle-summary.json \
             research/official-608-particle-material.json \
-            research/official-608-particle-texture.json \
-            research/official-608-blue-bubble.png
+            research/official-jp-assetbundle-manifest-discovery.json \
+            research/official-608-vs-release-material-bindings.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'research: resolve exact JP 608 particle texture through manifest closure'
+          git commit -m 'research: record current JP 608 manifest discovery and release diff'
           git push origin HEAD:${TARGET_BRANCH}
