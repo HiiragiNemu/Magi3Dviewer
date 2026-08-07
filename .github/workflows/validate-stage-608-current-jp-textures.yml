@@ -56,15 +56,19 @@ jobs:
             > research/official-jp-assetbundle-manifest-discovery.json
           git show "origin/${AUTOMATION_BRANCH}:scripts/apply_official_608_texture_parity.py" \
             > /tmp/magius-608-tools/apply_official_608_texture_parity.py
+          git show "origin/${AUTOMATION_BRANCH}:scripts/run_official_608_texture_parity_idempotent.py" \
+            > /tmp/magius-608-tools/run_official_608_texture_parity_idempotent.py
           test -s /tmp/magius-608-tools/official-608-material-properties.json
           test -s /tmp/magius-608-tools/official-608-external-files.json
           test -s research/official-jp-assetbundle-manifest-discovery.json
+          test -s /tmp/magius-608-tools/run_official_608_texture_parity_idempotent.py
       - name: Apply exact current-JP Texture2D pixels and run fixed regression
         shell: bash
         env:
           PYTHONPATH: /tmp/magius-608-tools
         run: |
           set +e
+          target_source_commit="$(git rev-parse HEAD)"
           rm -rf validation-evidence-texture visual-regression-output
           mkdir -p validation-evidence-texture visual-regression-output
 
@@ -79,7 +83,7 @@ jobs:
           }
 
           run_phase current-jp-texture-parity \
-            python /tmp/magius-608-tools/apply_official_608_texture_parity.py \
+            python /tmp/magius-608-tools/run_official_608_texture_parity_idempotent.py \
               --repo-root . \
               --material-report /tmp/magius-608-tools/official-608-material-properties.json \
               --external-report /tmp/magius-608-tools/official-608-external-files.json \
@@ -146,20 +150,23 @@ jobs:
           done
 
           replacement_count=-1
+          unchanged_count=-1
+          unique_texture_count=-1
           if [ -s research/stage-608-current-jp-texture-parity-evidence.json ]; then
-            replacement_count="$(python - <<'PY'
+            read -r replacement_count unchanged_count unique_texture_count < <(python - <<'PY'
           import json
           from pathlib import Path
           p = json.loads(Path('research/stage-608-current-jp-texture-parity-evidence.json').read_text())
-          print(p['replacementCount'])
+          print(p['replacementCount'], p['unchangedCount'], p['uniqueViewerTextureCount'])
           PY
-          )"
+            )
           fi
 
           cat >validation-evidence-texture/status.json <<EOF
           {
             "runId": ${GITHUB_RUN_ID},
-            "sourceCommit": "${GITHUB_SHA}",
+            "automationSourceCommit": "${GITHUB_SHA}",
+            "targetSourceCommit": "${target_source_commit}",
             "targetBranch": "${TARGET_BRANCH}",
             "assetBundleRevision": "${EXPECTED_REVISION}",
             "character": "100107",
@@ -167,6 +174,8 @@ jobs:
             "viewport": "1920x1080@1",
             "currentJpTextureParity": ${texture_status},
             "replacementCount": ${replacement_count},
+            "unchangedCount": ${unchanged_count},
+            "uniqueViewerTextureCount": ${unique_texture_count},
             "npmCi": ${ci_status},
             "npmAudit": ${audit_status},
             "productionBuildAndReleaseTests": ${build_status},
@@ -180,16 +189,24 @@ jobs:
 
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add \
-            public/stages/official/battle-608-00-00-001 \
-            research/stage-608-current-jp-texture-parity-evidence.json \
-            validation-evidence-texture/status.json \
+
+          # Required parity outputs must be staged independently. Optional screenshot
+          # pathspecs are added only when they exist so one missing artifact cannot
+          # silently discard already-generated JP Texture2D replacements.
+          git add -f public/stages/official/battle-608-00-00-001
+          if [ -s research/stage-608-current-jp-texture-parity-evidence.json ]; then
+            git add -f research/stage-608-current-jp-texture-parity-evidence.json
+          fi
+          git add -f validation-evidence-texture/status.json
+          for path in \
             validation-evidence-texture/100107-battle-608-canvas.png \
             validation-evidence-texture/100107-battle-608-full.png \
-            validation-evidence-texture/report.json 2>/dev/null || true
-          git add -f \
+            validation-evidence-texture/report.json \
             validation-evidence-texture/visual-regression.log \
-            validation-evidence-texture/vite.log 2>/dev/null || true
+            validation-evidence-texture/vite.log; do
+            if [ -e "${path}" ]; then git add -f "${path}"; fi
+          done
+
           if ! git diff --cached --quiet; then
             git commit -m 'fix: restore exact current-JP stage 608 Texture2D pixels'
             git push origin HEAD:${TARGET_BRANCH}
