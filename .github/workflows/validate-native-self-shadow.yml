@@ -23,7 +23,9 @@ jobs:
           ref: ${{ env.TARGET_BRANCH }}
           fetch-depth: 0
       - name: Apply native ReDrive self-shadow pass
-        run: python scripts/apply_native_self_shadow_patch.py
+        run: |
+          python scripts/apply_native_self_shadow_patch.py
+          python scripts/fix_native_self_shadow_debug_state.py
       - uses: actions/setup-node@v6
         with:
           node-version: 22
