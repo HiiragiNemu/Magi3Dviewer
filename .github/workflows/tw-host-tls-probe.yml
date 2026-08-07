@@ -1,0 +1,54 @@
+name: Probe Taiwan game and SDK hosts
+run-name: Verify Taiwan DNS TLS and unauthenticated HTTP behavior
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-host-tls-probe.yml'
+      - 'analysis-requests/tw-host-tls-probe.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - name: Probe candidate production hosts
+        shell: bash
+        run: |
+          set -u
+          mkdir -p work/report
+          for host in app-mme.so-net.tw mme-sdk.so-net.tw mme.so-net.tw; do
+            {
+              echo "===== $host ====="
+              echo '-- DNS --'
+              getent ahosts "$host" || true
+              echo '-- TLS certificate --'
+              timeout 15 openssl s_client -connect "$host:443" -servername "$host" </dev/null 2>/dev/null \
+                | openssl x509 -noout -subject -issuer -serial -dates -ext subjectAltName 2>&1 || true
+              echo '-- HTTPS HEAD / --'
+              curl -sSIk --max-time 15 "https://$host/" | sed -n '1,40p' || true
+            } >> work/report/host-probe.txt
+          done
+          for url in \
+            'https://app-mme.so-net.tw/api/config/get_config' \
+            'https://app-mme.so-net.tw/api/login' \
+            'https://app-mme.so-net.tw/api/akamai/create_token' \
+            'https://mme-sdk.so-net.tw/api/'; do
+            {
+              echo "===== $url ====="
+              curl -sSIk --max-time 15 "$url" | sed -n '1,60p' || true
+            } >> work/report/endpoint-head-probe.txt
+          done
+      - name: Upload host probe
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-host-tls-probe
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error

@@ -1,0 +1,236 @@
+name: Recover Taiwan protocol method bodies
+run-name: Cpp2IL and exact ARM64 xrefs for Taiwan client
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-cpp2il-protocol.yml'
+      - 'tools/research/curate_tw_cpp2il.py'
+      - 'tools/research/scan_tw_arm64_xrefs.py'
+      - 'analysis-requests/tw-cpp2il-protocol.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-cpp2il-protocol
+  cancel-in-progress: true
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - name: Checkout controller
+        uses: actions/checkout@v5
+
+      - name: Set up .NET 6 and 9
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            6.0.x
+            9.0.x
+
+      - name: Install analysis tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip zip jq file binutils-aarch64-linux-gnu python3-pip
+          python -m pip install --disable-pip-version-check pyelftools
+          dotnet tool install ilspycmd --tool-path work/dotnet-tools
+
+      - name: Download and merge public Taiwan split APKs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/source work/xapk work/merged work/report
+          curl -fL --retry 5 --retry-all-errors \
+            -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/tw.sonet.magiaexedra.xapk
+          sha256sum work/source/tw.sonet.magiaexedra.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/tw.sonet.magiaexedra.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do
+            unzip -q -o "$apk" -d work/merged
+          done < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test -s work/merged/assets/bin/Data/Managed/Metadata/global-metadata.dat
+          test -s work/merged/lib/arm64-v8a/libil2cpp.so
+          test -s work/merged/assets/bin/Data/globalgamemanagers
+          (
+            cd work/merged
+            zip -qr ../tw.synthetic.apk \
+              AndroidManifest.xml \
+              assets/bin/Data \
+              lib/arm64-v8a/libil2cpp.so
+          )
+          sha256sum work/tw.synthetic.apk > work/report/synthetic-apk-sha256.txt
+
+      - name: Generate full Il2CppDumper map
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/il2cpp-tool work/il2cpp-output
+          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' \
+            https://api.github.com/repos/Perfare/Il2CppDumper/releases/latest)
+          asset=$(jq -r '[.assets[] | select(.name | test("net6.*\\.zip$"; "i"))][0].browser_download_url // empty' <<< "$release")
+          test -n "$asset"
+          curl -fL --retry 4 "$asset" -o work/il2cpp-tool/tool.zip
+          unzip -q work/il2cpp-tool/tool.zip -d work/il2cpp-tool/extracted
+          dll=$(find work/il2cpp-tool/extracted -type f -name 'Il2CppDumper.dll' -print -quit)
+          test -n "$dll"
+          set +e
+          dotnet "$dll" \
+            work/merged/lib/arm64-v8a/libil2cpp.so \
+            work/merged/assets/bin/Data/Managed/Metadata/global-metadata.dat \
+            work/il2cpp-output \
+            </dev/null > work/report/il2cpp-dumper.log 2>&1
+          status=$?
+          set -e
+          echo "exit_status=$status" >> work/report/il2cpp-dumper.log
+          test -s work/il2cpp-output/dump.cs
+
+      - name: Find exact protocol call sites
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/xrefs work/xref-disassembly
+          binary=work/merged/lib/arm64-v8a/libil2cpp.so
+          python tools/research/scan_tw_arm64_xrefs.py \
+            --binary "$binary" \
+            --dump work/il2cpp-output/dump.cs \
+            --out work/xrefs
+          while IFS=$'\t' read -r safe start stop display; do
+            aarch64-linux-gnu-objdump -d -C \
+              --start-address=$((16#$start)) \
+              --stop-address=$((16#$stop)) \
+              "$binary" > "work/xref-disassembly/${safe}.txt" 2>&1 || true
+          done < work/xrefs/protocol-caller-ranges.tsv
+          cp work/xrefs/* work/report/
+
+      - name: Disassemble protocol-critical methods
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/disassembly
+          binary=work/merged/lib/arm64-v8a/libil2cpp.so
+          cat > work/targets.tsv <<'EOF'
+          AppLocalizeSettings.GetApiServerUrl	4E13070	4E131D0
+          AppLocalizeSettings.GetInitialRegion	4E131D0	4E132A8
+          AppLocalizeSettings.GetInitialLanguage	4E132A8	4E13380
+          AppResourceSettings.GetAppServerUrl	4E13F80	4E13FCC
+          AppResourceSettings.GetFileNameHashSalt	4E13FCC	4E1400C
+          AppSettings.InitializeConnection	4E160E8	4E16534
+          AppSettings.SetAppVersionHeader	4E174DC	4E17604
+          AppUrl.GetGameServerUrl	4E11024	4E1106C
+          AppUrl.StaticConstructor	4E18588	4E18768
+          AppUrl.SetAppUrlData	4E18768	4E187C8
+          LocalizeApi.SetApiRequestHeader	47E99BC	47E9B9C
+          ResourceApi.ResetAppServerUrl	476334C	4763534
+          ResourceApi.GetAppResourceUrl	4763534	476362C
+          ResourceApi.GetMasterDataApiPath	476362C	4763724
+          ResourceApi.GetMstList	4763938	4763D04
+          ResourceApi.ConvertIdToHash	4763D0C	4763D70
+          ResourceApi.GetAssetBundleList	4763D70	4764204
+          ResourceApi.GetAssetBundleCryptoKey	4764204	4764648
+          ResourceApi.GetFileList	4764648	4764AB0
+          ResourceApi.GetFileCryptoKey	4764AB0	4764EB4
+          ResourceApi.GetConfig	476528C	47653F4
+          ResourceApi.GetGcsSignedUrlList	47653F4	4765640
+          PokkeMsgPackAPI.Object.Ctor	6FC5248	6FC5258
+          PokkeMsgPackAPI.Object.OnRequestStart	6FC5258	6FC5414
+          PokkeMsgPackAPI.Object.OnEncoded	6FC58A0	6FC58C0
+          PokkeMsgPackAPI.Shared.Ctor	6FC5A90	6FC5B70
+          PokkeMsgPackAPI.Shared.OnRequestStart	6FC5B70	6FC5D4C
+          PokkeMsgPackAPI.Shared.OnEncoded	6FC62E8	6FC6308
+          EOF
+          while IFS=$'\t' read -r name start stop; do
+            safe=$(tr -cs 'A-Za-z0-9._-' '_' <<< "$name")
+            aarch64-linux-gnu-objdump -d -C \
+              --start-address=$((16#$start)) \
+              --stop-address=$((16#$stop)) \
+              "$binary" > "work/disassembly/${safe}.txt" 2>&1 || true
+          done < work/targets.tsv
+
+      - name: Run current Cpp2IL IL recovery
+        id: cpp2il
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/cpp2il-tool work/cpp2il-output
+          curl -fL --retry 4 --retry-all-errors \
+            'https://nightly.link/SamboyCoding/Cpp2IL/workflows/dotnet-core/development/Cpp2IL-net9-linux-x64.zip' \
+            -o work/cpp2il-tool/package.zip
+          unzip -q work/cpp2il-tool/package.zip -d work/cpp2il-tool/extracted
+          executable=$(find work/cpp2il-tool/extracted -type f -name 'Cpp2IL' -print -quit)
+          test -n "$executable"
+          chmod +x "$executable"
+          NO_COLOR=true "$executable" \
+            --game-path=work/tw.synthetic.apk \
+            --output-as=dll_il_recovery \
+            --output-to=work/cpp2il-output \
+            --verbose \
+            > work/report/cpp2il.log 2>&1
+          find work/cpp2il-output -type f -printf '%P\t%s\n' | sort > work/report/cpp2il-output-inventory.tsv
+
+      - name: Decompile recovered Assembly-CSharp
+        if: ${{ always() }}
+        id: ilspy
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/decompiled
+          assembly=$(find work/cpp2il-output -type f -name 'Assembly-CSharp.dll' -print -quit)
+          test -n "$assembly"
+          work/dotnet-tools/ilspycmd -p -o work/decompiled "$assembly" \
+            > work/report/ilspy.log 2>&1
+          find work/decompiled -type f -printf '%P\t%s\n' | sort > work/report/ilspy-output-inventory.tsv
+
+      - name: Curate method bodies and annotated calls
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/cpp2il-output work/decompiled work/report/curated
+          python tools/research/curate_tw_cpp2il.py \
+            --dump work/il2cpp-output/dump.cs \
+            --disassembly-dir work/disassembly \
+            --decompiled-root work/decompiled \
+            --cpp2il-root work/cpp2il-output \
+            --out work/report/curated
+          cp work/disassembly/*-annotated.txt work/report/curated/ 2>/dev/null || true
+          mkdir -p work/report/curated/xref-callers
+          cp work/xref-disassembly/*.txt work/report/curated/xref-callers/ 2>/dev/null || true
+          grep -R -n -i -E \
+            'OnSign|X-post-signature|x-app-version|X-GAME-SERVER-URL|get_gcs_signed_url_list|get_resource_|AppResourceUrl|MasterDataApiPath|GameServerUrl' \
+            work/report/curated \
+            > work/report/curated/focused-grep.txt || true
+
+      - name: Remove raw client and full generated assemblies
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          rm -rf \
+            work/source work/xapk work/merged work/tw.synthetic.apk \
+            work/il2cpp-tool work/il2cpp-output \
+            work/cpp2il-tool work/cpp2il-output work/decompiled \
+            work/dotnet-tools work/disassembly work/xref-disassembly work/xrefs
+          if find work/report -type f \( \
+            -name '*.apk' -o -name '*.xapk' -o -name '*.so' -o \
+            -name 'global-metadata.dat' -o -name 'dump.cs' -o -name '*.dll' \
+          \) | grep -q .; then
+            echo 'Raw client or full generated assembly remained in report' >&2
+            exit 1
+          fi
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+
+      - name: Upload curated Cpp2IL protocol evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-cpp2il-protocol-evidence
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
