@@ -45,8 +45,10 @@ jobs:
         run: python scripts/summarize_official_608_particles.py
       - name: Resolve particle renderer Material and stage-local dependency evidence
         run: python scripts/resolve_official_608_particle_material.py
-      - name: Diagnose current JP root AssetBundleManifest route
+      - name: Diagnose current JP AssetBundle dependency route
         run: python scripts/diagnose_current_jp_assetbundle_manifest.py
+      - name: Resolve exact particle BaseMap from current JP catalog dependencies
+        run: python scripts/resolve_official_608_particle_texture.py
       - name: Diff current JP Materials against release materialBindings
         shell: bash
         run: |
@@ -71,7 +73,9 @@ jobs:
             research/official-608-particle-summary.json \
             research/official-608-particle-material.json \
             research/official-jp-assetbundle-manifest-discovery.json \
+            research/official-608-particle-texture.json \
+            research/official-608-blue-bubble.png \
             research/official-608-vs-release-material-bindings.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'research: record current JP 608 manifest discovery and release diff'
+          git commit -m 'research: resolve exact current-JP 608 particle texture'
           git push origin HEAD:${TARGET_BRANCH}
