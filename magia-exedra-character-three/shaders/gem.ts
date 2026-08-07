@@ -39,7 +39,29 @@ export function setOfficialMaterialProfileUniforms(
         shader.uniforms[key] ??= { value: uniformValue };
         shader.uniforms[key].value = uniformValue;
     };
-    set('uMaterialAnisotropy', value.anisotropy ? 1 : 0);
+    const setColor = (
+        key: string,
+        rgb: readonly [number, number, number],
+    ) => {
+        const current = shader.uniforms[key]?.value;
+        if (current instanceof THREE.Color) current.setRGB(...rgb);
+        else shader.uniforms[key] = { value: new THREE.Color(...rgb) };
+    };
+    const aniso = value.anisotropyProfile;
+    const fresnel = value.fresnel;
+    set('uMaterialAnisotropy', aniso.enabled ? 1 : 0);
+    set('uMaterialAnisoMaskByMetallic', aniso.maskByMetallic ? 1 : 0);
+    setColor('uMaterialAnisoColor', aniso.color);
+    set('uMaterialAnisoThreshold', aniso.threshold);
+    set('uMaterialAnisoFeather', aniso.feather);
+    // Material defaults are authoritative. FresnelAnimationAttributeReceiver
+    // will eventually overwrite the same per-renderer uniforms from Timeline.
+    set('uFresnelEnabled', fresnel.enabled ? 1 : 0);
+    setColor('uFresnelColor', fresnel.color);
+    set('uFresnelStrength', fresnel.enabled ? 1 : 0);
+    set('uFresnelThreshold', fresnel.threshold);
+    set('uFresnelFeather', fresnel.feather);
+    set('uFresnelMaskByMetallic', fresnel.maskByMetallic ? 1 : 0);
     set('uMaterialOutlineOffset', value.outlineOffset ? 1 : 0);
     set('uMaterialSkinOutlineOffset', value.skinOutlineOffset ? 1 : 0);
     set('uMaterialIsGem', gem.enabled ? 1 : 0);
