@@ -48,6 +48,8 @@ export interface StageMaterialBinding {
     alphaTest?: number
     alphaToCoverage?: boolean
     transparent?: boolean
+    /** Exact Unity ZWrite state when serialized evidence is available. */
+    depthWrite?: boolean
     unlitness?: number
     matCapIntensity?: number
     castShadow?: boolean
@@ -340,6 +342,7 @@ async function createBoundMaterial(
         map,
         alphaTest: binding.alphaTest ?? 0,
         transparent: binding.transparent ?? false,
+        depthWrite: binding.depthWrite ?? true,
         side,
     }
 

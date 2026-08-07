@@ -45,7 +45,10 @@
       "castShadow": true,
       "receiveShadow": true,
       "alphaTest": 0.8999999761581421,
-      "transparent": true
+      "transparent": true,
+      "depthWrite": false,
+      "side": "front",
+      "alphaToCoverage": false
     },
     {
       "materialName": "bg3d608_00_blue_Fish",
@@ -153,11 +156,12 @@
       "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
       "alphaTest": 0.10000000149011612,
       "alphaToCoverage": true,
-      "transparent": true,
+      "transparent": false,
       "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
-      "side": "double"
+      "side": "front",
+      "depthWrite": true
     },
     {
       "materialName": "mt_bg3d608_00_red_MusicNoteB",
@@ -165,13 +169,14 @@
       "shading": "unlit",
       "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
       "alphaTest": 0.5,
-      "alphaToCoverage": true,
-      "transparent": true,
+      "alphaToCoverage": false,
+      "transparent": false,
       "smoothness": 0.3,
       "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
-      "side": "double"
+      "side": "front",
+      "depthWrite": true
     },
     {
       "materialName": "mt_bg3d608_00_red_MusicNoteC",
@@ -179,13 +184,14 @@
       "shading": "unlit",
       "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_circlenote_col.png",
       "alphaTest": 0.699999988079071,
-      "alphaToCoverage": true,
-      "transparent": true,
+      "alphaToCoverage": false,
+      "transparent": false,
       "smoothness": 0.3,
       "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
-      "side": "double"
+      "side": "front",
+      "depthWrite": true
     },
     {
       "materialName": "mt_bg3d608_00_red_violinCol",
@@ -194,17 +200,18 @@
       "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violin_sprite.png",
       "alphaTest": 0.5,
       "alphaToCoverage": true,
-      "transparent": true,
+      "transparent": false,
       "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
-      "side": "double",
+      "side": "front",
       "atlas": {
         "columns": 4,
         "rows": 4,
         "offset": 0,
         "framesPerSecond": 8
-      }
+      },
+      "depthWrite": true
     },
     {
       "materialName": "mt_bg3d608_00_red_violinShdLine",
@@ -212,18 +219,19 @@
       "shading": "unlit",
       "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violinLineShd_sprite.png",
       "alphaTest": 0.5,
-      "alphaToCoverage": true,
+      "alphaToCoverage": false,
       "transparent": true,
       "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
-      "side": "double",
+      "side": "front",
       "atlas": {
         "columns": 4,
         "rows": 4,
         "offset": 0,
         "framesPerSecond": 8
-      }
+      },
+      "depthWrite": false
     },
     {
       "materialName": "mt_mt_bg3d608_00_red_Object",
