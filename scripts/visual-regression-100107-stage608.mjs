@@ -122,17 +122,30 @@ try {
   if (await canvas.count() !== 1) {
     throw new Error(`Expected one #viewer canvas, got ${await canvas.count()}`)
   }
+  const canvasBox = await canvas.boundingBox()
+  if (!canvasBox || canvasBox.width <= 0 || canvasBox.height <= 0) {
+    throw new Error(`Viewer canvas has invalid bounding box: ${JSON.stringify(canvasBox)}`)
+  }
 
-  await canvas.screenshot({ path: `${outputDir}/100107-battle-608-canvas.png` })
+  // Locator.screenshot waits for element stability; an actively rendered WebGL
+  // canvas is intentionally never stable. Clip a page screenshot to its current
+  // box instead, which captures the animated frame without scroll/stability waits.
+  await page.screenshot({
+    path: `${outputDir}/100107-battle-608-canvas.png`,
+    clip: canvasBox,
+    timeout: 120_000,
+  })
   await page.screenshot({
     path: `${outputDir}/100107-battle-608-full.png`,
-    fullPage: true,
+    fullPage: false,
+    timeout: 120_000,
   })
 
   const consoleErrors = consoleRows.filter(row => row.type === 'error')
   const report = {
     ...state,
     modelLoadedLog: modelLoadedMessage.text(),
+    canvasBox,
     pageErrors,
     consoleErrors,
     consoleWarnings: consoleRows.filter(row => row.type === 'warning'),
