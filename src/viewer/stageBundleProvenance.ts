@@ -21,7 +21,10 @@ export interface StageBundleManifestSource {
  */
 export interface StageBundleProvenance {
     rootBundle: string
+    /** Primary manifest kept for backward-compatible JP catalogs. */
     manifest: StageBundleManifestSource
+    /** All manifest sources used to resolve the closure; TW may have several. */
+    manifestSources?: StageBundleManifestSource[]
     directDependencies?: string[]
     dependencyClosure?: string[]
     closureSha256?: string
@@ -46,6 +49,39 @@ function normalizeBundleName(value: string): string {
     return value.replaceAll('\\', '/').replace(/^\/+|\/+$/g, '')
 }
 
+function normalizeManifestSource(
+    value: StageBundleManifestSource,
+): StageBundleManifestSource {
+    return {
+        ...value,
+        path: value.path?.replaceAll('\\', '/'),
+        sha256: value.sha256?.toLowerCase(),
+    }
+}
+
+function uniqueManifestSources(
+    primary: StageBundleManifestSource,
+    values: readonly StageBundleManifestSource[] | undefined,
+): StageBundleManifestSource[] {
+    const result: StageBundleManifestSource[] = []
+    const seen = new Set<string>()
+    for (const value of [primary, ...(values ?? [])]) {
+        const normalized = normalizeManifestSource(value)
+        const key = JSON.stringify([
+            normalized.region,
+            normalized.kind,
+            normalized.repository ?? null,
+            normalized.revision ?? null,
+            normalized.path ?? null,
+            normalized.sha256 ?? null,
+        ])
+        if (seen.has(key)) continue
+        seen.add(key)
+        result.push(normalized)
+    }
+    return result
+}
+
 function uniqueNormalized(values: readonly string[] | undefined): string[] | undefined {
     if (!values) return undefined
     const normalized = values
@@ -66,11 +102,11 @@ export function normalizeStageBundleProvenance(
     const normalized: StageBundleProvenance = {
         ...value,
         rootBundle: normalizeBundleName(value.rootBundle),
-        manifest: {
-            ...value.manifest,
-            path: value.manifest.path?.replaceAll('\\', '/'),
-            sha256: value.manifest.sha256?.toLowerCase(),
-        },
+        manifest: normalizeManifestSource(value.manifest),
+        manifestSources: uniqueManifestSources(
+            value.manifest,
+            value.manifestSources,
+        ),
         directDependencies: uniqueNormalized(value.directDependencies),
         dependencyClosure: uniqueNormalized(value.dependencyClosure),
         closureSha256: value.closureSha256?.toLowerCase(),
@@ -95,6 +131,15 @@ export function validateStageBundleProvenance(
     }
 
     assertSha256(value.manifest.sha256, 'manifest.sha256')
+    const manifestSources = [value.manifest, ...(value.manifestSources ?? [])]
+    for (const [index, source] of manifestSources.entries()) {
+        assertSha256(source.sha256, `manifestSources[${index}].sha256`)
+        if (source.region !== value.manifest.region) {
+            throw new Error(
+                `Stage bundle provenance mixed regions: ${value.manifest.region} / ${source.region}`,
+            )
+        }
+    }
     assertSha256(value.closureSha256, 'closureSha256')
 
     const direct = uniqueNormalized(value.directDependencies) ?? []
