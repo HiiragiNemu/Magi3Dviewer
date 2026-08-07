@@ -25,7 +25,7 @@ test('Gem uses character MatCap when exported and a camera-facing MatCap basis',
   assert.match(gem, /matCapUrl \?\? DefaultGemMatCap/)
   assert.match(gem, /rdGemMatCapX/)
   assert.match(gem, /dot\(rdGemMatCapX, rdGemNormalVs\)/)
-  assert.match(gemExtension, /official-gem-v3/)
+  assert.match(gemExtension, /official-gem-v4-depthdiff/)
   assert.match(loader, /gemMatCapMap/)
   assert.match(loader, /extendMaterialWithOfficialGem\([\s\S]*gemMatCapMap/)
 })

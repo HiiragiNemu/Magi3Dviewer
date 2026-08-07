@@ -29,6 +29,14 @@ const gem = readFileSync(
   join(root, 'magia-exedra-character-three', 'shaders', 'gem.ts'),
   'utf8',
 )
+const gemExtension = readFileSync(
+  join(root, 'magia-exedra-character-three', 'shaders', 'gemExtension.ts'),
+  'utf8',
+)
+const cameraDepth = readFileSync(
+  join(root, 'magia-exedra-character-three', 'scene', 'cameraDepth.ts'),
+  'utf8',
+)
 
 test('100101/100107 shared body Aniso uses exact current-JP material values', () => {
   const value = profiles.getOfficialMaterialProfile('mt_chara_100101_body_Aniso')
@@ -65,4 +73,37 @@ test('per-material uniforms override the global debug Fresnel without enabling i
   assert.match(general, /uMaterialAnisoThreshold/)
   assert.match(general, /rdAnisoBand/)
   assert.match(general, /directional coordinate remains the current/)
+})
+
+test('GemDepthDiff removes executable NdotV proxy code and pins recovered JP predicate/threshold arithmetic', () => {
+  assert.doesNotMatch(gem, /float\s+rdGemDepthProxy\s*=/)
+  assert.match(gem, /uGemUseDepthDiff == 0\.0/)
+  assert.match(gem, /uGemTransparency == 0\.0/)
+  assert.match(gem, /uRdCameraDepthEnabled < 0\.5/)
+  assert.match(gem, /currentEye - 0\.00999999978/)
+  assert.match(gem, /depthDifference \* 5\.0/)
+  assert.match(gem, /1\.0 - uGemDepthDiffThreshold/)
+  assert.match(gem, /depthDifference >= threshold \? 0\.0 : 1\.0/)
+  assert.match(gem, /shader\.uniforms\.uGemTransparency \?\?= \{ value: 0 \}/)
+  assert.match(gem, /runtime _Transparency MaterialPropertyBlock|Timeline\/MPB source/)
+})
+
+test('GemDepthDiff depth producer is requested only by a proven depth-diff profile', () => {
+  assert.match(gemExtension, /profile\.gem\.enabled && profile\.gem\.useDepthDiff/)
+  assert.match(gemExtension, /requestReDriveCameraDepth\(\)/)
+  assert.match(gemExtension, /official-gem-v4-depthdiff/)
+})
+
+test('camera-depth transport stays explicitly approximate and unbinds its attachment while writing', () => {
+  assert.match(cameraDepth, /formulaFidelity: 'exact'/)
+  assert.match(cameraDepth, /transportFidelity: 'web-depth-transport-approximation'/)
+  assert.match(cameraDepth, /runtime _Transparency MaterialPropertyBlock\/attribute receiver/)
+  assert.match(
+    cameraDepth,
+    /reDriveCameraDepthUniformState\.enabled\.value = 0\s+reDriveCameraDepthUniformState\.map\.value = null/,
+  )
+  assert.match(
+    cameraDepth,
+    /renderer\.setRenderTarget\(oldTarget\)\s+reDriveCameraDepthUniformState\.map\.value = oldMap/,
+  )
 })

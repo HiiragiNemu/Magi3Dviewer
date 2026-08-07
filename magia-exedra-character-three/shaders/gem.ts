@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import type { OfficialMaterialProfile } from '../materialProfile';
 import { createDefaultMaterialProfile } from '../materialProfile';
+import { bindReDriveCameraDepthShader } from '../scene/cameraDepth';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 import DefaultGemMatCap from '../models/chara_109801_battle_unit/matcap02_invert.png';
 import OfficialSoftMetallicMatCap from '../models/common/matcap_SoftMetallic.png';
@@ -76,11 +77,10 @@ export function setOfficialMaterialProfileUniforms(
     set('uMaterialOutlineOffset', value.outlineOffset ? 1 : 0);
     set('uMaterialSkinOutlineOffset', value.skinOutlineOffset ? 1 : 0);
     set('uMaterialIsGem', gem.enabled ? 1 : 0);
-    // GeneralMaterial is shared by every recovered FBX draw group.  The
+    // GeneralMaterial is shared by every recovered FBX draw group. The
     // compile-time feature profile is deliberately an aggregate so the shader
     // variant contains the jewel branch, but the actual switch must follow the
-    // material slot selected by loader.onBeforeRender.  Keeping this beside
-    // uMaterialIsGem also guarantees non-gem groups reset the boost to zero.
+    // material slot selected by loader.onBeforeRender.
     set('uMaterialSpecialJewel', gem.enabled ? 1 : 0);
     set('uGemUseMatCap', gem.useMatCap ? 1 : 0);
     set('uGemMatCapIntensity', gem.matCapIntensity);
@@ -110,6 +110,13 @@ export function injectOfficialGemShader(
     initialProfile?: OfficialMaterialProfile,
 ) {
     shader.uniforms.tGemMatCap = { value: resources.matCap ?? null };
+    // Current-JP compiled GLSL proves GemDepthDiff is gated by
+    // `_UseGemDepthDiff != 0 && _Transparency != 0`. The serialized target
+    // Material does not contain `_Transparency`, so its Timeline/MPB source is
+    // not guessed here. A future authoritative receiver may overwrite this
+    // per-renderer uniform; default zero keeps the exact branch dormant.
+    shader.uniforms.uGemTransparency ??= { value: 0 };
+    bindReDriveCameraDepthShader(shader);
     setOfficialMaterialProfileUniforms(shader, initialProfile);
 
     shader.fragmentShader = /* glsl */ `
@@ -120,6 +127,11 @@ export function injectOfficialGemShader(
         uniform float uGemMaskMatcapMetallic;
         uniform float uGemMaskMatcapSpecular;
         uniform float uGemUseDepthDiff;
+        uniform float uGemTransparency;
+        uniform sampler2D tRdCameraDepth;
+        uniform float uRdCameraDepthEnabled;
+        uniform mat4 uRdCameraDepthInvProjection;
+        uniform vec2 uRdCameraDepthViewport;
         uniform float uGemFirstHighlightSize;
         uniform float uGemFirstShadowSize;
         uniform float uGemSecondHighlightSize;
@@ -130,6 +142,46 @@ export function injectOfficialGemShader(
         uniform float uGemFresnelThreshold;
         uniform float uGemFresnelFeather;
         uniform float uGemFresnelMaskByMetallic;
+
+        float rdGemLinearEyeDepth(float rawDepth, vec2 fragCoord) {
+            vec2 viewport = max(uRdCameraDepthViewport, vec2(1.0));
+            vec2 pixelUv = (floor(fragCoord) + vec2(0.5)) / viewport;
+            vec2 ndcXY = pixelUv * 2.0 - 1.0;
+            vec4 view = uRdCameraDepthInvProjection * vec4(
+                ndcXY,
+                rawDepth * 2.0 - 1.0,
+                1.0
+            );
+            float safeW = abs(view.w) > 0.0000001
+                ? view.w
+                : (view.w < 0.0 ? -0.0000001 : 0.0000001);
+            return max(0.0, -(view.z / safeW));
+        }
+
+        float rdGemOfficialDepthDiffBinary(vec2 fragCoord) {
+            // Exact current-JP branch predicate recovered from compiled GLSL:
+            // _UseGemDepthDiff != 0 && _Transparency != 0.
+            if (
+                uGemUseDepthDiff == 0.0 ||
+                uGemTransparency == 0.0 ||
+                uRdCameraDepthEnabled < 0.5
+            ) return 0.0;
+
+            vec2 viewport = max(uRdCameraDepthViewport, vec2(1.0));
+            vec2 pixelUv = (floor(fragCoord) + vec2(0.5)) / viewport;
+            float currentEye = rdGemLinearEyeDepth(gl_FragCoord.z, fragCoord);
+            float sceneRawDepth = texture2D(tRdCameraDepth, pixelUv).r;
+            float sceneEye = rdGemLinearEyeDepth(sceneRawDepth, fragCoord);
+
+            // Exact current-JP compiled arithmetic:
+            // sceneEye - (currentEye - 0.01), then x5, saturate, compare against
+            // 1 - _GemDepthDiffThreshold; true maps to 0, false maps to 1.
+            float depthDifference = sceneEye - (currentEye - 0.00999999978);
+            depthDifference = clamp(depthDifference * 5.0, 0.0, 1.0);
+            float threshold = 1.0 - uGemDepthDiffThreshold;
+            return depthDifference >= threshold ? 0.0 : 1.0;
+        }
+
         ${shader.fragmentShader}
     `.replace(
         '#include <opaque_fragment>',
@@ -139,10 +191,9 @@ export function injectOfficialGemShader(
             vec3 rdGemView = normalize(geometryViewDir);
             float rdGemNdotV = saturate(dot(rdGemNormalVs, rdGemView));
 
-            // MatCap lives in view space.  Mapping normal.xy directly made
-            // highlights stick to the model instead of the camera and erased
-            // the rotating/glassy response of Soul Gems.  Build the same
-            // camera-facing tangent basis used by conventional MatCap shading.
+            // MatCap lives in view space. This camera-facing basis remains the
+            // current Web implementation; only the recovered dependencies and
+            // serialized scalar values are exact at this stage.
             vec3 rdGemViewAxis = normalize(rdGemView);
             vec3 rdGemMatCapX = vec3(rdGemViewAxis.z, 0.0, -rdGemViewAxis.x);
             if (dot(rdGemMatCapX, rdGemMatCapX) < 0.0001) {
@@ -172,8 +223,8 @@ export function injectOfficialGemShader(
                 saturate(uGemMaskMatcapSpecular)
             );
 
-            // Official Gem size values are signed artistic offsets rather than
-            // literal widths. Map them around two stable view-normal bands.
+            // Signed Gem size interpretation remains a Web approximation until
+            // the complete current-JP Gem highlight subprogram is mapped.
             float rdGemHeight = saturate(
                 rdGemNormalVs.y * 0.5 + 0.5 +
                 (uGemHeightCorrection - 0.5) * 0.26
@@ -231,15 +282,25 @@ export function injectOfficialGemShader(
                     rdGemMatCapMask * 0.34;
             }
 
-            // Depth-diff gems receive a stronger inner-edge response. In WebGL
-            // this is a conservative local approximation until the dedicated
-            // ReDrive depth texture pass is ported.
-            float rdGemDepthProxy = smoothstep(
-                uGemDepthDiffThreshold,
-                1.0,
-                1.0 - rdGemNdotV
-            ) * uGemUseDepthDiff;
-            rdGemBase += rdGemTint * rdGemDepthProxy * 0.32;
+            // This binary selector itself is the recovered current-JP formula.
+            // The old NdotV rdGemDepthProxy implementation has been removed completely.
+            float rdGemDepthBinary = rdGemOfficialDepthDiffBinary(gl_FragCoord.xy);
+
+            // Current-JP compiled GLSL adds GemDepthDiff to the Gem shadow
+            // selector and saturates it before selecting the shadow-side colour.
+            // The selector integration is preserved here, but the Web shadow
+            // colour transport (ShadowTex + global tint + Web SH/light path)
+            // is still an explicit approximation rather than a claim that
+            // rdToonShadowColor equals native _BaseMap * _ShadowColor.
+            if (rdGemDepthBinary > 0.5) {
+                vec3 rdGemWebShadowTransport =
+                    rdToonShadowColor *
+                    uGlobalCharacterShadowTint *
+                    rdToonSceneLightColor +
+                    totalEmissiveRadiance;
+                rdGemBase = rdGemWebShadowTransport;
+            }
+
             rdGemBase += vec3(1.0) *
                 rdGemFresnelBand *
                 max(uGemRimFresnel, 0.0) * 0.72;
