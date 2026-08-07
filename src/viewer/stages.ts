@@ -24,6 +24,11 @@ import {
     type StageRuntimeController,
     type StageRuntimeProfile,
 } from './stageRuntime'
+import {
+    normalizeStageBundleProvenance,
+    validateStageBundleProvenance,
+    type StageBundleProvenance,
+} from './stageBundleProvenance'
 
 export type StageCategory = 'research' | 'battle' | 'field' | 'dungeon' | 'gallery' | 'adv'
 export type StageAssetType = 'gltf' | 'fbx'
@@ -143,6 +148,8 @@ export interface StageDefinition {
     category?: StageCategory
     official?: boolean
     assetBundleName?: string
+    /** Exact AssetBundle-manifest evidence retained with exported stages. */
+    bundleProvenance?: StageBundleProvenance
     type: 'procedural' | 'gltf' | 'fbx' | 'group'
     preset?: 'sky-reference' | 'studio' | 'battle-arena'
     url?: string
@@ -360,6 +367,16 @@ export async function setupStageSelector() {
             ].filter((stage, index, all) =>
                 all.findIndex(candidate => candidate.id === stage.id) === index
             )
+            for (const stage of catalogStages) {
+                if (!stage.bundleProvenance) continue
+                stage.bundleProvenance = normalizeStageBundleProvenance(
+                    stage.bundleProvenance,
+                )
+                validateStageBundleProvenance(
+                    stage.bundleProvenance,
+                    stage.assetBundleName,
+                )
+            }
             definitions = [
                 ...builtInStages,
                 ...catalogStages.filter(stage =>
@@ -439,6 +456,7 @@ export async function loadStageById(id: string) {
             stageOptions.id = definition.id
             stageSelector.value = definition.id
             stageRoot.userData.stageDefinition = definition
+            stageRoot.userData.bundleProvenance = definition.bundleProvenance ?? null
             stageRoot.userData.stageDynamic = definition.dynamic ?? null
             return
         }
@@ -460,6 +478,7 @@ export async function loadStageById(id: string) {
         stageOptions.id = definition.id
         stageSelector.value = definition.id
         stageRoot.userData.stageDefinition = definition
+        stageRoot.userData.bundleProvenance = definition.bundleProvenance ?? null
         stageRoot.userData.reDriveVolume = definition.renderProfile?.reDriveVolume ?? null
         stageRoot.userData.spawnPoints = definition.spawnPoints ?? []
         stageRoot.userData.stageRuntime = activeStageRuntime?.getDebugState() ?? null

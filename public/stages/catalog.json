@@ -11,7 +11,7 @@
       "name": "[Official geometry/Battle] 600-00-00-001",
       "category": "battle",
       "official": true,
-      "assetBundleName": "battle/stage/bg/3d/600/00/00/001",
+      "assetBundleName": "battle/stage/bg_3d_600_00_00_001",
       "type": "fbx",
       "url": "./stages/official/battle-600-00-00-001/bg_3d_600_00_00_001.fbxdata",
       "scale": 1,
@@ -102,7 +102,8 @@
       },
       "evidence": [
         "AssetStudioModCLI splitObjects",
-        "official AssetBundle geometry; render profile remains under parameter recovery"
+        "official AssetBundle geometry; render profile remains under parameter recovery",
+        "JP AssetBundles/Android manifest root identifier verified against ma-ex-dataSP"
       ]
     },
     {
@@ -110,7 +111,7 @@
       "name": "[Official geometry/Battle] 600-00-01-001",
       "category": "battle",
       "official": true,
-      "assetBundleName": "battle/stage/bg/3d/600/00/01/001",
+      "assetBundleName": "battle/stage/bg_3d_600_00_01_001",
       "type": "fbx",
       "url": "./stages/official/battle-600-00-01-001/bg_3d_600_00_01_001.fbxdata",
       "scale": 1,
@@ -250,7 +251,12 @@
             "name": "MainLight",
             "type": "directional",
             "anchorNode": "MainLight",
-            "color": [1.0, 0.9760049, 0.9386792, 1.0],
+            "color": [
+              1.0,
+              0.9760049,
+              0.9386792,
+              1.0
+            ],
             "intensity": 1,
             "cullingMask": 2147483647,
             "lightmapping": 1,
@@ -268,8 +274,17 @@
             "name": "BgCenterLight",
             "type": "spot",
             "anchorNode": "BgCenterLight",
-            "position": [0, 10.2, 0],
-            "color": [1.0, 0.95, 0.9809524, 1.0],
+            "position": [
+              0,
+              10.2,
+              0
+            ],
+            "color": [
+              1.0,
+              0.95,
+              0.9809524,
+              1.0
+            ],
             "intensity": 500,
             "range": 40,
             "outerAngleDegrees": 117.347824,
@@ -290,8 +305,17 @@
             "name": "BgFillLight",
             "type": "spot",
             "anchorNode": "BgFillLight",
-            "position": [0, 15.9, 0],
-            "color": [1.0, 0.99526566, 0.9490196, 1.0],
+            "position": [
+              0,
+              15.9,
+              0
+            ],
+            "color": [
+              1.0,
+              0.99526566,
+              0.9490196,
+              1.0
+            ],
             "intensity": 200,
             "range": 50,
             "outerAngleDegrees": 179,
@@ -312,8 +336,17 @@
             "name": "BgLightA001",
             "type": "point",
             "anchorNode": "BgLightA001",
-            "position": [-12.59, 5, -17],
-            "color": [1.0, 0.7885474, 0.752, 1.0],
+            "position": [
+              -12.59,
+              5,
+              -17
+            ],
+            "color": [
+              1.0,
+              0.7885474,
+              0.752,
+              1.0
+            ],
             "intensity": 100,
             "range": 20,
             "cullingMask": 64,
@@ -324,8 +357,17 @@
             "name": "BgLightA002",
             "type": "point",
             "anchorNode": "BgLightA002",
-            "position": [-4.96, 5, -15.46],
-            "color": [1.0, 0.8254717, 0.8466981, 1.0],
+            "position": [
+              -4.96,
+              5,
+              -15.46
+            ],
+            "color": [
+              1.0,
+              0.8254717,
+              0.8466981,
+              1.0
+            ],
             "intensity": 100,
             "range": 10,
             "cullingMask": 64,
@@ -336,8 +378,17 @@
             "name": "BgLightB001",
             "type": "point",
             "anchorNode": "BgLightB001",
-            "position": [14.25, 4.89, -16.72],
-            "color": [1.0, 0.9074746, 0.740566, 1.0],
+            "position": [
+              14.25,
+              4.89,
+              -16.72
+            ],
+            "color": [
+              1.0,
+              0.9074746,
+              0.740566,
+              1.0
+            ],
             "intensity": 120,
             "range": 20,
             "cullingMask": 64,
@@ -348,8 +399,17 @@
             "name": "BgLightC001",
             "type": "point",
             "anchorNode": "BgLightC001",
-            "position": [5.7, 8.66, 9.2],
-            "color": [1.0, 0.95452344, 0.7783019, 1.0],
+            "position": [
+              5.7,
+              8.66,
+              9.2
+            ],
+            "color": [
+              1.0,
+              0.95452344,
+              0.7783019,
+              1.0
+            ],
             "intensity": 250,
             "range": 20,
             "cullingMask": 64,
@@ -360,8 +420,17 @@
             "name": "BgLightD001",
             "type": "point",
             "anchorNode": "BgLightD001",
-            "position": [-10.72, 9.53, 12],
-            "color": [1.0, 0.7885474, 0.752, 1.0],
+            "position": [
+              -10.72,
+              9.53,
+              12
+            ],
+            "color": [
+              1.0,
+              0.7885474,
+              0.752,
+              1.0
+            ],
             "intensity": 300,
             "range": 20,
             "cullingMask": 64,
@@ -372,8 +441,17 @@
             "name": "BgLightD002",
             "type": "point",
             "anchorNode": "BgLightD002",
-            "position": [-3.65, 7.81, 8.57],
-            "color": [1.0, 0.7885474, 0.752, 1.0],
+            "position": [
+              -3.65,
+              7.81,
+              8.57
+            ],
+            "color": [
+              1.0,
+              0.7885474,
+              0.752,
+              1.0
+            ],
             "intensity": 150,
             "range": 10,
             "cullingMask": 64,
@@ -399,24 +477,73 @@
         "reDriveVolume": {
           "skyboxIntensity": 1,
           "shAmbient": [
-            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
-            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8,
-            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
-            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8,
-            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
-            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8
+            0.050811794,
+            -1.0546019e-10,
+            0,
+            -3.540026e-11,
+            0,
+            1.844384e-10,
+            -5.5879354e-09,
+            0,
+            -1.3396784e-08,
+            0.050811794,
+            -1.0546019e-10,
+            0,
+            -3.540026e-11,
+            0,
+            1.844384e-10,
+            -5.5879354e-09,
+            0,
+            -1.3396784e-08,
+            0.050811794,
+            -1.0546019e-10,
+            0,
+            -3.540026e-11,
+            0,
+            1.844384e-10,
+            -5.5879354e-09,
+            0,
+            -1.3396784e-08
           ],
-          "characterShadowTint": [0.672, 0.672, 0.8, 1],
-          "characterLightingOverrideColor": [0.590619, 0.57112503, 0.46778384, 1],
+          "characterShadowTint": [
+            0.672,
+            0.672,
+            0.8,
+            1
+          ],
+          "characterLightingOverrideColor": [
+            0.590619,
+            0.57112503,
+            0.46778384,
+            1
+          ],
           "characterLightingOverrideRatio": 0.25,
-          "characterAdditionalRimLightColor": [1, 1, 1, 1],
-          "characterAdditionalRimLightDirection": [1, -1],
+          "characterAdditionalRimLightColor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "characterAdditionalRimLightDirection": [
+            1,
+            -1
+          ],
           "backgroundShadowStrengthAdditive": 0.3,
           "backgroundPostExposure": 0.2,
           "paraffin": {
             "enabled": true,
-            "topColor": [0.40440553, 0.4024424, 0.426, 1],
-            "bottomColor": [0.5019608, 0.32627454, 0.32627454, 1],
+            "topColor": [
+              0.40440553,
+              0.4024424,
+              0.426,
+              1
+            ],
+            "bottomColor": [
+              0.5019608,
+              0.32627454,
+              0.32627454,
+              1
+            ],
             "opacity": 0.3,
             "width": 1.4,
             "topBlendMode": 0,
@@ -439,7 +566,8 @@
       "evidence": [
         "JP 3.11.0 AssetStudioModCLI exact prefab export",
         "JP ReDriveToonPostProcessVolume serialized values",
-        "JP Unity Light components and FBX anchor transforms"
+        "JP Unity Light components and FBX anchor transforms",
+        "JP AssetBundles/Android manifest root identifier verified against ma-ex-dataSP"
       ]
     },
     {
@@ -447,19 +575,35 @@
       "name": "[Official dynamic/Battle] 600-00-01-002",
       "category": "battle",
       "official": true,
-      "assetBundleName": "battle/stage/bg/3d/600/00/01/002",
+      "assetBundleName": "battle/stage/bg_3d_600_00_01_002",
       "type": "fbx",
       "url": "./stages/official/battle-600-00-01-002/bg_3d_600_00_01_002-animated.fbxdata",
       "scale": 1,
-      "position": [0, 0, 0],
-      "rotation": [0, 0, 0],
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
       "spawnPoints": [
         {
           "id": "actor-0",
           "name": "Actor 0",
           "role": "actor",
-          "position": [0, 0, 0],
-          "rotation": [0, 0, 0]
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
         }
       ],
       "materialBindings": [
@@ -627,13 +771,26 @@
             "name": "MainLight",
             "type": "directional",
             "anchorNode": "MainLight",
-            "color": [1, 0.9764706, 0.9372549, 1],
+            "color": [
+              1,
+              0.9764706,
+              0.9372549,
+              1
+            ],
             "intensity": 1,
             "cullingMask": 2147483647,
             "lightmapping": 1,
             "role": "character-key",
-            "position": [0, 0, 0],
-            "target": [-0.4131759, -0.76604437, -0.492404],
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "target": [
+              -0.4131759,
+              -0.76604437,
+              -0.492404
+            ],
             "castShadow": true,
             "shadow": {
               "type": 2,
@@ -647,7 +804,12 @@
             "name": "BgCenterLight",
             "type": "spot",
             "anchorNode": "BgCenterLight",
-            "color": [1, 0.95, 0.9809524, 1],
+            "color": [
+              1,
+              0.95,
+              0.9809524,
+              1
+            ],
             "intensity": 500,
             "range": 40,
             "outerAngleDegrees": 117.347824,
@@ -655,8 +817,16 @@
             "cullingMask": 64,
             "lightmapping": 1,
             "role": "background",
-            "position": [0, 10.2, 0],
-            "target": [0, 9.2, 0],
+            "position": [
+              0,
+              10.2,
+              0
+            ],
+            "target": [
+              0,
+              9.2,
+              0
+            ],
             "castShadow": true,
             "shadow": {
               "type": 1,
@@ -670,7 +840,12 @@
             "name": "BgFillLight",
             "type": "spot",
             "anchorNode": "BgFillLight",
-            "color": [1, 0.99526566, 0.9490196, 1],
+            "color": [
+              1,
+              0.99526566,
+              0.9490196,
+              1
+            ],
             "intensity": 600,
             "range": 70,
             "outerAngleDegrees": 179,
@@ -678,8 +853,16 @@
             "cullingMask": 64,
             "lightmapping": 2,
             "role": "background",
-            "position": [0, 25, 0],
-            "target": [0, 24, 0],
+            "position": [
+              0,
+              25,
+              0
+            ],
+            "target": [
+              0,
+              24,
+              0
+            ],
             "castShadow": true,
             "shadow": {
               "type": 1,
@@ -693,52 +876,88 @@
             "name": "BgLightA",
             "type": "point",
             "anchorNode": "BgLightA",
-            "color": [1, 0.7885474, 0.752, 1],
+            "color": [
+              1,
+              0.7885474,
+              0.752,
+              1
+            ],
             "intensity": 150,
             "range": 20,
             "cullingMask": 64,
             "lightmapping": 2,
             "role": "background",
-            "position": [-6.49, 6.92, -16.15],
+            "position": [
+              -6.49,
+              6.92,
+              -16.15
+            ],
             "castShadow": false
           },
           {
             "name": "BgLightB",
             "type": "point",
             "anchorNode": "BgLightB",
-            "color": [1, 0.9074746, 0.740566, 1],
+            "color": [
+              1,
+              0.9074746,
+              0.740566,
+              1
+            ],
             "intensity": 120,
             "range": 30,
             "cullingMask": 64,
             "lightmapping": 2,
             "role": "background",
-            "position": [13.88, 5.76, -11.88],
+            "position": [
+              13.88,
+              5.76,
+              -11.88
+            ],
             "castShadow": false
           },
           {
             "name": "BgLightC",
             "type": "point",
             "anchorNode": "BgLightC",
-            "color": [1, 0.95452344, 0.7783019, 1],
+            "color": [
+              1,
+              0.95452344,
+              0.7783019,
+              1
+            ],
             "intensity": 250,
             "range": 30,
             "cullingMask": 64,
             "lightmapping": 2,
             "role": "background",
-            "position": [8.25, 8.28, 14.84],
+            "position": [
+              8.25,
+              8.28,
+              14.84
+            ],
             "castShadow": false
           },
           {
             "name": "BgLightD",
             "type": "point",
             "anchorNode": "BgLightD",
-            "color": [1, 0.7885474, 0.752, 1],
+            "color": [
+              1,
+              0.7885474,
+              0.752,
+              1
+            ],
             "intensity": 200,
             "range": 30,
             "cullingMask": 64,
             "lightmapping": 2,
             "role": "background",
-            "position": [-11.72, 6.89, 10.14],
+            "position": [
+              -11.72,
+              6.89,
+              10.14
+            ],
             "castShadow": false
           }
         ],
@@ -760,26 +979,75 @@
         "reDriveVolume": {
           "skyboxIntensity": 1,
           "shAmbient": [
-            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
-            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8,
-            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
-            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8,
-            0.050811794, -1.0546019e-10, 0, -3.540026e-11, 0,
-            1.844384e-10, -5.5879354e-9, 0, -1.3396784e-8
+            0.050811794,
+            -1.0546019e-10,
+            0,
+            -3.540026e-11,
+            0,
+            1.844384e-10,
+            -5.5879354e-09,
+            0,
+            -1.3396784e-08,
+            0.050811794,
+            -1.0546019e-10,
+            0,
+            -3.540026e-11,
+            0,
+            1.844384e-10,
+            -5.5879354e-09,
+            0,
+            -1.3396784e-08,
+            0.050811794,
+            -1.0546019e-10,
+            0,
+            -3.540026e-11,
+            0,
+            1.844384e-10,
+            -5.5879354e-09,
+            0,
+            -1.3396784e-08
           ],
-          "characterShadowTint": [0.672, 0.672, 0.8, 1],
-          "characterLightingOverrideColor": [0.590619, 0.57112503, 0.46778384, 1],
+          "characterShadowTint": [
+            0.672,
+            0.672,
+            0.8,
+            1
+          ],
+          "characterLightingOverrideColor": [
+            0.590619,
+            0.57112503,
+            0.46778384,
+            1
+          ],
           "characterLightingOverrideRatio": 0.25,
-          "characterAdditionalRimLightColor": [1, 1, 1, 1],
-          "characterAdditionalRimLightDirection": [1, -1],
+          "characterAdditionalRimLightColor": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "characterAdditionalRimLightDirection": [
+            1,
+            -1
+          ],
           "backgroundShadowStrengthAdditive": 0.3,
           "backgroundPostExposure": 0.2,
           "backgroundContrast": 0.25,
           "backgroundSaturation": 5,
           "paraffin": {
             "enabled": true,
-            "topColor": [0.40440553, 0.4024424, 0.426, 1],
-            "bottomColor": [0.5, 0.325, 0.325, 1],
+            "topColor": [
+              0.40440553,
+              0.4024424,
+              0.426,
+              1
+            ],
+            "bottomColor": [
+              0.5,
+              0.325,
+              0.325,
+              1
+            ],
             "opacity": 0.2,
             "width": 1.4,
             "topBlendMode": 0,
@@ -851,7 +1119,8 @@
         "11 official serialized Material profiles",
         "7 Light plus UniversalAdditionalLightData profiles",
         "104 renderer lightmap bindings",
-        "ReDriveVolume, Global Volume and five Animator layer clips"
+        "ReDriveVolume, Global Volume and five Animator layer clips",
+        "JP AssetBundles/Android manifest root identifier verified against ma-ex-dataSP"
       ]
     },
     {
