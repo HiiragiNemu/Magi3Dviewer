@@ -17,6 +17,9 @@ permissions:
 jobs:
   extract:
     runs-on: ubuntu-24.04
+    env:
+      STAGE600_UV1_SOURCE_OUT: /tmp/stage600-uv1-source.json
+      STAGE600_UV1_COMPANION_OUT: /tmp/stage600-uv1-companion.json
     steps:
       - uses: actions/checkout@v5
         with:
@@ -45,6 +48,17 @@ jobs:
         run: python scripts/inspect_stage_600_unity_mesh_uv1.py
       - name: Inspect UnityPy mesh decoder API
         run: python scripts/inspect_unitypy_mesh_decoder.py
+      - name: Decode streamed current-JP UV1 with UnityPy MeshHandler
+        run: python scripts/extract_stage_600_uv1_source.py
+      - name: Prove FBX polygon-corner mapping and build UV1 companion candidate
+        run: node scripts/build_stage_600_uv1_companion.mjs
+      - name: Report UV1 companion candidate size
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s "$STAGE600_UV1_SOURCE_OUT"
+          test -s "$STAGE600_UV1_COMPANION_OUT"
+          wc -c "$STAGE600_UV1_SOURCE_OUT" "$STAGE600_UV1_COMPANION_OUT"
       - name: Parse exported FBX with the actual Three FBXLoader
         run: node scripts/audit_stage_600_three_fbx_uv.mjs
       - name: Persist evidence
@@ -58,6 +72,7 @@ jobs:
           test -s research/stage-600-01-02-uv-channel-audit.json
           test -s research/stage-600-01-02-unity-mesh-uv1-inspect.json
           test -s research/stage-600-01-02-unitypy-mesh-decoder-inspect.json
+          test -s research/stage-600-01-02-uv1-fbx-mapping.json
           test -s research/stage-600-01-02-three-fbx-uv-audit.json
           git add \
             research/official-600-01-02-material-properties.json \
@@ -66,7 +81,8 @@ jobs:
             research/stage-600-01-02-uv-channel-audit.json \
             research/stage-600-01-02-unity-mesh-uv1-inspect.json \
             research/stage-600-01-02-unitypy-mesh-decoder-inspect.json \
+            research/stage-600-01-02-uv1-fbx-mapping.json \
             research/stage-600-01-02-three-fbx-uv-audit.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'research: persist current-JP 600-01-02 parity summary'
+          git commit -m 'research: persist exact stage 600 UV1 mapping evidence'
           git push origin HEAD:research/stage-600-01-02-current-jp-20260808
