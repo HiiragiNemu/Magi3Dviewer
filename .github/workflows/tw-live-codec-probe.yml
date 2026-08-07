@@ -1,0 +1,284 @@
+name: Probe Taiwan response codec
+run-name: Verify candidate Taiwan MessagePack key against live login
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-live-codec-probe.yml'
+      - 'analysis-requests/tw-live-codec-probe.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-live-codec-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check requests msgpack pycryptodome
+      - name: Send disposable login and test recovered codec
+        shell: python
+        run: |
+          from __future__ import annotations
+
+          import base64
+          import hashlib
+          import hmac
+          import json
+          import os
+          import re
+          import time
+          import uuid
+          from pathlib import Path
+          from typing import Any
+
+          import msgpack
+          import requests
+          from Crypto.Cipher import AES
+          from Crypto.Util.Padding import pad, unpad
+
+          HOST = 'https://app-mme.so-net.tw'
+          APP_VERSION = '1.0.5'
+          UNITY_VERSION = '2022.3.62f3'
+
+          RAW_HASH_KEY = (
+              "*0h>%iZAAdrw[R5l(S+nEmzLp?|ld5QC.n(r'$l9JhqAYl#Iq+o5xK3'9m^872WbH@uIG0~6&"
+              "zujCBC;zigI%o..,p2ZkQAO,iLjJjW;um1c}mrCSLPJ6$WwKS$=YX:<"
+          )
+          RAW_HASH_SALT = 'Q?p%y):^p(N;}{5*'
+          RAW_CRYPTO_SEED = 'a+Bb]NW?[,4]{fU='
+          RAW_MSGPACK_CANDIDATES = {
+              'alphanumeric-runtime-candidate': 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+          }
+
+          def convert(value: str) -> str:
+              return value[1::2]
+
+          HASH_KEY = convert(RAW_HASH_KEY)
+          HASH_SALT = convert(RAW_HASH_SALT)
+          CRYPTO_SEED = convert(RAW_CRYPTO_SEED)
+
+          def centered_bytes(value: bytes, length: int) -> bytes:
+              if length <= 0 or len(value) <= length:
+                  return value
+              start = (len(value) - length) // 2
+              return value[start:start + length]
+
+          def centered_text(value: str, length: int) -> str:
+              if length <= 0 or len(value) <= length:
+                  return value
+              start = (len(value) - length) // 2
+              return value[start:start + length]
+
+          def derive(raw_value: str, length: int = 16) -> bytes:
+              digest = hmac.new(
+                  HASH_KEY.encode('utf-8'),
+                  (HASH_SALT + raw_value).encode('utf-8'),
+                  hashlib.sha256,
+              ).digest()
+              text = base64.b64encode(centered_bytes(digest, length)).decode('ascii')
+              result = centered_text(text, length).encode('utf-8')
+              if len(result) != length:
+                  raise RuntimeError(f'derived key length is {len(result)}, expected {length}')
+              return result
+
+          APP_CRYPTO_KEY = derive(CRYPTO_SEED)
+
+          def filetime_now() -> int:
+              return int((time.time() + 11_644_473_600) * 10_000_000)
+
+          def encode_request(payload: dict[str, Any], client_uuid: str, key: bytes) -> bytes:
+              envelope = {
+                  'payload': payload,
+                  'uuid': client_uuid,
+                  'userId': 0,
+                  'sessionId': '',
+                  'actionToken': None,
+                  'ctag': None,
+                  'actionTime': filetime_now(),
+              }
+              packed = msgpack.packb(envelope, use_bin_type=True)
+              iv = os.urandom(16)
+              return iv + AES.new(key, AES.MODE_CBC, iv).encrypt(pad(packed, 16))
+
+          def decode_response(encoded: bytes, key: bytes) -> Any:
+              if len(key) != 16:
+                  raise ValueError('current Taiwan MessagePack key must be 16 bytes')
+              if len(encoded) <= 16 or len(encoded) % 16:
+                  raise ValueError(f'invalid IV-prefix AES payload size {len(encoded)}')
+              plain = unpad(
+                  AES.new(key, AES.MODE_CBC, encoded[:16]).decrypt(encoded[16:]),
+                  16,
+              )
+              return msgpack.unpackb(plain, raw=False, strict_map_key=False)
+
+          SECRET = re.compile(r'(?i)(uuid|user.?id|session|token|jwt|ctag|guid|handover|cookie)')
+
+          def sanitize(value: Any, field: str = '') -> Any:
+              if isinstance(value, dict):
+                  return {str(key): sanitize(item, str(key)) for key, item in value.items()}
+              if isinstance(value, list):
+                  return [sanitize(item, field) for item in value[:200]]
+              if SECRET.search(field) and value not in (None, '', 0, False):
+                  raw = str(value).encode('utf-8')
+                  return {
+                      'present': True,
+                      'length': len(raw),
+                      'sha256': hashlib.sha256(raw).hexdigest(),
+                  }
+              if isinstance(value, (str, int, float, bool)) or value is None:
+                  return value
+              return repr(value)[:500]
+
+          client_uuid = uuid.uuid4().hex
+          payload = {
+              'appVersion': APP_VERSION,
+              'urlParam': '',
+              'deviceModel': 'Taiwan Codec Probe',
+              'osType': 2,
+              'osVersion': 'Android 14',
+              'storeType': 2,
+              'graphicsDeviceId': 0,
+              'graphicsDeviceVendorId': 0,
+              'processorCount': 8,
+              'processorType': 'arm64-v8a',
+              'supportedRenderTargetCount': 4,
+              'supports3DTextures': True,
+              'supportsAccelerometer': True,
+              'supportsComputeShaders': True,
+              'supportsGyroscope': True,
+              'supportsImageEffects': True,
+              'supportsInstancing': True,
+              'supportsLocationService': True,
+              'supportsRenderTextures': True,
+              'supportsRenderToCubemap': True,
+              'supportsShadows': True,
+              'supportsSparseTextures': False,
+              'supportsStencil': 1,
+              'supportsVibration': True,
+              'uuid': client_uuid,
+              'xuid': 0,
+              'jwttoken': '',
+              'sm': '',
+          }
+
+          attempts: list[dict[str, Any]] = []
+          accepted: dict[str, Any] | None = None
+          for candidate_name, raw_candidate in RAW_MSGPACK_CANDIDATES.items():
+              request_key = derive(raw_candidate)
+              encoded_request = encode_request(payload, client_uuid, request_key)
+              headers = {
+                  'Accept': '*/*',
+                  'Content-Type': 'application/x-msgpack',
+                  'x-region': 'TW',
+                  'x-language': 'zh_TW',
+                  'x-timezone-offset': '28800',
+                  'x-app-version': APP_VERSION,
+                  'X-GAME-SERVER-URL': HOST,
+                  'X-Unity-Version': UNITY_VERSION,
+                  'X-post-signature': base64.b64encode(
+                      hashlib.sha1(encoded_request).digest()
+                  ).decode('ascii'),
+              }
+              response = requests.post(
+                  HOST + '/api/login',
+                  headers=headers,
+                  data=encoded_request,
+                  timeout=30,
+              )
+              raw_response = response.content
+              decode_attempts: list[dict[str, Any]] = []
+              decoded: Any = None
+              decoded_key_label: str | None = None
+              response_keys = {
+                  'same-message-pack-key': request_key,
+                  'app-crypto-key': APP_CRYPTO_KEY,
+              }
+              for key_label, response_key in response_keys.items():
+                  try:
+                      decoded = decode_response(raw_response, response_key)
+                      decoded_key_label = key_label
+                      decode_attempts.append({
+                          'key': key_label,
+                          'keySha256': hashlib.sha256(response_key).hexdigest(),
+                          'success': True,
+                      })
+                      break
+                  except Exception as exc:
+                      decode_attempts.append({
+                          'key': key_label,
+                          'keySha256': hashlib.sha256(response_key).hexdigest(),
+                          'success': False,
+                          'error': type(exc).__name__ + ': ' + str(exc)[:300],
+                      })
+              attempt = {
+                  'candidate': candidate_name,
+                  'rawCandidateSha256': hashlib.sha256(raw_candidate.encode()).hexdigest(),
+                  'requestKeyText': request_key.decode('ascii'),
+                  'requestKeySha256': hashlib.sha256(request_key).hexdigest(),
+                  'httpStatus': response.status_code,
+                  'responseSize': len(raw_response),
+                  'responseSha256': hashlib.sha256(raw_response).hexdigest(),
+                  'responseFirst64Hex': raw_response[:64].hex(),
+                  'headers': {
+                      key.lower(): value
+                      for key, value in response.headers.items()
+                      if key.lower().startswith('x-')
+                      or key.lower() in {'content-type', 'content-length'}
+                  },
+                  'setCookiePresent': bool(response.headers.get('Set-Cookie')),
+                  'setCookieName': response.headers.get('Set-Cookie', '').split('=', 1)[0] or None,
+                  'decoded': decoded is not None,
+                  'decodedKey': decoded_key_label,
+                  'decodeAttempts': decode_attempts,
+                  'sanitizedResponse': sanitize(decoded) if decoded is not None else None,
+              }
+              attempts.append(attempt)
+              if decoded is not None:
+                  accepted = attempt
+                  break
+
+          report = {
+              'schemaVersion': 7,
+              'client': {
+                  'package': 'tw.sonet.magiaexedra',
+                  'appVersion': APP_VERSION,
+                  'unityVersion': UNITY_VERSION,
+                  'host': HOST,
+              },
+              'verifiedPrimitiveInputs': {
+                  'hashKeySha256': hashlib.sha256(HASH_KEY.encode()).hexdigest(),
+                  'hashSaltSha256': hashlib.sha256(HASH_SALT.encode()).hexdigest(),
+                  'appCryptoKeyText': APP_CRYPTO_KEY.decode('ascii'),
+                  'appCryptoKeySha256': hashlib.sha256(APP_CRYPTO_KEY).hexdigest(),
+              },
+              'acceptedCandidate': accepted['candidate'] if accepted else None,
+              'attempts': attempts,
+          }
+          Path('work/report').mkdir(parents=True, exist_ok=True)
+          Path('work/report/codec-probe.json').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          if accepted is None:
+              raise SystemExit('no candidate decoded the Taiwan login response')
+      - name: Upload sanitized codec probe
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-live-codec-probe
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
