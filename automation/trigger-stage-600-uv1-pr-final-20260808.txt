@@ -1,1 +1,1 @@
-Final synchronization marker before the Stage 600 UV1 P0 draft PR validation.
+Second human-authored synchronization marker after github-actions[bot] persisted the exact Stage 600 UV1 product payload at 228a89b444682c9fa4bb73aa71a617695497acdc. This validation must skip one-shot current-JP generation because uv1-companion.json already exists, then pass Stage600/lightmap/P0 regressions and production build directly from the persisted branch state.
