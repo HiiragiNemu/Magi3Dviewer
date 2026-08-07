@@ -1,0 +1,47 @@
+name: Validate exact ReDrive self-shadow receiver
+
+on:
+  pull_request:
+    branches:
+      - preview/p0-20260808
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: feature/exact-redrive-self-shadow-receiver-20260808
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Apply fail-closed current-JP receiver patch
+        run: python3 scripts/apply_exact_redrive_self_shadow_receiver.py
+      - name: Install dependencies
+        run: npm ci
+      - name: Gate exact receiver and existing self-shadow architecture
+        run: |
+          node --test exactSelfShadowReceiver.test.mjs
+          node --test nativeSelfShadow.test.mjs
+      - name: Gate current character material formula ports
+        run: node exactReDriveFormulaParity.test.mjs
+      - name: Production build
+        run: npm run build
+      - name: Persist validated runtime receiver
+        shell: bash --noprofile --norc -e -o pipefail {0}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add \
+            magia-exedra-character-three/scene/selfShadow.ts \
+            magia-exedra-character-three/shaders/general.ts \
+            magia-exedra-character-three/shaders/face.ts
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'feat: port current-JP ReDrive self-shadow receiver'
+          git push origin HEAD:feature/exact-redrive-self-shadow-receiver-20260808
