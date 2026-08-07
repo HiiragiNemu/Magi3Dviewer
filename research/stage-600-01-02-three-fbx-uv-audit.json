@@ -1,6 +1,7 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "source": "public/stages/official/battle-600-00-01-002/bg_3d_600_00_01_002-animated.fbxdata",
+  "rootName": "bg_3d_600_00_01_002",
   "meshCount": 158,
   "meshesWithUv": 158,
   "meshesWithUv1": 0,
@@ -21,9 +22,135 @@
     "mt_bg3d600A_01_02_rockAlpha",
     "mt_bg3d600A_01_02_sky"
   ],
+  "geometryNames": [
+    "adelbertAAA_geo",
+    "adelbertAAB_geo",
+    "anthonyAAA_geo",
+    "anthonyAAB_geo",
+    "butterflySignAAA_geo",
+    "butterflySignAAB_geo",
+    "butterflySignAAC_geo",
+    "butterflySignAAD_geo",
+    "butterflySignAAE_geo",
+    "butterflySignAAF_geo",
+    "butterflySignAAG_geo",
+    "butterflySignAAH_geo",
+    "butterflySignAAI_geo",
+    "butterflySignAAJ_geo",
+    "butterflySignAAK_geo",
+    "circleA_geo1",
+    "circleA_geo2",
+    "circleA_geo3",
+    "circleC_geo",
+    "circleD_geo",
+    "circleE_geo",
+    "ground_geo",
+    "ibaraABack_geo",
+    "ibaraA_geo",
+    "ibaraBBack_geo",
+    "ibaraB_geo",
+    "rockA_geo",
+    "rockB_geo",
+    "rockC_geo",
+    "rockD_geo",
+    "rockE_geo",
+    "rockEdge_geo",
+    "rockF_geo",
+    "rockG_geo",
+    "rockH_geo",
+    "rockI_geo",
+    "rockJ_geo",
+    "rockK_geo",
+    "rockL_geo",
+    "rockM_geo",
+    "rockN_geo",
+    "rockO_geo",
+    "rockP_geo",
+    "rockQ_geo",
+    "sky_geo",
+    "treeAABack_geo",
+    "treeAAFront_geo",
+    "treeABBack_geo",
+    "treeABFront_geo",
+    "treeABchainBack_geo",
+    "treeABchainFront_geo",
+    "treeACBack_geo",
+    "treeACFront_geo",
+    "treeACchainBack_geo",
+    "treeACchainFront_geo",
+    "treeBABack_geo",
+    "treeBAFront_geo",
+    "treeBBBack_geo",
+    "treeBBFront_geo",
+    "treeBBchainBack_geo",
+    "treeBBchainFront_geo",
+    "treeBCBack_geo",
+    "treeBCFront_geo",
+    "treeBCchainBack_geo",
+    "treeBCchainFront_geo",
+    "treeCABack_geo",
+    "treeCAFront_geo",
+    "treeCBBack_geo",
+    "treeCBFront_geo",
+    "treeCBchainBack_geo",
+    "treeCBchainFront_geo",
+    "treeCCBack_geo",
+    "treeCCFront_geo",
+    "treeCCchainBack_geo",
+    "treeCCchainFront_geo",
+    "treeCDBack_geo",
+    "treeCDFront_geo",
+    "treeCDchainBack_geo",
+    "treeCDchainFront_geo",
+    "windowAA001_geo",
+    "windowAB001_geo",
+    "windowAB002_geo",
+    "windowAB003_geo",
+    "windowAC001_geo",
+    "windowAD001_geo",
+    "windowAE001_geo",
+    "windowAE002_geo",
+    "windowBA001_geo",
+    "windowBA002_geo",
+    "windowBB001_geo",
+    "windowBC001_geo",
+    "windowBD001_geo",
+    "windowBE001_geo",
+    "windowBF001_geo",
+    "windowBG001_geo",
+    "windowBH001_geo",
+    "windowCA001_geo",
+    "windowCB001_geo",
+    "windowCC001_geo",
+    "windowCD001_geo",
+    "windowCE001_geo",
+    "windowCE002_geo",
+    "windowCE003_geo",
+    "windowCE004_geo",
+    "windowCF001_geo",
+    "windowCG001_geo",
+    "windowCG002_geo",
+    "windowCH001_geo",
+    "windowCI001_geo",
+    "windowCJ001_geo",
+    "windowCL001_geo",
+    "windowCM001_geo",
+    "windowCN001_geo",
+    "windowCO001_geo",
+    "windowCP001_geo",
+    "windowCQ001_geo",
+    "windowCR001_geo",
+    "windowDA001_geo",
+    "windowDB001_geo",
+    "windowDC001_geo",
+    "windowDC002_geo",
+    "windowDD001_geo"
+  ],
   "meshes": [
     {
       "nodeName": "circleA_geo1",
+      "geometryName": "circleA_geo1",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/anim_grp/circle_grp/circleA_loc/circleA_geo1",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -42,6 +169,8 @@
     },
     {
       "nodeName": "circleA_geo2",
+      "geometryName": "circleA_geo2",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/anim_grp/circle_grp/circleA_loc/circleA_geo2",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -60,6 +189,8 @@
     },
     {
       "nodeName": "circleA_geo3",
+      "geometryName": "circleA_geo3",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/anim_grp/circle_grp/circleA_loc/circleA_geo3",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -78,6 +209,8 @@
     },
     {
       "nodeName": "circleC_geo",
+      "geometryName": "circleC_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/anim_grp/circle_grp/circleCD_loc/circleC_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -96,6 +229,8 @@
     },
     {
       "nodeName": "circleD_geo",
+      "geometryName": "circleD_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/anim_grp/circle_grp/circleCD_loc/circleD_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -114,6 +249,8 @@
     },
     {
       "nodeName": "circleE_geo",
+      "geometryName": "circleE_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/anim_grp/circle_grp/circleE_loc/circleE_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -132,6 +269,8 @@
     },
     {
       "nodeName": "treeAABack_geo",
+      "geometryName": "treeAABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAA001_grp/treeAABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -150,6 +289,8 @@
     },
     {
       "nodeName": "treeAAFront_geo",
+      "geometryName": "treeAAFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAA001_grp/treeAAFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -168,6 +309,8 @@
     },
     {
       "nodeName": "treeAABack_geo",
+      "geometryName": "treeAABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAA002_grp/treeAABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -186,6 +329,8 @@
     },
     {
       "nodeName": "treeAAFront_geo",
+      "geometryName": "treeAAFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAA002_grp/treeAAFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -204,6 +349,8 @@
     },
     {
       "nodeName": "treeAABack_geo",
+      "geometryName": "treeAABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAA003_grp/treeAABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -222,6 +369,8 @@
     },
     {
       "nodeName": "treeAAFront_geo",
+      "geometryName": "treeAAFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAA003_grp/treeAAFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -240,6 +389,8 @@
     },
     {
       "nodeName": "treeABBack_geo",
+      "geometryName": "treeABBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAB001_grp/treeABBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -258,6 +409,8 @@
     },
     {
       "nodeName": "treeABchainBack_geo",
+      "geometryName": "treeABchainBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAB001_grp/treeABchainBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -276,6 +429,8 @@
     },
     {
       "nodeName": "treeABchainFront_geo",
+      "geometryName": "treeABchainFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAB001_grp/treeABchainFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -294,6 +449,8 @@
     },
     {
       "nodeName": "treeABFront_geo",
+      "geometryName": "treeABFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAB001_grp/treeABFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -312,6 +469,8 @@
     },
     {
       "nodeName": "treeACBack_geo",
+      "geometryName": "treeACBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAC001_grp/treeACBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -330,6 +489,8 @@
     },
     {
       "nodeName": "treeACchainBack_geo",
+      "geometryName": "treeACchainBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAC001_grp/treeACchainBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -348,6 +509,8 @@
     },
     {
       "nodeName": "treeACchainFront_geo",
+      "geometryName": "treeACchainFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAC001_grp/treeACchainFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -366,6 +529,8 @@
     },
     {
       "nodeName": "treeACFront_geo",
+      "geometryName": "treeACFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeAC001_grp/treeACFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -384,6 +549,8 @@
     },
     {
       "nodeName": "treeBABack_geo",
+      "geometryName": "treeBABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBA001_grp/treeBABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -402,6 +569,8 @@
     },
     {
       "nodeName": "treeBAFront_geo",
+      "geometryName": "treeBAFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBA001_grp/treeBAFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -420,6 +589,8 @@
     },
     {
       "nodeName": "treeBABack_geo",
+      "geometryName": "treeBABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBA002_grp/treeBABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -438,6 +609,8 @@
     },
     {
       "nodeName": "treeBAFront_geo",
+      "geometryName": "treeBAFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBA002_grp/treeBAFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -456,6 +629,8 @@
     },
     {
       "nodeName": "treeBABack_geo",
+      "geometryName": "treeBABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBA003_grp/treeBABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -474,6 +649,8 @@
     },
     {
       "nodeName": "treeBAFront_geo",
+      "geometryName": "treeBAFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBA003_grp/treeBAFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -492,6 +669,8 @@
     },
     {
       "nodeName": "treeBBBack_geo",
+      "geometryName": "treeBBBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBB001_grp/treeBBBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -510,6 +689,8 @@
     },
     {
       "nodeName": "treeBBchainBack_geo",
+      "geometryName": "treeBBchainBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBB001_grp/treeBBchainBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -528,6 +709,8 @@
     },
     {
       "nodeName": "treeBBchainFront_geo",
+      "geometryName": "treeBBchainFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBB001_grp/treeBBchainFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -546,6 +729,8 @@
     },
     {
       "nodeName": "treeBBFront_geo",
+      "geometryName": "treeBBFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBB001_grp/treeBBFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -564,6 +749,8 @@
     },
     {
       "nodeName": "treeBCBack_geo",
+      "geometryName": "treeBCBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBC001_grp/treeBCBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -582,6 +769,8 @@
     },
     {
       "nodeName": "treeBCchainBack_geo",
+      "geometryName": "treeBCchainBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBC001_grp/treeBCchainBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -600,6 +789,8 @@
     },
     {
       "nodeName": "treeBCchainFront_geo",
+      "geometryName": "treeBCchainFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBC001_grp/treeBCchainFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -618,6 +809,8 @@
     },
     {
       "nodeName": "treeBCFront_geo",
+      "geometryName": "treeBCFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeBC001_grp/treeBCFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -636,6 +829,8 @@
     },
     {
       "nodeName": "treeCABack_geo",
+      "geometryName": "treeCABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCA001_grp/treeCABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -654,6 +849,8 @@
     },
     {
       "nodeName": "treeCAFront_geo",
+      "geometryName": "treeCAFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCA001_grp/treeCAFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -672,6 +869,8 @@
     },
     {
       "nodeName": "treeCABack_geo",
+      "geometryName": "treeCABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCA002_grp/treeCABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -690,6 +889,8 @@
     },
     {
       "nodeName": "treeCAFront_geo",
+      "geometryName": "treeCAFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCA002_grp/treeCAFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -708,6 +909,8 @@
     },
     {
       "nodeName": "treeCABack_geo",
+      "geometryName": "treeCABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCA003_grp/treeCABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -726,6 +929,8 @@
     },
     {
       "nodeName": "treeCAFront_geo",
+      "geometryName": "treeCAFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCA003_grp/treeCAFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -744,6 +949,8 @@
     },
     {
       "nodeName": "treeCBBack_geo",
+      "geometryName": "treeCBBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCB001_grp/treeCBBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -762,6 +969,8 @@
     },
     {
       "nodeName": "treeCBchainBack_geo",
+      "geometryName": "treeCBchainBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCB001_grp/treeCBchainBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -780,6 +989,8 @@
     },
     {
       "nodeName": "treeCBchainFront_geo",
+      "geometryName": "treeCBchainFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCB001_grp/treeCBchainFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -798,6 +1009,8 @@
     },
     {
       "nodeName": "treeCBFront_geo",
+      "geometryName": "treeCBFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCB001_grp/treeCBFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -816,6 +1029,8 @@
     },
     {
       "nodeName": "treeCCBack_geo",
+      "geometryName": "treeCCBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCC001_grp/treeCCBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -834,6 +1049,8 @@
     },
     {
       "nodeName": "treeCCchainBack_geo",
+      "geometryName": "treeCCchainBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCC001_grp/treeCCchainBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -852,6 +1069,8 @@
     },
     {
       "nodeName": "treeCCchainFront_geo",
+      "geometryName": "treeCCchainFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCC001_grp/treeCCchainFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -870,6 +1089,8 @@
     },
     {
       "nodeName": "treeCCFront_geo",
+      "geometryName": "treeCCFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCC001_grp/treeCCFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -888,6 +1109,8 @@
     },
     {
       "nodeName": "treeCDBack_geo",
+      "geometryName": "treeCDBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCD001_grp/treeCDBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -906,6 +1129,8 @@
     },
     {
       "nodeName": "treeCDchainBack_geo",
+      "geometryName": "treeCDchainBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCD001_grp/treeCDchainBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -924,6 +1149,8 @@
     },
     {
       "nodeName": "treeCDchainFront_geo",
+      "geometryName": "treeCDchainFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCD001_grp/treeCDchainFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -942,6 +1169,8 @@
     },
     {
       "nodeName": "treeCDFront_geo",
+      "geometryName": "treeCDFront_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/tree_grp/treeCD001_grp/treeCDFront_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -960,6 +1189,8 @@
     },
     {
       "nodeName": "windowAA001_geo",
+      "geometryName": "windowAA001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowA_grp/windowAA001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -978,6 +1209,8 @@
     },
     {
       "nodeName": "windowAB001_geo",
+      "geometryName": "windowAB001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowA_grp/windowAB001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -996,6 +1229,8 @@
     },
     {
       "nodeName": "windowAB002_geo",
+      "geometryName": "windowAB002_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowA_grp/windowAB002_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1014,6 +1249,8 @@
     },
     {
       "nodeName": "windowAB003_geo",
+      "geometryName": "windowAB003_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowA_grp/windowAB003_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1032,6 +1269,8 @@
     },
     {
       "nodeName": "windowAC001_geo",
+      "geometryName": "windowAC001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowA_grp/windowAC001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1050,6 +1289,8 @@
     },
     {
       "nodeName": "windowAD001_geo",
+      "geometryName": "windowAD001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowA_grp/windowAD001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1068,6 +1309,8 @@
     },
     {
       "nodeName": "windowAE001_geo",
+      "geometryName": "windowAE001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowA_grp/windowAE001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1086,6 +1329,8 @@
     },
     {
       "nodeName": "windowAE002_geo",
+      "geometryName": "windowAE002_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowA_grp/windowAE002_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1104,6 +1349,8 @@
     },
     {
       "nodeName": "windowBA001_geo",
+      "geometryName": "windowBA001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowB_grp/windowBA001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1122,6 +1369,8 @@
     },
     {
       "nodeName": "windowBA002_geo",
+      "geometryName": "windowBA002_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowB_grp/windowBA002_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1140,6 +1389,8 @@
     },
     {
       "nodeName": "windowBB001_geo",
+      "geometryName": "windowBB001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowB_grp/windowBB001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1158,6 +1409,8 @@
     },
     {
       "nodeName": "windowBC001_geo",
+      "geometryName": "windowBC001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowB_grp/windowBC001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1176,6 +1429,8 @@
     },
     {
       "nodeName": "windowBD001_geo",
+      "geometryName": "windowBD001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowB_grp/windowBD001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1194,6 +1449,8 @@
     },
     {
       "nodeName": "windowBE001_geo",
+      "geometryName": "windowBE001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowB_grp/windowBE001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1212,6 +1469,8 @@
     },
     {
       "nodeName": "windowBF001_geo",
+      "geometryName": "windowBF001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowB_grp/windowBF001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1230,6 +1489,8 @@
     },
     {
       "nodeName": "windowBG001_geo",
+      "geometryName": "windowBG001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowB_grp/windowBG001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1248,6 +1509,8 @@
     },
     {
       "nodeName": "windowBH001_geo",
+      "geometryName": "windowBH001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowB_grp/windowBH001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1266,6 +1529,8 @@
     },
     {
       "nodeName": "windowCA001_geo",
+      "geometryName": "windowCA001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCA001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1284,6 +1549,8 @@
     },
     {
       "nodeName": "windowCB001_geo",
+      "geometryName": "windowCB001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCB001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1302,6 +1569,8 @@
     },
     {
       "nodeName": "windowCC001_geo",
+      "geometryName": "windowCC001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCC001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1320,6 +1589,8 @@
     },
     {
       "nodeName": "windowCD001_geo",
+      "geometryName": "windowCD001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCD001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1338,6 +1609,8 @@
     },
     {
       "nodeName": "windowCE001_geo",
+      "geometryName": "windowCE001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCE001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1356,6 +1629,8 @@
     },
     {
       "nodeName": "windowCE002_geo",
+      "geometryName": "windowCE002_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCE002_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1374,6 +1649,8 @@
     },
     {
       "nodeName": "windowCE003_geo",
+      "geometryName": "windowCE003_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCE003_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1392,6 +1669,8 @@
     },
     {
       "nodeName": "windowCE004_geo",
+      "geometryName": "windowCE004_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCE004_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1410,6 +1689,8 @@
     },
     {
       "nodeName": "windowCF001_geo",
+      "geometryName": "windowCF001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCF001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1428,6 +1709,8 @@
     },
     {
       "nodeName": "windowCG001_geo",
+      "geometryName": "windowCG001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCG001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1446,6 +1729,8 @@
     },
     {
       "nodeName": "windowCG002_geo",
+      "geometryName": "windowCG002_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCG002_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1464,6 +1749,8 @@
     },
     {
       "nodeName": "windowCH001_geo",
+      "geometryName": "windowCH001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCH001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1482,6 +1769,8 @@
     },
     {
       "nodeName": "windowCI001_geo",
+      "geometryName": "windowCI001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCI001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1500,6 +1789,8 @@
     },
     {
       "nodeName": "windowCJ001_geo",
+      "geometryName": "windowCJ001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCJ001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1518,6 +1809,8 @@
     },
     {
       "nodeName": "windowCL001_geo",
+      "geometryName": "windowCL001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCL001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1536,6 +1829,8 @@
     },
     {
       "nodeName": "windowCM001_geo",
+      "geometryName": "windowCM001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCM001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1554,6 +1849,8 @@
     },
     {
       "nodeName": "windowCN001_geo",
+      "geometryName": "windowCN001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCN001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1572,6 +1869,8 @@
     },
     {
       "nodeName": "windowCO001_geo",
+      "geometryName": "windowCO001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCO001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1590,6 +1889,8 @@
     },
     {
       "nodeName": "windowCP001_geo",
+      "geometryName": "windowCP001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCP001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1608,6 +1909,8 @@
     },
     {
       "nodeName": "windowCQ001_geo",
+      "geometryName": "windowCQ001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCQ001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1626,6 +1929,8 @@
     },
     {
       "nodeName": "windowCR001_geo",
+      "geometryName": "windowCR001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowC_grp/windowCR001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1644,6 +1949,8 @@
     },
     {
       "nodeName": "windowDA001_geo",
+      "geometryName": "windowDA001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowD_grp/windowDA001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1662,6 +1969,8 @@
     },
     {
       "nodeName": "windowDB001_geo",
+      "geometryName": "windowDB001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowD_grp/windowDB001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1680,6 +1989,8 @@
     },
     {
       "nodeName": "windowDC001_geo",
+      "geometryName": "windowDC001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowD_grp/windowDC001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1698,6 +2009,8 @@
     },
     {
       "nodeName": "windowDC002_geo",
+      "geometryName": "windowDC002_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowD_grp/windowDC002_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1716,6 +2029,8 @@
     },
     {
       "nodeName": "windowDD001_geo",
+      "geometryName": "windowDD001_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/far_grp/window_grp/windowD_grp/windowDD001_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propBAlpha"
       ],
@@ -1734,6 +2049,8 @@
     },
     {
       "nodeName": "ground_geo",
+      "geometryName": "ground_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/ground_grp/ground_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_ground"
       ],
@@ -1753,6 +2070,8 @@
     },
     {
       "nodeName": "adelbertAAA_geo",
+      "geometryName": "adelbertAAA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/adelbert_grp/adelbertAAA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_adelbertAAlpha"
       ],
@@ -1771,6 +2090,8 @@
     },
     {
       "nodeName": "adelbertAAB_geo",
+      "geometryName": "adelbertAAB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/adelbert_grp/adelbertAAB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_adelbertBAlpha"
       ],
@@ -1789,6 +2110,8 @@
     },
     {
       "nodeName": "anthonyAAA_geo",
+      "geometryName": "anthonyAAA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/anthony_grp/anthonyAAA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_anthonyAAlpha"
       ],
@@ -1807,6 +2130,8 @@
     },
     {
       "nodeName": "anthonyAAB_geo",
+      "geometryName": "anthonyAAB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/anthony_grp/anthonyAAB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_anthonyBAlpha"
       ],
@@ -1825,6 +2150,8 @@
     },
     {
       "nodeName": "butterflySignAAA_geo",
+      "geometryName": "butterflySignAAA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -1843,6 +2170,8 @@
     },
     {
       "nodeName": "butterflySignAAB_geo",
+      "geometryName": "butterflySignAAB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -1861,6 +2190,8 @@
     },
     {
       "nodeName": "butterflySignAAC_geo",
+      "geometryName": "butterflySignAAC_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAC_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -1879,6 +2210,8 @@
     },
     {
       "nodeName": "butterflySignAAD_geo",
+      "geometryName": "butterflySignAAD_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAD_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -1897,6 +2230,8 @@
     },
     {
       "nodeName": "butterflySignAAE_geo",
+      "geometryName": "butterflySignAAE_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAE_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -1915,6 +2250,8 @@
     },
     {
       "nodeName": "butterflySignAAF_geo",
+      "geometryName": "butterflySignAAF_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAF_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -1933,6 +2270,8 @@
     },
     {
       "nodeName": "butterflySignAAG_geo",
+      "geometryName": "butterflySignAAG_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAG_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -1951,6 +2290,8 @@
     },
     {
       "nodeName": "butterflySignAAH_geo",
+      "geometryName": "butterflySignAAH_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAH_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -1969,6 +2310,8 @@
     },
     {
       "nodeName": "butterflySignAAI_geo",
+      "geometryName": "butterflySignAAI_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAI_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -1987,6 +2330,8 @@
     },
     {
       "nodeName": "butterflySignAAJ_geo",
+      "geometryName": "butterflySignAAJ_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAJ_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -2005,6 +2350,8 @@
     },
     {
       "nodeName": "butterflySignAAK_geo",
+      "geometryName": "butterflySignAAK_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/butterflySign_grp/butterflySignAAK_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propA"
       ],
@@ -2023,6 +2370,8 @@
     },
     {
       "nodeName": "rockA_geo",
+      "geometryName": "rockA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockBig_grp/rockA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2041,6 +2390,8 @@
     },
     {
       "nodeName": "rockB_geo",
+      "geometryName": "rockB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockBig_grp/rockB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2059,6 +2410,8 @@
     },
     {
       "nodeName": "rockC_geo",
+      "geometryName": "rockC_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockBig_grp/rockC_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2077,6 +2430,8 @@
     },
     {
       "nodeName": "rockD_geo",
+      "geometryName": "rockD_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockBig_grp/rockD_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2095,6 +2450,8 @@
     },
     {
       "nodeName": "rockE_geo",
+      "geometryName": "rockE_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockBig_grp/rockE_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2113,6 +2470,8 @@
     },
     {
       "nodeName": "rockF_geo",
+      "geometryName": "rockF_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockBig_grp/rockF_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2131,6 +2490,8 @@
     },
     {
       "nodeName": "rockG_geo",
+      "geometryName": "rockG_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockBig_grp/rockG_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2149,6 +2510,8 @@
     },
     {
       "nodeName": "rockEdge_geo",
+      "geometryName": "rockEdge_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockEdge_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2168,6 +2531,8 @@
     },
     {
       "nodeName": "rockH_geo",
+      "geometryName": "rockH_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockSmall_grp/rockH_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2186,6 +2551,8 @@
     },
     {
       "nodeName": "rockI_geo",
+      "geometryName": "rockI_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockSmall_grp/rockI_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2204,6 +2571,8 @@
     },
     {
       "nodeName": "rockJ_geo",
+      "geometryName": "rockJ_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockSmall_grp/rockJ_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2222,6 +2591,8 @@
     },
     {
       "nodeName": "rockK_geo",
+      "geometryName": "rockK_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockSmall_grp/rockK_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2240,6 +2611,8 @@
     },
     {
       "nodeName": "rockL_geo",
+      "geometryName": "rockL_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockSmall_grp/rockL_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2258,6 +2631,8 @@
     },
     {
       "nodeName": "rockM_geo",
+      "geometryName": "rockM_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockSmall_grp/rockM_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2276,6 +2651,8 @@
     },
     {
       "nodeName": "rockN_geo",
+      "geometryName": "rockN_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockSmall_grp/rockN_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2294,6 +2671,8 @@
     },
     {
       "nodeName": "rockO_geo",
+      "geometryName": "rockO_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockSmall_grp/rockO_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2312,6 +2691,8 @@
     },
     {
       "nodeName": "rockP_geo",
+      "geometryName": "rockP_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockSmall_grp/rockP_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2330,6 +2711,8 @@
     },
     {
       "nodeName": "rockQ_geo",
+      "geometryName": "rockQ_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/mid_grp/rock_grp/rockSmall_grp/rockQ_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_rockAlpha"
       ],
@@ -2348,6 +2731,8 @@
     },
     {
       "nodeName": "sky_geo",
+      "geometryName": "sky_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02/sky_grp/sky_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_sky"
       ],
@@ -2366,6 +2751,8 @@
     },
     {
       "nodeName": "ibaraA_geo",
+      "geometryName": "ibaraA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara001/ibaraA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2384,6 +2771,8 @@
     },
     {
       "nodeName": "ibaraABack_geo",
+      "geometryName": "ibaraABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara001/ibaraABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2402,6 +2791,8 @@
     },
     {
       "nodeName": "ibaraB_geo",
+      "geometryName": "ibaraB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara001/ibaraB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2420,6 +2811,8 @@
     },
     {
       "nodeName": "ibaraBBack_geo",
+      "geometryName": "ibaraBBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara001/ibaraBBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2438,6 +2831,8 @@
     },
     {
       "nodeName": "ibaraA_geo",
+      "geometryName": "ibaraA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara002/ibaraA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2456,6 +2851,8 @@
     },
     {
       "nodeName": "ibaraABack_geo",
+      "geometryName": "ibaraABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara002/ibaraABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2474,6 +2871,8 @@
     },
     {
       "nodeName": "ibaraB_geo",
+      "geometryName": "ibaraB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara002/ibaraB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2492,6 +2891,8 @@
     },
     {
       "nodeName": "ibaraBBack_geo",
+      "geometryName": "ibaraBBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara002/ibaraBBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2510,6 +2911,8 @@
     },
     {
       "nodeName": "ibaraA_geo",
+      "geometryName": "ibaraA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara003/ibaraA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2528,6 +2931,8 @@
     },
     {
       "nodeName": "ibaraABack_geo",
+      "geometryName": "ibaraABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara003/ibaraABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2546,6 +2951,8 @@
     },
     {
       "nodeName": "ibaraB_geo",
+      "geometryName": "ibaraB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara003/ibaraB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2564,6 +2971,8 @@
     },
     {
       "nodeName": "ibaraBBack_geo",
+      "geometryName": "ibaraBBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara003/ibaraBBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2582,6 +2991,8 @@
     },
     {
       "nodeName": "ibaraA_geo",
+      "geometryName": "ibaraA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara004/ibaraA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2600,6 +3011,8 @@
     },
     {
       "nodeName": "ibaraABack_geo",
+      "geometryName": "ibaraABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara004/ibaraABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2618,6 +3031,8 @@
     },
     {
       "nodeName": "ibaraB_geo",
+      "geometryName": "ibaraB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara004/ibaraB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2636,6 +3051,8 @@
     },
     {
       "nodeName": "ibaraBBack_geo",
+      "geometryName": "ibaraBBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara004/ibaraBBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2654,6 +3071,8 @@
     },
     {
       "nodeName": "ibaraA_geo",
+      "geometryName": "ibaraA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara005/ibaraA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2672,6 +3091,8 @@
     },
     {
       "nodeName": "ibaraABack_geo",
+      "geometryName": "ibaraABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara005/ibaraABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2690,6 +3111,8 @@
     },
     {
       "nodeName": "ibaraB_geo",
+      "geometryName": "ibaraB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara005/ibaraB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2708,6 +3131,8 @@
     },
     {
       "nodeName": "ibaraBBack_geo",
+      "geometryName": "ibaraBBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara005/ibaraBBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2726,6 +3151,8 @@
     },
     {
       "nodeName": "ibaraA_geo",
+      "geometryName": "ibaraA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara006/ibaraA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2744,6 +3171,8 @@
     },
     {
       "nodeName": "ibaraABack_geo",
+      "geometryName": "ibaraABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara006/ibaraABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2762,6 +3191,8 @@
     },
     {
       "nodeName": "ibaraB_geo",
+      "geometryName": "ibaraB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara006/ibaraB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2780,6 +3211,8 @@
     },
     {
       "nodeName": "ibaraBBack_geo",
+      "geometryName": "ibaraBBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara006/ibaraBBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2798,6 +3231,8 @@
     },
     {
       "nodeName": "ibaraA_geo",
+      "geometryName": "ibaraA_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara007/ibaraA_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2816,6 +3251,8 @@
     },
     {
       "nodeName": "ibaraABack_geo",
+      "geometryName": "ibaraABack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara007/ibaraABack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2834,6 +3271,8 @@
     },
     {
       "nodeName": "ibaraB_geo",
+      "geometryName": "ibaraB_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara007/ibaraB_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
@@ -2852,6 +3291,8 @@
     },
     {
       "nodeName": "ibaraBBack_geo",
+      "geometryName": "ibaraBBack_geo",
+      "hierarchyPath": "bg_3d_600_00_01_002/bg_3d_600_00_01_002/bg3d600A_01_02_ibara/bg3d600A_01_02_ibara007/ibaraBBack_geo",
       "materialNames": [
         "mt_bg3d600A_01_02_propC"
       ],
