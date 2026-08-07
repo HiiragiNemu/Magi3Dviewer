@@ -1,0 +1,3 @@
+Validate feature/stage-608-current-jp-textures-20260808 against the exact current-JP stage-608 Texture2D closure.
+Apply only fail-closed decoded-pixel replacements, run full release build/tests, strict Chromium/WebGL regression with character 100107 + battle-608-00-00-001, and persist compact visual/hash evidence back to the feature branch.
+DO NOT MERGE: automation trigger only.
