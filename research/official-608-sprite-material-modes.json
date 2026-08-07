@@ -1,0 +1,1344 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-assetbundle-material-saved-properties",
+  "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+  "bundle": "battle/stage/bg_3d_608_00_00_001",
+  "materials": [
+    {
+      "name": "bg3d608_00_blue_ChairCD",
+      "pathId": "-6788543427247857492",
+      "shader": {
+        "m_FileID": 1,
+        "m_PathID": 8347699476007106368
+      },
+      "renderQueue": 3000,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_CULLING_OFF",
+        "_RECEIVESHADOWS_ON",
+        "_SURFACE_TYPE_TRANSPARENT"
+      ],
+      "enableInstancingVariants": false,
+      "doubleSidedGI": false,
+      "texEnvs": [
+        {
+          "property": "_BaseMap",
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "property": "_MainTex",
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.8999999761581421,
+        "_BaseSetting": 1.0,
+        "_Blend": 0.0,
+        "_Blend2ndPow": 1.0,
+        "_Blend2ndTexScale": 1.0,
+        "_Blend2ndTexScaleToggle": 0.0,
+        "_BlendModePreserveSpecular": 0.0,
+        "_BlendPow": 1.0,
+        "_BlendTexScale": 1.0,
+        "_BlendTexScaleToggle": 0.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_Culling": 0.0,
+        "_Cutoff": 0.5,
+        "_DropFrame_FlowMap": 0.0,
+        "_DropFrame_HueShift": 0.0,
+        "_DropFrame_MultiScroll": 0.0,
+        "_DstBlend": 10.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_HueShiftValue_MultiUV": 0.0,
+        "_QueueControl": 0.0,
+        "_QueueOffset": 0.0,
+        "_ReceiveShadows": 1.0,
+        "_RenderingOptions": 1.0,
+        "_SrcBlend": 5.0,
+        "_Surface": 1.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_MULTI_UV_SCROLL": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 0.30000001192092896,
+        "_UseAlphaToSmoothness": 0.0,
+        "_UseFlipbook": 0.0,
+        "_UseMeshUV": 0.0,
+        "_ZTest": 4.0,
+        "_ZWrite": 0.0,
+        "_ZWriteControl": 0.0,
+        "_frame": 0.0,
+        "_frames": 0.0
+      },
+      "ints": {},
+      "colors": {
+        "_1stColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_1stOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_2ndOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_Blend2ndTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_Blend2ndTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BottomFadeInRange": {
+          "r": 0.0,
+          "g": 40.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 2.0,
+          "g": 2.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_TopFadeOutRange": {
+          "r": 60.0,
+          "g": 100.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_UV_Scroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_maxValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_minValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d608_00_red_MusicNoteA",
+      "pathId": "-8004545123849076128",
+      "shader": {
+        "m_FileID": 1,
+        "m_PathID": 8347699476007106368
+      },
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_CULLING_OFF",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "enableInstancingVariants": false,
+      "doubleSidedGI": false,
+      "texEnvs": [
+        {
+          "property": "_BaseMap",
+          "fileId": 2,
+          "pathId": "2125725807504079055",
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "property": "_MainTex",
+          "fileId": 3,
+          "pathId": "-8638699045254887522",
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 1.0,
+        "_Alpha_Clip": 0.10000000149011612,
+        "_BaseSetting": 1.0,
+        "_Blend": 0.0,
+        "_Blend2ndPow": 1.0,
+        "_Blend2ndTexScale": 1.0,
+        "_Blend2ndTexScaleToggle": 0.0,
+        "_BlendModePreserveSpecular": 0.0,
+        "_BlendPow": 1.0,
+        "_BlendTexScale": 1.0,
+        "_BlendTexScaleToggle": 0.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_Culling": 0.0,
+        "_Cutoff": 0.5,
+        "_DropFrame_FlowMap": 0.0,
+        "_DropFrame_HueShift": 0.0,
+        "_DropFrame_MultiScroll": 0.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_HueShiftValue_MultiUV": 0.0,
+        "_QueueControl": 0.0,
+        "_QueueOffset": 0.0,
+        "_ReceiveShadows": 0.0,
+        "_RenderingOptions": 1.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_MULTI_UV_SCROLL": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseAlphaToSmoothness": 0.0,
+        "_UseFlipbook": 0.0,
+        "_UseMeshUV": 0.0,
+        "_ZTest": 4.0,
+        "_ZWrite": 1.0,
+        "_ZWriteControl": 0.0,
+        "_frame": 0.0,
+        "_frames": 0.0
+      },
+      "ints": {},
+      "colors": {
+        "_1stColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_1stOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_2ndOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BaseColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "_Blend2ndTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_Blend2ndTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BottomFadeInRange": {
+          "r": 0.0,
+          "g": 40.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 2.0,
+          "g": 2.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_TopFadeOutRange": {
+          "r": 60.0,
+          "g": 100.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_UV_Scroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_maxValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_minValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d608_00_red_MusicNoteB",
+      "pathId": "4156673915936468946",
+      "shader": {
+        "m_FileID": 1,
+        "m_PathID": 8347699476007106368
+      },
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_CULLING_OFF",
+        "_ISDITHERCLIPPING_ON",
+        "_NOISE",
+        "_RECEIVE_SHADOWS_OFF",
+        "_SURFACE_TYPE_TRANSPARENT"
+      ],
+      "enableInstancingVariants": false,
+      "doubleSidedGI": false,
+      "texEnvs": [
+        {
+          "property": "_BaseMap",
+          "fileId": 2,
+          "pathId": "2125725807504079055",
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "property": "_MainTex",
+          "fileId": 3,
+          "pathId": "-8638699045254887522",
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "property": "_NoiseTex",
+          "fileId": 12,
+          "pathId": "6159205007759442036",
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.5,
+        "_BaseSetting": 1.0,
+        "_Blend": 2.0,
+        "_Blend2ndPow": 1.0,
+        "_Blend2ndTexScale": 1.0,
+        "_Blend2ndTexScaleToggle": 0.0,
+        "_BlendModePreserveSpecular": 0.0,
+        "_BlendPow": 1.0,
+        "_BlendTexScale": 1.0,
+        "_BlendTexScaleToggle": 0.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_Culling": 0.0,
+        "_Cutoff": 0.5,
+        "_DropFrame_FlowMap": 0.0,
+        "_DropFrame_HueShift": 0.0,
+        "_DropFrame_MultiScroll": 0.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_HueShiftValue_MultiUV": 0.0,
+        "_QueueControl": 0.0,
+        "_QueueOffset": 0.0,
+        "_ReceiveShadows": 0.0,
+        "_RenderingOptions": 1.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_MULTI_UV_SCROLL": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseAlphaToSmoothness": 0.0,
+        "_UseFlipbook": 0.0,
+        "_UseMeshUV": 0.0,
+        "_ZTest": 4.0,
+        "_ZWrite": 1.0,
+        "_ZWriteControl": 0.0,
+        "_frame": 0.0,
+        "_frames": 0.0
+      },
+      "ints": {},
+      "colors": {
+        "_1stColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_1stOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_2ndOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BaseColor": {
+          "r": 0.8500000238418579,
+          "g": 0.6568182110786438,
+          "b": 0.6375000476837158,
+          "a": 1.0
+        },
+        "_Blend2ndTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_Blend2ndTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BottomFadeInRange": {
+          "r": 0.0,
+          "g": 40.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 2.0,
+          "g": 2.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_TopFadeOutRange": {
+          "r": 60.0,
+          "g": 100.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_UV_Scroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_maxValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_minValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d608_00_red_MusicNoteC",
+      "pathId": "232204644185810109",
+      "shader": {
+        "m_FileID": 1,
+        "m_PathID": 8347699476007106368
+      },
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_CULLING_OFF",
+        "_ISDITHERCLIPPING_ON",
+        "_NOISE",
+        "_RECEIVE_SHADOWS_OFF",
+        "_SURFACE_TYPE_TRANSPARENT"
+      ],
+      "enableInstancingVariants": false,
+      "doubleSidedGI": false,
+      "texEnvs": [
+        {
+          "property": "_BaseMap",
+          "fileId": 13,
+          "pathId": "-2243324628426955472",
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "property": "_MainTex",
+          "fileId": 13,
+          "pathId": "-2243324628426955472",
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "property": "_NoiseTex",
+          "fileId": 12,
+          "pathId": "6159205007759442036",
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.699999988079071,
+        "_BaseSetting": 1.0,
+        "_Blend": 2.0,
+        "_Blend2ndPow": 1.0,
+        "_Blend2ndTexScale": 1.0,
+        "_Blend2ndTexScaleToggle": 0.0,
+        "_BlendModePreserveSpecular": 0.0,
+        "_BlendPow": 1.0,
+        "_BlendTexScale": 1.0,
+        "_BlendTexScaleToggle": 0.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_Culling": 0.0,
+        "_Cutoff": 0.5,
+        "_DropFrame_FlowMap": 0.0,
+        "_DropFrame_HueShift": 0.0,
+        "_DropFrame_MultiScroll": 0.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_HueShiftValue_MultiUV": 0.0,
+        "_QueueControl": 0.0,
+        "_QueueOffset": 0.0,
+        "_ReceiveShadows": 0.0,
+        "_RenderingOptions": 1.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_MULTI_UV_SCROLL": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseAlphaToSmoothness": 0.0,
+        "_UseFlipbook": 0.0,
+        "_UseMeshUV": 0.0,
+        "_ZTest": 4.0,
+        "_ZWrite": 1.0,
+        "_ZWriteControl": 0.0,
+        "_frame": 0.0,
+        "_frames": 0.0
+      },
+      "ints": {},
+      "colors": {
+        "_1stColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_1stOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_2ndOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BaseColor": {
+          "r": 0.8500000238418579,
+          "g": 0.6568182110786438,
+          "b": 0.6375000476837158,
+          "a": 1.0
+        },
+        "_Blend2ndTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_Blend2ndTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BottomFadeInRange": {
+          "r": 0.0,
+          "g": 40.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 2.0,
+          "g": 2.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_TopFadeOutRange": {
+          "r": 60.0,
+          "g": 100.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_UV_Scroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_maxValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_minValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d608_00_red_violinCol",
+      "pathId": "-1521281346445600758",
+      "shader": {
+        "m_FileID": 1,
+        "m_PathID": 8347699476007106368
+      },
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_FLIPBOOK"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_CULLING_OFF",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "enableInstancingVariants": false,
+      "doubleSidedGI": false,
+      "texEnvs": [
+        {
+          "property": "_BaseMap",
+          "fileId": 0,
+          "pathId": "-4587267788711311578",
+          "resolvedLocalTextureName": "bg3d608_00_red_violin_sprite",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "property": "_MainTex",
+          "fileId": 0,
+          "pathId": "-4587267788711311578",
+          "resolvedLocalTextureName": "bg3d608_00_red_violin_sprite",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 1.0,
+        "_Alpha_Clip": 0.5,
+        "_BaseSetting": 1.0,
+        "_Blend": 0.0,
+        "_Blend2ndPow": 1.0,
+        "_Blend2ndTexScale": 1.0,
+        "_Blend2ndTexScaleToggle": 0.0,
+        "_BlendModePreserveSpecular": 0.0,
+        "_BlendPow": 1.0,
+        "_BlendTexScale": 1.0,
+        "_BlendTexScaleToggle": 0.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_Culling": 0.0,
+        "_Cutoff": 0.5,
+        "_DropFrame_FlowMap": 0.0,
+        "_DropFrame_HueShift": 0.0,
+        "_DropFrame_MultiScroll": 0.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_HueShiftValue_MultiUV": 0.0,
+        "_QueueControl": 0.0,
+        "_QueueOffset": 0.0,
+        "_ReceiveShadows": 0.0,
+        "_RenderingOptions": 1.0,
+        "_SrcBlend": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_MULTI_UV_SCROLL": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseAlphaToSmoothness": 0.0,
+        "_UseFlipbook": 1.0,
+        "_UseMeshUV": 0.0,
+        "_ZTest": 4.0,
+        "_ZWrite": 1.0,
+        "_ZWriteControl": 0.0,
+        "_frame": 0.0,
+        "_frames": 0.0
+      },
+      "ints": {},
+      "colors": {
+        "_1stColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_1stOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_2ndOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_Blend2ndTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_Blend2ndTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BottomFadeInRange": {
+          "r": 0.0,
+          "g": 40.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 4.0,
+          "g": 4.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_TopFadeOutRange": {
+          "r": 60.0,
+          "g": 100.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_UV_Scroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_maxValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_minValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      }
+    },
+    {
+      "name": "mt_bg3d608_00_red_violinShdLine",
+      "pathId": "-897049067990588486",
+      "shader": {
+        "m_FileID": 1,
+        "m_PathID": 8347699476007106368
+      },
+      "renderQueue": 3000,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_FLIPBOOK"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_ALPHAMODULATE_ON",
+        "_CULLING_OFF",
+        "_RECEIVE_SHADOWS_OFF",
+        "_SURFACE_TYPE_TRANSPARENT"
+      ],
+      "enableInstancingVariants": false,
+      "doubleSidedGI": false,
+      "texEnvs": [
+        {
+          "property": "_BaseMap",
+          "fileId": 0,
+          "pathId": "-7311903068602794106",
+          "resolvedLocalTextureName": "bg3d608_00_red_violinLineShd_sprite",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        {
+          "property": "_MainTex",
+          "fileId": 0,
+          "pathId": "-7311903068602794106",
+          "resolvedLocalTextureName": "bg3d608_00_red_violinLineShd_sprite",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        }
+      ],
+      "floats": {
+        "_AlphaClip": 1.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.5,
+        "_BaseSetting": 1.0,
+        "_Blend": 3.0,
+        "_Blend2ndPow": 1.0,
+        "_Blend2ndTexScale": 1.0,
+        "_Blend2ndTexScaleToggle": 0.0,
+        "_BlendModePreserveSpecular": 0.0,
+        "_BlendPow": 1.0,
+        "_BlendTexScale": 1.0,
+        "_BlendTexScaleToggle": 0.0,
+        "_CastShadows": 0.0,
+        "_Cull": 2.0,
+        "_Culling": 0.0,
+        "_Cutoff": 0.5,
+        "_DropFrame_FlowMap": 0.0,
+        "_DropFrame_HueShift": 0.0,
+        "_DropFrame_MultiScroll": 0.0,
+        "_DstBlend": 0.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FogInfluence": 1.0,
+        "_HueShiftValue_MultiUV": 0.0,
+        "_QueueControl": 0.0,
+        "_QueueOffset": 0.0,
+        "_ReceiveShadows": 0.0,
+        "_RenderingOptions": 1.0,
+        "_SrcBlend": 2.0,
+        "_Surface": 1.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_MULTI_UV_SCROLL": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseAlphaToSmoothness": 0.0,
+        "_UseFlipbook": 1.0,
+        "_UseMeshUV": 0.0,
+        "_ZTest": 4.0,
+        "_ZWrite": 0.0,
+        "_ZWriteControl": 0.0,
+        "_frame": 0.0,
+        "_frames": 0.0
+      },
+      "ints": {},
+      "colors": {
+        "_1stColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_1stOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_2ndOffset": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndScrollSpeed": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_2ndTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BaseColor": {
+          "r": 1.0,
+          "g": 0.7719124555587769,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "_Blend2ndTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_Blend2ndTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexScroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BlendTexTillingOffset": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BottomFadeInRange": {
+          "r": 0.0,
+          "g": 40.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_EmissionColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "_FlipbookTileGrid": {
+          "r": 4.0,
+          "g": 4.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_TopFadeOutRange": {
+          "r": 60.0,
+          "g": 100.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_UV_Scroll": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_maxValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_minValues": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      }
+    }
+  ],
+  "interpretation": "Exact serialized Material evidence only. No Web behavior is inferred here; billboard/mesh-UV/render-state semantics require shader/native parity before they may be described as exact."
+}
