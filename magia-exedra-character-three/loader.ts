@@ -173,6 +173,16 @@ export async function loadCharacter(
         texturePathUrl,
         path => path.toLowerCase().includes('rdtoon_metallic_gradient_map'),
     )
+    const gemMatCapMap = ObjFindByKey(
+        texturePathUrl,
+        path => {
+            const lower = path.toLowerCase()
+            return (
+                lower.includes('gem_matcap') ||
+                (lower.includes('matcap') && !lower.includes('metallic_gradient'))
+            )
+        },
+    )
     const characterProfile = getCharacterReDriveProfile(characterId)
 
     return new Promise(async (resolve, reject) => {
@@ -452,7 +462,11 @@ export async function loadCharacter(
                     }
 
                     if (materialProfiles.some(profile => profile.gem.enabled)) {
-                        const extension = await extendMaterialWithOfficialGem(material, materialProfiles)
+                        const extension = await extendMaterialWithOfficialGem(
+                            material,
+                            materialProfiles,
+                            gemMatCapMap,
+                        )
                         textures.push(...extension.resources.textures)
                     }
                     bindOfficialMaterialGroups(mesh, material, materialProfiles)

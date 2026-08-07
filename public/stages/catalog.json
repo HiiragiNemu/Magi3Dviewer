@@ -52,12 +52,12 @@
           "far": 200
         },
         "ambientLight": {
-          "color": "#fff2ec",
-          "intensity": 1.0
+          "color": "#ffffff",
+          "intensity": 0.4
         },
         "directionalLight": {
-          "color": "#ffd4c2",
-          "intensity": 2.0,
+          "color": "#ffffff",
+          "intensity": 0.85,
           "position": [
             -4,
             7,
@@ -72,39 +72,39 @@
         },
         "renderer": {
           "toneMapping": "aces",
-          "exposure": 1.0
+          "exposure": 0.85
         },
         "colorFilter": {
-          "brightness": 1.02,
-          "contrast": 0.95,
-          "saturation": 1.15
+          "brightness": 1.0,
+          "contrast": 1.0,
+          "saturation": 1.0
         },
         "bloom": {
-          "enabled": true,
-          "strength": 0.35,
-          "radius": 0.7,
-          "threshold": 0.8
-        },
-        "reDriveVolume": {
-          "characterShadowTint": "#ccbfb8",
-          "characterLightingOverrideColor": "#ffbc9b",
-          "characterLightingOverrideRatio": 0.5,
-          "characterAdditionalRimLightColor": "#ffffff",
-          "characterAdditionalRimLightDirection": [
-            1,
-            -1
-          ],
-          "backgroundShadowStrengthAdditive": 0.25,
-          "backgroundPostExposure": 0.2,
-          "backgroundContrast": -5,
-          "backgroundSaturation": 5
+          "enabled": false,
+          "strength": 0.0,
+          "radius": 0.0,
+          "threshold": 1.0
         }
       },
       "evidence": [
         "AssetStudioModCLI splitObjects",
         "official AssetBundle geometry; render profile remains under parameter recovery",
-        "JP AssetBundles/Android manifest root identifier verified against ma-ex-dataSP"
-      ]
+        "JP AssetBundles/Android manifest root identifier verified against ma-ex-dataSP",
+        "temporary conservative lighting fallback: legacy manual character LightingOverride/AdditionalRim/Bloom removed pending component recovery"
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "pending",
+        "missing": [
+          "component-backed ReDriveVolume and official Light profile",
+          "ReflectionProbe / lightmap evidence audit",
+          "scene runtime component audit"
+        ],
+        "evidence": [
+          "official AssetBundle geometry is present",
+          "legacy manual lighting was intentionally neutralized because it was not source-backed"
+        ]
+      }
     },
     {
       "id": "battle-600-00-01-001",
