@@ -26,10 +26,10 @@ def main() -> int:
     text = text.replace(OLD_HEAD, NEW_HEAD, 1).replace(OLD_TAIL, NEW_TAIL, 1)
     TARGET.write_text(text, encoding='utf-8')
     verify = TARGET.read_text(encoding='utf-8')
-    if verify.count('reDriveSelfShadowUniformState.map.value = null') != 1:
-        raise RuntimeError('Expected exactly one receiver sampler detach')
-    if verify.count('reDriveSelfShadowUniformState.map.value = receiverShadowMap') != 1:
-        raise RuntimeError('Expected exactly one receiver sampler restore')
+    if NEW_HEAD not in verify:
+        raise RuntimeError('Guarded caster-pass receiver sampler detach was not persisted')
+    if NEW_TAIL not in verify:
+        raise RuntimeError('Guarded caster-pass receiver sampler restore was not persisted')
     print('Detached ReDrive receiver sampler only while its depth attachment is the active render target')
     return 0
 
