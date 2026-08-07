@@ -11,664 +11,115 @@ TAP version 13
 # Subtest: angelRingHeadLock.test.mjs
 ok 1 - angelRingHeadLock.test.mjs
   ---
-  duration_ms: 60.357909
+  duration_ms: 36.342835
   type: 'test'
   ...
 # Subtest: per-slot gem uniforms update both the gem pass and special-jewel specular boost
 ok 2 - per-slot gem uniforms update both the gem pass and special-jewel specular boost
   ---
-  duration_ms: 1.105244
+  duration_ms: 0.561207
   type: 'test'
   ...
 # Subtest: draw-group binding refreshes the official profile before each render
 ok 3 - draw-group binding refreshes the official profile before each render
   ---
-  duration_ms: 0.216246
+  duration_ms: 0.157663
   type: 'test'
   ...
 # Subtest: native ReDrive self-shadow keeps recovered TW/JP-shared pass constants
 ok 4 - native ReDrive self-shadow keeps recovered TW/JP-shared pass constants
   ---
-  duration_ms: 1.584613
+  duration_ms: 1.25984
   type: 'test'
   ...
 # Subtest: camera depth is produced before self-shadow and both passes unbind their own sampled attachments
 ok 5 - camera depth is produced before self-shadow and both passes unbind their own sampled attachments
   ---
-  duration_ms: 0.588745
+  duration_ms: 0.400049
   type: 'test'
   ...
 # Subtest: self-shadow is applied through authored toon shadow textures and face SDF
 ok 6 - self-shadow is applied through authored toon shadow textures and face SDF
   ---
-  duration_ms: 1.833089
+  duration_ms: 1.446881
   type: 'test'
   ...
 # Subtest: 100101/100107 shared body Aniso uses exact current-JP material values
 ok 7 - 100101/100107 shared body Aniso uses exact current-JP material values
   ---
-  duration_ms: 2.313841
+  duration_ms: 1.551464
   type: 'test'
   ...
 # Subtest: 100101 weapon Soul Gem uses exact material Fresnel defaults
 ok 8 - 100101 weapon Soul Gem uses exact material Fresnel defaults
   ---
-  duration_ms: 0.440517
+  duration_ms: 0.308248
   type: 'test'
   ...
 # Subtest: per-material uniforms override the global debug Fresnel without enabling it globally
 ok 9 - per-material uniforms override the global debug Fresnel without enabling it globally
   ---
-  duration_ms: 0.354455
+  duration_ms: 0.233721
   type: 'test'
   ...
-# Subtest: GemDepthDiff removes the old NdotV proxy and pins recovered JP predicate/threshold arithmetic
-not ok 10 - GemDepthDiff removes the old NdotV proxy and pins recovered JP predicate/threshold arithmetic
+# Subtest: GemDepthDiff removes executable NdotV proxy code and pins recovered JP predicate/threshold arithmetic
+ok 10 - GemDepthDiff removes executable NdotV proxy code and pins recovered JP predicate/threshold arithmetic
   ---
-  duration_ms: 4.597345
+  duration_ms: 0.347033
   type: 'test'
-  location: '/home/runner/work/Magi3Dviewer/Magi3Dviewer/officialMaterialFresnelAniso.test.mjs:78:1'
-  failureType: 'testCodeFailure'
-  error: |-
-    The input was expected to not match the regular expression /rdGemDepthProxy/. Input:
-    
-    "import * as THREE from 'three';\n" +
-      "import type { OfficialMaterialProfile } from '../materialProfile';\n" +
-      "import { createDefaultMaterialProfile } from '../materialProfile';\n" +
-      "import { bindReDriveCameraDepthShader } from '../scene/cameraDepth';\n" +
-      "import { loadTexture, MaximizeTextureQuality } from '../texture';\n" +
-      "import DefaultGemMatCap from '../models/chara_109801_battle_unit/matcap02_invert.png';\n" +
-      "import OfficialSoftMetallicMatCap from '../models/common/matcap_SoftMetallic.png';\n" +
-      '\n' +
-      'export interface OfficialGemResources {\n' +
-      '    matCap?: THREE.Texture;\n' +
-      '    textures: THREE.Texture[];\n' +
-      '}\n' +
-      '\n' +
-      'export async function loadOfficialGemResources(\n' +
-      '    profiles: OfficialMaterialProfile[] | undefined,\n' +
-      '    matCapUrl?: string,\n' +
-      '): Promise<OfficialGemResources> {\n' +
-      '    if (!profiles?.some(profile => profile.gem.enabled && profile.gem.useMatCap)) {\n' +
-      '        return { textures: [] };\n' +
-      '    }\n' +
-      '    // Exact current-JP evidence for 100101/100107 body_SJ and\n' +
-      '    // weapon_a_sj resolves `_MatCapTex` to the common 256x256\n' +
-      '    // `matcap_SoftMetallic` texture. Do not substitute a character-package\n' +
-      '    // guess or the historical 109801 fallback for those material slots.\n' +
-      '    const requiresSoftMetallic = profiles.some(\n' +
-      '        profile =>\n' +
-      '            profile.gem.enabled &&\n' +
-      '            profile.gem.useMatCap &&\n' +
-      "            profile.gem.matCapSource === 'soft-metallic',\n" +
-      '    );\n' +
-      '    const resolvedMatCapUrl = requiresSoftMetallic\n' +
-      '        ? OfficialSoftMetallicMatCap\n' +
-      '        : (matCapUrl ?? DefaultGemMatCap);\n' +
-      '    const matCap = await loadTexture(resolvedMatCapUrl, {\n' +
-      '        colorSpace: THREE.NoColorSpace,\n' +
-      '    });\n' +
-      '    matCap.wrapS = THREE.ClampToEdgeWrapping;\n' +
-      '    matCap.wrapT = THREE.ClampToEdgeWrapping;\n' +
-      '    MaximizeTextureQuality(matCap);\n' +
-      '    return { matCap, textures: [matCap] };\n' +
-      '}\n' +
-      '\n' +
-      'export function setOfficialMaterialProfileUniforms(\n' +
-      '    shader: THREE.WebGLProgramParametersWithUniforms | undefined,\n' +
-      '    profile: OfficialMaterialProfile | undefined,\n' +
-      ') {\n' +
-      '    if (!shader) return;\n' +
-      '    const value = profile ?? createDefaultMaterialProfile();\n' +
-      '    const gem = value.gem;\n' +
-      '    const set = (key: string, uniformValue: number) => {\n' +
-      '        shader.uniforms[key] ??= { value: uniformValue };\n' +
-      '        shader.uniforms[key].value = uniformValue;\n' +
-      '    };\n' +
-      '    const setColor = (\n' +
-      '        key: string,\n' +
-      '        rgb: readonly [number, number, number],\n' +
-      '    ) => {\n' +
-      '        const current = shader.uniforms[key]?.value;\n' +
-      '        if (current instanceof THREE.Color) current.setRGB(...rgb);\n' +
-      '        else shader.uniforms[key] = { value: new THREE.Color(...rgb) };\n' +
-      '    };\n' +
-      '    const aniso = value.anisotropyProfile;\n' +
-      '    const fresnel = value.fresnel;\n' +
-      "    set('uMaterialAnisotropy', aniso.enabled ? 1 : 0);\n" +
-      "    set('uMaterialAnisoMaskByMetallic', aniso.maskByMetallic ? 1 : 0);\n" +
-      "    setColor('uMaterialAnisoColor', aniso.color);\n" +
-      "    set('uMaterialAnisoThreshold', aniso.threshold);\n" +
-      "    set('uMaterialAnisoFeather', aniso.feather);\n" +
-      '    // Material defaults are authoritative. FresnelAnimationAttributeReceiver\n' +
-      '    // will eventually overwrite the same per-renderer uniforms from Timeline.\n' +
-      "    set('uFresnelEnabled', fresnel.enabled ? 1 : 0);\n" +
-      "    setColor('uFresnelColor', fresnel.color);\n" +
-      "    set('uFresnelStrength', fresnel.enabled ? 1 : 0);\n" +
-      "    set('uFresnelThreshold', fresnel.threshold);\n" +
-      "    set('uFresnelFeather', fresnel.feather);\n" +
-      "    set('uFresnelMaskByMetallic', fresnel.maskByMetallic ? 1 : 0);\n" +
-      "    set('uMaterialOutlineOffset', value.outlineOffset ? 1 : 0);\n" +
-      "    set('uMaterialSkinOutlineOffset', value.skinOutlineOffset ? 1 : 0);\n" +
-      "    set('uMaterialIsGem', gem.enabled ? 1 : 0);\n" +
-      '    // GeneralMaterial is shared by every recovered FBX draw group. The\n' +
-      '    // compile-time feature profile is deliberately an aggregate so the shader\n' +
-      '    // variant contains the jewel branch, but the actual switch must follow the\n' +
-      '    // material slot selected by loader.onBeforeRender.\n' +
-      "    set('uMaterialSpecialJewel', gem.enabled ? 1 : 0);\n" +
-      "    set('uGemUseMatCap', gem.useMatCap ? 1 : 0);\n" +
-      "    set('uGemMatCapIntensity', gem.matCapIntensity);\n" +
-      "    set('uGemMaskMatcapMetallic', gem.maskMatcapMetallic ? 1 : 0);\n" +
-      "    set('uGemMaskMatcapSpecular', gem.maskMatcapSpecular ? 1 : 0);\n" +
-      "    set('uGemUseDepthDiff', gem.useDepthDiff ? 1 : 0);\n" +
-      "    set('uGemFirstHighlightSize', gem.firstHighlightSize);\n" +
-      "    set('uGemFirstShadowSize', gem.firstShadowSize);\n" +
-      "    set('uGemSecondHighlightSize', gem.secondHighlightSize);\n" +
-      "    set('uGemSecondShadowSize', gem.secondShadowSize);\n" +
-      "    set('uGemDepthDiffThreshold', gem.depthDiffThreshold);\n" +
-      "    set('uGemHeightCorrection', gem.heightCorrection);\n" +
-      "    set('uGemRimFresnel', gem.rimFresnel);\n" +
-      "    set('uGemFresnelThreshold', gem.fresnelThreshold);\n" +
-      "    set('uGemFresnelFeather', gem.fresnelFeather);\n" +
-      "    set('uGemFresnelMaskByMetallic', gem.fresnelMaskByMetallic ? 1 : 0);\n" +
-      '}\n' +
-      '\n' +
-      '/**\n' +
-      ' * Inject the recovered ReDrive Gem/MatCap feature family as a per-material pass.\n' +
-      ' * Geometry groups select their own official scalar profile in onBeforeRender, so\n' +
-      ' * a Soul Gem sub-material no longer forces the complete Body mesh into Gem mode.\n' +
-      ' */\n' +
-      'export function injectOfficialGemShader(\n' +
-      '    shader: THREE.WebGLProgramParametersWithUniforms,\n' +
-      '    resources: OfficialGemResources,\n' +
-      '    initialProfile?: OfficialMaterialProfile,\n' +
-      ') {\n' +
-      '    shader.uniforms.tGemMatCap = { value: resources.matCap ?? null };\n' +
-      '    // Current-JP compiled GLSL proves GemDepthDiff is gated by\n' +
-      '    // `_UseGemDepthDiff != 0 && _Transparency != 0`. The serialized target\n' +
-      '    // Material does not contain `_Transparency`, so its Timeline/MPB source is\n' +
-      '    // not guessed here. A future authoritative receiver may overwrite this\n' +
-      '    // per-renderer uniform; default zero keeps the exact branch dormant.\n' +
-      '    shader.uniforms.uGemTransparency ??= { value: 0 };\n' +
-      '    bindReDriveCameraDepthShader(shader);\n' +
-      '    setOfficialMaterialProfileUniforms(shader, initialProfile);\n' +
-      '\n' +
-      '    shader.fragmentShader = /* glsl */ `\n' +
-      '        uniform sampler2D tGemMatCap;\n' +
-      '        uniform float uMaterialIsGem;\n' +
-      '        uniform float uGemUseMatCap;\n' +
-      '        uniform float uGemMatCapIntensity;\n' +
-      '        uniform float uGemMaskMatcapMetallic;\n' +
-      '        uniform float uGemMaskMatcapSpecular;\n' +
-      '        uniform float uGemUseDepthDiff;\n' +
-      '        uniform float uGemTransparency;\n' +
-      '        uniform sampler2D tRdCameraDepth;\n' +
-      '        uniform float uRdCameraDepthEnabled;\n' +
-      '        uniform mat4 uRdCameraDepthInvProjection;\n' +
-      '        uniform vec2 uRdCameraDepthViewport;\n' +
-      '        uniform float uGemFirstHighlightSize;\n' +
-      '        uniform float uGemFirstShadowSize;\n' +
-      '        uniform float uGemSecondHighlightSize;\n' +
-      '        uniform float uGemSecondShadowSize;\n' +
-      '        uniform float uGemDepthDiffThreshold;\n' +
-      '        uniform float uGemHeightCorrection;\n' +
-      '        uniform float uGemRimFresnel;\n' +
-      '        uniform float uGemFresnelThreshold;\n' +
-      '        uniform float uGemFresnelFeather;\n' +
-      '        uniform float uGemFresnelMaskByMetallic;\n' +
-      '\n' +
-      '        float rdGemLinearEyeDepth(float rawDepth, vec2 fragCoord) {\n' +
-      '            vec2 viewport = max(uRdCameraDepthViewport, vec2(1.0));\n' +
-      '            vec2 pixelUv = (floor(fragCoord) + vec2(0.5)) / viewport;\n' +
-      '            vec2 ndcXY = pixelUv * 2.0 - 1.0;\n' +
-      '            vec4 view = uRdCameraDepthInvProjection * vec4(\n' +
-      '                ndcXY,\n' +
-      '                rawDepth * 2.0 - 1.0,\n' +
-      '                1.0\n' +
-      '            );\n' +
-      '            float safeW = abs(view.w) > 0.0000001\n' +
-      '                ? view.w\n' +
-      '                : (view.w < 0.0 ? -0.0000001 : 0.0000001);\n' +
-      '            return max(0.0, -(view.z / safeW));\n' +
-      '        }\n' +
-      '\n' +
-      '        float rdGemOfficialDepthDiffBinary(vec2 fragCoord) {\n' +
-      '            // Exact current-JP branch predicate recovered from compiled GLSL:\n' +
-      '            // `_UseGemDepthDiff != 0 && _Transparency != 0`.\n' +
-      '            if (\n' +
-      '                uGemUseDepthDiff == 0.0 ||\n' +
-      '                uGemTransparency == 0.0 ||\n' +
-      '                uRdCameraDepthEnabled < 0.5\n' +
-      '            ) return 0.0;\n' +
-      '\n' +
-      '            vec2 viewport = max(uRdCameraDepthViewport, vec2(1.0));\n' +
-      '            vec2 pixelUv = (floor(fragCoord) + vec2(0.5)) / viewport;\n' +
-      '            float currentEye = rdGemLinearEyeDepth(gl_FragCoord.z, fragCoord);\n' +
-      '            float sceneRawDepth = texture2D(tRdCameraDepth, pixelUv).r;\n' +
-      '            float sceneEye = rdGemLinearEyeDepth(sceneRawDepth, fragCoord);\n' +
-      '\n' +
-      '            // Exact current-JP compiled arithmetic:\n' +
-      '            // sceneEye - (currentEye - 0.01), then x5, saturate, compare against\n' +
-      '            // `1 - _GemDepthDiffThreshold`; true maps to 0, false maps to 1.\n' +
-      '            float depthDifference = sceneEye - (currentEye - 0.00999999978);\n' +
-      '            depthDifference = clamp(depthDifference * 5.0, 0.0, 1.0);\n' +
-      '            float threshold = 1.0 - uGemDepthDiffThreshold;\n' +
-      '            return depthDifference >= threshold ? 0.0 : 1.0;\n' +
-      '        }\n' +
-      '\n' +
-      '        ${shader.fragmentShader}\n' +
-      '    `.replace(\n' +
-      "        '#include <opaque_fragment>',\n" +
-      '        /* glsl */ `\n' +
-      '        if (uMaterialIsGem > 0.5) {\n' +
-      '            vec3 rdGemNormalVs = normalize(normal);\n' +
-      '            vec3 rdGemView = normalize(geometryViewDir);\n' +
-      '            float rdGemNdotV = saturate(dot(rdGemNormalVs, rdGemView));\n' +
-      '\n' +
-      '            // MatCap lives in view space. This camera-facing basis remains the\n' +
-      '            // current Web implementation; only the recovered dependencies and\n' +
-      '            // serialized scalar values are exact at this stage.\n' +
-      '            vec3 rdGemViewAxis = normalize(rdGemView);\n' +
-      '            vec3 rdGemMatCapX = vec3(rdGemViewAxis.z, 0.0, -rdGemViewAxis.x);\n' +
-      '            if (dot(rdGemMatCapX, rdGemMatCapX) < 0.0001) {\n' +
-      '                rdGemMatCapX = vec3(1.0, 0.0, 0.0);\n' +
-      '            } else {\n' +
-      '                rdGemMatCapX = normalize(rdGemMatCapX);\n' +
-      '            }\n' +
-      '            vec3 rdGemMatCapY = normalize(cross(rdGemViewAxis, rdGemMatCapX));\n' +
-      '            vec2 rdGemMatCapUv = clamp(\n' +
-      '                vec2(\n' +
-      '                    dot(rdGemMatCapX, rdGemNormalVs),\n' +
-      '                    dot(rdGemMatCapY, rdGemNormalVs)\n' +
-      '                ) * 0.495 + 0.5,\n' +
-      '                vec2(0.002),\n' +
-      '                vec2(0.998)\n' +
-      '            );\n' +
-      '            vec3 rdGemMatCap = texture2D(tGemMatCap, rdGemMatCapUv).rgb;\n' +
-      '            float rdGemMatCapLuma = dot(rdGemMatCap, vec3(0.2126, 0.7152, 0.0722));\n' +
-      '            float '... 4077 more characters
-    
-  code: 'ERR_ASSERTION'
-  name: 'AssertionError'
-  expected:
-  actual: |-
-    import * as THREE from 'three';
-    import type { OfficialMaterialProfile } from '../materialProfile';
-    import { createDefaultMaterialProfile } from '../materialProfile';
-    import { bindReDriveCameraDepthShader } from '../scene/cameraDepth';
-    import { loadTexture, MaximizeTextureQuality } from '../texture';
-    import DefaultGemMatCap from '../models/chara_109801_battle_unit/matcap02_invert.png';
-    import OfficialSoftMetallicMatCap from '../models/common/matcap_SoftMetallic.png';
-    
-    export interface OfficialGemResources {
-        matCap?: THREE.Texture;
-        textures: THREE.Texture[];
-    }
-    
-    export async function loadOfficialGemResources(
-        profiles: OfficialMaterialProfile[] | undefined,
-        matCapUrl?: string,
-    ): Promise<OfficialGemResources> {
-        if (!profiles?.some(profile => profile.gem.enabled && profile.gem.useMatCap)) {
-            return { textures: [] };
-        }
-        // Exact current-JP evidence for 100101/100107 body_SJ and
-        // weapon_a_sj resolves `_MatCapTex` to the common 256x256
-        // `matcap_SoftMetallic` texture. Do not substitute a character-package
-        // guess or the historical 109801 fallback for those material slots.
-        const requiresSoftMetallic = profiles.some(
-            profile =>
-                profile.gem.enabled &&
-                profile.gem.useMatCap &&
-                profile.gem.matCapSource === 'soft-metallic',
-        );
-        const resolvedMatCapUrl = requiresSoftMetallic
-            ? OfficialSoftMetallicMatCap
-            : (matCapUrl ?? DefaultGemMatCap);
-        const matCap = await loadTexture(resolvedMatCapUrl, {
-            colorSpace: THREE.NoColorSpace,
-        });
-        matCap.wrapS = THREE.ClampToEdgeWrapping;
-        matCap.wrapT = THREE.ClampToEdgeWrapping;
-        MaximizeTextureQuality(matCap);
-        return { matCap, textures: [matCap] };
-    }
-    
-    export function setOfficialMaterialProfileUniforms(
-        shader: THREE.WebGLProgramParametersWithUniforms | undefined,
-        profile: OfficialMaterialProfile | undefined,
-    ) {
-        if (!shader) return;
-        const value = profile ?? createDefaultMaterialProfile();
-        const gem = value.gem;
-        const set = (key: string, uniformValue: number) => {
-            shader.uniforms[key] ??= { value: uniformValue };
-            shader.uniforms[key].value = uniformValue;
-        };
-        const setColor = (
-            key: string,
-            rgb: readonly [number, number, number],
-        ) => {
-            const current = shader.uniforms[key]?.value;
-            if (current instanceof THREE.Color) current.setRGB(...rgb);
-            else shader.uniforms[key] = { value: new THREE.Color(...rgb) };
-        };
-        const aniso = value.anisotropyProfile;
-        const fresnel = value.fresnel;
-        set('uMaterialAnisotropy', aniso.enabled ? 1 : 0);
-        set('uMaterialAnisoMaskByMetallic', aniso.maskByMetallic ? 1 : 0);
-        setColor('uMaterialAnisoColor', aniso.color);
-        set('uMaterialAnisoThreshold', aniso.threshold);
-        set('uMaterialAnisoFeather', aniso.feather);
-        // Material defaults are authoritative. FresnelAnimationAttributeReceiver
-        // will eventually overwrite the same per-renderer uniforms from Timeline.
-        set('uFresnelEnabled', fresnel.enabled ? 1 : 0);
-        setColor('uFresnelColor', fresnel.color);
-        set('uFresnelStrength', fresnel.enabled ? 1 : 0);
-        set('uFresnelThreshold', fresnel.threshold);
-        set('uFresnelFeather', fresnel.feather);
-        set('uFresnelMaskByMetallic', fresnel.maskByMetallic ? 1 : 0);
-        set('uMaterialOutlineOffset', value.outlineOffset ? 1 : 0);
-        set('uMaterialSkinOutlineOffset', value.skinOutlineOffset ? 1 : 0);
-        set('uMaterialIsGem', gem.enabled ? 1 : 0);
-        // GeneralMaterial is shared by every recovered FBX draw group. The
-        // compile-time feature profile is deliberately an aggregate so the shader
-        // variant contains the jewel branch, but the actual switch must follow the
-        // material slot selected by loader.onBeforeRender.
-        set('uMaterialSpecialJewel', gem.enabled ? 1 : 0);
-        set('uGemUseMatCap', gem.useMatCap ? 1 : 0);
-        set('uGemMatCapIntensity', gem.matCapIntensity);
-        set('uGemMaskMatcapMetallic', gem.maskMatcapMetallic ? 1 : 0);
-        set('uGemMaskMatcapSpecular', gem.maskMatcapSpecular ? 1 : 0);
-        set('uGemUseDepthDiff', gem.useDepthDiff ? 1 : 0);
-        set('uGemFirstHighlightSize', gem.firstHighlightSize);
-        set('uGemFirstShadowSize', gem.firstShadowSize);
-        set('uGemSecondHighlightSize', gem.secondHighlightSize);
-        set('uGemSecondShadowSize', gem.secondShadowSize);
-        set('uGemDepthDiffThreshold', gem.depthDiffThreshold);
-        set('uGemHeightCorrection', gem.heightCorrection);
-        set('uGemRimFresnel', gem.rimFresnel);
-        set('uGemFresnelThreshold', gem.fresnelThreshold);
-        set('uGemFresnelFeather', gem.fresnelFeather);
-        set('uGemFresnelMaskByMetallic', gem.fresnelMaskByMetallic ? 1 : 0);
-    }
-    
-    /**
-     * Inject the recovered ReDrive Gem/MatCap feature family as a per-material pass.
-     * Geometry groups select their own official scalar profile in onBeforeRender, so
-     * a Soul Gem sub-material no longer forces the complete Body mesh into Gem mode.
-     */
-    export function injectOfficialGemShader(
-        shader: THREE.WebGLProgramParametersWithUniforms,
-        resources: OfficialGemResources,
-        initialProfile?: OfficialMaterialProfile,
-    ) {
-        shader.uniforms.tGemMatCap = { value: resources.matCap ?? null };
-        // Current-JP compiled GLSL proves GemDepthDiff is gated by
-        // `_UseGemDepthDiff != 0 && _Transparency != 0`. The serialized target
-        // Material does not contain `_Transparency`, so its Timeline/MPB source is
-        // not guessed here. A future authoritative receiver may overwrite this
-        // per-renderer uniform; default zero keeps the exact branch dormant.
-        shader.uniforms.uGemTransparency ??= { value: 0 };
-        bindReDriveCameraDepthShader(shader);
-        setOfficialMaterialProfileUniforms(shader, initialProfile);
-    
-        shader.fragmentShader = /* glsl */ `
-            uniform sampler2D tGemMatCap;
-            uniform float uMaterialIsGem;
-            uniform float uGemUseMatCap;
-            uniform float uGemMatCapIntensity;
-            uniform float uGemMaskMatcapMetallic;
-            uniform float uGemMaskMatcapSpecular;
-            uniform float uGemUseDepthDiff;
-            uniform float uGemTransparency;
-            uniform sampler2D tRdCameraDepth;
-            uniform float uRdCameraDepthEnabled;
-            uniform mat4 uRdCameraDepthInvProjection;
-            uniform vec2 uRdCameraDepthViewport;
-            uniform float uGemFirstHighlightSize;
-            uniform float uGemFirstShadowSize;
-            uniform float uGemSecondHighlightSize;
-            uniform float uGemSecondShadowSize;
-            uniform float uGemDepthDiffThreshold;
-            uniform float uGemHeightCorrection;
-            uniform float uGemRimFresnel;
-            uniform float uGemFresnelThreshold;
-            uniform float uGemFresnelFeather;
-            uniform float uGemFresnelMaskByMetallic;
-    
-            float rdGemLinearEyeDepth(float rawDepth, vec2 fragCoord) {
-                vec2 viewport = max(uRdCameraDepthViewport, vec2(1.0));
-                vec2 pixelUv = (floor(fragCoord) + vec2(0.5)) / viewport;
-                vec2 ndcXY = pixelUv * 2.0 - 1.0;
-                vec4 view = uRdCameraDepthInvProjection * vec4(
-                    ndcXY,
-                    rawDepth * 2.0 - 1.0,
-                    1.0
-                );
-                float safeW = abs(view.w) > 0.0000001
-                    ? view.w
-                    : (view.w < 0.0 ? -0.0000001 : 0.0000001);
-                return max(0.0, -(view.z / safeW));
-            }
-    
-            float rdGemOfficialDepthDiffBinary(vec2 fragCoord) {
-                // Exact current-JP branch predicate recovered from compiled GLSL:
-                // `_UseGemDepthDiff != 0 && _Transparency != 0`.
-                if (
-                    uGemUseDepthDiff == 0.0 ||
-                    uGemTransparency == 0.0 ||
-                    uRdCameraDepthEnabled < 0.5
-                ) return 0.0;
-    
-                vec2 viewport = max(uRdCameraDepthViewport, vec2(1.0));
-                vec2 pixelUv = (floor(fragCoord) + vec2(0.5)) / viewport;
-                float currentEye = rdGemLinearEyeDepth(gl_FragCoord.z, fragCoord);
-                float sceneRawDepth = texture2D(tRdCameraDepth, pixelUv).r;
-                float sceneEye = rdGemLinearEyeDepth(sceneRawDepth, fragCoord);
-    
-                // Exact current-JP compiled arithmetic:
-                // sceneEye - (currentEye - 0.01), then x5, saturate, compare against
-                // `1 - _GemDepthDiffThreshold`; true maps to 0, false maps to 1.
-                float depthDifference = sceneEye - (currentEye - 0.00999999978);
-                depthDifference = clamp(depthDifference * 5.0, 0.0, 1.0);
-                float threshold = 1.0 - uGemDepthDiffThreshold;
-                return depthDifference >= threshold ? 0.0 : 1.0;
-            }
-    
-            ${shader.fragmentShader}
-        `.replace(
-            '#include <opaque_fragment>',
-            /* glsl */ `
-            if (uMaterialIsGem > 0.5) {
-                vec3 rdGemNormalVs = normalize(normal);
-                vec3 rdGemView = normalize(geometryViewDir);
-                float rdGemNdotV = saturate(dot(rdGemNormalVs, rdGemView));
-    
-                // MatCap lives in view space. This camera-facing basis remains the
-                // current Web implementation; only the recovered dependencies and
-                // serialized scalar values are exact at this stage.
-                vec3 rdGemViewAxis = normalize(rdGemView);
-                vec3 rdGemMatCapX = vec3(rdGemViewAxis.z, 0.0, -rdGemViewAxis.x);
-                if (dot(rdGemMatCapX, rdGemMatCapX) < 0.0001) {
-                    rdGemMatCapX = vec3(1.0, 0.0, 0.0);
-                } else {
-                    rdGemMatCapX = normalize(rdGemMatCapX);
-                }
-                vec3 rdGemMatCapY = normalize(cross(rdGemViewAxis, rdGemMatCapX));
-                vec2 rdGemMatCapUv = clamp(
-                    vec2(
-                        dot(rdGemMatCapX, rdGemNormalVs),
-                        dot(rdGemMatCapY, rdGemNormalVs)
-                    ) * 0.495 + 0.5,
-                    vec2(0.002),
-                    vec2(0.998)
-                );
-                vec3 rdGemMatCap = texture2D(tGemMatCap, rdGemMatCapUv).rgb;
-                float rdGemMatCapLuma = dot(rdGemMatCap, vec3(0.2126, 0.7152, 0.0722));
-                float rdGemMatCapMask = mix(
-                    1.0,
-                    rdToonMetallicMask,
-                    saturate(uGemMaskMatcapMetallic)
-                );
-                rdGemMatCapMask *= mix(
-                    1.0,
-                    rdToonSpecularMask,
-                    saturate(uGemMaskMatcapSpecular)
-                );
-    
-                // Signed Gem size interpretation remains a Web approximation until
-                // the complete current-JP Gem highlight subprogram is mapped.
-                float rdGemHeight = saturate(
-                    rdGemNormalVs.y * 0.5 + 0.5 +
-                    (uGemHeightCorrection - 0.5) * 0.26
-                );
-                float rdGemFirstCenter = clamp(0.70 + uGemFirstHighlightSize * 0.18, 0.08, 0.92);
-                float rdGemSecondCenter = clamp(0.33 + uGemSecondHighlightSize * 0.20, 0.08, 0.92);
-                float rdGemFirstWidth = 0.09 + abs(uGemFirstHighlightSize) * 0.06;
-                float rdGemSecondWidth = 0.10 + abs(uGemSecondHighlightSize) * 0.07;
-                float rdGemHighlightOne = exp2(
-                    -pow((rdGemHeight - rdGemFirstCenter) / rdGemFirstWidth, 2.0) * 3.0
-                );
-                float rdGemHighlightTwo = exp2(
-                    -pow((rdGemHeight - rdGemSecondCenter) / rdGemSecondWidth, 2.0) * 3.0
-                );
-                float rdGemShadowOne = smoothstep(
-                    0.0,
-                    1.0,
-                    (0.5 - rdGemHeight) + uGemFirstShadowSize * 0.20
-                );
-                float rdGemShadowTwo = smoothstep(
-                    0.0,
-                    1.0,
-                    (rdGemHeight - 0.5) + uGemSecondShadowSize * 0.20
-                );
-    
-                float rdGemFresnel = 1.0 - rdGemNdotV;
-                float rdGemFresnelBand = smoothstep(
-                    clamp(uGemFresnelThreshold - uGemFresnelFeather, 0.0, 1.0),
-                    clamp(uGemFresnelThreshold + uGemFresnelFeather, 0.001, 1.0),
-                    rdGemFresnel
-                );
-                rdGemFresnelBand *= mix(
-                    1.0,
-                    rdToonMetallicMask,
-                    saturate(uGemFresnelMaskByMetallic)
-                );
-    
-                vec3 rdGemBase = max(outgoingLight, diffuseColor.rgb * 0.68);
-                vec3 rdGemTint = max(diffuseColor.rgb, vec3(0.025));
-                float rdGemInternal =
-                    rdGemHighlightOne * 0.58 +
-                    rdGemHighlightTwo * 0.42 -
-                    rdGemShadowOne * 0.18 -
-                    rdGemShadowTwo * 0.12;
-                rdGemBase *= 0.84 + rdGemInternal;
-    
-                if (uGemUseMatCap > 0.5) {
-                    vec3 rdGemReflection = mix(
-                        rdGemTint * rdGemMatCapLuma,
-                        rdGemMatCap,
-                        0.64
-                    );
-                    rdGemBase += rdGemReflection *
-                        uGemMatCapIntensity *
-                        rdGemMatCapMask * 0.34;
-                }
-    
-                // This binary selector itself is the recovered current-JP formula.
-                // The old NdotV `rdGemDepthProxy` has been removed completely.
-                float rdGemDepthBinary = rdGemOfficialDepthDiffBinary(gl_FragCoord.xy);
-    
-                // Current-JP compiled GLSL adds GemDepthDiff to the Gem shadow
-                // selector and saturates it before selecting the shadow-side colour.
-                // The selector integration is preserved here, but the Web shadow
-                // colour transport (`ShadowTex` + global tint + Web SH/light path)
-                // is still an explicit approximation rather than a claim that
-                // `rdToonShadowColor` equals native `_BaseMap * _ShadowColor`.
-                if (rdGemDepthBinary > 0.5) {
-                    vec3 rdGemWebShadowTransport =
-                        rdToonShadowColor *
-                        uGlobalCharacterShadowTint *
-                        rdToonSceneLightColor +
-                        totalEmissiveRadiance;
-                    rdGemBase = rdGemWebShadowTransport;
-                }
-    
-                rdGemBase += vec3(1.0) *
-                    rdGemFresnelBand *
-                    max(uGemRimFresnel, 0.0) * 0.72;
-    
-                outgoingLight = max(rdGemBase, vec3(0.0));
-            }
-    
-            #include <opaque_fragment>
-            `,
-        );
-    }
-    
-  operator: 'doesNotMatch'
-  stack: |-
-    TestContext.<anonymous> (file:///home/runner/work/Magi3Dviewer/Magi3Dviewer/officialMaterialFresnelAniso.test.mjs:79:10)
-    Test.runInAsyncScope (node:async_hooks:214:14)
-    Test.run (node:internal/test_runner/test:1047:25)
-    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
-    Test.postRun (node:internal/test_runner/test:1173:19)
-    Test.run (node:internal/test_runner/test:1101:12)
-    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
   ...
 # Subtest: GemDepthDiff depth producer is requested only by a proven depth-diff profile
 ok 11 - GemDepthDiff depth producer is requested only by a proven depth-diff profile
   ---
-  duration_ms: 0.230893
+  duration_ms: 0.136838
   type: 'test'
   ...
 # Subtest: camera-depth transport stays explicitly approximate and unbinds its attachment while writing
 ok 12 - camera-depth transport stays explicitly approximate and unbinds its attachment while writing
   ---
-  duration_ms: 0.347522
+  duration_ms: 0.181482
   type: 'test'
   ...
 # Subtest: ReDrive background adjustments execute between background and character passes
 ok 13 - ReDrive background adjustments execute between background and character passes
   ---
-  duration_ms: 2.615437
+  duration_ms: 2.044881
   type: 'test'
   ...
 # Subtest: background grading keeps Unity parameter semantics explicit
 ok 14 - background grading keeps Unity parameter semantics explicit
   ---
-  duration_ms: 0.278613
+  duration_ms: 0.245895
   type: 'test'
   ...
 # Subtest: ReDriveVolume drives background-only pass and disables legacy global CSS approximation
 ok 15 - ReDriveVolume drives background-only pass and disables legacy global CSS approximation
   ---
-  duration_ms: 0.283331
+  duration_ms: 0.260919
   type: 'test'
   ...
 # Subtest: ReDrive skybox intensity is override-gated and drives both split scenes
 ok 16 - ReDrive skybox intensity is override-gated and drives both split scenes
   ---
-  duration_ms: 1.395097
+  duration_ms: 1.027151
   type: 'test'
   ...
 # Subtest: ReDrive skybox intensity reset restores environment/background intensity state
 ok 17 - ReDrive skybox intensity reset restores environment/background intensity state
   ---
-  duration_ms: 0.30383
+  duration_ms: 0.265688
   type: 'test'
   ...
 # Subtest: 600-00-00-001 no longer stacks unverified character-brightening effects
 ok 18 - 600-00-00-001 no longer stacks unverified character-brightening effects
   ---
-  duration_ms: 1.391241
+  duration_ms: 0.992686
   type: 'test'
   ...
 # Subtest: Gem uses character MatCap when exported and a camera-facing MatCap basis
 not ok 19 - Gem uses character MatCap when exported and a camera-facing MatCap basis
   ---
-  duration_ms: 1.538286
+  duration_ms: 1.184388
   type: 'test'
   location: '/home/runner/work/Magi3Dviewer/Magi3Dviewer/sceneGemSpecularFix.test.mjs:24:1'
   failureType: 'testCodeFailure'
@@ -802,221 +253,221 @@ not ok 19 - Gem uses character MatCap when exported and a camera-facing MatCap b
 # Subtest: Control G no longer drives an invented world-up colour gradient
 ok 20 - Control G no longer drives an invented world-up colour gradient
   ---
-  duration_ms: 0.296106
+  duration_ms: 0.197462
   type: 'test'
   ...
 # Subtest: fixes only the four catalog-proven opaque alpha-card materials
 ok 21 - fixes only the four catalog-proven opaque alpha-card materials
   ---
-  duration_ms: 1.470288
+  duration_ms: 1.047136
   type: 'test'
   ...
 # Subtest: restores Unity cutout render state without transparent sorting
 ok 22 - restores Unity cutout render state without transparent sorting
   ---
-  duration_ms: 0.241643
+  duration_ms: 0.212979
   type: 'test'
   ...
 # Subtest: runs after asynchronous stage loads complete
 ok 23 - runs after asynchronous stage loads complete
   ---
-  duration_ms: 0.363823
+  duration_ms: 0.24588
   type: 'test'
   ...
 # Subtest: known JP battle stages use real AssetBundle root names
 ok 24 - known JP battle stages use real AssetBundle root names
   ---
-  duration_ms: 2.045558
+  duration_ms: 2.588953
   type: 'test'
   ...
 # Subtest: official battle catalog does not use filesystem-like synthetic bg/3d paths
 ok 25 - official battle catalog does not use filesystem-like synthetic bg/3d paths
   ---
-  duration_ms: 0.825248
+  duration_ms: 0.72749
   type: 'test'
   ...
 # Subtest: TW provenance retains all normalized root/text manifest sources
 ok 26 - TW provenance retains all normalized root/text manifest sources
   ---
-  duration_ms: 1.850983
+  duration_ms: 1.431297
   type: 'test'
   ...
 # Subtest: one stage provenance cannot mix JP and TW manifest sources
 ok 27 - one stage provenance cannot mix JP and TW manifest sources
   ---
-  duration_ms: 0.572454
+  duration_ms: 0.508623
   type: 'test'
   ...
 # Subtest: resolves an exact deterministic dependency closure
 ok 28 - resolves an exact deterministic dependency closure
   ---
-  duration_ms: 13.624791
+  duration_ms: 10.030652
   type: 'test'
   ...
 # Subtest: normalizes provenance without allowing root duplication
 ok 29 - normalizes provenance without allowing root duplication
   ---
-  duration_ms: 0.670267
+  duration_ms: 0.527112
   type: 'test'
   ...
 # Subtest: rejects a provenance root that disagrees with the stage catalog
 ok 30 - rejects a provenance root that disagrees with the stage catalog
   ---
-  duration_ms: 0.596059
+  duration_ms: 0.46413
   type: 'test'
   ...
 # Subtest: rejects cycles and missing dependencies in manifest graphs
 ok 31 - rejects cycles and missing dependencies in manifest graphs
   ---
-  duration_ms: 0.341902
+  duration_ms: 0.221198
   type: 'test'
   ...
 # Subtest: loads nested generated catalogs and individual stage entries
 ok 32 - loads nested generated catalogs and individual stage entries
   ---
-  duration_ms: 2.860326
+  duration_ms: 1.406587
   type: 'test'
   ...
 # Subtest: nested failures are diagnostic and do not hide other scene shards
 ok 33 - nested failures are diagnostic and do not hide other scene shards
   ---
-  duration_ms: 0.891172
+  duration_ms: 0.455885
   type: 'test'
   ...
 # Subtest: root catalog remains fail-closed
 ok 34 - root catalog remains fail-closed
   ---
-  duration_ms: 0.737433
+  duration_ms: 2.244038
   type: 'test'
   ...
 # Subtest: fidelity inspector exposes provenance, closure and concrete dynamic gaps
 ok 35 - fidelity inspector exposes provenance, closure and concrete dynamic gaps
   ---
-  duration_ms: 1.296112
+  duration_ms: 0.92611
   type: 'test'
   ...
 # Subtest: fidelity inspector renders external names as text rather than HTML
 ok 36 - fidelity inspector renders external names as text rather than HTML
   ---
-  duration_ms: 1.635267
+  duration_ms: 1.117675
   type: 'test'
   ...
 # Subtest: stage runtime updates the fidelity inspector only after resolved stage definitions
 ok 37 - stage runtime updates the fidelity inspector only after resolved stage definitions
   ---
-  duration_ms: 0.208792
+  duration_ms: 0.17356
   type: 'test'
   ...
 # Subtest: fidelity inspector remains bounded on desktop and mobile
 ok 38 - fidelity inspector remains bounded on desktop and mobile
   ---
-  duration_ms: 0.190297
+  duration_ms: 0.127359
   type: 'test'
   ...
 # Subtest: hierarchy path resolves the intended duplicate-named stage node
 ok 39 - hierarchy path resolves the intended duplicate-named stage node
   ---
-  duration_ms: 2.416333
+  duration_ms: 1.39269
   type: 'test'
   ...
 # Subtest: anchorPath wins while legacy anchorNode remains a fallback
 ok 40 - anchorPath wins while legacy anchorNode remains a fallback
   ---
-  duration_ms: 0.598323
+  duration_ms: 0.293555
   type: 'test'
   ...
 # Subtest: invalid hierarchy path does not loosely skip missing intermediate nodes
 ok 41 - invalid hierarchy path does not loosely skip missing intermediate nodes
   ---
-  duration_ms: 0.411692
+  duration_ms: 0.180262
   type: 'test'
   ...
 # Official stage lighting invariants passed.
 # Subtest: stageLighting.test.mjs
 ok 15 - stageLighting.test.mjs
   ---
-  duration_ms: 52.223998
+  duration_ms: 37.777207
   type: 'test'
   ...
 # Subtest: binds 104 hierarchy suffixes with shared RGBM texture and independent ST
 ok 43 - binds 104 hierarchy suffixes with shared RGBM texture and independent ST
   ---
-  duration_ms: 20.648679
+  duration_ms: 17.776637
   type: 'test'
   ...
 # Subtest: reports ambiguous suffixes and validates the second UV set before mutation
 ok 44 - reports ambiguous suffixes and validates the second UV set before mutation
   ---
-  duration_ms: 1.026025
+  duration_ms: 0.705386
   type: 'test'
   ...
 # Official stage material ownership invariants passed.
 # Subtest: stageMaterialBindings.test.mjs
 ok 17 - stageMaterialBindings.test.mjs
   ---
-  duration_ms: 49.833894
+  duration_ms: 27.32726
   type: 'test'
   ...
 # Subtest: stage runtime selects five exact clips and advances one shared clock
 ok 46 - stage runtime selects five exact clips and advances one shared clock
   ---
-  duration_ms: 8.759078
+  duration_ms: 6.511737
   type: 'test'
   ...
 # Subtest: missing runtime profile remains a true static-stage no-op
 ok 47 - missing runtime profile remains a true static-stage no-op
   ---
-  duration_ms: 0.436358
+  duration_ms: 0.305639
   type: 'test'
   ...
 # Subtest: non-looping runtime clamps at the shared timeline end and publishes live state
 ok 48 - non-looping runtime clamps at the shared timeline end and publishes live state
   ---
-  duration_ms: 0.665879
+  duration_ms: 0.559133
   type: 'test'
   ...
 # Subtest: voice source offset shortens the non-looping shared timeline
 ok 49 - voice source offset shortens the non-looping shared timeline
   ---
-  duration_ms: 0.278081
+  duration_ms: 0.215713
   type: 'test'
   ...
 # Subtest: Madoka official submesh counts exactly match the non-indexed FBX draw counts
 ok 50 - Madoka official submesh counts exactly match the non-indexed FBX draw counts
   ---
-  duration_ms: 2.30804
+  duration_ms: 1.222864
   type: 'test'
   ...
 # Subtest: runtime refuses partial group recovery and restores contiguous official ranges
 ok 51 - runtime refuses partial group recovery and restores contiguous official ranges
   ---
-  duration_ms: 0.459091
+  duration_ms: 0.185641
   type: 'test'
   ...
 # Subtest: static viewer shell keeps canonical English keys and exposes a language toggle
 ok 52 - static viewer shell keeps canonical English keys and exposes a language toggle
   ---
-  duration_ms: 5.3035
+  duration_ms: 4.097878
   type: 'test'
   ...
 # Subtest: runtime localization supports persistent English and Simplified Chinese switching
 ok 53 - runtime localization supports persistent English and Simplified Chinese switching
   ---
-  duration_ms: 2.0306
+  duration_ms: 1.499166
   type: 'test'
   ...
 # Subtest: dialogs, selectors, tooltips and alerts use canonical English plus runtime translation
 ok 54 - dialogs, selectors, tooltips and alerts use canonical English plus runtime translation
   ---
-  duration_ms: 3.721392
+  duration_ms: 3.410098
   type: 'test'
   ...
 1..54
 # tests 54
 # suites 0
-# pass 52
-# fail 2
+# pass 53
+# fail 1
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 2495.587
+# duration_ms 1596.65217
