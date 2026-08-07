@@ -1,0 +1,61 @@
+name: Extract So-net guest metadata strings
+run-name: Recover guest registration and JWT endpoint fragments
+
+on:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-sonet-metadata-strings.yml'
+      - 'analysis-requests/tw-sonet-metadata-strings.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  parse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - name: Download and unpack metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y unzip
+          mkdir -p work/source work/xapk work/unpacked work/report
+          curl -fL --retry 5 --retry-all-errors \
+            -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
+            < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+      - name: Parse SDK-related string literals
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,re,struct
+          data=Path('work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat').read_bytes()
+          magic,version=struct.unpack_from('<II',data,0)
+          assert magic==0xFAB11BAF
+          lo,ls,do,ds=struct.unpack_from('<IIII',data,8)
+          rows=[]
+          for pos in range(lo,lo+ls,8):
+              length,index=struct.unpack_from('<II',data,pos)
+              raw=data[do+index:do+index+length]
+              rows.append({'index':index,'value':raw.decode('utf-8',errors='replace')})
+          terms=re.compile(r'(?i)(guest|register|registration|jwt|uuid|token|handover|deviceid|gameid|localcountry|birthyear|birthmonth|xuid|x_uid|member|account|sns|login|auth|guid|sgmp|platform|userdata|user_data|restclient|sonet)')
+          out=[r for r in rows if terms.search(r['value'])]
+          Path('work/report/sonet-metadata-strings.json').write_text(json.dumps({'metadataVersion':version,'values':out},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('work/report/sonet-metadata-strings.txt').write_text('\n'.join(f"{r['index']}\t{r['value']}" for r in out)+'\n',encoding='utf-8')
+      - name: Remove raw client
+        if: ${{ always() }}
+        run: rm -rf work/source work/xapk work/unpacked
+      - name: Upload strings
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-sonet-metadata-strings
+          path: work/report
+          retention-days: 14

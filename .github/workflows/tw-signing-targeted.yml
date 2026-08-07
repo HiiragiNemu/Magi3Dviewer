@@ -1,0 +1,127 @@
+name: Target Taiwan API signing analysis
+run-name: Recover APISigning hash and GCS model fields
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-signing-targeted.yml'
+      - 'tools/research/scan_tw_signing_targets.py'
+      - 'tools/research/scan_tw_signing_callees.py'
+      - 'analysis-requests/tw-signing-targeted.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-signing-targeted
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip jq binutils-aarch64-linux-gnu python3-pip
+          python -m pip install --disable-pip-version-check pyelftools
+
+      - name: Download and merge public Taiwan client
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/source work/xapk work/merged work/report
+          curl -fL --retry 5 --retry-all-errors \
+            -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do
+            unzip -q -o "$apk" -d work/merged
+          done < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test -s work/merged/lib/arm64-v8a/libil2cpp.so
+          test -s work/merged/assets/bin/Data/Managed/Metadata/global-metadata.dat
+
+      - name: Generate Il2CppDumper map
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/tool work/dump
+          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' \
+            https://api.github.com/repos/Perfare/Il2CppDumper/releases/latest)
+          asset=$(jq -r '[.assets[] | select(.name | test("net6.*\\.zip$"; "i"))][0].browser_download_url // empty' <<< "$release")
+          test -n "$asset"
+          curl -fL --retry 4 "$asset" -o work/tool/tool.zip
+          unzip -q work/tool/tool.zip -d work/tool/extracted
+          dll=$(find work/tool/extracted -type f -name Il2CppDumper.dll -print -quit)
+          test -n "$dll"
+          set +e
+          dotnet "$dll" \
+            work/merged/lib/arm64-v8a/libil2cpp.so \
+            work/merged/assets/bin/Data/Managed/Metadata/global-metadata.dat \
+            work/dump </dev/null > work/report/il2cpp-dumper.log 2>&1
+          status=$?
+          set -e
+          echo "exit_status=$status" >> work/report/il2cpp-dumper.log
+          test -s work/dump/dump.cs
+
+      - name: Recover signing targets and direct callers
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/analysis work/callees work/report/disassembly
+          python tools/research/scan_tw_signing_targets.py \
+            --binary work/merged/lib/arm64-v8a/libil2cpp.so \
+            --dump work/dump/dump.cs \
+            --out work/analysis
+          python tools/research/scan_tw_signing_callees.py \
+            --binary work/merged/lib/arm64-v8a/libil2cpp.so \
+            --dump work/dump/dump.cs \
+            --out work/callees
+          cp work/analysis/*.json work/report/
+          cp work/callees/*.json work/report/
+          cp -r work/analysis/types work/report/
+          cp work/analysis/disassembly-ranges.tsv work/report/
+          cp work/callees/signing-extra-ranges.tsv work/report/
+          cat work/analysis/disassembly-ranges.tsv work/callees/signing-extra-ranges.tsv \
+            | sort -u > work/all-ranges.tsv
+          while IFS=$'\t' read -r safe start stop display; do
+            aarch64-linux-gnu-objdump -d -C \
+              --start-address=$((16#$start)) \
+              --stop-address=$((16#$stop)) \
+              work/merged/lib/arm64-v8a/libil2cpp.so \
+              > "work/report/disassembly/${safe}.txt" 2>&1 || true
+          done < work/all-ranges.tsv
+          grep -R -n -i -E \
+            'HMAC|SHA1|SHA256|SHA512|Base64|OnSign|APISigning|Expires|KeyName|Signature|encodedKey|keyName|signedUrl|webResourcesUrl|gcs' \
+            work/report > work/report/focused-grep.txt || true
+
+      - name: Remove raw client and full dump
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          rm -rf work/source work/xapk work/merged work/tool work/dump work/analysis work/callees work/all-ranges.tsv
+          if find work/report -type f \( -name '*.apk' -o -name '*.xapk' -o -name '*.so' -o -name 'dump.cs' -o -name 'global-metadata.dat' \) | grep -q .; then
+            echo 'raw client material remained' >&2
+            exit 1
+          fi
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+
+      - name: Upload targeted evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-signing-targeted-evidence
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error

@@ -1,0 +1,126 @@
+name: Decompile Taiwan So-net SDK
+run-name: Recover SONETAPI guest authorization protocol
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-sonet-sdk-jadx.yml'
+      - 'analysis-requests/tw-sonet-sdk-jadx.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-sonet-sdk-jadx
+  cancel-in-progress: true
+
+jobs:
+  decompile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Java and download JADX
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y unzip jq default-jre-headless
+          mkdir -p work/jadx work/source work/xapk work/report
+          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' \
+            https://api.github.com/repos/skylot/jadx/releases/latest)
+          asset=$(jq -r '[.assets[] | select(.name | test("^jadx-[0-9].*\\.zip$"; "i"))][0].browser_download_url // empty' <<< "$release")
+          test -n "$asset"
+          curl -fL --retry 4 "$asset" -o work/jadx/jadx.zip
+          unzip -q work/jadx/jadx.zip -d work/jadx/extracted
+
+      - name: Download public Taiwan XAPK
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL --retry 5 --retry-all-errors \
+            -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          base=$(find work/xapk -maxdepth 1 -type f -name 'tw.sonet.magiaexedra.apk' -print -quit)
+          if [[ -z "$base" ]]; then
+            base=$(find work/xapk -maxdepth 1 -type f -name '*.apk' -print -quit)
+          fi
+          test -n "$base"
+          echo "$base" > work/base-apk-path.txt
+
+      - name: Decompile base APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          base=$(cat work/base-apk-path.txt)
+          mkdir -p work/jadx-output
+          work/jadx/extracted/bin/jadx \
+            --no-res --show-bad-code --threads-count 4 \
+            -d work/jadx-output "$base" \
+            > work/report/jadx.log 2>&1
+
+      - name: Curate So-net SDK sources
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib, json, re
+
+          root=Path('work/jadx-output')
+          out=Path('work/report/sonet-sdk')
+          out.mkdir(parents=True,exist_ok=True)
+          terms=re.compile(r'(?i)(SONETAPI|so-net\.tw|sonet|gamelib|guest.?login|guest.?register|x_uid|xuid|uuid|jwt|device.?login|register|member/login|mme-sdk|nativebridge)')
+          records=[]; total=0
+          for path in sorted(root.rglob('*')):
+              if not path.is_file() or path.suffix.lower() not in {'.java','.kt','.xml','.json'}:
+                  continue
+              try: text=path.read_text(encoding='utf-8',errors='ignore')
+              except OSError: continue
+              if not terms.search(text) and not terms.search(path.as_posix()):
+                  continue
+              bounded=text[:500_000]
+              rel=path.relative_to(root)
+              target=out/rel
+              target.parent.mkdir(parents=True,exist_ok=True)
+              target.write_text(bounded,encoding='utf-8')
+              records.append({'path':rel.as_posix(),'bytes':len(bounded.encode()),'sha256':hashlib.sha256(bounded.encode()).hexdigest()})
+              total += len(bounded)
+              if total >= 12_000_000: break
+          (out/'index.json').write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          focused=[]
+          for path in out.rglob('*'):
+              if not path.is_file() or path.name=='index.json': continue
+              for number,line in enumerate(path.read_text(errors='ignore').splitlines(),1):
+                  if terms.search(line):
+                      focused.append({'file':path.relative_to(out).as_posix(),'line':number,'text':line[:3000]})
+                      if len(focused)>=20000: break
+              if len(focused)>=20000: break
+          (out/'focused-hits.json').write_text(json.dumps(focused,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          (out/'focused-hits.txt').write_text('\n'.join(f"{x['file']}:{x['line']}\t{x['text']}" for x in focused)+'\n',encoding='utf-8')
+          if not records:
+              raise SystemExit('No So-net SDK sources found')
+
+      - name: Remove APK and full decompilation
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          rm -rf work/source work/xapk work/jadx work/jadx-output work/base-apk-path.txt
+          if find work/report -type f \( -name '*.apk' -o -name '*.xapk' -o -name '*.dex' \) | grep -q .; then
+            echo 'raw Android client material remained' >&2
+            exit 1
+          fi
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+
+      - name: Upload curated So-net SDK evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-sonet-sdk-jadx
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error

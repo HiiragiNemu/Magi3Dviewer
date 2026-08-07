@@ -1,0 +1,107 @@
+name: Map Taiwan IL2CPP string addresses
+run-name: Resolve domain SDK URL and signing-salt slots
+
+on:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-il2cpp-string-addresses.yml'
+      - 'analysis-requests/tw-il2cpp-string-addresses.txt'
+
+permissions:
+  contents: read
+
+jobs:
+  map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - name: Download and unpack Taiwan client
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y unzip python3-pip
+          python -m pip install --disable-pip-version-check pyelftools
+          mkdir -p work/source work/xapk work/unpacked work/report
+          curl -fL --retry 5 --retry-all-errors -A 'Mozilla/5.0' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
+            < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test -s work/unpacked/lib/arm64-v8a/libil2cpp.so
+          test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
+      - name: Decode relocated Il2CppMetadataUsage strings
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,struct
+          from elftools.elf.elffile import ELFFile
+          from elftools.elf.relocation import RelocationSection
+
+          binary_path=Path('work/unpacked/lib/arm64-v8a/libil2cpp.so')
+          metadata=Path('work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat').read_bytes()
+          magic,version=struct.unpack_from('<II',metadata,0); assert magic==0xFAB11BAF
+          literal_offset,literal_size,literal_data_offset,literal_data_size=struct.unpack_from('<IIII',metadata,8)
+          literals=[]
+          for pos in range(literal_offset,literal_offset+literal_size,8):
+              length,index=struct.unpack_from('<II',metadata,pos)
+              literals.append(metadata[literal_data_offset+index:literal_data_offset+index+length].decode('utf-8',errors='replace'))
+
+          wanted=[int(x,16) for x in '''
+          9B7A4F0 9B7A538 9B79C68 9B81818 9B831F8 9B830F0
+          9B83D20 9B83D38 9B83D50 9B83D58 9B83D68
+          9B83FB8 9B83FC0 9B83FD8 9B83FE0 9B83FE8 9B83FF0 9B83FF8 9B84008
+          9B8CAC0 9B8CAC8 9B8CAD0 9B8CAD8 9B8CAE0 9B8CAE8 9B8CAF0 9B8CAF8
+          9B93110 9B93118 9C09490
+          '''.split()]
+          wanted_set=set(wanted)
+
+          def map_va(elf,address:int):
+              for segment in elf.iter_segments():
+                  if segment['p_type']!='PT_LOAD': continue
+                  start=int(segment['p_vaddr']); filesz=int(segment['p_filesz']); memsz=int(segment['p_memsz'])
+                  if start<=address<start+memsz:
+                      delta=address-start
+                      return None if delta>=filesz else int(segment['p_offset'])+delta
+              return None
+
+          with binary_path.open('rb') as stream:
+              elf=ELFFile(stream); pointers={}
+              for section in elf.iter_sections():
+                  if not isinstance(section,RelocationSection): continue
+                  symbol_table=elf.get_section(section['sh_link']) if section['sh_link'] else None
+                  for relocation in section.iter_relocations():
+                      slot=int(relocation['r_offset'])
+                      if slot not in wanted_set: continue
+                      addend=int(relocation.entry.get('r_addend',0)); symbol_value=0
+                      symbol_index=int(relocation['r_info_sym'])
+                      if symbol_table is not None and symbol_index:
+                          symbol_value=int(symbol_table.get_symbol(symbol_index)['st_value'])
+                      pointers[slot]=(symbol_value+addend)&0xffffffffffffffff
+              results=[]
+              for slot in wanted:
+                  pointer=pointers.get(slot,0); raw=map_va(elf,pointer); encoded=None; usage_type=None; index=None; value=None; error=None
+                  try:
+                      if raw is None: raise ValueError('metadata usage pointer is not file-backed')
+                      stream.seek(raw+16)
+                      encoded=struct.unpack('<I',stream.read(4))[0]
+                      usage_type=(encoded & 0xE0000000)>>29
+                      index=(encoded & 0x1FFFFFFF)>>1
+                      if usage_type==5 and index<len(literals): value=literals[index]
+                  except Exception as exc: error=repr(exc)
+                  results.append({'slotAddress':f'0x{slot:X}','usageAddress':f'0x{pointer:X}','encoded':None if encoded is None else f'0x{encoded:08X}','usageType':usage_type,'literalIndex':index,'value':value,'error':error})
+          Path('work/report/string-address-map.json').write_text(json.dumps({'metadataVersion':version,'literalCount':len(literals),'results':results},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          Path('work/report/string-address-map.txt').write_text('\n'.join(f"{r['slotAddress']}\t{r['usageAddress']}\t{r['encoded']}\ttype={r['usageType']}\tindex={r['literalIndex']}\t{r['value']!r}\t{r['error'] or ''}" for r in results)+'\n',encoding='utf-8')
+      - name: Remove raw files
+        if: ${{ always() }}
+        run: rm -rf work/source work/xapk work/unpacked
+      - name: Upload address map
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-il2cpp-string-addresses
+          path: work/report
+          retention-days: 14
