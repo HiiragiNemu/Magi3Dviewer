@@ -56,11 +56,11 @@ try {
       && !stage.disabled
   }, undefined, { timeout: 180_000 })
 
-  // Give textures, animation and the post-processing chain several frames to settle.
+  // Give textures, character animation and the post-processing chain several frames to settle.
   await page.waitForTimeout(8_000)
 
   const state = await page.evaluate(() => {
-    const canvas = document.querySelector('canvas')
+    const canvas = document.querySelector('#viewer canvas')
     const stage = document.querySelector('#stage-selector')
     const character = document.querySelector('#character-selector')
     const gl = canvas instanceof HTMLCanvasElement
@@ -83,15 +83,16 @@ try {
     }
   })
 
-  const canvas = page.locator('canvas').first()
-  if (await canvas.count() !== 1) throw new Error('Expected exactly one primary canvas')
+  const canvas = page.locator('#viewer canvas')
+  if (await canvas.count() !== 1) throw new Error(`Expected one #viewer canvas, got ${await canvas.count()}`)
   await canvas.screenshot({ path: `${outputDir}/100107-battle-608-canvas.png` })
   await page.screenshot({ path: `${outputDir}/100107-battle-608-full.png`, fullPage: true })
 
+  const consoleErrors = consoleRows.filter(row => row.type === 'error')
   const report = {
     ...state,
     pageErrors,
-    consoleErrors: consoleRows.filter(row => row.type === 'error'),
+    consoleErrors,
     consoleWarnings: consoleRows.filter(row => row.type === 'warning'),
     allConsole: consoleRows,
   }
@@ -101,6 +102,7 @@ try {
   if (state.stage !== 'battle-608-00-00-001') throw new Error(`Wrong stage loaded: ${state.stage}`)
   if (!state.webgl) throw new Error('WebGL context unavailable')
   if (pageErrors.length) throw new Error(`Page errors: ${pageErrors.join('\n')}`)
+  if (consoleErrors.length) throw new Error(`Console errors: ${consoleErrors.map(row => row.text).join('\n')}`)
 } finally {
   await browser.close()
 }
