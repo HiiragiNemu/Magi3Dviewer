@@ -5,6 +5,8 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 
 const sourcePath = process.env.STAGE600_UV1_SOURCE_OUT
   || '/tmp/stage600-uv1-source.json';
+const hierarchySourcePath = process.env.STAGE600_MESHFILTER_HIERARCHY_OUT
+  || '/tmp/stage600-meshfilter-hierarchy.json';
 const fbxPath = 'public/stages/official/battle-600-00-01-002/bg_3d_600_00_01_002-animated.fbxdata';
 const reportPath = 'research/stage-600-01-02-uv1-fbx-mapping.json';
 const companionPath = process.env.STAGE600_UV1_COMPANION_OUT
@@ -24,15 +26,6 @@ if (!globalThis.document) {
   };
 }
 
-const permutations = [
-  ['abc', [0, 1, 2]],
-  ['acb', [0, 2, 1]],
-  ['bac', [1, 0, 2]],
-  ['bca', [1, 2, 0]],
-  ['cab', [2, 0, 1]],
-  ['cba', [2, 1, 0]],
-];
-
 function hierarchyPath(node) {
   const parts = [];
   let current = node;
@@ -43,121 +36,79 @@ function hierarchyPath(node) {
   return parts.join('/');
 }
 
-function candidateIndices(source, targetCount, permutation) {
-  if (targetCount === source.sourceVertexCount && permutation[0] === 0
-      && permutation[1] === 1 && permutation[2] === 2) {
-    return Array.from({ length: targetCount }, (_, index) => index);
-  }
-  if (targetCount !== source.triangleIndices.length) return null;
-  const output = new Array(targetCount);
-  for (let offset = 0; offset < source.triangleIndices.length; offset += 3) {
-    output[offset] = source.triangleIndices[offset + permutation[0]];
-    output[offset + 1] = source.triangleIndices[offset + permutation[1]];
-    output[offset + 2] = source.triangleIndices[offset + permutation[2]];
-  }
-  return output;
+function normalizePath(value) {
+  return String(value || '')
+    .replaceAll('\\', '/')
+    .replace(/^\/+|\/+$/g, '')
+    .replace(/\/+/, '/');
 }
 
-function scoreMapping(targetUv, sourceUv, indices, signU, signV) {
-  let offsetU = 0;
-  let offsetV = 0;
-  for (let i = 0; i < indices.length; i++) {
-    const sourceIndex = indices[i] * 2;
-    offsetU += targetUv.getX(i) - signU * sourceUv[sourceIndex];
-    offsetV += targetUv.getY(i) - signV * sourceUv[sourceIndex + 1];
-  }
-  offsetU /= indices.length;
-  offsetV /= indices.length;
+function suffixPathMatch(left, right) {
+  const a = normalizePath(left);
+  const b = normalizePath(right);
+  return a === b || a.endsWith(`/${b}`) || b.endsWith(`/${a}`);
+}
 
+function candidateIndices(source, targetCount) {
+  if (targetCount === source.sourceVertexCount) {
+    return {
+      mode: 'direct',
+      indices: Array.from({ length: targetCount }, (_, index) => index),
+    };
+  }
+  if (targetCount !== source.triangleIndices.length) return null;
+  const indices = new Array(targetCount);
+  // Empirically proven on the first 142 unambiguous meshes: Unity's triangle
+  // corner order reaches Three r182 FBXLoader as C,B,A with no UV axis flip.
+  for (let offset = 0; offset < source.triangleIndices.length; offset += 3) {
+    indices[offset] = source.triangleIndices[offset + 2];
+    indices[offset + 1] = source.triangleIndices[offset + 1];
+    indices[offset + 2] = source.triangleIndices[offset];
+  }
+  return { mode: 'cba', indices };
+}
+
+function verifyUv0(targetUv, source, mapping) {
   let maxError = 0;
   let squaredError = 0;
-  for (let i = 0; i < indices.length; i++) {
-    const sourceIndex = indices[i] * 2;
-    const du = targetUv.getX(i)
-      - (signU * sourceUv[sourceIndex] + offsetU);
-    const dv = targetUv.getY(i)
-      - (signV * sourceUv[sourceIndex + 1] + offsetV);
+  for (let i = 0; i < mapping.indices.length; i++) {
+    const sourceOffset = mapping.indices[i] * 2;
+    const du = targetUv.getX(i) - source.uv0[sourceOffset];
+    const dv = targetUv.getY(i) - source.uv0[sourceOffset + 1];
     maxError = Math.max(maxError, Math.abs(du), Math.abs(dv));
     squaredError += du * du + dv * dv;
   }
   return {
-    signU,
-    signV,
-    offsetU,
-    offsetV,
     maxError,
-    rmsError: Math.sqrt(squaredError / (indices.length * 2)),
+    rmsError: Math.sqrt(squaredError / (mapping.indices.length * 2)),
   };
-}
-
-function bestSourceMapping(targetUv, source) {
-  let best = null;
-  const targetCount = targetUv.count;
-  const isDirect = targetCount === source.sourceVertexCount;
-  const permutationsToTry = isDirect
-    ? [['direct', [0, 1, 2]]]
-    : permutations;
-
-  for (const [permutationName, permutation] of permutationsToTry) {
-    const indices = candidateIndices(source, targetCount, permutation);
-    if (!indices) continue;
-    for (const signU of [1, -1]) {
-      for (const signV of [1, -1]) {
-        const score = scoreMapping(
-          targetUv,
-          source.uv0,
-          indices,
-          signU,
-          signV,
-        );
-        const current = {
-          ...score,
-          permutation: permutationName,
-          indices,
-        };
-        if (!best
-            || current.maxError < best.maxError
-            || (current.maxError === best.maxError
-              && current.rmsError < best.rmsError)) {
-          best = current;
-        }
-      }
-    }
-  }
-  return best;
 }
 
 function transformedUv1(source, mapping) {
   const values = new Float32Array(mapping.indices.length * 2);
   for (let i = 0; i < mapping.indices.length; i++) {
     const sourceOffset = mapping.indices[i] * 2;
-    values[i * 2] = mapping.signU * source.uv1[sourceOffset]
-      + mapping.offsetU;
-    values[i * 2 + 1] = mapping.signV * source.uv1[sourceOffset + 1]
-      + mapping.offsetV;
+    values[i * 2] = source.uv1[sourceOffset];
+    values[i * 2 + 1] = source.uv1[sourceOffset + 1];
   }
   return values;
 }
 
 function hashFloat32(values) {
-  const bytes = Buffer.from(
-    values.buffer,
-    values.byteOffset,
-    values.byteLength,
-  );
+  const bytes = Buffer.from(values.buffer, values.byteOffset, values.byteLength);
   return crypto.createHash('sha256').update(bytes).digest('hex');
 }
 
 const source = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));
+const hierarchySource = JSON.parse(fs.readFileSync(hierarchySourcePath, 'utf8'));
 const bytes = fs.readFileSync(fbxPath);
-const arrayBuffer = bytes.buffer.slice(
-  bytes.byteOffset,
-  bytes.byteOffset + bytes.byteLength,
-);
+const arrayBuffer = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
 const root = new FBXLoader().parse(arrayBuffer, path.dirname(fbxPath) + '/');
 
 const sourceByName = new Map();
+const sourceByPathId = new Map();
 for (const mesh of source.meshes) {
+  sourceByPathId.set(String(mesh.pathId), mesh);
   const list = sourceByName.get(mesh.name) || [];
   list.push(mesh);
   sourceByName.set(mesh.name, list);
@@ -167,93 +118,109 @@ const mappings = [];
 const failures = [];
 const geometries = {};
 const nodes = [];
+let hierarchyResolved = 0;
+let uv0Resolved = 0;
 
 root.traverse((node) => {
   if (!node.isMesh || !node.geometry) return;
+  const targetPath = hierarchyPath(node);
   const targetUv = node.geometry.getAttribute('uv');
   const targetPosition = node.geometry.getAttribute('position');
-  const names = [node.name, node.geometry.name].filter(Boolean);
-  const candidates = [...new Set(
-    names.flatMap((name) => sourceByName.get(name) || []),
-  )];
-
-  if (!targetUv || !targetPosition || candidates.length === 0) {
+  if (!targetUv || !targetPosition) {
     failures.push({
-      hierarchyPath: hierarchyPath(node),
+      hierarchyPath: targetPath,
       nodeName: node.name,
-      geometryName: node.geometry.name || '',
-      targetVertexCount: targetPosition?.count ?? null,
-      reason: !targetUv
-        ? 'missing-target-uv0'
-        : candidates.length === 0
-          ? 'no-source-mesh-name-candidate'
-          : 'missing-target-position',
+      reason: !targetUv ? 'missing-target-uv0' : 'missing-target-position',
     });
     return;
   }
 
-  const scored = candidates
-    .map((candidate) => ({
-      candidate,
-      mapping: bestSourceMapping(targetUv, candidate),
-    }))
-    .filter((entry) => entry.mapping)
-    .sort((left, right) =>
-      left.mapping.maxError - right.mapping.maxError
-      || left.mapping.rmsError - right.mapping.rmsError,
-    );
+  const hierarchyMatches = hierarchySource.records.filter((record) =>
+    record.meshName === node.name && suffixPathMatch(targetPath, record.hierarchyPath),
+  );
 
-  if (scored.length === 0 || scored[0].mapping.maxError > tolerance) {
+  let candidates = [];
+  let resolution = 'uv0';
+  if (hierarchyMatches.length === 1) {
+    const exact = sourceByPathId.get(String(hierarchyMatches[0].meshPathId));
+    if (exact) {
+      candidates = [exact];
+      resolution = 'official-hierarchy';
+    }
+  }
+  if (candidates.length === 0) {
+    const names = [node.name, node.geometry.name].filter(Boolean);
+    candidates = [...new Set(names.flatMap((name) => sourceByName.get(name) || []))];
+  }
+  if (candidates.length === 0) {
     failures.push({
-      hierarchyPath: hierarchyPath(node),
+      hierarchyPath: targetPath,
       nodeName: node.name,
       geometryName: node.geometry.name || '',
       targetVertexCount: targetPosition.count,
+      hierarchyMatches,
+      reason: 'no-source-mesh-candidate',
+    });
+    return;
+  }
+
+  const scored = candidates.map((candidate) => {
+    const cornerMapping = candidateIndices(candidate, targetPosition.count);
+    if (!cornerMapping) return null;
+    const score = verifyUv0(targetUv, candidate, cornerMapping);
+    return { candidate, cornerMapping, score };
+  }).filter(Boolean).sort((a, b) =>
+    a.score.maxError - b.score.maxError || a.score.rmsError - b.score.rmsError,
+  );
+
+  if (scored.length === 0 || scored[0].score.maxError > tolerance) {
+    failures.push({
+      hierarchyPath: targetPath,
+      nodeName: node.name,
+      geometryName: node.geometry.name || '',
+      targetVertexCount: targetPosition.count,
+      hierarchyMatches,
+      resolution,
       reason: 'no-exact-uv0-corner-mapping',
       best: scored[0] ? {
         sourcePathId: scored[0].candidate.pathId,
-        sourceVertexCount: scored[0].candidate.sourceVertexCount,
-        sourceTriangleCornerCount: scored[0].candidate.triangleIndices.length,
-        permutation: scored[0].mapping.permutation,
-        signU: scored[0].mapping.signU,
-        signV: scored[0].mapping.signV,
-        offsetU: scored[0].mapping.offsetU,
-        offsetV: scored[0].mapping.offsetV,
-        maxError: scored[0].mapping.maxError,
-        rmsError: scored[0].mapping.rmsError,
+        mode: scored[0].cornerMapping.mode,
+        maxError: scored[0].score.maxError,
+        rmsError: scored[0].score.rmsError,
       } : null,
     });
     return;
   }
 
-  const bestError = scored[0].mapping.maxError;
-  const exactCandidates = scored.filter((entry) =>
-    entry.mapping.maxError <= Math.max(tolerance, bestError + 1e-7),
-  );
-  const uv1Options = exactCandidates.map((entry) => ({
-    entry,
-    uv1: transformedUv1(entry.candidate, entry.mapping),
-  }));
-  const uv1Hashes = [...new Set(uv1Options.map((entry) => hashFloat32(entry.uv1)))];
-  if (uv1Hashes.length !== 1) {
-    failures.push({
-      hierarchyPath: hierarchyPath(node),
-      nodeName: node.name,
-      geometryName: node.geometry.name || '',
-      targetVertexCount: targetPosition.count,
-      reason: 'ambiguous-source-mesh-produces-different-uv1',
-      exactCandidates: uv1Options.map(({ entry, uv1 }) => ({
-        sourcePathId: entry.candidate.pathId,
-        permutation: entry.mapping.permutation,
-        maxError: entry.mapping.maxError,
-        uv1Hash: hashFloat32(uv1),
-      })),
-    });
-    return;
+  let selected = scored[0];
+  if (resolution !== 'official-hierarchy') {
+    const exact = scored.filter((entry) => entry.score.maxError <= tolerance);
+    const hashes = new Set(exact.map((entry) =>
+      hashFloat32(transformedUv1(entry.candidate, entry.cornerMapping)),
+    ));
+    if (hashes.size !== 1) {
+      failures.push({
+        hierarchyPath: targetPath,
+        nodeName: node.name,
+        geometryName: node.geometry.name || '',
+        targetVertexCount: targetPosition.count,
+        hierarchyMatches,
+        reason: 'ambiguous-source-mesh-produces-different-uv1',
+        exactCandidates: exact.map((entry) => ({
+          sourcePathId: entry.candidate.pathId,
+          mode: entry.cornerMapping.mode,
+          maxError: entry.score.maxError,
+          uv1Hash: hashFloat32(transformedUv1(entry.candidate, entry.cornerMapping)),
+        })),
+      });
+      return;
+    }
+    uv0Resolved++;
+  } else {
+    hierarchyResolved++;
   }
 
-  const selected = uv1Options[0];
-  const uv1 = selected.uv1;
+  const uv1 = transformedUv1(selected.candidate, selected.cornerMapping);
   const geometryHash = hashFloat32(uv1);
   const geometryKey = `${targetPosition.count}:${geometryHash}`;
   if (!geometries[geometryKey]) {
@@ -263,46 +230,27 @@ root.traverse((node) => {
       uv1: Array.from(uv1),
     };
   }
-  const mappingRecord = {
-    hierarchyPath: hierarchyPath(node),
+  const record = {
+    hierarchyPath: targetPath,
     nodeName: node.name,
     geometryName: node.geometry.name || '',
     targetVertexCount: targetPosition.count,
-    sourcePathId: selected.entry.candidate.pathId,
-    sourceName: selected.entry.candidate.name,
-    sourceVertexCount: selected.entry.candidate.sourceVertexCount,
-    sourceTriangleCornerCount:
-      selected.entry.candidate.triangleIndices.length,
-    permutation: selected.entry.mapping.permutation,
-    signU: selected.entry.mapping.signU,
-    signV: selected.entry.mapping.signV,
-    offsetU: selected.entry.mapping.offsetU,
-    offsetV: selected.entry.mapping.offsetV,
-    maxError: selected.entry.mapping.maxError,
-    rmsError: selected.entry.mapping.rmsError,
+    sourcePathId: selected.candidate.pathId,
+    sourceName: selected.candidate.name,
+    sourceVertexCount: selected.candidate.sourceVertexCount,
+    sourceTriangleCornerCount: selected.candidate.triangleIndices.length,
+    cornerMode: selected.cornerMapping.mode,
+    maxError: selected.score.maxError,
+    rmsError: selected.score.rmsError,
+    resolution,
     geometryKey,
   };
-  mappings.push(mappingRecord);
-  nodes.push({
-    hierarchyPath: mappingRecord.hierarchyPath,
-    geometryKey,
-  });
+  mappings.push(record);
+  nodes.push({ hierarchyPath: targetPath, geometryKey });
 });
 
-const transformModes = {};
-for (const mapping of mappings) {
-  const key = [
-    mapping.permutation,
-    mapping.signU,
-    mapping.signV,
-    Number(mapping.offsetU.toFixed(6)),
-    Number(mapping.offsetV.toFixed(6)),
-  ].join(':');
-  transformModes[key] = (transformModes[key] || 0) + 1;
-}
-
 const report = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   sourceRevision: source.sourceRevision,
   sourceBundle: source.sourceBundle,
   fbxPath,
@@ -310,19 +258,24 @@ const report = {
   fbxMeshCount: mappings.length + failures.length,
   mappedMeshCount: mappings.length,
   failureCount: failures.length,
+  hierarchyResolved,
+  uv0Resolved,
   uniqueUv1GeometryCount: Object.keys(geometries).length,
-  transformModes,
+  cornerModes: mappings.reduce((out, item) => {
+    out[item.cornerMode] = (out[item.cornerMode] || 0) + 1;
+    return out;
+  }, {}),
   failures,
   mappings: mappings.map(({ geometryKey, ...entry }) => entry),
 };
 
 const companion = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   stageId: 'battle-600-00-01-002',
   sourceRevision: source.sourceRevision,
   sourceBundle: source.sourceBundle,
   fbxPath,
-  uvConventionRecoveredFromUv0: true,
+  uvConvention: 'Unity triangle corners CBA -> Three r182; U/V unchanged',
   geometries,
   nodes,
 };
@@ -335,21 +288,24 @@ console.log(JSON.stringify({
   fbxMeshCount: report.fbxMeshCount,
   mappedMeshCount: report.mappedMeshCount,
   failureCount: report.failureCount,
+  hierarchyResolved,
+  uv0Resolved,
   uniqueUv1GeometryCount: report.uniqueUv1GeometryCount,
-  transformModes,
-  sampleFailures: failures.slice(0, 10),
-  sampleMappings: mappings.slice(0, 10).map((entry) => ({
-    hierarchyPath: entry.hierarchyPath,
-    sourcePathId: entry.sourcePathId,
-    permutation: entry.permutation,
-    signU: entry.signU,
-    signV: entry.signV,
-    offsetU: entry.offsetU,
-    offsetV: entry.offsetV,
-    maxError: entry.maxError,
-  })),
+  cornerModes: report.cornerModes,
+  sampleFailures: failures.slice(0, 20),
+  sampleHierarchyMappings: mappings
+    .filter((item) => item.resolution === 'official-hierarchy')
+    .slice(0, 20)
+    .map((item) => ({
+      hierarchyPath: item.hierarchyPath,
+      sourcePathId: item.sourcePathId,
+      cornerMode: item.cornerMode,
+      maxError: item.maxError,
+    })),
 }, null, 2));
 
-if (mappings.length === 0) {
-  throw new Error('No stage 600 FBX meshes could be mapped to current-JP UV1');
+if (failures.length !== 0 || mappings.length !== 158) {
+  throw new Error(
+    `Stage 600 UV1 mapping is not closed: mapped=${mappings.length} failures=${failures.length}`,
+  );
 }
