@@ -8,7 +8,7 @@ on:
       - 'automation/trigger-deploy-p0-review-20260808.txt'
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -23,23 +23,23 @@ jobs:
     timeout-minutes: 60
     env:
       RELEASE_BRANCH: magius3dviewer
-      STAGE_BRANCH: feature/stage-608-current-jp-textures-20260808
-      GEM_BRANCH: feature/exact-gem-depthdiff-predicate-20260808
       PREVIEW_BRANCH: preview/p0-20260808
       REVIEW_SUBPATH: review/p0-20260808
     steps:
-      - name: Checkout release source
+      - name: Checkout unchanged release source
         uses: actions/checkout@v5
         with:
           ref: ${{ env.RELEASE_BRANCH }}
-          fetch-depth: 0
+          fetch-depth: 1
           path: release
-      - name: Checkout stage candidate
+
+      - name: Checkout current P0 preview verbatim
         uses: actions/checkout@v5
         with:
-          ref: ${{ env.STAGE_BRANCH }}
-          fetch-depth: 0
+          ref: ${{ env.PREVIEW_BRANCH }}
+          fetch-depth: 1
           path: review
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -47,25 +47,18 @@ jobs:
           cache-dependency-path: |
             release/package-lock.json
             review/package-lock.json
-      - name: Assemble explicit GitHub preview branch
+
+      - name: Record immutable review sources
         shell: bash
-        working-directory: review
         run: |
           set -euo pipefail
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git fetch origin "${GEM_BRANCH}:refs/remotes/origin/${GEM_BRANCH}"
-          git merge --no-edit "origin/${GEM_BRANCH}"
-          stage_sha="$(git rev-parse "origin/${STAGE_BRANCH}")"
-          gem_sha="$(git rev-parse "origin/${GEM_BRANCH}")"
-          preview_sha="$(git rev-parse HEAD)"
+          release_sha="$(git -C release rev-parse HEAD)"
+          preview_sha="$(git -C review rev-parse HEAD)"
           printf '%s\n' \
-            "release=${RELEASE_BRANCH}" \
-            "stage=${STAGE_BRANCH}@${stage_sha}" \
-            "gem=${GEM_BRANCH}@${gem_sha}" \
+            "release=${RELEASE_BRANCH}@${release_sha}" \
             "preview=${PREVIEW_BRANCH}@${preview_sha}" \
             > /tmp/p0-review-sources.txt
-          git push --force origin "HEAD:${PREVIEW_BRANCH}"
+
       - name: Install and build unchanged release root
         shell: bash
         working-directory: release
@@ -74,14 +67,38 @@ jobs:
           npm ci
           npm audit --audit-level=high
           npm run build
-      - name: Install, test and build P0 review candidate
+
+      - name: Install P0 review dependencies
         shell: bash
         working-directory: review
         run: |
           set -euo pipefail
           npm ci
           npm audit --audit-level=high
+
+      - name: Gate proven ReDrive executable formulas
+        shell: bash
+        working-directory: review
+        run: |
+          set -euo pipefail
+          node exactReDriveFormulaParity.test.mjs
+          node officialMaterialFresnelAniso.test.mjs
+          node nativeSelfShadow.test.mjs
+
+      - name: Gate stage 608 current-JP flipbook reconstruction
+        shell: bash
+        working-directory: review
+        run: |
+          set -euo pipefail
+          node stage608Flipbook.test.mjs
+
+      - name: Build current P0 review candidate
+        shell: bash
+        working-directory: review
+        run: |
+          set -euo pipefail
           npm run build
+
       - name: Assemble one Pages artifact with stable root and isolated review path
         shell: bash
         run: |
@@ -109,15 +126,19 @@ jobs:
           EOF
           test -s site/index.html
           test -s "site/${REVIEW_SUBPATH}/index.html"
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload combined production + review Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
+
       - name: Deploy combined Pages artifact
         id: deployment
         uses: actions/deploy-pages@v4
+
       - name: Verify public production and review routes
         shell: bash
         run: |
