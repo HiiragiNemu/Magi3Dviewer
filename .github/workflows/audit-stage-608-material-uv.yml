@@ -28,7 +28,7 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Audit deployed 608 FBX draw groups and UV ranges
-        run: node scripts/audit_stage_608_material_uv.mjs
+        run: node scripts/run_stage_608_material_uv_audit.mjs
       - name: Persist textual audit only
         shell: bash
         run: |
