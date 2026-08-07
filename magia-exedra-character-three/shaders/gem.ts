@@ -3,6 +3,7 @@ import type { OfficialMaterialProfile } from '../materialProfile';
 import { createDefaultMaterialProfile } from '../materialProfile';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 import DefaultGemMatCap from '../models/chara_109801_battle_unit/matcap02_invert.png';
+import OfficialSoftMetallicMatCap from '../models/common/matcap_SoftMetallic.png';
 
 export interface OfficialGemResources {
     matCap?: THREE.Texture;
@@ -16,10 +17,20 @@ export async function loadOfficialGemResources(
     if (!profiles?.some(profile => profile.gem.enabled && profile.gem.useMatCap)) {
         return { textures: [] };
     }
-    // Character bundles may ship their own Gem MatCap.  Use that exact
-    // texture first; the historical 109801 texture is only a fallback for
-    // bundles where no dedicated MatCap was exported.
-    const matCap = await loadTexture(matCapUrl ?? DefaultGemMatCap, {
+    // Exact current-JP evidence for 100101/100107 body_SJ and
+    // weapon_a_sj resolves `_MatCapTex` to the common 256x256
+    // `matcap_SoftMetallic` texture. Do not substitute a character-package
+    // guess or the historical 109801 fallback for those material slots.
+    const requiresSoftMetallic = profiles.some(
+        profile =>
+            profile.gem.enabled &&
+            profile.gem.useMatCap &&
+            profile.gem.matCapSource === 'soft-metallic',
+    );
+    const resolvedMatCapUrl = requiresSoftMetallic
+        ? OfficialSoftMetallicMatCap
+        : (matCapUrl ?? DefaultGemMatCap);
+    const matCap = await loadTexture(resolvedMatCapUrl, {
         colorSpace: THREE.NoColorSpace,
     });
     matCap.wrapS = THREE.ClampToEdgeWrapping;

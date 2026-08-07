@@ -22,9 +22,13 @@ export interface OfficialFresnelProfile {
     feather: number;
 }
 
+export type OfficialGemMatCapSource = 'character-or-fallback' | 'soft-metallic';
+
 export interface OfficialGemProfile {
     enabled: boolean;
     useMatCap: boolean;
+    /** Exact serialized MatCap dependency when recovered; omitted means existing character/fallback path. */
+    matCapSource?: OfficialGemMatCapSource;
     matCapIntensity: number;
     maskMatcapMetallic: boolean;
     maskMatcapSpecular: boolean;
@@ -96,6 +100,7 @@ const FRESNEL_DISABLED: OfficialFresnelProfile = {
 const GEM_DISABLED: OfficialGemProfile = {
     enabled: false,
     useMatCap: false,
+    matCapSource: 'character-or-fallback',
     matCapIntensity: 0,
     maskMatcapMetallic: false,
     maskMatcapSpecular: false,
@@ -115,6 +120,7 @@ const GEM_DISABLED: OfficialGemProfile = {
 const GENERIC_GEM: OfficialGemProfile = {
     enabled: true,
     useMatCap: true,
+    matCapSource: 'character-or-fallback',
     matCapIntensity: 2,
     maskMatcapMetallic: false,
     maskMatcapSpecular: false,
@@ -252,6 +258,7 @@ const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
         gem: {
             enabled: true,
             useMatCap: true,
+            matCapSource: 'soft-metallic',
             matCapIntensity: 2,
             maskMatcapMetallic: false,
             maskMatcapSpecular: false,
@@ -284,6 +291,7 @@ const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
         gem: {
             enabled: true,
             useMatCap: true,
+            matCapSource: 'soft-metallic',
             matCapIntensity: 2,
             maskMatcapMetallic: true,
             maskMatcapSpecular: false,
