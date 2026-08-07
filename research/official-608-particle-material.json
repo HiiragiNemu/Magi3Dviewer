@@ -1,12 +1,20 @@
 {
-  "schemaVersion": 1,
-  "source": "official-jp-current-root-stage-bundle",
+  "schemaVersion": 2,
+  "source": "official-jp-current-608-stage-local-probe",
   "metadata": {
     "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
     "catalogEntryCount": 16586,
     "unityVersion": "2022.3.62f2"
   },
   "bundle": "battle/stage/bg_3d_608_00_00_001",
+  "probeBundleCount": 5,
+  "probeBundles": [
+    "battle/stage/bg_3d_608_00_00_001",
+    "battle/stage/bg_3d_608_00_00_002",
+    "battle/stage/bg_3d_608_00_01_001",
+    "battle/stage/bg_3d_608_00_01_002",
+    "battle/stage/bg_3d_608_00_01_003"
+  ],
   "material": {
     "name": "bg3d608_00_blue_bubble",
     "pathId": -439672645568008899,
@@ -27,7 +35,7 @@
           "fileId": 6,
           "pathId": -70738714532392232
         },
-        "resolveError": "FileNotFoundError('File cab-45fe6895e0364350e5df2d082222970e not found in /tmp/magius-608-particle-material-nga8pynd/battle/stage')"
+        "resolveError": "FileNotFoundError('File cab-45fe6895e0364350e5df2d082222970e not found in /tmp/magius-608-particle-material-bfcy_k3y/battle/stage')"
       },
       {
         "property": "_Blend2ndTex",
@@ -77,7 +85,7 @@
           "fileId": 6,
           "pathId": -70738714532392232
         },
-        "resolveError": "FileNotFoundError('File cab-45fe6895e0364350e5df2d082222970e not found in /tmp/magius-608-particle-material-nga8pynd/battle/stage')"
+        "resolveError": "FileNotFoundError('File cab-45fe6895e0364350e5df2d082222970e not found in /tmp/magius-608-particle-material-bfcy_k3y/battle/stage')"
       },
       {
         "property": "_MatCapTex",
