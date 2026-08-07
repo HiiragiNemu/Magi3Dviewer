@@ -17,54 +17,24 @@
       ],
       "renderQueue": 3000,
       "floats": {
-        "_FlipbookOffset": 0.0,
-        "_MatCapIntensity": 1.0,
-        "_1stOpacity": 1.0,
         "_AlphaClip": 1.0,
-        "_USE_MULTI_UV_SCROLL": 1.0,
+        "_2ndOpacity": 1.0,
         "_FlipbookFrameRate": 8.0,
-        "_DropFrame_MultiScroll": 1.0,
-        "_Additive_to_Multiply": 0.9800000190734863,
-        "_Alpha_Clip": 0.5,
-        "_UseFlipbook": 0.0,
         "_UseMatCap": 0.0,
         "_Smoothness": 0.0,
+        "_1stOpacity": 1.0,
+        "_USE_MULTI_UV_SCROLL": 1.0,
+        "_Additive_to_Multiply": 0.9800000190734863,
+        "_Alpha_Clip": 0.5,
+        "_DropFrame_MultiScroll": 1.0,
+        "_FlipbookOffset": 0.0,
+        "_Metallic": 0.0,
+        "_UseFlipbook": 0.0,
         "_Unlitness": 1.0,
-        "_2ndOpacity": 1.0,
-        "_Metallic": 0.0
+        "_MatCapIntensity": 1.0
       },
       "vectorsAndColors": {
-        "_1stOffset": {
-          "r": 0.0,
-          "g": 0.0,
-          "b": 0.0,
-          "a": 0.0
-        },
-        "_1stColor": {
-          "r": 1.0,
-          "g": 1.0,
-          "b": 1.0,
-          "a": 1.0
-        },
-        "_BaseColor": {
-          "r": 0.9245283007621765,
-          "g": 0.9245283007621765,
-          "b": 0.9245283007621765,
-          "a": 1.0
-        },
-        "_2ndTilling": {
-          "r": 1.0,
-          "g": 1.0,
-          "b": 0.0,
-          "a": 0.0
-        },
-        "_1stScrollSpeed": {
-          "r": -0.009999999776482582,
-          "g": 0.0,
-          "b": 0.0,
-          "a": 0.0
-        },
-        "_Color": {
+        "_2ndColor": {
           "r": 1.0,
           "g": 1.0,
           "b": 1.0,
@@ -76,20 +46,50 @@
           "b": 0.0,
           "a": 0.0
         },
-        "_2ndColor": {
+        "_2ndScrollSpeed": {
+          "r": -0.009999999776482582,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_BaseColor": {
+          "r": 0.9245283007621765,
+          "g": 0.9245283007621765,
+          "b": 0.9245283007621765,
+          "a": 1.0
+        },
+        "_Color": {
           "r": 1.0,
           "g": 1.0,
           "b": 1.0,
           "a": 1.0
         },
-        "_UV_Scroll": {
+        "_1stScrollSpeed": {
+          "r": -0.009999999776482582,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "_2ndTilling": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "_1stOffset": {
           "r": 0.0,
           "g": 0.0,
           "b": 0.0,
           "a": 0.0
         },
-        "_2ndScrollSpeed": {
-          "r": -0.009999999776482582,
+        "_UV_Scroll": {
+          "r": 0.0,
           "g": 0.0,
           "b": 0.0,
           "a": 0.0
@@ -102,52 +102,10 @@
         }
       },
       "textures": {
-        "_MatCapTex": {
-          "property": "_MatCapTex",
-          "fileId": 0,
-          "pathId": 0,
-          "resolvedLocalTextureName": null,
-          "scale": {
-            "x": 1.0,
-            "y": 1.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          }
-        },
-        "_ScrollTexutre": {
-          "property": "_ScrollTexutre",
-          "fileId": 5,
-          "pathId": -8456137164679184744,
-          "resolvedLocalTextureName": null,
-          "scale": {
-            "x": 1.0,
-            "y": 1.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          }
-        },
         "_Blend2ndTex": {
           "property": "_Blend2ndTex",
           "fileId": 0,
           "pathId": 0,
-          "resolvedLocalTextureName": null,
-          "scale": {
-            "x": 1.0,
-            "y": 1.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          }
-        },
-        "_MainTex": {
-          "property": "_MainTex",
-          "fileId": 4,
-          "pathId": 9046177032241614915,
           "resolvedLocalTextureName": null,
           "scale": {
             "x": 1.0,
@@ -172,10 +130,52 @@
             "y": 0.0
           }
         },
+        "_MainTex": {
+          "property": "_MainTex",
+          "fileId": 4,
+          "pathId": 9046177032241614915,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
         "_BaseMap": {
           "property": "_BaseMap",
           "fileId": 4,
           "pathId": 9046177032241614915,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_MatCapTex": {
+          "property": "_MatCapTex",
+          "fileId": 0,
+          "pathId": 0,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "_ScrollTexutre": {
+          "property": "_ScrollTexutre",
+          "fileId": 5,
+          "pathId": -8456137164679184744,
           "resolvedLocalTextureName": null,
           "scale": {
             "x": 1.0,

@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-assetbundle",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "bundle": "battle/stage/bg_3d_608_00_00_001",
+  "materials": [
+    {
+      "material": "bg3d608_00_blue_Fish",
+      "sourceSerializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "externalCount": 14,
+      "externals": [
+        {
+          "fileId": 1,
+          "path": "archive:/CAB-ec2e80ff75c4cc36a05f983c0d29e1b6/CAB-ec2e80ff75c4cc36a05f983c0d29e1b6",
+          "name": "CAB-ec2e80ff75c4cc36a05f983c0d29e1b6",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-ec2e80ff75c4cc36a05f983c0d29e1b6/CAB-ec2e80ff75c4cc36a05f983c0d29e1b6)>"
+        },
+        {
+          "fileId": 2,
+          "path": "archive:/CAB-0120efc8364ab71d4d327b22d1625fc4/CAB-0120efc8364ab71d4d327b22d1625fc4",
+          "name": "CAB-0120efc8364ab71d4d327b22d1625fc4",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-0120efc8364ab71d4d327b22d1625fc4/CAB-0120efc8364ab71d4d327b22d1625fc4)>"
+        },
+        {
+          "fileId": 3,
+          "path": "archive:/CAB-3fe4ff44c309649d9cd870ef7c3d8d12/CAB-3fe4ff44c309649d9cd870ef7c3d8d12",
+          "name": "CAB-3fe4ff44c309649d9cd870ef7c3d8d12",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-3fe4ff44c309649d9cd870ef7c3d8d12/CAB-3fe4ff44c309649d9cd870ef7c3d8d12)>"
+        },
+        {
+          "fileId": 4,
+          "path": "archive:/CAB-34c05180a60227ce997cf6675ffd5f94/CAB-34c05180a60227ce997cf6675ffd5f94",
+          "name": "CAB-34c05180a60227ce997cf6675ffd5f94",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-34c05180a60227ce997cf6675ffd5f94/CAB-34c05180a60227ce997cf6675ffd5f94)>"
+        },
+        {
+          "fileId": 5,
+          "path": "archive:/CAB-e4799e13d64cc3fda25cff0a6e53b332/CAB-e4799e13d64cc3fda25cff0a6e53b332",
+          "name": "CAB-e4799e13d64cc3fda25cff0a6e53b332",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-e4799e13d64cc3fda25cff0a6e53b332/CAB-e4799e13d64cc3fda25cff0a6e53b332)>"
+        },
+        {
+          "fileId": 6,
+          "path": "archive:/CAB-45fe6895e0364350e5df2d082222970e/CAB-45fe6895e0364350e5df2d082222970e",
+          "name": "CAB-45fe6895e0364350e5df2d082222970e",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-45fe6895e0364350e5df2d082222970e/CAB-45fe6895e0364350e5df2d082222970e)>"
+        },
+        {
+          "fileId": 7,
+          "path": "archive:/CAB-2cdadb73bcdef476b15052229aae1c7a/CAB-2cdadb73bcdef476b15052229aae1c7a",
+          "name": "CAB-2cdadb73bcdef476b15052229aae1c7a",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-2cdadb73bcdef476b15052229aae1c7a/CAB-2cdadb73bcdef476b15052229aae1c7a)>"
+        },
+        {
+          "fileId": 8,
+          "path": "archive:/CAB-5323634a3e5f295ed400c0995bff5ae9/CAB-5323634a3e5f295ed400c0995bff5ae9",
+          "name": "CAB-5323634a3e5f295ed400c0995bff5ae9",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-5323634a3e5f295ed400c0995bff5ae9/CAB-5323634a3e5f295ed400c0995bff5ae9)>"
+        },
+        {
+          "fileId": 9,
+          "path": "archive:/CAB-67d4009d37f04224dbcd872cef8fbddb/CAB-67d4009d37f04224dbcd872cef8fbddb",
+          "name": "CAB-67d4009d37f04224dbcd872cef8fbddb",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-67d4009d37f04224dbcd872cef8fbddb/CAB-67d4009d37f04224dbcd872cef8fbddb)>"
+        },
+        {
+          "fileId": 10,
+          "path": "archive:/CAB-6ca469ea29ccd092a0ca295ce0e7cf58/CAB-6ca469ea29ccd092a0ca295ce0e7cf58",
+          "name": "CAB-6ca469ea29ccd092a0ca295ce0e7cf58",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-6ca469ea29ccd092a0ca295ce0e7cf58/CAB-6ca469ea29ccd092a0ca295ce0e7cf58)>"
+        },
+        {
+          "fileId": 11,
+          "path": "archive:/CAB-71f8c58a4821c71710d7300d7d421dfc/CAB-71f8c58a4821c71710d7300d7d421dfc",
+          "name": "CAB-71f8c58a4821c71710d7300d7d421dfc",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-71f8c58a4821c71710d7300d7d421dfc/CAB-71f8c58a4821c71710d7300d7d421dfc)>"
+        },
+        {
+          "fileId": 12,
+          "path": "archive:/CAB-9a63551070f0645e4abb58eef7968ef4/CAB-9a63551070f0645e4abb58eef7968ef4",
+          "name": "CAB-9a63551070f0645e4abb58eef7968ef4",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-9a63551070f0645e4abb58eef7968ef4/CAB-9a63551070f0645e4abb58eef7968ef4)>"
+        },
+        {
+          "fileId": 13,
+          "path": "archive:/CAB-ae8928c8e1d5b3f8a53324cd37a488d5/CAB-ae8928c8e1d5b3f8a53324cd37a488d5",
+          "name": "CAB-ae8928c8e1d5b3f8a53324cd37a488d5",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-ae8928c8e1d5b3f8a53324cd37a488d5/CAB-ae8928c8e1d5b3f8a53324cd37a488d5)>"
+        },
+        {
+          "fileId": 14,
+          "path": "archive:/CAB-fa3d9b2636b893a09f96e1df986febcf/CAB-fa3d9b2636b893a09f96e1df986febcf",
+          "name": "CAB-fa3d9b2636b893a09f96e1df986febcf",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'",
+          "type": "None",
+          "repr": "<FileIdentifier(archive:/CAB-fa3d9b2636b893a09f96e1df986febcf/CAB-fa3d9b2636b893a09f96e1df986febcf)>"
+        }
+      ]
+    }
+  ]
+}
