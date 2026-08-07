@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-resource-api-bounded-discovery",
+  "purpose": "Discover the current JP AssetBundleManifest/root-catalog route after the historical normalized fullPath='android' assumption stopped matching. This report intentionally persists only schema/header/candidate evidence, never auth tokens or the full catalog.",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "configResourceRevisionHeaders": {
+    "x-resource-revision-asset-bundle": "61ad830ca038a9efd58e67170a61c85e",
+    "x-resource-revision-file": "3cb4302729343f6b936d3717cbe08fbe",
+    "x-resource-revision-master-data": "19ceea6eb2485e4dc72c48cabdaab0f9"
+  },
+  "assetBundleCatalog": {
+    "payloadKeys": [
+      "mstList",
+      "pathMappingMstList"
+    ],
+    "rawEntryCount": 16586,
+    "pathMappingCount": 524,
+    "itemKeyUnion": [
+      "cryptoKey",
+      "dependencies",
+      "expireType",
+      "label",
+      "language",
+      "name",
+      "pathId"
+    ],
+    "pathMappingKeyUnion": [
+      "path",
+      "pathId"
+    ],
+    "termCandidates": [],
+    "pathTermCandidates": [],
+    "unresolvedNameSamples": []
+  },
+  "normalizedEntryCount": 16586,
+  "normalizedTermCandidates": [],
+  "resourceFileCatalogProbe": {
+    "attempted": true,
+    "statusCode": 200,
+    "contentLength": 1193648,
+    "summary": {
+      "payloadKeys": [
+        "mstList",
+        "pathMappingMstList"
+      ],
+      "rawEntryCount": 7298,
+      "pathMappingCount": 3501,
+      "itemKeyUnion": [
+        "cryptoKey",
+        "expireType",
+        "isEncrypted",
+        "isRenamedName",
+        "label",
+        "language",
+        "name",
+        "pathId",
+        "revision",
+        "size"
+      ],
+      "pathMappingKeyUnion": [
+        "path",
+        "pathId"
+      ],
+      "termCandidates": [],
+      "pathTermCandidates": [],
+      "unresolvedNameSamples": []
+    }
+  }
+}

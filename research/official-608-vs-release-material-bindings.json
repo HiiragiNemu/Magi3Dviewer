@@ -1,0 +1,1071 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-608-vs-release-magius3dviewer",
+  "officialAssetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+  "officialBundle": "battle/stage/bg_3d_608_00_00_001",
+  "viewerRef": "da8228b9fdcf34d68abb1e78ce9d527678b592dd",
+  "viewerCatalogId": "battle-608-00-00-001",
+  "officialMaterialCount": 15,
+  "webBindingCount": 13,
+  "missingBindingsExactByMaterialName": [
+    "bg3d608_00_blue_bubble",
+    "SkyBox_bg3d608_00_blue"
+  ],
+  "extraBindingsExactByMaterialName": [],
+  "matchedCount": 13,
+  "matched": [
+    {
+      "material": "bg3d608_00_blue_ChairCD",
+      "binding": "bg3d608_00_blue_ChairCD",
+      "official": {
+        "renderQueue": 3000,
+        "validKeywords": [
+          "_ALPHATEST_ON"
+        ],
+        "invalidKeywords": [
+          "_ALPHACLIP_ON",
+          "_CULLING_OFF",
+          "_RECEIVESHADOWS_ON",
+          "_SURFACE_TYPE_TRANSPARENT"
+        ],
+        "smoothness": 0.10000000149011612,
+        "unlitness": 0.30000001192092896,
+        "alphaClipEnabled": 1.0,
+        "alphaClipThreshold": 0.8999999761581421,
+        "surface": 1.0,
+        "srcBlend": 5.0,
+        "dstBlend": 10.0,
+        "zWrite": 0.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 4,
+          "pathId": 9046177032241614915,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "lit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "smoothness": 0.1,
+        "unlitness": 0.3,
+        "alphaTest": null,
+        "transparent": null,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": true,
+        "receiveShadow": true,
+        "side": null,
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [
+        {
+          "field": "smoothness",
+          "official": 0.10000000149011612,
+          "web": 0.1
+        },
+        {
+          "field": "unlitness",
+          "official": 0.30000001192092896,
+          "web": 0.3
+        }
+      ],
+      "textureObservation": {
+        "officialFileId": 4,
+        "officialPathId": 9046177032241614915,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "webBaseName": "bg3d608_00_blue_objects_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "bg3d608_00_blue_Fish",
+      "binding": "bg3d608_00_blue_Fish",
+      "official": {
+        "renderQueue": 3000,
+        "validKeywords": [
+          "_MULTI_UV_SCROLL"
+        ],
+        "invalidKeywords": [
+          "KEY1",
+          "_ALPHACLIP_ON",
+          "_CULLING_OFF",
+          "_DROPFRAME_MULTISCROLL_ON",
+          "_ISFOG_ON",
+          "_RECEIVE_SHADOWS_OFF",
+          "_SURFACE_TYPE_TRANSPARENT",
+          "_USE_MULTI_UV_SCROLL"
+        ],
+        "smoothness": 0.0,
+        "unlitness": 1.0,
+        "alphaClipEnabled": 1.0,
+        "alphaClipThreshold": 0.5,
+        "surface": 1.0,
+        "srcBlend": 5.0,
+        "dstBlend": 10.0,
+        "zWrite": 0.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 0.9245283007621765,
+          "g": 0.9245283007621765,
+          "b": 0.9245283007621765,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 4,
+          "pathId": 9046177032241614915,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "smoothness": 0,
+        "unlitness": 1,
+        "alphaTest": 0.5,
+        "transparent": null,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": false,
+        "receiveShadow": false,
+        "side": null,
+        "multiUvScroll": {
+          "textureUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_uvscroll_col.png",
+          "first": {
+            "tiling": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ],
+            "speed": [
+              -0.009999999776482582,
+              0
+            ],
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "opacity": 1
+          },
+          "second": {
+            "tiling": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ],
+            "speed": [
+              -0.009999999776482582,
+              0
+            ],
+            "color": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "opacity": 1
+          },
+          "additiveToMultiply": 0.9800000190734863,
+          "dropFrame": true
+        }
+      },
+      "exactScalarMismatches": [],
+      "textureObservation": {
+        "officialFileId": 4,
+        "officialPathId": 9046177032241614915,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "webBaseName": "bg3d608_00_blue_objects_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "bg3d608_00_blue_Ground",
+      "binding": "bg3d608_00_blue_Ground",
+      "official": {
+        "renderQueue": 2000,
+        "validKeywords": [
+          "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+        ],
+        "invalidKeywords": [
+          "_CASTSHADOWS_ON",
+          "_RECEIVESHADOWS_ON"
+        ],
+        "smoothness": 0.5,
+        "unlitness": 0.20000000298023224,
+        "alphaClipEnabled": 0.0,
+        "alphaClipThreshold": 0.5,
+        "surface": 0.0,
+        "srcBlend": 1.0,
+        "dstBlend": 0.0,
+        "zWrite": 1.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 9,
+          "pathId": -5607514749919870913,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "lit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_ground_col.png",
+        "smoothness": 0.5,
+        "unlitness": 0.2,
+        "alphaTest": null,
+        "transparent": null,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": true,
+        "receiveShadow": true,
+        "side": null,
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [
+        {
+          "field": "unlitness",
+          "official": 0.20000000298023224,
+          "web": 0.2
+        }
+      ],
+      "textureObservation": {
+        "officialFileId": 9,
+        "officialPathId": -5607514749919870913,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_ground_col.png",
+        "webBaseName": "bg3d608_00_blue_ground_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "bg3d608_00_blue_Object",
+      "binding": "bg3d608_00_blue_Object",
+      "official": {
+        "renderQueue": 2000,
+        "validKeywords": [],
+        "invalidKeywords": [
+          "_CULLING_OFF",
+          "_RECEIVESHADOWS_ON"
+        ],
+        "smoothness": 0.20000000298023224,
+        "unlitness": 0.4000000059604645,
+        "alphaClipEnabled": 0.0,
+        "alphaClipThreshold": 0.5,
+        "surface": 0.0,
+        "srcBlend": 1.0,
+        "dstBlend": 0.0,
+        "zWrite": 1.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 4,
+          "pathId": 9046177032241614915,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "lit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "smoothness": 0.2,
+        "unlitness": 0.4,
+        "alphaTest": null,
+        "transparent": null,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": false,
+        "receiveShadow": true,
+        "side": null,
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [
+        {
+          "field": "smoothness",
+          "official": 0.20000000298023224,
+          "web": 0.2
+        },
+        {
+          "field": "unlitness",
+          "official": 0.4000000059604645,
+          "web": 0.4
+        }
+      ],
+      "textureObservation": {
+        "officialFileId": 4,
+        "officialPathId": 9046177032241614915,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "webBaseName": "bg3d608_00_blue_objects_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "bg3d608_00_blue_ObjectB",
+      "binding": "bg3d608_00_blue_ObjectB",
+      "official": {
+        "renderQueue": 2000,
+        "validKeywords": [],
+        "invalidKeywords": [
+          "_CULLING_OFF",
+          "_RECEIVESHADOWS_ON"
+        ],
+        "smoothness": 0.5,
+        "unlitness": 0.75,
+        "alphaClipEnabled": 0.0,
+        "alphaClipThreshold": 0.5,
+        "surface": 0.0,
+        "srcBlend": 1.0,
+        "dstBlend": 0.0,
+        "zWrite": 1.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 4,
+          "pathId": 9046177032241614915,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "lit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "smoothness": 0.5,
+        "unlitness": 0.75,
+        "alphaTest": null,
+        "transparent": null,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": false,
+        "receiveShadow": true,
+        "side": null,
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [],
+      "textureObservation": {
+        "officialFileId": 4,
+        "officialPathId": 9046177032241614915,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "webBaseName": "bg3d608_00_blue_objects_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "mt_bg3d608_00_blue_sky",
+      "binding": "mt_bg3d608_00_blue_sky",
+      "official": {
+        "renderQueue": 2000,
+        "validKeywords": [
+          "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+        ],
+        "invalidKeywords": [
+          "_CASTSHADOWS_ON",
+          "_CULLING_OFF",
+          "_RECEIVESHADOWS_ON"
+        ],
+        "smoothness": 1.0,
+        "unlitness": 0.20000000298023224,
+        "alphaClipEnabled": 0.0,
+        "alphaClipThreshold": 0.5,
+        "surface": 0.0,
+        "srcBlend": 1.0,
+        "dstBlend": 0.0,
+        "zWrite": 1.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 0.8066037893295288,
+          "g": 0.8515601754188538,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 7,
+          "pathId": 1699062358985823069,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_sky_col.png",
+        "smoothness": 1,
+        "unlitness": 0.2,
+        "alphaTest": null,
+        "transparent": null,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": false,
+        "receiveShadow": false,
+        "side": "double",
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [
+        {
+          "field": "unlitness",
+          "official": 0.20000000298023224,
+          "web": 0.2
+        }
+      ],
+      "textureObservation": {
+        "officialFileId": 7,
+        "officialPathId": 1699062358985823069,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_sky_col.png",
+        "webBaseName": "bg3d608_00_blue_sky_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "mt_bg3d608_00_red_MusicNoteA",
+      "binding": "mt_bg3d608_00_red_MusicNoteA",
+      "official": {
+        "renderQueue": 2450,
+        "validKeywords": [
+          "_ALPHATEST_ON"
+        ],
+        "invalidKeywords": [
+          "_ALPHACLIP_ON",
+          "_CULLING_OFF",
+          "_RECEIVE_SHADOWS_OFF"
+        ],
+        "smoothness": 0.0,
+        "unlitness": 1.0,
+        "alphaClipEnabled": 1.0,
+        "alphaClipThreshold": 0.10000000149011612,
+        "surface": 0.0,
+        "srcBlend": 1.0,
+        "dstBlend": 0.0,
+        "zWrite": 1.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 2,
+          "pathId": 2125725807504079055,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+        "smoothness": null,
+        "unlitness": 1,
+        "alphaTest": 0.01,
+        "transparent": true,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": false,
+        "receiveShadow": false,
+        "side": "double",
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [
+        {
+          "field": "alphaClipThreshold",
+          "official": 0.10000000149011612,
+          "web": 0.01
+        }
+      ],
+      "textureObservation": {
+        "officialFileId": 2,
+        "officialPathId": 2125725807504079055,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+        "webBaseName": "bg3d608_00_red_musicNote_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "mt_bg3d608_00_red_MusicNoteB",
+      "binding": "mt_bg3d608_00_red_MusicNoteB",
+      "official": {
+        "renderQueue": 2450,
+        "validKeywords": [
+          "_ALPHATEST_ON"
+        ],
+        "invalidKeywords": [
+          "_ALPHACLIP_ON",
+          "_CULLING_OFF",
+          "_ISDITHERCLIPPING_ON",
+          "_NOISE",
+          "_RECEIVE_SHADOWS_OFF",
+          "_SURFACE_TYPE_TRANSPARENT"
+        ],
+        "smoothness": 0.30000001192092896,
+        "unlitness": 1.0,
+        "alphaClipEnabled": 1.0,
+        "alphaClipThreshold": 0.5,
+        "surface": 0.0,
+        "srcBlend": 1.0,
+        "dstBlend": 0.0,
+        "zWrite": 1.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 0.8500000238418579,
+          "g": 0.6568182110786438,
+          "b": 0.6375000476837158,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 2,
+          "pathId": 2125725807504079055,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+        "smoothness": 0.3,
+        "unlitness": 1,
+        "alphaTest": 0.01,
+        "transparent": true,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": false,
+        "receiveShadow": false,
+        "side": "double",
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [
+        {
+          "field": "smoothness",
+          "official": 0.30000001192092896,
+          "web": 0.3
+        },
+        {
+          "field": "alphaClipThreshold",
+          "official": 0.5,
+          "web": 0.01
+        }
+      ],
+      "textureObservation": {
+        "officialFileId": 2,
+        "officialPathId": 2125725807504079055,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+        "webBaseName": "bg3d608_00_red_musicNote_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "mt_bg3d608_00_red_MusicNoteC",
+      "binding": "mt_bg3d608_00_red_MusicNoteC",
+      "official": {
+        "renderQueue": 2450,
+        "validKeywords": [
+          "_ALPHATEST_ON"
+        ],
+        "invalidKeywords": [
+          "_ALPHACLIP_ON",
+          "_CULLING_OFF",
+          "_ISDITHERCLIPPING_ON",
+          "_NOISE",
+          "_RECEIVE_SHADOWS_OFF",
+          "_SURFACE_TYPE_TRANSPARENT"
+        ],
+        "smoothness": 0.30000001192092896,
+        "unlitness": 1.0,
+        "alphaClipEnabled": 1.0,
+        "alphaClipThreshold": 0.699999988079071,
+        "surface": 0.0,
+        "srcBlend": 1.0,
+        "dstBlend": 0.0,
+        "zWrite": 1.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 0.8500000238418579,
+          "g": 0.6568182110786438,
+          "b": 0.6375000476837158,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 13,
+          "pathId": -2243324628426955472,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_circlenote_col.png",
+        "smoothness": 0.3,
+        "unlitness": 1,
+        "alphaTest": 0.01,
+        "transparent": true,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": false,
+        "receiveShadow": false,
+        "side": "double",
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [
+        {
+          "field": "smoothness",
+          "official": 0.30000001192092896,
+          "web": 0.3
+        },
+        {
+          "field": "alphaClipThreshold",
+          "official": 0.699999988079071,
+          "web": 0.01
+        }
+      ],
+      "textureObservation": {
+        "officialFileId": 13,
+        "officialPathId": -2243324628426955472,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_circlenote_col.png",
+        "webBaseName": "bg3d608_00_red_circlenote_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "mt_bg3d608_00_red_violinCol",
+      "binding": "mt_bg3d608_00_red_violinCol",
+      "official": {
+        "renderQueue": 2450,
+        "validKeywords": [
+          "_ALPHATEST_ON",
+          "_FLIPBOOK"
+        ],
+        "invalidKeywords": [
+          "_ALPHACLIP_ON",
+          "_CULLING_OFF",
+          "_RECEIVE_SHADOWS_OFF"
+        ],
+        "smoothness": 0.0,
+        "unlitness": 1.0,
+        "alphaClipEnabled": 1.0,
+        "alphaClipThreshold": 0.5,
+        "surface": 0.0,
+        "srcBlend": 1.0,
+        "dstBlend": 0.0,
+        "zWrite": 1.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 0,
+          "pathId": -4587267788711311578,
+          "resolvedLocalTextureName": "bg3d608_00_red_violin_sprite",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violin_sprite.png",
+        "smoothness": null,
+        "unlitness": 1,
+        "alphaTest": 0.01,
+        "transparent": true,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": false,
+        "receiveShadow": false,
+        "side": "double",
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [
+        {
+          "field": "alphaClipThreshold",
+          "official": 0.5,
+          "web": 0.01
+        }
+      ],
+      "textureObservation": {
+        "officialFileId": 0,
+        "officialPathId": -4587267788711311578,
+        "officialResolvedLocalTextureName": "bg3d608_00_red_violin_sprite",
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violin_sprite.png",
+        "webBaseName": "bg3d608_00_red_violin_sprite",
+        "localNameMatchesWebBasename": true,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "mt_bg3d608_00_red_violinShdLine",
+      "binding": "mt_bg3d608_00_red_violinShdLine",
+      "official": {
+        "renderQueue": 3000,
+        "validKeywords": [
+          "_ALPHATEST_ON",
+          "_FLIPBOOK"
+        ],
+        "invalidKeywords": [
+          "_ALPHACLIP_ON",
+          "_ALPHAMODULATE_ON",
+          "_CULLING_OFF",
+          "_RECEIVE_SHADOWS_OFF",
+          "_SURFACE_TYPE_TRANSPARENT"
+        ],
+        "smoothness": 0.0,
+        "unlitness": 1.0,
+        "alphaClipEnabled": 1.0,
+        "alphaClipThreshold": 0.5,
+        "surface": 1.0,
+        "srcBlend": 2.0,
+        "dstBlend": 0.0,
+        "zWrite": 0.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 1.0,
+          "g": 0.7719124555587769,
+          "b": 0.0,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 0,
+          "pathId": -7311903068602794106,
+          "resolvedLocalTextureName": "bg3d608_00_red_violinLineShd_sprite",
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violinLineShd_sprite.png",
+        "smoothness": null,
+        "unlitness": 1,
+        "alphaTest": 0.01,
+        "transparent": true,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": false,
+        "receiveShadow": false,
+        "side": "double",
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [
+        {
+          "field": "alphaClipThreshold",
+          "official": 0.5,
+          "web": 0.01
+        }
+      ],
+      "textureObservation": {
+        "officialFileId": 0,
+        "officialPathId": -7311903068602794106,
+        "officialResolvedLocalTextureName": "bg3d608_00_red_violinLineShd_sprite",
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violinLineShd_sprite.png",
+        "webBaseName": "bg3d608_00_red_violinLineShd_sprite",
+        "localNameMatchesWebBasename": true,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "mt_mt_bg3d608_00_red_Object",
+      "binding": "mt_mt_bg3d608_00_red_Object",
+      "official": {
+        "renderQueue": 2000,
+        "validKeywords": [
+          "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+        ],
+        "invalidKeywords": [
+          "_CULLING_OFF",
+          "_RECEIVESHADOWS_ON",
+          "_USE_NOISE"
+        ],
+        "smoothness": 0.20000000298023224,
+        "unlitness": 0.4000000059604645,
+        "alphaClipEnabled": 0.0,
+        "alphaClipThreshold": 0.5,
+        "surface": 0.0,
+        "srcBlend": 1.0,
+        "dstBlend": 0.0,
+        "zWrite": 1.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 3,
+          "pathId": -8638699045254887522,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "lit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_objects_col.png",
+        "smoothness": 0.2,
+        "unlitness": 0.4,
+        "alphaTest": null,
+        "transparent": null,
+        "matCapMapUrl": "./stages/official/battle-608-00-00-001/matcap.png",
+        "matCapIntensity": 1,
+        "castShadow": false,
+        "receiveShadow": true,
+        "side": null,
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [
+        {
+          "field": "smoothness",
+          "official": 0.20000000298023224,
+          "web": 0.2
+        },
+        {
+          "field": "unlitness",
+          "official": 0.4000000059604645,
+          "web": 0.4
+        }
+      ],
+      "textureObservation": {
+        "officialFileId": 3,
+        "officialPathId": -8638699045254887522,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_objects_col.png",
+        "webBaseName": "bg3d608_00_red_objects_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    },
+    {
+      "material": "mt_mt_bg3d608_00_red_Roof",
+      "binding": "mt_mt_bg3d608_00_red_Roof",
+      "official": {
+        "renderQueue": 2000,
+        "validKeywords": [
+          "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A"
+        ],
+        "invalidKeywords": [
+          "_CASTSHADOWS_ON",
+          "_RECEIVESHADOWS_ON"
+        ],
+        "smoothness": 0.5,
+        "unlitness": 1.0,
+        "alphaClipEnabled": 0.0,
+        "alphaClipThreshold": 0.5,
+        "surface": 0.0,
+        "srcBlend": 1.0,
+        "dstBlend": 0.0,
+        "zWrite": 1.0,
+        "useMatCap": 0.0,
+        "matCapIntensity": 1.0,
+        "baseColor": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "baseMap": {
+          "property": "_BaseMap",
+          "fileId": 11,
+          "pathId": 4458966477178561162,
+          "resolvedLocalTextureName": null,
+          "scale": {
+            "x": 1.0,
+            "y": 1.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          }
+        },
+        "ints": {}
+      },
+      "web": {
+        "shading": "unlit",
+        "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_ground_col.png",
+        "smoothness": 0.5,
+        "unlitness": 1,
+        "alphaTest": null,
+        "transparent": null,
+        "matCapMapUrl": null,
+        "matCapIntensity": null,
+        "castShadow": false,
+        "receiveShadow": false,
+        "side": null,
+        "multiUvScroll": null
+      },
+      "exactScalarMismatches": [],
+      "textureObservation": {
+        "officialFileId": 11,
+        "officialPathId": 4458966477178561162,
+        "officialResolvedLocalTextureName": null,
+        "webBaseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_ground_col.png",
+        "webBaseName": "bg3d608_00_red_ground_col",
+        "localNameMatchesWebBasename": null,
+        "note": "Exact name comparison is possible only when the official PPtr resolves locally; external PPtrs remain unresolved until their current-JP dependency bundle is loaded."
+      }
+    }
+  ],
+  "interpretation": {
+    "exact": "Material-name presence and serialized scalar values are exact current-JP-vs-Web comparisons.",
+    "deferred": "Shader semantic equivalence, external texture identity, render-state derivation and scene-state activation are not inferred from names alone; those remain deferred until their dependency/dataflow is resolved."
+  }
+}
