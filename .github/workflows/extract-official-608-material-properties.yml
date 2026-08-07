@@ -1,0 +1,40 @@
+name: Extract official stage 608 material properties
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'automation/trigger-official-608-material-properties.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TARGET_BRANCH: research/stage-608-official-material-properties-20260807
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install bounded extractor dependencies
+        run: python -m pip install requests msgpack pycryptodome UnityPy
+      - name: Extract exact stage 608 Material saved properties
+        run: python scripts/extract_official_608_material_properties.py
+      - name: Persist Material evidence only
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add research/official-608-material-properties.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: record official 608 Material saved properties'
+          git push origin HEAD:${TARGET_BRANCH}
