@@ -26,6 +26,13 @@
         "headHex": "",
         "tailHex": ""
       },
+      "streamedImageData": {
+        "byteCount": 32928,
+        "sha256": "6ce2db5ae86e171bf1bb79c03a0832d9f963afe77abe40166b4286364bc68c38",
+        "headHex": "051092492492492400000002ffff0000051092492492492400000002ffff0000051092492492492400000002ffff0000051092492492492400000002ffff0000",
+        "tailHex": "051092492492492400000002ffff0000051092492492492400000002ffff0000051092492492492400000002ffff0000051092492492492400000002ffff0000"
+      },
+      "streamedImageDataError": null,
       "streamData": {
         "offset": 4370128,
         "size": 32928,
@@ -45,10 +52,21 @@
           "size": [
             64,
             64
-          ]
+          ],
+          "mode": "RGBA",
+          "pixelSha256": "bd66d524d40c0fb87494bc047a46899faf0ddf1f8febe45a2e71e156fe2f2100"
         },
         "images": {
           "error": "AttributeError(\"'Cubemap' object has no attribute 'images'\")"
+        },
+        "get_image_data": {
+          "callable": true,
+          "result": {
+            "byteCount": 32928,
+            "sha256": "6ce2db5ae86e171bf1bb79c03a0832d9f963afe77abe40166b4286364bc68c38",
+            "headHex": "051092492492492400000002ffff0000051092492492492400000002ffff0000051092492492492400000002ffff0000051092492492492400000002ffff0000",
+            "tailHex": "051092492492492400000002ffff0000051092492492492400000002ffff0000051092492492492400000002ffff0000051092492492492400000002ffff0000"
+          }
         }
       },
       "typetreeKeys": [
@@ -96,6 +114,13 @@
         "headHex": "",
         "tailHex": ""
       },
+      "streamedImageData": {
+        "byteCount": 32928,
+        "sha256": "55c95ac84db10e767f54f3555cd9613a5e8b09f4c43173d7b389dfd47ad3d124",
+        "headHex": "0d10924924924924eeeeee24000000000d10924924924924eeeeee24000000000d10924924924924eeeeee24000000000d10924924924924eeeeee2400000000",
+        "tailHex": "0d10924924924924eeeeee24000000000d10924924924924eeeeee24000000000d10924924924924eeeeee24000000000d10924924924924eeeeee2400000000"
+      },
+      "streamedImageDataError": null,
       "streamData": {
         "offset": 6495232,
         "size": 32928,
@@ -115,10 +140,21 @@
           "size": [
             64,
             64
-          ]
+          ],
+          "mode": "RGBA",
+          "pixelSha256": "183d79edf81a4e66342e22dbc993a80afe6987e3c37e4adae60c04b835739449"
         },
         "images": {
           "error": "AttributeError(\"'Cubemap' object has no attribute 'images'\")"
+        },
+        "get_image_data": {
+          "callable": true,
+          "result": {
+            "byteCount": 32928,
+            "sha256": "55c95ac84db10e767f54f3555cd9613a5e8b09f4c43173d7b389dfd47ad3d124",
+            "headHex": "0d10924924924924eeeeee24000000000d10924924924924eeeeee24000000000d10924924924924eeeeee24000000000d10924924924924eeeeee2400000000",
+            "tailHex": "0d10924924924924eeeeee24000000000d10924924924924eeeeee24000000000d10924924924924eeeeee24000000000d10924924924924eeeeee2400000000"
+          }
         }
       },
       "typetreeKeys": [
