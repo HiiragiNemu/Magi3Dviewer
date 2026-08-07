@@ -43,7 +43,7 @@ jobs:
           git fetch origin \
             "${RESEARCH_BRANCH}:refs/remotes/origin/${RESEARCH_BRANCH}" \
             "${AUTOMATION_BRANCH}:refs/remotes/origin/${AUTOMATION_BRANCH}"
-          mkdir -p /tmp/magius-608-tools
+          mkdir -p /tmp/magius-608-tools research
           git show "origin/${RESEARCH_BRANCH}:scripts/extract_official_100101_material_properties.py" \
             > /tmp/magius-608-tools/extract_official_100101_material_properties.py
           git show "origin/${RESEARCH_BRANCH}:scripts/resolve_official_608_particle_texture.py" \
@@ -52,10 +52,13 @@ jobs:
             > /tmp/magius-608-tools/official-608-material-properties.json
           git show "origin/${RESEARCH_BRANCH}:research/official-608-external-files.json" \
             > /tmp/magius-608-tools/official-608-external-files.json
+          git show "origin/${RESEARCH_BRANCH}:research/official-jp-assetbundle-manifest-discovery.json" \
+            > research/official-jp-assetbundle-manifest-discovery.json
           git show "origin/${AUTOMATION_BRANCH}:scripts/apply_official_608_texture_parity.py" \
             > /tmp/magius-608-tools/apply_official_608_texture_parity.py
           test -s /tmp/magius-608-tools/official-608-material-properties.json
           test -s /tmp/magius-608-tools/official-608-external-files.json
+          test -s research/official-jp-assetbundle-manifest-discovery.json
       - name: Apply exact current-JP Texture2D pixels and run fixed regression
         shell: bash
         env:
