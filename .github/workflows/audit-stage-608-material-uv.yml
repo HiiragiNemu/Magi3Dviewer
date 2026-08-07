@@ -1,0 +1,40 @@
+name: Audit stage 608 material UV
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'automation/trigger-stage-608-material-uv.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TARGET_BRANCH: research/stage-608-uv-material-audit-20260807
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Audit deployed 608 FBX draw groups and UV ranges
+        run: node scripts/audit_stage_608_material_uv.mjs
+      - name: Persist textual audit only
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add research/stage-608-material-uv-audit.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: record stage 608 material UV audit'
+          git push origin HEAD:${TARGET_BRANCH}
