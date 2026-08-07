@@ -40,7 +40,6 @@ def summarize(value: Any, depth: int = 0) -> Any:
     if isinstance(value, dict):
         return {str(key): summarize(child, depth + 1) for key, child in value.items()}
     if isinstance(value, (list, tuple)):
-        # Preserve scalar tables completely; summarize large object arrays.
         if len(value) <= 512 and all(
             item is None or isinstance(item, (str, int, float, bool))
             for item in value
@@ -69,9 +68,30 @@ def find_material_and_shader(env: Any):
         pointer = getattr(material, 'm_Shader', None)
         if pointer is None:
             raise RuntimeError('target Material has no Shader PPtr')
-        reader = getattr(pointer, 'object_reader', None)
         shader = pointer.read()
-        return obj, material, pointer, reader, shader
+        shader_path_id = int(getattr(pointer, 'm_PathID', 0) or 0)
+        candidates = [
+            reader for reader in env.objects
+            if int(getattr(reader, 'path_id', 0) or 0) == shader_path_id
+            and str(getattr(getattr(reader, 'type', None), 'name', '')) == 'Shader'
+        ]
+        if not candidates:
+            raise RuntimeError(
+                f'Shader PPtr read succeeded but no Shader ObjectReader exists for PathID {shader_path_id}'
+            )
+        # A PathID may be repeated across different SerializedFiles. Prefer the
+        # candidate whose parsed object has the same generated-object identity
+        # fields, then fall back to the first exact type/path match.
+        shader_reader = candidates[0]
+        for candidate in candidates:
+            try:
+                candidate_shader = candidate.read()
+            except Exception:
+                continue
+            if type(candidate_shader) is type(shader):
+                shader_reader = candidate
+                break
+        return obj, material, pointer, shader_reader, shader
     raise RuntimeError(f'{TARGET_MATERIAL} not found')
 
 
@@ -97,8 +117,6 @@ def main() -> int:
         downloaded = [base.download(entry, request_headers, token, temp) for entry in selected]
         env = UnityPy.load(*(str(path) for path in downloaded))
         material_obj, material, pointer, shader_reader, shader = find_material_and_shader(env)
-        if shader_reader is None:
-            raise RuntimeError('Shader PPtr has no object_reader after successful dereference')
 
         try:
             tree = shader_reader.read_typetree()
