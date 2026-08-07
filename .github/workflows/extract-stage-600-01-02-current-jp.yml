@@ -20,16 +20,24 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
       - name: Install extractor dependencies
         run: python -m pip install requests msgpack pycryptodome UnityPy lz4
+      - name: Install project dependencies for production FBXLoader audit
+        run: npm ci
       - name: Extract current-JP 600-01-02 material properties
         run: python scripts/extract_official_600_01_02_material_properties.py
       - name: Summarize actionable current-JP parity fields
         run: python scripts/summarize_official_600_01_02_material_properties.py
       - name: Audit exported FBX material-name provenance
         run: python scripts/audit_stage_600_fbx_material_names.py
-      - name: Audit current-JP versus exported FBX UV channels
+      - name: Audit current-JP versus exported FBX raw UV channels
         run: python scripts/audit_stage_600_uv_channels.py
+      - name: Parse exported FBX with the actual Three FBXLoader
+        run: node scripts/audit_stage_600_three_fbx_uv.mjs
       - name: Persist evidence
         shell: bash --noprofile --norc -e -o pipefail {0}
         run: |
@@ -39,11 +47,13 @@ jobs:
           test -s research/official-600-01-02-material-summary.json
           test -s research/stage-600-01-02-fbx-material-name-audit.json
           test -s research/stage-600-01-02-uv-channel-audit.json
+          test -s research/stage-600-01-02-three-fbx-uv-audit.json
           git add \
             research/official-600-01-02-material-properties.json \
             research/official-600-01-02-material-summary.json \
             research/stage-600-01-02-fbx-material-name-audit.json \
-            research/stage-600-01-02-uv-channel-audit.json
+            research/stage-600-01-02-uv-channel-audit.json \
+            research/stage-600-01-02-three-fbx-uv-audit.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'research: persist current-JP 600-01-02 parity summary'
           git push origin HEAD:research/stage-600-01-02-current-jp-20260808
