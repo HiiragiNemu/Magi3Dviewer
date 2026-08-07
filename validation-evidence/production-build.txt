@@ -12,303 +12,303 @@ TAP version 13
 # Subtest: angelRingHeadLock.test.mjs
 ok 1 - angelRingHeadLock.test.mjs
   ---
-  duration_ms: 42.3378
+  duration_ms: 49.543261
   type: 'test'
   ...
 # Subtest: per-slot gem uniforms update both the gem pass and special-jewel specular boost
 ok 2 - per-slot gem uniforms update both the gem pass and special-jewel specular boost
   ---
-  duration_ms: 1.223368
+  duration_ms: 0.955812
   type: 'test'
   ...
 # Subtest: draw-group binding refreshes the official profile before each render
 ok 3 - draw-group binding refreshes the official profile before each render
   ---
-  duration_ms: 0.221104
+  duration_ms: 0.172653
   type: 'test'
   ...
 # Subtest: native ReDrive self-shadow keeps recovered TW/JP-shared pass constants
 ok 4 - native ReDrive self-shadow keeps recovered TW/JP-shared pass constants
   ---
-  duration_ms: 1.632484
+  duration_ms: 1.484022
   type: 'test'
   ...
 # Subtest: self-shadow is applied through authored toon shadow textures and face SDF
 ok 5 - self-shadow is applied through authored toon shadow textures and face SDF
   ---
-  duration_ms: 0.56723
+  duration_ms: 0.524273
   type: 'test'
   ...
 # Subtest: 100101/100107 shared body Aniso uses exact current-JP material values
 ok 6 - 100101/100107 shared body Aniso uses exact current-JP material values
   ---
-  duration_ms: 1.670775
+  duration_ms: 2.455653
   type: 'test'
   ...
 # Subtest: 100101 weapon Soul Gem uses exact material Fresnel defaults
 ok 7 - 100101 weapon Soul Gem uses exact material Fresnel defaults
   ---
-  duration_ms: 0.246892
+  duration_ms: 0.360897
   type: 'test'
   ...
 # Subtest: per-material uniforms override the global debug Fresnel without enabling it globally
 ok 8 - per-material uniforms override the global debug Fresnel without enabling it globally
   ---
-  duration_ms: 0.350576
+  duration_ms: 0.490709
   type: 'test'
   ...
 # Subtest: ReDrive background adjustments execute between background and character passes
 ok 9 - ReDrive background adjustments execute between background and character passes
   ---
-  duration_ms: 1.814935
+  duration_ms: 1.780918
   type: 'test'
   ...
 # Subtest: background grading keeps Unity parameter semantics explicit
 ok 10 - background grading keeps Unity parameter semantics explicit
   ---
-  duration_ms: 0.248996
+  duration_ms: 0.21894
   type: 'test'
   ...
 # Subtest: ReDriveVolume drives background-only pass and disables legacy global CSS approximation
 ok 11 - ReDriveVolume drives background-only pass and disables legacy global CSS approximation
   ---
-  duration_ms: 0.227766
+  duration_ms: 0.266189
   type: 'test'
   ...
 # Subtest: ReDrive skybox intensity is override-gated and drives both split scenes
 ok 12 - ReDrive skybox intensity is override-gated and drives both split scenes
   ---
-  duration_ms: 1.285534
+  duration_ms: 1.374025
   type: 'test'
   ...
 # Subtest: ReDrive skybox intensity reset restores environment/background intensity state
 ok 13 - ReDrive skybox intensity reset restores environment/background intensity state
   ---
-  duration_ms: 0.313586
+  duration_ms: 0.314379
   type: 'test'
   ...
 # Subtest: 600-00-00-001 no longer stacks unverified character-brightening effects
 ok 14 - 600-00-00-001 no longer stacks unverified character-brightening effects
   ---
-  duration_ms: 1.028383
+  duration_ms: 1.012938
   type: 'test'
   ...
 # Subtest: Gem uses character MatCap when exported and a camera-facing MatCap basis
 ok 15 - Gem uses character MatCap when exported and a camera-facing MatCap basis
   ---
-  duration_ms: 0.335447
+  duration_ms: 0.297077
   type: 'test'
   ...
 # Subtest: Control G no longer drives an invented world-up colour gradient
 ok 16 - Control G no longer drives an invented world-up colour gradient
   ---
-  duration_ms: 0.232445
+  duration_ms: 0.226695
   type: 'test'
   ...
 # Subtest: fixes only the four catalog-proven opaque alpha-card materials
 ok 17 - fixes only the four catalog-proven opaque alpha-card materials
   ---
-  duration_ms: 1.402574
+  duration_ms: 1.430542
   type: 'test'
   ...
 # Subtest: restores Unity cutout render state without transparent sorting
 ok 18 - restores Unity cutout render state without transparent sorting
   ---
-  duration_ms: 0.260868
+  duration_ms: 0.231424
   type: 'test'
   ...
 # Subtest: runs after asynchronous stage loads complete
 ok 19 - runs after asynchronous stage loads complete
   ---
-  duration_ms: 0.291184
+  duration_ms: 0.290936
   type: 'test'
   ...
 # Subtest: known JP battle stages use real AssetBundle root names
 ok 20 - known JP battle stages use real AssetBundle root names
   ---
-  duration_ms: 1.72155
+  duration_ms: 1.865216
   type: 'test'
   ...
 # Subtest: official battle catalog does not use filesystem-like synthetic bg/3d paths
 ok 21 - official battle catalog does not use filesystem-like synthetic bg/3d paths
   ---
-  duration_ms: 0.637412
+  duration_ms: 0.833843
   type: 'test'
   ...
 # Subtest: TW provenance retains all normalized root/text manifest sources
 ok 22 - TW provenance retains all normalized root/text manifest sources
   ---
-  duration_ms: 1.664523
+  duration_ms: 1.335033
   type: 'test'
   ...
 # Subtest: one stage provenance cannot mix JP and TW manifest sources
 ok 23 - one stage provenance cannot mix JP and TW manifest sources
   ---
-  duration_ms: 0.563263
+  duration_ms: 0.459421
   type: 'test'
   ...
 # Subtest: resolves an exact deterministic dependency closure
 ok 24 - resolves an exact deterministic dependency closure
   ---
-  duration_ms: 9.609412
+  duration_ms: 14.742944
   type: 'test'
   ...
 # Subtest: normalizes provenance without allowing root duplication
 ok 25 - normalizes provenance without allowing root duplication
   ---
-  duration_ms: 0.792272
+  duration_ms: 0.792015
   type: 'test'
   ...
 # Subtest: rejects a provenance root that disagrees with the stage catalog
 ok 26 - rejects a provenance root that disagrees with the stage catalog
   ---
-  duration_ms: 0.668861
+  duration_ms: 0.70456
   type: 'test'
   ...
 # Subtest: rejects cycles and missing dependencies in manifest graphs
 ok 27 - rejects cycles and missing dependencies in manifest graphs
   ---
-  duration_ms: 0.37453
+  duration_ms: 0.321513
   type: 'test'
   ...
 # Subtest: loads nested generated catalogs and individual stage entries
 ok 28 - loads nested generated catalogs and individual stage entries
   ---
-  duration_ms: 2.002896
+  duration_ms: 2.455232
   type: 'test'
   ...
 # Subtest: nested failures are diagnostic and do not hide other scene shards
 ok 29 - nested failures are diagnostic and do not hide other scene shards
   ---
-  duration_ms: 0.675493
+  duration_ms: 0.765294
   type: 'test'
   ...
 # Subtest: root catalog remains fail-closed
 ok 30 - root catalog remains fail-closed
   ---
-  duration_ms: 0.521655
+  duration_ms: 4.589663
   type: 'test'
   ...
 # Subtest: fidelity inspector exposes provenance, closure and concrete dynamic gaps
 ok 31 - fidelity inspector exposes provenance, closure and concrete dynamic gaps
   ---
-  duration_ms: 1.342891
+  duration_ms: 0.945632
   type: 'test'
   ...
 # Subtest: fidelity inspector renders external names as text rather than HTML
 ok 32 - fidelity inspector renders external names as text rather than HTML
   ---
-  duration_ms: 1.242954
+  duration_ms: 1.14191
   type: 'test'
   ...
 # Subtest: stage runtime updates the fidelity inspector only after resolved stage definitions
 ok 33 - stage runtime updates the fidelity inspector only after resolved stage definitions
   ---
-  duration_ms: 0.248665
+  duration_ms: 0.159419
   type: 'test'
   ...
 # Subtest: fidelity inspector remains bounded on desktop and mobile
 ok 34 - fidelity inspector remains bounded on desktop and mobile
   ---
-  duration_ms: 0.200014
+  duration_ms: 0.138649
   type: 'test'
   ...
 # Subtest: hierarchy path resolves the intended duplicate-named stage node
 ok 35 - hierarchy path resolves the intended duplicate-named stage node
   ---
-  duration_ms: 2.100238
+  duration_ms: 2.216335
   type: 'test'
   ...
 # Subtest: anchorPath wins while legacy anchorNode remains a fallback
 ok 36 - anchorPath wins while legacy anchorNode remains a fallback
   ---
-  duration_ms: 0.506367
+  duration_ms: 0.556263
   type: 'test'
   ...
 # Subtest: invalid hierarchy path does not loosely skip missing intermediate nodes
 ok 37 - invalid hierarchy path does not loosely skip missing intermediate nodes
   ---
-  duration_ms: 0.355846
+  duration_ms: 0.423564
   type: 'test'
   ...
 # Official stage lighting invariants passed.
 # Subtest: stageLighting.test.mjs
 ok 15 - stageLighting.test.mjs
   ---
-  duration_ms: 49.867399
+  duration_ms: 59.575186
   type: 'test'
   ...
 # Subtest: binds 104 hierarchy suffixes with shared RGBM texture and independent ST
 ok 39 - binds 104 hierarchy suffixes with shared RGBM texture and independent ST
   ---
-  duration_ms: 18.328861
+  duration_ms: 18.010575
   type: 'test'
   ...
 # Subtest: reports ambiguous suffixes and validates the second UV set before mutation
 ok 40 - reports ambiguous suffixes and validates the second UV set before mutation
   ---
-  duration_ms: 0.872351
+  duration_ms: 0.848351
   type: 'test'
   ...
 # Official stage material ownership invariants passed.
 # Subtest: stageMaterialBindings.test.mjs
 ok 17 - stageMaterialBindings.test.mjs
   ---
-  duration_ms: 52.327805
+  duration_ms: 58.393472
   type: 'test'
   ...
 # Subtest: stage runtime selects five exact clips and advances one shared clock
 ok 42 - stage runtime selects five exact clips and advances one shared clock
   ---
-  duration_ms: 8.704143
+  duration_ms: 6.376424
   type: 'test'
   ...
 # Subtest: missing runtime profile remains a true static-stage no-op
 ok 43 - missing runtime profile remains a true static-stage no-op
   ---
-  duration_ms: 0.449621
+  duration_ms: 0.381725
   type: 'test'
   ...
 # Subtest: non-looping runtime clamps at the shared timeline end and publishes live state
 ok 44 - non-looping runtime clamps at the shared timeline end and publishes live state
   ---
-  duration_ms: 0.651268
+  duration_ms: 0.678312
   type: 'test'
   ...
 # Subtest: voice source offset shortens the non-looping shared timeline
 ok 45 - voice source offset shortens the non-looping shared timeline
   ---
-  duration_ms: 0.285735
+  duration_ms: 0.27752
   type: 'test'
   ...
 # Subtest: Madoka official submesh counts exactly match the non-indexed FBX draw counts
 ok 46 - Madoka official submesh counts exactly match the non-indexed FBX draw counts
   ---
-  duration_ms: 1.666677
+  duration_ms: 2.411621
   type: 'test'
   ...
 # Subtest: runtime refuses partial group recovery and restores contiguous official ranges
 ok 47 - runtime refuses partial group recovery and restores contiguous official ranges
   ---
-  duration_ms: 0.257662
+  duration_ms: 0.361919
   type: 'test'
   ...
 # Subtest: static viewer shell keeps canonical English keys and exposes a language toggle
 ok 48 - static viewer shell keeps canonical English keys and exposes a language toggle
   ---
-  duration_ms: 7.641412
+  duration_ms: 7.27049
   type: 'test'
   ...
 # Subtest: runtime localization supports persistent English and Simplified Chinese switching
 ok 49 - runtime localization supports persistent English and Simplified Chinese switching
   ---
-  duration_ms: 2.529291
+  duration_ms: 2.412042
   type: 'test'
   ...
 # Subtest: dialogs, selectors, tooltips and alerts use canonical English plus runtime translation
 ok 50 - dialogs, selectors, tooltips and alerts use canonical English plus runtime translation
   ---
-  duration_ms: 4.794117
+  duration_ms: 4.409657
   type: 'test'
   ...
 1..50
@@ -319,7 +319,7 @@ ok 50 - dialogs, selectors, tooltips and alerts use canonical English plus runti
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 2214.564279
+# duration_ms 2199.280942
 Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
@@ -332,16 +332,16 @@ computing gzip size...
 [2mdist/[22m[2massets/[22m[36mfflate-legacy-DkfwhLEx.js                [39m[1m[2m  4.03 kB[22m[1m[22m[2m │ gzip:   2.15 kB[22m[2m │ map:   100.26 kB[22m
 [2mdist/[22m[2massets/[22m[36mlz-string-legacy-CWXjGfxK.js             [39m[1m[2m  4.88 kB[22m[1m[22m[2m │ gzip:   1.49 kB[22m[2m │ map:    25.27 kB[22m
 [2mdist/[22m[2massets/[22m[36mvendor-legacy-BdXU3G6_.js                [39m[1m[2m  8.25 kB[22m[1m[22m[2m │ gzip:   2.91 kB[22m[2m │ map:    34.51 kB[22m
-[2mdist/[22m[2massets/[22m[36mindex-legacy-Dpol82d9.js                 [39m[1m[2m  9.06 kB[22m[1m[22m[2m │ gzip:   2.85 kB[22m[2m │ map:     1.76 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-legacy-Da54ZyNG.js                 [39m[1m[2m  9.06 kB[22m[1m[22m[2m │ gzip:   2.85 kB[22m[2m │ map:     1.76 kB[22m
 [2mdist/[22m[2massets/[22m[36mviewer-localization-legacy-B3NweJtJ.js   [39m[1m[2m 13.59 kB[22m[1m[22m[2m │ gzip:   6.56 kB[22m[2m │ map:    26.38 kB[22m
 [2mdist/[22m[2massets/[22m[36mthree-libs-legacy-DGDE8Aub.js            [39m[1m[2m 35.13 kB[22m[1m[22m[2m │ gzip:  11.24 kB[22m[2m │ map:   158.05 kB[22m
 [2mdist/[22m[2massets/[22m[36mthree-controls-legacy-BB_i2cAe.js        [39m[1m[2m 40.60 kB[22m[1m[22m[2m │ gzip:   9.25 kB[22m[2m │ map:   152.60 kB[22m
-[2mdist/[22m[2massets/[22m[36mviewer-stage-legacy-GyNWPl-k.js          [39m[1m[2m 78.95 kB[22m[1m[22m[2m │ gzip:  24.25 kB[22m[2m │ map:   261.97 kB[22m
+[2mdist/[22m[2massets/[22m[36mviewer-stage-legacy-CgSh_RD1.js          [39m[1m[2m 78.95 kB[22m[1m[22m[2m │ gzip:  24.25 kB[22m[2m │ map:   261.97 kB[22m
 [2mdist/[22m[2massets/[22m[36mthree-loaders-legacy-DHPQll3f.js         [39m[1m[2m 90.20 kB[22m[1m[22m[2m │ gzip:  27.81 kB[22m[2m │ map:   395.51 kB[22m
 [2mdist/[22m[2massets/[22m[36mthree-postprocessing-legacy-BerQf8Ot.js  [39m[1m[2m110.51 kB[22m[1m[22m[2m │ gzip:  49.06 kB[22m[2m │ map:   210.50 kB[22m
 [2mdist/[22m[2massets/[22m[36mpolyfills-legacy-Y_PZVst0.js             [39m[1m[2m148.74 kB[22m[1m[22m[2m │ gzip:  55.65 kB[22m[2m │ map:   740.64 kB[22m
-[2mdist/[22m[2massets/[22m[36mviewer-controls-legacy-Bs_7l_EZ.js       [39m[1m[2m252.71 kB[22m[1m[22m[2m │ gzip:  34.69 kB[22m[2m │ map:   212.44 kB[22m
-[2mdist/[22m[2massets/[22m[36mcharacter-runtime-legacy-DQdYP1oe.js     [39m[1m[2m521.39 kB[22m[1m[22m[2m │ gzip: 115.13 kB[22m[2m │ map:   966.78 kB[22m
+[2mdist/[22m[2massets/[22m[36mviewer-controls-legacy-Bc7DLq0l.js       [39m[1m[2m252.71 kB[22m[1m[22m[2m │ gzip:  34.69 kB[22m[2m │ map:   212.44 kB[22m
+[2mdist/[22m[2massets/[22m[36mcharacter-runtime-legacy-WZ-I4dfC.js     [39m[1m[2m521.43 kB[22m[1m[22m[2m │ gzip: 115.17 kB[22m[2m │ map:   967.47 kB[22m
 [2mdist/[22m[2massets/[22m[36mthree-core-legacy-Bwp7veXn.js            [39m[1m[2m605.10 kB[22m[1m[22m[2m │ gzip: 156.15 kB[22m[2m │ map: 2,990.79 kB[22m
 [2mdist/[22m[2massets/[22m[32mWorkerThread-Ca9HRGgQ.js                                 [39m[1m[2m    2.56 kB[22m[1m[22m
 [2mdist/[22m[2massets/[22m[32mRDToon_AngelRingMap-CQH-A63U.png                         [39m[1m[2m    4.12 kB[22m[1m[22m
@@ -1700,19 +1700,19 @@ computing gzip size...
 [2mdist/[22m[2massets/[22m[32mVisualRoot.fbx-DLcGoiA8.fbxdata                          [39m[1m[2m3,664.80 kB[22m[1m[22m
 [2mdist/[22m[2massets/[22m[32mVisualRoot.fbx-BiiWLcys.fbxdata                          [39m[1m[2m3,898.07 kB[22m[1m[22m
 [2mdist/[22m[2massets/[22m[35mindex-CYMFguqM.css                                       [39m[1m[2m    8.02 kB[22m[1m[22m[2m │ gzip:   2.33 kB[22m
-[2mdist/[22m[2massets/[22m[36mindex-Cbn2MLQV.js                                        [39m[1m[2m    2.11 kB[22m[1m[22m[2m │ gzip:   1.11 kB[22m[2m │ map:     1.70 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-Q1eFwZKS.js                                        [39m[1m[2m    2.11 kB[22m[1m[22m[2m │ gzip:   1.11 kB[22m[2m │ map:     1.70 kB[22m
 [2mdist/[22m[2massets/[22m[36mfflate-4s8I9g3_.js                                       [39m[1m[2m    4.07 kB[22m[1m[22m[2m │ gzip:   2.13 kB[22m[2m │ map:   100.97 kB[22m
 [2mdist/[22m[2massets/[22m[36mlz-string-UNqkxtPb.js                                    [39m[1m[2m    4.85 kB[22m[1m[22m[2m │ gzip:   1.46 kB[22m[2m │ map:    25.44 kB[22m
 [2mdist/[22m[2massets/[22m[36mvendor-BNguDoK7.js                                       [39m[1m[2m    8.22 kB[22m[1m[22m[2m │ gzip:   2.99 kB[22m[2m │ map:    34.57 kB[22m
 [2mdist/[22m[2massets/[22m[36mviewer-localization-Cp5eMsdZ.js                          [39m[1m[2m   11.64 kB[22m[1m[22m[2m │ gzip:   5.68 kB[22m[2m │ map:    24.25 kB[22m
 [2mdist/[22m[2massets/[22m[36mthree-libs-CqkShLKE.js                                   [39m[1m[2m   34.98 kB[22m[1m[22m[2m │ gzip:  11.13 kB[22m[2m │ map:   155.87 kB[22m
 [2mdist/[22m[2massets/[22m[36mthree-controls-DLyKzrMo.js                               [39m[1m[2m   41.25 kB[22m[1m[22m[2m │ gzip:   9.33 kB[22m[2m │ map:   147.21 kB[22m
-[2mdist/[22m[2massets/[22m[36mviewer-stage-JNIZUfmj.js                                 [39m[1m[2m   65.60 kB[22m[1m[22m[2m │ gzip:  20.15 kB[22m[2m │ map:   234.58 kB[22m
+[2mdist/[22m[2massets/[22m[36mviewer-stage-PG-nraU6.js                                 [39m[1m[2m   65.60 kB[22m[1m[22m[2m │ gzip:  20.14 kB[22m[2m │ map:   234.58 kB[22m
 [2mdist/[22m[2massets/[22m[36mthree-loaders-DJKM6haP.js                                [39m[1m[2m   88.43 kB[22m[1m[22m[2m │ gzip:  26.77 kB[22m[2m │ map:   384.62 kB[22m
 [2mdist/[22m[2massets/[22m[36mthree-postprocessing-BAc0tOzr.js                         [39m[1m[2m  107.20 kB[22m[1m[22m[2m │ gzip:  48.33 kB[22m[2m │ map:   205.37 kB[22m
 [2mdist/[22m[2massets/[22m[36mpolyfills-D9xvXm9v.js                                    [39m[1m[2m  111.36 kB[22m[1m[22m[2m │ gzip:  41.81 kB[22m[2m │ map:   555.23 kB[22m
-[2mdist/[22m[2massets/[22m[36mviewer-controls-BFDK6f6N.js                              [39m[1m[2m  240.59 kB[22m[1m[22m[2m │ gzip:  30.92 kB[22m[2m │ map:   199.92 kB[22m
-[2mdist/[22m[2massets/[22m[36mcharacter-runtime-Drw03r39.js                            [39m[1m[2m  525.62 kB[22m[1m[22m[2m │ gzip: 113.97 kB[22m[2m │ map:   910.24 kB[22m
+[2mdist/[22m[2massets/[22m[36mviewer-controls-DJ0xNSHp.js                              [39m[1m[2m  240.59 kB[22m[1m[22m[2m │ gzip:  30.92 kB[22m[2m │ map:   199.92 kB[22m
+[2mdist/[22m[2massets/[22m[36mcharacter-runtime-eMJ1CEuV.js                            [39m[1m[2m  525.67 kB[22m[1m[22m[2m │ gzip: 113.98 kB[22m[2m │ map:   910.93 kB[22m
 [2mdist/[22m[2massets/[22m[36mthree-core-G5qnu2_m.js                                   [39m[1m[2m  602.18 kB[22m[1m[22m[2m │ gzip: 155.22 kB[22m[2m │ map: 2,928.40 kB[22m
-[32m✓ built in 27.86s[39m
+[32m✓ built in 29.10s[39m
 exit_code=0

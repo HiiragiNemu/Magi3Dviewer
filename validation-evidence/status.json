@@ -1,9 +1,10 @@
 {
-  "sourceCommit": "8b8b4cc80fb5e8ee0b1ace7f431b2989401629fc",
-  "runId": 31189912430,
+  "sourceCommit": "b502f9f8cb6cc6c79789eb7eccc87b284e206c49",
+  "runId": 31190484023,
   "runAttempt": 1,
   "character": "100107",
   "stage": "battle-608-00-00-001",
+  "selfShadowFeedbackPatch": 1,
   "npmCi": 0,
   "npmAudit": 0,
   "productionBuildAndReleaseTests": 0,
@@ -11,5 +12,6 @@
   "playwrightChromium": 0,
   "viteServer": 0,
   "strictFixedVisualRegression": 0,
-  "overall": 0
+  "feedbackLoopWarnings": 0,
+  "overall": 1
 }

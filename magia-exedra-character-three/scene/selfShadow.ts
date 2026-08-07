@@ -373,9 +373,16 @@ export class ReDriveSelfShadowController {
         const oldClearAlpha = renderer.getClearAlpha()
         renderer.getClearColor(this.previousClearColor)
         const outlineStates: Array<[THREE.Object3D, boolean]> = []
+        const receiverShadowMap = reDriveSelfShadowUniformState.map.value
 
-        // Never sample the same RT while its depth attachment is being written.
+        // The native caster pass does not bind its receiver shadow map while
+        // writing that same depth attachment. Merely branching on `enabled` is
+        // insufficient in WebGL: an active sampler that references the current
+        // framebuffer attachment still forms an illegal feedback loop. Keep the
+        // authored skinned/alpha-tested caster materials, but explicitly unbind
+        // only the injected ReDrive receiver sampler for this pass.
         reDriveSelfShadowUniformState.enabled.value = 0
+        reDriveSelfShadowUniformState.map.value = null
         for (const character of characters) {
             for (const outline of character.userData.outlineMeshes) {
                 outlineStates.push([outline, outline.visible])
@@ -405,6 +412,7 @@ export class ReDriveSelfShadowController {
             renderer.setClearColor(this.previousClearColor, oldClearAlpha)
             renderer.autoClear = oldAutoClear
             renderer.xr.enabled = oldXrEnabled
+            reDriveSelfShadowUniformState.map.value = receiverShadowMap
         }
     }
 }
