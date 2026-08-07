@@ -238,7 +238,7 @@ export async function loadCharacter(
 
             modelObject = fbxLoader.parse(
                 fbxBuffer,
-                new URL('.', fbxUrl).href,
+                new URL('.', new URL(fbxUrl, document.baseURI)).href,
             )
         } catch (error) {
             loadProgressCallback('Parse FAILED')
