@@ -11,463 +11,341 @@ TAP version 13
 # Subtest: angelRingHeadLock.test.mjs
 ok 1 - angelRingHeadLock.test.mjs
   ---
-  duration_ms: 36.342835
+  duration_ms: 50.844408
   type: 'test'
   ...
 # Subtest: per-slot gem uniforms update both the gem pass and special-jewel specular boost
 ok 2 - per-slot gem uniforms update both the gem pass and special-jewel specular boost
   ---
-  duration_ms: 0.561207
+  duration_ms: 0.852631
   type: 'test'
   ...
 # Subtest: draw-group binding refreshes the official profile before each render
 ok 3 - draw-group binding refreshes the official profile before each render
   ---
-  duration_ms: 0.157663
+  duration_ms: 0.231892
   type: 'test'
   ...
 # Subtest: native ReDrive self-shadow keeps recovered TW/JP-shared pass constants
 ok 4 - native ReDrive self-shadow keeps recovered TW/JP-shared pass constants
   ---
-  duration_ms: 1.25984
+  duration_ms: 1.509095
   type: 'test'
   ...
 # Subtest: camera depth is produced before self-shadow and both passes unbind their own sampled attachments
 ok 5 - camera depth is produced before self-shadow and both passes unbind their own sampled attachments
   ---
-  duration_ms: 0.400049
+  duration_ms: 0.545548
   type: 'test'
   ...
 # Subtest: self-shadow is applied through authored toon shadow textures and face SDF
 ok 6 - self-shadow is applied through authored toon shadow textures and face SDF
   ---
-  duration_ms: 1.446881
+  duration_ms: 1.40976
   type: 'test'
   ...
 # Subtest: 100101/100107 shared body Aniso uses exact current-JP material values
 ok 7 - 100101/100107 shared body Aniso uses exact current-JP material values
   ---
-  duration_ms: 1.551464
+  duration_ms: 2.333484
   type: 'test'
   ...
 # Subtest: 100101 weapon Soul Gem uses exact material Fresnel defaults
 ok 8 - 100101 weapon Soul Gem uses exact material Fresnel defaults
   ---
-  duration_ms: 0.308248
+  duration_ms: 0.38551
   type: 'test'
   ...
 # Subtest: per-material uniforms override the global debug Fresnel without enabling it globally
 ok 9 - per-material uniforms override the global debug Fresnel without enabling it globally
   ---
-  duration_ms: 0.233721
+  duration_ms: 0.360613
   type: 'test'
   ...
 # Subtest: GemDepthDiff removes executable NdotV proxy code and pins recovered JP predicate/threshold arithmetic
 ok 10 - GemDepthDiff removes executable NdotV proxy code and pins recovered JP predicate/threshold arithmetic
   ---
-  duration_ms: 0.347033
+  duration_ms: 0.47725
   type: 'test'
   ...
 # Subtest: GemDepthDiff depth producer is requested only by a proven depth-diff profile
 ok 11 - GemDepthDiff depth producer is requested only by a proven depth-diff profile
   ---
-  duration_ms: 0.136838
+  duration_ms: 0.233766
   type: 'test'
   ...
 # Subtest: camera-depth transport stays explicitly approximate and unbinds its attachment while writing
 ok 12 - camera-depth transport stays explicitly approximate and unbinds its attachment while writing
   ---
-  duration_ms: 0.181482
+  duration_ms: 0.277728
   type: 'test'
   ...
 # Subtest: ReDrive background adjustments execute between background and character passes
 ok 13 - ReDrive background adjustments execute between background and character passes
   ---
-  duration_ms: 2.044881
+  duration_ms: 1.657853
   type: 'test'
   ...
 # Subtest: background grading keeps Unity parameter semantics explicit
 ok 14 - background grading keeps Unity parameter semantics explicit
   ---
-  duration_ms: 0.245895
+  duration_ms: 0.227214
   type: 'test'
   ...
 # Subtest: ReDriveVolume drives background-only pass and disables legacy global CSS approximation
 ok 15 - ReDriveVolume drives background-only pass and disables legacy global CSS approximation
   ---
-  duration_ms: 0.260919
+  duration_ms: 0.233896
   type: 'test'
   ...
 # Subtest: ReDrive skybox intensity is override-gated and drives both split scenes
 ok 16 - ReDrive skybox intensity is override-gated and drives both split scenes
   ---
-  duration_ms: 1.027151
+  duration_ms: 1.263107
   type: 'test'
   ...
 # Subtest: ReDrive skybox intensity reset restores environment/background intensity state
 ok 17 - ReDrive skybox intensity reset restores environment/background intensity state
   ---
-  duration_ms: 0.265688
+  duration_ms: 0.327851
   type: 'test'
   ...
 # Subtest: 600-00-00-001 no longer stacks unverified character-brightening effects
 ok 18 - 600-00-00-001 no longer stacks unverified character-brightening effects
   ---
-  duration_ms: 0.992686
+  duration_ms: 1.279077
   type: 'test'
   ...
 # Subtest: Gem uses character MatCap when exported and a camera-facing MatCap basis
-not ok 19 - Gem uses character MatCap when exported and a camera-facing MatCap basis
+ok 19 - Gem uses character MatCap when exported and a camera-facing MatCap basis
   ---
-  duration_ms: 1.184388
+  duration_ms: 0.423651
   type: 'test'
-  location: '/home/runner/work/Magi3Dviewer/Magi3Dviewer/sceneGemSpecularFix.test.mjs:24:1'
-  failureType: 'testCodeFailure'
-  error: |-
-    The input did not match the regular expression /official-gem-v3/. Input:
-    
-    "import * as THREE from 'three';\n" +
-      "import type { OfficialMaterialProfile } from '../materialProfile';\n" +
-      "import { requestReDriveCameraDepth } from '../scene/cameraDepth';\n" +
-      'import {\n' +
-      '    injectOfficialGemShader,\n' +
-      '    loadOfficialGemResources,\n' +
-      '    type OfficialGemResources,\n' +
-      "} from './gem';\n" +
-      '\n' +
-      'export interface ExtendedGemMaterial {\n' +
-      '    resources: OfficialGemResources;\n' +
-      '    profiles: OfficialMaterialProfile[];\n' +
-      '}\n' +
-      '\n' +
-      '/**\n' +
-      ' * Extend one shared base material. Geometry groups may reference the same\n' +
-      ' * material object; loader onBeforeRender changes only scalar uniforms for the\n' +
-      ' * current group, while the expensive base/control/matcap textures remain shared.\n' +
-      ' */\n' +
-      'export async function extendMaterialWithOfficialGem(\n' +
-      '    material: THREE.Material,\n' +
-      '    profiles: OfficialMaterialProfile[],\n' +
-      '    matCapUrl?: string,\n' +
-      '): Promise<ExtendedGemMaterial> {\n' +
-      '    const resources = await loadOfficialGemResources(profiles, matCapUrl);\n' +
-      '    if (profiles.some(profile => profile.gem.enabled && profile.gem.useDepthDiff)) {\n' +
-      '        requestReDriveCameraDepth();\n' +
-      '    }\n' +
-      '    const previousCompile = material.onBeforeCompile;\n' +
-      '    const previousKey = material.customProgramCacheKey.bind(material);\n' +
-      '\n' +
-      '    material.onBeforeCompile = function (shader, renderer) {\n' +
-      '        previousCompile.call(this, shader, renderer);\n' +
-      '        const profile =\n' +
-      '            this.userData instanceof Object &&\n' +
-      "            'officialMaterialProfile' in this.userData\n" +
-      '                ? this.userData.officialMaterialProfile as\n' +
-      '                    | OfficialMaterialProfile\n' +
-      '                    | undefined\n' +
-      '                : undefined\n' +
-      '        injectOfficialGemShader(shader, resources, profile ?? profiles[0]);\n' +
-      '        // GeneralMaterial has already registered this shader in MaterialUserData.\n' +
-      '        // The object is the same, so per-group updates can access the new uniforms.\n' +
-      "        if (this.userData && typeof this.userData === 'object') {\n" +
-      '            this.userData.shader = shader;\n' +
-      '            this.userData.officialMaterialProfiles = profiles;\n' +
-      '        }\n' +
-      '    };\n' +
-      '    material.customProgramCacheKey = () =>\n' +
-      "        `${previousKey()}|official-gem-v4-depthdiff|${matCapUrl ? 'character-matcap' : 'fallback-matcap'}|${profiles.map(x => x.name).join('|')}`;\n" +
-      '    material.needsUpdate = true;\n' +
-      '\n' +
-      '    return { resources, profiles };\n' +
-      '}\n'
-    
-  code: 'ERR_ASSERTION'
-  name: 'AssertionError'
-  expected:
-  actual: |-
-    import * as THREE from 'three';
-    import type { OfficialMaterialProfile } from '../materialProfile';
-    import { requestReDriveCameraDepth } from '../scene/cameraDepth';
-    import {
-        injectOfficialGemShader,
-        loadOfficialGemResources,
-        type OfficialGemResources,
-    } from './gem';
-    
-    export interface ExtendedGemMaterial {
-        resources: OfficialGemResources;
-        profiles: OfficialMaterialProfile[];
-    }
-    
-    /**
-     * Extend one shared base material. Geometry groups may reference the same
-     * material object; loader onBeforeRender changes only scalar uniforms for the
-     * current group, while the expensive base/control/matcap textures remain shared.
-     */
-    export async function extendMaterialWithOfficialGem(
-        material: THREE.Material,
-        profiles: OfficialMaterialProfile[],
-        matCapUrl?: string,
-    ): Promise<ExtendedGemMaterial> {
-        const resources = await loadOfficialGemResources(profiles, matCapUrl);
-        if (profiles.some(profile => profile.gem.enabled && profile.gem.useDepthDiff)) {
-            requestReDriveCameraDepth();
-        }
-        const previousCompile = material.onBeforeCompile;
-        const previousKey = material.customProgramCacheKey.bind(material);
-    
-        material.onBeforeCompile = function (shader, renderer) {
-            previousCompile.call(this, shader, renderer);
-            const profile =
-                this.userData instanceof Object &&
-                'officialMaterialProfile' in this.userData
-                    ? this.userData.officialMaterialProfile as
-                        | OfficialMaterialProfile
-                        | undefined
-                    : undefined
-            injectOfficialGemShader(shader, resources, profile ?? profiles[0]);
-            // GeneralMaterial has already registered this shader in MaterialUserData.
-            // The object is the same, so per-group updates can access the new uniforms.
-            if (this.userData && typeof this.userData === 'object') {
-                this.userData.shader = shader;
-                this.userData.officialMaterialProfiles = profiles;
-            }
-        };
-        material.customProgramCacheKey = () =>
-            `${previousKey()}|official-gem-v4-depthdiff|${matCapUrl ? 'character-matcap' : 'fallback-matcap'}|${profiles.map(x => x.name).join('|')}`;
-        material.needsUpdate = true;
-    
-        return { resources, profiles };
-    }
-    
-  operator: 'match'
-  stack: |-
-    TestContext.<anonymous> (file:///home/runner/work/Magi3Dviewer/Magi3Dviewer/sceneGemSpecularFix.test.mjs:28:10)
-    Test.runInAsyncScope (node:async_hooks:214:14)
-    Test.run (node:internal/test_runner/test:1047:25)
-    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
-    Test.postRun (node:internal/test_runner/test:1173:19)
-    Test.run (node:internal/test_runner/test:1101:12)
-    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
   ...
 # Subtest: Control G no longer drives an invented world-up colour gradient
 ok 20 - Control G no longer drives an invented world-up colour gradient
   ---
-  duration_ms: 0.197462
+  duration_ms: 0.313274
   type: 'test'
   ...
 # Subtest: fixes only the four catalog-proven opaque alpha-card materials
 ok 21 - fixes only the four catalog-proven opaque alpha-card materials
   ---
-  duration_ms: 1.047136
+  duration_ms: 1.010315
   type: 'test'
   ...
 # Subtest: restores Unity cutout render state without transparent sorting
 ok 22 - restores Unity cutout render state without transparent sorting
   ---
-  duration_ms: 0.212979
+  duration_ms: 0.166891
   type: 'test'
   ...
 # Subtest: runs after asynchronous stage loads complete
 ok 23 - runs after asynchronous stage loads complete
   ---
-  duration_ms: 0.24588
+  duration_ms: 0.206715
   type: 'test'
   ...
 # Subtest: known JP battle stages use real AssetBundle root names
 ok 24 - known JP battle stages use real AssetBundle root names
   ---
-  duration_ms: 2.588953
+  duration_ms: 2.205094
   type: 'test'
   ...
 # Subtest: official battle catalog does not use filesystem-like synthetic bg/3d paths
 ok 25 - official battle catalog does not use filesystem-like synthetic bg/3d paths
   ---
-  duration_ms: 0.72749
+  duration_ms: 0.923774
   type: 'test'
   ...
 # Subtest: TW provenance retains all normalized root/text manifest sources
 ok 26 - TW provenance retains all normalized root/text manifest sources
   ---
-  duration_ms: 1.431297
+  duration_ms: 1.317539
   type: 'test'
   ...
 # Subtest: one stage provenance cannot mix JP and TW manifest sources
 ok 27 - one stage provenance cannot mix JP and TW manifest sources
   ---
-  duration_ms: 0.508623
+  duration_ms: 0.418801
   type: 'test'
   ...
 # Subtest: resolves an exact deterministic dependency closure
 ok 28 - resolves an exact deterministic dependency closure
   ---
-  duration_ms: 10.030652
+  duration_ms: 13.879487
   type: 'test'
   ...
 # Subtest: normalizes provenance without allowing root duplication
 ok 29 - normalizes provenance without allowing root duplication
   ---
-  duration_ms: 0.527112
+  duration_ms: 0.694847
   type: 'test'
   ...
 # Subtest: rejects a provenance root that disagrees with the stage catalog
 ok 30 - rejects a provenance root that disagrees with the stage catalog
   ---
-  duration_ms: 0.46413
+  duration_ms: 0.663729
   type: 'test'
   ...
 # Subtest: rejects cycles and missing dependencies in manifest graphs
 ok 31 - rejects cycles and missing dependencies in manifest graphs
   ---
-  duration_ms: 0.221198
+  duration_ms: 0.361284
   type: 'test'
   ...
 # Subtest: loads nested generated catalogs and individual stage entries
 ok 32 - loads nested generated catalogs and individual stage entries
   ---
-  duration_ms: 1.406587
+  duration_ms: 2.498502
   type: 'test'
   ...
 # Subtest: nested failures are diagnostic and do not hide other scene shards
 ok 33 - nested failures are diagnostic and do not hide other scene shards
   ---
-  duration_ms: 0.455885
+  duration_ms: 0.776609
   type: 'test'
   ...
 # Subtest: root catalog remains fail-closed
 ok 34 - root catalog remains fail-closed
   ---
-  duration_ms: 2.244038
+  duration_ms: 0.650473
   type: 'test'
   ...
 # Subtest: fidelity inspector exposes provenance, closure and concrete dynamic gaps
 ok 35 - fidelity inspector exposes provenance, closure and concrete dynamic gaps
   ---
-  duration_ms: 0.92611
+  duration_ms: 1.204828
   type: 'test'
   ...
 # Subtest: fidelity inspector renders external names as text rather than HTML
 ok 36 - fidelity inspector renders external names as text rather than HTML
   ---
-  duration_ms: 1.117675
+  duration_ms: 1.660949
   type: 'test'
   ...
 # Subtest: stage runtime updates the fidelity inspector only after resolved stage definitions
 ok 37 - stage runtime updates the fidelity inspector only after resolved stage definitions
   ---
-  duration_ms: 0.17356
+  duration_ms: 0.260977
   type: 'test'
   ...
 # Subtest: fidelity inspector remains bounded on desktop and mobile
 ok 38 - fidelity inspector remains bounded on desktop and mobile
   ---
-  duration_ms: 0.127359
+  duration_ms: 0.222035
   type: 'test'
   ...
 # Subtest: hierarchy path resolves the intended duplicate-named stage node
 ok 39 - hierarchy path resolves the intended duplicate-named stage node
   ---
-  duration_ms: 1.39269
+  duration_ms: 2.221896
   type: 'test'
   ...
 # Subtest: anchorPath wins while legacy anchorNode remains a fallback
 ok 40 - anchorPath wins while legacy anchorNode remains a fallback
   ---
-  duration_ms: 0.293555
+  duration_ms: 0.528446
   type: 'test'
   ...
 # Subtest: invalid hierarchy path does not loosely skip missing intermediate nodes
 ok 41 - invalid hierarchy path does not loosely skip missing intermediate nodes
   ---
-  duration_ms: 0.180262
+  duration_ms: 0.391891
   type: 'test'
   ...
 # Official stage lighting invariants passed.
 # Subtest: stageLighting.test.mjs
 ok 15 - stageLighting.test.mjs
   ---
-  duration_ms: 37.777207
+  duration_ms: 48.851539
   type: 'test'
   ...
 # Subtest: binds 104 hierarchy suffixes with shared RGBM texture and independent ST
 ok 43 - binds 104 hierarchy suffixes with shared RGBM texture and independent ST
   ---
-  duration_ms: 17.776637
+  duration_ms: 31.485357
   type: 'test'
   ...
 # Subtest: reports ambiguous suffixes and validates the second UV set before mutation
 ok 44 - reports ambiguous suffixes and validates the second UV set before mutation
   ---
-  duration_ms: 0.705386
+  duration_ms: 1.240875
   type: 'test'
   ...
 # Official stage material ownership invariants passed.
 # Subtest: stageMaterialBindings.test.mjs
 ok 17 - stageMaterialBindings.test.mjs
   ---
-  duration_ms: 27.32726
+  duration_ms: 45.029683
   type: 'test'
   ...
 # Subtest: stage runtime selects five exact clips and advances one shared clock
 ok 46 - stage runtime selects five exact clips and advances one shared clock
   ---
-  duration_ms: 6.511737
+  duration_ms: 6.259951
   type: 'test'
   ...
 # Subtest: missing runtime profile remains a true static-stage no-op
 ok 47 - missing runtime profile remains a true static-stage no-op
   ---
-  duration_ms: 0.305639
+  duration_ms: 0.37558
   type: 'test'
   ...
 # Subtest: non-looping runtime clamps at the shared timeline end and publishes live state
 ok 48 - non-looping runtime clamps at the shared timeline end and publishes live state
   ---
-  duration_ms: 0.559133
+  duration_ms: 0.668928
   type: 'test'
   ...
 # Subtest: voice source offset shortens the non-looping shared timeline
 ok 49 - voice source offset shortens the non-looping shared timeline
   ---
-  duration_ms: 0.215713
+  duration_ms: 0.276926
   type: 'test'
   ...
 # Subtest: Madoka official submesh counts exactly match the non-indexed FBX draw counts
 ok 50 - Madoka official submesh counts exactly match the non-indexed FBX draw counts
   ---
-  duration_ms: 1.222864
+  duration_ms: 2.385321
   type: 'test'
   ...
 # Subtest: runtime refuses partial group recovery and restores contiguous official ranges
 ok 51 - runtime refuses partial group recovery and restores contiguous official ranges
   ---
-  duration_ms: 0.185641
+  duration_ms: 0.365762
   type: 'test'
   ...
 # Subtest: static viewer shell keeps canonical English keys and exposes a language toggle
 ok 52 - static viewer shell keeps canonical English keys and exposes a language toggle
   ---
-  duration_ms: 4.097878
+  duration_ms: 5.552961
   type: 'test'
   ...
 # Subtest: runtime localization supports persistent English and Simplified Chinese switching
 ok 53 - runtime localization supports persistent English and Simplified Chinese switching
   ---
-  duration_ms: 1.499166
+  duration_ms: 2.078158
   type: 'test'
   ...
 # Subtest: dialogs, selectors, tooltips and alerts use canonical English plus runtime translation
 ok 54 - dialogs, selectors, tooltips and alerts use canonical English plus runtime translation
   ---
-  duration_ms: 3.410098
+  duration_ms: 3.675569
   type: 'test'
   ...
 1..54
 # tests 54
 # suites 0
-# pass 53
-# fail 1
+# pass 54
+# fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 1596.65217
+# duration_ms 2124.59043
+magia-exedra-character-three/shaders/gem.ts(163,17): error TS1005: ';' expected.
+magia-exedra-character-three/shaders/gem.ts(178,17): error TS1005: ';' expected.
+magia-exedra-character-three/shaders/gem.ts(286,31): error TS1005: ',' expected.
+magia-exedra-character-three/shaders/gem.ts(292,35): error TS1005: ',' expected.
+magia-exedra-character-three/shaders/gem.ts(294,17): error TS1005: ',' expected.
+magia-exedra-character-three/shaders/gem.ts(294,51): error TS1005: ',' expected.
