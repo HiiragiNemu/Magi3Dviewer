@@ -3,6 +3,7 @@ import type { MagiaExedraScene3D } from '..';
 
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+import { ReDriveBackgroundColorAdjustmentsShader } from './backgroundColorAdjustments';
 
 import { TAARenderPass } from 'three/addons/postprocessing/TAARenderPass.js';
 import { SSAARenderPass } from 'three/addons/postprocessing/SSAARenderPass.js';
@@ -122,6 +123,8 @@ export class SceneEffectsController {
     taaRenderPass: TAARenderPass
     ssaaRenderPass: SSAARenderPass
     backgroundRenderPass: RenderPass
+    /** ReDriveVolume background-only ColorAdjustments. */
+    backgroundColorAdjustPass: ShaderPass
     renderPass: RenderPass
 
     outlinePass: OutlinePass
@@ -157,6 +160,10 @@ export class SceneEffectsController {
             this.scene.camera,
         )
         this.backgroundRenderPass.enabled = false
+        this.backgroundColorAdjustPass = new ShaderPass(
+            ReDriveBackgroundColorAdjustmentsShader,
+        )
+        this.backgroundColorAdjustPass.enabled = false
         this.renderPass = new RenderPass(this.scene.scene, this.scene.camera)
 
         this.outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), this.scene.scene, this.scene.camera)
@@ -189,6 +196,9 @@ export class SceneEffectsController {
         this.composer = new EffectComposer(this.scene.renderer, this.renderTarget)
         this.composer.setPixelRatio(this.scene.getRenderPixelRatio())
         this.composer.addPass(this.backgroundRenderPass)
+        // Official ReDriveVolume background grading happens before
+        // characters are composited, so it cannot tint the actors.
+        this.composer.addPass(this.backgroundColorAdjustPass)
         this.composer.addPass(this.taaRenderPass)
         this.composer.addPass(this.ssaaRenderPass)
         this.composer.addPass(this.renderPass)

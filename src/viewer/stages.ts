@@ -1296,7 +1296,13 @@ function applyStageRenderProfile(
     if (profile.renderer?.clearAlpha != undefined) {
         scene.renderer.setClearAlpha(profile.renderer.clearAlpha)
     }
-    if (profile.colorFilter) scene.setColorFilter(profile.colorFilter)
+    // ReDriveVolume bg ColorAdjustments are background-only in the
+    // official renderer. The historical CSS filter affects characters too and
+    // would double-grade recovered scene profiles, so retain it only for manual
+    // research/procedural presets.
+    if (profile.colorFilter && profile.source !== 'ReDriveVolume') {
+        scene.setColorFilter(profile.colorFilter)
+    }
     if (profile.bloom) {
         scene.effects.bloomPass.enabled = profile.bloom.enabled
         if (profile.source === 'ReDriveVolume') {

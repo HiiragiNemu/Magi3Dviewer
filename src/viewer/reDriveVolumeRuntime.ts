@@ -13,7 +13,10 @@ export interface ReDriveVolumeRuntimeProfile {
     shAmbient?: number[]
     characterTint?: string | Rgba
     characterShadowTint?: string | Rgba
+    /** _globalBackgroundTintColor: scene-global background multiply. */
     backgroundTint?: string | Rgba
+    /** _bgBackgroundTintColor: background-only multiply. */
+    backgroundBackgroundTint?: string | Rgba
     characterLightingOverrideColor?: string | Rgba
     characterLightingOverrideRatio?: number
     characterLightingOverrideDirection?: [number, number, number]
@@ -122,6 +125,80 @@ function applySphericalHarmonics(values?: number[]) {
     recoveredFillLight.intensity = 0
 }
 
+function profileOverride(
+    profile: ReDriveVolumeRuntimeProfile,
+    key: string,
+    present: boolean,
+) {
+    return profile.overrides?.[key] ?? present
+}
+
+function applyBackgroundColorAdjustments(profile: ReDriveVolumeRuntimeProfile) {
+    const pass = scene.effects.backgroundColorAdjustPass
+    const globalTintEnabled = profileOverride(
+        profile,
+        'backgroundTint',
+        profile.backgroundTint != undefined,
+    )
+    const backgroundTintEnabled = profileOverride(
+        profile,
+        'backgroundBackgroundTint',
+        profile.backgroundBackgroundTint != undefined,
+    )
+    const exposureEnabled = profileOverride(
+        profile,
+        'backgroundPostExposure',
+        profile.backgroundPostExposure != undefined,
+    )
+    const contrastEnabled = profileOverride(
+        profile,
+        'backgroundContrast',
+        profile.backgroundContrast != undefined,
+    )
+    const saturationEnabled = profileOverride(
+        profile,
+        'backgroundSaturation',
+        profile.backgroundSaturation != undefined,
+    )
+    const enabled =
+        globalTintEnabled
+        || backgroundTintEnabled
+        || exposureEnabled
+        || contrastEnabled
+        || saturationEnabled
+
+    pass.enabled = enabled
+    pass.uniforms.uEnabled.value = enabled ? 1 : 0
+    pass.uniforms.uGlobalTint.value.copy(
+        color(globalTintEnabled ? profile.backgroundTint : undefined),
+    )
+    pass.uniforms.uBackgroundTint.value.copy(
+        color(
+            backgroundTintEnabled
+                ? profile.backgroundBackgroundTint
+                : undefined,
+        ),
+    )
+    pass.uniforms.uPostExposure.value =
+        exposureEnabled ? profile.backgroundPostExposure ?? 0 : 0
+    pass.uniforms.uContrast.value =
+        contrastEnabled ? profile.backgroundContrast ?? 0 : 0
+    pass.uniforms.uSaturation.value =
+        saturationEnabled ? profile.backgroundSaturation ?? 0 : 0
+
+    scene.backgroundScene.userData.reDriveBackgroundColorAdjustments = enabled
+        ? {
+            globalTint: globalTintEnabled ? profile.backgroundTint ?? null : null,
+            backgroundTint: backgroundTintEnabled
+                ? profile.backgroundBackgroundTint ?? null
+                : null,
+            postExposure: pass.uniforms.uPostExposure.value,
+            contrast: pass.uniforms.uContrast.value,
+            saturation: pass.uniforms.uSaturation.value,
+        }
+        : null
+}
+
 function applyParaffin(profile?: ReDriveVolumeRuntimeProfile['paraffin']) {
     const pass = scene.effects.paraffinPass
     if (!profile || profile.enabled === false || profile.opacity <= 0.0001) {
@@ -152,6 +229,7 @@ export function applyReDriveVolumeRuntime(profile?: ReDriveVolumeRuntimeProfile)
     }
 
     applySphericalHarmonics(profile.shAmbient)
+    applyBackgroundColorAdjustments(profile)
     applyParaffin(profile.paraffin)
 
     if (profile.characterTint != undefined) {
@@ -217,6 +295,15 @@ export function resetReDriveVolumeRuntime() {
         initial.characterLightingOverrideColor
     toonStylizationOptions.characterLightingOverrideRatio =
         initial.characterLightingOverrideRatio
+    const backgroundPass = scene.effects.backgroundColorAdjustPass
+    backgroundPass.enabled = false
+    backgroundPass.uniforms.uEnabled.value = 0
+    backgroundPass.uniforms.uGlobalTint.value.set(1, 1, 1)
+    backgroundPass.uniforms.uBackgroundTint.value.set(1, 1, 1)
+    backgroundPass.uniforms.uPostExposure.value = 0
+    backgroundPass.uniforms.uContrast.value = 0
+    backgroundPass.uniforms.uSaturation.value = 0
+    delete scene.backgroundScene.userData.reDriveBackgroundColorAdjustments
     scene.effects.paraffinPass.enabled = false
     scene.effects.paraffinPass.uniforms.uEnabled.value = 0
     toonStylizationOptions.rimEnabled = initial.rimEnabled

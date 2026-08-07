@@ -80,7 +80,12 @@ export class MagiaExedraScene3D {
         }
 
         if (this.composerEnabled == 'Auto') {
-            if (this.characterSelectionVisible || this.effects.bloomPass.enabled) {
+            if (
+                this.backgroundSceneEnabled
+                || this.characterSelectionVisible
+                || this.effects.bloomPass.enabled
+                || this.effects.backgroundColorAdjustPass.enabled
+            ) {
                 return true
             }
         }
