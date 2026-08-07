@@ -234,7 +234,8 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
                 saturate(uUseFaceGradient)
             );
             rdCombinedFaceLight *= rdToonSelfShadowVisibility(
-                vRdToonWorldPosition
+                vRdToonWorldPosition,
+                normal
             );
 
             faceColor.rgb = mix(

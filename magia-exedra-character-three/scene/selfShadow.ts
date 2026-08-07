@@ -55,17 +55,20 @@ export function injectReDriveSelfShadowShader(
     bindReDriveSelfShadowUniforms(shader)
     shader.vertexShader = /* glsl */ `
         varying vec3 vRdToonWorldPosition;
+        varying float vRdToonViewDepth;
         ${shader.vertexShader}
     `.replace(
         '#include <project_vertex>',
         /* glsl */ `
         #include <project_vertex>
         vRdToonWorldPosition = (modelMatrix * vec4(transformed, 1.0)).xyz;
+        vRdToonViewDepth = -mvPosition.z;
         `,
     )
     shader.fragmentShader = /* glsl */ `
         varying vec3 vRdToonWorldPosition;
-        uniform sampler2D tRdToonSelfShadowMap;
+        varying float vRdToonViewDepth;
+        uniform sampler2DShadow tRdToonSelfShadowMap;
         uniform float uRdToonSelfShadowEnabled;
         uniform mat4 uRdToonSelfShadowWorldToClip;
         uniform vec4 uRdToonSelfShadowParam;
@@ -74,44 +77,63 @@ export function injectReDriveSelfShadowShader(
         uniform vec3 uRdToonSelfShadowLightDirection;
         uniform float uRdToonSelfShadowUseNdotLFix;
 
-        float rdToonSelfShadowVisibility(vec3 worldPosition) {
+        float rdToonSelfShadowVisibility(
+            vec3 worldPosition,
+            vec3 viewNormal
+        ) {
             if (uRdToonSelfShadowEnabled < 0.5) return 1.0;
+
+            // Current-JP compiled ReDriveToon receiver. The native pass is
+            // orthographic, so clip W is 1; keep the homogeneous divide only
+            // as a defensive Web invariant. Native converts XYZ from [-1,1]
+            // to [0,1] before subtracting the global receiver depth bias.
             vec4 shadowClip =
                 uRdToonSelfShadowWorldToClip * vec4(worldPosition, 1.0);
-            if (shadowClip.w <= 0.000001) return 1.0;
-            vec3 shadowNdc = shadowClip.xyz / shadowClip.w;
-            vec2 shadowUv = shadowNdc.xy * 0.5 + 0.5;
-            float receiverDepth = shadowNdc.z * 0.5 + 0.5;
+            if (abs(shadowClip.w) <= 0.000001) return 1.0;
+            vec3 shadowCoord = shadowClip.xyz / shadowClip.w;
+            shadowCoord = shadowCoord * 0.5 + 0.5;
             if (
-                shadowUv.x <= 0.0 || shadowUv.x >= 1.0 ||
-                shadowUv.y <= 0.0 || shadowUv.y >= 1.0 ||
-                receiverDepth <= 0.0 || receiverDepth >= 1.0
+                shadowCoord.x <= 0.0 || shadowCoord.x >= 1.0 ||
+                shadowCoord.y <= 0.0 || shadowCoord.y >= 1.0 ||
+                shadowCoord.z <= 0.0 || shadowCoord.z >= 1.0
             ) return 1.0;
 
-            // Native creates a bilinear 16-bit Shadowmap RT. WebGL depth
-            // textures are compared explicitly, so use the recovered texel
-            // size for a stable 2x2 PCF footprint.
-            vec2 texel = max(uRdToonSelfShadowParam.xy, vec2(0.0000001));
             float compareDepth =
-                receiverDepth - uRdToonGlobalSelfShadowDepthBias;
-            float visibility = 0.0;
-            visibility += step(compareDepth, texture2D(
+                shadowCoord.z - uRdToonGlobalSelfShadowDepthBias;
+            float visibility = texture(
                 tRdToonSelfShadowMap,
-                shadowUv + texel * vec2(-0.5, -0.5)
-            ).r);
-            visibility += step(compareDepth, texture2D(
-                tRdToonSelfShadowMap,
-                shadowUv + texel * vec2( 0.5, -0.5)
-            ).r);
-            visibility += step(compareDepth, texture2D(
-                tRdToonSelfShadowMap,
-                shadowUv + texel * vec2(-0.5,  0.5)
-            ).r);
-            visibility += step(compareDepth, texture2D(
-                tRdToonSelfShadowMap,
-                shadowUv + texel * vec2( 0.5,  0.5)
-            ).r);
-            return visibility * 0.25;
+                vec3(shadowCoord.xy, compareDepth)
+            );
+
+            // Native fades self-shadow to fully lit over the last two units
+            // of _RdToonSelfShadowRange. vRdToonViewDepth is the Three
+            // equivalent of the recovered absolute eye-depth coordinate.
+            float rangeFade = clamp(
+                (abs(vRdToonViewDepth) -
+                    (uRdToonSelfShadowRange - 2.0)) * 0.5,
+                0.0,
+                1.0
+            );
+            visibility = mix(visibility, 1.0, rangeFade);
+
+            // Current-JP optional NdotL fix: smoothstep(0.1, 0.2, N.L)
+            // written explicitly as the compiled cubic polynomial. Both
+            // operands are view-space in this Web port.
+            float ndotl = clamp(
+                dot(normalize(viewNormal),
+                    normalize(uRdToonSelfShadowLightDirection)),
+                0.0,
+                1.0
+            );
+            float ndotlT = clamp((ndotl - 0.1) * 10.0, 0.0, 1.0);
+            float ndotlFix =
+                ndotlT * ndotlT * (3.0 - 2.0 * ndotlT);
+            visibility *= mix(
+                1.0,
+                ndotlFix,
+                step(0.5, uRdToonSelfShadowUseNdotLFix)
+            );
+            return min(visibility, 1.0);
         }
 
         ${shader.fragmentShader}
@@ -156,8 +178,9 @@ export class ReDriveSelfShadowController {
             THREE.UnsignedShortType,
         )
         depthTexture.format = THREE.DepthFormat
-        depthTexture.minFilter = THREE.NearestFilter
-        depthTexture.magFilter = THREE.NearestFilter
+        depthTexture.minFilter = THREE.LinearFilter
+        depthTexture.magFilter = THREE.LinearFilter
+        depthTexture.compareFunction = THREE.LessEqualCompare
         depthTexture.generateMipmaps = false
         depthTexture.name = 'ReDrive:_RdToonSelfShadowMapRT:Depth'
 
@@ -299,6 +322,7 @@ export class ReDriveSelfShadowController {
         reDriveSelfShadowUniformState.lightDirection.value
             .copy(this.forward)
             .transformDirection(this.shadowCamera.matrixWorld)
+            .transformDirection(this.scene.camera.matrixWorldInverse)
         reDriveSelfShadowUniformState.range.value = range
         reDriveSelfShadowUniformState.depthBias.value =
             officialReDriveSelfShadowSettings.depthBias

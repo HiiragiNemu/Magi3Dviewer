@@ -298,7 +298,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             }
             // Dedicated ReDrive self-shadow selects the authored ShadowTex.
             rdToonBaseWeight *= rdToonSelfShadowVisibility(
-                vRdToonWorldPosition
+                vRdToonWorldPosition,
+                normal
             );
 
             vec3 rdToonBaseColor = diffuseColor.rgb;
