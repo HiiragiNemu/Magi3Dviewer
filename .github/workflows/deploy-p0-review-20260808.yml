@@ -21,9 +21,6 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     env:
       RELEASE_BRANCH: magius3dviewer
       STAGE_BRANCH: feature/stage-608-current-jp-textures-20260808
