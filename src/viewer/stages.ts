@@ -21,6 +21,11 @@ import {
     type StageLightmapBinding,
 } from './stageLightmaps'
 import {
+    applyStageUv1Companion,
+    loadStageUv1Companion,
+    type StageUv1Companion,
+} from './stageUv1Companion'
+import {
     applyReDriveVolumeRuntime,
     resetReDriveVolumeRuntime,
     type ReDriveVolumeRuntimeProfile,
@@ -97,6 +102,8 @@ export interface StageRenderProfile {
     lightmap?: {
         textureUrl: string
         bindingsUrl: string
+        /** Restores Unity UV1 dropped by the FBX export before lightmap binding. */
+        uv1CompanionUrl?: string
         encoding: 'unity-rgbm-linear'
         intensity?: number
     }
@@ -289,6 +296,7 @@ interface LoadedProfileTextures {
     lightmap?: THREE.Texture
     lightmapBindings?: StageLightmapBinding[]
     lightmapIntensity?: number
+    uv1Companion?: StageUv1Companion
     textures: THREE.Texture[]
 }
 
@@ -501,6 +509,21 @@ export async function loadStageById(id: string) {
         object.rotation.x = rx
         object.rotation.z = rz
         updateStageTransform()
+        if (profileTextures.uv1Companion) {
+            if (profileTextures.uv1Companion.stageId !== definition.id) {
+                throw new Error(
+                    `Stage UV1 companion targets ${profileTextures.uv1Companion.stageId}, `
+                    + `not ${definition.id}`,
+                )
+            }
+            const uv1Debug = applyStageUv1Companion(
+                object,
+                profileTextures.uv1Companion,
+                { strict: true },
+            )
+            object.userData.stageUv1Companion = uv1Debug
+            stageRoot.userData.stageUv1Companion = uv1Debug
+        }
         if (profileTextures.lightmap && profileTextures.lightmapBindings) {
             activeStageLightmap = applyStageLightmaps(
                 object,
@@ -659,6 +682,8 @@ export function getCurrentStageDebugState() {
             activeStageObject?.userData.stageMaterialBindings ?? null,
         lightmaps:
             activeStageObject?.userData.stageLightmaps ?? null,
+        uv1Companion:
+            activeStageObject?.userData.stageUv1Companion ?? null,
         officialLights:
             activeStageObject?.userData.stageLights ?? null,
         dynamic: activeStageDefinition?.dynamic ?? null,
@@ -757,6 +782,7 @@ function clearStageObject() {
     stageRoot.userData.stageRuntime = null
     stageRoot.userData.stageDynamic = null
     stageRoot.userData.stageLightmaps = null
+    stageRoot.userData.stageUv1Companion = null
 }
 
 function prepareStageObject(object: THREE.Object3D, stageLayer?: number) {
@@ -989,6 +1015,12 @@ async function preloadStageProfileTextures(
             }
             loaded.lightmapBindings = bindingDocument.renderers
             loaded.lightmapIntensity = profile.lightmap.intensity
+            if (profile.lightmap.uv1CompanionUrl) {
+                loaded.uv1Companion = await loadStageUv1Companion(
+                    profile.lightmap.uv1CompanionUrl,
+                    signal,
+                )
+            }
         }
         return loaded
     } catch (error) {

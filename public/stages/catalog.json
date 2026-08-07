@@ -759,7 +759,8 @@
           "textureUrl": "./stages/official/battle-600-00-01-002/Lightmap-0-comp-light.png",
           "bindingsUrl": "./stages/official/battle-600-00-01-002/lightmap-bindings.json",
           "encoding": "unity-rgbm-linear",
-          "intensity": 1
+          "intensity": 1,
+          "uv1CompanionUrl": "./stages/official/battle-600-00-01-002/uv1-companion.json"
         },
         "fog": {
           "color": "#282828",
