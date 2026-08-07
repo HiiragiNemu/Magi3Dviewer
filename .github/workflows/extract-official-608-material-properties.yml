@@ -14,7 +14,7 @@ jobs:
   extract:
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 55
     env:
       TARGET_BRANCH: research/stage-608-official-material-properties-20260807
     steps:
@@ -43,8 +43,10 @@ jobs:
         run: python scripts/extract_official_608_particles.py
       - name: Summarize executable particle profiles
         run: python scripts/summarize_official_608_particles.py
-      - name: Resolve particle renderer Material and Texture dependencies
+      - name: Resolve particle renderer Material and stage-local dependency evidence
         run: python scripts/resolve_official_608_particle_material.py
+      - name: Resolve exact particle BaseMap through current JP root manifest closure
+        run: python scripts/resolve_official_608_particle_texture.py
       - name: Persist bounded stage evidence only
         shell: bash
         run: |
@@ -59,7 +61,9 @@ jobs:
             research/official-608-reflection-probes.json \
             research/official-608-particle-systems.json \
             research/official-608-particle-summary.json \
-            research/official-608-particle-material.json
+            research/official-608-particle-material.json \
+            research/official-608-particle-texture.json \
+            research/official-608-blue-bubble.png
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'research: record official 608 Material, Probe and particle evidence'
+          git commit -m 'research: resolve exact JP 608 particle texture through manifest closure'
           git push origin HEAD:${TARGET_BRANCH}
