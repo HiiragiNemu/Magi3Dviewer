@@ -1,0 +1,46 @@
+name: Validate native self-shadow culling and depth16
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'automation/trigger-native-self-shadow-culling-depth16.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-apply:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TARGET_BRANCH: feature/native-self-shadow-culling-depth16-20260807
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+      - name: Apply native culling/depth patch
+        run: python scripts/apply_native_self_shadow_culling_depth16_patch.py
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run complete production build
+        run: npm run build
+      - name: Require self-shadow regression tests
+        run: node --test nativeSelfShadow.test.mjs
+      - name: Persist validated source changes
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add \
+            magia-exedra-character-three/scene/selfShadow.ts \
+            nativeSelfShadow.test.mjs
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'feat: match native self-shadow depth and caster culling'
+          git push origin HEAD:${TARGET_BRANCH}
