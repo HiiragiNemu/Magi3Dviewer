@@ -1,0 +1,204 @@
+name: Validate current-JP stage 608 Texture2D parity
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'automation/trigger-stage-608-current-jp-textures.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      TARGET_BRANCH: feature/stage-608-current-jp-textures-20260808
+      RESEARCH_BRANCH: research/stage-608-official-material-properties-20260807
+      AUTOMATION_BRANCH: automation/trigger-stage-608-current-jp-textures
+      EXPECTED_REVISION: 61ad830ca038a9efd58e67170a61c85e
+      MAGIUS_TEST_URL: https://127.0.0.1:4173/
+      MAGIUS_VISUAL_OUTPUT: visual-regression-output
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install bounded current-JP extractor dependencies
+        run: python -m pip install requests msgpack pycryptodome UnityPy Pillow lz4
+      - name: Prepare bounded exporter and authoritative evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin \
+            "${RESEARCH_BRANCH}:refs/remotes/origin/${RESEARCH_BRANCH}" \
+            "${AUTOMATION_BRANCH}:refs/remotes/origin/${AUTOMATION_BRANCH}"
+          mkdir -p /tmp/magius-608-tools
+          git show "origin/${RESEARCH_BRANCH}:scripts/extract_official_100101_material_properties.py" \
+            > /tmp/magius-608-tools/extract_official_100101_material_properties.py
+          git show "origin/${RESEARCH_BRANCH}:scripts/resolve_official_608_particle_texture.py" \
+            > /tmp/magius-608-tools/resolve_official_608_particle_texture.py
+          git show "origin/${RESEARCH_BRANCH}:research/official-608-material-properties.json" \
+            > /tmp/magius-608-tools/official-608-material-properties.json
+          git show "origin/${RESEARCH_BRANCH}:research/official-608-external-files.json" \
+            > /tmp/magius-608-tools/official-608-external-files.json
+          git show "origin/${AUTOMATION_BRANCH}:scripts/apply_official_608_texture_parity.py" \
+            > /tmp/magius-608-tools/apply_official_608_texture_parity.py
+          test -s /tmp/magius-608-tools/official-608-material-properties.json
+          test -s /tmp/magius-608-tools/official-608-external-files.json
+      - name: Apply exact current-JP Texture2D pixels and run fixed regression
+        shell: bash
+        env:
+          PYTHONPATH: /tmp/magius-608-tools
+        run: |
+          set +e
+          rm -rf validation-evidence-texture visual-regression-output
+          mkdir -p validation-evidence-texture visual-regression-output
+
+          run_phase() {
+            local name="$1"
+            shift
+            echo "===== ${name} =====" | tee "validation-evidence-texture/${name}.log"
+            "$@" 2>&1 | tee -a "validation-evidence-texture/${name}.log"
+            local code=${PIPESTATUS[0]}
+            echo "exit_code=${code}" | tee -a "validation-evidence-texture/${name}.log"
+            return ${code}
+          }
+
+          run_phase current-jp-texture-parity \
+            python /tmp/magius-608-tools/apply_official_608_texture_parity.py \
+              --repo-root . \
+              --material-report /tmp/magius-608-tools/official-608-material-properties.json \
+              --external-report /tmp/magius-608-tools/official-608-external-files.json \
+              --expected-revision "${EXPECTED_REVISION}"
+          texture_status=$?
+
+          if [ ${texture_status} -eq 0 ]; then
+            run_phase npm-ci npm ci
+            ci_status=$?
+          else
+            ci_status=97
+          fi
+
+          if [ ${ci_status} -eq 0 ]; then
+            run_phase npm-audit npm audit --audit-level=high
+            audit_status=$?
+            run_phase production-build npm run build
+            build_status=$?
+          else
+            audit_status=97
+            build_status=97
+          fi
+
+          if [ ${ci_status} -eq 0 ] && [ ${build_status} -eq 0 ]; then
+            run_phase playwright-package npm install --no-save --package-lock=false playwright@1.55.0
+            playwright_package_status=$?
+          else
+            playwright_package_status=97
+          fi
+
+          if [ ${playwright_package_status} -eq 0 ]; then
+            run_phase playwright-browser npx playwright install --with-deps chromium
+            playwright_browser_status=$?
+          else
+            playwright_browser_status=97
+          fi
+
+          server_status=97
+          visual_status=97
+          if [ ${playwright_browser_status} -eq 0 ]; then
+            nohup npm run preview -- --host 127.0.0.1 --port 4173 \
+              >validation-evidence-texture/vite.log 2>&1 &
+            echo $! >validation-evidence-texture/vite.pid
+            server_status=1
+            for attempt in $(seq 1 90); do
+              if curl --fail --silent --show-error --insecure https://127.0.0.1:4173/ >/dev/null; then
+                server_status=0
+                break
+              fi
+              sleep 1
+            done
+            if [ ${server_status} -eq 0 ]; then
+              node scripts/visual-regression-100107-stage608.mjs \
+                >validation-evidence-texture/visual-regression.log 2>&1
+              visual_status=$?
+            fi
+          fi
+
+          cp -f visual-regression-output/* validation-evidence-texture/ 2>/dev/null || true
+
+          overall_status=0
+          for code in ${texture_status} ${ci_status} ${audit_status} ${build_status} ${playwright_package_status} ${playwright_browser_status} ${server_status} ${visual_status}; do
+            if [ "${code}" -ne 0 ]; then overall_status=1; fi
+          done
+
+          replacement_count=-1
+          if [ -s research/stage-608-current-jp-texture-parity-evidence.json ]; then
+            replacement_count="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path('research/stage-608-current-jp-texture-parity-evidence.json').read_text())
+          print(p['replacementCount'])
+          PY
+          )"
+          fi
+
+          cat >validation-evidence-texture/status.json <<EOF
+          {
+            "runId": ${GITHUB_RUN_ID},
+            "sourceCommit": "${GITHUB_SHA}",
+            "targetBranch": "${TARGET_BRANCH}",
+            "assetBundleRevision": "${EXPECTED_REVISION}",
+            "character": "100107",
+            "stage": "battle-608-00-00-001",
+            "viewport": "1920x1080@1",
+            "currentJpTextureParity": ${texture_status},
+            "replacementCount": ${replacement_count},
+            "npmCi": ${ci_status},
+            "npmAudit": ${audit_status},
+            "productionBuildAndReleaseTests": ${build_status},
+            "playwrightPackage": ${playwright_package_status},
+            "playwrightChromium": ${playwright_browser_status},
+            "productionPreviewServer": ${server_status},
+            "fixedVisualRegression": ${visual_status},
+            "overall": ${overall_status}
+          }
+          EOF
+
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add \
+            public/stages/official/battle-608-00-00-001 \
+            research/stage-608-current-jp-texture-parity-evidence.json \
+            validation-evidence-texture/status.json \
+            validation-evidence-texture/100107-battle-608-canvas.png \
+            validation-evidence-texture/100107-battle-608-full.png \
+            validation-evidence-texture/report.json 2>/dev/null || true
+          git add -f \
+            validation-evidence-texture/visual-regression.log \
+            validation-evidence-texture/vite.log 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: restore exact current-JP stage 608 Texture2D pixels'
+            git push origin HEAD:${TARGET_BRANCH}
+          fi
+
+          exit ${overall_status}
+      - name: Upload current-JP texture and fixed visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage-608-current-jp-texture-100107-regression
+          path: |
+            research/stage-608-current-jp-texture-parity-evidence.json
+            validation-evidence-texture/
+          if-no-files-found: warn
