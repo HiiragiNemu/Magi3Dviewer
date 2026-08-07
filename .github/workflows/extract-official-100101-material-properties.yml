@@ -14,7 +14,7 @@ jobs:
   extract:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 40
     env:
       TARGET_BRANCH: research/100101-official-material-properties-20260807
     steps:
@@ -29,64 +29,11 @@ jobs:
         run: python -m pip install requests msgpack pycryptodome UnityPy
       - name: Extract target Material saved properties from official JP bundles
         run: python scripts/run_official_100101_material_properties.py
-      - name: Record UnityPy Shader-export compatibility result
+      - name: Record UnityPy modern Shader-export compatibility result
         run: python scripts/extract_official_100101_shader_formula_evidence.py
-
-      - uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: '9.0.x'
-      - name: Stage bounded character and Shader workspace
-        run: python scripts/download_official_100101_shader_workspace.py /tmp/magius-rd-assets
-      - name: Build AssetStudioModCLI
-        shell: bash
-        run: |
-          git clone --depth 1 --branch AssetStudioMod --recurse-submodules \
-            https://github.com/aelurum/AssetStudio.git /tmp/AssetStudio
-          # AssetStudioModCLI itself is emitted successfully on Linux, but the
-          # upstream project then performs a Windows-only native-DLL copy and
-          # returns MSB3030. Treat that post-build copy as non-fatal only when
-          # the required managed CLI DLL actually exists.
-          set +e
-          dotnet build /tmp/AssetStudio/AssetStudioCLI/AssetStudioCLI.csproj -c Release
-          BUILD_STATUS=$?
-          set -e
-          CLI="$(find /tmp/AssetStudio/AssetStudioCLI/bin/Release -type f -name 'AssetStudioModCLI.dll' | sort | tail -n 1)"
-          if [ -z "$CLI" ]; then
-            echo "AssetStudio build status=$BUILD_STATUS and CLI DLL was not emitted" >&2
-            exit 1
-          fi
-          echo "AssetStudio build status=$BUILD_STATUS; using emitted CLI: $CLI"
-          printf '%s\n' "$CLI" > /tmp/assetstudio-cli-path.txt
-          git -C /tmp/AssetStudio rev-parse HEAD > /tmp/assetstudio-revision.txt
-      - name: Export official ReDrive Shader assets with AssetStudioModCLI
-        shell: bash
-        run: |
-          CLI="$(cat /tmp/assetstudio-cli-path.txt)"
-          mkdir -p /tmp/magius-rd-shader-export
-          dotnet "$CLI" /tmp/magius-rd-assets \
-            -t shader \
-            -g type \
-            -o /tmp/magius-rd-shader-export \
-            --unity-version 2022.3.62f2 \
-            --log-level warning
-          find /tmp/magius-rd-shader-export -maxdepth 5 -type f -print | head -n 100
-      - name: Keep only bounded feature contexts from Shader export
-        shell: bash
-        run: |
-          python scripts/summarize_assetstudio_redrive_shader.py \
-            /tmp/magius-rd-shader-export \
-            -o research/official-100101-assetstudio-shader-evidence.json
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          path = Path('research/official-100101-assetstudio-shader-evidence.json')
-          data = json.loads(path.read_text(encoding='utf-8'))
-          data['assetStudioRevision'] = Path('/tmp/assetstudio-revision.txt').read_text().strip()
-          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-          PY
-          rm -rf /tmp/magius-rd-assets /tmp/magius-rd-shader-export /tmp/AssetStudio
-
-      - name: Persist bounded material and Shader evidence only
+      - name: Resolve SJ MatCap through Android root manifest dependency closure
+        run: python scripts/resolve_official_100101_matcap_dependency.py
+      - name: Persist bounded Material/MatCap evidence only
         shell: bash
         run: |
           git config user.name github-actions[bot]
@@ -94,7 +41,7 @@ jobs:
           git add \
             research/official-100101-material-properties.json \
             research/official-100101-redrive-shader-evidence.json \
-            research/official-100101-assetstudio-shader-evidence.json
+            research/official-100101-matcap-resolution.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'research: record official 100101 Material and bounded ReDrive Shader evidence'
+          git commit -m 'research: resolve official 100101 SJ MatCap dependency'
           git push origin HEAD:${TARGET_BRANCH}
