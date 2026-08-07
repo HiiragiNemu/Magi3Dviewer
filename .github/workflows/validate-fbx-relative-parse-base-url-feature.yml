@@ -1,4 +1,4 @@
-name: Validate FBX relative parse base URL feature
+name: Validate runtime blockers with fixed 100107 stage 608 gate
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-      - name: Run release build/tests and strict fixed Chromium regression
+      - name: Run guarded product patches, release build/tests and strict Chromium regression
         shell: bash
         env:
           MAGIUS_TEST_URL: https://127.0.0.1:4173/
@@ -42,6 +42,9 @@ jobs:
             echo "exit_code=${code}" | tee -a "validation-evidence/${name}.txt"
             return ${code}
           }
+
+          run_phase self-shadow-feedback-patch python3 scripts/apply_self_shadow_feedback_loop_patch.py
+          self_shadow_patch_status=$?
 
           run_phase npm-ci npm ci
           ci_status=$?
@@ -71,6 +74,7 @@ jobs:
 
           server_status=97
           visual_status=97
+          feedback_status=97
           if [ ${playwright_browser_status} -eq 0 ]; then
             nohup npm run dev -- --host 127.0.0.1 --port 4173 >validation-evidence/vite.txt 2>&1 &
             echo $! >validation-evidence/vite.pid
@@ -90,8 +94,30 @@ jobs:
 
           cp -f visual-regression-output/* validation-evidence/ 2>/dev/null || true
 
+          if [ ${visual_status} -eq 0 ] && [ -f validation-evidence/report.json ]; then
+            python3 - <<'PY' >validation-evidence/feedback-loop-check.txt 2>&1
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path('validation-evidence/report.json').read_text(encoding='utf-8'))
+          warnings = report.get('consoleWarnings') or []
+          feedback = [
+              row for row in warnings
+              if 'feedback loop' in str(row.get('text', '')).lower()
+              or 'framebuffer feedback' in str(row.get('text', '')).lower()
+          ]
+          print(json.dumps({
+              'warningCount': len(warnings),
+              'feedbackLoopWarningCount': len(feedback),
+              'feedbackLoopWarnings': feedback,
+          }, ensure_ascii=False, indent=2))
+          raise SystemExit(1 if feedback else 0)
+          PY
+            feedback_status=$?
+          fi
+
           overall_status=0
-          for code in ${ci_status} ${audit_status} ${build_status} ${playwright_package_status} ${playwright_browser_status} ${server_status} ${visual_status}; do
+          for code in ${self_shadow_patch_status} ${ci_status} ${audit_status} ${build_status} ${playwright_package_status} ${playwright_browser_status} ${server_status} ${visual_status} ${feedback_status}; do
             if [ "${code}" -ne 0 ]; then overall_status=1; fi
           done
 
@@ -102,6 +128,7 @@ jobs:
             "runAttempt": ${GITHUB_RUN_ATTEMPT},
             "character": "100107",
             "stage": "battle-608-00-00-001",
+            "selfShadowFeedbackPatch": ${self_shadow_patch_status},
             "npmCi": ${ci_status},
             "npmAudit": ${audit_status},
             "productionBuildAndReleaseTests": ${build_status},
@@ -109,15 +136,17 @@ jobs:
             "playwrightChromium": ${playwright_browser_status},
             "viteServer": ${server_status},
             "strictFixedVisualRegression": ${visual_status},
+            "feedbackLoopWarnings": ${feedback_status},
             "overall": ${overall_status}
           }
           EOF
 
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add magia-exedra-character-three/scene/selfShadow.ts
           git add -f validation-evidence
           if ! git diff --cached --quiet; then
-            git commit -m 'test: persist temporary FBX URL validation evidence'
+            git commit -m 'fix: close runtime blockers found by fixed scene gate'
             git push origin HEAD:fix/fbx-relative-parse-base-url-20260807
           fi
 
@@ -126,6 +155,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: fbx-relative-url-100107-stage608-regression
+          name: runtime-blockers-100107-stage608-regression
           path: validation-evidence/
           if-no-files-found: warn
