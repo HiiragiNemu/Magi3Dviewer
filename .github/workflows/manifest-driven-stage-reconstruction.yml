@@ -1,0 +1,151 @@
+name: Wire manifest-driven stage provenance
+
+on:
+  push:
+    branches: ['feature/manifest-driven-stage-reconstruction-20260807']
+    paths:
+      - '.github/workflows/manifest-driven-stage-reconstruction.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v5
+        with:
+          ref: feature/manifest-driven-stage-reconstruction-20260807
+          fetch-depth: 0
+
+      - name: Wire provenance contract into stage catalog/runtime
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('src/viewer/stages.ts')
+          text = path.read_text(encoding='utf-8')
+
+          def replace_once(old: str, new: str):
+              global text
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(
+                      f'Expected exactly one match, found {count}: {old[:120]!r}'
+                  )
+              text = text.replace(old, new, 1)
+
+          replace_once(
+              """import {
+              createStageRuntimeController,
+              type StageRuntimeController,
+              type StageRuntimeProfile,
+          } from './stageRuntime'
+          """,
+              """import {
+              createStageRuntimeController,
+              type StageRuntimeController,
+              type StageRuntimeProfile,
+          } from './stageRuntime'
+          import {
+              normalizeStageBundleProvenance,
+              validateStageBundleProvenance,
+              type StageBundleProvenance,
+          } from './stageBundleProvenance'
+          """,
+          )
+
+          replace_once(
+              """    official?: boolean
+              assetBundleName?: string
+              type: 'procedural' | 'gltf' | 'fbx' | 'group'
+          """,
+              """    official?: boolean
+              assetBundleName?: string
+              /** Exact private/export dependency evidence for this packaged stage. */
+              bundleProvenance?: StageBundleProvenance
+              type: 'procedural' | 'gltf' | 'fbx' | 'group'
+          """,
+          )
+
+          replace_once(
+              """            const catalogStages = [
+                  ...(catalog.stages ?? []),
+                  ...modularStages,
+              ].filter((stage, index, all) =>
+                  all.findIndex(candidate => candidate.id === stage.id) === index
+              )
+              definitions = [
+          """,
+              """            const catalogStages = [
+                  ...(catalog.stages ?? []),
+                  ...modularStages,
+              ].filter((stage, index, all) =>
+                  all.findIndex(candidate => candidate.id === stage.id) === index
+              )
+              for (const stage of catalogStages) {
+                  if (!stage.bundleProvenance) continue
+                  stage.bundleProvenance = normalizeStageBundleProvenance(
+                      stage.bundleProvenance,
+                  )
+                  validateStageBundleProvenance(
+                      stage.bundleProvenance,
+                      stage.assetBundleName,
+                  )
+              }
+              definitions = [
+          """,
+          )
+
+          replace_once(
+              """            stageRoot.userData.stageDefinition = definition
+              stageRoot.userData.stageDynamic = definition.dynamic ?? null
+              return
+          """,
+              """            stageRoot.userData.stageDefinition = definition
+              stageRoot.userData.bundleProvenance = definition.bundleProvenance ?? null
+              stageRoot.userData.stageDynamic = definition.dynamic ?? null
+              return
+          """,
+          )
+
+          replace_once(
+              """        stageSelector.value = definition.id
+              stageRoot.userData.stageDefinition = definition
+              stageRoot.userData.reDriveVolume = definition.renderProfile?.reDriveVolume ?? null
+          """,
+              """        stageSelector.value = definition.id
+              stageRoot.userData.stageDefinition = definition
+              stageRoot.userData.bundleProvenance = definition.bundleProvenance ?? null
+              stageRoot.userData.reDriveVolume = definition.renderProfile?.reDriveVolume ?? null
+          """,
+          )
+
+          path.write_text(text, encoding='utf-8')
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate release build
+        run: npm run build
+
+      - name: Commit validated runtime integration
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add src/viewer/stages.ts
+          if git diff --cached --quiet; then
+            echo 'Stage provenance runtime already wired.'
+            exit 0
+          fi
+          git commit -m 'feat: retain verified AssetBundle provenance per stage'
+          git push origin HEAD:feature/manifest-driven-stage-reconstruction-20260807
