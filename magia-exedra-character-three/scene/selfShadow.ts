@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import type { MagiaExedraScene3D } from '.'
+import { ReDriveCameraDepthController } from './cameraDepth'
 
 /**
  * Native ReDriveToonSelfShadowPass evidence from the TW AArch64 client.
@@ -120,6 +121,7 @@ export function injectReDriveSelfShadowShader(
 
 export class ReDriveSelfShadowController {
     private readonly scene: MagiaExedraScene3D
+    private readonly cameraDepth: ReDriveCameraDepthController
     private readonly shadowCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.01, 10)
     private readonly renderTarget: THREE.WebGLRenderTarget
     private readonly shadowView = new THREE.Matrix4()
@@ -146,6 +148,7 @@ export class ReDriveSelfShadowController {
 
     constructor(scene: MagiaExedraScene3D) {
         this.scene = scene
+        this.cameraDepth = new ReDriveCameraDepthController(scene)
         const resolution = officialReDriveSelfShadowSettings.resolution
         const depthTexture = new THREE.DepthTexture(
             resolution,
@@ -183,6 +186,11 @@ export class ReDriveSelfShadowController {
 
     render() {
         if (this.disposed) return
+        // Current-JP GemDepthDiff reads CameraDepthTexture before the character
+        // colour pass. This Web producer is explicitly approximate, but the
+        // recovered fragment threshold arithmetic consuming it is exact.
+        this.cameraDepth.render()
+
         const characters = this.scene.characters
             .map(entry => entry.character)
             .filter((character): character is NonNullable<typeof character> => Boolean(character))
@@ -337,6 +345,7 @@ export class ReDriveSelfShadowController {
 
     dispose() {
         this.disposed = true
+        this.cameraDepth.dispose()
         this.renderTarget.depthTexture?.dispose()
         this.renderTarget.dispose()
         reDriveSelfShadowUniformState.map.value = null
@@ -373,9 +382,13 @@ export class ReDriveSelfShadowController {
         const oldClearAlpha = renderer.getClearAlpha()
         renderer.getClearColor(this.previousClearColor)
         const outlineStates: Array<[THREE.Object3D, boolean]> = []
+        const oldSelfShadowMap = reDriveSelfShadowUniformState.map.value
 
-        // Never sample the same RT while its depth attachment is being written.
+        // WebGL rejects a framebuffer attachment that remains bound to an
+        // active sampler even if the branch is disabled. Truly unbind the
+        // self-shadow sampler while writing its depth attachment.
         reDriveSelfShadowUniformState.enabled.value = 0
+        reDriveSelfShadowUniformState.map.value = null
         for (const character of characters) {
             for (const outline of character.userData.outlineMeshes) {
                 outlineStates.push([outline, outline.visible])
@@ -402,6 +415,7 @@ export class ReDriveSelfShadowController {
                 object.visible = visible
             })
             renderer.setRenderTarget(oldTarget)
+            reDriveSelfShadowUniformState.map.value = oldSelfShadowMap
             renderer.setClearColor(this.previousClearColor, oldClearAlpha)
             renderer.autoClear = oldAutoClear
             renderer.xr.enabled = oldXrEnabled
