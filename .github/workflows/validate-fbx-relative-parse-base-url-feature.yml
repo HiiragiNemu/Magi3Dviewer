@@ -98,6 +98,8 @@ jobs:
           cat >validation-evidence/status.json <<EOF
           {
             "sourceCommit": "${GITHUB_SHA}",
+            "runId": ${GITHUB_RUN_ID},
+            "runAttempt": ${GITHUB_RUN_ATTEMPT},
             "character": "100107",
             "stage": "battle-608-00-00-001",
             "npmCi": ${ci_status},
