@@ -28,6 +28,8 @@ jobs:
         run: python scripts/summarize_official_600_01_02_material_properties.py
       - name: Audit exported FBX material-name provenance
         run: python scripts/audit_stage_600_fbx_material_names.py
+      - name: Audit current-JP versus exported FBX UV channels
+        run: python scripts/audit_stage_600_uv_channels.py
       - name: Persist evidence
         shell: bash --noprofile --norc -e -o pipefail {0}
         run: |
@@ -36,10 +38,12 @@ jobs:
           test -s research/official-600-01-02-material-properties.json
           test -s research/official-600-01-02-material-summary.json
           test -s research/stage-600-01-02-fbx-material-name-audit.json
+          test -s research/stage-600-01-02-uv-channel-audit.json
           git add \
             research/official-600-01-02-material-properties.json \
             research/official-600-01-02-material-summary.json \
-            research/stage-600-01-02-fbx-material-name-audit.json
+            research/stage-600-01-02-fbx-material-name-audit.json \
+            research/stage-600-01-02-uv-channel-audit.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'research: persist current-JP 600-01-02 parity summary'
           git push origin HEAD:research/stage-600-01-02-current-jp-20260808
