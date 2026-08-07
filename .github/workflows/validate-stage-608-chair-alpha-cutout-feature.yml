@@ -1,4 +1,4 @@
-name: Validate stage 608 ChairCD feature
+name: Validate current-JP stage 608 alpha parity
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: '22'
           cache: npm
-      - name: Run release build/tests and fixed Chromium regression
+      - name: Run fail-closed JP patch, release build/tests and fixed Chromium regression
         shell: bash
         env:
           MAGIUS_TEST_URL: https://127.0.0.1:4173/
@@ -43,8 +43,15 @@ jobs:
             return ${code}
           }
 
-          run_phase npm-ci npm ci
-          ci_status=$?
+          run_phase current-jp-patch python3 scripts/apply_stage_608_current_jp_parity_patch.py
+          patch_status=$?
+
+          if [ ${patch_status} -eq 0 ]; then
+            run_phase npm-ci npm ci
+            ci_status=$?
+          else
+            ci_status=97
+          fi
 
           if [ ${ci_status} -eq 0 ]; then
             run_phase npm-audit npm audit --audit-level=high
@@ -73,7 +80,7 @@ jobs:
           server_status=97
           visual_status=97
           if [ ${playwright_browser_status} -eq 0 ]; then
-            nohup npm run dev -- --host 127.0.0.1 --port 4173 >validation-evidence/vite.log 2>&1 &
+            nohup npm run preview -- --host 127.0.0.1 --port 4173 >validation-evidence/vite.log 2>&1 &
             echo $! >validation-evidence/vite.pid
             server_status=1
             for attempt in $(seq 1 90); do
@@ -92,7 +99,7 @@ jobs:
           cp -f visual-regression-output/* validation-evidence/ 2>/dev/null || true
 
           overall_status=0
-          for code in ${ci_status} ${audit_status} ${build_status} ${playwright_package_status} ${playwright_browser_status} ${server_status} ${visual_status}; do
+          for code in ${patch_status} ${ci_status} ${audit_status} ${build_status} ${playwright_package_status} ${playwright_browser_status} ${server_status} ${visual_status}; do
             if [ "${code}" -ne 0 ]; then overall_status=1; fi
           done
 
@@ -101,12 +108,13 @@ jobs:
             "sourceCommit": "${GITHUB_SHA}",
             "character": "100107",
             "stage": "battle-608-00-00-001",
+            "currentJpFailClosedPatch": ${patch_status},
             "npmCi": ${ci_status},
             "npmAudit": ${audit_status},
             "productionBuildAndReleaseTests": ${build_status},
             "playwrightPackage": ${playwright_package_status},
             "playwrightChromium": ${playwright_browser_status},
-            "viteServer": ${server_status},
+            "productionPreviewServer": ${server_status},
             "fixedVisualRegression": ${visual_status},
             "overall": ${overall_status}
           }
@@ -114,9 +122,12 @@ jobs:
 
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add validation-evidence
+          git add \
+            magia-exedra-character-three/loader.ts \
+            public/stages/catalog/battle-608-00-00-001.json \
+            validation-evidence
           if ! git diff --cached --quiet; then
-            git commit -m 'test: persist temporary ChairCD validation evidence'
+            git commit -m 'test: persist current-JP 608 parity validation result'
             git push origin HEAD:fix/stage-608-chair-alpha-cutout-20260807
           fi
 
@@ -125,6 +136,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: stage-608-chair-alpha-100107-regression
+          name: stage-608-current-jp-alpha-100107-regression
           path: validation-evidence/
           if-no-files-found: warn
