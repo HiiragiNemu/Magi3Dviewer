@@ -89,10 +89,15 @@ try {
   await page.screenshot({ path: `${outputDir}/100107-battle-608-full.png`, fullPage: true })
 
   const consoleErrors = consoleRows.filter(row => row.type === 'error')
+  const webglValidationWarnings = consoleRows.filter(row =>
+    row.type === 'warning'
+    && /GL_INVALID_(?:OPERATION|FRAMEBUFFER_OPERATION)|feedback loop/i.test(row.text)
+  )
   const report = {
     ...state,
     pageErrors,
     consoleErrors,
+    webglValidationWarnings,
     consoleWarnings: consoleRows.filter(row => row.type === 'warning'),
     allConsole: consoleRows,
   }
@@ -103,6 +108,11 @@ try {
   if (!state.webgl) throw new Error('WebGL context unavailable')
   if (pageErrors.length) throw new Error(`Page errors: ${pageErrors.join('\n')}`)
   if (consoleErrors.length) throw new Error(`Console errors: ${consoleErrors.map(row => row.text).join('\n')}`)
+  if (webglValidationWarnings.length) {
+    throw new Error(
+      `WebGL validation warnings: ${webglValidationWarnings.map(row => row.text).join('\n')}`,
+    )
+  }
 } finally {
   await browser.close()
 }
