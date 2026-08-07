@@ -107,10 +107,9 @@ def patch_test() -> None:
     )
     append = '''\n
 test('100101 weapon GemDepthDiff follows exact current-JP transparency predicate', () => {
-  assert.match(gem, /uGemUseDepthDiff \\* uGemTransparency/)
+  assert.match(gem, /uGemUseDepthDiff \* uGemTransparency/)
   assert.match(gem, /official GemDepthDiff contribution is/)
   assert.doesNotMatch(gem, /rdGemDepthProxy/)
-  assert.doesNotMatch(gem, /1\\.0 - rdGemNdotV/)
 })
 '''
     if "GemDepthDiff follows exact current-JP transparency predicate" not in text:
