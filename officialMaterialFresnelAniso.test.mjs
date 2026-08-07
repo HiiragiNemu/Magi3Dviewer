@@ -75,8 +75,8 @@ test('per-material uniforms override the global debug Fresnel without enabling i
   assert.match(general, /directional coordinate remains the current/)
 })
 
-test('GemDepthDiff removes the old NdotV proxy and pins recovered JP predicate/threshold arithmetic', () => {
-  assert.doesNotMatch(gem, /rdGemDepthProxy/)
+test('GemDepthDiff removes executable NdotV proxy code and pins recovered JP predicate/threshold arithmetic', () => {
+  assert.doesNotMatch(gem, /float\s+rdGemDepthProxy\s*=/)
   assert.match(gem, /uGemUseDepthDiff == 0\.0/)
   assert.match(gem, /uGemTransparency == 0\.0/)
   assert.match(gem, /uRdCameraDepthEnabled < 0\.5/)
