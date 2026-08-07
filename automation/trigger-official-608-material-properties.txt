@@ -1,4 +1,4 @@
-Trigger bounded current-JP stage 608 Material saved-property extraction.
-Resolve every non-null current-JP 608 _BaseMap/_MainTex/_ScrollTexture dependency through the exact 15-bundle closure and compare decoded pixel SHA against explicit `origin/magius3dviewer`. Classify every mismatch against exact identity/flip-Y/flip-X/flip-XY pixel hashes before treating it as wrong content. Keep bounded `shader/bg_uber` compiled windows for BaseMap UV/ST, billboard, alpha clip and vertex-color dataflow.
+Trigger bounded current-JP stage 608 Material and runtime-state extraction.
+Resolve every non-null current-JP 608 _BaseMap/_MainTex/_ScrollTexture dependency through the exact 15-bundle closure and compare decoded pixel SHA against explicit `origin/magius3dviewer`. Keep bounded `shader/bg_uber` compiled windows for BaseMap UV/ST, billboard, alpha clip and vertex-color dataflow. This pass additionally audits current-JP AnimationClip/Animator/PlayableDirector bindings for red/blue, violin/chair/music and visibility/material state so the repeated-performer rows are not guessed away.
 DO NOT MERGE: automation trigger only.
-Rerun 2026-08-08 orientation-classification pass.
+Rerun 2026-08-08 animation-binding pass.
