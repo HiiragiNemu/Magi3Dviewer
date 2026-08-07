@@ -1,6 +1,11 @@
 name: Validate exact ReDrive self-shadow receiver
 
 on:
+  push:
+    branches:
+      - feature/exact-redrive-self-shadow-receiver-20260808
+    paths:
+      - automation/trigger-exact-redrive-self-shadow-receiver-20260808.txt
   pull_request:
     branches:
       - preview/p0-20260808
