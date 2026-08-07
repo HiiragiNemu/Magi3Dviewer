@@ -21,6 +21,22 @@ test('native ReDrive self-shadow keeps recovered TW/JP-shared pass constants', (
   assert.match(source, /vRdToonWorldPosition/)
 })
 
+test('self-shadow depth writer truly unbinds its own sampler to avoid WebGL feedback', () => {
+  const source = read('magia-exedra-character-three/scene/selfShadow.ts')
+  assert.match(
+    source,
+    /const oldSelfShadowMap = reDriveSelfShadowUniformState\.map\.value/,
+  )
+  assert.match(
+    source,
+    /reDriveSelfShadowUniformState\.enabled\.value = 0\s+reDriveSelfShadowUniformState\.map\.value = null/,
+  )
+  assert.match(
+    source,
+    /renderer\.setRenderTarget\(oldTarget\)\s+reDriveSelfShadowUniformState\.map\.value = oldSelfShadowMap/,
+  )
+})
+
 test('self-shadow is applied through authored toon shadow textures and face SDF', () => {
   const general = read('magia-exedra-character-three/shaders/general.ts')
   const face = read('magia-exedra-character-three/shaders/face.ts')
