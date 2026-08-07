@@ -41,6 +41,10 @@ jobs:
         run: python scripts/extract_compact_redrive_shader_formula_evidence.py
       - name: Extract targeted larger ReDrive formula windows
         run: python scripts/extract_targeted_redrive_formula_windows.py
+      - name: Extract compact exact executable ReDrive formula slices
+        run: python scripts/extract_exact_redrive_formula_slices.py
+      - name: Trace GemDepthDiff predecessor predicate
+        run: python scripts/trace_redrive_gem_depthdiff_predicate.py
       - name: Probe SJ MatCap across character plus shader workspace
         run: python scripts/resolve_official_100101_matcap_dependency.py
       - name: Persist bounded Material/Shader/MatCap evidence only
@@ -48,6 +52,7 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          test -s research/official-redrive-exact-formula-slices.json
           git add \
             research/official-100101-material-properties.json \
             research/official-100101-redrive-shader-evidence.json \
@@ -60,7 +65,9 @@ jobs:
             research/official-redrive-formula-depth-rim.json \
             research/official-redrive-formula-aniso.json \
             research/official-redrive-formula-fresnel.json \
+            research/official-redrive-exact-formula-slices.json \
+            research/official-redrive-gem-depthdiff-predicate-trace.json \
             research/official-100101-matcap-resolution.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'research: refresh targeted ReDrive formula windows'
+          git commit -m 'research: persist exact ReDrive executable formula slices'
           git push origin HEAD:${TARGET_BRANCH}
