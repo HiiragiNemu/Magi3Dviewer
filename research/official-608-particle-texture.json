@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 2,
+  "source": "official-jp-current-assetbundle-catalog-dependencies",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "stage": {
+    "rootBundle": "battle/stage/bg_3d_608_00_00_001",
+    "dependencySource": "current-JP GetResourceAssetBundleMstList.mstList.dependencies",
+    "boundedCatalogRecord": {
+      "name": "3d_608_00_00_001",
+      "pathId": 85,
+      "label": "",
+      "revision": "vR1d",
+      "dependencies": "shader/common/texture/cloud_noise,texture/bg/794f71efa5afc23468f2a73c8b563dc8,texture/bg/7c22553094ea521428b51081ae85d860,texture/bg/4609884769b92f6409f2592fe0524817,shader/bg_uber,texture/bg/efd676b5b84a41d4ebf49af3a5680084,texture/bg/5bec58544f3f8d34994548212c9a6405,texture/bg/12b6c395b65398146b34eacb3110054d,shader/common/texture/simple_noise,texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc,texture/bg/90d984104c9b6f646bc4139b675d732f,texture/bg/392aec77248a2064eaea814e641f6183,texture/bg/e99618be318e5644e84edc49bec76510,texture/bg/186adf1125c7ab4468afb72c4f957424",
+      "size": 5836492,
+      "resolvedPath": "battle/stage/bg_",
+      "keys": [
+        "cryptoKey",
+        "dependencies",
+        "expireType",
+        "label",
+        "language",
+        "name",
+        "pathId",
+        "revision",
+        "size"
+      ],
+      "fullPath": "battle/stage/bg_3d_608_00_00_001",
+      "dependencyValueTypes": null
+    },
+    "bundleCountIncludingRoot": 15,
+    "dependencyCount": 14,
+    "dependencyOrder": [
+      "shader/common/texture/cloud_noise",
+      "texture/bg/794f71efa5afc23468f2a73c8b563dc8",
+      "texture/bg/7c22553094ea521428b51081ae85d860",
+      "texture/bg/4609884769b92f6409f2592fe0524817",
+      "shader/bg_uber",
+      "texture/bg/efd676b5b84a41d4ebf49af3a5680084",
+      "texture/bg/5bec58544f3f8d34994548212c9a6405",
+      "texture/bg/12b6c395b65398146b34eacb3110054d",
+      "shader/common/texture/simple_noise",
+      "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+      "texture/bg/90d984104c9b6f646bc4139b675d732f",
+      "texture/bg/392aec77248a2064eaea814e641f6183",
+      "texture/bg/e99618be318e5644e84edc49bec76510",
+      "texture/bg/186adf1125c7ab4468afb72c4f957424"
+    ],
+    "totalDecryptedBytes": 17074895
+  },
+  "targetPointer": {
+    "externalFileId": 6,
+    "serializedFile": "cab-45fe6895e0364350e5df2d082222970e",
+    "pathId": -70738714532392232
+  },
+  "resolvedTexture": {
+    "sourceBundle": "texture/bg/5bec58544f3f8d34994548212c9a6405",
+    "sourceBundleSize": 3647,
+    "name": "bg3d608_00_blue_bubble_col",
+    "width": 32,
+    "height": 128,
+    "textureFormat": 50,
+    "mipCount": 1,
+    "imageCount": 1,
+    "dimension": 2,
+    "colorSpace": 1,
+    "decodedMode": "RGBA",
+    "decodedSize": [
+      32,
+      128
+    ],
+    "pixelSha256": "57fe4cf6e45c3061955dae3bfd8d923837a275085fa1678ada13f6f1d3471f1e",
+    "pngSha256": "6ca50ebbd85f6325ce1447b75bcd5f48761583c7432bb5c3ef9d01724ce8c5b4",
+    "pngBytes": 3999,
+    "output": "research/official-608-blue-bubble.png"
+  },
+  "closureBundleInventory": [
+    {
+      "bundle": "battle/stage/bg_3d_608_00_00_001",
+      "size": 5836492,
+      "internalSerializedFiles": [
+        "bg_3d_608_00_00_001"
+      ],
+      "objectCount": 1102
+    },
+    {
+      "bundle": "shader/common/texture/cloud_noise",
+      "size": 82768,
+      "internalSerializedFiles": [
+        "cloud_noise"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "texture/bg/794f71efa5afc23468f2a73c8b563dc8",
+      "size": 313077,
+      "internalSerializedFiles": [
+        "794f71efa5afc23468f2a73c8b563dc8"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "texture/bg/7c22553094ea521428b51081ae85d860",
+      "size": 17518,
+      "internalSerializedFiles": [
+        "7c22553094ea521428b51081ae85d860"
+      ],
+      "objectCount": 3
+    },
+    {
+      "bundle": "texture/bg/4609884769b92f6409f2592fe0524817",
+      "size": 230985,
+      "internalSerializedFiles": [
+        "4609884769b92f6409f2592fe0524817"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "shader/bg_uber",
+      "size": 9732984,
+      "internalSerializedFiles": [
+        "bg_uber"
+      ],
+      "objectCount": 4
+    },
+    {
+      "bundle": "texture/bg/efd676b5b84a41d4ebf49af3a5680084",
+      "size": 315631,
+      "internalSerializedFiles": [
+        "efd676b5b84a41d4ebf49af3a5680084"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "texture/bg/5bec58544f3f8d34994548212c9a6405",
+      "size": 3647,
+      "internalSerializedFiles": [
+        "5bec58544f3f8d34994548212c9a6405"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "texture/bg/12b6c395b65398146b34eacb3110054d",
+      "size": 43912,
+      "internalSerializedFiles": [
+        "12b6c395b65398146b34eacb3110054d"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "shader/common/texture/simple_noise",
+      "size": 160416,
+      "internalSerializedFiles": [
+        "simple_noise"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+      "size": 53825,
+      "internalSerializedFiles": [
+        "bd77e42c30e3c5047a33ffaaeb4ac1fc"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "texture/bg/90d984104c9b6f646bc4139b675d732f",
+      "size": 21930,
+      "internalSerializedFiles": [
+        "90d984104c9b6f646bc4139b675d732f"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "texture/bg/392aec77248a2064eaea814e641f6183",
+      "size": 9204,
+      "internalSerializedFiles": [
+        "392aec77248a2064eaea814e641f6183"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+      "size": 34984,
+      "internalSerializedFiles": [
+        "e99618be318e5644e84edc49bec76510"
+      ],
+      "objectCount": 2
+    },
+    {
+      "bundle": "texture/bg/186adf1125c7ab4468afb72c4f957424",
+      "size": 217522,
+      "internalSerializedFiles": [
+        "186adf1125c7ab4468afb72c4f957424"
+      ],
+      "objectCount": 2
+    }
+  ],
+  "privacyBoundary": "Raw current-JP AssetBundles remain transient in the Actions temp directory. Only this bounded metadata report and the single decoded public-viewer texture are persisted."
+}
