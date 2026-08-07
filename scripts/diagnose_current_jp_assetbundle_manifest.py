@@ -10,6 +10,7 @@ import requests
 import extract_official_100101_material_properties as base
 
 OUTPUT = Path('research/official-jp-assetbundle-manifest-discovery.json')
+TARGET_STAGE = 'battle/stage/bg_3d_608_00_00_001'
 MAX_CANDIDATES = 80
 TERMS = ('manifest', 'assetbundlemanifest', 'asset_bundle_manifest', 'android')
 INTERESTING_KEYS = (
@@ -24,9 +25,9 @@ def safe_value(value: Any) -> Any:
     if value is None or isinstance(value, (str, int, float, bool)):
         return value
     if isinstance(value, (list, tuple)):
-        return [safe_value(item) for item in value[:30]]
+        return [safe_value(item) for item in value[:80]]
     if isinstance(value, dict):
-        return {str(key): safe_value(child) for key, child in list(value.items())[:40]}
+        return {str(key): safe_value(child) for key, child in list(value.items())[:80]}
     return repr(value)
 
 
@@ -56,6 +57,15 @@ def compact_item(item: dict[str, Any], path_map: dict[int, str] | None = None) -
     return result
 
 
+def full_path(item: dict[str, Any], path_map: dict[int, str]) -> str:
+    try:
+        path = path_map.get(int(item.get('pathId', 0)), '')
+    except Exception:
+        path = ''
+    name = str(item.get('name', ''))
+    return f'{path}{name}'.replace('\\', '/').strip('/')
+
+
 def summarize_payload(payload: dict[str, Any]) -> dict[str, Any]:
     raw_items = payload.get('mstList') or []
     raw_paths = payload.get('pathMappingMstList') or []
@@ -77,23 +87,42 @@ def summarize_payload(payload: dict[str, Any]) -> dict[str, Any]:
         if isinstance(item, dict) and contains_term(item)
     ][:MAX_CANDIDATES]
     unresolved_name_items = []
+    target_items = []
+    dependency_shapes: dict[str, int] = {}
     name_keys = ('name', 'fileName', 'assetBundleName')
     for item in raw_items:
         if not isinstance(item, dict):
             continue
+        dependencies = item.get('dependencies')
+        if dependencies is not None:
+            if isinstance(dependencies, list):
+                shape = 'list:' + ','.join(sorted({type(value).__name__ for value in dependencies}))
+            else:
+                shape = type(dependencies).__name__
+            dependency_shapes[shape] = dependency_shapes.get(shape, 0) + 1
+        if full_path(item, path_map).lower() == TARGET_STAGE.lower():
+            target = compact_item(item, path_map)
+            target['fullPath'] = full_path(item, path_map)
+            target['dependencyValueTypes'] = (
+                [type(value).__name__ for value in dependencies]
+                if isinstance(dependencies, list) else None
+            )
+            target_items.append(target)
         if not any(item.get(key) is not None for key in name_keys):
             unresolved_name_items.append(compact_item(item, path_map))
             if len(unresolved_name_items) >= 20:
-                break
+                continue
     return {
         'payloadKeys': sorted(str(key) for key in payload.keys()),
         'rawEntryCount': len(raw_items),
         'pathMappingCount': len(raw_paths),
         'itemKeyUnion': item_key_union,
         'pathMappingKeyUnion': path_key_union,
+        'dependencyShapes': dependency_shapes,
+        'targetStageRecords': target_items,
         'termCandidates': candidates,
         'pathTermCandidates': path_candidates,
-        'unresolvedNameSamples': unresolved_name_items,
+        'unresolvedNameSamples': unresolved_name_items[:20],
     }
 
 
@@ -175,12 +204,13 @@ def main() -> int:
     ][:MAX_CANDIDATES]
 
     report = {
-        'schemaVersion': 1,
+        'schemaVersion': 2,
         'source': 'official-jp-current-resource-api-bounded-discovery',
         'purpose': (
-            'Discover the current JP AssetBundleManifest/root-catalog route after the historical '
-            "normalized fullPath='android' assumption stopped matching. This report intentionally "
-            'persists only schema/header/candidate evidence, never auth tokens or the full catalog.'
+            'Discover the current JP AssetBundle dependency route after the historical '
+            "normalized fullPath='android' AssetBundleManifest assumption stopped matching. "
+            'The current catalog schema itself exposes a dependencies field, so the exact 608 '
+            'target record is retained as bounded evidence. No auth token or full catalog is persisted.'
         ),
         'metadata': metadata,
         'configResourceRevisionHeaders': {
@@ -194,17 +224,19 @@ def main() -> int:
     }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    target_records = report['assetBundleCatalog']['targetStageRecords']
     print(json.dumps({
         'output': str(OUTPUT),
         'metadata': metadata,
         'resourceHeaders': report['configResourceRevisionHeaders'],
         'assetBundlePayloadKeys': report['assetBundleCatalog']['payloadKeys'],
         'assetBundleItemKeys': report['assetBundleCatalog']['itemKeyUnion'],
-        'assetBundleTermCandidateCount': len(report['assetBundleCatalog']['termCandidates']),
-        'normalizedTermCandidateCount': len(normalized_candidates),
+        'dependencyShapes': report['assetBundleCatalog']['dependencyShapes'],
+        'targetStageRecords': target_records,
         'fileCatalogStatus': report['resourceFileCatalogProbe'].get('statusCode'),
-        'fileCatalogPayloadKeys': (report['resourceFileCatalogProbe'].get('summary') or {}).get('payloadKeys'),
     }, ensure_ascii=False, indent=2))
+    if len(target_records) != 1:
+        raise RuntimeError(f'Expected one current-JP 608 catalog record, found {len(target_records)}')
     return 0
 
 
