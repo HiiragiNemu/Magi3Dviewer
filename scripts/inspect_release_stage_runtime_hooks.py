@@ -13,6 +13,8 @@ PATTERNS = [
     'materialBindings',
     'StageMaterialBinding',
     'stageMaterialBindings',
+    'StageRuntimeProfile',
+    'createStageRuntimeController',
     'ParticleSystem',
     'particle',
     'runtime',
@@ -33,17 +35,19 @@ def grep(pattern: str) -> list[dict[str, object]]:
             return []
         raise
     rows = []
+    ref_prefix = f'{REF}:'
     for line in text.splitlines()[:MAX_MATCHES_PER_PATTERN]:
-        prefix, content = line.split(':', 1)
-        if ':' in content:
-            line_no_text, content = content.split(':', 1)
-        else:
-            line_no_text = '0'
-        path = prefix.split(':', 1)[-1]
+        if not line.startswith(ref_prefix):
+            continue
+        remainder = line[len(ref_prefix):]
+        parts = remainder.split(':', 2)
+        if len(parts) != 3:
+            continue
+        path, line_no_text, content = parts
         try:
             line_no = int(line_no_text)
         except ValueError:
-            line_no = 0
+            continue
         rows.append({'path': path, 'line': line_no, 'text': content[:500]})
     return rows
 
@@ -58,14 +62,14 @@ def main() -> int:
         if row.get('path')
     })
     report = {
-        'schemaVersion': 1,
+        'schemaVersion': 2,
         'ref': REF,
         'sha': sha,
         'patterns': matches,
         'candidateFiles': paths,
         'note': (
-            'Bounded git-grep of the release branch to locate existing stage runtime extension points. '
-            'This is repository code only; no private game payload is included.'
+            'Bounded git-grep of the exact release branch to locate existing stage runtime extension points. '
+            'Paths are parsed from <ref>:<path>:<line>:<text>; this is repository code only and contains no private game payload.'
         ),
     }
     OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
