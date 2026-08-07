@@ -1,2 +1,2 @@
-Validate root-relative FBX parsing with release build/tests and strict fixed 100107 + battle-608-00-00-001 Chromium regression.
-Fourth pass: persist GITHUB_RUN_ID so the original screenshot artifact can be downloaded for manual visual inspection.
+Validate root-relative FBX parsing plus self-shadow caster-pass sampler isolation with release build/tests and strict fixed 100107 + battle-608-00-00-001 Chromium regression.
+Fail the gate if any Framebuffer/active Texture feedback-loop warning remains; persist run ID for manual screenshot artifact review.
