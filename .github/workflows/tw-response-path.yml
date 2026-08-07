@@ -1,0 +1,91 @@
+name: Map Taiwan response decoding path
+run-name: Identify Pokke response decoder and key source
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-response-path.yml'
+      - 'tools/research/extract_tw_response_path.py'
+      - 'analysis-requests/tw-response-path.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-response-path
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '6.0.x'
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip jq binutils-aarch64-linux-gnu python3-pip
+          python -m pip install --disable-pip-version-check pyelftools
+      - name: Download and unpack Taiwan client
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/source work/xapk work/unpacked work/tool work/dump work/report/path
+          curl -fL --retry 5 --retry-all-errors -A 'Mozilla/5.0' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
+            < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test -s work/unpacked/lib/arm64-v8a/libil2cpp.so
+          test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
+      - name: Generate Il2Cpp method map
+        shell: bash
+        run: |
+          set -euo pipefail
+          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' \
+            https://api.github.com/repos/Perfare/Il2CppDumper/releases/latest)
+          asset=$(jq -r '[.assets[] | select(.name | test("net6.*\\.zip$"; "i"))][0].browser_download_url // empty' <<< "$release")
+          test -n "$asset"
+          curl -fL --retry 4 "$asset" -o work/tool/tool.zip
+          unzip -q work/tool/tool.zip -d work/tool/extracted
+          dll=$(find work/tool/extracted -type f -name Il2CppDumper.dll -print -quit)
+          test -n "$dll"
+          set +e
+          dotnet "$dll" \
+            work/unpacked/lib/arm64-v8a/libil2cpp.so \
+            work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat \
+            work/dump </dev/null > work/report/dumper.log 2>&1
+          status=$?
+          set -e
+          echo "exit_status=$status" >> work/report/dumper.log
+          test -s work/dump/dump.cs
+      - name: Map response-path methods and crypto xrefs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/research/extract_tw_response_path.py \
+            --dump work/dump/dump.cs \
+            --binary work/unpacked/lib/arm64-v8a/libil2cpp.so \
+            --out work/report/path
+          cat work/report/path/response-address-map.json
+          cat work/report/path/response-crypto-xrefs.json
+      - name: Remove raw/full materials
+        if: ${{ always() }}
+        run: |
+          rm -rf work/source work/xapk work/unpacked work/tool work/dump
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+      - name: Upload response path
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-response-path
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
