@@ -55,7 +55,7 @@ test('runtime restores uv1 before applyStageLightmaps and fails closed', () => {
   assert.ok(lightmapApply > uv1Apply);
   assert.match(stages, /applyStageUv1Companion\([\s\S]*?strict:\s*true/);
   assert.match(stages, /loadStageUv1Companion/);
-  assert.match(helper, /geometry\.setAttribute\(\s*'uv1'/);
+  assert.match(helper, /(?:originalGeometry|clone)\.setAttribute\(\s*'uv1'/);
   assert.match(helper, /schemaVersion !== 3/);
   assert.match(helper, /assignments\.length !== companion\.nodes\.length/);
   assert.match(helper, /originalGeometry\.clone\(\)/);
