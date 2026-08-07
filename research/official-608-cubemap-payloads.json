@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-assetbundle",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "bundle": "battle/stage/bg_3d_608_00_00_001",
+  "cubemapCount": 2,
+  "cubemaps": [
+    {
+      "name": "ReflectionProbe-0",
+      "pathId": 1016455745504271734,
+      "width": 64,
+      "height": 64,
+      "textureFormat": 47,
+      "mipCount": 7,
+      "imageCount": 6,
+      "dimension": 2,
+      "colorSpace": 1,
+      "completeImageSize": 5488,
+      "imageData": {
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "headHex": "",
+        "tailHex": ""
+      },
+      "streamData": {
+        "offset": 4370128,
+        "size": 32928,
+        "path": "archive:/CAB-697a37eda16cff7785502222d3d167d2/CAB-697a37eda16cff7785502222d3d167d2.resS"
+      },
+      "rawObject": {
+        "byteCount": 300,
+        "sha256": "90107fb0f148e462d12fce2a243be3f0155b037ca9a9aeee8afbae68a7313748",
+        "headHex": "110000005265666c656374696f6e50726f62652d300000000400000000000000400000004000000070150000000000002f000000070000000000000000000000",
+        "tailHex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "rawObjectError": null,
+      "parsedError": null,
+      "extensionCapabilities": {
+        "image": {
+          "type": "Image",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "images": {
+          "error": "AttributeError(\"'Cubemap' object has no attribute 'images'\")"
+        }
+      },
+      "typetreeKeys": [
+        "image data",
+        "m_ColorSpace",
+        "m_CompleteImageSize",
+        "m_DownscaleFallback",
+        "m_ForcedFallbackFormat",
+        "m_Height",
+        "m_IgnoreMipmapLimit",
+        "m_ImageCount",
+        "m_IsAlphaChannelOptional",
+        "m_IsPreProcessed",
+        "m_IsReadable",
+        "m_LightmapFormat",
+        "m_MipCount",
+        "m_MipmapLimitGroupName",
+        "m_MipsStripped",
+        "m_Name",
+        "m_PlatformBlob",
+        "m_SourceTextures",
+        "m_StreamData",
+        "m_StreamingMipmaps",
+        "m_StreamingMipmapsPriority",
+        "m_TextureDimension",
+        "m_TextureFormat",
+        "m_TextureSettings",
+        "m_Width"
+      ]
+    },
+    {
+      "name": "ReflectionProbe-1",
+      "pathId": 4939737858652595000,
+      "width": 64,
+      "height": 64,
+      "textureFormat": 47,
+      "mipCount": 7,
+      "imageCount": 6,
+      "dimension": 2,
+      "colorSpace": 1,
+      "completeImageSize": 5488,
+      "imageData": {
+        "byteCount": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "headHex": "",
+        "tailHex": ""
+      },
+      "streamData": {
+        "offset": 6495232,
+        "size": 32928,
+        "path": "archive:/CAB-697a37eda16cff7785502222d3d167d2/CAB-697a37eda16cff7785502222d3d167d2.resS"
+      },
+      "rawObject": {
+        "byteCount": 300,
+        "sha256": "ccb6240bd5db35ba516fb8dbb7094b60be9504f6cb9565d7a5a52c4d16523752",
+        "headHex": "110000005265666c656374696f6e50726f62652d310000000400000000000000400000004000000070150000000000002f000000070000000000000000000000",
+        "tailHex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "rawObjectError": null,
+      "parsedError": null,
+      "extensionCapabilities": {
+        "image": {
+          "type": "Image",
+          "size": [
+            64,
+            64
+          ]
+        },
+        "images": {
+          "error": "AttributeError(\"'Cubemap' object has no attribute 'images'\")"
+        }
+      },
+      "typetreeKeys": [
+        "image data",
+        "m_ColorSpace",
+        "m_CompleteImageSize",
+        "m_DownscaleFallback",
+        "m_ForcedFallbackFormat",
+        "m_Height",
+        "m_IgnoreMipmapLimit",
+        "m_ImageCount",
+        "m_IsAlphaChannelOptional",
+        "m_IsPreProcessed",
+        "m_IsReadable",
+        "m_LightmapFormat",
+        "m_MipCount",
+        "m_MipmapLimitGroupName",
+        "m_MipsStripped",
+        "m_Name",
+        "m_PlatformBlob",
+        "m_SourceTextures",
+        "m_StreamData",
+        "m_StreamingMipmaps",
+        "m_StreamingMipmapsPriority",
+        "m_TextureDimension",
+        "m_TextureFormat",
+        "m_TextureSettings",
+        "m_Width"
+      ]
+    }
+  ]
+}
