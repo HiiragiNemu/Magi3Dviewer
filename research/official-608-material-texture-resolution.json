@@ -1,0 +1,2126 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-assetbundle-catalog-dependencies-vs-public-viewer-pixels",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "bundle": "battle/stage/bg_3d_608_00_00_001",
+  "materialCount": 15,
+  "comparisonCount": 15,
+  "baseMapPixelMismatchCount": 13,
+  "unresolvedTexturePointerCount": 0,
+  "baseMapPixelMismatches": [
+    {
+      "material": "bg3d608_00_blue_ChairCD",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "exists": true,
+        "size": [
+          512,
+          512
+        ],
+        "pixelSha256": "0ca2bbf21624cab7b0e7b3b2c5a5d252a83a8f68a4650d1362f1dd4263f571c6",
+        "pngSha256": "236ca25c7c51de9e019957f6dc31f66757b33811cce0af984ed73a25e76f6916"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "bg3d608_00_blue_Fish",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "exists": true,
+        "size": [
+          512,
+          512
+        ],
+        "pixelSha256": "0ca2bbf21624cab7b0e7b3b2c5a5d252a83a8f68a4650d1362f1dd4263f571c6",
+        "pngSha256": "236ca25c7c51de9e019957f6dc31f66757b33811cce0af984ed73a25e76f6916"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "bg3d608_00_blue_Ground",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 9,
+        "pathId": "-5607514749919870913",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 9,
+          "pathId": "-5607514749919870913",
+          "targetCab": "cab-67d4009d37f04224dbcd872cef8fbddb",
+          "resolved": true,
+          "sourceBundle": "texture/bg/efd676b5b84a41d4ebf49af3a5680084",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_ground_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "ba6e4fac126b7a3436c2a5ae674af16ba0694a52f448410f66525286a777da00",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 9,
+        "pathId": "-5607514749919870913",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 9,
+          "pathId": "-5607514749919870913",
+          "targetCab": "cab-67d4009d37f04224dbcd872cef8fbddb",
+          "resolved": true,
+          "sourceBundle": "texture/bg/efd676b5b84a41d4ebf49af3a5680084",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_ground_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "ba6e4fac126b7a3436c2a5ae674af16ba0694a52f448410f66525286a777da00",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_ground_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          1024
+        ],
+        "pixelSha256": "84c3de27af10b50bdc90111b75d30575795a4faf38caac3dde366bac06bba5ae",
+        "pngSha256": "85ee96ef96b44cdef3c4f4c9626cc8bc798d38b4e68f5b5716c31c287d5f7cf3"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "bg3d608_00_blue_Object",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "exists": true,
+        "size": [
+          512,
+          512
+        ],
+        "pixelSha256": "0ca2bbf21624cab7b0e7b3b2c5a5d252a83a8f68a4650d1362f1dd4263f571c6",
+        "pngSha256": "236ca25c7c51de9e019957f6dc31f66757b33811cce0af984ed73a25e76f6916"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "bg3d608_00_blue_ObjectB",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "exists": true,
+        "size": [
+          512,
+          512
+        ],
+        "pixelSha256": "0ca2bbf21624cab7b0e7b3b2c5a5d252a83a8f68a4650d1362f1dd4263f571c6",
+        "pngSha256": "236ca25c7c51de9e019957f6dc31f66757b33811cce0af984ed73a25e76f6916"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_blue_sky",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 7,
+        "pathId": "1699062358985823069",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 7,
+          "pathId": "1699062358985823069",
+          "targetCab": "cab-2cdadb73bcdef476b15052229aae1c7a",
+          "resolved": true,
+          "sourceBundle": "texture/bg/186adf1125c7ab4468afb72c4f957424",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_sky_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "3a3710737c735fd95c0b904421d80c1e561049c8d0959298943d943655bf46bf",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 14,
+        "pathId": "-7029126562195537083",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 14,
+          "pathId": "-7029126562195537083",
+          "targetCab": "cab-fa3d9b2636b893a09f96e1df986febcf",
+          "resolved": true,
+          "sourceBundle": "texture/bg/4609884769b92f6409f2592fe0524817",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_sky_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "13b0a63badd344dfe932e3c91ce9a0570bd9a23b4ce1585d3e19136710b16ed7",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": false,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_sky_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          1024
+        ],
+        "pixelSha256": "13eae3e00d5be82d567c521e5f0ab34c795078b6260a457f110adc02749cc2c6",
+        "pngSha256": "2f59751ce5ca3e78ca7eb749208e32063fbdc1c9d17fe5d8f77b23fd59c182fb"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_red_MusicNoteA",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 2,
+        "pathId": "2125725807504079055",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 2,
+          "pathId": "2125725807504079055",
+          "targetCab": "cab-0120efc8364ab71d4d327b22d1625fc4",
+          "resolved": true,
+          "sourceBundle": "texture/bg/90d984104c9b6f646bc4139b675d732f",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_musicNote_col",
+          "size": [
+            1024,
+            256
+          ],
+          "pixelSha256": "403f0a3875fc0be31d739491169a35d9ba9f377eb6240c85a86c1a3fa4e25c05",
+          "width": 1024,
+          "height": 256,
+          "textureFormat": 50,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 3,
+        "pathId": "-8638699045254887522",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 3,
+          "pathId": "-8638699045254887522",
+          "targetCab": "cab-3fe4ff44c309649d9cd870ef7c3d8d12",
+          "resolved": true,
+          "sourceBundle": "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "9ceab71495cc33aaa0ea594c44ca444292f57280cbadd911323d05928d232442",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": false,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          256
+        ],
+        "pixelSha256": "f0bfe6dfe49556caf4b8c245a5505033feab2f3bbb5697e4e933bdc52def2c43",
+        "pngSha256": "66c9c27beea242d633fd92460a1385beab009f43b8faaaefd0222c83addeab6d"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_red_MusicNoteB",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 2,
+        "pathId": "2125725807504079055",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 2,
+          "pathId": "2125725807504079055",
+          "targetCab": "cab-0120efc8364ab71d4d327b22d1625fc4",
+          "resolved": true,
+          "sourceBundle": "texture/bg/90d984104c9b6f646bc4139b675d732f",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_musicNote_col",
+          "size": [
+            1024,
+            256
+          ],
+          "pixelSha256": "403f0a3875fc0be31d739491169a35d9ba9f377eb6240c85a86c1a3fa4e25c05",
+          "width": 1024,
+          "height": 256,
+          "textureFormat": 50,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 3,
+        "pathId": "-8638699045254887522",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 3,
+          "pathId": "-8638699045254887522",
+          "targetCab": "cab-3fe4ff44c309649d9cd870ef7c3d8d12",
+          "resolved": true,
+          "sourceBundle": "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "9ceab71495cc33aaa0ea594c44ca444292f57280cbadd911323d05928d232442",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": false,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          256
+        ],
+        "pixelSha256": "f0bfe6dfe49556caf4b8c245a5505033feab2f3bbb5697e4e933bdc52def2c43",
+        "pngSha256": "66c9c27beea242d633fd92460a1385beab009f43b8faaaefd0222c83addeab6d"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_red_MusicNoteC",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 13,
+        "pathId": "-2243324628426955472",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 13,
+          "pathId": "-2243324628426955472",
+          "targetCab": "cab-ae8928c8e1d5b3f8a53324cd37a488d5",
+          "resolved": true,
+          "sourceBundle": "texture/bg/12b6c395b65398146b34eacb3110054d",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_circlenote_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "475481072c726a1932f92c3b8e7c206674b05de3878028474fa5becb50bf27df",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 13,
+        "pathId": "-2243324628426955472",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 13,
+          "pathId": "-2243324628426955472",
+          "targetCab": "cab-ae8928c8e1d5b3f8a53324cd37a488d5",
+          "resolved": true,
+          "sourceBundle": "texture/bg/12b6c395b65398146b34eacb3110054d",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_circlenote_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "475481072c726a1932f92c3b8e7c206674b05de3878028474fa5becb50bf27df",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_circlenote_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          1024
+        ],
+        "pixelSha256": "2020983df93aedf2810f437f78253a7de290d918bddf53383450e2f843b9ef11",
+        "pngSha256": "1dccee65fe1e78f23d20d424a842b695e21f8a73c4f4b49c372c8ebcbb0f4935"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_red_violinCol",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 0,
+        "pathId": "-4587267788711311578",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 0,
+          "pathId": "-4587267788711311578",
+          "targetCab": "cab-697a37eda16cff7785502222d3d167d2",
+          "resolved": true,
+          "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_violin_sprite",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "62783dc10c16daf88cc5c8c81009eb39d0a9207beedb50212e6686aa6b027790",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 0,
+        "pathId": "-4587267788711311578",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 0,
+          "pathId": "-4587267788711311578",
+          "targetCab": "cab-697a37eda16cff7785502222d3d167d2",
+          "resolved": true,
+          "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_violin_sprite",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "62783dc10c16daf88cc5c8c81009eb39d0a9207beedb50212e6686aa6b027790",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violin_sprite.png",
+        "exists": true,
+        "size": [
+          1024,
+          1024
+        ],
+        "pixelSha256": "085a7bcd2915e31ebd84490c2385e20d24f7d6dec30a00cb6e74ea4bd231bb7c",
+        "pngSha256": "91083e3aaaf57f155d5c0149db6aceb04bc4317ea33d6827fd17cfab9bdedb8d"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_red_violinShdLine",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 0,
+        "pathId": "-7311903068602794106",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 0,
+          "pathId": "-7311903068602794106",
+          "targetCab": "cab-697a37eda16cff7785502222d3d167d2",
+          "resolved": true,
+          "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_violinLineShd_sprite",
+          "size": [
+            2048,
+            512
+          ],
+          "pixelSha256": "83caea8b417aa9f09d4518ddb60aac3119575e2bfe82e9248f610ce321f71aec",
+          "width": 2048,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 0,
+        "pathId": "-7311903068602794106",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 0,
+          "pathId": "-7311903068602794106",
+          "targetCab": "cab-697a37eda16cff7785502222d3d167d2",
+          "resolved": true,
+          "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_violinLineShd_sprite",
+          "size": [
+            2048,
+            512
+          ],
+          "pixelSha256": "83caea8b417aa9f09d4518ddb60aac3119575e2bfe82e9248f610ce321f71aec",
+          "width": 2048,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violinLineShd_sprite.png",
+        "exists": true,
+        "size": [
+          2048,
+          512
+        ],
+        "pixelSha256": "6b67ee2077abdaa19d07381253835004a0611591292b14d7c5e4679705f6380c",
+        "pngSha256": "ca3297ce50cc20f30a6bc55d37a4cbdf9e6114a4de911840f8b1aca1c6e45158"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_mt_bg3d608_00_red_Object",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 3,
+        "pathId": "-8638699045254887522",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 3,
+          "pathId": "-8638699045254887522",
+          "targetCab": "cab-3fe4ff44c309649d9cd870ef7c3d8d12",
+          "resolved": true,
+          "sourceBundle": "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "9ceab71495cc33aaa0ea594c44ca444292f57280cbadd911323d05928d232442",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 3,
+        "pathId": "-8638699045254887522",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 3,
+          "pathId": "-8638699045254887522",
+          "targetCab": "cab-3fe4ff44c309649d9cd870ef7c3d8d12",
+          "resolved": true,
+          "sourceBundle": "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "9ceab71495cc33aaa0ea594c44ca444292f57280cbadd911323d05928d232442",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_objects_col.png",
+        "exists": true,
+        "size": [
+          512,
+          512
+        ],
+        "pixelSha256": "262228786248285b12a7ffa0b06af68c436afe6e711d705f2373f139e79a10b6",
+        "pngSha256": "4c7f11e4be384418545fadc186ae05fde5fc9a19f11ab9fe2720e6cc6ea4bd8f"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_mt_bg3d608_00_red_Roof",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 11,
+        "pathId": "4458966477178561162",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 11,
+          "pathId": "4458966477178561162",
+          "targetCab": "cab-71f8c58a4821c71710d7300d7d421dfc",
+          "resolved": true,
+          "sourceBundle": "texture/bg/794f71efa5afc23468f2a73c8b563dc8",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_ground_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "55a38f7e92c398f2244f18ff83aa27f3305d5520cb8b7741d8b3e2ccd40645f2",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 11,
+        "pathId": "4458966477178561162",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 11,
+          "pathId": "4458966477178561162",
+          "targetCab": "cab-71f8c58a4821c71710d7300d7d421dfc",
+          "resolved": true,
+          "sourceBundle": "texture/bg/794f71efa5afc23468f2a73c8b563dc8",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_ground_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "55a38f7e92c398f2244f18ff83aa27f3305d5520cb8b7741d8b3e2ccd40645f2",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_ground_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          1024
+        ],
+        "pixelSha256": "c3033cb2603a3268b8a15ec461292114109076956a4f4b062bfd9e1d5ff8f221",
+        "pngSha256": "e89d59038b3aab3ff593c12f9d0204ea4407f707515cc8b1713480e4ea9d0996"
+      },
+      "baseMapPixelMatch": false
+    }
+  ],
+  "unresolvedTexturePointers": [],
+  "comparisons": [
+    {
+      "material": "bg3d608_00_blue_bubble",
+      "webBindingPresent": false,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 6,
+        "pathId": "-70738714532392232",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 6,
+          "pathId": "-70738714532392232",
+          "targetCab": "cab-45fe6895e0364350e5df2d082222970e",
+          "resolved": true,
+          "sourceBundle": "texture/bg/5bec58544f3f8d34994548212c9a6405",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_bubble_col",
+          "size": [
+            32,
+            128
+          ],
+          "pixelSha256": "57fe4cf6e45c3061955dae3bfd8d923837a275085fa1678ada13f6f1d3471f1e",
+          "width": 32,
+          "height": 128,
+          "textureFormat": 50,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 6,
+        "pathId": "-70738714532392232",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 6,
+          "pathId": "-70738714532392232",
+          "targetCab": "cab-45fe6895e0364350e5df2d082222970e",
+          "resolved": true,
+          "sourceBundle": "texture/bg/5bec58544f3f8d34994548212c9a6405",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_bubble_col",
+          "size": [
+            32,
+            128
+          ],
+          "pixelSha256": "57fe4cf6e45c3061955dae3bfd8d923837a275085fa1678ada13f6f1d3471f1e",
+          "width": 32,
+          "height": 128,
+          "textureFormat": 50,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": null,
+      "baseMapPixelMatch": null
+    },
+    {
+      "material": "bg3d608_00_blue_ChairCD",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "exists": true,
+        "size": [
+          512,
+          512
+        ],
+        "pixelSha256": "0ca2bbf21624cab7b0e7b3b2c5a5d252a83a8f68a4650d1362f1dd4263f571c6",
+        "pngSha256": "236ca25c7c51de9e019957f6dc31f66757b33811cce0af984ed73a25e76f6916"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "bg3d608_00_blue_Fish",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "exists": true,
+        "size": [
+          512,
+          512
+        ],
+        "pixelSha256": "0ca2bbf21624cab7b0e7b3b2c5a5d252a83a8f68a4650d1362f1dd4263f571c6",
+        "pngSha256": "236ca25c7c51de9e019957f6dc31f66757b33811cce0af984ed73a25e76f6916"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "bg3d608_00_blue_Ground",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 9,
+        "pathId": "-5607514749919870913",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 9,
+          "pathId": "-5607514749919870913",
+          "targetCab": "cab-67d4009d37f04224dbcd872cef8fbddb",
+          "resolved": true,
+          "sourceBundle": "texture/bg/efd676b5b84a41d4ebf49af3a5680084",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_ground_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "ba6e4fac126b7a3436c2a5ae674af16ba0694a52f448410f66525286a777da00",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 9,
+        "pathId": "-5607514749919870913",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 9,
+          "pathId": "-5607514749919870913",
+          "targetCab": "cab-67d4009d37f04224dbcd872cef8fbddb",
+          "resolved": true,
+          "sourceBundle": "texture/bg/efd676b5b84a41d4ebf49af3a5680084",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_ground_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "ba6e4fac126b7a3436c2a5ae674af16ba0694a52f448410f66525286a777da00",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_ground_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          1024
+        ],
+        "pixelSha256": "84c3de27af10b50bdc90111b75d30575795a4faf38caac3dde366bac06bba5ae",
+        "pngSha256": "85ee96ef96b44cdef3c4f4c9626cc8bc798d38b4e68f5b5716c31c287d5f7cf3"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "bg3d608_00_blue_Object",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "exists": true,
+        "size": [
+          512,
+          512
+        ],
+        "pixelSha256": "0ca2bbf21624cab7b0e7b3b2c5a5d252a83a8f68a4650d1362f1dd4263f571c6",
+        "pngSha256": "236ca25c7c51de9e019957f6dc31f66757b33811cce0af984ed73a25e76f6916"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "bg3d608_00_blue_ObjectB",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 4,
+        "pathId": "9046177032241614915",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 4,
+          "pathId": "9046177032241614915",
+          "targetCab": "cab-34c05180a60227ce997cf6675ffd5f94",
+          "resolved": true,
+          "sourceBundle": "texture/bg/e99618be318e5644e84edc49bec76510",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "7c714c8c6736e2aa8f4d26a0ce9a786c28e4b39d9214165c549d22cb1d837bff",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_col.png",
+        "exists": true,
+        "size": [
+          512,
+          512
+        ],
+        "pixelSha256": "0ca2bbf21624cab7b0e7b3b2c5a5d252a83a8f68a4650d1362f1dd4263f571c6",
+        "pngSha256": "236ca25c7c51de9e019957f6dc31f66757b33811cce0af984ed73a25e76f6916"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_blue_sky",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 7,
+        "pathId": "1699062358985823069",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 7,
+          "pathId": "1699062358985823069",
+          "targetCab": "cab-2cdadb73bcdef476b15052229aae1c7a",
+          "resolved": true,
+          "sourceBundle": "texture/bg/186adf1125c7ab4468afb72c4f957424",
+          "type": "Texture2D",
+          "name": "bg3d608_00_blue_sky_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "3a3710737c735fd95c0b904421d80c1e561049c8d0959298943d943655bf46bf",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 14,
+        "pathId": "-7029126562195537083",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 14,
+          "pathId": "-7029126562195537083",
+          "targetCab": "cab-fa3d9b2636b893a09f96e1df986febcf",
+          "resolved": true,
+          "sourceBundle": "texture/bg/4609884769b92f6409f2592fe0524817",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_sky_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "13b0a63badd344dfe932e3c91ce9a0570bd9a23b4ce1585d3e19136710b16ed7",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": false,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_sky_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          1024
+        ],
+        "pixelSha256": "13eae3e00d5be82d567c521e5f0ab34c795078b6260a457f110adc02749cc2c6",
+        "pngSha256": "2f59751ce5ca3e78ca7eb749208e32063fbdc1c9d17fe5d8f77b23fd59c182fb"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_red_MusicNoteA",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 2,
+        "pathId": "2125725807504079055",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 2,
+          "pathId": "2125725807504079055",
+          "targetCab": "cab-0120efc8364ab71d4d327b22d1625fc4",
+          "resolved": true,
+          "sourceBundle": "texture/bg/90d984104c9b6f646bc4139b675d732f",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_musicNote_col",
+          "size": [
+            1024,
+            256
+          ],
+          "pixelSha256": "403f0a3875fc0be31d739491169a35d9ba9f377eb6240c85a86c1a3fa4e25c05",
+          "width": 1024,
+          "height": 256,
+          "textureFormat": 50,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 3,
+        "pathId": "-8638699045254887522",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 3,
+          "pathId": "-8638699045254887522",
+          "targetCab": "cab-3fe4ff44c309649d9cd870ef7c3d8d12",
+          "resolved": true,
+          "sourceBundle": "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "9ceab71495cc33aaa0ea594c44ca444292f57280cbadd911323d05928d232442",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": false,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          256
+        ],
+        "pixelSha256": "f0bfe6dfe49556caf4b8c245a5505033feab2f3bbb5697e4e933bdc52def2c43",
+        "pngSha256": "66c9c27beea242d633fd92460a1385beab009f43b8faaaefd0222c83addeab6d"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_red_MusicNoteB",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 2,
+        "pathId": "2125725807504079055",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 2,
+          "pathId": "2125725807504079055",
+          "targetCab": "cab-0120efc8364ab71d4d327b22d1625fc4",
+          "resolved": true,
+          "sourceBundle": "texture/bg/90d984104c9b6f646bc4139b675d732f",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_musicNote_col",
+          "size": [
+            1024,
+            256
+          ],
+          "pixelSha256": "403f0a3875fc0be31d739491169a35d9ba9f377eb6240c85a86c1a3fa4e25c05",
+          "width": 1024,
+          "height": 256,
+          "textureFormat": 50,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 3,
+        "pathId": "-8638699045254887522",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 3,
+          "pathId": "-8638699045254887522",
+          "targetCab": "cab-3fe4ff44c309649d9cd870ef7c3d8d12",
+          "resolved": true,
+          "sourceBundle": "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "9ceab71495cc33aaa0ea594c44ca444292f57280cbadd911323d05928d232442",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": false,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          256
+        ],
+        "pixelSha256": "f0bfe6dfe49556caf4b8c245a5505033feab2f3bbb5697e4e933bdc52def2c43",
+        "pngSha256": "66c9c27beea242d633fd92460a1385beab009f43b8faaaefd0222c83addeab6d"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_red_MusicNoteC",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 13,
+        "pathId": "-2243324628426955472",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 13,
+          "pathId": "-2243324628426955472",
+          "targetCab": "cab-ae8928c8e1d5b3f8a53324cd37a488d5",
+          "resolved": true,
+          "sourceBundle": "texture/bg/12b6c395b65398146b34eacb3110054d",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_circlenote_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "475481072c726a1932f92c3b8e7c206674b05de3878028474fa5becb50bf27df",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 13,
+        "pathId": "-2243324628426955472",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 13,
+          "pathId": "-2243324628426955472",
+          "targetCab": "cab-ae8928c8e1d5b3f8a53324cd37a488d5",
+          "resolved": true,
+          "sourceBundle": "texture/bg/12b6c395b65398146b34eacb3110054d",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_circlenote_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "475481072c726a1932f92c3b8e7c206674b05de3878028474fa5becb50bf27df",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_circlenote_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          1024
+        ],
+        "pixelSha256": "2020983df93aedf2810f437f78253a7de290d918bddf53383450e2f843b9ef11",
+        "pngSha256": "1dccee65fe1e78f23d20d424a842b695e21f8a73c4f4b49c372c8ebcbb0f4935"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_red_violinCol",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 0,
+        "pathId": "-4587267788711311578",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 0,
+          "pathId": "-4587267788711311578",
+          "targetCab": "cab-697a37eda16cff7785502222d3d167d2",
+          "resolved": true,
+          "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_violin_sprite",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "62783dc10c16daf88cc5c8c81009eb39d0a9207beedb50212e6686aa6b027790",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 0,
+        "pathId": "-4587267788711311578",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 0,
+          "pathId": "-4587267788711311578",
+          "targetCab": "cab-697a37eda16cff7785502222d3d167d2",
+          "resolved": true,
+          "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_violin_sprite",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "62783dc10c16daf88cc5c8c81009eb39d0a9207beedb50212e6686aa6b027790",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violin_sprite.png",
+        "exists": true,
+        "size": [
+          1024,
+          1024
+        ],
+        "pixelSha256": "085a7bcd2915e31ebd84490c2385e20d24f7d6dec30a00cb6e74ea4bd231bb7c",
+        "pngSha256": "91083e3aaaf57f155d5c0149db6aceb04bc4317ea33d6827fd17cfab9bdedb8d"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_bg3d608_00_red_violinShdLine",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 0,
+        "pathId": "-7311903068602794106",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 0,
+          "pathId": "-7311903068602794106",
+          "targetCab": "cab-697a37eda16cff7785502222d3d167d2",
+          "resolved": true,
+          "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_violinLineShd_sprite",
+          "size": [
+            2048,
+            512
+          ],
+          "pixelSha256": "83caea8b417aa9f09d4518ddb60aac3119575e2bfe82e9248f610ce321f71aec",
+          "width": 2048,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 0,
+        "pathId": "-7311903068602794106",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 0,
+          "pathId": "-7311903068602794106",
+          "targetCab": "cab-697a37eda16cff7785502222d3d167d2",
+          "resolved": true,
+          "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_violinLineShd_sprite",
+          "size": [
+            2048,
+            512
+          ],
+          "pixelSha256": "83caea8b417aa9f09d4518ddb60aac3119575e2bfe82e9248f610ce321f71aec",
+          "width": 2048,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violinLineShd_sprite.png",
+        "exists": true,
+        "size": [
+          2048,
+          512
+        ],
+        "pixelSha256": "6b67ee2077abdaa19d07381253835004a0611591292b14d7c5e4679705f6380c",
+        "pngSha256": "ca3297ce50cc20f30a6bc55d37a4cbdf9e6114a4de911840f8b1aca1c6e45158"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_mt_bg3d608_00_red_Object",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 3,
+        "pathId": "-8638699045254887522",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 3,
+          "pathId": "-8638699045254887522",
+          "targetCab": "cab-3fe4ff44c309649d9cd870ef7c3d8d12",
+          "resolved": true,
+          "sourceBundle": "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "9ceab71495cc33aaa0ea594c44ca444292f57280cbadd911323d05928d232442",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 3,
+        "pathId": "-8638699045254887522",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 3,
+          "pathId": "-8638699045254887522",
+          "targetCab": "cab-3fe4ff44c309649d9cd870ef7c3d8d12",
+          "resolved": true,
+          "sourceBundle": "texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_objects_col",
+          "size": [
+            512,
+            512
+          ],
+          "pixelSha256": "9ceab71495cc33aaa0ea594c44ca444292f57280cbadd911323d05928d232442",
+          "width": 512,
+          "height": 512,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_objects_col.png",
+        "exists": true,
+        "size": [
+          512,
+          512
+        ],
+        "pixelSha256": "262228786248285b12a7ffa0b06af68c436afe6e711d705f2373f139e79a10b6",
+        "pngSha256": "4c7f11e4be384418545fadc186ae05fde5fc9a19f11ab9fe2720e6cc6ea4bd8f"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "mt_mt_bg3d608_00_red_Roof",
+      "webBindingPresent": true,
+      "officialBaseMap": {
+        "property": "_BaseMap",
+        "fileId": 11,
+        "pathId": "4458966477178561162",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 11,
+          "pathId": "4458966477178561162",
+          "targetCab": "cab-71f8c58a4821c71710d7300d7d421dfc",
+          "resolved": true,
+          "sourceBundle": "texture/bg/794f71efa5afc23468f2a73c8b563dc8",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_ground_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "55a38f7e92c398f2244f18ff83aa27f3305d5520cb8b7741d8b3e2ccd40645f2",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "officialMainTex": {
+        "property": "_MainTex",
+        "fileId": 11,
+        "pathId": "4458966477178561162",
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "offset": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "resolvedTexture": {
+          "fileId": 11,
+          "pathId": "4458966477178561162",
+          "targetCab": "cab-71f8c58a4821c71710d7300d7d421dfc",
+          "resolved": true,
+          "sourceBundle": "texture/bg/794f71efa5afc23468f2a73c8b563dc8",
+          "type": "Texture2D",
+          "name": "bg3d608_00_red_ground_col",
+          "size": [
+            1024,
+            1024
+          ],
+          "pixelSha256": "55a38f7e92c398f2244f18ff83aa27f3305d5520cb8b7741d8b3e2ccd40645f2",
+          "width": 1024,
+          "height": 1024,
+          "textureFormat": 51,
+          "colorSpace": 1
+        }
+      },
+      "baseAndMainSamePointer": true,
+      "webBaseMap": {
+        "url": "./stages/official/battle-608-00-00-001/bg3d608_00_red_ground_col.png",
+        "exists": true,
+        "size": [
+          1024,
+          1024
+        ],
+        "pixelSha256": "c3033cb2603a3268b8a15ec461292114109076956a4f4b062bfd9e1d5ff8f221",
+        "pngSha256": "e89d59038b3aab3ff593c12f9d0204ea4407f707515cc8b1713480e4ea9d0996"
+      },
+      "baseMapPixelMatch": false
+    },
+    {
+      "material": "SkyBox_bg3d608_00_blue",
+      "webBindingPresent": false,
+      "officialBaseMap": null,
+      "officialMainTex": null,
+      "baseAndMainSamePointer": false,
+      "webBaseMap": null,
+      "baseMapPixelMatch": null
+    }
+  ],
+  "privacyBoundary": "Raw current-JP AssetBundles remain transient. Only bounded texture dependency names, dimensions and decoded pixel hashes are persisted."
+}
