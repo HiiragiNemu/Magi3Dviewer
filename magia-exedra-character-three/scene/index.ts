@@ -6,6 +6,7 @@ import type { LoadCharacterCallbacks } from '../loader';
 import { SceneShadowController } from './shadow'
 import { PerformanceController } from '../performance'
 import { SceneEffectsController } from './effects'
+import { ReDriveSelfShadowController } from './selfShadow'
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
@@ -60,6 +61,7 @@ export class MagiaExedraScene3D {
     static directionalLightInitialHeight = 2.5
 
     shadow: SceneShadowController
+    selfShadow: ReDriveSelfShadowController
     static shadowEnabled = true
     static shadowResolution = 4096
     static shadowBias = 0
@@ -168,6 +170,8 @@ export class MagiaExedraScene3D {
         this.controls.enableDamping = true;
         this.controls.target.set(...MagiaExedraScene3D.controlsInitialTarget);
 
+        this.selfShadow = new ReDriveSelfShadowController(this)
+
         this.raycaster = new THREE.Raycaster();
 
         this.transformControls = new TransformControls(this.camera, this.renderer.domElement)
@@ -194,6 +198,7 @@ export class MagiaExedraScene3D {
             }
 
             this.animateLoopCallback()
+            this.selfShadow.render()
 
             this.effects.outlinePass.enabled = this.characterSelectionVisible
             this.transformControls.enabled = this.characterSelectionVisible
