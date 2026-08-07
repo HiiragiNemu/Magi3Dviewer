@@ -85,7 +85,23 @@ try {
 
   const canvas = page.locator('#viewer canvas')
   if (await canvas.count() !== 1) throw new Error(`Expected one #viewer canvas, got ${await canvas.count()}`)
-  await canvas.screenshot({ path: `${outputDir}/100107-battle-608-canvas.png` })
+
+  // locator.screenshot() waits for the target element to become visually stable.
+  // A continuously rendered WebGL canvas never reaches that condition, so capture
+  // its current viewport rectangle through page.screenshot() instead. This does
+  // not freeze or otherwise alter the render loop under test.
+  const canvasBox = await canvas.boundingBox()
+  if (!canvasBox) throw new Error('WebGL canvas has no visible bounding box')
+  const clip = {
+    x: Math.max(0, canvasBox.x),
+    y: Math.max(0, canvasBox.y),
+    width: Math.min(canvasBox.width, 1920 - Math.max(0, canvasBox.x)),
+    height: Math.min(canvasBox.height, 1080 - Math.max(0, canvasBox.y)),
+  }
+  if (clip.width <= 0 || clip.height <= 0) {
+    throw new Error(`Invalid visible canvas clip: ${JSON.stringify(clip)}`)
+  }
+  await page.screenshot({ path: `${outputDir}/100107-battle-608-canvas.png`, clip })
   await page.screenshot({ path: `${outputDir}/100107-battle-608-full.png`, fullPage: true })
 
   const consoleErrors = consoleRows.filter(row => row.type === 'error')
