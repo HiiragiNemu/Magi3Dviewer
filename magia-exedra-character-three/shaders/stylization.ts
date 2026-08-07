@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MaterialUserData, ShaderUniformsController } from './userdata';
+import { injectReDriveSelfShadowShader } from '../scene/selfShadow';
 
 export interface ToonStylizationOptions {
     /** ReDriveVolume character globals. These remain active independently. */
@@ -174,6 +175,7 @@ export function injectToonStylization(
     uniforms: ToonStylizationUniforms = new ToonStylizationUniforms(shader),
 ): ToonStylizationUniforms {
     uniforms.loadGlobalOptions();
+    injectReDriveSelfShadowShader(shader);
 
     shader.fragmentShader = /* glsl */ `
         uniform vec3 uGlobalCharacterTint;
