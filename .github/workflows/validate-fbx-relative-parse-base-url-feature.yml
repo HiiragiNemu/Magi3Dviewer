@@ -1,0 +1,129 @@
+name: Validate FBX relative parse base URL feature
+
+on:
+  push:
+    branches:
+      - fix/fbx-relative-parse-base-url-20260807
+    paths:
+      - automation/trigger-fbx-relative-parse-base-url-validation.txt
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: fix/fbx-relative-parse-base-url-20260807
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Run release build/tests and strict fixed Chromium regression
+        shell: bash
+        env:
+          MAGIUS_TEST_URL: https://127.0.0.1:4173/
+          MAGIUS_VISUAL_OUTPUT: visual-regression-output
+        run: |
+          set +e
+          rm -rf validation-evidence visual-regression-output
+          mkdir -p validation-evidence visual-regression-output
+
+          run_phase() {
+            local name="$1"
+            shift
+            echo "===== ${name} =====" | tee "validation-evidence/${name}.log"
+            "$@" 2>&1 | tee -a "validation-evidence/${name}.log"
+            local code=${PIPESTATUS[0]}
+            echo "exit_code=${code}" | tee -a "validation-evidence/${name}.log"
+            return ${code}
+          }
+
+          run_phase npm-ci npm ci
+          ci_status=$?
+          if [ ${ci_status} -eq 0 ]; then
+            run_phase npm-audit npm audit --audit-level=high
+            audit_status=$?
+            run_phase production-build npm run build
+            build_status=$?
+          else
+            audit_status=97
+            build_status=97
+          fi
+
+          if [ ${ci_status} -eq 0 ] && [ ${build_status} -eq 0 ]; then
+            run_phase playwright-package npm install --no-save --package-lock=false playwright@1.55.0
+            playwright_package_status=$?
+          else
+            playwright_package_status=97
+          fi
+
+          if [ ${playwright_package_status} -eq 0 ]; then
+            run_phase playwright-browser npx playwright install --with-deps chromium
+            playwright_browser_status=$?
+          else
+            playwright_browser_status=97
+          fi
+
+          server_status=97
+          visual_status=97
+          if [ ${playwright_browser_status} -eq 0 ]; then
+            nohup npm run dev -- --host 127.0.0.1 --port 4173 >validation-evidence/vite.log 2>&1 &
+            echo $! >validation-evidence/vite.pid
+            server_status=1
+            for attempt in $(seq 1 90); do
+              if curl --fail --silent --show-error --insecure https://127.0.0.1:4173/ >/dev/null; then
+                server_status=0
+                break
+              fi
+              sleep 1
+            done
+            if [ ${server_status} -eq 0 ]; then
+              node scripts/visual-regression-100107-stage608.mjs >validation-evidence/visual-regression.log 2>&1
+              visual_status=$?
+            fi
+          fi
+
+          cp -f visual-regression-output/* validation-evidence/ 2>/dev/null || true
+
+          overall_status=0
+          for code in ${ci_status} ${audit_status} ${build_status} ${playwright_package_status} ${playwright_browser_status} ${server_status} ${visual_status}; do
+            if [ "${code}" -ne 0 ]; then overall_status=1; fi
+          done
+
+          cat >validation-evidence/status.json <<EOF
+          {
+            "sourceCommit": "${GITHUB_SHA}",
+            "character": "100107",
+            "stage": "battle-608-00-00-001",
+            "npmCi": ${ci_status},
+            "npmAudit": ${audit_status},
+            "productionBuildAndReleaseTests": ${build_status},
+            "playwrightPackage": ${playwright_package_status},
+            "playwrightChromium": ${playwright_browser_status},
+            "viteServer": ${server_status},
+            "strictFixedVisualRegression": ${visual_status},
+            "overall": ${overall_status}
+          }
+          EOF
+
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add validation-evidence
+          if ! git diff --cached --quiet; then
+            git commit -m 'test: persist temporary FBX URL validation evidence'
+            git push origin HEAD:fix/fbx-relative-parse-base-url-20260807
+          fi
+
+          exit ${overall_status}
+      - name: Upload strict regression evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fbx-relative-url-100107-stage608-regression
+          path: validation-evidence/
+          if-no-files-found: warn
