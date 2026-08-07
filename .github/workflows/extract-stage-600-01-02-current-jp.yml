@@ -1,6 +1,11 @@
 name: Extract stage 600-01-02 current JP
 
 on:
+  push:
+    branches:
+      - research/stage-600-01-02-current-jp-20260808
+    paths:
+      - automation/trigger-stage-600-01-02-current-jp-20260808.txt
   pull_request:
     branches:
       - research/stage-608-official-material-properties-20260807
