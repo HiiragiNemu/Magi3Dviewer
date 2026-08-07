@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-608-15-bundle-closure-bounded-animation-audit",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "stage": {
+    "rootBundle": "battle/stage/bg_3d_608_00_00_001",
+    "boundedCatalogRecord": {
+      "name": "3d_608_00_00_001",
+      "pathId": 85,
+      "label": "",
+      "revision": "vR1d",
+      "dependencies": "shader/common/texture/cloud_noise,texture/bg/794f71efa5afc23468f2a73c8b563dc8,texture/bg/7c22553094ea521428b51081ae85d860,texture/bg/4609884769b92f6409f2592fe0524817,shader/bg_uber,texture/bg/efd676b5b84a41d4ebf49af3a5680084,texture/bg/5bec58544f3f8d34994548212c9a6405,texture/bg/12b6c395b65398146b34eacb3110054d,shader/common/texture/simple_noise,texture/bg/bd77e42c30e3c5047a33ffaaeb4ac1fc,texture/bg/90d984104c9b6f646bc4139b675d732f,texture/bg/392aec77248a2064eaea814e641f6183,texture/bg/e99618be318e5644e84edc49bec76510,texture/bg/186adf1125c7ab4468afb72c4f957424",
+      "size": 5836492,
+      "resolvedPath": "battle/stage/bg_",
+      "keys": [
+        "cryptoKey",
+        "dependencies",
+        "expireType",
+        "label",
+        "language",
+        "name",
+        "pathId",
+        "revision",
+        "size"
+      ],
+      "fullPath": "battle/stage/bg_3d_608_00_00_001",
+      "dependencyValueTypes": null
+    },
+    "bundleCountIncludingRoot": 15,
+    "dependencyCount": 14
+  },
+  "animationClipCount": 2,
+  "focusedAnimationClipCount": 2,
+  "animatorCount": 14,
+  "playableDirectorCount": 0,
+  "typeCounts": {
+    "Animation": 13,
+    "AnimationClip": 2,
+    "Animator": 14,
+    "AnimatorController": 2,
+    "AssetBundle": 15,
+    "Cubemap": 2,
+    "GameObject": 359,
+    "Light": 3,
+    "Material": 15,
+    "Mesh": 85,
+    "MeshFilter": 82,
+    "MeshRenderer": 82,
+    "MonoBehaviour": 16,
+    "MonoScript": 14,
+    "ParticleSystem": 6,
+    "ParticleSystemRenderer": 6,
+    "ReflectionProbe": 1,
+    "Shader": 3,
+    "ShaderVariantCollection": 1,
+    "SkinnedMeshRenderer": 36,
+    "Texture2D": 17,
+    "Transform": 359
+  },
+  "focusedAnimationClips": [
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "2684642024606766010",
+      "name": "bg3d608_00_blue_FishAnimation",
+      "sampleRate": 30.0,
+      "wrapMode": 0,
+      "legacy": false,
+      "compressed": false,
+      "useHighQualityCurve": true,
+      "focusMatches": [
+        {
+          "jsonPath": "$",
+          "m_Name": "bg3d608_00_blue_FishAnimation",
+          "m_Legacy": false,
+          "m_Compressed": false,
+          "m_UseHighQualityCurve": true,
+          "m_SampleRate": 30.0,
+          "m_WrapMode": 0,
+          "m_MuscleClipSize": 10132,
+          "m_HasGenericRootTransform": false,
+          "m_HasMotionFloatCurves": false
+        },
+        {
+          "jsonPath": "m_Name",
+          "value": "bg3d608_00_blue_FishAnimation"
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "6827708826499008501",
+      "name": "bg3d608_00_blue_Fish_RotateAnimation",
+      "sampleRate": 60.0,
+      "wrapMode": 0,
+      "legacy": false,
+      "compressed": false,
+      "useHighQualityCurve": true,
+      "focusMatches": [
+        {
+          "jsonPath": "$",
+          "m_Name": "bg3d608_00_blue_Fish_RotateAnimation",
+          "m_Legacy": false,
+          "m_Compressed": false,
+          "m_UseHighQualityCurve": true,
+          "m_SampleRate": 60.0,
+          "m_WrapMode": 0,
+          "m_MuscleClipSize": 2764,
+          "m_HasGenericRootTransform": true,
+          "m_HasMotionFloatCurves": false
+        },
+        {
+          "jsonPath": "m_Name",
+          "value": "bg3d608_00_blue_Fish_RotateAnimation"
+        }
+      ]
+    }
+  ],
+  "allAnimationClips": [
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "2684642024606766010",
+      "name": "bg3d608_00_blue_FishAnimation",
+      "sampleRate": 30.0,
+      "wrapMode": 0,
+      "legacy": false,
+      "compressed": false
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "6827708826499008501",
+      "name": "bg3d608_00_blue_Fish_RotateAnimation",
+      "sampleRate": 60.0,
+      "wrapMode": 0,
+      "legacy": false,
+      "compressed": false
+    }
+  ],
+  "animators": [
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-6956890630890994406",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-6050283805682228920",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-6016629112425222986",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-3431411410230894173",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-1759418740517493184",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-1431669467788784909",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "-228146860041696626",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "3869081000987277117",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "5058041559062782444",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "5165498737366280478",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "5287611618059090928",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "6331919082090758306",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "6550541916261909555",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "sourceBundle": "battle/stage/bg_3d_608_00_00_001",
+      "serializedFile": "CAB-697a37eda16cff7785502222d3d167d2",
+      "pathId": "8879519179263967025",
+      "name": "",
+      "focusMatches": [
+        {
+          "jsonPath": "m_Enabled",
+          "value": 1
+        }
+      ]
+    }
+  ],
+  "playableDirectors": [],
+  "interpretation": "This is bounded current-JP serialized AnimationClip/Animator/PlayableDirector evidence. Focus matches only expose paths/attributes and a small keyframe prefix for 608 red/blue, violin/chair/music and visibility/material-related bindings. It does not infer runtime state for hashed/compressed bindings that cannot yet be mapped to hierarchy paths.",
+  "privacyBoundary": "Raw current-JP AssetBundles are transient. No complete dump or AssetBundle bytes are persisted."
+}
