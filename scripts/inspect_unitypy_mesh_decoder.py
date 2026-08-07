@@ -28,7 +28,24 @@ def summarize(value):
         return {'type': type(value).__name__, 'length': len(raw), 'headHex': raw[:128].hex()}
     if isinstance(value, list):
         return {'type': 'list', 'length': len(value), 'sample': [repr(x)[:500] for x in value[:8]]}
-    return {'type': type(value).__name__, 'repr': repr(value)[:1500]}
+    if value is None:
+        return {'type': 'NoneType', 'repr': 'None'}
+    fields = {}
+    for name in dir(value):
+        if name.startswith('__'):
+            continue
+        try:
+            item = getattr(value, name)
+        except Exception:
+            continue
+        if callable(item):
+            continue
+        if name.startswith('m_') or name in {'path','offset','size'}:
+            try:
+                fields[name] = repr(item)[:1500]
+            except Exception:
+                pass
+    return {'type': type(value).__name__, 'repr': repr(value)[:1500], 'fields': fields}
 
 
 def main():
@@ -46,6 +63,7 @@ def main():
         )
         mesh = obj.read()
         vertex_data = getattr(mesh, 'm_VertexData', None)
+        stream_data = getattr(mesh, 'm_StreamData', None)
         methods = []
         for name in dir(mesh):
             try:
@@ -71,29 +89,63 @@ def main():
                 if any(token in name.lower() for token in ('channel','stream','data','vert','current')):
                     try: fields[name] = summarize(getattr(vertex_data, name))
                     except Exception as exc: fields[name] = {'error': repr(exc)}
+
+        stream_methods = []
+        if stream_data is not None:
+            for name in dir(stream_data):
+                try:
+                    value = getattr(stream_data, name)
+                except Exception:
+                    continue
+                if callable(value) and not name.startswith('__'):
+                    stream_methods.append(name)
+
+        assets_file = getattr(obj, 'assets_file', None)
+        assets_file_methods = []
+        if assets_file is not None:
+            for name in dir(assets_file):
+                try:
+                    value = getattr(assets_file, name)
+                except Exception:
+                    continue
+                if callable(value) and not name.startswith('__') and any(
+                    token in name.lower() for token in ('resource','stream','read','file','container')
+                ):
+                    assets_file_methods.append(name)
+
+        export_func = getattr(mesh, 'export', None)
         report = {
             'sourceRevision': metadata.get('assetBundleRevision'),
             'unityPyVersion': getattr(UnityPy, '__version__', None),
             'meshClass': f'{mesh.__class__.__module__}.{mesh.__class__.__name__}',
             'meshMethods': methods,
             'meshClassSource': safe_source(mesh.__class__)[:30000],
+            'meshExportModule': getattr(export_func, '__module__', None),
+            'meshExportSource': safe_source(export_func)[:30000] if export_func else None,
+            'streamData': summarize(stream_data),
+            'streamDataMethods': stream_methods,
+            'streamDataClassSource': '' if stream_data is None else safe_source(stream_data.__class__)[:30000],
+            'assetsFileClass': None if assets_file is None else f'{assets_file.__class__.__module__}.{assets_file.__class__.__name__}',
+            'assetsFileMethods': assets_file_methods,
             'vertexDataClass': None if vertex_data is None else f'{vertex_data.__class__.__module__}.{vertex_data.__class__.__name__}',
             'vertexDataMethods': vertex_methods,
             'vertexDataClassSource': '' if vertex_data is None else safe_source(vertex_data.__class__)[:30000],
             'vertexDataFields': fields,
             'meshObjectDirMatches': [
                 name for name in dir(mesh)
-                if any(token in name.lower() for token in ('process','read','unpack','vertex','index','triangle','uv'))
+                if any(token in name.lower() for token in ('process','read','unpack','vertex','index','triangle','uv','stream'))
             ],
         }
         OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         print(json.dumps({
             'meshClass': report['meshClass'],
             'meshMethods': methods,
-            'vertexDataClass': report['vertexDataClass'],
-            'vertexDataMethods': vertex_methods,
+            'meshExportModule': report['meshExportModule'],
+            'streamData': report['streamData'],
+            'streamDataMethods': stream_methods,
+            'assetsFileClass': report['assetsFileClass'],
+            'assetsFileMethods': assets_file_methods,
             'vertexDataFields': fields,
-            'meshObjectDirMatches': report['meshObjectDirMatches'],
         }, ensure_ascii=False, indent=2))
 
 if __name__ == '__main__': main()
