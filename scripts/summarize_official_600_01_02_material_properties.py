@@ -31,7 +31,8 @@ def pairs_to_dict(value):
 def main():
     report = json.loads(REPORT.read_text(encoding='utf-8'))
     catalog = json.loads(CATALOG.read_text(encoding='utf-8'))
-    stage = next((x for x in catalog if x.get('id') == 'battle-600-00-01-002'), None)
+    stages = catalog.get('stages', []) if isinstance(catalog, dict) else catalog
+    stage = next((x for x in stages if x.get('id') == 'battle-600-00-01-002'), None)
     if stage is None:
         raise SystemExit('catalog stage battle-600-00-01-002 not found')
     bindings = {x.get('materialName'): x for x in stage.get('materialBindings', [])}
