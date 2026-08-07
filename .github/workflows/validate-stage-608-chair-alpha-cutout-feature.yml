@@ -126,6 +126,9 @@ jobs:
             magia-exedra-character-three/loader.ts \
             public/stages/catalog/battle-608-00-00-001.json \
             validation-evidence
+          # Keep only the compact browser/server diagnostics even though *.log
+          # is globally ignored. Build/install logs remain workflow-artifact-only.
+          git add -f validation-evidence/visual-regression.log validation-evidence/vite.log 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m 'test: persist current-JP 608 parity validation result'
             git push origin HEAD:fix/stage-608-chair-alpha-cutout-20260807
