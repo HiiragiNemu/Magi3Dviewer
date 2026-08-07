@@ -1,0 +1,1386 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-root-stage-bundle",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "bundle": "battle/stage/bg_3d_608_00_00_001",
+  "material": {
+    "name": "bg3d608_00_blue_bubble",
+    "pathId": -439672645568008899,
+    "shader": {
+      "fileId": 1,
+      "pathId": 8347699476007106368
+    },
+    "validKeywords": [],
+    "invalidKeywords": [
+      "_RECEIVE_SHADOWS_OFF",
+      "_SURFACE_TYPE_TRANSPARENT"
+    ],
+    "renderQueue": 3000,
+    "texEnvs": [
+      {
+        "property": "_BaseMap",
+        "pointer": {
+          "fileId": 6,
+          "pathId": -70738714532392232
+        },
+        "resolveError": "FileNotFoundError('File cab-45fe6895e0364350e5df2d082222970e not found in /tmp/magius-608-particle-material-nga8pynd/battle/stage')"
+      },
+      {
+        "property": "_Blend2ndTex",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_BlendTex",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_ComplexNoiseTexture",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_EmissionMap",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_FadeNoiseTex",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_FlowMap",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_MainTex",
+        "pointer": {
+          "fileId": 6,
+          "pathId": -70738714532392232
+        },
+        "resolveError": "FileNotFoundError('File cab-45fe6895e0364350e5df2d082222970e not found in /tmp/magius-608-particle-material-nga8pynd/battle/stage')"
+      },
+      {
+        "property": "_MatCapTex",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_NoiseTex",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_ScrollTexture",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_ScrollTexutre",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_UwasaHibiTex",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      },
+      {
+        "property": "_openVAT_main",
+        "pointer": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      }
+    ],
+    "floats": [
+      [
+        "_1stOpacity",
+        1.0
+      ],
+      [
+        "_2ndOpacity",
+        1.0
+      ],
+      [
+        "_Additive_to_Multiply",
+        0.0
+      ],
+      [
+        "_AlphaClip",
+        0.0
+      ],
+      [
+        "_AlphaToMask",
+        0.0
+      ],
+      [
+        "_Alpha_Clip",
+        0.5
+      ],
+      [
+        "_BaseSetting",
+        1.0
+      ],
+      [
+        "_Blend",
+        0.0
+      ],
+      [
+        "_Blend2ndPow",
+        1.0
+      ],
+      [
+        "_Blend2ndTexScale",
+        1.0
+      ],
+      [
+        "_Blend2ndTexScaleToggle",
+        0.0
+      ],
+      [
+        "_BlendModePreserveSpecular",
+        0.0
+      ],
+      [
+        "_BlendPow",
+        1.0
+      ],
+      [
+        "_BlendTexScale",
+        1.0
+      ],
+      [
+        "_BlendTexScaleToggle",
+        0.0
+      ],
+      [
+        "_CastShadows",
+        0.0
+      ],
+      [
+        "_Cull",
+        2.0
+      ],
+      [
+        "_Cutoff",
+        0.5
+      ],
+      [
+        "_DropFrame_FlowMap",
+        0.0
+      ],
+      [
+        "_DropFrame_HueShift",
+        0.0
+      ],
+      [
+        "_DropFrame_MultiScroll",
+        0.0
+      ],
+      [
+        "_DstBlend",
+        10.0
+      ],
+      [
+        "_FadeNoiseTexTilling",
+        1.0
+      ],
+      [
+        "_FlipbookFrameRate",
+        8.0
+      ],
+      [
+        "_FlipbookOffset",
+        0.0
+      ],
+      [
+        "_FlowMapPow",
+        1.0
+      ],
+      [
+        "_FlowSpeed",
+        0.15000000596046448
+      ],
+      [
+        "_FogInfluence",
+        1.0
+      ],
+      [
+        "_HueShiftValue",
+        0.0
+      ],
+      [
+        "_HueShiftValue_MultiUV",
+        0.0
+      ],
+      [
+        "_IS_SS_MAPPING",
+        0.0
+      ],
+      [
+        "_IgnoreScaleFadeRange",
+        0.0
+      ],
+      [
+        "_InvertDirection",
+        0.0
+      ],
+      [
+        "_IsDitherClipping",
+        0.0
+      ],
+      [
+        "_IsSSMapping",
+        0.0
+      ],
+      [
+        "_MatCapIntensity",
+        1.0
+      ],
+      [
+        "_Metallic",
+        0.0
+      ],
+      [
+        "_NoiseIntensity",
+        1.0
+      ],
+      [
+        "_NoiseScaling",
+        1.0
+      ],
+      [
+        "_NormalMap",
+        1.0
+      ],
+      [
+        "_NormalStrength",
+        1.0
+      ],
+      [
+        "_QueueControl",
+        0.0
+      ],
+      [
+        "_QueueOffset",
+        0.0
+      ],
+      [
+        "_ReceiveShadows",
+        0.0
+      ],
+      [
+        "_ReflectionValue",
+        1.0
+      ],
+      [
+        "_RenderingOptions",
+        1.0
+      ],
+      [
+        "_ScrollSpeed",
+        0.10000000149011612
+      ],
+      [
+        "_ShouldBgGlobalDitherFade",
+        0.0
+      ],
+      [
+        "_ShouldSkipGachaDissolve",
+        0.0
+      ],
+      [
+        "_Smoothness",
+        0.0
+      ],
+      [
+        "_SrcBlend",
+        5.0
+      ],
+      [
+        "_Surface",
+        1.0
+      ],
+      [
+        "_USE_BILLBOARD",
+        0.0
+      ],
+      [
+        "_USE_FLOW_MAP",
+        0.0
+      ],
+      [
+        "_USE_HUE_SHIFT",
+        0.0
+      ],
+      [
+        "_USE_MULTI_UV_SCROLL",
+        0.0
+      ],
+      [
+        "_USE_NOISE",
+        0.0
+      ],
+      [
+        "_USE_PLANARREFLECTION",
+        0.0
+      ],
+      [
+        "_USE_UWASA_EFFECT",
+        0.0
+      ],
+      [
+        "_USE_VERTEX_COLOR_BLEND",
+        0.0
+      ],
+      [
+        "_Unlitness",
+        1.0
+      ],
+      [
+        "_UseAlphaToSmoothness",
+        0.0
+      ],
+      [
+        "_UseFadeInOut",
+        0.0
+      ],
+      [
+        "_UseFlipbook",
+        0.0
+      ],
+      [
+        "_UseMatCap",
+        0.0
+      ],
+      [
+        "_UseMeshUV",
+        0.0
+      ],
+      [
+        "_UseSmoothnessMask",
+        0.0
+      ],
+      [
+        "_UseSmoothnessMaskMatcap",
+        0.0
+      ],
+      [
+        "_UseVAT",
+        0.0
+      ],
+      [
+        "_UseVATTime",
+        1.0
+      ],
+      [
+        "_UseVColGreen",
+        0.0
+      ],
+      [
+        "_UwasaEffectIntensity",
+        1.0
+      ],
+      [
+        "_UwasaHueShiftValue",
+        0.0
+      ],
+      [
+        "_UwasaTexTileSize",
+        1.0
+      ],
+      [
+        "_WorkflowMode",
+        1.0
+      ],
+      [
+        "_ZTest",
+        4.0
+      ],
+      [
+        "_ZWrite",
+        0.0
+      ],
+      [
+        "_ZWriteControl",
+        0.0
+      ],
+      [
+        "_exaggeration",
+        0.0
+      ],
+      [
+        "_frame",
+        0.0
+      ],
+      [
+        "_frames",
+        0.0
+      ],
+      [
+        "_resolutionY",
+        0.0
+      ],
+      [
+        "_speed",
+        1.0
+      ]
+    ],
+    "ints": [],
+    "colors": [
+      [
+        "_1stColor",
+        {
+          "repr": "ColorRGBA(r=1.0, g=1.0, b=1.0, a=1.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_1stOffset",
+        {
+          "repr": "ColorRGBA(r=0.0, g=0.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_1stScrollSpeed",
+        {
+          "repr": "ColorRGBA(r=0.0, g=0.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_1stTilling",
+        {
+          "repr": "ColorRGBA(r=1.0, g=1.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_2ndColor",
+        {
+          "repr": "ColorRGBA(r=1.0, g=1.0, b=1.0, a=1.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_2ndOffset",
+        {
+          "repr": "ColorRGBA(r=0.0, g=0.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_2ndScrollSpeed",
+        {
+          "repr": "ColorRGBA(r=0.0, g=0.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_2ndTilling",
+        {
+          "repr": "ColorRGBA(r=1.0, g=1.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_BaseColor",
+        {
+          "repr": "ColorRGBA(r=0.8773584961891174, g=0.8773584961891174, b=0.8773584961891174, a=1.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_Blend2ndTexScroll",
+        {
+          "repr": "ColorRGBA(r=0.0, g=0.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_Blend2ndTexTillingOffset",
+        {
+          "repr": "ColorRGBA(r=1.0, g=1.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_BlendTexScroll",
+        {
+          "repr": "ColorRGBA(r=0.0, g=0.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_BlendTexTillingOffset",
+        {
+          "repr": "ColorRGBA(r=1.0, g=1.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_BottomFadeInRange",
+        {
+          "repr": "ColorRGBA(r=0.0, g=40.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_EmissionColor",
+        {
+          "repr": "ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_FlipbookTileGrid",
+        {
+          "repr": "ColorRGBA(r=2.0, g=2.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_TopFadeOutRange",
+        {
+          "repr": "ColorRGBA(r=60.0, g=100.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_UV_Scroll",
+        {
+          "repr": "ColorRGBA(r=0.0, g=0.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_maxValues",
+        {
+          "repr": "ColorRGBA(r=0.0, g=0.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ],
+      [
+        "_minValues",
+        {
+          "repr": "ColorRGBA(r=0.0, g=0.0, b=0.0, a=0.0)",
+          "type": "ColorRGBA"
+        }
+      ]
+    ],
+    "typetree": {
+      "m_Name": "bg3d608_00_blue_bubble",
+      "m_Shader": {
+        "m_FileID": 1,
+        "m_PathID": 8347699476007106368
+      },
+      "m_ValidKeywords": [],
+      "m_InvalidKeywords": [
+        "_RECEIVE_SHADOWS_OFF",
+        "_SURFACE_TYPE_TRANSPARENT"
+      ],
+      "m_LightmapFlags": 4,
+      "m_EnableInstancingVariants": false,
+      "m_DoubleSidedGI": false,
+      "m_CustomRenderQueue": 3000,
+      "stringTagMap": [],
+      "disabledShaderPasses": [
+        "DepthOnly",
+        "SHADOWCASTER"
+      ],
+      "m_SavedProperties": {
+        "m_TexEnvs": [
+          [
+            "_BaseMap",
+            {
+              "m_Texture": {
+                "m_FileID": 6,
+                "m_PathID": -70738714532392232
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_Blend2ndTex",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_BlendTex",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_ComplexNoiseTexture",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_EmissionMap",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_FadeNoiseTex",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_FlowMap",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_MainTex",
+            {
+              "m_Texture": {
+                "m_FileID": 6,
+                "m_PathID": -70738714532392232
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_MatCapTex",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_NoiseTex",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_ScrollTexture",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_ScrollTexutre",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_UwasaHibiTex",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ],
+          [
+            "_openVAT_main",
+            {
+              "m_Texture": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "m_Scale": {
+                "x": 1.0,
+                "y": 1.0
+              },
+              "m_Offset": {
+                "x": 0.0,
+                "y": 0.0
+              }
+            }
+          ]
+        ],
+        "m_Ints": [],
+        "m_Floats": [
+          [
+            "_1stOpacity",
+            1.0
+          ],
+          [
+            "_2ndOpacity",
+            1.0
+          ],
+          [
+            "_Additive_to_Multiply",
+            0.0
+          ],
+          [
+            "_AlphaClip",
+            0.0
+          ],
+          [
+            "_AlphaToMask",
+            0.0
+          ],
+          [
+            "_Alpha_Clip",
+            0.5
+          ],
+          [
+            "_BaseSetting",
+            1.0
+          ],
+          [
+            "_Blend",
+            0.0
+          ],
+          [
+            "_Blend2ndPow",
+            1.0
+          ],
+          [
+            "_Blend2ndTexScale",
+            1.0
+          ],
+          [
+            "_Blend2ndTexScaleToggle",
+            0.0
+          ],
+          [
+            "_BlendModePreserveSpecular",
+            0.0
+          ],
+          [
+            "_BlendPow",
+            1.0
+          ],
+          [
+            "_BlendTexScale",
+            1.0
+          ],
+          [
+            "_BlendTexScaleToggle",
+            0.0
+          ],
+          [
+            "_CastShadows",
+            0.0
+          ],
+          [
+            "_Cull",
+            2.0
+          ],
+          [
+            "_Cutoff",
+            0.5
+          ],
+          [
+            "_DropFrame_FlowMap",
+            0.0
+          ],
+          [
+            "_DropFrame_HueShift",
+            0.0
+          ],
+          [
+            "_DropFrame_MultiScroll",
+            0.0
+          ],
+          [
+            "_DstBlend",
+            10.0
+          ],
+          [
+            "_FadeNoiseTexTilling",
+            1.0
+          ],
+          [
+            "_FlipbookFrameRate",
+            8.0
+          ],
+          [
+            "_FlipbookOffset",
+            0.0
+          ],
+          [
+            "_FlowMapPow",
+            1.0
+          ],
+          [
+            "_FlowSpeed",
+            0.15000000596046448
+          ],
+          [
+            "_FogInfluence",
+            1.0
+          ],
+          [
+            "_HueShiftValue",
+            0.0
+          ],
+          [
+            "_HueShiftValue_MultiUV",
+            0.0
+          ],
+          [
+            "_IS_SS_MAPPING",
+            0.0
+          ],
+          [
+            "_IgnoreScaleFadeRange",
+            0.0
+          ],
+          [
+            "_InvertDirection",
+            0.0
+          ],
+          [
+            "_IsDitherClipping",
+            0.0
+          ],
+          [
+            "_IsSSMapping",
+            0.0
+          ],
+          [
+            "_MatCapIntensity",
+            1.0
+          ],
+          [
+            "_Metallic",
+            0.0
+          ],
+          [
+            "_NoiseIntensity",
+            1.0
+          ],
+          [
+            "_NoiseScaling",
+            1.0
+          ],
+          [
+            "_NormalMap",
+            1.0
+          ],
+          [
+            "_NormalStrength",
+            1.0
+          ],
+          [
+            "_QueueControl",
+            0.0
+          ],
+          [
+            "_QueueOffset",
+            0.0
+          ],
+          [
+            "_ReceiveShadows",
+            0.0
+          ],
+          [
+            "_ReflectionValue",
+            1.0
+          ],
+          [
+            "_RenderingOptions",
+            1.0
+          ],
+          [
+            "_ScrollSpeed",
+            0.10000000149011612
+          ],
+          [
+            "_ShouldBgGlobalDitherFade",
+            0.0
+          ],
+          [
+            "_ShouldSkipGachaDissolve",
+            0.0
+          ],
+          [
+            "_Smoothness",
+            0.0
+          ],
+          [
+            "_SrcBlend",
+            5.0
+          ],
+          [
+            "_Surface",
+            1.0
+          ],
+          [
+            "_USE_BILLBOARD",
+            0.0
+          ],
+          [
+            "_USE_FLOW_MAP",
+            0.0
+          ],
+          [
+            "_USE_HUE_SHIFT",
+            0.0
+          ],
+          [
+            "_USE_MULTI_UV_SCROLL",
+            0.0
+          ],
+          [
+            "_USE_NOISE",
+            0.0
+          ],
+          [
+            "_USE_PLANARREFLECTION",
+            0.0
+          ],
+          [
+            "_USE_UWASA_EFFECT",
+            0.0
+          ],
+          [
+            "_USE_VERTEX_COLOR_BLEND",
+            0.0
+          ],
+          [
+            "_Unlitness",
+            1.0
+          ],
+          [
+            "_UseAlphaToSmoothness",
+            0.0
+          ],
+          [
+            "_UseFadeInOut",
+            0.0
+          ],
+          [
+            "_UseFlipbook",
+            0.0
+          ],
+          [
+            "_UseMatCap",
+            0.0
+          ],
+          [
+            "_UseMeshUV",
+            0.0
+          ],
+          [
+            "_UseSmoothnessMask",
+            0.0
+          ],
+          [
+            "_UseSmoothnessMaskMatcap",
+            0.0
+          ],
+          [
+            "_UseVAT",
+            0.0
+          ],
+          [
+            "_UseVATTime",
+            1.0
+          ],
+          [
+            "_UseVColGreen",
+            0.0
+          ],
+          [
+            "_UwasaEffectIntensity",
+            1.0
+          ],
+          [
+            "_UwasaHueShiftValue",
+            0.0
+          ],
+          [
+            "_UwasaTexTileSize",
+            1.0
+          ],
+          [
+            "_WorkflowMode",
+            1.0
+          ],
+          [
+            "_ZTest",
+            4.0
+          ],
+          [
+            "_ZWrite",
+            0.0
+          ],
+          [
+            "_ZWriteControl",
+            0.0
+          ],
+          [
+            "_exaggeration",
+            0.0
+          ],
+          [
+            "_frame",
+            0.0
+          ],
+          [
+            "_frames",
+            0.0
+          ],
+          [
+            "_resolutionY",
+            0.0
+          ],
+          [
+            "_speed",
+            1.0
+          ]
+        ],
+        "m_Colors": [
+          [
+            "_1stColor",
+            {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            }
+          ],
+          [
+            "_1stOffset",
+            {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_1stScrollSpeed",
+            {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_1stTilling",
+            {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_2ndColor",
+            {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            }
+          ],
+          [
+            "_2ndOffset",
+            {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_2ndScrollSpeed",
+            {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_2ndTilling",
+            {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_BaseColor",
+            {
+              "r": 0.8773584961891174,
+              "g": 0.8773584961891174,
+              "b": 0.8773584961891174,
+              "a": 1.0
+            }
+          ],
+          [
+            "_Blend2ndTexScroll",
+            {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_Blend2ndTexTillingOffset",
+            {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_BlendTexScroll",
+            {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_BlendTexTillingOffset",
+            {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_BottomFadeInRange",
+            {
+              "r": 0.0,
+              "g": 40.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_EmissionColor",
+            {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 1.0
+            }
+          ],
+          [
+            "_FlipbookTileGrid",
+            {
+              "r": 2.0,
+              "g": 2.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_TopFadeOutRange",
+            {
+              "r": 60.0,
+              "g": 100.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_UV_Scroll",
+            {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_maxValues",
+            {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ],
+          [
+            "_minValues",
+            {
+              "r": 0.0,
+              "g": 0.0,
+              "b": 0.0,
+              "a": 0.0
+            }
+          ]
+        ]
+      },
+      "m_BuildTextureStacks": []
+    }
+  },
+  "resolvedTextureCount": 0,
+  "resolvedTextures": []
+}
