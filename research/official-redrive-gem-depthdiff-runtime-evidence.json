@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-modern-ReDrive-Shader-plus-Material-saved-properties",
+  "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+  "material": "mt_chara_100101_weapon_a_sj",
+  "compiledShader": {
+    "chunkIndex": 2,
+    "platform": 9,
+    "decodedSha256": "65536f9156cf560226d40a4094f1a27c448f6b2bfca1a8d6a77a8de89ee4f62a",
+    "predicateOffsets": [
+      334276,
+      334343,
+      334385
+    ],
+    "predicate": "(_UseGemDepthDiff != 0) && (_Transparency != 0)",
+    "cameraDepthFetchOffset": 334921,
+    "depthDeltaScaleOffset": 335339,
+    "thresholdOffsets": [
+      335424,
+      335479,
+      335524
+    ]
+  },
+  "savedProperties": {
+    "_UseGemDepthDiff": 1.0,
+    "_Transparency": 0.0,
+    "_GemDepthDiffThreshold": 0.5
+  },
+  "runtimeConclusion": {
+    "depthDiffBranchEnabled": false,
+    "webAction": "remove previous NdotV depth proxy for this proven current-JP material"
+  },
+  "deferred": "Exact active `_Transparency != 0` CameraDepthTexture branch is not claimed as restored; it remains deferred until a proven material enters that branch and the camera-depth input is wired."
+}

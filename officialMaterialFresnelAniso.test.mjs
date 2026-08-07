@@ -53,6 +53,7 @@ test('100101 weapon Soul Gem uses exact material Fresnel defaults', () => {
   assert.equal(value.fresnel.threshold, 0.6000000238418579)
   assert.equal(value.fresnel.feather, 0.20000000298023224)
   assert.equal(value.gem.useDepthDiff, true)
+  assert.equal(value.gem.transparency, false)
   assert.equal(value.gem.maskMatcapMetallic, true)
 })
 
@@ -65,4 +66,11 @@ test('per-material uniforms override the global debug Fresnel without enabling i
   assert.match(general, /uMaterialAnisoThreshold/)
   assert.match(general, /rdAnisoBand/)
   assert.match(general, /directional coordinate remains the current/)
+})
+
+
+test('100101 weapon GemDepthDiff follows exact current-JP transparency predicate', () => {
+  assert.match(gem, /uGemUseDepthDiff \* uGemTransparency/)
+  assert.match(gem, /official GemDepthDiff contribution is/)
+  assert.doesNotMatch(gem, /rdGemDepthProxy/)
 })

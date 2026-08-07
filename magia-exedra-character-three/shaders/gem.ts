@@ -87,6 +87,7 @@ export function setOfficialMaterialProfileUniforms(
     set('uGemMaskMatcapMetallic', gem.maskMatcapMetallic ? 1 : 0);
     set('uGemMaskMatcapSpecular', gem.maskMatcapSpecular ? 1 : 0);
     set('uGemUseDepthDiff', gem.useDepthDiff ? 1 : 0);
+    set('uGemTransparency', gem.transparency ? 1 : 0);
     set('uGemFirstHighlightSize', gem.firstHighlightSize);
     set('uGemFirstShadowSize', gem.firstShadowSize);
     set('uGemSecondHighlightSize', gem.secondHighlightSize);
@@ -120,6 +121,7 @@ export function injectOfficialGemShader(
         uniform float uGemMaskMatcapMetallic;
         uniform float uGemMaskMatcapSpecular;
         uniform float uGemUseDepthDiff;
+        uniform float uGemTransparency;
         uniform float uGemFirstHighlightSize;
         uniform float uGemFirstShadowSize;
         uniform float uGemSecondHighlightSize;
@@ -231,15 +233,21 @@ export function injectOfficialGemShader(
                     rdGemMatCapMask * 0.34;
             }
 
-            // Depth-diff gems receive a stronger inner-edge response. In WebGL
-            // this is a conservative local approximation until the dedicated
-            // ReDrive depth texture pass is ported.
-            float rdGemDepthProxy = smoothstep(
-                uGemDepthDiffThreshold,
-                1.0,
-                1.0 - rdGemNdotV
-            ) * uGemUseDepthDiff;
-            rdGemBase += rdGemTint * rdGemDepthProxy * 0.32;
+            // Exact current-JP compiled predicate:
+            //   (_UseGemDepthDiff != 0) && (_Transparency != 0)
+            // mt_chara_100101_weapon_a_sj has _UseGemDepthDiff=1 but
+            // _Transparency=0, so its official GemDepthDiff contribution is
+            // exactly zero. Do not substitute the previous NdotV proxy.
+            // The active transparent CameraDepthTexture formula is recovered,
+            // but remains deferred until a proven material actually enters it
+            // and the scene camera-depth input is wired without approximation.
+            float rdGemDepthBranchEnabled =
+                uGemUseDepthDiff * uGemTransparency;
+            float rdGemDepthSelector = 0.0;
+            if (rdGemDepthBranchEnabled > 0.5) {
+                rdGemDepthSelector = 0.0; // deferred exact CameraDepthTexture branch
+            }
+            rdGemBase += rdGemTint * rdGemDepthSelector * 0.32;
             rdGemBase += vec3(1.0) *
                 rdGemFresnelBand *
                 max(uGemRimFresnel, 0.0) * 0.72;
