@@ -38,7 +38,11 @@ jobs:
       - name: Resolve serialized external file table
         run: python scripts/resolve_official_608_external_files.py
       - name: Resolve all current-JP 608 Material texture dependencies and compare Viewer pixels
-        run: python scripts/resolve_official_608_material_textures.py
+        shell: bash
+        run: |
+          VIEWER_REF="$(git rev-parse origin/magius3dviewer)"
+          python scripts/resolve_official_608_material_textures.py --viewer-ref "${VIEWER_REF}"
+          test -s research/official-608-material-texture-resolution.json
       - name: Trace target Renderers, Mesh UV diagnostics and TextureSettings
         run: python scripts/extract_official_608_sprite_renderer_mesh_uv.py
       - name: Inspect ReflectionProbe Cubemap payloads
@@ -78,6 +82,7 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          test -s research/official-608-material-texture-resolution.json
           git add \
             research/official-608-material-properties.json \
             research/official-608-gameobject-states.json \
