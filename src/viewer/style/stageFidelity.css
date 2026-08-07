@@ -1,0 +1,87 @@
+#stage-fidelity-row {
+    align-items: stretch !important;
+}
+
+#stage-fidelity-panel {
+    width: 100%;
+    max-width: min(720px, calc(100vw - 24px));
+    font-size: 12px;
+}
+
+#stage-fidelity-panel > summary {
+    cursor: pointer;
+    user-select: none;
+    opacity: 0.86;
+    padding: 3px 0;
+}
+
+#stage-fidelity-panel[data-status="recovered"] > summary {
+    font-weight: 600;
+}
+
+#stage-fidelity-body {
+    max-height: min(42vh, 360px);
+    overflow: auto;
+    margin-top: 6px;
+    padding: 8px;
+    border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    border-radius: 6px;
+    background: color-mix(in srgb, Canvas 92%, transparent);
+    color: CanvasText;
+}
+
+.stage-fidelity-grid {
+    display: grid;
+    grid-template-columns: minmax(120px, max-content) minmax(0, 1fr);
+    gap: 3px 10px;
+}
+
+.stage-fidelity-field {
+    display: contents;
+}
+
+.stage-fidelity-key {
+    opacity: 0.7;
+}
+
+.stage-fidelity-value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+}
+
+.stage-fidelity-section {
+    margin-top: 10px;
+}
+
+.stage-fidelity-section-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.stage-fidelity-section ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+.stage-fidelity-section li {
+    margin: 2px 0;
+    overflow-wrap: anywhere;
+}
+
+.stage-fidelity-empty {
+    opacity: 0.65;
+    font-style: italic;
+}
+
+@media (max-width: 760px) {
+    .stage-fidelity-grid {
+        grid-template-columns: 1fr;
+        gap: 1px;
+    }
+
+    .stage-fidelity-key {
+        margin-top: 4px;
+        font-weight: 600;
+    }
+}
