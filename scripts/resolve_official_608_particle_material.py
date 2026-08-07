@@ -76,11 +76,24 @@ def main() -> int:
         temp = Path(temporary)
         session = base.requests.Session()
         entries, request_headers, token, metadata = base.catalog(session)
-        selected = [entry for entry in entries if entry.full_path.lower() == TARGET_BUNDLE]
-        if len(selected) != 1:
-            raise RuntimeError(f'expected one stage bundle, got {len(selected)}')
-        bundle_path = base.download(selected[0], request_headers, token, temp)
-        env = UnityPy.load(str(bundle_path))
+        stage_local = [
+            entry for entry in entries
+            if entry.full_path.lower() == TARGET_BUNDLE
+            or (
+                entry.full_path.lower().startswith('battle/stage/')
+                and ('608_00' in entry.full_path.lower() or '608/00' in entry.full_path.lower())
+            )
+        ]
+        selected = sorted(
+            {entry.full_path: entry for entry in stage_local}.values(),
+            key=lambda item: item.full_path,
+        )
+        if not any(entry.full_path.lower() == TARGET_BUNDLE for entry in selected):
+            raise RuntimeError('target stage bundle missing from catalog selection')
+        if len(selected) > 80:
+            raise RuntimeError(f'unexpectedly broad 608 stage-local probe: {len(selected)} bundles')
+        downloaded = [base.download(entry, request_headers, token, temp) for entry in selected]
+        env = UnityPy.load(*(str(path) for path in downloaded))
 
         reader = next(
             (
@@ -124,10 +137,12 @@ def main() -> int:
             tex_envs.append(item)
 
         report = {
-            'schemaVersion': 1,
-            'source': 'official-jp-current-root-stage-bundle',
+            'schemaVersion': 2,
+            'source': 'official-jp-current-608-stage-local-probe',
             'metadata': metadata,
             'bundle': TARGET_BUNDLE,
+            'probeBundleCount': len(selected),
+            'probeBundles': [entry.full_path for entry in selected],
             'material': {
                 'name': str(getattr(material, 'm_Name', '')),
                 'pathId': TARGET_MATERIAL_PATH_ID,
@@ -146,10 +161,11 @@ def main() -> int:
         }
         OUTPUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         print(json.dumps({
+            'probeBundleCount': len(selected),
+            'probeBundles': report['probeBundles'],
             'material': report['material']['name'],
-            'validKeywords': report['material']['validKeywords'],
-            'renderQueue': report['material']['renderQueue'],
             'texEnvs': tex_envs,
+            'resolvedTextureCount': len(resolved_textures),
         }, ensure_ascii=False, indent=2))
     return 0
 
