@@ -1,0 +1,388 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-608-particle-components",
+  "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+  "systemCount": 6,
+  "modules": {
+    "SizeModule": {
+      "uniqueProfileCount": 1,
+      "profiles": [
+        {
+          "sha256": "c14d10b332b5ce9b8cc9ca2c3a4220ff49435980a6e57c5115c27b013d1eafcd",
+          "bytes": 1670,
+          "profile": {
+            "enabled": true,
+            "curve": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 4.162921905517578,
+                    "outSlope": 4.162921905517578,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.19790388643741608
+                  },
+                  {
+                    "time": 0.5419226288795471,
+                    "value": 0.8764061331748962,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.2336275577545166
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0,
+                    "inSlope": -4.16291618347168,
+                    "outSlope": -4.16291618347168,
+                    "weightedMode": 0,
+                    "inWeight": 0.2297936975955963,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "y": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "z": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "separateAxes": false
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": -6858687396393823220,
+          "profileSha256": "c14d10b332b5ce9b8cc9ca2c3a4220ff49435980a6e57c5115c27b013d1eafcd"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": -7586315711235274196,
+          "profileSha256": "c14d10b332b5ce9b8cc9ca2c3a4220ff49435980a6e57c5115c27b013d1eafcd"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": 1198205605091357490,
+          "profileSha256": "c14d10b332b5ce9b8cc9ca2c3a4220ff49435980a6e57c5115c27b013d1eafcd"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": 1996371953391616376,
+          "profileSha256": "c14d10b332b5ce9b8cc9ca2c3a4220ff49435980a6e57c5115c27b013d1eafcd"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": -1294285691191015837,
+          "profileSha256": "c14d10b332b5ce9b8cc9ca2c3a4220ff49435980a6e57c5115c27b013d1eafcd"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": 5963673205634448717,
+          "profileSha256": "c14d10b332b5ce9b8cc9ca2c3a4220ff49435980a6e57c5115c27b013d1eafcd"
+        }
+      ]
+    },
+    "RotationModule": {
+      "uniqueProfileCount": 1,
+      "profiles": [
+        {
+          "sha256": "455901af24a0b9901beb534527f56ca1b8e106ef77e00c0111161c492510fd74",
+          "bytes": 721,
+          "profile": {
+            "enabled": true,
+            "x": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "y": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "curve": {
+              "minMaxState": 0,
+              "scalar": 0.7853981852531433,
+              "minScalar": 0.7853981852531433,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "separateAxes": true
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": -6858687396393823220,
+          "profileSha256": "455901af24a0b9901beb534527f56ca1b8e106ef77e00c0111161c492510fd74"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": -7586315711235274196,
+          "profileSha256": "455901af24a0b9901beb534527f56ca1b8e106ef77e00c0111161c492510fd74"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": 1198205605091357490,
+          "profileSha256": "455901af24a0b9901beb534527f56ca1b8e106ef77e00c0111161c492510fd74"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": 1996371953391616376,
+          "profileSha256": "455901af24a0b9901beb534527f56ca1b8e106ef77e00c0111161c492510fd74"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": -1294285691191015837,
+          "profileSha256": "455901af24a0b9901beb534527f56ca1b8e106ef77e00c0111161c492510fd74"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": 5963673205634448717,
+          "profileSha256": "455901af24a0b9901beb534527f56ca1b8e106ef77e00c0111161c492510fd74"
+        }
+      ]
+    },
+    "UVModule": {
+      "uniqueProfileCount": 1,
+      "profiles": [
+        {
+          "sha256": "5cc0f515c0dc8b53fa266a64a952038b658c0ec5dbb17c1006fb0915cd5f141f",
+          "bytes": 940,
+          "profile": {
+            "enabled": true,
+            "mode": 0,
+            "timeMode": 2,
+            "fps": 2.0,
+            "frameOverTime": {
+              "minMaxState": 1,
+              "scalar": 0.9998999834060669,
+              "minScalar": 0.9998999834060669,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 1.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "startFrame": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "speedRange": {
+              "x": 0.0,
+              "y": 10.0
+            },
+            "tilesX": 1,
+            "tilesY": 4,
+            "animationType": 1,
+            "rowIndex": 0,
+            "cycles": 1.0,
+            "uvChannelMask": -1,
+            "rowMode": 1,
+            "sprites": [
+              {
+                "sprite": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            ],
+            "flipU": 0.0,
+            "flipV": 0.0
+          }
+        }
+      ],
+      "assignments": [
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": -6858687396393823220,
+          "profileSha256": "5cc0f515c0dc8b53fa266a64a952038b658c0ec5dbb17c1006fb0915cd5f141f"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": -7586315711235274196,
+          "profileSha256": "5cc0f515c0dc8b53fa266a64a952038b658c0ec5dbb17c1006fb0915cd5f141f"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": 1198205605091357490,
+          "profileSha256": "5cc0f515c0dc8b53fa266a64a952038b658c0ec5dbb17c1006fb0915cd5f141f"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": 1996371953391616376,
+          "profileSha256": "5cc0f515c0dc8b53fa266a64a952038b658c0ec5dbb17c1006fb0915cd5f141f"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": -1294285691191015837,
+          "profileSha256": "5cc0f515c0dc8b53fa266a64a952038b658c0ec5dbb17c1006fb0915cd5f141f"
+        },
+        {
+          "gameObjectPath": null,
+          "particleSystemPathId": 5963673205634448717,
+          "profileSha256": "5cc0f515c0dc8b53fa266a64a952038b658c0ec5dbb17c1006fb0915cd5f141f"
+        }
+      ]
+    }
+  },
+  "interpretation": "Values below are exact serialized current-JP ParticleSystem module evidence. Curve evaluation, random stream equivalence, native integrator order, billboard camera-facing rules and render sorting remain separate implementation questions and must not be inferred from serialization alone."
+}
