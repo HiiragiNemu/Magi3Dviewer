@@ -374,8 +374,13 @@ export class ReDriveSelfShadowController {
         renderer.getClearColor(this.previousClearColor)
         const outlineStates: Array<[THREE.Object3D, boolean]> = []
 
-        // Never sample the same RT while its depth attachment is being written.
+        // WebGL rejects a framebuffer attachment that is still bound to an
+        // active sampler even when the shader branch using that sampler is
+        // disabled.  Preserve the exact ReDrive self-shadow texture, but truly
+        // unbind it while writing the same depth attachment.
+        const oldSelfShadowMap = reDriveSelfShadowUniformState.map.value
         reDriveSelfShadowUniformState.enabled.value = 0
+        reDriveSelfShadowUniformState.map.value = null
         for (const character of characters) {
             for (const outline of character.userData.outlineMeshes) {
                 outlineStates.push([outline, outline.visible])
@@ -402,6 +407,7 @@ export class ReDriveSelfShadowController {
                 object.visible = visible
             })
             renderer.setRenderTarget(oldTarget)
+            reDriveSelfShadowUniformState.map.value = oldSelfShadowMap
             renderer.setClearColor(this.previousClearColor, oldClearAlpha)
             renderer.autoClear = oldAutoClear
             renderer.xr.enabled = oldXrEnabled
