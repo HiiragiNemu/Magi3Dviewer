@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "source": "official-jp-current-root-stage-bundle",
   "metadata": {
     "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
@@ -40,6 +40,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": -6082960871959845769,
+          "gameObjectPathId": 8511145718913053422,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -35.70000076293945,
+            "y": 0.6600000262260437,
+            "z": 19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -2985,6 +3053,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": -6082960871959845769,
+          "gameObjectPathId": 8511145718913053422,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -35.70000076293945,
+            "y": 0.6600000262260437,
+            "z": 19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -3132,6 +3268,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": 2304020634233964760,
+          "gameObjectPathId": 6864354603031526039,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": 8.5,
+            "y": 0.6600000262260437,
+            "z": 19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System_001"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -6077,6 +6281,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": 2304020634233964760,
+          "gameObjectPathId": 6864354603031526039,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": 8.5,
+            "y": 0.6600000262260437,
+            "z": 19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System_001"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -6224,6 +6496,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": 6740306178769554207,
+          "gameObjectPathId": 5240414767451196285,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -0.8799999952316284,
+            "y": 0.6600000262260437,
+            "z": 39.06999969482422
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System_002"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -9169,6 +9509,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": 6740306178769554207,
+          "gameObjectPathId": 5240414767451196285,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -0.8799999952316284,
+            "y": 0.6600000262260437,
+            "z": 39.06999969482422
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System_002"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -9316,6 +9724,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": -8813353494220481737,
+          "gameObjectPathId": -5747876566593745357,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -27.770000457763672,
+            "y": 0.6600000262260437,
+            "z": 38.27000045776367
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System_003"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -12261,6 +12737,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": -8813353494220481737,
+          "gameObjectPathId": -5747876566593745357,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -27.770000457763672,
+            "y": 0.6600000262260437,
+            "z": 38.27000045776367
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System_003"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -12408,6 +12952,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": 7184139103108780732,
+          "gameObjectPathId": 3134079955117151708,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -28.190000534057617,
+            "y": 0.6600000262260437,
+            "z": 1.5299999713897705
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System_004"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -15353,6 +15965,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": 7184139103108780732,
+          "gameObjectPathId": 3134079955117151708,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -28.190000534057617,
+            "y": 0.6600000262260437,
+            "z": 1.5299999713897705
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System_004"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -15500,6 +16180,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": 2263479332363203347,
+          "gameObjectPathId": 3514304529863087619,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -0.15000000596046448,
+            "y": 0.6600000262260437,
+            "z": 0.07999999821186066
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System_005"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
@@ -18445,6 +19193,74 @@
           "z": 1.0
         }
       },
+      "transformChain": [
+        {
+          "pathId": 4542248385352207969,
+          "gameObjectPathId": -123642979908016488,
+          "fatherTransformPathId": 0,
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "bg_3d_608_00_00_001"
+        },
+        {
+          "pathId": 3959226382858404768,
+          "gameObjectPathId": 601008399220494887,
+          "fatherTransformPathId": 4542248385352207969,
+          "localPosition": {
+            "x": 13.600000381469727,
+            "y": 0.0,
+            "z": -19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Eff_Bubbles"
+        },
+        {
+          "pathId": 2263479332363203347,
+          "gameObjectPathId": 3514304529863087619,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -0.15000000596046448,
+            "y": 0.6600000262260437,
+            "z": 0.07999999821186066
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "gameObjectName": "Particle System_005"
+        }
+      ],
       "typetree": {
         "m_GameObject": {
           "m_FileID": 0,
