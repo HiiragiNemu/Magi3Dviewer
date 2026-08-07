@@ -1,0 +1,5468 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-character-plus-shader-workspace",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "targetBundle": "battle/character/chara_100101_battle_unit",
+  "shaderBundleCount": 26,
+  "material": {
+    "name": "mt_chara_100101_body_SJ",
+    "pathId": -6081848842995723798,
+    "shaderPointer": {
+      "fileId": 1,
+      "pathId": 7704691985981102055
+    }
+  },
+  "shader": {
+    "pythonType": "Shader",
+    "name": "",
+    "pathId": 7704691985981102055,
+    "serializedFile": "CAB-d4292dd62db4a15308122929284b3327",
+    "rawObject": {
+      "length": 2054272,
+      "sha256": "cf4b5a2a7fb1687ac34dad3e8634c7aa835b7693e754cc01cd47a67042384977",
+      "headHex": "000000007a0000000c0000005f4261736553657474696e670b0000004261736553657474696e670001000000130000004d61696e28426173652c5f2c6f6e2c6f6666290002000000000000000000803f0000000000000000000000000000000001000000080000005f426173654d617007000000426173654d61700001000000",
+      "tailHex": "00080fc2fbffffffffffffffffffffffffffffffffffffffffffffff821f37c2fb7b0b1df60e9d130fc2fbffffffffffffffffffffff0f1f38c2fbff9a1f38c2fb581f38c2fb581f38c2fbffff1e1f37c2fbb01f37c2fbffffffffffffffffffffffef80bb000000000000000100000001000000000000000000000001000000"
+    },
+    "typetree": {
+      "m_Name": "",
+      "m_ParsedForm": {
+        "m_PropInfo": {
+          "m_Props": {
+            "type": "list",
+            "length": 122,
+            "items": [
+              {
+                "m_Name": "_BaseSetting",
+                "m_Description": "BaseSetting",
+                "m_Attributes": [
+                  "Main(Base,_,on,off)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_BaseMap",
+                "m_Description": "BaseMap",
+                "m_Attributes": [
+                  "Tex(Base)"
+                ],
+                "m_Type": 4,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "white",
+                  "m_TexDim": 2
+                }
+              },
+              {
+                "m_Name": "_ShadowTex",
+                "m_Description": "ShadowTex",
+                "m_Attributes": [
+                  "Tex(Base)"
+                ],
+                "m_Type": 4,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "white",
+                  "m_TexDim": 2
+                }
+              },
+              {
+                "m_Name": "_BaseColor",
+                "m_Description": "BaseColor",
+                "m_Attributes": [
+                  "Sub(Base)"
+                ],
+                "m_Type": 0,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 1.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 1.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_ShadowColor",
+                "m_Description": "ShadowColor",
+                "m_Attributes": [
+                  "Sub(Base)"
+                ],
+                "m_Type": 0,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 1.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 1.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_ShadowOffset",
+                "m_Description": "ShadowOffset",
+                "m_Attributes": [
+                  "Sub(Base)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.30000001192092896,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_ShadowFeather",
+                "m_Description": "ShadowFeather",
+                "m_Attributes": [
+                  "Sub(Base)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_EmissionMap",
+                "m_Description": "EmissionMap",
+                "m_Attributes": [
+                  "Tex(Base)"
+                ],
+                "m_Type": 4,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "white",
+                  "m_TexDim": 2
+                }
+              },
+              {
+                "m_Name": "_EmissionColor",
+                "m_Description": "EmissionColor",
+                "m_Attributes": [
+                  "Sub(Base)"
+                ],
+                "m_Type": 0,
+                "m_Flags": 16,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 1.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_ControlSetting",
+                "m_Description": "ControlSetting",
+                "m_Attributes": [
+                  "Main(Control,_,off,off)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_ControlMap",
+                "m_Description": "ControlMap",
+                "m_Attributes": [
+                  "Title(Control,R.ShadowOffset G.Metallic B.Specular)",
+                  "Tex(Control)"
+                ],
+                "m_Type": 4,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "white",
+                  "m_TexDim": 2
+                }
+              },
+              {
+                "m_Name": "_ShadowOffsetMapOffset",
+                "m_Description": "ShadowOffsetMapOffset",
+                "m_Attributes": [
+                  "Sub(Control)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_SpecularGradientMap",
+                "m_Description": "SpecularGradientMap ",
+                "m_Attributes": [
+                  "Tex(Control)"
+                ],
+                "m_Type": 4,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "grey",
+                  "m_TexDim": 2
+                }
+              },
+              {
+                "m_Name": "_IsFace",
+                "m_Description": "IsFace",
+                "m_Attributes": [
+                  "Main(IsFace,_ISFACE)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_UseFaceGradientMap",
+                "m_Description": "UseFaceGradientMap",
+                "m_Attributes": [
+                  "SubToggle(IsFace,_FACE_SHADOW_GRADIENTMAP)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_FaceShadowGradientMap",
+                "m_Description": "FaceShadowGradientMap",
+                "m_Attributes": [
+                  "Tex(IsFace)"
+                ],
+                "m_Type": 4,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "grey",
+                  "m_TexDim": 2
+                }
+              },
+              {
+                "m_Name": "_FaceShadowGradientMapYOffset",
+                "m_Description": "UV - Y Offset",
+                "m_Attributes": [
+                  "Sub(IsFace)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": -0.10000000149011612,
+                "m_DefValue[2]": 0.10000000149011612,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_NoseShadowGradientMap",
+                "m_Description": "NoseMap",
+                "m_Attributes": [
+                  "Tex(IsFace)"
+                ],
+                "m_Type": 4,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "grey",
+                  "m_TexDim": 2
+                }
+              },
+              {
+                "m_Name": "_NoseShadowGradientMapYOffset",
+                "m_Description": "UV - Y Offset",
+                "m_Attributes": [
+                  "Sub(IsFace)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": -0.10000000149011612,
+                "m_DefValue[2]": 0.10000000149011612,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_FaceAreaCameraDepthTextureZWriteOffset",
+                "m_Description": "FaceAreaCameraDepthTextureZWriteOffset",
+                "m_Attributes": [
+                  "Sub(IsFace)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 1,
+                "m_DefValue[0]": 0.03999999910593033,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.10000000149011612,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_FaceAdditional",
+                "m_Description": "FaceAdditional (Cheek,Highlight)",
+                "m_Attributes": [
+                  "Main(FaceAdd,_,off,off)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_FaceAdditionalMap",
+                "m_Description": "FaceAdditionalMap",
+                "m_Attributes": [
+                  "Tex(FaceAdd)"
+                ],
+                "m_Type": 4,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "black",
+                  "m_TexDim": 2
+                }
+              },
+              {
+                "m_Name": "_ShouldApplyFaceAdditional",
+                "m_Description": "例外的に適用?",
+                "m_Attributes": [
+                  "SubToggle(FaceAdd,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_CheekColor",
+                "m_Description": "CheekColor",
+                "m_Attributes": [
+                  "Title(FaceAdd,Cheek)",
+                  "Sub(FaceAdd)"
+                ],
+                "m_Type": 0,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 0.699999988079071,
+                "m_DefValue[2]": 0.699999988079071,
+                "m_DefValue[3]": 1.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_CheekValue",
+                "m_Description": "CheekValue",
+                "m_Attributes": [
+                  "Sub(FaceAdd)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.699999988079071,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_IsEye",
+                "m_Description": "IsEye",
+                "m_Attributes": [
+                  "Title(FaceAdd,Eye)",
+                  "SubToggle(FaceAdd,_ISEYE)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_HighlightThreshold",
+                "m_Description": "HightlightThreshold",
+                "m_Attributes": [
+                  "Sub(FaceAdd)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.5,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_HighlightRotation",
+                "m_Description": "HightlightRotation",
+                "m_Attributes": [
+                  "Sub(FaceAdd)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": -1.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_IsHair",
+                "m_Description": "IsHair",
+                "m_Attributes": [
+                  "Main(IsHair,_IS_HAIR)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_AngelRingMap",
+                "m_Description": "AngelRingMap",
+                "m_Attributes": [
+                  "Tex(IsHair)"
+                ],
+                "m_Type": 4,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "black",
+                  "m_TexDim": 2
+                }
+              },
+              {
+                "m_Name": "_YuugenHighlight",
+                "m_Description": "IsHairUVAngelRing",
+                "m_Attributes": [
+                  "SubToggle(IsHair,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_UseOutline",
+                "m_Description": "Outline",
+                "m_Attributes": [
+                  "Main(Outline,_USE_OUTLINE)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_UseBakedNormal",
+                "m_Description": "UseBakedNormal",
+                "m_Attributes": [
+                  "SubToggle(Outline,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_OutlineWidth",
+                "m_Description": "OutlineWidth",
+                "m_Attributes": [
+                  "Sub(Outline)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 5.0,
+                "m_DefValue[1]": 0.0010000000474974513,
+                "m_DefValue[2]": 10.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_OutlineTexBlend",
+                "m_Description": "OutlineTexBlend",
+                "m_Attributes": [
+                  "Sub(Outline)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.20000000298023224,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_OutlineColor",
+                "m_Description": "OutlineColor",
+                "m_Attributes": [
+                  "Sub(Outline)"
+                ],
+                "m_Type": 0,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 1.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_OutlineEmissionColor",
+                "m_Description": "OutlineEmissionColor",
+                "m_Attributes": [
+                  "Sub(Outline)"
+                ],
+                "m_Type": 0,
+                "m_Flags": 16,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 1.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_OutlineZOffset",
+                "m_Description": "Offset Outline with Camera Z-axis",
+                "m_Attributes": [
+                  "Sub(Outline)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": -0.10000000149011612,
+                "m_DefValue[2]": 0.10000000149011612,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_FaceOutlineAdjust",
+                "m_Description": "Outline Adjust By VCol B",
+                "m_Attributes": [
+                  "Sub(Outline)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 10.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_UseRimLight",
+                "m_Description": "RimLight",
+                "m_Attributes": [
+                  "Main(RimLight,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_RimLightColor",
+                "m_Description": "RimLightColor",
+                "m_Attributes": [
+                  "Sub(RimLight)"
+                ],
+                "m_Type": 0,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 1.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 1.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_UseFresnel",
+                "m_Description": "Fresnel",
+                "m_Attributes": [
+                  "Main(Fresnel,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_FresnelMaskByMetallic",
+                "m_Description": "メタリックでマスクする",
+                "m_Attributes": [
+                  "SubToggle(Fresnel,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_FresnelColor",
+                "m_Description": "Fresnel Color",
+                "m_Attributes": [
+                  "Sub(Fresnel)"
+                ],
+                "m_Type": 0,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 1.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 1.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_FresnelThreshold",
+                "m_Description": "Fresnel Threshold",
+                "m_Attributes": [
+                  "Sub(Fresnel)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.5,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_FresnelFeather",
+                "m_Description": "Fresnel Feather",
+                "m_Attributes": [
+                  "Sub(Fresnel)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.25,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_UseMatCap",
+                "m_Description": "MatCap",
+                "m_Attributes": [
+                  "Main(MatCap,_,off,on)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_MatCapTex",
+                "m_Description": "MatCap",
+                "m_Attributes": [
+                  "Tex(MatCap)"
+                ],
+                "m_Type": 4,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "linearGrey",
+                  "m_TexDim": 2
+                }
+              },
+              {
+                "m_Name": "_MatCapIntensity",
+                "m_Description": "MatCapIntensity",
+                "m_Attributes": [
+                  "Sub(MatCap)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 2.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_MaskMatcapSpecular",
+                "m_Description": "Specularでマスク",
+                "m_Attributes": [
+                  "SubToggle(MatCap,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_MaskMatcapMetallic",
+                "m_Description": "Metallicでマスク",
+                "m_Attributes": [
+                  "SubToggle(MatCap,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_IsGem",
+                "m_Description": "Gem",
+                "m_Attributes": [
+                  "Main(Gem,_ISGEM)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_UseGemDepthDiff",
+                "m_Description": "深度不透過",
+                "m_Attributes": [
+                  "SubToggle(Gem,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_Gem1stHighlightSize",
+                "m_Description": "大ハイライトのサイズ",
+                "m_Attributes": [
+                  "Sub(Gem)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": -1.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_Gem2ndHighlightSize",
+                "m_Description": "小ハイライトのサイズ",
+                "m_Attributes": [
+                  "Sub(Gem)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": -1.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_GemDepthDiffThreshold",
+                "m_Description": "不透過のしきい値",
+                "m_Attributes": [
+                  "Sub(Gem)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.5,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_GemHeightCorrection",
+                "m_Description": "影の高さ補正",
+                "m_Attributes": [
+                  "Sub(Gem)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": -1.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_Gem1stShadSize",
+                "m_Description": "明色部分のサイズ",
+                "m_Attributes": [
+                  "Sub(Gem)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": -1.0,
+                "m_DefValue[2]": 2.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_Gem2ndShadSize",
+                "m_Description": "暗色部分のサイズ",
+                "m_Attributes": [
+                  "Sub(Gem)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": -1.0,
+                "m_DefValue[2]": 2.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_GemRimFresnel",
+                "m_Description": "フレネルのサイズ",
+                "m_Attributes": [
+                  "Sub(Gem)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.5,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_IsAniso",
+                "m_Description": "Aniso",
+                "m_Attributes": [
+                  "Main(Aniso,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_AnisoMaskByMetallic",
+                "m_Description": "メタリックでマスクする",
+                "m_Attributes": [
+                  "SubToggle(Aniso,_)"
+                ],
+                "m_Type": 2,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.0,
+                "m_DefValue[1]": 0.0,
+                "m_DefValue[2]": 0.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_AnisoColor",
+                "m_Description": "AnisoColor",
+                "m_Attributes": [
+                  "Sub(Aniso)"
+                ],
+                "m_Type": 0,
+                "m_Flags": 0,
+                "m_DefValue[0]": 1.0,
+                "m_DefValue[1]": 1.0,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 1.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              },
+              {
+                "m_Name": "_AnisoThreshold",
+                "m_Description": "Anisoのしきい値",
+                "m_Attributes": [
+                  "Sub(Aniso)"
+                ],
+                "m_Type": 3,
+                "m_Flags": 0,
+                "m_DefValue[0]": 0.8999999761581421,
+                "m_DefValue[1]": 0.800000011920929,
+                "m_DefValue[2]": 1.0,
+                "m_DefValue[3]": 0.0,
+                "m_DefTexture": {
+                  "m_DefaultName": "",
+                  "m_TexDim": 1
+                }
+              }
+            ],
+            "truncated": true
+          }
+        },
+        "m_SubShaders": {
+          "type": "list",
+          "length": 1,
+          "items": [
+            {
+              "m_Passes": {
+                "type": "list",
+                "length": 9,
+                "items": [
+                  {
+                    "m_EditorDataHash": {
+                      "type": "list",
+                      "length": 1,
+                      "items": [
+                        {
+                          "type": "dict",
+                          "length": 16
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Platforms": [
+                      9
+                    ],
+                    "m_NameIndices": {
+                      "type": "list",
+                      "length": 33,
+                      "items": [
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Type": 0,
+                    "m_State": {
+                      "m_Name": "ReDriveToonOutlinePass",
+                      "rtBlend0": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend1": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend2": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend3": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend4": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend5": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend6": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend7": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtSeparateBlend": false,
+                      "zClip": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zTest": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zWrite": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "culling": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "conservative": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetFactor": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetUnits": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "alphaToMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilOp": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpFront": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpBack": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilReadMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilWriteMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilRef": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogStart": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogEnd": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogDensity": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogColor": {
+                        "type": "dict",
+                        "length": 5
+                      },
+                      "fogMode": -1,
+                      "gpuProgramID": 51897,
+                      "m_Tags": {
+                        "type": "dict",
+                        "length": 1
+                      },
+                      "m_LOD": 0,
+                      "lighting": false
+                    },
+                    "m_ProgramMask": 6,
+                    "progVertex": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 7
+                      }
+                    },
+                    "progFragment": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 8
+                      }
+                    },
+                    "progGeometry": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progHull": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progDomain": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progRayTracing": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "m_HasInstancingVariant": false,
+                    "m_HasProceduralInstancingVariant": false,
+                    "m_UseName": "",
+                    "m_Name": "",
+                    "m_TextureName": "",
+                    "m_Tags": {
+                      "tags": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    }
+                  },
+                  {
+                    "m_EditorDataHash": {
+                      "type": "list",
+                      "length": 1,
+                      "items": [
+                        {
+                          "type": "dict",
+                          "length": 16
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Platforms": [
+                      9
+                    ],
+                    "m_NameIndices": {
+                      "type": "list",
+                      "length": 23,
+                      "items": [
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Type": 0,
+                    "m_State": {
+                      "m_Name": "ReDriveToonSelectionStencilPass",
+                      "rtBlend0": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend1": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend2": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend3": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend4": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend5": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend6": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend7": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtSeparateBlend": false,
+                      "zClip": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zTest": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zWrite": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "culling": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "conservative": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetFactor": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetUnits": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "alphaToMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilOp": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpFront": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpBack": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilReadMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilWriteMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilRef": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogStart": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogEnd": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogDensity": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogColor": {
+                        "type": "dict",
+                        "length": 5
+                      },
+                      "fogMode": -1,
+                      "gpuProgramID": 101721,
+                      "m_Tags": {
+                        "type": "dict",
+                        "length": 1
+                      },
+                      "m_LOD": 0,
+                      "lighting": false
+                    },
+                    "m_ProgramMask": 6,
+                    "progVertex": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 4
+                      }
+                    },
+                    "progFragment": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 4
+                      }
+                    },
+                    "progGeometry": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progHull": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progDomain": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progRayTracing": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "m_HasInstancingVariant": false,
+                    "m_HasProceduralInstancingVariant": false,
+                    "m_UseName": "",
+                    "m_Name": "",
+                    "m_TextureName": "",
+                    "m_Tags": {
+                      "tags": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    }
+                  },
+                  {
+                    "m_EditorDataHash": {
+                      "type": "list",
+                      "length": 1,
+                      "items": [
+                        {
+                          "type": "dict",
+                          "length": 16
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Platforms": [
+                      9
+                    ],
+                    "m_NameIndices": {
+                      "type": "list",
+                      "length": 26,
+                      "items": [
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Type": 0,
+                    "m_State": {
+                      "m_Name": "ReDriveToonSelectionOutlinePass",
+                      "rtBlend0": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend1": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend2": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend3": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend4": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend5": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend6": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend7": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtSeparateBlend": false,
+                      "zClip": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zTest": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zWrite": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "culling": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "conservative": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetFactor": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetUnits": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "alphaToMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilOp": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpFront": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpBack": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilReadMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilWriteMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilRef": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogStart": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogEnd": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogDensity": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogColor": {
+                        "type": "dict",
+                        "length": 5
+                      },
+                      "fogMode": -1,
+                      "gpuProgramID": 160857,
+                      "m_Tags": {
+                        "type": "dict",
+                        "length": 1
+                      },
+                      "m_LOD": 0,
+                      "lighting": false
+                    },
+                    "m_ProgramMask": 6,
+                    "progVertex": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 7
+                      }
+                    },
+                    "progFragment": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 8
+                      }
+                    },
+                    "progGeometry": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progHull": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progDomain": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progRayTracing": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "m_HasInstancingVariant": false,
+                    "m_HasProceduralInstancingVariant": false,
+                    "m_UseName": "",
+                    "m_Name": "",
+                    "m_TextureName": "",
+                    "m_Tags": {
+                      "tags": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    }
+                  },
+                  {
+                    "m_EditorDataHash": {
+                      "type": "list",
+                      "length": 1,
+                      "items": [
+                        {
+                          "type": "dict",
+                          "length": 16
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Platforms": [
+                      9
+                    ],
+                    "m_NameIndices": {
+                      "type": "list",
+                      "length": 62,
+                      "items": [
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Type": 0,
+                    "m_State": {
+                      "m_Name": "ReDriveToon",
+                      "rtBlend0": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend1": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend2": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend3": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend4": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend5": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend6": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend7": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtSeparateBlend": false,
+                      "zClip": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zTest": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zWrite": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "culling": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "conservative": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetFactor": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetUnits": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "alphaToMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilOp": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpFront": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpBack": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilReadMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilWriteMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilRef": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogStart": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogEnd": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogDensity": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogColor": {
+                        "type": "dict",
+                        "length": 5
+                      },
+                      "fogMode": -1,
+                      "gpuProgramID": 242059,
+                      "m_Tags": {
+                        "type": "dict",
+                        "length": 1
+                      },
+                      "m_LOD": 0,
+                      "lighting": false
+                    },
+                    "m_ProgramMask": 6,
+                    "progVertex": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 19
+                      }
+                    },
+                    "progFragment": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 20
+                      }
+                    },
+                    "progGeometry": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progHull": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progDomain": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progRayTracing": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "m_HasInstancingVariant": false,
+                    "m_HasProceduralInstancingVariant": false,
+                    "m_UseName": "",
+                    "m_Name": "",
+                    "m_TextureName": "",
+                    "m_Tags": {
+                      "tags": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    }
+                  },
+                  {
+                    "m_EditorDataHash": {
+                      "type": "list",
+                      "length": 1,
+                      "items": [
+                        {
+                          "type": "dict",
+                          "length": 16
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Platforms": [
+                      9
+                    ],
+                    "m_NameIndices": {
+                      "type": "list",
+                      "length": 62,
+                      "items": [
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Type": 0,
+                    "m_State": {
+                      "m_Name": "ReDriveToonStencilMaskPass",
+                      "rtBlend0": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend1": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend2": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend3": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend4": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend5": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend6": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend7": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtSeparateBlend": false,
+                      "zClip": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zTest": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zWrite": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "culling": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "conservative": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetFactor": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetUnits": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "alphaToMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilOp": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpFront": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpBack": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilReadMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilWriteMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilRef": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogStart": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogEnd": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogDensity": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogColor": {
+                        "type": "dict",
+                        "length": 5
+                      },
+                      "fogMode": -1,
+                      "gpuProgramID": 284686,
+                      "m_Tags": {
+                        "type": "dict",
+                        "length": 1
+                      },
+                      "m_LOD": 0,
+                      "lighting": false
+                    },
+                    "m_ProgramMask": 6,
+                    "progVertex": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 19
+                      }
+                    },
+                    "progFragment": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 20
+                      }
+                    },
+                    "progGeometry": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progHull": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progDomain": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progRayTracing": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "m_HasInstancingVariant": false,
+                    "m_HasProceduralInstancingVariant": false,
+                    "m_UseName": "",
+                    "m_Name": "",
+                    "m_TextureName": "",
+                    "m_Tags": {
+                      "tags": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    }
+                  },
+                  {
+                    "m_EditorDataHash": {
+                      "type": "list",
+                      "length": 1,
+                      "items": [
+                        {
+                          "type": "dict",
+                          "length": 16
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Platforms": [
+                      9
+                    ],
+                    "m_NameIndices": {
+                      "type": "list",
+                      "length": 20,
+                      "items": [
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Type": 0,
+                    "m_State": {
+                      "m_Name": "ReDriveToonShadowCast",
+                      "rtBlend0": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend1": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend2": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend3": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend4": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend5": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend6": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend7": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtSeparateBlend": false,
+                      "zClip": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zTest": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zWrite": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "culling": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "conservative": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetFactor": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetUnits": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "alphaToMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilOp": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpFront": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpBack": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilReadMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilWriteMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilRef": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogStart": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogEnd": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogDensity": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogColor": {
+                        "type": "dict",
+                        "length": 5
+                      },
+                      "fogMode": -1,
+                      "gpuProgramID": 331683,
+                      "m_Tags": {
+                        "type": "dict",
+                        "length": 1
+                      },
+                      "m_LOD": 0,
+                      "lighting": false
+                    },
+                    "m_ProgramMask": 6,
+                    "progVertex": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 5
+                      }
+                    },
+                    "progFragment": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 5
+                      }
+                    },
+                    "progGeometry": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progHull": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progDomain": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progRayTracing": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "m_HasInstancingVariant": true,
+                    "m_HasProceduralInstancingVariant": false,
+                    "m_UseName": "",
+                    "m_Name": "",
+                    "m_TextureName": "",
+                    "m_Tags": {
+                      "tags": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    }
+                  },
+                  {
+                    "m_EditorDataHash": {
+                      "type": "list",
+                      "length": 1,
+                      "items": [
+                        {
+                          "type": "dict",
+                          "length": 16
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Platforms": [
+                      9
+                    ],
+                    "m_NameIndices": {
+                      "type": "list",
+                      "length": 18,
+                      "items": [
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Type": 0,
+                    "m_State": {
+                      "m_Name": "ReDriveToonShadowCast",
+                      "rtBlend0": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend1": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend2": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend3": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend4": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend5": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend6": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend7": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtSeparateBlend": false,
+                      "zClip": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zTest": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zWrite": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "culling": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "conservative": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetFactor": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetUnits": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "alphaToMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilOp": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpFront": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpBack": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilReadMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilWriteMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilRef": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogStart": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogEnd": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogDensity": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogColor": {
+                        "type": "dict",
+                        "length": 5
+                      },
+                      "fogMode": -1,
+                      "gpuProgramID": 438236,
+                      "m_Tags": {
+                        "type": "dict",
+                        "length": 1
+                      },
+                      "m_LOD": 0,
+                      "lighting": false
+                    },
+                    "m_ProgramMask": 6,
+                    "progVertex": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 5
+                      }
+                    },
+                    "progFragment": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 5
+                      }
+                    },
+                    "progGeometry": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progHull": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progDomain": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progRayTracing": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "m_HasInstancingVariant": true,
+                    "m_HasProceduralInstancingVariant": false,
+                    "m_UseName": "",
+                    "m_Name": "",
+                    "m_TextureName": "",
+                    "m_Tags": {
+                      "tags": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    }
+                  },
+                  {
+                    "m_EditorDataHash": {
+                      "type": "list",
+                      "length": 1,
+                      "items": [
+                        {
+                          "type": "dict",
+                          "length": 16
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Platforms": [
+                      9
+                    ],
+                    "m_NameIndices": {
+                      "type": "list",
+                      "length": 19,
+                      "items": [
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Type": 0,
+                    "m_State": {
+                      "m_Name": "DepthOnly",
+                      "rtBlend0": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend1": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend2": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend3": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend4": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend5": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend6": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend7": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtSeparateBlend": false,
+                      "zClip": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zTest": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zWrite": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "culling": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "conservative": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetFactor": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetUnits": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "alphaToMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilOp": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpFront": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpBack": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilReadMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilWriteMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilRef": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogStart": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogEnd": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogDensity": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogColor": {
+                        "type": "dict",
+                        "length": 5
+                      },
+                      "fogMode": -1,
+                      "gpuProgramID": 502090,
+                      "m_Tags": {
+                        "type": "dict",
+                        "length": 1
+                      },
+                      "m_LOD": 0,
+                      "lighting": false
+                    },
+                    "m_ProgramMask": 6,
+                    "progVertex": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 7
+                      }
+                    },
+                    "progFragment": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 7
+                      }
+                    },
+                    "progGeometry": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progHull": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progDomain": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progRayTracing": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "m_HasInstancingVariant": true,
+                    "m_HasProceduralInstancingVariant": false,
+                    "m_UseName": "",
+                    "m_Name": "",
+                    "m_TextureName": "",
+                    "m_Tags": {
+                      "tags": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    }
+                  },
+                  {
+                    "m_EditorDataHash": {
+                      "type": "list",
+                      "length": 1,
+                      "items": [
+                        {
+                          "type": "dict",
+                          "length": 16
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Platforms": [
+                      9
+                    ],
+                    "m_NameIndices": {
+                      "type": "list",
+                      "length": 60,
+                      "items": [
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        },
+                        {
+                          "type": "tuple",
+                          "length": 2
+                        }
+                      ],
+                      "truncated": false
+                    },
+                    "m_Type": 0,
+                    "m_State": {
+                      "m_Name": "ReDriveToon",
+                      "rtBlend0": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend1": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend2": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend3": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend4": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend5": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend6": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtBlend7": {
+                        "type": "dict",
+                        "length": 7
+                      },
+                      "rtSeparateBlend": false,
+                      "zClip": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zTest": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "zWrite": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "culling": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "conservative": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetFactor": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "offsetUnits": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "alphaToMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilOp": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpFront": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilOpBack": {
+                        "type": "dict",
+                        "length": 4
+                      },
+                      "stencilReadMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilWriteMask": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "stencilRef": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogStart": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogEnd": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogDensity": {
+                        "type": "dict",
+                        "length": 2
+                      },
+                      "fogColor": {
+                        "type": "dict",
+                        "length": 5
+                      },
+                      "fogMode": -1,
+                      "gpuProgramID": 532565,
+                      "m_Tags": {
+                        "type": "dict",
+                        "length": 1
+                      },
+                      "m_LOD": 0,
+                      "lighting": false
+                    },
+                    "m_ProgramMask": 6,
+                    "progVertex": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 4
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 18
+                      }
+                    },
+                    "progFragment": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 19
+                      }
+                    },
+                    "progGeometry": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progHull": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progDomain": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "progRayTracing": {
+                      "m_SubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_PlayerSubPrograms": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_ParameterBlobIndices": {
+                        "type": "list",
+                        "length": 0
+                      },
+                      "m_CommonParameters": {
+                        "type": "dict",
+                        "length": 8
+                      },
+                      "m_SerializedKeywordStateMask": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    },
+                    "m_HasInstancingVariant": false,
+                    "m_HasProceduralInstancingVariant": false,
+                    "m_UseName": "",
+                    "m_Name": "",
+                    "m_TextureName": "",
+                    "m_Tags": {
+                      "tags": {
+                        "type": "list",
+                        "length": 0
+                      }
+                    }
+                  }
+                ],
+                "truncated": false
+              },
+              "m_Tags": {
+                "tags": {
+                  "type": "list",
+                  "length": 5,
+                  "items": [
+                    [
+                      "IGNOREPROJECTOR",
+                      "true"
+                    ],
+                    [
+                      "QUEUE",
+                      "Geometry"
+                    ],
+                    [
+                      "RenderPipeline",
+                      "UniversalPipeline"
+                    ],
+                    [
+                      "RenderType",
+                      "Opaque"
+                    ],
+                    [
+                      "ShaderModel",
+                      "4.5"
+                    ]
+                  ],
+                  "truncated": false
+                }
+              },
+              "m_LOD": 0
+            }
+          ],
+          "truncated": false
+        },
+        "m_KeywordNames": [
+          "STEREO_INSTANCING_ON",
+          "UNITY_SINGLE_PASS_STEREO",
+          "STEREO_MULTIVIEW_ON",
+          "STEREO_CUBEMAP_RENDER_ON",
+          "_ADDITIONAL_LIGHTS",
+          "FOG_LINEAR",
+          "_ISFACE",
+          "_LIGHT_COOKIES",
+          "_RDTOON_ENABLE_SELF_SHADOW",
+          "_MAIN_LIGHT_SHADOWS",
+          "_MAIN_LIGHT_SHADOWS_CASCADE",
+          "_ADDITIONAL_LIGHTS_VERTEX",
+          "_ADDITIONAL_LIGHT_SHADOWS",
+          "_IS_HAIR",
+          "_USE_RIM_LIGHT",
+          "_ISEYE",
+          "_ISGEM",
+          "_FACE_SHADOW_GRADIENTMAP",
+          "_USE_DEPTHTEX_RIM_SHADOW",
+          "_USE_ZOFFSET",
+          "INSTANCING_ON"
+        ],
+        "m_KeywordFlags": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "m_Name": "Creative/Character/ReDriveToon",
+        "m_CustomEditorName": "LWGUI.LWGUI",
+        "m_FallbackName": "",
+        "m_Dependencies": [],
+        "m_CustomEditorForRenderPipelines": [],
+        "m_DisableNoSubshadersMessage": false
+      },
+      "platforms": [
+        9
+      ],
+      "offsets": {
+        "type": "list",
+        "length": 1,
+        "items": [
+          [
+            0,
+            5128,
+            28307,
+            93980,
+            158628,
+            229585,
+            339225,
+            440535,
+            505067,
+            574414,
+            659133,
+            799472,
+            863141,
+            929351,
+            992009,
+            1086635,
+            1170908,
+            1233647,
+            1304304,
+            1376008,
+            1480539,
+            1544245,
+            1606724,
+            1666342,
+            1728770,
+            1792125,
+            1852642,
+            1913254
+          ]
+        ],
+        "truncated": false
+      },
+      "compressedLengths": {
+        "type": "list",
+        "length": 1,
+        "items": [
+          [
+            5128,
+            23179,
+            65673,
+            64648,
+            70957,
+            109640,
+            101310,
+            64532,
+            69347,
+            84719,
+            140339,
+            63669,
+            66210,
+            62658,
+            94626,
+            84273,
+            62739,
+            70657,
+            71704,
+            104531,
+            63706,
+            62479,
+            59618,
+            62428,
+            63355,
+            60517,
+            60612,
+            72454
+          ]
+        ],
+        "truncated": false
+      },
+      "decompressedLengths": {
+        "type": "list",
+        "length": 1,
+        "items": [
+          [
+            7372,
+            1046632,
+            1032408,
+            1034332,
+            1011348,
+            1043320,
+            1014268,
+            997252,
+            1043604,
+            1008368,
+            1045852,
+            1005580,
+            1011996,
+            1006648,
+            1025564,
+            1019680,
+            1023452,
+            993640,
+            1005128,
+            1014084,
+            1043172,
+            1033776,
+            1041784,
+            1009532,
+            1014048,
+            992056,
+            1045616,
+            950676
+          ]
+        ],
+        "truncated": false
+      },
+      "compressedBlob": {
+        "type": "list",
+        "length": 1985708,
+        "items": [
+          49,
+          102,
+          2,
+          0,
+          1,
+          0,
+          83,
+          88,
+          2,
+          0,
+          0,
+          1,
+          8,
+          0,
+          19,
+          132,
+          12,
+          0,
+          99,
+          220,
+          4,
+          0,
+          0,
+          0,
+          4,
+          12,
+          0,
+          67,
+          8,
+          0,
+          0,
+          44,
+          12,
+          0,
+          98,
+          8,
+          13,
+          0,
+          0,
+          16,
+          6,
+          12,
+          0,
+          83,
+          24,
+          19,
+          0,
+          0,
+          60,
+          12,
+          0,
+          98,
+          84,
+          25,
+          0,
+          0,
+          164,
+          113,
+          12,
+          0,
+          99,
+          248,
+          138,
+          0
+        ],
+        "truncated": true
+      },
+      "stageCounts": [
+        1
+      ],
+      "m_Dependencies": [],
+      "m_NonModifiableTextures": [],
+      "m_ShaderIsBaked": true
+    },
+    "selectedAttributes": {
+      "compressedBlob": {
+        "type": "list",
+        "length": 1985708,
+        "items": [
+          49,
+          102,
+          2,
+          0,
+          1,
+          0,
+          83,
+          88,
+          2,
+          0,
+          0,
+          1,
+          8,
+          0,
+          19,
+          132,
+          12,
+          0,
+          99,
+          220,
+          4,
+          0,
+          0,
+          0,
+          4,
+          12,
+          0,
+          67,
+          8,
+          0,
+          0,
+          44,
+          12,
+          0,
+          98,
+          8,
+          13,
+          0,
+          0,
+          16,
+          6,
+          12,
+          0,
+          83,
+          24,
+          19,
+          0,
+          0,
+          60,
+          12,
+          0,
+          98,
+          84,
+          25,
+          0,
+          0,
+          164,
+          113,
+          12,
+          0,
+          99,
+          248,
+          138,
+          0
+        ],
+        "truncated": true
+      },
+      "compressedLengths": {
+        "type": "list",
+        "length": 1,
+        "items": [
+          [
+            5128,
+            23179,
+            65673,
+            64648,
+            70957,
+            109640,
+            101310,
+            64532,
+            69347,
+            84719,
+            140339,
+            63669,
+            66210,
+            62658,
+            94626,
+            84273,
+            62739,
+            70657,
+            71704,
+            104531,
+            63706,
+            62479,
+            59618,
+            62428,
+            63355,
+            60517,
+            60612,
+            72454
+          ]
+        ],
+        "truncated": false
+      },
+      "decompressedLengths": {
+        "type": "list",
+        "length": 1,
+        "items": [
+          [
+            7372,
+            1046632,
+            1032408,
+            1034332,
+            1011348,
+            1043320,
+            1014268,
+            997252,
+            1043604,
+            1008368,
+            1045852,
+            1005580,
+            1011996,
+            1006648,
+            1025564,
+            1019680,
+            1023452,
+            993640,
+            1005128,
+            1014084,
+            1043172,
+            1033776,
+            1041784,
+            1009532,
+            1014048,
+            992056,
+            1045616,
+            950676
+          ]
+        ],
+        "truncated": false
+      },
+      "decompressedSize": null,
+      "m_Name": "",
+      "m_ParsedForm": {
+        "type": "SerializedShader",
+        "repr": "SerializedShader(m_CustomEditorName='LWGUI.LWGUI', m_Dependencies=[], m_DisableNoSubshadersMessage=False, m_FallbackName='', m_Name='Creative/Character/ReDriveToon', m_PropInfo=SerializedProperties(m_Props=[SerializedProperty(m_Attributes=['Main(Base,_,on,off)'], m_DefTexture=SerializedTextureProperty(m_DefaultName='', m_TexDim=1), m_DefValue_0_=1.0, m_DefValue_1_=0.0, m_DefValue_2_=0.0, m_DefValue_3_=0.0, m_Description='BaseSetting', m_Flags=0, m_Name='_BaseSetting', m_Type=2), SerializedProperty(m_Attributes=['Tex(Base)'], m_DefTexture=SerializedTextureProperty(m_DefaultName='white', m_TexDim=2), m_DefValue_0_=0.0, m_DefValue_1_=0.0, m_DefValue_2_=0.0, m_DefValue_3_=0.0, m_Description='BaseMap', m_Flags=0, m_Name='_BaseMap', m_Type=4), SerializedProperty(m_Attributes=['Tex(Base)'], m_DefTexture=SerializedTextureProperty(m_DefaultName='white', m_TexDim=2), m_DefValue_0_=0.0, m_DefValue_1_=0.0, m_DefValue_2_=0.0, m_DefValue_3_=0.0, m_Description='ShadowTex', m_Flags=0, m_Name='_ShadowT"
+      },
+      "m_PathName": null,
+      "m_SubProgramBlob": null,
+      "offsets": {
+        "type": "list",
+        "length": 1,
+        "items": [
+          [
+            0,
+            5128,
+            28307,
+            93980,
+            158628,
+            229585,
+            339225,
+            440535,
+            505067,
+            574414,
+            659133,
+            799472,
+            863141,
+            929351,
+            992009,
+            1086635,
+            1170908,
+            1233647,
+            1304304,
+            1376008,
+            1480539,
+            1544245,
+            1606724,
+            1666342,
+            1728770,
+            1792125,
+            1852642,
+            1913254
+          ]
+        ],
+        "truncated": false
+      },
+      "platforms": [
+        9
+      ]
+    }
+  }
+}
