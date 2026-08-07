@@ -1,0 +1,36 @@
+name: Trace ReDrive self-shadow receiver
+
+on:
+  pull_request:
+    branches:
+      - research/100101-official-material-properties-20260807
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  trace:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: research/redrive-self-shadow-receiver-20260808
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install bounded extractor dependencies
+        run: python -m pip install requests msgpack pycryptodome UnityPy lz4
+      - name: Trace executable current-JP self-shadow receiver
+        run: python scripts/trace_redrive_self_shadow_receiver.py
+      - name: Persist bounded receiver evidence
+        shell: bash --noprofile --norc -e -o pipefail {0}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          test -s research/official-redrive-self-shadow-receiver-trace.json
+          git add research/official-redrive-self-shadow-receiver-trace.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'research: persist exact ReDrive self-shadow receiver trace'
+          git push origin HEAD:research/redrive-self-shadow-receiver-20260808
