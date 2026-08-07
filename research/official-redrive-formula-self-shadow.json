@@ -1,0 +1,1794 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-modern-ReDrive-Shader-targeted-window",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "material": "mt_chara_100101_body_SJ",
+  "shaderPathId": 7704691985981102055,
+  "shaderSerializedFile": "CAB-d4292dd62db4a15308122929284b3327",
+  "group": "self-shadow",
+  "tokens": [
+    "_RDTOON_ENABLE_SELF_SHADOW",
+    "RdToonSelfShadow",
+    "_RdToonSelfShadowMapRT",
+    "useNdotLFix",
+    "NdotLFix"
+  ],
+  "decompressedChunkCount": 28,
+  "occurrenceCount": 2192,
+  "hitChunks": [
+    2,
+    6,
+    7,
+    8,
+    9,
+    10,
+    15,
+    16,
+    17,
+    18,
+    19,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "windowRadiusBytes": 6144,
+  "selectedWindowCount": 3,
+  "windows": [
+    {
+      "chunkIndex": 6,
+      "platform": 9,
+      "decodedSha256": "a717fbab9e2a0dd2f76987fb94339326ee4c3208d1ee5f3d4d6ec7668b3657e9",
+      "centerOffset": 441043,
+      "centerToken": "RdToonSelfShadow",
+      "score": 67,
+      "targetTokensPresent": [
+        "_rdtoonselfshadowmaprt",
+        "ndotlfix",
+        "rdtoonselfshadow",
+        "usendotlfix"
+      ],
+      "start": 434899,
+      "end": 447187,
+      "byteCount": 12288,
+      "asciiLineCount": 232,
+      "storedLineCount": 140,
+      "rows": [
+        {
+          "offset": 434900,
+          "text": "vec2 u_xlat37;"
+        },
+        {
+          "offset": 434915,
+          "text": "int u_xlati37;"
+        },
+        {
+          "offset": 434930,
+          "text": "uvec2 u_xlatu37;"
+        },
+        {
+          "offset": 434947,
+          "text": "bvec2 u_xlatb37;"
+        },
+        {
+          "offset": 434964,
+          "text": "bool u_xlatb38;"
+        },
+        {
+          "offset": 434980,
+          "text": "mediump float u_xlat16_42;"
+        },
+        {
+          "offset": 435007,
+          "text": "vec2 u_xlat44;"
+        },
+        {
+          "offset": 435022,
+          "text": "bvec2 u_xlatb44;"
+        },
+        {
+          "offset": 435039,
+          "text": "mediump float u_xlat16_46;"
+        },
+        {
+          "offset": 435066,
+          "text": "float u_xlat54;"
+        },
+        {
+          "offset": 435082,
+          "text": "mediump float u_xlat16_54;"
+        },
+        {
+          "offset": 435109,
+          "text": "bool u_xlatb54;"
+        },
+        {
+          "offset": 435125,
+          "text": "float u_xlat55;"
+        },
+        {
+          "offset": 435141,
+          "text": "float u_xlat57;"
+        },
+        {
+          "offset": 435157,
+          "text": "bool u_xlatb57;"
+        },
+        {
+          "offset": 435173,
+          "text": "float u_xlat58;"
+        },
+        {
+          "offset": 435189,
+          "text": "mediump float u_xlat16_60;"
+        },
+        {
+          "offset": 435216,
+          "text": "mediump float u_xlat16_64;"
+        },
+        {
+          "offset": 435243,
+          "text": "int int_bitfieldInsert(int base, int insert, int offset, int bits) {"
+        },
+        {
+          "offset": 435312,
+          "text": "    uint mask = uint(~(int(~0) << uint(bits)) << uint(offset));"
+        },
+        {
+          "offset": 435376,
+          "text": "    return int((uint(base) & ~mask) | ((uint(insert) << uint(offset)) & mask));"
+        },
+        {
+          "offset": 435459,
+          "text": "void main()"
+        },
+        {
+          "offset": 435473,
+          "text": "ImmCB_0[0] = vec4(0.0588235296,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435518,
+          "text": "ImmCB_0[1] = vec4(0.529411793,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435562,
+          "text": "ImmCB_0[2] = vec4(0.176470593,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435606,
+          "text": "ImmCB_0[3] = vec4(0.647058845,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435650,
+          "text": "ImmCB_0[4] = vec4(0.764705896,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435694,
+          "text": "ImmCB_0[5] = vec4(0.294117659,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435738,
+          "text": "ImmCB_0[6] = vec4(0.882352948,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435782,
+          "text": "ImmCB_0[7] = vec4(0.411764711,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435826,
+          "text": "ImmCB_0[8] = vec4(0.235294119,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435870,
+          "text": "ImmCB_0[9] = vec4(0.70588237,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435913,
+          "text": "ImmCB_0[10] = vec4(0.117647059,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 435958,
+          "text": "ImmCB_0[11] = vec4(0.588235319,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 436003,
+          "text": "ImmCB_0[12] = vec4(0.941176474,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 436048,
+          "text": "ImmCB_0[13] = vec4(0.470588237,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 436093,
+          "text": "ImmCB_0[14] = vec4(0.823529422,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 436138,
+          "text": "ImmCB_0[15] = vec4(0.352941185,0.0,0.0,0.0);"
+        },
+        {
+          "offset": 436183,
+          "text": "vec4 hlslcc_FragCoord = vec4(gl_FragCoord.xyz, 1.0/gl_FragCoord.w);"
+        },
+        {
+          "offset": 436251,
+          "text": "    u_xlat16_0.xyz = texture(_BaseMap, vs_TEXCOORD0.xy, _GlobalMipBias.x).xyz;"
+        },
+        {
+          "offset": 436330,
+          "text": "    u_xlat16_1 = texture(_ShadowTex, vs_TEXCOORD0.xy, _GlobalMipBias.x);"
+        },
+        {
+          "offset": 436403,
+          "text": "    u_xlat16_2 = texture(_ControlMap, vs_TEXCOORD0.xy, _GlobalMipBias.x);"
+        },
+        {
+          "offset": 436477,
+          "text": "    u_xlat16_3.xyz = texture(_EmissionMap, vs_TEXCOORD0.xy, _GlobalMipBias.x).xyz;"
+        },
+        {
+          "offset": 436560,
+          "text": "    u_xlat4.xyz = u_xlat16_3.xyz * _EmissionColor.xyz;"
+        },
+        {
+          "offset": 436615,
+          "text": "    u_xlat5.xy = _Time.yy * vec2(_DissolveScroll.x, _DissolveScroll.y);"
+        },
+        {
+          "offset": 436687,
+          "text": "    u_xlat5.xy = vec2(vec2(_DissolveTilling, _DissolveTilling)) * vs_TEXCOORD0.xy + u_xlat5.xy;"
+        },
+        {
+          "offset": 436783,
+          "text": "    u_xlat5.xy = fract(u_xlat5.xy);"
+        },
+        {
+          "offset": 436819,
+          "text": "    u_xlat16_6 = u_xlat16_1 * _ShadowColor;"
+        },
+        {
+          "offset": 436863,
+          "text": "    u_xlatb54 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_Transparency);"
+        },
+        {
+          "offset": 436926,
+          "text": "    u_xlatb1.x = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_AlphaClipping);"
+        },
+        {
+          "offset": 436991,
+          "text": "    u_xlatb54 = u_xlatb54 || u_xlatb1.x;"
+        },
+        {
+          "offset": 437032,
+          "text": "    u_xlat16_19 = texture(_DissolveTex, u_xlat5.xy, _GlobalMipBias.x).x;"
+        },
+        {
+          "offset": 437105,
+          "text": "    u_xlat16_7.x = _IsDissolve * 0.5;"
+        },
+        {
+          "offset": 437143,
+          "text": "    u_xlat19.x = (-u_xlat16_19) + 1.0;"
+        },
+        {
+          "offset": 437182,
+          "text": "    u_xlat37.x = (-u_xlat16_1.w) * _ShadowColor.w + 1.0;"
+        },
+        {
+          "offset": 437239,
+          "text": "    u_xlat19.x = (-u_xlat19.x) * u_xlat37.x + (-u_xlat16_6.w);"
+        },
+        {
+          "offset": 437302,
+          "text": "    u_xlat19.x = u_xlat19.x + 1.0;"
+        },
+        {
+          "offset": 437337,
+          "text": "    u_xlat19.x = u_xlat16_7.x * u_xlat19.x + u_xlat16_6.w;"
+        },
+        {
+          "offset": 437396,
+          "text": "    u_xlat54 = (u_xlatb54) ? u_xlat19.x : 1.0;"
+        },
+        {
+          "offset": 437443,
+          "text": "    u_xlatb19 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_IsDissolve);"
+        },
+        {
+          "offset": 437504,
+          "text": "    u_xlatb1.x = u_xlatb19 || u_xlatb1.x;"
+        },
+        {
+          "offset": 437546,
+          "text": "    u_xlat16_60 = u_xlat54 + -0.5;"
+        },
+        {
+          "offset": 437581,
+          "text": "    u_xlatb19 = u_xlat16_60<0.0;"
+        },
+        {
+          "offset": 437614,
+          "text": "    u_xlatb1.x = u_xlatb1.x && u_xlatb19;"
+        },
+        {
+          "offset": 437656,
+          "text": "    if(u_xlatb1.x){discard;}"
+        },
+        {
+          "offset": 437685,
+          "text": "    u_xlat1.x = dot(vs_TEXCOORD3.xyz, vs_TEXCOORD3.xyz);"
+        },
+        {
+          "offset": 437742,
+          "text": "    u_xlat1.x = inversesqrt(u_xlat1.x);"
+        },
+        {
+          "offset": 437782,
+          "text": "    u_xlat19.xyz = u_xlat1.xxx * vs_TEXCOORD3.xyz;"
+        },
+        {
+          "offset": 437833,
+          "text": "    u_xlat57 = dot(vs_NORMAL0.xyz, vs_NORMAL0.xyz);"
+        },
+        {
+          "offset": 437885,
+          "text": "    u_xlat57 = inversesqrt(u_xlat57);"
+        },
+        {
+          "offset": 437923,
+          "text": "    u_xlat5.xyz = vec3(u_xlat57) * vs_NORMAL0.xyz;"
+        },
+        {
+          "offset": 437974,
+          "text": "    u_xlat57 = dot(vs_TEXCOORD5.xyz, vs_TEXCOORD5.xyz);"
+        },
+        {
+          "offset": 438030,
+          "text": "    u_xlat57 = inversesqrt(u_xlat57);"
+        },
+        {
+          "offset": 438068,
+          "text": "    u_xlat8.xy = vec2(u_xlat57) * vs_TEXCOORD5.xz;"
+        },
+        {
+          "offset": 438119,
+          "text": "    u_xlat19.x = dot(u_xlat5.xyz, u_xlat19.xyz);"
+        },
+        {
+          "offset": 438168,
+          "text": "    u_xlat19.x = clamp(u_xlat19.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 438214,
+          "text": "    u_xlat7 = hlslcc_FragCoord.xyxy / _ScaledScreenParams.xyxy;"
+        },
+        {
+          "offset": 438278,
+          "text": "    u_xlat37.xy = u_xlat7.zw * _ScreenParams.xy;"
+        },
+        {
+          "offset": 438327,
+          "text": "    u_xlatu37.xy = uvec2(u_xlat37.xy);"
+        },
+        {
+          "offset": 438366,
+          "text": "    u_xlati37 = int(int_bitfieldInsert(0, int(u_xlatu37.x), 2 & int(0x1F), 2));"
+        },
+        {
+          "offset": 438446,
+          "text": "    u_xlati37 = int(int_bitfieldInsert(u_xlati37, int(u_xlatu37.y), 0 & int(0x1F), 2));"
+        },
+        {
+          "offset": 438534,
+          "text": "    u_xlat37.x = 0.5 + (-ImmCB_0[u_xlati37].x);"
+        },
+        {
+          "offset": 438582,
+          "text": "    u_xlat37.x = _DitherFade * u_xlat37.x + 0.5;"
+        },
+        {
+          "offset": 438631,
+          "text": "    u_xlat55 = (-_DitherFade) + 1.0;"
+        },
+        {
+          "offset": 438668,
+          "text": "    u_xlat37.x = (-u_xlat37.x) + u_xlat55;"
+        },
+        {
+          "offset": 438711,
+          "text": "    u_xlatb37.x = u_xlat37.x<0.0;"
+        },
+        {
+          "offset": 438745,
+          "text": "    if(u_xlatb37.x){discard;}"
+        },
+        {
+          "offset": 438775,
+          "text": "    u_xlat37.x = dot(_MainLightPosition.xyz, _MainLightPosition.xyz);"
+        },
+        {
+          "offset": 438845,
+          "text": "    u_xlat37.x = max(u_xlat37.x, 1.17549435e-38);"
+        },
+        {
+          "offset": 438895,
+          "text": "    u_xlat37.x = inversesqrt(u_xlat37.x);"
+        },
+        {
+          "offset": 438937,
+          "text": "    u_xlat9.xyz = u_xlat37.xxx * _MainLightPosition.xyz;"
+        },
+        {
+          "offset": 438994,
+          "text": "    u_xlat16_10.xyz = (-_MainLightPosition.xyz) * u_xlat37.xxx + vec3(_GlobalCharacterLightingOverrideDirection.x, _GlobalCharacterLightingOverrideDirection.y, _GlobalCharacterLightingOverrideDirection.z);"
+        },
+        {
+          "offset": 439200,
+          "text": "    u_xlat16_10.xyz = vec3(_GlobalCharacterLightingOverrideDirectionEnabled) * u_xlat16_10.xyz + u_xlat9.xyz;"
+        },
+        {
+          "offset": 439310,
+          "text": "    u_xlat1.xzw = vs_TEXCOORD3.xyz * u_xlat1.xxx + u_xlat16_10.xyz;"
+        },
+        {
+          "offset": 439378,
+          "text": "    u_xlat57 = dot(u_xlat1.xzw, u_xlat1.xzw);"
+        },
+        {
+          "offset": 439424,
+          "text": "    u_xlat57 = inversesqrt(u_xlat57);"
+        },
+        {
+          "offset": 439462,
+          "text": "    u_xlat1.xzw = u_xlat1.xzw * vec3(u_xlat57);"
+        },
+        {
+          "offset": 439510,
+          "text": "    u_xlat16_60 = (-u_xlat19.x) + 1.0;"
+        },
+        {
+          "offset": 439549,
+          "text": "    u_xlat19.x = dot(u_xlat5.xyz, u_xlat16_10.xyz);"
+        },
+        {
+          "offset": 439601,
+          "text": "    u_xlat19.x = u_xlat19.x * 0.5 + 0.5;"
+        },
+        {
+          "offset": 439642,
+          "text": "    u_xlat16_10.x = u_xlat16_2.x + _ShadowOffsetMapOffset;"
+        },
+        {
+          "offset": 439701,
+          "text": "    u_xlat16_10.x = clamp(u_xlat16_10.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 439753,
+          "text": "    u_xlat16_10.x = (-u_xlat16_10.x) + 1.0;"
+        },
+        {
+          "offset": 439797,
+          "text": "    u_xlat16_10.x = u_xlat19.x + (-u_xlat16_10.x);"
+        },
+        {
+          "offset": 439848,
+          "text": "    u_xlat16_10.x = clamp(u_xlat16_10.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 439900,
+          "text": "    u_xlat16_28.x = (-_ShadowFeather) * 0.5 + _ShadowOffset;"
+        },
+        {
+          "offset": 439961,
+          "text": "    u_xlat16_28.x = clamp(u_xlat16_28.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 440013,
+          "text": "    u_xlat16_46 = _ShadowFeather * 0.5 + _ShadowOffset;"
+        },
+        {
+          "offset": 440069,
+          "text": "    u_xlat16_46 = clamp(u_xlat16_46, 0.0, 1.0);"
+        },
+        {
+          "offset": 440117,
+          "text": "    u_xlat16_46 = (-u_xlat16_28.x) + u_xlat16_46;"
+        },
+        {
+          "offset": 440167,
+          "text": "    u_xlat16_28.x = (-u_xlat16_28.x) + u_xlat16_10.x;"
+        },
+        {
+          "offset": 440221,
+          "text": "    u_xlat16_46 = float(1.0) / u_xlat16_46;"
+        },
+        {
+          "offset": 440265,
+          "text": "    u_xlat16_28.x = u_xlat16_46 * u_xlat16_28.x;"
+        },
+        {
+          "offset": 440314,
+          "text": "    u_xlat16_28.x = clamp(u_xlat16_28.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 440366,
+          "text": "    u_xlat16_46 = u_xlat16_28.x * -2.0 + 3.0;"
+        },
+        {
+          "offset": 440412,
+          "text": "    u_xlat16_28.x = u_xlat16_28.x * u_xlat16_28.x;"
+        },
+        {
+          "offset": 440463,
+          "text": "    u_xlat16_28.x = u_xlat16_28.x * u_xlat16_46;"
+        },
+        {
+          "offset": 440512,
+          "text": "    u_xlatb19 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_ReceiveSelfShadow);"
+        },
+        {
+          "offset": 440580,
+          "text": "    if(u_xlatb19){"
+        },
+        {
+          "offset": 440599,
+          "text": "        u_xlatb19 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(unity_OrthoParams.w);"
+        },
+        {
+          "offset": 440672,
+          "text": "        u_xlat2.x = (-_ProjectionParams.y) + _ProjectionParams.z;"
+        },
+        {
+          "offset": 440738,
+          "text": "        u_xlat2.x = hlslcc_FragCoord.z * u_xlat2.x + _ProjectionParams.y;"
+        },
+        {
+          "offset": 440812,
+          "text": "        u_xlat57 = _ZBufferParams.z * hlslcc_FragCoord.z + _ZBufferParams.w;"
+        },
+        {
+          "offset": 440889,
+          "text": "        u_xlat57 = float(1.0) / u_xlat57;"
+        },
+        {
+          "offset": 440931,
+          "text": "        u_xlat19.x = (u_xlatb19) ? u_xlat2.x : u_xlat57;"
+        },
+        {
+          "offset": 440988,
+          "text": "        u_xlat9.xyz = vs_TEXCOORD2.yyy * hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[1].xyz;"
+        },
+        {
+          "offset": 441079,
+          "text": "        u_xlat9.xyz = hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[0].xyz * vs_TEXCOORD2.xxx + u_xlat9.xyz;"
+        },
+        {
+          "offset": 441184,
+          "text": "        u_xlat9.xyz = hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[2].xyz * vs_TEXCOORD2.zzz + u_xlat9.xyz;"
+        },
+        {
+          "offset": 441289,
+          "text": "        u_xlat9.xyz = u_xlat9.xyz + hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[3].xyz;"
+        },
+        {
+          "offset": 441375,
+          "text": "        u_xlat9.xyz = u_xlat9.xyz * vec3(0.5, 0.5, 0.5) + vec3(0.5, 0.5, 0.5);"
+        },
+        {
+          "offset": 441454,
+          "text": "        u_xlat2.x = u_xlat9.z + (-_RdToonGlobalSelfShadowDepthBias);"
+        },
+        {
+          "offset": 441523,
+          "text": "        vec3 txVec0 = vec3(u_xlat9.xy,u_xlat2.x);"
+        },
+        {
+          "offset": 441573,
+          "text": "        u_xlat16_2.x = textureLod(hlslcc_zcmp_RdToonSelfShadowMapRT, txVec0, 0.0);"
+        },
+        {
+          "offset": 441656,
+          "text": "        u_xlat57 = _RdToonSelfShadowRange + -2.0;"
+        },
+        {
+          "offset": 441706,
+          "text": "        u_xlat19.x = abs(u_xlat19.x) + (-u_xlat57);"
+        },
+        {
+          "offset": 441758,
+          "text": "        u_xlat19.x = u_xlat19.x * 0.5;"
+        },
+        {
+          "offset": 441797,
+          "text": "        u_xlat19.x = clamp(u_xlat19.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 441847,
+          "text": "        u_xlat57 = (-u_xlat16_2.x) + 1.0;"
+        },
+        {
+          "offset": 441889,
+          "text": "        u_xlat19.x = u_xlat19.x * u_xlat57 + u_xlat16_2.x;"
+        },
+        {
+          "offset": 441948,
+          "text": "        u_xlatb2 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_RdToonSelfShadowUseNdotLFix);"
+        }
+      ],
+      "windowSha256": "6cd80ed5716bfd37e01fb5f34b72023291f1955866eda83b6e92bd1ab34e65c2",
+      "renderedSha256": "922158fb80d79f24410faa1b7088eddf015ac7711b8de4ff8556b7989e58c150"
+    },
+    {
+      "chunkIndex": 6,
+      "platform": 9,
+      "decodedSha256": "a717fbab9e2a0dd2f76987fb94339326ee4c3208d1ee5f3d4d6ec7668b3657e9",
+      "centerOffset": 759939,
+      "centerToken": "RdToonSelfShadow",
+      "score": 67,
+      "targetTokensPresent": [
+        "_rdtoonselfshadowmaprt",
+        "ndotlfix",
+        "rdtoonselfshadow",
+        "usendotlfix"
+      ],
+      "start": 753795,
+      "end": 766083,
+      "byteCount": 12288,
+      "asciiLineCount": 221,
+      "storedLineCount": 140,
+      "rows": [
+        {
+          "offset": 753795,
+          "text": "_61<0.0;"
+        },
+        {
+          "offset": 753804,
+          "text": "    u_xlatb2.x = u_xlatb2.x && u_xlatb22;"
+        },
+        {
+          "offset": 753846,
+          "text": "    if(u_xlatb2.x){discard;}"
+        },
+        {
+          "offset": 753875,
+          "text": "    u_xlat2.x = dot(vs_TEXCOORD3.xyz, vs_TEXCOORD3.xyz);"
+        },
+        {
+          "offset": 753932,
+          "text": "    u_xlat2.x = inversesqrt(u_xlat2.x);"
+        },
+        {
+          "offset": 753972,
+          "text": "    u_xlat22.xyz = u_xlat2.xxx * vs_TEXCOORD3.xyz;"
+        },
+        {
+          "offset": 754023,
+          "text": "    u_xlat64 = dot(vs_NORMAL0.xyz, vs_NORMAL0.xyz);"
+        },
+        {
+          "offset": 754075,
+          "text": "    u_xlat64 = inversesqrt(u_xlat64);"
+        },
+        {
+          "offset": 754113,
+          "text": "    u_xlat6.xyz = vec3(u_xlat64) * vs_NORMAL0.xyz;"
+        },
+        {
+          "offset": 754164,
+          "text": "    u_xlat64 = dot(vs_TEXCOORD5.xyz, vs_TEXCOORD5.xyz);"
+        },
+        {
+          "offset": 754220,
+          "text": "    u_xlat64 = inversesqrt(u_xlat64);"
+        },
+        {
+          "offset": 754258,
+          "text": "    u_xlat8.xy = vec2(u_xlat64) * vs_TEXCOORD5.xz;"
+        },
+        {
+          "offset": 754309,
+          "text": "    u_xlatb64 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(unity_OrthoParams.w);"
+        },
+        {
+          "offset": 754378,
+          "text": "    u_xlat65 = (-_ProjectionParams.y) + _ProjectionParams.z;"
+        },
+        {
+          "offset": 754439,
+          "text": "    u_xlat48.x = hlslcc_FragCoord.z * u_xlat65 + _ProjectionParams.y;"
+        },
+        {
+          "offset": 754509,
+          "text": "    u_xlat68 = _ZBufferParams.z * hlslcc_FragCoord.z + _ZBufferParams.w;"
+        },
+        {
+          "offset": 754582,
+          "text": "    u_xlat68 = float(1.0) / u_xlat68;"
+        },
+        {
+          "offset": 754620,
+          "text": "    u_xlat48.x = (u_xlatb64) ? u_xlat48.x : u_xlat68;"
+        },
+        {
+          "offset": 754674,
+          "text": "    u_xlat22.x = dot(u_xlat6.xyz, u_xlat22.xyz);"
+        },
+        {
+          "offset": 754723,
+          "text": "    u_xlat22.x = clamp(u_xlat22.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 754769,
+          "text": "    u_xlat9 = hlslcc_FragCoord.xyxy / _ScaledScreenParams.xyxy;"
+        },
+        {
+          "offset": 754833,
+          "text": "    u_xlat42.xy = u_xlat9.zw * _ScreenParams.xy;"
+        },
+        {
+          "offset": 754882,
+          "text": "    u_xlatu42.xy = uvec2(u_xlat42.xy);"
+        },
+        {
+          "offset": 754921,
+          "text": "    u_xlati42 = int(int_bitfieldInsert(0, int(u_xlatu42.x), 2 & int(0x1F), 2));"
+        },
+        {
+          "offset": 755001,
+          "text": "    u_xlati42 = int(int_bitfieldInsert(u_xlati42, int(u_xlatu42.y), 0 & int(0x1F), 2));"
+        },
+        {
+          "offset": 755089,
+          "text": "    u_xlat42.x = 0.5 + (-ImmCB_0[u_xlati42].x);"
+        },
+        {
+          "offset": 755137,
+          "text": "    u_xlat42.x = _DitherFade * u_xlat42.x + 0.5;"
+        },
+        {
+          "offset": 755186,
+          "text": "    u_xlat62 = (-_DitherFade) + 1.0;"
+        },
+        {
+          "offset": 755223,
+          "text": "    u_xlat42.x = (-u_xlat42.x) + u_xlat62;"
+        },
+        {
+          "offset": 755266,
+          "text": "    u_xlatb42 = u_xlat42.x<0.0;"
+        },
+        {
+          "offset": 755298,
+          "text": "    if(u_xlatb42){discard;}"
+        },
+        {
+          "offset": 755326,
+          "text": "    u_xlat42.x = float(1.0) / float(u_xlat48.x);"
+        },
+        {
+          "offset": 755375,
+          "text": "    u_xlat42.x = (u_xlatb64) ? 0.850000024 : u_xlat42.x;"
+        },
+        {
+          "offset": 755432,
+          "text": "    u_xlat62 = dot(_MainLightPosition.xyz, _MainLightPosition.xyz);"
+        },
+        {
+          "offset": 755500,
+          "text": "    u_xlat62 = max(u_xlat62, 1.17549435e-38);"
+        },
+        {
+          "offset": 755546,
+          "text": "    u_xlat62 = inversesqrt(u_xlat62);"
+        },
+        {
+          "offset": 755584,
+          "text": "    u_xlat10.xyz = vec3(u_xlat62) * _MainLightPosition.xyz;"
+        },
+        {
+          "offset": 755644,
+          "text": "    u_xlat16_11.xyz = (-_MainLightPosition.xyz) * vec3(u_xlat62) + vec3(_GlobalCharacterLightingOverrideDirection.x, _GlobalCharacterLightingOverrideDirection.y, _GlobalCharacterLightingOverrideDirection.z);"
+        },
+        {
+          "offset": 755852,
+          "text": "    u_xlat16_11.xyz = vec3(_GlobalCharacterLightingOverrideDirectionEnabled) * u_xlat16_11.xyz + u_xlat10.xyz;"
+        },
+        {
+          "offset": 755963,
+          "text": "    u_xlat10.xyz = vs_TEXCOORD3.xyz * u_xlat2.xxx + u_xlat16_11.xyz;"
+        },
+        {
+          "offset": 756032,
+          "text": "    u_xlat2.x = dot(u_xlat10.xyz, u_xlat10.xyz);"
+        },
+        {
+          "offset": 756081,
+          "text": "    u_xlat2.x = inversesqrt(u_xlat2.x);"
+        },
+        {
+          "offset": 756121,
+          "text": "    u_xlat10.xyz = u_xlat2.xxx * u_xlat10.xyz;"
+        },
+        {
+          "offset": 756168,
+          "text": "    u_xlat16_61 = (-u_xlat22.x) + 1.0;"
+        },
+        {
+          "offset": 756207,
+          "text": "    u_xlat16_67 = vs_COLOR0.y * _DepthTexWidth;"
+        },
+        {
+          "offset": 756255,
+          "text": "    u_xlat12.x = u_xlat16_67 * 0.660000026;"
+        },
+        {
+          "offset": 756299,
+          "text": "    u_xlat12.y = u_xlat16_67 * 0.660000026 + _DepthTexYOffset;"
+        },
+        {
+          "offset": 756362,
+          "text": "    u_xlat2.xw = u_xlat12.xy * vec2(_GlobalAspectFix.x, _GlobalAspectFix.y);"
+        },
+        {
+          "offset": 756439,
+          "text": "    u_xlat2.xw = u_xlat2.xw * vec2(vec2(_GlobalFOVorOrthoSizeFix, _GlobalFOVorOrthoSizeFix));"
+        },
+        {
+          "offset": 756533,
+          "text": "    u_xlat2.xz = u_xlat42.xx * u_xlat2.xw;"
+        },
+        {
+          "offset": 756576,
+          "text": "    u_xlat12.xy = u_xlat2.xz * _GlobalMainLightDirVS.xy;"
+        },
+        {
+          "offset": 756633,
+          "text": "    u_xlat12.xy = u_xlat12.xy * _ScaledScreenParams.xy + hlslcc_FragCoord.xy;"
+        },
+        {
+          "offset": 756711,
+          "text": "    u_xlat12.xy = trunc(u_xlat12.xy);"
+        },
+        {
+          "offset": 756749,
+          "text": "    u_xlat52.xy = _ScaledScreenParams.xy + vec2(-1.0, -1.0);"
+        },
+        {
+          "offset": 756810,
+          "text": "    u_xlat12.xy = max(u_xlat12.xy, vec2(0.0, 0.0));"
+        },
+        {
+          "offset": 756862,
+          "text": "    u_xlat12.xy = min(u_xlat52.xy, u_xlat12.xy);"
+        },
+        {
+          "offset": 756911,
+          "text": "    u_xlatu13.xy =  uvec2(ivec2(u_xlat12.xy));"
+        },
+        {
+          "offset": 756958,
+          "text": "    u_xlatu13.z = uint(uint(0u));"
+        },
+        {
+          "offset": 756992,
+          "text": "    u_xlatu13.w = uint(uint(0u));"
+        },
+        {
+          "offset": 757026,
+          "text": "    u_xlat62 = texelFetch(_CameraDepthTexture, ivec2(u_xlatu13.xy), int(u_xlatu13.w)).x;"
+        },
+        {
+          "offset": 757115,
+          "text": "    u_xlat68 = u_xlat62 * u_xlat65 + _ProjectionParams.y;"
+        },
+        {
+          "offset": 757173,
+          "text": "    u_xlat62 = _ZBufferParams.z * u_xlat62 + _ZBufferParams.w;"
+        },
+        {
+          "offset": 757236,
+          "text": "    u_xlat62 = float(1.0) / u_xlat62;"
+        },
+        {
+          "offset": 757274,
+          "text": "    u_xlat62 = (u_xlatb64) ? u_xlat68 : u_xlat62;"
+        },
+        {
+          "offset": 757324,
+          "text": "    u_xlat68 = u_xlat48.x + vs_TEXCOORD2.w;"
+        },
+        {
+          "offset": 757368,
+          "text": "    u_xlat68 = u_xlat68 + _DepthRimLightDiffThreshold;"
+        },
+        {
+          "offset": 757423,
+          "text": "    u_xlat70 = u_xlat62 + (-u_xlat68);"
+        },
+        {
+          "offset": 757462,
+          "text": "    u_xlat13.y = u_xlat70 * 10.0;"
+        },
+        {
+          "offset": 757496,
+          "text": "    u_xlat13.y = clamp(u_xlat13.y, 0.0, 1.0);"
+        },
+        {
+          "offset": 757542,
+          "text": "    u_xlat2.xz = u_xlat2.xz * _GlobalCharacterAdditionalRimLightDir.xy;"
+        },
+        {
+          "offset": 757614,
+          "text": "    u_xlat2.xz = u_xlat2.xz * _ScaledScreenParams.xy + hlslcc_FragCoord.xy;"
+        },
+        {
+          "offset": 757690,
+          "text": "    u_xlat2.xz = trunc(u_xlat2.xz);"
+        },
+        {
+          "offset": 757726,
+          "text": "    u_xlat2.xz = max(u_xlat2.xz, vec2(0.0, 0.0));"
+        },
+        {
+          "offset": 757776,
+          "text": "    u_xlat2.xz = min(u_xlat52.xy, u_xlat2.xz);"
+        },
+        {
+          "offset": 757823,
+          "text": "    u_xlatu12.xy =  uvec2(ivec2(u_xlat2.xz));"
+        },
+        {
+          "offset": 757869,
+          "text": "    u_xlatu12.z = uint(uint(0u));"
+        },
+        {
+          "offset": 757903,
+          "text": "    u_xlatu12.w = uint(uint(0u));"
+        },
+        {
+          "offset": 757937,
+          "text": "    u_xlat2.x = texelFetch(_CameraDepthTexture, ivec2(u_xlatu12.xy), int(u_xlatu12.w)).x;"
+        },
+        {
+          "offset": 758027,
+          "text": "    u_xlat42.x = u_xlat2.x * u_xlat65 + _ProjectionParams.y;"
+        },
+        {
+          "offset": 758088,
+          "text": "    u_xlat2.x = _ZBufferParams.z * u_xlat2.x + _ZBufferParams.w;"
+        },
+        {
+          "offset": 758153,
+          "text": "    u_xlat2.x = float(1.0) / u_xlat2.x;"
+        },
+        {
+          "offset": 758193,
+          "text": "    u_xlat2.x = (u_xlatb64) ? u_xlat42.x : u_xlat2.x;"
+        },
+        {
+          "offset": 758247,
+          "text": "    u_xlat2.x = (-u_xlat68) + u_xlat2.x;"
+        },
+        {
+          "offset": 758288,
+          "text": "    u_xlat13.z = u_xlat2.x * 10.0;"
+        },
+        {
+          "offset": 758323,
+          "text": "    u_xlat13.z = clamp(u_xlat13.z, 0.0, 1.0);"
+        },
+        {
+          "offset": 758369,
+          "text": "    u_xlat2.x = u_xlat48.x + (-_DepthShadowDiffThreshold);"
+        },
+        {
+          "offset": 758428,
+          "text": "    u_xlat2.x = (-u_xlat2.x) + u_xlat62;"
+        },
+        {
+          "offset": 758469,
+          "text": "    u_xlat13.x = u_xlat2.x * 50.0;"
+        },
+        {
+          "offset": 758504,
+          "text": "    u_xlat13.x = clamp(u_xlat13.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 758550,
+          "text": "    u_xlatb2.x = 0.5<_DitherFade;"
+        },
+        {
+          "offset": 758584,
+          "text": "    u_xlat16_14.xyz = (u_xlatb2.x) ? vec3(1.0, 0.0, 0.0) : u_xlat13.xyz;"
+        },
+        {
+          "offset": 758657,
+          "text": "    u_xlat2.x = dot(u_xlat6.xyz, u_xlat16_11.xyz);"
+        },
+        {
+          "offset": 758708,
+          "text": "    u_xlat2.x = u_xlat2.x * 0.5 + 0.5;"
+        },
+        {
+          "offset": 758747,
+          "text": "    u_xlat16_67 = u_xlat16_3.x + _ShadowOffsetMapOffset;"
+        },
+        {
+          "offset": 758804,
+          "text": "    u_xlat16_67 = clamp(u_xlat16_67, 0.0, 1.0);"
+        },
+        {
+          "offset": 758852,
+          "text": "    u_xlat16_67 = (-u_xlat16_67) + 1.0;"
+        },
+        {
+          "offset": 758892,
+          "text": "    u_xlat16_67 = u_xlat2.x + (-u_xlat16_67);"
+        },
+        {
+          "offset": 758938,
+          "text": "    u_xlat16_67 = clamp(u_xlat16_67, 0.0, 1.0);"
+        },
+        {
+          "offset": 758986,
+          "text": "    u_xlatb2.x = u_xlat16_14.x>=0.100000001;"
+        },
+        {
+          "offset": 759031,
+          "text": "    u_xlat2.x = u_xlatb2.x ? 1.0 : float(0.0);"
+        },
+        {
+          "offset": 759078,
+          "text": "    u_xlat42.x = u_xlat2.x * u_xlat16_67;"
+        },
+        {
+          "offset": 759120,
+          "text": "    u_xlat16_11.x = (-_ShadowFeather) * 0.5 + _ShadowOffset;"
+        },
+        {
+          "offset": 759181,
+          "text": "    u_xlat16_11.x = clamp(u_xlat16_11.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 759233,
+          "text": "    u_xlat16_31 = _ShadowFeather * 0.5 + _ShadowOffset;"
+        },
+        {
+          "offset": 759289,
+          "text": "    u_xlat16_31 = clamp(u_xlat16_31, 0.0, 1.0);"
+        },
+        {
+          "offset": 759337,
+          "text": "    u_xlat16_31 = (-u_xlat16_11.x) + u_xlat16_31;"
+        },
+        {
+          "offset": 759387,
+          "text": "    u_xlat16_67 = u_xlat16_67 * u_xlat2.x + (-u_xlat16_11.x);"
+        },
+        {
+          "offset": 759449,
+          "text": "    u_xlat16_11.x = float(1.0) / u_xlat16_31;"
+        },
+        {
+          "offset": 759495,
+          "text": "    u_xlat16_67 = u_xlat16_67 * u_xlat16_11.x;"
+        },
+        {
+          "offset": 759542,
+          "text": "    u_xlat16_67 = clamp(u_xlat16_67, 0.0, 1.0);"
+        },
+        {
+          "offset": 759590,
+          "text": "    u_xlat16_11.x = u_xlat16_67 * -2.0 + 3.0;"
+        },
+        {
+          "offset": 759636,
+          "text": "    u_xlat16_67 = u_xlat16_67 * u_xlat16_67;"
+        },
+        {
+          "offset": 759681,
+          "text": "    u_xlat16_67 = u_xlat16_67 * u_xlat16_11.x;"
+        },
+        {
+          "offset": 759728,
+          "text": "    u_xlatb12.xyz = notEqual(vec4(0.0, 0.0, 0.0, 0.0), vec4(_ReceiveSelfShadow, _UseRimLight, _UseDepthTex, _ReceiveSelfShadow)).xyz;"
+        },
+        {
+          "offset": 759862,
+          "text": "    if(u_xlatb12.x){"
+        },
+        {
+          "offset": 759883,
+          "text": "        u_xlat13.xyz = vs_TEXCOORD2.yyy * hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[1].xyz;"
+        },
+        {
+          "offset": 759975,
+          "text": "        u_xlat13.xyz = hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[0].xyz * vs_TEXCOORD2.xxx + u_xlat13.xyz;"
+        },
+        {
+          "offset": 760082,
+          "text": "        u_xlat13.xyz = hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[2].xyz * vs_TEXCOORD2.zzz + u_xlat13.xyz;"
+        },
+        {
+          "offset": 760189,
+          "text": "        u_xlat13.xyz = u_xlat13.xyz + hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[3].xyz;"
+        },
+        {
+          "offset": 760277,
+          "text": "        u_xlat13.xyz = u_xlat13.xyz * vec3(0.5, 0.5, 0.5) + vec3(0.5, 0.5, 0.5);"
+        },
+        {
+          "offset": 760358,
+          "text": "        u_xlat2.x = u_xlat13.z + (-_RdToonGlobalSelfShadowDepthBias);"
+        },
+        {
+          "offset": 760428,
+          "text": "        vec3 txVec0 = vec3(u_xlat13.xy,u_xlat2.x);"
+        },
+        {
+          "offset": 760479,
+          "text": "        u_xlat16_2.x = textureLod(hlslcc_zcmp_RdToonSelfShadowMapRT, txVec0, 0.0);"
+        },
+        {
+          "offset": 760562,
+          "text": "        u_xlat62 = _RdToonSelfShadowRange + -2.0;"
+        },
+        {
+          "offset": 760612,
+          "text": "        u_xlat62 = (-u_xlat62) + abs(u_xlat48.x);"
+        },
+        {
+          "offset": 760662,
+          "text": "        u_xlat62 = u_xlat62 * 0.5;"
+        },
+        {
+          "offset": 760697,
+          "text": "        u_xlat62 = clamp(u_xlat62, 0.0, 1.0);"
+        },
+        {
+          "offset": 760743,
+          "text": "        u_xlat3.x = (-u_xlat16_2.x) + 1.0;"
+        },
+        {
+          "offset": 760786,
+          "text": "        u_xlat2.x = u_xlat62 * u_xlat3.x + u_xlat16_2.x;"
+        },
+        {
+          "offset": 760843,
+          "text": "        u_xlatb62 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_RdToonSelfShadowUseNdotLFix);"
+        },
+        {
+          "offset": 760925,
+          "text": "        u_xlat3.x = dot(u_xlat6.xyz, _RdToonSelfShadowLightDirection.xyz);"
+        },
+        {
+          "offset": 761000,
+          "text": "        u_xlat3.x = clamp(u_xlat3.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 761048,
+          "text": "        u_xlat3.x = u_xlat3.x + -0.100000001;"
+        },
+        {
+          "offset": 761094,
+          "text": "        u_xlat3.x = u_xlat3.x * 10.0;"
+        },
+        {
+          "offset": 761132,
+          "text": "        u_xlat3.x = clamp(u_xlat3.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 761180,
+          "text": "        u_xlat64 = u_xlat3.x * -2.0 + 3.0;"
+        },
+        {
+          "offset": 761223,
+          "text": "        u_xlat3.x = u_xlat3.x * u_xlat3.x;"
+        },
+        {
+          "offset": 761266,
+          "text": "        u_xlat3.x = u_xlat3.x * u_xlat64;"
+        },
+        {
+          "offset": 761308,
+          "text": "        u_xlat62 = (u_xlatb62) ? u_xlat3.x : 1.0;"
+        },
+        {
+          "offset": 761358,
+          "text": "        u_xlat2.x = u_xlat62 * u_xlat2.x;"
+        }
+      ],
+      "windowSha256": "6c599901542366e25a2c489934c2a636209fcf401d9a71fb3156567366f77fc3",
+      "renderedSha256": "40049ad01462d1ca3bda618c797797351b1667e5e859f17a4f917598e74b2b50"
+    },
+    {
+      "chunkIndex": 6,
+      "platform": 9,
+      "decodedSha256": "a717fbab9e2a0dd2f76987fb94339326ee4c3208d1ee5f3d4d6ec7668b3657e9",
+      "centerOffset": 874804,
+      "centerToken": "RdToonSelfShadow",
+      "score": 67,
+      "targetTokensPresent": [
+        "_rdtoonselfshadowmaprt",
+        "ndotlfix",
+        "rdtoonselfshadow",
+        "usendotlfix"
+      ],
+      "start": 868660,
+      "end": 880948,
+      "byteCount": 12288,
+      "asciiLineCount": 216,
+      "storedLineCount": 140,
+      "rows": [
+        {
+          "offset": 868660,
+          "text": "FragCoord.xyxy / _ScaledScreenParams.xyxy;"
+        },
+        {
+          "offset": 868703,
+          "text": "    u_xlat26.xy = u_xlat10.zw * _ScreenParams.xy;"
+        },
+        {
+          "offset": 868753,
+          "text": "    u_xlatu26.xy = uvec2(u_xlat26.xy);"
+        },
+        {
+          "offset": 868792,
+          "text": "    u_xlati26 = int(int_bitfieldInsert(0, int(u_xlatu26.x), 2 & int(0x1F), 2));"
+        },
+        {
+          "offset": 868872,
+          "text": "    u_xlati26 = int(int_bitfieldInsert(u_xlati26, int(u_xlatu26.y), 0 & int(0x1F), 2));"
+        },
+        {
+          "offset": 868960,
+          "text": "    u_xlat26.x = 0.5 + (-ImmCB_0[u_xlati26].x);"
+        },
+        {
+          "offset": 869008,
+          "text": "    u_xlat26.x = _DitherFade * u_xlat26.x + 0.5;"
+        },
+        {
+          "offset": 869057,
+          "text": "    u_xlat46 = (-_DitherFade) + 1.0;"
+        },
+        {
+          "offset": 869094,
+          "text": "    u_xlat26.x = (-u_xlat26.x) + u_xlat46;"
+        },
+        {
+          "offset": 869137,
+          "text": "    u_xlatb26.x = u_xlat26.x<0.0;"
+        },
+        {
+          "offset": 869171,
+          "text": "    if(u_xlatb26.x){discard;}"
+        },
+        {
+          "offset": 869201,
+          "text": "    u_xlat26.x = float(1.0) / float(u_xlat9.x);"
+        },
+        {
+          "offset": 869249,
+          "text": "    u_xlat26.x = (u_xlatb65) ? 0.850000024 : u_xlat26.x;"
+        },
+        {
+          "offset": 869306,
+          "text": "    u_xlat46 = dot(_MainLightPosition.xyz, _MainLightPosition.xyz);"
+        },
+        {
+          "offset": 869374,
+          "text": "    u_xlat46 = max(u_xlat46, 1.17549435e-38);"
+        },
+        {
+          "offset": 869420,
+          "text": "    u_xlat46 = inversesqrt(u_xlat46);"
+        },
+        {
+          "offset": 869458,
+          "text": "    u_xlat29.xyz = vec3(u_xlat46) * _MainLightPosition.xyz;"
+        },
+        {
+          "offset": 869518,
+          "text": "    u_xlat16_11.xyz = (-_MainLightPosition.xyz) * vec3(u_xlat46) + vec3(_GlobalCharacterLightingOverrideDirection.x, _GlobalCharacterLightingOverrideDirection.y, _GlobalCharacterLightingOverrideDirection.z);"
+        },
+        {
+          "offset": 869726,
+          "text": "    u_xlat16_11.xyz = vec3(_GlobalCharacterLightingOverrideDirectionEnabled) * u_xlat16_11.xyz + u_xlat29.xyz;"
+        },
+        {
+          "offset": 869837,
+          "text": "    u_xlat29.xyz = vs_TEXCOORD3.xyz * vec3(u_xlat60) + u_xlat16_11.xyz;"
+        },
+        {
+          "offset": 869909,
+          "text": "    u_xlat60 = dot(u_xlat29.xyz, u_xlat29.xyz);"
+        },
+        {
+          "offset": 869957,
+          "text": "    u_xlat60 = inversesqrt(u_xlat60);"
+        },
+        {
+          "offset": 869995,
+          "text": "    u_xlat29.xyz = vec3(u_xlat60) * u_xlat29.xyz;"
+        },
+        {
+          "offset": 870045,
+          "text": "    u_xlat16_61 = (-u_xlat6.x) + 1.0;"
+        },
+        {
+          "offset": 870083,
+          "text": "    u_xlat16_67 = vs_COLOR0.y * _DepthTexWidth;"
+        },
+        {
+          "offset": 870131,
+          "text": "    u_xlat12.x = u_xlat16_67 * 0.660000026;"
+        },
+        {
+          "offset": 870175,
+          "text": "    u_xlat12.y = u_xlat16_67 * 0.660000026 + _DepthTexYOffset;"
+        },
+        {
+          "offset": 870238,
+          "text": "    u_xlat12.xy = u_xlat12.xy * vec2(_GlobalAspectFix.x, _GlobalAspectFix.y);"
+        },
+        {
+          "offset": 870316,
+          "text": "    u_xlat12.xy = u_xlat12.xy * vec2(vec2(_GlobalFOVorOrthoSizeFix, _GlobalFOVorOrthoSizeFix));"
+        },
+        {
+          "offset": 870412,
+          "text": "    u_xlat26.xy = u_xlat26.xx * u_xlat12.xy;"
+        },
+        {
+          "offset": 870457,
+          "text": "    u_xlat12.xy = u_xlat26.xy * _GlobalMainLightDirVS.xy;"
+        },
+        {
+          "offset": 870515,
+          "text": "    u_xlat12.xy = u_xlat12.xy * _ScaledScreenParams.xy + hlslcc_FragCoord.xy;"
+        },
+        {
+          "offset": 870593,
+          "text": "    u_xlat12.xy = trunc(u_xlat12.xy);"
+        },
+        {
+          "offset": 870631,
+          "text": "    u_xlat52.xy = _ScaledScreenParams.xy + vec2(-1.0, -1.0);"
+        },
+        {
+          "offset": 870692,
+          "text": "    u_xlat12.xy = max(u_xlat12.xy, vec2(0.0, 0.0));"
+        },
+        {
+          "offset": 870744,
+          "text": "    u_xlat12.xy = min(u_xlat52.xy, u_xlat12.xy);"
+        },
+        {
+          "offset": 870793,
+          "text": "    u_xlatu13.xy =  uvec2(ivec2(u_xlat12.xy));"
+        },
+        {
+          "offset": 870840,
+          "text": "    u_xlatu13.z = uint(uint(0u));"
+        },
+        {
+          "offset": 870874,
+          "text": "    u_xlatu13.w = uint(uint(0u));"
+        },
+        {
+          "offset": 870908,
+          "text": "    u_xlat60 = texelFetch(_CameraDepthTexture, ivec2(u_xlatu13.xy), int(u_xlatu13.w)).x;"
+        },
+        {
+          "offset": 870997,
+          "text": "    u_xlat12.x = u_xlat60 * u_xlat66 + _ProjectionParams.y;"
+        },
+        {
+          "offset": 871057,
+          "text": "    u_xlat60 = _ZBufferParams.z * u_xlat60 + _ZBufferParams.w;"
+        },
+        {
+          "offset": 871120,
+          "text": "    u_xlat60 = float(1.0) / u_xlat60;"
+        },
+        {
+          "offset": 871158,
+          "text": "    u_xlat60 = (u_xlatb65) ? u_xlat12.x : u_xlat60;"
+        },
+        {
+          "offset": 871210,
+          "text": "    u_xlat12.x = u_xlat9.x + vs_TEXCOORD2.w;"
+        },
+        {
+          "offset": 871255,
+          "text": "    u_xlat12.x = u_xlat12.x + _DepthRimLightDiffThreshold;"
+        },
+        {
+          "offset": 871314,
+          "text": "    u_xlat32 = u_xlat60 + (-u_xlat12.x);"
+        },
+        {
+          "offset": 871355,
+          "text": "    u_xlat13.y = u_xlat32 * 10.0;"
+        },
+        {
+          "offset": 871389,
+          "text": "    u_xlat13.y = clamp(u_xlat13.y, 0.0, 1.0);"
+        },
+        {
+          "offset": 871435,
+          "text": "    u_xlat26.xy = u_xlat26.xy * _GlobalCharacterAdditionalRimLightDir.xy;"
+        },
+        {
+          "offset": 871509,
+          "text": "    u_xlat26.xy = u_xlat26.xy * _ScaledScreenParams.xy + hlslcc_FragCoord.xy;"
+        },
+        {
+          "offset": 871587,
+          "text": "    u_xlat26.xy = trunc(u_xlat26.xy);"
+        },
+        {
+          "offset": 871625,
+          "text": "    u_xlat26.xy = max(u_xlat26.xy, vec2(0.0, 0.0));"
+        },
+        {
+          "offset": 871677,
+          "text": "    u_xlat26.xy = min(u_xlat52.xy, u_xlat26.xy);"
+        },
+        {
+          "offset": 871726,
+          "text": "    u_xlatu14.xy =  uvec2(ivec2(u_xlat26.xy));"
+        },
+        {
+          "offset": 871773,
+          "text": "    u_xlatu14.z = uint(uint(0u));"
+        },
+        {
+          "offset": 871807,
+          "text": "    u_xlatu14.w = uint(uint(0u));"
+        },
+        {
+          "offset": 871841,
+          "text": "    u_xlat26.x = texelFetch(_CameraDepthTexture, ivec2(u_xlatu14.xy), int(u_xlatu14.w)).x;"
+        },
+        {
+          "offset": 871932,
+          "text": "    u_xlat46 = u_xlat26.x * u_xlat66 + _ProjectionParams.y;"
+        },
+        {
+          "offset": 871992,
+          "text": "    u_xlat26.x = _ZBufferParams.z * u_xlat26.x + _ZBufferParams.w;"
+        },
+        {
+          "offset": 872059,
+          "text": "    u_xlat26.x = float(1.0) / u_xlat26.x;"
+        },
+        {
+          "offset": 872101,
+          "text": "    u_xlat26.x = (u_xlatb65) ? u_xlat46 : u_xlat26.x;"
+        },
+        {
+          "offset": 872155,
+          "text": "    u_xlat26.x = (-u_xlat12.x) + u_xlat26.x;"
+        },
+        {
+          "offset": 872200,
+          "text": "    u_xlat13.z = u_xlat26.x * 10.0;"
+        },
+        {
+          "offset": 872236,
+          "text": "    u_xlat13.z = clamp(u_xlat13.z, 0.0, 1.0);"
+        },
+        {
+          "offset": 872282,
+          "text": "    u_xlat26.x = u_xlat9.x + (-_DepthShadowDiffThreshold);"
+        },
+        {
+          "offset": 872341,
+          "text": "    u_xlat60 = u_xlat60 + (-u_xlat26.x);"
+        },
+        {
+          "offset": 872382,
+          "text": "    u_xlat13.x = u_xlat60 * 50.0;"
+        },
+        {
+          "offset": 872416,
+          "text": "    u_xlat13.x = clamp(u_xlat13.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 872462,
+          "text": "    u_xlatb60 = 0.5<_DitherFade;"
+        },
+        {
+          "offset": 872495,
+          "text": "    u_xlat16_15.xyz = (bool(u_xlatb60)) ? vec3(1.0, 0.0, 0.0) : u_xlat13.xyz;"
+        },
+        {
+          "offset": 872573,
+          "text": "    u_xlat60 = dot(u_xlat8.xyz, u_xlat16_11.xyz);"
+        },
+        {
+          "offset": 872623,
+          "text": "    u_xlat60 = u_xlat60 * 0.5 + 0.5;"
+        },
+        {
+          "offset": 872660,
+          "text": "    u_xlat16_67 = u_xlat16_3.x + _ShadowOffsetMapOffset;"
+        },
+        {
+          "offset": 872717,
+          "text": "    u_xlat16_67 = clamp(u_xlat16_67, 0.0, 1.0);"
+        },
+        {
+          "offset": 872765,
+          "text": "    u_xlat16_67 = (-u_xlat16_67) + 1.0;"
+        },
+        {
+          "offset": 872805,
+          "text": "    u_xlat16_67 = u_xlat60 + (-u_xlat16_67);"
+        },
+        {
+          "offset": 872850,
+          "text": "    u_xlat16_67 = clamp(u_xlat16_67, 0.0, 1.0);"
+        },
+        {
+          "offset": 872898,
+          "text": "    u_xlatb60 = u_xlat16_15.x>=0.100000001;"
+        },
+        {
+          "offset": 872942,
+          "text": "    u_xlat60 = u_xlatb60 ? 1.0 : float(0.0);"
+        },
+        {
+          "offset": 872987,
+          "text": "    u_xlat3 = u_xlat60 * u_xlat16_67;"
+        },
+        {
+          "offset": 873025,
+          "text": "    u_xlat16_11.x = (-_ShadowFeather) * 0.5 + _ShadowOffset;"
+        },
+        {
+          "offset": 873086,
+          "text": "    u_xlat16_11.x = clamp(u_xlat16_11.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 873138,
+          "text": "    u_xlat16_31 = _ShadowFeather * 0.5 + _ShadowOffset;"
+        },
+        {
+          "offset": 873194,
+          "text": "    u_xlat16_31 = clamp(u_xlat16_31, 0.0, 1.0);"
+        },
+        {
+          "offset": 873242,
+          "text": "    u_xlat16_31 = (-u_xlat16_11.x) + u_xlat16_31;"
+        },
+        {
+          "offset": 873292,
+          "text": "    u_xlat16_67 = u_xlat16_67 * u_xlat60 + (-u_xlat16_11.x);"
+        },
+        {
+          "offset": 873353,
+          "text": "    u_xlat16_11.x = float(1.0) / u_xlat16_31;"
+        },
+        {
+          "offset": 873399,
+          "text": "    u_xlat16_67 = u_xlat16_67 * u_xlat16_11.x;"
+        },
+        {
+          "offset": 873446,
+          "text": "    u_xlat16_67 = clamp(u_xlat16_67, 0.0, 1.0);"
+        },
+        {
+          "offset": 873494,
+          "text": "    u_xlat16_11.x = u_xlat16_67 * -2.0 + 3.0;"
+        },
+        {
+          "offset": 873540,
+          "text": "    u_xlat16_67 = u_xlat16_67 * u_xlat16_67;"
+        },
+        {
+          "offset": 873585,
+          "text": "    u_xlat16_67 = u_xlat16_67 * u_xlat16_11.x;"
+        },
+        {
+          "offset": 873632,
+          "text": "    u_xlatb26.xyz = notEqual(vec4(0.0, 0.0, 0.0, 0.0), vec4(_ReceiveSelfShadow, _UseRimLight, _UseDepthTex, _UseDepthTex)).xyz;"
+        },
+        {
+          "offset": 873760,
+          "text": "    if(u_xlatb26.x){"
+        },
+        {
+          "offset": 873781,
+          "text": "        u_xlat12.xyz = vs_TEXCOORD2.yyy * hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[1].xyz;"
+        },
+        {
+          "offset": 873873,
+          "text": "        u_xlat12.xyz = hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[0].xyz * vs_TEXCOORD2.xxx + u_xlat12.xyz;"
+        },
+        {
+          "offset": 873980,
+          "text": "        u_xlat12.xyz = hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[2].xyz * vs_TEXCOORD2.zzz + u_xlat12.xyz;"
+        },
+        {
+          "offset": 874087,
+          "text": "        u_xlat12.xyz = u_xlat12.xyz + hlslcc_mtx4x4_RdToonSelfShadowWorldToClip[3].xyz;"
+        },
+        {
+          "offset": 874175,
+          "text": "        u_xlat12.xyz = u_xlat12.xyz * vec3(0.5, 0.5, 0.5) + vec3(0.5, 0.5, 0.5);"
+        },
+        {
+          "offset": 874256,
+          "text": "        u_xlat60 = u_xlat12.z + (-_RdToonGlobalSelfShadowDepthBias);"
+        },
+        {
+          "offset": 874325,
+          "text": "        vec3 txVec0 = vec3(u_xlat12.xy,u_xlat60);"
+        },
+        {
+          "offset": 874375,
+          "text": "        u_xlat16_60 = textureLod(hlslcc_zcmp_RdToonSelfShadowMapRT, txVec0, 0.0);"
+        },
+        {
+          "offset": 874457,
+          "text": "        u_xlat26.x = _RdToonSelfShadowRange + -2.0;"
+        },
+        {
+          "offset": 874509,
+          "text": "        u_xlat26.x = (-u_xlat26.x) + abs(u_xlat9.x);"
+        },
+        {
+          "offset": 874562,
+          "text": "        u_xlat26.x = u_xlat26.x * 0.5;"
+        },
+        {
+          "offset": 874601,
+          "text": "        u_xlat26.x = clamp(u_xlat26.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 874651,
+          "text": "        u_xlat9.x = (-u_xlat16_60) + 1.0;"
+        },
+        {
+          "offset": 874693,
+          "text": "        u_xlat60 = u_xlat26.x * u_xlat9.x + u_xlat16_60;"
+        },
+        {
+          "offset": 874750,
+          "text": "        u_xlatb26.x = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_RdToonSelfShadowUseNdotLFix);"
+        },
+        {
+          "offset": 874834,
+          "text": "        u_xlat9.x = dot(u_xlat8.xyz, _RdToonSelfShadowLightDirection.xyz);"
+        },
+        {
+          "offset": 874909,
+          "text": "        u_xlat9.x = clamp(u_xlat9.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 874957,
+          "text": "        u_xlat9.x = u_xlat9.x + -0.100000001;"
+        },
+        {
+          "offset": 875003,
+          "text": "        u_xlat9.x = u_xlat9.x * 10.0;"
+        },
+        {
+          "offset": 875041,
+          "text": "        u_xlat9.x = clamp(u_xlat9.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 875089,
+          "text": "        u_xlat12.x = u_xlat9.x * -2.0 + 3.0;"
+        },
+        {
+          "offset": 875134,
+          "text": "        u_xlat9.x = u_xlat9.x * u_xlat9.x;"
+        },
+        {
+          "offset": 875177,
+          "text": "        u_xlat9.x = u_xlat9.x * u_xlat12.x;"
+        },
+        {
+          "offset": 875221,
+          "text": "        u_xlat26.x = (u_xlatb26.x) ? u_xlat9.x : 1.0;"
+        },
+        {
+          "offset": 875275,
+          "text": "        u_xlat60 = u_xlat60 * u_xlat26.x;"
+        },
+        {
+          "offset": 875317,
+          "text": "        u_xlat16_11.x = min(u_xlat60, 1.0);"
+        },
+        {
+          "offset": 875361,
+          "text": "    } else {"
+        },
+        {
+          "offset": 875374,
+          "text": "        u_xlat16_11.x = 1.0;"
+        },
+        {
+          "offset": 875403,
+          "text": "    }"
+        },
+        {
+          "offset": 875409,
+          "text": "    u_xlat16_67 = u_xlat16_67 * u_xlat16_11.x;"
+        },
+        {
+          "offset": 875456,
+          "text": "    u_xlatb12.xy = notEqual(vec4(0.0, 0.0, 0.0, 0.0), vec4(_EnabledGlobalCharacterShadow, _EnableACESCounter, _EnabledGlobalCharacterShadow, _EnabledGlobalCharacterShadow)).xy;"
+        },
+        {
+          "offset": 875633,
+          "text": "    if(u_xlatb12.x){"
+        },
+        {
+          "offset": 875654,
+          "text": "        u_xlat12.xz = vs_TEXCOORD2.xz + (-vec2(_GlobalCharacterShadowCameraPos.x, _GlobalCharacterShadowCameraPos.z));"
+        },
+        {
+          "offset": 875773,
+          "text": "        u_xlat60 = max(abs(u_xlat12.z), abs(u_xlat12.x));"
+        },
+        {
+          "offset": 875831,
+          "text": "        u_xlat60 = u_xlat60 + (-_GlobalCharacterShadowRTSize);"
+        },
+        {
+          "offset": 875894,
+          "text": "        u_xlat60 = (-u_xlat60);"
+        },
+        {
+          "offset": 875926,
+          "text": "        u_xlat60 = clamp(u_xlat60, 0.0, 1.0);"
+        },
+        {
+          "offset": 875972,
+          "text": "        u_xlat12.xz = u_xlat12.xz + vec2(_GlobalCharacterShadowRTSize);"
+        },
+        {
+          "offset": 876044,
+          "text": "        u_xlat26.x = _GlobalCharacterShadowRTSize + _GlobalCharacterShadowRTSize;"
+        },
+        {
+          "offset": 876126,
+          "text": "        u_xlat12.xz = u_xlat12.xz / u_xlat26.xx;"
+        },
+        {
+          "offset": 876175,
+          "text": "        u_xlat12.xz = clamp(u_xlat12.xz, 0.0, 1.0);"
+        },
+        {
+          "offset": 876227,
+          "text": "        u_xlat16_26 = texture(_GlobalCharacterShadowRT, u_xlat12.xz, _GlobalMipBias.x).x;"
+        },
+        {
+          "offset": 876317,
+          "text": "        u_xlat26.x = u_xlat16_26 + -1.0;"
+        },
+        {
+          "offset": 876358,
+          "text": "        u_xlat60 = u_xlat60 * u_xlat26.x + 1.0;"
+        },
+        {
+          "offset": 876406,
+          "text": "        u_xlat67 = u_xlat60 * u_xlat16_67;"
+        }
+      ],
+      "windowSha256": "53ecca11719cf2ddf1b2b8d69992f616a2e3b19ce55c3f7f6868561f9f14f10c",
+      "renderedSha256": "49d49b693767b30373a5d481e8ec736238e6113bf57354ff3f9fb32e8036e38d"
+    }
+  ],
+  "interpretation": "These are bounded current-JP compiled GLSL neighborhoods selected for dataflow reconstruction. They are exact extracted code evidence, but a Web implementation remains deferred until the relevant inputs, branch predicates and output contribution can be traced through a complete chain."
+}

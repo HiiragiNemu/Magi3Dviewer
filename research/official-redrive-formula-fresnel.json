@@ -1,0 +1,1812 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-modern-ReDrive-Shader-targeted-window",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "material": "mt_chara_100101_body_SJ",
+  "shaderPathId": 7704691985981102055,
+  "shaderSerializedFile": "CAB-d4292dd62db4a15308122929284b3327",
+  "group": "fresnel",
+  "tokens": [
+    "_UseFresnel",
+    "_FresnelColor",
+    "_FresnelThreshold",
+    "_FresnelFeather",
+    "_FresnelMaskByMetallic",
+    "_Fresnel"
+  ],
+  "decompressedChunkCount": 28,
+  "occurrenceCount": 15625,
+  "hitChunks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "windowRadiusBytes": 6144,
+  "selectedWindowCount": 3,
+  "windows": [
+    {
+      "chunkIndex": 2,
+      "platform": 9,
+      "decodedSha256": "65536f9156cf560226d40a4094f1a27c448f6b2bfca1a8d6a77a8de89ee4f62a",
+      "centerOffset": 90596,
+      "centerToken": "_Fresnel",
+      "score": 84,
+      "targetTokensPresent": [
+        "_fresnel",
+        "_fresnelcolor",
+        "_fresnelfeather",
+        "_fresnelmaskbymetallic",
+        "_fresnelthreshold",
+        "_usefresnel"
+      ],
+      "start": 84452,
+      "end": 96740,
+      "byteCount": 12288,
+      "asciiLineCount": 216,
+      "storedLineCount": 140,
+      "rows": [
+        {
+          "offset": 84452,
+          "text": "9.xyz + u_xlat0.xyz;"
+        },
+        {
+          "offset": 84473,
+          "text": "        u_xlatb19 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_IsAlphaAdditive);"
+        },
+        {
+          "offset": 84543,
+          "text": "        u_xlat16_6.x = dot(vec3(0.298911989, 0.586610973, 0.114478), u_xlat14.xyz);"
+        },
+        {
+          "offset": 84627,
+          "text": "        u_xlat16_6.x = u_xlat16_6.x + -0.5;"
+        },
+        {
+          "offset": 84671,
+          "text": "        u_xlat16_6.x = u_xlat16_6.x + u_xlat16_6.x;"
+        },
+        {
+          "offset": 84723,
+          "text": "        u_xlat16_6.x = clamp(u_xlat16_6.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 84777,
+          "text": "        u_xlat16_6.x = u_xlat54 + u_xlat16_6.x;"
+        },
+        {
+          "offset": 84825,
+          "text": "        u_xlat16_6.x = (u_xlatb19) ? u_xlat16_6.x : u_xlat54;"
+        },
+        {
+          "offset": 84887,
+          "text": "    } else {"
+        },
+        {
+          "offset": 84900,
+          "text": "        u_xlat16_6.x = u_xlat54;"
+        },
+        {
+          "offset": 84933,
+          "text": "    }"
+        },
+        {
+          "offset": 84939,
+          "text": "    u_xlat5.w = 1.0;"
+        },
+        {
+          "offset": 84960,
+          "text": "    u_xlat16_11.x = dot(unity_SHAr, u_xlat5);"
+        },
+        {
+          "offset": 85006,
+          "text": "    u_xlat16_11.y = dot(unity_SHAg, u_xlat5);"
+        },
+        {
+          "offset": 85052,
+          "text": "    u_xlat16_11.z = dot(unity_SHAb, u_xlat5);"
+        },
+        {
+          "offset": 85098,
+          "text": "    u_xlat16_9 = u_xlat5.yzzx * u_xlat5.xyzz;"
+        },
+        {
+          "offset": 85144,
+          "text": "    u_xlat16_15.x = dot(unity_SHBr, u_xlat16_9);"
+        },
+        {
+          "offset": 85193,
+          "text": "    u_xlat16_15.y = dot(unity_SHBg, u_xlat16_9);"
+        },
+        {
+          "offset": 85242,
+          "text": "    u_xlat16_15.z = dot(unity_SHBb, u_xlat16_9);"
+        },
+        {
+          "offset": 85291,
+          "text": "    u_xlat16_24.x = u_xlat5.y * u_xlat5.y;"
+        },
+        {
+          "offset": 85334,
+          "text": "    u_xlat16_24.x = u_xlat5.x * u_xlat5.x + (-u_xlat16_24.x);"
+        },
+        {
+          "offset": 85396,
+          "text": "    u_xlat16_15.xyz = unity_SHC.xyz * u_xlat16_24.xxx + u_xlat16_15.xyz;"
+        },
+        {
+          "offset": 85469,
+          "text": "    u_xlat16_11.xyz = u_xlat16_11.xyz + u_xlat16_15.xyz;"
+        },
+        {
+          "offset": 85526,
+          "text": "    u_xlat16_11.xyz = max(u_xlat16_11.xyz, vec3(0.0, 0.0, 0.0));"
+        },
+        {
+          "offset": 85591,
+          "text": "    u_xlat12.xyz = u_xlat16_11.xyz + _MainLightColor.xyz;"
+        },
+        {
+          "offset": 85649,
+          "text": "    u_xlat12.xyz = clamp(u_xlat12.xyz, 0.0, 1.0);"
+        },
+        {
+          "offset": 85699,
+          "text": "    u_xlat13.xyz = (-u_xlat12.xyz) + _GlobalCharacterLightingOverrideColor.xyz;"
+        },
+        {
+          "offset": 85779,
+          "text": "    u_xlat12.xyz = vec3(_GlobalCharacterLightingOverrideRatio) * u_xlat13.xyz + u_xlat12.xyz;"
+        },
+        {
+          "offset": 85873,
+          "text": "    u_xlat16_11.xyz = max(u_xlat12.xyz, vec3(0.100000001, 0.100000001, 0.100000001));"
+        },
+        {
+          "offset": 85959,
+          "text": "    u_xlat0.xyz = u_xlat0.xyz * u_xlat16_11.xyz;"
+        },
+        {
+          "offset": 86008,
+          "text": "    u_xlat16_24.x = u_xlat16_28.x * 0.800000012 + 0.200000003;"
+        },
+        {
+          "offset": 86071,
+          "text": "    u_xlat16_15.xyz = u_xlat16_11.xyz * u_xlat16_24.xxx;"
+        },
+        {
+          "offset": 86128,
+          "text": "    u_xlatb44.xy = notEqual(vec4(0.0, 0.0, 0.0, 0.0), vec4(_ShouldApplyFaceAdditional, _IsAlphaAdditive, _ShouldApplyFaceAdditional, _IsAlphaAdditive)).xy;"
+        },
+        {
+          "offset": 86284,
+          "text": "    if(u_xlatb44.x){"
+        },
+        {
+          "offset": 86305,
+          "text": "        u_xlat16_54 = texture(_FaceAdditionalMap, vs_TEXCOORD4.xy, _GlobalMipBias.x).x;"
+        },
+        {
+          "offset": 86393,
+          "text": "        u_xlatb19 = vs_TEXCOORD4.y>=0.5;"
+        },
+        {
+          "offset": 86434,
+          "text": "        u_xlat2.x = u_xlatb19 ? 1.0 : float(0.0);"
+        },
+        {
+          "offset": 86484,
+          "text": "        u_xlat16_24.x = u_xlat16_54 * u_xlat2.x;"
+        },
+        {
+          "offset": 86533,
+          "text": "        u_xlat16_42 = (u_xlatb19) ? 0.0 : 1.0;"
+        },
+        {
+          "offset": 86580,
+          "text": "        u_xlat16_24.x = u_xlat16_24.x * _CheekValue;"
+        },
+        {
+          "offset": 86633,
+          "text": "        u_xlat12.xyz = u_xlat0.xyz * _CheekColor.xyz + (-u_xlat0.xyz);"
+        },
+        {
+          "offset": 86704,
+          "text": "        u_xlat12.xyz = u_xlat16_24.xxx * u_xlat12.xyz + u_xlat0.xyz;"
+        },
+        {
+          "offset": 86773,
+          "text": "        u_xlat16_24.x = u_xlat16_54 * u_xlat16_42 + (-_HighlightThreshold);"
+        },
+        {
+          "offset": 86849,
+          "text": "        u_xlat16_24.x = u_xlat16_24.x * 20.0;"
+        },
+        {
+          "offset": 86895,
+          "text": "        u_xlat16_24.x = clamp(u_xlat16_24.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 86951,
+          "text": "        u_xlat16_42 = u_xlat16_24.x * -2.0 + 3.0;"
+        },
+        {
+          "offset": 87001,
+          "text": "        u_xlat16_24.x = u_xlat16_24.x * u_xlat16_24.x;"
+        },
+        {
+          "offset": 87056,
+          "text": "        u_xlat16_24.x = u_xlat16_24.x * u_xlat16_42;"
+        },
+        {
+          "offset": 87109,
+          "text": "        u_xlat16_16.xyz = u_xlat16_11.xyz + u_xlat16_11.xyz;"
+        },
+        {
+          "offset": 87170,
+          "text": "        u_xlat16_16.xyz = min(u_xlat16_16.xyz, vec3(1.0, 1.0, 1.0));"
+        },
+        {
+          "offset": 87239,
+          "text": "        u_xlat16_16.xyz = u_xlat16_24.xxx * u_xlat16_16.xyz;"
+        },
+        {
+          "offset": 87300,
+          "text": "        u_xlat0.xyz = u_xlat16_16.xyz * vec3(1.5, 1.5, 1.5) + u_xlat12.xyz;"
+        },
+        {
+          "offset": 87376,
+          "text": "    }"
+        },
+        {
+          "offset": 87382,
+          "text": "    u_xlatb54 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_IsAniso);"
+        },
+        {
+          "offset": 87440,
+          "text": "    u_xlat19.x = dot(u_xlat8.xy, u_xlat8.xy);"
+        },
+        {
+          "offset": 87486,
+          "text": "    u_xlat19.x = inversesqrt(u_xlat19.x);"
+        },
+        {
+          "offset": 87528,
+          "text": "    u_xlat8.xy = u_xlat19.xx * u_xlat8.xy;"
+        },
+        {
+          "offset": 87571,
+          "text": "    u_xlat12.xy = u_xlat1.zz * hlslcc_mtx4x4unity_MatrixV[1].xz;"
+        },
+        {
+          "offset": 87636,
+          "text": "    u_xlat12.xy = hlslcc_mtx4x4unity_MatrixV[0].xz * u_xlat1.xx + u_xlat12.xy;"
+        },
+        {
+          "offset": 87715,
+          "text": "    u_xlat12.xy = hlslcc_mtx4x4unity_MatrixV[2].xz * u_xlat1.ww + u_xlat12.xy;"
+        },
+        {
+          "offset": 87794,
+          "text": "    u_xlat19.x = dot(u_xlat12.xy, u_xlat12.xy);"
+        },
+        {
+          "offset": 87842,
+          "text": "    u_xlat19.x = inversesqrt(u_xlat19.x);"
+        },
+        {
+          "offset": 87884,
+          "text": "    u_xlat12.xy = u_xlat19.xx * u_xlat12.xy;"
+        },
+        {
+          "offset": 87929,
+          "text": "    u_xlat19.x = dot(u_xlat8.xy, u_xlat12.xy);"
+        },
+        {
+          "offset": 87976,
+          "text": "    u_xlat19.x = clamp(u_xlat19.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 88022,
+          "text": "    u_xlat16_24.x = (-_AnisoThreshold) + 1.00100005;"
+        },
+        {
+          "offset": 88075,
+          "text": "    u_xlat16_42 = (-u_xlat16_2.y) + 1.0;"
+        },
+        {
+          "offset": 88116,
+          "text": "    u_xlat8.xyz = u_xlat16_15.xyz * _AnisoColor.xyz;"
+        },
+        {
+          "offset": 88169,
+          "text": "    u_xlat16_24.x = u_xlat16_24.x * u_xlat16_42 + _AnisoThreshold;"
+        },
+        {
+          "offset": 88236,
+          "text": "    u_xlat16_42 = u_xlat16_24.x + (-_AnisoFeather);"
+        },
+        {
+          "offset": 88288,
+          "text": "    u_xlat16_24.x = u_xlat16_24.x + _AnisoFeather;"
+        },
+        {
+          "offset": 88339,
+          "text": "    u_xlat16_24.x = (-u_xlat16_42) + u_xlat16_24.x;"
+        },
+        {
+          "offset": 88391,
+          "text": "    u_xlat16_42 = u_xlat19.x + (-u_xlat16_42);"
+        },
+        {
+          "offset": 88438,
+          "text": "    u_xlat16_24.x = float(1.0) / u_xlat16_24.x;"
+        },
+        {
+          "offset": 88486,
+          "text": "    u_xlat16_24.x = u_xlat16_24.x * u_xlat16_42;"
+        },
+        {
+          "offset": 88535,
+          "text": "    u_xlat16_24.x = clamp(u_xlat16_24.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 88587,
+          "text": "    u_xlat16_42 = u_xlat16_24.x * -2.0 + 3.0;"
+        },
+        {
+          "offset": 88633,
+          "text": "    u_xlat16_24.x = u_xlat16_24.x * u_xlat16_24.x;"
+        },
+        {
+          "offset": 88684,
+          "text": "    u_xlat16_24.x = u_xlat16_24.x * u_xlat16_42;"
+        },
+        {
+          "offset": 88733,
+          "text": "    u_xlat8.xyz = u_xlat16_24.xxx * u_xlat8.xyz;"
+        },
+        {
+          "offset": 88782,
+          "text": "    u_xlat16_24.x = u_xlat16_2.y + -1.0;"
+        },
+        {
+          "offset": 88823,
+          "text": "    u_xlat16_24.x = _AnisoMaskByMetallic * u_xlat16_24.x + 1.0;"
+        },
+        {
+          "offset": 88887,
+          "text": "    u_xlat12.xyz = u_xlat16_24.xxx * u_xlat8.xyz;"
+        },
+        {
+          "offset": 88937,
+          "text": "    u_xlat8.xyz = u_xlat8.xyz * u_xlat16_24.xxx + u_xlat0.xyz;"
+        },
+        {
+          "offset": 89000,
+          "text": "    u_xlat16_24.x = dot(vec3(0.298911989, 0.586610973, 0.114478), u_xlat12.xyz);"
+        },
+        {
+          "offset": 89081,
+          "text": "    u_xlat16_24.x = clamp(u_xlat16_24.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 89133,
+          "text": "    u_xlat16_24.x = u_xlat16_24.x + u_xlat16_6.x;"
+        },
+        {
+          "offset": 89183,
+          "text": "    u_xlat16_24.x = (u_xlatb44.y) ? u_xlat16_24.x : u_xlat16_6.x;"
+        },
+        {
+          "offset": 89249,
+          "text": "    u_xlat16_6.x = (u_xlatb54) ? u_xlat16_24.x : u_xlat16_6.x;"
+        },
+        {
+          "offset": 89312,
+          "text": "    u_xlat0.xyz = (bool(u_xlatb54)) ? u_xlat8.xyz : u_xlat0.xyz;"
+        },
+        {
+          "offset": 89377,
+          "text": "    u_xlat1.x = dot(u_xlat5.xyz, u_xlat1.xzw);"
+        },
+        {
+          "offset": 89424,
+          "text": "    u_xlat1.x = clamp(u_xlat1.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 89468,
+          "text": "    u_xlatb19 = u_xlat1.x>=0.966000021;"
+        },
+        {
+          "offset": 89508,
+          "text": "    u_xlat5.xyz = _MainLightColor.xyz * _RimLightColor.xyz;"
+        },
+        {
+          "offset": 89568,
+          "text": "    u_xlat19.xyz = bool(u_xlatb19) ? u_xlat5.xyz : vec3(0.0, 0.0, 0.0);"
+        },
+        {
+          "offset": 89640,
+          "text": "    u_xlat19.xyz = u_xlat16_15.xyz * u_xlat19.xyz;"
+        },
+        {
+          "offset": 89691,
+          "text": "    u_xlat19.xyz = u_xlat16_2.zzz * u_xlat19.xyz;"
+        },
+        {
+          "offset": 89741,
+          "text": "    u_xlat54 = (u_xlatb54) ? 0.0 : 1.0;"
+        },
+        {
+          "offset": 89781,
+          "text": "    u_xlat0.xyz = u_xlat19.xyz * vec3(u_xlat54) + u_xlat0.xyz;"
+        },
+        {
+          "offset": 89844,
+          "text": "    u_xlat16_1.xyz = texture(_SpecularGradientMap, u_xlat1.xx, _GlobalMipBias.x).xyz;"
+        },
+        {
+          "offset": 89930,
+          "text": "    u_xlatb5.xyz = lessThan(vec4(0.5, 0.5, 0.5, 0.0), u_xlat0.xyzx).xyz;"
+        },
+        {
+          "offset": 90003,
+          "text": "    u_xlat8.xyz = (-u_xlat0.xyz) + vec3(1.0, 1.0, 1.0);"
+        },
+        {
+          "offset": 90059,
+          "text": "    u_xlat8.xyz = u_xlat8.xyz + u_xlat8.xyz;"
+        },
+        {
+          "offset": 90104,
+          "text": "    u_xlat12.xyz = (-u_xlat16_1.xyz) + vec3(1.0, 1.0, 1.0);"
+        },
+        {
+          "offset": 90164,
+          "text": "    u_xlat8.xyz = (-u_xlat8.xyz) * u_xlat12.xyz + vec3(1.0, 1.0, 1.0);"
+        },
+        {
+          "offset": 90235,
+          "text": "    u_xlat54 = dot(u_xlat16_1.xx, u_xlat0.xx);"
+        },
+        {
+          "offset": 90282,
+          "text": "    u_xlat12.x = (u_xlatb5.x) ? u_xlat8.x : u_xlat54;"
+        },
+        {
+          "offset": 90336,
+          "text": "    u_xlat54 = dot(u_xlat16_1.yy, u_xlat0.yy);"
+        },
+        {
+          "offset": 90383,
+          "text": "    u_xlat12.y = (u_xlatb5.y) ? u_xlat8.y : u_xlat54;"
+        },
+        {
+          "offset": 90437,
+          "text": "    u_xlat54 = dot(u_xlat16_1.zz, u_xlat0.zz);"
+        },
+        {
+          "offset": 90484,
+          "text": "    u_xlat12.z = (u_xlatb5.z) ? u_xlat8.z : u_xlat54;"
+        },
+        {
+          "offset": 90538,
+          "text": "    u_xlatb1.xy = notEqual(vec4(0.0, 0.0, 0.0, 0.0), vec4(_FresnelMaskByMetallic, _UseFresnel, _FresnelMaskByMetallic, _FresnelMaskByMetallic)).xy;"
+        },
+        {
+          "offset": 90686,
+          "text": "    u_xlat16_24.x = (-_UseFresnel) + 1.0;"
+        },
+        {
+          "offset": 90728,
+          "text": "    u_xlat16_24.x = (u_xlatb1.x) ? u_xlat16_24.x : 1.0;"
+        },
+        {
+          "offset": 90784,
+          "text": "    u_xlat16_24.x = u_xlat16_2.y * u_xlat16_24.x;"
+        },
+        {
+          "offset": 90834,
+          "text": "    u_xlat5.xyz = (-u_xlat0.xyz) + u_xlat12.xyz;"
+        },
+        {
+          "offset": 90883,
+          "text": "    u_xlat0.xyz = u_xlat16_24.xxx * u_xlat5.xyz + u_xlat0.xyz;"
+        },
+        {
+          "offset": 90946,
+          "text": "    u_xlat16_24.x = dot(vec3(0.298911989, 0.586610973, 0.114478), u_xlat12.xyz);"
+        },
+        {
+          "offset": 91027,
+          "text": "    u_xlat16_24.x = u_xlat16_24.x + -0.5;"
+        },
+        {
+          "offset": 91069,
+          "text": "    u_xlat16_24.x = u_xlat16_24.x + u_xlat16_24.x;"
+        },
+        {
+          "offset": 91120,
+          "text": "    u_xlat16_24.x = clamp(u_xlat16_24.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 91172,
+          "text": "    u_xlat16_24.x = u_xlat16_24.x + u_xlat16_6.x;"
+        },
+        {
+          "offset": 91222,
+          "text": "    u_xlat16_24.x = (u_xlatb44.y) ? u_xlat16_24.x : u_xlat16_6.x;"
+        },
+        {
+          "offset": 91288,
+          "text": "    u_xlat16_42 = (u_xlatb1.x) ? u_xlat16_2.y : 1.0;"
+        },
+        {
+          "offset": 91341,
+          "text": "    u_xlat1.xzw = u_xlat16_15.xyz * _FresnelColor.xyz;"
+        },
+        {
+          "offset": 91396,
+          "text": "    u_xlat16_46 = (-_FresnelThreshold) + 1.0;"
+        },
+        {
+          "offset": 91442,
+          "text": "    u_xlat16_64 = (-_FresnelFeather) * 0.5 + u_xlat16_46;"
+        },
+        {
+          "offset": 91500,
+          "text": "    u_xlat16_46 = _FresnelFeather * 0.5 + u_xlat16_46;"
+        },
+        {
+          "offset": 91555,
+          "text": "    u_xlat16_46 = (-u_xlat16_64) + u_xlat16_46;"
+        },
+        {
+          "offset": 91603,
+          "text": "    u_xlat16_42 = u_xlat16_60 * u_xlat16_42 + (-u_xlat16_64);"
+        },
+        {
+          "offset": 91665,
+          "text": "    u_xlat16_60 = float(1.0) / u_xlat16_46;"
+        },
+        {
+          "offset": 91709,
+          "text": "    u_xlat16_42 = u_xlat16_60 * u_xlat16_42;"
+        },
+        {
+          "offset": 91754,
+          "text": "    u_xlat16_42 = clamp(u_xlat16_42, 0.0, 1.0);"
+        },
+        {
+          "offset": 91802,
+          "text": "    u_xlat16_60 = u_xlat16_42 * -2.0 + 3.0;"
+        },
+        {
+          "offset": 91846,
+          "text": "    u_xlat16_42 = u_xlat16_42 * u_xlat16_42;"
+        },
+        {
+          "offset": 91891,
+          "text": "    u_xlat16_42 = u_xlat16_42 * u_xlat16_60;"
+        },
+        {
+          "offset": 91936,
+          "text": "    u_xlat2.xyz = u_xlat1.xzw * vec3(u_xlat16_42);"
+        },
+        {
+          "offset": 91987,
+          "text": "    u_xlat1.xzw = u_xlat1.xzw * vec3(u_xlat16_42) + u_xlat0.xyz;"
+        },
+        {
+          "offset": 92052,
+          "text": "    u_xlat16_42 = dot(vec3(0.298911989, 0.586610973, 0.114478), u_xlat2.xyz);"
+        },
+        {
+          "offset": 92130,
+          "text": "    u_xlat16_42 = clamp(u_xlat16_42, 0.0, 1.0);"
+        }
+      ],
+      "windowSha256": "d7092aa2026622535ce07fd557535e6e257c7a665c5d08814571ff4952356a0b",
+      "renderedSha256": "4341a4999273d9d0efdae774606746d896018db58590d474a3e92893adb74503"
+    },
+    {
+      "chunkIndex": 2,
+      "platform": 9,
+      "decodedSha256": "65536f9156cf560226d40a4094f1a27c448f6b2bfca1a8d6a77a8de89ee4f62a",
+      "centerOffset": 191685,
+      "centerToken": "_UseFresnel",
+      "score": 84,
+      "targetTokensPresent": [
+        "_fresnel",
+        "_fresnelcolor",
+        "_fresnelfeather",
+        "_fresnelmaskbymetallic",
+        "_fresnelthreshold",
+        "_usefresnel"
+      ],
+      "start": 185541,
+      "end": 197829,
+      "byteCount": 12288,
+      "asciiLineCount": 213,
+      "storedLineCount": 140,
+      "rows": [
+        {
+          "offset": 185541,
+          "text": ".xyz = (-u_xlat0.xyz) + vec3(1.0, 1.0, 1.0);"
+        },
+        {
+          "offset": 185586,
+          "text": "        u_xlat11.xyz = u_xlat11.xyz + u_xlat11.xyz;"
+        },
+        {
+          "offset": 185638,
+          "text": "        u_xlat12.xyz = (-u_xlat16_5.xyz) + vec3(1.0, 1.0, 1.0);"
+        },
+        {
+          "offset": 185702,
+          "text": "        u_xlat11.xyz = (-u_xlat11.xyz) * u_xlat12.xyz + vec3(1.0, 1.0, 1.0);"
+        },
+        {
+          "offset": 185779,
+          "text": "        u_xlat18.x = dot(u_xlat16_5.xx, u_xlat0.xx);"
+        },
+        {
+          "offset": 185832,
+          "text": "        u_xlat12.x = (u_xlatb9.x) ? u_xlat11.x : u_xlat18.x;"
+        },
+        {
+          "offset": 185893,
+          "text": "        u_xlat18.x = dot(u_xlat16_5.yy, u_xlat0.yy);"
+        },
+        {
+          "offset": 185946,
+          "text": "        u_xlat12.y = (u_xlatb9.y) ? u_xlat11.y : u_xlat18.x;"
+        },
+        {
+          "offset": 186007,
+          "text": "        u_xlat18.x = dot(u_xlat16_5.zz, u_xlat0.zz);"
+        },
+        {
+          "offset": 186060,
+          "text": "        u_xlat12.z = (u_xlatb9.z) ? u_xlat11.z : u_xlat18.x;"
+        },
+        {
+          "offset": 186121,
+          "text": "        u_xlatb5.xy = notEqual(vec4(0.0, 0.0, 0.0, 0.0), vec4(_MaskMatcapSpecular, _MaskMatcapMetallic, _MaskMatcapSpecular, _MaskMatcapSpecular)).xy;"
+        },
+        {
+          "offset": 186272,
+          "text": "        u_xlat16_6.x = (u_xlatb5.x) ? u_xlat16_2.y : float(1.0);"
+        },
+        {
+          "offset": 186337,
+          "text": "        u_xlat16_6.y = (u_xlatb5.y) ? u_xlat16_2.x : float(1.0);"
+        },
+        {
+          "offset": 186402,
+          "text": "        u_xlat18.x = u_xlat16_6.x * _MatCapIntensity;"
+        },
+        {
+          "offset": 186456,
+          "text": "        u_xlat18.x = u_xlat16_6.y * u_xlat18.x;"
+        },
+        {
+          "offset": 186504,
+          "text": "        u_xlat5.xyz = (-u_xlat0.xyz) + u_xlat12.xyz;"
+        },
+        {
+          "offset": 186557,
+          "text": "        u_xlat0.xyz = u_xlat18.xxx * u_xlat5.xyz + u_xlat0.xyz;"
+        },
+        {
+          "offset": 186621,
+          "text": "        u_xlatb18 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_IsAlphaAdditive);"
+        },
+        {
+          "offset": 186691,
+          "text": "        u_xlat16_6.x = dot(vec3(0.298911989, 0.586610973, 0.114478), u_xlat12.xyz);"
+        },
+        {
+          "offset": 186775,
+          "text": "        u_xlat16_6.x = u_xlat16_6.x + -0.5;"
+        },
+        {
+          "offset": 186819,
+          "text": "        u_xlat16_6.x = u_xlat16_6.x + u_xlat16_6.x;"
+        },
+        {
+          "offset": 186871,
+          "text": "        u_xlat16_6.x = clamp(u_xlat16_6.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 186925,
+          "text": "        u_xlat16_6.x = u_xlat51 + u_xlat16_6.x;"
+        },
+        {
+          "offset": 186973,
+          "text": "        u_xlat16_6.x = (u_xlatb18) ? u_xlat16_6.x : u_xlat51;"
+        },
+        {
+          "offset": 187035,
+          "text": "    } else {"
+        },
+        {
+          "offset": 187048,
+          "text": "        u_xlat16_6.x = u_xlat51;"
+        },
+        {
+          "offset": 187081,
+          "text": "    }"
+        },
+        {
+          "offset": 187087,
+          "text": "    u_xlat5.xyz = _FaceForwardDirection.xyz;"
+        },
+        {
+          "offset": 187132,
+          "text": "    u_xlat5.w = 1.0;"
+        },
+        {
+          "offset": 187153,
+          "text": "    u_xlat16_10.x = dot(unity_SHAr, u_xlat5);"
+        },
+        {
+          "offset": 187199,
+          "text": "    u_xlat16_10.y = dot(unity_SHAg, u_xlat5);"
+        },
+        {
+          "offset": 187245,
+          "text": "    u_xlat16_10.z = dot(unity_SHAb, u_xlat5);"
+        },
+        {
+          "offset": 187291,
+          "text": "    u_xlat16_5 = _FaceForwardDirection.yzzx * _FaceForwardDirection.xyzz;"
+        },
+        {
+          "offset": 187365,
+          "text": "    u_xlat16_13.x = dot(unity_SHBr, u_xlat16_5);"
+        },
+        {
+          "offset": 187414,
+          "text": "    u_xlat16_13.y = dot(unity_SHBg, u_xlat16_5);"
+        },
+        {
+          "offset": 187463,
+          "text": "    u_xlat16_13.z = dot(unity_SHBb, u_xlat16_5);"
+        },
+        {
+          "offset": 187512,
+          "text": "    u_xlat16_23.x = _FaceForwardDirection.y * _FaceForwardDirection.y;"
+        },
+        {
+          "offset": 187583,
+          "text": "    u_xlat16_23.x = _FaceForwardDirection.x * _FaceForwardDirection.x + (-u_xlat16_23.x);"
+        },
+        {
+          "offset": 187673,
+          "text": "    u_xlat16_13.xyz = unity_SHC.xyz * u_xlat16_23.xxx + u_xlat16_13.xyz;"
+        },
+        {
+          "offset": 187746,
+          "text": "    u_xlat16_10.xyz = u_xlat16_10.xyz + u_xlat16_13.xyz;"
+        },
+        {
+          "offset": 187803,
+          "text": "    u_xlat16_10.xyz = max(u_xlat16_10.xyz, vec3(0.0, 0.0, 0.0));"
+        },
+        {
+          "offset": 187868,
+          "text": "    u_xlat9.xyz = u_xlat16_10.xyz + _MainLightColor.xyz;"
+        },
+        {
+          "offset": 187925,
+          "text": "    u_xlat9.xyz = clamp(u_xlat9.xyz, 0.0, 1.0);"
+        },
+        {
+          "offset": 187973,
+          "text": "    u_xlat11.xyz = (-u_xlat9.xyz) + _GlobalCharacterLightingOverrideColor.xyz;"
+        },
+        {
+          "offset": 188052,
+          "text": "    u_xlat9.xyz = vec3(_GlobalCharacterLightingOverrideRatio) * u_xlat11.xyz + u_xlat9.xyz;"
+        },
+        {
+          "offset": 188144,
+          "text": "    u_xlat16_10.xyz = max(u_xlat9.xyz, vec3(0.100000001, 0.100000001, 0.100000001));"
+        },
+        {
+          "offset": 188229,
+          "text": "    u_xlat0.xyz = u_xlat0.xyz * u_xlat16_10.xyz;"
+        },
+        {
+          "offset": 188278,
+          "text": "    u_xlat16_23.x = u_xlat16_53 * 0.800000012 + 0.200000003;"
+        },
+        {
+          "offset": 188339,
+          "text": "    u_xlat16_13.xyz = u_xlat16_10.xyz * u_xlat16_23.xxx;"
+        },
+        {
+          "offset": 188396,
+          "text": "    u_xlatb42.xy = notEqual(vec4(0.0, 0.0, 0.0, 0.0), vec4(_ShouldApplyFaceAdditional, _IsAlphaAdditive, _ShouldApplyFaceAdditional, _IsAlphaAdditive)).xy;"
+        },
+        {
+          "offset": 188552,
+          "text": "    if(u_xlatb42.x){"
+        },
+        {
+          "offset": 188573,
+          "text": "        u_xlat16_51 = texture(_FaceAdditionalMap, vs_TEXCOORD4.xy, _GlobalMipBias.x).x;"
+        },
+        {
+          "offset": 188661,
+          "text": "        u_xlatb18 = vs_TEXCOORD4.y>=0.5;"
+        },
+        {
+          "offset": 188702,
+          "text": "        u_xlat54 = u_xlatb18 ? 1.0 : float(0.0);"
+        },
+        {
+          "offset": 188751,
+          "text": "        u_xlat16_23.x = u_xlat16_51 * u_xlat54;"
+        },
+        {
+          "offset": 188799,
+          "text": "        u_xlat16_40 = (u_xlatb18) ? 0.0 : 1.0;"
+        },
+        {
+          "offset": 188846,
+          "text": "        u_xlat16_23.x = u_xlat16_23.x * _CheekValue;"
+        },
+        {
+          "offset": 188899,
+          "text": "        u_xlat9.xyz = u_xlat0.xyz * _CheekColor.xyz + (-u_xlat0.xyz);"
+        },
+        {
+          "offset": 188969,
+          "text": "        u_xlat9.xyz = u_xlat16_23.xxx * u_xlat9.xyz + u_xlat0.xyz;"
+        },
+        {
+          "offset": 189036,
+          "text": "        u_xlat16_23.x = u_xlat16_51 * u_xlat16_40 + (-_HighlightThreshold);"
+        },
+        {
+          "offset": 189112,
+          "text": "        u_xlat16_23.x = u_xlat16_23.x * 20.0;"
+        },
+        {
+          "offset": 189158,
+          "text": "        u_xlat16_23.x = clamp(u_xlat16_23.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 189214,
+          "text": "        u_xlat16_40 = u_xlat16_23.x * -2.0 + 3.0;"
+        },
+        {
+          "offset": 189264,
+          "text": "        u_xlat16_23.x = u_xlat16_23.x * u_xlat16_23.x;"
+        },
+        {
+          "offset": 189319,
+          "text": "        u_xlat16_23.x = u_xlat16_23.x * u_xlat16_40;"
+        },
+        {
+          "offset": 189372,
+          "text": "        u_xlat16_14.xyz = u_xlat16_10.xyz + u_xlat16_10.xyz;"
+        },
+        {
+          "offset": 189433,
+          "text": "        u_xlat16_14.xyz = min(u_xlat16_14.xyz, vec3(1.0, 1.0, 1.0));"
+        },
+        {
+          "offset": 189502,
+          "text": "        u_xlat16_14.xyz = u_xlat16_23.xxx * u_xlat16_14.xyz;"
+        },
+        {
+          "offset": 189563,
+          "text": "        u_xlat0.xyz = u_xlat16_14.xyz * vec3(1.5, 1.5, 1.5) + u_xlat9.xyz;"
+        },
+        {
+          "offset": 189638,
+          "text": "    }"
+        },
+        {
+          "offset": 189644,
+          "text": "    u_xlatb51 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_IsAniso);"
+        },
+        {
+          "offset": 189702,
+          "text": "    u_xlat18.x = dot(u_xlat8.xy, u_xlat8.xy);"
+        },
+        {
+          "offset": 189748,
+          "text": "    u_xlat18.x = inversesqrt(u_xlat18.x);"
+        },
+        {
+          "offset": 189790,
+          "text": "    u_xlat8.xy = u_xlat18.xx * u_xlat8.xy;"
+        },
+        {
+          "offset": 189833,
+          "text": "    u_xlat18.xy = u_xlat1.zz * hlslcc_mtx4x4unity_MatrixV[1].xz;"
+        },
+        {
+          "offset": 189898,
+          "text": "    u_xlat1.xy = hlslcc_mtx4x4unity_MatrixV[0].xz * u_xlat1.xx + u_xlat18.xy;"
+        },
+        {
+          "offset": 189976,
+          "text": "    u_xlat1.xy = hlslcc_mtx4x4unity_MatrixV[2].xz * u_xlat1.ww + u_xlat1.xy;"
+        },
+        {
+          "offset": 190053,
+          "text": "    u_xlat35.x = dot(u_xlat1.xy, u_xlat1.xy);"
+        },
+        {
+          "offset": 190099,
+          "text": "    u_xlat35.x = inversesqrt(u_xlat35.x);"
+        },
+        {
+          "offset": 190141,
+          "text": "    u_xlat1.xy = u_xlat35.xx * u_xlat1.xy;"
+        },
+        {
+          "offset": 190184,
+          "text": "    u_xlat1.x = dot(u_xlat8.xy, u_xlat1.xy);"
+        },
+        {
+          "offset": 190229,
+          "text": "    u_xlat1.x = clamp(u_xlat1.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 190273,
+          "text": "    u_xlat16_23.x = (-_AnisoThreshold) + 1.00100005;"
+        },
+        {
+          "offset": 190326,
+          "text": "    u_xlat16_40 = (-u_xlat16_2.x) + 1.0;"
+        },
+        {
+          "offset": 190367,
+          "text": "    u_xlat18.xyz = u_xlat16_13.xyz * _AnisoColor.xyz;"
+        },
+        {
+          "offset": 190421,
+          "text": "    u_xlat16_23.x = u_xlat16_23.x * u_xlat16_40 + _AnisoThreshold;"
+        },
+        {
+          "offset": 190488,
+          "text": "    u_xlat16_40 = u_xlat16_23.x + (-_AnisoFeather);"
+        },
+        {
+          "offset": 190540,
+          "text": "    u_xlat16_23.x = u_xlat16_23.x + _AnisoFeather;"
+        },
+        {
+          "offset": 190591,
+          "text": "    u_xlat16_23.x = (-u_xlat16_40) + u_xlat16_23.x;"
+        },
+        {
+          "offset": 190643,
+          "text": "    u_xlat16_40 = u_xlat1.x + (-u_xlat16_40);"
+        },
+        {
+          "offset": 190689,
+          "text": "    u_xlat16_23.x = float(1.0) / u_xlat16_23.x;"
+        },
+        {
+          "offset": 190737,
+          "text": "    u_xlat16_23.x = u_xlat16_23.x * u_xlat16_40;"
+        },
+        {
+          "offset": 190786,
+          "text": "    u_xlat16_23.x = clamp(u_xlat16_23.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 190838,
+          "text": "    u_xlat16_40 = u_xlat16_23.x * -2.0 + 3.0;"
+        },
+        {
+          "offset": 190884,
+          "text": "    u_xlat16_23.x = u_xlat16_23.x * u_xlat16_23.x;"
+        },
+        {
+          "offset": 190935,
+          "text": "    u_xlat16_23.x = u_xlat16_23.x * u_xlat16_40;"
+        },
+        {
+          "offset": 190984,
+          "text": "    u_xlat1.xyz = u_xlat18.xyz * u_xlat16_23.xxx;"
+        },
+        {
+          "offset": 191034,
+          "text": "    u_xlat16_23.x = u_xlat16_2.x + -1.0;"
+        },
+        {
+          "offset": 191075,
+          "text": "    u_xlat16_23.x = _AnisoMaskByMetallic * u_xlat16_23.x + 1.0;"
+        },
+        {
+          "offset": 191139,
+          "text": "    u_xlat8.xyz = u_xlat1.xyz * u_xlat16_23.xxx;"
+        },
+        {
+          "offset": 191188,
+          "text": "    u_xlat1.xyz = u_xlat1.xyz * u_xlat16_23.xxx + u_xlat0.xyz;"
+        },
+        {
+          "offset": 191251,
+          "text": "    u_xlat16_23.x = dot(vec3(0.298911989, 0.586610973, 0.114478), u_xlat8.xyz);"
+        },
+        {
+          "offset": 191331,
+          "text": "    u_xlat16_23.x = clamp(u_xlat16_23.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 191383,
+          "text": "    u_xlat16_23.x = u_xlat16_23.x + u_xlat16_6.x;"
+        },
+        {
+          "offset": 191433,
+          "text": "    u_xlat16_23.x = (u_xlatb42.y) ? u_xlat16_23.x : u_xlat16_6.x;"
+        },
+        {
+          "offset": 191499,
+          "text": "    u_xlat16_6.x = (u_xlatb51) ? u_xlat16_23.x : u_xlat16_6.x;"
+        },
+        {
+          "offset": 191562,
+          "text": "    u_xlat0.xyz = (bool(u_xlatb51)) ? u_xlat1.xyz : u_xlat0.xyz;"
+        },
+        {
+          "offset": 191627,
+          "text": "    u_xlatb1.xy = notEqual(vec4(0.0, 0.0, 0.0, 0.0), vec4(_UseFresnel, _FresnelMaskByMetallic, _UseFresnel, _UseFresnel)).xy;"
+        },
+        {
+          "offset": 191753,
+          "text": "    u_xlat16_23.x = (u_xlatb1.y) ? u_xlat16_2.x : 1.0;"
+        },
+        {
+          "offset": 191808,
+          "text": "    u_xlat18.xyz = u_xlat16_13.xyz * _FresnelColor.xyz;"
+        },
+        {
+          "offset": 191864,
+          "text": "    u_xlat16_40 = (-_FresnelThreshold) + 1.0;"
+        },
+        {
+          "offset": 191910,
+          "text": "    u_xlat16_61 = (-_FresnelFeather) * 0.5 + u_xlat16_40;"
+        },
+        {
+          "offset": 191968,
+          "text": "    u_xlat16_40 = _FresnelFeather * 0.5 + u_xlat16_40;"
+        },
+        {
+          "offset": 192023,
+          "text": "    u_xlat16_40 = (-u_xlat16_61) + u_xlat16_40;"
+        },
+        {
+          "offset": 192071,
+          "text": "    u_xlat16_23.x = u_xlat16_57 * u_xlat16_23.x + (-u_xlat16_61);"
+        },
+        {
+          "offset": 192137,
+          "text": "    u_xlat16_40 = float(1.0) / u_xlat16_40;"
+        },
+        {
+          "offset": 192181,
+          "text": "    u_xlat16_23.x = u_xlat16_40 * u_xlat16_23.x;"
+        },
+        {
+          "offset": 192230,
+          "text": "    u_xlat16_23.x = clamp(u_xlat16_23.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 192282,
+          "text": "    u_xlat16_40 = u_xlat16_23.x * -2.0 + 3.0;"
+        },
+        {
+          "offset": 192328,
+          "text": "    u_xlat16_23.x = u_xlat16_23.x * u_xlat16_23.x;"
+        },
+        {
+          "offset": 192379,
+          "text": "    u_xlat16_23.x = u_xlat16_23.x * u_xlat16_40;"
+        },
+        {
+          "offset": 192428,
+          "text": "    u_xlat8.xyz = u_xlat18.xyz * u_xlat16_23.xxx;"
+        },
+        {
+          "offset": 192478,
+          "text": "    u_xlat18.xyz = u_xlat18.xyz * u_xlat16_23.xxx + u_xlat0.xyz;"
+        },
+        {
+          "offset": 192543,
+          "text": "    u_xlat16_23.x = dot(vec3(0.298911989, 0.586610973, 0.114478), u_xlat8.xyz);"
+        },
+        {
+          "offset": 192623,
+          "text": "    u_xlat16_23.x = clamp(u_xlat16_23.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 192675,
+          "text": "    u_xlat16_23.x = u_xlat16_23.x + u_xlat16_6.x;"
+        },
+        {
+          "offset": 192725,
+          "text": "    u_xlat16_23.x = (u_xlatb42.y) ? u_xlat16_23.x : u_xlat16_6.x;"
+        },
+        {
+          "offset": 192791,
+          "text": "    u_xlat16_6.x = (u_xlatb1.x) ? u_xlat16_23.x : u_xlat16_6.x;"
+        },
+        {
+          "offset": 192855,
+          "text": "    u_xlat16_6.x = clamp(u_xlat16_6.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 192905,
+          "text": "    u_xlat0.xyz = (u_xlatb1.x) ? u_xlat18.xyz : u_xlat0.xyz;"
+        },
+        {
+          "offset": 192966,
+          "text": "    u_xlatb51 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_IsCosmic);"
+        },
+        {
+          "offset": 193025,
+          "text": "    if(u_xlatb51){"
+        },
+        {
+          "offset": 193044,
+          "text": "        u_xlat1 = u_xlat7 * vec4(2.0, 2.0, 2.0, 2.0) + vec4(-1.0, -1.0, -1.0, -1.0);"
+        },
+        {
+          "offset": 193129,
+          "text": "        u_xlat16_5 = vs_TEXCOORD7.zwzw + vs_TEXCOORD7.xyxy;"
+        },
+        {
+          "offset": 193189,
+          "text": "        u_xlat16_7 = (-vs_TEXCOORD7.zwzw) + vs_TEXCOORD7.xyxy;"
+        },
+        {
+          "offset": 193252,
+          "text": "        u_xlat1 = u_xlat1 + (-u_xlat16_7);"
+        },
+        {
+          "offset": 193295,
+          "text": "        u_xlat5 = u_xlat16_5 + (-u_xlat16_7);"
+        },
+        {
+          "offset": 193341,
+          "text": "        u_xlat1 = u_xlat1 / u_xlat5;"
+        },
+        {
+          "offset": 193378,
+          "text": "        u_xlat1 = u_xlat1 * vec4(3.0, 3.0, 9.0, 9.0);"
+        },
+        {
+          "offset": 193432,
+          "text": "        u_xlat51 = _Time.y * _CosmicNoiseSpeed;"
+        }
+      ],
+      "windowSha256": "46254dadf260bfb18a97556d71fa3aef6899c383d9396f62e46bd1dc7130c8c7",
+      "renderedSha256": "d0b4a3496b1ea694c5270e662db9b384164177608826d7aa0a2266022eb188b0"
+    },
+    {
+      "chunkIndex": 2,
+      "platform": 9,
+      "decodedSha256": "65536f9156cf560226d40a4094f1a27c448f6b2bfca1a8d6a77a8de89ee4f62a",
+      "centerOffset": 346017,
+      "centerToken": "_Fresnel",
+      "score": 84,
+      "targetTokensPresent": [
+        "_fresnel",
+        "_fresnelcolor",
+        "_fresnelfeather",
+        "_fresnelmaskbymetallic",
+        "_fresnelthreshold",
+        "_usefresnel"
+      ],
+      "start": 339873,
+      "end": 352161,
+      "byteCount": 12288,
+      "asciiLineCount": 216,
+      "storedLineCount": 140,
+      "rows": [
+        {
+          "offset": 339873,
+          "text": "1.x = (u_xlatb2.x) ? u_xlat16_1.x : u_xlat57;"
+        },
+        {
+          "offset": 339919,
+          "text": "    } else {"
+        },
+        {
+          "offset": 339932,
+          "text": "        u_xlat16_1.x = u_xlat57;"
+        },
+        {
+          "offset": 339965,
+          "text": "    }"
+        },
+        {
+          "offset": 339971,
+          "text": "    u_xlat6.w = 1.0;"
+        },
+        {
+          "offset": 339992,
+          "text": "    u_xlat16_12.x = dot(unity_SHAr, u_xlat6);"
+        },
+        {
+          "offset": 340038,
+          "text": "    u_xlat16_12.y = dot(unity_SHAg, u_xlat6);"
+        },
+        {
+          "offset": 340084,
+          "text": "    u_xlat16_12.z = dot(unity_SHAb, u_xlat6);"
+        },
+        {
+          "offset": 340130,
+          "text": "    u_xlat16_11 = u_xlat6.yzzx * u_xlat6.xyzz;"
+        },
+        {
+          "offset": 340177,
+          "text": "    u_xlat16_13.x = dot(unity_SHBr, u_xlat16_11);"
+        },
+        {
+          "offset": 340227,
+          "text": "    u_xlat16_13.y = dot(unity_SHBg, u_xlat16_11);"
+        },
+        {
+          "offset": 340277,
+          "text": "    u_xlat16_13.z = dot(unity_SHBb, u_xlat16_11);"
+        },
+        {
+          "offset": 340327,
+          "text": "    u_xlat16_20.x = u_xlat6.y * u_xlat6.y;"
+        },
+        {
+          "offset": 340370,
+          "text": "    u_xlat16_20.x = u_xlat6.x * u_xlat6.x + (-u_xlat16_20.x);"
+        },
+        {
+          "offset": 340432,
+          "text": "    u_xlat16_13.xyz = unity_SHC.xyz * u_xlat16_20.xxx + u_xlat16_13.xyz;"
+        },
+        {
+          "offset": 340505,
+          "text": "    u_xlat16_12.xyz = u_xlat16_12.xyz + u_xlat16_13.xyz;"
+        },
+        {
+          "offset": 340562,
+          "text": "    u_xlat16_12.xyz = max(u_xlat16_12.xyz, vec3(0.0, 0.0, 0.0));"
+        },
+        {
+          "offset": 340627,
+          "text": "    u_xlat14.xyz = u_xlat16_12.xyz + _MainLightColor.xyz;"
+        },
+        {
+          "offset": 340685,
+          "text": "    u_xlat14.xyz = clamp(u_xlat14.xyz, 0.0, 1.0);"
+        },
+        {
+          "offset": 340735,
+          "text": "    u_xlat15.xyz = (-u_xlat14.xyz) + _GlobalCharacterLightingOverrideColor.xyz;"
+        },
+        {
+          "offset": 340815,
+          "text": "    u_xlat14.xyz = vec3(_GlobalCharacterLightingOverrideRatio) * u_xlat15.xyz + u_xlat14.xyz;"
+        },
+        {
+          "offset": 340909,
+          "text": "    u_xlat16_12.xyz = max(u_xlat14.xyz, vec3(0.100000001, 0.100000001, 0.100000001));"
+        },
+        {
+          "offset": 340995,
+          "text": "    u_xlat0.xyz = u_xlat0.xyz * u_xlat16_12.xyz;"
+        },
+        {
+          "offset": 341044,
+          "text": "    u_xlat16_20.x = u_xlat16_48 * 0.800000012 + 0.200000003;"
+        },
+        {
+          "offset": 341105,
+          "text": "    u_xlat16_13.xyz = u_xlat16_12.xyz * u_xlat16_20.xxx;"
+        },
+        {
+          "offset": 341162,
+          "text": "    u_xlatb2.xw = notEqual(vec4(0.0, 0.0, 0.0, 0.0), vec4(_ShouldApplyFaceAdditional, _ShouldApplyFaceAdditional, _ShouldApplyFaceAdditional, _IsAlphaAdditive)).xw;"
+        },
+        {
+          "offset": 341327,
+          "text": "    if(u_xlatb2.x){"
+        },
+        {
+          "offset": 341347,
+          "text": "        u_xlat16_57 = texture(_FaceAdditionalMap, vs_TEXCOORD4.xy, _GlobalMipBias.x).x;"
+        },
+        {
+          "offset": 341435,
+          "text": "        u_xlatb2.x = vs_TEXCOORD4.y>=0.5;"
+        },
+        {
+          "offset": 341477,
+          "text": "        u_xlat60 = u_xlatb2.x ? 1.0 : float(0.0);"
+        },
+        {
+          "offset": 341527,
+          "text": "        u_xlat16_20.x = u_xlat16_57 * u_xlat60;"
+        },
+        {
+          "offset": 341575,
+          "text": "        u_xlat16_39 = (u_xlatb2.x) ? 0.0 : 1.0;"
+        },
+        {
+          "offset": 341623,
+          "text": "        u_xlat16_20.x = u_xlat16_20.x * _CheekValue;"
+        },
+        {
+          "offset": 341676,
+          "text": "        u_xlat14.xyz = u_xlat0.xyz * _CheekColor.xyz + (-u_xlat0.xyz);"
+        },
+        {
+          "offset": 341747,
+          "text": "        u_xlat14.xyz = u_xlat16_20.xxx * u_xlat14.xyz + u_xlat0.xyz;"
+        },
+        {
+          "offset": 341816,
+          "text": "        u_xlat16_20.x = u_xlat16_57 * u_xlat16_39 + (-_HighlightThreshold);"
+        },
+        {
+          "offset": 341892,
+          "text": "        u_xlat16_20.x = u_xlat16_20.x * 20.0;"
+        },
+        {
+          "offset": 341938,
+          "text": "        u_xlat16_20.x = clamp(u_xlat16_20.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 341994,
+          "text": "        u_xlat16_39 = u_xlat16_20.x * -2.0 + 3.0;"
+        },
+        {
+          "offset": 342044,
+          "text": "        u_xlat16_20.x = u_xlat16_20.x * u_xlat16_20.x;"
+        },
+        {
+          "offset": 342099,
+          "text": "        u_xlat16_20.x = u_xlat16_20.x * u_xlat16_39;"
+        },
+        {
+          "offset": 342152,
+          "text": "        u_xlat16_17.xyz = u_xlat16_12.xyz + u_xlat16_12.xyz;"
+        },
+        {
+          "offset": 342213,
+          "text": "        u_xlat16_17.xyz = min(u_xlat16_17.xyz, vec3(1.0, 1.0, 1.0));"
+        },
+        {
+          "offset": 342282,
+          "text": "        u_xlat16_17.xyz = u_xlat16_20.xxx * u_xlat16_17.xyz;"
+        },
+        {
+          "offset": 342343,
+          "text": "        u_xlat0.xyz = u_xlat16_17.xyz * vec3(1.5, 1.5, 1.5) + u_xlat14.xyz;"
+        },
+        {
+          "offset": 342419,
+          "text": "    }"
+        },
+        {
+          "offset": 342425,
+          "text": "    u_xlatb57 = vec4(0.0, 0.0, 0.0, 0.0)!=vec4(_IsAniso);"
+        },
+        {
+          "offset": 342483,
+          "text": "    u_xlat2.x = dot(u_xlat7.xy, u_xlat7.xy);"
+        },
+        {
+          "offset": 342528,
+          "text": "    u_xlat2.x = inversesqrt(u_xlat2.x);"
+        },
+        {
+          "offset": 342568,
+          "text": "    u_xlat7.xy = u_xlat2.xx * u_xlat7.xy;"
+        },
+        {
+          "offset": 342610,
+          "text": "    u_xlat45.xy = u_xlat24.yy * hlslcc_mtx4x4unity_MatrixV[1].xz;"
+        },
+        {
+          "offset": 342676,
+          "text": "    u_xlat45.xy = hlslcc_mtx4x4unity_MatrixV[0].xz * u_xlat24.xx + u_xlat45.xy;"
+        },
+        {
+          "offset": 342756,
+          "text": "    u_xlat45.xy = hlslcc_mtx4x4unity_MatrixV[2].xz * u_xlat24.zz + u_xlat45.xy;"
+        },
+        {
+          "offset": 342836,
+          "text": "    u_xlat2.x = dot(u_xlat45.xy, u_xlat45.xy);"
+        },
+        {
+          "offset": 342883,
+          "text": "    u_xlat2.x = inversesqrt(u_xlat2.x);"
+        },
+        {
+          "offset": 342923,
+          "text": "    u_xlat45.xy = u_xlat2.xx * u_xlat45.xy;"
+        },
+        {
+          "offset": 342967,
+          "text": "    u_xlat2.x = dot(u_xlat7.xy, u_xlat45.xy);"
+        },
+        {
+          "offset": 343013,
+          "text": "    u_xlat2.x = clamp(u_xlat2.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 343057,
+          "text": "    u_xlat16_20.x = (-_AnisoThreshold) + 1.00100005;"
+        },
+        {
+          "offset": 343110,
+          "text": "    u_xlat16_39 = (-u_xlat16_2.y) + 1.0;"
+        },
+        {
+          "offset": 343151,
+          "text": "    u_xlat7.xyz = u_xlat16_13.xyz * _AnisoColor.xyz;"
+        },
+        {
+          "offset": 343204,
+          "text": "    u_xlat16_20.x = u_xlat16_20.x * u_xlat16_39 + _AnisoThreshold;"
+        },
+        {
+          "offset": 343271,
+          "text": "    u_xlat16_39 = u_xlat16_20.x + (-_AnisoFeather);"
+        },
+        {
+          "offset": 343323,
+          "text": "    u_xlat16_20.x = u_xlat16_20.x + _AnisoFeather;"
+        },
+        {
+          "offset": 343374,
+          "text": "    u_xlat16_20.x = (-u_xlat16_39) + u_xlat16_20.x;"
+        },
+        {
+          "offset": 343426,
+          "text": "    u_xlat16_39 = (-u_xlat16_39) + u_xlat2.x;"
+        },
+        {
+          "offset": 343472,
+          "text": "    u_xlat16_20.x = float(1.0) / u_xlat16_20.x;"
+        },
+        {
+          "offset": 343520,
+          "text": "    u_xlat16_20.x = u_xlat16_20.x * u_xlat16_39;"
+        },
+        {
+          "offset": 343569,
+          "text": "    u_xlat16_20.x = clamp(u_xlat16_20.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 343621,
+          "text": "    u_xlat16_39 = u_xlat16_20.x * -2.0 + 3.0;"
+        },
+        {
+          "offset": 343667,
+          "text": "    u_xlat16_20.x = u_xlat16_20.x * u_xlat16_20.x;"
+        },
+        {
+          "offset": 343718,
+          "text": "    u_xlat16_20.x = u_xlat16_20.x * u_xlat16_39;"
+        },
+        {
+          "offset": 343767,
+          "text": "    u_xlat7.xyz = u_xlat16_20.xxx * u_xlat7.xyz;"
+        },
+        {
+          "offset": 343816,
+          "text": "    u_xlat16_20.x = u_xlat16_2.y + -1.0;"
+        },
+        {
+          "offset": 343857,
+          "text": "    u_xlat16_20.x = _AnisoMaskByMetallic * u_xlat16_20.x + 1.0;"
+        },
+        {
+          "offset": 343921,
+          "text": "    u_xlat14.xyz = u_xlat16_20.xxx * u_xlat7.xyz;"
+        },
+        {
+          "offset": 343971,
+          "text": "    u_xlat7.xyz = u_xlat7.xyz * u_xlat16_20.xxx + u_xlat0.xyz;"
+        },
+        {
+          "offset": 344034,
+          "text": "    u_xlat16_20.x = dot(vec3(0.298911989, 0.586610973, 0.114478), u_xlat14.xyz);"
+        },
+        {
+          "offset": 344115,
+          "text": "    u_xlat16_20.x = clamp(u_xlat16_20.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 344167,
+          "text": "    u_xlat16_20.x = u_xlat16_20.x + u_xlat16_1.x;"
+        },
+        {
+          "offset": 344217,
+          "text": "    u_xlat16_20.x = (u_xlatb2.w) ? u_xlat16_20.x : u_xlat16_1.x;"
+        },
+        {
+          "offset": 344282,
+          "text": "    u_xlat16_1.x = (u_xlatb57) ? u_xlat16_20.x : u_xlat16_1.x;"
+        },
+        {
+          "offset": 344345,
+          "text": "    u_xlat0.xyz = (bool(u_xlatb57)) ? u_xlat7.xyz : u_xlat0.xyz;"
+        },
+        {
+          "offset": 344410,
+          "text": "    u_xlat2.x = dot(u_xlat6.xyz, u_xlat24.xyz);"
+        },
+        {
+          "offset": 344458,
+          "text": "    u_xlat2.x = clamp(u_xlat2.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 344502,
+          "text": "    u_xlat60 = dot(u_xlat6.xyz, u_xlat9.xyz);"
+        },
+        {
+          "offset": 344548,
+          "text": "    u_xlat60 = clamp(u_xlat60, 0.0, 1.0);"
+        },
+        {
+          "offset": 344590,
+          "text": "    u_xlat16_20.xy = vec2(_Gem1stHighlightSize, _Gem2ndHighlightSize) * vec2(-0.0350000001, -0.00300000003) + vec2(0.966000021, 0.997500002);"
+        },
+        {
+          "offset": 344732,
+          "text": "    u_xlatb61 = u_xlat2.x>=u_xlat16_20.x;"
+        },
+        {
+          "offset": 344774,
+          "text": "    u_xlat16_20.x = (u_xlatb61) ? 1.0 : 0.0;"
+        },
+        {
+          "offset": 344819,
+          "text": "    u_xlatb60 = u_xlat60>=u_xlat16_20.y;"
+        },
+        {
+          "offset": 344860,
+          "text": "    u_xlat16_39 = (u_xlatb60) ? 1.0 : 0.0;"
+        },
+        {
+          "offset": 344903,
+          "text": "    u_xlat16_20.x = u_xlat16_39 + u_xlat16_20.x;"
+        },
+        {
+          "offset": 344952,
+          "text": "    u_xlat16_20.x = min(u_xlat16_20.x, 1.0);"
+        },
+        {
+          "offset": 344997,
+          "text": "    u_xlat16_17.xyz = u_xlat16_20.xxx * _RimLightColor.xyz;"
+        },
+        {
+          "offset": 345057,
+          "text": "    u_xlat5.xyz = u_xlat16_17.xyz * _MainLightColor.xyz;"
+        },
+        {
+          "offset": 345114,
+          "text": "    u_xlat5.xyz = u_xlat16_13.xyz * u_xlat5.xyz;"
+        },
+        {
+          "offset": 345163,
+          "text": "    u_xlat57 = (u_xlatb57) ? 0.0 : 1.0;"
+        },
+        {
+          "offset": 345203,
+          "text": "    u_xlat0.xyz = u_xlat5.xyz * vec3(u_xlat57) + u_xlat0.xyz;"
+        },
+        {
+          "offset": 345265,
+          "text": "    u_xlat16_5.xyz = texture(_SpecularGradientMap, u_xlat2.xx, _GlobalMipBias.x).xyz;"
+        },
+        {
+          "offset": 345351,
+          "text": "    u_xlatb7.xyz = lessThan(vec4(0.5, 0.5, 0.5, 0.0), u_xlat0.xyzx).xyz;"
+        },
+        {
+          "offset": 345424,
+          "text": "    u_xlat9.xyz = (-u_xlat0.xyz) + vec3(1.0, 1.0, 1.0);"
+        },
+        {
+          "offset": 345480,
+          "text": "    u_xlat9.xyz = u_xlat9.xyz + u_xlat9.xyz;"
+        },
+        {
+          "offset": 345525,
+          "text": "    u_xlat14.xyz = (-u_xlat16_5.xyz) + vec3(1.0, 1.0, 1.0);"
+        },
+        {
+          "offset": 345585,
+          "text": "    u_xlat9.xyz = (-u_xlat9.xyz) * u_xlat14.xyz + vec3(1.0, 1.0, 1.0);"
+        },
+        {
+          "offset": 345656,
+          "text": "    u_xlat57 = dot(u_xlat16_5.xx, u_xlat0.xx);"
+        },
+        {
+          "offset": 345703,
+          "text": "    u_xlat14.x = (u_xlatb7.x) ? u_xlat9.x : u_xlat57;"
+        },
+        {
+          "offset": 345757,
+          "text": "    u_xlat57 = dot(u_xlat16_5.yy, u_xlat0.yy);"
+        },
+        {
+          "offset": 345804,
+          "text": "    u_xlat14.y = (u_xlatb7.y) ? u_xlat9.y : u_xlat57;"
+        },
+        {
+          "offset": 345858,
+          "text": "    u_xlat57 = dot(u_xlat16_5.zz, u_xlat0.zz);"
+        },
+        {
+          "offset": 345905,
+          "text": "    u_xlat14.z = (u_xlatb7.z) ? u_xlat9.z : u_xlat57;"
+        },
+        {
+          "offset": 345959,
+          "text": "    u_xlatb5.xy = notEqual(vec4(0.0, 0.0, 0.0, 0.0), vec4(_FresnelMaskByMetallic, _UseFresnel, _FresnelMaskByMetallic, _FresnelMaskByMetallic)).xy;"
+        },
+        {
+          "offset": 346107,
+          "text": "    u_xlat16_20.x = (-_UseFresnel) + 1.0;"
+        },
+        {
+          "offset": 346149,
+          "text": "    u_xlat16_20.x = (u_xlatb5.x) ? u_xlat16_20.x : 1.0;"
+        },
+        {
+          "offset": 346205,
+          "text": "    u_xlat16_20.x = u_xlat16_20.x * u_xlat16_2.y;"
+        },
+        {
+          "offset": 346255,
+          "text": "    u_xlat7.xyz = (-u_xlat0.xyz) + u_xlat14.xyz;"
+        },
+        {
+          "offset": 346304,
+          "text": "    u_xlat0.xyz = u_xlat16_20.xxx * u_xlat7.xyz + u_xlat0.xyz;"
+        },
+        {
+          "offset": 346367,
+          "text": "    u_xlat16_20.x = dot(vec3(0.298911989, 0.586610973, 0.114478), u_xlat14.xyz);"
+        },
+        {
+          "offset": 346448,
+          "text": "    u_xlat16_20.x = u_xlat16_20.x + -0.5;"
+        },
+        {
+          "offset": 346490,
+          "text": "    u_xlat16_20.x = u_xlat16_20.x + u_xlat16_20.x;"
+        },
+        {
+          "offset": 346541,
+          "text": "    u_xlat16_20.x = clamp(u_xlat16_20.x, 0.0, 1.0);"
+        },
+        {
+          "offset": 346593,
+          "text": "    u_xlat16_20.x = u_xlat16_20.x + u_xlat16_1.x;"
+        },
+        {
+          "offset": 346643,
+          "text": "    u_xlat16_20.x = (u_xlatb2.w) ? u_xlat16_20.x : u_xlat16_1.x;"
+        },
+        {
+          "offset": 346708,
+          "text": "    u_xlat16_39 = (u_xlatb5.x) ? u_xlat16_2.y : 1.0;"
+        },
+        {
+          "offset": 346761,
+          "text": "    u_xlat5.xzw = u_xlat16_13.xyz * _FresnelColor.xyz;"
+        },
+        {
+          "offset": 346816,
+          "text": "    u_xlat16_67 = (-_FresnelThreshold) + 1.0;"
+        },
+        {
+          "offset": 346862,
+          "text": "    u_xlat16_69 = (-_FresnelFeather) * 0.5 + u_xlat16_67;"
+        },
+        {
+          "offset": 346920,
+          "text": "    u_xlat16_67 = _FresnelFeather * 0.5 + u_xlat16_67;"
+        },
+        {
+          "offset": 346975,
+          "text": "    u_xlat16_67 = (-u_xlat16_69) + u_xlat16_67;"
+        },
+        {
+          "offset": 347023,
+          "text": "    u_xlat16_39 = u_xlat16_58 * u_xlat16_39 + (-u_xlat16_69);"
+        },
+        {
+          "offset": 347085,
+          "text": "    u_xlat16_58 = float(1.0) / u_xlat16_67;"
+        },
+        {
+          "offset": 347129,
+          "text": "    u_xlat16_39 = u_xlat16_58 * u_xlat16_39;"
+        },
+        {
+          "offset": 347174,
+          "text": "    u_xlat16_39 = clamp(u_xlat16_39, 0.0, 1.0);"
+        },
+        {
+          "offset": 347222,
+          "text": "    u_xlat16_58 = u_xlat16_39 * -2.0 + 3.0;"
+        },
+        {
+          "offset": 347266,
+          "text": "    u_xlat16_39 = u_xlat16_39 * u_xlat16_39;"
+        },
+        {
+          "offset": 347311,
+          "text": "    u_xlat16_39 = u_xlat16_39 * u_xlat16_58;"
+        },
+        {
+          "offset": 347356,
+          "text": "    u_xlat7.xyz = vec3(u_xlat16_39) * u_xlat5.xzw;"
+        },
+        {
+          "offset": 347407,
+          "text": "    u_xlat5.xzw = u_xlat5.xzw * vec3(u_xlat16_39) + u_xlat0.xyz;"
+        },
+        {
+          "offset": 347472,
+          "text": "    u_xlat16_39 = dot(vec3(0.298911989, 0.586610973, 0.114478), u_xlat7.xyz);"
+        },
+        {
+          "offset": 347550,
+          "text": "    u_xlat16_39 = clamp(u_xlat16_39, 0.0, 1.0);"
+        }
+      ],
+      "windowSha256": "8b472bd2ca7ed187a93a50e0d899f08ea89b92bf70021a14e5d17171f0a5897c",
+      "renderedSha256": "7df885477b3f7e3d6a6d45801565ee4d58a280294f65f97eadf16cb4a3a936a3"
+    }
+  ],
+  "interpretation": "These are bounded current-JP compiled GLSL neighborhoods selected for dataflow reconstruction. They are exact extracted code evidence, but a Web implementation remains deferred until the relevant inputs, branch predicates and output contribution can be traced through a complete chain."
+}
