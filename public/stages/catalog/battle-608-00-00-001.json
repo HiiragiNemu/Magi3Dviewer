@@ -198,7 +198,13 @@
       "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
-      "side": "double"
+      "side": "double",
+      "atlas": {
+        "columns": 4,
+        "rows": 4,
+        "offset": 0,
+        "framesPerSecond": 8
+      }
     },
     {
       "materialName": "mt_bg3d608_00_red_violinShdLine",
@@ -211,7 +217,13 @@
       "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
-      "side": "double"
+      "side": "double",
+      "atlas": {
+        "columns": 4,
+        "rows": 4,
+        "offset": 0,
+        "framesPerSecond": 8
+      }
     },
     {
       "materialName": "mt_mt_bg3d608_00_red_Object",
@@ -479,7 +491,8 @@
       "One 1024x1024 RGBA baked lightmap and 20 renderer bindings",
       "One realtime ReflectionProbe and ReDriveVolume serialized profile",
       "No TimelineAsset or PlayableDirector exists in the 15-file closure",
-      "Current JP Material bg3d608_00_blue_Fish: _MULTI_UV_SCROLL=1, BaseMap and separate ScrollTexture PPtrs, both layers speed [-0.01,0], tiling [1,1], opacity 1, _Additive_to_Multiply=0.98, alpha clip 0.5"
+      "Current JP Material bg3d608_00_blue_Fish: _MULTI_UV_SCROLL=1, BaseMap and separate ScrollTexture PPtrs, both layers speed [-0.01,0], tiling [1,1], opacity 1, _Additive_to_Multiply=0.98, alpha clip 0.5",
+      "Current JP violin colour/shadow materials are _FLIPBOOK with _UseFlipbook=1, _FlipbookTileGrid=[4,4], _FlipbookFrameRate=8 and _FlipbookOffset=0"
     ]
   },
   "evidence": [
