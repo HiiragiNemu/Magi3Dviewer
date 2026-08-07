@@ -9,6 +9,7 @@ from typing import Any
 SOURCE = Path('research/official-608-particle-systems.json')
 OUTPUT = Path('research/official-608-particle-stage-root-profiles.json')
 
+STAGE_ROOT_NAME = 'bg_3d_608_00_00_001'
 IDENTITY_ROTATION = {'x': 0.0, 'y': 0.0, 'z': 0.0, 'w': 1.0}
 IDENTITY_SCALE = {'x': 1.0, 'y': 1.0, 'z': 1.0}
 ZERO_POSITION = {'x': 0.0, 'y': 0.0, 'z': 0.0}
@@ -50,18 +51,19 @@ def main() -> int:
     for system in systems:
         chain = system.get('transformChain') or []
         names = [str(item.get('gameObjectName')) for item in chain]
-        if names[:3] != ['Root', 'Stage', 'Eff_Bubbles'] or len(chain) != 4:
+        expected_prefix = [STAGE_ROOT_NAME, 'Eff_Bubbles']
+        if len(chain) != 3 or names[:2] != expected_prefix or not names[2].startswith('Particle System'):
             raise RuntimeError(f'{system.get("hierarchyPath")}: unexpected transform chain {names}')
-        require_identity(chain[0], allow_translation=False)
-        require_identity(chain[1], allow_translation=False)
-        require_identity(chain[2], allow_translation=True)
-        parent_position = xyz(chain[2]['localPosition'])
+
+        stage_root, parent, child = chain
+        require_identity(stage_root, allow_translation=False)
+        require_identity(parent, allow_translation=True)
+        parent_position = xyz(parent['localPosition'])
         if common_parent_position is None:
             common_parent_position = parent_position
         elif parent_position != common_parent_position:
             raise RuntimeError('Eff_Bubbles parent position changed between systems')
 
-        child = chain[3]
         child_position = xyz(child['localPosition'])
         stage_root_position = [
             parent_position[index] + child_position[index]
@@ -81,7 +83,7 @@ def main() -> int:
         })
 
     output = {
-        'schemaVersion': 1,
+        'schemaVersion': 2,
         'source': 'official-jp-current-608-transform-chains',
         'assetBundleRevision': (report.get('metadata') or {}).get('assetBundleRevision'),
         'stageAssetTransform': {
@@ -90,20 +92,27 @@ def main() -> int:
             'rotationEuler': [0, 0, 0],
             'source': 'public/stages/catalog/battle-608-00-00-001.json release contract',
         },
+        'root': {
+            'hierarchyPath': STAGE_ROOT_NAME,
+            'stageRootPosition': [0, 0, 0],
+            'stageRootRotationQuaternion': [0, 0, 0, 1],
+            'stageRootScale': [1, 1, 1],
+        },
         'parent': {
-            'hierarchyPath': 'Root/Stage/Eff_Bubbles',
+            'hierarchyPath': f'{STAGE_ROOT_NAME}/Eff_Bubbles',
             'stageRootPosition': common_parent_position,
             'stageRootRotationQuaternion': [0, 0, 0, 1],
             'stageRootScale': [1, 1, 1],
         },
         'systems': profiles,
         'composition': (
-            'Exact for current JP: Root and Stage are identity; Eff_Bubbles has identity rotation/scale and only the recorded translation. '
-            'Each system stageRootPosition is therefore Eff_Bubbles.localPosition + child.localPosition. The script fails closed if that parent contract changes.'
+            'Exact for current JP: the serialized stage root is identity; Eff_Bubbles has identity rotation/scale and only the recorded translation. '
+            'Each system stageRootPosition is therefore Eff_Bubbles.localPosition + child.localPosition. The script fails closed if that three-node parent contract changes.'
         ),
     }
     OUTPUT.write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({
+        'root': output['root'],
         'parent': output['parent'],
         'systems': [
             {'name': item['name'], 'stageRootPosition': item['stageRootPosition']}
