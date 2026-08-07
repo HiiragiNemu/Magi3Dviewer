@@ -1,0 +1,144 @@
+name: Disassemble Taiwan crypto primitives
+run-name: Recover Hash and BasicCrypto ARM64 behavior
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+    paths:
+      - '.github/workflows/tw-crypto-disasm.yml'
+      - 'tools/research/extract_tw_crypto_disassembly.py'
+      - 'analysis-requests/tw-crypto-disasm.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tw-crypto-disasm
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '6.0.x'
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip jq binutils-aarch64-linux-gnu
+          python -m pip install --disable-pip-version-check pyelftools
+      - name: Download and unpack Taiwan client
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/source work/xapk work/unpacked work/tool work/dump work/report
+          curl -fL --retry 5 --retry-all-errors -A 'Mozilla/5.0' \
+            'https://d.apkpure.net/b/XAPK/tw.sonet.magiaexedra?version=latest' \
+            -o work/source/client.xapk
+          sha256sum work/source/client.xapk > work/report/xapk-sha256.txt
+          unzip -q work/source/client.xapk -d work/xapk
+          while IFS= read -r -d '' apk; do unzip -q -o "$apk" -d work/unpacked; done \
+            < <(find work/xapk -type f -name '*.apk' -print0 | sort -z)
+          test -s work/unpacked/lib/arm64-v8a/libil2cpp.so
+          test -s work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat
+      - name: Generate method map and disassemble targets
+        shell: bash
+        run: |
+          set -euo pipefail
+          release=$(curl -fsSL -H 'Accept: application/vnd.github+json' https://api.github.com/repos/Perfare/Il2CppDumper/releases/latest)
+          asset=$(jq -r '[.assets[] | select(.name | test("net6.*\\.zip$";"i"))][0].browser_download_url // empty' <<< "$release")
+          test -n "$asset"
+          curl -fL --retry 4 "$asset" -o work/tool/tool.zip
+          unzip -q work/tool/tool.zip -d work/tool/extracted
+          dll=$(find work/tool/extracted -type f -name Il2CppDumper.dll -print -quit); test -n "$dll"
+          set +e
+          dotnet "$dll" \
+            work/unpacked/lib/arm64-v8a/libil2cpp.so \
+            work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat \
+            work/dump </dev/null > work/report/dumper.log 2>&1
+          dumper_status=$?
+          set -e
+          echo "exit_status=$dumper_status" >> work/report/dumper.log
+          test -s work/dump/dump.cs
+          set +e
+          python tools/research/extract_tw_crypto_disassembly.py \
+            --dump work/dump/dump.cs \
+            --binary work/unpacked/lib/arm64-v8a/libil2cpp.so \
+            --out work/report/crypto-disasm \
+            > work/report/extractor.log 2>&1
+          extractor_status=$?
+          set -e
+          echo "exit_status=$extractor_status" >> work/report/extractor.log
+          cat work/report/extractor.log
+          if [[ -d work/report/crypto-disasm ]]; then
+            grep -R -n -E '\b(mov|movk|orr|str|bl)\b' work/report/crypto-disasm > work/report/instruction-focus.txt || true
+          fi
+          test "$extractor_status" -eq 0
+      - name: Extract direct crypto string slots
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,struct
+          from elftools.elf.elffile import ELFFile
+          from elftools.elf.relocation import RelocationSection
+
+          binary_path=Path('work/unpacked/lib/arm64-v8a/libil2cpp.so')
+          metadata=Path('work/unpacked/assets/bin/Data/Managed/Metadata/global-metadata.dat').read_bytes()
+          magic,version=struct.unpack_from('<II',metadata,0); assert magic==0xFAB11BAF
+          lo,ls,do,ds=struct.unpack_from('<IIII',metadata,8)
+          literals=[]
+          for pos in range(lo,lo+ls,8):
+              length,index=struct.unpack_from('<II',metadata,pos)
+              literals.append(metadata[do+index:do+index+length].decode('utf-8',errors='replace'))
+          slots={
+              'appCryptoHashKey':0x9BCAF80,
+              'appCryptoHashSalt':0x9BCAF88,
+              'appCryptoKeySeed':0x9BCAF90,
+              'appMsgPackCryptKey':0x9BCB028,
+              'msgPackDefaultCryptKey':0x9BA5660,
+          }
+          wanted=set(slots.values())
+          def map_va(elf,address):
+              for segment in elf.iter_segments():
+                  if segment['p_type']!='PT_LOAD': continue
+                  start=int(segment['p_vaddr']); filesz=int(segment['p_filesz']); memsz=int(segment['p_memsz'])
+                  if start<=address<start+memsz:
+                      delta=address-start
+                      return None if delta>=filesz else int(segment['p_offset'])+delta
+              return None
+          with binary_path.open('rb') as stream:
+              elf=ELFFile(stream); pointers={}
+              for section in elf.iter_sections():
+                  if not isinstance(section,RelocationSection): continue
+                  symtab=elf.get_section(section['sh_link']) if section['sh_link'] else None
+                  for rel in section.iter_relocations():
+                      slot=int(rel['r_offset'])
+                      if slot not in wanted: continue
+                      addend=int(rel.entry.get('r_addend',0)); symval=0; symidx=int(rel['r_info_sym'])
+                      if symtab is not None and symidx: symval=int(symtab.get_symbol(symidx)['st_value'])
+                      pointers[slot]=(symval+addend)&0xffffffffffffffff
+              result={}
+              for name,slot in slots.items():
+                  usage=pointers[slot]; raw=map_va(elf,usage); assert raw is not None
+                  stream.seek(raw+16); encoded=struct.unpack('<I',stream.read(4))[0]
+                  usage_type=(encoded&0xE0000000)>>29; index=(encoded&0x1FFFFFFF)>>1
+                  assert usage_type==5 and index<len(literals), (name,hex(encoded),usage_type,index)
+                  result[name]={'slot':f'0x{slot:X}','encoded':f'0x{encoded:08X}','literalIndex':index,'value':literals[index]}
+          Path('work/report/crypto-literals.json').write_text(json.dumps({'metadataVersion':version,'values':result},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+      - name: Remove raw/full materials
+        if: ${{ always() }}
+        run: |
+          rm -rf work/source work/xapk work/unpacked work/tool work/dump
+          find work/report -type f -printf '%P\t%s\n' | sort > work/report/report-inventory.tsv
+      - name: Upload crypto disassembly
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: tw-crypto-disasm
+          path: work/report
+          retention-days: 14
+          if-no-files-found: error
