@@ -1,0 +1,4333 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-root-stage-bundle",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "bundle": "battle/stage/bg_3d_608_00_00_001",
+  "profileCount": 6,
+  "profiles": [
+    {
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System",
+      "particleSystem": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System",
+        "transform": {
+          "pathId": -6082960871959845769,
+          "gameObjectPathId": 8511145718913053422,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -35.70000076293945,
+            "y": 0.6600000262260437,
+            "z": 19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "lengthInSec": 5.0,
+        "simulationSpeed": 0.30000001192092896,
+        "looping": true,
+        "prewarm": true,
+        "playOnAwake": true,
+        "scalingMode": 1,
+        "moveWithTransform": 0,
+        "startDelay": {
+          "minMaxState": 0,
+          "scalar": 0.0,
+          "minScalar": 0.0
+        },
+        "initial": {
+          "enabled": true,
+          "startLifetime": {
+            "minMaxState": 0,
+            "scalar": 5.0,
+            "minScalar": 30.0
+          },
+          "startSpeed": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 1.0
+          },
+          "startColor": {
+            "minMaxState": 0,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          },
+          "startSize": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.5
+          },
+          "startSizeY": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startSizeZ": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startRotation": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 3.141592502593994
+          },
+          "startRotationX": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "startRotationY": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "gravityModifier": {
+            "minMaxState": 0,
+            "scalar": -0.10000000149011612,
+            "minScalar": 0.0
+          },
+          "maxNumParticles": 50,
+          "size3D": false,
+          "rotation3D": true
+        },
+        "shape": {
+          "enabled": true,
+          "type": 4,
+          "angle": 25.0,
+          "length": 5.0,
+          "radiusThickness": 1.0,
+          "donutRadius": 0.20000000298023224,
+          "m_Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "placementMode": 0,
+          "randomDirectionAmount": 0.0,
+          "sphericalDirectionAmount": 0.0,
+          "randomPositionAmount": 0.0,
+          "alignToDirection": false
+        },
+        "emission": {
+          "enabled": true,
+          "rateOverTime": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.75
+          },
+          "rateOverDistance": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "bursts": null
+        },
+        "velocityOverLifetime": {
+          "enabled": false,
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "z": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalX": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalY": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalZ": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "radial": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "speedModifier": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "inWorldSpace": false
+        },
+        "colorOverLifetime": {
+          "enabled": false,
+          "gradient": {
+            "minMaxState": 1,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          }
+        },
+        "sizeOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 4.162921905517578,
+                "outSlope": 4.162921905517578,
+                "weightedMode": 0,
+                "inWeight": 0.0,
+                "outWeight": 0.19790388643741608
+              },
+              {
+                "time": 0.5419226288795471,
+                "value": 0.8764061331748962,
+                "inSlope": 0.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.2336275577545166
+              },
+              {
+                "time": 1.0,
+                "value": 0.0,
+                "inSlope": -4.16291618347168,
+                "outSlope": -4.16291618347168,
+                "weightedMode": 0,
+                "inWeight": 0.2297936975955963,
+                "outWeight": 0.0
+              }
+            ]
+          },
+          "y": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "z": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "separateAxes": false
+        },
+        "rotationOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 0,
+            "scalar": 0.7853981852531433,
+            "minScalar": 0.7853981852531433
+          },
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "separateAxes": true
+        },
+        "noise": {
+          "enabled": true,
+          "frequency": 0.5,
+          "damping": true,
+          "octaves": 1,
+          "octaveMultiplier": 0.5,
+          "octaveScale": 2.0,
+          "quality": 1,
+          "scrollSpeed": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "remapEnabled": false,
+          "positionAmount": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "rotationAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "sizeAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          }
+        }
+      },
+      "renderer": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System",
+        "transform": {
+          "pathId": -6082960871959845769,
+          "gameObjectPathId": 8511145718913053422,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -35.70000076293945,
+            "y": 0.6600000262260437,
+            "z": 19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "renderMode": 0,
+        "sortMode": 0,
+        "minParticleSize": 0.0,
+        "maxParticleSize": 0.5,
+        "cameraVelocityScale": 0.0,
+        "velocityScale": 0.0,
+        "lengthScale": 2.0,
+        "sortingFudge": 0.0,
+        "normalDirection": 1.0,
+        "sortingLayerID": 0,
+        "sortingOrder": 0,
+        "materials": [
+          {
+            "fileId": 0,
+            "pathId": -439672645568008899
+          }
+        ],
+        "trailMaterial": null,
+        "mesh": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      }
+    },
+    {
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_001",
+      "particleSystem": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_001",
+        "transform": {
+          "pathId": 2304020634233964760,
+          "gameObjectPathId": 6864354603031526039,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": 8.5,
+            "y": 0.6600000262260437,
+            "z": 19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "lengthInSec": 5.0,
+        "simulationSpeed": 0.30000001192092896,
+        "looping": true,
+        "prewarm": true,
+        "playOnAwake": true,
+        "scalingMode": 1,
+        "moveWithTransform": 0,
+        "startDelay": {
+          "minMaxState": 0,
+          "scalar": 0.0,
+          "minScalar": 0.0
+        },
+        "initial": {
+          "enabled": true,
+          "startLifetime": {
+            "minMaxState": 0,
+            "scalar": 5.0,
+            "minScalar": 30.0
+          },
+          "startSpeed": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 1.0
+          },
+          "startColor": {
+            "minMaxState": 0,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          },
+          "startSize": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.5
+          },
+          "startSizeY": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startSizeZ": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startRotation": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 3.141592502593994
+          },
+          "startRotationX": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "startRotationY": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "gravityModifier": {
+            "minMaxState": 0,
+            "scalar": -0.10000000149011612,
+            "minScalar": 0.0
+          },
+          "maxNumParticles": 50,
+          "size3D": false,
+          "rotation3D": true
+        },
+        "shape": {
+          "enabled": true,
+          "type": 4,
+          "angle": 25.0,
+          "length": 5.0,
+          "radiusThickness": 1.0,
+          "donutRadius": 0.20000000298023224,
+          "m_Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "placementMode": 0,
+          "randomDirectionAmount": 0.0,
+          "sphericalDirectionAmount": 0.0,
+          "randomPositionAmount": 0.0,
+          "alignToDirection": false
+        },
+        "emission": {
+          "enabled": true,
+          "rateOverTime": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.75
+          },
+          "rateOverDistance": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "bursts": null
+        },
+        "velocityOverLifetime": {
+          "enabled": false,
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "z": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalX": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalY": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalZ": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "radial": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "speedModifier": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "inWorldSpace": false
+        },
+        "colorOverLifetime": {
+          "enabled": false,
+          "gradient": {
+            "minMaxState": 1,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          }
+        },
+        "sizeOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 4.162921905517578,
+                "outSlope": 4.162921905517578,
+                "weightedMode": 0,
+                "inWeight": 0.0,
+                "outWeight": 0.19790388643741608
+              },
+              {
+                "time": 0.5419226288795471,
+                "value": 0.8764061331748962,
+                "inSlope": 0.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.2336275577545166
+              },
+              {
+                "time": 1.0,
+                "value": 0.0,
+                "inSlope": -4.16291618347168,
+                "outSlope": -4.16291618347168,
+                "weightedMode": 0,
+                "inWeight": 0.2297936975955963,
+                "outWeight": 0.0
+              }
+            ]
+          },
+          "y": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "z": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "separateAxes": false
+        },
+        "rotationOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 0,
+            "scalar": 0.7853981852531433,
+            "minScalar": 0.7853981852531433
+          },
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "separateAxes": true
+        },
+        "noise": {
+          "enabled": true,
+          "frequency": 0.5,
+          "damping": true,
+          "octaves": 1,
+          "octaveMultiplier": 0.5,
+          "octaveScale": 2.0,
+          "quality": 1,
+          "scrollSpeed": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "remapEnabled": false,
+          "positionAmount": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "rotationAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "sizeAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          }
+        }
+      },
+      "renderer": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_001",
+        "transform": {
+          "pathId": 2304020634233964760,
+          "gameObjectPathId": 6864354603031526039,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": 8.5,
+            "y": 0.6600000262260437,
+            "z": 19.700000762939453
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "renderMode": 0,
+        "sortMode": 0,
+        "minParticleSize": 0.0,
+        "maxParticleSize": 0.5,
+        "cameraVelocityScale": 0.0,
+        "velocityScale": 0.0,
+        "lengthScale": 2.0,
+        "sortingFudge": 0.0,
+        "normalDirection": 1.0,
+        "sortingLayerID": 0,
+        "sortingOrder": 0,
+        "materials": [
+          {
+            "fileId": 0,
+            "pathId": -439672645568008899
+          }
+        ],
+        "trailMaterial": null,
+        "mesh": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      }
+    },
+    {
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_002",
+      "particleSystem": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_002",
+        "transform": {
+          "pathId": 6740306178769554207,
+          "gameObjectPathId": 5240414767451196285,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -0.8799999952316284,
+            "y": 0.6600000262260437,
+            "z": 39.06999969482422
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "lengthInSec": 5.0,
+        "simulationSpeed": 0.30000001192092896,
+        "looping": true,
+        "prewarm": true,
+        "playOnAwake": true,
+        "scalingMode": 1,
+        "moveWithTransform": 0,
+        "startDelay": {
+          "minMaxState": 0,
+          "scalar": 0.0,
+          "minScalar": 0.0
+        },
+        "initial": {
+          "enabled": true,
+          "startLifetime": {
+            "minMaxState": 0,
+            "scalar": 5.0,
+            "minScalar": 30.0
+          },
+          "startSpeed": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 1.0
+          },
+          "startColor": {
+            "minMaxState": 0,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          },
+          "startSize": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.5
+          },
+          "startSizeY": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startSizeZ": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startRotation": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 3.141592502593994
+          },
+          "startRotationX": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "startRotationY": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "gravityModifier": {
+            "minMaxState": 0,
+            "scalar": -0.10000000149011612,
+            "minScalar": 0.0
+          },
+          "maxNumParticles": 50,
+          "size3D": false,
+          "rotation3D": true
+        },
+        "shape": {
+          "enabled": true,
+          "type": 4,
+          "angle": 25.0,
+          "length": 5.0,
+          "radiusThickness": 1.0,
+          "donutRadius": 0.20000000298023224,
+          "m_Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "placementMode": 0,
+          "randomDirectionAmount": 0.0,
+          "sphericalDirectionAmount": 0.0,
+          "randomPositionAmount": 0.0,
+          "alignToDirection": false
+        },
+        "emission": {
+          "enabled": true,
+          "rateOverTime": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.75
+          },
+          "rateOverDistance": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "bursts": null
+        },
+        "velocityOverLifetime": {
+          "enabled": false,
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "z": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalX": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalY": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalZ": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "radial": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "speedModifier": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "inWorldSpace": false
+        },
+        "colorOverLifetime": {
+          "enabled": false,
+          "gradient": {
+            "minMaxState": 1,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          }
+        },
+        "sizeOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 4.162921905517578,
+                "outSlope": 4.162921905517578,
+                "weightedMode": 0,
+                "inWeight": 0.0,
+                "outWeight": 0.19790388643741608
+              },
+              {
+                "time": 0.5419226288795471,
+                "value": 0.8764061331748962,
+                "inSlope": 0.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.2336275577545166
+              },
+              {
+                "time": 1.0,
+                "value": 0.0,
+                "inSlope": -4.16291618347168,
+                "outSlope": -4.16291618347168,
+                "weightedMode": 0,
+                "inWeight": 0.2297936975955963,
+                "outWeight": 0.0
+              }
+            ]
+          },
+          "y": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "z": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "separateAxes": false
+        },
+        "rotationOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 0,
+            "scalar": 0.7853981852531433,
+            "minScalar": 0.7853981852531433
+          },
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "separateAxes": true
+        },
+        "noise": {
+          "enabled": true,
+          "frequency": 0.5,
+          "damping": true,
+          "octaves": 1,
+          "octaveMultiplier": 0.5,
+          "octaveScale": 2.0,
+          "quality": 1,
+          "scrollSpeed": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "remapEnabled": false,
+          "positionAmount": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "rotationAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "sizeAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          }
+        }
+      },
+      "renderer": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_002",
+        "transform": {
+          "pathId": 6740306178769554207,
+          "gameObjectPathId": 5240414767451196285,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -0.8799999952316284,
+            "y": 0.6600000262260437,
+            "z": 39.06999969482422
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "renderMode": 0,
+        "sortMode": 0,
+        "minParticleSize": 0.0,
+        "maxParticleSize": 0.5,
+        "cameraVelocityScale": 0.0,
+        "velocityScale": 0.0,
+        "lengthScale": 2.0,
+        "sortingFudge": 0.0,
+        "normalDirection": 1.0,
+        "sortingLayerID": 0,
+        "sortingOrder": 0,
+        "materials": [
+          {
+            "fileId": 0,
+            "pathId": -439672645568008899
+          }
+        ],
+        "trailMaterial": null,
+        "mesh": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      }
+    },
+    {
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_003",
+      "particleSystem": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_003",
+        "transform": {
+          "pathId": -8813353494220481737,
+          "gameObjectPathId": -5747876566593745357,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -27.770000457763672,
+            "y": 0.6600000262260437,
+            "z": 38.27000045776367
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "lengthInSec": 5.0,
+        "simulationSpeed": 0.30000001192092896,
+        "looping": true,
+        "prewarm": true,
+        "playOnAwake": true,
+        "scalingMode": 1,
+        "moveWithTransform": 0,
+        "startDelay": {
+          "minMaxState": 0,
+          "scalar": 0.0,
+          "minScalar": 0.0
+        },
+        "initial": {
+          "enabled": true,
+          "startLifetime": {
+            "minMaxState": 0,
+            "scalar": 5.0,
+            "minScalar": 30.0
+          },
+          "startSpeed": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 1.0
+          },
+          "startColor": {
+            "minMaxState": 0,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          },
+          "startSize": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.5
+          },
+          "startSizeY": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startSizeZ": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startRotation": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 3.141592502593994
+          },
+          "startRotationX": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "startRotationY": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "gravityModifier": {
+            "minMaxState": 0,
+            "scalar": -0.10000000149011612,
+            "minScalar": 0.0
+          },
+          "maxNumParticles": 50,
+          "size3D": false,
+          "rotation3D": true
+        },
+        "shape": {
+          "enabled": true,
+          "type": 4,
+          "angle": 25.0,
+          "length": 5.0,
+          "radiusThickness": 1.0,
+          "donutRadius": 0.20000000298023224,
+          "m_Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "placementMode": 0,
+          "randomDirectionAmount": 0.0,
+          "sphericalDirectionAmount": 0.0,
+          "randomPositionAmount": 0.0,
+          "alignToDirection": false
+        },
+        "emission": {
+          "enabled": true,
+          "rateOverTime": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.75
+          },
+          "rateOverDistance": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "bursts": null
+        },
+        "velocityOverLifetime": {
+          "enabled": false,
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "z": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalX": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalY": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalZ": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "radial": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "speedModifier": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "inWorldSpace": false
+        },
+        "colorOverLifetime": {
+          "enabled": false,
+          "gradient": {
+            "minMaxState": 1,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          }
+        },
+        "sizeOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 4.162921905517578,
+                "outSlope": 4.162921905517578,
+                "weightedMode": 0,
+                "inWeight": 0.0,
+                "outWeight": 0.19790388643741608
+              },
+              {
+                "time": 0.5419226288795471,
+                "value": 0.8764061331748962,
+                "inSlope": 0.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.2336275577545166
+              },
+              {
+                "time": 1.0,
+                "value": 0.0,
+                "inSlope": -4.16291618347168,
+                "outSlope": -4.16291618347168,
+                "weightedMode": 0,
+                "inWeight": 0.2297936975955963,
+                "outWeight": 0.0
+              }
+            ]
+          },
+          "y": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "z": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "separateAxes": false
+        },
+        "rotationOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 0,
+            "scalar": 0.7853981852531433,
+            "minScalar": 0.7853981852531433
+          },
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "separateAxes": true
+        },
+        "noise": {
+          "enabled": true,
+          "frequency": 0.5,
+          "damping": true,
+          "octaves": 1,
+          "octaveMultiplier": 0.5,
+          "octaveScale": 2.0,
+          "quality": 1,
+          "scrollSpeed": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "remapEnabled": false,
+          "positionAmount": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "rotationAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "sizeAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          }
+        }
+      },
+      "renderer": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_003",
+        "transform": {
+          "pathId": -8813353494220481737,
+          "gameObjectPathId": -5747876566593745357,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -27.770000457763672,
+            "y": 0.6600000262260437,
+            "z": 38.27000045776367
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "renderMode": 0,
+        "sortMode": 0,
+        "minParticleSize": 0.0,
+        "maxParticleSize": 0.5,
+        "cameraVelocityScale": 0.0,
+        "velocityScale": 0.0,
+        "lengthScale": 2.0,
+        "sortingFudge": 0.0,
+        "normalDirection": 1.0,
+        "sortingLayerID": 0,
+        "sortingOrder": 0,
+        "materials": [
+          {
+            "fileId": 0,
+            "pathId": -439672645568008899
+          }
+        ],
+        "trailMaterial": null,
+        "mesh": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      }
+    },
+    {
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_004",
+      "particleSystem": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_004",
+        "transform": {
+          "pathId": 7184139103108780732,
+          "gameObjectPathId": 3134079955117151708,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -28.190000534057617,
+            "y": 0.6600000262260437,
+            "z": 1.5299999713897705
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "lengthInSec": 5.0,
+        "simulationSpeed": 0.30000001192092896,
+        "looping": true,
+        "prewarm": true,
+        "playOnAwake": true,
+        "scalingMode": 1,
+        "moveWithTransform": 0,
+        "startDelay": {
+          "minMaxState": 0,
+          "scalar": 0.0,
+          "minScalar": 0.0
+        },
+        "initial": {
+          "enabled": true,
+          "startLifetime": {
+            "minMaxState": 0,
+            "scalar": 5.0,
+            "minScalar": 30.0
+          },
+          "startSpeed": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 1.0
+          },
+          "startColor": {
+            "minMaxState": 0,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          },
+          "startSize": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.5
+          },
+          "startSizeY": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startSizeZ": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startRotation": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 3.141592502593994
+          },
+          "startRotationX": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "startRotationY": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "gravityModifier": {
+            "minMaxState": 0,
+            "scalar": -0.10000000149011612,
+            "minScalar": 0.0
+          },
+          "maxNumParticles": 50,
+          "size3D": false,
+          "rotation3D": true
+        },
+        "shape": {
+          "enabled": true,
+          "type": 4,
+          "angle": 25.0,
+          "length": 5.0,
+          "radiusThickness": 1.0,
+          "donutRadius": 0.20000000298023224,
+          "m_Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "placementMode": 0,
+          "randomDirectionAmount": 0.0,
+          "sphericalDirectionAmount": 0.0,
+          "randomPositionAmount": 0.0,
+          "alignToDirection": false
+        },
+        "emission": {
+          "enabled": true,
+          "rateOverTime": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.75
+          },
+          "rateOverDistance": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "bursts": null
+        },
+        "velocityOverLifetime": {
+          "enabled": false,
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "z": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalX": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalY": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalZ": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "radial": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "speedModifier": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "inWorldSpace": false
+        },
+        "colorOverLifetime": {
+          "enabled": false,
+          "gradient": {
+            "minMaxState": 1,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          }
+        },
+        "sizeOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 4.162921905517578,
+                "outSlope": 4.162921905517578,
+                "weightedMode": 0,
+                "inWeight": 0.0,
+                "outWeight": 0.19790388643741608
+              },
+              {
+                "time": 0.5419226288795471,
+                "value": 0.8764061331748962,
+                "inSlope": 0.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.2336275577545166
+              },
+              {
+                "time": 1.0,
+                "value": 0.0,
+                "inSlope": -4.16291618347168,
+                "outSlope": -4.16291618347168,
+                "weightedMode": 0,
+                "inWeight": 0.2297936975955963,
+                "outWeight": 0.0
+              }
+            ]
+          },
+          "y": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "z": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "separateAxes": false
+        },
+        "rotationOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 0,
+            "scalar": 0.7853981852531433,
+            "minScalar": 0.7853981852531433
+          },
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "separateAxes": true
+        },
+        "noise": {
+          "enabled": true,
+          "frequency": 0.5,
+          "damping": true,
+          "octaves": 1,
+          "octaveMultiplier": 0.5,
+          "octaveScale": 2.0,
+          "quality": 1,
+          "scrollSpeed": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "remapEnabled": false,
+          "positionAmount": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "rotationAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "sizeAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          }
+        }
+      },
+      "renderer": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_004",
+        "transform": {
+          "pathId": 7184139103108780732,
+          "gameObjectPathId": 3134079955117151708,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -28.190000534057617,
+            "y": 0.6600000262260437,
+            "z": 1.5299999713897705
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "renderMode": 0,
+        "sortMode": 0,
+        "minParticleSize": 0.0,
+        "maxParticleSize": 0.5,
+        "cameraVelocityScale": 0.0,
+        "velocityScale": 0.0,
+        "lengthScale": 2.0,
+        "sortingFudge": 0.0,
+        "normalDirection": 1.0,
+        "sortingLayerID": 0,
+        "sortingOrder": 0,
+        "materials": [
+          {
+            "fileId": 0,
+            "pathId": -439672645568008899
+          }
+        ],
+        "trailMaterial": null,
+        "mesh": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      }
+    },
+    {
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_005",
+      "particleSystem": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_005",
+        "transform": {
+          "pathId": 2263479332363203347,
+          "gameObjectPathId": 3514304529863087619,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -0.15000000596046448,
+            "y": 0.6600000262260437,
+            "z": 0.07999999821186066
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "lengthInSec": 5.0,
+        "simulationSpeed": 0.30000001192092896,
+        "looping": true,
+        "prewarm": true,
+        "playOnAwake": true,
+        "scalingMode": 1,
+        "moveWithTransform": 0,
+        "startDelay": {
+          "minMaxState": 0,
+          "scalar": 0.0,
+          "minScalar": 0.0
+        },
+        "initial": {
+          "enabled": true,
+          "startLifetime": {
+            "minMaxState": 0,
+            "scalar": 5.0,
+            "minScalar": 30.0
+          },
+          "startSpeed": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 1.0
+          },
+          "startColor": {
+            "minMaxState": 0,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          },
+          "startSize": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.5
+          },
+          "startSizeY": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startSizeZ": {
+            "minMaxState": 3,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "startRotation": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 3.141592502593994
+          },
+          "startRotationX": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "startRotationY": {
+            "minMaxState": 3,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "gravityModifier": {
+            "minMaxState": 0,
+            "scalar": -0.10000000149011612,
+            "minScalar": 0.0
+          },
+          "maxNumParticles": 50,
+          "size3D": false,
+          "rotation3D": true
+        },
+        "shape": {
+          "enabled": true,
+          "type": 4,
+          "angle": 25.0,
+          "length": 5.0,
+          "radiusThickness": 1.0,
+          "donutRadius": 0.20000000298023224,
+          "m_Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "m_Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "placementMode": 0,
+          "randomDirectionAmount": 0.0,
+          "sphericalDirectionAmount": 0.0,
+          "randomPositionAmount": 0.0,
+          "alignToDirection": false
+        },
+        "emission": {
+          "enabled": true,
+          "rateOverTime": {
+            "minMaxState": 3,
+            "scalar": 2.0,
+            "minScalar": 0.75
+          },
+          "rateOverDistance": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "bursts": null
+        },
+        "velocityOverLifetime": {
+          "enabled": false,
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "z": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalX": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalY": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "orbitalZ": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "radial": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "speedModifier": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0
+          },
+          "inWorldSpace": false
+        },
+        "colorOverLifetime": {
+          "enabled": false,
+          "gradient": {
+            "minMaxState": 1,
+            "minColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxColor": {
+              "r": 1.0,
+              "g": 1.0,
+              "b": 1.0,
+              "a": 1.0
+            },
+            "maxGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            },
+            "minGradient": {
+              "key0": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key1": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "key2": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key3": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key4": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key5": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key6": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "key7": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 0.0
+              },
+              "ctime0": 0,
+              "ctime1": 65535,
+              "ctime2": 0,
+              "ctime3": 0,
+              "ctime4": 0,
+              "ctime5": 0,
+              "ctime6": 0,
+              "ctime7": 0,
+              "atime0": 0,
+              "atime1": 65535,
+              "atime2": 0,
+              "atime3": 0,
+              "atime4": 0,
+              "atime5": 0,
+              "atime6": 0,
+              "atime7": 0,
+              "m_Mode": 0,
+              "m_ColorSpace": -1,
+              "m_NumColorKeys": 2,
+              "m_NumAlphaKeys": 2
+            }
+          }
+        },
+        "sizeOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 4.162921905517578,
+                "outSlope": 4.162921905517578,
+                "weightedMode": 0,
+                "inWeight": 0.0,
+                "outWeight": 0.19790388643741608
+              },
+              {
+                "time": 0.5419226288795471,
+                "value": 0.8764061331748962,
+                "inSlope": 0.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.2336275577545166
+              },
+              {
+                "time": 1.0,
+                "value": 0.0,
+                "inSlope": -4.16291618347168,
+                "outSlope": -4.16291618347168,
+                "weightedMode": 0,
+                "inWeight": 0.2297936975955963,
+                "outWeight": 0.0
+              }
+            ]
+          },
+          "y": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "z": {
+            "minMaxState": 1,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": [
+              {
+                "time": 0.0,
+                "value": 0.0,
+                "inSlope": 0.0,
+                "outSlope": 1.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              },
+              {
+                "time": 1.0,
+                "value": 1.0,
+                "inSlope": 1.0,
+                "outSlope": 0.0,
+                "weightedMode": 0,
+                "inWeight": 0.3333333432674408,
+                "outWeight": 0.3333333432674408
+              }
+            ]
+          },
+          "separateAxes": false
+        },
+        "rotationOverLifetime": {
+          "enabled": true,
+          "curve": {
+            "minMaxState": 0,
+            "scalar": 0.7853981852531433,
+            "minScalar": 0.7853981852531433
+          },
+          "x": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "y": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0
+          },
+          "separateAxes": true
+        },
+        "noise": {
+          "enabled": true,
+          "frequency": 0.5,
+          "damping": true,
+          "octaves": 1,
+          "octaveMultiplier": 0.5,
+          "octaveScale": 2.0,
+          "quality": 1,
+          "scrollSpeed": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "remapEnabled": false,
+          "positionAmount": {
+            "minMaxState": 0,
+            "scalar": 1.0,
+            "minScalar": 1.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "rotationAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "sizeAmount": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          }
+        }
+      },
+      "renderer": {
+        "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_005",
+        "transform": {
+          "pathId": 2263479332363203347,
+          "gameObjectPathId": 3514304529863087619,
+          "fatherTransformPathId": 3959226382858404768,
+          "localPosition": {
+            "x": -0.15000000596046448,
+            "y": 0.6600000262260437,
+            "z": 0.07999999821186066
+          },
+          "localRotation": {
+            "x": -0.7071068286895752,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 0.7071068286895752
+          },
+          "localScale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        },
+        "renderMode": 0,
+        "sortMode": 0,
+        "minParticleSize": 0.0,
+        "maxParticleSize": 0.5,
+        "cameraVelocityScale": 0.0,
+        "velocityScale": 0.0,
+        "lengthScale": 2.0,
+        "sortingFudge": 0.0,
+        "normalDirection": 1.0,
+        "sortingLayerID": 0,
+        "sortingOrder": 0,
+        "materials": [
+          {
+            "fileId": 0,
+            "pathId": -439672645568008899
+          }
+        ],
+        "trailMaterial": null,
+        "mesh": {
+          "fileId": 0,
+          "pathId": 0
+        }
+      }
+    }
+  ]
+}
