@@ -1,2 +1,2 @@
 Validate root-relative FBX parsing with release build/tests and strict fixed 100107 + battle-608-00-00-001 Chromium regression.
-Persist full text diagnostics for any strict-visual failure, then remove all validation-only files before merge.
+Third pass: capture the continuously animated WebGL canvas through page screenshot clipping instead of locator stability waits.
