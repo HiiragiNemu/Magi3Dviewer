@@ -5,6 +5,7 @@ import { fetchAndTryDecompressGzip } from 'magia-exedra-character-three/utils'
 import { scene, recoveredFillLight, recoveredHemisphereLight } from './scene'
 import { gui } from './controllers/GUI'
 import { loadStageCatalogTree } from './stageCatalog'
+import { resolveStageAnchor } from './stageHierarchy'
 import {
     applyStageMaterialBindings,
     type StageMaterialBinding,
@@ -55,8 +56,10 @@ export interface StageSpawnPoint {
 export interface StageLightProfile {
     name?: string
     type?: 'directional' | 'point' | 'spot'
-    /** Existing FBX node whose converted transform drives this light. */
+    /** Legacy loose FBX node-name anchor. */
     anchorNode?: string
+    /** Exact serialized Unity hierarchy path; preferred when available. */
+    anchorPath?: string
     color: string | Rgba
     intensity: number
     range?: number
@@ -1066,6 +1069,7 @@ function applyOfficialStageLights(
         rawIntensity: number
         effectiveIntensity: number
         anchorNode: string | null
+        anchorPath: string | null
         anchorResolved: boolean
         instances: number
     }> = []
@@ -1078,9 +1082,7 @@ function applyOfficialStageLights(
 
     profiles.forEach((profile, index) => {
         const type = profile.type ?? 'directional'
-        const anchor = profile.anchorNode
-            ? stageObject.getObjectByName(profile.anchorNode)
-            : undefined
+        const anchor = resolveStageAnchor(stageObject, profile)
         const effectiveIntensity = effectiveStageLightIntensity(profile, type)
         const debugBase = {
             index,
@@ -1091,7 +1093,10 @@ function applyOfficialStageLights(
             rawIntensity: profile.intensity,
             effectiveIntensity,
             anchorNode: profile.anchorNode ?? null,
-            anchorResolved: profile.anchorNode == undefined || anchor != undefined,
+            anchorPath: profile.anchorPath ?? null,
+            anchorResolved:
+                (profile.anchorPath == undefined && profile.anchorNode == undefined)
+                || anchor != undefined,
         }
 
         // Baked lights are already represented by the recovered lightmap.
