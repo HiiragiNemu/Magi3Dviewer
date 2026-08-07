@@ -12,8 +12,12 @@ interface CameraDepthHostCharacter {
 interface CameraDepthHost {
     renderer: THREE.WebGLRenderer
     scene: THREE.Scene
-    camera: THREE.Camera & { projectionMatrixInverse: THREE.Matrix4 }
+    camera: THREE.PerspectiveCamera | THREE.OrthographicCamera
     characters: CameraDepthHostCharacter[]
+}
+
+interface CameraDepthBindableShader {
+    uniforms: Record<string, { value: unknown }>
 }
 
 export const reDriveCameraDepthUniformState = {
@@ -27,9 +31,8 @@ let reDriveCameraDepthRequested = false
 
 /**
  * Marks that at least one compiled ReDrive material contains the current-JP
- * `_UseGemDepthDiff` branch.  The renderer keeps the depth pass dormant until
- * a real consumer exists, avoiding a permanent extra character draw for the
- * common case.
+ * `_UseGemDepthDiff` branch. The renderer keeps the depth pass dormant until a
+ * real consumer exists, avoiding a permanent extra character draw otherwise.
  */
 export function requestReDriveCameraDepth() {
     reDriveCameraDepthRequested = true
@@ -39,7 +42,7 @@ export function getReDriveCameraDepthRequested() {
     return reDriveCameraDepthRequested
 }
 
-export function bindReDriveCameraDepthShader(shader: THREE.WebGLProgramParametersWithUniforms | any) {
+export function bindReDriveCameraDepthShader(shader: CameraDepthBindableShader) {
     shader.uniforms.tRdCameraDepth = reDriveCameraDepthUniformState.map
     shader.uniforms.uRdCameraDepthEnabled = reDriveCameraDepthUniformState.enabled
     shader.uniforms.uRdCameraDepthInvProjection = reDriveCameraDepthUniformState.inverseProjection
@@ -48,7 +51,7 @@ export function bindReDriveCameraDepthShader(shader: THREE.WebGLProgramParameter
 
 /**
  * Supplies a camera-depth texture for the recovered current-JP GemDepthDiff
- * arithmetic.  The compiled JP fragment formula is exact, but this Web depth
+ * arithmetic. The compiled JP fragment formula is exact, but this Web depth
  * transport remains explicitly deferred/approximate until the native camera
  * depth production path, queue filtering and attachment precision are proven.
  *
@@ -102,16 +105,14 @@ export class ReDriveCameraDepthController {
             this.target.setSize(width, height)
         }
 
-        camera.updateProjectionMatrix?.()
+        camera.updateProjectionMatrix()
         reDriveCameraDepthUniformState.inverseProjection.value.copy(
             camera.projectionMatrixInverse,
         )
         reDriveCameraDepthUniformState.viewport.value.set(width, height)
 
         const allowed = new Set<THREE.Object3D>()
-        for (const root of roots) {
-            root.traverse(object => allowed.add(object))
-        }
+        for (const root of roots) root.traverse(object => allowed.add(object))
 
         const hidden: Array<{ object: THREE.Object3D; visible: boolean }> = []
         scene.traverse(object => {
@@ -140,9 +141,9 @@ export class ReDriveCameraDepthController {
         const oldEnabled = reDriveCameraDepthUniformState.enabled.value
 
         try {
-            // Merely disabling the branch is not sufficient in WebGL: a depth
-            // attachment may not remain bound to an active sampler while it is
-            // being written.  Truly unbind it, mirroring the self-shadow fix.
+            // WebGL rejects a framebuffer attachment that remains bound to an
+            // active sampler even if the consuming branch is disabled. Truly
+            // unbind the depth sampler while writing the same attachment.
             reDriveCameraDepthUniformState.enabled.value = 0
             reDriveCameraDepthUniformState.map.value = null
             renderer.xr.enabled = false
@@ -190,8 +191,8 @@ export class ReDriveCameraDepthController {
             reDriveCameraDepthUniformState.map.value = null
             reDriveCameraDepthUniformState.enabled.value = 0
         }
-        this.target.dispose()
         this.target.depthTexture?.dispose()
+        this.target.dispose()
         delete this.host.scene.userData.reDriveCameraDepth
     }
 }
