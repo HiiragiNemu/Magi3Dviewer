@@ -36,10 +36,10 @@ jobs:
           run_phase() {
             local name="$1"
             shift
-            echo "===== ${name} =====" | tee "validation-evidence/${name}.log"
-            "$@" 2>&1 | tee -a "validation-evidence/${name}.log"
+            echo "===== ${name} =====" | tee "validation-evidence/${name}.txt"
+            "$@" 2>&1 | tee -a "validation-evidence/${name}.txt"
             local code=${PIPESTATUS[0]}
-            echo "exit_code=${code}" | tee -a "validation-evidence/${name}.log"
+            echo "exit_code=${code}" | tee -a "validation-evidence/${name}.txt"
             return ${code}
           }
 
@@ -72,7 +72,7 @@ jobs:
           server_status=97
           visual_status=97
           if [ ${playwright_browser_status} -eq 0 ]; then
-            nohup npm run dev -- --host 127.0.0.1 --port 4173 >validation-evidence/vite.log 2>&1 &
+            nohup npm run dev -- --host 127.0.0.1 --port 4173 >validation-evidence/vite.txt 2>&1 &
             echo $! >validation-evidence/vite.pid
             server_status=1
             for attempt in $(seq 1 90); do
@@ -83,7 +83,7 @@ jobs:
               sleep 1
             done
             if [ ${server_status} -eq 0 ]; then
-              node scripts/visual-regression-100107-stage608.mjs >validation-evidence/visual-regression.log 2>&1
+              node scripts/visual-regression-100107-stage608.mjs >validation-evidence/visual-regression.txt 2>&1
               visual_status=$?
             fi
           fi
@@ -113,7 +113,7 @@ jobs:
 
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add validation-evidence
+          git add -f validation-evidence
           if ! git diff --cached --quiet; then
             git commit -m 'test: persist temporary FBX URL validation evidence'
             git push origin HEAD:fix/fbx-relative-parse-base-url-20260807
