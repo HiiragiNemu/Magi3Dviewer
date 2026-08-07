@@ -29,12 +29,16 @@ jobs:
         run: python -m pip install requests msgpack pycryptodome UnityPy
       - name: Extract exact stage 608 Material saved properties
         run: python scripts/extract_official_608_material_properties.py
+      - name: Summarize dynamic/multi-UV material state
+        run: python scripts/summarize_official_608_material_properties.py
       - name: Persist Material evidence only
         shell: bash
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add research/official-608-material-properties.json
+          git add \
+            research/official-608-material-properties.json \
+            research/official-608-material-summary.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'research: record official 608 Material saved properties'
           git push origin HEAD:${TARGET_BRANCH}
