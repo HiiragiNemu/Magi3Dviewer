@@ -1,0 +1,60 @@
+name: Validate official SoftMetallic MatCap
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'automation/trigger-official-soft-metallic-matcap.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-apply:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      TARGET_BRANCH: feature/official-soft-metallic-matcap-20260807
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install bounded JP exporter dependencies
+        run: python -m pip install requests msgpack pycryptodome UnityPy
+      - name: Export exact current-JP SoftMetallic MatCap
+        run: python scripts/export_official_soft_metallic_matcap.py
+      - name: Apply per-material MatCap source patch
+        run: python scripts/apply_official_soft_metallic_matcap_patch.py
+      - name: Verify recovered texture identity and source selection
+        shell: bash
+        run: |
+          test -s magia-exedra-character-three/models/common/matcap_SoftMetallic.png
+          grep -q 'bc693dc16619511f8478e06fa26e6a8ae82bbcac0cb0c66302311687ac31ed42' research/official-soft-metallic-matcap.json
+          grep -q "matCapSource: 'soft-metallic'" magia-exedra-character-three/materialProfile.ts
+          grep -q 'OfficialSoftMetallicMatCap' magia-exedra-character-three/shaders/gem.ts
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run complete production build
+        run: npm run build
+      - name: Persist validated exact resource/runtime changes
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add \
+            magia-exedra-character-three/models/common/matcap_SoftMetallic.png \
+            magia-exedra-character-three/materialProfile.ts \
+            magia-exedra-character-three/shaders/gem.ts \
+            research/official-soft-metallic-matcap.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'feat: use exact JP SoftMetallic MatCap for Madoka SJ slots'
+          git push origin HEAD:${TARGET_BRANCH}
