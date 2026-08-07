@@ -160,7 +160,7 @@ export function injectOfficialGemShader(
 
         float rdGemOfficialDepthDiffBinary(vec2 fragCoord) {
             // Exact current-JP branch predicate recovered from compiled GLSL:
-            // `_UseGemDepthDiff != 0 && _Transparency != 0`.
+            // _UseGemDepthDiff != 0 && _Transparency != 0.
             if (
                 uGemUseDepthDiff == 0.0 ||
                 uGemTransparency == 0.0 ||
@@ -175,7 +175,7 @@ export function injectOfficialGemShader(
 
             // Exact current-JP compiled arithmetic:
             // sceneEye - (currentEye - 0.01), then x5, saturate, compare against
-            // `1 - _GemDepthDiffThreshold`; true maps to 0, false maps to 1.
+            // 1 - _GemDepthDiffThreshold; true maps to 0, false maps to 1.
             float depthDifference = sceneEye - (currentEye - 0.00999999978);
             depthDifference = clamp(depthDifference * 5.0, 0.0, 1.0);
             float threshold = 1.0 - uGemDepthDiffThreshold;
@@ -283,15 +283,15 @@ export function injectOfficialGemShader(
             }
 
             // This binary selector itself is the recovered current-JP formula.
-            // The old NdotV `rdGemDepthProxy` has been removed completely.
+            // The old NdotV rdGemDepthProxy implementation has been removed completely.
             float rdGemDepthBinary = rdGemOfficialDepthDiffBinary(gl_FragCoord.xy);
 
             // Current-JP compiled GLSL adds GemDepthDiff to the Gem shadow
             // selector and saturates it before selecting the shadow-side colour.
             // The selector integration is preserved here, but the Web shadow
-            // colour transport (`ShadowTex` + global tint + Web SH/light path)
+            // colour transport (ShadowTex + global tint + Web SH/light path)
             // is still an explicit approximation rather than a claim that
-            // `rdToonShadowColor` equals native `_BaseMap * _ShadowColor`.
+            // rdToonShadowColor equals native _BaseMap * _ShadowColor.
             if (rdGemDepthBinary > 0.5) {
                 vec3 rdGemWebShadowTransport =
                     rdToonShadowColor *

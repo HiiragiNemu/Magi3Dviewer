@@ -1,7 +1,1 @@
-Traceback (most recent call last):
-  File "/home/runner/work/Magi3Dviewer/Magi3Dviewer/scripts/fix_gem_depthdiff_template_comments.py", line 57, in <module>
-    raise SystemExit(main())
-                     ^^^^^^
-  File "/home/runner/work/Magi3Dviewer/Magi3Dviewer/scripts/fix_gem_depthdiff_template_comments.py", line 30, in main
-    raise RuntimeError(
-RuntimeError: Gem template comment contract drifted for '// `_UseGemDepthDiff != 0 && _Transparency != 0`.': old_count=2, new_count=0
+GemDepthDiff GLSL template comments contain no accidental backticks.
