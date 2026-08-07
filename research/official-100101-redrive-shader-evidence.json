@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "source": "official-jp-current-assetbundles",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "characterBundleCount": 2,
+  "shaderBundleCount": 26,
+  "selectedBundleCount": 28,
+  "materials": [
+    {
+      "material": "mt_chara_100101_weapon_a_sj",
+      "shaderName": "",
+      "shaderPathId": 7704691985981102055
+    },
+    {
+      "material": "mt_chara_100101_body_sj",
+      "shaderName": "",
+      "shaderPathId": 7704691985981102055
+    },
+    {
+      "material": "mt_chara_100101_body_aniso",
+      "shaderName": "",
+      "shaderPathId": 7704691985981102055
+    },
+    {
+      "material": "mt_chara_100101_weapon_a_sj",
+      "shaderName": "",
+      "shaderPathId": 7704691985981102055
+    },
+    {
+      "material": "mt_chara_100101_body_sj",
+      "shaderName": "",
+      "shaderPathId": 7704691985981102055
+    },
+    {
+      "material": "mt_chara_100101_body_aniso",
+      "shaderName": "",
+      "shaderPathId": 7704691985981102055
+    }
+  ],
+  "shaders": [
+    {
+      "name": "",
+      "pathId": 7704691985981102055,
+      "exportError": "error('unpack_from requires a buffer of at least 7376 bytes for unpacking 4 bytes at offset 7372 (actual buffer size is 7372)')"
+    }
+  ]
+}
