@@ -1,0 +1,284 @@
+{
+  "schemaVersion": 2,
+  "source": "official-jp-character-plus-shader-probe-workspace",
+  "metadata": {
+    "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+    "catalogEntryCount": 16586,
+    "unityVersion": "2022.3.62f2"
+  },
+  "targetBundle": "battle/character/chara_100101_battle_unit",
+  "shaderBundleCount": 26,
+  "downloadedBundleCount": 27,
+  "downloadedBundles": [
+    "battle/character/chara_100101_battle_unit",
+    "shader/bg_grassland",
+    "shader/bg_grassland_unlit",
+    "shader/bg_sky_cloud",
+    "shader/bg_uber",
+    "shader/bgunlitcube",
+    "shader/common/mercury",
+    "shader/common/texture/cloud_noise",
+    "shader/common/texture/face_ctrl_base",
+    "shader/common/texture/face_ctrl_nose",
+    "shader/common/texture/matcap_iron",
+    "shader/common/texture/matcap_jewel",
+    "shader/common/texture/matcap_mercury",
+    "shader/common/texture/matcap_soft_metallic",
+    "shader/common/texture/simple_noise",
+    "shader/common/texture/swirl_noise1",
+    "shader/common/texture/swirl_noise2",
+    "shader/common/texture/swirl_noise3",
+    "shader/effect",
+    "shader/enemy_uber",
+    "shader/kioku",
+    "shader/old_bg_uber",
+    "shader/redrive_toon",
+    "shader/solo_raid_halo",
+    "shaders/shader_dx_sm5_vfxsb",
+    "shaders/shader_ios_metal_vfxsb",
+    "shaders/shader_opengl_vfxsb"
+  ],
+  "loadedSerializedFiles": [
+    {
+      "name": "CAB-02c25c64d20d30cc0626c271e1b7d855",
+      "objectCount": 6
+    },
+    {
+      "name": "CAB-0622f4584dbda7c3802f750ea8c56ae6",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-174818d8255e64980e98e92fb951e5c4",
+      "objectCount": 4
+    },
+    {
+      "name": "CAB-22ba2d975435e8a8ad9c2f4e56879d41",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-240d96a621a686adefc5bc0d4edf63d8",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-42daf2df7c8c93678d38fe837b019471",
+      "objectCount": 3
+    },
+    {
+      "name": "CAB-48d3acfdbb2feba2ce97bd8104259721",
+      "objectCount": 17
+    },
+    {
+      "name": "CAB-65a07c7b0b1050e3340f7502e596fbd5",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-6ca469ea29ccd092a0ca295ce0e7cf58",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-7c01a6909773780dc0f068881ff04267",
+      "objectCount": 737
+    },
+    {
+      "name": "CAB-8027676caea88f4488a6fd302bf42971",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-944d4e26773d1fed56a22c91080cb2dd",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-9a63551070f0645e4abb58eef7968ef4",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-9ee3e83373b4f09f6825cf2ebaa33ed9",
+      "objectCount": 13
+    },
+    {
+      "name": "CAB-ae56315384e4a9b743408a0660dd8eed",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-aee1c3757f2f59f1685b9eab1dc5a59f",
+      "objectCount": 4
+    },
+    {
+      "name": "CAB-aee36efb56c393b23275e8de19cab06b",
+      "objectCount": 3
+    },
+    {
+      "name": "CAB-b06aa39e6280a10b8dee83c4458e9508",
+      "objectCount": 3
+    },
+    {
+      "name": "CAB-be3dd510455ba4b6be821dbd1a81ea53",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-c0b111b2efabd4edfcc1623b7de66b4a",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-d06ebda3e2671ccdcd411346f64b3f21",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-d4292dd62db4a15308122929284b3327",
+      "objectCount": 7
+    },
+    {
+      "name": "CAB-d63b83d6a839f2309afd7f7c8f7d790c",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-d8d518da136ebb0bb64f35df379d014d",
+      "objectCount": 2
+    },
+    {
+      "name": "CAB-ec2e80ff75c4cc36a05f983c0d29e1b6",
+      "objectCount": 4
+    },
+    {
+      "name": "CAB-f28d66dcd8fe0c106055f24dc52b7a70",
+      "objectCount": 3
+    },
+    {
+      "name": "CAB-f2e9366668ef89a41c565dd5c95a30c3",
+      "objectCount": 6
+    }
+  ],
+  "targetExternalTables": [
+    {
+      "material": "mt_chara_100101_weapon_a_sj",
+      "sourceSerializedFile": "CAB-7c01a6909773780dc0f068881ff04267",
+      "externals": [
+        {
+          "fileId": 1,
+          "path": "archive:/CAB-d4292dd62db4a15308122929284b3327/CAB-d4292dd62db4a15308122929284b3327",
+          "name": "CAB-d4292dd62db4a15308122929284b3327",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+        },
+        {
+          "fileId": 2,
+          "path": "archive:/CAB-d06ebda3e2671ccdcd411346f64b3f21/CAB-d06ebda3e2671ccdcd411346f64b3f21",
+          "name": "CAB-d06ebda3e2671ccdcd411346f64b3f21",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+        },
+        {
+          "fileId": 3,
+          "path": "Library/unity default resources",
+          "name": "unity default resources",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x0e\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+        },
+        {
+          "fileId": 4,
+          "path": "archive:/CAB-8027676caea88f4488a6fd302bf42971/CAB-8027676caea88f4488a6fd302bf42971",
+          "name": "CAB-8027676caea88f4488a6fd302bf42971",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+        },
+        {
+          "fileId": 5,
+          "path": "archive:/CAB-d63b83d6a839f2309afd7f7c8f7d790c/CAB-d63b83d6a839f2309afd7f7c8f7d790c",
+          "name": "CAB-d63b83d6a839f2309afd7f7c8f7d790c",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+        }
+      ]
+    },
+    {
+      "material": "mt_chara_100101_body_sj",
+      "sourceSerializedFile": "CAB-7c01a6909773780dc0f068881ff04267",
+      "externals": [
+        {
+          "fileId": 1,
+          "path": "archive:/CAB-d4292dd62db4a15308122929284b3327/CAB-d4292dd62db4a15308122929284b3327",
+          "name": "CAB-d4292dd62db4a15308122929284b3327",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+        },
+        {
+          "fileId": 2,
+          "path": "archive:/CAB-d06ebda3e2671ccdcd411346f64b3f21/CAB-d06ebda3e2671ccdcd411346f64b3f21",
+          "name": "CAB-d06ebda3e2671ccdcd411346f64b3f21",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+        },
+        {
+          "fileId": 3,
+          "path": "Library/unity default resources",
+          "name": "unity default resources",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x0e\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+        },
+        {
+          "fileId": 4,
+          "path": "archive:/CAB-8027676caea88f4488a6fd302bf42971/CAB-8027676caea88f4488a6fd302bf42971",
+          "name": "CAB-8027676caea88f4488a6fd302bf42971",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+        },
+        {
+          "fileId": 5,
+          "path": "archive:/CAB-d63b83d6a839f2309afd7f7c8f7d790c/CAB-d63b83d6a839f2309afd7f7c8f7d790c",
+          "name": "CAB-d63b83d6a839f2309afd7f7c8f7d790c",
+          "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+        }
+      ]
+    }
+  ],
+  "matCaps": [
+    {
+      "material": "mt_chara_100101_weapon_a_sj",
+      "pointer": {
+        "fileId": 2,
+        "pathId": 835141015512989441
+      },
+      "referencedExternal": {
+        "fileId": 2,
+        "path": "archive:/CAB-d06ebda3e2671ccdcd411346f64b3f21/CAB-d06ebda3e2671ccdcd411346f64b3f21",
+        "name": "CAB-d06ebda3e2671ccdcd411346f64b3f21",
+        "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+      },
+      "resolveError": null,
+      "resolvedTexture": {
+        "name": "matcap_SoftMetallic",
+        "type": "Texture2D",
+        "width": 256,
+        "height": 256,
+        "textureFormat": 50,
+        "sourceSerializedFile": "CAB-d06ebda3e2671ccdcd411346f64b3f21",
+        "image": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "pixelSha256": "bc693dc16619511f8478e06fa26e6a8ae82bbcac0cb0c66302311687ac31ed42"
+        }
+      }
+    },
+    {
+      "material": "mt_chara_100101_body_sj",
+      "pointer": {
+        "fileId": 2,
+        "pathId": 835141015512989441
+      },
+      "referencedExternal": {
+        "fileId": 2,
+        "path": "archive:/CAB-d06ebda3e2671ccdcd411346f64b3f21/CAB-d06ebda3e2671ccdcd411346f64b3f21",
+        "name": "CAB-d06ebda3e2671ccdcd411346f64b3f21",
+        "guid": "b'\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00'"
+      },
+      "resolveError": null,
+      "resolvedTexture": {
+        "name": "matcap_SoftMetallic",
+        "type": "Texture2D",
+        "width": 256,
+        "height": 256,
+        "textureFormat": 50,
+        "sourceSerializedFile": "CAB-d06ebda3e2671ccdcd411346f64b3f21",
+        "image": {
+          "width": 256,
+          "height": 256,
+          "mode": "RGBA",
+          "pixelSha256": "bc693dc16619511f8478e06fa26e6a8ae82bbcac0cb0c66302311687ac31ed42"
+        }
+      }
+    }
+  ],
+  "allResolved": true
+}
