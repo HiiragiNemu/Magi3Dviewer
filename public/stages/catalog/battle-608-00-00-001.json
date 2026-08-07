@@ -7,15 +7,31 @@
   "type": "fbx",
   "url": "./stages/official/battle-608-00-00-001/bg_3d_608_00_00_001-animated.fbxdata",
   "scale": 1,
-  "position": [0, 0, 0],
-  "rotation": [0, 0, 0],
+  "position": [
+    0,
+    0,
+    0
+  ],
+  "rotation": [
+    0,
+    0,
+    0
+  ],
   "spawnPoints": [
     {
       "id": "actor-0",
       "name": "Actor 0",
       "role": "actor",
-      "position": [0, 0, 0],
-      "rotation": [0, 0, 0]
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
     }
   ],
   "materialBindings": [
@@ -37,7 +53,55 @@
       "smoothness": 0,
       "unlitness": 1,
       "castShadow": false,
-      "receiveShadow": false
+      "receiveShadow": false,
+      "multiUvScroll": {
+        "textureUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_blue_objects_uvscroll_col.png",
+        "first": {
+          "tiling": [
+            1,
+            1
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "speed": [
+            -0.009999999776482582,
+            0
+          ],
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "opacity": 1
+        },
+        "second": {
+          "tiling": [
+            1,
+            1
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "speed": [
+            -0.009999999776482582,
+            0
+          ],
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "opacity": 1
+        },
+        "additiveToMultiply": 0.9800000190734863,
+        "dropFrame": true
+      },
+      "alphaTest": 0.5
     },
     {
       "materialName": "bg3d608_00_blue_Ground",
@@ -185,9 +249,22 @@
         "name": "VolumeLight",
         "type": "spot",
         "anchorNode": "VolumeLight",
-        "position": [0, 30, 0],
-        "target": [0, 0, 0],
-        "color": [0.3160377, 0.7141651, 1, 1],
+        "position": [
+          0,
+          30,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "color": [
+          0.3160377,
+          0.7141651,
+          1,
+          1
+        ],
         "intensity": 0.3,
         "range": 30,
         "outerAngleDegrees": 90,
@@ -201,8 +278,17 @@
         "name": "FillLight",
         "type": "point",
         "anchorNode": "FillLight",
-        "position": [0, 11, 0],
-        "color": [0.44001427, 0.8666653, 0.9056604, 1],
+        "position": [
+          0,
+          11,
+          0
+        ],
+        "color": [
+          0.44001427,
+          0.8666653,
+          0.9056604,
+          1
+        ],
         "intensity": 600,
         "range": 60,
         "cullingMask": 64,
@@ -214,9 +300,22 @@
         "name": "MainLight",
         "type": "directional",
         "anchorNode": "MainLight",
-        "position": [0, 5, 0],
-        "target": [-0.41317597, 4.23395568, -0.49240401],
-        "color": [0.8869565, 1, 0.9782609, 1],
+        "position": [
+          0,
+          5,
+          0
+        ],
+        "target": [
+          -0.41317597,
+          4.23395568,
+          -0.49240401
+        ],
+        "color": [
+          0.8869565,
+          1,
+          0.9782609,
+          1
+        ],
         "intensity": 1,
         "cullingMask": 2147483647,
         "lightmapping": 1,
@@ -249,20 +348,72 @@
     "reDriveVolume": {
       "skyboxIntensity": 1,
       "shAmbient": [
-        0.060730126, 2.2054808e-10, 0, -8.087256e-11, 0, 7.228495e-11, 2.4680048e-8, 0, -1.0990876e-8,
-        0.060730126, 2.2054808e-10, 0, -8.087256e-11, 0, 7.228495e-11, 2.4680048e-8, 0, -1.0990876e-8,
-        0.060730126, 2.2054808e-10, 0, -8.087256e-11, 0, 7.228495e-11, 2.4680048e-8, 0, -1.0990876e-8
+        0.060730126,
+        2.2054808e-10,
+        0,
+        -8.087256e-11,
+        0,
+        7.228495e-11,
+        2.4680048e-08,
+        0,
+        -1.0990876e-08,
+        0.060730126,
+        2.2054808e-10,
+        0,
+        -8.087256e-11,
+        0,
+        7.228495e-11,
+        2.4680048e-08,
+        0,
+        -1.0990876e-08,
+        0.060730126,
+        2.2054808e-10,
+        0,
+        -8.087256e-11,
+        0,
+        7.228495e-11,
+        2.4680048e-08,
+        0,
+        -1.0990876e-08
       ],
-      "characterShadowTint": [0.85, 0.9086956, 1, 1],
-      "characterLightingOverrideColor": [1, 1, 1, 1],
+      "characterShadowTint": [
+        0.85,
+        0.9086956,
+        1,
+        1
+      ],
+      "characterLightingOverrideColor": [
+        1,
+        1,
+        1,
+        1
+      ],
       "characterLightingOverrideRatio": 0.5,
-      "characterAdditionalRimLightColor": [1, 1, 1, 1],
-      "characterAdditionalRimLightDirection": [1, -1],
+      "characterAdditionalRimLightColor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "characterAdditionalRimLightDirection": [
+        1,
+        -1
+      ],
       "backgroundShadowStrengthAdditive": 0.5,
       "paraffin": {
         "enabled": true,
-        "topColor": [0.08139099, 0, 0.8301887, 1],
-        "bottomColor": [0.36078432, 0.85882354, 0.718218, 1],
+        "topColor": [
+          0.08139099,
+          0,
+          0.8301887,
+          1
+        ],
+        "bottomColor": [
+          0.36078432,
+          0.85882354,
+          0.718218,
+          1
+        ],
         "opacity": 0.3,
         "width": 1.5,
         "topBlendMode": 2,
@@ -293,7 +444,11 @@
     "rotators": [
       {
         "objectName": "chair_grp",
-        "degreesPerSecond": [0, 1, 0],
+        "degreesPerSecond": [
+          0,
+          1,
+          0
+        ],
         "space": "self"
       }
     ]
@@ -307,12 +462,12 @@
     ],
     "missing": [
       "six Unity ParticleSystem and ParticleSystemRenderer reconstructions",
-      "bg3d608_00_blue_Fish two-layer UV scroll at -0.01 U/second",
       "volumetric spot-light beam and dust runtime",
       "20 renderer lightmap offset/scale bindings and secondary UV verification",
       "reflection probe cubemap conversion and box projection",
       "Unity component light-state and red/blue material-state runtime",
-      "vignette and exact Unity post-processing parity"
+      "vignette and exact Unity post-processing parity",
+      "exact _DropFrame_MultiScroll time quantization and compiled background-shader blend formula"
     ],
     "evidence": [
       "Two exact Three.js-loadable clips: 4 s/12 tracks and 1 s/1 track",
@@ -321,7 +476,8 @@
       "Fish material _MULTI_UV_SCROLL with both scroll speeds [-0.01,0]",
       "One 1024x1024 RGBA baked lightmap and 20 renderer bindings",
       "One realtime ReflectionProbe and ReDriveVolume serialized profile",
-      "No TimelineAsset or PlayableDirector exists in the 15-file closure"
+      "No TimelineAsset or PlayableDirector exists in the 15-file closure",
+      "Current JP Material bg3d608_00_blue_Fish: _MULTI_UV_SCROLL=1, BaseMap and separate ScrollTexture PPtrs, both layers speed [-0.01,0], tiling [1,1], opacity 1, _Additive_to_Multiply=0.98, alpha clip 0.5"
     ]
   },
   "evidence": [
