@@ -1,4 +1,3 @@
 Trigger bounded current-JP stage 608 Material saved-property extraction.
-2026-08-07 compact ChairCD/MusicNote/violin sprite Material state to determine whether billboard/mesh-UV/render-state semantics explain the still-visible repeated chair/person strips in the fixed 100107 + 608 regression.
+2026-08-08 extract exact GameObject m_IsActive and Renderer m_Enabled state for red/blue, violin, chair, music-note, Fish and Bubble renderables to explain the still-visible repeated person/chair strips in the fixed 100107 + 608 regression.
 DO NOT MERGE: automation trigger only.
-Rerun after re-anchoring this temporary trigger branch to current main.
