@@ -42,15 +42,20 @@ jobs:
         run: |
           git clone --depth 1 --branch AssetStudioMod --recurse-submodules \
             https://github.com/aelurum/AssetStudio.git /tmp/AssetStudio
+          # AssetStudioModCLI itself is emitted successfully on Linux, but the
+          # upstream project then performs a Windows-only native-DLL copy and
+          # returns MSB3030. Treat that post-build copy as non-fatal only when
+          # the required managed CLI DLL actually exists.
+          set +e
           dotnet build /tmp/AssetStudio/AssetStudioCLI/AssetStudioCLI.csproj -c Release
-          CLI="$(find /tmp/AssetStudio/AssetStudioCLI/bin/Release -type f -name 'AssetStudioModCLI.dll' | head -n 1)"
+          BUILD_STATUS=$?
+          set -e
+          CLI="$(find /tmp/AssetStudio/AssetStudioCLI/bin/Release -type f -name 'AssetStudioModCLI.dll' | sort | tail -n 1)"
           if [ -z "$CLI" ]; then
-            CLI="$(find /tmp/AssetStudio/AssetStudioCLI/bin/Release -type f -name '*CLI.dll' | head -n 1)"
-          fi
-          if [ -z "$CLI" ]; then
-            echo 'AssetStudio CLI DLL not found after build' >&2
+            echo "AssetStudio build status=$BUILD_STATUS and CLI DLL was not emitted" >&2
             exit 1
           fi
+          echo "AssetStudio build status=$BUILD_STATUS; using emitted CLI: $CLI"
           printf '%s\n' "$CLI" > /tmp/assetstudio-cli-path.txt
           git -C /tmp/AssetStudio rev-parse HEAD > /tmp/assetstudio-revision.txt
       - name: Export official ReDrive Shader assets with AssetStudioModCLI
@@ -64,7 +69,7 @@ jobs:
             -o /tmp/magius-rd-shader-export \
             --unity-version 2022.3.62f2 \
             --log-level warning
-          find /tmp/magius-rd-shader-export -type f -maxdepth 5 -print | head -n 100
+          find /tmp/magius-rd-shader-export -maxdepth 5 -type f -print | head -n 100
       - name: Keep only bounded feature contexts from Shader export
         shell: bash
         run: |
