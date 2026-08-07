@@ -59,10 +59,12 @@ jobs:
           node --test stageLightmaps.test.mjs
       - name: Gate previously shipped P0 corrections
         run: |
-          node --test stage608Flipbook.test.mjs
-          node --test stage608ExactRenderState.test.mjs
+          node stage608Flipbook.test.mjs
+          node stage608RenderState.test.mjs
+          node stageMaterialBindings.test.mjs
           node exactReDriveFormulaParity.test.mjs
-          node --test nativeSelfShadow.test.mjs
+          node officialMaterialFresnelAniso.test.mjs
+          node nativeSelfShadow.test.mjs
       - name: Production build
         run: npm run build
       - name: Persist generated product payload after successful build
