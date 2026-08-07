@@ -8,6 +8,11 @@ import { scene, recoveredFillLight, recoveredHemisphereLight } from './scene'
 export type RdBlendMode = 0 | 1 | 2 | 3
 export type Rgba = [number, number, number, number]
 
+type SceneWithImageBasedLighting = THREE.Scene & {
+    environmentIntensity?: number
+    backgroundIntensity?: number
+}
+
 export interface ReDriveVolumeRuntimeProfile {
     skyboxIntensity?: number
     shAmbient?: number[]
@@ -54,6 +59,14 @@ backgroundLightProbe.name = 'OfficialReDriveSphericalHarmonics:Background'
 scene.backgroundScene.add(backgroundLightProbe)
 
 const initial = {
+    sceneEnvironmentIntensity:
+        (scene.scene as SceneWithImageBasedLighting).environmentIntensity,
+    backgroundSceneEnvironmentIntensity:
+        (scene.backgroundScene as SceneWithImageBasedLighting).environmentIntensity,
+    sceneBackgroundIntensity:
+        (scene.scene as SceneWithImageBasedLighting).backgroundIntensity,
+    backgroundSceneBackgroundIntensity:
+        (scene.backgroundScene as SceneWithImageBasedLighting).backgroundIntensity,
     ambientIntensity: scene.ambientLight.intensity,
     hemisphereIntensity: recoveredHemisphereLight.intensity,
     fillIntensity: recoveredFillLight.intensity,
@@ -131,6 +144,26 @@ function profileOverride(
     present: boolean,
 ) {
     return profile.overrides?.[key] ?? present
+}
+
+function applySkyboxIntensity(profile: ReDriveVolumeRuntimeProfile) {
+    const enabled = profileOverride(
+        profile,
+        'skyboxIntensity',
+        profile.skyboxIntensity != undefined,
+    )
+    if (!enabled) {
+        delete scene.scene.userData.reDriveSkyboxIntensity
+        return
+    }
+    const intensity = Number.isFinite(profile.skyboxIntensity)
+        ? Math.max(0, profile.skyboxIntensity ?? 1)
+        : 1
+    ;(scene.scene as SceneWithImageBasedLighting).environmentIntensity = intensity
+    ;(scene.backgroundScene as SceneWithImageBasedLighting).environmentIntensity = intensity
+    ;(scene.scene as SceneWithImageBasedLighting).backgroundIntensity = intensity
+    ;(scene.backgroundScene as SceneWithImageBasedLighting).backgroundIntensity = intensity
+    scene.scene.userData.reDriveSkyboxIntensity = intensity
 }
 
 function applyBackgroundColorAdjustments(profile: ReDriveVolumeRuntimeProfile) {
@@ -229,6 +262,7 @@ export function applyReDriveVolumeRuntime(profile?: ReDriveVolumeRuntimeProfile)
     }
 
     applySphericalHarmonics(profile.shAmbient)
+    applySkyboxIntensity(profile)
     applyBackgroundColorAdjustments(profile)
     applyParaffin(profile.paraffin)
 
@@ -283,6 +317,15 @@ export function applyReDriveVolumeRuntime(profile?: ReDriveVolumeRuntimeProfile)
 export function resetReDriveVolumeRuntime() {
     lightProbe.intensity = 0
     lightProbe.sh.zero()
+    ;(scene.scene as SceneWithImageBasedLighting).environmentIntensity =
+        initial.sceneEnvironmentIntensity
+    ;(scene.backgroundScene as SceneWithImageBasedLighting).environmentIntensity =
+        initial.backgroundSceneEnvironmentIntensity
+    ;(scene.scene as SceneWithImageBasedLighting).backgroundIntensity =
+        initial.sceneBackgroundIntensity
+    ;(scene.backgroundScene as SceneWithImageBasedLighting).backgroundIntensity =
+        initial.backgroundSceneBackgroundIntensity
+    delete scene.scene.userData.reDriveSkyboxIntensity
     backgroundLightProbe.intensity = 0
     backgroundLightProbe.sh.zero()
     scene.ambientLight.intensity = initial.ambientIntensity
