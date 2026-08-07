@@ -14,7 +14,7 @@ jobs:
   extract:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 55
     env:
       TARGET_BRANCH: research/100101-official-material-properties-20260807
     steps:
@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install bounded extractor dependencies
-        run: python -m pip install requests msgpack pycryptodome UnityPy
+        run: python -m pip install requests msgpack pycryptodome UnityPy lz4
       - name: Extract target Material saved properties from official JP bundles
         run: python scripts/run_official_100101_material_properties.py
       - name: Record UnityPy modern Shader-export compatibility result
@@ -35,6 +35,8 @@ jobs:
         run: python scripts/inspect_modern_redrive_shader_blob.py
       - name: Summarize modern Shader program/blob tables
         run: python scripts/summarize_modern_redrive_shader_blob.py
+      - name: Decompress modern ReDrive Shader program chunks
+        run: python scripts/decompress_modern_redrive_shader_programs.py
       - name: Probe SJ MatCap across character plus shader workspace
         run: python scripts/resolve_official_100101_matcap_dependency.py
       - name: Persist bounded Material/Shader/MatCap evidence only
@@ -47,7 +49,8 @@ jobs:
             research/official-100101-redrive-shader-evidence.json \
             research/official-redrive-modern-shader-blob.json \
             research/official-redrive-modern-shader-blob-summary.json \
+            research/official-redrive-modern-shader-programs.json \
             research/official-100101-matcap-resolution.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'research: summarize modern ReDrive Shader and SJ MatCap dependencies'
+          git commit -m 'research: decompress modern ReDrive Shader programs and resolve SJ MatCap'
           git push origin HEAD:${TARGET_BRANCH}
