@@ -9,8 +9,11 @@ export interface OfficialStageParticleCurveKey {
 
 export interface OfficialStageParticleSystemProfile {
     name: string
-    pathId: number
+    /** Signed Unity PathID kept as decimal text so JavaScript never rounds the 64-bit value. */
+    pathId: string
+    /** Exact current-JP transform composed into stage-root space. */
     position: [number, number, number]
+    /** Exact current-JP local quaternion; the serialized parent rotation is identity. */
     rotation: [number, number, number, number]
 }
 
@@ -93,47 +96,47 @@ const BUBBLE_TEXTURE_URL =
 const BUBBLE_SYSTEMS: OfficialStageParticleSystemProfile[] = [
     {
         name: 'Particle System',
-        pathId: -6858687396393823220,
+        pathId: '-6858687396393823220',
         position: [-22.100000381469727, 0.6600000262260437, 0],
         rotation: [-0.7071068286895752, 0, 0, 0.7071068286895752],
     },
     {
         name: 'Particle System_001',
-        pathId: -7586315711235274196,
+        pathId: '-7586315711235274196',
         position: [22.100000381469727, 0.6600000262260437, 0],
         rotation: [-0.7071068286895752, 0, 0, 0.7071068286895752],
     },
     {
         name: 'Particle System_002',
-        pathId: 1198205605091357490,
+        pathId: '1198205605091357490',
         position: [12.720000386238098, 0.6600000262260437, 19.369998931884766],
         rotation: [-0.7071068286895752, 0, 0, 0.7071068286895752],
     },
     {
         name: 'Particle System_003',
-        pathId: 1996371953391616376,
+        pathId: '1996371953391616376',
         position: [-14.170000076293945, 0.6600000262260437, 18.56999969482422],
         rotation: [-0.7071068286895752, 0, 0, 0.7071068286895752],
     },
     {
         name: 'Particle System_004',
-        pathId: -1294285691191015837,
+        pathId: '-1294285691191015837',
         position: [-14.59000015258789, 0.6600000262260437, -18.170000791549683],
         rotation: [-0.7071068286895752, 0, 0, 0.7071068286895752],
     },
     {
         name: 'Particle System_005',
-        pathId: 5963673205634448717,
+        pathId: '5963673205634448717',
         position: [13.450000375509262, 0.6600000262260437, -19.620000764727592],
         rotation: [-0.7071068286895752, 0, 0, 0.7071068286895752],
     },
 ]
 
 /**
- * Exact current-JP serialized values are retained below. The Web runtime is
- * intentionally labelled an approximation because Unity's internal
- * ParticleSystem RNG, cone sampling and integration order have not yet been
- * reconstructed from the native renderer.
+ * Exact current-JP serialized values are retained below. The Web simulation is
+ * intentionally labelled an approximation: Unity's ParticleSystem RNG, cone
+ * sampling and integration order have not yet been reconstructed from native
+ * behavior. Exact source data and approximate execution are kept separate.
  */
 export const OFFICIAL_608_BUBBLE_PROFILE: OfficialStageParticleRuntimeProfile = {
     stageObjectName: 'Stage:battle-608-00-00-001',
@@ -224,19 +227,35 @@ export function hasOfficialStageParticleRuntime(rootName: string) {
     return getOfficialStageParticleRuntimeProfile(rootName) != undefined
 }
 
-function xorshift32(seed: number) {
-    let state = seed >>> 0
-    if (state === 0) state = 0x9e3779b9
-    return () => {
+class StableWebApproxRandom {
+    private readonly initialState: number
+    private state: number
+
+    constructor(pathId: string) {
+        const folded = Number(BigInt(pathId) & 0xffffffffn) >>> 0
+        this.initialState = folded || 0x9e3779b9
+        this.state = this.initialState
+    }
+
+    reset() {
+        this.state = this.initialState
+    }
+
+    next() {
+        let state = this.state
         state ^= state << 13
         state ^= state >>> 17
         state ^= state << 5
-        return (state >>> 0) / 0x100000000
+        this.state = state >>> 0
+        return this.state / 0x100000000
     }
 }
 
-function sampleRange(random: () => number, [min, max]: [number, number]) {
-    return min + ((max - min) * random())
+function sampleRange(
+    random: StableWebApproxRandom,
+    [min, max]: [number, number],
+) {
+    return min + ((max - min) * random.next())
 }
 
 function evaluateHermiteCurve(
@@ -273,7 +292,7 @@ class ApproximateBubbleSystemRuntime {
     private readonly profile: OfficialStageParticleRuntimeProfile
     private readonly system: OfficialStageParticleSystemProfile
     private readonly frameTextures: THREE.Texture[]
-    private readonly random: () => number
+    private readonly random: StableWebApproxRandom
     private readonly particles: ActiveParticle[] = []
     private emissionCountdown = 0
 
@@ -286,9 +305,7 @@ class ApproximateBubbleSystemRuntime {
         this.root = root
         this.profile = profile
         this.system = system
-        const foldedPathId = Number(BigInt(system.pathId) & 0xffffffffn)
-        this.random = xorshift32(foldedPathId)
-        this.frameTextures = frameTextures
+        this.random = new StableWebApproxRandom(system.pathId)
         this.emissionCountdown = this.sampleEmissionInterval()
     }
 
@@ -302,6 +319,7 @@ class ApproximateBubbleSystemRuntime {
             particle.sprite.material.dispose()
         }
         this.particles.length = 0
+        this.random.reset()
         this.emissionCountdown = this.sampleEmissionInterval()
     }
 
@@ -326,7 +344,10 @@ class ApproximateBubbleSystemRuntime {
     }
 
     private sampleEmissionInterval() {
-        const rate = Math.max(1e-4, sampleRange(this.random, this.profile.emissionRate))
+        const rate = Math.max(
+            1e-4,
+            sampleRange(this.random, this.profile.emissionRate),
+        )
         return 1 / rate
     }
 
@@ -340,7 +361,10 @@ class ApproximateBubbleSystemRuntime {
             this.emissionCountdown += this.sampleEmissionInterval()
         }
 
-        const gravity = -9.81 * this.profile.gravityModifier
+        // Physics.gravity.y (-9.81) multiplied by the exact serialized -0.1
+        // gravityModifier produces an upward acceleration. Integration order is
+        // still a Web approximation and is deliberately listed as deferred.
+        const gravityY = -9.81 * this.profile.gravityModifier
         for (let index = this.particles.length - 1; index >= 0; index--) {
             const particle = this.particles[index]
             particle.age += deltaSeconds
@@ -351,7 +375,7 @@ class ApproximateBubbleSystemRuntime {
                 continue
             }
 
-            particle.velocity.y += gravity * deltaSeconds
+            particle.velocity.y += gravityY * deltaSeconds
             particle.sprite.position.addScaledVector(particle.velocity, deltaSeconds)
             particle.rotation += this.profile.rotationOverLifetime * deltaSeconds
             const normalizedAge = particle.age / particle.lifetime
@@ -373,15 +397,15 @@ class ApproximateBubbleSystemRuntime {
     private spawnParticle() {
         const profile = this.profile
         const system = this.system
-        const theta = this.random() * Math.PI * 2
-        const radial = Math.sqrt(this.random()) * profile.shape.radius
+        const theta = this.random.next() * Math.PI * 2
+        const radial = Math.sqrt(this.random.next()) * profile.shape.radius
         const localOffset = new THREE.Vector3(
             Math.cos(theta) * radial,
             Math.sin(theta) * radial,
             0,
         )
         const angle = THREE.MathUtils.degToRad(profile.shape.angleDegrees)
-        const directionRadius = Math.tan(angle) * this.random()
+        const directionRadius = Math.tan(angle) * this.random.next()
         const localDirection = new THREE.Vector3(
             Math.cos(theta) * directionRadius,
             Math.sin(theta) * directionRadius,
@@ -391,9 +415,8 @@ class ApproximateBubbleSystemRuntime {
         localOffset.applyQuaternion(rotation)
         localDirection.applyQuaternion(rotation)
 
-        const map = this.frameTextures[0]
         const material = new THREE.SpriteMaterial({
-            map,
+            map: this.frameTextures[0],
             color: new THREE.Color().setRGB(
                 profile.material.baseColor[0],
                 profile.material.baseColor[1],
@@ -412,6 +435,8 @@ class ApproximateBubbleSystemRuntime {
 
         const sprite = new THREE.Sprite(material)
         sprite.name = `${system.name}:bubble`
+        // This preserves the exact serialized queue value as ordering metadata;
+        // Three.js renderOrder is not claimed to be Unity renderQueue parity.
         sprite.renderOrder = profile.material.renderQueue
         sprite.position.set(...system.position).add(localOffset)
         const baseSize = sampleRange(this.random, profile.startSize)
