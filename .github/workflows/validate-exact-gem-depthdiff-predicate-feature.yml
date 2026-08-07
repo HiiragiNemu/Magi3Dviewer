@@ -1,0 +1,60 @@
+name: Validate exact current-JP GemDepthDiff predicate feature
+
+on:
+  push:
+    branches:
+      - feature/exact-gem-depthdiff-predicate-20260808
+    paths:
+      - automation/trigger-exact-gem-depthdiff-predicate.txt
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: feature/exact-gem-depthdiff-predicate-20260808
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Apply fail-closed current-JP GemDepthDiff predicate patch
+        run: python3 scripts/apply_exact_gem_depthdiff_predicate_patch.py
+      - name: Install exact lockfile dependencies
+        run: npm ci
+      - name: Run complete release tests and production build
+        run: npm run build
+      - name: Verify exact predicate evidence and no NdotV proxy
+        shell: bash
+        run: |
+          grep -F 'uGemUseDepthDiff * uGemTransparency' magia-exedra-character-three/shaders/gem.ts
+          if grep -F 'rdGemDepthProxy' magia-exedra-character-three/shaders/gem.ts; then
+            echo 'obsolete GemDepthDiff NdotV proxy still present' >&2
+            exit 1
+          fi
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p = json.loads(Path('research/official-redrive-gem-depthdiff-runtime-evidence.json').read_text())
+          assert p['savedProperties']['_UseGemDepthDiff'] == 1.0
+          assert p['savedProperties']['_Transparency'] == 0.0
+          assert p['runtimeConclusion']['depthDiffBranchEnabled'] is False
+          PY
+      - name: Persist validated viewer changes only
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add \
+            magia-exedra-character-three/materialProfile.ts \
+            magia-exedra-character-three/shaders/gem.ts \
+            officialMaterialFresnelAniso.test.mjs \
+            research/official-redrive-gem-depthdiff-runtime-evidence.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'fix: obey exact current-JP GemDepthDiff transparency predicate'
+          git push origin HEAD:feature/exact-gem-depthdiff-predicate-20260808
