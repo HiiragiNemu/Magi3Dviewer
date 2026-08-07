@@ -28,7 +28,7 @@ jobs:
       - name: Install bounded extractor dependencies
         run: python -m pip install requests msgpack pycryptodome UnityPy
       - name: Extract target Material saved properties from official JP bundles
-        run: python scripts/extract_official_100101_material_properties.py
+        run: python scripts/run_official_100101_material_properties.py
       - name: Persist material evidence only
         shell: bash
         run: |
