@@ -1,0 +1,79 @@
+name: Validate ReDrive GemDepthDiff feature
+
+on:
+  push:
+    branches:
+      - feature/redrive-gem-depthdiff-exact-20260807
+    paths:
+      - automation/trigger-redrive-gem-depthdiff-validation.txt
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: feature/redrive-gem-depthdiff-exact-20260807
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Validate release tests and production build
+        shell: bash
+        run: |
+          set +e
+          rm -rf validation-gem-depthdiff
+          mkdir -p validation-gem-depthdiff
+
+          npm ci >validation-gem-depthdiff/npm-ci.log 2>&1
+          ci_status=$?
+          if [ ${ci_status} -eq 0 ]; then
+            npm audit --audit-level=high >validation-gem-depthdiff/npm-audit.log 2>&1
+            audit_status=$?
+            npm run build >validation-gem-depthdiff/production-build.log 2>&1
+            build_status=$?
+          else
+            audit_status=97
+            build_status=97
+          fi
+
+          overall_status=0
+          for code in ${ci_status} ${audit_status} ${build_status}; do
+            if [ "${code}" -ne 0 ]; then overall_status=1; fi
+          done
+
+          cat >validation-gem-depthdiff/status.json <<EOF
+          {
+            "runId": ${GITHUB_RUN_ID},
+            "sourceCommit": "${GITHUB_SHA}",
+            "npmCi": ${ci_status},
+            "npmAudit": ${audit_status},
+            "productionBuildAndReleaseTests": ${build_status},
+            "overall": ${overall_status},
+            "formulaFidelity": "exact-current-JP-compiled-GLSL",
+            "cameraDepthTransportFidelity": "web-depth-transport-approximation",
+            "transparencyRuntimeSource": "deferred"
+          }
+          EOF
+
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -f validation-gem-depthdiff/status.json validation-gem-depthdiff/production-build.log
+          if ! git diff --cached --quiet; then
+            git commit -m 'test: persist GemDepthDiff feature build result'
+            git push origin HEAD:feature/redrive-gem-depthdiff-exact-20260807
+          fi
+
+          exit ${overall_status}
+      - name: Upload build evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: redrive-gem-depthdiff-build-evidence
+          path: validation-gem-depthdiff/
+          if-no-files-found: warn
