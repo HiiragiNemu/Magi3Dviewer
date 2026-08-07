@@ -45,8 +45,10 @@ jobs:
 
           run_phase current-jp-patch python3 scripts/apply_stage_608_current_jp_parity_patch.py
           patch_status=$?
+          run_phase self-shadow-feedback-patch python3 scripts/apply_self_shadow_feedback_fix.py
+          self_shadow_status=$?
 
-          if [ ${patch_status} -eq 0 ]; then
+          if [ ${patch_status} -eq 0 ] && [ ${self_shadow_status} -eq 0 ]; then
             run_phase npm-ci npm ci
             ci_status=$?
           else
@@ -99,16 +101,19 @@ jobs:
           cp -f visual-regression-output/* validation-evidence/ 2>/dev/null || true
 
           overall_status=0
-          for code in ${patch_status} ${ci_status} ${audit_status} ${build_status} ${playwright_package_status} ${playwright_browser_status} ${server_status} ${visual_status}; do
+          for code in ${patch_status} ${self_shadow_status} ${ci_status} ${audit_status} ${build_status} ${playwright_package_status} ${playwright_browser_status} ${server_status} ${visual_status}; do
             if [ "${code}" -ne 0 ]; then overall_status=1; fi
           done
 
           cat >validation-evidence/status.json <<EOF
           {
+            "runId": ${GITHUB_RUN_ID},
             "sourceCommit": "${GITHUB_SHA}",
             "character": "100107",
             "stage": "battle-608-00-00-001",
+            "viewport": "1920x1080@1",
             "currentJpFailClosedPatch": ${patch_status},
+            "selfShadowFeedbackPatch": ${self_shadow_status},
             "npmCi": ${ci_status},
             "npmAudit": ${audit_status},
             "productionBuildAndReleaseTests": ${build_status},
@@ -124,10 +129,11 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add \
             magia-exedra-character-three/loader.ts \
+            magia-exedra-character-three/scene/selfShadow.ts \
             public/stages/catalog/battle-608-00-00-001.json \
             validation-evidence
-          # Keep only the compact browser/server diagnostics even though *.log
-          # is globally ignored. Build/install logs remain workflow-artifact-only.
+          # Keep only compact browser/server diagnostics even though *.log is
+          # globally ignored. Build/install logs remain workflow-artifact-only.
           git add -f validation-evidence/visual-regression.log validation-evidence/vite.log 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m 'test: persist current-JP 608 parity validation result'
