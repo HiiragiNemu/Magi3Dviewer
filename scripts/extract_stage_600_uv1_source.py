@@ -59,6 +59,7 @@ def main():
                 continue
             mesh = obj.read()
             name = str(getattr(mesh, 'm_Name', ''))
+            path_id = str(int(getattr(obj, 'path_id', 0) or 0))
             try:
                 handler = MeshHandler(mesh)
                 handler.process()
@@ -81,7 +82,7 @@ def main():
                         f'max={max(triangles)} uv1={len(uv1)}'
                     )
                 meshes.append({
-                    'pathId': int(getattr(obj, 'path_id', 0) or 0),
+                    'pathId': path_id,
                     'name': name,
                     'sourceVertexCount': int(handler.m_VertexCount),
                     'uv0': flatten_vec2(uv0),
@@ -91,7 +92,7 @@ def main():
                 })
             except Exception as exc:
                 failures.append({
-                    'pathId': int(getattr(obj, 'path_id', 0) or 0),
+                    'pathId': path_id,
                     'name': name,
                     'error': repr(exc),
                 })
