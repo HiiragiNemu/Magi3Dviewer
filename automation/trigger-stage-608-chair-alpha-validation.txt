@@ -1,0 +1,5 @@
+Validate the current-JP 608 alpha-cutout parity set (ChairCD + five red-side sprite materials), including exact saved-property opaque alpha-cutout semantics (_Surface=0, SrcBlend=1, DstBlend=0, ZWrite=1), the root-relative FBX URL-base fix, the self-shadow framebuffer-feedback fix, release tests/build, and fixed 100107 + battle-608-00-00-001 Chromium visual regression against production preview.
+Unity renderQueue 2450 is retained only as Three renderOrder ordering metadata and remains an explicit approximation, not native queue parity.
+The visual gate must fail on GL_INVALID_OPERATION / framebuffer feedback warnings, not only console errors.
+Persist temporary inspectable validation evidence on the feature branch, then remove it before merge.
+Run 2026-08-07 parity-v5 opaque-alpha-cutout.

@@ -43,7 +43,9 @@
       "smoothness": 0.1,
       "unlitness": 0.3,
       "castShadow": true,
-      "receiveShadow": true
+      "receiveShadow": true,
+      "alphaTest": 0.8999999761581421,
+      "transparent": true
     },
     {
       "materialName": "bg3d608_00_blue_Fish",
@@ -149,7 +151,7 @@
       "materialPattern": "^mt_bg3d608_00_red_MusicNoteA(?:\\.\\d+)?$",
       "shading": "unlit",
       "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
-      "alphaTest": 0.01,
+      "alphaTest": 0.10000000149011612,
       "alphaToCoverage": true,
       "transparent": true,
       "unlitness": 1,
@@ -162,7 +164,7 @@
       "materialPattern": "^mt_bg3d608_00_red_MusicNoteB(?:\\.\\d+)?$",
       "shading": "unlit",
       "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_musicNote_col.png",
-      "alphaTest": 0.01,
+      "alphaTest": 0.5,
       "alphaToCoverage": true,
       "transparent": true,
       "smoothness": 0.3,
@@ -176,7 +178,7 @@
       "materialPattern": "^mt_bg3d608_00_red_MusicNoteC(?:\\.\\d+)?$",
       "shading": "unlit",
       "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_circlenote_col.png",
-      "alphaTest": 0.01,
+      "alphaTest": 0.699999988079071,
       "alphaToCoverage": true,
       "transparent": true,
       "smoothness": 0.3,
@@ -190,7 +192,7 @@
       "materialPattern": "^mt_bg3d608_00_red_violinCol(?:\\.\\d+)?$",
       "shading": "unlit",
       "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violin_sprite.png",
-      "alphaTest": 0.01,
+      "alphaTest": 0.5,
       "alphaToCoverage": true,
       "transparent": true,
       "unlitness": 1,
@@ -203,7 +205,7 @@
       "materialPattern": "^mt_bg3d608_00_red_violinShdLine(?:\\.\\d+)?$",
       "shading": "unlit",
       "baseMapUrl": "./stages/official/battle-608-00-00-001/bg3d608_00_red_violinLineShd_sprite.png",
-      "alphaTest": 0.01,
+      "alphaTest": 0.5,
       "alphaToCoverage": true,
       "transparent": true,
       "unlitness": 1,
@@ -512,5 +514,13 @@
       "matcap.png": "1f14556c9d23a64ab2d133e4cbff15139af4091b2f04aea391942838c19b70e5",
       "simple_noise_tex.png": "b6c830aa7ed7b6db24fd99f472d4fda0a88b8aaf13bc19324d5998b1c5c201a8"
     }
+  },
+  "restorationStatus": {
+    "missing": [
+      "bg3d608_00_blue_ChairCD exact Unity ZWrite=0/renderQueue=3000 ordering remains deferred; Web restores the current-JP alpha-cutout threshold and transparent blend path but StageMaterialBinding does not yet expose an exact depth-write/render-queue mapping."
+    ],
+    "evidence": [
+      "Current JP bg3d608_00_blue_ChairCD: renderQueue 3000, _ALPHATEST_ON, _AlphaClip=1, _Alpha_Clip=0.8999999761581421, _Surface=1, _SrcBlend=5, _DstBlend=10 and _ZWrite=0."
+    ]
   }
 }
