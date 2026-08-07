@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { fetchAndTryDecompressGzip } from 'magia-exedra-character-three/utils'
 import { scene, recoveredFillLight, recoveredHemisphereLight } from './scene'
 import { gui } from './controllers/GUI'
+import { loadStageCatalogTree } from './stageCatalog'
 import {
     applyStageMaterialBindings,
     type StageMaterialBinding,
@@ -178,15 +179,6 @@ export interface StageDefinition {
     evidence?: string[]
 }
 
-interface StageCatalog {
-    version: number
-    generatedAt?: string
-    sourceRevision?: string
-    /** Optional modular entries keep large official catalogs incremental. */
-    entries?: string[]
-    stages: StageDefinition[]
-}
-
 export interface StagePreset {
     id: string
     X: number
@@ -341,57 +333,53 @@ const initialSceneState = {
 
 export async function setupStageSelector() {
     try {
-        const response = await fetch('./stages/catalog.json', { cache: 'no-cache' })
-        if (response.ok) {
-            const catalog = await response.json() as StageCatalog
-            const modularStages: StageDefinition[] = []
-            for (const entryUrl of catalog.entries ?? []) {
-                try {
-                    const entryResponse = await fetch(entryUrl, { cache: 'no-cache' })
-                    if (!entryResponse.ok) {
-                        throw new Error(`${entryResponse.status} ${entryResponse.statusText}`)
-                    }
-                    modularStages.push(
-                        await entryResponse.json() as StageDefinition,
-                    )
-                } catch (error) {
-                    console.warn(
-                        `Could not load stage catalog entry ${entryUrl}:`,
-                        error,
-                    )
-                }
-            }
-            const catalogStages = [
-                ...(catalog.stages ?? []),
-                ...modularStages,
-            ].filter((stage, index, all) =>
-                all.findIndex(candidate => candidate.id === stage.id) === index
+        const loaded = await loadStageCatalogTree<StageDefinition>(
+            './stages/catalog.json',
+        )
+        const catalog = loaded.root
+        for (const error of loaded.errors) {
+            console.warn(
+                `Could not load stage ${error.kind} ${error.url}: ${error.message}`,
             )
-            for (const stage of catalogStages) {
-                if (!stage.bundleProvenance) continue
-                stage.bundleProvenance = normalizeStageBundleProvenance(
-                    stage.bundleProvenance,
-                )
-                validateStageBundleProvenance(
-                    stage.bundleProvenance,
-                    stage.assetBundleName,
-                )
-            }
-            definitions = [
-                ...builtInStages,
-                ...catalogStages.filter(stage =>
-                    !builtInStages.some(builtIn => builtIn.id === stage.id)
-                ),
-            ]
-            console.log('Loaded stage catalog:', {
-                version: catalog.version,
-                generatedAt: catalog.generatedAt,
-                sourceRevision: catalog.sourceRevision,
-                total: catalogStages.length,
-                modular: modularStages.length,
-                official: catalogStages.filter(stage => stage.official).length,
-            })
         }
+        const catalogStages = loaded.stages.filter((stage, index, all) =>
+            all.findIndex(candidate => candidate.id === stage.id) === index
+        )
+        for (const stage of catalogStages) {
+            if (!stage.bundleProvenance) continue
+            stage.bundleProvenance = normalizeStageBundleProvenance(
+                stage.bundleProvenance,
+            )
+            validateStageBundleProvenance(
+                stage.bundleProvenance,
+                stage.assetBundleName,
+            )
+        }
+        definitions = [
+            ...builtInStages,
+            ...catalogStages.filter(stage =>
+                !builtInStages.some(builtIn => builtIn.id === stage.id)
+            ),
+        ]
+        console.log('Loaded stage catalog tree:', {
+            version: catalog.version,
+            generatedAt: catalog.generatedAt,
+            sourceRevision: catalog.sourceRevision,
+            catalogs: loaded.catalogCount,
+            entries: loaded.entryCount,
+            errors: loaded.errors.length,
+            total: catalogStages.length,
+            official: catalogStages.filter(stage => stage.official).length,
+            dynamicRecovered: catalogStages.filter(
+                stage => stage.dynamic?.status === 'recovered'
+            ).length,
+            dynamicPartial: catalogStages.filter(
+                stage => stage.dynamic?.status === 'partial'
+            ).length,
+            dynamicPending: catalogStages.filter(
+                stage => stage.dynamic?.status === 'pending'
+            ).length,
+        })
     } catch (error) {
         console.warn('Could not load external stage catalog:', error)
     }
