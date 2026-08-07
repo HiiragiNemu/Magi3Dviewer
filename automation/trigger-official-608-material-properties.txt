@@ -1,0 +1,4 @@
+Trigger bounded current-JP stage 608 Material and runtime-state extraction.
+Resolve every non-null current-JP 608 _BaseMap/_MainTex/_ScrollTexture dependency through the exact 15-bundle closure and compare decoded pixel SHA against explicit `origin/magius3dviewer`. Keep bounded `shader/bg_uber` compiled windows for BaseMap UV/ST, billboard, alpha clip and vertex-color dataflow. This pass maps all legacy Animation and Animator components to their exact root-stage hierarchy owners and records AnimatorController/motion pointers, closing whether violin/chair/red/blue visibility is animation-driven.
+DO NOT MERGE: automation trigger only.
+Rerun 2026-08-08 v2 legacy Animation/AnimatorController ownership pass.
