@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 2,
+  "source": "official-jp-current-608-transform-chains",
+  "assetBundleRevision": "61ad830ca038a9efd58e67170a61c85e",
+  "stageAssetTransform": {
+    "scale": 1,
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotationEuler": [
+      0,
+      0,
+      0
+    ],
+    "source": "public/stages/catalog/battle-608-00-00-001.json release contract"
+  },
+  "root": {
+    "hierarchyPath": "bg_3d_608_00_00_001",
+    "stageRootPosition": [
+      0,
+      0,
+      0
+    ],
+    "stageRootRotationQuaternion": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "stageRootScale": [
+      1,
+      1,
+      1
+    ]
+  },
+  "parent": {
+    "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles",
+    "stageRootPosition": [
+      13.600000381469727,
+      0.0,
+      -19.700000762939453
+    ],
+    "stageRootRotationQuaternion": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "stageRootScale": [
+      1,
+      1,
+      1
+    ]
+  },
+  "systems": [
+    {
+      "name": "Particle System",
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System",
+      "particleSystemPathId": -6858687396393823220,
+      "transformPathId": -6082960871959845769,
+      "localPositionUnderEffBubbles": [
+        -35.70000076293945,
+        0.6600000262260437,
+        19.700000762939453
+      ],
+      "stageRootPosition": [
+        -22.100000381469727,
+        0.6600000262260437,
+        0.0
+      ],
+      "stageRootRotationQuaternion": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "stageRootScale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Particle System_001",
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_001",
+      "particleSystemPathId": -7586315711235274196,
+      "transformPathId": 2304020634233964760,
+      "localPositionUnderEffBubbles": [
+        8.5,
+        0.6600000262260437,
+        19.700000762939453
+      ],
+      "stageRootPosition": [
+        22.100000381469727,
+        0.6600000262260437,
+        0.0
+      ],
+      "stageRootRotationQuaternion": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "stageRootScale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Particle System_002",
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_002",
+      "particleSystemPathId": 1198205605091357490,
+      "transformPathId": 6740306178769554207,
+      "localPositionUnderEffBubbles": [
+        -0.8799999952316284,
+        0.6600000262260437,
+        39.06999969482422
+      ],
+      "stageRootPosition": [
+        12.720000386238098,
+        0.6600000262260437,
+        19.369998931884766
+      ],
+      "stageRootRotationQuaternion": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "stageRootScale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Particle System_003",
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_003",
+      "particleSystemPathId": 1996371953391616376,
+      "transformPathId": -8813353494220481737,
+      "localPositionUnderEffBubbles": [
+        -27.770000457763672,
+        0.6600000262260437,
+        38.27000045776367
+      ],
+      "stageRootPosition": [
+        -14.170000076293945,
+        0.6600000262260437,
+        18.56999969482422
+      ],
+      "stageRootRotationQuaternion": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "stageRootScale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Particle System_004",
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_004",
+      "particleSystemPathId": -1294285691191015837,
+      "transformPathId": 7184139103108780732,
+      "localPositionUnderEffBubbles": [
+        -28.190000534057617,
+        0.6600000262260437,
+        1.5299999713897705
+      ],
+      "stageRootPosition": [
+        -14.59000015258789,
+        0.6600000262260437,
+        -18.170000791549683
+      ],
+      "stageRootRotationQuaternion": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "stageRootScale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Particle System_005",
+      "hierarchyPath": "bg_3d_608_00_00_001/Eff_Bubbles/Particle System_005",
+      "particleSystemPathId": 5963673205634448717,
+      "transformPathId": 2263479332363203347,
+      "localPositionUnderEffBubbles": [
+        -0.15000000596046448,
+        0.6600000262260437,
+        0.07999999821186066
+      ],
+      "stageRootPosition": [
+        13.450000375509262,
+        0.6600000262260437,
+        -19.620000764727592
+      ],
+      "stageRootRotationQuaternion": [
+        -0.7071068286895752,
+        -0.0,
+        -0.0,
+        0.7071068286895752
+      ],
+      "stageRootScale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "composition": "Exact for current JP: the serialized stage root is identity; Eff_Bubbles has identity rotation/scale and only the recorded translation. Each system stageRootPosition is therefore Eff_Bubbles.localPosition + child.localPosition. The script fails closed if that three-node parent contract changes."
+}
