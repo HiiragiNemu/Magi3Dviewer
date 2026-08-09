@@ -21,15 +21,25 @@ test('native ReDrive self-shadow keeps recovered TW/JP-shared pass constants', (
   assert.match(source, /vRdToonWorldPosition/)
 })
 
-test('self-shadow depth writer truly unbinds its own sampler to avoid WebGL feedback', () => {
+test('self-shadow depth writer uses a separate comparison sampler', () => {
   const source = read('magia-exedra-character-three/scene/selfShadow.ts')
+  assert.match(
+    source,
+    /this\.depthPassSampler = new THREE\.DepthTexture\(\s*1,\s*1,\s*THREE\.UnsignedShortType/,
+  )
+  assert.match(
+    source,
+    /this\.depthPassSampler\.compareFunction = THREE\.LessEqualCompare/,
+  )
+  assert.match(source, /this\.depthPassSampler\.needsUpdate = true/)
+  assert.match(source, /this\.depthPassSampler\.dispose\(\)/)
   assert.match(
     source,
     /const oldSelfShadowMap = reDriveSelfShadowUniformState\.map\.value/,
   )
   assert.match(
     source,
-    /reDriveSelfShadowUniformState\.enabled\.value = 0\s+reDriveSelfShadowUniformState\.map\.value = null/,
+    /reDriveSelfShadowUniformState\.enabled\.value = 0\s+reDriveSelfShadowUniformState\.map\.value = this\.depthPassSampler/,
   )
   assert.match(
     source,

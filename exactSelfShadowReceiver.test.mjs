@@ -14,6 +14,14 @@ const face = fs.readFileSync(
   'magia-exedra-character-three/shaders/face.ts',
   'utf8',
 );
+const meshPhysicalFragment = fs.readFileSync(
+  'node_modules/three/src/renderers/shaders/ShaderLib/meshphysical.glsl.js',
+  'utf8',
+);
+const defaultNormalVertexChunk = fs.readFileSync(
+  'node_modules/three/src/renderers/shaders/ShaderChunk/defaultnormal_vertex.glsl.js',
+  'utf8',
+);
 
 test('current-JP receiver uses one hardware depth compare with native bias/range/NdotL structure', () => {
   for (const token of [
@@ -45,10 +53,40 @@ test('receiver NdotL fix gets view-space normal and light direction', () => {
     source,
     /transformDirection\(this\.shadowCamera\.matrixWorld\)\s+\.transformDirection\(this\.scene\.camera\.matrixWorldInverse\)/,
   );
-  for (const shader of [general, face]) {
-    assert.match(
-      shader,
-      /rdToonSelfShadowVisibility\(\s*vRdToonWorldPosition,\s*normal\s*\)/,
-    );
-  }
+  assert.match(
+    general,
+    /rdToonSelfShadowVisibility\(\s*vRdToonWorldPosition,\s*normal\s*\)/,
+  );
+  assert.match(
+    face,
+    /rdToonSelfShadowVisibility\(\s*vRdToonWorldPosition,\s*vFaceSelfShadowNormalVS\s*\)/,
+  );
+});
+
+test('face NdotL receiver only reads a normal available at map-fragment time', () => {
+  const mapFragmentIndex = meshPhysicalFragment.indexOf('#include <map_fragment>');
+  const normalFragmentIndex = meshPhysicalFragment.indexOf('#include <normal_fragment_begin>');
+  assert.ok(mapFragmentIndex >= 0, 'missing Three map fragment include');
+  assert.ok(normalFragmentIndex >= 0, 'missing Three normal fragment include');
+  assert.ok(
+    mapFragmentIndex < normalFragmentIndex,
+    'Three must still initialize fragment normal after the face map hook',
+  );
+  assert.match(
+    defaultNormalVertexChunk,
+    /transformedNormal = normalMatrix \* transformedNormal;/,
+  );
+  assert.equal(
+    (face.match(/varying vec3 vFaceSelfShadowNormalVS;/g) ?? []).length,
+    2,
+    'face shader must link the dedicated view-space normal varying',
+  );
+  assert.match(
+    face,
+    /#include <defaultnormal_vertex>\s+vFaceSelfShadowNormalVS = normalize\(transformedNormal\);/,
+  );
+  assert.doesNotMatch(
+    face,
+    /rdToonSelfShadowVisibility\(\s*vRdToonWorldPosition,\s*normal\s*\)/,
+  );
 });

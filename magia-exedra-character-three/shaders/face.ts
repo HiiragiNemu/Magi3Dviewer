@@ -130,6 +130,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             varying vec3 vFaceForwardVS;
             varying vec3 vFaceUpVS;
             varying vec3 vFaceRightVS;
+            varying vec3 vFaceSelfShadowNormalVS;
             uniform vec3 uFaceForwardWS;
             uniform vec3 uFaceUpWS;
             uniform vec3 uFaceRightWS;
@@ -144,6 +145,12 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             vFaceUpVS = normalize(mat3(viewMatrix) * uFaceUpWS);
             vFaceRightVS = normalize(mat3(viewMatrix) * uFaceRightWS);
             `
+        ).replace(
+            '#include <defaultnormal_vertex>',
+            /*glsl*/ `
+            #include <defaultnormal_vertex>
+            vFaceSelfShadowNormalVS = normalize(transformedNormal);
+            `
         );
 
         shader.fragmentShader = /*glsl*/ `
@@ -152,6 +159,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             varying vec3 vFaceForwardVS;
             varying vec3 vFaceUpVS;
             varying vec3 vFaceRightVS;
+            varying vec3 vFaceSelfShadowNormalVS;
 
             uniform sampler2D tShadow;
             uniform sampler2D tFaceGradient;
@@ -235,7 +243,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             );
             rdCombinedFaceLight *= rdToonSelfShadowVisibility(
                 vRdToonWorldPosition,
-                normal
+                vFaceSelfShadowNormalVS
             );
 
             faceColor.rgb = mix(

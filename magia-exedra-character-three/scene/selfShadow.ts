@@ -144,6 +144,7 @@ export class ReDriveSelfShadowController {
     private readonly scene: MagiaExedraScene3D
     private readonly shadowCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.01, 10)
     private readonly renderTarget: THREE.WebGLRenderTarget
+    private readonly depthPassSampler: THREE.DepthTexture
     private readonly shadowView = new THREE.Matrix4()
     private readonly boundsView = new THREE.Matrix4()
     private readonly rotation = new THREE.Matrix4()
@@ -183,6 +184,24 @@ export class ReDriveSelfShadowController {
         depthTexture.compareFunction = THREE.LessEqualCompare
         depthTexture.generateMipmaps = false
         depthTexture.name = 'ReDrive:_RdToonSelfShadowMapRT:Depth'
+
+        // The depth writer still links the shared sampler2DShadow uniform even
+        // while self-shadow evaluation is disabled. A null uniform makes Three
+        // bind its color-texture fallback, which is not sampler2DShadow-compatible.
+        // Keep a separate comparison texture bound without sampling the depth
+        // attachment currently being rendered.
+        this.depthPassSampler = new THREE.DepthTexture(
+            1,
+            1,
+            THREE.UnsignedShortType,
+        )
+        this.depthPassSampler.format = THREE.DepthFormat
+        this.depthPassSampler.minFilter = THREE.NearestFilter
+        this.depthPassSampler.magFilter = THREE.NearestFilter
+        this.depthPassSampler.compareFunction = THREE.LessEqualCompare
+        this.depthPassSampler.generateMipmaps = false
+        this.depthPassSampler.name = 'ReDrive:SelfShadowDepthPassSampler'
+        this.depthPassSampler.needsUpdate = true
 
         this.renderTarget = new THREE.WebGLRenderTarget(resolution, resolution, {
             depthBuffer: true,
@@ -361,6 +380,7 @@ export class ReDriveSelfShadowController {
 
     dispose() {
         this.disposed = true
+        this.depthPassSampler.dispose()
         this.renderTarget.depthTexture?.dispose()
         this.renderTarget.dispose()
         reDriveSelfShadowUniformState.map.value = null
@@ -400,11 +420,11 @@ export class ReDriveSelfShadowController {
 
         // WebGL rejects a framebuffer attachment that is still bound to an
         // active sampler even when the shader branch using that sampler is
-        // disabled.  Preserve the exact ReDrive self-shadow texture, but truly
-        // unbind it while writing the same depth attachment.
+        // disabled. Preserve the exact ReDrive self-shadow texture, but bind a
+        // separate comparison texture while writing the depth attachment.
         const oldSelfShadowMap = reDriveSelfShadowUniformState.map.value
         reDriveSelfShadowUniformState.enabled.value = 0
-        reDriveSelfShadowUniformState.map.value = null
+        reDriveSelfShadowUniformState.map.value = this.depthPassSampler
         for (const character of characters) {
             for (const outline of character.userData.outlineMeshes) {
                 outlineStates.push([outline, outline.visible])
