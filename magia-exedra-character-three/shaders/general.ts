@@ -21,6 +21,21 @@ export const officialShadowPreset = {
     ...ShadowTexOptions,
 }
 
+/**
+ * Bounded research switch for the official `_ADDITIONAL_LIGHTS` path.
+ *
+ * Current JP/TW compiled programs prove the generic directional selector,
+ * fixed scale, luminance influence and final additive order. Point/Spot,
+ * realtime additional shadows and FaceGradient remain separate phases.
+ * Keep this explicit directional fixture disabled in normal rendering.
+ */
+export const AdditionalDirectionalLightExperiment = {
+    enabled: false,
+    directionWorld: new THREE.Vector3(-4.5, 1.55, -4.0).normalize(),
+    radiance: new THREE.Color('#91b4ff').multiplyScalar(0.42),
+    influenceByLuminance: 1.0,
+}
+
 export function resetOfficialShadowPreset() {
     Object.assign(ShadowTexOptions, officialShadowPreset)
 }
@@ -64,6 +79,43 @@ export class GeneralMatrialUniforms extends ToonStylizationUniforms {
         this.setValue('uRdShadowOffsetMapOffset', value)
     }
 
+    get uRdAdditionalDirectionalLightEnabled(): number | undefined {
+        return this.getValue('uRdAdditionalDirectionalLightEnabled')
+    }
+    set uRdAdditionalDirectionalLightEnabled(value) {
+        this.setValue('uRdAdditionalDirectionalLightEnabled', value)
+    }
+
+    get uRdAdditionalDirectionalLightDirectionWorld(): THREE.Vector3 | undefined {
+        return this.getValue('uRdAdditionalDirectionalLightDirectionWorld')
+    }
+    set uRdAdditionalDirectionalLightDirectionWorld(value) {
+        if (!value) return
+        const current = this.getValue('uRdAdditionalDirectionalLightDirectionWorld')
+        if (current instanceof THREE.Vector3) current.copy(value)
+        else this.setValue(
+            'uRdAdditionalDirectionalLightDirectionWorld',
+            value.clone(),
+        )
+    }
+
+    get uRdAdditionalDirectionalLightColor(): THREE.Color | undefined {
+        return this.getValue('uRdAdditionalDirectionalLightColor')
+    }
+    set uRdAdditionalDirectionalLightColor(value) {
+        if (!value) return
+        const current = this.getValue('uRdAdditionalDirectionalLightColor')
+        if (current instanceof THREE.Color) current.copy(value)
+        else this.setValue('uRdAdditionalDirectionalLightColor', value.clone())
+    }
+
+    get uRdAdditionalLightInfluenceByLuminance(): number | undefined {
+        return this.getValue('uRdAdditionalLightInfluenceByLuminance')
+    }
+    set uRdAdditionalLightInfluenceByLuminance(value) {
+        this.setValue('uRdAdditionalLightInfluenceByLuminance', value)
+    }
+
     loadGlobalOptions() {
         super.loadGlobalOptions()
         this.uShadowMix = 0.72
@@ -77,6 +129,14 @@ export class GeneralMatrialUniforms extends ToonStylizationUniforms {
         this.uRdShadowFeather = ShadowTexOptions.shadowFeather
         this.uRdShadowOffsetMapOffset =
             ShadowTexOptions.shadowOffsetMapOffset
+        this.uRdAdditionalDirectionalLightEnabled =
+            AdditionalDirectionalLightExperiment.enabled ? 1 : 0
+        this.uRdAdditionalDirectionalLightDirectionWorld =
+            AdditionalDirectionalLightExperiment.directionWorld.clone()
+        this.uRdAdditionalDirectionalLightColor =
+            AdditionalDirectionalLightExperiment.radiance.clone()
+        this.uRdAdditionalLightInfluenceByLuminance =
+            AdditionalDirectionalLightExperiment.influenceByLuminance
     }
 }
 
@@ -188,6 +248,10 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             uniform float uRdShadowOffset;
             uniform float uRdShadowFeather;
             uniform float uRdShadowOffsetMapOffset;
+            uniform float uRdAdditionalDirectionalLightEnabled;
+            uniform vec3 uRdAdditionalDirectionalLightDirectionWorld;
+            uniform vec3 uRdAdditionalDirectionalLightColor;
+            uniform float uRdAdditionalLightInfluenceByLuminance;
             uniform float uMaterialAnisotropy;
             uniform float uMaterialAnisoMaskByMetallic;
             uniform vec3 uMaterialAnisoColor;
@@ -423,6 +487,47 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
         options.onBeforeCompile?.call(this, shader);
         injectToonStylization(shader, uniforms);
+        shader.fragmentShader = shader.fragmentShader.replace(
+            '#include <opaque_fragment>',
+            /* glsl */ `
+            // Generic directional slice of the official per-pixel additional
+            // light loop. Directional attenuation and shadow visibility are 1.
+            // FaceGradient uses a per-light SDF selector and is implemented in
+            // face.ts rather than approximated here with a mesh-normal test.
+            vec3 rdAdditionalLightRawDirectionVS =
+                mat3(viewMatrix) * uRdAdditionalDirectionalLightDirectionWorld
+            ;
+            float rdAdditionalLightDirectionLengthSquared = dot(
+                rdAdditionalLightRawDirectionVS,
+                rdAdditionalLightRawDirectionVS
+            );
+            vec3 rdAdditionalLightDirectionVS =
+                rdAdditionalLightRawDirectionVS * inversesqrt(max(
+                    rdAdditionalLightDirectionLengthSquared,
+                    0.0000001
+                ));
+            float rdAdditionalLightSelector =
+                step(0.0000001, rdAdditionalLightDirectionLengthSquared) *
+                step(0.0, dot(normal, rdAdditionalLightDirectionVS));
+            float rdAdditionalLightBaseLuminance = dot(
+                rdToonBaseColor,
+                vec3(0.298911989, 0.586610973, 0.114478)
+            );
+            float rdAdditionalLightLuminanceFactor = mix(
+                1.0,
+                rdAdditionalLightBaseLuminance,
+                saturate(uRdAdditionalLightInfluenceByLuminance)
+            );
+            outgoingLight +=
+                uRdAdditionalDirectionalLightColor *
+                rdAdditionalLightSelector *
+                0.200000003 *
+                rdAdditionalLightLuminanceFactor *
+                saturate(uRdAdditionalDirectionalLightEnabled);
+
+            #include <opaque_fragment>
+            `,
+        )
         setOfficialMaterialProfileUniforms(
             shader,
             runtimeUserData.officialMaterialProfile ??
