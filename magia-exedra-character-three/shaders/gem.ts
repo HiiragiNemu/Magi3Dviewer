@@ -4,6 +4,7 @@ import { createDefaultMaterialProfile } from '../materialProfile';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 import DefaultGemMatCap from '../models/chara_109801_battle_unit/matcap02_invert.png';
 import OfficialSoftMetallicMatCap from '../models/common/matcap_SoftMetallic.png';
+import { setDepthRimMaterialProfileUniforms } from './depthRim';
 
 export interface OfficialGemResources {
     matCap?: THREE.Texture;
@@ -98,6 +99,7 @@ export function setOfficialMaterialProfileUniforms(
     set('uGemFresnelThreshold', gem.fresnelThreshold);
     set('uGemFresnelFeather', gem.fresnelFeather);
     set('uGemFresnelMaskByMetallic', gem.fresnelMaskByMetallic ? 1 : 0);
+    setDepthRimMaterialProfileUniforms(shader, value);
 }
 
 /**
@@ -212,8 +214,46 @@ export function injectOfficialGemShader(
                 saturate(uGemFresnelMaskByMetallic)
             );
 
-            vec3 rdGemBase = max(outgoingLight, diffuseColor.rgb * 0.68);
-            vec3 rdGemTint = max(diffuseColor.rgb, vec3(0.025));
+            // Official transparent GemDepthDiff is a selector before MatCap,
+            // not a final colour tint. It is additionally bounded by the
+            // global CameraDepthTexture experiment so disabled output is
+            // byte-for-byte the pre-prototype path.
+            // mt_chara_100101_weapon_a_sj has Transparency=0, therefore its
+            // official GemDepthDiff contribution is exactly zero.
+            float rdGemDepthBranchEnabled =
+                uGemUseDepthDiff * uGemTransparency *
+                uRdDepthRimExperimentEnabled;
+            float rdGemDepthSelector = 0.0;
+            if (rdGemDepthBranchEnabled > 0.5) {
+                float rdGemCenterZ =
+                    rdDepthRimLinearEye(gl_FragCoord.z);
+                float rdGemCenterTextureZ = rdDepthRimFetchEye(
+                    ivec2(trunc(gl_FragCoord.xy))
+                );
+                float rdGemDepthDifference = clamp(
+                    5.0 * (
+                        rdGemCenterTextureZ -
+                        (rdGemCenterZ - 0.01)
+                    ),
+                    0.0,
+                    1.0
+                );
+                rdGemDepthSelector =
+                    rdGemDepthDifference >=
+                        1.0 - uGemDepthDiffThreshold
+                    ? 0.0
+                    : 1.0;
+            }
+
+            vec3 rdGemDepthSelectedBase = mix(
+                diffuseColor.rgb,
+                rdToonShadowColor,
+                rdGemDepthSelector
+            );
+            vec3 rdGemBase = max(
+                outgoingLight,
+                rdGemDepthSelectedBase * 0.68
+            );
             float rdGemInternal =
                 rdGemHighlightOne * 0.58 +
                 rdGemHighlightTwo * 0.42 -
@@ -243,21 +283,6 @@ export function injectOfficialGemShader(
                     (rdGemMatCapBlend - rdGemBase);
             }
 
-            // Exact current-JP compiled predicate:
-            //   (_UseGemDepthDiff != 0) && (_Transparency != 0)
-            // mt_chara_100101_weapon_a_sj has _UseGemDepthDiff=1 but
-            // _Transparency=0, so its official GemDepthDiff contribution is
-            // exactly zero. Do not substitute the previous NdotV proxy.
-            // The active transparent CameraDepthTexture formula is recovered,
-            // but remains deferred until a proven material actually enters it
-            // and the scene camera-depth input is wired without approximation.
-            float rdGemDepthBranchEnabled =
-                uGemUseDepthDiff * uGemTransparency;
-            float rdGemDepthSelector = 0.0;
-            if (rdGemDepthBranchEnabled > 0.5) {
-                rdGemDepthSelector = 0.0; // deferred exact CameraDepthTexture branch
-            }
-            rdGemBase += rdGemTint * rdGemDepthSelector * 0.32;
             rdGemBase += vec3(1.0) *
                 rdGemFresnelBand *
                 max(uGemRimFresnel, 0.0) * 0.72;

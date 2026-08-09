@@ -3,6 +3,7 @@ import { MaterialUserData, type MaterialCreationOptions, type MaterialCreationRe
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 import { injectToonStylization, ToonStylizationUniforms } from './stylization';
 import { setOfficialMaterialProfileUniforms } from './gem';
+import { injectReDriveDepthRimShader } from './depthRim';
 
 export const ShadowTexOptions = {
     preMix: 0.82,
@@ -487,6 +488,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
         options.onBeforeCompile?.call(this, shader);
         injectToonStylization(shader, uniforms);
+        injectReDriveDepthRimShader(shader);
         shader.fragmentShader = shader.fragmentShader.replace(
             '#include <opaque_fragment>',
             /* glsl */ `

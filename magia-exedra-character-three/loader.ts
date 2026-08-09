@@ -13,6 +13,7 @@ import {
     setAngelRingCameraUniforms,
     setOfficialAngelRingMaterialProfileUniforms,
     setOfficialMaterialProfileUniforms,
+    setDepthRimVertexColorAvailability,
     MaterialUserData,
 } from './shaders'
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes, fetchAndTryDecompressGzip } from './utils';
@@ -143,6 +144,10 @@ function bindOfficialMaterialGroups(
         setOfficialMaterialProfileUniforms(shader, profile)
         setOfficialAngelRingMaterialProfileUniforms(shader, profile)
         setAngelRingCameraUniforms(shader, renderer, camera)
+        setDepthRimVertexColorAvailability(
+            shader,
+            Boolean(geometry.getAttribute('color')),
+        )
     }
 }
 

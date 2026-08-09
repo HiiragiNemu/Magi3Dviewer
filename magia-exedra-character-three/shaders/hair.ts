@@ -551,7 +551,10 @@ export async function createHairMaterial(
                 // Until the official CameraDepthTexture offset pass is ported,
                 // preserve its observed soft, asymmetric and scene-tinted
                 // response rather than substituting a hard global Fresnel.
-                if (uHairDepthRimEnabled > 0.5) {
+                if (
+                    uHairDepthRimEnabled > 0.5 &&
+                    uRdDepthRimExperimentEnabled < 0.5
+                ) {
                     vec3 rdHairViewDirection =
                         normalize(vViewPosition);
                     float rdHairNdotV = saturate(

@@ -12,6 +12,7 @@ export * from './shadow'
 export * from './stylization'
 export * from './gem'
 export * from './gemExtension'
+export * from './depthRim'
 
 export interface MaterialCreationOptions {
     colorMap: string;
