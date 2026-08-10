@@ -221,8 +221,9 @@ export function injectOfficialGemShader(
             // mt_chara_100101_weapon_a_sj has Transparency=0, therefore its
             // official GemDepthDiff contribution is exactly zero.
             float rdGemDepthBranchEnabled =
-                uGemUseDepthDiff * uGemTransparency *
-                uRdDepthRimExperimentEnabled;
+                step(0.0000001, abs(uGemUseDepthDiff)) *
+                step(0.0000001, abs(uGemTransparency)) *
+                step(0.0000001, abs(uRdDepthRimExperimentEnabled));
             float rdGemDepthSelector = 0.0;
             if (rdGemDepthBranchEnabled > 0.5) {
                 float rdGemCenterZ =

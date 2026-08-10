@@ -553,7 +553,10 @@ export async function createHairMaterial(
                 // response rather than substituting a hard global Fresnel.
                 if (
                     uHairDepthRimEnabled > 0.5 &&
-                    uRdDepthRimExperimentEnabled < 0.5
+                    (
+                        uRdDepthRimExperimentEnabled < 0.5 ||
+                        uRdDepthRimVertexColorGAvailable < 0.5
+                    )
                 ) {
                     vec3 rdHairViewDirection =
                         normalize(vViewPosition);

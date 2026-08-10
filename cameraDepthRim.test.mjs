@@ -2,9 +2,10 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
 
-const [depthRim, cameraDepth, hair, gem, scene] = await Promise.all([
+const [depthRim, cameraDepth, shadow, hair, gem, scene] = await Promise.all([
     readFile('magia-exedra-character-three/shaders/depthRim.ts', 'utf8'),
     readFile('magia-exedra-character-three/scene/cameraDepth.ts', 'utf8'),
+    readFile('magia-exedra-character-three/shaders/shadow.ts', 'utf8'),
     readFile('magia-exedra-character-three/shaders/hair.ts', 'utf8'),
     readFile('magia-exedra-character-three/shaders/gem.ts', 'utf8'),
     readFile('magia-exedra-character-three/scene/index.ts', 'utf8'),
@@ -57,6 +58,13 @@ test('prototype is default-off and owns an independent camera depth prepass', ()
     assert.doesNotMatch(cameraDepth, /backgroundScene\.traverse/)
 })
 
+test('alpha-cutout depth material owns its first-draw UV macro contract', () => {
+    const mapAssignment = shadow.indexOf('material.map = alphaTex')
+    const compileHook = shadow.indexOf('material.onBeforeCompile = shader =>')
+    assert.ok(mapAssignment > 0 && mapAssignment < compileHook)
+    assert.match(shadow, /texture2D\(tAlpha, vMapUv\)\.a < uAlphaTest/)
+})
+
 test('static GLSL keeps recovered coordinates, constants and debug channels', () => {
     for (const token of [
         'vRdDepthRimVertexColorG * uRdDepthTexWidth',
@@ -95,7 +103,10 @@ test('Body and Gem share depth signal while Hair alone applies 1-NdotV gate', ()
     assert.equal(hairClass.rim, 0)
     assert.match(depthRim, /1\.0 - uRdDepthRimIsHair \* rdDepthNdotV/)
     assert.match(depthRim, /profile\?\.gem\.enabled \? 1 : 0/)
-    assert.match(hair, /uRdDepthRimExperimentEnabled < 0\.5/)
+    assert.match(
+        hair,
+        /uRdDepthRimExperimentEnabled < 0\.5 \|\|\s*uRdDepthRimVertexColorGAvailable < 0\.5/,
+    )
 })
 
 test('GemDepthDiff requires both official predicates and runs before MatCap', () => {
@@ -116,6 +127,8 @@ test('GemDepthDiff requires both official predicates and runs before MatCap', ()
     assert.ok(selectorIndex > 0 && selectorIndex < matCapIndex)
     assert.match(gem, /5\.0 \* \(/)
     assert.match(gem, /1\.0 - uGemDepthDiffThreshold/)
+    assert.match(gem, /step\(0\.0000001, abs\(uGemUseDepthDiff\)\)/)
+    assert.match(gem, /step\(0\.0000001, abs\(uGemTransparency\)\)/)
+    assert.doesNotMatch(gem, /uGemUseDepthDiff \* uGemTransparency/)
     assert.doesNotMatch(gem, /rdGemTint \* rdGemDepthSelector/)
 })
-

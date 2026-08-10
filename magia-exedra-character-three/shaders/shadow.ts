@@ -35,6 +35,13 @@ export function createDistanceMaterial(alphaTex: THREE.Texture): THREE.MeshDista
 function createDepthOrDistanceMaterial<T extends typeof THREE.MeshDepthMaterial | typeof THREE.MeshDistanceMaterial>(materialType: T, alphaTex: THREE.Texture): InstanceType<T> {
     const material = new materialType()
 
+    // The injected alpha discard samples vMapUv. Establish the USE_MAP/UV
+    // program contract on this custom material itself instead of relying on
+    // WebGLShadowMap to copy the forward material's map during a prior shadow
+    // pass. CameraDepthTexture can therefore compile correctly on its first
+    // independent draw as well.
+    material.map = alphaTex
+
     const userData = new MaterialUserData()
     material.userData = userData
 
@@ -44,7 +51,7 @@ function createDepthOrDistanceMaterial<T extends typeof THREE.MeshDepthMaterial 
         const uniforms = new ShadowMaterialUniforms(shader)
         uniforms.loadGlobalOptions()
 
-        shader.fragmentShader = shader.fragmentShader = /*glsl*/`
+        shader.fragmentShader = /*glsl*/`
             uniform sampler2D tAlpha;
             uniform float uAlphaTest;
 
