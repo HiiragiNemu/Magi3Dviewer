@@ -10,6 +10,7 @@ import {
     setupStageFidelityPanel,
     updateStageFidelityPanel,
     type StageFidelityComponentEvidence,
+    type StageFidelityLayerCounts,
 } from './stageFidelity'
 import {
     applyStageMaterialBindings,
@@ -91,6 +92,31 @@ export interface StageLightProfile {
     }
 }
 
+export interface StageVolumeColorAdjustmentsProfile {
+    active?: boolean
+    /** Unity postExposure in EV stops. */
+    postExposure?: number
+    /** Unity percentage value, normally [-100, 100]. */
+    contrast?: number
+    colorFilter?: string | Rgba
+    /** Unity percentage value, normally [-100, 100]. */
+    saturation?: number
+}
+
+export interface StageVolumeVignetteProfile {
+    active?: boolean
+    color?: string | Rgba
+    center?: [number, number]
+    intensity?: number
+    smoothness?: number
+    rounded?: boolean
+}
+
+export interface StageVolumePostProcessingProfile {
+    colorAdjustments?: StageVolumeColorAdjustmentsProfile
+    vignette?: StageVolumeVignetteProfile
+}
+
 export interface StageRenderProfile {
     /** Source ReDriveVolume or export profile ID. */
     id?: string
@@ -108,7 +134,7 @@ export interface StageRenderProfile {
         intensity?: number
     }
     fog?: {
-        color: string
+        color: string | Rgba
         near: number
         far: number
         /**
@@ -143,6 +169,8 @@ export interface StageRenderProfile {
         radius: number
         threshold: number
     }
+    /** Serialized Unity Volume overrides applied to the full composite. */
+    postProcessing?: StageVolumePostProcessingProfile
     camera?: {
         position: [number, number, number]
         target: [number, number, number]
@@ -178,7 +206,14 @@ export interface StageDefinition {
     renderProfile?: StageRenderProfile
     runtime?: StageRuntimeProfile
     fidelity?: {
+        exact?: boolean
         components?: StageFidelityComponentEvidence
+        layers?: {
+            source?: StageFidelityLayerCounts
+            carrier?: StageFidelityLayerCounts
+            runtime?: StageFidelityLayerCounts
+        }
+        omissions?: string[]
         sourceRevision?: string
         generated?: boolean
     }
@@ -1037,6 +1072,12 @@ function applyLightColor(light: THREE.Light, value: string | Rgba) {
     }
 }
 
+function createStageColor(value: string | Rgba) {
+    return Array.isArray(value)
+        ? new THREE.Color().setRGB(value[0], value[1], value[2])
+        : new THREE.Color(value)
+}
+
 const keyLightAnchorPosition = new THREE.Vector3()
 const keyLightAnchorDirection = new THREE.Vector3()
 
@@ -1285,11 +1326,12 @@ function applyStageRenderProfile(
         scene.scene.fog = null
         scene.backgroundScene.fog = null
     } else if (profile.fog) {
+        const fogColor = createStageColor(profile.fog.color)
         scene.backgroundScene.fog =
-            new THREE.Fog(profile.fog.color, profile.fog.near, profile.fog.far)
+            new THREE.Fog(fogColor, profile.fog.near, profile.fog.far)
         scene.scene.fog = profile.fog.affectsCharacters === false
             ? null
-            : new THREE.Fog(profile.fog.color, profile.fog.near, profile.fog.far)
+            : new THREE.Fog(fogColor, profile.fog.near, profile.fog.far)
     }
 
     if (profile.ambientLight) {
@@ -1368,6 +1410,7 @@ function applyStageRenderProfile(
             scene.effects.bloomPass.threshold = profile.bloom.threshold
         }
     }
+    applyStageVolumePostProcessing(profile.postProcessing)
     if (profile.camera) {
         scene.camera.position.set(...profile.camera.position)
         scene.controls.target.set(...profile.camera.target)
@@ -1378,6 +1421,80 @@ function applyStageRenderProfile(
         scene.controls.update()
     }
     applyReDriveVolumeRuntime(profile.reDriveVolume)
+}
+
+function setVolumePassColor(
+    target: THREE.Color,
+    value: string | Rgba | undefined,
+    fallback: string,
+) {
+    if (Array.isArray(value)) {
+        target.setRGB(value[0], value[1], value[2])
+    } else {
+        target.set(value ?? fallback)
+    }
+}
+
+function applyStageVolumePostProcessing(
+    profile: StageVolumePostProcessingProfile | undefined,
+) {
+    const pass = scene.effects.volumePostProcessPass
+    const colorAdjustments = profile?.colorAdjustments
+    const vignette = profile?.vignette
+    const colorAdjustEnabled = Boolean(
+        colorAdjustments && colorAdjustments.active !== false,
+    )
+    const vignetteEnabled = Boolean(
+        vignette
+        && vignette.active !== false
+        && (vignette.intensity ?? 0) > 0,
+    )
+
+    pass.enabled = colorAdjustEnabled || vignetteEnabled
+    pass.uniforms.uColorAdjustEnabled.value = colorAdjustEnabled ? 1 : 0
+    pass.uniforms.uPostExposure.value = colorAdjustEnabled
+        ? colorAdjustments?.postExposure ?? 0
+        : 0
+    pass.uniforms.uContrast.value = colorAdjustEnabled
+        ? colorAdjustments?.contrast ?? 0
+        : 0
+    pass.uniforms.uSaturation.value = colorAdjustEnabled
+        ? colorAdjustments?.saturation ?? 0
+        : 0
+    setVolumePassColor(
+        pass.uniforms.uColorFilter.value,
+        colorAdjustEnabled ? colorAdjustments?.colorFilter : undefined,
+        '#ffffff',
+    )
+
+    pass.uniforms.uVignetteEnabled.value = vignetteEnabled ? 1 : 0
+    setVolumePassColor(
+        pass.uniforms.uVignetteColor.value,
+        vignetteEnabled ? vignette?.color : undefined,
+        '#000000',
+    )
+    pass.uniforms.uVignetteCenter.value.set(
+        ...(vignetteEnabled && vignette?.center
+            ? vignette.center
+            : [0.5, 0.5] as [number, number]),
+    )
+    pass.uniforms.uVignetteIntensity.value = vignetteEnabled
+        ? THREE.MathUtils.clamp(vignette?.intensity ?? 0, 0, 1)
+        : 0
+    pass.uniforms.uVignetteSmoothness.value = vignetteEnabled
+        ? THREE.MathUtils.clamp(vignette?.smoothness ?? 0.2, 0, 1)
+        : 0.2
+    pass.uniforms.uVignetteRounded.value =
+        vignetteEnabled && vignette?.rounded ? 1 : 0
+
+    scene.scene.userData.stageVolumePostProcessing = pass.enabled
+        ? {
+            colorAdjustments: colorAdjustEnabled
+                ? { ...colorAdjustments }
+                : null,
+            vignette: vignetteEnabled ? { ...vignette } : null,
+        }
+        : null
 }
 
 function restoreSceneProfile() {
@@ -1443,6 +1560,7 @@ function restoreSceneProfile() {
     scene.effects.bloomPass.strength = initialSceneState.bloomStrength
     scene.effects.bloomPass.radius = initialSceneState.bloomRadius
     scene.effects.bloomPass.threshold = initialSceneState.bloomThreshold
+    applyStageVolumePostProcessing(undefined)
     scene.camera.position.copy(initialSceneState.cameraPosition)
     scene.controls.target.copy(initialSceneState.cameraTarget)
     scene.camera.fov = initialSceneState.cameraFov

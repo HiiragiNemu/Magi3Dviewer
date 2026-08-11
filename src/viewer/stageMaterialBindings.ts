@@ -28,12 +28,27 @@ export interface StageMultiUvScrollProfile {
     dropFrame?: boolean
 }
 
+export interface StageFlowMapProfile {
+    /** Serialized Unity `_FlowMap`; sampled as signed RG direction data. */
+    textureUrl: string
+    /** Serialized `_FlowSpeed`. */
+    speed: number
+    /** Serialized `_FlowMapPow`. */
+    power?: number
+    /** `_DropFrame_FlowMap`; exact time quantization remains source evidence. */
+    dropFrame?: boolean
+}
+
 export interface StageMaterialBinding {
     /** Exact FBX material name. */
     materialName?: string
     /** Optional regular expression for exporter-added name suffixes. */
     materialPattern?: string
     shading?: 'lit' | 'unlit'
+    /** Source blend state mapped to the closest Three.js blend equation. */
+    blending?: 'normal' | 'additive' | 'multiply'
+    /** Serialized Unity _BaseColor/_Color multiplier. */
+    color?: string | [number, number, number, number]
     baseMapUrl?: string
     normalMapUrl?: string
     smoothnessMapUrl?: string
@@ -57,6 +72,7 @@ export interface StageMaterialBinding {
     side?: 'front' | 'back' | 'double'
     atlas?: StageAtlasProfile
     multiUvScroll?: StageMultiUvScrollProfile
+    flowMap?: StageFlowMapProfile
 }
 
 export interface StageMaterialBindingResult {
@@ -71,6 +87,12 @@ const sideByName = {
     front: THREE.FrontSide,
     back: THREE.BackSide,
     double: THREE.DoubleSide,
+} as const
+
+const blendingByName = {
+    normal: THREE.NormalBlending,
+    additive: THREE.AdditiveBlending,
+    multiply: THREE.MultiplyBlending,
 } as const
 
 /**
@@ -128,6 +150,9 @@ export async function applyStageMaterialBindings(
         binding.matCapMapUrl ? loadTexture(binding.matCapMapUrl, 'color') : undefined,
         binding.multiUvScroll?.textureUrl
             ? loadTexture(binding.multiUvScroll.textureUrl, 'color')
+            : undefined,
+        binding.flowMap?.textureUrl
+            ? loadTexture(binding.flowMap.textureUrl, 'data')
             : undefined,
     ].filter((promise): promise is Promise<THREE.Texture> => Boolean(promise)))
 
@@ -189,6 +214,10 @@ export async function applyStageMaterialBindings(
                         multiUvScrollMap: await resolveTexture(
                             binding.multiUvScroll?.textureUrl,
                             'color',
+                        ),
+                        flowMap: await resolveTexture(
+                            binding.flowMap?.textureUrl,
+                            'data',
                         ),
                         ownedTextures,
                     })
@@ -328,6 +357,7 @@ interface BoundTextureSet {
     blendMap?: THREE.Texture
     matCapMap?: THREE.Texture
     multiUvScrollMap?: THREE.Texture
+    flowMap?: THREE.Texture
     ownedTextures: Set<THREE.Texture>
 }
 
@@ -338,8 +368,17 @@ async function createBoundMaterial(
 ): Promise<THREE.Material> {
     const side = binding.side ? sideByName[binding.side] : THREE.FrontSide
     const map = createAtlasTexture(textures.baseMap, binding.atlas, textures.ownedTextures)
+    const color = Array.isArray(binding.color)
+        ? new THREE.Color(binding.color[0], binding.color[1], binding.color[2])
+        : new THREE.Color(binding.color ?? '#ffffff')
+    const opacity = Array.isArray(binding.color) ? binding.color[3] : 1
     const common = {
         map,
+        color,
+        opacity,
+        blending: binding.blending
+            ? blendingByName[binding.blending]
+            : THREE.NormalBlending,
         alphaTest: binding.alphaTest ?? 0,
         transparent: binding.transparent ?? false,
         depthWrite: binding.depthWrite ?? true,
@@ -354,6 +393,8 @@ async function createBoundMaterial(
             material,
             binding.multiUvScroll,
             textures.multiUvScrollMap,
+            binding.flowMap,
+            textures.flowMap,
             mesh,
         )
         return material
@@ -383,6 +424,8 @@ async function createBoundMaterial(
         material,
         binding.multiUvScroll,
         textures.multiUvScrollMap,
+        binding.flowMap,
+        textures.flowMap,
         mesh,
     )
     return material
@@ -392,6 +435,8 @@ function installMultiUvScroll(
     material: THREE.Material,
     profile: StageMultiUvScrollProfile | undefined,
     scrollTexture: THREE.Texture | undefined,
+    flowProfile: StageFlowMapProfile | undefined,
+    flowTexture: THREE.Texture | undefined,
     mesh: THREE.Object3D,
 ) {
     if (!profile || !scrollTexture) return
@@ -399,6 +444,11 @@ function installMultiUvScroll(
     scrollTexture.wrapS = THREE.RepeatWrapping
     scrollTexture.wrapT = THREE.RepeatWrapping
     scrollTexture.needsUpdate = true
+    if (flowTexture) {
+        flowTexture.wrapS = THREE.RepeatWrapping
+        flowTexture.wrapT = THREE.RepeatWrapping
+        flowTexture.needsUpdate = true
+    }
 
     const firstColor = profile.first.color ?? [1, 1, 1, 1]
     const secondColor = profile.second.color ?? [1, 1, 1, 1]
@@ -413,8 +463,15 @@ function installMultiUvScroll(
             ? 'continuous-until-dropped-frame-time-is-recovered'
             : 'continuous',
     }
+    material.userData.stageFlowMap = flowProfile && flowTexture
+        ? {
+            ...flowProfile,
+            approximation: 'two-phase-directional-advection',
+        }
+        : null
     material.customProgramCacheKey = () =>
         `${baseCacheKey}:stage-multi-uv:${JSON.stringify(profile)}`
+        + `:stage-flow:${JSON.stringify(flowProfile ?? null)}`
 
     material.onBeforeCompile = function (shader, renderer) {
         shader.uniforms.uStageMultiUvTexture = { value: scrollTexture }
@@ -452,6 +509,12 @@ function installMultiUvScroll(
         shader.uniforms.uStageMultiUvAdditiveToMultiply = {
             value: profile.additiveToMultiply,
         }
+        shader.uniforms.uStageFlowMap = { value: flowTexture ?? scrollTexture }
+        shader.uniforms.uStageFlowEnabled = {
+            value: flowProfile && flowTexture ? 1 : 0,
+        }
+        shader.uniforms.uStageFlowSpeed = { value: flowProfile?.speed ?? 0 }
+        shader.uniforms.uStageFlowPower = { value: flowProfile?.power ?? 1 }
         timeUniform = shader.uniforms.uStageMultiUvTime as THREE.IUniform<number>
 
         shader.fragmentShader = shader.fragmentShader
@@ -470,26 +533,54 @@ uniform vec2 uStageMultiUvSecondOffset;
 uniform vec2 uStageMultiUvSecondSpeed;
 uniform vec4 uStageMultiUvSecondColor;
 uniform float uStageMultiUvSecondOpacity;
-uniform float uStageMultiUvAdditiveToMultiply;`,
+uniform float uStageMultiUvAdditiveToMultiply;
+uniform sampler2D uStageFlowMap;
+uniform float uStageFlowEnabled;
+uniform float uStageFlowSpeed;
+uniform float uStageFlowPower;`,
             )
             .replace(
                 '#include <map_fragment>',
                 `#include <map_fragment>
 #ifdef USE_MAP
-    vec2 rdStageUv1 =
+    vec2 rdStageFlowDirection =
+        (texture2D(uStageFlowMap, vMapUv).rg * 2.0 - 1.0) *
+        uStageFlowPower * uStageFlowEnabled;
+    float rdStageFlowPhase0 = fract(uStageMultiUvTime * uStageFlowSpeed);
+    float rdStageFlowPhase1 = fract(
+        uStageMultiUvTime * uStageFlowSpeed + 0.5
+    );
+    float rdStageFlowBlend = abs(rdStageFlowPhase0 * 2.0 - 1.0);
+    vec2 rdStageUv1Base =
         vMapUv * uStageMultiUvFirstTiling +
         uStageMultiUvFirstOffset +
         uStageMultiUvFirstSpeed * uStageMultiUvTime;
-    vec2 rdStageUv2 =
+    vec2 rdStageUv2Base =
         vMapUv * uStageMultiUvSecondTiling +
         uStageMultiUvSecondOffset +
         uStageMultiUvSecondSpeed * uStageMultiUvTime;
-    vec4 rdStageScroll1 =
-        texture2D(uStageMultiUvTexture, rdStageUv1) *
-        uStageMultiUvFirstColor;
-    vec4 rdStageScroll2 =
-        texture2D(uStageMultiUvTexture, rdStageUv2) *
-        uStageMultiUvSecondColor;
+    vec4 rdStageScroll1 = mix(
+        texture2D(
+            uStageMultiUvTexture,
+            rdStageUv1Base - rdStageFlowDirection * rdStageFlowPhase0
+        ),
+        texture2D(
+            uStageMultiUvTexture,
+            rdStageUv1Base - rdStageFlowDirection * rdStageFlowPhase1
+        ),
+        rdStageFlowBlend * uStageFlowEnabled
+    ) * uStageMultiUvFirstColor;
+    vec4 rdStageScroll2 = mix(
+        texture2D(
+            uStageMultiUvTexture,
+            rdStageUv2Base - rdStageFlowDirection * rdStageFlowPhase0
+        ),
+        texture2D(
+            uStageMultiUvTexture,
+            rdStageUv2Base - rdStageFlowDirection * rdStageFlowPhase1
+        ),
+        rdStageFlowBlend * uStageFlowEnabled
+    ) * uStageMultiUvSecondColor;
     float rdStageAlpha1 = saturate(
         rdStageScroll1.a * uStageMultiUvFirstOpacity
     );
@@ -497,10 +588,10 @@ uniform float uStageMultiUvAdditiveToMultiply;`,
         rdStageScroll2.a * uStageMultiUvSecondOpacity
     );
 
-    // The two texture inputs, ST, colors, opacities and speeds are exact
-    // serialized JP Material values. The final additive/multiply interpolation
-    // remains an explicit Web approximation until the compiled background
-    // shader subprogram is decoded.
+    // Texture inputs, ST, colors, opacities, speeds and flow parameters are
+    // exact serialized JP Material values. The two-phase flow advection and
+    // final additive/multiply interpolation remain explicit Web
+    // approximations until the compiled background subprogram is decoded.
     vec3 rdStageAdditive = diffuseColor.rgb +
         rdStageScroll1.rgb * rdStageAlpha1 +
         rdStageScroll2.rgb * rdStageAlpha2;

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "stageId": "battle-603-00-00-001",
+  "sourceBundle": "battle/stage/bg_3d_603_00_00_001",
+  "sourceComponent": {
+    "className": "ReDrive.Creative.PrefabLightmapData",
+    "pathId": "9029512024812301684",
+    "rawDump": "semantic-dumps/MonoBehaviour/PrefabLightmapData--9029512024812301684.txt",
+    "rawDumpSha256": "ff06b464c4c3947af3edbbf143da88be9830a502dfef550590d6047e26a28370"
+  },
+  "encoding": "unity-rgbm-linear",
+  "renderers": [
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/ground_grp/ground_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.17225902,
+        0.17225902,
+        0.78101784,
+        -0.00023217386
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/ground_grp/ground_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07859389,
+        0.07859389,
+        0.7810104,
+        0.18690936
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/sky_grp/skydome_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.7692182,
+        0.7692182,
+        -0.0002338105,
+        -0.0002338105
+      ]
+    }
+  ]
+}

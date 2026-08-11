@@ -1,0 +1,645 @@
+{
+  "id": "battle-603-00-00-001",
+  "name": "[Official dynamic partial/Battle] 603-00-00-001",
+  "category": "battle",
+  "official": true,
+  "assetBundleName": "battle/stage/bg_3d_603_00_00_001",
+  "bundleProvenance": {
+    "rootBundle": "battle/stage/bg_3d_603_00_00_001",
+    "manifest": {
+      "region": "jp",
+      "kind": "text-manifest",
+      "path": "artifacts/research/20260810-scene603-export/closure-manifest.json",
+      "sha256": "0b5a25a9f0a06ab0e5077da15d6e0750ce6be00325544fc025f031f29a38dbd9"
+    },
+    "directDependencies": [
+      "texture/bg/e45d974338d51d64e913ef623ef265e9",
+      "texture/bg/b7f7156553ae84f0c9b83f398ba0429b",
+      "texture/bg/16592b18c69c14784a3b8b3c6ae386e7",
+      "texture/bg/8e0cd773931814640bbe7f6f1b7d7a2d",
+      "shader/common/texture/cloud_noise",
+      "texture/bg/db08fc38cabd5bd4896360d8b97b8ad4",
+      "shader/bg_uber",
+      "texture/bg/6856d4c1d5a6a37468973ba81bdf5bdc",
+      "texture/bg/926a436cdbbd468499627686e9db8b6a",
+      "shader/common/texture/simple_noise",
+      "texture/bg/589a3fc14c5a4fb46b538bc7132d1491",
+      "texture/bg/0a7b140d2f029f942a2565de3ad2161c"
+    ],
+    "dependencyClosure": [
+      "texture/bg/e45d974338d51d64e913ef623ef265e9",
+      "texture/bg/b7f7156553ae84f0c9b83f398ba0429b",
+      "texture/bg/16592b18c69c14784a3b8b3c6ae386e7",
+      "texture/bg/8e0cd773931814640bbe7f6f1b7d7a2d",
+      "shader/common/texture/cloud_noise",
+      "texture/bg/db08fc38cabd5bd4896360d8b97b8ad4",
+      "shader/bg_uber",
+      "texture/bg/6856d4c1d5a6a37468973ba81bdf5bdc",
+      "texture/bg/926a436cdbbd468499627686e9db8b6a",
+      "shader/common/texture/simple_noise",
+      "texture/bg/589a3fc14c5a4fb46b538bc7132d1491",
+      "texture/bg/0a7b140d2f029f942a2565de3ad2161c"
+    ],
+    "closureSha256": "0b5a25a9f0a06ab0e5077da15d6e0750ce6be00325544fc025f031f29a38dbd9"
+  },
+  "type": "fbx",
+  "url": "./stages/official/battle-603-00-00-001/bg_3d_603_00_00_001-animated.fbxdata",
+  "scale": 1,
+  "position": [
+    0,
+    0,
+    0
+  ],
+  "rotation": [
+    0,
+    0,
+    0
+  ],
+  "spawnPoints": [
+    {
+      "id": "actor-0",
+      "name": "Actor 0",
+      "role": "actor",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "materialBindings": [
+    {
+      "materialName": "bg3d603_00_grd",
+      "materialPattern": "^bg3d603_00_grd(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "blending": "additive",
+      "color": [
+        0.75956744,
+        0.91659343,
+        0.95283014,
+        1
+      ],
+      "baseMapUrl": "./stages/official/battle-603-00-00-001/bg3d603_00_grd_col.png",
+      "transparent": true,
+      "depthWrite": false,
+      "unlitness": 1,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front"
+    },
+    {
+      "materialName": "bg3d603_00_ground",
+      "materialPattern": "^bg3d603_00_ground(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseMapUrl": "./stages/official/battle-603-00-00-001/bg3d603_00_ground_col.png",
+      "blendMapUrl": "./stages/official/battle-603-00-00-001/bg3d603_00_ground_dot.png",
+      "vertexColorBlend": true,
+      "smoothness": 0,
+      "unlitness": 0.5,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front"
+    },
+    {
+      "materialName": "bg3d603_00_foam",
+      "materialPattern": "^bg3d603_00_foam(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "baseMapUrl": "./stages/official/battle-603-00-00-001/bg3d603_00_foam_col.png",
+      "unlitness": 1,
+      "castShadow": true,
+      "receiveShadow": true,
+      "side": "front",
+      "multiUvScroll": {
+        "textureUrl": "./stages/official/battle-603-00-00-001/bg3d603_00_foam_col.png",
+        "first": {
+          "tiling": [
+            0.5,
+            0.5
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "speed": [
+            0.02,
+            -0.02
+          ],
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "opacity": 1
+        },
+        "second": {
+          "tiling": [
+            1.5,
+            1.5
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "speed": [
+            -0.02,
+            -0.01
+          ],
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "opacity": 1
+        },
+        "additiveToMultiply": 0.25,
+        "dropFrame": false
+      },
+      "flowMap": {
+        "textureUrl": "./stages/official/battle-603-00-00-001/flowmap.png",
+        "speed": 0.2,
+        "power": 1,
+        "dropFrame": false
+      }
+    },
+    {
+      "materialName": "bg3d603_00_groundBlend",
+      "materialPattern": "^bg3d603_00_groundBlend(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseMapUrl": "./stages/official/battle-603-00-00-001/bg3d603_00_wall_col.png",
+      "smoothness": 0,
+      "unlitness": 0.5,
+      "alphaTest": 0,
+      "transparent": true,
+      "depthWrite": false,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front"
+    },
+    {
+      "materialName": "bg3d603_00_wall_In",
+      "materialPattern": "^bg3d603_00_wall_In(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "baseMapUrl": "./stages/official/battle-603-00-00-001/bg3d603_00_wall_col.png",
+      "smoothness": 0.5,
+      "alphaTest": 0.5,
+      "transparent": false,
+      "depthWrite": true,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front"
+    },
+    {
+      "materialName": "bg3d603_00_sky",
+      "materialPattern": "^bg3d603_00_sky(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        0.5,
+        0.5,
+        0.5,
+        1
+      ],
+      "baseMapUrl": "./stages/official/battle-603-00-00-001/bg3d603_00_foam_col.png",
+      "smoothness": 0,
+      "unlitness": 0.6,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front",
+      "multiUvScroll": {
+        "textureUrl": "./stages/official/battle-603-00-00-001/bg3d603_00_foam_col.png",
+        "first": {
+          "tiling": [
+            8,
+            6
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "speed": [
+            0.05,
+            -0.05
+          ],
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "opacity": 1
+        },
+        "second": {
+          "tiling": [
+            10,
+            8
+          ],
+          "offset": [
+            0,
+            0
+          ],
+          "speed": [
+            -0.05,
+            -0.03
+          ],
+          "color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "opacity": 1
+        },
+        "additiveToMultiply": 0.219,
+        "dropFrame": false
+      },
+      "flowMap": {
+        "textureUrl": "./stages/official/battle-603-00-00-001/flowmap.png",
+        "speed": 0.05,
+        "power": 1,
+        "dropFrame": true
+      }
+    }
+  ],
+  "renderProfile": {
+    "id": "bg_3d_603_00_00_001",
+    "source": "ReDriveVolume",
+    "stageLayer": 6,
+    "backgroundTextureUrl": "./stages/official/battle-603-00-00-001/bg3d603_00_ReflectionProbe-equirect.png",
+    "environmentTextureUrl": "./stages/official/battle-603-00-00-001/ReflectionProbe-0-equirect.png",
+    "environmentIntensity": 1,
+    "lightmap": {
+      "textureUrl": "./stages/official/battle-603-00-00-001/Lightmap-0_comp_light.png",
+      "bindingsUrl": "./stages/official/battle-603-00-00-001/lightmap-bindings.json",
+      "uv1CompanionUrl": "./stages/official/battle-603-00-00-001/uv1-companion.json",
+      "encoding": "unity-rgbm-linear",
+      "intensity": 1
+    },
+    "fog": {
+      "color": [
+        0.6745283,
+        0.88464504,
+        1,
+        1
+      ],
+      "near": 0,
+      "far": 285.00006,
+      "affectsCharacters": false
+    },
+    "lights": [
+      {
+        "name": "Directional Light",
+        "type": "directional",
+        "anchorPath": "bg_3d_603_00_00_001/Light/Directional_Light",
+        "position": [
+          0,
+          3,
+          0
+        ],
+        "target": [
+          0.4131758303,
+          2.2339555486,
+          -0.4924039315
+        ],
+        "color": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "intensity": 1,
+        "cullingMask": 4294967295,
+        "lightmapping": 1,
+        "role": "character-key",
+        "castShadow": true,
+        "shadow": {
+          "type": 2,
+          "strength": 1,
+          "bias": 0.05,
+          "normalBias": 0.4,
+          "nearPlane": 0.2
+        }
+      },
+      {
+        "name": "VolumeLight",
+        "type": "spot",
+        "anchorPath": "bg_3d_603_00_00_001/Light/VolumeLight",
+        "position": [
+          0,
+          44,
+          0
+        ],
+        "target": [
+          0,
+          43,
+          0
+        ],
+        "color": [
+          0.495283,
+          0.9541167,
+          1,
+          1
+        ],
+        "intensity": 2,
+        "range": 60,
+        "outerAngleDegrees": 60,
+        "innerAngleDegrees": 20,
+        "cullingMask": 64,
+        "lightmapping": 1,
+        "role": "background",
+        "castShadow": false
+      }
+    ],
+    "renderer": {
+      "toneMapping": "aces",
+      "exposure": 1
+    },
+    "bloom": {
+      "enabled": true,
+      "strength": 1,
+      "radius": 0.75,
+      "threshold": 0.8
+    },
+    "postProcessing": {
+      "colorAdjustments": {
+        "active": true,
+        "contrast": 10,
+        "saturation": 15
+      },
+      "vignette": {
+        "active": true,
+        "color": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "center": [
+          0.5,
+          0.5
+        ],
+        "intensity": 0.4,
+        "smoothness": 0.2,
+        "rounded": false
+      }
+    },
+    "reDriveVolume": {
+      "skyboxIntensity": 1,
+      "shAmbient": [
+        0.20169786,
+        -0.074383065,
+        -0.002611678,
+        0.001609589,
+        -0.00034097306,
+        0.0010677036,
+        -0.00794759,
+        0.00012714404,
+        -0.023940925,
+        0.94129497,
+        -0.22804397,
+        -0.017147377,
+        0.010443994,
+        -0.0032543738,
+        0.0080765635,
+        -0.020028774,
+        -0.00021820917,
+        -0.0607694,
+        1.5292639,
+        -0.2928787,
+        -0.029651284,
+        0.016643949,
+        -0.0054905224,
+        0.014009853,
+        -0.022757083,
+        -0.00063741393,
+        -0.06890544
+      ],
+      "characterShadowTint": [
+        0.6431373,
+        0.75686276,
+        0.8666667,
+        1
+      ],
+      "characterLightingOverrideColor": [
+        0.3915094,
+        0.8845967,
+        1,
+        1
+      ],
+      "characterLightingOverrideRatio": 0.35,
+      "characterAdditionalRimLightColor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "characterAdditionalRimLightDirection": [
+        1,
+        -1
+      ],
+      "backgroundBackgroundTint": [
+        0.8537736,
+        0.9739597,
+        1,
+        1
+      ],
+      "backgroundPostExposure": 0.5,
+      "backgroundContrast": -15,
+      "backgroundSaturation": -15,
+      "paraffin": {
+        "enabled": true,
+        "topColor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "bottomColor": [
+          0.45882353,
+          0.61337453,
+          0.7647059,
+          1
+        ],
+        "opacity": 0.4,
+        "width": 1.5,
+        "topBlendMode": 2,
+        "bottomBlendMode": 2
+      },
+      "overrides": {
+        "skyboxIntensity": true,
+        "shAmbient": true,
+        "characterTint": false,
+        "characterShadowTint": true,
+        "backgroundTint": false,
+        "backgroundBackgroundTint": true,
+        "characterLightingOverrideColor": true,
+        "characterLightingOverrideRatio": true,
+        "characterLightingOverrideDirection": false,
+        "characterAdditionalRimLightColor": true,
+        "characterAdditionalRimLightDirection": true,
+        "characterFaceAwayTint": false,
+        "characterCancelPerspective": false,
+        "backgroundShadowStrengthAdditive": false,
+        "backgroundPostExposure": true,
+        "backgroundContrast": true,
+        "backgroundSaturation": true,
+        "paraffin": true
+      }
+    }
+  },
+  "runtime": {
+    "clipNames": [
+      "bg3d6010_03"
+    ],
+    "autoplay": true,
+    "loop": true,
+    "timeScale": 1,
+    "voiceTracks": []
+  },
+  "fidelity": {
+    "exact": false,
+    "sourceRevision": "55c3c4f3acb13a5c9bee14092aeaaba21ed7e3f8d47ac018287369c196331a3f",
+    "layers": {
+      "source": {
+        "gameObjectCount": 46,
+        "meshCount": 25,
+        "materialCount": 9,
+        "textureCount": 11,
+        "lightCount": 2,
+        "reDriveVolumeCount": 1,
+        "reflectionProbeCount": 2,
+        "particleSystemCount": 1,
+        "particleForceFieldCount": 1,
+        "monoBehaviourCount": 16,
+        "animatorCount": 2,
+        "animationClipCount": 1,
+        "lightmapBindingCount": 3
+      },
+      "carrier": {
+        "nodeCount": 47,
+        "meshCount": 25,
+        "materialCount": 6,
+        "textureCount": 7,
+        "lightCount": 0,
+        "reDriveVolumeCount": 0,
+        "reflectionProbeCount": 0,
+        "particleSystemCount": 0,
+        "particleForceFieldCount": 0,
+        "monoBehaviourCount": 0,
+        "animatorCount": 0,
+        "animationClipCount": 1,
+        "lightmapBindingCount": 0
+      },
+      "runtime": {
+        "nodeCount": 47,
+        "meshCount": 25,
+        "materialCount": 6,
+        "textureCount": 9,
+        "lightCount": 2,
+        "reDriveVolumeCount": 1,
+        "reflectionProbeCount": 2,
+        "particleSystemCount": 0,
+        "particleForceFieldCount": 0,
+        "monoBehaviourCount": 5,
+        "animatorCount": 1,
+        "animationClipCount": 1,
+        "lightmapBindingCount": 3
+      }
+    },
+    "omissions": [
+      "AssetStudio FBX is used only as geometry/material-name/animation carrier; raw Bundle components remain scene truth.",
+      "MagicCircle MeshRenderer, mahoujin material and DOTween runtime are absent from the FBX carrier.",
+      "Unity ParticleSystem, ParticleSystemRenderer and ParticleSystemForceField simulation are retained as evidence but not instantiated.",
+      "VolumetricLightBeam cone/noise/depth blending and disabled VolumetricDustParticles are not instantiated.",
+      "Background shader flow-map advection, noise and additive-to-multiply combination use bounded Web approximations; compiled shader parity remains pending.",
+      "Cubemap base faces are recovered from raw stream data, but original mip-chain convolution and probe box projection are not reproduced exactly.",
+      "URP Bloom, ColorAdjustments, Vignette and ACES are mapped to Three passes with source parameters; operator-level parity remains partial."
+    ]
+  },
+  "dynamic": {
+    "expected": true,
+    "status": "partial",
+    "clipNames": [
+      "bg3d6010_03"
+    ],
+    "missing": [
+      "MagicCircle MeshRenderer/material/DOTween reconstruction",
+      "one Unity ParticleSystem plus renderer and one ParticleSystemForceField runtime",
+      "VolumetricLightBeam cone, noise and depth-blend runtime",
+      "compiled bg_uber flow-map/noise/multi-scroll blend formula and exact dropped-frame timing",
+      "source cubemap mip-chain convolution and reflection-probe box projection",
+      "operator-level Unity URP post-processing parity"
+    ],
+    "evidence": [
+      "Raw 13-file JP Bundle closure: 46 GameObjects, 25 Meshes, 26 MeshRenderers, 9 Materials, 11 Texture2D, 2 Lights, 16 MonoBehaviours.",
+      "Three.js FBX carrier: 47 nodes, 25 meshes, six materials, one 40 s clip with six tracks.",
+      "Strict runtime UV1 companion maps 3/3 renderers and enables all three PrefabLightmapData bindings.",
+      "UnityPy recovered both six-face Cubemap streams that AssetStudio did not export."
+    ]
+  },
+  "evidence": [
+    "JP Unity 2022.3.62f2 raw Bundle/component truth; no network acquisition.",
+    "AssetStudio binary FBX 7.3 retained only as a carrier and was reopened with Three r182 without warnings.",
+    "UnityPy 1.25.2 recovered 128x128 RGBA32 and 64x64 ETC2 Cubemap face sets directly from stream data.",
+    "Material, Light, ReDriveVolume, Bloom, Tonemapping, ColorAdjustments, Vignette, PrefabLightmapData and animation values are catalogued from serialized objects."
+  ],
+  "packageEvidence": {
+    "sourceFbxSha256": "ba8892357b4c8b14675d73988c9a5e56aba2c488e69f585edc0f3b62c315bacc",
+    "closureManifestSha256": "0b5a25a9f0a06ab0e5077da15d6e0750ce6be00325544fc025f031f29a38dbd9",
+    "sceneComponentsSha256": "a910585f916bfea6b55912c5c9921278de2036d086482fc1fe415fc247757af2",
+    "materialProfileSha256": "f2af86ae3adc5003ceda235c59a69bb88bec0fcb7618884b7d9af02b127fe4ea",
+    "sourceLightmapBindingsSha256": "98191f050697542307348e08813e5eb9438e152c5b999382e52d4c522007581b",
+    "rawUv1CompanionSha256": "070a84ed1f1ccca55a66ef26859322c0b6bf6a7203f8b8f46e0bffcfbf2e0982",
+    "runtimeUv1CompanionSha256": "5dcc52186a84a7f1611cb49e88d3138b6840cad336eda45d0af264a2fe090f2c",
+    "cubemapVerificationSha256": "358faa4824e69cae335dd3d8402cc2ac6dc4892986413b6e66c3f971640cb562",
+    "fileCount": 16,
+    "totalBytes": 24741432,
+    "files": {
+      "bg3d603_00_foam_col.png": "b2584a5d1d4483e7f95a61d8c1f30f0124783356a42db57b526cf648370baee3",
+      "bg3d603_00_grd_col.png": "3ff0ade0e5766228ecf7f424f182d4697839265d113130ce9694f131cf52452d",
+      "bg3d603_00_ground_col.png": "d5283f2c52a5cb1e9fa1d62e053f06874a67d6eabc1364c22785524c5b7dae1f",
+      "bg3d603_00_ground_dot.png": "7a15055e88ef563d78b8ad9a4853550d9db21c8a98982c322fdf04793a775eec",
+      "bg3d603_00_particle.png": "1591e9731c0f3d984efc0e6b5610f62d9d3f6f81cfc4993c59275bf75654719e",
+      "bg3d603_00_ReflectionProbe-equirect.png": "29e8b538ddd120104ae03a13638b54a30cdb3084eca837327e38675ecb6683f0",
+      "bg3d603_00_wall_col.png": "6440ff9310ca85c1151c36542af034b19e6f31bb44fe2b31945d8e61cc1f25bb",
+      "bg_3d_603_00_00_001-animated.fbxdata": "ba8892357b4c8b14675d73988c9a5e56aba2c488e69f585edc0f3b62c315bacc",
+      "cloud_noise_tex.png": "e812f1a8733ee1f401bae75b407fb0b076548255ad845c6dfc1ca3f43df751dd",
+      "flowmap.png": "bdb41b57c83f308f995e44ddb7fcfd75f40cea5a2e7c9e9d3203b7f62556152e",
+      "Lightmap-0_comp_light.png": "cbd7a54edca2e5e396af01637b0c8f38ad8bf25d4a512f29fabd8c1a4daea096",
+      "lightmap-bindings.json": "8e8e52cce0d4b59ecb162c9708eb711b0b4bd5020a8cbb26bcf604036804a070",
+      "mahoujin_bokashi.png": "dedf727a183e689115395e62a9e36f288ac824134bfd518c60c62d6b688e94be",
+      "ReflectionProbe-0-equirect.png": "83a8b11be750c550905d4cd477cf86c29c2a2cc82821e8c2dc6cab987651ce8f",
+      "simple_noise_tex.png": "b6c830aa7ed7b6db24fd99f472d4fda0a88b8aaf13bc19324d5998b1c5c201a8",
+      "uv1-companion.json": "5dcc52186a84a7f1611cb49e88d3138b6840cad336eda45d0af264a2fe090f2c"
+    }
+  }
+}

@@ -70,7 +70,9 @@ test('per-material uniforms override the global debug Fresnel without enabling i
 
 
 test('100101 weapon GemDepthDiff follows exact current-JP transparency predicate', () => {
-  assert.match(gem, /uGemUseDepthDiff \* uGemTransparency/)
+  assert.match(gem, /step\(0\.0000001, abs\(uGemUseDepthDiff\)\)/)
+  assert.match(gem, /step\(0\.0000001, abs\(uGemTransparency\)\)/)
+  assert.doesNotMatch(gem, /uGemUseDepthDiff \* uGemTransparency/)
   assert.match(gem, /official GemDepthDiff contribution is/)
   assert.doesNotMatch(gem, /rdGemDepthProxy/)
 })

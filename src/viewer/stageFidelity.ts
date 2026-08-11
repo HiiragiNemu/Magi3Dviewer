@@ -11,6 +11,23 @@ export interface StageFidelityComponentEvidence {
     typetreeErrorCount?: number
 }
 
+export interface StageFidelityLayerCounts {
+    gameObjectCount?: number
+    nodeCount?: number
+    meshCount?: number
+    materialCount?: number
+    textureCount?: number
+    lightCount?: number
+    reDriveVolumeCount?: number
+    reflectionProbeCount?: number
+    particleSystemCount?: number
+    particleForceFieldCount?: number
+    monoBehaviourCount?: number
+    animatorCount?: number
+    animationClipCount?: number
+    lightmapBindingCount?: number
+}
+
 export interface StageFidelityDefinition {
     id: string
     name: string
@@ -53,7 +70,16 @@ export interface StageFidelityDefinition {
         evidence?: string[]
     }
     fidelity?: {
+        /** False means runtime parity remains bounded/partial. */
+        exact?: boolean
         components?: StageFidelityComponentEvidence
+        layers?: {
+            source?: StageFidelityLayerCounts
+            carrier?: StageFidelityLayerCounts
+            runtime?: StageFidelityLayerCounts
+        }
+        /** Semantics present in source evidence but omitted by the carrier/runtime. */
+        omissions?: string[]
         sourceRevision?: string
         generated?: boolean
     }
@@ -193,6 +219,31 @@ function componentSummary(value: StageFidelityComponentEvidence) {
     return parts.length > 0 ? parts.join(' · ') : '—'
 }
 
+function layerSummary(value: StageFidelityLayerCounts | undefined) {
+    if (!value) return '—'
+    const fields: Array<[keyof StageFidelityLayerCounts, string]> = [
+        ['gameObjectCount', 'GameObject'],
+        ['nodeCount', 'Node'],
+        ['meshCount', 'Mesh'],
+        ['materialCount', 'Material'],
+        ['textureCount', 'Texture'],
+        ['lightCount', 'Light'],
+        ['reDriveVolumeCount', 'ReDriveVolume'],
+        ['reflectionProbeCount', 'Probe'],
+        ['particleSystemCount', 'Particle'],
+        ['particleForceFieldCount', 'ForceField'],
+        ['monoBehaviourCount', 'MonoBehaviour'],
+        ['animatorCount', 'Animator'],
+        ['animationClipCount', 'Clip'],
+        ['lightmapBindingCount', 'LightmapBinding'],
+    ]
+    const parts = fields.flatMap(([key, label]) => {
+        const count = value[key]
+        return count == undefined ? [] : [`${label} ${count}`]
+    })
+    return parts.length > 0 ? parts.join(' · ') : '—'
+}
+
 export function setupStageFidelityPanel() {
     ensurePanel()
 }
@@ -230,6 +281,13 @@ export function updateStageFidelityPanel(
     addRow(overview, 'Stage ID', definition.id)
     addRow(overview, 'Category', definition.category ?? 'research')
     addRow(overview, 'Official asset', definition.official ? 'Yes' : 'No')
+    addRow(
+        overview,
+        'Exact runtime parity',
+        definition.fidelity?.exact == undefined
+            ? undefined
+            : definition.fidelity.exact ? 'Yes' : 'No',
+    )
     addRow(overview, 'Dynamic status', status)
     addRow(overview, 'Region', provenance?.manifest.region?.toUpperCase())
     addRow(overview, 'AssetBundle', definition.assetBundleName ?? provenance?.rootBundle)
@@ -239,6 +297,9 @@ export function updateStageFidelityPanel(
     addRow(overview, 'Closure SHA-256', shortDigest(provenance?.closureSha256))
     addRow(overview, 'Render profile', definition.renderProfile?.source)
     addRow(overview, 'Recovered components', componentSummary(components))
+    addRow(overview, 'Source components', layerSummary(definition.fidelity?.layers?.source))
+    addRow(overview, 'Carrier contents', layerSummary(definition.fidelity?.layers?.carrier))
+    addRow(overview, 'Runtime mappings', layerSummary(definition.fidelity?.layers?.runtime))
     addRow(overview, 'Lightmap', definition.renderProfile?.lightmap ? 'Yes' : 'No')
     addRow(overview, 'Environment map', definition.renderProfile?.environmentTextureUrl ? 'Yes' : 'No')
     addRow(overview, 'Runtime clips', definition.runtime?.clipNames?.length ?? definition.dynamic?.clipNames?.length)
@@ -263,6 +324,13 @@ export function updateStageFidelityPanel(
         definition.dynamic?.status === 'recovered'
             ? 'No declared dynamic gaps'
             : 'No structured gap list',
+    )
+
+    addList(
+        panel.body,
+        'Carrier/runtime omissions',
+        definition.fidelity?.omissions,
+        'No structured omission list',
     )
 
     const evidence = [

@@ -4,6 +4,7 @@ import type { MagiaExedraScene3D } from '..';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { ReDriveBackgroundColorAdjustmentsShader } from './backgroundColorAdjustments';
+import { ReDriveVolumePostProcessingShader } from './volumePostProcessing';
 
 import { TAARenderPass } from 'three/addons/postprocessing/TAARenderPass.js';
 import { SSAARenderPass } from 'three/addons/postprocessing/SSAARenderPass.js';
@@ -133,6 +134,8 @@ export class SceneEffectsController {
 
     bloomPass: UnrealBloomPass
     paraffinPass: ShaderPass
+    /** Full-composite Unity Volume ColorAdjustments/Vignette subset. */
+    volumePostProcessPass: ShaderPass
 
     smaaPass: SMAAPass
     outputPass: OutputPass
@@ -178,6 +181,11 @@ export class SceneEffectsController {
         this.paraffinPass = new ShaderPass(ReDriveParaffinShader)
         this.paraffinPass.enabled = false
 
+        this.volumePostProcessPass = new ShaderPass(
+            ReDriveVolumePostProcessingShader,
+        )
+        this.volumePostProcessPass.enabled = false
+
         this.smaaPass = new SMAAPass()
         this.smaaPass.enabled = false
         this.outputPass = new OutputPass()
@@ -205,6 +213,7 @@ export class SceneEffectsController {
         this.composer.addPass(this.bloomPass)
         this.composer.addPass(this.outlinePass)
         this.composer.addPass(this.paraffinPass)
+        this.composer.addPass(this.volumePostProcessPass)
         this.composer.addPass(this.smaaPass)
         this.composer.addPass(this.outputPass)
         this.composer.addPass(this.fxaaPass)

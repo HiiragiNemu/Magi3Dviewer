@@ -14,6 +14,11 @@ test('fidelity inspector exposes provenance, closure and concrete dynamic gaps',
   assert.match(source, /dependencyClosure/)
   assert.match(source, /reflectionProbeCount/)
   assert.match(source, /playableDirectorCount/)
+  assert.match(source, /Exact runtime parity/)
+  assert.match(source, /Source components/)
+  assert.match(source, /Carrier contents/)
+  assert.match(source, /Runtime mappings/)
+  assert.match(source, /Carrier\/runtime omissions/)
 })
 
 test('fidelity inspector renders external names as text rather than HTML', () => {
