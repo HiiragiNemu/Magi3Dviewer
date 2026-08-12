@@ -1,0 +1,988 @@
+{
+  "id": "battle-616-00-01-001",
+  "name": "[Official dynamic partial/Battle] 616-00-01-001",
+  "category": "battle",
+  "official": true,
+  "assetBundleName": "battle/stage/bg_3d_616_00_01_001",
+  "bundleProvenance": {
+    "rootBundle": "battle/stage/bg_3d_616_00_01_001",
+    "manifest": {
+      "region": "jp",
+      "kind": "text-manifest",
+      "path": "artifacts/research/20260812-stage616-export/closure-manifest.json",
+      "sha256": "0a8bf6cafba9a8909454e240ef449ee353fa4577cde78ad9fd7049c92ab1b27e"
+    },
+    "directDependencies": [
+      "texture/bg/55d26fb36e239664ba3377d109fff3eb",
+      "texture/bg/b546f9eafd61a854dbc04e1321ecbd78",
+      "texture/bg/7e29829d2091d764bae46203dc41c700",
+      "texture/bg/a085c06ea04bba14bb82dc7238b10267",
+      "texture/bg/862a0e3d385b6a547b9650eb3936299b",
+      "shader/effect",
+      "texture/bg/275ee12e64b99884185a9a0d05bfa3c9",
+      "texture/bg/7c22553094ea521428b51081ae85d860",
+      "texture/bg/9f434ff0c0fdaf94fa3ed7766f22a2f3",
+      "texture/bg/cf6d414e501ec634b90fa203b9bcb8ab",
+      "texture/bg/563440658a7e53c4b99b8a3eaf433f56",
+      "texture/bg/708f1d255de439740ac97b2345ff4f61",
+      "texture/bg/16ba031be8d5eb443adafe7d1a14bf7f",
+      "texture/bg/692e7d5c3d55b6d4b95d5aa6fe263574",
+      "shader/common/texture/cloud_noise",
+      "texture/bg/5fc1d9761d4cbd041961a4f132fed829",
+      "texture/bg/64011fcb27b16074f9216f6e6724c419",
+      "shader/bg_uber",
+      "texture/bg/68556cc9c5269da47a91c7a1cd479d2b",
+      "texture/bg/aa38a8ef083a66e42b53d02352bd00f7",
+      "texture/bg/fe7e68ac8f33bdd46bbbe97bc8d384ba",
+      "texture/bg/7487c5e2c26a3af4abc7ed389288f556",
+      "texture/bg/90e479f17b258244686fb1fe94ecc000",
+      "texture/bg/b89b3573e2b8db44d9523f27d7449663",
+      "texture/bg/3d467b6a47aa3db409db1444e96e5f89",
+      "texture/bg/3cc1912827a42cc4880d7f30f84e2848"
+    ],
+    "dependencyClosure": [
+      "texture/bg/55d26fb36e239664ba3377d109fff3eb",
+      "texture/bg/b546f9eafd61a854dbc04e1321ecbd78",
+      "texture/bg/7e29829d2091d764bae46203dc41c700",
+      "texture/bg/a085c06ea04bba14bb82dc7238b10267",
+      "texture/bg/862a0e3d385b6a547b9650eb3936299b",
+      "shader/effect",
+      "texture/bg/275ee12e64b99884185a9a0d05bfa3c9",
+      "texture/bg/7c22553094ea521428b51081ae85d860",
+      "texture/bg/9f434ff0c0fdaf94fa3ed7766f22a2f3",
+      "texture/bg/cf6d414e501ec634b90fa203b9bcb8ab",
+      "texture/bg/563440658a7e53c4b99b8a3eaf433f56",
+      "texture/bg/708f1d255de439740ac97b2345ff4f61",
+      "texture/bg/16ba031be8d5eb443adafe7d1a14bf7f",
+      "texture/bg/692e7d5c3d55b6d4b95d5aa6fe263574",
+      "shader/common/texture/cloud_noise",
+      "texture/bg/5fc1d9761d4cbd041961a4f132fed829",
+      "texture/bg/64011fcb27b16074f9216f6e6724c419",
+      "shader/bg_uber",
+      "texture/bg/68556cc9c5269da47a91c7a1cd479d2b",
+      "texture/bg/aa38a8ef083a66e42b53d02352bd00f7",
+      "texture/bg/fe7e68ac8f33bdd46bbbe97bc8d384ba",
+      "texture/bg/7487c5e2c26a3af4abc7ed389288f556",
+      "texture/bg/90e479f17b258244686fb1fe94ecc000",
+      "texture/bg/b89b3573e2b8db44d9523f27d7449663",
+      "texture/bg/3d467b6a47aa3db409db1444e96e5f89",
+      "texture/bg/3cc1912827a42cc4880d7f30f84e2848"
+    ],
+    "closureSha256": "0a8bf6cafba9a8909454e240ef449ee353fa4577cde78ad9fd7049c92ab1b27e",
+    "manifestTargetId": 173,
+    "manifestHash128BytesHex": "79531ba0970919a0af7591003d2bbb84",
+    "dependencyCount": 26,
+    "closureFileCount": 27,
+    "closureBytes": 23446492,
+    "sourceBundleSha256": "a51e02ee5dedfb7d54950607376723ecebfe303154aa5408f5baf1b6f6dcc967"
+  },
+  "type": "fbx",
+  "url": "./stages/official/battle-616-00-01-001/bg_3d_616_00_01_001-animated.fbxdata",
+  "scale": 1,
+  "position": [
+    0,
+    0,
+    0
+  ],
+  "rotation": [
+    0,
+    0,
+    0
+  ],
+  "spawnPoints": [
+    {
+      "id": "actor-0",
+      "name": "Actor 0",
+      "role": "actor",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "materialBindings": [
+    {
+      "materialName": "mt_bg3d616_01_01_Lightning",
+      "materialPattern": "^mt_bg3d616_01_01_Lightning(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        0.7169811725616455,
+        0.6946064233779907,
+        0.6527234315872192,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_lightning_col.png",
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": true,
+      "depthWrite": false,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "blending": "additive"
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_cloth1",
+      "materialPattern": "^mt_bg3d616_01_01_cloth1(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_cloth_col.png",
+      "smoothness": 0.4390000104904175,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.30000001192092896,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_cloth_nml.png"
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_crystal",
+      "materialPattern": "^mt_bg3d616_01_01_crystal(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_crystal_col.png",
+      "smoothness": 0.8999999761581421,
+      "metallic": 0.25,
+      "normalScale": 1.0,
+      "transparent": true,
+      "depthWrite": false,
+      "unlitness": 0.0,
+      "castShadow": true,
+      "receiveShadow": false,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_crystal_nml.png",
+      "alphaTest": 0.5,
+      "alphaToCoverage": false,
+      "blending": "normal",
+      "matCapMapUrl": "./stages/official/battle-616-00-01-001/matcap.png",
+      "matCapIntensity": 1.0,
+      "multiUvScroll": {
+        "textureUrl": "./stages/official/battle-616-00-01-001/eff_gch_crystal_01.png",
+        "first": {
+          "tiling": [
+            3.0,
+            3.0
+          ],
+          "offset": [
+            0.15000000596046448,
+            0.0
+          ],
+          "speed": [
+            0.0,
+            0.0
+          ],
+          "color": [
+            0.6698113083839417,
+            0.3886169493198395,
+            0.3886169493198395,
+            1.0
+          ],
+          "opacity": 0.33000001311302185
+        },
+        "second": {
+          "tiling": [
+            3.0,
+            3.0
+          ],
+          "offset": [
+            0.0,
+            0.0
+          ],
+          "speed": [
+            0.0,
+            0.0
+          ],
+          "color": [
+            0.20754718780517578,
+            0.04797081649303436,
+            0.0694771409034729,
+            1.0
+          ],
+          "opacity": 0.20000000298023224
+        },
+        "additiveToMultiply": 0.0,
+        "dropFrame": false
+      }
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_egg",
+      "materialPattern": "^mt_bg3d616_01_01_egg(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_egg_col.png",
+      "smoothness": 0.45399999618530273,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.39100000262260437,
+      "castShadow": true,
+      "receiveShadow": false,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_egg_nml.png"
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_ground",
+      "materialPattern": "^mt_bg3d616_01_01_ground(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        0.8867924213409424,
+        0.8867924213409424,
+        0.8867924213409424,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_ground_col.webp",
+      "smoothness": 0.42500001192092896,
+      "metallic": 0.25,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.25,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_ground_nml.webp",
+      "smoothnessMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_ground_col.webp",
+      "smoothnessChannel": "a"
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_perfume1",
+      "materialPattern": "^mt_bg3d616_01_01_perfume1(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_perfume_col.png",
+      "smoothness": 0.550000011920929,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.30000001192092896,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_perfume_nml.png",
+      "smoothnessMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_perfume_met.png",
+      "smoothnessChannel": "a",
+      "metallicFromSmoothnessMap": true
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_perfume2",
+      "materialPattern": "^mt_bg3d616_01_01_perfume2(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_perfume_col.png",
+      "smoothness": 0.7490000128746033,
+      "metallic": 0.7919999957084656,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.20000000298023224,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_perfume_nml.png",
+      "smoothnessMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_perfume_met.png",
+      "smoothnessChannel": "a",
+      "metallicFromSmoothnessMap": true
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_ring",
+      "materialPattern": "^mt_bg3d616_01_01_ring(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_crystal_col.png",
+      "smoothness": 0.75,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.0,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_crystal_nml.png"
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_sky1",
+      "materialPattern": "^mt_bg3d616_01_01_sky1(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        0.6415094137191772,
+        0.6415094137191772,
+        0.6415094137191772,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_sky_col.png",
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "alphaTest": 0.5,
+      "alphaToCoverage": true
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_sky2",
+      "materialPattern": "^mt_bg3d616_01_01_sky2(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_sky_col.png",
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": true,
+      "depthWrite": false,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "alphaTest": 0.5,
+      "alphaToCoverage": false,
+      "blending": "additive"
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_sky3",
+      "materialPattern": "^mt_bg3d616_01_01_sky3(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        0.801886796951294,
+        0.801886796951294,
+        0.801886796951294,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_sky_col.png",
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": true,
+      "depthWrite": false,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "alphaTest": 0.5,
+      "alphaToCoverage": false,
+      "blending": "normal"
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_sky4",
+      "materialPattern": "^mt_bg3d616_01_01_sky4(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_sky_col.png",
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": true,
+      "depthWrite": false,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "alphaTest": 0.3799999952316284,
+      "alphaToCoverage": false,
+      "blending": "additive"
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_torsoM1",
+      "materialPattern": "^mt_bg3d616_01_01_torsoM1(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_torsoM_col.png",
+      "smoothness": 0.5799999833106995,
+      "metallic": 0.6100000143051147,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.0,
+      "castShadow": true,
+      "receiveShadow": true,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_torsoM_nml.png",
+      "smoothnessMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_torsoM_met.png",
+      "smoothnessChannel": "a",
+      "metallicFromSmoothnessMap": true
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_torsoM2",
+      "materialPattern": "^mt_bg3d616_01_01_torsoM2(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_torsoM_col.png",
+      "smoothness": 0.054999999701976776,
+      "metallic": 0.2849999964237213,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.0,
+      "castShadow": true,
+      "receiveShadow": true,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_torsoM_nml.png",
+      "smoothnessMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_torsoM_met.png",
+      "smoothnessChannel": "a",
+      "metallicFromSmoothnessMap": true
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_torsoS",
+      "materialPattern": "^mt_bg3d616_01_01_torsoS(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_torsoS_col.png",
+      "smoothness": 0.5,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "alphaTest": 0.5,
+      "alphaToCoverage": true
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_tree",
+      "materialPattern": "^mt_bg3d616_01_01_tree(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_tree_col.png",
+      "smoothness": 0.5,
+      "metallic": 1.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "alphaTest": 0.5,
+      "alphaToCoverage": true
+    },
+    {
+      "materialName": "mt_bg3d616_01_01_whitetree",
+      "materialPattern": "^mt_bg3d616_01_01_whitetree(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        0.8584905862808228,
+        0.8096075057983398,
+        0.8058472871780396,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_whitetree_col.png",
+      "smoothness": 0.5,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "alphaTest": 0.5,
+      "alphaToCoverage": true
+    }
+  ],
+  "renderProfile": {
+    "id": "bg_3d_616_00_01_001",
+    "source": "ReDriveVolume",
+    "stageLayer": 6,
+    "backgroundColor": [
+      0.41099998354911804,
+      0.3983764052391052,
+      0.393326997756958,
+      0.5058823823928833
+    ],
+    "environmentTextureUrl": "./stages/official/battle-616-00-01-001/ReflectionProbe-1-equirectangular.png",
+    "environmentIntensity": 1.0,
+    "lightmap": {
+      "textureUrl": "./stages/official/battle-616-00-01-001/Lightmap-0_comp_light.png",
+      "bindingsUrl": "./stages/official/battle-616-00-01-001/lightmap-bindings.json",
+      "uv1CompanionUrl": "./stages/official/battle-616-00-01-001/uv1-companion.json",
+      "encoding": "unity-rgbm-linear",
+      "intensity": 1
+    },
+    "fog": {
+      "color": [
+        0.41099998354911804,
+        0.3983764052391052,
+        0.393326997756958,
+        0.5058823823928833
+      ],
+      "near": 15.0,
+      "far": 200.0,
+      "affectsCharacters": false
+    },
+    "lights": [
+      {
+        "name": "Spot Light",
+        "type": "spot",
+        "anchorPath": "bg_3d_616_00_01_001/Light/BGLight/Spot Light",
+        "position": [
+          -0.9620060920715332,
+          5.639585494995117,
+          5.627020835876465
+        ],
+        "target": [
+          -0.9620060920715332,
+          5.066009091141534,
+          4.807868768832506
+        ],
+        "color": [
+          0.9339622855186462,
+          0.9307515621185303,
+          0.9295567870140076,
+          1.0
+        ],
+        "intensity": 150.0,
+        "cullingMask": 64,
+        "lightmapping": 1,
+        "role": "background",
+        "castShadow": false,
+        "range": 12.4399995803833,
+        "outerAngleDegrees": 100.0,
+        "innerAngleDegrees": 0.0
+      },
+      {
+        "name": "MainLight",
+        "type": "directional",
+        "anchorPath": "bg_3d_616_00_01_001/Light/MainLight",
+        "position": [
+          -0.9620060920715332,
+          5.639585494995117,
+          16.23702049255371
+        ],
+        "target": [
+          -1.375181978198005,
+          4.8735411034163185,
+          15.744616514854227
+        ],
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "intensity": 1.0,
+        "cullingMask": 4294967295,
+        "lightmapping": 1,
+        "role": "character-key",
+        "castShadow": true,
+        "shadow": {
+          "type": 2,
+          "strength": 1.0,
+          "bias": 0.05000000074505806,
+          "normalBias": 0.4000000059604645,
+          "nearPlane": 0.20000000298023224
+        }
+      }
+    ],
+    "renderer": {
+      "toneMapping": "aces",
+      "exposure": 1
+    },
+    "bloom": {
+      "enabled": true,
+      "strength": 1.100000023841858,
+      "radius": 0.699999988079071,
+      "threshold": 0.800000011920929
+    },
+    "postProcessing": {
+      "colorAdjustments": {
+        "active": true,
+        "contrast": 10.0,
+        "saturation": 15.0
+      },
+      "vignette": {
+        "active": true,
+        "color": [
+          0.14150941371917725,
+          0.10746705532073975,
+          0.10746705532073975,
+          1.0
+        ],
+        "center": [
+          0.5,
+          0.6000000238418579
+        ],
+        "intensity": 0.20000000298023224,
+        "smoothness": 0.30000001192092896,
+        "rounded": false
+      }
+    },
+    "reDriveVolume": {
+      "skyboxIntensity": 1.0,
+      "shAmbient": [
+        0.2121584117412567,
+        -1.4029760686540271e-09,
+        0.0,
+        -2.9623651622012748e-12,
+        0.0,
+        2.3548496486114345e-10,
+        -1.3783574104309082e-07,
+        0.0,
+        -9.586976545961079e-08,
+        0.2121584117412567,
+        -1.4029760686540271e-09,
+        0.0,
+        -2.9623651622012748e-12,
+        0.0,
+        2.3548496486114345e-10,
+        -1.3783574104309082e-07,
+        0.0,
+        -9.586976545961079e-08,
+        0.2121584117412567,
+        -1.4029760686540271e-09,
+        0.0,
+        -2.9623651622012748e-12,
+        0.0,
+        2.3548496486114345e-10,
+        -1.3783574104309082e-07,
+        0.0,
+        -9.586976545961079e-08
+      ],
+      "characterShadowTint": [
+        0.9245283007621765,
+        0.8895672559738159,
+        0.876557469367981,
+        1.0
+      ],
+      "characterAdditionalRimLightColor": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "characterAdditionalRimLightDirection": [
+        1.0,
+        -1.0
+      ],
+      "backgroundShadowStrengthAdditive": 0.699999988079071,
+      "backgroundPostExposure": 0.20000000298023224,
+      "backgroundContrast": -10.0,
+      "backgroundSaturation": -20.0,
+      "paraffin": {
+        "enabled": true,
+        "topColor": [
+          0.7358490228652954,
+          0.620535135269165,
+          0.6004805564880371,
+          1.0
+        ],
+        "bottomColor": [
+          0.22641509771347046,
+          0.22641509771347046,
+          0.22641509771347046,
+          1.0
+        ],
+        "opacity": 0.30000001192092896,
+        "width": 1.5,
+        "topBlendMode": 0,
+        "bottomBlendMode": 2
+      },
+      "overrides": {
+        "skyboxMaterial": true,
+        "skyboxIntensity": true,
+        "reflectionProbe": true,
+        "fogColor": true,
+        "fogRange": true,
+        "shAmbient": true,
+        "characterTint": false,
+        "characterShadowTint": true,
+        "backgroundTint": false,
+        "characterLightingOverrideColor": false,
+        "characterLightingOverrideRatio": false,
+        "characterLightingOverrideDirection": false,
+        "characterAdditionalRimLightColor": true,
+        "characterAdditionalRimLightDirection": false,
+        "characterFaceAwayTint": false,
+        "characterCancelPerspective": false,
+        "backgroundShadowStrengthAdditive": true,
+        "backgroundPostExposure": true,
+        "backgroundContrast": true,
+        "backgroundSaturation": true,
+        "backgroundBackgroundTint": false,
+        "useFixedLightDirection": true,
+        "paraffin": true,
+        "screenTexture": false,
+        "lightScreen": false
+      }
+    }
+  },
+  "runtime": {
+    "clipNames": [
+      "bg_3d_616_01_01"
+    ],
+    "autoplay": true,
+    "loop": true,
+    "timeScale": 1,
+    "voiceTracks": []
+  },
+  "fidelity": {
+    "exact": false,
+    "sourceRevision": "484d3c6471259a1454ef919b53df064edc1eb542a1a96daabd0d0b7f8fb935fd",
+    "layers": {
+      "source": {
+        "gameObjectCount": 464,
+        "meshCount": 285,
+        "materialCount": 19,
+        "textureCount": 29,
+        "lightCount": 25,
+        "reDriveVolumeCount": 1,
+        "reflectionProbeCount": 1,
+        "particleSystemCount": 1,
+        "monoBehaviourCount": 35,
+        "animatorCount": 3,
+        "animationClipCount": 2,
+        "lightmapBindingCount": 177
+      },
+      "carrier": {
+        "nodeCount": 465,
+        "meshCount": 284,
+        "materialCount": 17,
+        "textureCount": 21,
+        "lightCount": 0,
+        "reDriveVolumeCount": 0,
+        "reflectionProbeCount": 0,
+        "particleSystemCount": 0,
+        "monoBehaviourCount": 0,
+        "animatorCount": 0,
+        "animationClipCount": 2,
+        "lightmapBindingCount": 0
+      },
+      "runtime": {
+        "nodeCount": 465,
+        "meshCount": 284,
+        "materialCount": 17,
+        "textureCount": 23,
+        "lightCount": 2,
+        "reDriveVolumeCount": 1,
+        "reflectionProbeCount": 1,
+        "particleSystemCount": 0,
+        "monoBehaviourCount": 5,
+        "animatorCount": 1,
+        "animationClipCount": 1,
+        "lightmapBindingCount": 177
+      }
+    },
+    "omissions": [
+      "Lightning Animation is present as an AnimationClip asset but ModelConverter/FBX contains zero tracks; its exact trigger/visibility behavior remains raw evidence.",
+      "One Unity ParticleSystem and ParticleSystemRenderer are retained as serialized evidence but are not instantiated by the current browser runtime.",
+      "Twenty-three baked background lights are represented by the recovered RGBM lightmap instead of duplicate realtime lights; MainLight and Spot Light remain live.",
+      "The local ReflectionProbe cubemap is retained, while the current runtime uses the ReDrive reflection cubemap as one global equirectangular environment without box projection or original mip convolution.",
+      "All 21 AssetStudio/ModelConverter PNGs differ at pixel level from UnityPy decodes; the matched FBX carrier convention is used online and both decoders remain auditable offline.",
+      "Creative background/particle shader operator parity is partial; PBR, alpha-test/additive, metallic-smoothness, matcap and multi-UV-scroll parameters are bounded Web mappings.",
+      "Unity URP Bloom, ColorAdjustments, Vignette, ACES and ReDriveVolume are parameter-mapped; operator-level parity remains partial."
+    ]
+  },
+  "dynamic": {
+    "expected": true,
+    "status": "partial",
+    "clipNames": [
+      "bg_3d_616_01_01"
+    ],
+    "missing": [
+      "Lightning Animation zero-track behavior reconstruction",
+      "one Unity ParticleSystem and ParticleSystemRenderer runtime",
+      "local ReflectionProbe box projection and mip convolution",
+      "compiled Creative/Bg and Creative/Particles shader operator parity",
+      "operator-level Unity URP post-processing parity"
+    ],
+    "evidence": [
+      "Two AnimationClip assets; main FBX clip is 133.3333435 s with 115 tracks, Lightning Animation is an explicit zero-track boundary.",
+      "Strict UV1 companion closes 177/177 lightmap renderers with max UV0 error 0 and 97 deduplicated UV1 geometries.",
+      "Nineteen serialized material profiles reconnect all 17 FBX carrier materials; the fog particle and skybox materials remain source-only.",
+      "Twenty-five enabled lights include two mixed/realtime lights and 23 baked lights represented through the source lightmap."
+    ]
+  },
+  "evidence": [
+    "JP AssetBundle manifest target 173 and 27-file dependency closure; no network acquisition.",
+    "Unity 2022.3.62f2 fallback plus exact raw PPtr closure for 19 materials, 29 images, 285 meshes and 25 lights.",
+    "AssetStudio.ModelConverter FBX carrier reopened with Three r182: 465 nodes, 284 meshes, 17 materials and two clips.",
+    "UnityPy retained six Texture2D objects and two Cubemap objects omitted by AssetStudio, plus pixel-level dual-decoder evidence.",
+    "ReDriveVolume, PrefabLightmapData, Bloom, Tonemapping, ColorAdjustments and Vignette serialized values mapped without modifying common loaders."
+  ],
+  "packageEvidence": {
+    "sourceFbxSha256": "8ccaf169d9288bcbd540f6bcf9395e7de609736ae1b60fd4e4c4f1db2a34d28d",
+    "rawTruthSha256": "484d3c6471259a1454ef919b53df064edc1eb542a1a96daabd0d0b7f8fb935fd",
+    "exportVerificationSha256": "b14c63518b8b727f7d15fb3f06b8a21808524a4c7866e2660f210c9d72a88141",
+    "uv1MappingSha256": "f540b9ff3829687b092c1f303647d15e9ed643fcad93f60d9f0765cbc66a0ebb",
+    "runtimeUv1CompanionSha256": "a0e1d77b191363d82f836605f55ff017ad7f04a1b7c9038fff9ff26e73235368",
+    "runtimeLightmapBindingsSha256": "997caaf6f02579d6e6391e0441dd39a780528d3560880dcaae5daeb30ed371a6",
+    "assetProvenanceSha256": "adfd02e914c4b67c3f3f70d5a8b2711e88a7046b2e84fa74e4c02c370ba10656",
+    "fileCount": 33,
+    "totalBytes": 26140943,
+    "files": {
+      "asset-provenance.json": "eb7222c7aa7594b902f59c853bc29780c36265aa5ab0facfcc7d5a3e302eacb3",
+      "bg3d615_00_PropA_col.png": "faaf5700385f4ca36693d6cd39536257c567ffa54095036cc2324e333cf7938e",
+      "bg3d615_00_PropB_mask_col.png": "8f95e7c084995e6eb8e62361d9767fcc1ccdfb256ae1d8b38b6fbbffdf0d34b5",
+      "bg3d615_00_PropB_nml.png": "72bb85dd04ab0f1fdee836e03a248fbca7c56366c9dae413a80a3e7bfd94f621",
+      "bg3d616_01_01_cloth_col.png": "baadcde46df0a608e0e970d734883bc9340d9972497045ea20096b9c684924d4",
+      "bg3d616_01_01_cloth_nml.png": "b74e347451bbf1b4d8176e604c8eeac408072a388a6f3c525c62de9a07a38553",
+      "bg3d616_01_01_crystal_col.png": "0de23370c956cc52cb0757c1508459e2ea18bceceff3176c560f3e32ddbf7f6c",
+      "bg3d616_01_01_crystal_nml.png": "b85c0edae649307b7213d6bfd4c74102868b7167267d0818e6a3c511a484525b",
+      "bg3d616_01_01_egg_col.png": "e601dd0300839459b138af6771d4af8a537ee6489909c2a4d1f5411f9f2f1a53",
+      "bg3d616_01_01_egg_nml.png": "bb181b1c14400d973361822cee7152b8d2c80276d5439e9dab2389397e388499",
+      "bg3d616_01_01_ground_col.webp": "d5c9565520c6e3c3d7a2fa59d971ffdc5811279970c0a541a8851df5030ec03d",
+      "bg3d616_01_01_ground_nml.webp": "63e23458ea3a40ec5a28ecac36bca835fbb79eb61704f0556f7473eb5010a32a",
+      "bg3d616_01_01_lightning_col.png": "2d8725c3aff0ba6d052723f86b975c62caae09567e18e141656c993e73c4b899",
+      "bg3d616_01_01_perfume_col.png": "8308e729cbe47fc6a5f6d719d7b0451c4c233019e2ea50b304e51ede733cb4da",
+      "bg3d616_01_01_perfume_met.png": "22a02d24f5743a57aa4b1745eda1bd40de8edd525c665606fa7981aacdcb73c2",
+      "bg3d616_01_01_perfume_nml.png": "13e5746e534e9b7b3b1bc6d6423327f2c4a58c965e937fe909be1f4b222944fc",
+      "bg3d616_01_01_sky_col.png": "8ba4fb8574db8002c29187431c939e9c2d0743ff7b8e7d92ca075125829391e5",
+      "bg3d616_01_01_torsoM_col.png": "9866fe55b22fe80376c17c74ceb4c742fbb207f02b34ae23dc7416dd3391c170",
+      "bg3d616_01_01_torsoM_met.png": "c988530e068624b2318952bacc32b01bee78693111c1097293077f4845a76da2",
+      "bg3d616_01_01_torsoM_nml.png": "c60e8ce10e5f28c924fb288d490614897ea26d69edd9c21313db24b226ee20b6",
+      "bg3d616_01_01_torsoS_col.png": "6573dbfc482616737d4dbcca33bcf4283fd215c92d9356f462c5e5c486b43397",
+      "bg3d616_01_01_tree_col.png": "3169ed5403d776cecc1b2f89ade235cd46361e8444fadd864d5d7c23ef59f5c5",
+      "bg3d616_01_01_whitetree_col.png": "9c763f996f519f5d0f7335666b72e92c8605723d670c9108b90d3c376994ee46",
+      "bg3d_652_00_matcap.png": "58e7ac4e60850d6ce0674dad2c3a21cdeb7f3f5f1e1820403e0cc876ccab5d84",
+      "bg_3d_616_00_01_001-animated.fbxdata": "c90c3c7c9b506fcf2a5ecf319da304a6c9c2e77a4818c37c69ce44dd8dd43b5e",
+      "cloud_noise_tex.png": "73c7c1e188257a4ef80fa0a46afe3e3f7f6c544d2527acc38376fe6cd413e9d9",
+      "eff_gch_crystal_01.png": "b263a791eeda7dcf4aac26f292a802c2c75dd2be6bbef5060c345df8fa4af4b7",
+      "Lightmap-0_comp_light.png": "5681ac82c1a43d2f7287d2313f857b87afe9a2a692ad180033b612d6b194b364",
+      "lightmap-bindings.json": "997caaf6f02579d6e6391e0441dd39a780528d3560880dcaae5daeb30ed371a6",
+      "matcap.png": "1f14556c9d23a64ab2d133e4cbff15139af4091b2f04aea391942838c19b70e5",
+      "ReflectionProbe-0-equirectangular.png": "0ca6c094d8833cc576d388ce80c3cdbb5408a37d90076d90eae2fa039ea882eb",
+      "ReflectionProbe-1-equirectangular.png": "d4dee0b6f7d98449980a0a090b5d697964885be9a75e350aa6f4c9bbf4944fb0",
+      "uv1-companion.json": "a0e1d77b191363d82f836605f55ff017ad7f04a1b7c9038fff9ff26e73235368"
+    },
+    "transportOptimized": true,
+    "transportEvidence": "artifacts/research/20260812-stage616-export/transport-optimization/verification.json"
+  },
+  "restorationStatus": {
+    "phase": "verified-browser-package",
+    "generatedAt": "2026-08-12",
+    "commonLoaderChanges": false,
+    "gameDirectoryTouched": false
+  },
+  "transport": {
+    "purpose": "bounded GitHub/Pages transport after reproducible HTTP 408 on monolithic packs",
+    "fbx": {
+      "path": "bg_3d_616_00_01_001-animated.fbxdata",
+      "encoding": "gzip",
+      "sourceBytes": 3779728,
+      "encodedBytes": 1419834,
+      "sourceSha256": "8ccaf169d9288bcbd540f6bcf9395e7de609736ae1b60fd4e4c4f1db2a34d28d",
+      "encodedSha256": "c90c3c7c9b506fcf2a5ecf319da304a6c9c2e77a4818c37c69ce44dd8dd43b5e",
+      "decodedByteExact": true
+    },
+    "groundColor": {
+      "path": "bg3d616_01_01_ground_col.webp",
+      "encoding": "WebP quality 98; RGBA alpha lossless",
+      "sourceBytes": 6988412,
+      "encodedBytes": 3186710,
+      "sourceSha256": "11bb7b66220c44a1b88441e74517e33b8e08221f971e9dc9d128de24691e090e",
+      "encodedSha256": "d5c9565520c6e3c3d7a2fa59d971ffdc5811279970c0a541a8851df5030ec03d",
+      "channels": "RGBA",
+      "pixelExact": false,
+      "maxAbsoluteError": [
+        34,
+        15,
+        37,
+        0
+      ],
+      "meanAbsoluteError": [
+        1.0434086322784424,
+        0.84295654296875,
+        0.9972434043884277,
+        0.0
+      ]
+    },
+    "groundNormal": {
+      "path": "bg3d616_01_01_ground_nml.webp",
+      "encoding": "lossless WebP RGB; source alpha unused by normalMap",
+      "sourceBytes": 5091763,
+      "encodedBytes": 2262428,
+      "sourceSha256": "6c8740468393f7cbee8cba8e08e91544c9b0c69062129dd90f15689985cffeff",
+      "encodedSha256": "63e23458ea3a40ec5a28ecac36bca835fbb79eb61704f0556f7473eb5010a32a",
+      "channels": "RGB",
+      "pixelExact": true,
+      "maxAbsoluteError": [
+        0,
+        0,
+        0
+      ],
+      "meanAbsoluteError": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  }
+}
