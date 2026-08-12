@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "stageId": "battle-616-00-01-001",
+  "sourceBundle": "battle/stage/bg_3d_616_00_01_001",
+  "sourceBundleSha256": "a51e02ee5dedfb7d54950607376723ecebfe303154aa5408f5baf1b6f6dcc967",
+  "rawTruthSha256": "484d3c6471259a1454ef919b53df064edc1eb542a1a96daabd0d0b7f8fb935fd",
+  "exportVerificationSha256": "b14c63518b8b727f7d15fb3f06b8a21808524a4c7866e2660f210c9d72a88141",
+  "networkUsed": false,
+  "sourceBundlesCopied": false,
+  "publicAssetStorage": "NTFS hard links for immutable binary carriers; generated JSON for runtime bindings",
+  "assetStudioBoundary": {
+    "modelConverterTextureCount": 21,
+    "texture2dObjectCount": 27,
+    "cubemapObjectCount": 2,
+    "assetStudioOmittedTexture2dCount": 6,
+    "modelConverterVsUnityPyPixelDifferenceCount": 21,
+    "runtimeCarrierChoice": "ModelConverter PNGs preserve the FBX carrier convention; UnityPy comparison PNGs remain evidence-only",
+    "mixedSerializedUnityMetadata": [
+      "2022.3.62f2",
+      "2022.3.21f1"
+    ]
+  },
+  "animationBoundary": {
+    "fbxAnimationCount": 2,
+    "mainClipTrackCount": 115,
+    "lightningClipTrackCount": 0
+  },
+  "uv1Closure": {
+    "rendererCount": 177,
+    "mappedRendererCount": 177,
+    "uniqueUv1GeometryCount": 97,
+    "maxUv0Error": 0,
+    "cornerModes": {
+      "cba": 177
+    },
+    "strictlyClosed": true
+  }
+}
