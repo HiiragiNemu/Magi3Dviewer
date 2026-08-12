@@ -7,7 +7,7 @@
   "exportVerificationSha256": "b14c63518b8b727f7d15fb3f06b8a21808524a4c7866e2660f210c9d72a88141",
   "networkUsed": false,
   "sourceBundlesCopied": false,
-  "publicAssetStorage": "NTFS hard links for immutable binary carriers; generated JSON for runtime bindings",
+  "publicAssetStorage": "NTFS hard links to verified export or transport candidates; generated JSON for runtime bindings",
   "assetStudioBoundary": {
     "modelConverterTextureCount": 21,
     "texture2dObjectCount": 27,
@@ -34,5 +34,59 @@
       "cba": 177
     },
     "strictlyClosed": true
+  },
+  "transport": {
+    "purpose": "bounded GitHub/Pages transport after reproducible HTTP 408 on monolithic packs",
+    "fbx": {
+      "path": "bg_3d_616_00_01_001-animated.fbxdata",
+      "encoding": "gzip",
+      "sourceBytes": 3779728,
+      "encodedBytes": 1419834,
+      "sourceSha256": "8ccaf169d9288bcbd540f6bcf9395e7de609736ae1b60fd4e4c4f1db2a34d28d",
+      "encodedSha256": "c90c3c7c9b506fcf2a5ecf319da304a6c9c2e77a4818c37c69ce44dd8dd43b5e",
+      "decodedByteExact": true
+    },
+    "groundColor": {
+      "path": "bg3d616_01_01_ground_col.webp",
+      "encoding": "WebP quality 98; RGBA alpha lossless",
+      "sourceBytes": 6988412,
+      "encodedBytes": 3186710,
+      "sourceSha256": "11bb7b66220c44a1b88441e74517e33b8e08221f971e9dc9d128de24691e090e",
+      "encodedSha256": "d5c9565520c6e3c3d7a2fa59d971ffdc5811279970c0a541a8851df5030ec03d",
+      "channels": "RGBA",
+      "pixelExact": false,
+      "maxAbsoluteError": [
+        34,
+        15,
+        37,
+        0
+      ],
+      "meanAbsoluteError": [
+        1.0434086322784424,
+        0.84295654296875,
+        0.9972434043884277,
+        0.0
+      ]
+    },
+    "groundNormal": {
+      "path": "bg3d616_01_01_ground_nml.webp",
+      "encoding": "lossless WebP RGB; source alpha unused by normalMap",
+      "sourceBytes": 5091763,
+      "encodedBytes": 2262428,
+      "sourceSha256": "6c8740468393f7cbee8cba8e08e91544c9b0c69062129dd90f15689985cffeff",
+      "encodedSha256": "63e23458ea3a40ec5a28ecac36bca835fbb79eb61704f0556f7473eb5010a32a",
+      "channels": "RGB",
+      "pixelExact": true,
+      "maxAbsoluteError": [
+        0,
+        0,
+        0
+      ],
+      "meanAbsoluteError": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
   }
 }
