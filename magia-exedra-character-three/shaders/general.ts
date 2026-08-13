@@ -159,8 +159,9 @@ interface GeneralMaterialCreationOptions extends MaterialCreationOptions {
  *
  * Control B is not treated only as inverse roughness. The official schema also
  * provides `_SpecularGradientMap`; this port samples the exported gradient from
- * N.H and applies it after Three's PBR accumulation. Materials whose FBX names
- * contain `Aniso` use a tangent-oriented half-vector coordinate.
+ * N.H and applies it after Three's PBR accumulation. Anisotropic materials add
+ * the separate ReDriveToon view-normal XZ band recovered from the JP GLES3
+ * subprogram; it does not use a mesh tangent or reshape the ordinary specular.
  */
 export async function createGeneralMaterial(options: GeneralMaterialCreationOptions): Promise<MaterialCreationResult> {
     if (options.alphaSrc == 'shadow' && !options.shadowMap) options.alphaSrc = undefined;
@@ -383,11 +384,16 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             #if defined(RE_IndirectDiffuse)
                 rdToonAmbientColor = irradiance;
             #endif
+            vec3 rdToonSceneLightRaw = clamp(
+                rdToonAmbientColor + rdToonMainLightColor,
+                vec3(0.0),
+                vec3(1.0)
+            );
             vec3 rdToonSceneLightColor = max(
-                clamp(
-                    rdToonAmbientColor + rdToonMainLightColor,
-                    vec3(0.0),
-                    vec3(1.0)
+                mix(
+                    rdToonSceneLightRaw,
+                    uGlobalCharacterLightingOverrideColor,
+                    saturate(uGlobalCharacterLightingOverrideRatio)
                 ),
                 vec3(0.1)
             );
@@ -396,54 +402,19 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                 totalEmissiveRadiance;
 
             #ifdef HAS_CTRL
-                vec3 rdViewDirection = normalize(vViewPosition);
+                vec3 rdViewDirection = normalize(geometryViewDir);
                 vec3 rdLightDirection = rdToonMainLightDirection;
                 vec3 rdHalfDirection = normalize(rdViewDirection + rdLightDirection);
                 float rdNdotH = saturate(dot(normal, rdHalfDirection));
 
-                vec3 rdAnisoTangent = cross(vec3(0.0, 1.0, 0.0), normal);
-                if (dot(rdAnisoTangent, rdAnisoTangent) < 0.0001) {
-                    rdAnisoTangent = cross(vec3(1.0, 0.0, 0.0), normal);
-                }
-                rdAnisoTangent = normalize(rdAnisoTangent);
-                vec3 rdAnisoNormal = normalize(
-                    normal + rdAnisoTangent *
-                    (dot(rdHalfDirection, rdAnisoTangent) * 0.52)
-                );
-                float rdAnisoNdotH = saturate(dot(rdAnisoNormal, rdHalfDirection));
-                float rdSpecularCoordinate = mix(
-                    rdNdotH,
-                    rdAnisoNdotH,
-                    saturate(uMaterialAnisotropy)
-                );
-                float rdAnisoStart = clamp(
-                    uMaterialAnisoThreshold - uMaterialAnisoFeather,
-                    0.0, 1.0
-                );
-                float rdAnisoEnd = max(
-                    rdAnisoStart + 0.00001,
-                    clamp(
-                        uMaterialAnisoThreshold + uMaterialAnisoFeather,
-                        0.0, 1.0
-                    )
-                );
-                float rdAnisoBand = uMaterialAnisoFeather > 0.00001
-                    ? smoothstep(rdAnisoStart, rdAnisoEnd, rdAnisoNdotH)
-                    : step(uMaterialAnisoThreshold, rdAnisoNdotH);
-                rdAnisoBand *= mix(
-                    1.0,
-                    rdToonMetallicMask,
-                    saturate(uMaterialAnisoMaskByMetallic)
-                );
-
                 float rdSpecularGradient = pow(
-                    rdSpecularCoordinate,
+                    rdNdotH,
                     mix(18.0, 5.0, rdToonSpecularMask)
                 );
                 #ifdef HAS_SPECULAR_GRADIENT
                     rdSpecularGradient = texture2D(
                         tSpecularGradient,
-                        vec2(rdSpecularCoordinate, 0.5)
+                        vec2(rdNdotH, 0.5)
                     ).r;
                 #endif
 
@@ -456,7 +427,6 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                     rdSpecularGradient *
                     rdSpecularMask *
                     uOfficialSpecularStrength;
-                rdSpecular *= mix(1.0, 1.18, saturate(uMaterialAnisotropy));
                 rdSpecular *= mix(1.0, 1.35, saturate(uMaterialSpecialJewel));
                 // Preserve a strong authored highlight without feeding
                 // unbounded HDR values into scene Bloom/tone mapping.
@@ -467,19 +437,51 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                     max(diffuseColor.rgb, vec3(0.04)),
                     saturate(rdToonMetallicMask * uMetallicResponse)
                 );
-                // Exact current-JP per-material Aniso colour/threshold are
-                // recovered. The directional coordinate remains the current
-                // Web approximation until the compiled ReDrive subprogram is
-                // decoded; keep that uncertainty local to this one term.
-                float rdAnisoInfluence =
-                    saturate(uMaterialAnisotropy) * rdAnisoBand;
-                rdSpecularColor = mix(
-                    rdSpecularColor,
-                    uMaterialAnisoColor,
-                    rdAnisoInfluence
-                );
-                rdSpecular *= mix(1.0, 1.22, rdAnisoInfluence);
                 outgoingLight += rdSpecularColor * rdSpecular;
+
+                // JP 2022.3.62f2 ReDriveToon _IsAniso branch (GLES3 blob 90):
+                // compare the view-space normal XZ direction with the
+                // view-space half-vector XZ direction. Control G raises the
+                // per-pixel threshold and can also mask the resulting colour.
+                // This is a separate additive band, not tangent-space PBR.
+                vec2 rdAnisoNormalXZ = normal.xz;
+                float rdAnisoNormalLength = length(rdAnisoNormalXZ);
+                rdAnisoNormalXZ = rdAnisoNormalLength > 0.00001
+                    ? rdAnisoNormalXZ / rdAnisoNormalLength
+                    : vec2(0.0, 1.0);
+                vec2 rdAnisoHalfXZ = rdHalfDirection.xz;
+                float rdAnisoHalfLength = length(rdAnisoHalfXZ);
+                rdAnisoHalfXZ = rdAnisoHalfLength > 0.00001
+                    ? rdAnisoHalfXZ / rdAnisoHalfLength
+                    : vec2(0.0, 1.0);
+                float rdAnisoCoordinate = saturate(dot(
+                    rdAnisoNormalXZ,
+                    rdAnisoHalfXZ
+                ));
+                float rdAnisoThreshold =
+                    uMaterialAnisoThreshold +
+                    (1.00100005 - uMaterialAnisoThreshold) *
+                    (1.0 - rdToonMetallicMask);
+                float rdAnisoBand = uMaterialAnisoFeather > 0.00001
+                    ? smoothstep(
+                        rdAnisoThreshold - uMaterialAnisoFeather,
+                        rdAnisoThreshold + uMaterialAnisoFeather,
+                        rdAnisoCoordinate
+                    )
+                    : step(rdAnisoThreshold, rdAnisoCoordinate);
+                float rdAnisoMetallicMask = mix(
+                    1.0,
+                    rdToonMetallicMask,
+                    saturate(uMaterialAnisoMaskByMetallic)
+                );
+                vec3 rdAnisoSceneLight = rdToonSceneLightColor *
+                    (0.2 + 0.8 * rdToonBaseWeight);
+                vec3 rdAnisoColor =
+                    rdAnisoSceneLight *
+                    uMaterialAnisoColor *
+                    rdAnisoBand *
+                    rdAnisoMetallicMask;
+                outgoingLight += rdAnisoColor * saturate(uMaterialAnisotropy);
             #endif
 
             #include <opaque_fragment>
@@ -548,7 +550,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             ctrl: ctrlTex,
             shadow: shadowTex,
             none: undefined,
-        }[options.alphaSrc || 'none']
+        }[options.alphaSrc || 'none'],
+        shadowTex,
     };
 }
 

@@ -35,7 +35,7 @@ export const guiCharacterSelected = gui.addFolder(guiCharacterSelectedFolderName
 
 const characterGlobalFolder = gui.addFolder('Characters (Global)').close()
 characterGlobalFolder.add(guiOptions, 'OutlineVisible').onChange(() => updateCharacterOutline('OutlineVisible', guiOptions))
-characterGlobalFolder.add(guiOptions, 'OutlineThickness', 0, 0.01).onChange(() => updateCharacterOutline('OutlineThickness', guiOptions))
+characterGlobalFolder.add(guiOptions, 'OutlineThickness', 0.001, 10, 0.001).onChange(() => updateCharacterOutline('OutlineThickness', guiOptions))
 characterGlobalFolder.addColor(guiOptions, 'OutlineColor').onChange(() => updateCharacterOutline('OutlineColor', guiOptions))
 characterGlobalFolder.add(guiOptions, 'OutlineAlwaysVisible').onChange(() => updateCharacterOutline('OutlineAlwaysVisible', guiOptions)).domElement.title = 'Show outline even when mesh is hidden'
 
@@ -95,7 +95,7 @@ export function updateCharacterController(character: MagiaExedraCharacter3D | nu
     outlineFolder = guiCharacterSelected.addFolder('Outline')
     if (outlineFolderClosed) outlineFolder.close()
     outlineFolder.add(characterOptions, 'OutlineVisible').onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = true
-    outlineFolder.add(characterOptions, 'OutlineThickness', 0, 0.01).onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = OutlineThickness
+    outlineFolder.add(characterOptions, 'OutlineThickness', 0.001, 10, 0.001).onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = OutlineThickness
     outlineFolder.addColor(characterOptions, 'OutlineColor').onChange(() => updateCharacterOutline(character, characterOptions))._initialValueHexString = OutlineColor
     outlineFolder.add(characterOptions, 'OutlineAlwaysVisible').onChange(() => updateCharacterOutline(character, characterOptions)).initialValue = CharacterMeshController.OutlineAlwaysVisible
 

@@ -1,8 +1,32 @@
 diff --git a/node_modules/three/examples/jsm/loaders/FBXLoader.js b/node_modules/three/examples/jsm/loaders/FBXLoader.js
-index 9fa1993..0892d67 100644
+index 9fa1993..2aeee47 100644
 --- a/node_modules/three/examples/jsm/loaders/FBXLoader.js
 +++ b/node_modules/three/examples/jsm/loaders/FBXLoader.js
-@@ -2504,6 +2504,17 @@ class AnimationParser {
+@@ -1782,9 +1782,21 @@ class GeometryParser {
+ 		geoInfo.vertexPositions = ( geoNode.Vertices !== undefined ) ? geoNode.Vertices.a : [];
+ 		geoInfo.vertexIndices = ( geoNode.PolygonVertexIndex !== undefined ) ? geoNode.PolygonVertexIndex.a : [];
+ 
+-		if ( geoNode.LayerElementColor && geoNode.LayerElementColor[ 0 ].Colors ) {
++		const colorNode = geoNode.LayerElementColor?.[ 0 ];
++		const inferredByVertexColor = colorNode?.MappingInformationType === 'NoMappingInformation' &&
++			colorNode.ReferenceInformationType === 'Direct' &&
++			Array.isArray( colorNode.Colors?.a ) &&
++			colorNode.Colors.a.length === geoInfo.vertexPositions.length / 3 * 4;
+ 
+-			geoInfo.color = this.parseVertexColors( geoNode.LayerElementColor[ 0 ] );
++		if ( inferredByVertexColor ) {
++
++			colorNode.MappingInformationType = 'ByVertice';
++
++		}
++
++		if ( colorNode?.Colors ) {
++
++			geoInfo.color = this.parseVertexColors( colorNode );
+ 
+ 		}
+ 
+@@ -2504,6 +2516,17 @@ class AnimationParser {
  	parse() {
  
  		const animationClips = [];
@@ -20,7 +44,7 @@ index 9fa1993..0892d67 100644
  
  		const rawClips = this.parseClips();
  
-@@ -2736,6 +2747,7 @@ class AnimationParser {
+@@ -2736,6 +2759,7 @@ class AnimationParser {
  								const node = {
  
  									modelName: rawModel.attrName ? PropertyBinding.sanitizeNodeName( rawModel.attrName ) : '',
@@ -28,7 +52,7 @@ index 9fa1993..0892d67 100644
  									morphName: fbxTree.Objects.Deformer[ deformerID ].attrName,
  
  								};
-@@ -2816,6 +2828,8 @@ class AnimationParser {
+@@ -2816,6 +2840,8 @@ class AnimationParser {
  	generateTracks( rawTracks ) {
  
  		const tracks = [];
@@ -37,7 +61,7 @@ index 9fa1993..0892d67 100644
  
  		let initialPosition = new Vector3();
  		let initialScale = new Vector3();
-@@ -2827,28 +2841,28 @@ class AnimationParser {
+@@ -2827,28 +2853,28 @@ class AnimationParser {
  
  		if ( rawTracks.T !== undefined && Object.keys( rawTracks.T.curves ).length > 0 ) {
  
@@ -70,7 +94,7 @@ index 9fa1993..0892d67 100644
  			if ( morphTrack !== undefined ) tracks.push( morphTrack );
  
  		}
-@@ -2942,7 +2956,7 @@ class AnimationParser {
+@@ -2942,7 +2968,7 @@ class AnimationParser {
  
  	}
  
@@ -79,7 +103,7 @@ index 9fa1993..0892d67 100644
  
  		const curves = rawTracks.DeformPercent.curves.morph;
  		const values = curves.values.map( function ( val ) {
-@@ -2951,9 +2965,11 @@ class AnimationParser {
+@@ -2951,9 +2977,11 @@ class AnimationParser {
  
  		} );
  

@@ -265,6 +265,53 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             faceColor.rgb -= vec3(0.0, blushFactor, blushFactor);
             diffuseColor = faceColor;
             `
+        ).replace(
+            '#include <opaque_fragment>',
+            /*glsl*/ `
+            // JP ReDriveToon face pass evaluates SH with the animated Head
+            // forward direction, not the polygon normal. Apply the scene-volume
+            // lighting override before subsequent material additions.
+            vec3 rdFaceForwardNormalVS = normalize(vFaceForwardVS);
+            vec3 rdFaceAmbient = getAmbientLightIrradiance(ambientLightColor);
+            #if defined(USE_LIGHT_PROBES)
+                rdFaceAmbient += getLightProbeIrradiance(
+                    lightProbe,
+                    rdFaceForwardNormalVS
+                );
+            #endif
+            #if NUM_HEMI_LIGHTS > 0
+                #pragma unroll_loop_start
+                for (int i = 0; i < NUM_HEMI_LIGHTS; i++) {
+                    rdFaceAmbient += getHemisphereLightIrradiance(
+                        hemisphereLights[i],
+                        rdFaceForwardNormalVS
+                    );
+                }
+                #pragma unroll_loop_end
+            #endif
+            vec3 rdFaceMainLightColor = vec3(0.0);
+            #if NUM_DIR_LIGHTS > 0
+                rdFaceMainLightColor = directionalLights[0].color;
+            #endif
+            vec3 rdFaceSceneLightRaw = clamp(
+                max(rdFaceAmbient, vec3(0.0)) + rdFaceMainLightColor,
+                vec3(0.0),
+                vec3(1.0)
+            );
+            vec3 rdFaceSceneLightColor = max(
+                mix(
+                    rdFaceSceneLightRaw,
+                    uGlobalCharacterLightingOverrideColor,
+                    saturate(uGlobalCharacterLightingOverrideRatio)
+                ),
+                vec3(0.1)
+            );
+            outgoingLight =
+                diffuseColor.rgb * rdFaceSceneLightColor +
+                totalEmissiveRadiance;
+
+            #include <opaque_fragment>
+            `
         );
 
         injectToonStylization(shader, uniforms);
@@ -281,6 +328,7 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             noseGradientTex,
             eyehighlightTex,
         ],
+        shadowTex,
         updateFaceDirectionReference: options.faceReference
             ? updateFaceDirectionReference
             : undefined,

@@ -42,6 +42,35 @@ loadingManager.setURLModifier((url) => {
 const fbxLoader = new FBXLoader(loadingManager);
 let stencilRefCount = 1
 
+/**
+ * FBXLoader treats vertex colours as display RGB and converts them to the
+ * working colour space. AssetStudio exported the ReDrive vertex channels as
+ * numeric shader data (outline width in R, depth-rim width in G and face
+ * outline adjustment in B), so restore those serialized values once at the
+ * character-loader boundary. Stage FBX uses a separate loader and keeps its
+ * own material-scoped recovery.
+ */
+export function restoreReDriveCharacterVertexColorChannels(
+    geometry: THREE.BufferGeometry,
+): boolean {
+    if (geometry.userData.reDriveVertexColorSpace === 'raw') return false
+    const attribute = geometry.getAttribute('color')
+    if (!(attribute instanceof THREE.BufferAttribute) || attribute.itemSize < 3) {
+        return false
+    }
+
+    const array = attribute.array
+    for (let index = 0; index < array.length; index++) {
+        const linear = THREE.MathUtils.clamp(Number(array[index]), 0, 1)
+        array[index] = linear <= 0.0031308
+            ? linear * 12.92
+            : 1.055 * linear ** (1 / 2.4) - 0.055
+    }
+    attribute.needsUpdate = true
+    geometry.userData.reDriveVertexColorSpace = 'raw'
+    return true
+}
+
 const origConsoleWarn = console.warn
 console.warn = function (...data: any[]) {
     for (const value of data) {
@@ -255,8 +284,15 @@ export async function loadCharacter(
 
             modelObject.updateMatrixWorld(true)
             const meshes: THREE.Mesh[] = []
+            const recoveredVertexColorGeometries = new Set<THREE.BufferGeometry>()
             modelObject.traverse(child => {
-                if ((child as THREE.Mesh).isMesh) meshes.push(child as THREE.Mesh)
+                if (!(child as THREE.Mesh).isMesh) return
+                const mesh = child as THREE.Mesh
+                meshes.push(mesh)
+                if (!recoveredVertexColorGeometries.has(mesh.geometry)) {
+                    restoreReDriveCharacterVertexColorChannels(mesh.geometry)
+                    recoveredVertexColorGeometries.add(mesh.geometry)
+                }
             })
 
             const userData: ObjectUserData = {
@@ -358,11 +394,14 @@ export async function loadCharacter(
                     }
 
                     let alphaTex: THREE.Texture | undefined
+                    let outlineShadowTex: THREE.Texture | undefined
+                    let outlineFaceAdjust = 0
                     let material: THREE.Material
                     let textures: THREE.Texture[]
 
                     if (name.includes('face')) {
               const faceProfile = getOfficialFaceProfile(characterId)
+              outlineFaceAdjust = faceProfile.faceOutlineAdjust
               const faceReference = createFaceDirectionReference(modelObject, characterProfile)
               const result = await createFaceMaterial({
                   ...sharedMaterialOptions,
@@ -379,6 +418,7 @@ export async function loadCharacter(
               })
               material = result.material
               textures = result.textures
+              outlineShadowTex = result.shadowTex
               if (result.updateFaceDirectionReference) {
                   userData.animationLoops.push(result.updateFaceDirectionReference)
               }
@@ -390,6 +430,7 @@ export async function loadCharacter(
                             material = result.material
                             textures = result.textures
                             alphaTex = result.alphaTex
+                            outlineShadowTex = result.shadowTex
                             userData.animationLoops.push(result.animate)
                         } else {
                             if (characterId == 100106 && name.includes('body')) alphaSrc = 'shadow'
@@ -438,6 +479,7 @@ export async function loadCharacter(
                             material = result.material
                             textures = result.textures
                             alphaTex = result.alphaTex
+                            outlineShadowTex = result.shadowTex
                             if (result.updateAngelRingReference) {
                                 userData.animationLoops.push(result.updateAngelRingReference)
                             }
@@ -449,6 +491,7 @@ export async function loadCharacter(
                             material = result.material
                             textures = result.textures
                             alphaTex = result.alphaTex
+                            outlineShadowTex = result.shadowTex
                         }
                         console.log('AngelRing capability/reference:', {
                             enabled: characterProfile.angelRingEnabled,
@@ -462,6 +505,7 @@ export async function loadCharacter(
                                 material = result.material
                                 textures = result.textures
                                 alphaTex = result.alphaTex
+                                outlineShadowTex = result.shadowTex
                             }
                         }
                     }
@@ -487,7 +531,8 @@ export async function loadCharacter(
 
                     const outlineMesh = addOutlineToMesh(mesh, {
                         alphaTex,
-                        thickness: featureProfile.outlineOffset ? 0.0018 : undefined,
+                        shadowTex: outlineShadowTex,
+                        faceOutlineAdjust: outlineFaceAdjust,
                     })
                     userData.outlineMeshes.push(outlineMesh)
                     outlineMesh.renderOrder = 3

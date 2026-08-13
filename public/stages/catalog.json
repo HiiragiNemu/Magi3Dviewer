@@ -3,6 +3,7 @@
   "generatedAt": "2026-07-30",
   "sourceRevision": "b63d986c8f2e088362e7f26214967c92",
   "entries": [
+    "./stages/catalog/battle-601-00-01-001.json",
     "./stages/catalog/battle-603-00-00-001.json",
     "./stages/catalog/battle-608-00-00-001.json",
     "./stages/catalog/battle-616-00-01-001.json"
@@ -184,8 +185,8 @@
           "materialName": "mt_bg3d600A_01_01_ground",
           "materialPattern": "^mt_bg3d600A_01_01_ground(?:\\.\\d+)?$",
           "shading": "lit",
-          "baseMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_03_groundA_col.png",
-          "blendMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_03_groundB_col.png",
+          "baseMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_03_groundB_col.png",
+          "blendMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_03_groundA_col.png",
           "normalMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_03_groundB_nml.png",
           "smoothnessMapUrl": "./stages/official/battle-600-00-01-001/bg3d600A_01_01_ground_smoothness.png",
           "vertexColorBlend": true,
@@ -195,7 +196,8 @@
           "metallicFromSmoothnessMap": true,
           "normalScale": 2,
           "castShadow": false,
-          "receiveShadow": true
+          "receiveShadow": true,
+          "textureWrap": "repeat"
         },
         {
           "materialName": "mt_bg3d600A_01_01_sky",
@@ -689,7 +691,8 @@
           "normalScale": 2,
           "unlitness": 0,
           "castShadow": false,
-          "receiveShadow": true
+          "receiveShadow": true,
+          "textureWrap": "repeat"
         },
         {
           "materialName": "mt_bg3d600A_01_02_propA",

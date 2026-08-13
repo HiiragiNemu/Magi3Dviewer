@@ -29,6 +29,10 @@ const gem = readFileSync(
   join(root, 'magia-exedra-character-three', 'shaders', 'gem.ts'),
   'utf8',
 )
+const face = readFileSync(
+  join(root, 'magia-exedra-character-three', 'shaders', 'face.ts'),
+  'utf8',
+)
 
 test('100101/100107 shared body Aniso uses exact current-JP material values', () => {
   const value = profiles.getOfficialMaterialProfile('mt_chara_100101_body_Aniso')
@@ -65,7 +69,74 @@ test('per-material uniforms override the global debug Fresnel without enabling i
   assert.match(general, /uMaterialAnisoColor/)
   assert.match(general, /uMaterialAnisoThreshold/)
   assert.match(general, /rdAnisoBand/)
-  assert.match(general, /directional coordinate remains the current/)
+  assert.match(general, /vec2 rdAnisoNormalXZ = normal\.xz/)
+  assert.match(general, /vec2 rdAnisoHalfXZ = rdHalfDirection\.xz/)
+  assert.match(general, /vec3 rdViewDirection = normalize\(geometryViewDir\)/)
+  assert.match(
+    general,
+    /\(1\.00100005 - uMaterialAnisoThreshold\)[\s\S]*?\(1\.0 - rdToonMetallicMask\)/,
+  )
+  assert.match(general, /rdAnisoSceneLight[\s\S]*?0\.2 \+ 0\.8 \* rdToonBaseWeight/)
+  assert.match(general, /rdToonSceneLightRaw/)
+  assert.match(
+    general,
+    /mix\([\s\S]*?rdToonSceneLightRaw[\s\S]*?uGlobalCharacterLightingOverrideColor[\s\S]*?uGlobalCharacterLightingOverrideRatio/,
+  )
+  assert.match(general, /outgoingLight \+= rdAnisoColor \* saturate\(uMaterialAnisotropy\)/)
+  assert.doesNotMatch(general, /rdAnisoTangent/)
+  assert.doesNotMatch(general, /1\.18, saturate\(uMaterialAnisotropy\)/)
+  assert.doesNotMatch(general, /1\.22, rdAnisoInfluence/)
+})
+
+test('reverse-derived character lighting is the production default', () => {
+  assert.match(stylization, /officialLookEnabled:\s*false/)
+  assert.match(stylization, /Legacy Web approximation retained only/)
+  assert.match(stylization, /outgoingLight \*= uGlobalCharacterTint/)
+  assert.doesNotMatch(
+    stylization,
+    /outgoingLight\s*=\s*mix\([\s\S]*?diffuseColor\.rgb\s*\*\s*max\([\s\S]*?uGlobalCharacterLightingOverrideColor/,
+  )
+})
+
+test('face uses its animated forward direction for official scene lighting', () => {
+  assert.match(
+    face,
+    /getLightProbeIrradiance\([\s\S]*?lightProbe,[\s\S]*?rdFaceForwardNormalVS/,
+  )
+  assert.match(
+    face,
+    /getHemisphereLightIrradiance\([\s\S]*?hemisphereLights\[i\],[\s\S]*?rdFaceForwardNormalVS/,
+  )
+  assert.match(
+    face,
+    /diffuseColor\.rgb \* rdFaceSceneLightColor \+[\s\S]*?totalEmissiveRadiance/,
+  )
+  assert.ok(
+    face.indexOf('vec3 rdFaceSceneLightRaw') <
+      face.indexOf('injectToonStylization(shader, uniforms)'),
+  )
+})
+
+test('scene-light override preserves the official pre-material ordering', () => {
+  const raw = [0.2, 0.4, 0.6]
+  const override = [1, 0.5, 0]
+  const ratio = 0.35
+  const result = raw.map((value, index) => Math.max(
+    0.1,
+    value + ratio * (override[index] - value),
+  ))
+  assert.deepEqual(result.map(value => Number(value.toFixed(3))), [0.48, 0.435, 0.39])
+})
+
+test('official anisotropy threshold and metallic mask match the recovered arithmetic', () => {
+  const threshold = 0.9139999747276306
+  const controlG = 0.42
+  const dynamicThreshold = threshold + (1.00100005 - threshold) * (1 - controlG)
+  assert.ok(Math.abs(dynamicThreshold - 0.964460018) < 1e-6)
+
+  const maskByMetallic = 1
+  const multiplier = 1 + maskByMetallic * (controlG - 1)
+  assert.ok(Math.abs(multiplier - controlG) < 1e-12)
 })
 
 

@@ -269,7 +269,8 @@
       "side": "front",
       "normalMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_ground_nml.webp",
       "smoothnessMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_ground_col.webp",
-      "smoothnessChannel": "a"
+      "smoothnessChannel": "a",
+      "textureWrap": "repeat"
     },
     {
       "materialName": "mt_bg3d616_01_01_perfume1",

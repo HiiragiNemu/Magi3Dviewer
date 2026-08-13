@@ -54,6 +54,8 @@ export interface StageMaterialBinding {
     smoothnessMapUrl?: string
     blendMapUrl?: string
     matCapMapUrl?: string
+    /** Serialized Unity Texture2D wrap mode for every authored map in this binding. */
+    textureWrap?: 'repeat' | 'clamp' | 'mirror'
     vertexColorBlend?: boolean
     smoothness?: number
     smoothnessChannel?: 'r' | 'g' | 'b' | 'a'
@@ -95,6 +97,12 @@ const blendingByName = {
     multiply: THREE.MultiplyBlending,
 } as const
 
+const wrappingByName = {
+    repeat: THREE.RepeatWrapping,
+    clamp: THREE.ClampToEdgeWrapping,
+    mirror: THREE.MirroredRepeatWrapping,
+} as const
+
 /**
  * AssetStudio's FBX contains geometry and material names, but this stage's FBX
  * contains no Texture/RelativeFilename records. This binder reconnects the
@@ -119,8 +127,12 @@ export async function applyStageMaterialBindings(
     const createdMaterials = new Set<THREE.Material>()
     const sourceMaterialsToDispose = new Set<THREE.Material>()
 
-    const loadTexture = (url: string, kind: LoadedTextureKind) => {
-        const cacheKey = `${kind}:${new URL(url, document.baseURI).href}`
+    const loadTexture = (
+        url: string,
+        kind: LoadedTextureKind,
+        wrap: StageMaterialBinding['textureWrap'] = 'clamp',
+    ) => {
+        const cacheKey = `${kind}:${wrap}:${new URL(url, document.baseURI).href}`
         let promise = textureCache.get(cacheKey)
         if (!promise) {
             promise = textureLoader.loadAsync(new URL(url, document.baseURI).href).then(texture => {
@@ -132,6 +144,8 @@ export async function applyStageMaterialBindings(
                 texture.colorSpace = kind === 'color'
                     ? THREE.SRGBColorSpace
                     : THREE.NoColorSpace
+                texture.wrapS = wrappingByName[wrap]
+                texture.wrapT = wrappingByName[wrap]
                 texture.anisotropy = maxAnisotropy
                 texture.needsUpdate = true
                 ownedTextures.add(texture)
@@ -143,22 +157,26 @@ export async function applyStageMaterialBindings(
     }
 
     const texturePromises = bindings.flatMap(binding => [
-        binding.baseMapUrl ? loadTexture(binding.baseMapUrl, 'color') : undefined,
-        binding.normalMapUrl ? loadTexture(binding.normalMapUrl, 'data') : undefined,
-        binding.smoothnessMapUrl ? loadTexture(binding.smoothnessMapUrl, 'data') : undefined,
-        binding.blendMapUrl ? loadTexture(binding.blendMapUrl, 'color') : undefined,
-        binding.matCapMapUrl ? loadTexture(binding.matCapMapUrl, 'color') : undefined,
+        binding.baseMapUrl ? loadTexture(binding.baseMapUrl, 'color', binding.textureWrap) : undefined,
+        binding.normalMapUrl ? loadTexture(binding.normalMapUrl, 'data', binding.textureWrap) : undefined,
+        binding.smoothnessMapUrl ? loadTexture(binding.smoothnessMapUrl, 'data', binding.textureWrap) : undefined,
+        binding.blendMapUrl ? loadTexture(binding.blendMapUrl, 'color', binding.textureWrap) : undefined,
+        binding.matCapMapUrl ? loadTexture(binding.matCapMapUrl, 'color', binding.textureWrap) : undefined,
         binding.multiUvScroll?.textureUrl
-            ? loadTexture(binding.multiUvScroll.textureUrl, 'color')
+            ? loadTexture(binding.multiUvScroll.textureUrl, 'color', 'repeat')
             : undefined,
         binding.flowMap?.textureUrl
-            ? loadTexture(binding.flowMap.textureUrl, 'data')
+            ? loadTexture(binding.flowMap.textureUrl, 'data', 'repeat')
             : undefined,
     ].filter((promise): promise is Promise<THREE.Texture> => Boolean(promise)))
 
-    const resolveTexture = async (url: string | undefined, kind: LoadedTextureKind) => {
+    const resolveTexture = async (
+        url: string | undefined,
+        kind: LoadedTextureKind,
+        wrap: StageMaterialBinding['textureWrap'] = 'clamp',
+    ) => {
         if (!url) return undefined
-        return loadTexture(url, kind)
+        return loadTexture(url, kind, wrap)
     }
 
     interface MeshMaterialPlan {
@@ -206,18 +224,20 @@ export async function applyStageMaterialBindings(
 
                 plan.operations.push((async () => {
                     const material = await createBoundMaterial(binding, mesh, {
-                        baseMap: await resolveTexture(binding.baseMapUrl, 'color'),
-                        normalMap: await resolveTexture(binding.normalMapUrl, 'data'),
-                        smoothnessMap: await resolveTexture(binding.smoothnessMapUrl, 'data'),
-                        blendMap: await resolveTexture(binding.blendMapUrl, 'color'),
-                        matCapMap: await resolveTexture(binding.matCapMapUrl, 'color'),
+                        baseMap: await resolveTexture(binding.baseMapUrl, 'color', binding.textureWrap),
+                        normalMap: await resolveTexture(binding.normalMapUrl, 'data', binding.textureWrap),
+                        smoothnessMap: await resolveTexture(binding.smoothnessMapUrl, 'data', binding.textureWrap),
+                        blendMap: await resolveTexture(binding.blendMapUrl, 'color', binding.textureWrap),
+                        matCapMap: await resolveTexture(binding.matCapMapUrl, 'color', binding.textureWrap),
                         multiUvScrollMap: await resolveTexture(
                             binding.multiUvScroll?.textureUrl,
                             'color',
+                            'repeat',
                         ),
                         flowMap: await resolveTexture(
                             binding.flowMap?.textureUrl,
                             'data',
+                            'repeat',
                         ),
                         ownedTextures,
                     })
@@ -372,8 +392,7 @@ async function createBoundMaterial(
         ? new THREE.Color(binding.color[0], binding.color[1], binding.color[2])
         : new THREE.Color(binding.color ?? '#ffffff')
     const opacity = Array.isArray(binding.color) ? binding.color[3] : 1
-    const common = {
-        map,
+    const common: THREE.MeshBasicMaterialParameters = {
         color,
         opacity,
         blending: binding.blending
@@ -384,6 +403,7 @@ async function createBoundMaterial(
         depthWrite: binding.depthWrite ?? true,
         side,
     }
+    if (map) common.map = map
 
     if (binding.shading === 'unlit') {
         const material = new THREE.MeshBasicMaterial(common)
@@ -400,9 +420,8 @@ async function createBoundMaterial(
         return material
     }
 
-    const material = new THREE.MeshStandardMaterial({
+    const standardParameters: THREE.MeshStandardMaterialParameters = {
         ...common,
-        normalMap: textures.normalMap,
         normalScale: new THREE.Vector2(
             binding.normalScale ?? 1,
             binding.normalScale ?? 1,
@@ -412,7 +431,9 @@ async function createBoundMaterial(
             ? 1
             : 1 - (binding.smoothness ?? 0),
         vertexColors: Boolean(binding.vertexColorBlend && mesh.geometry.hasAttribute('color')),
-    })
+    }
+    if (textures.normalMap) standardParameters.normalMap = textures.normalMap
+    const material = new THREE.MeshStandardMaterial(standardParameters)
     material.alphaToCoverage = binding.alphaToCoverage ?? false
 
     if (binding.vertexColorBlend && !mesh.geometry.hasAttribute('color')) {
@@ -740,7 +761,14 @@ uniform sampler2D uStageBlendMap;`,
 #endif
 #ifdef USE_COLOR
     vec4 stageBlendColor = texture2D( uStageBlendMap, vMapUv );
-    diffuseColor.rgb = mix( diffuseColor.rgb, stageBlendColor.rgb, clamp( vColor.r, 0.0, 1.0 ) );
+    // FBXLoader decodes vertex colours as sRGB display colour. ReDrive bg_uber
+    // consumes the red channel as a raw numeric blend weight, so invert that
+    // loader conversion before applying the official vertex-colour blend.
+    float stageBlendWeightLinear = clamp( vColor.r, 0.0, 1.0 );
+    float stageBlendWeight = stageBlendWeightLinear <= 0.0031308
+        ? stageBlendWeightLinear * 12.92
+        : 1.055 * pow( stageBlendWeightLinear, 1.0 / 2.4 ) - 0.055;
+    diffuseColor.rgb = mix( diffuseColor.rgb, stageBlendColor.rgb, clamp( stageBlendWeight, 0.0, 1.0 ) );
 #endif`,
                 )
         }

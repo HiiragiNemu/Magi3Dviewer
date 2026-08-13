@@ -50,11 +50,10 @@ export const toonStylizationOptions: ToonStylizationOptions = {
     characterLightingOverrideColor: '#ffffff',
     characterLightingOverrideRatio: 0,
 
-    // Until the recovered GLES diffuse/SH path replaces Three.js PBR in full,
-    // preserve the authored colour/shadow textures as a safety baseline. Turning
-    // this off while also lowering ambient/fill lighting caused the near-black
-    // purple silhouette regression.
-    officialLookEnabled: true,
+    // The reverse-derived ReDriveToon diffuse/SH path is now the production
+    // default. Keep this hand-tuned Web colour reconstruction available only as
+    // the explicitly labelled GUI comparison override below.
+    officialLookEnabled: false,
     lightingInfluence: 0.24,
     albedoLift: 0.00,
     brightness: 0.98,
@@ -296,18 +295,9 @@ export function injectToonStylization(
             saturate(uOfficialLookEnabled)
         );
 
-        // ReDriveToon applies the scene lighting override to the accumulated
-        // main-light + SH colour, then multiplies the material result. Three.js
-        // exposes the accumulated result here, so blend toward the same authored
-        // target while preserving its shadow/specular computation.
-        outgoingLight = mix(
-            outgoingLight,
-            diffuseColor.rgb * max(
-                uGlobalCharacterLightingOverrideColor,
-                vec3(0.1)
-            ),
-            saturate(uGlobalCharacterLightingOverrideRatio)
-        );
+        // The recovered material shaders apply the scene-light override before
+        // multiplying Base/Shadow and before their additive Aniso/Gem/Rim terms.
+        // Applying it here would erase those official additions at nonzero ratio.
         outgoingLight *= uGlobalCharacterTint;
 
         float rdToonNdotV = saturate(dot(normal, geometryViewDir));

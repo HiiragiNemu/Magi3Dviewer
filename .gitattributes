@@ -1,1 +1,7 @@
 public/stages/official/battle-603-00-00-001/lightmap-bindings.json text eol=lf
+# Unified-diff context lines intentionally begin with the diff marker followed
+# by source indentation and blank context carries one marker space.
+patches/*.patch whitespace=-blank-at-eol,-space-before-tab
+# This generated shard is byte-hashed in its evidence/rollback records. Preserve
+# the emitted CRLF bytes while treating CR as part of the line ending.
+public/stages/catalog/battle-601-00-01-001.json whitespace=cr-at-eol

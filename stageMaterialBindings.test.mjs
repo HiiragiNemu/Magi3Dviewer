@@ -42,4 +42,47 @@ assert.match(source, /rdStageFlowPhase0/)
 assert.match(source, /rdStageFlowPhase1/)
 assert.match(source, /rdStageFlowBlend/)
 
+assert.match(
+    source,
+    /textureWrap\?: 'repeat' \| 'clamp' \| 'mirror'/,
+    'serialized Unity texture wrapping must be represented explicitly',
+)
+assert.match(
+    source,
+    /texture\.wrapS = wrappingByName\[wrap\][\s\S]*?texture\.wrapT = wrappingByName\[wrap\]/,
+    'material binding must apply the authored wrap mode on both UV axes',
+)
+assert.match(
+    source,
+    /const cacheKey = `\$\{kind\}:\$\{wrap\}:/,
+    'texture cache identity must include wrap mode',
+)
+assert.match(
+    source,
+    /stageBlendWeightLinear <= 0\.0031308[\s\S]*?1\.055 \* pow\( stageBlendWeightLinear, 1\.0 \/ 2\.4 \) - 0\.055/,
+    'FBX sRGB vertex-colour conversion must be inverted for raw blend weights',
+)
+assert.match(
+    source,
+    /if \(map\) common\.map = map/,
+    'untextured official materials must omit an undefined map constructor parameter',
+)
+assert.match(
+    source,
+    /if \(textures\.normalMap\) standardParameters\.normalMap = textures\.normalMap/,
+    'materials without an official normal map must omit the undefined parameter',
+)
+
+const rawWeight = 77 / 255
+const loaderLinearWeight = rawWeight <= 0.04045
+    ? rawWeight / 12.92
+    : ((rawWeight + 0.055) / 1.055) ** 2.4
+const recoveredWeight = loaderLinearWeight <= 0.0031308
+    ? loaderLinearWeight * 12.92
+    : 1.055 * loaderLinearWeight ** (1 / 2.4) - 0.055
+assert.ok(
+    Math.abs(recoveredWeight - rawWeight) < 1e-7,
+    `raw vertex blend weight must round-trip (expected ${rawWeight}, got ${recoveredWeight})`,
+)
+
 console.log('Official stage material ownership invariants passed.')

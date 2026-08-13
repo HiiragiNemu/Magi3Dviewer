@@ -29,4 +29,6 @@ export interface MaterialCreationResult {
     material: THREE.Material
     textures: THREE.Texture[];
     alphaTex?: THREE.Texture;
+    /** Authored ReDrive `_ShadowTex`, reused by the outline pass. */
+    shadowTex?: THREE.Texture;
 }

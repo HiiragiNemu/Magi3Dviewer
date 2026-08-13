@@ -114,7 +114,9 @@ export function applyRecoveredBaseline() {
         Brightness: 1.02,
         Contrast: 1.12,
         Saturation: 1.06,
-        OutlineThickness: 0.0020,
+        // The fallback changes colour and lighting only; retain the serialized
+        // ReDriveToon outline-width unit used by the reverse-derived pass.
+        OutlineThickness: 5,
         OutlineColor: '#554a67',
     })
 
