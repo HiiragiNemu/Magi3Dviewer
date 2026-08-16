@@ -39,6 +39,51 @@ export interface StageFlowMapProfile {
     dropFrame?: boolean
 }
 
+export type StageTextureWrap = 'repeat' | 'clamp' | 'mirror'
+export type StageTextureFilter = 'point' | 'bilinear' | 'trilinear'
+export type StageTextureSlot = 'base' | 'normal' | 'smoothness' | 'blend' | 'matCap'
+
+export interface StageTextureBinding {
+    /** Runtime URL of the exported carrier texture. */
+    url: string
+    /** Unity material property that owns this TexEnv, e.g. `_BaseMap`. */
+    sourceProperty: string
+    /** Exact source Texture2D PPtr when raw bundle evidence is available. */
+    sourceTexturePathId?: string
+    /** Manifest-relative bundle and serialized CAB that make the PPtr unique. */
+    sourceTextureBundle?: string
+    sourceTextureCab?: string
+    /** Serialized Texture2D colour-space flag before slot-specific runtime use. */
+    serializedColorSpace?: 'srgb' | 'linear'
+    colorSpace: 'srgb' | 'linear'
+    coordinates:
+        | { kind: 'mesh-uv', channel: 0 | 1 | 2 | 3 }
+        | { kind: 'view-normal' }
+    /** Serialized Unity Material TexEnv scale/offset. */
+    transform: {
+        scale: [number, number]
+        offset: [number, number]
+    }
+    /** Serialized Texture2D per-axis sampler state. */
+    wrap: {
+        u: StageTextureWrap
+        v: StageTextureWrap
+    }
+    filter: StageTextureFilter
+    anisotropy: number
+    mipBias: number
+    mipCount: number
+    evidence: 'exact-unity-texture2d' | 'legacy-default'
+}
+
+export interface StageTextureSet {
+    base?: StageTextureBinding
+    normal?: StageTextureBinding
+    smoothness?: StageTextureBinding
+    blend?: StageTextureBinding
+    matCap?: StageTextureBinding
+}
+
 export interface StageMaterialBinding {
     /** Exact FBX material name. */
     materialName?: string
@@ -54,8 +99,14 @@ export interface StageMaterialBinding {
     smoothnessMapUrl?: string
     blendMapUrl?: string
     matCapMapUrl?: string
-    /** Serialized Unity Texture2D wrap mode for every authored map in this binding. */
-    textureWrap?: 'repeat' | 'clamp' | 'mirror'
+    /**
+     * Exact per-slot Texture2D sampler and Material TexEnv data. New official
+     * products use this path; URL fields above remain a legacy compatibility
+     * surface and are normalized once at load time.
+     */
+    textures?: StageTextureSet
+    /** Legacy shorthand used only when every authored map shares one wrap mode. */
+    textureWrap?: StageTextureWrap
     vertexColorBlend?: boolean
     smoothness?: number
     smoothnessChannel?: 'r' | 'g' | 'b' | 'a'
@@ -83,13 +134,116 @@ export interface StageMaterialBindingResult {
     unmatchedBindings: string[]
 }
 
-type LoadedTextureKind = 'color' | 'data'
-
 const sideByName = {
     front: THREE.FrontSide,
     back: THREE.BackSide,
     double: THREE.DoubleSide,
 } as const
+
+const magFilterByName = {
+    point: THREE.NearestFilter,
+    bilinear: THREE.LinearFilter,
+    trilinear: THREE.LinearFilter,
+} as const
+
+function minFilterFor(profile: StageTextureBinding) {
+    if (profile.mipCount === 1) {
+        return profile.filter === 'point'
+            ? THREE.NearestFilter
+            : THREE.LinearFilter
+    }
+    if (profile.filter === 'point') return THREE.NearestMipmapNearestFilter
+    if (profile.filter === 'bilinear') return THREE.LinearMipmapNearestFilter
+    return THREE.LinearMipmapLinearFilter
+}
+
+function legacyTextureBinding(
+    url: string,
+    colorSpace: 'color' | 'data',
+    wrap: StageTextureWrap,
+    anisotropy: number,
+    sourceProperty: string,
+    coordinates: StageTextureBinding['coordinates'] = { kind: 'mesh-uv', channel: 0 },
+): StageTextureBinding {
+    return {
+        url,
+        sourceProperty,
+        colorSpace: colorSpace === 'color' ? 'srgb' : 'linear',
+        coordinates,
+        transform: { scale: [1, 1], offset: [0, 0] },
+        wrap: { u: wrap, v: wrap },
+        filter: 'trilinear',
+        anisotropy,
+        mipBias: 0,
+        mipCount: 0,
+        evidence: 'legacy-default',
+    }
+}
+
+function resolveStageTextureBinding(
+    binding: StageMaterialBinding,
+    slot: StageTextureSlot,
+    legacyAnisotropy: number,
+): StageTextureBinding | undefined {
+    const exact = binding.textures?.[slot]
+    if (exact) {
+        validateStageTextureBinding(exact, binding, slot)
+        return exact
+    }
+
+    const legacy = {
+        base: [binding.baseMapUrl, 'color', '_BaseMap', { kind: 'mesh-uv', channel: 0 }],
+        normal: [binding.normalMapUrl, 'data', '_BumpMap', { kind: 'mesh-uv', channel: 0 }],
+        smoothness: [binding.smoothnessMapUrl, 'data', '_MetallicGlossMap', { kind: 'mesh-uv', channel: 0 }],
+        blend: [binding.blendMapUrl, 'color', '_BlendTex', { kind: 'mesh-uv', channel: 0 }],
+        matCap: [binding.matCapMapUrl, 'color', '_MatCapTex', { kind: 'view-normal' }],
+    } as const
+    const [url, colorSpace, sourceProperty, coordinates] = legacy[slot]
+    if (!url) return undefined
+    return legacyTextureBinding(
+        url,
+        colorSpace,
+        binding.textureWrap ?? 'clamp',
+        legacyAnisotropy,
+        sourceProperty,
+        coordinates,
+    )
+}
+
+function validateStageTextureBinding(
+    profile: StageTextureBinding,
+    material: StageMaterialBinding,
+    slot: StageTextureSlot,
+) {
+    const label = material.materialName ?? material.materialPattern ?? '(unnamed)'
+    const transformValues = [
+        ...profile.transform.scale,
+        ...profile.transform.offset,
+    ]
+    if (profile.evidence !== 'exact-unity-texture2d') {
+        throw new Error(`Official stage texture ${label}/${slot} is not exact Unity evidence`)
+    }
+    if (
+        !profile.url
+        || !profile.sourceProperty
+        || profile.transform.scale.length !== 2
+        || profile.transform.offset.length !== 2
+        || !(profile.wrap.u in wrappingByName)
+        || !(profile.wrap.v in wrappingByName)
+        || !(profile.filter in magFilterByName)
+        || !transformValues.every(Number.isFinite)
+        || !Number.isFinite(profile.anisotropy)
+        || profile.anisotropy < 0
+        || !Number.isFinite(profile.mipBias)
+        // WebGL/Three has no fixed-function per-sampler LOD bias.  Refuse to
+        // present a non-zero Unity value as exact until a shader path owns it.
+        || profile.mipBias !== 0
+        || !Number.isInteger(profile.mipCount)
+        || profile.mipCount < 1
+    ) {
+        throw new Error(`Invalid exact stage texture descriptor: ${label}/${slot}`)
+    }
+}
 
 const blendingByName = {
     normal: THREE.NormalBlending,
@@ -127,26 +281,44 @@ export async function applyStageMaterialBindings(
     const createdMaterials = new Set<THREE.Material>()
     const sourceMaterialsToDispose = new Set<THREE.Material>()
 
-    const loadTexture = (
-        url: string,
-        kind: LoadedTextureKind,
-        wrap: StageMaterialBinding['textureWrap'] = 'clamp',
-    ) => {
-        const cacheKey = `${kind}:${wrap}:${new URL(url, document.baseURI).href}`
+    const textureBinding = (
+        binding: StageMaterialBinding,
+        slot: StageTextureSlot,
+    ) => resolveStageTextureBinding(binding, slot, maxAnisotropy)
+
+    const loadTexture = (profile: StageTextureBinding) => {
+        const absoluteUrl = new URL(profile.url, document.baseURI).href
+        // Sampler, TexEnv and UV channel are texture-instance state in Three.
+        // Include the complete descriptor so one source image can safely serve
+        // different Unity materials without cross-material mutation.
+        const cacheKey = JSON.stringify({ absoluteUrl, ...profile })
         let promise = textureCache.get(cacheKey)
         if (!promise) {
-            promise = textureLoader.loadAsync(new URL(url, document.baseURI).href).then(texture => {
+            promise = textureLoader.loadAsync(absoluteUrl).then(texture => {
                 if (signal?.aborted) {
                     texture.dispose()
                     signal.throwIfAborted()
                 }
-                texture.name = `StageTexture:${url}`
-                texture.colorSpace = kind === 'color'
+                texture.name = `StageTexture:${profile.url}`
+                texture.colorSpace = profile.colorSpace === 'srgb'
                     ? THREE.SRGBColorSpace
                     : THREE.NoColorSpace
-                texture.wrapS = wrappingByName[wrap]
-                texture.wrapT = wrappingByName[wrap]
-                texture.anisotropy = maxAnisotropy
+                texture.wrapS = wrappingByName[profile.wrap.u]
+                texture.wrapT = wrappingByName[profile.wrap.v]
+                texture.repeat.set(...profile.transform.scale)
+                texture.offset.set(...profile.transform.offset)
+                if (profile.coordinates.kind === 'mesh-uv') {
+                    texture.channel = profile.coordinates.channel
+                }
+                texture.magFilter = magFilterByName[profile.filter]
+                texture.minFilter = minFilterFor(profile)
+                texture.generateMipmaps = profile.mipCount !== 1
+                texture.anisotropy = Math.min(
+                    Math.max(1, profile.anisotropy),
+                    maxAnisotropy,
+                )
+                texture.userData.stageTextureBinding = structuredClone(profile)
+                texture.updateMatrix()
                 texture.needsUpdate = true
                 ownedTextures.add(texture)
                 return texture
@@ -157,26 +329,37 @@ export async function applyStageMaterialBindings(
     }
 
     const texturePromises = bindings.flatMap(binding => [
-        binding.baseMapUrl ? loadTexture(binding.baseMapUrl, 'color', binding.textureWrap) : undefined,
-        binding.normalMapUrl ? loadTexture(binding.normalMapUrl, 'data', binding.textureWrap) : undefined,
-        binding.smoothnessMapUrl ? loadTexture(binding.smoothnessMapUrl, 'data', binding.textureWrap) : undefined,
-        binding.blendMapUrl ? loadTexture(binding.blendMapUrl, 'color', binding.textureWrap) : undefined,
-        binding.matCapMapUrl ? loadTexture(binding.matCapMapUrl, 'color', binding.textureWrap) : undefined,
+        textureBinding(binding, 'base'),
+        textureBinding(binding, 'normal'),
+        textureBinding(binding, 'smoothness'),
+        textureBinding(binding, 'blend'),
+        textureBinding(binding, 'matCap'),
+    ].filter((profile): profile is StageTextureBinding => Boolean(profile)).map(loadTexture).concat([
         binding.multiUvScroll?.textureUrl
-            ? loadTexture(binding.multiUvScroll.textureUrl, 'color', 'repeat')
+            ? loadTexture(legacyTextureBinding(
+                binding.multiUvScroll.textureUrl,
+                'color',
+                'repeat',
+                maxAnisotropy,
+                '_ScrollTexture',
+            ))
             : undefined,
         binding.flowMap?.textureUrl
-            ? loadTexture(binding.flowMap.textureUrl, 'data', 'repeat')
+            ? loadTexture(legacyTextureBinding(
+                binding.flowMap.textureUrl,
+                'data',
+                'repeat',
+                maxAnisotropy,
+                '_FlowMap',
+            ))
             : undefined,
-    ].filter((promise): promise is Promise<THREE.Texture> => Boolean(promise)))
+    ].filter((promise): promise is Promise<THREE.Texture> => Boolean(promise))))
 
     const resolveTexture = async (
-        url: string | undefined,
-        kind: LoadedTextureKind,
-        wrap: StageMaterialBinding['textureWrap'] = 'clamp',
+        profile: StageTextureBinding | undefined,
     ) => {
-        if (!url) return undefined
-        return loadTexture(url, kind, wrap)
+        if (!profile) return undefined
+        return loadTexture(profile)
     }
 
     interface MeshMaterialPlan {
@@ -224,20 +407,32 @@ export async function applyStageMaterialBindings(
 
                 plan.operations.push((async () => {
                     const material = await createBoundMaterial(binding, mesh, {
-                        baseMap: await resolveTexture(binding.baseMapUrl, 'color', binding.textureWrap),
-                        normalMap: await resolveTexture(binding.normalMapUrl, 'data', binding.textureWrap),
-                        smoothnessMap: await resolveTexture(binding.smoothnessMapUrl, 'data', binding.textureWrap),
-                        blendMap: await resolveTexture(binding.blendMapUrl, 'color', binding.textureWrap),
-                        matCapMap: await resolveTexture(binding.matCapMapUrl, 'color', binding.textureWrap),
+                        baseMap: await resolveTexture(textureBinding(binding, 'base')),
+                        normalMap: await resolveTexture(textureBinding(binding, 'normal')),
+                        smoothnessMap: await resolveTexture(textureBinding(binding, 'smoothness')),
+                        blendMap: await resolveTexture(textureBinding(binding, 'blend')),
+                        matCapMap: await resolveTexture(textureBinding(binding, 'matCap')),
                         multiUvScrollMap: await resolveTexture(
-                            binding.multiUvScroll?.textureUrl,
-                            'color',
-                            'repeat',
+                            binding.multiUvScroll?.textureUrl
+                                ? legacyTextureBinding(
+                                    binding.multiUvScroll.textureUrl,
+                                    'color',
+                                    'repeat',
+                                    maxAnisotropy,
+                                    '_ScrollTexture',
+                                )
+                                : undefined,
                         ),
                         flowMap: await resolveTexture(
-                            binding.flowMap?.textureUrl,
-                            'data',
-                            'repeat',
+                            binding.flowMap?.textureUrl
+                                ? legacyTextureBinding(
+                                    binding.flowMap.textureUrl,
+                                    'data',
+                                    'repeat',
+                                    maxAnisotropy,
+                                    '_FlowMap',
+                                )
+                                : undefined,
                         ),
                         ownedTextures,
                     })
@@ -381,11 +576,35 @@ interface BoundTextureSet {
     ownedTextures: Set<THREE.Texture>
 }
 
+function requireExactTextureCoordinates(
+    mesh: THREE.Mesh,
+    texture: THREE.Texture | undefined,
+    slot: StageTextureSlot,
+) {
+    const profile = texture?.userData.stageTextureBinding as StageTextureBinding | undefined
+    if (!profile || profile.evidence !== 'exact-unity-texture2d') return
+    if (profile.coordinates.kind !== 'mesh-uv') return
+    const attribute = profile.coordinates.channel === 0
+        ? 'uv'
+        : `uv${profile.coordinates.channel}`
+    if (!mesh.geometry.hasAttribute(attribute)) {
+        throw new Error(
+            `Official stage texture ${profile.sourceProperty}/${slot} requires `
+            + `${attribute} on ${mesh.name || '<unnamed mesh>'}`,
+        )
+    }
+}
+
 async function createBoundMaterial(
     binding: StageMaterialBinding,
     mesh: THREE.Mesh,
     textures: BoundTextureSet,
 ): Promise<THREE.Material> {
+    requireExactTextureCoordinates(mesh, textures.baseMap, 'base')
+    requireExactTextureCoordinates(mesh, textures.normalMap, 'normal')
+    requireExactTextureCoordinates(mesh, textures.smoothnessMap, 'smoothness')
+    requireExactTextureCoordinates(mesh, textures.blendMap, 'blend')
+    requireExactTextureCoordinates(mesh, textures.matCapMap, 'matCap')
     const side = binding.side ? sideByName[binding.side] : THREE.FrontSide
     const map = createAtlasTexture(textures.baseMap, binding.atlas, textures.ownedTextures)
     const color = Array.isArray(binding.color)
@@ -662,9 +881,10 @@ function createAtlasTexture(
     if (!source || !atlas) return source
     const texture = source.clone()
     texture.name = `${source.name}:atlas`
-    texture.wrapS = THREE.RepeatWrapping
-    texture.wrapT = THREE.RepeatWrapping
-    texture.repeat.set(1 / atlas.columns, 1 / atlas.rows)
+    texture.userData.stageAtlasSourceTransform = {
+        scale: [source.repeat.x, source.repeat.y],
+        offset: [source.offset.x, source.offset.y],
+    }
     setAtlasFrame(texture, atlas, atlas.offset ?? 0)
     texture.needsUpdate = true
     ownedTextures.add(texture)
@@ -704,15 +924,48 @@ function findStageRuntimeTime(object: THREE.Object3D) {
     return undefined
 }
 
-function setAtlasFrame(texture: THREE.Texture, atlas: StageAtlasProfile, frame: number) {
+export function composeStageAtlasTransform(
+    source: { scale: [number, number]; offset: [number, number] },
+    atlas: StageAtlasProfile,
+    frame: number,
+) {
+    if (
+        !Number.isInteger(atlas.columns)
+        || !Number.isInteger(atlas.rows)
+        || atlas.columns < 1
+        || atlas.rows < 1
+    ) {
+        throw new Error(`Invalid stage atlas grid: ${atlas.columns}x${atlas.rows}`)
+    }
     const normalizedFrame = ((frame % (atlas.columns * atlas.rows)) + atlas.columns * atlas.rows)
         % (atlas.columns * atlas.rows)
     const column = normalizedFrame % atlas.columns
     const row = Math.floor(normalizedFrame / atlas.columns)
-    texture.offset.set(
-        column / atlas.columns,
-        1 - ((row + 1) / atlas.rows),
+    return {
+        scale: [
+            source.scale[0] / atlas.columns,
+            source.scale[1] / atlas.rows,
+        ] as [number, number],
+        offset: [
+            (source.offset[0] + column) / atlas.columns,
+            (source.offset[1] + atlas.rows - row - 1) / atlas.rows,
+        ] as [number, number],
+    }
+}
+
+function setAtlasFrame(texture: THREE.Texture, atlas: StageAtlasProfile, frame: number) {
+    const source = texture.userData.stageAtlasSourceTransform as {
+        scale: [number, number]
+        offset: [number, number]
+    } | undefined
+    const transform = composeStageAtlasTransform(
+        source ?? { scale: [1, 1], offset: [0, 0] },
+        atlas,
+        frame,
     )
+    texture.repeat.set(...transform.scale)
+    texture.offset.set(...transform.offset)
+    texture.updateMatrix()
 }
 
 function installOfficialLitExtensions(
@@ -739,12 +992,32 @@ function installOfficialLitExtensions(
 
     material.onBeforeCompile = shader => {
         if (blendMap) {
+            blendMap.updateMatrix()
             shader.uniforms.uStageBlendMap = { value: blendMap }
+            shader.uniforms.uStageBlendMapTransform = { value: blendMap.matrix }
+            const blendUvAttribute = blendMap.channel === 0
+                ? 'uv'
+                : `uv${blendMap.channel}`
+            shader.vertexShader = shader.vertexShader
+                .replace(
+                    '#include <uv_pars_vertex>',
+                    `#include <uv_pars_vertex>
+uniform mat3 uStageBlendMapTransform;
+varying vec2 vStageBlendMapUv;`,
+                )
+                .replace(
+                    '#include <uv_vertex>',
+                    `#include <uv_vertex>
+vStageBlendMapUv = (
+    uStageBlendMapTransform * vec3( ${blendUvAttribute}, 1.0 )
+).xy;`,
+                )
             shader.fragmentShader = shader.fragmentShader
                 .replace(
                     '#include <map_pars_fragment>',
                     `#include <map_pars_fragment>
-uniform sampler2D uStageBlendMap;`,
+uniform sampler2D uStageBlendMap;
+varying vec2 vStageBlendMapUv;`,
                 )
                 .replace(
                     '#include <color_fragment>',
@@ -760,7 +1033,7 @@ uniform sampler2D uStageBlendMap;`,
     diffuseColor *= sampledDiffuseColor;
 #endif
 #ifdef USE_COLOR
-    vec4 stageBlendColor = texture2D( uStageBlendMap, vMapUv );
+    vec4 stageBlendColor = texture2D( uStageBlendMap, vStageBlendMapUv );
     // FBXLoader decodes vertex colours as sRGB display colour. ReDrive bg_uber
     // consumes the red channel as a raw numeric blend weight, so invert that
     // loader conversion before applying the official vertex-colour blend.
@@ -800,7 +1073,9 @@ float roughnessFactor = clamp( 1.0 - stageSmoothness, 0.04, 1.0 );`,
         }
 
         if (matCapMap) {
+            matCapMap.updateMatrix()
             shader.uniforms.uStageMatCapMap = { value: matCapMap }
+            shader.uniforms.uStageMatCapMapTransform = { value: matCapMap.matrix }
             shader.uniforms.uStageMatCapIntensity = {
                 value: binding.matCapIntensity ?? 1,
             }
@@ -809,6 +1084,7 @@ float roughnessFactor = clamp( 1.0 - stageSmoothness, 0.04, 1.0 );`,
                     '#include <common>',
                     `#include <common>
 uniform sampler2D uStageMatCapMap;
+uniform mat3 uStageMatCapMapTransform;
 uniform float uStageMatCapIntensity;`,
                 )
                 .replace(
@@ -830,6 +1106,9 @@ vec2 stageMatCapUv = vec2(
     dot( stageMatCapX, normal ),
     dot( stageMatCapY, normal )
 ) * 0.495 + 0.5;
+stageMatCapUv = (
+    uStageMatCapMapTransform * vec3( stageMatCapUv, 1.0 )
+).xy;
 vec3 stageMatCapColor = texture2D(
     uStageMatCapMap,
     stageMatCapUv
@@ -859,9 +1138,11 @@ uniform float uStageUnlitness;`,
         }
     }
     material.customProgramCacheKey = () => [
-        'official-stage-material-v1',
-        blendMap ? 'vertex-blend' : 'single-map',
-        smoothnessMap ? 'smoothness-inversion' : 'constant-roughness',
+        'official-stage-material-v2',
+        blendMap ? `vertex-blend-uv${blendMap.channel}` : 'single-map',
+        smoothnessMap
+            ? `smoothness-inversion-uv${smoothnessMap.channel}-${smoothnessChannel}`
+            : 'constant-roughness',
         binding.metallicFromSmoothnessMap ? 'metallic-red' : 'metallic-constant',
         matCapMap ? `matcap-${binding.matCapIntensity ?? 1}` : 'no-matcap',
         unlitness > 0 ? `unlit-mix-${unlitness}` : 'fully-lit',

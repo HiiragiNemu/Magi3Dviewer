@@ -113,6 +113,40 @@
         "rows": 3,
         "offset": 0,
         "framesPerSecond": 8.0
+      },
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_anthonyAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-3235572434319895935",
+          "sourceTextureBundle": "texture/bg/b37387fbb6245a94d9cc8e81bc913f16",
+          "sourceTextureCab": "CAB-c45453827ab7af865a7ce40c3f38f0af",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        }
       }
     },
     {
@@ -142,6 +176,40 @@
         "rows": 3,
         "offset": 3,
         "framesPerSecond": 8.0
+      },
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_anthonyAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-3235572434319895935",
+          "sourceTextureBundle": "texture/bg/b37387fbb6245a94d9cc8e81bc913f16",
+          "sourceTextureCab": "CAB-c45453827ab7af865a7ce40c3f38f0af",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        }
       }
     },
     {
@@ -169,7 +237,137 @@
       "normalMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_groundB_nml.png",
       "smoothnessMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_01_ground_smoothness.png",
       "smoothnessChannel": "a",
-      "metallicFromSmoothnessMap": true
+      "metallicFromSmoothnessMap": true,
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_groundB_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "4898203225825602498",
+          "sourceTextureBundle": "texture/bg/16661dc1e118c2f4aa06fdbca9d9b241",
+          "sourceTextureCab": "CAB-baf448ed724d35b4b7eb0274ca7d04a4",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 11,
+          "evidence": "exact-unity-texture2d"
+        },
+        "normal": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_groundB_nml.png",
+          "sourceProperty": "_BumpMap",
+          "sourceTexturePathId": "-3797953936908647363",
+          "sourceTextureBundle": "texture/bg/a1e926046d3020a48a2d7d9c97a50859",
+          "sourceTextureCab": "CAB-5b9ea94d3ce83f6783d75234175f4462",
+          "serializedColorSpace": "linear",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 11,
+          "evidence": "exact-unity-texture2d"
+        },
+        "smoothness": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_01_ground_smoothness.png",
+          "sourceProperty": "_MetallicGlossMap",
+          "sourceTexturePathId": "-7803560460100085053",
+          "sourceTextureBundle": "texture/bg/d9526dedc6f2bf148b781cb682a2cc76",
+          "sourceTextureCab": "CAB-ee49f7fabbea1f0410fdc07127ee58a1",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 11,
+          "evidence": "exact-unity-texture2d"
+        },
+        "blend": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_groundA_col.png",
+          "sourceProperty": "_BlendTex",
+          "sourceTexturePathId": "5168115229173093267",
+          "sourceTextureBundle": "texture/bg/8083bbb864bf4fa46982c2576be12cad",
+          "sourceTextureCab": "CAB-1fd9c43657f9ae57e215e365cf69ced6",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        }
+      }
     },
     {
       "materialName": "mt_bg3d600A_01_03_propAAlpha",
@@ -193,7 +391,73 @@
       "side": "front",
       "normalMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_propAlpha_nml.png",
       "alphaTest": 0.5,
-      "alphaToCoverage": true
+      "alphaToCoverage": true,
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_propAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "4521712537232842716",
+          "sourceTextureBundle": "texture/bg/5fc2872b86555d74180c4d7eb7c47b90",
+          "sourceTextureCab": "CAB-49403b303f2be2d311e0a6bc9e9aed56",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        },
+        "normal": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_propAlpha_nml.png",
+          "sourceProperty": "_BumpMap",
+          "sourceTexturePathId": "4694501425423602614",
+          "sourceTextureBundle": "texture/bg/18211f689e00ea3408fc9361a68e3c16",
+          "sourceTextureCab": "CAB-57e522bd9646bb7d8e49d2d8e4ef5d73",
+          "serializedColorSpace": "linear",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        }
+      }
     },
     {
       "materialName": "mt_bg3d600A_01_03_propBAlpha",
@@ -216,7 +480,41 @@
       "receiveShadow": false,
       "side": "front",
       "alphaTest": 0.5,
-      "alphaToCoverage": true
+      "alphaToCoverage": true,
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_propAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "4521712537232842716",
+          "sourceTextureBundle": "texture/bg/5fc2872b86555d74180c4d7eb7c47b90",
+          "sourceTextureCab": "CAB-49403b303f2be2d311e0a6bc9e9aed56",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        }
+      }
     },
     {
       "materialName": "mt_bg3d600A_01_03_rockAlpha",
@@ -243,7 +541,105 @@
       "smoothnessChannel": "a",
       "metallicFromSmoothnessMap": true,
       "alphaTest": 0.5,
-      "alphaToCoverage": true
+      "alphaToCoverage": true,
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_rockAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-4703210253191428541",
+          "sourceTextureBundle": "texture/bg/e575aa04a807ed846984bf26b4b66871",
+          "sourceTextureCab": "CAB-febccd0194dab0851aa63853c7d66a8d",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 11,
+          "evidence": "exact-unity-texture2d"
+        },
+        "normal": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_rockAlpha_nml.png",
+          "sourceProperty": "_BumpMap",
+          "sourceTexturePathId": "-3966275834595958355",
+          "sourceTextureBundle": "texture/bg/0a4d806b5913e92479a926e4a88922e7",
+          "sourceTextureCab": "CAB-9d3035bac1cbe9042276bf5ccf9ff54f",
+          "serializedColorSpace": "linear",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 11,
+          "evidence": "exact-unity-texture2d"
+        },
+        "smoothness": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_01_ground_smoothness.png",
+          "sourceProperty": "_MetallicGlossMap",
+          "sourceTexturePathId": "-7803560460100085053",
+          "sourceTextureBundle": "texture/bg/d9526dedc6f2bf148b781cb682a2cc76",
+          "sourceTextureCab": "CAB-ee49f7fabbea1f0410fdc07127ee58a1",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 11,
+          "evidence": "exact-unity-texture2d"
+        }
+      }
     },
     {
       "materialName": "mt_bg3d600A_01_03_sky",
@@ -264,7 +660,41 @@
       "unlitness": 1.0,
       "castShadow": false,
       "receiveShadow": true,
-      "side": "front"
+      "side": "front",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-01-003/bg3d600A_01_01_sky_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-5600093076400639242",
+          "sourceTextureBundle": "texture/bg/0656901a718c1dd4dad78419b76611d3",
+          "sourceTextureCab": "CAB-9f730e744127f177d15d96954bbdd9e8",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        }
+      }
     }
   ],
   "renderProfile": {
@@ -834,5 +1264,16 @@
       "encoding": "PNG",
       "losslessFileTransport": true
     }
+  },
+  "textureBindingEvidence": {
+    "schemaVersion": 1,
+    "unityVersion": "2022.3.62f2",
+    "profile": "jp-unity-2022.3.62f2",
+    "materialCount": 7,
+    "exactSlotCount": 13,
+    "joinKey": [
+      "sourceCab",
+      "pathId"
+    ]
   }
 }

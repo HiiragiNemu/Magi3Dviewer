@@ -252,16 +252,27 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
     updateAnimationControls()
 
     if (character.expression) {
+        const officialDefaultFaceState = '__official_default_face_state__'
         expressionSelector.disabled = false
         initSelector(
             expressionSelector,
             character.expression.expressions.reduce((obj, name) => {
                 obj[name] = name
                 return obj
-            }, {} as Record<string, string>),
-            value => character.expression?.set(value),
+            }, {
+                'Default / auto blink': officialDefaultFaceState,
+            } as Record<string, string>),
+            value => {
+                if (value === officialDefaultFaceState) {
+                    character.expression?.resetToDefault()
+                } else {
+                    character.expression?.set(value)
+                }
+            },
         )
-        expressionSelector.value = character.expression.current
+        expressionSelector.value = character.expression.automaticBlinkActive
+            ? officialDefaultFaceState
+            : character.expression.current
     } else {
         expressionSelector.disabled = true
         initSelector(expressionSelector, { '<No expression data>': '' })

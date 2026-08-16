@@ -167,7 +167,13 @@ function isMorphTargetMesh(mesh: THREE.Mesh): mesh is MorphTargetMesh {
     return !!mesh.morphTargetDictionary && !!mesh.morphTargetInfluences
 }
 
-/** Four independent Unity controller layers: body, expression, blink, mouth. */
+/**
+ * Unity's Home controller has four layers, but expression and blink are states
+ * in the same `FaceLayer`.  Selecting a FaceXX state therefore replaces the
+ * automatic blink state machine; it must never be composited on top of a
+ * selected expression.  `FaceDefault` returns that layer to the blink branch,
+ * while `FaceDefaultLayer` continues to provide the character's base face.
+ */
 export class CharacterExpressionController {
     readonly runtime: HomeExpressionRuntime
     readonly meshes: MorphTargetMesh[]
@@ -178,6 +184,7 @@ export class CharacterExpressionController {
     private _current: string
     private elapsed = 0
     private mouthTime = 0
+    private faceLayerState: 'automatic-blink' | 'expression' = 'automatic-blink'
     private readonly controlledNames: Set<string>
 
     constructor(meshes: THREE.Mesh[], runtime: HomeExpressionRuntime) {
@@ -207,12 +214,29 @@ export class CharacterExpressionController {
         return this._current
     }
 
+    get automaticBlinkActive(): boolean {
+        return this.faceLayerState === 'automatic-blink'
+    }
+
     set(name: string) {
+        if (name === 'HomeFace00_Default') {
+            this.resetToDefault()
+            return
+        }
         const canonical = this.runtime.aliases[name] ?? name
         if (!this.runtime.expressions[canonical]) {
             throw new Error(`Home expression not found: ${name}`)
         }
         this._current = canonical
+        this.faceLayerState = 'expression'
+        this.apply()
+    }
+
+    /** Mirrors the controller's `FaceDefault` trigger. */
+    resetToDefault() {
+        this._current = this.runtime.defaultExpression
+        this.faceLayerState = 'automatic-blink'
+        this.elapsed = 0
         this.apply()
     }
 
@@ -227,7 +251,11 @@ export class CharacterExpressionController {
     }
 
     private blinkWeight(): number {
-        if (!this.autoBlink || !this.runtime.blink.controller) return 0
+        if (
+            this.faceLayerState !== 'automatic-blink'
+            || !this.autoBlink
+            || !this.runtime.blink.controller
+        ) return 0
         const { duration, controller } = this.runtime.blink
         const blinkStart = controller.emptyExitTime
         const fullBlinkStart = blinkStart + controller.fadeInSeconds

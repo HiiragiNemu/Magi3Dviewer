@@ -4,6 +4,7 @@ import test from 'node:test'
 import zlib from 'node:zlib'
 import * as THREE from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
+import { CharacterExpressionController } from './magia-exedra-character-three/homeRuntime.ts'
 
 globalThis.document = {
     createElementNS() {
@@ -127,6 +128,115 @@ test('Home facial registry exposes official expressions, blink timing and mouth 
     }
 })
 
+test('official FaceLayer makes automatic blink and selected expressions mutually exclusive', () => {
+    const evidence = JSON.parse(fs.readFileSync(
+        'research/official-home-animation-expression-evidence.json',
+        'utf8',
+    ))
+    const controller = evidence.characters['10010701'].home.controller
+    const faceLayer = controller.layers.find(layer => layer.name === 'FaceLayer')
+    assert.ok(faceLayer)
+    assert.equal(faceLayer.blendingMode, 0)
+    assert.ok(faceLayer.states.some(state => state.name === 'Home_Eye_Blink'))
+    assert.ok(faceLayer.states.some(state => state.name === 'Face02_Smiling'))
+    assert.equal(
+        controller.layers.some(layer => (
+            layer.name !== 'FaceLayer'
+            && layer.states.some(state => state.name === 'Home_Eye_Blink')
+        )),
+        false,
+    )
+
+    const runtime = fs.readFileSync(
+        'magia-exedra-character-three/homeRuntime.ts',
+        'utf8',
+    )
+    assert.match(runtime, /faceLayerState: 'automatic-blink' \| 'expression'/)
+    assert.match(runtime, /this\.faceLayerState = 'expression'/)
+    assert.match(runtime, /this\.faceLayerState = 'automatic-blink'/)
+    assert.match(runtime, /this\.faceLayerState !== 'automatic-blink'/)
+})
+
+test('selected closed-eye expression never receives the automatic blink morphs over time', () => {
+    const names = [
+        'Eyelid_Close_Smile_L',
+        'Eyelid_Close_Smile_R',
+        'Eyelid_Close_L',
+        'Eyelid_Close_R',
+        'Blink_Eyebrows_Down_L',
+        'Blink_Eyebrows_Down_R',
+    ]
+    const mesh = new THREE.Mesh()
+    mesh.morphTargetDictionary = Object.fromEntries(names.map((name, index) => [name, index]))
+    mesh.morphTargetInfluences = names.map(() => 0)
+    const runtime = {
+        schema: 1,
+        characterId: 100107,
+        unityVersion: '2022.3.62f2',
+        source: 'synthetic official-layer regression',
+        defaultExpression: 'Smile',
+        morphTargetCount: names.length,
+        expressionOrder: ['Smile', 'Smiling'],
+        aliases: { HomeFace02_Smiling: 'Smiling' },
+        expressions: {
+            Smile: { duration: 0, weights: {} },
+            Smiling: {
+                duration: 0,
+                weights: {
+                    Eyelid_Close_Smile_L: 1,
+                    Eyelid_Close_Smile_R: 1,
+                },
+            },
+        },
+        blink: {
+            duration: 0.1,
+            weights: {
+                Eyelid_Close_L: 1,
+                Eyelid_Close_R: 1,
+                Blink_Eyebrows_Down_L: 0.3,
+                Blink_Eyebrows_Down_R: 0.3,
+            },
+            controller: {
+                emptyExitTime: 0.1,
+                fadeInSeconds: 0.05,
+                blinkExitTime: 0.5,
+                fadeOutSeconds: 0.05,
+                afterBlinkExitTime: 0.2,
+                afterBlinkTransitionSeconds: 0.1,
+                intervalSpeed: 1,
+                intervalExitTime: 0.5,
+                intervalTransitionSeconds: 0.1,
+            },
+        },
+        mouth: {
+            duration: 1,
+            curveTarget: null,
+            curveSegments: [],
+            constantWeights: {},
+            unresolvedAttributes: [],
+        },
+    }
+    const controller = new CharacterExpressionController([mesh], runtime)
+    controller.set('HomeFace02_Smiling')
+    assert.equal(controller.automaticBlinkActive, false)
+
+    for (const delta of [0.12, 0.04, 0.06, 0.7, 1.5, 4.2]) {
+        controller.update(delta)
+        assert.equal(mesh.morphTargetInfluences[0], 1)
+        assert.equal(mesh.morphTargetInfluences[1], 1)
+        assert.equal(mesh.morphTargetInfluences[2], 0)
+        assert.equal(mesh.morphTargetInfluences[3], 0)
+        assert.equal(mesh.morphTargetInfluences[4], 0)
+        assert.equal(mesh.morphTargetInfluences[5], 0)
+    }
+
+    controller.resetToDefault()
+    controller.update(0.125)
+    assert.equal(controller.automaticBlinkActive, true)
+    assert.ok(mesh.morphTargetInfluences[2] > 0)
+    assert.ok(mesh.morphTargetInfluences[3] > 0)
+})
+
 test('Viewer loads Home runtimes before character construction and exposes both selectors', () => {
     const loader = fs.readFileSync('magia-exedra-character-three/loader.ts', 'utf8')
     const character = fs.readFileSync('magia-exedra-character-three/character.ts', 'utf8')
@@ -143,6 +253,7 @@ test('Viewer loads Home runtimes before character construction and exposes both 
     assert.match(character, /enterTransitionSeconds/)
     assert.match(viewerFiles, /home-\*\.json\*/)
     assert.match(viewer, /character\.expression\.expressions/)
+    assert.match(viewer, /character\.expression\?\.resetToDefault\(\)/)
     assert.match(html, /id="expression-selector"/)
 })
 

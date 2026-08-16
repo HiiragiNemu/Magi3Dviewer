@@ -42,20 +42,109 @@ assert.match(source, /rdStageFlowPhase0/)
 assert.match(source, /rdStageFlowPhase1/)
 assert.match(source, /rdStageFlowBlend/)
 
+const textureBindingStart = source.indexOf('export interface StageTextureBinding')
+const textureBindingEnd = source.indexOf('export interface StageTextureSet')
+assert.ok(textureBindingStart >= 0 && textureBindingEnd > textureBindingStart)
+const textureBindingContract = source.slice(textureBindingStart, textureBindingEnd)
+
 assert.match(
-    source,
-    /textureWrap\?: 'repeat' \| 'clamp' \| 'mirror'/,
-    'serialized Unity texture wrapping must be represented explicitly',
+    textureBindingContract,
+    /coordinates:[\s\S]*?kind: 'mesh-uv', channel: 0 \| 1 \| 2 \| 3[\s\S]*?kind: 'view-normal'/,
+    'each texture slot must declare its recovered coordinate source and UV channel',
+)
+assert.match(
+    textureBindingContract,
+    /transform:\s*\{[\s\S]*?scale: \[number, number\][\s\S]*?offset: \[number, number\][\s\S]*?\}/,
+    'each texture slot must retain the serialized Unity Material TexEnv scale and offset',
+)
+assert.match(
+    textureBindingContract,
+    /wrap:\s*\{[\s\S]*?u: StageTextureWrap[\s\S]*?v: StageTextureWrap[\s\S]*?\}/,
+    'each texture slot must retain independent Texture2D U and V wrap modes',
+)
+assert.match(
+    textureBindingContract,
+    /evidence: 'exact-unity-texture2d' \| 'legacy-default'/,
+    'texture descriptors must expose whether their values are exact or compatibility defaults',
 )
 assert.match(
     source,
-    /texture\.wrapS = wrappingByName\[wrap\][\s\S]*?texture\.wrapT = wrappingByName\[wrap\]/,
-    'material binding must apply the authored wrap mode on both UV axes',
+    /export interface StageTextureSet[\s\S]*?base\?: StageTextureBinding[\s\S]*?normal\?: StageTextureBinding[\s\S]*?smoothness\?: StageTextureBinding[\s\S]*?blend\?: StageTextureBinding[\s\S]*?matCap\?: StageTextureBinding/,
+    'material bindings must carry independent descriptors for every authored texture slot',
 )
 assert.match(
+    source,
+    /texture\.wrapS = wrappingByName\[profile\.wrap\.u\][\s\S]*?texture\.wrapT = wrappingByName\[profile\.wrap\.v\]/,
+    'runtime texture setup must apply authored U and V wrap modes independently',
+)
+assert.match(
+    source,
+    /texture\.repeat\.set\(\.\.\.profile\.transform\.scale\)[\s\S]*?texture\.offset\.set\(\.\.\.profile\.transform\.offset\)/,
+    'runtime texture setup must apply the exact Material TexEnv transform',
+)
+assert.match(
+    source,
+    /profile\.coordinates\.kind === 'mesh-uv'[\s\S]*?texture\.channel = profile\.coordinates\.channel/,
+    'runtime texture setup must select the recovered mesh UV channel',
+)
+assert.match(
+    source,
+    /const cacheKey = JSON\.stringify\(\{\s*absoluteUrl,\s*\.\.\.profile\s*\}\)/,
+    'texture cache identity must include the complete per-slot descriptor',
+)
+assert.doesNotMatch(
     source,
     /const cacheKey = `\$\{kind\}:\$\{wrap\}:/,
-    'texture cache identity must include wrap mode',
+    'the legacy kind/wrap/url cache key must not merge distinct exact descriptors',
+)
+assert.match(
+    source,
+    /if \(exact\) \{[\s\S]*?validateStageTextureBinding\(exact, binding, slot\)[\s\S]*?return exact/,
+    'every exact per-slot descriptor must pass the strict evidence validator',
+)
+assert.match(
+    source,
+    /profile\.evidence !== 'exact-unity-texture2d'[\s\S]*?throw new Error\(`Official stage texture \$\{label\}\/\$\{slot\} is not exact Unity evidence`\)/,
+    'a claimed exact texture path must fail closed when its evidence marker is not exact',
+)
+
+assert.match(source, /uniform mat3 uStageBlendMapTransform;/)
+assert.match(source, /varying vec2 vStageBlendMapUv;/)
+assert.match(
+    source,
+    /uStageBlendMapTransform \* vec3\( \$\{blendUvAttribute\}, 1\.0 \)/,
+    'the blend map must use its own UV channel and transform in the vertex shader',
+)
+assert.match(
+    source,
+    /texture2D\( uStageBlendMap, vStageBlendMapUv \)/,
+    'the blend map must sample its independently transformed varying',
+)
+assert.doesNotMatch(
+    source,
+    /texture2D\( uStageBlendMap, vMapUv \)/,
+    'the blend map must not silently inherit the base-map UV transform',
+)
+
+assert.match(
+    source,
+    /stageAtlasSourceTransform\s*=\s*\{[\s\S]*?scale: \[source\.repeat\.x, source\.repeat\.y\][\s\S]*?offset: \[source\.offset\.x, source\.offset\.y\]/,
+    'atlas setup must preserve the source Material TexEnv transform',
+)
+assert.match(
+    source,
+    /function composeStageAtlasTransform\([\s\S]*?source\.scale\[0\] \/ atlas\.columns[\s\S]*?source\.scale\[1\] \/ atlas\.rows[\s\S]*?source\.offset\[0\] \+ column[\s\S]*?source\.offset\[1\] \+ atlas\.rows - row - 1/,
+    'atlas frame selection must compose with source scale and offset rather than overwrite them',
+)
+assert.match(
+    source,
+    /const transform = composeStageAtlasTransform\([\s\S]*?texture\.repeat\.set\(\.\.\.transform\.scale\)[\s\S]*?texture\.offset\.set\(\.\.\.transform\.offset\)/,
+    'atlas runtime updates must install the composed source-plus-frame transform',
+)
+assert.doesNotMatch(
+    source,
+    /texture\.repeat\.set\(1 \/ atlas\.columns, 1 \/ atlas\.rows\)/,
+    'atlas setup must not replace the official source scale with a frame-only transform',
 )
 assert.match(
     source,
@@ -85,4 +174,4 @@ assert.ok(
     `raw vertex blend weight must round-trip (expected ${rawWeight}, got ${recoveredWeight})`,
 )
 
-console.log('Official stage material ownership invariants passed.')
+console.log('Official stage material descriptor and ownership invariants passed.')

@@ -35,6 +35,7 @@ export const zhCnUiText: Readonly<Record<string, string>> = {
     'Animation': '动作',
     'Choose animation': '选择动作',
     'Choose expression': '选择表情',
+    'Default / auto blink': '默认／自动眨眼',
     'Play animation': '播放动作',
     'Pause animation': '暂停动作',
     'Choose 3D stage': '选择 3D 场景',
