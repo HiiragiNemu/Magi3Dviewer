@@ -1,0 +1,5256 @@
+{
+  "schemaVersion": 1,
+  "stageId": "battle-600-01-00-001",
+  "releaseProfile": "jp-android-3.13.0",
+  "unityVersion": "2022.3.62f2",
+  "readiness": {
+    "state": "evidence-complete-runtime-blocked",
+    "deploymentSafe": false,
+    "visibleReviewReady": false,
+    "reason": "The raw component/material truth is closed, but the official UV1 runtime provider and a strict browser carrier are unresolved."
+  },
+  "source": {
+    "networkUsed": false,
+    "sourceBundlesCopied": false,
+    "manifestPath": "D:\\magia\\ma-ex-data\\gamedata\\AssetBundles\\Android",
+    "manifestBytes": 465351,
+    "manifestSha256": "c243499e1d304cc14cd1e0abe15f6992d71937e90365e89b03ecbf035cf7b3c8",
+    "manifestTargetId": 11310,
+    "manifestTargetName": "battle/stage/bg_3d_600_01_00_001",
+    "manifestHash128": "e6339b15722a9c63ba00a8bad43270f0",
+    "rootBundle": "battle/stage/bg_3d_600_01_00_001",
+    "rootBundleBytes": 2802466,
+    "rootBundleSha256": "7b5ec33cf1a3ed9b5f1cf422b1965c23dfc4f9b992034bbda122c402e019ee25",
+    "closureFiles": 13,
+    "closureBytes": 16309195,
+    "externalTableAllMapped": true,
+    "stageExternalBundlesNotInManifest": []
+  },
+  "hierarchy": {
+    "cab": "CAB-e5fe2987706ceb455d1d971bc0a97d83",
+    "objects": 2071,
+    "gameObjects": 517,
+    "transforms": 517,
+    "rootGameObjects": [
+      {
+        "pathId": "-7766355292456287766",
+        "name": "bg_3d_600_01_00_001",
+        "active": true,
+        "layer": 0,
+        "hierarchyPath": "bg_3d_600_01_00_001",
+        "transformPathId": "-1706614739051197485",
+        "immediateChildCount": 7
+      }
+    ],
+    "objectTypeCounts": {
+      "AnimationClip": 2,
+      "Animator": 3,
+      "AnimatorController": 2,
+      "AssetBundle": 1,
+      "Cubemap": 2,
+      "GameObject": 517,
+      "Light": 6,
+      "Material": 14,
+      "Mesh": 259,
+      "MeshFilter": 353,
+      "MeshRenderer": 353,
+      "MonoBehaviour": 21,
+      "MonoScript": 14,
+      "ParticleSystem": 1,
+      "ParticleSystemRenderer": 1,
+      "Shader": 4,
+      "Texture2D": 1,
+      "Transform": 517
+    }
+  },
+  "materials": {
+    "materialCount": 14,
+    "rendererCount": 353,
+    "unresolvedPointers": 0,
+    "ground": {
+      "name": "bg3d600B_00_ground",
+      "pathId": "2177995480226999899",
+      "shader": "Creative/Bg/BgUberShader",
+      "shaderPathId": "7496099449604649442",
+      "shaderSourceBundle": "shader/bg_uber",
+      "validKeywords": [
+        "_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A",
+        "_VERTEX_COLOR_BLEND"
+      ],
+      "textures": [
+        {
+          "property": "_BaseMap",
+          "pathId": "-5811547468823832497",
+          "name": "bg3d600B_00_groundSiba_col",
+          "sourceBundle": "texture/bg/5e94b425e27368146a90ca2d0c33abdf",
+          "scale": [
+            1.0,
+            1.0
+          ],
+          "offset": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "property": "_BlendTex",
+          "pathId": "7716902718432439573",
+          "name": "bg3d600B_00_groundTuti_col",
+          "sourceBundle": "texture/bg/ce0431dff25f4ed43bdd38f0e25f670e",
+          "scale": [
+            1.0,
+            1.0
+          ],
+          "offset": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "property": "_BumpMap",
+          "pathId": "-6961349789096681634",
+          "name": "bg3d600B_00_groundSiba_nml",
+          "sourceBundle": "texture/bg/63fc144c849bf7945911e066b3c36122",
+          "scale": [
+            1.0,
+            1.0
+          ],
+          "offset": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "property": "_MainTex",
+          "pathId": "-5811547468823832497",
+          "name": "bg3d600B_00_groundSiba_col",
+          "sourceBundle": "texture/bg/5e94b425e27368146a90ca2d0c33abdf",
+          "scale": [
+            1.0,
+            1.0
+          ],
+          "offset": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "floats": {
+        "_BlendPow": 0.4000000059604645,
+        "_BlendTexScale": 0.3799999952316284,
+        "_NormalStrength": 2.0,
+        "_ReceiveShadows": 1.0,
+        "_Smoothness": 0.4000000059604645,
+        "_USE_VERTEX_COLOR_BLEND": 1.0,
+        "_Unlitness": 0.0
+      },
+      "colors": {
+        "_BaseColor": [
+          0.8639999628067017,
+          1.0,
+          0.9761999845504761,
+          1.0
+        ],
+        "_BlendTexTillingOffset": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "skybox": {
+      "name": "SkyBox_bg3d600B_00",
+      "pathId": "-8911177962544021465",
+      "shader": "Skybox/Cubemap",
+      "shaderPathId": "6560481260228239820",
+      "shaderSourceBundle": "battle/stage/bg_3d_600_01_00_001",
+      "validKeywords": [],
+      "textures": [
+        {
+          "property": "_Tex",
+          "pathId": "502961026789473299",
+          "name": "ReflectionProbe-bg3d600B_00",
+          "sourceBundle": "battle/stage/bg_3d_600_01_00_001",
+          "scale": [
+            1.0,
+            1.0
+          ],
+          "offset": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "floats": {
+        "_ReceiveShadows": 1.0,
+        "_Smoothness": 0.5
+      },
+      "colors": {
+        "_BaseColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "all": [
+      {
+        "name": "SkyBox_bg3d600B_00",
+        "pathId": "-8911177962544021465",
+        "shader": "Skybox/Cubemap"
+      },
+      {
+        "name": "Lit",
+        "pathId": "-7570766783883702616",
+        "shader": "Universal Render Pipeline/Lit"
+      },
+      {
+        "name": "bg3d600B_00_prop3",
+        "pathId": "-6906826717276852853",
+        "shader": "Creative/Bg/BgUberShader"
+      },
+      {
+        "name": "bg3d600B_00_groundEdge",
+        "pathId": "-5466790983009438610",
+        "shader": "Creative/Bg/BgUberShader"
+      },
+      {
+        "name": "bg3d600B_00_wall",
+        "pathId": "-3868341176453282004",
+        "shader": "Creative/Bg/BgUnlit"
+      },
+      {
+        "name": "bg3d600B_00_propRose",
+        "pathId": "-2219513015550109384",
+        "shader": "Creative/Bg/BgUberShader"
+      },
+      {
+        "name": "bg3d600B_00_propRoseRoof",
+        "pathId": "-1984905476231875043",
+        "shader": "Creative/Bg/BgUnlit"
+      },
+      {
+        "name": "bg3d600B_00_propRose2",
+        "pathId": "1471512444213710749",
+        "shader": "Creative/Bg/BgUnlit"
+      },
+      {
+        "name": "bg3d600B_00_ground",
+        "pathId": "2177995480226999899",
+        "shader": "Creative/Bg/BgUberShader"
+      },
+      {
+        "name": "bg3d600B_00_tuta",
+        "pathId": "2851518256786079267",
+        "shader": "Creative/Bg/BgUnlit"
+      },
+      {
+        "name": "bg3d600B_00_prop2",
+        "pathId": "4118693720954506417",
+        "shader": "Creative/Bg/BgUnlit"
+      },
+      {
+        "name": "bg3d600B_00_prop1",
+        "pathId": "6869172667782841226",
+        "shader": "Creative/Bg/BgUnlit"
+      },
+      {
+        "name": "bg3d600B_00_farTree",
+        "pathId": "7727484668819011918",
+        "shader": "Creative/Bg/BgUnlit"
+      },
+      {
+        "name": "black",
+        "pathId": "9211478939160909144",
+        "shader": "Creative/Bg/BgUnlit"
+      }
+    ]
+  },
+  "uv1AndLightmaps": {
+    "sourceMeshCount": 259,
+    "validSourceMeshCount": 258,
+    "lightmappedUniqueMeshCount": 225,
+    "sourceUv1MeshCount": 0,
+    "lightmappedSourceUv1MeshCount": 0,
+    "meshDecodeFailures": [],
+    "rendererBindingCount": 319,
+    "lightmapCount": 1,
+    "directionalLightmapCount": 0,
+    "shadowMaskCount": 0,
+    "lightmap": {
+      "name": "Lightmap-0_comp_light",
+      "type": "Texture2D",
+      "pathId": "-503822266558675177",
+      "sourceBundle": "battle/stage/bg_3d_600_01_00_001",
+      "width": 1024,
+      "height": 1024,
+      "mipCount": 11,
+      "imageCount": 1,
+      "encodedBytes": 1398128,
+      "encodedSha256": "71307e1d0c62ccf5f8dc229b785cb4af6301bc9ca77360bb5fdcbdaf6a2aa565",
+      "decodedFirstImageRgbaSha256": "e51a9e7ff709a0eb758bd8b58f7cf2222228259239ac5867b49e034c32ed399d"
+    },
+    "prefabLightmapData": {
+      "componentCount": 1,
+      "rendererInfoCount": 319,
+      "serializedFields": [
+        "m_Enabled",
+        "m_GameObject",
+        "m_LightInfo",
+        "m_Lightmaps",
+        "m_LightmapsDir",
+        "m_Name",
+        "m_RendererInfo",
+        "m_Script",
+        "m_ShadowMasks"
+      ],
+      "containsUvCarrierField": false,
+      "conclusion": "PrefabLightmapData stores renderer PPtrs, lightmap indices, ST offsets, lightmap textures, and light metadata; it does not serialize mesh UV1 values."
+    },
+    "compiledShaderEvidence": {
+      "schemaVersion": 1,
+      "evidenceLevel": "compiled-shader-exact",
+      "releaseProfile": "jp-steam-build-24729669",
+      "unityVersion": "2022.3.62f2",
+      "shader": "Creative/Bg/BgUberShader",
+      "source": {
+        "path": "D:\\SteamLibrary\\steamapps\\common\\MadokaExedra\\MadokaExedra_Data\\resources.assets",
+        "bytes": 36194880,
+        "shaderPathId": "659",
+        "networkUsed": false,
+        "sourceCopied": false
+      },
+      "pass": "ForwardLit",
+      "variant": "LIGHTMAP_ON",
+      "vertex": {
+        "lightmappedBlobIndices": [
+          4,
+          6,
+          10,
+          12
+        ],
+        "controlBlobIndex": 2,
+        "input": "TEXCOORD1 v5.xy",
+        "output": "TEXCOORD8 o4.xy",
+        "instruction": "mad o4.xy, v5.xyxx, cb1[23].xyxx, cb1[23].zwzz"
+      },
+      "fragment": {
+        "lightmappedBlobIndex": 259,
+        "controlBlobIndex": 242,
+        "input": "TEXCOORD8 v4.xy",
+        "sampleInstruction": "sample_b r5.xyzw, v4.xyxx, t1.xyzw, s1, cb0[5].x",
+        "combineInstruction": "mad r5.xyz, r5.xyzx, r6.xyzx, r8.xyzx",
+        "resourceSymbol": null,
+        "resourceIdentity": "The symbol-stripped t1 resource is the only additional Texture2D sampled by the LIGHTMAP_ON variant relative to control blob 242."
+      },
+      "lightmapUvFormula": "UV1 * unity_LightmapST.xy + unity_LightmapST.zw",
+      "confirmed": [
+        "The official LIGHTMAP_ON vertex path reads TEXCOORD1 rather than TEXCOORD0 or vertex color.",
+        "The vertex path applies unity_LightmapST and forwards the result to the fragment shader.",
+        "The LIGHTMAP_ON fragment variant samples one additional texture at the forwarded lightmap coordinate and combines it into the lit color.",
+        "The non-LIGHTMAP control variant has no TEXCOORD8/v4 input and one fewer Texture2D."
+      ],
+      "unresolved": [
+        "DXBC resource symbols are stripped, so the t1 name is established by LIGHTMAP_ON variant differential rather than an embedded resource label.",
+        "The runtime or build-time provider of UV1 for battle-600-01-00-001 remains unidentified."
+      ],
+      "toolResults": [
+        {
+          "tool": "UnityPy asset lookup",
+          "input": "resources.assets / Shader PathID 659",
+          "literalResult": "Creative/Bg/BgUberShader",
+          "exitStatus": 0
+        },
+        {
+          "tool": "D3DDisassemble",
+          "input": "ForwardLit vertex LIGHTMAP_ON blobs 4,6,10,12 and control blob 2",
+          "literalResult": "HRESULT 0x00000000; LIGHTMAP_ON blobs emit mad o4.xy from v5.xy and cb1[23]",
+          "exitStatus": 0
+        },
+        {
+          "tool": "D3DDisassemble",
+          "input": "ForwardLit fragment LIGHTMAP_ON blob 259 and control blob 242",
+          "literalResult": "HRESULT 0x00000000; blob 259 samples t1 at v4.xy and blob 242 has neither v4 nor that additional Texture2D",
+          "exitStatus": 0
+        }
+      ]
+    },
+    "conclusion": "The official LIGHTMAP_ON path requires TEXCOORD1/UV1. The serialized source meshes have no UV1, so deployment remains fail-closed until the official provider/carrier is found."
+  },
+  "lighting": [
+    {
+      "pathId": "-6230379626627871259",
+      "name": "bg_CenterLight",
+      "hierarchyPath": "bg_3d_600_01_00_001/Light_bg3d6001_03/bg_CenterLight",
+      "enabled": true,
+      "type": 0,
+      "shape": 0,
+      "color": [
+        0.9947827458381653,
+        1.0,
+        0.8915094137191772,
+        1.0
+      ],
+      "intensity": 300.0,
+      "range": 100.0,
+      "spotAngle": 90.0,
+      "innerSpotAngle": 10.0,
+      "cullingMask": 64,
+      "lightmapping": 2,
+      "bounceIntensity": 1.0,
+      "cookie": {
+        "fileId": 0,
+        "pathId": "0",
+        "null": true
+      },
+      "shadow": {
+        "type": 1,
+        "strength": 1.0,
+        "bias": 0.05000000074505806,
+        "normalBias": 0.4000000059604645,
+        "nearPlane": 0.20000000298023224
+      },
+      "localPosition": [
+        0.0,
+        15.0,
+        -0.0
+      ],
+      "localRotation": [
+        0.7071068286895752,
+        0.0,
+        0.0,
+        0.7071068286895752
+      ],
+      "worldPosition": [
+        0.0,
+        15.0,
+        0.0
+      ],
+      "worldForward": [
+        0.0,
+        -0.9999999999999911,
+        -1.3435883843274954e-07
+      ]
+    },
+    {
+      "pathId": "-5736334263193072262",
+      "name": "VolumeLight",
+      "hierarchyPath": "bg_3d_600_01_00_001/Light_bg3d6001_03/VolumeLight",
+      "enabled": true,
+      "type": 0,
+      "shape": 0,
+      "color": [
+        0.9970245957374573,
+        1.0,
+        0.900943398475647,
+        1.0
+      ],
+      "intensity": 0.10000000149011612,
+      "range": 20.0,
+      "spotAngle": 100.0,
+      "innerSpotAngle": 60.0,
+      "cullingMask": 4294967295,
+      "lightmapping": 1,
+      "bounceIntensity": 0.0,
+      "cookie": {
+        "fileId": 0,
+        "pathId": "0",
+        "null": true
+      },
+      "shadow": {
+        "type": 0,
+        "strength": 1.0,
+        "bias": 0.05000000074505806,
+        "normalBias": 0.4000000059604645,
+        "nearPlane": 0.20000000298023224
+      },
+      "localPosition": [
+        0.0,
+        23.860000610351562,
+        0.0
+      ],
+      "localRotation": [
+        0.7008546590805054,
+        -0.09382335096597672,
+        0.09382335096597672,
+        0.7008546590805054
+      ],
+      "worldPosition": [
+        0.0,
+        23.860000610351562,
+        0.0
+      ],
+      "worldForward": [
+        0.0,
+        -0.9999999999999889,
+        -1.4868265028966993e-07
+      ]
+    },
+    {
+      "pathId": "-3500939808940339792",
+      "name": "Ennemy_Light",
+      "hierarchyPath": "bg_3d_600_01_00_001/Light_bg3d6001_03/Ennemy_Light",
+      "enabled": true,
+      "type": 0,
+      "shape": 0,
+      "color": [
+        0.9970245957374573,
+        1.0,
+        0.900943398475647,
+        1.0
+      ],
+      "intensity": 100.0,
+      "range": 20.0,
+      "spotAngle": 80.0,
+      "innerSpotAngle": 20.0,
+      "cullingMask": 128,
+      "lightmapping": 4,
+      "bounceIntensity": 1.0,
+      "cookie": {
+        "fileId": 0,
+        "pathId": "0",
+        "null": true
+      },
+      "shadow": {
+        "type": 0,
+        "strength": 1.0,
+        "bias": 0.05000000074505806,
+        "normalBias": 0.4000000059604645,
+        "nearPlane": 0.20000000298023224
+      },
+      "localPosition": [
+        0.0,
+        22.6200008392334,
+        0.0
+      ],
+      "localRotation": [
+        0.7071068286895752,
+        0.0,
+        0.0,
+        0.7071068286895752
+      ],
+      "worldPosition": [
+        0.0,
+        22.6200008392334,
+        0.0
+      ],
+      "worldForward": [
+        0.0,
+        -0.9999999999999911,
+        -1.3435883843274954e-07
+      ]
+    },
+    {
+      "pathId": "501494718219717553",
+      "name": "VolumeLight_01",
+      "hierarchyPath": "bg_3d_600_01_00_001/Light_bg3d6001_03/VolumeLight_01",
+      "enabled": true,
+      "type": 0,
+      "shape": 0,
+      "color": [
+        1.0,
+        0.9729976058006287,
+        0.75,
+        1.0
+      ],
+      "intensity": 0.05000000074505806,
+      "range": 100.0,
+      "spotAngle": 80.0,
+      "innerSpotAngle": 5.0,
+      "cullingMask": 4294967295,
+      "lightmapping": 2,
+      "bounceIntensity": 0.0,
+      "cookie": {
+        "fileId": 0,
+        "pathId": "0",
+        "null": true
+      },
+      "shadow": {
+        "type": 0,
+        "strength": 1.0,
+        "bias": 0.05000000074505806,
+        "normalBias": 0.4000000059604645,
+        "nearPlane": 0.20000000298023224
+      },
+      "localPosition": [
+        0.0,
+        56.0,
+        0.0
+      ],
+      "localRotation": [
+        0.7008546590805054,
+        -0.09382335096597672,
+        0.09382335096597672,
+        0.7008546590805054
+      ],
+      "worldPosition": [
+        0.0,
+        56.0,
+        0.0
+      ],
+      "worldForward": [
+        0.0,
+        -0.9999999999999889,
+        -1.4868265028966993e-07
+      ]
+    },
+    {
+      "pathId": "4576909379303517442",
+      "name": "MainLight",
+      "hierarchyPath": "bg_3d_600_01_00_001/Light_bg3d6001_03/MainLight",
+      "enabled": true,
+      "type": 1,
+      "shape": 0,
+      "color": [
+        1.0,
+        0.9852148294448853,
+        0.9198113083839417,
+        1.0
+      ],
+      "intensity": 1.0,
+      "range": 10.0,
+      "spotAngle": 30.0,
+      "innerSpotAngle": 21.802080154418945,
+      "cullingMask": 2147483647,
+      "lightmapping": 1,
+      "bounceIntensity": 1.0,
+      "cookie": {
+        "fileId": 0,
+        "pathId": "0",
+        "null": true
+      },
+      "shadow": {
+        "type": 2,
+        "strength": 1.0,
+        "bias": 0.0,
+        "normalBias": 0.0,
+        "nearPlane": 0.10000000149011612
+      },
+      "localPosition": [
+        0.0,
+        2.0,
+        0.0
+      ],
+      "localRotation": [
+        0.8516507744789124,
+        0.14454393088817596,
+        -0.3099754750728607,
+        0.3971312344074249
+      ],
+      "worldPosition": [
+        0.0,
+        2.0,
+        0.0
+      ],
+      "worldForward": [
+        -0.4131758861264719,
+        -0.7660443915787982,
+        -0.49240397769948363
+      ]
+    },
+    {
+      "pathId": "4793392325318545927",
+      "name": "bg_Light",
+      "hierarchyPath": "bg_3d_600_01_00_001/Light_bg3d6001_03/bg_Light",
+      "enabled": true,
+      "type": 0,
+      "shape": 0,
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "intensity": 4000.0,
+      "range": 100.0,
+      "spotAngle": 160.0,
+      "innerSpotAngle": 80.0,
+      "cullingMask": 64,
+      "lightmapping": 2,
+      "bounceIntensity": 1.0,
+      "cookie": {
+        "fileId": 0,
+        "pathId": "0",
+        "null": true
+      },
+      "shadow": {
+        "type": 1,
+        "strength": 1.0,
+        "bias": 0.05000000074505806,
+        "normalBias": 0.4000000059604645,
+        "nearPlane": 0.20000000298023224
+      },
+      "localPosition": [
+        0.0,
+        50.0,
+        0.0
+      ],
+      "localRotation": [
+        0.7071068286895752,
+        0.0,
+        0.0,
+        0.7071068286895752
+      ],
+      "worldPosition": [
+        0.0,
+        50.0,
+        0.0
+      ],
+      "worldForward": [
+        0.0,
+        -0.9999999999999911,
+        -1.3435883843274954e-07
+      ]
+    }
+  ],
+  "environment": {
+    "skyboxReflection": {
+      "name": "ReflectionProbe-bg3d600B_00",
+      "type": "Cubemap",
+      "pathId": "502961026789473299",
+      "sourceBundle": "battle/stage/bg_3d_600_01_00_001",
+      "width": 64,
+      "height": 64,
+      "mipCount": 7,
+      "imageCount": 6,
+      "encodedBytes": 32928,
+      "encodedSha256": "f8fa1ce8f85c84b5aa94336b02dacc7b0b750c9337590e7bd82d87df7dd64482",
+      "decodedFirstImageRgbaSha256": "a7ad3743c32e4ce91eb1a5616fdf7413b50a511e41a6c50547441ef2252fcd4d"
+    },
+    "reDriveReflection": {
+      "name": "ReflectionProbe-0",
+      "type": "Cubemap",
+      "pathId": "6281337083519777034",
+      "sourceBundle": "battle/stage/bg_3d_600_01_00_001",
+      "width": 64,
+      "height": 64,
+      "mipCount": 7,
+      "imageCount": 6,
+      "encodedBytes": 32928,
+      "encodedSha256": "8d2f54383736fd1fc6a9e246710cbf22ead88f316013fa770acd08be81b1c79b",
+      "decodedFirstImageRgbaSha256": "545ddb7b8d8f766af96654175b23979aa291487ec15af15201612373ab15df62"
+    },
+    "supportingTextures": [
+      {
+        "name": "bg3d600B_00_groundEdge_col",
+        "type": "Texture2D",
+        "pathId": "-2397592522635905154",
+        "sourceBundle": "texture/bg/bf0f7724b7937664891a7e656d341c00",
+        "width": 256,
+        "height": 256,
+        "mipCount": 9,
+        "imageCount": 1,
+        "encodedBytes": 40096,
+        "encodedSha256": "1db41291f8c7cc92bc182a80d6c6cbe89b7a8d0a06e9a550f130a87aa42cd6a7",
+        "decodedFirstImageRgbaSha256": "e8cca7aa713405c5059462f2e1b86c17fbc59bb6959e33e7210352749c855d4e"
+      },
+      {
+        "name": "bg3d600B_00_farTree_col",
+        "type": "Texture2D",
+        "pathId": "4557483868769253370",
+        "sourceBundle": "texture/bg/9a45cfefe5cbe1848a5bf0a3b29352b2",
+        "width": 1024,
+        "height": 128,
+        "mipCount": 1,
+        "imageCount": 1,
+        "encodedBytes": 60192,
+        "encodedSha256": "b02ec8356cf2b2e685f54e0733c86cc9c3ed9e566764a6566397a197d259acd1",
+        "decodedFirstImageRgbaSha256": "e8811bffa4899c57df799f0cd68c482b0c360db0e8419bfcec8bdd0517ade16e"
+      },
+      {
+        "name": "matcap02",
+        "type": "Texture2D",
+        "pathId": "2981295021062300932",
+        "sourceBundle": "texture/bg/5105c8e2aa63f31458d8e02dfcb9b581",
+        "width": 256,
+        "height": 256,
+        "mipCount": 9,
+        "imageCount": 1,
+        "encodedBytes": 40096,
+        "encodedSha256": "2b93b9cf95416c0b7e18772e39d59ef661eae189ac1ad6a86519a8747950b3d3",
+        "decodedFirstImageRgbaSha256": "0a8b9610c8ec857330a3cef9bd23ba4ef51561a24ae6d5acfbbc0a993f651f13"
+      },
+      {
+        "name": "bg3d600B_00_prop_nml",
+        "type": "Texture2D",
+        "pathId": "-3207615092173130777",
+        "sourceBundle": "texture/bg/f4fb9098d4f407c4c890c29364c6cb5d",
+        "width": 1024,
+        "height": 1024,
+        "mipCount": 1,
+        "imageCount": 1,
+        "encodedBytes": 467856,
+        "encodedSha256": "85d4c3472f3009a6c5e207a15680d377f40dc1d192de7a5f13db754c7d1e9f83",
+        "decodedFirstImageRgbaSha256": "b81d3326b94da927dd4eeda363435c342123fde0fe262f6f3404992073aea8b5"
+      },
+      {
+        "name": "bg3d600B_00_wall_col",
+        "type": "Texture2D",
+        "pathId": "-6044637406876321496",
+        "sourceBundle": "texture/bg/31cd9ea416a4eb9439f4fe290d3b5aa3",
+        "width": 1024,
+        "height": 1024,
+        "mipCount": 1,
+        "imageCount": 1,
+        "encodedBytes": 467856,
+        "encodedSha256": "2e43171cbbc5cb92edcfe8e4689ab19526c76473b8c177f31cc3e4c3b841f2ac",
+        "decodedFirstImageRgbaSha256": "755c3807cbe23196939b8a9407b197609397ea24478450357baa10dba2fdf986"
+      },
+      {
+        "name": "bg3d600B_00_groundSiba_nml",
+        "type": "Texture2D",
+        "pathId": "-6961349789096681634",
+        "sourceBundle": "texture/bg/63fc144c849bf7945911e066b3c36122",
+        "width": 1024,
+        "height": 1024,
+        "mipCount": 11,
+        "imageCount": 1,
+        "encodedBytes": 626288,
+        "encodedSha256": "00a0251a41bf57faa61aed1f42e21c81272cbac5d05c2ee432fa3e2765015567",
+        "decodedFirstImageRgbaSha256": "d0c5d46221ddd48befde9f5878f821f6b60381548365d0f6c98f62fcd61d7c2e"
+      },
+      {
+        "name": "cloud_noise_tex",
+        "type": "Texture2D",
+        "pathId": "6159205007759442036",
+        "sourceBundle": "shader/common/texture/cloud_noise",
+        "width": 512,
+        "height": 512,
+        "mipCount": 1,
+        "imageCount": 1,
+        "encodedBytes": 118336,
+        "encodedSha256": "de983515caed6f9453f735873933918d1447445364d75b95a193c0b762e27736",
+        "decodedFirstImageRgbaSha256": "2b2195215f7d62b64c9ef4c71b01e9a5409728ed07ed0cef2147f41c16c1c6f8"
+      },
+      {
+        "name": "bg3d600B_00_groundSiba_col",
+        "type": "Texture2D",
+        "pathId": "-5811547468823832497",
+        "sourceBundle": "texture/bg/5e94b425e27368146a90ca2d0c33abdf",
+        "width": 1024,
+        "height": 1024,
+        "mipCount": 11,
+        "imageCount": 1,
+        "encodedBytes": 626288,
+        "encodedSha256": "d3416ac8f0a5b5a8dc373183b62898791d0fb00b9dcd772df61f4823b111863f",
+        "decodedFirstImageRgbaSha256": "1f9460a02297a1cacf494d131e56e0ed6999fa7fdb03417d1def677151889789"
+      },
+      {
+        "name": "bg3d600B_00_roofRose_col",
+        "type": "Texture2D",
+        "pathId": "7206989852839707772",
+        "sourceBundle": "texture/bg/7fa82cbf52a84564ca92ae95143619eb",
+        "width": 1024,
+        "height": 1024,
+        "mipCount": 1,
+        "imageCount": 1,
+        "encodedBytes": 467856,
+        "encodedSha256": "a89cce61c16ca768105a024e20089b1efdeae0646cc5e3958d76c5f6375eeb90",
+        "decodedFirstImageRgbaSha256": "6e5b7d1135210e41e13fbe7e968d42090010b7d2a5fc185c087bb0520335b6f7"
+      },
+      {
+        "name": "bg3d600B_00_groundTuti_col",
+        "type": "Texture2D",
+        "pathId": "7716902718432439573",
+        "sourceBundle": "texture/bg/ce0431dff25f4ed43bdd38f0e25f670e",
+        "width": 1024,
+        "height": 1024,
+        "mipCount": 11,
+        "imageCount": 1,
+        "encodedBytes": 626288,
+        "encodedSha256": "be24d95a1c2d785ed64bd3f6189b9f50dbff98a3ae109586732c44cbda9501b7",
+        "decodedFirstImageRgbaSha256": "74d88ed2dc4e1a409484fe19dcdd21c4a32f625baec76c81c9303864433099ac"
+      },
+      {
+        "name": "bg3d600B_00_prop_col",
+        "type": "Texture2D",
+        "pathId": "3884380002030309550",
+        "sourceBundle": "texture/bg/06a72338a26fe3c4da125b3721a78164",
+        "width": 1024,
+        "height": 1024,
+        "mipCount": 1,
+        "imageCount": 1,
+        "encodedBytes": 467856,
+        "encodedSha256": "6b9d33497537061a5edf675b96638ea20457dfbf389a59d5bab5531dab76d906",
+        "decodedFirstImageRgbaSha256": "badef562757e1e0c26ec2c7c522b3f4d42fd9cd8adbed3a1f2380efa7b68abf7"
+      }
+    ]
+  },
+  "postProcessing": {
+    "tonemapping": [
+      {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -4476214662336307861
+        },
+        "m_Name": "Tonemapping",
+        "active": 1,
+        "mode": {
+          "m_OverrideState": 1,
+          "m_Value": 2
+        },
+        "neutralHDRRangeReductionMode": {
+          "m_OverrideState": 0,
+          "m_Value": 2
+        },
+        "acesPreset": {
+          "m_OverrideState": 0,
+          "m_Value": 3
+        },
+        "hueShiftAmount": {
+          "m_OverrideState": 0,
+          "m_Value": 0.0
+        },
+        "detectPaperWhite": {
+          "m_OverrideState": 0,
+          "m_Value": 0
+        },
+        "paperWhite": {
+          "m_OverrideState": 0,
+          "m_Value": 300.0
+        },
+        "detectBrightnessLimits": {
+          "m_OverrideState": 0,
+          "m_Value": 1
+        },
+        "minNits": {
+          "m_OverrideState": 0,
+          "m_Value": 0.004999999888241291
+        },
+        "maxNits": {
+          "m_OverrideState": 0,
+          "m_Value": 1000.0
+        }
+      }
+    ],
+    "bloom": [
+      {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -6123209036660115946
+        },
+        "m_Name": "Bloom",
+        "active": 1,
+        "skipIterations": {
+          "m_OverrideState": 0,
+          "m_Value": 3
+        },
+        "threshold": {
+          "m_OverrideState": 1,
+          "m_Value": 0.800000011920929
+        },
+        "intensity": {
+          "m_OverrideState": 1,
+          "m_Value": 1.25
+        },
+        "scatter": {
+          "m_OverrideState": 1,
+          "m_Value": 0.75
+        },
+        "clamp": {
+          "m_OverrideState": 0,
+          "m_Value": 1.0
+        },
+        "tint": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          }
+        },
+        "highQualityFiltering": {
+          "m_OverrideState": 0,
+          "m_Value": 1
+        },
+        "downscale": {
+          "m_OverrideState": 0,
+          "m_Value": 0
+        },
+        "maxIterations": {
+          "m_OverrideState": 0,
+          "m_Value": 6
+        },
+        "dirtTexture": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "dimension": 1
+        },
+        "dirtIntensity": {
+          "m_OverrideState": 0,
+          "m_Value": 5.0
+        }
+      }
+    ],
+    "vignette": [
+      {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -4175427079884003143
+        },
+        "m_Name": "Vignette",
+        "active": 1,
+        "color": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 1.0
+          }
+        },
+        "center": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "x": 0.5,
+            "y": 0.5
+          }
+        },
+        "intensity": {
+          "m_OverrideState": 1,
+          "m_Value": 0.4000000059604645
+        },
+        "smoothness": {
+          "m_OverrideState": 1,
+          "m_Value": 0.20000000298023224
+        },
+        "rounded": {
+          "m_OverrideState": 0,
+          "m_Value": 0
+        }
+      }
+    ],
+    "colorAdjustments": [
+      {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 611471210327989785
+        },
+        "m_Name": "ColorAdjustments",
+        "active": 1,
+        "postExposure": {
+          "m_OverrideState": 1,
+          "m_Value": 0.0
+        },
+        "contrast": {
+          "m_OverrideState": 1,
+          "m_Value": 10.0
+        },
+        "colorFilter": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          }
+        },
+        "hueShift": {
+          "m_OverrideState": 0,
+          "m_Value": -34.0
+        },
+        "saturation": {
+          "m_OverrideState": 1,
+          "m_Value": 15.0
+        }
+      }
+    ],
+    "globalVolumeController": [
+      {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -9011936571915027200
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -2399166112289969600
+        },
+        "m_Name": "",
+        "volume": {
+          "m_FileID": 0,
+          "m_PathID": -3936055841238990272
+        },
+        "animator": {
+          "m_FileID": 0,
+          "m_PathID": 9122290035340819387
+        },
+        "bloomThreshold": 0.800000011920929,
+        "bloomIntensity": 1.25,
+        "bloomScatter": 0.75,
+        "bloomTint": {
+          "r": 1.0,
+          "g": 1.0,
+          "b": 1.0,
+          "a": 1.0
+        },
+        "vignetteIntensity": 0.4000000059604645,
+        "lensIntensity": 0.10000000149011612,
+        "kawaseBlurOffset": 0.0,
+        "fogColor": {
+          "r": 0.6941176652908325,
+          "g": 0.8066383600234985,
+          "b": 0.8117647171020508,
+          "a": 1.0
+        },
+        "cancelPerspective": 1.0,
+        "vignetteBlendColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "vignetteBlendIntensity": 0.0,
+        "vignetteBlendSmoothness": 0.0,
+        "vignetteBlendIsEyeBlink": 0,
+        "noiseIntensity": 0.0,
+        "noiseVignette": 1.0,
+        "waveIntensity": 0.0,
+        "waveSizeRcp": 0.0,
+        "waveScale": 0.0,
+        "waveSpeed": 0.0,
+        "spiralBlurIntensity": 0.0,
+        "fillColor": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        },
+        "lineNoise": 0.0,
+        "noiseSpeed": 0.0,
+        "noiseTillingOffset": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 0.0
+        },
+        "lineNoiseInversion": 0.0,
+        "noiseMaskAmount": 0.0,
+        "noiseMaskTilling": 0.0,
+        "chromaticOffsetX": 0.0,
+        "chromaticOffsetY": 0.0,
+        "offsetX": 0.0,
+        "offsetY": 0.0,
+        "scanLineIntensity": 0.0,
+        "rollInOutProgress": 0.0,
+        "rollInOutByLeft": 0,
+        "rollInOutIsIn": 0,
+        "darkenProgress": 0.0,
+        "sepiaProgress": 0.0,
+        "grayscaleProgress": 0.0,
+        "radialBlurFocusPow": 0.0,
+        "radialBlurBlurCount": 0,
+        "radialBlurTexBlurCount": 0,
+        "radialBlurNear": 0.0,
+        "radialBlurFar": 0.0
+      }
+    ],
+    "reDriveVolume": [
+      {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -5596282057173054488
+        },
+        "m_Name": "ReDriveToonPostProcessVolume",
+        "active": 1,
+        "_skyboxMaterial": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "m_FileID": 0,
+            "m_PathID": -8911177962544021465
+          }
+        },
+        "_skyboxIntensity": {
+          "m_OverrideState": 1,
+          "m_Value": 0.5
+        },
+        "_reflectionProbe": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "m_FileID": 0,
+            "m_PathID": 6281337083519777034
+          }
+        },
+        "_fogColor": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "r": 0.6941176652908325,
+            "g": 0.8066383600234985,
+            "b": 0.8117647171020508,
+            "a": 1.0
+          }
+        },
+        "_fogRange": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "x": 10.0,
+            "y": 350.0
+          }
+        },
+        "SH2": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "sh[ 0]": 0.05355525016784668,
+            "sh[ 1]": 0.013824351131916046,
+            "sh[ 2]": 0.004036810714751482,
+            "sh[ 3]": -0.00046899268636479974,
+            "sh[ 4]": -0.0024237832985818386,
+            "sh[ 5]": 0.00048697751481086016,
+            "sh[ 6]": 0.001639154157601297,
+            "sh[ 7]": 0.000557022518478334,
+            "sh[ 8]": 0.004413743503391743,
+            "sh[ 9]": 0.04813910648226738,
+            "sh[10]": 0.017887145280838013,
+            "sh[11]": -0.003556919516995549,
+            "sh[12]": 0.0005122181610204279,
+            "sh[13]": -0.00047263092710636556,
+            "sh[14]": 0.0012307242723181844,
+            "sh[15]": 0.0009856853866949677,
+            "sh[16]": -0.00021862098947167397,
+            "sh[17]": 0.005371346604079008,
+            "sh[18]": 0.04013491049408913,
+            "sh[19]": 0.014939215034246445,
+            "sh[20]": -0.007989363744854927,
+            "sh[21]": 0.0015939787263050675,
+            "sh[22]": 0.0003078407025896013,
+            "sh[23]": 0.0018590664258226752,
+            "sh[24]": 0.0007382499170489609,
+            "sh[25]": -0.000687692197971046,
+            "sh[26]": 0.005194537807255983
+          }
+        },
+        "_globalCharacterTintColor": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          }
+        },
+        "_globalCharacterShadowTintColor": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "r": 0.7335616946220398,
+            "g": 0.7801370024681091,
+            "b": 0.8500000238418579,
+            "a": 1.0
+          }
+        },
+        "_globalBackgroundTintColor": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 1.0
+          }
+        },
+        "_globalCharacterLightingOverrideColor": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          }
+        },
+        "_globalCharacterLightingOverrideRatio": {
+          "m_OverrideState": 0,
+          "m_Value": 0.0
+        },
+        "_globalCharacterLightingOverrideDirection": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "x": 130.0,
+            "y": 40.0,
+            "z": 0.0
+          }
+        },
+        "_globalCharacterAdditionalRimLightColor": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          }
+        },
+        "_globalCharacterAdditionalRimLightDirection": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "x": 1.0,
+            "y": -1.0
+          }
+        },
+        "_globalCharacterFaceAwayTintColor": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          }
+        },
+        "_globalCharacterCancelPerspective": {
+          "m_OverrideState": 0,
+          "m_Value": 1.0
+        },
+        "_bgShadowStrengthAdditive": {
+          "m_OverrideState": 1,
+          "m_Value": 0.25
+        },
+        "_bgPostExposure": {
+          "m_OverrideState": 1,
+          "m_Value": 0.30000001192092896
+        },
+        "_bgContrast": {
+          "m_OverrideState": 1,
+          "m_Value": -9.0
+        },
+        "_bgSaturation": {
+          "m_OverrideState": 1,
+          "m_Value": -10.0
+        },
+        "_bgBackgroundTintColor": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          }
+        },
+        "_useFixedLightDir": {
+          "m_OverrideState": 1,
+          "m_Value": 0
+        },
+        "_tintTopColor": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "r": 1.0,
+            "g": 0.9103558659553528,
+            "b": 0.8726415038108826,
+            "a": 1.0
+          }
+        },
+        "_tintBottomColor": {
+          "m_OverrideState": 1,
+          "m_Value": {
+            "r": 0.0,
+            "g": 0.007362973876297474,
+            "b": 0.23584908246994019,
+            "a": 1.0
+          }
+        },
+        "_opacity": {
+          "m_OverrideState": 1,
+          "m_Value": 0.15000000596046448
+        },
+        "_paraWidth": {
+          "m_OverrideState": 1,
+          "m_Value": 1.399999976158142
+        },
+        "_topBlendMode": {
+          "m_OverrideState": 1,
+          "m_Value": 2
+        },
+        "_bottomBlendMode": {
+          "m_OverrideState": 1,
+          "m_Value": 3
+        },
+        "_screenTexture": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "dimension": 1
+        },
+        "_lightScreenIntensity": {
+          "m_OverrideState": 0,
+          "m_Value": 0.0
+        },
+        "_lightScreenTopColor": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 1.0
+          }
+        },
+        "_lightScreenBottomColor": {
+          "m_OverrideState": 0,
+          "m_Value": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 1.0
+          }
+        },
+        "_lightScreenPow": {
+          "m_OverrideState": 0,
+          "m_Value": 1.0
+        },
+        "_lightScreenRoundness": {
+          "m_OverrideState": 0,
+          "m_Value": 0.0
+        }
+      }
+    ]
+  },
+  "dynamicComponents": {
+    "animators": [
+      {
+        "pathId": "-2836846853637088620",
+        "gameObject": "Light_bg3d6001_03",
+        "hierarchyPath": "bg_3d_600_01_00_001/Light_bg3d6001_03",
+        "enabled": false,
+        "controller": {
+          "fileId": 0,
+          "pathId": "-8870045925051101851",
+          "resolved": true,
+          "resolvedType": "AnimatorController",
+          "resolvedName": "checkLight_rotate",
+          "resolvedNameSource": "m_Name",
+          "resolvedCab": "CAB-e5fe2987706ceb455d1d971bc0a97d83",
+          "resolvedSourceBundle": "battle/stage/bg_3d_600_01_00_001"
+        },
+        "avatar": {
+          "fileId": 0,
+          "pathId": "0",
+          "null": true
+        },
+        "cullingMode": 0,
+        "updateMode": 0,
+        "applyRootMotion": false
+      },
+      {
+        "pathId": "3094779292991649547",
+        "gameObject": "bg3d6001_03_base",
+        "hierarchyPath": "bg_3d_600_01_00_001/bg3d6001_03_base",
+        "enabled": true,
+        "controller": {
+          "fileId": 0,
+          "pathId": "6743516739255718961",
+          "resolved": true,
+          "resolvedType": "AnimatorController",
+          "resolvedName": "bg3d600B_00",
+          "resolvedNameSource": "m_Name",
+          "resolvedCab": "CAB-e5fe2987706ceb455d1d971bc0a97d83",
+          "resolvedSourceBundle": "battle/stage/bg_3d_600_01_00_001"
+        },
+        "avatar": {
+          "fileId": 0,
+          "pathId": "0",
+          "null": true
+        },
+        "cullingMode": 0,
+        "updateMode": 0,
+        "applyRootMotion": false
+      },
+      {
+        "pathId": "9122290035340819387",
+        "gameObject": "bg3d6001_03_Global Volume",
+        "hierarchyPath": "bg_3d_600_01_00_001/bg3d6001_03_Global Volume",
+        "enabled": true,
+        "controller": {
+          "fileId": 0,
+          "pathId": "0",
+          "null": true
+        },
+        "avatar": {
+          "fileId": 0,
+          "pathId": "0",
+          "null": true
+        },
+        "cullingMode": 0,
+        "updateMode": 0,
+        "applyRootMotion": false
+      }
+    ],
+    "controllers": [
+      {
+        "name": "checkLight_rotate",
+        "pathId": "-8870045925051101851",
+        "clipPathIds": [
+          "6556947399969015217"
+        ],
+        "tos": [
+          {
+            "hash": 2105523844,
+            "name": "GravityWeight"
+          },
+          {
+            "hash": 6601356,
+            "name": "Base Layer.rotation180"
+          },
+          {
+            "hash": 1285996976,
+            "name": "rotation360_300-600F"
+          },
+          {
+            "hash": 756556552,
+            "name": "Base Layer"
+          },
+          {
+            "hash": 3213098537,
+            "name": "rotation180"
+          },
+          {
+            "hash": 0,
+            "name": ""
+          },
+          {
+            "hash": 1658450749,
+            "name": "Base Layer.rotation360_300-600F"
+          }
+        ]
+      },
+      {
+        "name": "bg3d600B_00",
+        "pathId": "6743516739255718961",
+        "clipPathIds": [
+          "7291217522938930127"
+        ],
+        "tos": [
+          {
+            "hash": 1906057931,
+            "name": "bg3d600B_00_wall"
+          },
+          {
+            "hash": 2105523844,
+            "name": "GravityWeight"
+          },
+          {
+            "hash": 756556552,
+            "name": "Base Layer"
+          },
+          {
+            "hash": 0,
+            "name": ""
+          },
+          {
+            "hash": 316508437,
+            "name": "Base Layer.bg3d600B_00_wall"
+          }
+        ]
+      }
+    ],
+    "clips": [
+      {
+        "name": "rotation360_300-600F",
+        "pathId": "6556947399969015217",
+        "legacy": false,
+        "sampleRate": 60.0,
+        "stopTime": 10.0,
+        "loopTime": false,
+        "bindingCount": 1,
+        "bindings": [
+          {
+            "index": 0,
+            "pathHash": 0,
+            "attribute": 4,
+            "typeId": 4,
+            "customType": 4,
+            "isPPtrCurve": 0
+          }
+        ],
+        "streamed": {
+          "wordCount": 70,
+          "byteCount": 280,
+          "frameCount": 5,
+          "curveCount": 3,
+          "sentinelFrameCount": 2,
+          "keyCount": 12,
+          "serializedValueMin": 0.0,
+          "serializedValueMax": 360.0
+        },
+        "dense": {
+          "curveCount": 0,
+          "frameCount": 602,
+          "sampleRate": 60.0,
+          "beginTime": 0.0,
+          "sampleCount": 0,
+          "serializedValueMin": null,
+          "serializedValueMax": null
+        },
+        "constant": {
+          "scalarCount": 0,
+          "serializedValueMin": null,
+          "serializedValueMax": null
+        }
+      },
+      {
+        "name": "bg3d600B_00_wall",
+        "pathId": "7291217522938930127",
+        "legacy": false,
+        "sampleRate": 30.0,
+        "stopTime": 80.00000762939453,
+        "loopTime": false,
+        "bindingCount": 10,
+        "bindings": [
+          {
+            "index": 0,
+            "pathHash": 2676166091,
+            "attribute": 2,
+            "typeId": 4,
+            "customType": 0,
+            "isPPtrCurve": 0
+          },
+          {
+            "index": 1,
+            "pathHash": 2557659906,
+            "attribute": 2,
+            "typeId": 4,
+            "customType": 0,
+            "isPPtrCurve": 0
+          },
+          {
+            "index": 2,
+            "pathHash": 3869908114,
+            "attribute": 2,
+            "typeId": 4,
+            "customType": 0,
+            "isPPtrCurve": 0
+          },
+          {
+            "index": 3,
+            "pathHash": 3437384162,
+            "attribute": 2,
+            "typeId": 4,
+            "customType": 0,
+            "isPPtrCurve": 0
+          },
+          {
+            "index": 4,
+            "pathHash": 454800306,
+            "attribute": 2,
+            "typeId": 4,
+            "customType": 0,
+            "isPPtrCurve": 0
+          },
+          {
+            "index": 5,
+            "pathHash": 827588290,
+            "attribute": 2,
+            "typeId": 4,
+            "customType": 0,
+            "isPPtrCurve": 0
+          },
+          {
+            "index": 6,
+            "pathHash": 1334520146,
+            "attribute": 2,
+            "typeId": 4,
+            "customType": 0,
+            "isPPtrCurve": 0
+          },
+          {
+            "index": 7,
+            "pathHash": 1932135737,
+            "attribute": 2,
+            "typeId": 4,
+            "customType": 0,
+            "isPPtrCurve": 0
+          },
+          {
+            "index": 8,
+            "pathHash": 3702148530,
+            "attribute": 2,
+            "typeId": 4,
+            "customType": 0,
+            "isPPtrCurve": 0
+          },
+          {
+            "index": 9,
+            "pathHash": 1707303970,
+            "attribute": 2,
+            "typeId": 4,
+            "customType": 0,
+            "isPPtrCurve": 0
+          }
+        ],
+        "streamed": {
+          "wordCount": 8326,
+          "byteCount": 33304,
+          "frameCount": 53,
+          "curveCount": 36,
+          "sentinelFrameCount": 2,
+          "keyCount": 1644,
+          "serializedValueMin": -1.0,
+          "serializedValueMax": 1.0
+        },
+        "dense": {
+          "curveCount": 0,
+          "frameCount": 2402,
+          "sampleRate": 30.0,
+          "beginTime": 0.0,
+          "sampleCount": 0,
+          "serializedValueMin": null,
+          "serializedValueMax": null
+        },
+        "constant": {
+          "scalarCount": 4,
+          "serializedValueMin": 0.0,
+          "serializedValueMax": 1.0
+        }
+      }
+    ],
+    "particleSystems": [
+      {
+        "pathId": "-5764409398310470664",
+        "gameObject": "Eff-FallenRoseParticle",
+        "hierarchyPath": "bg_3d_600_01_00_001/Eff-FallenRoseParticle",
+        "typetreeSha256": "f7028ee208684b692d69c69a350d0ea0611f5341d019f9ab8d26268f3187f16c",
+        "typetree": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": 4670514844223901977
+          },
+          "lengthInSec": 5.0,
+          "simulationSpeed": 1.0,
+          "stopAction": 0,
+          "cullingMode": 0,
+          "ringBufferMode": 0,
+          "ringBufferLoopRange": {
+            "x": 0.0,
+            "y": 1.0
+          },
+          "emitterVelocityMode": 1,
+          "looping": true,
+          "prewarm": true,
+          "playOnAwake": true,
+          "useUnscaledTime": false,
+          "autoRandomSeed": true,
+          "startDelay": {
+            "minMaxState": 0,
+            "scalar": 0.0,
+            "minScalar": 0.0,
+            "maxCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            },
+            "minCurve": {
+              "m_Curve": [],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "moveWithTransform": 0,
+          "moveWithCustomTransform": {
+            "m_FileID": 0,
+            "m_PathID": 0
+          },
+          "scalingMode": 1,
+          "randomSeed": 0,
+          "InitialModule": {
+            "enabled": true,
+            "startLifetime": {
+              "minMaxState": 0,
+              "scalar": 8.0,
+              "minScalar": 5.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "startSpeed": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 5.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "startColor": {
+              "minMaxState": 0,
+              "minColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              },
+              "minGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              }
+            },
+            "startSize": {
+              "minMaxState": 3,
+              "scalar": 1.5,
+              "minScalar": 0.6000000238418579,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "startSizeY": {
+              "minMaxState": 3,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "startSizeZ": {
+              "minMaxState": 3,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "startRotationX": {
+              "minMaxState": 3,
+              "scalar": 0.7853981256484985,
+              "minScalar": -0.7853981256484985,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "startRotationY": {
+              "minMaxState": 3,
+              "scalar": 0.0,
+              "minScalar": 6.283185005187988,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "startRotation": {
+              "minMaxState": 3,
+              "scalar": 0.7853981256484985,
+              "minScalar": -0.7853981256484985,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "randomizeRotationDirection": 0.0,
+            "gravitySource": 0,
+            "maxNumParticles": 20,
+            "customEmitterVelocity": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "size3D": false,
+            "rotation3D": true,
+            "gravityModifier": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "ShapeModule": {
+            "enabled": true,
+            "type": 10,
+            "angle": 25.0,
+            "length": 5.0,
+            "boxThickness": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "radiusThickness": 1.0,
+            "donutRadius": 0.20000000298023224,
+            "m_Position": {
+              "x": 0.0,
+              "y": 30.0,
+              "z": 0.0
+            },
+            "m_Rotation": {
+              "x": 90.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "m_Scale": {
+              "x": 25.0,
+              "y": 25.0,
+              "z": 5.0
+            },
+            "placementMode": 0,
+            "m_MeshMaterialIndex": 0,
+            "m_MeshNormalOffset": 0.0,
+            "m_MeshSpawn": {
+              "mode": 0,
+              "spread": 0.0,
+              "speed": {
+                "minMaxState": 0,
+                "scalar": 1.0,
+                "minScalar": 1.0,
+                "maxCurve": {
+                  "m_Curve": [],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "minCurve": {
+                  "m_Curve": [],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                }
+              }
+            },
+            "m_Mesh": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_MeshRenderer": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_SkinnedMeshRenderer": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Sprite": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_SpriteRenderer": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_UseMeshMaterialIndex": false,
+            "m_UseMeshColors": true,
+            "alignToDirection": false,
+            "m_Texture": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_TextureClipChannel": 3,
+            "m_TextureClipThreshold": 0.0,
+            "m_TextureUVChannel": 0,
+            "m_TextureColorAffectsParticles": true,
+            "m_TextureAlphaAffectsParticles": true,
+            "m_TextureBilinearFiltering": false,
+            "randomDirectionAmount": 0.0,
+            "sphericalDirectionAmount": 0.0,
+            "randomPositionAmount": 0.0,
+            "radius": {
+              "value": 1.0,
+              "mode": 0,
+              "spread": 0.0,
+              "speed": {
+                "minMaxState": 0,
+                "scalar": 1.0,
+                "minScalar": 1.0,
+                "maxCurve": {
+                  "m_Curve": [],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "minCurve": {
+                  "m_Curve": [],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                }
+              }
+            },
+            "arc": {
+              "value": 180.0,
+              "mode": 0,
+              "spread": 0.0,
+              "speed": {
+                "minMaxState": 0,
+                "scalar": 1.0,
+                "minScalar": 1.0,
+                "maxCurve": {
+                  "m_Curve": [],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "minCurve": {
+                  "m_Curve": [],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                }
+              }
+            }
+          },
+          "EmissionModule": {
+            "enabled": true,
+            "rateOverTime": {
+              "minMaxState": 3,
+              "scalar": 3.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "rateOverDistance": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "m_BurstCount": 0,
+            "m_Bursts": []
+          },
+          "SizeModule": {
+            "enabled": true,
+            "curve": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 0.06340237706899643,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 0.7262749671936035,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "y": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "z": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "separateAxes": false
+          },
+          "RotationModule": {
+            "enabled": true,
+            "x": {
+              "minMaxState": 2,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "y": {
+              "minMaxState": 2,
+              "scalar": 8.726646423339844,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 0.1712748110294342,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 0.6531317830085754,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 0.7212713360786438,
+                    "value": 0.010477066040039062,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 0.1720418483018875,
+                    "value": -0.9523787498474121,
+                    "inSlope": -0.3034021854400635,
+                    "outSlope": -0.3034021854400635,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 0.6278300285339355,
+                    "value": -1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 0.7237833142280579,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "curve": {
+              "minMaxState": 2,
+              "scalar": 1.0,
+              "minScalar": 0.7853981852531433,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "separateAxes": true
+          },
+          "ColorModule": {
+            "enabled": false,
+            "gradient": {
+              "minMaxState": 1,
+              "minColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              },
+              "minGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              }
+            }
+          },
+          "UVModule": {
+            "enabled": false,
+            "mode": 0,
+            "timeMode": 0,
+            "fps": 30.0,
+            "frameOverTime": {
+              "minMaxState": 1,
+              "scalar": 0.9998999834060669,
+              "minScalar": 0.9998999834060669,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "startFrame": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "speedRange": {
+              "x": 0.0,
+              "y": 1.0
+            },
+            "tilesX": 1,
+            "tilesY": 1,
+            "animationType": 0,
+            "rowIndex": 0,
+            "cycles": 1.0,
+            "uvChannelMask": -1,
+            "rowMode": 1,
+            "sprites": [
+              {
+                "sprite": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                }
+              }
+            ],
+            "flipU": 0.0,
+            "flipV": 0.0
+          },
+          "VelocityModule": {
+            "enabled": true,
+            "x": {
+              "minMaxState": 0,
+              "scalar": 0.8500000238418579,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "y": {
+              "minMaxState": 0,
+              "scalar": -5.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "z": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "orbitalX": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "orbitalY": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "orbitalZ": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "orbitalOffsetX": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "orbitalOffsetY": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "orbitalOffsetZ": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "radial": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "speedModifier": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "inWorldSpace": false
+          },
+          "InheritVelocityModule": {
+            "enabled": false,
+            "m_Mode": 0,
+            "m_Curve": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "LifetimeByEmitterSpeedModule": {
+            "enabled": false,
+            "m_Curve": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": -0.800000011920929,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.20000000298023224,
+                    "inSlope": -0.800000011920929,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "m_Range": {
+              "x": 0.0,
+              "y": 1.0
+            }
+          },
+          "ForceModule": {
+            "enabled": false,
+            "x": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "y": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "z": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "inWorldSpace": false,
+            "randomizePerFrame": false
+          },
+          "ExternalForcesModule": {
+            "enabled": false,
+            "multiplierCurve": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "influenceFilter": 0,
+            "influenceMask": {
+              "m_Bits": 4294967295
+            },
+            "influenceList": []
+          },
+          "ClampVelocityModule": {
+            "enabled": false,
+            "x": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "y": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "z": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "magnitude": {
+              "minMaxState": 0,
+              "scalar": 2.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "separateAxis": false,
+            "inWorldSpace": false,
+            "multiplyDragByParticleSize": true,
+            "multiplyDragByParticleVelocity": true,
+            "dampen": 0.029999999329447746,
+            "drag": {
+              "minMaxState": 0,
+              "scalar": 0.029999999329447746,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "NoiseModule": {
+            "enabled": false,
+            "strength": {
+              "minMaxState": 0,
+              "scalar": 0.20000000298023224,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "strengthY": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "strengthZ": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "separateAxes": false,
+            "frequency": 0.5,
+            "damping": true,
+            "octaves": 1,
+            "octaveMultiplier": 0.5,
+            "octaveScale": 2.0,
+            "quality": 1,
+            "scrollSpeed": {
+              "minMaxState": 0,
+              "scalar": 0.5,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "remap": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": -1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 2.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 2.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "remapY": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": -1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 2.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 2.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "remapZ": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": -1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 2.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 2.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "remapEnabled": false,
+            "positionAmount": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "rotationAmount": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "sizeAmount": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "SizeBySpeedModule": {
+            "enabled": false,
+            "curve": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "y": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "z": {
+              "minMaxState": 1,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.3333333432674408,
+                    "outWeight": 0.3333333432674408
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "range": {
+              "x": 0.0,
+              "y": 1.0
+            },
+            "separateAxes": false
+          },
+          "RotationBySpeedModule": {
+            "enabled": false,
+            "x": {
+              "minMaxState": 0,
+              "scalar": 5.235987663269043,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "y": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "curve": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "separateAxes": true,
+            "range": {
+              "x": 0.0,
+              "y": 1.0
+            }
+          },
+          "ColorBySpeedModule": {
+            "enabled": false,
+            "gradient": {
+              "minMaxState": 1,
+              "minColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              },
+              "minGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              }
+            },
+            "range": {
+              "x": 0.0,
+              "y": 1.0
+            }
+          },
+          "CollisionModule": {
+            "enabled": true,
+            "type": 0,
+            "collisionMode": 0,
+            "colliderForce": 0.0,
+            "multiplyColliderForceByParticleSize": false,
+            "multiplyColliderForceByParticleSpeed": false,
+            "multiplyColliderForceByCollisionAngle": true,
+            "m_Planes": [
+              {
+                "m_FileID": 0,
+                "m_PathID": -7205201075818082485
+              }
+            ],
+            "m_Dampen": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "m_Bounce": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "m_EnergyLossOnCollision": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "minKillSpeed": 0.0,
+            "maxKillSpeed": 10000.0,
+            "radiusScale": 9.999999747378752e-05,
+            "collidesWith": {
+              "m_Bits": 4294967295
+            },
+            "maxCollisionShapes": 256,
+            "quality": 0,
+            "voxelSize": 0.5,
+            "collisionMessages": false,
+            "collidesWithDynamic": true,
+            "interiorCollisions": false
+          },
+          "TriggerModule": {
+            "enabled": false,
+            "inside": 1,
+            "outside": 0,
+            "enter": 0,
+            "exit": 0,
+            "colliderQueryMode": 0,
+            "radiusScale": 1.0,
+            "primitives": []
+          },
+          "SubModule": {
+            "enabled": false,
+            "subEmitters": [
+              {
+                "emitter": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "type": 0,
+                "properties": 0,
+                "emitProbability": 1.0
+              }
+            ]
+          },
+          "LightsModule": {
+            "enabled": false,
+            "ratio": 0.0,
+            "light": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "randomDistribution": true,
+            "color": true,
+            "range": true,
+            "intensity": true,
+            "rangeCurve": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "intensityCurve": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "maxLights": 20
+          },
+          "TrailModule": {
+            "enabled": false,
+            "mode": 0,
+            "ratio": 1.0,
+            "lifetime": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "minVertexDistance": 0.20000000298023224,
+            "textureMode": 0,
+            "textureScale": {
+              "x": 1.0,
+              "y": 1.0
+            },
+            "ribbonCount": 1,
+            "shadowBias": 0.5,
+            "worldSpace": false,
+            "dieWithParticles": true,
+            "sizeAffectsWidth": true,
+            "sizeAffectsLifetime": false,
+            "inheritParticleColor": true,
+            "generateLightingData": false,
+            "splitSubEmitterRibbons": false,
+            "attachRibbonsToTransform": false,
+            "colorOverLifetime": {
+              "minMaxState": 0,
+              "minColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              },
+              "minGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              }
+            },
+            "widthOverTrail": {
+              "minMaxState": 0,
+              "scalar": 1.0,
+              "minScalar": 1.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "colorOverTrail": {
+              "minMaxState": 0,
+              "minColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              },
+              "minGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              }
+            }
+          },
+          "CustomDataModule": {
+            "enabled": false,
+            "mode0": 0,
+            "vectorComponentCount0": 4,
+            "color0": {
+              "minMaxState": 0,
+              "minColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              },
+              "minGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              }
+            },
+            "vector0_0": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "vector0_1": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "vector0_2": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "vector0_3": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "mode1": 0,
+            "vectorComponentCount1": 4,
+            "color1": {
+              "minMaxState": 0,
+              "minColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+              },
+              "maxGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              },
+              "minGradient": {
+                "key0": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key1": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "key2": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key3": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key4": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key5": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key6": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "key7": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 0.0
+                },
+                "ctime0": 0,
+                "ctime1": 65535,
+                "ctime2": 0,
+                "ctime3": 0,
+                "ctime4": 0,
+                "ctime5": 0,
+                "ctime6": 0,
+                "ctime7": 0,
+                "atime0": 0,
+                "atime1": 65535,
+                "atime2": 0,
+                "atime3": 0,
+                "atime4": 0,
+                "atime5": 0,
+                "atime6": 0,
+                "atime7": 0,
+                "m_Mode": 0,
+                "m_ColorSpace": -1,
+                "m_NumColorKeys": 2,
+                "m_NumAlphaKeys": 2
+              }
+            },
+            "vector1_0": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "vector1_1": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "vector1_2": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "vector1_3": {
+              "minMaxState": 0,
+              "scalar": 0.0,
+              "minScalar": 0.0,
+              "maxCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              },
+              "minCurve": {
+                "m_Curve": [],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          }
+        },
+        "renderer": {
+          "pathId": "8332364541016999655",
+          "enabled": true,
+          "renderMode": 4,
+          "sortMode": 0,
+          "sortingFudge": 0.0,
+          "materials": [
+            {
+              "fileId": 0,
+              "pathId": "4118693720954506417",
+              "resolved": true,
+              "resolvedType": "Material",
+              "resolvedName": "bg3d600B_00_prop2",
+              "resolvedNameSource": "m_Name",
+              "resolvedCab": "CAB-e5fe2987706ceb455d1d971bc0a97d83",
+              "resolvedSourceBundle": "battle/stage/bg_3d_600_01_00_001"
+            }
+          ],
+          "mesh": {
+            "fileId": 0,
+            "pathId": "-1059987457286302460",
+            "resolved": true,
+            "resolvedType": "Mesh",
+            "resolvedName": "roseHi_geo",
+            "resolvedNameSource": "m_Name",
+            "resolvedCab": "CAB-e5fe2987706ceb455d1d971bc0a97d83",
+            "resolvedSourceBundle": "battle/stage/bg_3d_600_01_00_001"
+          },
+          "vertexStreams": [
+            0,
+            1,
+            3,
+            4
+          ]
+        }
+      }
+    ],
+    "volumetricDustParticles": [
+      {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -213946444770332066
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 7290436474085954161
+        },
+        "m_Name": "",
+        "alpha": 0.5,
+        "size": 0.019999999552965164,
+        "direction": 0,
+        "velocity": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.10000000149011612
+        },
+        "speed": 0.029999999329447746,
+        "density": 50.0,
+        "spawnDistanceRange": {
+          "m_MinValue": 0.0,
+          "m_MaxValue": 0.699999988079071
+        },
+        "spawnMinDistance": 0.0,
+        "spawnMaxDistance": 0.699999988079071,
+        "cullingEnabled": 0,
+        "cullingMaxDistance": 10.0,
+        "m_AlphaAdditionalRuntime": 1.0
+      },
+      {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -7303809684061688062
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": 7290436474085954161
+        },
+        "m_Name": "",
+        "alpha": 0.5,
+        "size": 0.019999999552965164,
+        "direction": 0,
+        "velocity": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.10000000149011612
+        },
+        "speed": 0.029999999329447746,
+        "density": 50.0,
+        "spawnDistanceRange": {
+          "m_MinValue": 0.0,
+          "m_MaxValue": 0.699999988079071
+        },
+        "spawnMinDistance": 0.0,
+        "spawnMaxDistance": 0.699999988079071,
+        "cullingEnabled": 0,
+        "cullingMaxDistance": 10.0,
+        "m_AlphaAdditionalRuntime": 1.0
+      }
+    ],
+    "volumetricLightBeams": [
+      {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -7303809684061688062
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -8526694666757663789
+        },
+        "m_Name": "",
+        "colorFromLight": 1,
+        "colorMode": 0,
+        "color": {
+          "r": 0.9970245957374573,
+          "g": 1.0,
+          "b": 0.900943398475647,
+          "a": 1.0
+        },
+        "colorGradient": {
+          "key0": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "key1": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "key2": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "key3": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "key4": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "key5": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "key6": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "key7": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "ctime0": 0,
+          "ctime1": 65535,
+          "ctime2": 0,
+          "ctime3": 0,
+          "ctime4": 0,
+          "ctime5": 0,
+          "ctime6": 0,
+          "ctime7": 0,
+          "atime0": 0,
+          "atime1": 65535,
+          "atime2": 0,
+          "atime3": 0,
+          "atime4": 0,
+          "atime5": 0,
+          "atime6": 0,
+          "atime7": 0,
+          "m_Mode": 0,
+          "m_ColorSpace": -1,
+          "m_NumColorKeys": 2,
+          "m_NumAlphaKeys": 2
+        },
+        "intensityFromLight": 1,
+        "intensityModeAdvanced": 0,
+        "intensityInside": 0.10000000149011612,
+        "intensityOutside": 0.10000000149011612,
+        "blendingMode": 0,
+        "spotAngleFromLight": 1,
+        "spotAngle": 100.0,
+        "coneRadiusStart": 0.0,
+        "shaderAccuracy": 0,
+        "geomMeshType": 0,
+        "geomCustomSides": 18,
+        "geomCustomSegments": 5,
+        "skewingLocalForwardDirection": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "clippingPlaneTransform": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "geomCap": 1,
+        "fallOffEndFromLight": 0,
+        "attenuationEquation": 0,
+        "attenuationCustomBlending": 0.5,
+        "fallOffStart": 0.0,
+        "fallOffEnd": 30.0,
+        "depthBlendDistance": 2.0,
+        "cameraClippingDistance": 0.5,
+        "glareFrontal": 0.5,
+        "glareBehind": 0.5,
+        "fresnelPow": 5.0,
+        "noiseMode": 0,
+        "noiseIntensity": 0.5,
+        "noiseScaleUseGlobal": 1,
+        "noiseScaleLocal": 0.5,
+        "noiseVelocityUseGlobal": 1,
+        "noiseVelocityLocal": {
+          "x": 0.07000000029802322,
+          "y": 0.18000000715255737,
+          "z": 0.05000000074505806
+        },
+        "dimensions": 0,
+        "tiltFactor": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "pluginVersion": 1970,
+        "_TrackChangesDuringPlaytime": 0,
+        "_SortingLayerID": 0,
+        "_SortingOrder": 0,
+        "_FadeOutBegin": -150.0,
+        "_FadeOutEnd": -200.0
+      },
+      {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": -213946444770332066
+        },
+        "m_Enabled": 1,
+        "m_Script": {
+          "m_FileID": 0,
+          "m_PathID": -8526694666757663789
+        },
+        "m_Name": "",
+        "colorFromLight": 1,
+        "colorMode": 0,
+        "color": {
+          "r": 1.0,
+          "g": 0.9729976058006287,
+          "b": 0.75,
+          "a": 1.0
+        },
+        "colorGradient": {
+          "key0": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "key1": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 1.0
+          },
+          "key2": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "key3": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "key4": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "key5": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "key6": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "key7": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+          },
+          "ctime0": 0,
+          "ctime1": 65535,
+          "ctime2": 0,
+          "ctime3": 0,
+          "ctime4": 0,
+          "ctime5": 0,
+          "ctime6": 0,
+          "ctime7": 0,
+          "atime0": 0,
+          "atime1": 65535,
+          "atime2": 0,
+          "atime3": 0,
+          "atime4": 0,
+          "atime5": 0,
+          "atime6": 0,
+          "atime7": 0,
+          "m_Mode": 0,
+          "m_ColorSpace": -1,
+          "m_NumColorKeys": 2,
+          "m_NumAlphaKeys": 2
+        },
+        "intensityFromLight": 1,
+        "intensityModeAdvanced": 0,
+        "intensityInside": 0.05000000074505806,
+        "intensityOutside": 0.05000000074505806,
+        "blendingMode": 1,
+        "spotAngleFromLight": 1,
+        "spotAngle": 80.0,
+        "coneRadiusStart": 0.0,
+        "shaderAccuracy": 0,
+        "geomMeshType": 0,
+        "geomCustomSides": 18,
+        "geomCustomSegments": 5,
+        "skewingLocalForwardDirection": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 1.0
+        },
+        "clippingPlaneTransform": {
+          "m_FileID": 0,
+          "m_PathID": 0
+        },
+        "geomCap": 1,
+        "fallOffEndFromLight": 0,
+        "attenuationEquation": 0,
+        "attenuationCustomBlending": 0.5,
+        "fallOffStart": 0.0,
+        "fallOffEnd": 90.0,
+        "depthBlendDistance": 2.0,
+        "cameraClippingDistance": 0.5,
+        "glareFrontal": 0.5,
+        "glareBehind": 0.5,
+        "fresnelPow": 10.0,
+        "noiseMode": 0,
+        "noiseIntensity": 0.5,
+        "noiseScaleUseGlobal": 1,
+        "noiseScaleLocal": 0.5,
+        "noiseVelocityUseGlobal": 1,
+        "noiseVelocityLocal": {
+          "x": 0.07000000029802322,
+          "y": 0.18000000715255737,
+          "z": 0.05000000074505806
+        },
+        "dimensions": 0,
+        "tiltFactor": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "pluginVersion": 1970,
+        "_TrackChangesDuringPlaytime": 0,
+        "_SortingLayerID": 0,
+        "_SortingOrder": 0,
+        "_FadeOutBegin": -150.0,
+        "_FadeOutEnd": -200.0
+      }
+    ]
+  },
+  "confirmedFacts": [
+    "The 13-file local JP closure is complete, hash-bound, and required no network or payload copy.",
+    "All 14 material PPtrs resolve and the stage contains 353 renderers.",
+    "The stage contains one baked lightmap and 319 renderer lightmap bindings.",
+    "All 258 valid serialized meshes contain UV0 but no UV1; 225 unique lightmapped meshes are affected.",
+    "The official compiled LIGHTMAP_ON vertex path reads TEXCOORD1 and applies unity_LightmapST.",
+    "The raw stage contains six Lights, two Cubemaps, two AnimationClips, two AnimatorControllers, one ParticleSystem, two volumetric dust components, and two volumetric light beams."
+  ],
+  "inferences": [
+    "An official runtime or build/export step supplies the missing UV1/TEXCOORD1 data; its implementation has not yet been identified.",
+    "A visually faithful browser result will require both the UV1 carrier and compiled BgUber operator parity, not a global brightness adjustment."
+  ],
+  "blockers": [
+    {
+      "id": "official-uv1-runtime-provider",
+      "severity": "blocking",
+      "fact": "225 unique lightmapped source meshes and 319 renderer bindings exist, but all 258 valid serialized meshes contain zero UV1 values.",
+      "requiredEvidence": "Identify the official runtime or export carrier that supplies TEXCOORD1; do not substitute UV0."
+    },
+    {
+      "id": "deployable-geometry-carrier",
+      "severity": "blocking",
+      "fact": "No browser-ready hierarchy carrier with proven official UV1 is registered for this stage.",
+      "requiredEvidence": "A strict hierarchy/vertex mapping with official UV1 and zero ambiguous or mismatched nodes."
+    },
+    {
+      "id": "bg-uber-operator-parity",
+      "severity": "blocking",
+      "fact": "PPtrs and material parameters are resolved, while the full compiled BgUber operator chain has not yet been translated into the Viewer.",
+      "requiredEvidence": "Compiled-shader-backed bindings and an external-Chrome A/B capture."
+    },
+    {
+      "id": "dynamic-component-parity",
+      "severity": "partial",
+      "fact": "Two clips, two controllers, one particle system, two dust components, and two volumetric beams are inventoried but not yet reproduced in the browser runtime.",
+      "requiredEvidence": "Bound runtime playback with component/property parity and visual evidence."
+    }
+  ]
+}

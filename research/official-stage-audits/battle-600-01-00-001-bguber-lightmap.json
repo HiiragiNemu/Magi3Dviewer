@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "evidenceLevel": "compiled-shader-exact",
+  "releaseProfile": "jp-steam-build-24729669",
+  "unityVersion": "2022.3.62f2",
+  "shader": "Creative/Bg/BgUberShader",
+  "source": {
+    "path": "D:\\SteamLibrary\\steamapps\\common\\MadokaExedra\\MadokaExedra_Data\\resources.assets",
+    "bytes": 36194880,
+    "shaderPathId": "659",
+    "networkUsed": false,
+    "sourceCopied": false
+  },
+  "pass": "ForwardLit",
+  "variant": "LIGHTMAP_ON",
+  "vertex": {
+    "lightmappedBlobIndices": [4, 6, 10, 12],
+    "controlBlobIndex": 2,
+    "input": "TEXCOORD1 v5.xy",
+    "output": "TEXCOORD8 o4.xy",
+    "instruction": "mad o4.xy, v5.xyxx, cb1[23].xyxx, cb1[23].zwzz"
+  },
+  "fragment": {
+    "lightmappedBlobIndex": 259,
+    "controlBlobIndex": 242,
+    "input": "TEXCOORD8 v4.xy",
+    "sampleInstruction": "sample_b r5.xyzw, v4.xyxx, t1.xyzw, s1, cb0[5].x",
+    "combineInstruction": "mad r5.xyz, r5.xyzx, r6.xyzx, r8.xyzx",
+    "resourceSymbol": null,
+    "resourceIdentity": "The symbol-stripped t1 resource is the only additional Texture2D sampled by the LIGHTMAP_ON variant relative to control blob 242."
+  },
+  "lightmapUvFormula": "UV1 * unity_LightmapST.xy + unity_LightmapST.zw",
+  "confirmed": [
+    "The official LIGHTMAP_ON vertex path reads TEXCOORD1 rather than TEXCOORD0 or vertex color.",
+    "The vertex path applies unity_LightmapST and forwards the result to the fragment shader.",
+    "The LIGHTMAP_ON fragment variant samples one additional texture at the forwarded lightmap coordinate and combines it into the lit color.",
+    "The non-LIGHTMAP control variant has no TEXCOORD8/v4 input and one fewer Texture2D."
+  ],
+  "unresolved": [
+    "DXBC resource symbols are stripped, so the t1 name is established by LIGHTMAP_ON variant differential rather than an embedded resource label.",
+    "The runtime or build-time provider of UV1 for battle-600-01-00-001 remains unidentified."
+  ],
+  "toolResults": [
+    {
+      "tool": "UnityPy asset lookup",
+      "input": "resources.assets / Shader PathID 659",
+      "literalResult": "Creative/Bg/BgUberShader",
+      "exitStatus": 0
+    },
+    {
+      "tool": "D3DDisassemble",
+      "input": "ForwardLit vertex LIGHTMAP_ON blobs 4,6,10,12 and control blob 2",
+      "literalResult": "HRESULT 0x00000000; LIGHTMAP_ON blobs emit mad o4.xy from v5.xy and cb1[23]",
+      "exitStatus": 0
+    },
+    {
+      "tool": "D3DDisassemble",
+      "input": "ForwardLit fragment LIGHTMAP_ON blob 259 and control blob 242",
+      "literalResult": "HRESULT 0x00000000; blob 259 samples t1 at v4.xy and blob 242 has neither v4 nor that additional Texture2D",
+      "exitStatus": 0
+    }
+  ]
+}
