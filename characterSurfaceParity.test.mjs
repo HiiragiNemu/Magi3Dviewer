@@ -34,9 +34,11 @@ function transpile(sourcePath, runtimePath) {
       'official-material-profiles.json',
     ), 'utf8')
     source = source.replace(
-      /^import officialMaterialProfileData from '.\/official-material-profiles\.json';\r?\n/,
-      `const officialMaterialProfileData = ${data.trim()};\n`,
+      /^import officialMaterialProfileUrl from '.\/official-material-profiles\.json\?url';\r?\n/,
+      `const officialMaterialProfileUrl = 'memory://official-material-profiles';\n` +
+        `const officialMaterialProfileData = ${data.trim()};\n`,
     )
+    source += '\nawait loadOfficialMaterialProfiles(officialMaterialProfileData);\n'
   }
   const compiled = ts.transpileModule(source, {
     compilerOptions: {
@@ -92,6 +94,16 @@ const generatedProfiles = JSON.parse(readFileSync(
 ))
 
 const profile = materialProfiles.getOfficialMaterialProfile
+
+test('official material table is external and awaited before model material resolution', () => {
+  const source = readFileSync(materialProfilePath, 'utf8')
+  assert.match(
+    source,
+    /import officialMaterialProfileUrl from '.\/official-material-profiles\.json\?url'/,
+  )
+  assert.match(source, /fetch\(officialMaterialProfileUrl\)/)
+  assert.match(loader, /await loadOfficialMaterialProfiles\(\)/)
+})
 
 test('101901 Body slots resolve exact JP f2 material profiles', () => {
   const body = profile('mt_chara_101901_body')

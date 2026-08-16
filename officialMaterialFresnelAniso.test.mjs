@@ -14,9 +14,11 @@ const officialMaterialProfileData = JSON.parse(readFileSync(
 ))
 const source = readFileSync(sourcePath, 'utf8')
   .replace(
-    /import officialMaterialProfileData from '\.\/official-material-profiles\.json';?/,
-    `const officialMaterialProfileData = ${JSON.stringify(officialMaterialProfileData)}`,
+    /import officialMaterialProfileUrl from '\.\/official-material-profiles\.json\?url';?/,
+    `const officialMaterialProfileUrl = 'memory://official-material-profiles';\n` +
+      `const officialMaterialProfileData = ${JSON.stringify(officialMaterialProfileData)}`,
   )
+  .concat('\nawait loadOfficialMaterialProfiles(officialMaterialProfileData);\n')
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 },
   fileName: sourcePath,

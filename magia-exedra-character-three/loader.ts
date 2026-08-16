@@ -25,6 +25,7 @@ import {
 } from './renderProfile';
 import {
     getOfficialMaterialProfiles,
+    loadOfficialMaterialProfiles,
     type OfficialMaterialProfile,
 } from './materialProfile';
 import { createFaceDirectionReference, getOfficialFaceProfile } from './faceProfile';
@@ -207,6 +208,14 @@ export async function loadCharacter(
     const loadProgressCallback = callbacks?.loadProgressCallback || (() => undefined)
     const modelLoadedCallback = callbacks?.modelLoadedCallback || (() => undefined)
     const loadFinishCallback = callbacks?.loadFinishCallback || (() => undefined)
+
+    loadProgressCallback('Loading official material profiles...')
+    try {
+        await loadOfficialMaterialProfiles()
+    } catch (error) {
+        loadProgressCallback('Material profile FAILED')
+        throw error
+    }
 
     const fbxPathUrl = ObjFilterByKey(files, path => path.includes('.fbx'))
     const fbxPath = Object.keys(fbxPathUrl)[0]

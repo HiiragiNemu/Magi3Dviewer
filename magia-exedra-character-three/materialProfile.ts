@@ -1,4 +1,4 @@
-import officialMaterialProfileData from './official-material-profiles.json';
+import officialMaterialProfileUrl from './official-material-profiles.json?url';
 
 export interface OfficialAnisotropyProfile {
     /** Serialized `_IsAniso`. */
@@ -116,13 +116,42 @@ interface OfficialMaterialProfileFile {
     materials: Record<string, Partial<OfficialMaterialProfile>>;
 }
 
-const generatedProfileFile = officialMaterialProfileData as unknown as OfficialMaterialProfileFile;
-if (generatedProfileFile.schema !== 1 || generatedProfileFile.unityVersion !== '2022.3.62f2') {
-    throw new Error('Official JP material profiles require Unity 2022.3.62f2');
+let generatedOfficialMaterials = new Map<string, Partial<OfficialMaterialProfile>>();
+let officialMaterialProfilesPromise: Promise<void> | undefined;
+
+function installOfficialMaterialProfiles(data: unknown): void {
+    const profileFile = data as OfficialMaterialProfileFile;
+    if (profileFile?.schema !== 1 || profileFile.unityVersion !== '2022.3.62f2') {
+        throw new Error('Official JP material profiles require Unity 2022.3.62f2');
+    }
+    generatedOfficialMaterials = new Map(Object.entries(profileFile.materials));
 }
-const GENERATED_OFFICIAL_MATERIALS = new Map(
-    Object.entries(generatedProfileFile.materials),
-);
+
+/**
+ * Keep the 1.7 MB serialized material table as a cacheable data asset rather
+ * than compiling it into the character JavaScript chunk. The loader awaits
+ * this once before resolving any model material, so no approximate profile is
+ * shown while the exact JP f2 values are still in flight.
+ *
+ * Tests may pass the parsed repository artifact directly; production always
+ * fetches the Vite-emitted URL.
+ */
+export async function loadOfficialMaterialProfiles(data?: unknown): Promise<void> {
+    if (data !== undefined) {
+        installOfficialMaterialProfiles(data);
+        return;
+    }
+    if (generatedOfficialMaterials.size > 0) return;
+    officialMaterialProfilesPromise ??= fetch(officialMaterialProfileUrl).then(async response => {
+        if (!response.ok) {
+            throw new Error(
+                `Official material profile request failed: ${response.status} ${response.statusText}`,
+            );
+        }
+        installOfficialMaterialProfiles(await response.json());
+    });
+    await officialMaterialProfilesPromise;
+}
 
 const ANISO_DISABLED: OfficialAnisotropyProfile = {
     enabled: false,
@@ -597,7 +626,7 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         },
         emissionColor: [0, 0, 0],
     };
-    const generated = GENERATED_OFFICIAL_MATERIALS.get(normalized);
+    const generated = generatedOfficialMaterials.get(normalized);
     const manual = OFFICIAL_MATERIALS.get(normalized);
     const official = generated || manual
         ? { ...generated, ...manual }
