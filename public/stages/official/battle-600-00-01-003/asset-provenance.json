@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "stageId": "battle-600-00-01-003",
+  "sourceBundle": "battle/stage/bg_3d_600_00_01_003",
+  "sourceBundleSha256": "827d8fe45f0b345a544de09982a0737146832021c080ed48deb9c618472db5e4",
+  "rawTruthSha256": "d93720c10becd4971b333a42a804f6265620add9f860736e6a33c386dbead779",
+  "exportVerificationSha256": "4fcc0328e55ae50d7729162d30082ef1b41b137b874e527c62b00f5943f96386",
+  "networkUsed": false,
+  "sourceBundlesCopied": false,
+  "publicAssetStorage": "NTFS hard links for immutable binary carriers; generated JSON for runtime bindings",
+  "assetStudioBoundary": {
+    "modelConverterTextureCount": 14,
+    "texture2dObjectCount": 15,
+    "cubemapObjectCount": 1,
+    "assetStudioOmittedTexture2dCount": 1,
+    "modelConverterVsUnityPyPixelDifferenceCount": 14,
+    "runtimeCarrierChoice": "ModelConverter PNGs preserve the FBX carrier convention; UnityPy comparison PNGs remain evidence-only",
+    "unityVersion": "2022.3.62f2"
+  },
+  "animationBoundary": {
+    "fbxAnimationCount": 5,
+    "trackCounts": {
+      "bg3d600A_01_02_circleA": 1,
+      "bg3d600A_01_02_circleCD": 1,
+      "bg3d600A_01_02_circleE": 1,
+      "bg3d600A_01_02_window": 0,
+      "bg3d600A_01_02_window02": 4
+    },
+    "zeroTrackClips": [
+      "bg3d600A_01_02_window"
+    ]
+  },
+  "uv1Closure": {
+    "rendererCount": 128,
+    "mappedRendererCount": 128,
+    "uniqueUv1GeometryCount": 77,
+    "maxUv0Error": 0,
+    "cornerModes": {
+      "cba": 128
+    },
+    "strictlyClosed": true
+  },
+  "transport": {
+    "fbxEncoding": "raw binary FBX 7.3",
+    "publicAssetsContainRawBundles": false,
+    "aggregateCatalogChanged": false
+  }
+}

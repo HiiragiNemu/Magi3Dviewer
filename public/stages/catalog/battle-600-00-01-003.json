@@ -1,0 +1,838 @@
+{
+  "id": "battle-600-00-01-003",
+  "name": "[Official dynamic partial/Battle] 600-00-01-003",
+  "category": "battle",
+  "official": true,
+  "assetBundleName": "battle/stage/bg_3d_600_00_01_003",
+  "bundleProvenance": {
+    "rootBundle": "battle/stage/bg_3d_600_00_01_003",
+    "unityVersion": "2022.3.62f2",
+    "manifest": {
+      "region": "jp",
+      "kind": "AssetBundleManifest binary",
+      "path": "D:/magia/ma-ex-data/gamedata/AssetBundles/Android",
+      "sha256": "c243499e1d304cc14cd1e0abe15f6992d71937e90365e89b03ecbf035cf7b3c8"
+    },
+    "closureEvidence": {
+      "path": "artifacts/research/20260813-stage600-003-truth/closure-manifest.json",
+      "sha256": "9d7d04492c47f8b207eb011d7fc87a54c7b0e8a208f9f79d7a5498a49a66ddaf"
+    },
+    "directDependencies": [
+      "texture/bg/b37387fbb6245a94d9cc8e81bc913f16",
+      "texture/bg/d9526dedc6f2bf148b781cb682a2cc76",
+      "texture/bg/8083bbb864bf4fa46982c2576be12cad",
+      "texture/bg/18211f689e00ea3408fc9361a68e3c16",
+      "texture/bg/a1e926046d3020a48a2d7d9c97a50859",
+      "texture/bg/16661dc1e118c2f4aa06fdbca9d9b241",
+      "texture/bg/0a4d806b5913e92479a926e4a88922e7",
+      "texture/bg/0656901a718c1dd4dad78419b76611d3",
+      "texture/bg/5fc2872b86555d74180c4d7eb7c47b90",
+      "shader/common/texture/cloud_noise",
+      "shader/bg_uber",
+      "texture/bg/e575aa04a807ed846984bf26b4b66871",
+      "shader/common/texture/simple_noise"
+    ],
+    "dependencyClosure": [
+      "texture/bg/b37387fbb6245a94d9cc8e81bc913f16",
+      "texture/bg/d9526dedc6f2bf148b781cb682a2cc76",
+      "texture/bg/8083bbb864bf4fa46982c2576be12cad",
+      "texture/bg/18211f689e00ea3408fc9361a68e3c16",
+      "texture/bg/a1e926046d3020a48a2d7d9c97a50859",
+      "texture/bg/16661dc1e118c2f4aa06fdbca9d9b241",
+      "texture/bg/0a4d806b5913e92479a926e4a88922e7",
+      "texture/bg/0656901a718c1dd4dad78419b76611d3",
+      "texture/bg/5fc2872b86555d74180c4d7eb7c47b90",
+      "shader/common/texture/cloud_noise",
+      "shader/bg_uber",
+      "texture/bg/e575aa04a807ed846984bf26b4b66871",
+      "shader/common/texture/simple_noise"
+    ],
+    "closureSha256": "9d7d04492c47f8b207eb011d7fc87a54c7b0e8a208f9f79d7a5498a49a66ddaf",
+    "manifestTargetId": 10992,
+    "manifestHash128BytesHex": "6b9b4bcb258eb5f3af8ba028d449cb68",
+    "dependencyCount": 13,
+    "closureFileCount": 14,
+    "closureBytes": 17769135,
+    "sourceBundleSha256": "827d8fe45f0b345a544de09982a0737146832021c080ed48deb9c618472db5e4"
+  },
+  "type": "fbx",
+  "url": "./stages/official/battle-600-00-01-003/bg_3d_600_00_01_003-animated.fbxdata",
+  "scale": 1,
+  "position": [
+    0,
+    0,
+    0
+  ],
+  "rotation": [
+    0,
+    0,
+    0
+  ],
+  "spawnPoints": [
+    {
+      "id": "actor-0",
+      "name": "Actor 0",
+      "role": "actor",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "materialBindings": [
+    {
+      "materialName": "mt_bg3d600A_01_03_anthonyAlphaA",
+      "materialPattern": "^mt_bg3d600A_01_03_anthonyAlphaA(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_anthonyAlpha_col.png",
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "alphaTest": 0.5,
+      "alphaToCoverage": true,
+      "atlas": {
+        "columns": 6,
+        "rows": 3,
+        "offset": 0,
+        "framesPerSecond": 8.0
+      }
+    },
+    {
+      "materialName": "mt_bg3d600A_01_03_anthonyAlphaB",
+      "materialPattern": "^mt_bg3d600A_01_03_anthonyAlphaB(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_anthonyAlpha_col.png",
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "alphaTest": 0.5,
+      "alphaToCoverage": true,
+      "atlas": {
+        "columns": 6,
+        "rows": 3,
+        "offset": 3,
+        "framesPerSecond": 8.0
+      }
+    },
+    {
+      "materialName": "mt_bg3d600A_01_03_ground",
+      "materialPattern": "^mt_bg3d600A_01_03_ground(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_groundB_col.png",
+      "smoothness": 0.699999988079071,
+      "metallic": 0.16599999368190765,
+      "normalScale": 2.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.0,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front",
+      "blendMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_groundA_col.png",
+      "vertexColorBlend": true,
+      "normalMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_groundB_nml.png",
+      "smoothnessMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_01_ground_smoothness.png",
+      "smoothnessChannel": "a",
+      "metallicFromSmoothnessMap": true
+    },
+    {
+      "materialName": "mt_bg3d600A_01_03_propAAlpha",
+      "materialPattern": "^mt_bg3d600A_01_03_propAAlpha(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_propAlpha_col.png",
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.0,
+      "castShadow": true,
+      "receiveShadow": true,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_propAlpha_nml.png",
+      "alphaTest": 0.5,
+      "alphaToCoverage": true
+    },
+    {
+      "materialName": "mt_bg3d600A_01_03_propBAlpha",
+      "materialPattern": "^mt_bg3d600A_01_03_propBAlpha(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_propAlpha_col.png",
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "alphaTest": 0.5,
+      "alphaToCoverage": true
+    },
+    {
+      "materialName": "mt_bg3d600A_01_03_rockAlpha",
+      "materialPattern": "^mt_bg3d600A_01_03_rockAlpha(?:\\.\\d+)?$",
+      "shading": "lit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_rockAlpha_col.png",
+      "smoothness": 0.8500000238418579,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 0.0,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front",
+      "normalMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_rockAlpha_nml.png",
+      "smoothnessMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_01_ground_smoothness.png",
+      "smoothnessChannel": "a",
+      "metallicFromSmoothnessMap": true,
+      "alphaTest": 0.5,
+      "alphaToCoverage": true
+    },
+    {
+      "materialName": "mt_bg3d600A_01_03_sky",
+      "materialPattern": "^mt_bg3d600A_01_03_sky(?:\\.\\d+)?$",
+      "shading": "unlit",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_01_sky_col.png",
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "unlitness": 1.0,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front"
+    }
+  ],
+  "renderProfile": {
+    "id": "bg_3d_600_00_01_003",
+    "source": "ReDriveVolume",
+    "stageLayer": 6,
+    "backgroundColor": [
+      0.15600000321865082,
+      0.15600000321865082,
+      0.15600000321865082,
+      1.0
+    ],
+    "environmentTextureUrl": "./stages/official/battle-600-00-01-003/ReflectionProbe-0-equirectangular.png",
+    "environmentIntensity": 1.0,
+    "lightmap": {
+      "textureUrl": "./stages/official/battle-600-00-01-003/Lightmap-0_comp_light.png",
+      "bindingsUrl": "./stages/official/battle-600-00-01-003/lightmap-bindings.json",
+      "uv1CompanionUrl": "./stages/official/battle-600-00-01-003/uv1-companion.json",
+      "encoding": "unity-rgbm-linear",
+      "intensity": 1
+    },
+    "fog": {
+      "color": [
+        0.15600000321865082,
+        0.15600000321865082,
+        0.15600000321865082,
+        1.0
+      ],
+      "near": 0.0,
+      "far": 95.0,
+      "affectsCharacters": false
+    },
+    "lights": [
+      {
+        "name": "MainLight",
+        "type": "directional",
+        "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/MainLight",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "target": [
+          -0.4131758861264719,
+          -0.7660443915787982,
+          -0.49240397769948363
+        ],
+        "color": [
+          1.0,
+          0.9764705896377563,
+          0.9372549057006836,
+          1.0
+        ],
+        "intensity": 1.0,
+        "cullingMask": 2147483647,
+        "lightmapping": 1,
+        "role": "character-key",
+        "castShadow": true,
+        "shadow": {
+          "type": 2,
+          "strength": 1.0,
+          "bias": 0.0,
+          "normalBias": 0.0,
+          "nearPlane": 0.10000000149011612
+        }
+      },
+      {
+        "name": "FillLight01",
+        "type": "spot",
+        "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/FillLight01",
+        "position": [
+          0.0,
+          25.0,
+          0.0
+        ],
+        "target": [
+          0.0,
+          24.000000000000007,
+          -1.3435883843274954e-07
+        ],
+        "color": [
+          1.0,
+          0.9952656626701355,
+          0.9490196108818054,
+          1.0
+        ],
+        "intensity": 600.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "castShadow": false,
+        "range": 150.0,
+        "outerAngleDegrees": 179.0,
+        "innerAngleDegrees": 179.0
+      },
+      {
+        "name": "BgLight03",
+        "type": "point",
+        "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgLight03",
+        "position": [
+          10.5,
+          9.640000343322754,
+          10.600000381469727
+        ],
+        "target": [
+          10.5,
+          9.640000343322754,
+          11.600000381469727
+        ],
+        "color": [
+          1.0,
+          0.9545234441757202,
+          0.7783018946647644,
+          1.0
+        ],
+        "intensity": 50.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "castShadow": false,
+        "range": 30.0
+      },
+      {
+        "name": "BgLight01",
+        "type": "point",
+        "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgLight01",
+        "position": [
+          -13.920000076293945,
+          11.319999694824219,
+          -17.639999389648438
+        ],
+        "target": [
+          -13.920000076293945,
+          11.319999694824219,
+          -16.639999389648438
+        ],
+        "color": [
+          1.0,
+          0.7885473966598511,
+          0.7519999742507935,
+          1.0
+        ],
+        "intensity": 400.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "castShadow": false,
+        "range": 20.0
+      },
+      {
+        "name": "BgLight01_01",
+        "type": "point",
+        "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgLight01_01",
+        "position": [
+          4.519999980926514,
+          5.71999979019165,
+          17.469999313354492
+        ],
+        "target": [
+          4.834729690227233,
+          5.468940158167379,
+          18.38537588682102
+        ],
+        "color": [
+          1.0,
+          0.7576826214790344,
+          0.36320751905441284,
+          1.0
+        ],
+        "intensity": 500.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "castShadow": false,
+        "range": 8.0
+      },
+      {
+        "name": "BgCenterLight",
+        "type": "spot",
+        "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgCenterLight",
+        "position": [
+          0.0,
+          10.199999809265137,
+          0.0
+        ],
+        "target": [
+          0.0,
+          9.199999809265146,
+          -1.3435883843274954e-07
+        ],
+        "color": [
+          1.0,
+          0.949999988079071,
+          0.9809523820877075,
+          1.0
+        ],
+        "intensity": 500.0,
+        "cullingMask": 64,
+        "lightmapping": 1,
+        "role": "background",
+        "castShadow": true,
+        "range": 40.0,
+        "outerAngleDegrees": 117.34782409667969,
+        "innerAngleDegrees": 26.0,
+        "shadow": {
+          "type": 1,
+          "strength": 1.0,
+          "bias": 0.05000000074505806,
+          "normalBias": 0.4000000059604645,
+          "nearPlane": 0.20000000298023224
+        }
+      },
+      {
+        "name": "BgLight02",
+        "type": "point",
+        "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgLight02",
+        "position": [
+          7.150000095367432,
+          8.600000381469727,
+          -24.719999313354492
+        ],
+        "target": [
+          7.150000095367432,
+          8.600000381469727,
+          -23.719999313354492
+        ],
+        "color": [
+          1.0,
+          0.9074745774269104,
+          0.7405660152435303,
+          1.0
+        ],
+        "intensity": 120.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "castShadow": false,
+        "range": 15.0
+      },
+      {
+        "name": "BgLight04",
+        "type": "point",
+        "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgLight04",
+        "position": [
+          -16.40999984741211,
+          13.329999923706055,
+          12.369999885559082
+        ],
+        "target": [
+          -16.40999984741211,
+          13.329999923706055,
+          13.369999885559082
+        ],
+        "color": [
+          1.0,
+          0.7885473966598511,
+          0.7519999742507935,
+          1.0
+        ],
+        "intensity": 300.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "castShadow": false,
+        "range": 15.0
+      }
+    ],
+    "renderer": {
+      "toneMapping": "aces",
+      "exposure": 1
+    },
+    "bloom": {
+      "enabled": true,
+      "strength": 1.0,
+      "radius": 0.699999988079071,
+      "threshold": 0.800000011920929
+    },
+    "postProcessing": {
+      "colorAdjustments": {
+        "active": true,
+        "contrast": 10.0,
+        "saturation": 15.0,
+        "sourceValues": {
+          "postExposure": 0.20000000298023224
+        },
+        "overrideStates": {
+          "postExposure": false,
+          "contrast": true,
+          "saturation": true
+        }
+      },
+      "vignette": {
+        "active": true,
+        "color": [
+          0.10196078568696976,
+          0.04313725605607033,
+          0.05696747079491615,
+          1.0
+        ],
+        "center": [
+          0.5,
+          0.5
+        ],
+        "intensity": 0.25,
+        "smoothness": 0.5,
+        "rounded": false
+      }
+    },
+    "reDriveVolume": {
+      "skyboxIntensity": 1.0,
+      "shAmbient": [
+        0.05081179365515709,
+        -1.0546018919255218e-10,
+        0.0,
+        -3.5400259112972066e-11,
+        0.0,
+        1.844383951121742e-10,
+        -5.587935447692871e-09,
+        0.0,
+        -1.3396784126484818e-08,
+        0.05081179365515709,
+        -1.0546018919255218e-10,
+        0.0,
+        -3.5400259112972066e-11,
+        0.0,
+        1.844383951121742e-10,
+        -5.587935447692871e-09,
+        0.0,
+        -1.3396784126484818e-08,
+        0.05081179365515709,
+        -1.0546018919255218e-10,
+        0.0,
+        -3.5400259112972066e-11,
+        0.0,
+        1.844383951121742e-10,
+        -5.587935447692871e-09,
+        0.0,
+        -1.3396784126484818e-08
+      ],
+      "characterShadowTint": [
+        0.6745098233222961,
+        0.6745098233222961,
+        0.800000011920929,
+        1.0
+      ],
+      "characterLightingOverrideColor": [
+        0.8773584961891174,
+        0.8508463501930237,
+        0.7076807022094727,
+        1.0
+      ],
+      "characterLightingOverrideRatio": 0.25,
+      "characterAdditionalRimLightColor": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "characterAdditionalRimLightDirection": [
+        1.0,
+        -1.0
+      ],
+      "backgroundShadowStrengthAdditive": 0.30000001192092896,
+      "backgroundPostExposure": 0.20000000298023224,
+      "backgroundContrast": 2.0,
+      "backgroundSaturation": 0.0,
+      "paraffin": {
+        "enabled": true,
+        "topColor": [
+          0.40440553426742554,
+          0.40244239568710327,
+          0.4259999990463257,
+          1.0
+        ],
+        "bottomColor": [
+          0.501960813999176,
+          0.3262745440006256,
+          0.3262745440006256,
+          1.0
+        ],
+        "opacity": 0.30000001192092896,
+        "width": 1.399999976158142,
+        "topBlendMode": 0,
+        "bottomBlendMode": 3
+      },
+      "overrides": {
+        "skyboxMaterial": true,
+        "skyboxIntensity": true,
+        "reflectionProbe": true,
+        "fogColor": true,
+        "fogRange": true,
+        "shAmbient": true,
+        "characterTint": false,
+        "characterShadowTint": true,
+        "backgroundTint": false,
+        "characterLightingOverrideColor": true,
+        "characterLightingOverrideRatio": true,
+        "characterLightingOverrideDirection": false,
+        "characterAdditionalRimLightColor": true,
+        "characterAdditionalRimLightDirection": false,
+        "characterFaceAwayTint": false,
+        "characterCancelPerspective": false,
+        "backgroundShadowStrengthAdditive": true,
+        "backgroundPostExposure": true,
+        "backgroundContrast": true,
+        "backgroundSaturation": false,
+        "backgroundBackgroundTint": false,
+        "useFixedLightDirection": true,
+        "paraffin": true,
+        "screenTexture": false,
+        "lightScreen": false
+      }
+    }
+  },
+  "runtime": {
+    "clipNames": [
+      "bg3d600A_01_02_circleA",
+      "bg3d600A_01_02_circleCD",
+      "bg3d600A_01_02_circleE",
+      "bg3d600A_01_02_window",
+      "bg3d600A_01_02_window02"
+    ],
+    "autoplay": true,
+    "loop": true,
+    "timeScale": 1,
+    "voiceTracks": []
+  },
+  "fidelity": {
+    "exact": false,
+    "sourceRevision": "d93720c10becd4971b333a42a804f6265620add9f860736e6a33c386dbead779",
+    "layers": {
+      "source": {
+        "gameObjectCount": 278,
+        "meshCount": 142,
+        "materialCount": 8,
+        "textureCount": 16,
+        "lightCount": 8,
+        "reDriveVolumeCount": 1,
+        "reflectionProbeCount": 0,
+        "particleSystemCount": 0,
+        "monoBehaviourCount": 20,
+        "animatorCount": 3,
+        "animationClipCount": 5,
+        "lightmapBindingCount": 128
+      },
+      "carrier": {
+        "nodeCount": 279,
+        "meshCount": 182,
+        "materialCount": 7,
+        "textureCount": 14,
+        "lightCount": 0,
+        "reDriveVolumeCount": 0,
+        "reflectionProbeCount": 0,
+        "particleSystemCount": 0,
+        "monoBehaviourCount": 0,
+        "animatorCount": 0,
+        "animationClipCount": 5,
+        "lightmapBindingCount": 0
+      },
+      "runtime": {
+        "nodeCount": 279,
+        "meshCount": 182,
+        "materialCount": 7,
+        "textureCount": 12,
+        "lightCount": 8,
+        "reDriveVolumeCount": 1,
+        "reflectionProbeCount": 1,
+        "particleSystemCount": 0,
+        "monoBehaviourCount": 5,
+        "animatorCount": 1,
+        "animationClipCount": 5,
+        "lightmapBindingCount": 128
+      }
+    },
+    "omissions": [
+      "bg3d600A_01_02_window is present in the FBX but has zero exported tracks; its exact property animation remains raw evidence.",
+      "The browser runtime plays all five exported clips concurrently, but does not reproduce the official AnimatorController state machines, transitions, masks, or layer weights.",
+      "The mesh-sky scroll/noise composition and compiled Creative/Bg shader operators remain evidence-only.",
+      "The equirectangular environment is derived from the Cubemap base faces; original seven-mip convolution is not reproduced.",
+      "All 14 AssetStudio/ModelConverter PNGs differ at pixel level from UnityPy decodes; the matched FBX carrier convention is used and both remain auditable.",
+      "Eight serialized lights and URP/ReDrive volume values are translated declaratively; operator-level and visual parity remain partial."
+    ]
+  },
+  "dynamic": {
+    "expected": true,
+    "status": "partial",
+    "clipNames": [
+      "bg3d600A_01_02_circleA",
+      "bg3d600A_01_02_circleCD",
+      "bg3d600A_01_02_circleE",
+      "bg3d600A_01_02_window",
+      "bg3d600A_01_02_window02"
+    ],
+    "missing": [
+      "bg3d600A_01_02_window zero-track property animation",
+      "exact five-layer AnimatorController states, transitions, masks, and weights",
+      "mesh-sky scroll and noise composition",
+      "original Cubemap mip convolution",
+      "compiled Creative/Bg and Unity URP/ReDrive operator parity",
+      "browser visual acceptance, aggregate registration, and deployment"
+    ],
+    "evidence": [
+      "Five FBX clips are present with track counts 1, 1, 1, 0, and 4.",
+      "Anthony A/B use the existing isolated material atlas operator at 6x3, 8 fps, with source offsets 0 and 3.",
+      "Strict UV1 mapping closes 128/128 lightmapped renderers with max UV0 error 0 and 77 deduplicated runtime geometries.",
+      "Eight serialized materials resolve to seven FBX mesh materials plus one source-only Skybox material; ground keeps BaseMap groundB and BlendTex groundA.",
+      "All eight serialized lights are retained in the isolated render profile."
+    ]
+  },
+  "evidence": [
+    "JP AssetBundleManifest target 10992 and exact 14-file dependency closure; no network acquisition.",
+    "Unity 2022.3.62f2 fallback plus exact raw PPtr closure for eight materials, 16 images, 142 meshes, 182 renderers, and eight lights.",
+    "AssetStudio.ModelConverter FBX reopens with Three r182 as 279 objects, 182 meshes, seven materials, and five clips.",
+    "UnityPy retains the omitted color lightmap and derives the directly referenced Cubemap equirectangular environment without box projection.",
+    "PrefabLightmapData, ReDriveVolume, Bloom, Tonemapping, ColorAdjustments, Vignette, and five clip layers are mapped without common Viewer or aggregate catalog edits."
+  ],
+  "packageEvidence": {
+    "sourceFbxSha256": "1d1e778e0f39309f8e9e1a01f7594acb0d89e3ff7991311b5c8e478bfdd01bbd",
+    "rawTruthSha256": "d93720c10becd4971b333a42a804f6265620add9f860736e6a33c386dbead779",
+    "exportVerificationSha256": "4fcc0328e55ae50d7729162d30082ef1b41b137b874e527c62b00f5943f96386",
+    "uv1MappingSha256": "b63c6e14c24a09ca8ab087c2ed8e6f031f9dda8103fc0b9c23a2957f07805d19",
+    "runtimeUv1CompanionSha256": "99ad39726387f4d5025a8f60308c90bced6f3381c127f04f518aeaae5bd26df5",
+    "runtimeLightmapBindingsSha256": "748a6e2784fa2a0235eaa4c6bc4b23f306dd3bb6aa465c20e8f01e75d9050c6f",
+    "assetProvenanceSha256": "56f8e9b8fcec3e44e168e229756bf5df53b200d011666d57de5e5066613ec680",
+    "fileCount": 20,
+    "totalBytes": 29038236,
+    "files": {
+      "asset-provenance.json": "56f8e9b8fcec3e44e168e229756bf5df53b200d011666d57de5e5066613ec680",
+      "bg3d600A_01_01_ground_smoothness.png": "350e3d34a5e7f9236fce6b83766740c38959512b0de15ac574ad99c6a0ae95ef",
+      "bg3d600A_01_01_sky_col.png": "98d726adb364d485a2f2ed1547e8b3c2bc5ceb43746c2706714cf930f3890eb2",
+      "bg3d600A_01_03_anthonyAlpha_col.png": "736a4652aa3ddcc03bdb4da0c1821a45e1f8cd9fedfe054ecc5a3ad5eb7565e7",
+      "bg3d600A_01_03_groundA_col.png": "f3911ccd13e85fd52dcb5c61a9b6f47d53b6316504fe69ca6dc27df38bceeffa",
+      "bg3d600A_01_03_groundB_col.png": "08f2a5305bb2d2e97ef89134f7c723813c3dc5235d2e046f3e5bfe787368061e",
+      "bg3d600A_01_03_groundB_nml.png": "d4e263e1630093d126745068c413427cbd7aec82382602011ed988f342d76cb3",
+      "bg3d600A_01_03_propAlpha_col.png": "8eb09bdb6d80c802ef8d2517df45ccbbaa9005247593c502222385e9ba9a25f4",
+      "bg3d600A_01_03_propAlpha_nml.png": "4c9e50f5e8c394104ef6b907aa52c3eaaf2e2a1923dffade0aa065226ebd7bb2",
+      "bg3d600A_01_03_rockAlpha_col.png": "959b646b475783db1da3ec577491b578b5b285bb3756a3764390fd81bbb696bb",
+      "bg3d600A_01_03_rockAlpha_nml.png": "ff926ca6e60c16104a45d36298a8dc60376d19f0f02dd0bfff4f3234850a3d20",
+      "bg_3d_600_00_01_003-animated.fbxdata": "1d1e778e0f39309f8e9e1a01f7594acb0d89e3ff7991311b5c8e478bfdd01bbd",
+      "cloud_noise_tex.png": "e812f1a8733ee1f401bae75b407fb0b076548255ad845c6dfc1ca3f43df751dd",
+      "Lightmap-0_comp_light.png": "0d0009bef2dcd87a2564b412d5be2400c89ee581093d5e7257eac1a9399b494c",
+      "lightmap-bindings.json": "748a6e2784fa2a0235eaa4c6bc4b23f306dd3bb6aa465c20e8f01e75d9050c6f",
+      "ReflectionProbe-0-equirectangular.png": "490991f4091cf91d008b90a62e4a3bd9006cf041570d9124b3dd754a85736532",
+      "simple_noise_tex.png": "b6c830aa7ed7b6db24fd99f472d4fda0a88b8aaf13bc19324d5998b1c5c201a8",
+      "uv1-companion.json": "99ad39726387f4d5025a8f60308c90bced6f3381c127f04f518aeaae5bd26df5",
+      "uwasa_hibi_sky.png": "0fb31071afba977c1eff8c74a9cb628bdba63d4b3f261207a52a54f34a0a5fdd",
+      "uwasa_hibi_tile.png": "232af02e3c4406d0f804f80292c412fb6e12bce972ceb1911ab2bae59f384a89"
+    }
+  },
+  "restorationStatus": {
+    "phase": "verified-isolated-product",
+    "generatedAt": "2026-08-16",
+    "commonLoaderChanges": false,
+    "aggregateCatalogChanged": false,
+    "gameDirectoryTouched": false
+  },
+  "transport": {
+    "scope": "local isolated product; aggregate catalog remains unchanged",
+    "fbx": {
+      "path": "bg_3d_600_00_01_003-animated.fbxdata",
+      "encoding": "raw binary FBX 7.3",
+      "sourceBytes": 8852048,
+      "encodedBytes": 8852048,
+      "decodedByteExact": true
+    },
+    "textures": {
+      "encoding": "PNG",
+      "losslessFileTransport": true
+    }
+  }
+}
