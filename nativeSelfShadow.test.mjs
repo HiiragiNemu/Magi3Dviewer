@@ -53,7 +53,24 @@ test('self-shadow is applied through authored toon shadow textures and face SDF'
   const stylization = read('magia-exedra-character-three/shaders/stylization.ts')
   const scene = read('magia-exedra-character-three/scene/index.ts')
   assert.match(stylization, /injectReDriveSelfShadowShader\(shader\)/)
-  assert.match(general, /rdToonBaseWeight \*= rdToonSelfShadowVisibility/)
+  assert.match(general, /rdToonBaseWeight \*= mix\(/)
+  assert.match(general, /rdToonSelfShadowVisibility\(/)
+  assert.match(general, /uMaterialReceiveSelfShadow/)
   assert.match(face, /rdCombinedFaceLight \*= rdToonSelfShadowVisibility/)
   assert.match(scene, /this\.selfShadow\.render\(\)/)
+})
+
+test('self-shadow depth writer suppresses official non-casters and restores writes', () => {
+  const source = read('magia-exedra-character-three/scene/selfShadow.ts')
+  assert.match(source, /profile\?\.shadow\.castSelfShadow !== false/)
+  assert.match(source, /material\.colorWrite = false/)
+  assert.match(source, /material\.depthWrite = false/)
+  assert.match(
+    source,
+    /finally \{[\s\S]*state\.material\.colorWrite = state\.colorWrite[\s\S]*state\.material\.depthWrite = state\.depthWrite/,
+  )
+  assert.match(
+    source,
+    /reDriveSelfShadowUniformState\.map\.value = oldSelfShadowMap\s+reDriveSelfShadowUniformState\.enabled\.value = oldSelfShadowEnabled/,
+  )
 })

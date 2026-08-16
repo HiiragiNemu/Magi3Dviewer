@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import type { MagiaExedraScene3D } from '.'
+import type { OfficialMaterialProfile } from '../materialProfile'
 
 /**
  * Native ReDriveToonSelfShadowPass evidence from the TW AArch64 client.
@@ -417,22 +418,56 @@ export class ReDriveSelfShadowController {
         const oldClearAlpha = renderer.getClearAlpha()
         renderer.getClearColor(this.previousClearColor)
         const outlineStates: Array<[THREE.Object3D, boolean]> = []
+        const materialWriteStates: Array<{
+            material: THREE.Material
+            colorWrite: boolean
+            depthWrite: boolean
+        }> = []
+        const suppressedMaterials = new Set<THREE.Material>()
 
         // WebGL rejects a framebuffer attachment that is still bound to an
         // active sampler even when the shader branch using that sampler is
         // disabled. Preserve the exact ReDrive self-shadow texture, but bind a
         // separate comparison texture while writing the depth attachment.
         const oldSelfShadowMap = reDriveSelfShadowUniformState.map.value
-        reDriveSelfShadowUniformState.enabled.value = 0
-        reDriveSelfShadowUniformState.map.value = this.depthPassSampler
-        for (const character of characters) {
-            for (const outline of character.userData.outlineMeshes) {
-                outlineStates.push([outline, outline.visible])
-                outline.visible = false
-            }
-        }
+        const oldSelfShadowEnabled = reDriveSelfShadowUniformState.enabled.value
 
         try {
+            reDriveSelfShadowUniformState.enabled.value = 0
+            reDriveSelfShadowUniformState.map.value = this.depthPassSampler
+            for (const character of characters) {
+                for (const outline of character.userData.outlineMeshes) {
+                    outlineStates.push([outline, outline.visible])
+                    outline.visible = false
+                }
+                character.object.traverse(object => {
+                    const mesh = object as THREE.Mesh
+                    if (!mesh.isMesh) return
+                    const materials = Array.isArray(mesh.material)
+                        ? mesh.material
+                        : [mesh.material]
+                    for (const material of materials) {
+                        const profile = material.userData?.officialMaterialProfile as
+                            | OfficialMaterialProfile
+                            | undefined
+                        if (
+                            profile?.shadow.castSelfShadow !== false
+                            || suppressedMaterials.has(material)
+                        ) continue
+                        suppressedMaterials.add(material)
+                        materialWriteStates.push({
+                            material,
+                            colorWrite: material.colorWrite,
+                            depthWrite: material.depthWrite,
+                        })
+                        // Keep the authored material and alpha/deformation path,
+                        // but prevent this official non-caster draw group from
+                        // modifying either attachment in the self-shadow RT.
+                        material.colorWrite = false
+                        material.depthWrite = false
+                    }
+                })
+            }
             renderer.xr.enabled = false
             renderer.autoClear = false
             renderer.setRenderTarget(this.renderTarget)
@@ -447,11 +482,16 @@ export class ReDriveSelfShadowController {
                 )
             }
         } finally {
+            materialWriteStates.forEach(state => {
+                state.material.colorWrite = state.colorWrite
+                state.material.depthWrite = state.depthWrite
+            })
             outlineStates.forEach(([object, visible]) => {
                 object.visible = visible
             })
             renderer.setRenderTarget(oldTarget)
             reDriveSelfShadowUniformState.map.value = oldSelfShadowMap
+            reDriveSelfShadowUniformState.enabled.value = oldSelfShadowEnabled
             renderer.setClearColor(this.previousClearColor, oldClearAlpha)
             renderer.autoClear = oldAutoClear
             renderer.xr.enabled = oldXrEnabled

@@ -7,37 +7,84 @@ import OfficialSoftMetallicMatCap from '../models/common/matcap_SoftMetallic.png
 import { setDepthRimMaterialProfileUniforms } from './depthRim';
 
 export interface OfficialGemResources {
-    matCap?: THREE.Texture;
+    matCaps: Map<string, THREE.Texture>;
+    fallbackMatCap?: THREE.Texture;
     textures: THREE.Texture[];
+}
+
+function normalizeTextureName(value: string): string {
+    return value.replace(/\\/g, '/').split('/').pop()!
+        .replace(/\.png$/i, '')
+        .toLowerCase();
 }
 
 export async function loadOfficialGemResources(
     profiles: OfficialMaterialProfile[] | undefined,
-    matCapUrl?: string,
+    texturePathUrl: Record<string, string> = {},
 ): Promise<OfficialGemResources> {
-    if (!profiles?.some(profile => profile.gem.enabled && profile.gem.useMatCap)) {
-        return { textures: [] };
+    if (!profiles?.some(profile => profile.matCap.enabled)) {
+        return { matCaps: new Map(), textures: [] };
     }
-    // Exact current-JP evidence for 100101/100107 body_SJ and
-    // weapon_a_sj resolves `_MatCapTex` to the common 256x256
-    // `matcap_SoftMetallic` texture. Do not substitute a character-package
-    // guess or the historical 109801 fallback for those material slots.
-    const requiresSoftMetallic = profiles.some(
-        profile =>
-            profile.gem.enabled &&
-            profile.gem.useMatCap &&
-            profile.gem.matCapSource === 'soft-metallic',
+    const urlsByName = new Map<string, string>();
+    for (const [path, url] of Object.entries(texturePathUrl)) {
+        urlsByName.set(normalizeTextureName(path), url);
+    }
+    urlsByName.set('matcap_softmetallic', OfficialSoftMetallicMatCap);
+
+    const requested = new Set(
+        profiles
+            .filter(profile => profile.matCap.enabled)
+            .map(profile => profile.matCap.texture?.toLowerCase())
+            .filter((name): name is string => !!name),
     );
-    const resolvedMatCapUrl = requiresSoftMetallic
-        ? OfficialSoftMetallicMatCap
-        : (matCapUrl ?? DefaultGemMatCap);
-    const matCap = await loadTexture(resolvedMatCapUrl, {
+    if (profiles.some(profile => (
+        profile.matCap.enabled && profile.matCap.source === 'soft-metallic'
+    ))) {
+        requested.add('matcap_softmetallic');
+    }
+
+    const matCaps = new Map<string, THREE.Texture>();
+    const textures: THREE.Texture[] = [];
+    for (const name of requested) {
+        const url = urlsByName.get(name);
+        if (!url) continue;
+        const texture = await loadTexture(url, { colorSpace: THREE.NoColorSpace });
+        texture.wrapS = THREE.ClampToEdgeWrapping;
+        texture.wrapT = THREE.ClampToEdgeWrapping;
+        MaximizeTextureQuality(texture);
+        matCaps.set(name, texture);
+        textures.push(texture);
+    }
+
+    // A bounded fallback keeps older/name-inferred profiles usable. Recovered
+    // profiles with an exact PPtr select their own Texture2D below.
+    const fallbackUrl = [...urlsByName.entries()].find(([name]) => (
+        name.includes('matcap') && name !== 'matcap_softmetallic'
+    ))?.[1] ?? DefaultGemMatCap;
+    const fallbackMatCap = await loadTexture(fallbackUrl, {
         colorSpace: THREE.NoColorSpace,
     });
-    matCap.wrapS = THREE.ClampToEdgeWrapping;
-    matCap.wrapT = THREE.ClampToEdgeWrapping;
-    MaximizeTextureQuality(matCap);
-    return { matCap, textures: [matCap] };
+    fallbackMatCap.wrapS = THREE.ClampToEdgeWrapping;
+    fallbackMatCap.wrapT = THREE.ClampToEdgeWrapping;
+    MaximizeTextureQuality(fallbackMatCap);
+    textures.push(fallbackMatCap);
+    return { matCaps, fallbackMatCap, textures: [...new Set(textures)] };
+}
+
+function selectOfficialMatCap(
+    resources: OfficialGemResources,
+    profile?: OfficialMaterialProfile,
+): THREE.Texture | undefined {
+    const matCap = profile?.matCap;
+    const exactName = matCap?.texture?.toLowerCase();
+    if (exactName && resources.matCaps.has(exactName)) {
+        return resources.matCaps.get(exactName);
+    }
+    if (matCap?.source === 'soft-metallic') {
+        return resources.matCaps.get('matcap_softmetallic')
+            ?? resources.fallbackMatCap;
+    }
+    return resources.fallbackMatCap;
 }
 
 export function setOfficialMaterialProfileUniforms(
@@ -47,6 +94,7 @@ export function setOfficialMaterialProfileUniforms(
     if (!shader) return;
     const value = profile ?? createDefaultMaterialProfile();
     const gem = value.gem;
+    const matCap = value.matCap;
     const set = (key: string, uniformValue: number) => {
         shader.uniforms[key] ??= { value: uniformValue };
         shader.uniforms[key].value = uniformValue;
@@ -76,6 +124,10 @@ export function setOfficialMaterialProfileUniforms(
     set('uFresnelMaskByMetallic', fresnel.maskByMetallic ? 1 : 0);
     set('uMaterialOutlineOffset', value.outlineOffset ? 1 : 0);
     set('uMaterialSkinOutlineOffset', value.skinOutlineOffset ? 1 : 0);
+    set('uRdShadowOffset', value.shadow.offset);
+    set('uRdShadowFeather', value.shadow.feather);
+    set('uMaterialReceiveSelfShadow', value.shadow.receiveSelfShadow ? 1 : 0);
+    setColor('uMaterialEmissionColor', value.emissionColor);
     set('uMaterialIsGem', gem.enabled ? 1 : 0);
     // GeneralMaterial is shared by every recovered FBX draw group.  The
     // compile-time feature profile is deliberately an aggregate so the shader
@@ -83,10 +135,12 @@ export function setOfficialMaterialProfileUniforms(
     // material slot selected by loader.onBeforeRender.  Keeping this beside
     // uMaterialIsGem also guarantees non-gem groups reset the boost to zero.
     set('uMaterialSpecialJewel', gem.enabled ? 1 : 0);
-    set('uGemUseMatCap', gem.useMatCap ? 1 : 0);
-    set('uGemMatCapIntensity', gem.matCapIntensity);
-    set('uGemMaskMatcapMetallic', gem.maskMatcapMetallic ? 1 : 0);
-    set('uGemMaskMatcapSpecular', gem.maskMatcapSpecular ? 1 : 0);
+    set('uMaterialMatCapEnabled', matCap.enabled ? 1 : 0);
+    set('uMaterialMatCapUseLinearGrey',
+        matCap.source === 'default-linear-grey' ? 1 : 0);
+    set('uMaterialMatCapIntensity', matCap.intensity);
+    set('uMaterialMatCapMaskByMetallic', matCap.maskByMetallic ? 1 : 0);
+    set('uMaterialMatCapMaskBySpecular', matCap.maskBySpecular ? 1 : 0);
     set('uGemUseDepthDiff', gem.useDepthDiff ? 1 : 0);
     set('uGemTransparency', gem.transparency ? 1 : 0);
     set('uGemFirstHighlightSize', gem.firstHighlightSize);
@@ -103,7 +157,8 @@ export function setOfficialMaterialProfileUniforms(
 }
 
 /**
- * Inject the recovered ReDrive Gem/MatCap feature family as a per-material pass.
+ * Inject the recovered ReDrive base MatCap and Gem feature families as a
+ * per-material pass.
  * Geometry groups select their own official scalar profile in onBeforeRender, so
  * a Soul Gem sub-material no longer forces the complete Body mesh into Gem mode.
  */
@@ -112,16 +167,19 @@ export function injectOfficialGemShader(
     resources: OfficialGemResources,
     initialProfile?: OfficialMaterialProfile,
 ) {
-    shader.uniforms.tGemMatCap = { value: resources.matCap ?? null };
+    shader.uniforms.tGemMatCap = {
+        value: selectOfficialMatCap(resources, initialProfile) ?? null,
+    };
     setOfficialMaterialProfileUniforms(shader, initialProfile);
 
     shader.fragmentShader = /* glsl */ `
         uniform sampler2D tGemMatCap;
         uniform float uMaterialIsGem;
-        uniform float uGemUseMatCap;
-        uniform float uGemMatCapIntensity;
-        uniform float uGemMaskMatcapMetallic;
-        uniform float uGemMaskMatcapSpecular;
+        uniform float uMaterialMatCapEnabled;
+        uniform float uMaterialMatCapUseLinearGrey;
+        uniform float uMaterialMatCapIntensity;
+        uniform float uMaterialMatCapMaskByMetallic;
+        uniform float uMaterialMatCapMaskBySpecular;
         uniform float uGemUseDepthDiff;
         uniform float uGemTransparency;
         uniform float uGemFirstHighlightSize;
@@ -138,42 +196,35 @@ export function injectOfficialGemShader(
     `.replace(
         '#include <opaque_fragment>',
         /* glsl */ `
+        vec3 rdGemNormalVs = normalize(normal);
+        // JP 2022.3.62f2 ReDriveToon vs_TEXCOORD5 is the world normal
+        // transformed by unity_MatrixV. Three normal is already that
+        // view-space normal, so the native MatCap UV is direct and does not
+        // depend on the view direction.
+        vec2 rdGemMatCapUv = rdGemNormalVs.xy * 0.5 + 0.5;
+        vec3 rdGemMatCapTexture = texture2D(
+            tGemMatCap,
+            rdGemMatCapUv
+        ).rgb;
+        vec3 rdGemMatCap = mix(
+            rdGemMatCapTexture,
+            vec3(0.5),
+            saturate(uMaterialMatCapUseLinearGrey)
+        );
+        float rdGemMatCapMask = mix(
+            1.0,
+            rdToonMetallicMask,
+            saturate(uMaterialMatCapMaskByMetallic)
+        );
+        rdGemMatCapMask *= mix(
+            1.0,
+            rdToonSpecularMask,
+            saturate(uMaterialMatCapMaskBySpecular)
+        );
+
         if (uMaterialIsGem > 0.5) {
-            vec3 rdGemNormalVs = normalize(normal);
             vec3 rdGemView = normalize(geometryViewDir);
             float rdGemNdotV = saturate(dot(rdGemNormalVs, rdGemView));
-
-            // MatCap lives in view space. The current Web coordinate reconstruction
-            // remains approximate until the varying feeding native vs_TEXCOORD5 is
-            // completely mapped; the blend below is now the exact current-JP
-            // ReDriveToon executable formula.
-            vec3 rdGemViewAxis = normalize(rdGemView);
-            vec3 rdGemMatCapX = vec3(rdGemViewAxis.z, 0.0, -rdGemViewAxis.x);
-            if (dot(rdGemMatCapX, rdGemMatCapX) < 0.0001) {
-                rdGemMatCapX = vec3(1.0, 0.0, 0.0);
-            } else {
-                rdGemMatCapX = normalize(rdGemMatCapX);
-            }
-            vec3 rdGemMatCapY = normalize(cross(rdGemViewAxis, rdGemMatCapX));
-            vec2 rdGemMatCapUv = clamp(
-                vec2(
-                    dot(rdGemMatCapX, rdGemNormalVs),
-                    dot(rdGemMatCapY, rdGemNormalVs)
-                ) * 0.495 + 0.5,
-                vec2(0.002),
-                vec2(0.998)
-            );
-            vec3 rdGemMatCap = texture2D(tGemMatCap, rdGemMatCapUv).rgb;
-            float rdGemMatCapMask = mix(
-                1.0,
-                rdToonMetallicMask,
-                saturate(uGemMaskMatcapMetallic)
-            );
-            rdGemMatCapMask *= mix(
-                1.0,
-                rdToonSpecularMask,
-                saturate(uGemMaskMatcapSpecular)
-            );
 
             // Official Gem size values are signed artistic offsets rather than
             // literal widths. Map them around two stable view-normal bands.
@@ -262,7 +313,7 @@ export function injectOfficialGemShader(
                 rdGemShadowTwo * 0.12;
             rdGemBase *= 0.84 + rdGemInternal;
 
-            if (uGemUseMatCap > 0.5) {
+            if (uMaterialMatCapEnabled > 0.5) {
                 // Current-JP ReDriveToon executable MatCap blend, per channel:
                 // base<=0.5 => base*matcap; base>0.5 =>
                 // 1 - 2*(1-base)*(1-matcap). The serialized MatCapIntensity and
@@ -278,7 +329,7 @@ export function injectOfficialGemShader(
                     step(vec3(0.5), rdGemBase)
                 );
                 float rdGemMatCapFactor =
-                    uGemMatCapIntensity * rdGemMatCapMask;
+                    uMaterialMatCapIntensity * rdGemMatCapMask;
                 rdGemBase +=
                     rdGemMatCapFactor *
                     (rdGemMatCapBlend - rdGemBase);
@@ -289,6 +340,31 @@ export function injectOfficialGemShader(
                 max(uGemRimFresnel, 0.0) * 0.72;
 
             outgoingLight = max(rdGemBase, vec3(0.0));
+        }
+
+        // _UseMatCap is an independent base-shader feature. Apply it to
+        // regular body/metal/weapon slots as well; Gem has already consumed
+        // the same official operator inside its own authored band result.
+        if (
+            uMaterialMatCapEnabled > 0.5 &&
+            uMaterialIsGem <= 0.5
+        ) {
+            vec3 rdMatCapBase = outgoingLight;
+            vec3 rdMatCapLow = rdGemMatCap * rdMatCapBase;
+            vec3 rdMatCapHigh =
+                vec3(1.0) -
+                (vec3(1.0) - rdMatCapBase) *
+                (vec3(1.0) - rdGemMatCap) * 2.0;
+            vec3 rdMatCapBlend = mix(
+                rdMatCapLow,
+                rdMatCapHigh,
+                step(vec3(0.5), rdMatCapBase)
+            );
+            outgoingLight +=
+                uMaterialMatCapIntensity *
+                rdGemMatCapMask *
+                (rdMatCapBlend - rdMatCapBase);
+            outgoingLight = max(outgoingLight, vec3(0.0));
         }
 
         #include <opaque_fragment>

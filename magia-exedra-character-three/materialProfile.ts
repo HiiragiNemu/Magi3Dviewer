@@ -1,3 +1,5 @@
+import officialMaterialProfileData from './official-material-profiles.json';
+
 export interface OfficialAnisotropyProfile {
     /** Serialized `_IsAniso`. */
     enabled: boolean;
@@ -22,7 +24,28 @@ export interface OfficialFresnelProfile {
     feather: number;
 }
 
-export type OfficialGemMatCapSource = 'character-or-fallback' | 'soft-metallic';
+export type OfficialMatCapSource =
+    | 'default-linear-grey'
+    | 'character-or-fallback'
+    | 'soft-metallic';
+
+/** Backwards-compatible alias for the earlier Gem-only schema. */
+export type OfficialGemMatCapSource = OfficialMatCapSource;
+
+export interface OfficialMatCapProfile {
+    /** Serialized `_UseMatCap`; independent of `_IsGem`. */
+    enabled: boolean;
+    /** Exact texture binding or the Shader's built-in linearGrey default. */
+    source: OfficialMatCapSource;
+    /** Exact serialized Texture2D name resolved from `_MatCapTex`. */
+    texture?: string | null;
+    /** Serialized `_MatCapIntensity`. */
+    intensity: number;
+    /** Serialized `_MaskMatcapMetallic`. */
+    maskByMetallic: boolean;
+    /** Serialized `_MaskMatcapSpecular`. */
+    maskBySpecular: boolean;
+}
 
 export interface OfficialGemProfile {
     enabled: boolean;
@@ -71,9 +94,35 @@ export interface OfficialMaterialProfile {
     fresnel: OfficialFresnelProfile;
     outlineOffset: boolean;
     skinOutlineOffset: boolean;
+    /** Serialized ReDriveToon `_OutlineWidth`. */
+    outlineWidth: number;
+    /** Base ReDriveToon MatCap branch; it is not owned by Gem. */
+    matCap: OfficialMatCapProfile;
     gem: OfficialGemProfile;
     angelRing: OfficialAngelRingMaterialProfile;
+    shadow: {
+        offset: number;
+        feather: number;
+        castSelfShadow: boolean;
+        receiveSelfShadow: boolean;
+    };
+    /** Serialized HDR `_EmissionColor`, kept in linear shader units. */
+    emissionColor: readonly [number, number, number];
 }
+
+interface OfficialMaterialProfileFile {
+    schema: 1;
+    unityVersion: string;
+    materials: Record<string, Partial<OfficialMaterialProfile>>;
+}
+
+const generatedProfileFile = officialMaterialProfileData as unknown as OfficialMaterialProfileFile;
+if (generatedProfileFile.schema !== 1 || generatedProfileFile.unityVersion !== '2022.3.62f2') {
+    throw new Error('Official JP material profiles require Unity 2022.3.62f2');
+}
+const GENERATED_OFFICIAL_MATERIALS = new Map(
+    Object.entries(generatedProfileFile.materials),
+);
 
 const ANISO_DISABLED: OfficialAnisotropyProfile = {
     enabled: false,
@@ -97,6 +146,14 @@ const FRESNEL_DISABLED: OfficialFresnelProfile = {
     color: [1, 1, 1],
     threshold: 0.5,
     feather: 0.25,
+};
+
+const MATCAP_DISABLED: OfficialMatCapProfile = {
+    enabled: false,
+    source: 'default-linear-grey',
+    intensity: 1,
+    maskByMetallic: false,
+    maskBySpecular: false,
 };
 
 const GEM_DISABLED: OfficialGemProfile = {
@@ -240,6 +297,16 @@ function getOfficialAngelRingMaterialProfile(
 }
 
 const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
+    ['mt_chara_100101_body', {
+        source: 'official-export',
+        matCap: {
+            enabled: true,
+            source: 'soft-metallic',
+            intensity: 2,
+            maskByMetallic: true,
+            maskBySpecular: false,
+        },
+    }],
     ['mt_chara_100101_body_aniso', {
         source: 'official-export',
         anisotropy: true,
@@ -253,6 +320,13 @@ const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
             ],
             threshold: 0.9139999747276306,
             feather: 0,
+        },
+        matCap: {
+            enabled: true,
+            source: 'soft-metallic',
+            intensity: 2,
+            maskByMetallic: true,
+            maskBySpecular: false,
         },
     }],
     ['mt_chara_100101_body_sj', {
@@ -275,6 +349,13 @@ const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
             fresnelThreshold: 0.5,
             fresnelFeather: 0.25,
             fresnelMaskByMetallic: false,
+        },
+        matCap: {
+            enabled: true,
+            source: 'soft-metallic',
+            intensity: 2,
+            maskByMetallic: false,
+            maskBySpecular: false,
         },
     }],
     ['mt_chara_100101_weapon_a_sj', {
@@ -313,6 +394,130 @@ const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
             fresnelFeather: 0.2,
             fresnelMaskByMetallic: true,
         },
+        matCap: {
+            enabled: true,
+            source: 'soft-metallic',
+            intensity: 2,
+            maskByMetallic: true,
+            maskBySpecular: false,
+        },
+    }],
+    ['mt_chara_101901_body_sj', {
+        source: 'official-export',
+        gem: {
+            enabled: true,
+            useMatCap: true,
+            matCapSource: 'soft-metallic',
+            matCapIntensity: 2,
+            maskMatcapMetallic: false,
+            maskMatcapSpecular: false,
+            useDepthDiff: false,
+            transparency: false,
+            firstHighlightSize: 0,
+            firstShadowSize: 1.9199999570846558,
+            secondHighlightSize: -1,
+            secondShadowSize: 2,
+            depthDiffThreshold: 0.5,
+            heightCorrection: -0.375,
+            rimFresnel: 0.5389999747276306,
+            fresnelThreshold: 0.5,
+            fresnelFeather: 0.25,
+            fresnelMaskByMetallic: false,
+        },
+        matCap: {
+            enabled: true,
+            source: 'soft-metallic',
+            intensity: 2,
+            maskByMetallic: false,
+            maskBySpecular: false,
+        },
+    }],
+    ['mt_chara_101901_body_socks', {
+        source: 'official-export',
+        anisotropy: true,
+        anisotropyProfile: {
+            enabled: true,
+            maskByMetallic: true,
+            color: [
+                0.46666669845581055,
+                0.4549019932746887,
+                0.40392160415649414,
+            ],
+            threshold: 1,
+            feather: 0.2919999957084656,
+        },
+        fresnel: {
+            enabled: true,
+            maskByMetallic: true,
+            color: [
+                0.46666669845581055,
+                0.4549019932746887,
+                0.40392160415649414,
+            ],
+            threshold: 0.4560000002384186,
+            feather: 0.36500000953674316,
+        },
+    }],
+    ['mt_chara_101901_body_gold', {
+        source: 'official-export',
+        anisotropy: true,
+        anisotropyProfile: {
+            enabled: true,
+            maskByMetallic: true,
+            color: [1, 0.714678168296814, 0.5707547068595886],
+            threshold: 0.9660000205039978,
+            feather: 0.00800000037997961,
+        },
+        fresnel: {
+            enabled: true,
+            maskByMetallic: true,
+            color: [1, 0.9004032611846924, 0.5235849022865295],
+            threshold: 0.2800000011920929,
+            feather: 0.5699999928474426,
+        },
+        // The serialized PPtr is null. ReDriveToon therefore samples the
+        // Shader's linearGrey default rather than borrowing a Jewel texture.
+        matCap: {
+            enabled: true,
+            source: 'default-linear-grey',
+            intensity: 1,
+            maskByMetallic: false,
+            maskBySpecular: false,
+        },
+    }],
+    ['mt_chara_101901_weapon_a', {
+        source: 'official-export',
+        anisotropy: true,
+        anisotropyProfile: {
+            enabled: true,
+            maskByMetallic: true,
+            color: [
+                0.4745098352432251,
+                0.43137258291244507,
+                0.43137258291244507,
+            ],
+            threshold: 0.9890000224113464,
+            feather: 0.019999999552965164,
+        },
+        fresnel: {
+            enabled: true,
+            maskByMetallic: true,
+            color: [
+                0.4745098352432251,
+                0.43137258291244507,
+                0.43137258291244507,
+            ],
+            threshold: 0.2980000078678131,
+            feather: 0.15000000596046448,
+        },
+        outlineWidth: 6.179999828338623,
+        matCap: {
+            enabled: true,
+            source: 'soft-metallic',
+            intensity: 1,
+            maskByMetallic: true,
+            maskBySpecular: false,
+        },
     }],
     ['mt_chara_110701_body_sj', {
         source: 'official-export',
@@ -341,6 +546,10 @@ function copyGem(profile: OfficialGemProfile): OfficialGemProfile {
     return { ...profile };
 }
 
+function copyMatCap(profile: OfficialMatCapProfile): OfficialMatCapProfile {
+    return { ...profile };
+}
+
 /** AssetStudio/FBXLoader may append `::Material` or a numeric duplicate suffix. */
 export function normalizeOfficialMaterialName(name: string): string {
     return name
@@ -366,10 +575,33 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         fresnel: { ...FRESNEL_DISABLED },
         outlineOffset: normalized.includes('outlineoffset'),
         skinOutlineOffset: normalized.includes('outlineoffset_skin'),
+        outlineWidth: 5,
+        matCap: copyMatCap(
+            inferredGem
+                ? {
+                    enabled: GENERIC_GEM.useMatCap,
+                    source: GENERIC_GEM.matCapSource ?? 'character-or-fallback',
+                    intensity: GENERIC_GEM.matCapIntensity,
+                    maskByMetallic: GENERIC_GEM.maskMatcapMetallic,
+                    maskBySpecular: GENERIC_GEM.maskMatcapSpecular,
+                }
+                : MATCAP_DISABLED,
+        ),
         gem: copyGem(inferredGem ? GENERIC_GEM : GEM_DISABLED),
         angelRing: getOfficialAngelRingMaterialProfile(normalized),
+        shadow: {
+            offset: 0.3,
+            feather: 0,
+            castSelfShadow: true,
+            receiveSelfShadow: true,
+        },
+        emissionColor: [0, 0, 0],
     };
-    const official = OFFICIAL_MATERIALS.get(normalized);
+    const generated = GENERATED_OFFICIAL_MATERIALS.get(normalized);
+    const manual = OFFICIAL_MATERIALS.get(normalized);
+    const official = generated || manual
+        ? { ...generated, ...manual }
+        : undefined;
     if (!official) return base;
     return {
         ...base,
@@ -381,10 +613,17 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         fresnel: official.fresnel
             ? { ...official.fresnel }
             : { ...base.fresnel },
+        matCap: official.matCap
+            ? copyMatCap(official.matCap as OfficialMatCapProfile)
+            : copyMatCap(base.matCap),
         gem: official.gem ? copyGem(official.gem as OfficialGemProfile) : base.gem,
         angelRing: official.angelRing
             ? { ...official.angelRing }
             : base.angelRing,
+        shadow: official.shadow ? { ...official.shadow } : { ...base.shadow },
+        emissionColor: official.emissionColor
+            ? [...official.emissionColor] as [number, number, number]
+            : [...base.emissionColor] as [number, number, number],
     };
 }
 

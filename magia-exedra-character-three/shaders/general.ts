@@ -260,6 +260,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             uniform float uMaterialAnisoThreshold;
             uniform float uMaterialAnisoFeather;
             uniform float uMaterialSpecialJewel;
+            uniform float uMaterialReceiveSelfShadow;
+            uniform vec3 uMaterialEmissionColor;
 
             ${shader.fragmentShader}
         `.replace(
@@ -363,9 +365,13 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                 );
             }
             // Dedicated ReDrive self-shadow selects the authored ShadowTex.
-            rdToonBaseWeight *= rdToonSelfShadowVisibility(
-                vRdToonWorldPosition,
-                normal
+            rdToonBaseWeight *= mix(
+                1.0,
+                rdToonSelfShadowVisibility(
+                    vRdToonWorldPosition,
+                    normal
+                ),
+                saturate(uMaterialReceiveSelfShadow)
             );
 
             vec3 rdToonBaseColor = diffuseColor.rgb;
@@ -399,7 +405,8 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             );
             outgoingLight =
                 diffuseColor.rgb * rdToonSceneLightColor +
-                totalEmissiveRadiance;
+                totalEmissiveRadiance +
+                rdToonBaseColor * uMaterialEmissionColor;
 
             #ifdef HAS_CTRL
                 vec3 rdViewDirection = normalize(geometryViewDir);

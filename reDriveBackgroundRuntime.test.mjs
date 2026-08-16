@@ -28,5 +28,15 @@ test('ReDriveVolume drives background-only pass and disables legacy global CSS a
   assert.match(runtime, /profile\.backgroundContrast/)
   assert.match(runtime, /profile\.backgroundSaturation/)
   assert.match(runtime, /profile\.backgroundBackgroundTint/)
-  assert.match(stages, /profile\.source !== 'ReDriveVolume'/)
+  assert.match(
+    stages,
+    /profile\.source === 'ReDriveVolume'[\s\S]*scene\.setColorFilter\(\{ brightness: 1, contrast: 1, saturation: 1 \}\)/,
+  )
+})
+
+test('Paraffin cannot wash the full composite without native and shader proof', () => {
+  assert.match(runtime, /profile\.runtimeVerified !== true/)
+  assert.match(runtime, /profile\.operatorVerified !== true/)
+  assert.match(runtime, /native-runtime-gate-unverified/)
+  assert.match(runtime, /compiled-operator-unverified/)
 })

@@ -12,16 +12,17 @@ export interface ExtendedGemMaterial {
 }
 
 /**
- * Extend one shared base material. Geometry groups may reference the same
+ * Extend one shared base material with the official base MatCap and Gem
+ * branches. Geometry groups may reference the same
  * material object; loader onBeforeRender changes only scalar uniforms for the
  * current group, while the expensive base/control/matcap textures remain shared.
  */
 export async function extendMaterialWithOfficialGem(
     material: THREE.Material,
     profiles: OfficialMaterialProfile[],
-    matCapUrl?: string,
+    texturePathUrl: Record<string, string> = {},
 ): Promise<ExtendedGemMaterial> {
-    const resources = await loadOfficialGemResources(profiles, matCapUrl);
+    const resources = await loadOfficialGemResources(profiles, texturePathUrl);
     const previousCompile = material.onBeforeCompile;
     const previousKey = material.customProgramCacheKey.bind(material);
 
@@ -43,7 +44,7 @@ export async function extendMaterialWithOfficialGem(
         }
     };
     material.customProgramCacheKey = () =>
-        `${previousKey()}|official-gem-v3|${matCapUrl ? 'character-matcap' : 'fallback-matcap'}|${profiles.map(x => x.name).join('|')}`;
+        `${previousKey()}|official-matcap-gem-v5|${profiles.map(x => `${x.name}:${x.matCap.texture ?? x.matCap.source}`).join('|')}`;
     material.needsUpdate = true;
 
     return { resources, profiles };

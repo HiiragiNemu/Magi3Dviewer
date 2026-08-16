@@ -22,6 +22,7 @@ export const ReDriveVolumePostProcessingShader = {
         uVignetteIntensity: { value: 0 },
         uVignetteSmoothness: { value: 0.2 },
         uVignetteRounded: { value: 0 },
+        uVignetteAspectRatio: { value: 1 },
     },
     vertexShader: /* glsl */ `
         varying vec2 vUv;
@@ -43,11 +44,31 @@ export const ReDriveVolumePostProcessingShader = {
         uniform float uVignetteIntensity;
         uniform float uVignetteSmoothness;
         uniform float uVignetteRounded;
+        uniform float uVignetteAspectRatio;
         varying vec2 vUv;
 
         void main() {
             vec4 source = texture2D(tDiffuse, vUv);
             vec3 color = source.rgb;
+
+            if (uVignetteEnabled > 0.5 && uVignetteIntensity > 0.0001) {
+                // Unity URP 14 (Unity 2022.3) SetupVignette multiplies the
+                // serialized intensity by 3 and smoothness by 5. Common.hlsl
+                // then applies a multiplicative vignette before color grading.
+                vec2 dist = abs(vUv - uVignetteCenter)
+                    * (uVignetteIntensity * 3.0);
+                float roundness = mix(
+                    1.0,
+                    uVignetteAspectRatio,
+                    clamp(uVignetteRounded, 0.0, 1.0)
+                );
+                dist.x *= roundness;
+                float vfactor = pow(
+                    clamp(1.0 - dot(dist, dist), 0.0, 1.0),
+                    max(uVignetteSmoothness * 5.0, 0.0001)
+                );
+                color *= mix(uVignetteColor, vec3(1.0), vfactor);
+            }
 
             if (uColorAdjustEnabled > 0.5) {
                 color *= uColorFilter;
@@ -59,21 +80,6 @@ export const ReDriveVolumePostProcessingShader = {
                 float luma = dot(color, vec3(0.2126, 0.7152, 0.0722));
                 float saturation = 1.0 + uSaturation * 0.01;
                 color = mix(vec3(luma), color, saturation);
-            }
-
-            if (uVignetteEnabled > 0.5 && uVignetteIntensity > 0.0001) {
-                vec2 delta = abs(vUv - uVignetteCenter) * 2.0;
-                // Rounded is retained in the runtime contract. The 603 source
-                // leaves its override disabled, so this branch stays neutral.
-                delta.x *= mix(1.0, 0.75, clamp(uVignetteRounded, 0.0, 1.0));
-                float radius = max(1.0 - uVignetteIntensity, 0.0001);
-                float softness = max(uVignetteSmoothness, 0.0001);
-                float keep = 1.0 - smoothstep(
-                    max(radius - softness, 0.0),
-                    radius + softness,
-                    length(delta)
-                );
-                color = mix(uVignetteColor, color, keep);
             }
 
             gl_FragColor = vec4(max(color, vec3(0.0)), source.a);

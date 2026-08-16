@@ -5,6 +5,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { ReDriveBackgroundColorAdjustmentsShader } from './backgroundColorAdjustments';
 import { ReDriveVolumePostProcessingShader } from './volumePostProcessing';
+import { ReDriveUrpBloomPass } from './urpBloom';
 
 import { TAARenderPass } from 'three/addons/postprocessing/TAARenderPass.js';
 import { SSAARenderPass } from 'three/addons/postprocessing/SSAARenderPass.js';
@@ -133,6 +134,8 @@ export class SceneEffectsController {
     static outlineColorDark = new THREE.Color(0xff00ff)
 
     bloomPass: UnrealBloomPass
+    /** Source-equivalent Unity 2022.3 URP Bloom for recovered volumes. */
+    urpBloomPass: ReDriveUrpBloomPass
     paraffinPass: ShaderPass
     /** Full-composite Unity Volume ColorAdjustments/Vignette subset. */
     volumePostProcessPass: ShaderPass
@@ -177,6 +180,7 @@ export class SceneEffectsController {
 
         this.bloomPass = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.05, 0, 0.5)
         this.bloomPass.enabled = false
+        this.urpBloomPass = new ReDriveUrpBloomPass()
 
         this.paraffinPass = new ShaderPass(ReDriveParaffinShader)
         this.paraffinPass.enabled = false
@@ -211,6 +215,7 @@ export class SceneEffectsController {
         this.composer.addPass(this.ssaaRenderPass)
         this.composer.addPass(this.renderPass)
         this.composer.addPass(this.bloomPass)
+        this.composer.addPass(this.urpBloomPass)
         this.composer.addPass(this.outlinePass)
         this.composer.addPass(this.paraffinPass)
         this.composer.addPass(this.volumePostProcessPass)

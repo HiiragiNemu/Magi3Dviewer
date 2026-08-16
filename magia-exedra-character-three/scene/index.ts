@@ -88,6 +88,7 @@ export class MagiaExedraScene3D {
                 this.backgroundSceneEnabled
                 || this.characterSelectionVisible
                 || this.effects.bloomPass.enabled
+                || this.effects.urpBloomPass.enabled
                 || this.effects.backgroundColorAdjustPass.enabled
                 || this.effects.volumePostProcessPass.enabled
             ) {

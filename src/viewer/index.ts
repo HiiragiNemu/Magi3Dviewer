@@ -17,6 +17,7 @@ const animationSelector = document.getElementById('animation-selector') as HTMLS
 const animationPlayBtn = document.getElementById('animation-play') as HTMLButtonElement
 const animationPauseBtn = document.getElementById('animation-pause') as HTMLButtonElement
 const animationSlider = document.getElementById('animation-slider') as HTMLInputElement
+const expressionSelector = document.getElementById('expression-selector') as HTMLSelectElement
 const fullscreenBtn = document.getElementById('fullscreen-btn') as HTMLButtonElement
 
 const loadProgressEl = document.getElementById('load-progress')!
@@ -240,7 +241,7 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
         }, { '<No animation>': '' } as Record<string, string>),
         value => {
             if (value) {
-                character.animation.play(value, true)
+                character.animation.play(value, value.endsWith('_L'))
             } else {
                 character.animation.clear()
             }
@@ -249,6 +250,22 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
 
     animationSelector.value = character.animation.current || ''
     updateAnimationControls()
+
+    if (character.expression) {
+        expressionSelector.disabled = false
+        initSelector(
+            expressionSelector,
+            character.expression.expressions.reduce((obj, name) => {
+                obj[name] = name
+                return obj
+            }, {} as Record<string, string>),
+            value => character.expression?.set(value),
+        )
+        expressionSelector.value = character.expression.current
+    } else {
+        expressionSelector.disabled = true
+        initSelector(expressionSelector, { '<No expression data>': '' })
+    }
 
     updateCharacterController(character)
     updateTransformModeButtons()

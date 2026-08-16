@@ -29,6 +29,11 @@ import {
 } from './materialProfile';
 import { createFaceDirectionReference, getOfficialFaceProfile } from './faceProfile';
 import { restoreOfficialSubmeshGroups } from './submeshGroups';
+import {
+    attachHomeAnimationRuntime,
+    type HomeAnimationRuntime,
+    type HomeExpressionRuntime,
+} from './homeRuntime';
 
 const loadingManager = new THREE.LoadingManager();
 loadingManager.setURLModifier((url) => {
@@ -41,6 +46,11 @@ loadingManager.setURLModifier((url) => {
 
 const fbxLoader = new FBXLoader(loadingManager);
 let stencilRefCount = 1
+
+async function fetchJsonRuntime<T>(url: string): Promise<T> {
+    const blob = await fetchAndTryDecompressGzip(url)
+    return JSON.parse(await blob.text()) as T
+}
 
 /**
  * FBXLoader treats vertex colours as display RGB and converts them to the
@@ -202,20 +212,18 @@ export async function loadCharacter(
     const fbxPath = Object.keys(fbxPathUrl)[0]
     const characterId = parseInt(fbxPath.match(/chara_(\d+).*\//)![1])
     const fbxUrl = fbxPathUrl[fbxPath]
+    const homeAnimationUrl = ObjFindByKey(
+        files,
+        path => path.endsWith('home-animations.json.gz'),
+    )
+    const homeExpressionUrl = ObjFindByKey(
+        files,
+        path => path.endsWith('home-expressions.json'),
+    )
     const texturePathUrl = ObjFilterByKey(files, path => path.includes('.png'))
     const specularGradientMap = ObjFindByKey(
         texturePathUrl,
         path => path.toLowerCase().includes('rdtoon_metallic_gradient_map'),
-    )
-    const gemMatCapMap = ObjFindByKey(
-        texturePathUrl,
-        path => {
-            const lower = path.toLowerCase()
-            return (
-                lower.includes('gem_matcap') ||
-                (lower.includes('matcap') && !lower.includes('metallic_gradient'))
-            )
-        },
     )
     const characterProfile = getCharacterReDriveProfile(characterId)
 
@@ -280,6 +288,39 @@ export async function loadCharacter(
             return
         }
 
+            let homeAnimationRuntime: HomeAnimationRuntime | undefined
+            let homeExpressionRuntime: HomeExpressionRuntime | undefined
+            if (homeAnimationUrl || homeExpressionUrl) {
+                loadProgressCallback('Loading Home actions and expressions...')
+                try {
+                    const [animationRuntime, expressionRuntime] = await Promise.all([
+                        homeAnimationUrl
+                            ? fetchJsonRuntime<HomeAnimationRuntime>(homeAnimationUrl)
+                            : Promise.resolve(undefined),
+                        homeExpressionUrl
+                            ? fetchJsonRuntime<HomeExpressionRuntime>(homeExpressionUrl)
+                            : Promise.resolve(undefined),
+                    ])
+                    if (animationRuntime) {
+                        if (animationRuntime.characterId !== characterId) {
+                            throw new Error('Home animation character ID does not match the model')
+                        }
+                        attachHomeAnimationRuntime(modelObject, animationRuntime)
+                        homeAnimationRuntime = animationRuntime
+                    }
+                    if (expressionRuntime) {
+                        if (expressionRuntime.characterId !== characterId) {
+                            throw new Error('Home expression character ID does not match the model')
+                        }
+                        homeExpressionRuntime = expressionRuntime
+                    }
+                } catch (error) {
+                    loadProgressCallback('Home runtime FAILED')
+                    reject(error)
+                    return
+                }
+            }
+
             console.log(`Model "${modelObject.name}" loaded successfully`)
 
             modelObject.updateMatrixWorld(true)
@@ -301,6 +342,8 @@ export async function loadCharacter(
                 textures: [],
                 outlineMeshes: [],
                 animationLoops: [],
+                homeAnimationRuntime,
+                homeExpressionRuntime,
             }
             modelObject.userData = userData
 
@@ -510,11 +553,13 @@ export async function loadCharacter(
                         }
                     }
 
-                    if (materialProfiles.some(profile => profile.gem.enabled)) {
+                    if (materialProfiles.some(
+                        profile => profile.gem.enabled || profile.matCap.enabled,
+                    )) {
                         const extension = await extendMaterialWithOfficialGem(
                             material,
                             materialProfiles,
-                            gemMatCapMap,
+                            texturePathUrl,
                         )
                         textures.push(...extension.resources.textures)
                     }
@@ -529,7 +574,19 @@ export async function loadCharacter(
                     if (name.includes('weapon')) mesh.frustumCulled = false
                     mesh.renderOrder = name.includes('hair') ? 1 : 2
 
+                    const firstOutlineWidth =
+                        materialProfiles[0]?.outlineWidth
+                    const uniformOutlineWidth = materialProfiles.every(
+                        profile => profile.outlineWidth === firstOutlineWidth,
+                    )
+                        ? firstOutlineWidth
+                        : undefined
                     const outlineMesh = addOutlineToMesh(mesh, {
+                        // Weapon_a is a single official material slot, so its
+                        // recovered 6.18 width can be applied exactly. Keep the
+                        // existing global default for mixed-width meshes until
+                        // outline submesh groups are split per draw.
+                        thickness: uniformOutlineWidth,
                         alphaTex,
                         shadowTex: outlineShadowTex,
                         faceOutlineAdjust: outlineFaceAdjust,

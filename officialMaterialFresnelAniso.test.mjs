@@ -8,7 +8,15 @@ import ts from 'typescript'
 const root = dirname(fileURLToPath(import.meta.url))
 const sourcePath = join(root, 'magia-exedra-character-three', 'materialProfile.ts')
 const runtimePath = join(root, `.official-material-profile-${process.pid}-${Date.now()}.mjs`)
+const officialMaterialProfileData = JSON.parse(readFileSync(
+  join(root, 'magia-exedra-character-three', 'official-material-profiles.json'),
+  'utf8',
+))
 const source = readFileSync(sourcePath, 'utf8')
+  .replace(
+    /import officialMaterialProfileData from '\.\/official-material-profiles\.json';?/,
+    `const officialMaterialProfileData = ${JSON.stringify(officialMaterialProfileData)}`,
+  )
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 },
   fileName: sourcePath,

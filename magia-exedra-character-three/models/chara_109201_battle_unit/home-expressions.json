@@ -1,0 +1,330 @@
+{
+  "schema": 1,
+  "characterId": 109201,
+  "unityVersion": "2022.3.62f2",
+  "source": "home/doll_house/chara_10920101_home",
+  "defaultExpression": "Smile",
+  "morphTargetCount": 65,
+  "expressionOrder": [
+    "Smile",
+    "Smiling",
+    "Serious",
+    "Annoyed",
+    "Furious",
+    "Sorrow",
+    "Sadness",
+    "Troubled",
+    "Dumbfounded",
+    "Wry",
+    "Surprised",
+    "Astonished",
+    "Damage",
+    "Expressionless",
+    "Despair"
+  ],
+  "aliases": {
+    "HomeFace00_Default": "Smile",
+    "HomeFace01_Smile": "Smile",
+    "HomeFace02_Smiling": "Smiling",
+    "HomeFace03_Serious": "Serious",
+    "HomeFace04_Annoyed": "Annoyed",
+    "HomeFace05_Furious": "Furious",
+    "HomeFace06_Sorrow": "Sorrow",
+    "HomeFace07_Sadness": "Sadness",
+    "HomeFace08_Troubled": "Troubled",
+    "HomeFace10_Dumbfounded": "Dumbfounded",
+    "HomeFace09_Wry": "Wry",
+    "HomeFace11_Surprised": "Surprised",
+    "HomeFace12_Astonished": "Astonished",
+    "HomeFace13_Damage": "Damage",
+    "HomeFace14_Expressionless": "Expressionless",
+    "HomeFace15_Despair": "Despair"
+  },
+  "expressions": {
+    "Smile": {
+      "duration": 0.13333334028720856,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    },
+    "Smiling": {
+      "duration": 0.13333332538604736,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Close_Smile_L": 1.0,
+        "Eyelid_Close_Smile_R": 1.0,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    },
+    "Serious": {
+      "duration": 0.13333332538604736,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    },
+    "Annoyed": {
+      "duration": 0.13333332538604736,
+      "weights": {
+        "Eyebrows_Anger_L": 0.8,
+        "Eyebrows_Anger_R": 0.8,
+        "Eyelid_Close_L": 0.1,
+        "Eyelid_Close_R": 0.1,
+        "Eyelid_Anger_L": 0.7,
+        "Eyelid_Anger_R": 0.7,
+        "Mouth_Down_L": 0.6,
+        "Mouth_Down_R": 0.6,
+        "Mouth_Wide": 0.1,
+        "Mouth_Narrow": 0.6,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Furious": {
+      "duration": 0.13333332538604736,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    },
+    "Sorrow": {
+      "duration": 0.13333332538604736,
+      "weights": {
+        "Eyebrows_Sad_L": 0.6,
+        "Eyebrows_Sad_R": 0.6,
+        "Eyelid_Close_L": 0.1,
+        "Eyelid_Close_R": 0.1,
+        "Eyelid_Sad_L": 0.2,
+        "Eyelid_Sad_R": 0.2,
+        "Mouth_Down_L": 0.6,
+        "Mouth_Down_R": 0.6,
+        "Mouth_Narrow": 0.7,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Sadness": {
+      "duration": 0.13333332538604736,
+      "weights": {
+        "Eyebrows_Sad_L": 0.6,
+        "Eyebrows_Sad_R": 0.6,
+        "Eyebrows_Down_L": 0.3,
+        "Eyebrows_Down_R": 0.3,
+        "Eyelid_Close_L": 0.2,
+        "Eyelid_Close_R": 0.2,
+        "Eyelid_Sad_L": 0.4,
+        "Eyelid_Sad_R": 0.4,
+        "Mouth_Down_L": 0.6,
+        "Mouth_Down_R": 0.6,
+        "Mouth_Narrow": 0.3442623,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Troubled": {
+      "duration": 0.13333332538604736,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    },
+    "Dumbfounded": {
+      "duration": 0.13333332538604736,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    },
+    "Wry": {
+      "duration": 0.13333332538604736,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    },
+    "Surprised": {
+      "duration": 0.13333332538604736,
+      "weights": {
+        "Eyebrows_Up_L": 0.4,
+        "Eyebrows_Up_R": 0.4,
+        "Eyebrows_Outside_Down_L": 0.5,
+        "Eyebrows_Outside_Down_R": 0.5,
+        "Eyebrows_Inside_Up_L": 0.4,
+        "Eyebrows_Inside_Up_R": 0.4,
+        "Eyelid_Open_L": 0.9,
+        "Eyelid_Open_R": 0.9,
+        "Mouth_Down_L": 0.7,
+        "Mouth_Down_R": 0.7,
+        "Mouth_Narrow": 0.5,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Astonished": {
+      "duration": 0.13333344459533691,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    },
+    "Damage": {
+      "duration": 0.1333332061767578,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    },
+    "Expressionless": {
+      "duration": 0.13333344459533691,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    },
+    "Despair": {
+      "duration": 0.13333344459533691,
+      "weights": {
+        "Eyebrows_Anger_L": 0.2122905,
+        "Eyebrows_Anger_R": 0.212,
+        "Eyelid_Anger_L": 0.1340782,
+        "Eyelid_Anger_R": 0.134,
+        "Mouth_Narrow": 0.1843575,
+        "Tooth_Back": 1.0,
+        "Unique_05": 0.628757
+      },
+      "unresolvedAttributes": []
+    }
+  },
+  "blink": {
+    "duration": 0.10000000149011612,
+    "weights": {
+      "Eyelid_Close_L": 1.0,
+      "Eyelid_Close_R": 1.0,
+      "Blink_Eyebrows_Down_L": 0.3,
+      "Blink_Eyebrows_Down_R": 0.3
+    },
+    "controller": {
+      "emptyExitTime": 0.9475513100624084,
+      "fadeInSeconds": 0.05244868993759155,
+      "blinkExitTime": 0.9475513100624084,
+      "fadeOutSeconds": 0.05244868993759155,
+      "afterBlinkExitTime": 0.75,
+      "afterBlinkTransitionSeconds": 0.25,
+      "intervalSpeed": 0.4000000059604645,
+      "intervalExitTime": 0.75,
+      "intervalTransitionSeconds": 0.25
+    },
+    "unresolvedAttributes": []
+  },
+  "mouth": {
+    "duration": 0.4166666567325592,
+    "curveTarget": "Mouth_OpenVertically",
+    "curveSegments": [
+      {
+        "time": 0.0,
+        "coeff": [
+          -21600.0,
+          5400.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "time": 0.1666666716337204,
+        "coeff": [
+          0.0,
+          0.0,
+          0.0,
+          50.0
+        ]
+      },
+      {
+        "time": 0.25,
+        "coeff": [
+          21600.005859375,
+          -5400.0009765625,
+          0.0,
+          50.0
+        ]
+      },
+      {
+        "time": 0.4166666567325592,
+        "coeff": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "constantWeights": {
+      "Tooth_OutUpper": 1.0,
+      "Tooth_OutUnder": 1.0
+    },
+    "unresolvedAttributes": [
+      3651414215,
+      598414756
+    ]
+  }
+}

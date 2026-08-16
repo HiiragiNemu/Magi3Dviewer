@@ -21,13 +21,14 @@ test('600-00-00-001 no longer stacks unverified character-brightening effects', 
   assert.equal(stage.dynamic.status, 'pending')
 })
 
-test('Gem uses character MatCap when exported and a camera-facing MatCap basis', () => {
-  assert.match(gem, /matCapUrl \?\? DefaultGemMatCap/)
-  assert.match(gem, /rdGemMatCapX/)
-  assert.match(gem, /dot\(rdGemMatCapX, rdGemNormalVs\)/)
-  assert.match(gemExtension, /official-gem-v3/)
-  assert.match(loader, /gemMatCapMap/)
-  assert.match(loader, /extendMaterialWithOfficialGem\([\s\S]*gemMatCapMap/)
+test('MatCap uses exported texture and the official view-normal coordinates', () => {
+  assert.match(gem, /profile\?\.matCap/)
+  assert.match(gem, /resources\.matCaps\.get\(exactName\)/)
+  assert.match(gem, /matcap_softmetallic/)
+  assert.match(gem, /rdGemMatCapUv = rdGemNormalVs\.xy \* 0\.5 \+ 0\.5/)
+  assert.doesNotMatch(gem, /rdGemMatCapX/)
+  assert.match(gemExtension, /official-matcap-gem-v5/)
+  assert.match(loader, /extendMaterialWithOfficialGem\([\s\S]*texturePathUrl/)
 })
 
 test('Control G no longer drives an invented world-up colour gradient', () => {

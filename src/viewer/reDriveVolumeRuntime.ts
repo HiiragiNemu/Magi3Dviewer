@@ -35,6 +35,10 @@ export interface ReDriveVolumeRuntimeProfile {
     backgroundSaturation?: number
     paraffin?: {
         enabled?: boolean
+        /** True only after the native IsActiveParaffin gate is recovered. */
+        runtimeVerified?: boolean
+        /** True only after the web operator matches the compiled shader. */
+        operatorVerified?: boolean
         topColor: string | Rgba
         bottomColor: string | Rgba
         opacity: number
@@ -234,9 +238,24 @@ function applyBackgroundColorAdjustments(profile: ReDriveVolumeRuntimeProfile) {
 
 function applyParaffin(profile?: ReDriveVolumeRuntimeProfile['paraffin']) {
     const pass = scene.effects.paraffinPass
-    if (!profile || profile.enabled === false || profile.opacity <= 0.0001) {
+    if (
+        !profile
+        || profile.enabled === false
+        || profile.runtimeVerified !== true
+        || profile.operatorVerified !== true
+        || profile.opacity <= 0.0001
+    ) {
         pass.enabled = false
         pass.uniforms.uEnabled.value = 0
+        scene.scene.userData.reDriveParaffin = profile
+            ? {
+                requested: profile.enabled !== false && profile.opacity > 0.0001,
+                applied: false,
+                reason: profile.runtimeVerified !== true
+                    ? 'native-runtime-gate-unverified'
+                    : 'compiled-operator-unverified',
+            }
+            : null
         return
     }
 
@@ -253,6 +272,11 @@ function applyParaffin(profile?: ReDriveVolumeRuntimeProfile['paraffin']) {
     pass.uniforms.uLightScreenBottomColor.value.copy(color(profile.lightScreenBottomColor, '#000000'))
     pass.uniforms.uLightScreenPow.value = profile.lightScreenPow ?? 1
     pass.uniforms.uLightScreenRoundness.value = profile.lightScreenRoundness ?? 0
+    scene.scene.userData.reDriveParaffin = {
+        requested: true,
+        applied: true,
+        reason: 'verified',
+    }
 }
 
 export function applyReDriveVolumeRuntime(profile?: ReDriveVolumeRuntimeProfile) {
@@ -349,6 +373,7 @@ export function resetReDriveVolumeRuntime() {
     delete scene.backgroundScene.userData.reDriveBackgroundColorAdjustments
     scene.effects.paraffinPass.enabled = false
     scene.effects.paraffinPass.uniforms.uEnabled.value = 0
+    delete scene.scene.userData.reDriveParaffin
     toonStylizationOptions.rimEnabled = initial.rimEnabled
     toonStylizationOptions.rimColor = initial.rimColor
     toonStylizationOptions.rimStrength = initial.rimStrength

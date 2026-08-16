@@ -150,6 +150,10 @@ export function applyRecoveredBaseline() {
     })
     scene.renderer.toneMapping = THREE.ACESFilmicToneMapping
     scene.renderer.toneMappingExposure = 1.04
+    // The recovered baseline uses the legacy inspection Bloom. Keep it
+    // mutually exclusive with stage-owned URP Bloom to prevent double
+    // compositing when this action is used while a ReDrive stage is active.
+    scene.effects.urpBloomPass.enabled = false
     scene.effects.bloomPass.enabled = true
     scene.effects.bloomPass.strength = 0.10
     scene.effects.bloomPass.radius = 0.30

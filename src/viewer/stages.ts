@@ -165,9 +165,15 @@ export interface StageRenderProfile {
     }
     bloom?: {
         enabled: boolean
+        /** Serialized Unity URP Bloom intensity. */
         strength: number
+        /** Serialized Unity URP Bloom scatter. */
         radius: number
+        /** Serialized gamma-space Unity URP Bloom threshold. */
         threshold: number
+        clamp?: number
+        maxIterations?: number
+        tint?: string | Rgba
     }
     /** Serialized Unity Volume overrides applied to the full composite. */
     postProcessing?: StageVolumePostProcessingProfile
@@ -379,6 +385,13 @@ const initialSceneState = {
     bloomStrength: scene.effects.bloomPass.strength,
     bloomRadius: scene.effects.bloomPass.radius,
     bloomThreshold: scene.effects.bloomPass.threshold,
+    urpBloomEnabled: scene.effects.urpBloomPass.enabled,
+    urpBloomIntensity: scene.effects.urpBloomPass.intensity,
+    urpBloomScatter: scene.effects.urpBloomPass.scatter,
+    urpBloomThreshold: scene.effects.urpBloomPass.threshold,
+    urpBloomClamp: scene.effects.urpBloomPass.clamp,
+    urpBloomMaxIterations: scene.effects.urpBloomPass.maxIterations,
+    urpBloomTint: scene.effects.urpBloomPass.tint.clone(),
     cameraPosition: scene.camera.position.clone(),
     cameraTarget: scene.controls.target.clone(),
     cameraFov: scene.camera.fov,
@@ -1380,31 +1393,28 @@ function applyStageRenderProfile(
     // official renderer. The historical CSS filter affects characters too and
     // would double-grade recovered scene profiles, so retain it only for manual
     // research/procedural presets.
-    if (profile.colorFilter && profile.source !== 'ReDriveVolume') {
+    if (profile.source === 'ReDriveVolume') {
+        scene.setColorFilter({ brightness: 1, contrast: 1, saturation: 1 })
+    } else if (profile.colorFilter) {
         scene.setColorFilter(profile.colorFilter)
     }
     if (profile.bloom) {
-        scene.effects.bloomPass.enabled = profile.bloom.enabled
         if (profile.source === 'ReDriveVolume') {
-            // Unity/URP Bloom volume values are not numerically compatible with
-            // Three's UnrealBloomPass. Convert only recovered Unity profiles.
-            scene.effects.bloomPass.strength = THREE.MathUtils.clamp(
-                profile.bloom.strength * 0.08,
-                0,
-                0.35,
-            )
-            scene.effects.bloomPass.radius = THREE.MathUtils.clamp(
-                profile.bloom.radius * 0.5,
-                0,
-                1,
-            )
-            scene.effects.bloomPass.threshold = THREE.MathUtils.clamp(
-                0.52 + profile.bloom.threshold * 0.5,
-                0,
-                1,
-            )
+            // Recovered volumes use the dedicated Unity 2022.3 URP operator;
+            // never reinterpret these serialized values as UnrealBloom units.
+            scene.effects.bloomPass.enabled = false
+            const pass = scene.effects.urpBloomPass
+            pass.enabled = profile.bloom.enabled
+            pass.intensity = profile.bloom.strength
+            pass.scatter = profile.bloom.radius
+            pass.threshold = profile.bloom.threshold
+            pass.clamp = profile.bloom.clamp ?? 65472
+            pass.maxIterations = profile.bloom.maxIterations ?? 6
+            setVolumePassColor(pass.tint, profile.bloom.tint, '#ffffff')
         } else {
             // Manual research stages already store UnrealBloomPass units.
+            scene.effects.urpBloomPass.enabled = false
+            scene.effects.bloomPass.enabled = profile.bloom.enabled
             scene.effects.bloomPass.strength = profile.bloom.strength
             scene.effects.bloomPass.radius = profile.bloom.radius
             scene.effects.bloomPass.threshold = profile.bloom.threshold
@@ -1486,6 +1496,11 @@ function applyStageVolumePostProcessing(
         : 0.2
     pass.uniforms.uVignetteRounded.value =
         vignetteEnabled && vignette?.rounded ? 1 : 0
+    const drawingBufferSize = scene.renderer.getDrawingBufferSize(
+        new THREE.Vector2(),
+    )
+    pass.uniforms.uVignetteAspectRatio.value = drawingBufferSize.x
+        / Math.max(drawingBufferSize.y, 1)
 
     scene.scene.userData.stageVolumePostProcessing = pass.enabled
         ? {
@@ -1560,6 +1575,13 @@ function restoreSceneProfile() {
     scene.effects.bloomPass.strength = initialSceneState.bloomStrength
     scene.effects.bloomPass.radius = initialSceneState.bloomRadius
     scene.effects.bloomPass.threshold = initialSceneState.bloomThreshold
+    scene.effects.urpBloomPass.enabled = initialSceneState.urpBloomEnabled
+    scene.effects.urpBloomPass.intensity = initialSceneState.urpBloomIntensity
+    scene.effects.urpBloomPass.scatter = initialSceneState.urpBloomScatter
+    scene.effects.urpBloomPass.threshold = initialSceneState.urpBloomThreshold
+    scene.effects.urpBloomPass.clamp = initialSceneState.urpBloomClamp
+    scene.effects.urpBloomPass.maxIterations = initialSceneState.urpBloomMaxIterations
+    scene.effects.urpBloomPass.tint.copy(initialSceneState.urpBloomTint)
     applyStageVolumePostProcessing(undefined)
     scene.camera.position.copy(initialSceneState.cameraPosition)
     scene.controls.target.copy(initialSceneState.cameraTarget)

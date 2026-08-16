@@ -1,6 +1,11 @@
 import * as THREE from 'three';
 import { disposeObject } from './utils';
 import { addAnimationLoop, getClockDelta, removeAnimationLoop } from './renderer';
+import {
+    CharacterExpressionController,
+    type HomeAnimationRuntime,
+    type HomeExpressionRuntime,
+} from './homeRuntime';
 
 export interface ObjectUserData {
     characterId: number
@@ -9,6 +14,8 @@ export interface ObjectUserData {
     textures: THREE.Texture[]
     outlineMeshes: THREE.SkinnedMesh[]
     animationLoops: Function[]
+    homeAnimationRuntime?: HomeAnimationRuntime
+    homeExpressionRuntime?: HomeExpressionRuntime
 }
 
 /**
@@ -27,6 +34,28 @@ function isCompanionAnimationName(name: string): boolean {
     return /_weapon_[a-z0-9]+(?=_|$)/i.test(name) || /_\d+$/.test(name)
 }
 
+function isHomeAnimationHelper(name: string): boolean {
+    return (
+        /^HomeWeapon[A-Z0-9_]*Hide(?:_|$)/.test(name)
+        || /^HomeTransition/.test(name)
+        || /_weapon_[a-z0-9]+/i.test(name)
+        || /_Hide(?:_|$)/.test(name)
+    )
+}
+
+function getHomeLoopAfterStart(
+    name: string,
+    runtime?: HomeAnimationRuntime,
+): string | undefined {
+    const family = getAnimationFamilyName(name)
+    const official = runtime?.actions?.unique01
+    if (official && family === getAnimationFamilyName(official.startFamily)) {
+        return getAnimationFamilyName(official.loopFamily)
+    }
+    const match = name.match(/^(Home(?:Wait|Unique)\d+?)_(?:S|SE)\d?$/)
+    return match ? `${match[1]}_L` : undefined
+}
+
 export default class MagiaExedraCharacter3D {
     /** 
      * Can be added to three.js scene.
@@ -36,6 +65,7 @@ export default class MagiaExedraCharacter3D {
     object: THREE.Group
     userData: ObjectUserData
     animation: ChatacterAnimation
+    expression?: CharacterExpressionController
     meshes: CharacterMeshController[]
 
     constructor(object: THREE.Group) {
@@ -44,12 +74,19 @@ export default class MagiaExedraCharacter3D {
 
         this.animation = new ChatacterAnimation(this)
         this.meshes = this.userData.meshes.map(x => new CharacterMeshController(x))
+        this.expression = this.userData.homeExpressionRuntime
+            ? new CharacterExpressionController(
+                this.userData.meshes,
+                this.userData.homeExpressionRuntime,
+            )
+            : undefined
 
         addAnimationLoop(this.animationLoop)
     }
 
     animationLoop = () => {
         this.animation.animationLoop()
+        this.expression?.update(getClockDelta())
         this.userData.animationLoops.forEach(x => x())
     }
 
@@ -57,6 +94,7 @@ export default class MagiaExedraCharacter3D {
         return [...new Set(
             this.object.animations
                 .filter(x => x.tracks.length > 0)
+                .filter(x => !isHomeAnimationHelper(x.name))
                 .map(x => getAnimationFamilyName(x.name))
         )].sort()
     }
@@ -84,6 +122,9 @@ export class ChatacterAnimation {
     private _default?: string | null = null
     private _current?: string
     private _clamped = false
+    private _queuedHomeLoop?: string
+    private _queuedHomeGateAction?: THREE.AnimationAction
+    private _activeActions: THREE.AnimationAction[] = []
     private _preparedFamilies = new Map<string, THREE.AnimationClip[]>()
     paused = false
 
@@ -102,15 +143,44 @@ export class ChatacterAnimation {
         and other families where the unnumbered clip is full-body. The family is
         therefore ordered by binding coverage, not by suffix.
         */
+        const queuedHomeLoop = getHomeLoopAfterStart(
+            name,
+            this._character.userData.homeAnimationRuntime,
+        )
+        if (
+            queuedHomeLoop
+            && this._character.object.animations.some(
+                clip => getAnimationFamilyName(clip.name) === queuedHomeLoop,
+            )
+        ) {
+            loop = false
+            this._queuedHomeLoop = queuedHomeLoop
+        } else {
+            this._queuedHomeLoop = undefined
+            this._queuedHomeGateAction = undefined
+        }
+
         const animations = this.getPreparedAnimationClipsByName(name)
         if (animations.length == 0) {
             console.warn(`Animation "${name}" not found in "${this._character.object.name}"`)
             return
         }
 
-        this.mixer.stopAllAction()
+        const uniqueAction = this._character.userData.homeAnimationRuntime
+            ?.actions?.unique01
+        const enterTransitionSeconds = queuedHomeLoop
+            ? uniqueAction?.enterTransitionSeconds ?? 0
+            : 0
+        if (enterTransitionSeconds > 0 && this._activeActions.length > 0) {
+            for (const action of this._activeActions) {
+                action.fadeOut(enterTransitionSeconds)
+            }
+        } else {
+            this.mixer.stopAllAction()
+        }
 
-        for (const animation of animations) {
+        const nextActions: THREE.AnimationAction[] = []
+        for (const [index, animation] of animations.entries()) {
             const action = this.mixer.clipAction(animation);
 
             if (loop) {
@@ -122,7 +192,15 @@ export class ChatacterAnimation {
             }
 
             action.reset().play()
+            if (enterTransitionSeconds > 0) {
+                action.fadeIn(enterTransitionSeconds)
+            }
+            nextActions.push(action)
+            if (queuedHomeLoop && index === 0) {
+                this._queuedHomeGateAction = action
+            }
         }
+        this._activeActions = nextActions
 
         this.paused = false
         this.time = 0
@@ -134,12 +212,15 @@ export class ChatacterAnimation {
 
     clear() {
         this.mixer.stopAllAction()
+        this._activeActions = []
         this._current = undefined
+        this._queuedHomeLoop = undefined
+        this._queuedHomeGateAction = undefined
     }
 
     getAnimationClipsByName(name: string): THREE.AnimationClip[] {
         const family = getAnimationFamilyName(name)
-        return this._character.object.animations
+        const clips = this._character.object.animations
             .filter(clip => getAnimationFamilyName(clip.name) === family)
             .sort((a, b) => {
                 // The clip with the broadest binding coverage is the base pose.
@@ -159,6 +240,23 @@ export class ChatacterAnimation {
 
                 return a.name.localeCompare(b.name)
             })
+        if (family.startsWith('Home') && !isHomeAnimationHelper(family)) {
+            const configuredHelpers = new Set(
+                (this._character.userData.homeAnimationRuntime?.helpers ?? [])
+                    .map(getAnimationFamilyName),
+            )
+            const weaponHelpers = this._character.object.animations.filter(clip => (
+                /^HomeWeapon.*Hide$/.test(getAnimationFamilyName(clip.name))
+                && (
+                    configuredHelpers.size === 0
+                    || configuredHelpers.has(getAnimationFamilyName(clip.name))
+                )
+            ))
+            for (const helper of weaponHelpers) {
+                if (!clips.includes(helper)) clips.push(helper)
+            }
+        }
+        return clips
     }
 
     /**
@@ -223,13 +321,26 @@ export class ChatacterAnimation {
         this.mixer.update(delta)
     }
 
-    onFinishHandler = () => {
-        this._clamped = true
+    onFinishHandler = (event: { action: THREE.AnimationAction }) => {
+        if (
+            this._queuedHomeLoop
+            && event.action === this._queuedHomeGateAction
+        ) {
+            const loop = this._queuedHomeLoop
+            this._queuedHomeLoop = undefined
+            this._queuedHomeGateAction = undefined
+            this.play(loop, true)
+            return
+        }
+        if (event.action === this._queuedHomeGateAction || !this._queuedHomeGateAction) {
+            this._clamped = true
+        }
     }
 
     get default(): string | undefined {
         if (this._default === null) {
-            this._default = this._character.animations.find(x => x.startsWith('CommonWait') || x.startsWith('DungeonWait'))
+            this._default = this._character.animations.find(x => x === 'HomeWait01_L')
+                ?? this._character.animations.find(x => x.startsWith('CommonWait') || x.startsWith('DungeonWait'))
             if (!this._default) {
                 console.warn(`Default animation not found in "${this._character.object.name}"`)
             }

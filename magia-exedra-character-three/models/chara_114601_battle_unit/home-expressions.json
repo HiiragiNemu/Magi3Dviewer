@@ -1,0 +1,298 @@
+{
+  "schema": 1,
+  "characterId": 114601,
+  "unityVersion": "2022.3.62f2",
+  "source": "home/doll_house/chara_11460101_home",
+  "defaultExpression": "Serious",
+  "morphTargetCount": 66,
+  "expressionOrder": [
+    "Serious",
+    "Smile",
+    "Smiling",
+    "Annoyed",
+    "Furious",
+    "Sorrow",
+    "Sadness",
+    "Dumbfounded",
+    "Surprised",
+    "Astonished",
+    "Damage",
+    "Despair"
+  ],
+  "aliases": {
+    "HomeFace00_Default": "Serious",
+    "HomeFace01_Smile": "Smile",
+    "HomeFace02_Smiling": "Smiling",
+    "HomeFace03_Serious": "Serious",
+    "HomeFace04_Annoyed": "Annoyed",
+    "HomeFace05_Furious": "Furious",
+    "HomeFace06_Sorrow": "Sorrow",
+    "HomeFace07_Sadness": "Sadness",
+    "HomeFace08_Troubled": "Smile",
+    "HomeFace10_Dumbfounded": "Dumbfounded",
+    "HomeFace09_Wry": "Smile",
+    "HomeFace11_Surprised": "Surprised",
+    "HomeFace12_Astonished": "Astonished",
+    "HomeFace13_Damage": "Damage",
+    "HomeFace14_Expressionless": "Smile",
+    "HomeFace15_Despair": "Despair"
+  },
+  "expressions": {
+    "Serious": {
+      "duration": 0.13333338499069214,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Smile": {
+      "duration": 0.13333334028720856,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Eyebrows_Smilethinly_L": 0.295,
+        "Eyebrows_Smilethinly_R": 0.2954545,
+        "Eyebrows_Smile_L": 0.3636364,
+        "Eyebrows_Smile_R": 0.364,
+        "Eyelid_Open_L": 0.1931818,
+        "Eyelid_Open_R": 0.193,
+        "Eyelid_Sad_L": 0.2159091,
+        "Eyelid_Sad_R": 0.216,
+        "Mouth_Up_L": 0.716,
+        "Mouth_Up_R": 0.715909,
+        "Mouth_Wide": 0.3352273,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Smiling": {
+      "duration": 0.13333335518836975,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Eyebrows_Smile_L": 0.665,
+        "Eyebrows_Smile_R": 0.6647727,
+        "Eyelid_Close_Smile_L": 1.0,
+        "Eyelid_Close_Smile_R": 1.0,
+        "Mouth_Up_L": 0.699,
+        "Mouth_Up_R": 0.6988636,
+        "Mouth_Wide": 0.4659091,
+        "Tooth_Back": 1.0,
+        "Unique_01": 0.1136364
+      },
+      "unresolvedAttributes": []
+    },
+    "Annoyed": {
+      "duration": 0.13333338499069214,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Eyebrows_Anger_L": 0.472,
+        "Eyebrows_Anger_R": 0.4715909,
+        "Eyebrows_Down_L": 0.2784091,
+        "Eyebrows_Down_R": 0.278,
+        "Eyebrows_Outside_Up_L": 0.4488636,
+        "Eyebrows_Outside_Up_R": 0.449,
+        "Eyebrows_InsideLong_Down_L": 0.0625,
+        "Eyebrows_InsideLong_Down_R": 0.063,
+        "Eyelid_Anger_L": 0.3238636,
+        "Eyelid_Anger_R": 0.324,
+        "Eyelid_LowerUp_L": 0.25,
+        "Eyelid_LowerUp_R": 0.25,
+        "Mouth_Down_L": 0.1988636,
+        "Mouth_Down_R": 0.199,
+        "Mouth_Wide": 0.2215909,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Furious": {
+      "duration": 0.13333338499069214,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Sorrow": {
+      "duration": 0.13333344459533691,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Eyebrows_Sad_L": 0.3068182,
+        "Eyebrows_Sad_R": 0.307,
+        "Eyebrows_Up_L": 0.1818182,
+        "Eyebrows_Up_R": 0.182,
+        "Eyebrows_Outside_Down_L": 0.3977273,
+        "Eyebrows_Outside_Down_R": 0.398,
+        "Eyelid_Sad_L": 0.3863636,
+        "Eyelid_Sad_R": 0.386,
+        "Mouth_Down_L": 0.5397728,
+        "Mouth_Down_R": 0.54,
+        "Tooth_Back": 1.0,
+        "Unique_01": 0.1477273
+      },
+      "unresolvedAttributes": []
+    },
+    "Sadness": {
+      "duration": 0.13333344459533691,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Eyebrows_Sad_L": 0.125,
+        "Eyebrows_Sad_R": 0.125,
+        "Eyelid_Sad_L": 0.0681818,
+        "Eyelid_Sad_R": 0.068,
+        "Eyelid_LowerUp_L": 0.2954545,
+        "Eyelid_LowerUp_R": 0.295,
+        "Mouth_Down_L": 0.4488636,
+        "Mouth_Down_R": 0.449,
+        "Mouth_Wide": 0.4261364,
+        "Tooth_Back": 1.0,
+        "Unique_01": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Dumbfounded": {
+      "duration": 0.13333344459533691,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Surprised": {
+      "duration": 0.13333344459533691,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Eyebrows_Up_L": 0.2727273,
+        "Eyebrows_Up_R": 0.273,
+        "Eyebrows_Outside_Up_L": 0.284,
+        "Eyebrows_Outside_Up_R": 0.2840909,
+        "Eyelid_Open_L": 1.0,
+        "Eyelid_Open_R": 1.0,
+        "Pupil_Upset": 0.1193182,
+        "Mouth_Down_L": 0.375,
+        "Mouth_Down_R": 0.375,
+        "Mouth_Narrow": 0.2670455,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Astonished": {
+      "duration": 0.13333344459533691,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Eyebrows_Up_L": 0.085,
+        "Eyebrows_Up_R": 0.0852273,
+        "Eyebrows_Outside_Down_L": 0.233,
+        "Eyebrows_Outside_Down_R": 0.2329545,
+        "Eyebrows_Inside_Up_L": 0.125,
+        "Eyebrows_Inside_Up_R": 0.125,
+        "Eyelid_Open_L": 0.784091,
+        "Eyelid_Open_R": 0.784,
+        "Pupil_Upset": 0.2215909,
+        "Mouth_Wide": 0.1136364,
+        "Tooth_Back": 1.0,
+        "Unique_02": 1.0,
+        "Unique_03": 0.7102273
+      },
+      "unresolvedAttributes": []
+    },
+    "Damage": {
+      "duration": 0.13333344459533691,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    },
+    "Despair": {
+      "duration": 0.13333344459533691,
+      "weights": {
+        "Eyebrows_Forward_L": 0.29,
+        "Eyebrows_Forward_R": 0.29,
+        "Tooth_Back": 1.0
+      },
+      "unresolvedAttributes": []
+    }
+  },
+  "blink": {
+    "duration": 0.10000000149011612,
+    "weights": {
+      "Eyelid_Close_L": 1.0,
+      "Eyelid_Close_R": 1.0,
+      "Blink_Eyebrows_Down_L": 0.3,
+      "Blink_Eyebrows_Down_R": 0.3
+    },
+    "controller": {
+      "emptyExitTime": 0.9475513100624084,
+      "fadeInSeconds": 0.05244868993759155,
+      "blinkExitTime": 0.9475513100624084,
+      "fadeOutSeconds": 0.05244868993759155,
+      "afterBlinkExitTime": 0.75,
+      "afterBlinkTransitionSeconds": 0.25,
+      "intervalSpeed": 0.4000000059604645,
+      "intervalExitTime": 0.75,
+      "intervalTransitionSeconds": 0.25
+    },
+    "unresolvedAttributes": []
+  },
+  "mouth": {
+    "duration": 0.4166666567325592,
+    "curveTarget": "Mouth_OpenVertically",
+    "curveSegments": [
+      {
+        "time": 0.0,
+        "coeff": [
+          -21600.0,
+          5400.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "time": 0.1666666716337204,
+        "coeff": [
+          0.0,
+          0.0,
+          0.0,
+          50.0
+        ]
+      },
+      {
+        "time": 0.25,
+        "coeff": [
+          21600.005859375,
+          -5400.0009765625,
+          0.0,
+          50.0
+        ]
+      },
+      {
+        "time": 0.4166666567325592,
+        "coeff": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "constantWeights": {
+      "Tooth_OutUpper": 1.0,
+      "Tooth_OutUnder": 1.0
+    },
+    "unresolvedAttributes": [
+      3651414215,
+      598414756
+    ]
+  }
+}

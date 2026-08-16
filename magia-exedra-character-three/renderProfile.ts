@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { getOfficialMaterialProfiles } from './materialProfile';
 
 export type ReDriveAxis = 'x' | 'y' | 'z' | '-x' | '-y' | '-z';
 
@@ -259,11 +260,11 @@ export function createAngelRingReference(root: THREE.Object3D, hairMesh: THREE.M
 export interface MaterialFeatureProfile { anisotropy: boolean; outlineOffset: boolean; skinOutlineOffset: boolean; specialJewel: boolean; }
 
 export function inferMaterialFeatures(materialNames: string[]): MaterialFeatureProfile {
-    const lower = materialNames.map(x => x.toLowerCase());
+    const profiles = getOfficialMaterialProfiles(materialNames);
     return {
-        anisotropy: lower.some(x => x.includes('aniso')),
-        outlineOffset: lower.some(x => x.includes('outlineoffset')),
-        skinOutlineOffset: lower.some(x => x.includes('outlineoffset_skin')),
-        specialJewel: lower.some(x => x.includes('_sj') || x.includes('jewel') || x.includes('gem')),
+        anisotropy: profiles.some(profile => profile.anisotropyProfile.enabled),
+        outlineOffset: profiles.some(profile => profile.outlineOffset),
+        skinOutlineOffset: profiles.some(profile => profile.skinOutlineOffset),
+        specialJewel: profiles.some(profile => profile.gem.enabled),
     };
 }
