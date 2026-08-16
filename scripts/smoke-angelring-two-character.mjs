@@ -53,7 +53,10 @@ await page.goto('https://127.0.0.1:4173/', {
   timeout: 60_000,
 })
 await page.waitForFunction(
-  () => window.scene && document.querySelector('#character-selector option[value="100107"]'),
+  () => (
+    window.scene?.characterSelected?.character?.userData?.characterId === 100107 &&
+    document.querySelector('#character-selector option[value="100107"]')
+  ),
   { timeout: 180_000 },
 )
 await page.evaluate(async () => {
@@ -91,17 +94,28 @@ async function selectCharacter(selectorValue, expectedResourceId) {
     },
     { timeout: 180_000 },
   )
+  await page.evaluate(() => {
+    const character = window.scene.characterSelected.character
+    const animation = character.animation
+    animation.play('Wait_L', true)
+    animation.paused = true
+    animation.time = 0
+    character.animationLoop()
+    if (animation.current !== 'Wait_L' || !animation.paused || animation.time !== 0) {
+      throw new Error(`Unable to lock Wait_L at t=0: ${animation.current} @ ${animation.time}`)
+    }
+  })
   await new Promise(resolve => setTimeout(resolve, 2_000))
 }
 
 async function measureAngelRing() {
   return page.evaluate(async () => {
-    const waitForRender = milliseconds => new Promise(resolve => setTimeout(resolve, milliseconds))
     const canvas = document.querySelector('#viewer canvas')
     const gl = canvas?.getContext('webgl2') || canvas?.getContext('webgl')
     if (!gl) throw new Error('WebGL unavailable')
 
-    const character = window.scene.characterSelected.character
+    const viewer = window.scene
+    const character = viewer.characterSelected.character
     const hairMeshes = character.userData.meshes
       .filter(mesh => mesh.name.toLowerCase().includes('hair'))
     const shaders = hairMeshes
@@ -120,13 +134,21 @@ async function measureAngelRing() {
       gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
       return { width, height, pixels }
     }
+    // CI SwiftShader can run below one animation frame per second. Render the
+    // two uniform states synchronously so camera changes or a delayed RAF
+    // cannot be mistaken for the AngelRing delta.
+    const renderCurrentFrame = () => {
+      viewer.controls.update()
+      viewer.renderer.render(viewer.scene, viewer.camera)
+      gl.finish()
+    }
 
     const original = shaders.map(shader => Number(shader.uniforms.uAngelRingEnabled.value))
     shaders.forEach(shader => { shader.uniforms.uAngelRingEnabled.value = 0 })
-    await waitForRender(1_200)
+    renderCurrentFrame()
     const off = sample()
     shaders.forEach((shader, index) => { shader.uniforms.uAngelRingEnabled.value = original[index] })
-    await waitForRender(1_200)
+    renderCurrentFrame()
     const on = sample()
 
     const x0 = Math.floor(on.width * 0.24)
