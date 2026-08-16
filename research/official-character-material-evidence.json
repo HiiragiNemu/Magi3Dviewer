@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 1,
+  "releaseProfile": "jp-android-3.13.0",
+  "unityVersion": "2022.3.62f2",
+  "scope": [
+    "chara_100107_battle_unit",
+    "chara_101901_battle_unit",
+    "shader/redrive_toon"
+  ],
+  "sourceArtifacts": [
+    {
+      "id": "character-100107",
+      "artifact": "gamedata/AssetBundles/battle/character/chara_100107_battle_unit",
+      "size": 3139872,
+      "sha256": "3146ceffabe46f70c5edbe31f18d1f6ef5a3a7cfc77744207b1e2cdf4df0f326",
+      "sourceRoot": "jp-asset-root"
+    },
+    {
+      "id": "character-101901",
+      "artifact": "gamedata/AssetBundles/battle/character/chara_101901_battle_unit",
+      "size": 4036502,
+      "sha256": "15ecddac1e282f63441eed640f47610d5d312ca2d2d98aaccf72976a9f7ece84",
+      "sourceRoot": "jp-asset-root"
+    },
+    {
+      "id": "shader-redrive-toon",
+      "artifact": "gamedata/AssetBundles/shader/redrive_toon",
+      "size": 1494994,
+      "sha256": "87ee3fc2d10777a020bb3bfd5cf299a88aa1b01073b54b662757e8bd699332eb",
+      "sourceRoot": "jp-asset-root"
+    },
+    {
+      "id": "matcap-soft-metallic",
+      "artifact": "gamedata/AssetBundles/shader/common/texture/matcap_soft_metallic",
+      "size": 11885,
+      "sha256": "70891a0fc4f957017b1722a7762d6374cc0558ddf512ef101528955f115b7ea3",
+      "sourceRoot": "jp-asset-root"
+    }
+  ],
+  "supplementaryArtifacts": [
+    {
+      "id": "redrive-toon-pseudo-shader",
+      "artifact": "3D project/Shader/Creative_Character_ReDriveToon.shader",
+      "size": 12110,
+      "sha256": "d9b79663ae2d019033ebabe28e72932f026603ba9890e2344091fdc7cff4489a",
+      "sourceRoot": "project-root"
+    },
+    {
+      "id": "official-angel-ring-map",
+      "artifact": "gamedata/ExtractedAssetBundles/assets/creativeassets/shaders/redrivetoon/redrivetoon_commontexture/RDToon_AngelRingMap.png",
+      "size": 4116,
+      "sha256": "e33863f3d085b75a7b54218872bdb01b4492e84c0a4f492e4325632f44237776",
+      "sourceRoot": "jp-asset-root",
+      "dimensions": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "id": "official-metallic-gradient-map-export",
+      "sourceRoot": "jp-asset-root",
+      "artifact": "gamedata/ExtractedAssetBundles/assets/webresources/assetbundles/outer/battle/character/RDToon_metallic_gradient_map.png",
+      "size": 137,
+      "sha256": "b58ddb1a438b62ea108bec0b9f6fe6cccd8eb7843abafd1dc7c99fe28f79bcce",
+      "dimensions": [
+        256,
+        2
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "id": "redrive-toon-serialized-structure",
+      "sourceRoot": "compiled-shader-evidence",
+      "artifact": "redrive-toon-structure.json",
+      "size": 617556,
+      "sha256": "5b420c59cc1d9cac066bd38f3ac36897e4c0e16f4dc7201715b274b92fdbd4fd"
+    },
+    {
+      "id": "redrive-toon-pipeline-state-text",
+      "sourceRoot": "compiled-shader-evidence",
+      "artifact": "Creative__Character__ReDriveToonUniqueWeaponSpFade.shader.txt",
+      "size": 2345,
+      "sha256": "eae4e536e29948fb8e1e943f3cd45d1532b4bab9c9fc4142586f667affa24d71"
+    }
+  ],
+  "materials": {
+    "mt_chara_100101_hair": {
+      "characterResource": "chara_100107_battle_unit",
+      "pathId": "-6234653200986010283",
+      "evidenceLevel": "raw-material-saved-properties-and-pptr",
+      "features": {
+        "isHair": 1,
+        "useDepthTex": 1,
+        "depthRimLightDiffThreshold": 0.02,
+        "depthShadowDiffThreshold": 0.03,
+        "useRimLight": 1,
+        "useOutline": 1,
+        "outlineWidth": 5,
+        "outlineTexBlend": 0.1,
+        "faceOutlineAdjust": 0.59,
+        "useBakedNormal": 1,
+        "characterCancelPerspective": 1,
+        "useMatCap": 0,
+        "isAniso": 0
+      },
+      "textures": {
+        "baseMap": "chara_100101_hair_color",
+        "controlMap": "chara_100101_hair_ctrl",
+        "shadowTex": "chara_100101_hair_shadow",
+        "specularGradientMap": "RDToon_metallic_gradient_map",
+        "angelRingMap": "redrive_toon:2265012383630109063"
+      }
+    },
+    "mt_chara_100101_body_SJ": {
+      "characterResource": "chara_100107_battle_unit",
+      "pathId": "-6081848842995723798",
+      "evidenceLevel": "raw-material-saved-properties-and-pptr",
+      "features": {
+        "isGem": 1,
+        "useMatCap": 1,
+        "matCapIntensity": 2,
+        "gemHeightCorrection": 0.55,
+        "useGemDepthDiff": 0,
+        "gemDepthDiffThreshold": 0.5,
+        "gemRimFresnel": 0.5,
+        "useDepthTex": 1,
+        "useOutline": 1,
+        "outlineWidth": 5
+      },
+      "textures": {
+        "matCapTex": "matcap-soft-metallic:835141015512989441"
+      }
+    },
+    "mt_chara_100101_weapon_a_sj": {
+      "characterResource": "chara_100107_battle_unit",
+      "pathId": "-8806580922588316025",
+      "evidenceLevel": "raw-material-saved-properties-and-pptr",
+      "features": {
+        "isGem": 1,
+        "useGemDepthDiff": 1,
+        "useFresnel": 1,
+        "useMatCap": 1,
+        "matCapIntensity": 2,
+        "fresnelColor": [
+          1,
+          0.5047169923782349,
+          0.9053794741630554,
+          1
+        ],
+        "outlineTexBlend": 0.2
+      }
+    },
+    "mt_chara_100101_body_Aniso": {
+      "characterResource": "chara_100107_battle_unit",
+      "pathId": "929879790748685277",
+      "evidenceLevel": "raw-material-saved-properties-and-pptr",
+      "features": {
+        "isAniso": 1,
+        "anisoThreshold": 0.9139999747276306,
+        "anisoFeather": 0,
+        "anisoMaskByMetallic": 0,
+        "anisoColor": [
+          0.7519999742507935,
+          0.2753385901451111,
+          0.4024481475353241,
+          1
+        ],
+        "useMatCap": 1,
+        "matCapIntensity": 2,
+        "useDepthTex": 1,
+        "useRimLight": 1,
+        "useOutline": 1
+      },
+      "activationNote": "Serialized _IsAniso=1 requests anisotropic response even though the _IS_ANISO keyword is absent; runtime activation must inspect saved properties rather than keyword/name alone."
+    },
+    "mt_chara_101901_hair": {
+      "characterResource": "chara_101901_battle_unit",
+      "pathId": "5218997938524243120",
+      "evidenceLevel": "raw-material-saved-properties-and-pptr",
+      "features": {
+        "isHair": 1,
+        "useDepthTex": 1,
+        "useOutline": 1,
+        "outlineWidth": 5,
+        "faceOutlineAdjust": 3.3,
+        "characterCancelPerspective": 1
+      },
+      "textures": {
+        "baseMap": "chara_101901_hair_color",
+        "controlMap": "chara_101901_hair_ctrl",
+        "shadowTex": "chara_101901_hair_shadow",
+        "angelRingMap": "redrive_toon:2265012383630109063"
+      }
+    },
+    "mt_chara_101901_body_SJ": {
+      "characterResource": "chara_101901_battle_unit",
+      "pathId": "-8898881680188409888",
+      "evidenceLevel": "raw-material-saved-properties-and-pptr",
+      "features": {
+        "isGem": 1,
+        "useMatCap": 1,
+        "matCapIntensity": 2,
+        "gemHeightCorrection": -0.375,
+        "gemRimFresnel": 0.539,
+        "fresnelColor": [
+          0.990566,
+          0.359781,
+          0.366364,
+          1
+        ]
+      },
+      "textures": {
+        "matCapTex": "matcap-soft-metallic:835141015512989441"
+      }
+    },
+    "mt_chara_101901_body_Gold": {
+      "characterResource": "chara_101901_battle_unit",
+      "pathId": "-5562216011826612224",
+      "evidenceLevel": "raw-material-saved-properties-and-pptr",
+      "features": {
+        "isAniso": 1,
+        "anisoThreshold": 0.966,
+        "anisoFeather": 0.008,
+        "anisoMaskByMetallic": 1,
+        "anisoColor": [
+          1,
+          0.714678,
+          0.570755,
+          1
+        ],
+        "useFresnel": 1,
+        "fresnelColor": [
+          1,
+          0.900403,
+          0.523585,
+          1
+        ],
+        "useMatCap": 1
+      }
+    },
+    "mt_chara_101901_body_Socks": {
+      "characterResource": "chara_101901_battle_unit",
+      "pathId": "469235521807299179",
+      "evidenceLevel": "raw-material-saved-properties-and-pptr",
+      "features": {
+        "isAniso": 1,
+        "anisoThreshold": 1,
+        "anisoFeather": 0.292,
+        "anisoMaskByMetallic": 1,
+        "anisoColor": [
+          0.466667,
+          0.454902,
+          0.403922,
+          1
+        ],
+        "useFresnel": 1,
+        "fresnelColor": [
+          0.466667,
+          0.454902,
+          0.403922,
+          1
+        ],
+        "useMatCap": 0
+      },
+      "semanticBoundary": "Body_Mesh material-slot association proves a socks/footwear-related saved profile requests Aniso and Fresnel response; raw Renderer data alone does not identify every covered triangle as shoe leather."
+    }
+  },
+  "compiledShaderFacts": {
+    "hair": {
+      "artifact": "main_hair__blob-98__FOG_LINEAR___MAIN_LIGHT_SHADOWS___MAIN_LIGHT_SHADOWS_CASCADE___ADDITIONAL_LIGHT_SHADOWS___IS_HAIR___USE_DEPTHTEX_RIM_SHADOW.glsl",
+      "sourceSha256": "a956b5ebc0550523c046244c1bcc37ceeb611078f0433d33b6cb72b500975b46",
+      "facts": [
+        "CameraDepthTexture offsets use vertex color G, DepthTexWidth, FOV/aspect and main/additional rim directions.",
+        "Depth rim is clamp((sampleDepth-(fragmentDepth+threshold))*10,0,1).",
+        "Depth shadow is clamp((sampleDepth-(fragmentDepth-threshold))*50,0,1).",
+        "AngelRing projects through face axes and the official AngelRingMap; it is not a static screen-space stripe."
+      ],
+      "sourceRoot": "compiled-shader-evidence",
+      "size": 60469
+    },
+    "gem": {
+      "artifact": "main_gem__blob-95__FOG_LINEAR___MAIN_LIGHT_SHADOWS___MAIN_LIGHT_SHADOWS_CASCADE___ADDITIONAL_LIGHT_SHADOWS___USE_RIM_LIGHT___ISGEM.glsl",
+      "sourceSha256": "f368b2686a2a6fb27f91aef4734869730d06f9f90b5e8bef14755a14cc7be977",
+      "facts": [
+        "MatCap UV is view-normal XY * 0.5 + 0.5.",
+        "MatCap uses per-RGB overlay, ControlMap G masking and _MatCapIntensity.",
+        "GemDepthDiff samples CameraDepthTexture only under its material predicate."
+      ],
+      "sourceRoot": "compiled-shader-evidence",
+      "size": 53749
+    },
+    "aniso": {
+      "artifact": "main_base__blob-90___MAIN_LIGHT_SHADOWS___MAIN_LIGHT_SHADOWS_CASCADE___ADDITIONAL_LIGHT_SHADOWS.glsl",
+      "sourceSha256": "7d5b6355f98aa65b43f023d85ecde4a07348d4e6363c8c3878bf36554874e2d0",
+      "facts": [
+        "Two normalized XZ direction dots drive the anisotropic band.",
+        "Threshold is _AnisoThreshold + (1.001-_AnisoThreshold)*(1-ControlMap.g).",
+        "Mask is 1 + _AnisoMaskByMetallic*(ControlMap.g-1)."
+      ],
+      "sourceRoot": "compiled-shader-evidence",
+      "size": 51035
+    },
+    "outline": {
+      "artifact": "outline__blob-6__no-keyword.glsl",
+      "sourceSha256": "a29346699e8f20d59d7dea9a55daca78a92ee769848954b30fd85df296bd6349",
+      "facts": [
+        "Width is _OutlineWidth * 0.01 with perspective or orthographic scale.",
+        "Vertex color R scales extrusion; vertex color B drives _FaceOutlineAdjust.",
+        "_CharacterCancelPerspective is depth-dependent and outline color uses BaseMap, ShadowColor, lighting and emission."
+      ],
+      "sourceRoot": "compiled-shader-evidence",
+      "size": 29050,
+      "serializedPassState": {
+        "sourceRoot": "compiled-shader-evidence",
+        "artifact": "redrive-toon-structure.json",
+        "sourceSha256": "5b420c59cc1d9cac066bd38f3ac36897e4c0e16f4dc7201715b274b92fdbd4fd",
+        "shaderIndex": 1,
+        "subShaderIndex": 0,
+        "passIndex": 0,
+        "passName": "ReDriveToonOutlinePass",
+        "culling": 1.0,
+        "interpretation": "Unity ShaderLab Cull Front (enum 1)"
+      }
+    }
+  },
+  "implementationPolicy": {
+    "proven": "Compiled formulas plus raw Material saved properties and PPtrs may drive exact profiles.",
+    "fallback": "Name-convention profiles are compatibility fallbacks and must remain labelled as such.",
+    "forbiddenClaim": "Do not describe a Body_Mesh material slot as a specific shoe submesh without triangle-level material mapping."
+  },
+  "sourceRoots": {
+    "jp-asset-root": {
+      "description": "Current-JP raw and extracted AssetBundle corpus"
+    },
+    "project-root": {
+      "description": "Local research root for pseudo-shader evidence"
+    },
+    "compiled-shader-evidence": {
+      "description": "Current-JP compiled shader extraction evidence"
+    }
+  },
+  "bundleLocalPPtrs": {
+    "redriveToonShader": {
+      "fileId": 1,
+      "pathId": "7704691985981102055"
+    },
+    "softMetallicMatCap": {
+      "fileId": 2,
+      "pathId": "835141015512989441",
+      "textureName": "matcap_SoftMetallic"
+    },
+    "angelRingMap": {
+      "fileId": 1,
+      "pathId": "2265012383630109063"
+    },
+    "resolutionBoundary": "FileID/PathID pairs are interpreted through each source bundle dependency table; equal numeric pairs are not asserted to be globally shared identities."
+  }
+}

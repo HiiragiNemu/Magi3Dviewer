@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "sourceRoots": {
+    "jp-capture-root": {
+      "description": "Local JP HTTP capture corpus"
+    },
+    "jp-client-source": {
+      "description": "Current JP Android client source workspace"
+    },
+    "jp-steam-install": {
+      "description": "Current local JP Steam installation"
+    },
+    "jp-steam-log": {
+      "description": "Mutable Unity Player.log directory; hashes are observation snapshots"
+    },
+    "tw-research-root": {
+      "description": "Private TW client and capture research workspace"
+    }
+  },
+  "policy": {
+    "requireExplicitProfile": true,
+    "unknownProfile": "reject",
+    "serializedObjectVersion": "use only as a per-bundle fallback; never replace the release default"
+  },
+  "profiles": {
+    "jp-android-3.13.0": {
+      "region": "JP",
+      "platform": "Android",
+      "appVersion": "3.13.0",
+      "versionCode": 26072409,
+      "unityVersion": "2022.3.62f2",
+      "evidence": [
+        {
+          "kind": "captured-request-header",
+          "sourceRoot": "jp-capture-root",
+          "artifact": "requests_detailed.log",
+          "size": 34357013,
+          "sha256": "8348aa6d6f3b94cc47c93ba507565ef23f845aeddda8f8149cce2fe976744c91",
+          "locator": "lines 23375 and 23377: x-app-version 3.13.0; X-Unity-Version 2022.3.62f2"
+        },
+        {
+          "kind": "apk-globalgamemanagers",
+          "sourceRoot": "jp-client-source",
+          "artifact": "unpacked/base_assets.apk",
+          "size": 578191455,
+          "sha256": "fa09d7526585a8561adced7acd909a6a1136696f09daa7ecefb74ce4376253c1",
+          "zipEntry": {
+            "artifact": "assets/bin/Data/globalgamemanagers",
+            "size": 6185156,
+            "sha256": "3baf32a667876b2c975d447a43b5caea18a3911ccdf52e2e2a5d70081090324b",
+            "asciiOffset": 48,
+            "expectedAscii": "2022.3.62f2"
+          },
+          "locator": "base_assets.apk!/assets/bin/Data/globalgamemanagers ASCII offset 48"
+        }
+      ]
+    },
+    "jp-steam-24586478": {
+      "region": "JP",
+      "platform": "WindowsPlayer",
+      "steamBuild": 24586478,
+      "unityVersion": "2022.3.62f2",
+      "evidence": [
+        {
+          "kind": "globalgamemanagers",
+          "sourceRoot": "jp-steam-install",
+          "artifact": "MadokaExedra_Data/globalgamemanagers",
+          "size": 6052044,
+          "sha256": "aff6abcd46803897cf34df58711fa33b2ac39b70a7919cec1292acbe2e73eaa1",
+          "locator": "ASCII offset 48: 2022.3.62f2"
+        },
+        {
+          "kind": "player-log",
+          "sourceRoot": "jp-steam-log",
+          "artifact": "Player.log",
+          "size": 19754,
+          "sha256": "ba71a585f3eb4fcfdcd78fa50514e691f802d8bb10d3eb6ec1ad9b4872f90b64",
+          "mutableObservation": true,
+          "locator": "observation snapshot line 3: Initialize engine version: 2022.3.62f2 (7670c08855a9)"
+        }
+      ]
+    },
+    "tw-android-1.1.2": {
+      "region": "TW",
+      "platform": "Android",
+      "appVersion": "1.1.2",
+      "versionCode": 26072717,
+      "unityVersion": "2022.3.62f3",
+      "evidence": [
+        {
+          "kind": "captured-request-header",
+          "sourceRoot": "tw-research-root",
+          "artifact": "private-inputs/captures/manual-20260802-034447/private-headers/1785614351018086600-000008.json",
+          "size": 1309,
+          "sha256": "314ab0d8512df123fa6fbb65c6a3ea3f2f4bf8b9f77f7b0261d85c30c8e5f7b4",
+          "locator": "x-app-version 1.1.2; X-Unity-Version 2022.3.62f3"
+        },
+        {
+          "kind": "apk-globalgamemanagers",
+          "sourceRoot": "tw-research-root",
+          "artifact": "private-inputs/tw-client-apkpure/extracted/base_assets.apk",
+          "size": 500097648,
+          "sha256": "778083560acbdd510630e5db879bbeacbb5040dedbefda0ecb7d4c18b8aa1884",
+          "zipEntry": {
+            "artifact": "assets/bin/Data/globalgamemanagers",
+            "size": 774436,
+            "sha256": "34d3dd10fc44c61f0d3fbbef81cd09a4697f7804c790409e8232fd691bf8cdee",
+            "asciiOffset": 48,
+            "expectedAscii": "2022.3.62f3"
+          },
+          "locator": "base_assets.apk!/assets/bin/Data/globalgamemanagers ASCII offset 48"
+        }
+      ]
+    },
+    "legacy-unclassified-2022.3.21f1": {
+      "region": "UNKNOWN",
+      "platform": "Unknown",
+      "unityVersion": "2022.3.21f1",
+      "selectable": false,
+      "evidence": [
+        {
+          "kind": "legacy-serialized-metadata",
+          "artifact": "legacy bundle metadata",
+          "sha256": null,
+          "locator": "historical per-bundle fallback only; not a current JP or TW release default"
+        }
+      ]
+    }
+  }
+}
