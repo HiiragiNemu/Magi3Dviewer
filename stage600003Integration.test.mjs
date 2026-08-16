@@ -17,11 +17,11 @@ function pngSize(path) {
   assert.equal(bytes.subarray(1, 4).toString('ascii'), 'PNG')
   return [bytes.readUInt32BE(16), bytes.readUInt32BE(20)]
 }
-test('600-003 remains a standalone shard with the audited JP bundle identity', () => {
+test('600-003 is registered once with the audited JP bundle identity', () => {
   const root = JSON.parse(readFileSync('public/stages/catalog.json', 'utf8'))
   assert.equal(
     root.entries.filter((entry) => entry === `./stages/catalog/${stageId}.json`).length,
-    0,
+    1,
   )
   assert.equal(catalog.id, stageId)
   assert.equal(catalog.type, 'fbx')
