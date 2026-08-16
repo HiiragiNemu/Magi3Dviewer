@@ -1,0 +1,1080 @@
+{
+  "schemaVersion": 1,
+  "sourceManifest": "research/next-official-stage-candidates.json",
+  "releaseProfile": "jp-android-3.13.0",
+  "unityVersion": "2022.3.62f2",
+  "policy": {
+    "ordering": "preserve audited candidate priority",
+    "payload": "references only; no AssetBundle, texture, mesh or scene payload copied",
+    "readiness": "fail closed until every required product and visual gate is verified"
+  },
+  "summary": {
+    "entryCount": 7,
+    "readyForDeployment": 0,
+    "pendingRawTruth": 7,
+    "closureBytesReferenced": 124550981
+  },
+  "queue": [
+    {
+      "priority": 1,
+      "sceneId": "600_00_01_003",
+      "bundle": "battle/stage/bg_3d_600_00_01_003",
+      "expectedRootGameObject": "bg_3d_600_00_01_003",
+      "manifest": {
+        "key": 10992,
+        "hash128": "6b9b4bcb258eb5f3af8ba028d449cb68"
+      },
+      "closureReference": {
+        "fileCount": 14,
+        "bytesJP": 17769135,
+        "names": [
+          "battle/stage/bg_3d_600_00_01_003",
+          "shader/bg_uber",
+          "shader/common/texture/cloud_noise",
+          "shader/common/texture/simple_noise",
+          "texture/bg/0656901a718c1dd4dad78419b76611d3",
+          "texture/bg/0a4d806b5913e92479a926e4a88922e7",
+          "texture/bg/16661dc1e118c2f4aa06fdbca9d9b241",
+          "texture/bg/18211f689e00ea3408fc9361a68e3c16",
+          "texture/bg/5fc2872b86555d74180c4d7eb7c47b90",
+          "texture/bg/8083bbb864bf4fa46982c2576be12cad",
+          "texture/bg/a1e926046d3020a48a2d7d9c97a50859",
+          "texture/bg/b37387fbb6245a94d9cc8e81bc913f16",
+          "texture/bg/d9526dedc6f2bf148b781cb682a2cc76",
+          "texture/bg/e575aa04a807ed846984bf26b4b66871"
+        ]
+      },
+      "rawRootIdentity": {
+        "jpSha256": "827d8fe45f0b345a544de09982a0737146832021c080ed48deb9c618472db5e4",
+        "twByteIdentical": true
+      },
+      "componentInventory": {
+        "AnimationClip": 5,
+        "Animator": 3,
+        "AnimatorController": 1,
+        "AssetBundle": 1,
+        "Cubemap": 1,
+        "GameObject": 278,
+        "Light": 8,
+        "Material": 8,
+        "Mesh": 142,
+        "MeshFilter": 182,
+        "MeshRenderer": 182,
+        "MonoBehaviour": 20,
+        "MonoScript": 12,
+        "Texture2D": 3,
+        "Transform": 278
+      },
+      "gates": [
+        {
+          "id": "manifest-closure",
+          "required": true,
+          "status": "verified",
+          "componentEvidence": {
+            "files": 14,
+            "bytes": 17769135
+          }
+        },
+        {
+          "id": "root-object-and-serialized-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "serializedFiles": 14,
+            "objects": 1124
+          }
+        },
+        {
+          "id": "geometry-material-carrier",
+          "required": true,
+          "status": "pending-export-and-hierarchy-verification",
+          "componentEvidence": {
+            "Mesh": 142,
+            "MeshFilter": 182,
+            "MeshRenderer": 182,
+            "Material": 8
+          }
+        },
+        {
+          "id": "material-texture-pptr",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Material": 8,
+            "Texture2D": 3
+          }
+        },
+        {
+          "id": "uv1-lightmaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MeshRenderer": 182
+          }
+        },
+        {
+          "id": "lights",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Light": 8
+          }
+        },
+        {
+          "id": "reflection-probes-cubemaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Cubemap": 1
+          }
+        },
+        {
+          "id": "animator-clips",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Animator": 3,
+            "AnimatorController": 1,
+            "AnimationClip": 5
+          }
+        },
+        {
+          "id": "particles",
+          "required": false,
+          "status": "not-required-by-inventory",
+          "componentEvidence": {}
+        },
+        {
+          "id": "volume-and-custom-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MonoBehaviour": 20
+          }
+        },
+        {
+          "id": "external-chrome-visual-regression",
+          "required": true,
+          "status": "blocked-by-product-gates",
+          "componentEvidence": {}
+        }
+      ],
+      "readyForDeployment": false,
+      "nextAction": "extract-and-verify-raw-component-truth"
+    },
+    {
+      "priority": 2,
+      "sceneId": "600_01_00_001",
+      "bundle": "battle/stage/bg_3d_600_01_00_001",
+      "expectedRootGameObject": "bg_3d_600_01_00_001",
+      "manifest": {
+        "key": 11310,
+        "hash128": "e6339b15722a9c63ba00a8bad43270f0"
+      },
+      "closureReference": {
+        "fileCount": 13,
+        "bytesJP": 16309195,
+        "names": [
+          "battle/stage/bg_3d_600_01_00_001",
+          "shader/bg_uber",
+          "shader/common/texture/cloud_noise",
+          "texture/bg/06a72338a26fe3c4da125b3721a78164",
+          "texture/bg/31cd9ea416a4eb9439f4fe290d3b5aa3",
+          "texture/bg/5105c8e2aa63f31458d8e02dfcb9b581",
+          "texture/bg/5e94b425e27368146a90ca2d0c33abdf",
+          "texture/bg/63fc144c849bf7945911e066b3c36122",
+          "texture/bg/7fa82cbf52a84564ca92ae95143619eb",
+          "texture/bg/9a45cfefe5cbe1848a5bf0a3b29352b2",
+          "texture/bg/bf0f7724b7937664891a7e656d341c00",
+          "texture/bg/ce0431dff25f4ed43bdd38f0e25f670e",
+          "texture/bg/f4fb9098d4f407c4c890c29364c6cb5d"
+        ]
+      },
+      "rawRootIdentity": {
+        "jpSha256": "7b5ec33cf1a3ed9b5f1cf422b1965c23dfc4f9b992034bbda122c402e019ee25",
+        "twByteIdentical": true
+      },
+      "componentInventory": {
+        "AnimationClip": 2,
+        "Animator": 3,
+        "AnimatorController": 2,
+        "AssetBundle": 1,
+        "Cubemap": 2,
+        "GameObject": 517,
+        "Light": 6,
+        "Material": 14,
+        "Mesh": 259,
+        "MeshFilter": 353,
+        "MeshRenderer": 353,
+        "MonoBehaviour": 21,
+        "MonoScript": 14,
+        "ParticleSystem": 1,
+        "ParticleSystemRenderer": 1,
+        "Texture2D": 1,
+        "Transform": 517
+      },
+      "gates": [
+        {
+          "id": "manifest-closure",
+          "required": true,
+          "status": "verified",
+          "componentEvidence": {
+            "files": 13,
+            "bytes": 16309195
+          }
+        },
+        {
+          "id": "root-object-and-serialized-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "serializedFiles": 13,
+            "objects": 2067
+          }
+        },
+        {
+          "id": "geometry-material-carrier",
+          "required": true,
+          "status": "pending-export-and-hierarchy-verification",
+          "componentEvidence": {
+            "Mesh": 259,
+            "MeshFilter": 353,
+            "MeshRenderer": 353,
+            "Material": 14
+          }
+        },
+        {
+          "id": "material-texture-pptr",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Material": 14,
+            "Texture2D": 1
+          }
+        },
+        {
+          "id": "uv1-lightmaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MeshRenderer": 353
+          }
+        },
+        {
+          "id": "lights",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Light": 6
+          }
+        },
+        {
+          "id": "reflection-probes-cubemaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Cubemap": 2
+          }
+        },
+        {
+          "id": "animator-clips",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Animator": 3,
+            "AnimatorController": 2,
+            "AnimationClip": 2
+          }
+        },
+        {
+          "id": "particles",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "ParticleSystem": 1
+          }
+        },
+        {
+          "id": "volume-and-custom-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MonoBehaviour": 21
+          }
+        },
+        {
+          "id": "external-chrome-visual-regression",
+          "required": true,
+          "status": "blocked-by-product-gates",
+          "componentEvidence": {}
+        }
+      ],
+      "readyForDeployment": false,
+      "nextAction": "extract-and-verify-raw-component-truth"
+    },
+    {
+      "priority": 3,
+      "sceneId": "604_00_00_001",
+      "bundle": "battle/stage/bg_3d_604_00_00_001",
+      "expectedRootGameObject": "bg_3d_604_00_00_001",
+      "manifest": {
+        "key": 9928,
+        "hash128": "cdded2ce0f72bdc2112dbda8dcbbb605"
+      },
+      "closureReference": {
+        "fileCount": 15,
+        "bytesJP": 17916989,
+        "names": [
+          "battle/stage/bg_3d_604_00_00_001",
+          "shader/bg_uber",
+          "shader/common/texture/cloud_noise",
+          "shader/common/texture/simple_noise",
+          "texture/bg/20187cf898fd95c4286351287f2516de",
+          "texture/bg/21c81b0c05849ea43b0d07d190169f22",
+          "texture/bg/22423f6282fb2384491743b9ac20f9b6",
+          "texture/bg/5725d8ac1b5f1b444a404664b952ffd2",
+          "texture/bg/58ee0c1f8e360a0449fecb1095fb941d",
+          "texture/bg/892d04ea0b5c4b94da5474db1d79b1dd",
+          "texture/bg/8ea95336ae4a068478e6540de23f220b",
+          "texture/bg/a48d02cd2ce4dbd49bb00c7e372a5048",
+          "texture/bg/c75d8331ddd6e5042a5b9dd08c140df3",
+          "texture/bg/cc4e75c082ac3da47a5f590f9bd9616b",
+          "texture/bg/eb2933c538f22ec4b83dede5f61a1375"
+        ]
+      },
+      "rawRootIdentity": {
+        "jpSha256": "96d6e22110cf83fa56cc699b6ebdc4b26bccf6e72ad4d2c3de309176a723a574",
+        "twByteIdentical": true
+      },
+      "componentInventory": {
+        "AnimationClip": 2,
+        "Animator": 3,
+        "AnimatorController": 2,
+        "AssetBundle": 1,
+        "Cubemap": 1,
+        "GameObject": 995,
+        "Light": 5,
+        "Material": 8,
+        "Mesh": 867,
+        "MeshFilter": 867,
+        "MeshRenderer": 867,
+        "MonoBehaviour": 15,
+        "MonoScript": 11,
+        "Texture2D": 1,
+        "Transform": 995
+      },
+      "gates": [
+        {
+          "id": "manifest-closure",
+          "required": true,
+          "status": "verified",
+          "componentEvidence": {
+            "files": 15,
+            "bytes": 17916989
+          }
+        },
+        {
+          "id": "root-object-and-serialized-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "serializedFiles": 15,
+            "objects": 4640
+          }
+        },
+        {
+          "id": "geometry-material-carrier",
+          "required": true,
+          "status": "pending-export-and-hierarchy-verification",
+          "componentEvidence": {
+            "Mesh": 867,
+            "MeshFilter": 867,
+            "MeshRenderer": 867,
+            "Material": 8
+          }
+        },
+        {
+          "id": "material-texture-pptr",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Material": 8,
+            "Texture2D": 1
+          }
+        },
+        {
+          "id": "uv1-lightmaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MeshRenderer": 867
+          }
+        },
+        {
+          "id": "lights",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Light": 5
+          }
+        },
+        {
+          "id": "reflection-probes-cubemaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Cubemap": 1
+          }
+        },
+        {
+          "id": "animator-clips",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Animator": 3,
+            "AnimatorController": 2,
+            "AnimationClip": 2
+          }
+        },
+        {
+          "id": "particles",
+          "required": false,
+          "status": "not-required-by-inventory",
+          "componentEvidence": {}
+        },
+        {
+          "id": "volume-and-custom-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MonoBehaviour": 15
+          }
+        },
+        {
+          "id": "external-chrome-visual-regression",
+          "required": true,
+          "status": "blocked-by-product-gates",
+          "componentEvidence": {}
+        }
+      ],
+      "readyForDeployment": false,
+      "nextAction": "extract-and-verify-raw-component-truth"
+    },
+    {
+      "priority": 4,
+      "sceneId": "605_00_00_001",
+      "bundle": "battle/stage/bg_3d_605_00_00_001",
+      "expectedRootGameObject": "bg_3d_605_00_00_001",
+      "manifest": {
+        "key": 1662,
+        "hash128": "43de706c9d155f1193e0037daed097cd"
+      },
+      "closureReference": {
+        "fileCount": 16,
+        "bytesJP": 16916387,
+        "names": [
+          "battle/stage/bg_3d_605_00_00_001",
+          "shader/bg_uber",
+          "shader/common/texture/cloud_noise",
+          "texture/bg/0c6137dcdb0486e45b2bd9a39f39335f",
+          "texture/bg/3b11d29f2fb1eb240915faef8b4c438d",
+          "texture/bg/3eb34f49a27c8594e89ba1b74229d259",
+          "texture/bg/53fe2d26b1cbbb54d8f33787d217f35a",
+          "texture/bg/5ba44d9a458611a4c9a695b0cd694ea7",
+          "texture/bg/683b444e0af707743967324823df106c",
+          "texture/bg/7c22553094ea521428b51081ae85d860",
+          "texture/bg/82ea999ad7f904741899bff2063fab31",
+          "texture/bg/8a21e5b7416393d47856f716e3dfe7fb",
+          "texture/bg/921077f44c11a354f9e6de9d4329ea10",
+          "texture/bg/a4061f9fe0f37a24d969263c12bd0e23",
+          "texture/bg/bcbc5b8b53a0d0a4a81ff6040dbf9049",
+          "texture/bg/cf09278f9f564ad439be0be314872539"
+        ]
+      },
+      "rawRootIdentity": {
+        "jpSha256": "cd8ea04c1e1d40045ca509ca8142b098a9e1933f039bc28c73a2d8abc4e284e2",
+        "twByteIdentical": true
+      },
+      "componentInventory": {
+        "AnimationClip": 7,
+        "Animator": 56,
+        "AnimatorController": 7,
+        "AssetBundle": 1,
+        "Cubemap": 2,
+        "GameObject": 2006,
+        "Light": 444,
+        "LookAtConstraint": 90,
+        "Material": 10,
+        "Mesh": 90,
+        "MeshFilter": 1018,
+        "MeshRenderer": 1018,
+        "MonoBehaviour": 545,
+        "MonoScript": 14,
+        "ReflectionProbe": 1,
+        "Texture2D": 2,
+        "Transform": 2006
+      },
+      "gates": [
+        {
+          "id": "manifest-closure",
+          "required": true,
+          "status": "verified",
+          "componentEvidence": {
+            "files": 16,
+            "bytes": 16916387
+          }
+        },
+        {
+          "id": "root-object-and-serialized-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "serializedFiles": 16,
+            "objects": 7317
+          }
+        },
+        {
+          "id": "geometry-material-carrier",
+          "required": true,
+          "status": "pending-export-and-hierarchy-verification",
+          "componentEvidence": {
+            "Mesh": 90,
+            "MeshFilter": 1018,
+            "MeshRenderer": 1018,
+            "Material": 10
+          }
+        },
+        {
+          "id": "material-texture-pptr",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Material": 10,
+            "Texture2D": 2
+          }
+        },
+        {
+          "id": "uv1-lightmaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MeshRenderer": 1018
+          }
+        },
+        {
+          "id": "lights",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Light": 444
+          }
+        },
+        {
+          "id": "reflection-probes-cubemaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "ReflectionProbe": 1,
+            "Cubemap": 2
+          }
+        },
+        {
+          "id": "animator-clips",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Animator": 56,
+            "AnimatorController": 7,
+            "AnimationClip": 7
+          }
+        },
+        {
+          "id": "particles",
+          "required": false,
+          "status": "not-required-by-inventory",
+          "componentEvidence": {}
+        },
+        {
+          "id": "volume-and-custom-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MonoBehaviour": 545
+          }
+        },
+        {
+          "id": "external-chrome-visual-regression",
+          "required": true,
+          "status": "blocked-by-product-gates",
+          "componentEvidence": {}
+        }
+      ],
+      "readyForDeployment": false,
+      "nextAction": "extract-and-verify-raw-component-truth"
+    },
+    {
+      "priority": 5,
+      "sceneId": "601_00_00_001",
+      "bundle": "battle/stage/bg_3d_601_00_00_001",
+      "expectedRootGameObject": "bg_3d_601_00_00_001",
+      "manifest": {
+        "key": 2522,
+        "hash128": "afc50483e949336a8f5722dc09c4c369"
+      },
+      "closureReference": {
+        "fileCount": 17,
+        "bytesJP": 13221289,
+        "names": [
+          "battle/stage/bg_3d_601_00_00_001",
+          "shader/bg_uber",
+          "shader/common/texture/cloud_noise",
+          "shader/effect",
+          "texture/bg/0c827ebc0d2dd2b429418cf6d719d275",
+          "texture/bg/2740a7602716e3049a87926d9e2a22e6",
+          "texture/bg/3261b94d3aae34e4db9fd4dabde7c7f1",
+          "texture/bg/5147b1d2c4f2b0247aba5374932d3955",
+          "texture/bg/52f2b3e9da831544d98709d673f97a4a",
+          "texture/bg/5518332d6491a914c9b297493bd83d45",
+          "texture/bg/56c9f4e74a984124da1f5d923b16a948",
+          "texture/bg/6d9afa6ed376b394f8ca5d4b0875a88b",
+          "texture/bg/70c87dc8f954e2348996f4cfa2a16530",
+          "texture/bg/8c23f33a51b7a3f45a867cd43b4f5bc5",
+          "texture/bg/a51a9f7e1aca7ab4c81cc1892d7a5d11",
+          "texture/bg/b45647a810f574843aa4f46077fa5f5d",
+          "texture/bg/e18fae03cf1b2c84481a4c7175c228d9"
+        ]
+      },
+      "rawRootIdentity": {
+        "jpSha256": "cbfc686228b72d80e363e66cf8e08d5b4f4dc4c8200824d63a95b6406a1b2080",
+        "twByteIdentical": false
+      },
+      "componentInventory": {
+        "AnimationClip": 10,
+        "Animator": 85,
+        "AnimatorController": 4,
+        "AssetBundle": 1,
+        "Cubemap": 2,
+        "GameObject": 526,
+        "Light": 5,
+        "Material": 17,
+        "Mesh": 137,
+        "MeshFilter": 299,
+        "MeshRenderer": 299,
+        "MonoBehaviour": 117,
+        "MonoScript": 14,
+        "ParticleSystem": 88,
+        "ParticleSystemRenderer": 88,
+        "ReflectionProbe": 1,
+        "Texture2D": 2,
+        "Transform": 526
+      },
+      "gates": [
+        {
+          "id": "manifest-closure",
+          "required": true,
+          "status": "verified",
+          "componentEvidence": {
+            "files": 17,
+            "bytes": 13221289
+          }
+        },
+        {
+          "id": "root-object-and-serialized-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "serializedFiles": 17,
+            "objects": 2221
+          }
+        },
+        {
+          "id": "geometry-material-carrier",
+          "required": true,
+          "status": "pending-export-and-hierarchy-verification",
+          "componentEvidence": {
+            "Mesh": 137,
+            "MeshFilter": 299,
+            "MeshRenderer": 299,
+            "Material": 17
+          }
+        },
+        {
+          "id": "material-texture-pptr",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Material": 17,
+            "Texture2D": 2
+          }
+        },
+        {
+          "id": "uv1-lightmaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MeshRenderer": 299
+          }
+        },
+        {
+          "id": "lights",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Light": 5
+          }
+        },
+        {
+          "id": "reflection-probes-cubemaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "ReflectionProbe": 1,
+            "Cubemap": 2
+          }
+        },
+        {
+          "id": "animator-clips",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Animator": 85,
+            "AnimatorController": 4,
+            "AnimationClip": 10
+          }
+        },
+        {
+          "id": "particles",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "ParticleSystem": 88
+          }
+        },
+        {
+          "id": "volume-and-custom-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MonoBehaviour": 117
+          }
+        },
+        {
+          "id": "external-chrome-visual-regression",
+          "required": true,
+          "status": "blocked-by-product-gates",
+          "componentEvidence": {}
+        }
+      ],
+      "readyForDeployment": false,
+      "nextAction": "extract-and-verify-raw-component-truth"
+    },
+    {
+      "priority": 6,
+      "sceneId": "601_00_01_001",
+      "bundle": "battle/stage/bg_3d_601_00_01_001",
+      "expectedRootGameObject": "bg_3d_601_00_01_001",
+      "manifest": {
+        "key": 2619,
+        "hash128": "05f7b24dbff611cd910a5b4d19178be5"
+      },
+      "closureReference": {
+        "fileCount": 19,
+        "bytesJP": 16720423,
+        "names": [
+          "battle/stage/bg_3d_601_00_01_001",
+          "shader/bg_uber",
+          "shader/common/texture/cloud_noise",
+          "shader/effect",
+          "texture/bg/0c827ebc0d2dd2b429418cf6d719d275",
+          "texture/bg/0dd0d093bc0b9cf458e2bfae5a310e16",
+          "texture/bg/2740a7602716e3049a87926d9e2a22e6",
+          "texture/bg/3261b94d3aae34e4db9fd4dabde7c7f1",
+          "texture/bg/5147b1d2c4f2b0247aba5374932d3955",
+          "texture/bg/5518332d6491a914c9b297493bd83d45",
+          "texture/bg/56c9f4e74a984124da1f5d923b16a948",
+          "texture/bg/6d9afa6ed376b394f8ca5d4b0875a88b",
+          "texture/bg/70c87dc8f954e2348996f4cfa2a16530",
+          "texture/bg/7c22553094ea521428b51081ae85d860",
+          "texture/bg/8c23f33a51b7a3f45a867cd43b4f5bc5",
+          "texture/bg/9264ffb86bad50546ba91d361db7e8ef",
+          "texture/bg/a51a9f7e1aca7ab4c81cc1892d7a5d11",
+          "texture/bg/b45647a810f574843aa4f46077fa5f5d",
+          "texture/bg/e18fae03cf1b2c84481a4c7175c228d9"
+        ]
+      },
+      "rawRootIdentity": {
+        "jpSha256": "93ef10aa93679de71ae27788b20b8570f09bc2557d0d52c8e3c66d2398ef9dae",
+        "twByteIdentical": false
+      },
+      "componentInventory": {
+        "AnimationClip": 5,
+        "Animator": 83,
+        "AnimatorController": 3,
+        "AssetBundle": 1,
+        "Cubemap": 1,
+        "GameObject": 535,
+        "Light": 11,
+        "Material": 18,
+        "Mesh": 149,
+        "MeshFilter": 312,
+        "MeshRenderer": 312,
+        "MonoBehaviour": 104,
+        "MonoScript": 13,
+        "ParticleSystem": 84,
+        "ParticleSystemRenderer": 84,
+        "Texture2D": 2,
+        "Transform": 535
+      },
+      "gates": [
+        {
+          "id": "manifest-closure",
+          "required": true,
+          "status": "verified",
+          "componentEvidence": {
+            "files": 19,
+            "bytes": 16720423
+          }
+        },
+        {
+          "id": "root-object-and-serialized-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "serializedFiles": 19,
+            "objects": 2252
+          }
+        },
+        {
+          "id": "geometry-material-carrier",
+          "required": true,
+          "status": "pending-export-and-hierarchy-verification",
+          "componentEvidence": {
+            "Mesh": 149,
+            "MeshFilter": 312,
+            "MeshRenderer": 312,
+            "Material": 18
+          }
+        },
+        {
+          "id": "material-texture-pptr",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Material": 18,
+            "Texture2D": 2
+          }
+        },
+        {
+          "id": "uv1-lightmaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MeshRenderer": 312
+          }
+        },
+        {
+          "id": "lights",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Light": 11
+          }
+        },
+        {
+          "id": "reflection-probes-cubemaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Cubemap": 1
+          }
+        },
+        {
+          "id": "animator-clips",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Animator": 83,
+            "AnimatorController": 3,
+            "AnimationClip": 5
+          }
+        },
+        {
+          "id": "particles",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "ParticleSystem": 84
+          }
+        },
+        {
+          "id": "volume-and-custom-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MonoBehaviour": 104
+          }
+        },
+        {
+          "id": "external-chrome-visual-regression",
+          "required": true,
+          "status": "blocked-by-product-gates",
+          "componentEvidence": {}
+        }
+      ],
+      "readyForDeployment": false,
+      "nextAction": "extract-and-verify-raw-component-truth"
+    },
+    {
+      "priority": 7,
+      "sceneId": "602_00_00_001",
+      "bundle": "battle/stage/bg_3d_602_00_00_001",
+      "expectedRootGameObject": "bg_3d_602_00_00_001",
+      "manifest": {
+        "key": 2531,
+        "hash128": "88c2e5e666e1ae8201fb634201c252b9"
+      },
+      "closureReference": {
+        "fileCount": 16,
+        "bytesJP": 25697563,
+        "names": [
+          "battle/stage/bg_3d_602_00_00_001",
+          "shader/bg_uber",
+          "shader/common/texture/cloud_noise",
+          "shader/common/texture/simple_noise",
+          "shader/enemy_uber",
+          "texture/bg/2ae6b30140a15624798eec6de0223801",
+          "texture/bg/2e36162febbf2c944aacfae31dda5fd5",
+          "texture/bg/3e3f096b9522ed249b62165d49678e81",
+          "texture/bg/5f962c06dd11a8543ba00a7d185196f8",
+          "texture/bg/647be343be64d5d4fb83c917b348ae01",
+          "texture/bg/86b54069f07ac7748801cd3665f04ce3",
+          "texture/bg/955e935c5ffadd248bda2e828c91307a",
+          "texture/bg/967ef909a0a21a545a09218cd0730b90",
+          "texture/bg/a884d4cd1e9614c4cb2a215eda831bf0",
+          "texture/bg/d0b9f026004a3e54cb4e041dd5d3a0e4",
+          "texture/bg/d2b58a0bc60da0b4ca16821c60917e44"
+        ]
+      },
+      "rawRootIdentity": {
+        "jpSha256": "a84b1fc31bf2859ba9d38e90c44ad820a67433b9256f608286cf69bbbc58074c",
+        "twByteIdentical": false
+      },
+      "componentInventory": {
+        "AnimationClip": 10,
+        "Animator": 27,
+        "AnimatorController": 3,
+        "AssetBundle": 1,
+        "Cubemap": 1,
+        "GameObject": 732,
+        "Light": 6,
+        "Material": 15,
+        "Mesh": 24,
+        "MeshFilter": 89,
+        "MeshRenderer": 89,
+        "MonoBehaviour": 102,
+        "MonoScript": 18,
+        "ReflectionProbe": 1,
+        "SkinnedMeshRenderer": 23,
+        "Texture2D": 2,
+        "Transform": 732
+      },
+      "gates": [
+        {
+          "id": "manifest-closure",
+          "required": true,
+          "status": "verified",
+          "componentEvidence": {
+            "files": 16,
+            "bytes": 25697563
+          }
+        },
+        {
+          "id": "root-object-and-serialized-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "serializedFiles": 16,
+            "objects": 1875
+          }
+        },
+        {
+          "id": "geometry-material-carrier",
+          "required": true,
+          "status": "pending-export-and-hierarchy-verification",
+          "componentEvidence": {
+            "Mesh": 24,
+            "MeshFilter": 89,
+            "MeshRenderer": 89,
+            "Material": 15
+          }
+        },
+        {
+          "id": "material-texture-pptr",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Material": 15,
+            "Texture2D": 2
+          }
+        },
+        {
+          "id": "uv1-lightmaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MeshRenderer": 89
+          }
+        },
+        {
+          "id": "lights",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Light": 6
+          }
+        },
+        {
+          "id": "reflection-probes-cubemaps",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "ReflectionProbe": 1,
+            "Cubemap": 1
+          }
+        },
+        {
+          "id": "animator-clips",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "Animator": 27,
+            "AnimatorController": 3,
+            "AnimationClip": 10
+          }
+        },
+        {
+          "id": "particles",
+          "required": false,
+          "status": "not-required-by-inventory",
+          "componentEvidence": {}
+        },
+        {
+          "id": "volume-and-custom-components",
+          "required": true,
+          "status": "pending-raw-truth",
+          "componentEvidence": {
+            "MonoBehaviour": 102
+          }
+        },
+        {
+          "id": "external-chrome-visual-regression",
+          "required": true,
+          "status": "blocked-by-product-gates",
+          "componentEvidence": {}
+        }
+      ],
+      "readyForDeployment": false,
+      "nextAction": "extract-and-verify-raw-component-truth"
+    }
+  ]
+}
