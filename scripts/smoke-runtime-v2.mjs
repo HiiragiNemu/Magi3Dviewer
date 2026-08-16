@@ -38,8 +38,14 @@ page.on('requestfailed', request => {
 })
 
 await page.goto('https://127.0.0.1:4173/', { waitUntil: 'domcontentloaded', timeout: 60_000 })
+// Wait for the asynchronous default-character load to own the selected slot.
+// Selecting Ashley while that slot is still undefined races the default load:
+// both characters can finish, but the default completion can reclaim selection.
 await page.waitForFunction(
-  () => window.scene && document.querySelector('#character-selector option[value="100107"]'),
+  () => (
+    window.scene?.characterSelected?.character?.userData?.characterId === 100107 &&
+    document.querySelector('#character-selector option[value="100107"]')
+  ),
   { timeout: 180_000 },
 )
 await page.waitForFunction(
@@ -266,6 +272,14 @@ const madokaMaterialResult = await page.evaluate(async () => {
 })
 
 const guiText = await page.$eval('#three-gui', element => element.textContent ?? '')
+const hasRecoveredBaselineControl = [
+  'Apply recovered ReDrive baseline',
+  '应用已恢复的 ReDrive 基线',
+].some(label => guiText.includes(label))
+const hasAngelRingControl = [
+  'AngelRing (official GLES projection)',
+  '天使环（AngelRing，官方 GLES 投影）',
+].some(label => guiText.includes(label))
 const canvasResult = await page.evaluate(() => {
   const canvas = document.querySelector('#viewer canvas')
   const gl = canvas?.getContext('webgl2') || canvas?.getContext('webgl')
@@ -296,7 +310,7 @@ if (
 if (ashleyAnimation.duplicatePreparedBindingCount > 0) failures.push('Ashley duplicate animation tracks remain after preparation')
 if (stageResult.officialCount < 5 || !stageResult.definition?.official) failures.push('official stage catalog/runtime unavailable')
 if (stageResult.meshes < 1 || stageResult.materials < 1) failures.push('official stage geometry unavailable')
-if (!guiText.includes('Apply recovered ReDrive baseline') || !guiText.includes('AngelRing (official GLES projection)')) failures.push('shader controls missing')
+if (!hasRecoveredBaselineControl || !hasAngelRingControl) failures.push('shader controls missing')
 if (madokaMaterialResult.characterId !== 100107) failures.push('Madoka material regression target unavailable')
 if (madokaMaterialResult.bodyMaterialSlotCount < 2 || madokaMaterialResult.bodyGroupCount < 2) failures.push('FBX material groups were collapsed')
 if (madokaMaterialResult.gemProfileCount < 1) failures.push('Madoka Soul Gem material profile missing')
