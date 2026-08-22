@@ -21,6 +21,9 @@ test('Steam scene inventory accounts for every direct official battle scene', ()
   assert.equal(inventory.counts.families['battle-bosspoint-helper'], 9)
   assert.equal(inventory.counts.families['battle-tower-data'], 76)
 
+  // The decrypted Steam root is verified locally and deliberately absent from Pages CI.
+  if (!existsSync(inventory.sources.steamRoot)) return
+
   for (const row of direct) {
     assert.equal(
       existsSync(join(inventory.sources.steamRoot, row.logicalPath)),
