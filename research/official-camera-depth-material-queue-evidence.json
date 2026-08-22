@@ -1,0 +1,3882 @@
+{
+  "schema": 1,
+  "unityVersion": "2022.3.62f2",
+  "source": {
+    "kind": "Steam JP decrypted AssetBundle Material/Renderer/Mesh objects",
+    "root": "D:\\magia\\Madoka Magica Magia Exedra Steam JP\\AssetBundles\\battle\\character",
+    "bundleGlob": "chara_*_battle_unit"
+  },
+  "summary": {
+    "bundleCount": 95,
+    "materialRows": 1655,
+    "transparentQueueRows": 48,
+    "transparencyFlagRows": 44,
+    "gemAndTransparencyRows": 6,
+    "multiMaterialRenderers": 459,
+    "mixedTransparentQueueRenderers": 40,
+    "mixedGemTransparencyRenderers": 4,
+    "errors": 0,
+    "localFbxCharacterCount": 90,
+    "localFbxMixedTransparentQueueRenderers": 38,
+    "nonLocalOrAlternateMixedTransparentQueueRenderers": 2
+  },
+  "mixedTransparentQueueRenderers": [
+    {
+      "bundle": "chara_100101_battle_unit",
+      "rendererPathId": -8786615610828434600,
+      "mesh": "weapon_b_mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_100101_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100101_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100101_weapon_a_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100106_battle_unit",
+      "rendererPathId": -8665909037859186771,
+      "mesh": "Body_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_100106_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_body alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_body_matcap",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_body_metal",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100106_battle_unit",
+      "rendererPathId": -2929128180020745502,
+      "mesh": "weapon_mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_100106_weapon_a_sp",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_Trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_Crystal",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100106_battle_unit",
+      "rendererPathId": -1132385371819232405,
+      "mesh": "weapon_mesh",
+      "submeshes": 4,
+      "materials": [
+        {
+          "name": "mt_chara_100106_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_metal",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100107_battle_unit",
+      "rendererPathId": -7757709845332952769,
+      "mesh": "weapon_b_mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_100101_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100101_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100101_weapon_a_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100201_battle_unit",
+      "rendererPathId": 214538443098924785,
+      "mesh": "Weapon_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_100201_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100201_weapon_a_glow",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100201_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100202_battle_unit",
+      "rendererPathId": 7707585983758734367,
+      "mesh": "Weapon_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_100201_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100201_weapon_a_glow",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100201_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100203_battle_unit",
+      "rendererPathId": 2105803572638834631,
+      "mesh": "weapon_b_Mesh",
+      "submeshes": 2,
+      "materials": [
+        {
+          "name": "mt_chara_100203_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100203_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100207_battle_unit",
+      "rendererPathId": 6431744914851908240,
+      "mesh": "Body_Mesh",
+      "submeshes": 10,
+      "materials": [
+        {
+          "name": "mt_chara_100207_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body02",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body_Gem",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100207_body_Aniso4",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100207_body_Aniso2",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body_Fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body_Aniso3",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body_Aniso1",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100303_battle_unit",
+      "rendererPathId": -8294342490397481402,
+      "mesh": "Mint_Mesh",
+      "submeshes": 2,
+      "materials": [
+        {
+          "name": "mt_chara_100303_weapon_b_color",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100303_weapon_b_ice",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100402_battle_unit",
+      "rendererPathId": 608560238784827581,
+      "mesh": "Body_Mesh",
+      "submeshes": 9,
+      "materials": [
+        {
+          "name": "mt_chara_100402_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_gold",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_swimsuit",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100402_body_suit",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_stopper",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_gem",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100402_body_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_bangle",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100502_battle_unit",
+      "rendererPathId": -4770040365893689090,
+      "mesh": "Body_Mesh",
+      "submeshes": 8,
+      "materials": [
+        {
+          "name": "mt_chara_100502_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body_fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body_gold_aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100502_body_gold_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body_frill",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body_lace_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100804_battle_unit",
+      "rendererPathId": -2790802717815057951,
+      "mesh": "Body_Mesh",
+      "submeshes": 7,
+      "materials": [
+        {
+          "name": "mt_chara_100804_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100804_body_Aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100804_body_Gold",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100804_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100804_body_Gold_Aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100804_body_beads",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100804_body_Transparent",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100903_battle_unit",
+      "rendererPathId": -4593246092115782266,
+      "mesh": "Body_Mesh",
+      "submeshes": 7,
+      "materials": [
+        {
+          "name": "mt_chara_100903_body_bikini",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100903_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100903_body_gold",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100903_body_matcap",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100903_body_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100903_body_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100903_body_coral",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_101101_battle_unit",
+      "rendererPathId": -8676845708339616216,
+      "mesh": "Acc_Mesh",
+      "submeshes": 2,
+      "materials": [
+        {
+          "name": "mt_chara_101101_acc",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101101_acc_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_101401_battle_unit",
+      "rendererPathId": 3726948337768619572,
+      "mesh": "Body_Mesh",
+      "submeshes": 6,
+      "materials": [
+        {
+          "name": "mt_chara_101401_body_aniso3",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101401_body_aniso2",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101401_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101401_body_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101401_body_aniso1",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101401_body_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_102101_battle_unit",
+      "rendererPathId": -6282434574410810416,
+      "mesh": "Body_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_102101_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_102101_body_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_102101_body_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_102101_body_Gold",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_102101_body_BootsBlack",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_102101_battle_unit",
+      "rendererPathId": 8913814766427594515,
+      "mesh": "Weapon_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_102101_weapon_a_trs",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_102101_weapon_a_opq",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_102101_weapon_a_trs_out",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_105801_battle_unit",
+      "rendererPathId": -8574385386826562635,
+      "mesh": "Body_Mesh",
+      "submeshes": 8,
+      "materials": [
+        {
+          "name": "mt_chara_105801_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_Trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_105801_body_Aniso_WhiteBelt",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_105801_body_Aniso_Gold",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_Aniso_BlackBelt",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_Fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_105901_battle_unit",
+      "rendererPathId": -2703720693490317044,
+      "mesh": "weapon_mesh",
+      "submeshes": 11,
+      "materials": [
+        {
+          "name": "mt_chara_105901_weapon_a_liquid_Purple",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_sphere_02_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_sphere_01_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_liquid_Red",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_liquid_Orange",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_gold",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_goldbutton",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_liquid_Cyan",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_liquid_Green",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_106101_battle_unit",
+      "rendererPathId": -7899219149171617229,
+      "mesh": "Body_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_106101_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_106101_body_Fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_106101_body_matcap",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_106101_body_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_106101_body_aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_107601_battle_unit",
+      "rendererPathId": -642129646142367994,
+      "mesh": "Weapon_Mesh",
+      "submeshes": 4,
+      "materials": [
+        {
+          "name": "mt_chara_107601_weapon_b_iron",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_107601_weapon_b",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_107601_weapon_b_red",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_107601_weapon_b alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_108002_battle_unit",
+      "rendererPathId": 1903793492396555416,
+      "mesh": "Acc_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_108002_acc",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108002_acc_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108002_acc_Rhinestone",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_108401_battle_unit",
+      "rendererPathId": -3930355641513852590,
+      "mesh": "Acc_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_108401_acc",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_acc_aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_acc_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_108401_battle_unit",
+      "rendererPathId": 6366746568355352025,
+      "mesh": "Body_Mesh",
+      "submeshes": 6,
+      "materials": [
+        {
+          "name": "mt_chara_108401_body_aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_body_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_body_alpha",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_body_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_108401_body_star",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_108601_battle_unit",
+      "rendererPathId": 6890536965512196274,
+      "mesh": "Body_Mesh",
+      "submeshes": 6,
+      "materials": [
+        {
+          "name": "mt_chara_108601_body_ArmFrill",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108601_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108601_body_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108601_body_LegAniso",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108601_body_Aniso",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108601_body_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_109001_battle_unit",
+      "rendererPathId": -1084218569460964667,
+      "mesh": "Acc_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_109001_acc",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109001_acc_aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109001_acc_fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109001_acc_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109001_acc_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_109201_battle_unit",
+      "rendererPathId": 6245663745117370401,
+      "mesh": "Acc_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_109201_acc",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109201_acc_Aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109201_acc_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_109801_battle_unit",
+      "rendererPathId": 6798442318642410353,
+      "mesh": "Hair_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_109801_hair_out_alpha",
+          "queue": 2002,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109801_hair_out",
+          "queue": 2002,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109801_hair",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109801_hair_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109801_hair_space",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_110401_battle_unit",
+      "rendererPathId": 398101486265380554,
+      "mesh": "Body_Mesh",
+      "submeshes": 6,
+      "materials": [
+        {
+          "name": "mt_chara_110401_body_Silver",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_110401_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_110401_body_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_110401_body_Leather",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_110401_body_Gold",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_110401_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_113701_battle_unit",
+      "rendererPathId": -522664544863056119,
+      "mesh": "Hair_Mesh",
+      "submeshes": 4,
+      "materials": [
+        {
+          "name": "mt_chara_113701_hair_out",
+          "queue": 2002,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_hair",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_hair_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_hair_outline",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_113701_battle_unit",
+      "rendererPathId": 1055303023220785206,
+      "mesh": "Body_Mesh",
+      "submeshes": 6,
+      "materials": [
+        {
+          "name": "mt_chara_113701_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_body_alpha",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_body_transparent",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_body_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_113701_body_fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_body_space",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_113701_battle_unit",
+      "rendererPathId": 3895895815068580378,
+      "mesh": "weapon_b_mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_113701_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_weapon_a_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_113801_battle_unit",
+      "rendererPathId": 701920915690401808,
+      "mesh": "Acc_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_113801_acc_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113801_acc",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113801_acc_Velvet_Red",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_113901_battle_unit",
+      "rendererPathId": 7436350416785733098,
+      "mesh": "Body_Mesh",
+      "submeshes": 10,
+      "materials": [
+        {
+          "name": "mt_chara_113901_body_Gold",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Silver",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_OutlineBlue",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Aniso",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Aniso_Plate",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Aniso_Mark1",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Aniso_Mark2",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Aniso_Goko",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_114501_battle_unit",
+      "rendererPathId": -3908522453168481531,
+      "mesh": "Body_Mesh",
+      "submeshes": 13,
+      "materials": [
+        {
+          "name": "mt_chara_114501_body",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_Aniso",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_tights",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_Aniso_Foot",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_Fresnel",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_metal",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_114501_body_Jewel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_Stone",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_114501_body_AnisoSleeve",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_BreastLine",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_alpha",
+          "queue": 2002,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_114601_battle_unit",
+      "rendererPathId": 8051007758013752416,
+      "mesh": "Body_Mesh",
+      "submeshes": 13,
+      "materials": [
+        {
+          "name": "mt_chara_114601_body_Aniso_pink",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_Fresnel_upper",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_Aniso_jacket",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_skin",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_metal",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_Aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_Aniso_belt",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_metal_shoes",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_Aniso_shoes",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_114601_body_Fresnel_upper",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_115001_battle_unit",
+      "rendererPathId": 3331938646035566508,
+      "mesh": "Body_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_115001_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115001_body_Star",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115001_body_Bangle",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_115101_battle_unit",
+      "rendererPathId": 3739603712766817227,
+      "mesh": "weapon_mesh",
+      "submeshes": 2,
+      "materials": [
+        {
+          "name": "mt_chara_115101_weapon_b_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_weapon_b",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_115101_battle_unit",
+      "rendererPathId": 4638134781643900992,
+      "mesh": "Body_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_115101_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_body_Bangle",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_115101_body_donut",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_body_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_body_OutlineOffset",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    }
+  ],
+  "oldWholeMeshGemLossCases": [
+    {
+      "bundle": "chara_100106_battle_unit",
+      "rendererPathId": -2929128180020745502,
+      "mesh": "weapon_mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_100106_weapon_a_sp",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_Trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_Crystal",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_105801_battle_unit",
+      "rendererPathId": -8574385386826562635,
+      "mesh": "Body_Mesh",
+      "submeshes": 8,
+      "materials": [
+        {
+          "name": "mt_chara_105801_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_Trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_105801_body_Aniso_WhiteBelt",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_105801_body_Aniso_Gold",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_Aniso_BlackBelt",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_Fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_115001_battle_unit",
+      "rendererPathId": 3331938646035566508,
+      "mesh": "Body_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_115001_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115001_body_Star",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115001_body_Bangle",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_115101_battle_unit",
+      "rendererPathId": 4638134781643900992,
+      "mesh": "Body_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_115101_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_body_Bangle",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_115101_body_donut",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_body_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_body_OutlineOffset",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    }
+  ],
+  "targetCases": [
+    {
+      "bundle": "chara_100107_battle_unit",
+      "rendererPathId": -7757709845332952769,
+      "mesh": "weapon_b_mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_100101_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100101_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100101_weapon_a_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    }
+  ],
+  "acceptance": {
+    "queueRule": "m_CustomRenderQueue >= 3000 skips only that restored submesh group",
+    "opaqueQueueRule": "m_CustomRenderQueue < 3000 remains a depth writer, including 2001/2002/2500",
+    "alphaCutoutRule": "non-transparent groups reuse the authored UV0 alpha texture transform"
+  },
+  "localFbxMixedTransparentQueueRenderers": [
+    {
+      "bundle": "chara_100101_battle_unit",
+      "rendererPathId": -8786615610828434600,
+      "mesh": "weapon_b_mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_100101_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100101_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100101_weapon_a_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100106_battle_unit",
+      "rendererPathId": -8665909037859186771,
+      "mesh": "Body_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_100106_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_body alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_body_matcap",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_body_metal",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100106_battle_unit",
+      "rendererPathId": -1132385371819232405,
+      "mesh": "weapon_mesh",
+      "submeshes": 4,
+      "materials": [
+        {
+          "name": "mt_chara_100106_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_metal",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100107_battle_unit",
+      "rendererPathId": -7757709845332952769,
+      "mesh": "weapon_b_mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_100101_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100101_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100101_weapon_a_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100201_battle_unit",
+      "rendererPathId": 214538443098924785,
+      "mesh": "Weapon_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_100201_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100201_weapon_a_glow",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100201_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100202_battle_unit",
+      "rendererPathId": 7707585983758734367,
+      "mesh": "Weapon_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_100201_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100201_weapon_a_glow",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100201_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100203_battle_unit",
+      "rendererPathId": 2105803572638834631,
+      "mesh": "weapon_b_Mesh",
+      "submeshes": 2,
+      "materials": [
+        {
+          "name": "mt_chara_100203_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100203_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100207_battle_unit",
+      "rendererPathId": 6431744914851908240,
+      "mesh": "Body_Mesh",
+      "submeshes": 10,
+      "materials": [
+        {
+          "name": "mt_chara_100207_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body02",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body_Gem",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100207_body_Aniso4",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100207_body_Aniso2",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body_Fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body_Aniso3",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body_Aniso1",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100207_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100303_battle_unit",
+      "rendererPathId": -8294342490397481402,
+      "mesh": "Mint_Mesh",
+      "submeshes": 2,
+      "materials": [
+        {
+          "name": "mt_chara_100303_weapon_b_color",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100303_weapon_b_ice",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100402_battle_unit",
+      "rendererPathId": 608560238784827581,
+      "mesh": "Body_Mesh",
+      "submeshes": 9,
+      "materials": [
+        {
+          "name": "mt_chara_100402_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_gold",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_swimsuit",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100402_body_suit",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_stopper",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_gem",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100402_body_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100402_body_bangle",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100502_battle_unit",
+      "rendererPathId": -4770040365893689090,
+      "mesh": "Body_Mesh",
+      "submeshes": 8,
+      "materials": [
+        {
+          "name": "mt_chara_100502_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body_fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body_gold_aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100502_body_gold_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body_frill",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100502_body_lace_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100804_battle_unit",
+      "rendererPathId": -2790802717815057951,
+      "mesh": "Body_Mesh",
+      "submeshes": 7,
+      "materials": [
+        {
+          "name": "mt_chara_100804_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100804_body_Aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100804_body_Gold",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100804_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100804_body_Gold_Aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100804_body_beads",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100804_body_Transparent",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_101101_battle_unit",
+      "rendererPathId": -8676845708339616216,
+      "mesh": "Acc_Mesh",
+      "submeshes": 2,
+      "materials": [
+        {
+          "name": "mt_chara_101101_acc",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101101_acc_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_101401_battle_unit",
+      "rendererPathId": 3726948337768619572,
+      "mesh": "Body_Mesh",
+      "submeshes": 6,
+      "materials": [
+        {
+          "name": "mt_chara_101401_body_aniso3",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101401_body_aniso2",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101401_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101401_body_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101401_body_aniso1",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_101401_body_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_102101_battle_unit",
+      "rendererPathId": -6282434574410810416,
+      "mesh": "Body_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_102101_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_102101_body_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_102101_body_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_102101_body_Gold",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_102101_body_BootsBlack",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_102101_battle_unit",
+      "rendererPathId": 8913814766427594515,
+      "mesh": "Weapon_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_102101_weapon_a_trs",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_102101_weapon_a_opq",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_102101_weapon_a_trs_out",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_105801_battle_unit",
+      "rendererPathId": -8574385386826562635,
+      "mesh": "Body_Mesh",
+      "submeshes": 8,
+      "materials": [
+        {
+          "name": "mt_chara_105801_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_Trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_105801_body_Aniso_WhiteBelt",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_105801_body_Aniso_Gold",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_Aniso_BlackBelt",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105801_body_Fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_105901_battle_unit",
+      "rendererPathId": -2703720693490317044,
+      "mesh": "weapon_mesh",
+      "submeshes": 11,
+      "materials": [
+        {
+          "name": "mt_chara_105901_weapon_a_liquid_Purple",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_sphere_02_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_sphere_01_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_liquid_Red",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_liquid_Orange",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_gold",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_goldbutton",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_liquid_Cyan",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_105901_weapon_a_liquid_Green",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_106101_battle_unit",
+      "rendererPathId": -7899219149171617229,
+      "mesh": "Body_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_106101_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_106101_body_Fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_106101_body_matcap",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_106101_body_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_106101_body_aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_107601_battle_unit",
+      "rendererPathId": -642129646142367994,
+      "mesh": "Weapon_Mesh",
+      "submeshes": 4,
+      "materials": [
+        {
+          "name": "mt_chara_107601_weapon_b_iron",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_107601_weapon_b",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_107601_weapon_b_red",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_107601_weapon_b alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_108002_battle_unit",
+      "rendererPathId": 1903793492396555416,
+      "mesh": "Acc_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_108002_acc",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108002_acc_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108002_acc_Rhinestone",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_108401_battle_unit",
+      "rendererPathId": -3930355641513852590,
+      "mesh": "Acc_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_108401_acc",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_acc_aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_acc_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_108401_battle_unit",
+      "rendererPathId": 6366746568355352025,
+      "mesh": "Body_Mesh",
+      "submeshes": 6,
+      "materials": [
+        {
+          "name": "mt_chara_108401_body_aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_body_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_body_alpha",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108401_body_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_108401_body_star",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_108601_battle_unit",
+      "rendererPathId": 6890536965512196274,
+      "mesh": "Body_Mesh",
+      "submeshes": 6,
+      "materials": [
+        {
+          "name": "mt_chara_108601_body_ArmFrill",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108601_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108601_body_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108601_body_LegAniso",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108601_body_Aniso",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_108601_body_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_109001_battle_unit",
+      "rendererPathId": -1084218569460964667,
+      "mesh": "Acc_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_109001_acc",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109001_acc_aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109001_acc_fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109001_acc_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109001_acc_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_109201_battle_unit",
+      "rendererPathId": 6245663745117370401,
+      "mesh": "Acc_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_109201_acc",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109201_acc_Aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109201_acc_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_109801_battle_unit",
+      "rendererPathId": 6798442318642410353,
+      "mesh": "Hair_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_109801_hair_out_alpha",
+          "queue": 2002,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109801_hair_out",
+          "queue": 2002,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109801_hair",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109801_hair_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_109801_hair_space",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_110401_battle_unit",
+      "rendererPathId": 398101486265380554,
+      "mesh": "Body_Mesh",
+      "submeshes": 6,
+      "materials": [
+        {
+          "name": "mt_chara_110401_body_Silver",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_110401_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_110401_body_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_110401_body_Leather",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_110401_body_Gold",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_110401_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_113701_battle_unit",
+      "rendererPathId": -522664544863056119,
+      "mesh": "Hair_Mesh",
+      "submeshes": 4,
+      "materials": [
+        {
+          "name": "mt_chara_113701_hair_out",
+          "queue": 2002,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_hair",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_hair_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_hair_outline",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_113701_battle_unit",
+      "rendererPathId": 1055303023220785206,
+      "mesh": "Body_Mesh",
+      "submeshes": 6,
+      "materials": [
+        {
+          "name": "mt_chara_113701_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_body_alpha",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_body_transparent",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_body_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_113701_body_fresnel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_body_space",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_113701_battle_unit",
+      "rendererPathId": 3895895815068580378,
+      "mesh": "weapon_b_mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_113701_weapon_a",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_weapon_a_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113701_weapon_a_sj",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_113801_battle_unit",
+      "rendererPathId": 701920915690401808,
+      "mesh": "Acc_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_113801_acc_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113801_acc",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113801_acc_Velvet_Red",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_113901_battle_unit",
+      "rendererPathId": 7436350416785733098,
+      "mesh": "Body_Mesh",
+      "submeshes": 10,
+      "materials": [
+        {
+          "name": "mt_chara_113901_body_Gold",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_alpha",
+          "queue": 3000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Silver",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_OutlineBlue",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Aniso",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Aniso_Plate",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Aniso_Mark1",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Aniso_Mark2",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_113901_body_Aniso_Goko",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_114501_battle_unit",
+      "rendererPathId": -3908522453168481531,
+      "mesh": "Body_Mesh",
+      "submeshes": 13,
+      "materials": [
+        {
+          "name": "mt_chara_114501_body",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_Aniso",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_tights",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_Aniso_Foot",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_Fresnel",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_metal",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_114501_body_Jewel",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_Stone",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_114501_body_AnisoSleeve",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_BreastLine",
+          "queue": 2001,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114501_body_alpha",
+          "queue": 2002,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_114601_battle_unit",
+      "rendererPathId": 8051007758013752416,
+      "mesh": "Body_Mesh",
+      "submeshes": 13,
+      "materials": [
+        {
+          "name": "mt_chara_114601_body_Aniso_pink",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_Fresnel_upper",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_Aniso_jacket",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_skin",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_metal",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_Aniso",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_Aniso_belt",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_metal_shoes",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_Aniso_shoes",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_114601_body_SJ",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_114601_body_Fresnel_upper",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_115001_battle_unit",
+      "rendererPathId": 3331938646035566508,
+      "mesh": "Body_Mesh",
+      "submeshes": 3,
+      "materials": [
+        {
+          "name": "mt_chara_115001_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115001_body_Star",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115001_body_Bangle",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_115101_battle_unit",
+      "rendererPathId": 3739603712766817227,
+      "mesh": "weapon_mesh",
+      "submeshes": 2,
+      "materials": [
+        {
+          "name": "mt_chara_115101_weapon_b_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_weapon_b",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_115101_battle_unit",
+      "rendererPathId": 4638134781643900992,
+      "mesh": "Body_Mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_115101_body",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_body_Bangle",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_115101_body_donut",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_body_alpha",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_115101_body_OutlineOffset",
+          "queue": -1,
+          "transparency": 0.0,
+          "alphaClipping": 1.0,
+          "isGem": 0.0
+        }
+      ]
+    }
+  ],
+  "nonLocalOrAlternateMixedTransparentQueueRenderers": [
+    {
+      "bundle": "chara_100106_battle_unit",
+      "rendererPathId": -2929128180020745502,
+      "mesh": "weapon_mesh",
+      "submeshes": 5,
+      "materials": [
+        {
+          "name": "mt_chara_100106_weapon_a_sp",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_Trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_alpha",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100106_weapon_a_sp_Crystal",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        }
+      ]
+    },
+    {
+      "bundle": "chara_100903_battle_unit",
+      "rendererPathId": -4593246092115782266,
+      "mesh": "Body_Mesh",
+      "submeshes": 7,
+      "materials": [
+        {
+          "name": "mt_chara_100903_body_bikini",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100903_body",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100903_body_gold",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100903_body_matcap",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100903_body_trans",
+          "queue": 3000,
+          "transparency": 1.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        },
+        {
+          "name": "mt_chara_100903_body_SJ",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 1.0
+        },
+        {
+          "name": "mt_chara_100903_body_coral",
+          "queue": 2000,
+          "transparency": 0.0,
+          "alphaClipping": 0.0,
+          "isGem": 0.0
+        }
+      ]
+    }
+  ]
+}

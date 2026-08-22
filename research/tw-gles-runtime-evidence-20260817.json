@@ -1,0 +1,523 @@
+{
+  "schemaVersion": 1,
+  "capture": {
+    "releaseProfile": "TW Android 1.1.2 / Unity 2022.3.62f3",
+    "package": "tw.sonet.magiaexedra",
+    "adbSerial": "127.0.0.1:16384",
+    "displayId": 3,
+    "surfaceFlingerDisplay": "4619826888814064386",
+    "logicalResolution": [
+      3840,
+      2160
+    ],
+    "renderResolution": [
+      1536,
+      864
+    ],
+    "screenshot": "artifacts/runtime/20260817-tw-shader-capture/tw-battle-display3-baseline.png",
+    "screenshotBytes": 7175255,
+    "method": "Revula Frida attach; read-only GLES interface/value queries"
+  },
+  "programCount": 19,
+  "classifiedPrograms": {
+    "ColorGrading": [
+      102
+    ],
+    "ReDriveToon": [
+      315,
+      333,
+      336,
+      369
+    ],
+    "EnemyUber": [
+      981,
+      1017
+    ],
+    "Other": [
+      1239,
+      1266,
+      1293,
+      1296,
+      1299,
+      1302,
+      1305,
+      1308,
+      1311,
+      1314
+    ],
+    "BgUber": [
+      1317,
+      1320
+    ]
+  },
+  "interfaces": [
+    {
+      "program": 102,
+      "families": [
+        "ColorGrading"
+      ],
+      "uniformCount": 26,
+      "attributeCount": 1,
+      "attributes": [
+        "gl_VertexID"
+      ]
+    },
+    {
+      "program": 315,
+      "families": [
+        "ReDriveToon"
+      ],
+      "uniformCount": 127,
+      "attributeCount": 3,
+      "attributes": [
+        "in_POSITION0",
+        "in_NORMAL0",
+        "in_TEXCOORD0"
+      ]
+    },
+    {
+      "program": 333,
+      "families": [
+        "ReDriveToon"
+      ],
+      "uniformCount": 125,
+      "attributeCount": 2,
+      "attributes": [
+        "in_POSITION0",
+        "in_TEXCOORD0"
+      ]
+    },
+    {
+      "program": 336,
+      "families": [
+        "ReDriveToon"
+      ],
+      "uniformCount": 128,
+      "attributeCount": 2,
+      "attributes": [
+        "in_POSITION0",
+        "in_TEXCOORD0"
+      ]
+    },
+    {
+      "program": 369,
+      "families": [
+        "ReDriveToon"
+      ],
+      "uniformCount": 130,
+      "attributeCount": 2,
+      "attributes": [
+        "in_POSITION0",
+        "in_TEXCOORD0"
+      ]
+    },
+    {
+      "program": 981,
+      "families": [
+        "EnemyUber"
+      ],
+      "uniformCount": 145,
+      "attributeCount": 3,
+      "attributes": [
+        "in_POSITION0",
+        "in_NORMAL0",
+        "in_TEXCOORD0"
+      ]
+    },
+    {
+      "program": 1017,
+      "families": [
+        "EnemyUber"
+      ],
+      "uniformCount": 145,
+      "attributeCount": 2,
+      "attributes": [
+        "in_POSITION0",
+        "in_TEXCOORD0"
+      ]
+    },
+    {
+      "program": 1239,
+      "families": [
+        "Other"
+      ],
+      "uniformCount": 116,
+      "attributeCount": 4,
+      "attributes": [
+        "in_POSITION0",
+        "in_NORMAL0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1266,
+      "families": [
+        "Other"
+      ],
+      "uniformCount": 116,
+      "attributeCount": 4,
+      "attributes": [
+        "in_POSITION0",
+        "in_NORMAL0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1293,
+      "families": [
+        "Other"
+      ],
+      "uniformCount": 116,
+      "attributeCount": 4,
+      "attributes": [
+        "in_POSITION0",
+        "in_NORMAL0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1296,
+      "families": [
+        "Other"
+      ],
+      "uniformCount": 116,
+      "attributeCount": 4,
+      "attributes": [
+        "in_POSITION0",
+        "in_NORMAL0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1299,
+      "families": [
+        "Other"
+      ],
+      "uniformCount": 115,
+      "attributeCount": 3,
+      "attributes": [
+        "in_POSITION0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1302,
+      "families": [
+        "Other"
+      ],
+      "uniformCount": 115,
+      "attributeCount": 3,
+      "attributes": [
+        "in_POSITION0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1305,
+      "families": [
+        "Other"
+      ],
+      "uniformCount": 108,
+      "attributeCount": 3,
+      "attributes": [
+        "in_POSITION0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1308,
+      "families": [
+        "Other"
+      ],
+      "uniformCount": 120,
+      "attributeCount": 3,
+      "attributes": [
+        "in_POSITION0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1311,
+      "families": [
+        "Other"
+      ],
+      "uniformCount": 113,
+      "attributeCount": 3,
+      "attributes": [
+        "in_POSITION0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1314,
+      "families": [
+        "Other"
+      ],
+      "uniformCount": 113,
+      "attributeCount": 3,
+      "attributes": [
+        "in_POSITION0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1317,
+      "families": [
+        "BgUber"
+      ],
+      "uniformCount": 156,
+      "attributeCount": 6,
+      "attributes": [
+        "in_POSITION0",
+        "in_NORMAL0",
+        "in_TANGENT0",
+        "in_COLOR0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    },
+    {
+      "program": 1320,
+      "families": [
+        "BgUber"
+      ],
+      "uniformCount": 151,
+      "attributeCount": 6,
+      "attributes": [
+        "in_POSITION0",
+        "in_NORMAL0",
+        "in_TANGENT0",
+        "in_COLOR0",
+        "in_TEXCOORD0",
+        "in_TEXCOORD1"
+      ]
+    }
+  ],
+  "requiredGenericGroundVertexChannels": [
+    "POSITION",
+    "NORMAL",
+    "TANGENT",
+    "COLOR",
+    "TEXCOORD0",
+    "TEXCOORD1"
+  ],
+  "fullBgUberPrograms": [
+    1317,
+    1320
+  ],
+  "uniformBlockContracts": [
+    {
+      "program": 315,
+      "name": "UnityPerDraw",
+      "binding": 1,
+      "dataSize": 688,
+      "memberCount": 30
+    },
+    {
+      "program": 315,
+      "name": "UnityPerMaterial",
+      "binding": 0,
+      "dataSize": 552,
+      "memberCount": 88
+    },
+    {
+      "program": 333,
+      "name": "UnityPerDraw",
+      "binding": 1,
+      "dataSize": 688,
+      "memberCount": 30
+    },
+    {
+      "program": 333,
+      "name": "UnityPerMaterial",
+      "binding": 0,
+      "dataSize": 552,
+      "memberCount": 88
+    },
+    {
+      "program": 336,
+      "name": "UnityPerDraw",
+      "binding": 1,
+      "dataSize": 688,
+      "memberCount": 30
+    },
+    {
+      "program": 336,
+      "name": "UnityPerMaterial",
+      "binding": 0,
+      "dataSize": 552,
+      "memberCount": 88
+    },
+    {
+      "program": 369,
+      "name": "UnityPerDraw",
+      "binding": 1,
+      "dataSize": 688,
+      "memberCount": 30
+    },
+    {
+      "program": 369,
+      "name": "UnityPerMaterial",
+      "binding": 0,
+      "dataSize": 552,
+      "memberCount": 88
+    },
+    {
+      "program": 1317,
+      "name": "UnityPerDraw",
+      "binding": 0,
+      "dataSize": 688,
+      "memberCount": 30
+    },
+    {
+      "program": 1317,
+      "name": "UnityPerMaterial",
+      "binding": 1,
+      "dataSize": 532,
+      "memberCount": 80
+    },
+    {
+      "program": 1320,
+      "name": "UnityPerDraw",
+      "binding": 0,
+      "dataSize": 688,
+      "memberCount": 30
+    },
+    {
+      "program": 1320,
+      "name": "UnityPerMaterial",
+      "binding": 1,
+      "dataSize": 532,
+      "memberCount": 80
+    }
+  ],
+  "liveStageValues": {
+    "_BgShadowStrengthAdditive": [
+      0.30000001192092896
+    ],
+    "_GlobalBackgroundTintColor": [
+      1,
+      1,
+      1
+    ],
+    "_BgColorAdjustments": [
+      1,
+      1.0499999523162842,
+      1.148698329925537
+    ],
+    "_BgBackgroundTintColor": [
+      1,
+      1,
+      1
+    ],
+    "_MainLightColor": [
+      1,
+      0.9473065733909607,
+      0.8631572723388672,
+      1
+    ],
+    "_AdditionalLightsCount": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "unity_FogColor": [
+      0.02101222053170204,
+      0.02101222053170204,
+      0.02101222053170204,
+      1
+    ],
+    "_MainLightPosition": [
+      0.41317588090896606,
+      0.7660443782806396,
+      0.4924039840698242,
+      0
+    ],
+    "_ProjectionParams": [
+      1,
+      0.10000000149011612,
+      1000,
+      0.0010000000474974513
+    ],
+    "unity_FogParams": [
+      0.01201122347265482,
+      0.014426949433982372,
+      -0.001923076924867928,
+      1
+    ],
+    "_MainLightShadowParams": [
+      1,
+      1,
+      0.0014619877329096198,
+      -4.263155937194824
+    ]
+  },
+  "liveColorGradingValues": {
+    "_ColorFilter": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "_Lut_Params": [
+      16,
+      0.001953125,
+      0.03125,
+      1.0666667222976685
+    ],
+    "_ColorBalance": [
+      1.0000003576278687,
+      0.9999992847442627,
+      1.000003457069397,
+      0
+    ],
+    "_HueSatCon": [
+      0,
+      1.149999976158142,
+      1.100000023841858,
+      0
+    ],
+    "_Lift": [
+      -1.4901161193847656e-08,
+      -1.4901161193847656e-08,
+      -1.4901161193847656e-08,
+      0
+    ],
+    "_Gamma": [
+      1.0000001192092896,
+      1.0000001192092896,
+      1.0000001192092896,
+      0
+    ],
+    "_Gain": [
+      0.9999999403953552,
+      0.9999999403953552,
+      0.9999999403953552,
+      0
+    ],
+    "_ShaHiLimits": [
+      0,
+      0.30000001192092896,
+      0.550000011920929,
+      1
+    ]
+  },
+  "implementationDecisions": [
+    "Ground import must retain tangent, vertex color and UV1; UV0-only projection is invalid.",
+    "BgUber must bind base/normal/blend/lightmap/reflection inputs and use live stage lighting/fog globals.",
+    "The white-filter defect cannot be corrected with an arbitrary tint: the official frame uses saturation 1.15 and contrast 1.10 through URP color grading.",
+    "ReDriveToon, BgUber, EnemyUber and color grading are distinct active program families and require separate dispatch.",
+    "Material values stored in UnityPerMaterial UBOs require static Material/MPB evidence; inactive -1 uniforms are not valid runtime values."
+  ]
+}

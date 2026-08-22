@@ -1,0 +1,917 @@
+{
+  "schema": "magia-home-animation-integrity-gate-v1",
+  "releaseProfile": "jp-android-3.13.0",
+  "unityVersion": "2022.3.62f2",
+  "generatorContract": {
+    "preserveAllNodes": true,
+    "clipSelection": "exact-source-path-id",
+    "targetBinding": "exact-character-local-path",
+    "nearestParentFallback": false
+  },
+  "batchBuild": {
+    "requested": 90,
+    "passed": 89,
+    "skipped": 1,
+    "skippedCharacterIds": [
+      "100101"
+    ]
+  },
+  "sourceBinding": {
+    "characterCount": 91,
+    "classificationCounts": {
+      "no-same-source-evidence": 91
+    },
+    "strictSafeCount": 91,
+    "charactersWithMissingTerminalPaths": 0,
+    "confirmedNearestParentOverwriteCount": 0,
+    "actionFamilyCollisionCount": 0,
+    "missingTerminalPathCount": 0,
+    "confirmedNearestParentOverwriteCountRecomputed": 0
+  },
+  "skinning": {
+    "characterCount": 91,
+    "classificationCounts": {
+      "no-same-source-evidence": 83,
+      "native-visual-review": 8
+    },
+    "deploymentSafeCount": 83,
+    "blockerCount": 8,
+    "hardBlockerCount": 0,
+    "nativeVisualReviewCount": 8,
+    "maximumHairEdgeRatio": 3.507498297307713,
+    "maximumFaceEdgeRatio": 2.706281465040852
+  },
+  "character101901": {
+    "before": {
+      "sourceTransformPaths": 189,
+      "runtimeTransformPaths": 184,
+      "sourceBindings": 567,
+      "runtimeTracks": 552,
+      "missingTerminalPaths": 5,
+      "maximumHairEdgeRatio": 7.906,
+      "hairEdgesOver2": 624,
+      "hairEdgesOver5": 15,
+      "maximumFaceEdgeRatio": 1.302
+    },
+    "after": {
+      "sourceTransformPaths": 189,
+      "runtimeTransformPaths": 189,
+      "missingTerminalPaths": 0,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": [],
+      "maximumHairEdgeRatio": 1.6659510530742203,
+      "maximumFaceEdgeRatio": 1.3021799825255338
+    }
+  },
+  "unresolved": [
+    {
+      "characterId": "100101",
+      "reason": "official Home runtime source is absent from the local JP corpus"
+    }
+  ],
+  "geometryReviewWarnings": [
+    {
+      "characterId": "100304",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 3.507498297307713,
+      "maximumFaceEdgeRatio": 1.0000001050802354,
+      "geometryWarningClips": [
+        "HomeUnique01_SE",
+        "HomeUnique01_L"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100504",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 2.5574498499162117,
+      "maximumFaceEdgeRatio": 1.0000000803531268,
+      "geometryWarningClips": [
+        "mogumogu_HomeUnique01_SE"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101701",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 2.2441922885546086,
+      "maximumFaceEdgeRatio": 1.1903897436603013,
+      "geometryWarningClips": [
+        "HomeUnique01_S",
+        "HomeUnique01_L",
+        "HomeWait02_S",
+        "HomeWait01_L",
+        "HomeWait01_S"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "107101",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 3.2929186613885024,
+      "maximumFaceEdgeRatio": 1.1465577003212775,
+      "geometryWarningClips": [
+        "HomeUnique01_S"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "108602",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 1.000003369369268,
+      "maximumFaceEdgeRatio": 2.706281465040852,
+      "geometryWarningClips": [
+        "HomeUnique01_L"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "110401",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 2.10111472742178,
+      "maximumFaceEdgeRatio": 1.4492692266828744,
+      "geometryWarningClips": [
+        "HomeWait02_L"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "115001",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 2.836523763462315,
+      "maximumFaceEdgeRatio": 1.000000074084568,
+      "geometryWarningClips": [
+        "HomeUnique01_L"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "115101",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 2.787135194802832,
+      "maximumFaceEdgeRatio": 1.0000002426715617,
+      "geometryWarningClips": [
+        "HomeWait02_L",
+        "HomeUnique01_L",
+        "HomeUnique01_SE",
+        "HomeWait01_L"
+      ],
+      "geometryHardBlockerClips": []
+    }
+  ],
+  "geometryBlockers": [],
+  "characters": [
+    {
+      "characterId": "100101",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000050228369255,
+      "maximumFaceEdgeRatio": 1.1634203202531355,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100102",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000052501697445,
+      "maximumFaceEdgeRatio": 1.1636184373772855,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100103",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000042147393882,
+      "maximumFaceEdgeRatio": 1.1845230297713876,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100106",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000167741216512,
+      "maximumFaceEdgeRatio": 1.298419896925598,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100107",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000050228369255,
+      "maximumFaceEdgeRatio": 1.1634203202531355,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100201",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.6971727672420114,
+      "maximumFaceEdgeRatio": 1.3669783258489991,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100202",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.6792332678204194,
+      "maximumFaceEdgeRatio": 1.9132020481876675,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100203",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.21336797568734,
+      "maximumFaceEdgeRatio": 1.225428548079003,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100205",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.697172811049446,
+      "maximumFaceEdgeRatio": 1.3669784104351796,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100207",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.2134421705313592,
+      "maximumFaceEdgeRatio": 1.236714851445976,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100301",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.2337572202390954,
+      "maximumFaceEdgeRatio": 1.0000000604446688,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100302",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.4793353032603664,
+      "maximumFaceEdgeRatio": 1.0000000697866476,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100303",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.4464598195183036,
+      "maximumFaceEdgeRatio": 1.0000000197610002,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100304",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 3.507498297307713,
+      "maximumFaceEdgeRatio": 1.0000001050802354,
+      "geometryWarningClips": [
+        "HomeUnique01_SE",
+        "HomeUnique01_L"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100305",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.211652811314532,
+      "maximumFaceEdgeRatio": 1.0000001049012763,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100401",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.000005177908459,
+      "maximumFaceEdgeRatio": 1.000000039062866,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100402",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.000017796087254,
+      "maximumFaceEdgeRatio": 1.0000000744722641,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100403",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.1336238989337193,
+      "maximumFaceEdgeRatio": 1.0000000867127063,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100501",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000175532281241,
+      "maximumFaceEdgeRatio": 1.000000116485423,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100502",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.5176396028049493,
+      "maximumFaceEdgeRatio": 1.0000001689895213,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100503",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.2791590097024286,
+      "maximumFaceEdgeRatio": 1.000000050415924,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100504",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 2.5574498499162117,
+      "maximumFaceEdgeRatio": 1.0000000803531268,
+      "geometryWarningClips": [
+        "mogumogu_HomeUnique01_SE"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100601",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000041804894706,
+      "maximumFaceEdgeRatio": 1.0000000742115749,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100701",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000148053001539,
+      "maximumFaceEdgeRatio": 1.0000000491090753,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100702",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.2376154310469332,
+      "maximumFaceEdgeRatio": 1.0000001731391688,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100801",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0415289258519962,
+      "maximumFaceEdgeRatio": 1.6864422411753077,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100804",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.1875880636590537,
+      "maximumFaceEdgeRatio": 2.0538968817606196,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100805",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 2.0318724456898085,
+      "maximumFaceEdgeRatio": 1.6071103901898252,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "100901",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.9543808149522701,
+      "maximumFaceEdgeRatio": 1.460098599162029,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101001",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.000004319022885,
+      "maximumFaceEdgeRatio": 1.1278904241306524,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101101",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.597193973955472,
+      "maximumFaceEdgeRatio": 1.0518813667860716,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101201",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.3211100866522207,
+      "maximumFaceEdgeRatio": 1.0000000768225856,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101301",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.3137293796751788,
+      "maximumFaceEdgeRatio": 1.247320488329377,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101401",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000166071318448,
+      "maximumFaceEdgeRatio": 1.6413662858645393,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101501",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.9271856511282417,
+      "maximumFaceEdgeRatio": 1.3214825873246618,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101601",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000145022809306,
+      "maximumFaceEdgeRatio": 1.2601532379855012,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101701",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 2.2441922885546086,
+      "maximumFaceEdgeRatio": 1.1903897436603013,
+      "geometryWarningClips": [
+        "HomeUnique01_S",
+        "HomeUnique01_L",
+        "HomeWait02_S",
+        "HomeWait01_L",
+        "HomeWait01_S"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101801",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0617722744336497,
+      "maximumFaceEdgeRatio": 1.1471580909474293,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "101901",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.6659510530742203,
+      "maximumFaceEdgeRatio": 1.3021799825255338,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "102001",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.2855075838307215,
+      "maximumFaceEdgeRatio": 1.000000039321334,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "102101",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.4920591450923832,
+      "maximumFaceEdgeRatio": 1.5912351769921742,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "102102",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.3836697279817733,
+      "maximumFaceEdgeRatio": 1.5489802283560645,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "102201",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.000006750216894,
+      "maximumFaceEdgeRatio": 1.7512086067851038,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "102301",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.4758206583636913,
+      "maximumFaceEdgeRatio": 1.0000001141324548,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "102401",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0112785266128914,
+      "maximumFaceEdgeRatio": 1.000000004193747,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "102501",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.5248089225125705,
+      "maximumFaceEdgeRatio": 1.000000087378262,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "102601",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000060076252066,
+      "maximumFaceEdgeRatio": 1.000000044682102,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "105801",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0097108029397706,
+      "maximumFaceEdgeRatio": 1.0000000295024039,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "105901",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0215616449169813,
+      "maximumFaceEdgeRatio": 1.0000001028020122,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "106101",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.052411973825393,
+      "maximumFaceEdgeRatio": 1.0134217850369187,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "106201",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 2.0596994547824172,
+      "maximumFaceEdgeRatio": 1.0000000478332431,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "106701",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000113966462196,
+      "maximumFaceEdgeRatio": 1.3950526587440424,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "106801",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000033755960063,
+      "maximumFaceEdgeRatio": 1.000000126203748,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "106901",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.1398540051839146,
+      "maximumFaceEdgeRatio": 1.0287532536290451,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "107001",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000014198819869,
+      "maximumFaceEdgeRatio": 1.000000028454804,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "107101",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 3.2929186613885024,
+      "maximumFaceEdgeRatio": 1.1465577003212775,
+      "geometryWarningClips": [
+        "HomeUnique01_S"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "107201",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.1298427683849828,
+      "maximumFaceEdgeRatio": 1.2285842955223065,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "107401",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.1164570828747546,
+      "maximumFaceEdgeRatio": 1.0000000848675719,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "107601",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.5267456616479362,
+      "maximumFaceEdgeRatio": 1.0000000204475896,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "108001",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.186350626938864,
+      "maximumFaceEdgeRatio": 1.4951443495308514,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "108002",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.1856043127647369,
+      "maximumFaceEdgeRatio": 1.4918883442623028,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "108101",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000072691428197,
+      "maximumFaceEdgeRatio": 1.0000000971292067,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "108201",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.3842398078698432,
+      "maximumFaceEdgeRatio": 1.0000001091104254,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "108301",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.2355732118367269,
+      "maximumFaceEdgeRatio": 1.1227792954085447,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "108401",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000042986109867,
+      "maximumFaceEdgeRatio": 1.0000001135997623,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "108601",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000033693689556,
+      "maximumFaceEdgeRatio": 1.4855355722005998,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "108602",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 1.000003369369268,
+      "maximumFaceEdgeRatio": 2.706281465040852,
+      "geometryWarningClips": [
+        "HomeUnique01_L"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "109001",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.000002152447341,
+      "maximumFaceEdgeRatio": 1.0000000244474279,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "109201",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0000048248491729,
+      "maximumFaceEdgeRatio": 1.1155020918887113,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "109801",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0621950087985716,
+      "maximumFaceEdgeRatio": 1.2932878572760214,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "110401",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 2.10111472742178,
+      "maximumFaceEdgeRatio": 1.4492692266828744,
+      "geometryWarningClips": [
+        "HomeWait02_L"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "110701",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.1593229033658485,
+      "maximumFaceEdgeRatio": 1.0000000405911487,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "111401",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.1365409472792283,
+      "maximumFaceEdgeRatio": 1.0680056871131072,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "111501",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0416389221449514,
+      "maximumFaceEdgeRatio": 1.0000000275089769,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "111601",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.2498010514794577,
+      "maximumFaceEdgeRatio": 1.0000001286099047,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "111701",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.000590246563573,
+      "maximumFaceEdgeRatio": 1.0000001054198713,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "112001",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.076091096331199,
+      "maximumFaceEdgeRatio": 1.0000000571574377,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "112401",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.1367520433381877,
+      "maximumFaceEdgeRatio": 1.0000000446800967,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "112501",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.4795140833362994,
+      "maximumFaceEdgeRatio": 1.1776682292659812,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "112601",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0285141763087327,
+      "maximumFaceEdgeRatio": 1.0281220240625795,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "113301",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.2848799727566522,
+      "maximumFaceEdgeRatio": 1.1430300610586765,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "113701",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.1743880629531647,
+      "maximumFaceEdgeRatio": 1.1393289410050322,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "113801",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.5280374945834512,
+      "maximumFaceEdgeRatio": 1.2994816520147536,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "113901",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.3572818537954383,
+      "maximumFaceEdgeRatio": 1.0000000331561512,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "114401",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.791652423735883,
+      "maximumFaceEdgeRatio": 1.1946049329980772,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "114501",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.5777775466926054,
+      "maximumFaceEdgeRatio": 1.0000001103144618,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "114601",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.5326582853870279,
+      "maximumFaceEdgeRatio": 1.159382423089721,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "114901",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.4621394625375776,
+      "maximumFaceEdgeRatio": 2.488191729578135,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "115001",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 2.836523763462315,
+      "maximumFaceEdgeRatio": 1.000000074084568,
+      "geometryWarningClips": [
+        "HomeUnique01_L"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "115101",
+      "classification": "native-visual-review",
+      "maximumHairEdgeRatio": 2.787135194802832,
+      "maximumFaceEdgeRatio": 1.0000002426715617,
+      "geometryWarningClips": [
+        "HomeWait02_L",
+        "HomeUnique01_L",
+        "HomeUnique01_SE",
+        "HomeWait01_L"
+      ],
+      "geometryHardBlockerClips": []
+    },
+    {
+      "characterId": "115201",
+      "classification": "no-same-source-evidence",
+      "maximumHairEdgeRatio": 1.0244326339561218,
+      "maximumFaceEdgeRatio": 0,
+      "geometryWarningClips": [],
+      "geometryHardBlockerClips": []
+    }
+  ]
+}

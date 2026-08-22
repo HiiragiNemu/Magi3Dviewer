@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "source": "steam-scene-dependency-closures.json",
+  "closure": {
+    "logicalPath": "AssetBundles/battle/stage/bg_3d_602_00_00_001",
+    "resourceName": "bg_3d_602_00_00_001",
+    "family": "battle-direct",
+    "sourceBytes": 4629427,
+    "primaryCabs": [
+      "CAB-72789a554d694c5dcd7a871be647d37b"
+    ],
+    "externalCabCount": 16,
+    "externalCabs": [
+      "CAB-15cdda292f60e130330d2e3039bee360",
+      "CAB-174818d8255e64980e98e92fb951e5c4",
+      "CAB-1a39e69cdcf53709ce0a1535c7353f5c",
+      "CAB-3713b91d7b434afa5ef591e538810c45",
+      "CAB-430e44f67ea6395db7020a0395d565f9",
+      "CAB-5f0ea194ff6238af9b58c978ca9ec8bb",
+      "CAB-6ca469ea29ccd092a0ca295ce0e7cf58",
+      "CAB-940ad3e18d531c0ce984d46fb03d8f4f",
+      "CAB-9a63551070f0645e4abb58eef7968ef4",
+      "CAB-9ca6c268a9eb5fb19b5d363c69fb7f42",
+      "CAB-b991fe35e33087b8ab002c138abc1de3",
+      "CAB-cab109b8c2129e6a37d5795e3a7a13f7",
+      "CAB-ec2e80ff75c4cc36a05f983c0d29e1b6",
+      "CAB-f8f3250e41929e146ada803a85bb9af9",
+      "CAB-f99a21dc3e3f268817a2d358f2748533",
+      "CAB-fd3cdfe6af745d3f121661e12675ca3c"
+    ],
+    "resolvedExternalCabCount": 16,
+    "unresolvedExternalCabs": [],
+    "fullyResolved": true,
+    "dependencies": [
+      {
+        "cab": "CAB-15cdda292f60e130330d2e3039bee360",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/d2b58a0bc60da0b4ca16821c60917e44",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/d2b58a0bc60da0b4ca16821c60917e44",
+            "bytes": 4572616
+          }
+        ]
+      },
+      {
+        "cab": "CAB-174818d8255e64980e98e92fb951e5c4",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/shader/enemy_uber",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/shader/enemy_uber",
+            "bytes": 69443
+          }
+        ]
+      },
+      {
+        "cab": "CAB-1a39e69cdcf53709ce0a1535c7353f5c",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/a884d4cd1e9614c4cb2a215eda831bf0",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/a884d4cd1e9614c4cb2a215eda831bf0",
+            "bytes": 34736
+          }
+        ]
+      },
+      {
+        "cab": "CAB-3713b91d7b434afa5ef591e538810c45",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/967ef909a0a21a545a09218cd0730b90",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/967ef909a0a21a545a09218cd0730b90",
+            "bytes": 785614
+          }
+        ]
+      },
+      {
+        "cab": "CAB-430e44f67ea6395db7020a0395d565f9",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/955e935c5ffadd248bda2e828c91307a",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/955e935c5ffadd248bda2e828c91307a",
+            "bytes": 5246759
+          }
+        ]
+      },
+      {
+        "cab": "CAB-5f0ea194ff6238af9b58c978ca9ec8bb",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/2e36162febbf2c944aacfae31dda5fd5",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/2e36162febbf2c944aacfae31dda5fd5",
+            "bytes": 2860297
+          }
+        ]
+      },
+      {
+        "cab": "CAB-6ca469ea29ccd092a0ca295ce0e7cf58",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/shader/common/texture/simple_noise",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/shader/common/texture/simple_noise",
+            "bytes": 177311
+          }
+        ]
+      },
+      {
+        "cab": "CAB-940ad3e18d531c0ce984d46fb03d8f4f",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/86b54069f07ac7748801cd3665f04ce3",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/86b54069f07ac7748801cd3665f04ce3",
+            "bytes": 403251
+          }
+        ]
+      },
+      {
+        "cab": "CAB-9a63551070f0645e4abb58eef7968ef4",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/shader/common/texture/cloud_noise",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/shader/common/texture/cloud_noise",
+            "bytes": 82076
+          }
+        ]
+      },
+      {
+        "cab": "CAB-9ca6c268a9eb5fb19b5d363c69fb7f42",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/647be343be64d5d4fb83c917b348ae01",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/647be343be64d5d4fb83c917b348ae01",
+            "bytes": 80236
+          }
+        ]
+      },
+      {
+        "cab": "CAB-b991fe35e33087b8ab002c138abc1de3",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/3e3f096b9522ed249b62165d49678e81",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/3e3f096b9522ed249b62165d49678e81",
+            "bytes": 1984664
+          }
+        ]
+      },
+      {
+        "cab": "CAB-cab109b8c2129e6a37d5795e3a7a13f7",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/d0b9f026004a3e54cb4e041dd5d3a0e4",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/d0b9f026004a3e54cb4e041dd5d3a0e4",
+            "bytes": 12613
+          }
+        ]
+      },
+      {
+        "cab": "CAB-ec2e80ff75c4cc36a05f983c0d29e1b6",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/shader/bg_uber",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/shader/bg_uber",
+            "bytes": 2029745
+          }
+        ]
+      },
+      {
+        "cab": "CAB-f8f3250e41929e146ada803a85bb9af9",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/5f962c06dd11a8543ba00a7d185196f8",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/5f962c06dd11a8543ba00a7d185196f8",
+            "bytes": 5303527
+          }
+        ]
+      },
+      {
+        "cab": "CAB-f99a21dc3e3f268817a2d358f2748533",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/2ae6b30140a15624798eec6de0223801",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/2ae6b30140a15624798eec6de0223801",
+            "bytes": 177969
+          }
+        ]
+      },
+      {
+        "cab": "CAB-fd3cdfe6af745d3f121661e12675ca3c",
+        "resolved": true,
+        "preferredLogicalPath": "AssetBundles/texture/bg/bg3d602_00_01_wall_soloraid_mask_d728",
+        "allMappings": [
+          {
+            "logicalPath": "AssetBundles/texture/bg/bg3d602_00_01_wall_soloraid_mask_d728",
+            "bytes": 579467
+          }
+        ]
+      }
+    ],
+    "objectCount": 1879,
+    "objectTypeCounts": {
+      "AnimationClip": 10,
+      "Animator": 27,
+      "AnimatorController": 3,
+      "AssetBundle": 1,
+      "Cubemap": 1,
+      "GameObject": 732,
+      "Light": 6,
+      "Material": 15,
+      "Mesh": 24,
+      "MeshFilter": 89,
+      "MeshRenderer": 89,
+      "MonoBehaviour": 102,
+      "MonoScript": 18,
+      "ReflectionProbe": 1,
+      "Shader": 4,
+      "SkinnedMeshRenderer": 23,
+      "Texture2D": 2,
+      "Transform": 732
+    }
+  }
+}
