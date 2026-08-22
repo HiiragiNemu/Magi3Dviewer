@@ -10,6 +10,8 @@ const repositoryRoot = dirname(fileURLToPath(import.meta.url))
 const nonce = `${process.pid}-${Date.now()}`
 const mockPath = join(repositoryRoot, `.stage-runtime-renderer-${nonce}.mjs`)
 const runtimePath = join(repositoryRoot, `.stage-runtime-under-test-${nonce}.mjs`)
+const hierarchyPath = join(repositoryRoot, `.stage-hierarchy-under-test-${nonce}.mjs`)
+const particlePath = join(repositoryRoot, `.stage-particles-under-test-${nonce}.mjs`)
 
 writeFileSync(mockPath, `
 export const loops = []
@@ -26,10 +28,49 @@ export function getClockDelta() {
 `, 'utf8')
 
 const sourcePath = join(repositoryRoot, 'src', 'viewer', 'stageRuntime.ts')
-const source = readFileSync(sourcePath, 'utf8').replace(
-    "'magia-exedra-character-three/renderer'",
-    `'./${basename(mockPath)}'`,
+const hierarchySourcePath = join(repositoryRoot, 'src', 'viewer', 'stageHierarchy.ts')
+const hierarchyCompiled = ts.transpileModule(
+    readFileSync(hierarchySourcePath, 'utf8'),
+    {
+        compilerOptions: {
+            module: ts.ModuleKind.ES2022,
+            target: ts.ScriptTarget.ES2022,
+        },
+        fileName: hierarchySourcePath,
+    },
 )
+writeFileSync(hierarchyPath, hierarchyCompiled.outputText, 'utf8')
+
+const particleSourcePath = join(repositoryRoot, 'src', 'viewer', 'stageParticles.ts')
+const particleSource = readFileSync(particleSourcePath, 'utf8').replace(
+    "'./stageHierarchy'",
+    `'./${basename(hierarchyPath)}'`,
+).replace(
+    "'magia-exedra-character-three/coordinateSpace'",
+    "'./magia-exedra-character-three/coordinateSpace.ts'",
+)
+const particleCompiled = ts.transpileModule(particleSource, {
+    compilerOptions: {
+        module: ts.ModuleKind.ES2022,
+        target: ts.ScriptTarget.ES2022,
+    },
+    fileName: particleSourcePath,
+})
+writeFileSync(particlePath, particleCompiled.outputText, 'utf8')
+
+const source = readFileSync(sourcePath, 'utf8')
+    .replace(
+        "'magia-exedra-character-three/renderer'",
+        `'./${basename(mockPath)}'`,
+    )
+    .replace(
+        "'./stageHierarchy'",
+        `'./${basename(hierarchyPath)}'`,
+    )
+    .replace(
+        "'./stageParticles'",
+        `'./${basename(particlePath)}'`,
+    )
 const compiled = ts.transpileModule(source, {
     compilerOptions: {
         module: ts.ModuleKind.ES2022,
@@ -40,11 +81,14 @@ const compiled = ts.transpileModule(source, {
 writeFileSync(runtimePath, compiled.outputText, 'utf8')
 
 const runtime = await import(pathToFileURL(runtimePath).href)
+const particles = await import(pathToFileURL(particlePath).href)
 const rendererMock = await import(pathToFileURL(mockPath).href)
 
 after(() => {
     rmSync(runtimePath, { force: true })
     rmSync(mockPath, { force: true })
+    rmSync(hierarchyPath, { force: true })
+    rmSync(particlePath, { force: true })
 })
 
 function makeAnimatedStageRoot() {
@@ -256,4 +300,98 @@ test('voice source offset shortens the non-looping shared timeline', () => {
     assert.equal(controller.time, 1.6)
     assert.equal(controller.getVoiceTrackStates()[0].playback, 'ended')
     controller.dispose()
+})
+
+test('generated Unity particle records bind exact hierarchy/material and share stage time', () => {
+    assert.equal(particles.evaluateStageMinMaxCurve({
+        minMaxState: 3,
+        minScalar: 2,
+        scalar: 6,
+    }, 0.25), 3)
+    assert.deepEqual(particles.evaluateStageMinMaxGradient({
+        minMaxState: 2,
+        minColor: [0, 0.25, 0.5, 0.75],
+        maxColor: [1, 0.75, 0.5, 0.25],
+    }, 0.25), [0.25, 0.375, 0.5, 0.625])
+
+    const root = new THREE.Group()
+    root.name = 'Root'
+    const anchor = new THREE.Group()
+    anchor.name = 'Particle System'
+    root.add(anchor)
+
+    const texture = new THREE.DataTexture(
+        new Uint8Array([255, 255, 255, 255]),
+        1,
+        1,
+    )
+    texture.needsUpdate = true
+    texture.userData.stageTextureBinding = { url: '/particle.png' }
+
+    const controller = new runtime.StageRuntimeController(root, {
+        autoplay: true,
+        loop: true,
+        timeScale: 1,
+        particlePresets: [{
+            id: 'preset',
+            duration: 5,
+            simulationSpeed: 1,
+            looping: true,
+            prewarm: false,
+            playOnAwake: true,
+            autoRandomSeed: false,
+            randomSeed: 123,
+            moveWithTransform: 0,
+            scalingMode: 0,
+            initial: {
+                maxNumParticles: 4,
+                startLifetime: { minMaxState: 0, scalar: 1 },
+                startSpeed: { minMaxState: 0, scalar: 0 },
+                gravityModifier: { minMaxState: 0, scalar: 0 },
+                startSize: { minMaxState: 0, scalar: 1 },
+                startRotation: { minMaxState: 0, scalar: 0 },
+                startColor: { maxColor: [1, 1, 1, 1] },
+            },
+            emission: {
+                rateOverTime: { minMaxState: 0, scalar: 2 },
+            },
+            shape: {
+                type: 5,
+                m_Position: [0, 0, 0],
+                m_Rotation: [0, 0, 0],
+                m_Scale: [1, 1, 1],
+            },
+            modules: {},
+            renderer: { sortingOrder: 7 },
+        }],
+        particleSystems: [{
+            pathID: '1',
+            hierarchyPath: 'Root/Particle System',
+            active: true,
+            presetId: 'preset',
+            materials: ['particle-material'],
+        }],
+    }, undefined, [{
+        materialName: 'particle-material',
+        transparent: true,
+        textures: {
+            base: { url: '/particle.png' },
+        },
+    }], [texture])
+
+    const initial = controller.getDebugState().particles
+    assert.equal(initial.activeSystemCount, 1)
+    assert.equal(initial.missingAnchorPaths.length, 0)
+    assert.equal(initial.missingMaterialNames.length, 0)
+    assert.equal(initial.randomSeedAuthority, 'serialized')
+    assert.equal(anchor.children[0].name, 'UnityParticleSystem:1')
+    assert.equal(anchor.children[0].renderOrder, 7)
+
+    controller.update(0.5)
+    assert.equal(controller.time, 0.5)
+    assert.equal(controller.getDebugState().particles.activeParticleCount, 2)
+
+    controller.dispose()
+    assert.equal(anchor.children.length, 0)
+    texture.dispose()
 })

@@ -1,10 +1,12 @@
 import * as THREE from 'three';
 import { MaterialUserData, type MaterialCreationOptions, type MaterialCreationResult } from '.';
 import type { FaceDirectionReference, OfficialFaceProfile } from '../faceProfile';
+import type { OfficialMaterialProfile } from '../materialProfile';
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 import FaceCtrlBase from './face_ctrl_base.png'
 import FaceCtrlNose from './face_ctrl_nose.png'
 import { injectToonStylization, ToonStylizationUniforms } from './stylization';
+import { injectCharacterPerspectiveCancellation } from './perspective';
 
 interface FaceMaterialCreationOptions extends MaterialCreationOptions {
     shadowMap: string;
@@ -16,6 +18,30 @@ interface FaceMaterialCreationOptions extends MaterialCreationOptions {
 
 export interface FaceMaterialCreationResult extends MaterialCreationResult {
     updateFaceDirectionReference?: () => void;
+}
+
+export function setOfficialFaceMaterialProfileUniforms(
+    shader: THREE.WebGLProgramParametersWithUniforms | undefined,
+    profile: OfficialMaterialProfile,
+): void {
+    if (!shader) return
+    const face = profile.face
+    const set = (name: string, value: number) => {
+        if (shader.uniforms[name]) shader.uniforms[name].value = value
+    }
+    set('uUseFaceGradient', face.useGradientMap ? 1 : 0)
+    set('uOfficialFaceIsEye', face.isEye ? 1 : 0)
+    set(
+        'uOfficialFaceShouldApplyAdditional',
+        face.shouldApplyAdditional ? 1 : 0,
+    )
+    set('uOfficialFaceHighlightThreshold', face.highlightThreshold)
+    set('uOfficialFaceHighlightRotation', face.highlightRotation)
+    set('uCheekValue', face.cheekValue)
+    const color = shader.uniforms.uOfficialFaceCheekColor?.value
+    if (color instanceof THREE.Color) {
+        color.setRGB(...face.cheekColor, THREE.LinearSRGBColorSpace)
+    }
 }
 
 /**
@@ -74,6 +100,9 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
     const forward = new THREE.Vector3(0, 0, 1)
     const up = new THREE.Vector3(0, 1, 0)
     const right = new THREE.Vector3(1, 0, 0)
+    const initialOfficialProfile = options.materialProfiles?.find(
+        profile => profile.face.useGradientMap,
+    ) ?? options.materialProfiles?.[0]
 
     const updateFaceDirectionReference = () => {
         if (compiledShaders.size === 0 || !options.faceReference) return
@@ -95,6 +124,9 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
         characterId: options.faceProfile.characterId,
         source: options.faceProfile.source,
         hasReference: Boolean(options.faceReference),
+        hasCharacterPerspective: Boolean(
+            options.characterPerspectiveReference,
+        ),
     })
 
     material.onBeforeCompile = function (shader) {
@@ -116,11 +148,19 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
         shader.uniforms.uFaceGradientYOffset = { value: options.faceProfile.faceShadowGradientMapYOffset };
         shader.uniforms.uNoseGradientYOffset = { value: options.faceProfile.noseShadowGradientMapYOffset };
         shader.uniforms.uCheekValue = { value: options.faceProfile.cheekValue };
-        shader.uniforms.uHighlightBrightness = { value: 1.06 };
-        shader.uniforms.uBlushStrength = { value: 0.17 };
+        shader.uniforms.uOfficialFaceIsEye = { value: 0 };
+        shader.uniforms.uOfficialFaceShouldApplyAdditional = { value: 0 };
+        shader.uniforms.uOfficialFaceHighlightThreshold = { value: 0.5 };
+        shader.uniforms.uOfficialFaceHighlightRotation = { value: 0 };
+        shader.uniforms.uOfficialFaceCheekColor = {
+            value: new THREE.Color(1, 0.7, 0.7),
+        };
         shader.uniforms.uFaceForwardWS = { value: new THREE.Vector3(0, 0, 1) };
         shader.uniforms.uFaceUpWS = { value: new THREE.Vector3(0, 1, 0) };
         shader.uniforms.uFaceRightWS = { value: new THREE.Vector3(1, 0, 0) };
+        if (initialOfficialProfile) {
+            setOfficialFaceMaterialProfileUniforms(shader, initialOfficialProfile)
+        }
         updateFaceDirectionReference()
 
         shader.vertexShader = /*glsl*/ `
@@ -169,8 +209,11 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             uniform float uFaceGradientYOffset;
             uniform float uNoseGradientYOffset;
             uniform float uCheekValue;
-            uniform float uHighlightBrightness;
-            uniform float uBlushStrength;
+            uniform float uOfficialFaceIsEye;
+            uniform float uOfficialFaceShouldApplyAdditional;
+            uniform float uOfficialFaceHighlightThreshold;
+            uniform float uOfficialFaceHighlightRotation;
+            uniform vec3 uOfficialFaceCheekColor;
             ${shader.fragmentShader}
         `.replace(
             '#include <map_fragment>',
@@ -179,10 +222,21 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             vec4 faceShadow = texture2D(tShadow, vFaceUv);
             vec4 eyehighlight = texture2D(tEyehighlight, vFaceUv2);
 
-            vec3 rdFaceLightVS = normalize(vec3(-0.35, 0.72, 0.60));
+            vec3 rdFacePhysicalLightVS = normalize(vec3(-0.35, 0.72, 0.60));
             #if NUM_DIR_LIGHTS > 0
-                rdFaceLightVS = normalize(directionalLights[0].direction);
+                rdFacePhysicalLightVS = normalize(directionalLights[0].direction);
             #endif
+            // SetGlobalShaderParams applies the same character-light direction
+            // to FaceGradient as to Body/Hair.  Keeping Face on the physical
+            // stage light alone made every overridden scene appear backlit.
+            vec3 rdFaceLightVS = normalize(mix(
+                rdFacePhysicalLightVS,
+                uGlobalCharacterLightingOverrideDirection,
+                step(
+                    0.5,
+                    uGlobalCharacterLightingOverrideDirectionEnabled
+                )
+            ));
 
             // Recovered from the Android ReDriveToon face-gradient variant.
             // The two bias constants and the 0.985 threshold are part of the
@@ -231,14 +285,23 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             );
             float rdFaceThreshold =
                 0.985 - (rdFaceDirection.y * 0.5 + 0.5);
-            float rdCombinedFaceLight = smoothstep(
+            float rdGradientFaceLight = smoothstep(
                 rdFaceThreshold - 0.01,
                 rdFaceThreshold,
                 rdCombinedGradient
             );
-            rdCombinedFaceLight = mix(
+            float rdMaskNdotL = dot(
+                rdFaceLightVS,
+                normalize(vFaceSelfShadowNormalVS)
+            );
+            float rdMaskFaceLight = smoothstep(
+                0.0,
                 1.0,
-                rdCombinedFaceLight,
+                clamp(rdMaskNdotL + 1.0, 0.0, 1.0)
+            );
+            float rdCombinedFaceLight = mix(
+                rdMaskFaceLight,
+                rdGradientFaceLight,
                 saturate(uUseFaceGradient)
             );
             rdCombinedFaceLight *= rdToonSelfShadowVisibility(
@@ -252,17 +315,6 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
                 rdCombinedFaceLight
             );
 
-            float eyeMask = step(vFaceUv2.y, 0.5);
-            float highlightIntensity =
-                eyehighlight.r *
-                smoothstep(0.46, 0.62, eyehighlight.r) *
-                eyeMask;
-            faceColor.rgb += vec3(highlightIntensity * uHighlightBrightness);
-
-            float blushMask = step(0.5, vFaceUv2.y);
-            float blushFactor =
-                eyehighlight.r * blushMask * uBlushStrength * uCheekValue;
-            faceColor.rgb -= vec3(0.0, blushFactor, blushFactor);
             diffuseColor = faceColor;
             `
         ).replace(
@@ -291,7 +343,12 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
             #endif
             vec3 rdFaceMainLightColor = vec3(0.0);
             #if NUM_DIR_LIGHTS > 0
-                rdFaceMainLightColor = directionalLights[0].color;
+                // Stage directional lights are multiplied by PI so Three's
+                // Lambert branch receives Unity radiance after RECIPROCAL_PI.
+                // This face carrier bypasses Lambert, matching ReDriveToon's
+                // direct _MainLightColor use, so undo that transport scaling.
+                rdFaceMainLightColor =
+                    directionalLights[0].color * RECIPROCAL_PI;
             #endif
             vec3 rdFaceSceneLightRaw = clamp(
                 max(rdFaceAmbient, vec3(0.0)) + rdFaceMainLightColor,
@@ -310,10 +367,67 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
                 diffuseColor.rgb * rdFaceSceneLightColor +
                 totalEmissiveRadiance;
 
+            // _ISEYE is a separate queue-2001 geometry pass. The compiled
+            // ReDriveToon program applies its highlight after scene lighting;
+            // it is not a hand-tuned brightening of the main face material.
+            vec2 rdFaceAdditionalUv = vFaceUv2;
+            if (uOfficialFaceHighlightRotation != 0.0) {
+                vec2 rdEyeCenter = vFaceUv2.x <= 0.5
+                    ? vec2(0.25, 0.25)
+                    : vec2(0.75, 0.25);
+                vec2 rdEyeLocal = vFaceUv2 - rdEyeCenter;
+                float rdEyeAngle =
+                    uOfficialFaceHighlightRotation * 6.28318530718;
+                float rdEyeSin = sin(rdEyeAngle);
+                float rdEyeCos = cos(rdEyeAngle);
+                rdFaceAdditionalUv = rdEyeCenter + vec2(
+                    dot(rdEyeLocal, vec2(rdEyeCos, rdEyeSin)),
+                    dot(rdEyeLocal.yx, vec2(rdEyeCos, -rdEyeSin))
+                );
+            }
+            float rdEyeAdditional = texture2D(
+                tEyehighlight,
+                rdFaceAdditionalUv
+            ).r;
+            float rdEyeHighlight = smoothstep(
+                uOfficialFaceHighlightThreshold,
+                uOfficialFaceHighlightThreshold + 0.05,
+                rdEyeAdditional
+            );
+            vec3 rdFaceHighlightCarrier =
+                min(rdFaceSceneLightColor * 2.0, vec3(1.0)) * 1.5;
+            outgoingLight += rdFaceHighlightCarrier * rdEyeHighlight
+                * saturate(uOfficialFaceIsEye);
+
+            if (uOfficialFaceShouldApplyAdditional != 0.0) {
+                float rdFaceAdditional = texture2D(
+                    tEyehighlight,
+                    vFaceUv2
+                ).r;
+                float rdCheekMask = step(0.5, vFaceUv2.y);
+                float rdCheekBlend =
+                    rdFaceAdditional * rdCheekMask * uCheekValue;
+                outgoingLight = mix(
+                    outgoingLight,
+                    outgoingLight * uOfficialFaceCheekColor,
+                    rdCheekBlend
+                );
+                float rdFaceHighlight = smoothstep(
+                    uOfficialFaceHighlightThreshold,
+                    uOfficialFaceHighlightThreshold + 0.05,
+                    rdFaceAdditional * (1.0 - rdCheekMask)
+                );
+                outgoingLight += rdFaceHighlightCarrier * rdFaceHighlight;
+            }
+
             #include <opaque_fragment>
             `
         );
 
+        injectCharacterPerspectiveCancellation(
+            shader,
+            options.characterPerspectiveReference,
+        );
         injectToonStylization(shader, uniforms);
         runtimeUserData.shader = shader;
         runtimeUserData.shaderUniforms = uniforms;

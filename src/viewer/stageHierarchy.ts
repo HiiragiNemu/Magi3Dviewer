@@ -12,13 +12,18 @@ function descendByNames(
     root: THREE.Object3D,
     segments: readonly string[],
 ): THREE.Object3D | undefined {
-    let current: THREE.Object3D = root
+    let candidates: THREE.Object3D[] = [root]
     for (const segment of segments) {
-        const next = current.children.find(child => child.name === segment)
-        if (!next) return undefined
-        current = next
+        const sanitizedSegment = THREE.PropertyBinding.sanitizeNodeName(segment)
+        candidates = candidates.flatMap(current => {
+            const exact = current.children.filter(child => child.name === segment)
+            return exact.length > 0 || sanitizedSegment === segment
+                ? exact
+                : current.children.filter(child => child.name === sanitizedSegment)
+        })
+        if (candidates.length === 0) return undefined
     }
-    return current
+    return candidates.length === 1 ? candidates[0] : undefined
 }
 
 /**
@@ -45,8 +50,15 @@ export function resolveStageHierarchyPath(
     }
 
     const starts: THREE.Object3D[] = []
+    const sanitizedRootName = THREE.PropertyBinding.sanitizeNodeName(segments[0])
     root.traverse(candidate => {
-        if (candidate.name === segments[0]) starts.push(candidate)
+        if (
+            candidate.name === segments[0]
+            || (
+                sanitizedRootName !== segments[0]
+                && candidate.name === sanitizedRootName
+            )
+        ) starts.push(candidate)
     })
     for (const start of starts) {
         const resolved = descendByNames(start, segments.slice(1))

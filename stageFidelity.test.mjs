@@ -5,6 +5,7 @@ import test from 'node:test'
 const source = readFileSync('src/viewer/stageFidelity.ts', 'utf8')
 const stages = readFileSync('src/viewer/stages.ts', 'utf8')
 const style = readFileSync('src/viewer/style/stageFidelity.css', 'utf8')
+const styleIndex = readFileSync('src/viewer/style/index.css', 'utf8')
 
 test('fidelity inspector exposes provenance, closure and concrete dynamic gaps', () => {
   assert.match(source, /Manifest provenance/)
@@ -26,9 +27,12 @@ test('fidelity inspector renders external names as text rather than HTML', () =>
   assert.match(source, /textContent = value/)
 })
 
-test('stage runtime updates the fidelity inspector only after resolved stage definitions', () => {
-  assert.match(stages, /setupStageFidelityPanel/)
-  assert.match(stages, /updateStageFidelityPanel\(definition\)/)
+test('stage fidelity evidence is not mounted as a viewer submenu', () => {
+  assert.doesNotMatch(stages, /setupStageFidelityPanel/)
+  assert.doesNotMatch(stages, /updateStageFidelityPanel\(definition\)/)
+  assert.doesNotMatch(styleIndex, /stageFidelity\.css/)
+  assert.match(stages, /StageFidelityComponentEvidence/)
+  assert.match(stages, /StageFidelityLayerCounts/)
 })
 
 test('fidelity inspector remains bounded on desktop and mobile', () => {

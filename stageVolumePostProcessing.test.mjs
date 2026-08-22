@@ -26,6 +26,24 @@ test('Unity Volume subset retains serialized ColorAdjustments units', () => {
   assert.match(shader, /uContrast \* 0\.01/)
   assert.match(shader, /uSaturation \* 0\.01/)
   assert.match(shader, /uColorFilter/)
+  assert.match(shader, /uHueShift/)
+})
+
+test('ReDrive profiles use the Unity 2022.3 ACES operator instead of Three ACES', () => {
+  assert.match(shader, /RD_ACESCC_MIDGRAY = 0\.4135884/)
+  assert.match(shader, /vec3\(0\.4397010, 0\.3829780, 0\.1773350\)/)
+  assert.match(shader, /rdAcesToAcesCc/)
+  assert.match(shader, /rdAcesCcToAces/)
+  assert.match(shader, /rdDarkToDimSurround/)
+  assert.match(shader, /0\.0245786/)
+  assert.match(shader, /0\.983729/)
+  assert.match(shader, /mix\(vec3\(luma\), linearCv, 0\.93\)/)
+  assert.match(shader, /if \(uToneMappingMode > 0\.5\)/)
+  assert.match(
+    stages,
+    /const unityAces = profile\.source === 'ReDriveVolume'[\s\S]*THREE\.NoToneMapping/,
+  )
+  assert.match(stages, /pass\.uniforms\.uToneMappingMode\.value/)
 })
 
 test('serialized Vignette has an explicit full-composite runtime pass', () => {
@@ -38,11 +56,10 @@ test('serialized Vignette has an explicit full-composite runtime pass', () => {
   assert.match(shader, /uVignetteSmoothness \* 5\.0/)
   assert.match(shader, /1\.0 - dot\(dist, dist\)/)
   assert.match(shader, /color \*= mix\(uVignetteColor, vec3\(1\.0\), vfactor\)/)
-  assert.doesNotMatch(shader, /smoothstep\(/)
-
   const vignette = shader.indexOf('if (uVignetteEnabled > 0.5')
-  const grading = shader.indexOf('if (uColorAdjustEnabled > 0.5')
+  const grading = shader.indexOf('if (uToneMappingMode > 0.5')
   assert.ok(vignette >= 0 && grading > vignette)
+  assert.doesNotMatch(shader.slice(vignette, grading), /smoothstep\(/)
   assert.match(effects, /volumePostProcessPass = new ShaderPass/)
 
   const paraffin = effects.indexOf('this.composer.addPass(this.paraffinPass)')
@@ -63,6 +80,25 @@ test('stage profiles apply and reset both recovered Volume components', () => {
     /profile\.source === 'ReDriveVolume'[\s\S]*scene\.setColorFilter\(\{ brightness: 1, contrast: 1, saturation: 1 \}\)/,
   )
   assert.match(stages, /applyStageVolumePostProcessing\(undefined\)/)
+})
+
+test('legacy recovered stage grading is promoted to full-composite Unity units', () => {
+  assert.match(stages, /function resolveStageVolumePostProcessing/)
+  assert.match(
+    stages,
+    /profile\.source === 'ReDriveVolume'[\s\S]*profile\.colorFilter/,
+  )
+  assert.match(stages, /explicit\?\.colorAdjustments/)
+  assert.match(
+    stages,
+    /postExposure: Math\.log2\(Math\.max\(recovered\.brightness, 1e-6\)\)/,
+  )
+  assert.match(stages, /contrast: \(recovered\.contrast - 1\) \* 100/)
+  assert.match(stages, /saturation: \(recovered\.saturation - 1\) \* 100/)
+  assert.match(
+    stages,
+    /applyStageVolumePostProcessing\([\s\S]*resolveStageVolumePostProcessing\(profile\)/,
+  )
 })
 
 test('recovered Unity Bloom uses the 2022.3 URP operator, not Unreal units', () => {

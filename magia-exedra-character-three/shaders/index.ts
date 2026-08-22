@@ -1,5 +1,8 @@
 import * as THREE from 'three';
-import type { MaterialFeatureProfile } from '../renderProfile';
+import type {
+    CharacterPerspectiveReference,
+    MaterialFeatureProfile,
+} from '../renderProfile';
 import type { OfficialMaterialProfile } from '../materialProfile';
 
 export * from './userdata'
@@ -13,6 +16,7 @@ export * from './stylization'
 export * from './gem'
 export * from './gemExtension'
 export * from './depthRim'
+export * from './perspective'
 
 export interface MaterialCreationOptions {
     colorMap: string;
@@ -23,6 +27,7 @@ export interface MaterialCreationOptions {
     featureProfile?: MaterialFeatureProfile;
     materialProfiles?: OfficialMaterialProfile[];
     specularGradientMap?: string;
+    characterPerspectiveReference?: CharacterPerspectiveReference;
 }
 
 export interface MaterialCreationResult {

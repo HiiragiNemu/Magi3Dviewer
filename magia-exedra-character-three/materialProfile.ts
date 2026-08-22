@@ -24,6 +24,21 @@ export interface OfficialFresnelProfile {
     feather: number;
 }
 
+export interface OfficialOutlineProfile {
+    /** Serialized `_UseOutline`; false slots emit no outline draw. */
+    enabled: boolean;
+    /** Serialized linear `_OutlineColor` RGB. */
+    color: readonly [number, number, number];
+    /** Serialized HDR `_OutlineEmissionColor` RGB. */
+    emissionColor: readonly [number, number, number];
+    /** Serialized `_OutlineTexBlend`. */
+    texBlend: number;
+    /** Serialized `_OutlineZOffset`. */
+    zOffset: number;
+    /** Serialized `_FaceOutlineAdjust`. */
+    faceOutlineAdjust: number;
+}
+
 export type OfficialMatCapSource =
     | 'default-linear-grey'
     | 'character-or-fallback'
@@ -85,9 +100,47 @@ export interface OfficialAngelRingMaterialProfile {
     rimLightColor: readonly [number, number, number];
 }
 
+export interface OfficialDepthRimProfile {
+    /** Serialized `_UseDepthTex`; gates depth-shadow and depth-rim sampling. */
+    useDepthTex: boolean;
+    /** Serialized `_UseRimLight`; independently gates the rim contribution. */
+    useRimLight: boolean;
+    /** Serialized `_DitherFade`; values over 0.5 neutralize depth masks. */
+    ditherFade: number;
+    /** Serialized `_DepthTexWidth`, multiplied by vertex-colour G. */
+    width: number;
+    /** Serialized `_DepthTexYOffset`. */
+    yOffset: number;
+    /** Serialized `_DepthRimLightDiffThreshold`. */
+    rimDiffThreshold: number;
+    /** Serialized `_DepthShadowDiffThreshold`. */
+    shadowDiffThreshold: number;
+}
+
+export interface OfficialFaceMaterialProfile {
+    /** Serialized `_IsFace`; identifies the ReDrive face-family pass. */
+    isFace: boolean;
+    /** Serialized `_IsEye`; selects the dedicated eye highlight geometry pass. */
+    isEye: boolean;
+    /** Serialized `_UseFaceGradientMap`; false for eye/eyebrow mask groups. */
+    useGradientMap: boolean;
+    /** Serialized `_ShouldApplyFaceAdditional`; exceptional main-face overlay. */
+    shouldApplyAdditional: boolean;
+    /** Serialized `_HighlightThreshold`; official transition width is 0.05. */
+    highlightThreshold: number;
+    /** Serialized `_HighlightRotation`, in turns. */
+    highlightRotation: number;
+    /** Serialized `_CheekValue`. */
+    cheekValue: number;
+    /** Serialized `_CheekColor`, kept in shader units. */
+    cheekColor: readonly [number, number, number];
+}
+
 export interface OfficialMaterialProfile {
     name: string;
     source: 'official-export' | 'name-convention' | 'default';
+    /** Serialized Unity `Material.m_CustomRenderQueue`; -1 uses shader default. */
+    customRenderQueue: number;
     /** Legacy aggregate flag retained for existing feature-variant selection. */
     anisotropy: boolean;
     anisotropyProfile: OfficialAnisotropyProfile;
@@ -96,6 +149,8 @@ export interface OfficialMaterialProfile {
     skinOutlineOffset: boolean;
     /** Serialized ReDriveToon `_OutlineWidth`. */
     outlineWidth: number;
+    outline: OfficialOutlineProfile;
+    face: OfficialFaceMaterialProfile;
     /** Base ReDriveToon MatCap branch; it is not owned by Gem. */
     matCap: OfficialMatCapProfile;
     gem: OfficialGemProfile;
@@ -106,6 +161,9 @@ export interface OfficialMaterialProfile {
         castSelfShadow: boolean;
         receiveSelfShadow: boolean;
     };
+    depthRim: OfficialDepthRimProfile;
+    /** Serialized `_AdditionalLightInfluenceByLuminance`. */
+    additionalLightInfluenceByLuminance: number;
     /** Serialized HDR `_EmissionColor`, kept in linear shader units. */
     emissionColor: readonly [number, number, number];
 }
@@ -183,6 +241,36 @@ const MATCAP_DISABLED: OfficialMatCapProfile = {
     intensity: 1,
     maskByMetallic: false,
     maskBySpecular: false,
+};
+
+const OFFICIAL_DEPTH_RIM_DEFAULT: OfficialDepthRimProfile = {
+    useDepthTex: true,
+    useRimLight: true,
+    ditherFade: 0,
+    width: 1,
+    yOffset: 0,
+    rimDiffThreshold: 0.02,
+    shadowDiffThreshold: 0.03,
+};
+
+const OFFICIAL_OUTLINE_DEFAULT: OfficialOutlineProfile = {
+    enabled: true,
+    color: [0, 0, 0],
+    emissionColor: [0, 0, 0],
+    texBlend: 0.2,
+    zOffset: 0,
+    faceOutlineAdjust: 0,
+};
+
+const OFFICIAL_FACE_MATERIAL_DEFAULT: OfficialFaceMaterialProfile = {
+    isFace: false,
+    isEye: false,
+    useGradientMap: false,
+    shouldApplyAdditional: false,
+    highlightThreshold: 0.5,
+    highlightRotation: 0,
+    cheekValue: 1,
+    cheekColor: [1, 0.7, 0.7],
 };
 
 const GEM_DISABLED: OfficialGemProfile = {
@@ -354,7 +442,7 @@ const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
             enabled: true,
             source: 'soft-metallic',
             intensity: 2,
-            maskByMetallic: true,
+            maskByMetallic: false,
             maskBySpecular: false,
         },
     }],
@@ -579,6 +667,27 @@ function copyMatCap(profile: OfficialMatCapProfile): OfficialMatCapProfile {
     return { ...profile };
 }
 
+function copyDepthRim(profile: OfficialDepthRimProfile): OfficialDepthRimProfile {
+    return { ...profile };
+}
+
+function copyOutline(profile: OfficialOutlineProfile): OfficialOutlineProfile {
+    return {
+        ...profile,
+        color: [...profile.color] as [number, number, number],
+        emissionColor: [...profile.emissionColor] as [number, number, number],
+    };
+}
+
+function copyFaceMaterial(
+    profile: OfficialFaceMaterialProfile,
+): OfficialFaceMaterialProfile {
+    return {
+        ...profile,
+        cheekColor: [...profile.cheekColor] as [number, number, number],
+    };
+}
+
 /** AssetStudio/FBXLoader may append `::Material` or a numeric duplicate suffix. */
 export function normalizeOfficialMaterialName(name: string): string {
     return name
@@ -597,6 +706,7 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         source: inferredGem || normalized.includes('aniso') || normalized.includes('outlineoffset')
             ? 'name-convention'
             : 'default',
+        customRenderQueue: -1,
         anisotropy: normalized.includes('aniso'),
         anisotropyProfile: {
             ...(normalized.includes('aniso') ? GENERIC_ANISO : ANISO_DISABLED),
@@ -605,6 +715,14 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         outlineOffset: normalized.includes('outlineoffset'),
         skinOutlineOffset: normalized.includes('outlineoffset_skin'),
         outlineWidth: 5,
+        outline: copyOutline(OFFICIAL_OUTLINE_DEFAULT),
+        face: {
+            ...copyFaceMaterial(OFFICIAL_FACE_MATERIAL_DEFAULT),
+            isFace: normalized.includes('_face')
+                || normalized.includes('_eye_mask')
+                || normalized.includes('_eyebrow_mask'),
+            isEye: normalized.includes('_eye_mask'),
+        },
         matCap: copyMatCap(
             inferredGem
                 ? {
@@ -624,12 +742,17 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
             castSelfShadow: true,
             receiveSelfShadow: true,
         },
+        depthRim: copyDepthRim(OFFICIAL_DEPTH_RIM_DEFAULT),
+        additionalLightInfluenceByLuminance: 0,
         emissionColor: [0, 0, 0],
     };
     const generated = generatedOfficialMaterials.get(normalized);
     const manual = OFFICIAL_MATERIALS.get(normalized);
     const official = generated || manual
-        ? { ...generated, ...manual }
+        // Generated AssetBundle truth is authoritative. Manual entries may
+        // supply a field absent from an older export, but must never replace a
+        // serialized value that the current official profile already owns.
+        ? { ...manual, ...generated }
         : undefined;
     if (!official) return base;
     return {
@@ -642,6 +765,12 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         fresnel: official.fresnel
             ? { ...official.fresnel }
             : { ...base.fresnel },
+        outline: official.outline
+            ? copyOutline(official.outline as OfficialOutlineProfile)
+            : copyOutline(base.outline),
+        face: official.face
+            ? copyFaceMaterial(official.face as OfficialFaceMaterialProfile)
+            : copyFaceMaterial(base.face),
         matCap: official.matCap
             ? copyMatCap(official.matCap as OfficialMatCapProfile)
             : copyMatCap(base.matCap),
@@ -650,6 +779,9 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
             ? { ...official.angelRing }
             : base.angelRing,
         shadow: official.shadow ? { ...official.shadow } : { ...base.shadow },
+        depthRim: official.depthRim
+            ? copyDepthRim(official.depthRim as OfficialDepthRimProfile)
+            : copyDepthRim(base.depthRim),
         emissionColor: official.emissionColor
             ? [...official.emissionColor] as [number, number, number]
             : [...base.emissionColor] as [number, number, number],

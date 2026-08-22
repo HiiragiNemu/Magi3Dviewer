@@ -298,7 +298,6 @@ export async function createHairMaterial(
                 uniform vec3 uAngelRingFaceUp;
                 uniform vec3 uAngelRingFaceForward;
                 varying vec3 vAngelRingFaceClip;
-                varying vec3 vAngelRingFaceUpClip;
                 varying vec3 vAngelRingFaceUpVS;
                 varying vec3 vAngelRingFaceForwardVS;
                 ${shader.vertexShader}
@@ -314,17 +313,6 @@ export async function createHairMaterial(
                     rdAngelFaceClip.xy,
                     rdAngelFaceClip.w
                 );
-                vec4 rdAngelFaceUpClip =
-                    projectionMatrix *
-                    viewMatrix *
-                    vec4(
-                        uAngelRingFacePosition + uAngelRingFaceUp,
-                        1.0
-                    );
-                vAngelRingFaceUpClip = vec3(
-                    rdAngelFaceUpClip.xy,
-                    rdAngelFaceUpClip.w
-                );
                 vAngelRingFaceUpVS =
                     mat3(viewMatrix) * uAngelRingFaceUp;
                 vAngelRingFaceForwardVS =
@@ -334,7 +322,6 @@ export async function createHairMaterial(
 
             shader.fragmentShader = /* glsl */ `
                 varying vec3 vAngelRingFaceClip;
-                varying vec3 vAngelRingFaceUpClip;
                 varying vec3 vAngelRingFaceUpVS;
                 varying vec3 vAngelRingFaceForwardVS;
                 uniform sampler2D tAngelRingCommon;
@@ -462,41 +449,23 @@ export async function createHairMaterial(
                             ) /
                             (rdAngelRectHalf * 2.0) -
                             vec2(0.5);
-                        // Project both the Head origin and its Up endpoint
-                        // through the complete camera matrix. Using only
-                        // FaceUp.xy omits perspective division and turns the
-                        // highlight into a diagonal band under pitch/portrait.
-                        float rdAngelFaceUpW = max(
-                            abs(vAngelRingFaceUpClip.z),
-                            0.000001
-                        );
-                        vec2 rdAngelFaceUpUv =
-                            vAngelRingFaceUpClip.xy /
-                            rdAngelFaceUpW;
-                        rdAngelFaceUpUv =
-                            rdAngelFaceUpUv * 0.5 + vec2(0.5);
-                        vec2 rdAngelProjectedUp =
-                            (rdAngelFaceUpUv - rdAngelFaceUv) /
-                            max(rdAngelRectHalf, vec2(0.000001));
-                        float rdAngelProjectedUpLength =
-                            length(rdAngelProjectedUp);
-                        rdAngelProjectedUp =
-                            rdAngelProjectedUpLength > 0.00001
-                                ? rdAngelProjectedUp /
-                                    rdAngelProjectedUpLength
-                                : vec2(0.0, 1.0);
-                        vec2 rdAngelProjectedRight = vec2(
-                            rdAngelProjectedUp.y,
-                            -rdAngelProjectedUp.x
+                        // JP 2022.3.62f2 main_hair blob 98 lines 970-974.
+                        // The native program rotates the centred rectangle
+                        // directly with the view-space FaceUp axis. It does not
+                        // project a second endpoint or renormalize FaceUp.xy.
+                        vec2 rdAngelFaceUpXY = rdAngelFaceUpVS.xy;
+                        vec2 rdAngelFaceRightXY = vec2(
+                            rdAngelFaceUpVS.y,
+                            -rdAngelFaceUpVS.x
                         );
                         vec2 rdAngelRotated = vec2(
                             dot(
                                 rdAngelRectCoordinate,
-                                rdAngelProjectedRight
+                                rdAngelFaceRightXY
                             ),
                             dot(
                                 rdAngelRectCoordinate,
-                                rdAngelProjectedUp
+                                rdAngelFaceUpXY
                             )
                         ) + vec2(0.5);
                         float rdAngelArch = sin(
@@ -547,41 +516,10 @@ export async function createHairMaterial(
                         rdAngelContribution * rdAngelActive;
                 }
 
-                // ReDriveToon's hair depth-rim is separate from AngelRing.
-                // Until the official CameraDepthTexture offset pass is ported,
-                // preserve its observed soft, asymmetric and scene-tinted
-                // response rather than substituting a hard global Fresnel.
-                if (
-                    uHairDepthRimEnabled > 0.5 &&
-                    (
-                        uRdDepthRimExperimentEnabled < 0.5 ||
-                        uRdDepthRimVertexColorGAvailable < 0.5
-                    )
-                ) {
-                    vec3 rdHairViewDirection =
-                        normalize(vViewPosition);
-                    float rdHairNdotV = saturate(
-                        dot(normal, rdHairViewDirection)
-                    );
-                    float rdHairEdge = smoothstep(
-                        0.55,
-                        0.93,
-                        1.0 - rdHairNdotV
-                    );
-                    float rdHairLightSide = saturate(
-                        dot(normal, rdToonMainLightDirection) *
-                        0.5 + 0.5
-                    );
-                    float rdHairDepthRim =
-                        rdHairEdge *
-                        mix(0.15, 1.0, rdHairLightSide) *
-                        (rdToonBaseWeight * 0.8 + 0.2);
-                    gl_FragColor.rgb +=
-                        uAngelRingColor *
-                        rdToonSceneLightColor *
-                        rdHairDepthRim *
-                        0.16;
-                }
+                // No picture-matched fallback: the official hair edge is the
+                // shared CameraDepthTexture signal gated by (1 - NdotV).
+                // Missing depth/color-G data therefore stays neutral instead
+                // of reintroducing the removed 0.55/0.93/0.16 proxy.
                 `,
             );
         },

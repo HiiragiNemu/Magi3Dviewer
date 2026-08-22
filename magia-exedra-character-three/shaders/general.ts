@@ -3,6 +3,7 @@ import { MaterialUserData, type MaterialCreationOptions, type MaterialCreationRe
 import { loadTexture, MaximizeTextureQuality } from '../texture';
 import { injectToonStylization, ToonStylizationUniforms } from './stylization';
 import { setOfficialMaterialProfileUniforms } from './gem';
+import { injectCharacterPerspectiveCancellation } from './perspective';
 import { injectReDriveDepthRimShader } from './depthRim';
 
 export const ShadowTexOptions = {
@@ -201,6 +202,9 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         anisotropy,
         specialJewel,
         hasExtension: Boolean(options.onBeforeCompile),
+        hasCharacterPerspective: Boolean(
+            options.characterPerspectiveReference,
+        ),
     });
     material.customProgramCacheKey = () => programCacheKey;
 
@@ -254,6 +258,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             uniform vec3 uRdAdditionalDirectionalLightDirectionWorld;
             uniform vec3 uRdAdditionalDirectionalLightColor;
             uniform float uRdAdditionalLightInfluenceByLuminance;
+            uniform float uRdOfficialAdditionalLightInfluenceByLuminance;
             uniform float uMaterialAnisotropy;
             uniform float uMaterialAnisoMaskByMetallic;
             uniform vec3 uMaterialAnisoColor;
@@ -338,11 +343,30 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             #if NUM_DIR_LIGHTS > 0
                 rdToonMainLightDirection =
                     normalize(directionalLights[0].direction);
-                rdToonMainLightColor = directionalLights[0].color;
+                // Stage lights are multiplied by PI to cancel Three's
+                // Lambert RECIPROCAL_PI. This custom toon carrier bypasses
+                // Lambert, so convert the light back to Unity radiance.
+                rdToonMainLightColor =
+                    directionalLights[0].color * RECIPROCAL_PI;
             #endif
 
+            // Native ReDriveToon keeps two independent direction chains:
+            // CameraDepthTexture samples the physical main light, while the
+            // broad BaseTex/ShadowTex selector and highlights use the optional
+            // character-light override produced by SetGlobalShaderParams.
+            vec3 rdToonCharacterLightDirection = mix(
+                rdToonMainLightDirection,
+                uGlobalCharacterLightingOverrideDirection,
+                step(
+                    0.5,
+                    uGlobalCharacterLightingOverrideDirectionEnabled
+                )
+            );
+
+            // RD_DEPTH_RIM_SAMPLE_BEGIN
+
             float rdToonHalfLambert = saturate(
-                dot(normal, rdToonMainLightDirection) * 0.5 + 0.5
+                dot(normal, rdToonCharacterLightDirection) * 0.5 + 0.5
             );
             float rdToonControl = saturate(
                 rdToonControlR + uRdShadowOffsetMapOffset
@@ -350,6 +374,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             float rdToonRamp = saturate(
                 rdToonHalfLambert - (1.0 - rdToonControl)
             );
+            // RD_DEPTH_SHADOW_SELECTOR_BEGIN
             float rdToonRampLow = saturate(
                 uRdShadowOffset - uRdShadowFeather * 0.5
             );
@@ -386,9 +411,22 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             // The official shader uses SH + main-light colour as a colour
             // multiplier. N.L has already selected the toon texture and must not
             // darken it a second time through MeshStandard's physical diffuse.
-            vec3 rdToonAmbientColor = vec3(0.0);
-            #if defined(RE_IndirectDiffuse)
-                rdToonAmbientColor = irradiance;
+            // ReDriveToon consumes Unity's 27-coefficient SH plus the main
+            // directional light. Three's assembled irradiance also contains
+            // every HemisphereLight in the scene; the Viewer fallback
+            // hemisphere therefore introduced a second, normal-dependent
+            // gradient after the authored zero-feather Base/Shadow selector.
+            // Keep the direction-independent fallback AmbientLight, and use a
+            // real LightProbe when one is installed as the Web equivalent of
+            // Unity SH. Background/fallback hemisphere lights do not belong to
+            // the character carrier.
+            vec3 rdToonAmbientColor =
+                getAmbientLightIrradiance(ambientLightColor);
+            #if defined(USE_LIGHT_PROBES)
+                rdToonAmbientColor += getLightProbeIrradiance(
+                    lightProbe,
+                    normal
+                );
             #endif
             vec3 rdToonSceneLightRaw = clamp(
                 rdToonAmbientColor + rdToonMainLightColor,
@@ -403,54 +441,16 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                 ),
                 vec3(0.1)
             );
-            outgoingLight =
-                diffuseColor.rgb * rdToonSceneLightColor +
-                totalEmissiveRadiance +
-                rdToonBaseColor * uMaterialEmissionColor;
+            outgoingLight = diffuseColor.rgb * rdToonSceneLightColor;
 
             #ifdef HAS_CTRL
                 vec3 rdViewDirection = normalize(geometryViewDir);
-                vec3 rdLightDirection = rdToonMainLightDirection;
+                vec3 rdLightDirection = rdToonCharacterLightDirection;
                 vec3 rdHalfDirection = normalize(rdViewDirection + rdLightDirection);
                 float rdNdotH = saturate(dot(normal, rdHalfDirection));
 
-                float rdSpecularGradient = pow(
-                    rdNdotH,
-                    mix(18.0, 5.0, rdToonSpecularMask)
-                );
-                #ifdef HAS_SPECULAR_GRADIENT
-                    rdSpecularGradient = texture2D(
-                        tSpecularGradient,
-                        vec2(rdNdotH, 0.5)
-                    ).r;
-                #endif
-
-                float rdSpecularMask = smoothstep(
-                    0.04,
-                    0.96,
-                    rdToonSpecularMask
-                );
-                float rdSpecular =
-                    rdSpecularGradient *
-                    rdSpecularMask *
-                    uOfficialSpecularStrength;
-                rdSpecular *= mix(1.0, 1.35, saturate(uMaterialSpecialJewel));
-                // Preserve a strong authored highlight without feeding
-                // unbounded HDR values into scene Bloom/tone mapping.
-                rdSpecular = min(rdSpecular, 1.5);
-
-                vec3 rdSpecularColor = mix(
-                    vec3(1.0),
-                    max(diffuseColor.rgb, vec3(0.04)),
-                    saturate(rdToonMetallicMask * uMetallicResponse)
-                );
-                outgoingLight += rdSpecularColor * rdSpecular;
-
-                // JP 2022.3.62f2 ReDriveToon _IsAniso branch (GLES3 blob 90):
-                // compare the view-space normal XZ direction with the
-                // view-space half-vector XZ direction. Control G raises the
-                // per-pixel threshold and can also mask the resulting colour.
-                // This is a separate additive band, not tangent-space PBR.
+                // JP 2022.3.62f2 ReDriveToon _IsAniso branch (GLES3 blob 90)
+                // executes before the hard highlight and RGB gradient Overlay.
                 vec2 rdAnisoNormalXZ = normal.xz;
                 float rdAnisoNormalLength = length(rdAnisoNormalXZ);
                 rdAnisoNormalXZ = rdAnisoNormalLength > 0.00001
@@ -489,18 +489,228 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                     rdAnisoBand *
                     rdAnisoMetallicMask;
                 outgoingLight += rdAnisoColor * saturate(uMaterialAnisotropy);
+
+                // JP 2022.3.62f2 main_hair blob 98: the primary response is a
+                // hard N.H gate, not the former hand-tuned pow/strength lobe.
+                // The light carrier is shared with Aniso/Rim and Control B is
+                // the serialized specular mask.
+                vec3 rdSpecularLightCarrier =
+                    rdToonSceneLightColor *
+                    (rdToonBaseWeight * 0.800000012 + 0.200000003);
+                float rdHardSpecular =
+                    step(0.966000021, rdNdotH) *
+                    rdToonSpecularMask *
+                    (1.0 - step(0.5, uMaterialAnisotropy));
+                outgoingLight +=
+                    rdSpecularLightCarrier *
+                    rdToonMainLightColor *
+                    uRdDepthRimMainColor *
+                    rdHardSpecular;
+
+                #ifdef HAS_SPECULAR_GRADIENT
+                    // The official gradient is RGB and uses the same per-
+                    // channel Overlay operator recovered for MatCap. Control
+                    // G selects the blend; when Fresnel itself is metallic-
+                    // masked, enabling Fresnel suppresses this overlay.
+                    vec3 rdSpecularGradient = texture2D(
+                        tSpecularGradient,
+                        vec2(rdNdotH, rdNdotH)
+                    ).rgb;
+                    vec3 rdSpecularOverlayLow =
+                        outgoingLight * rdSpecularGradient * 2.0;
+                    vec3 rdSpecularOverlayHigh =
+                        vec3(1.0) -
+                        (vec3(1.0) - outgoingLight) *
+                        (vec3(1.0) - rdSpecularGradient) * 2.0;
+                    vec3 rdSpecularOverlay = mix(
+                        rdSpecularOverlayLow,
+                        rdSpecularOverlayHigh,
+                        vec3(1.0) - step(outgoingLight, vec3(0.5))
+                    );
+                    float rdSpecularFresnelGate = mix(
+                        1.0,
+                        1.0 - saturate(uFresnelEnabled),
+                        saturate(uFresnelMaskByMetallic)
+                    );
+                    float rdSpecularOverlayWeight =
+                        rdToonMetallicMask * rdSpecularFresnelGate;
+                    outgoingLight +=
+                        rdSpecularOverlayWeight *
+                        (rdSpecularOverlay - outgoingLight);
+                #endif
+
             #endif
+
+            // JP 2022.3.62f2 ReDriveToon main_hair blob 98, lines 788-808
+            // and 911-924. Fresnel is an authored additive band carried by
+            // the same SH/main-light and Base/Shadow selector as Aniso and the
+            // hard highlight. It is not a lighting-independent post effect.
+            float rdToonFresnelNdotV = saturate(dot(
+                normal,
+                normalize(geometryViewDir)
+            ));
+            float rdToonFresnelMetallicScale = mix(
+                1.0,
+                rdToonMetallicMask,
+                saturate(uFresnelMaskByMetallic)
+            );
+            float rdToonFresnelInput =
+                (1.0 - rdToonFresnelNdotV) *
+                rdToonFresnelMetallicScale;
+            float rdToonFresnelCenter = 1.0 - uFresnelThreshold;
+            float rdToonFresnelLow =
+                rdToonFresnelCenter - uFresnelFeather * 0.5;
+            float rdToonFresnelHigh =
+                rdToonFresnelCenter + uFresnelFeather * 0.5;
+            float rdToonFresnelMask = step(
+                rdToonFresnelCenter,
+                rdToonFresnelInput
+            );
+            if (rdToonFresnelHigh > rdToonFresnelLow + 0.000001) {
+                float rdToonFresnelT = saturate(
+                    (rdToonFresnelInput - rdToonFresnelLow) /
+                    (rdToonFresnelHigh - rdToonFresnelLow)
+                );
+                rdToonFresnelMask =
+                    rdToonFresnelT * rdToonFresnelT *
+                    (3.0 - 2.0 * rdToonFresnelT);
+            }
+            vec3 rdToonFresnelSceneCarrier =
+                rdToonSceneLightColor *
+                (rdToonBaseWeight * 0.800000012 + 0.200000003);
+            outgoingLight +=
+                rdToonFresnelSceneCarrier *
+                uFresnelColor *
+                rdToonFresnelMask *
+                saturate(uFresnelEnabled);
+
+            // RD_DEPTH_RIM_COMPOSITE_BEGIN
+
+            // Emission is downstream of Aniso, hard Specular and the RGB
+            // SpecularGradient Overlay in the compiled ReDriveToon program.
+            outgoingLight +=
+                totalEmissiveRadiance +
+                rdToonBaseColor * uMaterialEmissionColor;
 
             #include <opaque_fragment>
             `
         );
 
         options.onBeforeCompile?.call(this, shader);
+        injectCharacterPerspectiveCancellation(
+            shader,
+            options.characterPerspectiveReference,
+        );
         injectToonStylization(shader, uniforms);
         injectReDriveDepthRimShader(shader);
         shader.fragmentShader = shader.fragmentShader.replace(
             '#include <opaque_fragment>',
             /* glsl */ `
+            // JP 2022.3.62f2 ReDriveToon forward additional-light loop.
+            // Foreground lights are already selected from Unity culling masks
+            // by the generated scene profile. Three stores their colours in
+            // PI-scaled Lambert units; this toon branch consumes Unity
+            // radiance directly and therefore applies RECIPROCAL_PI.
+            vec3 rdOfficialAdditionalLight = vec3(0.0);
+
+            #if NUM_DIR_LIGHTS > 1
+                for (int rdLightIndex = 1;
+                    rdLightIndex < NUM_DIR_LIGHTS;
+                    rdLightIndex++) {
+                    vec3 rdDirection = normalize(
+                        directionalLights[rdLightIndex].direction
+                    );
+                    float rdSelector = step(
+                        0.0,
+                        dot(normal, rdDirection)
+                    );
+                    rdOfficialAdditionalLight +=
+                        directionalLights[rdLightIndex].color *
+                        RECIPROCAL_PI *
+                        rdSelector;
+                }
+            #endif
+
+            #if NUM_POINT_LIGHTS > 0
+                for (int rdLightIndex = 0;
+                    rdLightIndex < NUM_POINT_LIGHTS;
+                    rdLightIndex++) {
+                    IncidentLight rdPointLight;
+                    getPointLightInfo(
+                        pointLights[rdLightIndex],
+                        geometryPosition,
+                        rdPointLight
+                    );
+                    float rdSelector = step(
+                        0.0,
+                        dot(normal, rdPointLight.direction)
+                    );
+                    rdOfficialAdditionalLight +=
+                        rdPointLight.color *
+                        RECIPROCAL_PI *
+                        rdSelector;
+                }
+            #endif
+
+            #if NUM_SPOT_LIGHTS > 0
+                for (int rdLightIndex = 0;
+                    rdLightIndex < NUM_SPOT_LIGHTS;
+                    rdLightIndex++) {
+                    SpotLight rdSpot = spotLights[rdLightIndex];
+                    vec3 rdSpotVector =
+                        rdSpot.position - geometryPosition;
+                    float rdSpotDistance = length(rdSpotVector);
+                    vec3 rdSpotDirection = rdSpotVector / max(
+                        rdSpotDistance,
+                        0.0000610351562
+                    );
+                    float rdSpotAngleCos = dot(
+                        rdSpotDirection,
+                        rdSpot.direction
+                    );
+                    float rdSpotAttenuation = saturate(
+                        (rdSpotAngleCos - rdSpot.coneCos) /
+                        max(
+                            rdSpot.penumbraCos - rdSpot.coneCos,
+                            0.00001
+                        )
+                    );
+                    rdSpotAttenuation *= rdSpotAttenuation;
+                    float rdDistanceAttenuation =
+                        getDistanceAttenuation(
+                            rdSpotDistance,
+                            rdSpot.distance,
+                            rdSpot.decay
+                        );
+                    float rdSelector = step(
+                        0.0,
+                        dot(normal, rdSpotDirection)
+                    );
+                    rdOfficialAdditionalLight +=
+                        rdSpot.color *
+                        RECIPROCAL_PI *
+                        rdSpotAttenuation *
+                        rdDistanceAttenuation *
+                        rdSelector;
+                }
+            #endif
+
+            float rdOfficialBaseLuminance = dot(
+                rdToonBaseColor,
+                vec3(0.298911989, 0.586610973, 0.114478)
+            );
+            float rdOfficialAdditionalLuminanceFactor = mix(
+                1.0,
+                rdOfficialBaseLuminance,
+                saturate(
+                    uRdOfficialAdditionalLightInfluenceByLuminance
+                )
+            );
+            outgoingLight +=
+                rdOfficialAdditionalLight *
+                0.200000003 *
+                rdOfficialAdditionalLuminanceFactor;
+
             // Generic directional slice of the official per-pixel additional
             // light loop. Directional attenuation and shadow visibility are 1.
             // FaceGradient uses a per-light SDF selector and is implemented in

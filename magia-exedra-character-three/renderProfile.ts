@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { getOfficialMaterialProfiles } from './materialProfile';
+import generatedCharacterProfiles from './official-character-controller-profiles.generated.json';
 
 export type ReDriveAxis = 'x' | 'y' | 'z' | '-x' | '-y' | '-z';
 
@@ -14,6 +15,10 @@ export interface CharacterReDriveProfile {
     faceRightAxis: ReDriveAxis;
     /** Official serialized ReDriveToonMaterialController value when known. */
     headOffset?: number;
+    /** Official per-character perspective-cancellation multiplier. */
+    characterCancelPerspective?: number;
+    /** Official per-character additional-light luminance coupling. */
+    additionalLightInfluenceByLuminance?: number;
     /**
      * Whether an official `_IsHair` material binds `_AngelRingMap`.
      */
@@ -24,7 +29,8 @@ export interface CharacterReDriveProfile {
 }
 
 /**
- * Generated from 92 official `battle/character/chara_*_battle_unit` bundles.
+ * Generated from 95 official `battle/character/chara_*_battle_unit` bundles
+ * by `tools/magius/extract_magius_character_render_profiles.py`.
  *
  * All current character controllers serialize TransformDirection values
  * forward=3 (negX), up=1 (Y), right=2 (Z). Head offsets are character-specific.
@@ -49,9 +55,11 @@ const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
     [100303, { characterId: 100303, styleId: 100302, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
     [100304, { characterId: 100304, styleId: 100305, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
     [100305, { characterId: 100305, styleId: 100306, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
+    [100306, { characterId: 100306, styleId: 100306, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
     [100401, { characterId: 100401, styleId: 100401, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
     [100402, { characterId: 100402, styleId: 100402, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
     [100403, { characterId: 100403, styleId: 100403, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
+    [100407, { characterId: 100407, styleId: 100407, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
     [100501, { characterId: 100501, styleId: 100501, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.206, angelRingEnabled: true, hairUvAngelRing: false }],
     [100502, { characterId: 100502, styleId: 100504, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.206, angelRingEnabled: true, hairUvAngelRing: false }],
     [100503, { characterId: 100503, styleId: 100502, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
@@ -108,6 +116,7 @@ const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
     [110401, { characterId: 110401, styleId: 110401, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.211, angelRingEnabled: true, hairUvAngelRing: false }],
     [110701, { characterId: 110701, styleId: 110701, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
     [111401, { characterId: 111401, styleId: 111401, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
+    [111402, { characterId: 111402, styleId: 111402, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
     [111501, { characterId: 111501, styleId: 111501, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
     [111601, { characterId: 111601, styleId: 111601, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.2, angelRingEnabled: true, hairUvAngelRing: false }],
     [111701, { characterId: 111701, styleId: 111701, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.167, angelRingEnabled: true, hairUvAngelRing: false }],
@@ -126,9 +135,37 @@ const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
     [115001, { characterId: 115001, styleId: 115001, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.18, angelRingEnabled: true, hairUvAngelRing: false }],
     [115101, { characterId: 115101, styleId: 115101, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.19, angelRingEnabled: true, hairUvAngelRing: false }],
     [115201, { characterId: 115201, styleId: 115201, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.215, angelRingEnabled: true, hairUvAngelRing: false }],
-    // 92 resource-character profiles from jp-redrive-character-evidence.json.
+    // 95 resource-character profiles from the official top-level bundle export.
     // END GENERATED JP CHARACTER PROFILES
 ]);
+
+interface GeneratedCharacterControllerProfile {
+    characterId: number;
+    headOffset: number;
+    faceForwardAxis: ReDriveAxis;
+    faceUpAxis: ReDriveAxis;
+    faceRightAxis: ReDriveAxis;
+    headBoneName: string;
+    characterCancelPerspective: number;
+    additionalLightInfluenceByLuminance: number;
+    angelRingEnabled: boolean;
+    hairUvAngelRing: boolean;
+}
+
+/**
+ * Exact serialized values and newly released resource IDs come from the
+ * generated controller table. Preserve only the separately sourced style-ID
+ * alias from the handwritten rows above.
+ */
+for (const generated of generatedCharacterProfiles.profiles as GeneratedCharacterControllerProfile[]) {
+    const current = CHARACTER_PROFILES.get(generated.characterId);
+    CHARACTER_PROFILES.set(generated.characterId, {
+        ...current,
+        ...generated,
+        styleId: current?.styleId,
+        source: 'official-export',
+    });
+}
 
 const DEFAULT_PROFILE: Omit<CharacterReDriveProfile, 'characterId'> = {
     source: 'estimated',
@@ -136,6 +173,8 @@ const DEFAULT_PROFILE: Omit<CharacterReDriveProfile, 'characterId'> = {
     faceForwardAxis: '-x',
     faceUpAxis: 'y',
     faceRightAxis: 'z',
+    characterCancelPerspective: 1,
+    additionalLightInfluenceByLuminance: 0,
     angelRingEnabled: false,
     notes: ['No official serialized character profile is available; AngelRing remains disabled.'],
 };
@@ -185,6 +224,53 @@ export function findCharacterHeadBone(root: THREE.Object3D, profile: CharacterRe
     return candidates.find(x => hasNamedAncestor(x, 'Neck')) ?? candidates.find(x => x instanceof THREE.Bone) ?? candidates[0];
 }
 
+export interface CharacterPerspectiveReference {
+    headBone: THREE.Object3D;
+    localUp: THREE.Vector3;
+    headOffset: number;
+    characterCancelPerspective: number;
+    facePosition: THREE.Vector3;
+    update: () => void;
+}
+
+/**
+ * ReDriveToonMaterialController writes `_FacePositionWS` every frame as
+ * `Head.position + FaceUp * HeadOffset`. The same value drives AngelRing and
+ * the compiled character perspective-cancellation pass.
+ */
+export function createCharacterPerspectiveReference(
+    root: THREE.Object3D,
+    profile: CharacterReDriveProfile,
+): CharacterPerspectiveReference | undefined {
+    const headBone = findCharacterHeadBone(root, profile);
+    if (!headBone || profile.headOffset == undefined) return undefined;
+
+    const localUp = unityDirectionToThreeFbx(profile.faceUpAxis);
+    const headPosition = new THREE.Vector3();
+    const headQuaternion = new THREE.Quaternion();
+    const faceUp = new THREE.Vector3();
+    const facePosition = new THREE.Vector3();
+    const reference: CharacterPerspectiveReference = {
+        headBone,
+        localUp,
+        headOffset: profile.headOffset,
+        characterCancelPerspective:
+            profile.characterCancelPerspective ?? 1,
+        facePosition,
+        update: () => {
+            headBone.updateWorldMatrix(true, false);
+            headBone.getWorldPosition(headPosition);
+            headBone.getWorldQuaternion(headQuaternion);
+            faceUp.copy(localUp).applyQuaternion(headQuaternion).normalize();
+            facePosition
+                .copy(headPosition)
+                .addScaledVector(faceUp, reference.headOffset);
+        },
+    };
+    reference.update();
+    return reference;
+}
+
 export interface AngelRingReference {
     headBone: THREE.Object3D;
     localUp: THREE.Vector3;
@@ -205,7 +291,7 @@ export interface AngelRingReference {
  * at the back of the rendered head, which reverses the projected AngelRing
  * front/back response.
  */
-function unityDirectionToThreeFbx(axis: ReDriveAxis): THREE.Vector3 {
+export function unityDirectionToThreeFbx(axis: ReDriveAxis): THREE.Vector3 {
     const direction = axisToVector(axis);
     direction.x *= -1;
     return direction;

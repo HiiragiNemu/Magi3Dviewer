@@ -1,10 +1,66 @@
 #menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: relative;
+    z-index: 20;
+    min-height: 38px;
+    max-height: 60vh;
+    padding: 3px 44px 3px 4px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: rgba(18, 18, 28, 0.96);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+
+.menu-ui-collapsed #menu-controls {
+    display: none !important;
+}
+
+.menu-ui-collapsed #menu {
+    overflow: hidden;
+}
+
+body.theme-light #menu {
+    background: rgba(240, 240, 245, 0.97);
+    border-bottom-color: rgba(0, 0, 0, 0.12);
+}
+
+.main-toolbar-toggle {
+    position: absolute;
+    top: 3px;
+    right: 8px;
+    z-index: 2;
+    width: 32px;
+    height: 32px;
+    padding: 0;
     display: flex;
-    justify-content: space-between;
-    pointer-events: none;
-    max-height: 100%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 6px;
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    font-size: 13px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.main-toolbar-toggle:hover {
+    background: rgba(16, 185, 129, 0.3);
+    color: #059669;
+}
+
+.main-toolbar-toggle.controls-collapsed {
+    transform: rotate(180deg);
+}
+
+body.theme-light .main-toolbar-toggle {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.5);
+    color: #059669;
+}
+
+body.theme-light .main-toolbar-toggle:hover {
+    background: rgba(16, 185, 129, 0.2);
 }

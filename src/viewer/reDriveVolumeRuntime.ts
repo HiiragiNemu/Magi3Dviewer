@@ -1,9 +1,13 @@
 import * as THREE from 'three'
 import {
+    DepthRimExperiment,
+    getReDriveCharacterLightingDirectionState,
     getMeshToonStylizationUniforms,
+    setReDriveCharacterLightingOverrideDirection,
     toonStylizationOptions,
 } from 'magia-exedra-character-three/shaders'
 import { scene, recoveredFillLight, recoveredHemisphereLight } from './scene'
+import { unityShL2ToThree } from './unityLighting'
 
 export type RdBlendMode = 0 | 1 | 2 | 3
 export type Rgba = [number, number, number, number]
@@ -24,7 +28,10 @@ export interface ReDriveVolumeRuntimeProfile {
     backgroundBackgroundTint?: string | Rgba
     characterLightingOverrideColor?: string | Rgba
     characterLightingOverrideRatio?: number
+    /** Native Vector3Parameter value: Unity Euler degrees, not a direction. */
     characterLightingOverrideDirection?: [number, number, number]
+    /** Optional effective Volume-stack gate recovered at runtime. */
+    characterLightingOverrideDirectionEnabled?: boolean
     characterAdditionalRimLightColor?: string | Rgba
     characterAdditionalRimLightDirection?: [number, number]
     characterFaceAwayTint?: string | Rgba
@@ -45,6 +52,10 @@ export interface ReDriveVolumeRuntimeProfile {
         width: number
         topBlendMode: RdBlendMode
         bottomBlendMode: RdBlendMode
+        /** Serialized ReDriveVolume _useFixedLightDir value. */
+        useFixedLightDirection?: boolean
+        activationSource?: string
+        operatorSource?: string
         lightScreenIntensity?: number
         lightScreenTopColor?: string | Rgba
         lightScreenBottomColor?: string | Rgba
@@ -54,37 +65,75 @@ export interface ReDriveVolumeRuntimeProfile {
     overrides?: Record<string, boolean>
 }
 
+export interface ReDriveBackgroundShaderGlobals {
+    /** Native `_BgColorAdjustments`: contrast, saturation, exposure multiplier. */
+    colorAdjustments: [number, number, number]
+    globalTint: string | Rgba
+    backgroundTint: string | Rgba
+    shadowStrengthAdditive: number
+    authority: 'redrive-volume-to-native-gpu-uniforms'
+}
+
+export interface ReDriveVolumeRuntimeOptions {
+    /** True when recovered background materials consume native shader globals. */
+    backgroundShaderGlobalsApplied?: boolean
+}
+
 const lightProbe = new THREE.LightProbe(new THREE.SphericalHarmonics3(), 0)
 lightProbe.name = 'OfficialReDriveSphericalHarmonics'
-scene.scene.add(lightProbe)
 const backgroundLightProbe =
     new THREE.LightProbe(new THREE.SphericalHarmonics3(), 0)
 backgroundLightProbe.name = 'OfficialReDriveSphericalHarmonics:Background'
-scene.backgroundScene.add(backgroundLightProbe)
 
-const initial = {
-    sceneEnvironmentIntensity:
-        (scene.scene as SceneWithImageBasedLighting).environmentIntensity,
-    backgroundSceneEnvironmentIntensity:
-        (scene.backgroundScene as SceneWithImageBasedLighting).environmentIntensity,
-    sceneBackgroundIntensity:
-        (scene.scene as SceneWithImageBasedLighting).backgroundIntensity,
-    backgroundSceneBackgroundIntensity:
-        (scene.backgroundScene as SceneWithImageBasedLighting).backgroundIntensity,
-    ambientIntensity: scene.ambientLight.intensity,
-    hemisphereIntensity: recoveredHemisphereLight.intensity,
-    fillIntensity: recoveredFillLight.intensity,
-    characterTint: toonStylizationOptions.characterTint,
-    characterShadowTint: toonStylizationOptions.characterShadowTint,
-    characterLightingOverrideColor:
-        toonStylizationOptions.characterLightingOverrideColor,
-    characterLightingOverrideRatio:
-        toonStylizationOptions.characterLightingOverrideRatio,
-    rimEnabled: toonStylizationOptions.rimEnabled,
-    rimColor: toonStylizationOptions.rimColor,
-    rimStrength: toonStylizationOptions.rimStrength,
-    rimDirectionX: toonStylizationOptions.rimDirectionX,
-    rimDirectionY: toonStylizationOptions.rimDirectionY,
+function captureInitialState() {
+    return {
+        sceneEnvironmentIntensity:
+            (scene.scene as SceneWithImageBasedLighting).environmentIntensity,
+        backgroundSceneEnvironmentIntensity:
+            (scene.backgroundScene as SceneWithImageBasedLighting).environmentIntensity,
+        sceneBackgroundIntensity:
+            (scene.scene as SceneWithImageBasedLighting).backgroundIntensity,
+        backgroundSceneBackgroundIntensity:
+            (scene.backgroundScene as SceneWithImageBasedLighting).backgroundIntensity,
+        ambientIntensity: scene.ambientLight.intensity,
+        hemisphereIntensity: recoveredHemisphereLight.intensity,
+        fillIntensity: recoveredFillLight.intensity,
+        characterTint: toonStylizationOptions.characterTint,
+        characterShadowTint: toonStylizationOptions.characterShadowTint,
+        characterLightingOverrideColor:
+            toonStylizationOptions.characterLightingOverrideColor,
+        characterLightingOverrideRatio:
+            toonStylizationOptions.characterLightingOverrideRatio,
+        characterLightingOverrideDirection:
+            getReDriveCharacterLightingDirectionState(),
+        rimEnabled: toonStylizationOptions.rimEnabled,
+        rimColor: toonStylizationOptions.rimColor,
+        rimStrength: toonStylizationOptions.rimStrength,
+        rimDirectionX: toonStylizationOptions.rimDirectionX,
+        rimDirectionY: toonStylizationOptions.rimDirectionY,
+        additionalRimDirection:
+            DepthRimExperiment.additionalDirectionVS.clone(),
+        additionalRimColor: DepthRimExperiment.additionalColor.clone(),
+    }
+}
+
+type InitialState = ReturnType<typeof captureInitialState>
+let initialState: InitialState | undefined
+let probesAttached = false
+
+/**
+ * stages.ts and scene.ts form an intentional runtime import cycle. Do not read
+ * the scene binding while modules are still being evaluated: production chunk
+ * ordering can otherwise hit the ESM temporal dead zone before setupViewer().
+ */
+function ensureReDriveRuntimeInitialized(): InitialState {
+    if (!probesAttached) {
+        scene.scene.add(lightProbe)
+        scene.backgroundScene.add(backgroundLightProbe)
+        probesAttached = true
+    }
+    initialState ??= captureInitialState()
+    return initialState
 }
 
 function color(value: string | Rgba | undefined, fallback = '#ffffff'): THREE.Color {
@@ -117,18 +166,17 @@ function updateCharacterUniforms() {
 }
 
 function applySphericalHarmonics(values?: number[]) {
+    ensureReDriveRuntimeInitialized()
     if (!values || values.length !== 27) {
         lightProbe.intensity = 0
         backgroundLightProbe.intensity = 0
         return
     }
 
-    // Unity SphericalHarmonicsL2 serializes 9 coefficients per RGB channel.
-    for (let coefficient = 0; coefficient < 9; coefficient++) {
+    const coefficients = unityShL2ToThree(values)
+    for (let coefficient = 0; coefficient < coefficients.length; coefficient++) {
         lightProbe.sh.coefficients[coefficient].set(
-            values[coefficient],
-            values[coefficient + 9],
-            values[coefficient + 18],
+            ...coefficients[coefficient],
         )
         backgroundLightProbe.sh.coefficients[coefficient].copy(
             lightProbe.sh.coefficients[coefficient],
@@ -148,6 +196,71 @@ function profileOverride(
     present: boolean,
 ) {
     return profile.overrides?.[key] ?? present
+}
+
+/**
+ * Resolve serialized Volume parameters to the exact native GPU representation.
+ * A bounded TW GLES capture confirmed [1, 1.05, 1.14869833] for serialized
+ * contrast=0, saturation=5 and postExposure=0.2.
+ */
+export function resolveReDriveBackgroundShaderGlobals(
+    profile?: ReDriveVolumeRuntimeProfile,
+): ReDriveBackgroundShaderGlobals | undefined {
+    if (!profile) return undefined
+    const contrastEnabled = profileOverride(
+        profile,
+        'backgroundContrast',
+        profile.backgroundContrast != undefined,
+    )
+    const saturationEnabled = profileOverride(
+        profile,
+        'backgroundSaturation',
+        profile.backgroundSaturation != undefined,
+    )
+    const exposureEnabled = profileOverride(
+        profile,
+        'backgroundPostExposure',
+        profile.backgroundPostExposure != undefined,
+    )
+    const globalTintEnabled = profileOverride(
+        profile,
+        'backgroundTint',
+        profile.backgroundTint != undefined,
+    )
+    const backgroundTintEnabled = profileOverride(
+        profile,
+        'backgroundBackgroundTint',
+        profile.backgroundBackgroundTint != undefined,
+    )
+    const shadowEnabled = profileOverride(
+        profile,
+        'backgroundShadowStrengthAdditive',
+        profile.backgroundShadowStrengthAdditive != undefined,
+    )
+    const contrast = contrastEnabled ? profile.backgroundContrast ?? 0 : 0
+    const saturation = saturationEnabled ? profile.backgroundSaturation ?? 0 : 0
+    const postExposure = exposureEnabled ? profile.backgroundPostExposure ?? 0 : 0
+    return {
+        colorAdjustments: [
+            1 + contrast * 0.01,
+            1 + saturation * 0.01,
+            2 ** postExposure,
+        ],
+        globalTint: globalTintEnabled
+            ? profile.backgroundTint ?? [1, 1, 1, 1]
+            : [1, 1, 1, 1],
+        backgroundTint: backgroundTintEnabled
+            ? profile.backgroundBackgroundTint ?? [1, 1, 1, 1]
+            : [1, 1, 1, 1],
+        shadowStrengthAdditive: shadowEnabled
+            ? THREE.MathUtils.clamp(
+                profile.backgroundShadowStrengthAdditive ?? 0,
+                0,
+                1,
+            )
+            : 0,
+        authority: 'redrive-volume-to-native-gpu-uniforms',
+    }
 }
 
 function applySkyboxIntensity(profile: ReDriveVolumeRuntimeProfile) {
@@ -170,7 +283,10 @@ function applySkyboxIntensity(profile: ReDriveVolumeRuntimeProfile) {
     scene.scene.userData.reDriveSkyboxIntensity = intensity
 }
 
-function applyBackgroundColorAdjustments(profile: ReDriveVolumeRuntimeProfile) {
+function applyBackgroundColorAdjustments(
+    profile: ReDriveVolumeRuntimeProfile,
+    shaderGlobalsApplied: boolean,
+) {
     const pass = scene.effects.backgroundColorAdjustPass
     const globalTintEnabled = profileOverride(
         profile,
@@ -204,8 +320,9 @@ function applyBackgroundColorAdjustments(profile: ReDriveVolumeRuntimeProfile) {
         || contrastEnabled
         || saturationEnabled
 
-    pass.enabled = enabled
-    pass.uniforms.uEnabled.value = enabled ? 1 : 0
+    const fullscreenFallbackEnabled = enabled && !shaderGlobalsApplied
+    pass.enabled = fullscreenFallbackEnabled
+    pass.uniforms.uEnabled.value = fullscreenFallbackEnabled ? 1 : 0
     pass.uniforms.uGlobalTint.value.copy(
         color(globalTintEnabled ? profile.backgroundTint : undefined),
     )
@@ -225,6 +342,10 @@ function applyBackgroundColorAdjustments(profile: ReDriveVolumeRuntimeProfile) {
 
     scene.backgroundScene.userData.reDriveBackgroundColorAdjustments = enabled
         ? {
+            path: shaderGlobalsApplied
+                ? 'native-material-shader-globals'
+                : 'fullscreen-fallback',
+            shaderGlobals: resolveReDriveBackgroundShaderGlobals(profile),
             globalTint: globalTintEnabled ? profile.backgroundTint ?? null : null,
             backgroundTint: backgroundTintEnabled
                 ? profile.backgroundBackgroundTint ?? null
@@ -267,28 +388,70 @@ function applyParaffin(profile?: ReDriveVolumeRuntimeProfile['paraffin']) {
     pass.uniforms.uParaWidth.value = profile.width
     pass.uniforms.uTopBlendMode.value = profile.topBlendMode
     pass.uniforms.uBottomBlendMode.value = profile.bottomBlendMode
-    pass.uniforms.uLightScreenIntensity.value = profile.lightScreenIntensity ?? 0
-    pass.uniforms.uLightScreenTopColor.value.copy(color(profile.lightScreenTopColor, '#000000'))
-    pass.uniforms.uLightScreenBottomColor.value.copy(color(profile.lightScreenBottomColor, '#000000'))
-    pass.uniforms.uLightScreenPow.value = profile.lightScreenPow ?? 1
-    pass.uniforms.uLightScreenRoundness.value = profile.lightScreenRoundness ?? 0
+    pass.uniforms.uUseFixedLightDirection.value =
+        profile.useFixedLightDirection ? 1 : 0
     scene.scene.userData.reDriveParaffin = {
         requested: true,
         applied: true,
         reason: 'verified',
+        useFixedLightDirection: profile.useFixedLightDirection === true,
+        activationSource: profile.activationSource ?? null,
+        operatorSource: profile.operatorSource ?? null,
+        lightScreenApplied: false,
     }
 }
 
-export function applyReDriveVolumeRuntime(profile?: ReDriveVolumeRuntimeProfile) {
+function applyCharacterLightingOverrideDirection(
+    profile: ReDriveVolumeRuntimeProfile,
+) {
+    const initial = ensureReDriveRuntimeInitialized()
+    const serialized = profile.characterLightingOverrideDirection
+    const validSerialized =
+        serialized != undefined
+        && serialized.length === 3
+        && serialized.every(Number.isFinite)
+    const stageOverridesDirection = profile.overrides
+        ?.characterLightingOverrideDirection === true
+    // The shader gate is the effective Volume-stack override state. A stored
+    // Vector3Parameter with overrideState=false is only an inspector value and
+    // must not inherit the Viewer's previous hard-coded -Z override.
+    const enabled = profile.characterLightingOverrideDirectionEnabled
+        ?? stageOverridesDirection
+    const eulerDegrees = validSerialized
+        ? serialized
+        : initial.characterLightingOverrideDirection.eulerDegrees
+    const state = setReDriveCharacterLightingOverrideDirection(
+        enabled,
+        eulerDegrees,
+    )
+    scene.scene.userData.reDriveCharacterLightingOverrideDirection = {
+        ...state,
+        source: profile.characterLightingOverrideDirectionEnabled != undefined
+            ? 'resolved-volume-stack'
+            : stageOverridesDirection && validSerialized
+                ? 'stage-redrive-volume'
+                : 'disabled-unoverridden-volume-parameter',
+    }
+}
+
+export function applyReDriveVolumeRuntime(
+    profile?: ReDriveVolumeRuntimeProfile,
+    options: ReDriveVolumeRuntimeOptions = {},
+) {
     if (!profile) {
         resetReDriveVolumeRuntime()
         return
     }
 
+    ensureReDriveRuntimeInitialized()
     applySphericalHarmonics(profile.shAmbient)
     applySkyboxIntensity(profile)
-    applyBackgroundColorAdjustments(profile)
+    applyBackgroundColorAdjustments(
+        profile,
+        options.backgroundShaderGlobalsApplied === true,
+    )
     applyParaffin(profile.paraffin)
+    applyCharacterLightingOverrideDirection(profile)
 
     if (profile.characterTint != undefined) {
         toonStylizationOptions.characterTint =
@@ -321,17 +484,30 @@ export function applyReDriveVolumeRuntime(profile?: ReDriveVolumeRuntimeProfile)
     // HDR colour by itself is only a default value, not proof that the effect
     // is active. Requiring both effective overrides prevents a static white
     // rim from washing out every character in the stage.
-    toonStylizationOptions.rimEnabled =
+    const additionalRimEnabled =
         rimColorOverride
         && rimDirectionOverride
         && validRimDirection
         && rim.intensity > 0.0001
+    // Preserve the existing material/main Rim path and add the compiled
+    // ReDriveToon pass' second CameraDepthTexture signal in parallel. The
+    // scene/Timeline globals drive that opposing depth edge on both Body
+    // decorations and Hair; replacing the main Rim would remove an already
+    // visible reflection layer instead of restoring the missing one.
+    toonStylizationOptions.rimEnabled = additionalRimEnabled
     toonStylizationOptions.rimColor = `#${rim.color.getHexString()}`
     // Unity stores HDR colour magnitude in the RGB components.
     toonStylizationOptions.rimStrength = rim.intensity
-    if (validRimDirection && rimDirectionOverride) {
+    if (additionalRimEnabled && rimDirection) {
         toonStylizationOptions.rimDirectionX = rimDirection[0]
         toonStylizationOptions.rimDirectionY = rimDirection[1]
+        DepthRimExperiment.additionalDirectionVS.set(...rimDirection)
+        DepthRimExperiment.additionalColor
+            .copy(rim.color)
+            .multiplyScalar(rim.intensity)
+    } else {
+        DepthRimExperiment.additionalDirectionVS.set(0, 0)
+        DepthRimExperiment.additionalColor.setRGB(0, 0, 0)
     }
 
     scene.scene.userData.reDriveVolumeRuntime = profile
@@ -339,6 +515,7 @@ export function applyReDriveVolumeRuntime(profile?: ReDriveVolumeRuntimeProfile)
 }
 
 export function resetReDriveVolumeRuntime() {
+    const initial = ensureReDriveRuntimeInitialized()
     lightProbe.intensity = 0
     lightProbe.sh.zero()
     ;(scene.scene as SceneWithImageBasedLighting).environmentIntensity =
@@ -362,6 +539,11 @@ export function resetReDriveVolumeRuntime() {
         initial.characterLightingOverrideColor
     toonStylizationOptions.characterLightingOverrideRatio =
         initial.characterLightingOverrideRatio
+    setReDriveCharacterLightingOverrideDirection(
+        initial.characterLightingOverrideDirection.enabled,
+        initial.characterLightingOverrideDirection.eulerDegrees,
+    )
+    delete scene.scene.userData.reDriveCharacterLightingOverrideDirection
     const backgroundPass = scene.effects.backgroundColorAdjustPass
     backgroundPass.enabled = false
     backgroundPass.uniforms.uEnabled.value = 0
@@ -379,6 +561,10 @@ export function resetReDriveVolumeRuntime() {
     toonStylizationOptions.rimStrength = initial.rimStrength
     toonStylizationOptions.rimDirectionX = initial.rimDirectionX
     toonStylizationOptions.rimDirectionY = initial.rimDirectionY
+    DepthRimExperiment.additionalDirectionVS.copy(
+        initial.additionalRimDirection,
+    )
+    DepthRimExperiment.additionalColor.copy(initial.additionalRimColor)
     delete scene.scene.userData.reDriveVolumeRuntime
     updateCharacterUniforms()
 }

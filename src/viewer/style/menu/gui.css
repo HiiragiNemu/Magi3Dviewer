@@ -1,15 +1,20 @@
 #three-gui {
+    width: 100%;
+    height: 100%;
     overflow: auto;
-    flex-shrink: 1;
     overscroll-behavior: contain;
-    scrollbar-width: thin;
-    display: initial;
-    margin-top: 8px;
-    margin-left: 4px;
+    scrollbar-width: none;
+    padding: 6px;
+}
+
+#three-gui::-webkit-scrollbar {
+    display: none;
 }
 
 #three-gui>.lil-gui {
     margin: 0;
+    width: 100%;
+    max-width: none;
 }
 
 .lil-gui {

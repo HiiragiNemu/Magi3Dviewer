@@ -18,7 +18,8 @@ Force enabling the effect composer with high levels of antialiasing can produce 
 
 const guiAntiAliasing = miscFolder.add(guiOptions, 'AntiAliasing', ['None', 'MSAA', 'TAA', 'SSAA', 'SMAA', 'FXAA']).name('AntiAliasing(Composer)').onChange(updateAntiAliasing)
 guiAntiAliasing.domElement.title = `Anti-aliasing method used for the effect composer.
-This option does not affect direct rendering that always uses default MSAA.`;
+FXAA is the default balanced mode. None disables anti-aliasing; SMAA is the
+sharper moderate-cost option; MSAA, TAA and SSAA are progressively heavier.`;
 
 const guiAntiAliasingLevel = createSquareExponentController(miscFolder, guiOptions, 'AntiAliasingLevel', 1, 8).onChange(updateAntiAliasing).hide()
 
@@ -44,5 +45,7 @@ function updateAntiAliasing() {
     updateAntiAliasingGUI()
     scene.effects.setAntiAliasing(guiOptions.AntiAliasing, guiOptions.AntiAliasingLevel)
 }
+
+updateAntiAliasing()
 
 miscFolder.add(PerformanceMetricsOptions, 'visible').name('PerformanceMetrics')

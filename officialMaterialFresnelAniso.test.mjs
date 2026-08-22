@@ -59,6 +59,53 @@ test('100101/100107 shared body Aniso uses exact current-JP material values', ()
   assert.equal(value.anisotropyProfile.feather, 0)
 })
 
+test('official material corpus carries per-slot CameraDepthTexture and rim gates', () => {
+  assert.equal(officialMaterialProfileData.bundleCount, 95)
+  assert.equal(officialMaterialProfileData.materialCount, 1533)
+  const value = profiles.getOfficialMaterialProfile('mt_chara_100101_hair')
+  assert.equal(value.source, 'official-export')
+  assert.deepEqual(value.depthRim, {
+    useDepthTex: true,
+    useRimLight: true,
+    ditherFade: 0,
+    width: 1,
+    yOffset: 0,
+    rimDiffThreshold: 0.019999999552965164,
+    shadowDiffThreshold: 0.029999999329447746,
+  })
+})
+
+test('official material corpus drives Hair and AngelRing from serialized values', () => {
+  const madoka = profiles.getOfficialMaterialProfile('mt_chara_100101_hair')
+  assert.deepEqual(madoka.angelRing, {
+    isHair: true,
+    enabled: true,
+    uvMode: false,
+    map: 'common',
+    rimLightColor: [1, 1, 1],
+  })
+
+  const yuugen = profiles.getOfficialMaterialProfile('mt_chara_108101_hair')
+  assert.deepEqual(yuugen.angelRing, {
+    isHair: true,
+    enabled: true,
+    uvMode: true,
+    map: 'character',
+    rimLightColor: [
+      0.686274528503418,
+      0.6431372761726379,
+      0.7607843279838562,
+    ],
+  })
+
+  // A hair-like name is not enough: the official `_IsHair` switch is the
+  // executable branch selector for every material slot.
+  const nonHair = profiles.getOfficialMaterialProfile('mt_chara_100504_hair_out')
+  assert.equal(nonHair.angelRing.isHair, false)
+  assert.equal(nonHair.angelRing.enabled, false)
+  assert.equal(nonHair.angelRing.map, 'none')
+})
+
 test('100101 weapon Soul Gem uses exact material Fresnel defaults', () => {
   const value = profiles.getOfficialMaterialProfile('mt_chara_100101_weapon_a_sj')
   assert.equal(value.fresnel.enabled, true)
@@ -154,6 +201,9 @@ test('100101 weapon GemDepthDiff follows exact current-JP transparency predicate
   assert.match(gem, /step\(0\.0000001, abs\(uGemUseDepthDiff\)\)/)
   assert.match(gem, /step\(0\.0000001, abs\(uGemTransparency\)\)/)
   assert.doesNotMatch(gem, /uGemUseDepthDiff \* uGemTransparency/)
-  assert.match(gem, /official GemDepthDiff contribution is/)
+  assert.match(gem, /5\.0 \* \(/)
+  assert.match(gem, /1\.0 - uGemDepthDiffThreshold/)
+  assert.match(gem, /rdGemShadowSelector = saturate\(/)
+  assert.match(gem, /diffuseColor\.a \+ rdGemDepthSelector/)
   assert.doesNotMatch(gem, /rdGemDepthProxy/)
 })

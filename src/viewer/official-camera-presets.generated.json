@@ -1,0 +1,5558 @@
+{
+  "schema": "magius-camera-preset-runtime-profiles-v1",
+  "unityVersion": "2022.3.62f2",
+  "profileCount": 55,
+  "profiles": [
+    {
+      "cameraPresetId": "000",
+      "bundleName": "camera_preset_000",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 34.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 300.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 1238202575991969423,
+        "path": "camera_preset_000/01_CharacterFollowCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            2.5,
+            -1.7999999523162842
+          ],
+          "rotation": [
+            0.2503800094127655,
+            -0.0,
+            -0.0,
+            0.9681476950645447
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            2.5,
+            -1.7999999523162842
+          ],
+          "rotation": [
+            0.2503800094127655,
+            0.0,
+            0.0,
+            0.9681476950645447
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 3820941088083517252,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          2.5,
+          -1.7999999523162842
+        ],
+        "damping": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "composer": null
+    },
+    {
+      "cameraPresetId": "001",
+      "bundleName": "camera_preset_001",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -5750635710211813730,
+        "path": "camera_preset_001/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -12.106315612792969
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.1358914077281952,
+            0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -12.106315612792969
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.1358914077281952,
+            0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -6825881029521409333,
+        "bindingMode": 1,
+        "followOffset": [
+          2.0,
+          1.600000023841858,
+          -5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -6819160492883001797,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          -0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "002",
+      "bundleName": "camera_preset_002",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 35.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -1448510230977627124,
+        "path": "camera_preset_002/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            -1.600000023841858,
+            1.600000023841858,
+            -5.000001907348633
+          ],
+          "rotation": [
+            0.058967527002096176,
+            0.15395841002464294,
+            -0.009204898960888386,
+            0.9862732887268066
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -1.600000023841858,
+            1.600000023841858,
+            -5.000001907348633
+          ],
+          "rotation": [
+            0.058967527002096176,
+            0.15395841002464294,
+            -0.009204898960888386,
+            0.9862732887268066
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 3516909822729574324,
+        "bindingMode": 1,
+        "followOffset": [
+          -1.600000023841858,
+          1.600000023841858,
+          -5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 6011153405256685636,
+        "trackedObjectOffset": [
+          0.0,
+          -0.2800000011920929,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "003",
+      "bundleName": "camera_preset_003",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 6755963093996433815,
+        "path": "camera_preset_003/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            3.0,
+            4.0,
+            -17.10631561279297
+          ],
+          "rotation": [
+            0.115863136947155,
+            -0.11669795960187912,
+            0.013708928599953651,
+            0.9862907528877258
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            3.0,
+            4.0,
+            -17.10631561279297
+          ],
+          "rotation": [
+            0.115863136947155,
+            -0.11669795960187912,
+            0.013708928599953651,
+            0.9862907528877258
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -634739459395321491,
+        "bindingMode": 1,
+        "followOffset": [
+          3.0,
+          4.0,
+          -10.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 5567575353456483850,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          0.30000001192092896,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "004",
+      "bundleName": "camera_preset_004",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 38.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -6405756987683021640,
+        "path": "camera_preset_004/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            -6.0,
+            4.0,
+            -9.549921035766602
+          ],
+          "rotation": [
+            0.09565854072570801,
+            0.265615314245224,
+            -0.026495877653360367,
+            0.9589556455612183
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -6.0,
+            4.0,
+            -9.549921035766602
+          ],
+          "rotation": [
+            0.09565854072570801,
+            0.265615314245224,
+            -0.026495877653360367,
+            0.9589556455612183
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -1128760514366773080,
+        "bindingMode": 1,
+        "followOffset": [
+          -6.0,
+          4.0,
+          -10.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -1655238093229047109,
+        "trackedObjectOffset": [
+          0.0,
+          0.4000000059604645,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "005",
+      "bundleName": "camera_preset_005",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -2327182823817757447,
+        "path": "camera_preset_005/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            3.0,
+            1.7999999523162842,
+            13.858009338378906
+          ],
+          "rotation": [
+            -0.028031377121806145,
+            0.9251156449317932,
+            -0.0696760043501854,
+            -0.37218356132507324
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            3.0,
+            1.7999999523162842,
+            13.858009338378906
+          ],
+          "rotation": [
+            -0.028031377121806145,
+            0.9251156449317932,
+            -0.0696760043501854,
+            -0.37218356132507324
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -8497417251201574463,
+        "bindingMode": 1,
+        "followOffset": [
+          3.0,
+          1.7999999523162842,
+          5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -8091641998522876962,
+        "trackedObjectOffset": [
+          -1.7999999523162842,
+          -0.5,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "006",
+      "bundleName": "camera_preset_006",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 35.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -5182548447528860069,
+        "path": "camera_preset_006/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            -3.5,
+            1.2000000476837158,
+            -11.5
+          ],
+          "rotation": [
+            0.0057418146170675755,
+            0.8935896158218384,
+            -0.011434804648160934,
+            0.4487025737762451
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -3.5,
+            1.2000000476837158,
+            -11.5
+          ],
+          "rotation": [
+            0.0057418146170675755,
+            0.8935896158218384,
+            -0.011434804648160934,
+            0.4487025737762451
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 5462719680897384797,
+        "bindingMode": 1,
+        "followOffset": [
+          -3.5,
+          1.2000000476837158,
+          3.5
+        ],
+        "damping": [
+          0.15000000596046448,
+          0.15000000596046448,
+          0.15000000596046448
+        ]
+      },
+      "composer": {
+        "pathId": -4226017286912065387,
+        "trackedObjectOffset": [
+          1.2000000476837158,
+          -0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "007",
+      "bundleName": "camera_preset_007",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -1043824042124113250,
+        "path": "camera_preset_007/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -30.0
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.1358914077281952,
+            0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -30.0
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.1358914077281952,
+            0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 3576843956352307148,
+        "bindingMode": 1,
+        "followOffset": [
+          2.0,
+          1.600000023841858,
+          -5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 7235870432474884721,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          -0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "008",
+      "bundleName": "camera_preset_008",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 7355254591651297571,
+        "path": "camera_preset_008/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            -2.0,
+            1.600000023841858,
+            -0.7462754249572754
+          ],
+          "rotation": [
+            0.05225116387009621,
+            0.1358914077281952,
+            -0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -2.0,
+            1.600000023841858,
+            -0.7462754249572754
+          ],
+          "rotation": [
+            0.05225116387009621,
+            0.1358914077281952,
+            -0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 631887138881750029,
+        "bindingMode": 1,
+        "followOffset": [
+          -2.0,
+          1.600000023841858,
+          -5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -6110727090830833860,
+        "trackedObjectOffset": [
+          -0.6000000238418579,
+          -0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "009",
+      "bundleName": "camera_preset_009",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 1300593469087768913,
+        "path": "camera_preset_009/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            2.200000047683716,
+            -10.203958511352539
+          ],
+          "rotation": [
+            0.062137458473443985,
+            -1.401298464324817e-45,
+            -0.0,
+            0.9980676174163818
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            2.200000047683716,
+            -10.203958511352539
+          ],
+          "rotation": [
+            0.062137458473443985,
+            -1.401298464324817e-45,
+            0.0,
+            0.9980676174163818
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 4176180708710505810,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          2.200000047683716,
+          -5.199999809265137
+        ],
+        "damping": [
+          0.15000000596046448,
+          0.15000000596046448,
+          0.15000000596046448
+        ]
+      },
+      "composer": {
+        "pathId": 5237621316146277356,
+        "trackedObjectOffset": [
+          0.0,
+          0.30000001192092896,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "010",
+      "bundleName": "camera_preset_010",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 3798402783660112319,
+        "path": "camera_preset_010/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            2.200000047683716,
+            -2.557560920715332
+          ],
+          "rotation": [
+            0.062137454748153687,
+            -3.7180918344148495e-09,
+            2.3148007122220093e-10,
+            0.9980676174163818
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            2.200000047683716,
+            -2.557560920715332
+          ],
+          "rotation": [
+            0.062137454748153687,
+            -3.7180918344148495e-09,
+            2.3148007122220093e-10,
+            0.9980676174163818
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 1925326646513372603,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          2.200000047683716,
+          -5.199999809265137
+        ],
+        "damping": [
+          0.15000000596046448,
+          0.15000000596046448,
+          0.15000000596046448
+        ]
+      },
+      "composer": {
+        "pathId": 661955684541852156,
+        "trackedObjectOffset": [
+          0.0,
+          0.30000001192092896,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "011",
+      "bundleName": "camera_preset_011",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 8591718823595379294,
+        "path": "camera_preset_011/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            0.0,
+            5.0,
+            -14.803958892822266
+          ],
+          "rotation": [
+            0.1363620162010193,
+            -1.7045653777358893e-08,
+            2.3462962683851174e-09,
+            0.9906591176986694
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            5.0,
+            -14.803958892822266
+          ],
+          "rotation": [
+            0.1363620162010193,
+            -1.7045653777358893e-08,
+            2.3462962683851174e-09,
+            0.9906591176986694
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 3141597532443374595,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          5.0,
+          -9.800000190734863
+        ],
+        "damping": [
+          0.15000000596046448,
+          0.15000000596046448,
+          0.15000000596046448
+        ]
+      },
+      "composer": {
+        "pathId": -6837597686627162179,
+        "trackedObjectOffset": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "012",
+      "bundleName": "camera_preset_012",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 4302934056728183787,
+        "path": "camera_preset_012/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -7.1520562171936035
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.1358914077281952,
+            0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -7.1520562171936035
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.1358914077281952,
+            0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 7825679520183486639,
+        "bindingMode": 1,
+        "followOffset": [
+          2.0,
+          1.600000023841858,
+          -5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -4749622328920975289,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          -0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "013",
+      "bundleName": "camera_preset_013",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 35.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 5195482630148252866,
+        "path": "camera_preset_013/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            -1.600000023841858,
+            1.600000023841858,
+            -5.200065612792969
+          ],
+          "rotation": [
+            0.05896752327680588,
+            0.15395842492580414,
+            -0.009204898029565811,
+            0.9862732887268066
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -1.600000023841858,
+            1.600000023841858,
+            -5.200065612792969
+          ],
+          "rotation": [
+            0.05896752327680588,
+            0.15395842492580414,
+            -0.009204898029565811,
+            0.9862732887268066
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -2503499808333668388,
+        "bindingMode": 1,
+        "followOffset": [
+          -1.600000023841858,
+          1.600000023841858,
+          -5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 1085563387646519997,
+        "trackedObjectOffset": [
+          0.0,
+          -0.2800000011920929,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "014",
+      "bundleName": "camera_preset_014",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 6526002840868945997,
+        "path": "camera_preset_014/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            3.0,
+            1.7999999523162842,
+            4.849950790405273
+          ],
+          "rotation": [
+            -0.028031377121806145,
+            0.9251156449317932,
+            -0.0696760043501854,
+            -0.37218356132507324
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            3.0,
+            1.7999999523162842,
+            4.849950790405273
+          ],
+          "rotation": [
+            -0.028031377121806145,
+            0.9251156449317932,
+            -0.0696760043501854,
+            -0.37218356132507324
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -7305052795251412084,
+        "bindingMode": 1,
+        "followOffset": [
+          3.0,
+          1.7999999523162842,
+          5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -6079398385656599812,
+        "trackedObjectOffset": [
+          -1.7999999523162842,
+          -0.5,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "015",
+      "bundleName": "camera_preset_015",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 35.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 4738126484033809278,
+        "path": "camera_preset_015/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            -3.5,
+            1.2000000476837158,
+            -11.5
+          ],
+          "rotation": [
+            0.005741807632148266,
+            0.8935896158218384,
+            -0.011434792540967464,
+            0.44870248436927795
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -3.5,
+            1.2000000476837158,
+            -11.5
+          ],
+          "rotation": [
+            0.005741807632148266,
+            0.8935896158218384,
+            -0.011434792540967464,
+            0.44870248436927795
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -4113500463138680784,
+        "bindingMode": 1,
+        "followOffset": [
+          -3.5,
+          1.2000000476837158,
+          3.5
+        ],
+        "damping": [
+          0.15000000596046448,
+          0.15000000596046448,
+          0.15000000596046448
+        ]
+      },
+      "composer": {
+        "pathId": 175131733999160552,
+        "trackedObjectOffset": [
+          1.2000000476837158,
+          -0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "016",
+      "bundleName": "camera_preset_016",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 45.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 3434550933559912500,
+        "path": "camera_preset_016/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            5.0,
+            2.0,
+            -1.0500617027282715
+          ],
+          "rotation": [
+            0.06379768997430801,
+            -0.6318278908729553,
+            0.052301596850156784,
+            0.7707061171531677
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            5.0,
+            2.0,
+            -1.0500617027282715
+          ],
+          "rotation": [
+            0.06379768997430801,
+            -0.6318278908729553,
+            0.052301596850156784,
+            0.7707061171531677
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 782798852485176636,
+        "bindingMode": 1,
+        "followOffset": [
+          5.0,
+          2.0,
+          0.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 23262699390236474,
+        "trackedObjectOffset": [
+          0.0,
+          -0.10000000149011612,
+          1.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "017",
+      "bundleName": "camera_preset_017",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 35.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 4383299141898467279,
+        "path": "camera_preset_017/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            -6.0,
+            1.2000000476837158,
+            -15.0
+          ],
+          "rotation": [
+            0.009405839256942272,
+            0.6463257670402527,
+            -0.007967941462993622,
+            0.7629621028900146
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -6.0,
+            1.2000000476837158,
+            -15.0
+          ],
+          "rotation": [
+            0.009405839256942272,
+            0.6463257670402527,
+            -0.007967941462993622,
+            0.7629621028900146
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -5652811616957789296,
+        "bindingMode": 1,
+        "followOffset": [
+          -6.0,
+          1.2000000476837158,
+          0.0
+        ],
+        "damping": [
+          0.15000000596046448,
+          0.15000000596046448,
+          0.15000000596046448
+        ]
+      },
+      "composer": {
+        "pathId": -7931320522466549793,
+        "trackedObjectOffset": [
+          0.0,
+          -0.20000000298023224,
+          1.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "018",
+      "bundleName": "camera_preset_018",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -3260958062833199038,
+        "path": "camera_preset_018/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            2.4000000953674316,
+            2.0,
+            -32.5
+          ],
+          "rotation": [
+            0.0357666015625,
+            -0.09528197348117828,
+            0.0034257194492965937,
+            0.9948017001152039
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            2.4000000953674316,
+            2.0,
+            -32.5
+          ],
+          "rotation": [
+            0.0357666015625,
+            -0.09528197348117828,
+            0.0034257194492965937,
+            0.9948017001152039
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 1803814718288768271,
+        "bindingMode": 1,
+        "followOffset": [
+          2.4000000953674316,
+          2.0,
+          -7.5
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -1896595772972122913,
+        "trackedObjectOffset": [
+          0.949999988079071,
+          0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "019",
+      "bundleName": "camera_preset_019",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -2076930705313307831,
+        "path": "camera_preset_019/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            3.0,
+            3.0,
+            16.123586654663086
+          ],
+          "rotation": [
+            0.08493075519800186,
+            -0.14467716217041016,
+            0.012465191073715687,
+            0.9857484102249146
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            3.0,
+            3.0,
+            16.123586654663086
+          ],
+          "rotation": [
+            0.08493075519800186,
+            -0.14467716217041016,
+            0.012465191073715687,
+            0.9857484102249146
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 5575240498086547869,
+        "bindingMode": 1,
+        "followOffset": [
+          3.0,
+          3.0,
+          -8.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -5633092209593888531,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          0.30000001192092896,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "020",
+      "bundleName": "camera_preset_020",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 1109101216283167906,
+        "path": "camera_preset_020/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            4.199999809265137,
+            -35.0
+          ],
+          "rotation": [
+            0.11320322751998901,
+            -0.0,
+            -0.0,
+            0.9935718774795532
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            4.199999809265137,
+            -35.0
+          ],
+          "rotation": [
+            0.11320322751998901,
+            0.0,
+            0.0,
+            0.9935718774795532
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": null,
+      "composer": null
+    },
+    {
+      "cameraPresetId": "021",
+      "bundleName": "camera_preset_021",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 45.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 5724471240659277257,
+        "path": "camera_preset_021/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            5.0,
+            2.0,
+            10.60630989074707
+          ],
+          "rotation": [
+            0.06379768997430801,
+            -0.6318278908729553,
+            0.052301596850156784,
+            0.7707061171531677
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            5.0,
+            2.0,
+            10.60630989074707
+          ],
+          "rotation": [
+            0.06379768997430801,
+            -0.6318278908729553,
+            0.052301596850156784,
+            0.7707061171531677
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 7109927243681447483,
+        "bindingMode": 1,
+        "followOffset": [
+          5.0,
+          2.0,
+          0.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -4164697432246199993,
+        "trackedObjectOffset": [
+          0.0,
+          -0.10000000149011612,
+          1.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "600000101",
+      "bundleName": "camera_preset_600000101",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 4947554385339260290,
+        "path": "camera_preset_600000101/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            3.740000009536743,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.10426364839076996,
+            -2.0678598389167746e-08,
+            2.167841461897524e-09,
+            0.9945496916770935
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            3.740000009536743,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.10426364839076996,
+            -2.0678598389167746e-08,
+            2.167841461897524e-09,
+            0.9945496916770935
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -2109578598306507052,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          3.740000009536743,
+          -10.0
+        ],
+        "damping": [
+          0.15000000596046448,
+          0.15000000596046448,
+          0.15000000596046448
+        ]
+      },
+      "composer": {
+        "pathId": 1761079025898959116,
+        "trackedObjectOffset": [
+          0.0,
+          0.3700000047683716,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "600000102",
+      "bundleName": "camera_preset_600000102",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 293747894799774181,
+        "path": "camera_preset_600000102/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            3.740000009536743,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.10426364839076996,
+            -2.0678598389167746e-08,
+            2.167841461897524e-09,
+            0.9945496916770935
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            3.740000009536743,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.10426364839076996,
+            -2.0678598389167746e-08,
+            2.167841461897524e-09,
+            0.9945496916770935
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -1079365572564460955,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          1.399999976158142,
+          -6.5
+        ],
+        "damping": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "composer": {
+        "pathId": -5526256533893504623,
+        "trackedObjectOffset": [
+          0.0,
+          -0.10000000149011612,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "600000103",
+      "bundleName": "camera_preset_600000103",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 4811529210885563801,
+        "path": "camera_preset_600000103/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            3.740000009536743,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.10426364839076996,
+            -2.0678598389167746e-08,
+            2.167841461897524e-09,
+            0.9945496916770935
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            3.740000009536743,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.10426364839076996,
+            -2.0678598389167746e-08,
+            2.167841461897524e-09,
+            0.9945496916770935
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -8563692119048563451,
+        "bindingMode": 1,
+        "followOffset": [
+          4.0,
+          2.0,
+          -5.0
+        ],
+        "damping": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "composer": {
+        "pathId": -1732273633841766910,
+        "trackedObjectOffset": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "600000104",
+      "bundleName": "camera_preset_600000104",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 50.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -7255024360492752436,
+        "path": "camera_preset_600000104/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            3.740000009536743,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.10426364839076996,
+            -2.0678598389167746e-08,
+            2.167841461897524e-09,
+            0.9945496916770935
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            3.740000009536743,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.10426364839076996,
+            -2.0678598389167746e-08,
+            2.167841461897524e-09,
+            0.9945496916770935
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -7671203464477652606,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          8.0,
+          -9.0
+        ],
+        "damping": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "composer": {
+        "pathId": 2812363175226186827,
+        "trackedObjectOffset": [
+          0.0,
+          0.6000000238418579,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "600000105",
+      "bundleName": "camera_preset_600000105",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 45.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -7455619901639458323,
+        "path": "camera_preset_600000105/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            3.740000009536743,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.10426364839076996,
+            -2.0678598389167746e-08,
+            2.167841461897524e-09,
+            0.9945496916770935
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            3.740000009536743,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.10426364839076996,
+            -2.0678598389167746e-08,
+            2.167841461897524e-09,
+            0.9945496916770935
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 3915071249458664145,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          2.200000047683716,
+          -5.199999809265137
+        ],
+        "damping": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "composer": {
+        "pathId": -8218303838271952243,
+        "trackedObjectOffset": [
+          0.0,
+          -0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "600000201",
+      "bundleName": "camera_preset_600000201",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 6802249539638726711,
+        "path": "camera_preset_600000201/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            2.630000114440918,
+            1.0800000429153442,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.04845499247312546,
+            -0.15642189979553223,
+            -0.007683368865400553,
+            0.9864711165428162
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            2.630000114440918,
+            1.0800000429153442,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.04845499247312546,
+            -0.15642189979553223,
+            -0.007683368865400553,
+            0.9864711165428162
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 5851105614333612221,
+        "bindingMode": 1,
+        "followOffset": [
+          2.630000114440918,
+          1.0800000429153442,
+          -5.539999961853027
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -7311510187726881423,
+        "trackedObjectOffset": [
+          -0.47999998927116394,
+          0.8199999928474426,
+          4.019999980926514
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "600000301",
+      "bundleName": "camera_preset_600000301",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -3978810511419857959,
+        "path": "camera_preset_600000301/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            1.5700000524520874,
+            0.8100000023841858,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.07028527557849884,
+            -0.09566160291433334,
+            -0.0067716375924646854,
+            0.9929063320159912
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            1.5700000524520874,
+            0.8100000023841858,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.07028527557849884,
+            -0.09566160291433334,
+            -0.0067716375924646854,
+            0.9929063320159912
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 4297716185201733694,
+        "bindingMode": 1,
+        "followOffset": [
+          1.5700000524520874,
+          0.8100000023841858,
+          -5.539999961853027
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -7329300293565363010,
+        "trackedObjectOffset": [
+          0.5099999904632568,
+          0.3499999940395355,
+          -0.09000000357627869
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "600010101",
+      "bundleName": "camera_preset_600010101",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -7683062441421767508,
+        "path": "camera_preset_600010101/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            4.199999809265137,
+            1.059999942779541,
+            -5.876617431640625
+          ],
+          "rotation": [
+            -0.05282723158597946,
+            -0.28590068221092224,
+            -0.015787381678819656,
+            0.9566717743873596
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            4.199999809265137,
+            1.059999942779541,
+            -5.876617431640625
+          ],
+          "rotation": [
+            -0.05282723158597946,
+            -0.28590068221092224,
+            -0.015787381678819656,
+            0.9566717743873596
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -924785519147863297,
+        "bindingMode": 1,
+        "followOffset": [
+          4.199999809265137,
+          1.059999942779541,
+          -5.760000228881836
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 2358598471099446495,
+        "trackedObjectOffset": [
+          1.0299999713897705,
+          0.44999998807907104,
+          -0.9300000071525574
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "600010201",
+      "bundleName": "camera_preset_600010201",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 5867494829063270796,
+        "path": "camera_preset_600010201/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            1.7999999523162842,
+            0.6700000166893005,
+            -5.506616592407227
+          ],
+          "rotation": [
+            -0.08863290399312973,
+            -0.10331560671329498,
+            -0.009243604727089405,
+            0.990648627281189
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            1.7999999523162842,
+            0.6700000166893005,
+            -5.506616592407227
+          ],
+          "rotation": [
+            -0.08863290399312973,
+            -0.10331560671329498,
+            -0.009243604727089405,
+            0.990648627281189
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 6585201613015618783,
+        "bindingMode": 1,
+        "followOffset": [
+          1.7999999523162842,
+          0.6700000166893005,
+          -5.389999866485596
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -3731760858508733012,
+        "trackedObjectOffset": [
+          -1.3799999952316284,
+          2.200000047683716,
+          9.6899995803833
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "600010301",
+      "bundleName": "camera_preset_600010301",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 38.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -8114124605971436707,
+        "path": "camera_preset_600010301/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            -2.880000114440918,
+            1.4600000381469727,
+            -4.756616592407227
+          ],
+          "rotation": [
+            0.02027721330523491,
+            0.273113489151001,
+            -0.005758227314800024,
+            0.961750864982605
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -2.880000114440918,
+            1.4600000381469727,
+            -4.756616592407227
+          ],
+          "rotation": [
+            0.02027721330523491,
+            0.273113489151001,
+            -0.005758227314800024,
+            0.961750864982605
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 8700396599641189825,
+        "bindingMode": 1,
+        "followOffset": [
+          -2.880000114440918,
+          1.4600000381469727,
+          -4.639999866485596
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 5412206184619901196,
+        "trackedObjectOffset": [
+          0.10999999940395355,
+          -0.029999999329447746,
+          0.20000000298023224
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "601000101",
+      "bundleName": "camera_preset_601000101",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -6057204203178398415,
+        "path": "camera_preset_601000101/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            -2.069999933242798,
+            1.149999976158142,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.0421934500336647,
+            0.15459823608398438,
+            0.006608588621020317,
+            0.9870539307594299
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -2.069999933242798,
+            1.149999976158142,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.0421934500336647,
+            0.15459823608398438,
+            0.006608588621020317,
+            0.9870539307594299
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 7367337152820502417,
+        "bindingMode": 1,
+        "followOffset": [
+          -2.069999933242798,
+          1.149999976158142,
+          -5.539999961853027
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -6455254969604809917,
+        "trackedObjectOffset": [
+          1.0,
+          0.7599999904632568,
+          4.019999980926514
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "601000201",
+      "bundleName": "camera_preset_601000201",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 3565230781109288708,
+        "path": "camera_preset_601000201/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            1.5700000524520874,
+            1.0299999713897705,
+            -5.776617050170898
+          ],
+          "rotation": [
+            -0.06223650649189949,
+            -0.0959288701415062,
+            -0.0060098073445260525,
+            0.9934224486351013
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            1.5700000524520874,
+            1.0299999713897705,
+            -5.776617050170898
+          ],
+          "rotation": [
+            -0.06223650649189949,
+            -0.0959288701415062,
+            -0.0060098073445260525,
+            0.9934224486351013
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 357997605695942844,
+        "bindingMode": 1,
+        "followOffset": [
+          1.5700000524520874,
+          1.0299999713897705,
+          -5.659999847412109
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 3112031709608559315,
+        "trackedObjectOffset": [
+          0.49000000953674316,
+          0.49000000953674316,
+          -0.11999999731779099
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "601000301",
+      "bundleName": "camera_preset_601000301",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 38.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 8130935500436441986,
+        "path": "camera_preset_601000301/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            -3.75,
+            1.5800000429153442,
+            -7.1466169357299805
+          ],
+          "rotation": [
+            0.010629916563630104,
+            0.22163620591163635,
+            -0.002416214207187295,
+            0.9750685095787048
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -3.75,
+            1.5800000429153442,
+            -7.1466169357299805
+          ],
+          "rotation": [
+            0.010629916563630104,
+            0.22163620591163635,
+            -0.002416214207187295,
+            0.9750685095787048
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -8975861896498045104,
+        "bindingMode": 1,
+        "followOffset": [
+          -3.75,
+          1.5800000429153442,
+          -7.03000020980835
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 1603125624286353109,
+        "trackedObjectOffset": [
+          -0.3799999952316284,
+          0.1599999964237213,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "602000101",
+      "bundleName": "camera_preset_602000101",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 35.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -1805583474487396497,
+        "path": "camera_preset_602000101/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            -6.0,
+            1.2000000476837158,
+            -15.0
+          ],
+          "rotation": [
+            0.009405839256942272,
+            0.6463257670402527,
+            -0.007967941462993622,
+            0.7629621028900146
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -6.0,
+            1.2000000476837158,
+            -15.0
+          ],
+          "rotation": [
+            0.009405839256942272,
+            0.6463257670402527,
+            -0.007967941462993622,
+            0.7629621028900146
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -6713082302997765470,
+        "bindingMode": 1,
+        "followOffset": [
+          1.5,
+          2.200000047683716,
+          -7.5
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 1843721827123170141,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          0.5,
+          5.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "602000201",
+      "bundleName": "camera_preset_602000201",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -1058699384057781118,
+        "path": "camera_preset_602000201/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            3.0,
+            1.7999999523162842,
+            13.858009338378906
+          ],
+          "rotation": [
+            -0.028031377121806145,
+            0.9251156449317932,
+            -0.0696760043501854,
+            -0.37218356132507324
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            3.0,
+            1.7999999523162842,
+            13.858009338378906
+          ],
+          "rotation": [
+            -0.028031377121806145,
+            0.9251156449317932,
+            -0.0696760043501854,
+            -0.37218356132507324
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -7624370032991191303,
+        "bindingMode": 1,
+        "followOffset": [
+          3.0,
+          2.200000047683716,
+          -6.5
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 5540998049552376823,
+        "trackedObjectOffset": [
+          -4.5,
+          -1.2000000476837158,
+          25.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "602000301",
+      "bundleName": "camera_preset_602000301",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -8426290471305641290,
+        "path": "camera_preset_602000301/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            5.369999885559082,
+            1.350000023841858,
+            -3.916616916656494
+          ],
+          "rotation": [
+            -0.12501205503940582,
+            0.18706153333187103,
+            0.02400757372379303,
+            0.9740655422210693
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            5.369999885559082,
+            1.350000023841858,
+            -3.916616916656494
+          ],
+          "rotation": [
+            -0.12501205503940582,
+            0.18706153333187103,
+            0.02400757372379303,
+            0.9740655422210693
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -690973531895295086,
+        "bindingMode": 1,
+        "followOffset": [
+          3.0,
+          2.200000047683716,
+          -7.5
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -5947677614712138435,
+        "trackedObjectOffset": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "603000101",
+      "bundleName": "camera_preset_603000101",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 5180751111234944898,
+        "path": "camera_preset_603000101/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            -2.0,
+            1.600000023841858,
+            -5.116617202758789
+          ],
+          "rotation": [
+            0.05225116387009621,
+            0.1358914077281952,
+            -0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            -2.0,
+            1.600000023841858,
+            -5.116617202758789
+          ],
+          "rotation": [
+            0.05225116387009621,
+            0.1358914077281952,
+            -0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -5293600557909839020,
+        "bindingMode": 1,
+        "followOffset": [
+          1.5,
+          2.200000047683716,
+          -5.5
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -6701960908563457586,
+        "trackedObjectOffset": [
+          0.5,
+          -0.20000000298023224,
+          1.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "603000201",
+      "bundleName": "camera_preset_603000201",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -3277268005189752188,
+        "path": "camera_preset_603000201/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            5.369999885559082,
+            1.350000023841858,
+            -3.916616916656494
+          ],
+          "rotation": [
+            -0.12501205503940582,
+            0.18706153333187103,
+            0.02400757372379303,
+            0.9740655422210693
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            5.369999885559082,
+            1.350000023841858,
+            -3.916616916656494
+          ],
+          "rotation": [
+            -0.12501205503940582,
+            0.18706153333187103,
+            0.02400757372379303,
+            0.9740655422210693
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 5773262340154083449,
+        "bindingMode": 1,
+        "followOffset": [
+          1.5,
+          2.200000047683716,
+          -5.5
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 5533338485154776077,
+        "trackedObjectOffset": [
+          0.5,
+          -0.20000000298023224,
+          1.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "603000301",
+      "bundleName": "camera_preset_603000301",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "ZoningCamera",
+      "lens": {
+        "fieldOfView": 45.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -2259950300002116482,
+        "path": "camera_preset_603000301/TemplateZoningCamera_02/Camera_Cut",
+        "local": {
+          "position": [
+            5.0,
+            2.0,
+            -25.0
+          ],
+          "rotation": [
+            0.06379768997430801,
+            -0.6318278908729553,
+            0.052301596850156784,
+            0.7707061171531677
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            5.0,
+            2.0,
+            -25.0
+          ],
+          "rotation": [
+            0.06379768997430801,
+            -0.6318278908729553,
+            0.052301596850156784,
+            0.7707061171531677
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -3280363216619490845,
+        "bindingMode": 1,
+        "followOffset": [
+          3.0,
+          3.0,
+          -10.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -2703782165526530119,
+        "trackedObjectOffset": [
+          1.5,
+          2.0,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "608000201",
+      "bundleName": "camera_preset_608000201",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 45.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 4367522140860012967,
+        "path": "camera_preset_608000201/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -5.5701398849487305
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.1358914077281952,
+            0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -5.5701398849487305
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.1358914077281952,
+            0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 8322252542060344483,
+        "bindingMode": 1,
+        "followOffset": [
+          2.0,
+          1.600000023841858,
+          -5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 6822386133833849739,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          -0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "611000201",
+      "bundleName": "camera_preset_611000201",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -7375589786684456056,
+        "path": "camera_preset_611000201/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            3.0,
+            3.0,
+            16.123586654663086
+          ],
+          "rotation": [
+            0.08493075519800186,
+            -0.14467716217041016,
+            0.012465191073715687,
+            0.9857484102249146
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            3.0,
+            3.0,
+            16.123586654663086
+          ],
+          "rotation": [
+            0.08493075519800186,
+            -0.14467716217041016,
+            0.012465191073715687,
+            0.9857484102249146
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -2860417830780319470,
+        "bindingMode": 1,
+        "followOffset": [
+          4.5,
+          4.0,
+          -8.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 6215788101972574984,
+        "trackedObjectOffset": [
+          0.949999988079071,
+          0.5,
+          1.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "611000301",
+      "bundleName": "camera_preset_611000301",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 9083946584301325009,
+        "path": "camera_preset_611000301/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            3.0,
+            4.0,
+            -17.10631561279297
+          ],
+          "rotation": [
+            0.115863136947155,
+            -0.11669795960187912,
+            0.013708928599953651,
+            0.9862907528877258
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            3.0,
+            4.0,
+            -17.10631561279297
+          ],
+          "rotation": [
+            0.115863136947155,
+            -0.11669795960187912,
+            0.013708928599953651,
+            0.9862907528877258
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -3110793219782240089,
+        "bindingMode": 1,
+        "followOffset": [
+          3.0,
+          4.0,
+          -10.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -739291221756340711,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          0.30000001192092896,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "612000101",
+      "bundleName": "camera_preset_612000101",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 2632298882013797958,
+        "path": "camera_preset_612000101/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -18.854717254638672
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.1358914077281952,
+            0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -18.854717254638672
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.1358914077281952,
+            0.007177142892032862,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -1679650953645519324,
+        "bindingMode": 1,
+        "followOffset": [
+          2.0,
+          1.600000023841858,
+          -5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -1659727093775851745,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          -0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "612000102",
+      "bundleName": "camera_preset_612000102",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 8533274572470132396,
+        "path": "camera_preset_612000102/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            3.0,
+            4.0,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.115863136947155,
+            -0.11669795960187912,
+            0.013708928599953651,
+            0.9862907528877258
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            3.0,
+            4.0,
+            -10.116617202758789
+          ],
+          "rotation": [
+            0.115863136947155,
+            -0.11669795960187912,
+            0.013708928599953651,
+            0.9862907528877258
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 4142215469698071073,
+        "bindingMode": 1,
+        "followOffset": [
+          3.0,
+          4.0,
+          -10.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -7854187571928222992,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          0.30000001192092896,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "612000201",
+      "bundleName": "camera_preset_612000201",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 50.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 455072882164993929,
+        "path": "camera_preset_612000201/TemplateCamera_00/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            1.0,
+            -28.0
+          ],
+          "rotation": [
+            -0.11279365420341492,
+            1.401298464324817e-45,
+            -0.0,
+            0.9936184287071228
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            1.0,
+            -28.0
+          ],
+          "rotation": [
+            -0.11279365420341492,
+            1.401298464324817e-45,
+            0.0,
+            0.9936184287071228
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -8944206111357150733,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          1.0,
+          -3.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 4334806878486408425,
+        "trackedObjectOffset": [
+          0.0,
+          0.4399999976158142,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "615000101",
+      "bundleName": "camera_preset_615000101",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -6225100248344265994,
+        "path": "camera_preset_615000101/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            5.369999885559082,
+            1.350000023841858,
+            -3.916616916656494
+          ],
+          "rotation": [
+            -0.12501205503940582,
+            0.18706153333187103,
+            0.02400757372379303,
+            0.9740655422210693
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            5.369999885559082,
+            1.350000023841858,
+            -3.916616916656494
+          ],
+          "rotation": [
+            -0.12501205503940582,
+            0.18706153333187103,
+            0.02400757372379303,
+            0.9740655422210693
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -362091737593354122,
+        "bindingMode": 1,
+        "followOffset": [
+          3.0,
+          3.0,
+          -10.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -952838278983009953,
+        "trackedObjectOffset": [
+          1.0,
+          1.5,
+          1.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "618000101",
+      "bundleName": "camera_preset_618000101",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -1339387735939413495,
+        "path": "camera_preset_618000101/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            1.5700000524520874,
+            0.6800000071525574,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.08163488656282425,
+            -0.09557788074016571,
+            -0.007865113206207752,
+            0.9920377135276794
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            1.5700000524520874,
+            0.6800000071525574,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.08163488656282425,
+            -0.09557788074016571,
+            -0.007865113206207752,
+            0.9920377135276794
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 7138015344316401848,
+        "bindingMode": 1,
+        "followOffset": [
+          1.5700000524520874,
+          0.6800000071525574,
+          -5.539999961853027
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -8448412115529051637,
+        "trackedObjectOffset": [
+          0.5099999904632568,
+          0.3499999940395355,
+          -0.09000000357627869
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "619000101",
+      "bundleName": "camera_preset_619000101",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -3518236755745019965,
+        "path": "camera_preset_619000101/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            1.5700000524520874,
+            0.6800000071525574,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.08163488656282425,
+            -0.09557788074016571,
+            -0.007865113206207752,
+            0.9920377135276794
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            1.5700000524520874,
+            0.6800000071525574,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.08163488656282425,
+            -0.09557788074016571,
+            -0.007865113206207752,
+            0.9920377135276794
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -1406138784204096687,
+        "bindingMode": 1,
+        "followOffset": [
+          1.5700000524520874,
+          0.6800000071525574,
+          -5.539999961853027
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": 1206038143259625067,
+        "trackedObjectOffset": [
+          0.5099999904632568,
+          0.3499999940395355,
+          -0.09000000357627869
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "650000301",
+      "bundleName": "camera_preset_650000301",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -1784136448706572664,
+        "path": "camera_preset_650000301/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            1.5700000524520874,
+            1.0,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.05355052277445793,
+            -0.09576206654310226,
+            -0.005159325897693634,
+            0.9939494132995605
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            1.5700000524520874,
+            1.0,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.05355052277445793,
+            -0.09576206654310226,
+            -0.005159325897693634,
+            0.9939494132995605
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -419912189949284163,
+        "bindingMode": 1,
+        "followOffset": [
+          1.5700000524520874,
+          1.0,
+          -5.539999961853027
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -8862109019969109504,
+        "trackedObjectOffset": [
+          0.5099999904632568,
+          0.3499999940395355,
+          -0.09000000357627869
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "650000302",
+      "bundleName": "camera_preset_650000302",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -5436697802817599181,
+        "path": "camera_preset_650000302/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            1.5700000524520874,
+            1.0,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.05355052277445793,
+            -0.09576206654310226,
+            -0.005159325897693634,
+            0.9939494132995605
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            1.5700000524520874,
+            1.0,
+            -5.656617164611816
+          ],
+          "rotation": [
+            -0.05355052277445793,
+            -0.09576206654310226,
+            -0.005159325897693634,
+            0.9939494132995605
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -1112113433343389123,
+        "bindingMode": 1,
+        "followOffset": [
+          1.5700000524520874,
+          1.0,
+          -5.539999961853027
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -5067251354166284684,
+        "trackedObjectOffset": [
+          0.5099999904632568,
+          0.3499999940395355,
+          -0.09000000357627869
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "650000303",
+      "bundleName": "camera_preset_650000303",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": 6121540728015546798,
+        "path": "camera_preset_650000303/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            2.200000047683716,
+            -5.316617012023926
+          ],
+          "rotation": [
+            0.06213745102286339,
+            -2.211864546703443e-16,
+            -1.6100304188808365e-19,
+            0.9980676174163818
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            2.200000047683716,
+            -5.316617012023926
+          ],
+          "rotation": [
+            0.06213745102286339,
+            -2.211864546703443e-16,
+            -1.6100304188808365e-19,
+            0.9980676174163818
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 935298571609633710,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          2.200000047683716,
+          -5.199999809265137
+        ],
+        "damping": [
+          0.15000000596046448,
+          0.15000000596046448,
+          0.15000000596046448
+        ]
+      },
+      "composer": {
+        "pathId": 5927077956288277418,
+        "trackedObjectOffset": [
+          0.0,
+          0.30000001192092896,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "654000201",
+      "bundleName": "camera_preset_654000201",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -8139431171961230389,
+        "path": "camera_preset_654000201/TemplateCamera/Camera_Ease",
+        "local": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -6.240255832672119
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.13589143753051758,
+            0.007177144754678011,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            2.0,
+            1.600000023841858,
+            -6.240255832672119
+          ],
+          "rotation": [
+            0.05225116387009621,
+            -0.13589143753051758,
+            0.007177144754678011,
+            0.9893189072608948
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": 701180077648088783,
+        "bindingMode": 1,
+        "followOffset": [
+          2.0,
+          1.600000023841858,
+          -5.0
+        ],
+        "damping": [
+          0.10000000149011612,
+          0.10000000149011612,
+          0.10000000149011612
+        ]
+      },
+      "composer": {
+        "pathId": -7699773877371474220,
+        "trackedObjectOffset": [
+          0.6000000238418579,
+          -0.20000000298023224,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "cameraPresetId": "654000301",
+      "bundleName": "camera_preset_654000301",
+      "defaultCameraIndex": 0,
+      "defaultCameraEntryType": "LevelCameraBase",
+      "lens": {
+        "fieldOfView": 40.0,
+        "orthographicSize": 5.0,
+        "nearClipPlane": 0.30000001192092896,
+        "farClipPlane": 1000.0,
+        "dutch": 0.0,
+        "modeOverride": 0,
+        "gateFit": 2,
+        "focusDistance": 10.0,
+        "lensShift": [
+          0.0,
+          0.0
+        ],
+        "sensorSize": [
+          1.0,
+          1.0
+        ]
+      },
+      "transform": {
+        "pathId": -1238866791523028728,
+        "path": "camera_preset_654000301/TemplateCamera/Camera_Cut",
+        "local": {
+          "position": [
+            0.0,
+            2.200000047683716,
+            -10.203958511352539
+          ],
+          "rotation": [
+            0.062137458473443985,
+            -1.401298464324817e-45,
+            -0.0,
+            0.9980676174163818
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "world": {
+          "position": [
+            0.0,
+            2.200000047683716,
+            -10.203958511352539
+          ],
+          "rotation": [
+            0.062137458473443985,
+            -1.401298464324817e-45,
+            0.0,
+            0.9980676174163818
+          ],
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "transposer": {
+        "pathId": -1792933422631452528,
+        "bindingMode": 1,
+        "followOffset": [
+          0.0,
+          2.200000047683716,
+          -5.199999809265137
+        ],
+        "damping": [
+          0.15000000596046448,
+          0.15000000596046448,
+          0.15000000596046448
+        ]
+      },
+      "composer": {
+        "pathId": -3157053561124004380,
+        "trackedObjectOffset": [
+          0.0,
+          0.30000001192092896,
+          0.0
+        ],
+        "screen": [
+          0.5,
+          0.5
+        ],
+        "deadZone": [
+          0.0,
+          0.0
+        ],
+        "softZone": [
+          0.800000011920929,
+          0.800000011920929
+        ],
+        "bias": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  ]
+}

@@ -118,6 +118,7 @@
       "assetBundleName": "battle/stage/bg_3d_600_00_01_001",
       "type": "fbx",
       "url": "./stages/official/battle-600-00-01-001/bg_3d_600_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-00-01-001/scene-profile.json",
       "scale": 1,
       "position": [
         0,
@@ -1128,7 +1129,8 @@
         "104 renderer lightmap bindings",
         "ReDriveVolume, Global Volume and five Animator layer clips",
         "JP AssetBundles/Android manifest root identifier verified against ma-ex-dataSP"
-      ]
+      ],
+      "sceneProfileUrl": "./stages/official/battle-600-00-01-002/scene-profile.json"
     },
     {
       "id": "dungeon-intro-0001-001",

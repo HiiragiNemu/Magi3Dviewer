@@ -5,13 +5,15 @@ export const themeDarkBtn = document.getElementById('theme-set-dark') as HTMLBut
 themeLightBtn.onclick = () => setTheme('light')
 themeDarkBtn.onclick = () => setTheme('dark')
 
+const themeStorageKey = 'magius3dviewer.theme'
+
 export const themeDarkBgColor = '#444444'
 export const themeLightBgColor = '#ffffff'
 
 export type Theme = 'light' | 'dark'
 export const themeLightClassName = 'theme-light'
 
-export function setTheme(theme: Theme) {
+export function setTheme(theme: Theme, persist = true) {
     let newColor
     let shouldApplyNewColor = false
 
@@ -27,6 +29,12 @@ export function setTheme(theme: Theme) {
 
     guiBgColor._initialValueHexString = newColor
     if (shouldApplyNewColor) guiBgColor.reset()
+    if (persist) localStorage.setItem(themeStorageKey, theme)
+}
+
+export function restoreThemePreference() {
+    const stored = localStorage.getItem(themeStorageKey)
+    setTheme(stored == 'light' || stored == 'dark' ? stored : 'dark', false)
 }
 
 export function getCurrentTheme(): Theme {

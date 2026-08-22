@@ -28,8 +28,12 @@ $results = foreach ($id in $ids) {
     if ($id -notmatch '^\d{6}$') { throw "Invalid character ID: $id" }
     $modelBundle = Join-Path $AssetRoot "battle\character\chara_${id}_battle_unit"
     $homeBundle = Join-Path $AssetRoot "home\doll_house\chara_${id}01_home"
-    $outputDirectory = Join-Path $modelRootPath "chara_${id}_battle_unit"
-    if (-not (Test-Path -LiteralPath $outputDirectory -PathType Container)) {
+    $outputDirectory = @(
+        (Join-Path $modelRootPath "chara_${id}_battle_unit"),
+        (Join-Path $modelRootPath "chara_${id}")
+    ) | Where-Object { Test-Path -LiteralPath $_ -PathType Container } |
+        Select-Object -First 1
+    if (-not $outputDirectory) {
         continue
     }
     if (

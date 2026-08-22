@@ -1,17 +1,19 @@
 #stat {
     position: fixed;
-    top: 50%;
+    top: 6px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     text-align: center;
     width: max-content;
     max-width: 100%;
     color: white;
+    pointer-events: none;
+    z-index: 20;
 }
 
 #stat .demo {
     background-color: rgba(0, 0, 0, 0.5);
-    font-size: 1.5em;
+    font-size: 1em;
     padding: 0 0.2em;
 }
 

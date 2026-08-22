@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import {
-    axisToVector,
     findCharacterHeadBone,
     type CharacterReDriveProfile,
+    unityDirectionToThreeFbx,
 } from './renderProfile'
 
 export interface OfficialFaceProfile {
@@ -150,8 +150,12 @@ export function createFaceDirectionReference(
     if (!headBone) return undefined
     return {
         headBone,
-        localForward: axisToVector(profile.faceForwardAxis),
-        localUp: axisToVector(profile.faceUpAxis),
-        localRight: axisToVector(profile.faceRightAxis),
+        // ReDrive serializes Unity-local axes, while Three's FBX import exposes
+        // the character rig with the opposite local-X handedness. Keep the face
+        // basis in the same converted frame as AngelRing before the animated
+        // Head quaternion is applied.
+        localForward: unityDirectionToThreeFbx(profile.faceForwardAxis),
+        localUp: unityDirectionToThreeFbx(profile.faceUpAxis),
+        localRight: unityDirectionToThreeFbx(profile.faceRightAxis),
     }
 }

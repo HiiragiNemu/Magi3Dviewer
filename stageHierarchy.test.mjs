@@ -46,3 +46,36 @@ test('invalid hierarchy path does not loosely skip missing intermediate nodes', 
   const { wrapper } = makeTree()
   assert.equal(api.resolveStageHierarchyPath(wrapper, 'StageRoot/Unknown/MainLight'), undefined)
 })
+
+test('raw Unity paths resolve FBXLoader-sanitized component node names', () => {
+  const wrapper = new THREE.Group(); wrapper.name = 'Wrapper'
+  const prefab = new THREE.Group(); prefab.name = 'StageRoot'; wrapper.add(prefab)
+  const effect = new THREE.Group(); effect.name = 'Eff_ShootingStar_(1)'; prefab.add(effect)
+  const particles = new THREE.Group(); particles.name = 'Particle_System'; effect.add(particles)
+  assert.equal(
+    api.resolveStageHierarchyPath(
+      wrapper,
+      'StageRoot/Eff_ShootingStar (1)/Particle System',
+    ),
+    particles,
+  )
+})
+
+test('a renderer PathID suffix disambiguates duplicate raw sibling paths', () => {
+  const wrapper = new THREE.Group(); wrapper.name = 'Wrapper'
+  const prefab = new THREE.Group(); prefab.name = 'StageRoot'; wrapper.add(prefab)
+  const duplicates = [11, 22].map((pathID) => {
+    const duplicate = new THREE.Group(); duplicate.name = 'Duplicate'; prefab.add(duplicate)
+    const mesh = new THREE.Group(); mesh.name = `Mesh__lm_${pathID}`; duplicate.add(mesh)
+    const particles = new THREE.Group(); particles.name = 'Particle_System'; mesh.add(particles)
+    return particles
+  })
+  assert.equal(
+    api.resolveStageHierarchyPath(wrapper, 'StageRoot/Duplicate/Mesh/Particle System'),
+    undefined,
+  )
+  assert.equal(
+    api.resolveStageHierarchyPath(wrapper, 'StageRoot/Duplicate/Mesh__lm_22/Particle System'),
+    duplicates[1],
+  )
+})

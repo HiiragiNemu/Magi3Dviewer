@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { MaterialUserData, ShaderUniformsController } from './userdata';
 import { injectReDriveSelfShadowShader } from '../scene/selfShadow';
+import { unityWorldToViewerVector } from '../coordinateSpace';
 
 export interface ToonStylizationOptions {
     /** ReDriveVolume character globals. These remain active independently. */
@@ -37,6 +38,102 @@ export interface ToonStylizationOptions {
     fresnelStrength: number;
     fresnelThreshold: number;
     fresnelFeather: number;
+}
+
+/**
+ * Native ReDriveToon character-light direction state.
+ *
+ * SetGlobalShaderParams stores (0, 0, -1) as lightOriginDir, converts the
+ * serialized Vector3 from degrees to radians, calls Quaternion.Euler, then
+ * rotates lightOriginDir. Unity's Euler order is ZXY. AssetStudio reflects the
+ * Unity-world X axis while exporting the FBX, so the rotated Unity vector must
+ * receive that same reflection before entering Viewer world space. The final
+ * shader value is view-space because Three's fragment normal is view-space.
+ *
+ * The gate and Euler are owned by the effective scene Volume stack. Captures
+ * legitimately differ by context; these values are only the reset fallback.
+ */
+export const officialReDriveCharacterLightingDirectionDefaults = Object.freeze({
+    // This is a Volume override gate, not a player-wide default. The frozen
+    // stage profiles prove that 600/608 resolve it to false while 601 resolves
+    // it to true. A profile-free scene therefore starts disabled and follows
+    // its physical main light instead of inheriting one captured TW scene.
+    enabled: false,
+    eulerDegrees: [0, 0, 0] as const,
+    lightOriginDirection: [0, 0, -1] as const,
+});
+
+export const reDriveCharacterLightingDirectionUniformState = {
+    enabled: {
+        value: officialReDriveCharacterLightingDirectionDefaults.enabled ? 1 : 0,
+    },
+    directionUnityWorld: { value: new THREE.Vector3(0, 0, -1) },
+    directionWorld: { value: new THREE.Vector3(0, 0, -1) },
+    directionView: { value: new THREE.Vector3(0, 0, -1) },
+    eulerDegrees: new THREE.Vector3(),
+};
+
+const characterLightingEuler = new THREE.Euler(0, 0, 0, 'ZXY');
+const characterLightingRotation = new THREE.Quaternion();
+
+export function setReDriveCharacterLightingOverrideDirection(
+    enabled: boolean,
+    eulerDegrees: readonly [number, number, number],
+) {
+    const safeEuler = eulerDegrees.every(Number.isFinite)
+        ? eulerDegrees
+        : officialReDriveCharacterLightingDirectionDefaults.eulerDegrees;
+    const state = reDriveCharacterLightingDirectionUniformState;
+    state.enabled.value = enabled ? 1 : 0;
+    state.eulerDegrees.set(...safeEuler);
+    characterLightingEuler.set(
+        THREE.MathUtils.degToRad(safeEuler[0]),
+        THREE.MathUtils.degToRad(safeEuler[1]),
+        THREE.MathUtils.degToRad(safeEuler[2]),
+        'ZXY',
+    );
+    characterLightingRotation.setFromEuler(characterLightingEuler);
+    state.directionUnityWorld.value
+        .set(...officialReDriveCharacterLightingDirectionDefaults.lightOriginDirection)
+        .applyQuaternion(characterLightingRotation)
+        .normalize();
+    state.directionWorld.value
+        .set(...unityWorldToViewerVector(
+            state.directionUnityWorld.value.toArray() as [number, number, number],
+        ))
+        .normalize();
+    return getReDriveCharacterLightingDirectionState();
+}
+
+export function updateReDriveCharacterLightingDirection(camera: THREE.Camera) {
+    camera.updateMatrixWorld();
+    // Each skinned mesh's normalMatrix already applies its character/display
+    // root. Applying that root to this global world direction would apply it
+    // twice and diverge from ReDriveToon's WorldToObject normal chain.
+    reDriveCharacterLightingDirectionUniformState.directionView.value
+        .copy(reDriveCharacterLightingDirectionUniformState.directionWorld.value)
+        .transformDirection(camera.matrixWorldInverse);
+}
+
+export function getReDriveCharacterLightingDirectionState() {
+    const state = reDriveCharacterLightingDirectionUniformState;
+    return {
+        enabled: state.enabled.value > 0.5,
+        eulerDegrees: state.eulerDegrees.toArray() as [number, number, number],
+        directionUnityWorld: state.directionUnityWorld.value.toArray() as [number, number, number],
+        directionWorld: state.directionWorld.value.toArray() as [number, number, number],
+        directionView: state.directionView.value.toArray() as [number, number, number],
+        unityEulerOrder: 'ZXY' as const,
+    };
+}
+
+function bindReDriveCharacterLightingDirectionUniforms(
+    shader: THREE.WebGLProgramParametersWithUniforms,
+) {
+    shader.uniforms.uGlobalCharacterLightingOverrideDirectionEnabled =
+        reDriveCharacterLightingDirectionUniformState.enabled;
+    shader.uniforms.uGlobalCharacterLightingOverrideDirection =
+        reDriveCharacterLightingDirectionUniformState.directionView;
 }
 
 /**
@@ -174,6 +271,7 @@ export function injectToonStylization(
     uniforms: ToonStylizationUniforms = new ToonStylizationUniforms(shader),
 ): ToonStylizationUniforms {
     uniforms.loadGlobalOptions();
+    bindReDriveCharacterLightingDirectionUniforms(shader);
     injectReDriveSelfShadowShader(shader);
 
     shader.fragmentShader = /* glsl */ `
@@ -181,6 +279,8 @@ export function injectToonStylization(
         uniform vec3 uGlobalCharacterShadowTint;
         uniform vec3 uGlobalCharacterLightingOverrideColor;
         uniform float uGlobalCharacterLightingOverrideRatio;
+        uniform float uGlobalCharacterLightingOverrideDirectionEnabled;
+        uniform vec3 uGlobalCharacterLightingOverrideDirection;
 
         uniform float uOfficialLookEnabled;
         uniform float uLightingInfluence;
@@ -334,40 +434,9 @@ export function injectToonStylization(
         outgoingLight +=
             uRimColor * rdToonRimMask * uRimStrength * uRimEnabled;
 
-        // Current-JP ReDriveToon executable arithmetic. Metallic masking is
-        // applied to the Fresnel coordinate before thresholding; the authored
-        // band is centred on (1-threshold) with +/- feather/2 and uses the
-        // explicit cubic x*x*(3-2*x) interpolation.
-        float rdToonFresnelMetallicScale = mix(
-            1.0,
-            rdToonMetallicMask,
-            saturate(uFresnelMaskByMetallic)
-        );
-        float rdToonFresnelInput =
-            rdToonEdge * rdToonFresnelMetallicScale;
-        float rdToonFresnelCenter = 1.0 - uFresnelThreshold;
-        float rdToonFresnelLow =
-            rdToonFresnelCenter - uFresnelFeather * 0.5;
-        float rdToonFresnelHigh =
-            rdToonFresnelCenter + uFresnelFeather * 0.5;
-        float rdToonFresnelMask = step(
-            rdToonFresnelCenter,
-            rdToonFresnelInput
-        );
-        if (rdToonFresnelHigh > rdToonFresnelLow + 0.000001) {
-            float rdToonFresnelT = saturate(
-                (rdToonFresnelInput - rdToonFresnelLow) /
-                (rdToonFresnelHigh - rdToonFresnelLow)
-            );
-            rdToonFresnelMask =
-                rdToonFresnelT * rdToonFresnelT *
-                (3.0 - 2.0 * rdToonFresnelT);
-        }
-        outgoingLight +=
-            uFresnelColor *
-            rdToonFresnelMask *
-            uFresnelStrength *
-            uFresnelEnabled;
+        // Fresnel is composed in general.ts while the official
+        // SH/main-light/BaseWeight carrier is still available. Keeping a
+        // second post-light addition here would double the serialized band.
 
         #include <opaque_fragment>
         `,

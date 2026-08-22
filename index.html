@@ -12,16 +12,11 @@
 
     <meta property="og:title" content="Magius3Dviewer">
     <meta property="og:description" content="Magia Exedra 3D viewer with official-style ReDriveToon, AngelRing and scene staging controls.">
-    <meta property="og:image" content="https://hiiraginemu.github.io/Magi3Dviewer/demo.jpg">
-    <meta property="og:image:width" content="768">
-    <meta property="og:image:height" content="1152">
-
     <script type="application/ld+json">
         {
             "@context": "https://schema.org/",
             "@type": "WebPage",
             "name": "Magius3Dviewer",
-            "image": "https://hiiraginemu.github.io/Magi3Dviewer/demo.jpg",
             "description": "Magia Exedra 3D viewer with official-style ReDriveToon, AngelRing and scene staging controls."
         }
     </script>
@@ -29,29 +24,8 @@
 
 <body>
     <div id="app">
-        <div id="viewer"></div>
-
-        <div id="stat">
-            <span class="demo">Magius3Dviewer is loading the official-style shader and character model...</span>
-            <div style="text-align: center;">
-                <span id="load-progress"></span>
-            </div>
-        </div>
-
-        <img id="demo-screenshot" class="demo" src="./demo.jpg" alt="Magius3Dviewer demo screenshot">
-
-        <img id="bg-image">
-
-        <video id="camera-bg" disablePictureInPicture></video>
-
-        <div id="perf-stat">
-            <div id="perf-time" style="display: none;"></div>
-            <div id="perf-stat-js"></div>
-        </div>
-
-        <button id="camera-shot-btn" title="Take a photo"><img src="src/icons/camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-
         <div id="menu">
+            <button id="menu-collapse-toggle" class="main-toolbar-toggle" data-i18n-ignore="true" type="button" title="Collapse controls" aria-label="Collapse controls" aria-controls="menu-controls" aria-expanded="true"><span aria-hidden="true">△</span></button>
             <div id="menu-controls">
                 <div>
                     <img src="src/icons/accessibility_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Model">
@@ -71,13 +45,18 @@
                     <select id="animation-selector" class="target-true" title="Choose animation"></select>
                     <button id="animation-play" class="target-true" style="display: none;" title="Play animation"><img src="src/icons/play_arrow_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
                     <button id="animation-pause" class="target-true" title="Pause animation"><img src="src/icons/pause_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
-                    <input id="animation-slider" class="target-true" type="range">
+                    <button id="action-panel-toggle" class="target-true" type="button" title="Show action parameters" aria-controls="action-parameter-panel" aria-expanded="false">Action panel</button>
                     <span class="target-false">&lt;No target selected&gt;</span>
                 </div>
 
                 <div>
                     <img src="src/icons/emoji_people_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Expression">
                     <select id="expression-selector" class="target-true" title="Choose expression"></select>
+                    <label id="expression-auto-blink-control" class="target-true" title="Enable automatic blink for the selected expression">
+                        <input id="expression-auto-blink" type="checkbox">
+                        <span>Auto blink</span>
+                    </label>
+                    <button id="expression-panel-toggle" class="target-true" type="button" title="Show expression parameters" aria-controls="expression-parameter-panel" aria-expanded="false">Expression panel</button>
                     <span class="target-false">&lt;No target selected&gt;</span>
                 </div>
 
@@ -86,14 +65,74 @@
                     <select id="stage-selector" title="Choose 3D stage"></select>
                 </div>
 
-                <div class="spacer"></div>
-
-                <div id="three-gui"></div>
+                <button id="render-settings-toggle" data-i18n-ignore="true" type="button" title="Show rendering controls" aria-controls="advanced-controls-dock" aria-expanded="false">Rendering controls</button>
+                <button id="position-controls-toggle" class="target-true" data-i18n-ignore="true" type="button" title="Show character movement" aria-controls="position-controls-wrapper" aria-expanded="false">Character movement</button>
             </div>
+        </div>
 
-            <div id="menu-icons">
-                <a href="https://github.com/HiiragiNemu/Magi3Dviewer/tree/magius3dviewer" target="_blank" title="Visit the Magius3Dviewer source branch"><img src="src/icons/GitHub_Invertocat_Black.svg"></a>
+        <div id="workspace">
+            <aside id="advanced-controls-dock" class="floating-panel" role="dialog" aria-modal="false" aria-labelledby="render-settings-title" aria-hidden="true">
+                <header class="floating-panel-header">
+                    <strong id="render-settings-title">Rendering controls</strong>
+                    <button id="render-settings-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
+                </header>
+                <div class="floating-panel-scroll"><div id="three-gui"></div></div>
+            </aside>
 
+            <main id="viewer">
+                <img id="bg-image" alt="">
+                <video id="camera-bg" disablePictureInPicture></video>
+                <div id="position-controls-wrapper" aria-hidden="true">
+                    <div id="position-controls" class="target-true">
+                        <div id="recording-spec-controls" aria-label="Recording format">
+                            <label>
+                                <span id="recording-quality-label">Quality</span>
+                                <select id="recording-resolution" title="Recording resolution">
+                                    <option value="current" selected>Current view</option>
+                                    <option value="1k">1K</option>
+                                    <option value="2k">2K</option>
+                                    <option value="4k">4K</option>
+                                </select>
+                            </label>
+                            <label>
+                                <span id="recording-aspect-label">Aspect ratio</span>
+                                <select id="recording-aspect" title="Recording aspect ratio">
+                                    <option value="16:9" selected>16:9</option>
+                                    <option value="21:9">21:9</option>
+                                    <option value="4:3">4:3</option>
+                                    <option value="1:1">1:1</option>
+                                </select>
+                            </label>
+                            <label>
+                                <span id="recording-orientation-label">Orientation</span>
+                                <select id="recording-orientation" title="Recording orientation">
+                                    <option value="landscape">Landscape</option>
+                                    <option value="portrait">Portrait</option>
+                                </select>
+                            </label>
+                            <output id="recording-size-output" aria-live="polite">1920 × 1080</output>
+                        </div>
+                        <button id="character-tilt-left" type="button" title="Tilt character left">↺</button>
+                        <button id="character-move-up" type="button" title="Move character up">↑</button>
+                        <button id="character-tilt-right" type="button" title="Tilt character right">↻</button>
+                        <button id="character-move-left" type="button" title="Move character left">←</button>
+                        <button id="character-transform-reset" type="button" title="Reset character transform">Reset</button>
+                        <button id="character-move-right" type="button" title="Move character right">→</button>
+                        <button id="capture-character" type="button" title="Capture character">Char Only</button>
+                        <button id="character-move-down" type="button" title="Move character down">↓</button>
+                        <button id="capture-with-background" type="button" title="Capture with background">With BG</button>
+                        <button id="record-character" type="button" title="Record character">Rec Char</button>
+                        <button id="record-with-background" type="button" title="Record with background">Rec/BG</button>
+                        <button id="record-mp4-with-background" type="button" title="Record MP4 with background">MP4/BG</button>
+                        <button id="character-rotate-left" type="button" title="Turn character left">Y−</button>
+                        <button id="viewer-vr-toggle" data-i18n-ignore="true" type="button" title="Enter VR" aria-pressed="false">VR</button>
+                        <button id="character-rotate-right" type="button" title="Turn character right">Y+</button>
+                    </div>
+                </div>
+            </main>
+
+            <aside id="side-dock" aria-label="Viewer tools">
+                <div id="menu-icons">
                 <button id="language-toggle" type="button" data-i18n-ignore="true" title="Switch to Simplified Chinese" aria-label="Switch to Simplified Chinese" aria-pressed="false"><span aria-hidden="true">中</span></button>
                 <button id="theme-set-light" title="Use light theme"><img src="src/icons/light_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                 <button id="theme-set-dark" title="Use dark theme"><img src="src/icons/dark_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
@@ -121,6 +160,91 @@
 
                 <button id="transform-set-translate" title="Adjust character position" style="display: none;"><img src="src/icons/drag_pan_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                 <button id="transform-set-rotate" title="Adjust character rotation" style="display: none;"><img src="src/icons/360_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                </div>
+
+                <div id="perf-stat">
+                    <div id="perf-time" style="display: none;"></div>
+                    <div id="perf-stat-js"></div>
+                </div>
+            </aside>
+        </div>
+
+        <section id="action-parameter-panel" class="floating-panel parameter-panel" role="dialog" aria-modal="false" aria-labelledby="action-parameter-title" aria-hidden="true">
+            <header class="floating-panel-header">
+                <strong id="action-parameter-title">Action parameters</strong>
+                <button id="action-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
+            </header>
+            <div class="floating-panel-scroll">
+                <div id="action-basic-controls" class="parameter-basics target-true">
+                    <label>
+                        <span>Timeline</span>
+                        <input id="animation-slider" type="range">
+                    </label>
+                    <label>
+                        <span>Animation speed</span>
+                        <input id="animation-speed" type="range" min="0" max="2" step="0.05" value="1">
+                        <output id="animation-speed-value">1.00×</output>
+                    </label>
+                </div>
+                <div class="direct-pose-toolbar target-true">
+                    <button id="action-direct-edit-toggle" type="button" aria-pressed="false" data-i18n-ignore="true">Direct drag pose</button>
+                    <output id="action-direct-edit-target" aria-live="polite" data-i18n-ignore="true">Click a body part, then drag it or use the rotation rings</output>
+                </div>
+                <label class="parameter-search">
+                    <span>Bone search</span>
+                    <input id="action-channel-search" type="search" placeholder="Search bones">
+                </label>
+                <div class="parameter-axis-legend" aria-hidden="true"><span>Bone</span><span>X</span><span>Y</span><span>Z</span></div>
+                <div id="action-channel-list" class="parameter-channel-list" aria-live="polite"></div>
+            </div>
+            <footer class="floating-panel-footer">
+                <button id="action-parameters-reset" type="button">Reset action parameters</button>
+            </footer>
+        </section>
+
+        <section id="expression-parameter-panel" class="floating-panel parameter-panel" role="dialog" aria-modal="false" aria-labelledby="expression-parameter-title" aria-hidden="true">
+            <header class="floating-panel-header">
+                <strong id="expression-parameter-title">Expression parameters</strong>
+                <button id="expression-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
+            </header>
+            <div class="floating-panel-scroll">
+                <div id="face-manual-controls" class="parameter-basics target-true" aria-label="Manual face controls">
+                    <label title="Set eyelid closure using this character's official blink bindings">
+                        <span>Manual blink</span>
+                        <input id="expression-manual-blink" type="range" min="0" max="1" step="0.01" value="0">
+                        <output id="expression-manual-blink-value">0.00</output>
+                    </label>
+                    <label title="Blend the selected official expression with this character's default face">
+                        <span>Expression strength</span>
+                        <input id="expression-strength" type="range" min="0" max="1" step="0.01" value="1">
+                        <output id="expression-strength-value">1.00</output>
+                    </label>
+                    <label title="Set the transition duration used by the next expression selection">
+                        <span>Transition</span>
+                        <input id="expression-transition" type="range" min="0" max="2" step="0.05" value="0">
+                        <output id="expression-transition-value">0.00 s</output>
+                    </label>
+                    <label title="Adjust this character's available mouth-corner bindings">
+                        <span>Mouth corner</span>
+                        <input id="expression-mouth-corner" type="range" min="-1" max="1" step="0.01" value="0">
+                        <output id="expression-mouth-corner-value">0.00</output>
+                    </label>
+                </div>
+                <label class="parameter-search">
+                    <span>Morph search</span>
+                    <input id="expression-channel-search" type="search" placeholder="Search morphs">
+                </label>
+                <div id="expression-channel-list" class="parameter-channel-list" aria-live="polite"></div>
+            </div>
+            <footer class="floating-panel-footer">
+                <button id="expression-parameters-reset" type="button">Reset expression parameters</button>
+            </footer>
+        </section>
+
+        <div id="stat">
+            <span class="demo">Magius3Dviewer is loading the official-style shader and character model...</span>
+            <div style="text-align: center;">
+                <span id="load-progress"></span>
             </div>
         </div>
 

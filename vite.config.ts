@@ -33,21 +33,16 @@ export default defineConfig({
           if (normalized.includes('/magia-exedra-character-three/')) {
             return 'character-runtime'
           }
-          // Camera helpers and GUI controllers import one another. Keeping
-          // them in separate manual chunks created a Rollup cycle
-          // (viewer-camera -> viewer-controls -> viewer-camera) and could stop
-          // the production entry before window.scene was initialized.
-          if (normalized.includes('/src/viewer/controllers/') ||
-              normalized.includes('/src/viewer/camera/')) {
-            return 'viewer-controls'
-          }
           if (normalized.includes('/src/viewer/localization/')) {
             return 'viewer-localization'
           }
-          if (normalized.includes('/src/viewer/stage') ||
-              normalized.endsWith('/src/viewer/stages.ts') ||
-              normalized.endsWith('/src/viewer/reDriveVolumeRuntime.ts')) {
-            return 'viewer-stage'
+
+          // Scene, GUI, camera and stage modules intentionally share live
+          // bindings. Splitting those modules into separate manual chunks
+          // creates a production-only ESM temporal-dead-zone cycle before the
+          // Viewer scene is initialized. Keep that connected runtime together.
+          if (normalized.includes('/src/viewer/')) {
+            return 'viewer-runtime'
           }
 
           if (!normalized.includes('/node_modules/')) return undefined

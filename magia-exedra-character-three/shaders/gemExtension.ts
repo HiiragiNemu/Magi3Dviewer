@@ -44,7 +44,7 @@ export async function extendMaterialWithOfficialGem(
         }
     };
     material.customProgramCacheKey = () =>
-        `${previousKey()}|official-matcap-gem-v5|${profiles.map(x => `${x.name}:${x.matCap.texture ?? x.matCap.source}`).join('|')}`;
+        `${previousKey()}|official-matcap-gem-v9|${profiles.map(x => `${x.name}:${x.matCap.texture ?? x.matCap.source}`).join('|')}`;
     material.needsUpdate = true;
 
     return { resources, profiles };

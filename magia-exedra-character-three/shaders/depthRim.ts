@@ -1,21 +1,14 @@
-import * as THREE from 'three';
-import type { OfficialMaterialProfile } from '../materialProfile';
+import * as THREE from 'three'
+import type { OfficialMaterialProfile } from '../materialProfile'
 
 /**
- * First bounded CameraDepthTexture experiment.
- *
- * The recovered constants are official JP 3.11 values. The additional Rim
- * direction/colour are intentionally neutral until a scene/Timeline value is
- * captured; callers may set them explicitly for A/B work. Normal rendering is
- * unchanged because enabled defaults to false.
+ * Runtime controls for the recovered JP 2022.3.62f2 CameraDepthTexture pass.
+ * Serialized material values are authoritative; these controls only own the
+ * shared pass/debug state and the scene-provided additional-rim light.
  */
 export const DepthRimExperiment = {
-    enabled: false,
+    enabled: true,
     debugMasks: false,
-    depthTexWidth: 1.0,
-    depthTexYOffset: 0.0,
-    rimDiffThreshold: 0.02,
-    shadowDiffThreshold: 0.03,
     additionalDirectionVS: new THREE.Vector2(0, 0),
     additionalColor: new THREE.Color(0, 0, 0),
 }
@@ -33,7 +26,7 @@ fallbackDepth.magFilter = THREE.NearestFilter
 fallbackDepth.generateMipmaps = false
 fallbackDepth.needsUpdate = true
 
-/** Shared frame uniforms. Material-class uniforms remain per draw. */
+/** Shared frame uniforms. Serialized material values remain per draw. */
 export const reDriveCameraDepthUniformState = {
     enabled: { value: 0 },
     debugMasks: { value: 0 },
@@ -43,10 +36,6 @@ export const reDriveCameraDepthUniformState = {
     orthographic: { value: 0 },
     aspectFix: { value: new THREE.Vector2(1, 1) },
     fovOrOrthoFix: { value: 1 },
-    depthTexWidth: { value: 1.0 },
-    depthTexYOffset: { value: 0.0 },
-    rimDiffThreshold: { value: 0.02 },
-    shadowDiffThreshold: { value: 0.03 },
     additionalDirectionVS: { value: new THREE.Vector2(0, 0) },
     additionalColor: { value: new THREE.Color(0, 0, 0) },
 }
@@ -61,12 +50,6 @@ function bindSharedUniforms(shader: THREE.WebGLProgramParametersWithUniforms) {
     uniforms.uRdDepthRimOrthographic = reDriveCameraDepthUniformState.orthographic
     uniforms.uRdDepthRimAspectFix = reDriveCameraDepthUniformState.aspectFix
     uniforms.uRdDepthRimFovOrOrthoFix = reDriveCameraDepthUniformState.fovOrOrthoFix
-    uniforms.uRdDepthTexWidth = reDriveCameraDepthUniformState.depthTexWidth
-    uniforms.uRdDepthTexYOffset = reDriveCameraDepthUniformState.depthTexYOffset
-    uniforms.uRdDepthRimLightDiffThreshold =
-        reDriveCameraDepthUniformState.rimDiffThreshold
-    uniforms.uRdDepthShadowDiffThreshold =
-        reDriveCameraDepthUniformState.shadowDiffThreshold
     uniforms.uRdDepthRimAdditionalDirectionVS =
         reDriveCameraDepthUniformState.additionalDirectionVS
     uniforms.uRdDepthRimAdditionalColor =
@@ -82,6 +65,22 @@ export function setDepthRimMaterialProfileUniforms(
         shader.uniforms[name] ??= { value }
         shader.uniforms[name].value = value
     }
+    const depthRim = profile?.depthRim
+    setNumber('uRdDepthRimProfilePresent', profile ? 1 : 0)
+    setNumber('uRdDepthUseDepthTex', depthRim?.useDepthTex ? 1 : 0)
+    setNumber('uRdDepthUseRimLight', depthRim?.useRimLight ? 1 : 0)
+    setNumber('uRdDepthDitherFade', depthRim?.ditherFade ?? 0)
+    setNumber('uRdDepthTexWidth', depthRim?.width ?? 1)
+    setNumber('uRdDepthTexYOffset', depthRim?.yOffset ?? 0)
+    setNumber(
+        'uRdDepthRimLightDiffThreshold',
+        depthRim?.rimDiffThreshold ?? 0.02,
+    )
+    setNumber(
+        'uRdDepthShadowDiffThreshold',
+        depthRim?.shadowDiffThreshold ?? 0.03,
+    )
+
     const color = profile?.angelRing.rimLightColor ?? [1, 1, 1]
     const currentColor = shader.uniforms.uRdDepthRimMainColor?.value
     if (currentColor instanceof THREE.Color) currentColor.setRGB(...color)
@@ -101,11 +100,11 @@ export function setDepthRimVertexColorAvailability(
 }
 
 /**
- * Inject the shared Body/Hair/Gem CameraDepthTexture path.
- *
- * The contribution is inserted immediately after Three's opaque write. This
- * keeps it in linear shader space, survives Gem's earlier outgoingLight
- * replacement, and remains before tone mapping/fog/output encoding.
+ * Inject the official Body/Hair CameraDepthTexture path at three explicit
+ * points in the reconstructed forward program:
+ *  1. sample depth before the toon ramp;
+ *  2. apply the >= 0.1 depth-shadow selector before ShadowFeather;
+ *  3. add rim light with the already-computed scene-light carrier.
  */
 export function injectReDriveDepthRimShader(
     shader: THREE.WebGLProgramParametersWithUniforms,
@@ -137,6 +136,10 @@ export function injectReDriveDepthRimShader(
         uniform float uRdDepthRimOrthographic;
         uniform vec2 uRdDepthRimAspectFix;
         uniform float uRdDepthRimFovOrOrthoFix;
+        uniform float uRdDepthRimProfilePresent;
+        uniform float uRdDepthUseDepthTex;
+        uniform float uRdDepthUseRimLight;
+        uniform float uRdDepthDitherFade;
         uniform float uRdDepthTexWidth;
         uniform float uRdDepthTexYOffset;
         uniform float uRdDepthRimLightDiffThreshold;
@@ -173,15 +176,59 @@ export function injectReDriveDepthRimShader(
             );
         }
 
+        float rdDepthRimDitherBayer(ivec2 pixel) {
+            int x = int(mod(float(pixel.x), 4.0));
+            int y = int(mod(float(pixel.y), 4.0));
+            int index = x * 4 + y;
+            if (index == 0) return 0.0588235296;
+            if (index == 1) return 0.529411793;
+            if (index == 2) return 0.176470593;
+            if (index == 3) return 0.647058845;
+            if (index == 4) return 0.764705896;
+            if (index == 5) return 0.294117659;
+            if (index == 6) return 0.882352948;
+            if (index == 7) return 0.411764711;
+            if (index == 8) return 0.235294119;
+            if (index == 9) return 0.70588237;
+            if (index == 10) return 0.117647059;
+            if (index == 11) return 0.588235319;
+            if (index == 12) return 0.941176474;
+            if (index == 13) return 0.470588237;
+            if (index == 14) return 0.823529422;
+            return 0.352941185;
+        }
+
         ${shader.fragmentShader}
     `.replace(
-        '#include <opaque_fragment>',
+        '// RD_DEPTH_RIM_SAMPLE_BEGIN',
         /* glsl */ `
-        #include <opaque_fragment>
+        float rdDepthShadowSignal = 1.0;
+        vec2 rdDepthRim = vec2(0.0);
+        float rdDepthProfileEnabled =
+            step(0.5, uRdDepthRimExperimentEnabled) *
+            step(0.5, uRdDepthRimProfilePresent);
 
+        if (rdDepthProfileEnabled > 0.5) {
+            float rdDepthDitherValue = rdDepthRimDitherBayer(
+                ivec2(gl_FragCoord.xy)
+            );
+            float rdDepthDitherTest =
+                (1.0 - uRdDepthDitherFade) -
+                (
+                    uRdDepthDitherFade *
+                    (0.5 - rdDepthDitherValue) +
+                    0.5
+                );
+            if (rdDepthDitherTest < 0.0) discard;
+        }
+
+        float rdDepthChainEnabled =
+            rdDepthProfileEnabled *
+            step(0.5, uRdDepthUseDepthTex) *
+            step(0.5, uRdDepthRimVertexColorGAvailable);
         if (
-            uRdDepthRimExperimentEnabled > 0.5 &&
-            uRdDepthRimVertexColorGAvailable > 0.5
+            rdDepthChainEnabled > 0.5 &&
+            uRdDepthDitherFade <= 0.5
         ) {
             float rdDepthCenterZ = rdDepthRimLinearEye(gl_FragCoord.z);
             float rdDepthDistanceScale = mix(
@@ -234,7 +281,7 @@ export function injectReDriveDepthRimShader(
                 0.0,
                 1.0
             );
-            float rdDepthShadowSignal = clamp(
+            rdDepthShadowSignal = clamp(
                 50.0 * (
                     rdDepthMainZ -
                     (rdDepthCenterZ - uRdDepthShadowDiffThreshold)
@@ -248,7 +295,7 @@ export function injectReDriveDepthRimShader(
             );
             float rdDepthEdge =
                 1.0 - uRdDepthRimIsHair * rdDepthNdotV;
-            vec2 rdDepthRim = smoothstep(
+            rdDepthRim = smoothstep(
                 vec2(0.1),
                 vec2(0.125),
                 rdDepthEdge * vec2(
@@ -256,37 +303,43 @@ export function injectReDriveDepthRimShader(
                     rdDepthAdditionalSignal
                 )
             );
-
-            if (uRdDepthRimDebugMasks > 0.5) {
-                gl_FragColor.rgb = vec3(
-                    rdDepthShadowSignal,
-                    rdDepthRim.x,
-                    rdDepthRim.y
-                );
-            } else {
-                float rdDepthBaseLuma = dot(
-                    rdToonBaseColor,
-                    vec3(0.298911989, 0.586610973, 0.114478)
-                );
-                vec3 rdDepthLightCarrier = max(
-                    mix(
-                        rdToonSceneLightColor,
-                        uGlobalCharacterLightingOverrideColor,
-                        saturate(uGlobalCharacterLightingOverrideRatio)
-                    ),
-                    vec3(0.1)
-                ) * (0.2 + 0.8 * rdToonBaseWeight);
-                gl_FragColor.rgb +=
-                    rdDepthLightCarrier *
-                    rdDepthBaseLuma *
-                    rdDepthRim.x *
-                    uRdDepthRimMainColor;
-                gl_FragColor.rgb +=
-                    rdDepthLightCarrier *
-                    rdDepthBaseLuma *
-                    rdDepthRim.y *
-                    uRdDepthRimAdditionalColor;
-            }
+            rdDepthRim *= step(0.5, uRdDepthUseRimLight);
+        }
+        `,
+    ).replace(
+        '// RD_DEPTH_SHADOW_SELECTOR_BEGIN',
+        /* glsl */ `
+        float rdDepthShadowSelector =
+            rdDepthShadowSignal >= 0.100000001 ? 1.0 : 0.0;
+        rdToonRamp *= rdDepthShadowSelector;
+        `,
+    ).replace(
+        '// RD_DEPTH_RIM_COMPOSITE_BEGIN',
+        /* glsl */ `
+        if (uRdDepthRimDebugMasks > 0.5) {
+            outgoingLight = vec3(
+                rdDepthShadowSignal,
+                rdDepthRim.x,
+                rdDepthRim.y
+            );
+        } else {
+            float rdDepthBaseLuma = dot(
+                rdToonBaseColor,
+                vec3(0.298911989, 0.586610973, 0.114478)
+            );
+            vec3 rdDepthLightCarrier =
+                rdToonSceneLightColor *
+                (rdToonBaseWeight * 0.800000012 + 0.200000003);
+            outgoingLight +=
+                rdDepthLightCarrier *
+                rdDepthBaseLuma *
+                rdDepthRim.x *
+                uRdDepthRimMainColor;
+            outgoingLight +=
+                rdDepthLightCarrier *
+                rdDepthBaseLuma *
+                rdDepthRim.y *
+                uRdDepthRimAdditionalColor;
         }
         `,
     )
@@ -295,13 +348,8 @@ export function injectReDriveDepthRimShader(
 export function updateDepthRimExperimentUniforms() {
     const state = reDriveCameraDepthUniformState
     state.debugMasks.value = DepthRimExperiment.debugMasks ? 1 : 0
-    state.depthTexWidth.value = DepthRimExperiment.depthTexWidth
-    state.depthTexYOffset.value = DepthRimExperiment.depthTexYOffset
-    state.rimDiffThreshold.value = DepthRimExperiment.rimDiffThreshold
-    state.shadowDiffThreshold.value = DepthRimExperiment.shadowDiffThreshold
     state.additionalDirectionVS.value.copy(
         DepthRimExperiment.additionalDirectionVS,
     )
     state.additionalColor.value.copy(DepthRimExperiment.additionalColor)
 }
-

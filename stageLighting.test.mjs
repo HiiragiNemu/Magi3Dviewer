@@ -1,5 +1,10 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
+import {
+    unityDiffuseRadianceToThree,
+    unityLightColorToLinear,
+    unityWorldToViewerVector,
+} from './src/viewer/unityLighting.ts'
 
 const stagesSource = await readFile(
     new URL('./src/viewer/stages.ts', import.meta.url),
@@ -11,7 +16,14 @@ const volumeSource = await readFile(
 )
 const officialStage608 = JSON.parse(await readFile(
     new URL(
-        './public/stages/catalog/battle-608-00-00-001.json',
+        './public/stages/official/battle-608-00-00-001/scene-profile.json',
+        import.meta.url,
+    ),
+  'utf8',
+))
+const officialStage601 = JSON.parse(await readFile(
+    new URL(
+        './public/stages/official/battle-601-00-01-001/scene-profile.json',
         import.meta.url,
     ),
     'utf8',
@@ -23,9 +35,15 @@ const mainCatalog = JSON.parse(await readFile(
 
 assert.match(
     stagesSource,
-    /const UNITY_LOCAL_LIGHT_TO_THREE_INTENSITY = 0\.01/,
-    'Unity point/spot intensity conversion must stay explicit and auditable',
+    /localLightIntensityScale: UNITY_TO_THREE_DIFFUSE_IRRADIANCE/,
+    'debug state must expose Unity-to-Three Lambert normalization',
 )
+assert.equal(
+    unityDiffuseRadianceToThree(2.5),
+    2.5 * Math.PI,
+    'serialized Unity radiance must cancel Three MeshStandard BRDF_Lambert 1/pi',
+)
+assert.match(stagesSource, /sourceColorSpace: 'unity-srgb'/)
 assert.match(
     stagesSource,
     /profile\.lightmapping === 2 && bakedLightmapsActive/,
@@ -56,10 +74,53 @@ assert.match(
     /rawIntensity: profile\.intensity[\s\S]*effectiveIntensity/,
     'stage-light diagnostics must expose raw and effective intensities',
 )
-assert.doesNotMatch(
+assert.match(stagesSource, /unityLightColorToLinear/)
+assert.match(stagesSource, /unityWorldToViewerVector/)
+assert.match(
     stagesSource,
-    /new THREE\.(?:PointLight|SpotLight)\([\s\S]{0,160}?profile\.intensity/,
-    'Unity local-light intensities must not be passed directly to Three.js',
+    /profileAffectsUnityLayer\(profile, 0\)[\s\S]*profileAffectsUnityLayer\(profile, stageLayer\)/,
+    'serialized cullingMask must independently route each light to character and stage scenes',
+)
+assert.match(
+    stagesSource,
+    /addForegroundStageLight\(type, profile, effectiveIntensity, anchor\)/,
+    'all-layer additional lights must be reproduced in the character render scene',
+)
+assert.match(
+    stagesSource,
+    /shadowLight\.shadow\.intensity = THREE\.MathUtils\.clamp\(shadow\?\.strength \?\? 1, 0, 1\)/,
+    'serialized Unity shadow strength must reach Three LightShadow',
+)
+assert.match(stagesSource, /mainLight: 2048/)
+assert.match(stagesSource, /additionalLight: 1024/)
+assert.match(stagesSource, /additionalTiers: \[256, 512, 1024\]/)
+assert.match(
+    stagesSource,
+    /profile\.type === 'directional' && profile\.role === 'character-key'/,
+    'official MainLight must select the active URP main-light atlas size',
+)
+assert.match(
+    stagesSource,
+    /profile\.additionalLightData\?\.shadowResolutionTier/,
+    'additional lights must consume their serialized URP resolution tier',
+)
+assert.match(stagesSource, /shadowLight\.shadow\.map\?\.dispose\(\)/)
+assert.match(stagesSource, /shadowLight\.shadow\.map = null/)
+assert.doesNotMatch(stagesSource, /shadow\.mapSize\.set\(1024, 1024\)/)
+assert.match(
+    stagesSource,
+    /function attachOfficialStageLight[\s\S]*?light\.position\.set\(0, 0, -10\)[\s\S]*?light\.target\.position\.set\(0, 0, 0\)/,
+    'an anchored Unity directional light must place the Three shadow camera behind its target',
+)
+assert.match(
+    stagesSource,
+    /attachOfficialStageLight\(stageLight, stageObject, profile, anchor\)/,
+    'the background MainLight copy must use the shadow-camera-safe directional transform',
+)
+assert.match(
+    stagesSource,
+    /subVectors\(stageLightProfileTarget, stageLightProfilePosition\)[\s\S]*?addScaledVector\(stageLightProfileDirection, -10\)/,
+    'profile-only directional lights must preserve direction while moving the shadow camera off the target plane',
 )
 
 assert.match(
@@ -93,15 +154,24 @@ assert.doesNotMatch(
 
 const effectiveIntensity = (type, raw) => {
     const safe = Number.isFinite(raw) ? Math.max(0, raw) : 0
-    return type === 'directional' ? safe : safe * 0.01
+    return safe
 }
 assert.equal(effectiveIntensity('directional', 1.25), 1.25)
-assert.equal(effectiveIntensity('point', 500), 5)
-assert.equal(effectiveIntensity('spot', 600), 6)
+assert.equal(effectiveIntensity('point', 500), 500)
+assert.equal(effectiveIntensity('spot', 600), 600)
 assert.equal(effectiveIntensity('point', -20), 0)
 assert.equal(effectiveIntensity('point', Number.NaN), 0)
 
+const capturedBgCenter = unityLightColorToLinear([1, 0.95, 0.9809523821])
+assert.ok(Math.abs(capturedBgCenter[1] * 500 - 445.0027771) < 0.001)
+assert.ok(Math.abs(capturedBgCenter[2] * 500 - 478.6076355) < 0.001)
+assert.deepEqual(unityWorldToViewerVector([6, 7, -8]), [-6, 7, -8])
+
 const stage608Lights = officialStage608.renderProfile.lights
+const volumeLight = stage608Lights.find(light => light.name === 'VolumeLight')
+assert.equal(volumeLight.cullingMask, 0xffffffff)
+assert.equal(volumeLight.additionalLightData.shadowResolutionTier, 2)
+assert.equal(volumeLight.additionalLightData.softShadowQuality, 1)
 const baked608Lights = stage608Lights.filter(light => light.lightmapping === 2)
 const runtime608Lights = stage608Lights.filter(light => light.lightmapping !== 2)
 assert.ok(baked608Lights.length > 0, 'fixture must exercise Baked-light filtering')
@@ -111,17 +181,25 @@ assert.ok(
     'only Unity LightmapBakeType.Baked lights may be filtered',
 )
 
+const stage601MainLight = officialStage601.renderProfile.lights.find(
+    light => light.role === 'character-key' && light.type === 'directional',
+)
+assert.ok(stage601MainLight)
+assert.equal(stage601MainLight.name, 'MainLight')
+assert.equal(stage601MainLight.castShadow, true)
+assert.equal(stage601MainLight.additionalLightData.shadowResolutionTier, 2)
+
 const stage608Volume = officialStage608.renderProfile.reDriveVolume
 assert.equal(stage608Volume.overrides.characterAdditionalRimLightColor, true)
-assert.equal(stage608Volume.overrides.characterAdditionalRimLightDirection, false)
+assert.equal(stage608Volume.overrides.characterAdditionalRimLightDirection, true)
 const stage608RimEnabled =
     stage608Volume.overrides.characterAdditionalRimLightColor
     && stage608Volume.overrides.characterAdditionalRimLightDirection
     && stage608Volume.characterAdditionalRimLightDirection.every(Number.isFinite)
 assert.equal(
     stage608RimEnabled,
-    false,
-    'Stage 608 colour-only default must not become an always-on white rim',
+    true,
+    'generated Stage 608 profile must preserve its explicit valid rim direction override',
 )
 
 console.log('Official stage lighting invariants passed.')

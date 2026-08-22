@@ -51,7 +51,15 @@ function transpile(sourcePath, runtimePath) {
 }
 
 transpile(materialProfilePath, runtimeMaterialPath)
-const renderSource = readFileSync(renderProfilePath, 'utf8')
+const generatedCharacterProfiles = readFileSync(join(
+  root,
+  'magia-exedra-character-three',
+  'official-character-controller-profiles.generated.json',
+), 'utf8')
+const renderSource = readFileSync(renderProfilePath, 'utf8').replace(
+  /^import generatedCharacterProfiles from '.\/official-character-controller-profiles\.generated\.json';\r?\n/m,
+  `const generatedCharacterProfiles = ${generatedCharacterProfiles.trim()};\n`,
+)
 const renderCompiled = ts.transpileModule(renderSource, {
   compilerOptions: {
     module: ts.ModuleKind.ES2022,
@@ -86,6 +94,10 @@ const gemExtension = readFileSync(
 )
 const generalShader = readFileSync(
   join(root, 'magia-exedra-character-three', 'shaders', 'general.ts'),
+  'utf8',
+)
+const faceShader = readFileSync(
+  join(root, 'magia-exedra-character-three', 'shaders', 'face.ts'),
   'utf8',
 )
 const generatedProfiles = JSON.parse(readFileSync(
@@ -125,6 +137,7 @@ test('101901 Body slots resolve exact JP f2 material profiles', () => {
   assert.deepEqual(gem.matCap, {
     enabled: true,
     source: 'soft-metallic',
+    texture: 'matcap_SoftMetallic',
     intensity: 2,
     maskByMetallic: false,
     maskBySpecular: false,
@@ -157,6 +170,7 @@ test('101901 Body slots resolve exact JP f2 material profiles', () => {
   assert.deepEqual(gold.matCap, {
     enabled: true,
     source: 'default-linear-grey',
+    texture: null,
     intensity: 1,
     maskByMetallic: false,
     maskBySpecular: false,
@@ -183,6 +197,7 @@ test('101901 weapon restores Aniso Fresnel SoftMetallic and outline width', () =
   assert.deepEqual(weapon.matCap, {
     enabled: true,
     source: 'soft-metallic',
+    texture: 'matcap_SoftMetallic',
     intensity: 1,
     maskByMetallic: true,
     maskBySpecular: false,
@@ -198,8 +213,10 @@ test('100107 regular body and Aniso slots restore non-Gem MatCap', () => {
     assert.equal(value.matCap.enabled, true)
     assert.equal(value.matCap.source, 'soft-metallic')
     assert.equal(value.matCap.intensity, 2)
-    assert.equal(value.matCap.maskByMetallic, true)
   }
+  assert.equal(body.matCap.maskByMetallic, true)
+  assert.equal(aniso.matCap.maskByMetallic, false)
+  assert.equal(aniso.matCap.texture, 'matcap_SoftMetallic')
   assert.equal(aniso.anisotropyProfile.enabled, true)
 })
 
@@ -241,15 +258,29 @@ test('100107 and 101901 official hair remains non-Aniso', () => {
   }
 })
 
-test('base MatCap executes outside Gem with native view-normal UV', () => {
-  assert.match(gemShader, /rdGemMatCapUv = rdGemNormalVs\.xy \* 0\.5 \+ 0\.5/)
-  assert.match(gemShader, /uMaterialMatCapEnabled > 0\.5 &&[\s\S]*?uMaterialIsGem <= 0\.5/)
+test('base MatCap executes before scene light for regular and Gem materials', () => {
+  assert.match(gemShader, /rdGemMatCapUv = vNormal\.xy \* 0\.5 \+ 0\.5/)
+  assert.match(gemShader, /if \(uMaterialMatCapEnabled > 0\.5\)/)
+  assert.doesNotMatch(
+    gemShader,
+    /uMaterialMatCapEnabled > 0\.5 &&[\s\S]*?uMaterialIsGem <= 0\.5/,
+  )
+  assert.match(gemShader, /rdGemMatCap \* rdMatCapBase \* 2\.0/)
+  assert.match(gemShader, /rdMatCapBase = diffuseColor\.rgb/)
+  assert.match(gemShader, /rdActiveMatCapMask/)
+  assert.doesNotMatch(gemShader, /rdMatCapBase = outgoingLight/)
+  assert.ok(
+    generalShader.indexOf('// END diffuseColor manipulation') <
+      generalShader.indexOf('outgoingLight = diffuseColor.rgb * rdToonSceneLightColor'),
+    'the MatCap insertion point must precede the official SH/main-light carrier',
+  )
   assert.match(gemShader, /uMaterialMatCapUseLinearGrey/)
   assert.doesNotMatch(gemShader, /rdGemMatCapX/)
   assert.doesNotMatch(gemShader, /dot\(rdGemMatCapX, rdGemNormalVs\)/)
   assert.match(loader, /profile => profile\.gem\.enabled \|\| profile\.matCap\.enabled/)
-  assert.match(loader, /thickness: uniformOutlineWidth/)
-  assert.match(gemExtension, /official-matcap-gem-v5/)
+  assert.match(loader, /addOfficialOutlineGroupsToMesh\(/)
+  assert.match(loader, /thickness: profile\.outlineWidth/)
+  assert.match(gemExtension, /official-matcap-gem-v9/)
 })
 
 test('each recovered material slot retains its exact MatCap Texture2D binding', () => {
@@ -284,8 +315,8 @@ test('each recovered material slot retains its exact MatCap Texture2D binding', 
 test('all local JP material bundles drive sharp shadow, self-shadow and HDR emission uniforms', () => {
   assert.equal(generatedProfiles.schema, 1)
   assert.equal(generatedProfiles.unityVersion, '2022.3.62f2')
-  assert.equal(generatedProfiles.bundleCount, 92)
-  assert.equal(generatedProfiles.materialCount, 1512)
+  assert.equal(generatedProfiles.bundleCount, 95)
+  assert.equal(generatedProfiles.materialCount, 1533)
 
   const socks = profile('mt_chara_101901_body_Socks')
   const weapon = profile('mt_chara_101901_weapon_a')
@@ -295,10 +326,58 @@ test('all local JP material bundles drive sharp shadow, self-shadow and HDR emis
   assert.equal(weapon.shadow.castSelfShadow, false)
   assert.equal(weapon.shadow.receiveSelfShadow, false)
 
+  const officialHair = Object.entries(generatedProfiles.materials)
+    .filter(([, value]) => value.angelRing?.isHair)
+  assert.equal(officialHair.length, 169)
+  for (const [name, value] of officialHair) {
+    assert.equal(
+      value.shadow?.feather,
+      0,
+      `${name} must preserve serialized zero-feather toon shadow`,
+    )
+  }
+
   assert.match(gemShader, /set\('uRdShadowOffset', value\.shadow\.offset\)/)
   assert.match(gemShader, /set\('uRdShadowFeather', value\.shadow\.feather\)/)
+  assert.match(
+    gemShader,
+    /uRdOfficialAdditionalLightInfluenceByLuminance[\s\S]*?value\.additionalLightInfluenceByLuminance/,
+  )
   assert.match(gemShader, /setColor\('uMaterialEmissionColor', value\.emissionColor\)/)
   assert.match(generalShader, /step\(rdToonRampLow, rdToonRamp\)/)
+  assert.match(
+    generalShader,
+    /getAmbientLightIrradiance\(ambientLightColor\)/,
+  )
+  assert.match(
+    generalShader,
+    /getLightProbeIrradiance\(\s*lightProbe,\s*normal\s*\)/,
+  )
+  assert.doesNotMatch(generalShader, /rdToonAmbientColor = irradiance/)
   assert.match(generalShader, /uMaterialReceiveSelfShadow/)
   assert.match(generalShader, /rdToonBaseColor \* uMaterialEmissionColor/)
+})
+
+test('custom toon lighting consumes Unity radiance and automatic scene lights', () => {
+  assert.match(
+    generalShader,
+    /directionalLights\[0\]\.color \* RECIPROCAL_PI/,
+    'custom toon carrier must undo the PI used only for Three Lambert',
+  )
+  assert.match(generalShader, /#if NUM_DIR_LIGHTS > 1/)
+  assert.match(generalShader, /#if NUM_POINT_LIGHTS > 0/)
+  assert.match(generalShader, /#if NUM_SPOT_LIGHTS > 0/)
+  assert.match(generalShader, /getPointLightInfo\(/)
+  assert.match(generalShader, /getDistanceAttenuation\(/)
+  assert.match(generalShader, /rdSpotAttenuation \*= rdSpotAttenuation/)
+  assert.match(
+    generalShader,
+    /rdOfficialAdditionalLight \*[\s\S]*?0\.200000003 \*[\s\S]*?rdOfficialAdditionalLuminanceFactor/,
+  )
+  assert.equal(profile('mt_chara_101901_hair').additionalLightInfluenceByLuminance, 1)
+  assert.match(
+    faceShader,
+    /rdFaceMainLightColor\s*=\s*directionalLights\[0\]\.color \* RECIPROCAL_PI/,
+    'face scene carrier must consume the same Unity main-light radiance as body/hair',
+  )
 })

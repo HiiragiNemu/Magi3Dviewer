@@ -1,0 +1,777 @@
+{
+  "schemaVersion": 1,
+  "scene": "battle/stage/bg_3d_600_00_01_001",
+  "encoding": "unity-bc6h-linear",
+  "renderers": [
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/far_grp/rockDPlane_grp/rockBPlane_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13354447484016418,
+        0.13354447484016418,
+        0.5679644346237183,
+        0.4228046238422394
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/far_grp/rockDPlane_grp/rockCPlane_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11451345682144165,
+        0.11451345682144165,
+        0.8162362575531006,
+        0.16188761591911316
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/far_grp/rockDPlane_grp/rockDPlane001_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1129472404718399,
+        0.1129472404718399,
+        0.7001098394393921,
+        0.19758032262325287
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/far_grp/rockDPlane_grp/rockDPlane002_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11590641736984253,
+        0.11590641736984253,
+        0.7000842690467834,
+        0.16194657981395721
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/far_grp/rockDPlane_grp/rockEPlane_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08282269537448883,
+        0.08282269537448883,
+        0.9179700016975403,
+        0.19766704738140106
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/far_grp/rockDPlane_grp/rockFPlane_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10058444738388062,
+        0.10058444738388062,
+        0.700042724609375,
+        0.23423802852630615
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/far_grp/rockDPlane_grp/rockGPlane_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10467461496591568,
+        0.10467461496591568,
+        0.8133159875869751,
+        0.19750525057315826
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/ground_grp/ground_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.5720934271812439,
+        0.5720934271812439,
+        -0.0006168706458993256,
+        -0.0006168706458993256
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/anthony_grp/anthonyAAA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014306402765214443,
+        0.014306402765214443,
+        0.9150989651679993,
+        0.0689704418182373
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/anthony_grp/anthonyAAB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014306404627859592,
+        0.014306404627859592,
+        0.9004505276679993,
+        0.0689704418182373
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA001_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01655755750834942,
+        0.01655755750834942,
+        0.8023448586463928,
+        0.14784304797649384
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA001_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016188589856028557,
+        0.016188589856028557,
+        0.8039799928665161,
+        0.05837026610970497
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA002_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01655755005776882,
+        0.01655755005776882,
+        0.8629275560379028,
+        0.14665056765079498
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA002_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014820005744695663,
+        0.014820005744695663,
+        0.6831365823745728,
+        0.33063754439353943
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA003_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016557559370994568,
+        0.016557559370994568,
+        0.8130870461463928,
+        0.14784304797649384
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA003_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01617763191461563,
+        0.01617763191461563,
+        0.7727435827255249,
+        0.058371398597955704
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA004_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011038366705179214,
+        0.011038366705179214,
+        0.9505892992019653,
+        0.1474194973707199
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA004_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012730728834867477,
+        0.012730728834867477,
+        0.7564620971679688,
+        0.14883530139923096
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA005_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01655755378305912,
+        0.01655755378305912,
+        0.8414431810379028,
+        0.14665056765079498
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA005_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0161781944334507,
+        0.0161781944334507,
+        0.7414935231208801,
+        0.05837133899331093
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA006_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011038370430469513,
+        0.011038370430469513,
+        0.9427767992019653,
+        0.1544516384601593
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA006_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011644287966191769,
+        0.011644287966191769,
+        0.7698708176612854,
+        0.14954866468906403
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA007_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01655755192041397,
+        0.01655755192041397,
+        0.8238292336463928,
+        0.14784304797649384
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA007_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01620274968445301,
+        0.01620274968445301,
+        0.8196035623550415,
+        0.058368802070617676
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA010_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011038357391953468,
+        0.011038357391953468,
+        0.9505892992019653,
+        0.15442760288715363
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA010_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011555446311831474,
+        0.011555446311831474,
+        0.8650177121162415,
+        0.06868501752614975
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA011_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01655755378305912,
+        0.01655755378305912,
+        0.8521853685379028,
+        0.14665056765079498
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA011_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014820005744695663,
+        0.014820005744695663,
+        0.6577459573745728,
+        0.3549216091632843
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA012_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016557544469833374,
+        0.016557544469833374,
+        0.8844119310379028,
+        0.14665056765079498
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA012_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0161781944334507,
+        0.0161781944334507,
+        0.7571185231208801,
+        0.05837133899331093
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA013_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016557546332478523,
+        0.016557546332478523,
+        0.8736697435379028,
+        0.14665056765079498
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA013_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016202745959162712,
+        0.016202745959162712,
+        0.8352285623550415,
+        0.058368802070617676
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA014_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016557566821575165,
+        0.016557566821575165,
+        0.7916026711463928,
+        0.14784303307533264
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignA014_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016188589856028557,
+        0.016188589856028557,
+        0.7883549928665161,
+        0.05837026610970497
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB001_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01105710119009018,
+        0.01105710119009018,
+        0.9349581599235535,
+        0.14741338789463043
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB001_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009250620380043983,
+        0.009250620380043983,
+        0.9257813096046448,
+        0.14800216257572174
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB002_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01658567786216736,
+        0.01658567786216736,
+        0.9498235583305359,
+        0.06756222993135452
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB002_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012719410471618176,
+        0.012719410471618176,
+        0.7310889363288879,
+        0.14883646368980408
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB003_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011057117953896523,
+        0.011057117953896523,
+        0.7230653762817383,
+        0.07200343161821365
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB003_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009244363754987717,
+        0.009244363754987717,
+        0.8965063691139221,
+        0.14800281822681427
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB004_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016585664823651314,
+        0.016585664823651314,
+        0.9605657458305359,
+        0.06756222993135452
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB004_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012711436487734318,
+        0.012711436487734318,
+        0.8512140512466431,
+        0.05872930958867073
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB005_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016585661098361015,
+        0.016585661098361015,
+        0.9713079333305359,
+        0.06756222993135452
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB005_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012710994109511375,
+        0.012710994109511375,
+        0.7184042930603027,
+        0.14883732795715332
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB006_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011057100258767605,
+        0.011057100258767605,
+        0.9427706599235535,
+        0.14741338789463043
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB006_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010416047647595406,
+        0.010416047647595406,
+        0.9403218030929565,
+        0.06880266964435577
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB007_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016585662961006165,
+        0.016585662961006165,
+        0.9820501208305359,
+        0.06756222993135452
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB007_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012719607912003994,
+        0.012719607912003994,
+        0.7437679767608643,
+        0.14883644878864288
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB008_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011057103984057903,
+        0.011057103984057903,
+        0.8509826064109802,
+        0.0711919516324997
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB008_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010416057892143726,
+        0.010416057892143726,
+        0.9295796155929565,
+        0.06880266964435577
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB009_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011057114228606224,
+        0.011057114228606224,
+        0.7308778762817383,
+        0.07200343161821365
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB009_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009244357235729694,
+        0.009244357235729694,
+        0.9160234332084656,
+        0.14800281822681427
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB010_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01658565364778042,
+        0.01658565364778042,
+        0.7808513045310974,
+        0.14783386886119843
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB010_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012710995972156525,
+        0.012710995972156525,
+        0.7057187557220459,
+        0.14883732795715332
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB011_grp/butterflySignA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011057103052735329,
+        0.011057103052735329,
+        0.9349581599235535,
+        0.15444552898406982
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/butterflysign_grp/butterflySignB011_grp/butterflySignB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009244357235729694,
+        0.009244357235729694,
+        0.9062649011611938,
+        0.14800281822681427
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockBig_grp/rockA001_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13806062936782837,
+        0.13806062936782837,
+        0.5685594081878662,
+        -0.000776532688178122
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockBig_grp/rockA002_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13707681000232697,
+        0.13707681000232697,
+        0.5685649514198303,
+        0.08036566525697708
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockBig_grp/rockB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.16086618602275848,
+        0.16086618602275848,
+        0.7070218920707703,
+        -0.000985948834568262
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockBig_grp/rockC_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1361684501171112,
+        0.1361684501171112,
+        0.7061963081359863,
+        0.08030173927545547
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockBig_grp/rockD001_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13362987339496613,
+        0.13362987339496613,
+        0.568578839302063,
+        0.24646131694316864
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockBig_grp/rockD002_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13362987339496613,
+        0.13362987339496613,
+        0.568578839302063,
+        0.16227705776691437
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockBig_grp/rockE_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09398321807384491,
+        0.09398321807384491,
+        0.5686008930206299,
+        0.45040521025657654
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockBig_grp/rockF_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11953940987586975,
+        0.11953940987586975,
+        0.8429601192474365,
+        0.08034677803516388
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockBig_grp/rockG_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12926948070526123,
+        0.12926948070526123,
+        0.865401029586792,
+        -0.0008099369006231427
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockEdge_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09246166050434113,
+        0.09246166050434113,
+        0.5687306523323059,
+        0.33079737424850464
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockH_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03513587638735771,
+        0.03513587638735771,
+        0.963269829750061,
+        0.08053930848836899
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockI_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.05177417770028114,
+        0.05177417770028114,
+        0.7005777359008789,
+        0.32558295130729675
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockJ_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023639407008886337,
+        0.023639407008886337,
+        0.9632480144500732,
+        0.13946771621704102
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockK001_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015813559293746948,
+        0.015813559293746948,
+        0.7073797583580017,
+        0.0594138503074646
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockK002_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010860581882297993,
+        0.010860581882297993,
+        0.8773127794265747,
+        0.06927019357681274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockK003_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010860581882297993,
+        0.010860581882297993,
+        0.8890315294265747,
+        0.06927019357681274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockL_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.053030919283628464,
+        0.053030919283628464,
+        0.7004718780517578,
+        0.37821146845817566
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockM002_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017771100625395775,
+        0.017771100625395775,
+        0.7238809466362,
+        0.059313442558050156
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockN_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02772546373307705,
+        0.02772546373307705,
+        0.9632064700126648,
+        0.11610075831413269
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockO_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06083444505929947,
+        0.06083444505929947,
+        0.7005637288093567,
+        0.26404550671577454
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_00_01_001/bg3d600A_01_01/mid_grp/rock_grp/rockSmall_grp/rockQ_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.024632154032588005,
+        0.024632154032588005,
+        0.6578845977783203,
+        0.330776184797287
+      ]
+    }
+  ]
+}

@@ -1,24 +1,65 @@
 #menu-controls {
-    overflow-x: auto;
-    overflow-y: hidden;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-top: 4px;
-    padding-left: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+    gap: 2px 4px;
+    width: 100%;
+    min-width: 0;
+    overflow: visible;
+    font-size: 12px;
 }
 
 #menu-controls>* {
-    flex-shrink: 0;
-    pointer-events: initial;
+    flex: 0 1 auto;
     display: flex;
     align-items: center;
+    min-width: 0;
     max-width: 100%;
 }
 
 #menu-controls>*>* {
-    margin-top: 4px;
-    margin-left: 4px;
+    margin: 0 0 0 4px;
+}
+
+#menu-controls button,
+#menu-controls select,
+#menu-controls input {
+    font: inherit;
+}
+
+#menu-controls button,
+#menu-controls select {
+    min-height: 28px;
+    color: #e7e7eb;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+#menu-controls button {
+    cursor: pointer;
+    padding: 3px 8px;
+}
+
+#menu-controls button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#menu-controls select {
+    max-width: min(250px, 28vw);
+    background-color: #1e1e30;
+}
+
+body.theme-light #menu-controls button,
+body.theme-light #menu-controls select {
+    color: #222;
+    background: rgba(0, 0, 0, 0.07);
+    border-color: rgba(0, 0, 0, 0.18);
+}
+
+body.theme-light #menu-controls select {
+    background-color: #fff;
 }
 
 #menu-controls img {
@@ -48,9 +89,192 @@
 }
 
 #animation-slider {
-    min-width: 80px;
+    width: 100%;
+    min-width: 0;
+}
+
+#expression-auto-blink-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    white-space: nowrap;
+}
+
+#expression-auto-blink-control input {
+    margin: 0;
+}
+
+#face-manual-controls>label {
+    display: grid;
+    grid-template-columns: minmax(116px, 0.8fr) minmax(130px, 1fr) 4.5em;
+    align-items: center;
+    gap: 8px;
+}
+
+#face-manual-controls input[type="range"] {
+    width: 100%;
+    min-width: 0;
+}
+
+#face-manual-controls output {
+    min-width: 3.4em;
+    font-variant-numeric: tabular-nums;
+}
+
+#face-manual-controls input:disabled,
+#face-manual-controls input:disabled+output {
+    opacity: 0.45;
+}
+
+#position-controls-wrapper {
+    display: none;
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 30;
+    width: max-content;
+    max-width: calc(100% - 16px);
+}
+
+body.position-controls-open #position-controls-wrapper {
+    display: block;
+}
+
+#position-controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(72px, 1fr));
+    gap: 2px;
+    width: min(300px, calc(100vw - 76px));
+    max-width: calc(100vw - 76px);
+    padding: 4px;
+    background: rgba(18, 18, 28, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+}
+
+#recording-spec-controls {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3px;
+    min-width: 0;
+}
+
+#recording-spec-controls label {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    color: #c9c9d2;
+    font-size: 9px;
+    line-height: 1.1;
+}
+
+#recording-spec-controls select {
+    width: 100%;
+    min-width: 0;
+    height: 27px;
+    padding: 2px 3px;
+    color: #e7e7eb;
+    background: #242432;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    font: inherit;
+    font-size: 10px;
+}
+
+#recording-size-output {
+    grid-column: 1 / -1;
+    min-height: 15px;
+    color: #aeb9c9;
+    font-size: 9px;
+    line-height: 15px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+#position-controls button {
+    min-width: 54px;
+    min-height: 30px;
+    padding: 4px 6px;
+    color: #e7e7eb;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    font: inherit;
+    font-size: 11px;
+    line-height: 1.15;
+    white-space: nowrap;
+    cursor: pointer;
+    touch-action: none;
+}
+
+#position-controls button.recording {
+    color: #fff;
+    background: #a81f35;
+    border-color: #e1596f;
+}
+
+#position-controls button:disabled {
+    cursor: default;
+    opacity: 0.45;
+}
+
+#position-controls button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+body.theme-light #position-controls {
+    background: rgba(240, 240, 245, 0.92);
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+body.theme-light #position-controls button {
+    color: #222;
+    background: rgba(0, 0, 0, 0.07);
+    border-color: rgba(0, 0, 0, 0.18);
+}
+
+body.theme-light #recording-spec-controls label,
+body.theme-light #recording-size-output {
+    color: #444;
+}
+
+body.theme-light #recording-spec-controls select {
+    color: #222;
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.18);
+}
+
+body.theme-light #position-controls button:hover {
+    background: rgba(0, 0, 0, 0.13);
 }
 
 #menu-controls .spacer {
     display: none;
+}
+
+@media (max-width: 760px) {
+    #menu-controls select {
+        max-width: min(210px, 42vw);
+    }
+
+    #position-controls {
+        grid-template-columns: repeat(3, minmax(58px, 1fr));
+        width: min(270px, calc(100vw - 68px));
+    }
+
+    #position-controls button {
+        min-width: 48px;
+        min-height: 28px;
+        padding: 3px 4px;
+        font-size: 10px;
+    }
+
+    #face-manual-controls>label {
+        grid-template-columns: minmax(96px, 0.8fr) minmax(100px, 1fr) 4em;
+        gap: 5px;
+    }
 }

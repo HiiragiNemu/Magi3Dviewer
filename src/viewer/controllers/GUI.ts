@@ -2,7 +2,10 @@ import GUI, { type FunctionController } from 'three/addons/libs/lil-gui.module.m
 import { OutlineColor, OutlineThickness } from 'magia-exedra-character-three/shaders'
 import { scene } from '../scene';
 import { MagiaExedraScene3D } from 'magia-exedra-character-three/scene'
-import type { SceneComposerAntiAliasing } from 'magia-exedra-character-three/scene/effects';
+import {
+    defaultSceneComposerAntiAliasing,
+    type SceneComposerAntiAliasing,
+} from 'magia-exedra-character-three/scene/effects';
 import { presetExport, presetImport } from './presets';
 import { themeDarkBgColor } from './theme';
 import { CharacterMeshController } from 'magia-exedra-character-three/character';
@@ -40,7 +43,7 @@ export const guiOptions = {
     Axes: false,
     PixelRatio: MagiaExedraScene3D.defaultPixelRatio,
     UseEffectComposer: scene.composerEnabled,
-    AntiAliasing: 'None' satisfies SceneComposerAntiAliasing as SceneComposerAntiAliasing,
+    AntiAliasing: defaultSceneComposerAntiAliasing satisfies SceneComposerAntiAliasing as SceneComposerAntiAliasing,
     AntiAliasingLevel: 2,
 
     async Export() {

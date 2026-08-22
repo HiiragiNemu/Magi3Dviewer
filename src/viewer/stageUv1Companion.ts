@@ -2,7 +2,11 @@ import * as THREE from 'three'
 
 export interface StageUv1GeometryRecord {
     vertexCount: number
-    uv1Sha256: string
+    /** Present in preserved schema-v3 companions. */
+    uv1Sha256?: string
+    /** Stable source identity used by the automatic schema-v4 exporter. */
+    sourceMeshPathID?: string
+    sourceMeshCab?: string
     /** Little-endian Float32 UV pairs, base64 encoded. */
     uv1Base64: string
 }
@@ -64,7 +68,8 @@ export async function loadStageUv1Companion(
     const documentValue = await response.json() as Partial<StageUv1Companion>
     signal.throwIfAborted()
     if (
-        documentValue.schemaVersion !== 3
+        (documentValue.schemaVersion !== 3
+            && documentValue.schemaVersion !== 4)
         || typeof documentValue.stageId !== 'string'
         || typeof documentValue.sourceRevision !== 'string'
         || !documentValue.geometries
@@ -232,7 +237,9 @@ function decodeUv1(record: StageUv1GeometryRecord) {
     const expectedBytes = record.vertexCount * 2 * Float32Array.BYTES_PER_ELEMENT
     if (binary.length !== expectedBytes) {
         throw new Error(
-            `UV1 byte count mismatch for ${record.uv1Sha256}: `
+            `UV1 byte count mismatch for ${
+                record.uv1Sha256 ?? record.sourceMeshPathID ?? 'unknown mesh'
+            }: `
             + `expected ${expectedBytes}, got ${binary.length}`,
         )
     }

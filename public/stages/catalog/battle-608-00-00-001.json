@@ -491,7 +491,7 @@
       "bg3d608_00_blue_Fish_RotateAnimation"
     ],
     "missing": [
-      "six Unity ParticleSystem and ParticleSystemRenderer reconstructions",
+      "particle Noise operator and the exact Unity auto-random seed stream",
       "volumetric spot-light beam and dust runtime",
       "reflection probe cubemap conversion and box projection",
       "Unity component light-state and red/blue material-state runtime",
@@ -508,7 +508,8 @@
       "One realtime ReflectionProbe and ReDriveVolume serialized profile",
       "No TimelineAsset or PlayableDirector exists in the 15-file closure",
       "Current JP Material bg3d608_00_blue_Fish: _MULTI_UV_SCROLL=1, BaseMap and separate ScrollTexture PPtrs, both layers speed [-0.01,0], tiling [1,1], opacity 1, _Additive_to_Multiply=0.98, alpha clip 0.5",
-      "Current JP violin colour/shadow materials are _FLIPBOOK with _UseFlipbook=1, _FlipbookTileGrid=[4,4], _FlipbookFrameRate=8 and _FlipbookOffset=0"
+      "Current JP violin colour/shadow materials are _FLIPBOOK with _UseFlipbook=1, _FlipbookTileGrid=[4,4], _FlipbookFrameRate=8 and _FlipbookOffset=0",
+      "Generated bundle profile instantiates 6/6 bubble ParticleSystems and resolves the LinearRotater by exact hierarchy path."
     ]
   },
   "evidence": [
@@ -551,5 +552,6 @@
     "evidence": [
       "Current JP bg3d608_00_blue_ChairCD: renderQueue 3000, _ALPHATEST_ON, _AlphaClip=1, _Alpha_Clip=0.8999999761581421, _Surface=1, _SrcBlend=5, _DstBlend=10 and _ZWrite=0."
     ]
-  }
+  },
+  "sceneProfileUrl": "./stages/official/battle-608-00-00-001/scene-profile.json"
 }

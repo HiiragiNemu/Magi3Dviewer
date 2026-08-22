@@ -4,6 +4,12 @@ import {
     getClockDelta,
     removeAnimationLoop,
 } from 'magia-exedra-character-three/renderer'
+import { resolveStageHierarchyPath } from './stageHierarchy'
+import type { StageMaterialBinding } from './stageMaterialBindings'
+import {
+    StageParticleRuntimeController,
+    type StageParticleRuntimeDebugState,
+} from './stageParticles'
 
 /**
  * Declarative voice metadata for the shared stage clock.
@@ -28,11 +34,178 @@ export interface StageVoiceTrackProfile {
 }
 
 export interface StageRotatorProfile {
-    /** Exact exported object name; ambiguous duplicate names are not guessed. */
-    objectName: string
+    /** Exact serialized hierarchy path; generated profiles use this first. */
+    hierarchyPath?: string
+    /** Legacy exact object name; ambiguous duplicate names are not guessed. */
+    objectName?: string
     /** Native LinearRotater.rotation value, measured in degrees per second. */
     degreesPerSecond: [number, number, number]
     space?: 'self'
+}
+
+export interface StageParticlePresetProfile {
+    id: string
+    duration: number
+    simulationSpeed: number
+    looping: boolean
+    prewarm: boolean
+    playOnAwake: boolean
+    useUnscaledTime?: boolean
+    autoRandomSeed: boolean
+    randomSeed: number
+    moveWithTransform: number
+    scalingMode: number
+    initial: Record<string, unknown>
+    emission: Record<string, unknown>
+    shape: Record<string, unknown>
+    modules: Record<string, Record<string, unknown>>
+    renderer: Record<string, unknown>
+}
+
+export interface StageParticleSystemProfile {
+    pathID: string
+    hierarchyPath: string
+    /** Collision-safe FBX carrier path derived from the nearest Renderer PathID. */
+    carrierHierarchyPath?: string
+    active: boolean
+    presetId: string
+    materials: string[]
+}
+
+export interface StageSerializedComponentClipProfile {
+    pathID: string
+    name: string
+    sampleRate: number
+    duration: number
+    loop: boolean
+    bindings: Array<Record<string, unknown>>
+}
+
+export interface StageAnimatorRandomizerProfile {
+    componentPathID: string
+    hierarchyPath?: string
+    enabled: boolean
+    animatorPathID: string
+    animator?: Record<string, unknown>
+    selectionAuthority: string
+}
+
+export interface StageVolumetricLightBeamConfigProfile {
+    name: 'VLBConfigOverride'
+    geometryOverrideLayer: boolean
+    geometryLayerID: number
+    geometryTag: string
+    geometryRenderQueue: number
+    /** VLB RenderPipeline.URP = 1. */
+    renderPipeline: number
+    /** VLB RenderingMode.SinglePass = 1. */
+    renderingMode: number
+    ditheringFactor: number
+    sharedMeshSides: number
+    sharedMeshSegments: number
+    globalNoiseScale: number
+    globalNoiseVelocity: [number, number, number]
+    fadeOutCameraTag: string
+    noiseTexture3D: { fileID: number; pathID: number }
+    dustParticlesPrefab: { fileID: number; pathID: number }
+    ditheringNoiseTexture: { fileID: number; pathID: number }
+    featureEnabledColorGradient: number
+    featureEnabledDepthBlend: boolean
+    featureEnabledNoise3D: boolean
+    featureEnabledDynamicOcclusion: boolean
+    featureEnabledMeshSkewing: boolean
+    featureEnabledShaderAccuracyHigh: boolean
+    pluginVersion: number
+    dummyMaterial: { fileID: number; pathID: number }
+    beamShader: { fileID: number; pathID: number }
+    source?: string
+    sourceBytes?: number
+    objectPathID?: string
+    objectBytes?: number
+}
+
+export interface StageVolumetricLightBeamProfile {
+    componentPathID: string
+    gameObjectPathID: string
+    hierarchyPath?: string
+    active: boolean
+    lightAnchorPath?: string
+    linkedLight?: {
+        pathID: string
+        name: string
+        hierarchyPath: string
+        active: boolean
+        enabled: boolean
+        type: 'spot'
+        color: [number, number, number, number]
+        intensity: number
+        range: number
+        outerAngleDegrees: number
+        innerAngleDegrees: number
+        worldPosition: [number, number, number]
+        worldForward: [number, number, number]
+    }
+    colorFromLight: boolean
+    colorMode: number
+    color: [number, number, number, number]
+    colorGradient?: Record<string, unknown>
+    intensityFromLight: boolean
+    intensityModeAdvanced: number
+    intensityInside: number
+    intensityOutside: number
+    blendingMode: number
+    spotAngleFromLight: boolean
+    spotAngle: number
+    coneRadiusStart: number
+    shaderAccuracy: number
+    geomMeshType: number
+    geomCustomSides: number
+    geomCustomSegments: number
+    skewingLocalForwardDirection: [number, number, number]
+    geomCap: boolean
+    fallOffEndFromLight: boolean
+    attenuationEquation: number
+    attenuationCustomBlending: number
+    fallOffStart: number
+    fallOffEnd: number
+    depthBlendDistance: number
+    cameraClippingDistance: number
+    glareFrontal: number
+    glareBehind: number
+    fresnelPow: number
+    noiseMode: number
+    noiseIntensity: number
+    noiseScaleUseGlobal: boolean
+    noiseScaleLocal: number
+    noiseVelocityUseGlobal: boolean
+    noiseVelocityLocal: [number, number, number]
+    dimensions: number
+    tiltFactor: [number, number]
+    pluginVersion: number
+    sortingLayerID: number
+    sortingOrder: number
+    fadeOutBegin: number
+    fadeOutEnd: number
+}
+
+export interface StageVolumetricDustParticlesProfile {
+    componentPathID: string
+    gameObjectPathID: string
+    beamComponentPathID?: string
+    hierarchyPath?: string
+    active: boolean
+    alpha: number
+    size: number
+    direction: number
+    velocity: [number, number, number]
+    speed: number
+    density: number
+    spawnDistanceRange?: { m_MinValue?: number; m_MaxValue?: number }
+    spawnMinDistance: number
+    spawnMaxDistance: number
+    cullingEnabled: boolean
+    cullingMaxDistance: number
+    alphaAdditionalRuntime: number
 }
 
 export interface StageRuntimeProfile {
@@ -44,6 +217,13 @@ export interface StageRuntimeProfile {
     timeScale?: number
     voiceTracks?: StageVoiceTrackProfile[]
     rotators?: StageRotatorProfile[]
+    particlePresets?: StageParticlePresetProfile[]
+    particleSystems?: StageParticleSystemProfile[]
+    serializedComponentClips?: StageSerializedComponentClipProfile[]
+    animatorRandomizers?: StageAnimatorRandomizerProfile[]
+    volumetricLightBeamConfig?: StageVolumetricLightBeamConfigProfile
+    volumetricLightBeams?: StageVolumetricLightBeamProfile[]
+    volumetricDustParticles?: StageVolumetricDustParticlesProfile[]
 }
 
 export type StageVoiceTrackPlaybackState =
@@ -83,6 +263,7 @@ export interface StageRuntimeDebugState {
     activeRotatorNames: string[]
     missingRotatorNames: string[]
     ambiguousRotatorNames: string[]
+    particles?: StageParticleRuntimeDebugState
 }
 
 interface ActiveStageRotator {
@@ -115,6 +296,7 @@ export class StageRuntimeController {
     private readonly activeRotators: ActiveStageRotator[]
     private readonly missingRotatorNames: string[]
     private readonly ambiguousRotatorNames: string[]
+    private readonly particleRuntime?: StageParticleRuntimeController
     private readonly animationLoop: () => void
     private readonly afterUpdate?: () => void
     private _time: number
@@ -126,6 +308,8 @@ export class StageRuntimeController {
         root: THREE.Object3D,
         profile: StageRuntimeProfile,
         afterUpdate?: () => void,
+        materialBindings: readonly StageMaterialBinding[] = [],
+        textures: readonly THREE.Texture[] = [],
     ) {
         this.root = root
         this.profile = profile
@@ -152,11 +336,19 @@ export class StageRuntimeController {
         this.missingRotatorNames = []
         this.ambiguousRotatorNames = []
         for (const rotator of requestedRotators) {
-            const candidates = objectsByName.get(rotator.objectName) ?? []
+            const label = rotator.hierarchyPath ?? rotator.objectName ?? '(unnamed)'
+            const hierarchyCandidate = rotator.hierarchyPath
+                ? resolveStageHierarchyPath(root, rotator.hierarchyPath)
+                : undefined
+            const candidates = hierarchyCandidate
+                ? [hierarchyCandidate]
+                : rotator.objectName
+                    ? objectsByName.get(rotator.objectName) ?? []
+                    : []
             if (candidates.length === 0) {
-                this.missingRotatorNames.push(rotator.objectName)
+                this.missingRotatorNames.push(label)
             } else if (candidates.length > 1) {
-                this.ambiguousRotatorNames.push(rotator.objectName)
+                this.ambiguousRotatorNames.push(label)
             } else {
                 this.activeRotators.push({
                     profile: rotator,
@@ -183,8 +375,18 @@ export class StageRuntimeController {
         this._time = finiteNonNegative(profile.startTime, 0)
         this._timeScale = finiteNonNegative(profile.timeScale, 1)
         this._paused = profile.autoplay === false
+        if ((profile.particleSystems?.length ?? 0) > 0) {
+            this.particleRuntime = new StageParticleRuntimeController(
+                root,
+                profile.particlePresets ?? [],
+                profile.particleSystems ?? [],
+                materialBindings,
+                textures,
+            )
+        }
         this.mixer?.setTime(this._time)
         this.applyRotatorDelta(this._time)
+        this.particleRuntime?.update(this._time)
         this.runAfterUpdate()
         this.publishTime()
 
@@ -229,6 +431,7 @@ export class StageRuntimeController {
         this._time = finiteNonNegative(time, this._time)
         this.mixer?.setTime(this._time)
         this.applyRotatorDelta(this._time - previousTime)
+        this.particleRuntime?.update(this._time)
         this.runAfterUpdate()
         this.publishTime()
     }
@@ -259,6 +462,7 @@ export class StageRuntimeController {
             this.mixer?.update(scaledDelta)
         }
         this.applyRotatorDelta(this._time - previousTime)
+        this.particleRuntime?.update(this._time)
         this.runAfterUpdate()
         this.publishTime()
     }
@@ -331,11 +535,18 @@ export class StageRuntimeController {
                 && this._time >= animationDuration,
             voiceTracks: this.getVoiceTrackStates(),
             requestedRotatorNames:
-                (this.profile.rotators ?? []).map(rotator => rotator.objectName),
+                (this.profile.rotators ?? []).map(
+                    rotator => rotator.hierarchyPath ?? rotator.objectName ?? '(unnamed)',
+                ),
             activeRotatorNames:
-                this.activeRotators.map(rotator => rotator.profile.objectName),
+                this.activeRotators.map(
+                    rotator => rotator.profile.hierarchyPath
+                        ?? rotator.profile.objectName
+                        ?? '(unnamed)',
+                ),
             missingRotatorNames: [...this.missingRotatorNames],
             ambiguousRotatorNames: [...this.ambiguousRotatorNames],
+            particles: this.particleRuntime?.getDebugState(),
         }
     }
 
@@ -345,6 +556,7 @@ export class StageRuntimeController {
         removeAnimationLoop(this.animationLoop)
         this.mixer?.stopAllAction()
         this.mixer?.uncacheRoot(this.root)
+        this.particleRuntime?.dispose()
         delete this.root.userData.stageRuntimeTime
         delete this.root.userData.stageRuntime
         this._disposed = true
@@ -406,8 +618,16 @@ export function createStageRuntimeController(
     root: THREE.Object3D,
     profile?: StageRuntimeProfile,
     afterUpdate?: () => void,
+    materialBindings: readonly StageMaterialBinding[] = [],
+    textures: readonly THREE.Texture[] = [],
 ) {
     return profile == undefined
         ? undefined
-        : new StageRuntimeController(root, profile, afterUpdate)
+        : new StageRuntimeController(
+            root,
+            profile,
+            afterUpdate,
+            materialBindings,
+            textures,
+        )
 }

@@ -3,11 +3,13 @@
 export const officialCharacterSubmeshIndexCounts: Readonly<
     Record<number, Readonly<Record<string, readonly number[]>>>
 > = {
-    100102: {
-        "Acc_Mesh": [912],
-        "Body_Mesh": [29658, 3342],
+    100101: {
+        "Acc_Mesh": [5316],
+        "Body_Mesh": [34164, 834, 246],
         "Face_Mesh": [6996, 996, 192],
         "Hair_Mesh": [3261, 5709],
+        "weapon_a_mesh": [2994, 168],
+        "weapon_b_mesh": [4077, 48, 168],
     },
     100103: {
         "Acc_Mesh": [4272],

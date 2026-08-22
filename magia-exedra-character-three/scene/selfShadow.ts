@@ -16,7 +16,8 @@ export const officialReDriveSelfShadowSettings = Object.freeze({
     shadowRange: 10,
     depthBias: 1,
     depthBiasScale: 0.005,
-    useNdotLFix: true,
+    // TW battle and JP Home live programs both expose the native value 0.
+    useNdotLFix: false,
     charaBoundSize: [0.75, 1.5, 0.5] as const,
 })
 

@@ -1,7 +1,7 @@
 #perf-stat {
-    position: fixed;
-    right: 0;
-    bottom: 0;
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 2px;
     text-align: right;
     display: flex;
     flex-direction: column;
@@ -9,10 +9,16 @@
     font-family: monospace;
     color: white;
     pointer-events: none;
+    overflow: hidden;
 }
 
 #perf-stat-js {
     pointer-events: initial;
+    transform: scale(0.72);
+    transform-origin: right bottom;
+    width: 36px;
+    height: 24px;
+    overflow: hidden;
 }
 
 #perf-time {
@@ -21,7 +27,7 @@
     align-items: flex-end;
 }
 
-#perf-time>* {
+#perf-time > * {
     pointer-events: initial;
     background-color: rgba(0, 0, 0, 0.33);
 }

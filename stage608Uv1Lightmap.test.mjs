@@ -12,6 +12,9 @@ const uv1 = JSON.parse(readFileSync(`${stageRoot}/uv1-companion.json`, 'utf8'))
 const lightmaps = JSON.parse(
   readFileSync(`${stageRoot}/lightmap-bindings.json`, 'utf8'),
 )
+const profile = JSON.parse(
+  readFileSync(`${stageRoot}/scene-profile.json`, 'utf8'),
+)
 
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex')
 
@@ -55,7 +58,7 @@ test('stage 608 opts into strict UV1 restoration before baked-lightmap binding',
   const stages = readFileSync('src/viewer/stages.ts', 'utf8')
   const uv1Apply = stages.indexOf('if (profileTextures.uv1Companion)')
   const lightmapApply = stages.indexOf(
-    'if (profileTextures.lightmap && profileTextures.lightmapBindings)',
+    'if (profileTextures.lightmaps?.length && profileTextures.lightmapBindings)',
     uv1Apply,
   )
   assert.ok(uv1Apply >= 0)
@@ -72,5 +75,23 @@ test('stage 608 opts into strict UV1 restoration before baked-lightmap binding',
     catalog.dynamic.evidence.some((entry) =>
       entry.includes('20/20 lightmapped renderers'),
     ),
+  )
+})
+
+test('stage 608 generated runtime restores all bubble emitters and exact rotator path', () => {
+  assert.equal(profile.runtime.particlePresets.length, 1)
+  assert.equal(profile.runtime.particleSystems.length, 6)
+  assert.equal(profile.runtime.rotators.length, 1)
+  assert.equal(
+    profile.runtime.rotators[0].hierarchyPath,
+    'bg_3d_608_00_00_001/bg3d608_00_red/chair_grp',
+  )
+  assert.ok(
+    !catalog.dynamic.missing.some((entry) =>
+      entry.includes('six Unity ParticleSystem'),
+    ),
+  )
+  assert.ok(
+    catalog.dynamic.missing.some((entry) => entry.includes('particle Noise')),
   )
 })

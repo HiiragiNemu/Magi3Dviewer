@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { readFile } from 'node:fs/promises'
+import { readdir, readFile } from 'node:fs/promises'
 import test from 'node:test'
 
 const generated = await readFile(
@@ -22,6 +22,38 @@ function counts(characterId, meshName) {
     assert.ok(values, `missing ${characterId}/${meshName}`)
     return values.split(',').map(value => Number(value.trim()))
 }
+
+function generatedCharacterIds() {
+    return [...generated.matchAll(/^    (\d+): \{$/gm)]
+        .map(match => Number(match[1]))
+        .sort((left, right) => left - right)
+}
+
+async function localBattleModelIds() {
+    const entries = await readdir(
+        new URL('./magia-exedra-character-three/models/', import.meta.url),
+        { withFileTypes: true },
+    )
+    return entries
+        .filter(entry => entry.isDirectory())
+        .map(entry => entry.name.match(/^chara_(\d+)_battle_unit$/)?.[1])
+        .filter(Boolean)
+        .map(Number)
+        .sort((left, right) => left - right)
+}
+
+test('generated character keys exactly cover the local battle-model corpus', async () => {
+    assert.deepEqual(generatedCharacterIds(), await localBattleModelIds())
+})
+
+test('100101 draw ranges come from its own official Unity Mesh submeshes', () => {
+    assert.deepEqual(counts(100101, 'Acc_Mesh'), [5316])
+    assert.deepEqual(counts(100101, 'Body_Mesh'), [34164, 834, 246])
+    assert.deepEqual(counts(100101, 'Face_Mesh'), [6996, 996, 192])
+    assert.deepEqual(counts(100101, 'Hair_Mesh'), [3261, 5709])
+    assert.deepEqual(counts(100101, 'weapon_a_mesh'), [2994, 168])
+    assert.deepEqual(counts(100101, 'weapon_b_mesh'), [4077, 48, 168])
+})
 
 test('Madoka official submesh counts exactly match the non-indexed FBX draw counts', () => {
     assert.deepEqual(counts(100107, 'Body_Mesh'), [34164, 834, 246])

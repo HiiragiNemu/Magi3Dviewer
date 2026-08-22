@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import type { ReDriveBackgroundShaderGlobals } from './reDriveVolumeRuntime'
 
 export interface StageAtlasProfile {
     columns: number
@@ -41,7 +42,13 @@ export interface StageFlowMapProfile {
 
 export type StageTextureWrap = 'repeat' | 'clamp' | 'mirror'
 export type StageTextureFilter = 'point' | 'bilinear' | 'trilinear'
-export type StageTextureSlot = 'base' | 'normal' | 'smoothness' | 'blend' | 'matCap'
+export type StageTextureSlot =
+    | 'base'
+    | 'normal'
+    | 'smoothness'
+    | 'blend'
+    | 'matCap'
+    | 'emission'
 
 export interface StageTextureBinding {
     /** Runtime URL of the exported carrier texture. */
@@ -82,6 +89,7 @@ export interface StageTextureSet {
     smoothness?: StageTextureBinding
     blend?: StageTextureBinding
     matCap?: StageTextureBinding
+    emission?: StageTextureBinding
 }
 
 export interface StageMaterialBinding {
@@ -89,16 +97,27 @@ export interface StageMaterialBinding {
     materialName?: string
     /** Optional regular expression for exporter-added name suffixes. */
     materialPattern?: string
+    /** Exact serialized Unity shader name used to select the material family. */
+    sourceShader?: string
+    /** Exact Material queue; -1 selects the shader's default queue. */
+    renderQueue?: number
+    /** Unity 2022 local/global keyword state used to select compiled variants. */
+    validKeywords?: string[]
+    invalidKeywords?: string[]
+    disabledShaderPasses?: string[]
     shading?: 'lit' | 'unlit'
     /** Source blend state mapped to the closest Three.js blend equation. */
     blending?: 'normal' | 'additive' | 'multiply'
     /** Serialized Unity _BaseColor/_Color multiplier. */
     color?: string | [number, number, number, number]
+    /** Serialized linear HDR `_EmissionColor`; alpha is not shader input. */
+    emissionColor?: [number, number, number, number]
     baseMapUrl?: string
     normalMapUrl?: string
     smoothnessMapUrl?: string
     blendMapUrl?: string
     matCapMapUrl?: string
+    emissionMapUrl?: string
     /**
      * Exact per-slot Texture2D sampler and Material TexEnv data. New official
      * products use this path; URL fields above remain a legacy compatibility
@@ -113,6 +132,10 @@ export interface StageMaterialBinding {
     metallic?: number
     metallicFromSmoothnessMap?: boolean
     normalScale?: number
+    /** Official BgUber stores tangent-space X/Y in texture A/G and rebuilds Z. */
+    normalPacking?: 'unity-dxt5nm-ag'
+    /** URP `_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A` variant state. */
+    smoothnessFromBaseAlpha?: boolean
     alphaTest?: number
     alphaToCoverage?: boolean
     transparent?: boolean
@@ -120,6 +143,10 @@ export interface StageMaterialBinding {
     depthWrite?: boolean
     unlitness?: number
     matCapIntensity?: number
+    useMatCap?: boolean
+    useSmoothnessMaskMatCap?: boolean
+    /** Serialized `_FogInfluence`; 0 bypasses scene fog and 1 uses it fully. */
+    fogInfluence?: number
     castShadow?: boolean
     receiveShadow?: boolean
     side?: 'front' | 'back' | 'double'
@@ -132,7 +159,21 @@ export interface StageMaterialBindingResult {
     textures: THREE.Texture[]
     matchedMaterials: string[]
     unmatchedBindings: string[]
+    unmatchedSourceMaterials: string[]
+    backgroundShaderGlobalsApplied: boolean
+    backgroundShaderMaterials: string[]
+    renderQueueMeshes: string[]
+    mixedRenderQueueMeshes: string[]
 }
+
+const BACKGROUND_GLOBAL_SHADER_FAMILIES = new Set([
+    'Creative/Bg/BgUberShader',
+    'Creative/Bg/BgUnlit',
+])
+const BACKGROUND_GLOBAL_PROVEN_BYPASS_FAMILIES = new Set([
+    // Official compiled variants contain no `_BgColorAdjustments` uniform.
+    'Creative/Effect/Particle/Common',
+])
 
 const sideByName = {
     front: THREE.FrontSide,
@@ -197,6 +238,7 @@ function resolveStageTextureBinding(
         smoothness: [binding.smoothnessMapUrl, 'data', '_MetallicGlossMap', { kind: 'mesh-uv', channel: 0 }],
         blend: [binding.blendMapUrl, 'color', '_BlendTex', { kind: 'mesh-uv', channel: 0 }],
         matCap: [binding.matCapMapUrl, 'color', '_MatCapTex', { kind: 'view-normal' }],
+        emission: [binding.emissionMapUrl, 'color', '_EmissionMap', { kind: 'mesh-uv', channel: 0 }],
     } as const
     const [url, colorSpace, sourceProperty, coordinates] = legacy[slot]
     if (!url) return undefined
@@ -257,6 +299,69 @@ const wrappingByName = {
     mirror: THREE.MirroredRepeatWrapping,
 } as const
 
+const THREE_SPOT_ATTENUATION_PATTERN =
+    /float getSpotAttenuation\(\s*const in float coneCosine,\s*const in float penumbraCosine,\s*const in float angleCosine\s*\)\s*\{\s*return smoothstep\(\s*coneCosine,\s*penumbraCosine,\s*angleCosine\s*\);\s*\}/
+
+const URP_SPOT_ATTENUATION = `float getSpotAttenuation( const in float coneCosine, const in float penumbraCosine, const in float angleCosine ) {
+
+    float rdUrpSpot = saturate(
+        ( angleCosine - coneCosine )
+        / max( penumbraCosine - coneCosine, 1e-5 )
+    );
+    return rdUrpSpot * rdUrpSpot;
+
+}`
+
+export function installUrpSpotAttenuation(fragmentShader: string) {
+    const sourceChunk = THREE.ShaderChunk.lights_pars_begin
+    const urpChunk = sourceChunk.replace(
+        THREE_SPOT_ATTENUATION_PATTERN,
+        URP_SPOT_ATTENUATION,
+    )
+    if (urpChunk === sourceChunk) {
+        throw new Error('Three spot attenuation source changed')
+    }
+    if (fragmentShader.includes('#include <lights_pars_begin>')) {
+        return fragmentShader.replace('#include <lights_pars_begin>', urpChunk)
+    }
+    const expanded = fragmentShader.replace(
+        THREE_SPOT_ATTENUATION_PATTERN,
+        URP_SPOT_ATTENUATION,
+    )
+    if (expanded === fragmentShader) {
+        throw new Error('Three spot attenuation shader hook was not found')
+    }
+    return expanded
+}
+
+const THREE_LIGHT_PROBE_IRRADIANCE_PATTERN =
+    /\n\s*#if defined\( USE_LIGHT_PROBES \)\s*\n\s*irradiance \+= getLightProbeIrradiance\( lightProbe, geometryNormal \);\s*\n\s*#endif\s*\n/
+
+export function suppressUnusedUnitySphericalHarmonics(fragmentShader: string) {
+    const sourceChunk = THREE.ShaderChunk.lights_fragment_begin
+    const officialChunk = sourceChunk.replace(
+        THREE_LIGHT_PROBE_IRRADIANCE_PATTERN,
+        '\n\t// Official compiled BgUber declares Unity SH as unused.\n',
+    )
+    if (officialChunk === sourceChunk) {
+        throw new Error('Three light-probe irradiance source changed')
+    }
+    if (fragmentShader.includes('#include <lights_fragment_begin>')) {
+        return fragmentShader.replace(
+            '#include <lights_fragment_begin>',
+            officialChunk,
+        )
+    }
+    const expanded = fragmentShader.replace(
+        THREE_LIGHT_PROBE_IRRADIANCE_PATTERN,
+        '\n\t// Official compiled BgUber declares Unity SH as unused.\n',
+    )
+    if (expanded === fragmentShader) {
+        throw new Error('Three light-probe shader hook was not found')
+    }
+    return expanded
+}
+
 /**
  * AssetStudio's FBX contains geometry and material names, but this stage's FBX
  * contains no Texture/RelativeFilename records. This binder reconnects the
@@ -267,9 +372,19 @@ export async function applyStageMaterialBindings(
     bindings: StageMaterialBinding[] | undefined,
     renderer: THREE.WebGLRenderer,
     signal?: AbortSignal,
+    backgroundShaderGlobals?: ReDriveBackgroundShaderGlobals,
 ): Promise<StageMaterialBindingResult> {
     if (!bindings?.length) {
-        return { textures: [], matchedMaterials: [], unmatchedBindings: [] }
+        return {
+            textures: [],
+            matchedMaterials: [],
+            unmatchedBindings: [],
+            unmatchedSourceMaterials: [],
+            backgroundShaderGlobalsApplied: false,
+            backgroundShaderMaterials: [],
+            renderQueueMeshes: [],
+            mixedRenderQueueMeshes: [],
+        }
     }
 
     const textureLoader = new THREE.TextureLoader()
@@ -280,6 +395,32 @@ export async function applyStageMaterialBindings(
     const maxAnisotropy = renderer.capabilities.getMaxAnisotropy()
     const createdMaterials = new Set<THREE.Material>()
     const sourceMaterialsToDispose = new Set<THREE.Material>()
+    const backgroundShaderMaterials = new Set<string>()
+    const renderQueueMeshes = new Set<string>()
+    const mixedRenderQueueMeshes = new Set<string>()
+    const sourceMaterialNames = collectObjectMaterialNames(object)
+    const sourceMaterialBindings = new Map(
+        sourceMaterialNames.map(name => [
+            name,
+            bindings.find(binding => matchesMaterial(binding, name)),
+        ]),
+    )
+    const unknownBackgroundGlobalSources = [...sourceMaterialBindings]
+        .filter(([, binding]) => (
+            !binding?.sourceShader
+            || (
+                !BACKGROUND_GLOBAL_SHADER_FAMILIES.has(binding.sourceShader)
+                && !BACKGROUND_GLOBAL_PROVEN_BYPASS_FAMILIES.has(
+                    binding.sourceShader,
+                )
+            )
+        ))
+        .map(([name]) => name)
+    const backgroundShaderGlobalsApplied = Boolean(
+        backgroundShaderGlobals
+        && sourceMaterialNames.length > 0
+        && unknownBackgroundGlobalSources.length === 0,
+    )
 
     const textureBinding = (
         binding: StageMaterialBinding,
@@ -334,6 +475,7 @@ export async function applyStageMaterialBindings(
         textureBinding(binding, 'smoothness'),
         textureBinding(binding, 'blend'),
         textureBinding(binding, 'matCap'),
+        textureBinding(binding, 'emission'),
     ].filter((profile): profile is StageTextureBinding => Boolean(profile)).map(loadTexture).concat([
         binding.multiUvScroll?.textureUrl
             ? loadTexture(legacyTextureBinding(
@@ -406,12 +548,19 @@ export async function applyStageMaterialBindings(
                 sourceMaterialsToDispose.add(sourceMaterial)
 
                 plan.operations.push((async () => {
+                    const materialBackgroundGlobals =
+                        backgroundShaderGlobalsApplied
+                        && binding.sourceShader
+                        && BACKGROUND_GLOBAL_SHADER_FAMILIES.has(binding.sourceShader)
+                            ? backgroundShaderGlobals
+                            : undefined
                     const material = await createBoundMaterial(binding, mesh, {
                         baseMap: await resolveTexture(textureBinding(binding, 'base')),
                         normalMap: await resolveTexture(textureBinding(binding, 'normal')),
                         smoothnessMap: await resolveTexture(textureBinding(binding, 'smoothness')),
                         blendMap: await resolveTexture(textureBinding(binding, 'blend')),
                         matCapMap: await resolveTexture(textureBinding(binding, 'matCap')),
+                        emissionMap: await resolveTexture(textureBinding(binding, 'emission')),
                         multiUvScrollMap: await resolveTexture(
                             binding.multiUvScroll?.textureUrl
                                 ? legacyTextureBinding(
@@ -435,13 +584,16 @@ export async function applyStageMaterialBindings(
                                 : undefined,
                         ),
                         ownedTextures,
-                    })
+                    }, materialBackgroundGlobals)
                     createdMaterials.add(material)
                     signal?.throwIfAborted()
                     material.name = sourceMaterial.name
                     outputMaterials[index] = material
                     matchedBindings.add(binding)
                     matchedMaterials.add(sourceMaterial.name)
+                    if (materialBackgroundGlobals) {
+                        backgroundShaderMaterials.add(sourceMaterial.name)
+                    }
                 })())
             })
             if (plan.operations.length > 0) plans.push(plan)
@@ -461,6 +613,15 @@ export async function applyStageMaterialBindings(
                 ? plan.outputMaterials
                 : plan.outputMaterials[0]
             applyDeterministicMeshShadowPolicy(plan.mesh, plan.bindings)
+            const queueResult = applyDeterministicMeshRenderQueue(
+                plan.mesh,
+                plan.bindings,
+            )
+            if (queueResult === 'applied') {
+                renderQueueMeshes.add(plan.mesh.name || '<unnamed mesh>')
+            } else if (queueResult === 'mixed') {
+                mixedRenderQueueMeshes.add(plan.mesh.name || '<unnamed mesh>')
+            }
         })
         // FBXLoader may share one Texture instance across multiple materials.
         // Replacing one material must not dispose a texture that is still used
@@ -478,10 +639,18 @@ export async function applyStageMaterialBindings(
     const unmatchedBindings = bindings
         .filter(binding => !matchedBindings.has(binding))
         .map(binding => binding.materialName ?? binding.materialPattern ?? '(unnamed)')
+    const unmatchedSourceMaterials = sourceMaterialNames
+        .filter(name => !matchedMaterials.has(name))
 
     object.userData.stageMaterialBindings = {
         matchedMaterials: [...matchedMaterials],
         unmatchedBindings,
+        unmatchedSourceMaterials,
+        backgroundShaderGlobalsApplied,
+        backgroundShaderMaterials: [...backgroundShaderMaterials],
+        unknownBackgroundGlobalSources,
+        renderQueueMeshes: [...renderQueueMeshes],
+        mixedRenderQueueMeshes: [...mixedRenderQueueMeshes],
     }
     if (unmatchedBindings.length > 0) {
         console.warn('Official stage material bindings did not match FBX materials:', unmatchedBindings)
@@ -492,7 +661,62 @@ export async function applyStageMaterialBindings(
         textures: [...ownedTextures],
         matchedMaterials: [...matchedMaterials],
         unmatchedBindings,
+        unmatchedSourceMaterials,
+        backgroundShaderGlobalsApplied,
+        backgroundShaderMaterials: [...backgroundShaderMaterials],
+        renderQueueMeshes: [...renderQueueMeshes],
+        mixedRenderQueueMeshes: [...mixedRenderQueueMeshes],
     }
+}
+
+function effectiveUnityRenderQueue(binding: StageMaterialBinding) {
+    if (binding.renderQueue != undefined && binding.renderQueue >= 0) {
+        return binding.renderQueue
+    }
+    if (
+        binding.transparent
+        || binding.sourceShader === 'Creative/Effect/Particle/Common'
+    ) {
+        return 3000
+    }
+    return 2000
+}
+
+function applyDeterministicMeshRenderQueue(
+    mesh: THREE.Mesh,
+    bindings: StageMaterialBinding[],
+): 'applied' | 'mixed' | 'absent' {
+    if (bindings.length === 0) return 'absent'
+    const queues = [...new Set(bindings.map(effectiveUnityRenderQueue))]
+    mesh.userData.stageUnityRenderQueues = queues
+    if (queues.length !== 1) {
+        mesh.userData.stageUnityRenderQueueStatus = 'mixed-groups-require-split'
+        console.warn(
+            `Stage mesh "${mesh.name}" has mixed Unity render queues; `
+            + 'preserving its groups for a later lightmap-aware split.',
+        )
+        return 'mixed'
+    }
+    const queue = queues[0]
+    mesh.userData.stageUnityRenderQueueStatus = 'applied'
+    mesh.userData.stageOriginalRenderOrder = mesh.renderOrder
+    // Preserve room for the character foreground ordering while retaining all
+    // Unity background queue deltas (2000, 2450, 2997...3000) exactly.
+    mesh.renderOrder = (queue - 2000) / 1000
+    return 'applied'
+}
+
+function collectObjectMaterialNames(object: THREE.Object3D) {
+    const names = new Set<string>()
+    object.traverse(child => {
+        const mesh = child as THREE.Mesh
+        if (!mesh.isMesh) return
+        const materials = Array.isArray(mesh.material)
+            ? mesh.material
+            : [mesh.material]
+        materials.forEach(material => names.add(material.name))
+    })
+    return [...names]
 }
 
 function applyDeterministicMeshShadowPolicy(
@@ -571,6 +795,7 @@ interface BoundTextureSet {
     smoothnessMap?: THREE.Texture
     blendMap?: THREE.Texture
     matCapMap?: THREE.Texture
+    emissionMap?: THREE.Texture
     multiUvScrollMap?: THREE.Texture
     flowMap?: THREE.Texture
     ownedTextures: Set<THREE.Texture>
@@ -599,18 +824,27 @@ async function createBoundMaterial(
     binding: StageMaterialBinding,
     mesh: THREE.Mesh,
     textures: BoundTextureSet,
+    backgroundShaderGlobals?: ReDriveBackgroundShaderGlobals,
 ): Promise<THREE.Material> {
     requireExactTextureCoordinates(mesh, textures.baseMap, 'base')
     requireExactTextureCoordinates(mesh, textures.normalMap, 'normal')
     requireExactTextureCoordinates(mesh, textures.smoothnessMap, 'smoothness')
     requireExactTextureCoordinates(mesh, textures.blendMap, 'blend')
     requireExactTextureCoordinates(mesh, textures.matCapMap, 'matCap')
+    requireExactTextureCoordinates(mesh, textures.emissionMap, 'emission')
     const side = binding.side ? sideByName[binding.side] : THREE.FrontSide
     const map = createAtlasTexture(textures.baseMap, binding.atlas, textures.ownedTextures)
     const color = Array.isArray(binding.color)
         ? new THREE.Color(binding.color[0], binding.color[1], binding.color[2])
         : new THREE.Color(binding.color ?? '#ffffff')
     const opacity = Array.isArray(binding.color) ? binding.color[3] : 1
+    const emissionColor = binding.emissionColor
+        ? new THREE.Color(
+            binding.emissionColor[0],
+            binding.emissionColor[1],
+            binding.emissionColor[2],
+        )
+        : new THREE.Color(0, 0, 0)
     const common: THREE.MeshBasicMaterialParameters = {
         color,
         opacity,
@@ -627,6 +861,14 @@ async function createBoundMaterial(
     if (binding.shading === 'unlit') {
         const material = new THREE.MeshBasicMaterial(common)
         material.alphaToCoverage = binding.alphaToCoverage ?? false
+        material.userData.stageUnityMaterialState = {
+            sourceShader: binding.sourceShader ?? null,
+            renderQueue: binding.renderQueue ?? null,
+            effectiveRenderQueue: effectiveUnityRenderQueue(binding),
+            validKeywords: binding.validKeywords ?? null,
+            invalidKeywords: binding.invalidKeywords ?? null,
+            disabledShaderPasses: binding.disabledShaderPasses ?? null,
+        }
         installAtlasAnimation(material, map, binding.atlas, mesh)
         installMultiUvScroll(
             material,
@@ -636,6 +878,18 @@ async function createBoundMaterial(
             textures.flowMap,
             mesh,
         )
+        installOfficialUnlitMatCap(material, binding, textures.matCapMap)
+        installOfficialBackgroundShaderGlobals(
+            material,
+            backgroundShaderGlobals,
+            false,
+        )
+        installOfficialUnlitEmission(
+            material,
+            emissionColor,
+            textures.emissionMap,
+        )
+        installOfficialFogInfluence(material, binding.fogInfluence ?? 1)
         return material
     }
 
@@ -645,15 +899,27 @@ async function createBoundMaterial(
             binding.normalScale ?? 1,
             binding.normalScale ?? 1,
         ),
-        metalness: binding.metallic ?? 0,
-        roughness: textures.smoothnessMap
+        metalness: binding.metallicFromSmoothnessMap
+            ? 1
+            : binding.metallic ?? 0,
+        roughness: textures.smoothnessMap || binding.smoothnessFromBaseAlpha
             ? 1
             : 1 - (binding.smoothness ?? 0),
+        emissive: emissionColor,
         vertexColors: Boolean(binding.vertexColorBlend && mesh.geometry.hasAttribute('color')),
     }
     if (textures.normalMap) standardParameters.normalMap = textures.normalMap
+    if (textures.emissionMap) standardParameters.emissiveMap = textures.emissionMap
     const material = new THREE.MeshStandardMaterial(standardParameters)
     material.alphaToCoverage = binding.alphaToCoverage ?? false
+    material.userData.stageUnityMaterialState = {
+        sourceShader: binding.sourceShader ?? null,
+        renderQueue: binding.renderQueue ?? null,
+        effectiveRenderQueue: effectiveUnityRenderQueue(binding),
+        validKeywords: binding.validKeywords ?? null,
+        invalidKeywords: binding.invalidKeywords ?? null,
+        disabledShaderPasses: binding.disabledShaderPasses ?? null,
+    }
 
     if (binding.vertexColorBlend && !mesh.geometry.hasAttribute('color')) {
         console.warn(`Stage material ${binding.materialName ?? binding.materialPattern} requested vertex-color blending, but its mesh has no color attribute`)
@@ -668,7 +934,345 @@ async function createBoundMaterial(
         textures.flowMap,
         mesh,
     )
+    installOfficialBackgroundShaderGlobals(
+        material,
+        backgroundShaderGlobals,
+        true,
+    )
+    installOfficialFogInfluence(material, binding.fogInfluence ?? 1)
     return material
+}
+
+function backgroundShaderColor(value: string | readonly number[]) {
+    return Array.isArray(value)
+        ? new THREE.Color().setRGB(value[0], value[1], value[2])
+        : new THREE.Color(value as string)
+}
+
+function installOfficialBackgroundShaderGlobals(
+    material: THREE.MeshBasicMaterial | THREE.MeshStandardMaterial,
+    globals: ReDriveBackgroundShaderGlobals | undefined,
+    lit: boolean,
+) {
+    if (!globals) return
+    const previousOnBeforeCompile = material.onBeforeCompile
+    const previousCacheKey = material.customProgramCacheKey.bind(material)
+    const adjustments = new THREE.Vector3(...globals.colorAdjustments)
+    const globalTint = backgroundShaderColor(globals.globalTint)
+    const backgroundTint = backgroundShaderColor(globals.backgroundTint)
+    const shadowStrength = globals.shadowStrengthAdditive
+    material.userData.stageBackgroundShaderGlobals = {
+        colorAdjustments: [...globals.colorAdjustments],
+        globalTint: globalTint.toArray(),
+        backgroundTint: backgroundTint.toArray(),
+        shadowStrengthAdditive: shadowStrength,
+        authority: globals.authority,
+        operator:
+            'official-compiled-bg-color-adjustments-and-global-tint',
+    }
+
+    material.onBeforeCompile = function (shader, renderer) {
+        previousOnBeforeCompile.call(this, shader, renderer)
+        shader.uniforms.uStageBgColorAdjustments = { value: adjustments }
+        shader.uniforms.uStageGlobalBackgroundTint = { value: globalTint }
+        shader.uniforms.uStageBackgroundTint = { value: backgroundTint }
+        shader.uniforms.uStageBgShadowStrengthAdditive = {
+            value: shadowStrength,
+        }
+        shader.fragmentShader = shader.fragmentShader.replace(
+            '#include <common>',
+            `#include <common>
+uniform vec3 uStageBgColorAdjustments;
+uniform vec3 uStageGlobalBackgroundTint;
+uniform vec3 uStageBackgroundTint;
+uniform float uStageBgShadowStrengthAdditive;`,
+        )
+
+        const adjustment = `float stageBgLuma = dot(
+    diffuseColor.rgb,
+    vec3( 0.298911989, 0.586610973, 0.114478 )
+);
+diffuseColor.rgb = (
+    diffuseColor.rgb - vec3( 0.217600003 )
+) * uStageBgColorAdjustments.x + vec3( 0.217600003 );
+diffuseColor.rgb = (
+    diffuseColor.rgb - vec3( stageBgLuma )
+) * uStageBgColorAdjustments.y + vec3( stageBgLuma );
+diffuseColor.rgb *= uStageBgColorAdjustments.z * uStageBackgroundTint;
+diffuseColor.rgb = max( diffuseColor.rgb, vec3( 0.0 ) );`
+        shader.fragmentShader = lit
+            ? shader.fragmentShader.replace(
+                '#include <lights_physical_fragment>',
+                `${adjustment}
+#include <lights_physical_fragment>`,
+            )
+            : shader.fragmentShader.replace(
+                '#include <alphatest_fragment>',
+                `${adjustment}
+#include <alphatest_fragment>`,
+            )
+
+        if (lit) {
+            // BgUber applies the recovered main-shadow attenuation once more to
+            // the post-emission/unlitness colour, with the serialized additive
+            // value selecting between no shadow and the native attenuation.
+            shader.fragmentShader = shader.fragmentShader.replace(
+                '#include <opaque_fragment>',
+                `float stageBgMainShadow = 1.0;
+#if defined( USE_SHADOWMAP ) && ( NUM_DIR_LIGHT_SHADOWS > 0 )
+    DirectionalLightShadow stageBgDirectionalShadow = directionalLightShadows[ 0 ];
+    stageBgMainShadow = receiveShadow ? getShadow(
+        directionalShadowMap[ 0 ],
+        stageBgDirectionalShadow.shadowMapSize,
+        stageBgDirectionalShadow.shadowIntensity,
+        stageBgDirectionalShadow.shadowBias,
+        stageBgDirectionalShadow.shadowRadius,
+        vDirectionalShadowCoord[ 0 ]
+    ) : 1.0;
+#endif
+outgoingLight *= mix(
+    1.0,
+    stageBgMainShadow,
+    uStageBgShadowStrengthAdditive
+);
+#include <opaque_fragment>`,
+            )
+        }
+        shader.fragmentShader = shader.fragmentShader.replace(
+            '#include <fog_fragment>',
+            `#include <fog_fragment>
+gl_FragColor.rgb *= uStageGlobalBackgroundTint;`,
+        )
+    }
+    material.customProgramCacheKey = () => [
+        previousCacheKey(),
+        'official-bg-globals-v1',
+        lit ? 'bg-uber' : 'bg-unlit',
+        ...globals.colorAdjustments,
+        globalTint.r,
+        globalTint.g,
+        globalTint.b,
+        backgroundTint.r,
+        backgroundTint.g,
+        backgroundTint.b,
+        shadowStrength,
+    ].join(':')
+    material.needsUpdate = true
+}
+
+const OFFICIAL_MATCAP_OVERLAY = `vec3 stageMatCapBase = diffuseColor.rgb;
+vec3 stageMatCapSample = texture2D(
+    uStageMatCapMap,
+    stageMatCapViewNormal.xy * 0.5 + 0.5
+).rgb;
+vec3 stageMatCapLow = stageMatCapBase * stageMatCapSample;
+vec3 stageMatCapHigh = vec3( 1.0 )
+    - 2.0 * ( vec3( 1.0 ) - stageMatCapBase )
+    * ( vec3( 1.0 ) - stageMatCapSample );
+vec3 stageMatCapOverlay = mix(
+    stageMatCapLow,
+    stageMatCapHigh,
+    step( vec3( 0.5 ), stageMatCapBase )
+);
+float stageMatCapMask = uStageUseSmoothnessMaskMatCap > 0.5
+    ? stageMatCapSmoothnessMask
+    : 1.0;
+diffuseColor.rgb = mix(
+    stageMatCapBase,
+    stageMatCapOverlay,
+    stageMatCapMask * uStageMatCapIntensity
+);`
+
+function installOfficialUnlitMatCap(
+    material: THREE.MeshBasicMaterial,
+    binding: StageMaterialBinding,
+    matCapMap: THREE.Texture | undefined,
+) {
+    if (!binding.useMatCap || !matCapMap) return
+    const previousOnBeforeCompile = material.onBeforeCompile
+    const previousCacheKey = material.customProgramCacheKey.bind(material)
+    const intensity = binding.matCapIntensity ?? 1
+    const useSmoothnessMask = binding.useSmoothnessMaskMatCap ? 1 : 0
+    material.userData.stageMatCap = {
+        formula: 'official-overlay',
+        coordinates: 'view-normal-xy',
+        intensity,
+        useSmoothnessMask: Boolean(useSmoothnessMask),
+    }
+    material.defines = {
+        ...material.defines,
+        STAGE_MATCAP: '',
+    }
+    material.onBeforeCompile = function (shader, renderer) {
+        previousOnBeforeCompile.call(this, shader, renderer)
+        shader.uniforms.uStageMatCapMap = { value: matCapMap }
+        shader.uniforms.uStageMatCapIntensity = { value: intensity }
+        shader.uniforms.uStageUseSmoothnessMaskMatCap = {
+            value: useSmoothnessMask,
+        }
+        shader.vertexShader = shader.vertexShader
+            .replace(
+                '#include <common>',
+                `#include <common>
+varying vec3 vStageMatCapNormal;`,
+            )
+            .replace(
+                '#if defined ( USE_ENVMAP ) || defined ( USE_SKINNING )',
+                '#if defined ( USE_ENVMAP ) || defined ( USE_SKINNING ) || defined ( STAGE_MATCAP )',
+            )
+            .replace(
+                '#include <defaultnormal_vertex>',
+                `#include <defaultnormal_vertex>
+vStageMatCapNormal = normalize( transformedNormal );`,
+            )
+        shader.fragmentShader = shader.fragmentShader
+            .replace(
+                '#include <common>',
+                `#include <common>
+uniform sampler2D uStageMatCapMap;
+uniform float uStageMatCapIntensity;
+uniform float uStageUseSmoothnessMaskMatCap;
+varying vec3 vStageMatCapNormal;`,
+            )
+            .replace(
+                '#include <alphatest_fragment>',
+                `vec3 stageMatCapViewNormal = normalize( vStageMatCapNormal );
+float stageMatCapSmoothnessMask = diffuseColor.a;
+${OFFICIAL_MATCAP_OVERLAY}
+#include <alphatest_fragment>`,
+            )
+    }
+    material.customProgramCacheKey = () => [
+        previousCacheKey(),
+        'official-bg-matcap-overlay-v1',
+        intensity,
+        useSmoothnessMask,
+    ].join(':')
+    material.needsUpdate = true
+}
+
+function installOfficialFogInfluence(
+    material: THREE.Material,
+    influence: number,
+) {
+    if (!Number.isFinite(influence)) {
+        throw new Error(`Invalid stage fog influence: ${influence}`)
+    }
+    const previousOnBeforeCompile = material.onBeforeCompile
+    const previousCacheKey = material.customProgramCacheKey.bind(material)
+    material.userData.stageFogInfluence = {
+        value: influence,
+        formula: 'fogAmount * _FogInfluence',
+        authority: 'official-compiled-bg-shader',
+    }
+    material.onBeforeCompile = function (shader, renderer) {
+        previousOnBeforeCompile.call(this, shader, renderer)
+        shader.uniforms.uStageFogInfluence = { value: influence }
+        shader.fragmentShader = shader.fragmentShader
+            .replace(
+                '#include <common>',
+                `#include <common>
+uniform float uStageFogInfluence;`,
+            )
+            .replace(
+                '#include <fog_fragment>',
+                `#ifdef USE_FOG
+    #ifdef FOG_EXP2
+        float fogFactor = 1.0 - exp(
+            - fogDensity * fogDensity * vFogDepth * vFogDepth
+        );
+    #else
+        float fogFactor = smoothstep( fogNear, fogFar, vFogDepth );
+    #endif
+    fogFactor *= uStageFogInfluence;
+    gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
+#endif`,
+            )
+    }
+    material.customProgramCacheKey = () => [
+        previousCacheKey(),
+        'official-bg-fog-influence-v1',
+        influence,
+    ].join(':')
+    material.needsUpdate = true
+}
+
+function installOfficialUnlitEmission(
+    material: THREE.MeshBasicMaterial,
+    emissionColor: THREE.Color,
+    emissionMap: THREE.Texture | undefined,
+) {
+    material.userData.stageEmission = {
+        color: emissionColor.toArray(),
+        map: emissionMap?.name ?? null,
+        formula: 'base + emissionMap.rgb * emissionColor.rgb',
+    }
+    if (
+        emissionColor.r === 0
+        && emissionColor.g === 0
+        && emissionColor.b === 0
+    ) return
+
+    const previousOnBeforeCompile = material.onBeforeCompile
+    const previousCacheKey = material.customProgramCacheKey()
+    const emissionUvAttribute = emissionMap
+        ? emissionMap.channel === 0
+            ? 'uv'
+            : `uv${emissionMap.channel}`
+        : null
+    if (emissionMap) emissionMap.updateMatrix()
+
+    material.onBeforeCompile = function (shader, renderer) {
+        previousOnBeforeCompile.call(this, shader, renderer)
+        shader.uniforms.uStageEmissionColor = { value: emissionColor }
+        if (emissionMap && emissionUvAttribute) {
+            shader.uniforms.uStageEmissionMap = { value: emissionMap }
+            shader.uniforms.uStageEmissionMapTransform = {
+                value: emissionMap.matrix,
+            }
+            shader.vertexShader = shader.vertexShader
+                .replace(
+                    '#include <uv_pars_vertex>',
+                    `#include <uv_pars_vertex>
+uniform mat3 uStageEmissionMapTransform;
+varying vec2 vStageEmissionMapUv;`,
+                )
+                .replace(
+                    '#include <uv_vertex>',
+                    `#include <uv_vertex>
+vStageEmissionMapUv = (
+    uStageEmissionMapTransform * vec3( ${emissionUvAttribute}, 1.0 )
+).xy;`,
+                )
+        }
+
+        shader.fragmentShader = shader.fragmentShader
+            .replace(
+                '#include <common>',
+                `#include <common>
+uniform vec3 uStageEmissionColor;
+${emissionMap
+        ? `uniform sampler2D uStageEmissionMap;
+varying vec2 vStageEmissionMapUv;`
+        : ''}`,
+            )
+            .replace(
+                '#include <alphatest_fragment>',
+                `${emissionMap
+        ? 'diffuseColor.rgb += texture2D( uStageEmissionMap, vStageEmissionMapUv ).rgb * uStageEmissionColor;'
+        : 'diffuseColor.rgb += uStageEmissionColor;'}
+#include <alphatest_fragment>`,
+            )
+    }
+    material.customProgramCacheKey = () => [
+        previousCacheKey,
+        'official-bg-unlit-emission',
+        emissionMap ? `uv${emissionMap.channel}` : 'default-white',
+        emissionColor.r,
+        emissionColor.g,
+        emissionColor.b,
+    ].join(':')
+    material.needsUpdate = true
 }
 
 function installMultiUvScroll(
@@ -975,14 +1579,24 @@ function installOfficialLitExtensions(
 ) {
     const blendMap = binding.vertexColorBlend ? textures.blendMap : undefined
     const smoothnessMap = textures.smoothnessMap
-    const matCapMap = textures.matCapMap
+    const smoothnessFromBaseAlpha = Boolean(binding.smoothnessFromBaseAlpha)
+    const matCapMap = (binding.useMatCap ?? Boolean(textures.matCapMap))
+        ? textures.matCapMap
+        : undefined
     const smoothness = binding.smoothness ?? 1
     const smoothnessChannel = binding.smoothnessChannel ?? 'r'
     const unlitness = binding.unlitness ?? 0
     material.userData.stageBlendMap = blendMap
     material.userData.stageSmoothnessMap = smoothnessMap
     material.userData.stageSmoothness = smoothness
+    material.userData.stageSmoothnessFromBaseAlpha = smoothnessFromBaseAlpha
+    material.userData.stageNormalPacking = binding.normalPacking ?? null
     material.userData.stageMatCapMap = matCapMap
+    material.userData.stageEmission = {
+        color: material.emissive.toArray(),
+        map: material.emissiveMap?.name ?? null,
+        formula: 'lit + emissionMap.rgb * emissionColor.rgb',
+    }
     // This must be present before program parameter collection so Three emits
     // USE_ROUGHNESSMAP and vRoughnessMapUv for our smoothness interpretation.
     if (smoothnessMap) material.roughnessMap = smoothnessMap
@@ -991,6 +1605,37 @@ function installOfficialLitExtensions(
     }
 
     material.onBeforeCompile = shader => {
+        // Three's inverse-square/range falloff already matches URP 14's
+        // DistanceAttenuation. Its spot edge uses smoothstep, however, while
+        // URP squares a saturated linear cone interpolation. Replace only that
+        // operator for official lit stage materials.
+        shader.fragmentShader = installUrpSpotAttenuation(shader.fragmentShader)
+        if (
+            binding.sourceShader
+            && BACKGROUND_GLOBAL_SHADER_FAMILIES.has(binding.sourceShader)
+        ) {
+            shader.fragmentShader = suppressUnusedUnitySphericalHarmonics(
+                shader.fragmentShader,
+            )
+            material.userData.stageUsesSphericalHarmonics = false
+        }
+        if (textures.normalMap && binding.normalPacking === 'unity-dxt5nm-ag') {
+            shader.fragmentShader = shader.fragmentShader.replace(
+                '#include <normal_fragment_maps>',
+                `#ifdef USE_NORMALMAP_TANGENTSPACE
+    vec4 stagePackedNormal = texture2D( normalMap, vNormalMapUv );
+    vec2 stageNormalXY = stagePackedNormal.ag * 2.0 - 1.0;
+    float stageNormalZ = sqrt( max(
+        1.0 - dot( stageNormalXY, stageNormalXY ),
+        1.0e-16
+    ) );
+    vec3 mapN = vec3( stageNormalXY * normalScale, stageNormalZ );
+    normal = normalize( tbn * mapN );
+#else
+    #include <normal_fragment_maps>
+#endif`,
+            )
+        }
         if (blendMap) {
             blendMap.updateMatrix()
             shader.uniforms.uStageBlendMap = { value: blendMap }
@@ -1041,7 +1686,12 @@ varying vec2 vStageBlendMapUv;`,
     float stageBlendWeight = stageBlendWeightLinear <= 0.0031308
         ? stageBlendWeightLinear * 12.92
         : 1.055 * pow( stageBlendWeightLinear, 1.0 / 2.4 ) - 0.055;
-    diffuseColor.rgb = mix( diffuseColor.rgb, stageBlendColor.rgb, clamp( stageBlendWeight, 0.0, 1.0 ) );
+    vec4 stageBlendDiffuse = stageBlendColor * vec4( diffuse, opacity );
+    diffuseColor = mix(
+        diffuseColor,
+        stageBlendDiffuse,
+        clamp( stageBlendWeight, 0.0, 1.0 )
+    );
 #endif`,
                 )
         }
@@ -1070,55 +1720,51 @@ float roughnessFactor = clamp( 1.0 - stageSmoothness, 0.04, 1.0 );`,
 #endif`,
                 )
             }
+        } else if (smoothnessFromBaseAlpha) {
+            shader.uniforms.uStageSmoothness = { value: smoothness }
+            shader.fragmentShader = shader.fragmentShader
+                .replace(
+                    '#include <roughnessmap_pars_fragment>',
+                    `#include <roughnessmap_pars_fragment>
+uniform float uStageSmoothness;`,
+                )
+                .replace(
+                    '#include <roughnessmap_fragment>',
+                    `float stageSmoothness = diffuseColor.a * uStageSmoothness;
+float roughnessFactor = clamp( 1.0 - stageSmoothness, 0.04, 1.0 );`,
+                )
         }
 
         if (matCapMap) {
-            matCapMap.updateMatrix()
             shader.uniforms.uStageMatCapMap = { value: matCapMap }
-            shader.uniforms.uStageMatCapMapTransform = { value: matCapMap.matrix }
             shader.uniforms.uStageMatCapIntensity = {
                 value: binding.matCapIntensity ?? 1,
             }
+            shader.uniforms.uStageUseSmoothnessMaskMatCap = {
+                value: binding.useSmoothnessMaskMatCap ? 1 : 0,
+            }
+            const smoothnessMask = smoothnessMap
+                ? `texture2D(
+    uStageSmoothnessMap,
+    vRoughnessMapUv
+).${smoothnessChannel}`
+                : smoothnessFromBaseAlpha
+                    ? 'diffuseColor.a'
+                    : '1.0'
             shader.fragmentShader = shader.fragmentShader
                 .replace(
                     '#include <common>',
                     `#include <common>
 uniform sampler2D uStageMatCapMap;
-uniform mat3 uStageMatCapMapTransform;
-uniform float uStageMatCapIntensity;`,
+uniform float uStageMatCapIntensity;
+uniform float uStageUseSmoothnessMaskMatCap;`,
                 )
                 .replace(
-                    '#include <opaque_fragment>',
-                    `vec3 stageMatCapViewDir = normalize( vViewPosition );
-float stageMatCapHorizontalLengthSq = dot(
-    stageMatCapViewDir.xz,
-    stageMatCapViewDir.xz
-);
-vec3 stageMatCapX = stageMatCapHorizontalLengthSq > 1e-6
-    ? vec3(
-        stageMatCapViewDir.z,
-        0.0,
-        -stageMatCapViewDir.x
-    ) * inversesqrt( stageMatCapHorizontalLengthSq )
-    : vec3( 1.0, 0.0, 0.0 );
-vec3 stageMatCapY = cross( stageMatCapViewDir, stageMatCapX );
-vec2 stageMatCapUv = vec2(
-    dot( stageMatCapX, normal ),
-    dot( stageMatCapY, normal )
-) * 0.495 + 0.5;
-stageMatCapUv = (
-    uStageMatCapMapTransform * vec3( stageMatCapUv, 1.0 )
-).xy;
-vec3 stageMatCapColor = texture2D(
-    uStageMatCapMap,
-    stageMatCapUv
-).rgb;
-outgoingLight = mix(
-    outgoingLight,
-    diffuseColor.rgb * stageMatCapColor,
-    clamp( uStageMatCapIntensity, 0.0, 1.0 )
-);
-#include <opaque_fragment>`,
+                    '#include <lights_physical_fragment>',
+                    `vec3 stageMatCapViewNormal = normal;
+float stageMatCapSmoothnessMask = ${smoothnessMask};
+${OFFICIAL_MATCAP_OVERLAY}
+#include <lights_physical_fragment>`,
                 )
         }
 
@@ -1127,7 +1773,11 @@ outgoingLight = mix(
             shader.fragmentShader = shader.fragmentShader
                 .replace(
                     '#include <opaque_fragment>',
-                    `outgoingLight = mix( outgoingLight, diffuseColor.rgb, uStageUnlitness );
+                    `outgoingLight = mix(
+    outgoingLight - totalEmissiveRadiance,
+    diffuseColor.rgb,
+    uStageUnlitness
+) + totalEmissiveRadiance;
 #include <opaque_fragment>`,
                 )
                 .replace(
@@ -1139,12 +1789,18 @@ uniform float uStageUnlitness;`,
     }
     material.customProgramCacheKey = () => [
         'official-stage-material-v2',
+        'urp14-distance-and-spot-attenuation',
         blendMap ? `vertex-blend-uv${blendMap.channel}` : 'single-map',
         smoothnessMap
             ? `smoothness-inversion-uv${smoothnessMap.channel}-${smoothnessChannel}`
-            : 'constant-roughness',
+            : smoothnessFromBaseAlpha
+                ? 'smoothness-base-alpha'
+                : 'constant-roughness',
         binding.metallicFromSmoothnessMap ? 'metallic-red' : 'metallic-constant',
-        matCapMap ? `matcap-${binding.matCapIntensity ?? 1}` : 'no-matcap',
+        binding.normalPacking ?? 'normal-rgb',
+        matCapMap
+            ? `matcap-overlay-${binding.matCapIntensity ?? 1}-${binding.useSmoothnessMaskMatCap ? 1 : 0}`
+            : 'no-matcap',
         unlitness > 0 ? `unlit-mix-${unlitness}` : 'fully-lit',
     ].join(':')
     material.needsUpdate = true

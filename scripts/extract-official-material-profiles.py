@@ -10,6 +10,7 @@ from UnityPy import config as unitypy_config
 
 
 SOFT_METALLIC_PATH_ID = 835141015512989441
+COMMON_ANGEL_RING_PATH_ID = 2265012383630109063
 
 
 def color3(value: Any) -> list[float]:
@@ -54,8 +55,24 @@ def material_profile(material: Any) -> dict[str, Any]:
 
     is_gem = flag("_IsGem")
     use_matcap = flag("_UseMatCap")
+    is_hair = flag("_IsHair")
+    angel_ring = textures.get("_AngelRingMap")
+    angel_ring_path_id = (
+        int(angel_ring.m_Texture.m_PathID) if angel_ring else 0
+    )
+    angel_ring_map = (
+        "none"
+        if not is_hair or not angel_ring_path_id
+        else "common"
+        if angel_ring_path_id == COMMON_ANGEL_RING_PATH_ID
+        else "character"
+    )
     return {
         "source": "official-export",
+        # CameraDepthTexture draws the opaque render-queue range. Preserve
+        # Unity's serialized override instead of guessing it from a material
+        # name or from the Gem feature toggle.
+        "customRenderQueue": int(material.m_CustomRenderQueue),
         "anisotropy": flag("_IsAniso"),
         "anisotropyProfile": {
             "enabled": flag("_IsAniso"),
@@ -74,6 +91,26 @@ def material_profile(material: Any) -> dict[str, Any]:
         "outlineOffset": flag("_OutlineOffset"),
         "skinOutlineOffset": flag("_OutlineOffsetSkin"),
         "outlineWidth": number("_OutlineWidth", 5.0),
+        "outline": {
+            "enabled": flag("_UseOutline", True),
+            "color": rgb("_OutlineColor", (0.0, 0.0, 0.0)),
+            "emissionColor": rgb(
+                "_OutlineEmissionColor", (0.0, 0.0, 0.0)
+            ),
+            "texBlend": number("_OutlineTexBlend", 0.2),
+            "zOffset": number("_OutlineZOffset", 0.0),
+            "faceOutlineAdjust": number("_FaceOutlineAdjust", 0.0),
+        },
+        "face": {
+            "isFace": flag("_IsFace"),
+            "isEye": flag("_IsEye"),
+            "useGradientMap": flag("_UseFaceGradientMap"),
+            "shouldApplyAdditional": flag("_ShouldApplyFaceAdditional"),
+            "highlightThreshold": number("_HighlightThreshold", 0.5),
+            "highlightRotation": number("_HighlightRotation", 0.0),
+            "cheekValue": number("_CheekValue", 1.0),
+            "cheekColor": rgb("_CheekColor", (1.0, 0.7, 0.7)),
+        },
         "matCap": {
             "enabled": use_matcap,
             "source": matcap_source,
@@ -102,12 +139,35 @@ def material_profile(material: Any) -> dict[str, Any]:
             "fresnelFeather": number("_GemFresnelFeather", 0.25),
             "fresnelMaskByMetallic": flag("_GemFresnelMaskByMetallic"),
         },
+        "angelRing": {
+            "isHair": is_hair,
+            "enabled": is_hair and angel_ring_path_id != 0,
+            "uvMode": is_hair and flag("_YuugenHighlight"),
+            "map": angel_ring_map,
+            "rimLightColor": rgb("_RimLightColor", (1.0, 1.0, 1.0)),
+        },
         "shadow": {
             "offset": number("_ShadowOffset", 0.3),
             "feather": number("_ShadowFeather", 0.0),
             "castSelfShadow": flag("_CastSelfShadow", True),
             "receiveSelfShadow": flag("_ReceiveSelfShadow", True),
         },
+        "depthRim": {
+            "useDepthTex": flag("_UseDepthTex", True),
+            "useRimLight": flag("_UseRimLight", True),
+            "ditherFade": number("_DitherFade", 0.0),
+            "width": number("_DepthTexWidth", 1.0),
+            "yOffset": number("_DepthTexYOffset", 0.0),
+            "rimDiffThreshold": number(
+                "_DepthRimLightDiffThreshold", 0.02
+            ),
+            "shadowDiffThreshold": number(
+                "_DepthShadowDiffThreshold", 0.03
+            ),
+        },
+        "additionalLightInfluenceByLuminance": number(
+            "_AdditionalLightInfluenceByLuminance", 0.0
+        ),
         "emissionColor": rgb("_EmissionColor", (0.0, 0.0, 0.0)),
     }
 

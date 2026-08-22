@@ -48,7 +48,7 @@ test('runtime restores uv1 before applyStageLightmaps and fails closed', () => {
   const helper = read('src/viewer/stageUv1Companion.ts');
   const uv1Apply = stages.indexOf('if (profileTextures.uv1Companion)');
   const lightmapApply = stages.indexOf(
-    'if (profileTextures.lightmap && profileTextures.lightmapBindings)',
+    'if (profileTextures.lightmaps?.length && profileTextures.lightmapBindings)',
     uv1Apply,
   );
   assert.ok(uv1Apply >= 0);
@@ -57,6 +57,7 @@ test('runtime restores uv1 before applyStageLightmaps and fails closed', () => {
   assert.match(stages, /loadStageUv1Companion/);
   assert.match(helper, /(?:originalGeometry|clone)\.setAttribute\(\s*'uv1'/);
   assert.match(helper, /schemaVersion !== 3/);
+  assert.match(helper, /schemaVersion !== 4/);
   assert.match(helper, /assignments\.length !== companion\.nodes\.length/);
   assert.match(helper, /originalGeometry\.clone\(\)/);
 });

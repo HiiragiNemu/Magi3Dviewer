@@ -63,7 +63,7 @@ const metadata = metadataFile
     ? JSON.parse(fs.readFileSync(metadataFile, 'utf8'))
     : undefined
 if (metadata) {
-    if (metadata.schema !== 1 || metadata.characterId !== Number(characterIdText)) {
+    if (![1, 2].includes(metadata.schema) || metadata.characterId !== Number(characterIdText)) {
         throw new Error('Home action metadata does not match the converted character')
     }
     const availableFamilies = new Set(clips.map(clip => familyName(clip.name)))
@@ -84,11 +84,13 @@ if (metadata) {
 }
 
 const payload = {
-    schema: 1,
+    schema: metadata?.schema === 2 ? 2 : 1,
     characterId: Number(characterIdText),
     unityVersion: '2022.3.62f2',
     source: `home/doll_house/chara_${characterIdText}01_home`,
     actions: metadata?.actions,
+    clipIdentities: metadata?.clipIdentities,
+    helperSourceClipPathIds: metadata?.helperSourceClipPathIds,
     helpers: (metadata?.helpers ?? []).filter(name => (
         new Set(clips.map(clip => familyName(clip.name))).has(familyName(name))
     )),

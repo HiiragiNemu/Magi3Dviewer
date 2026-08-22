@@ -655,8 +655,8 @@
   },
   "runtime": {
     "clipNames": [],
-    "autoplay": false,
-    "loop": false,
+    "autoplay": true,
+    "loop": true,
     "timeScale": 1,
     "voiceTracks": []
   },
@@ -703,7 +703,7 @@
         "reDriveVolumeCount": 1,
         "reflectionProbeCount": 0,
         "reDriveReflectionCubemapCount": 1,
-        "particleSystemCount": 0,
+        "particleSystemCount": 84,
         "monoBehaviourCount": 5,
         "animatorCount": 0,
         "animationClipCount": 0,
@@ -712,7 +712,7 @@
     },
     "omissions": [
       "Five source component/property AnimationClips contain no transform tracks representable by AssetStudio FBX; their light-state runtime remains evidence-only.",
-      "Eighty-four Unity ParticleSystem and ParticleSystemRenderer pairs are retained as serialized evidence but are not instantiated.",
+      "Shooting-star Trail rendering and exact Unity auto-random seed equivalence remain partial; all 84 serialized ParticleSystems are instantiated.",
       "Six active baked lights are represented by the recovered RGBM lightmap; three inactive mixed lights belong to unresolved light-state clips; MainLight and BgLightFront are live.",
       "The ReDrive reflection Cubemap is mapped as one equirectangular environment without original mip convolution or box projection.",
       "Creative background and particle shader operator parity remains bounded to recovered PBR, alpha-test, blend, matcap and texture parameters.",
@@ -731,7 +731,7 @@
     ],
     "missing": [
       "five component/property light-state clip reconstructions and AnimatorRandomizer switching",
-      "84 Unity ParticleSystem plus 84 ParticleSystemRenderer runtimes",
+      "shooting-star Trail rendering and the exact Unity auto-random seed stream",
       "three animation-controlled inactive mixed-light states",
       "ReDrive Cubemap mip convolution and compiled background/particle shader operator parity",
       "operator-level Unity URP post-processing parity"
@@ -740,7 +740,8 @@
       "Raw JP closure: 535 GameObjects, 149 Mesh assets, 312 MeshRenderers, 18 Materials, 19 Texture2D, 11 Lights, 84 ParticleSystems and 104 MonoBehaviours.",
       "Three r182 reopens the binary FBX carrier without warnings: 536 nodes, 312 meshes and 14 materials.",
       "Strict runtime UV1 companion resolves 173/173 unique lightmapped renderer paths through seven deduplicated UV1 geometries.",
-      "Five source clips are recovered as component/property animation evidence and intentionally remain zero clips in the transform-only FBX carrier."
+      "Five source clips are recovered as component/property animation evidence and intentionally remain zero clips in the transform-only FBX carrier.",
+      "Generated bundle profile instantiates 84/84 ParticleSystems: 82 raw hierarchy paths plus 2 collision-safe Renderer-PathID carrier paths."
     ]
   },
   "evidence": [
@@ -804,5 +805,6 @@
     "commonLoaderChanges": false,
     "rootCatalogRegistered": false,
     "gameDirectoryTouched": false
-  }
+  },
+  "sceneProfileUrl": "./stages/official/battle-601-00-01-001/scene-profile.json"
 }

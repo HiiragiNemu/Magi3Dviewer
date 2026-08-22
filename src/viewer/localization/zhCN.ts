@@ -25,7 +25,6 @@ const pageMetadata: Record<UiLocale, {
  */
 export const zhCnUiText: Readonly<Record<string, string>> = {
     'Magius3Dviewer is loading the official-style shader and character model...': 'Magius3Dviewer 正在加载官方风格着色器与角色模型……',
-    'Magius3Dviewer demo screenshot': 'Magius3Dviewer 演示截图',
     'Take a photo': '拍照',
     'Model': '角色模型',
     'Choose model': '选择角色模型',
@@ -35,10 +34,104 @@ export const zhCnUiText: Readonly<Record<string, string>> = {
     'Animation': '动作',
     'Choose animation': '选择动作',
     'Choose expression': '选择表情',
-    'Default / auto blink': '默认／自动眨眼',
+    'Default face': '默认表情',
+    'Manual face controls': '手动面部控制',
+    'Auto blink': '自动眨眼',
+    'Enable automatic blink for the selected expression': '为当前表情启用自动眨眼',
+    'Manual blink': '手动闭眼',
+    "Set eyelid closure using this character's official blink bindings": '使用当前角色的官方眨眼绑定调节闭眼幅度',
+    'Expression strength': '表情幅度',
+    "Blend the selected official expression with this character's default face": '在当前角色的默认脸与所选官方表情之间调节幅度',
+    'Transition': '过渡时间',
+    'Set the transition duration used by the next expression selection': '设置下一次切换表情时的过渡时长',
+    'Mouth corner': '嘴角',
+    "Adjust this character's available mouth-corner bindings": '调节当前角色实际拥有的嘴角绑定（左为下垂，右为上扬）',
     'Play animation': '播放动作',
     'Pause animation': '暂停动作',
     'Choose 3D stage': '选择 3D 场景',
+    'Collapse controls': '折叠控制栏',
+    'Expand controls': '展开控制栏',
+    'Rendering controls': '渲染设置',
+    'Show rendering controls': '展开渲染设置',
+    'Hide rendering controls': '收起渲染设置',
+    'Action panel': '动作面板',
+    'Show action parameters': '展开动作参数',
+    'Hide action parameters': '收起动作参数',
+    'Action parameters': '动作参数调节',
+    'Expression panel': '表情面板',
+    'Show expression parameters': '展开表情参数',
+    'Hide expression parameters': '收起表情参数',
+    'Expression parameters': '表情参数调节',
+    'Timeline': '动作时间轴',
+    'Animation speed': '动作速度',
+    'Bone search': '骨骼搜索',
+    'Search bones': '搜索骨骼',
+    'Morph search': '变形通道搜索',
+    'Search morphs': '搜索变形通道',
+    'Bone': '骨骼',
+    'Unnamed bone': '未命名骨骼',
+    'No bone channels': '当前角色没有骨骼通道',
+    'No morph channels': '当前角色没有变形通道',
+    'Select a character to edit action parameters': '选择角色后可调节动作参数',
+    'Select a character to edit expression parameters': '选择角色后可调节表情参数',
+    'Reset action parameters': '重置动作参数',
+    'Reset expression parameters': '重置表情参数',
+    'Direct drag pose': '直接拖拽编辑动作',
+    'Exit direct drag pose': '退出拖拽编辑',
+    'Click a body part, then drag it or use the rotation rings': '点击身体部位后直接拖拽，或使用旋转环精调',
+    'Drag vertically for local X, horizontally for local Z; hold Alt for local Y': '纵向拖拽调局部 X，横向拖拽调局部 Z；按住 Alt 调局部 Y',
+    'No weighted bone at this point': '此处没有可编辑的蒙皮骨骼',
+    'Selected bone': '当前骨骼',
+    'Common body controls': '常用肢体设置',
+    'All bone controls': '全部骨骼设置',
+    'Common expression controls': '常用表情设置',
+    'All expression controls': '全部表情设置',
+    'Character movement': '旋转移动角色',
+    'Show character movement': '展开角色移动',
+    'Hide character movement': '收起角色移动',
+    'Rotate character left': '向左旋转角色',
+    'Rotate character right': '向右旋转角色',
+    'Tilt character left': '角色左倾',
+    'Tilt character right': '角色右倾',
+    'Turn character left': '角色向左转身',
+    'Turn character right': '角色向右转身',
+    'Move character up': '向上移动角色',
+    'Move character down': '向下移动角色',
+    'Move character left': '向左移动角色',
+    'Move character right': '向右移动角色',
+    'Reset character transform': '重置角色位置与方向',
+    'Capture character': '截取仅角色画面',
+    'Capture with background': '截取带背景画面',
+    'Record character': '录制仅角色画面',
+    'Record with background': '录制带背景画面',
+    'Record MP4 with background': '录制带背景 MP4',
+    'Char Only': '仅角色',
+    'With BG': '含背景',
+    'Rec Char': '录制角色',
+    'Rec/BG': '录制/BG',
+    'MP4/BG': 'MP4/BG',
+    'Stop': '停止',
+    'Stop recording': '停止录制',
+    'Video recording is not supported by this browser': '当前浏览器不支持视频录制',
+    'Video recording could not be started': '视频录制启动失败',
+    'Video recording could not be completed': '视频录制封装失败',
+    'Recording format': '录制规格',
+    'Recording resolution': '录制分辨率',
+    'Current view': '当前画面',
+    'Recording aspect ratio': '录制画幅比例',
+    'Recording orientation': '录制方向',
+    'Quality': '清晰度',
+    'Aspect ratio': '画幅',
+    'Orientation': '方向',
+    'Landscape': '横版',
+    'Portrait': '竖版',
+    'WebM duration metadata could not be written': 'WebM 录制时长元数据写入失败',
+    'Enter VR': '进入 VR',
+    'Exit VR': '退出 VR',
+    'VR is not available in this browser': '当前浏览器不支持 VR',
+    'No immersive VR device is available': '未检测到可用的沉浸式 VR 设备',
+    'VR session could not be started': 'VR 会话启动失败',
+    'Viewer tools': '查看器工具',
     'Visit the Magius3Dviewer source branch': '查看 Magius3Dviewer 源代码分支',
     'Use light theme': '使用浅色主题',
     'Use dark theme': '使用深色主题',
@@ -235,6 +328,165 @@ const uiTextPatterns: ReadonlyArray<readonly [RegExp, string]> = [
     [/^Anti-aliasing method used for the effect composer[\s\S]*$/, '后期合成器使用的抗锯齿方式。\n此选项不影响始终采用默认 MSAA 的直接渲染。'],
 ]
 
+const officialExpressionLabels: Readonly<Record<string, string>> = {
+    Smile: '微笑',
+    Smiling: '笑容',
+    Serious: '严肃',
+    Annoyed: '不悦',
+    Furious: '愤怒',
+    Sorrow: '哀伤',
+    Sadness: '悲伤',
+    Troubled: '困扰',
+    Dumbfounded: '愕然',
+    Wry: '苦笑',
+    Surprised: '惊讶',
+    Astonished: '震惊',
+    Damage: '受伤',
+    Expressionless: '无表情',
+    Despair: '绝望',
+}
+
+/**
+ * These are presentation labels only.  Select values remain the byte-exact
+ * official clip/state names, so presets, AOC mappings and runtime lookup never
+ * depend on a translation.
+ */
+const officialAnimationBaseLabels: Readonly<Record<string, string>> = {
+    Abnormality: '异常状态',
+    CommonWait: '通用待机',
+    Damage: '受伤',
+    Down: '倒地',
+    HomeUnique01: '看板专属动作 1',
+    HomeWait01: '看板待机 1',
+    HomeWait02: '看板待机 2',
+    HomeWait0102: '看板待机 1→2',
+    HomeTransition01: '看板动作过渡 1',
+    StandbyTransition: '战斗准备过渡',
+    Standby: '战斗准备',
+    Victory: '胜利',
+    Wait: '待机',
+    Attack: '攻击',
+    Skill: '技能',
+    Magia: '魔法必杀',
+    Guard: '防御',
+    Dodge: '闪避',
+    Run: '奔跑',
+    Walk: '行走',
+    Entry: '入场',
+    Appear: '登场',
+    Death: '退场',
+}
+
+const officialAnimationSuffixLabels: Readonly<Record<string, string>> = {
+    L: '循环',
+    S: '起始',
+    SE: '单次',
+}
+
+const boneSemanticLabels: ReadonlyArray<readonly [RegExp, string]> = [
+    [/(?:^|[_ .:/-])(?:root|origin)(?:$|[_ .:/-])/i, '根骨骼'],
+    [/(?:hip|hips|pelvis)/i, '骨盆'],
+    [/(?:waist|center)/i, '腰部'],
+    [/(?:spine)/i, '脊柱'],
+    [/(?:chest|bust)/i, '胸部'],
+    [/(?:neck)/i, '颈部'],
+    [/(?:head)/i, '头部'],
+    [/(?:clavicle|shoulder)/i, '肩部'],
+    [/(?:forearm|lowerarm)/i, '前臂'],
+    [/(?:upperarm)/i, '上臂'],
+    [/(?:elbow)/i, '手肘'],
+    [/(?:hand|wrist)/i, '手部'],
+    [/(?:thigh|upperleg)/i, '大腿'],
+    [/(?:calf|shin|lowerleg)/i, '小腿'],
+    [/(?:knee)/i, '膝盖'],
+    [/(?:foot|ankle)/i, '脚部'],
+    [/(?:toe)/i, '脚趾'],
+]
+
+const technicalTokenLabels: Readonly<Record<string, string>> = {
+    left: '左', l: '左', right: '右', r: '右', center: '中央', c: '中央',
+    root: '根骨骼', origin: '原点', hip: '髋部', hips: '髋部', pelvis: '骨盆',
+    waist: '腰部', spine: '脊柱', chest: '胸部', bust: '胸部', neck: '颈部', head: '头部',
+    clavicle: '锁骨', shoulder: '肩部', upperarm: '上臂', arm: '手臂', forearm: '前臂',
+    lowerarm: '前臂', elbow: '手肘', hand: '手部', wrist: '手腕', finger: '手指', thumb: '拇指',
+    thigh: '大腿', upperleg: '大腿', leg: '腿部', lowerleg: '小腿', calf: '小腿', shin: '小腿',
+    knee: '膝盖', foot: '脚部', ankle: '脚踝', toe: '脚趾', twist: '扭转', roll: '滚转',
+    eye: '眼睛', eyes: '眼睛', eyelid: '眼睑', brow: '眉毛', eyebrow: '眉毛', eyebrows: '眉毛',
+    blink: '眨眼', open: '张开', opened: '张开', close: '闭合', closed: '闭合',
+    smile: '微笑', smiling: '笑容', mouth: '嘴', lip: '嘴唇', corner: '嘴角',
+    cheek: '脸颊', tear: '泪水', tongue: '舌头', jaw: '下颌', face: '面部',
+    up: '向上', down: '向下', lower: '下部', upper: '上部', inside: '内侧', outside: '外侧', inner: '内侧', outer: '外侧',
+    forward: '向前', back: '向后', long: '长', short: '短', form: '形状', shape: '形状',
+    anger: '生气', angry: '生气', sad: '悲伤', sorrow: '哀伤', damage: '受伤',
+    motion: '动作', mtn: '动作', animation: '动作', anim: '动作', home: '看板', wait: '待机',
+    standby: '战斗准备', transition: '过渡', victory: '胜利', attack: '攻击', skill: '技能',
+    magia: '魔法必杀', guard: '防御', dodge: '闪避', run: '奔跑', walk: '行走', entry: '入场',
+    appear: '登场', death: '退场', loop: '循环', expression: '表情', facial: '表情',
+}
+
+function splitTechnicalTokens(value: string): string[] {
+    return value
+        .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+        .replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')
+        .split(/[_ .:/\\-]+/)
+        .filter(Boolean)
+}
+
+function translateTechnicalTokens(value: string): string | undefined {
+    const tokens = splitTechnicalTokens(value)
+    let translated = false
+    const label = tokens.map(token => {
+        const mapped = technicalTokenLabels[token.toLocaleLowerCase()]
+        if (mapped) translated = true
+        return mapped ?? token
+    }).join(' ')
+    return translated ? label : undefined
+}
+
+export function translateBoneChannelLabel(name: string, locale: UiLocale = currentLocale): string {
+    if (locale === 'en' || !name) return name
+    const side = /(?:^|[_ .:/-])(?:left|l)(?:$|[_ .:/-])/i.test(name) || /^L(?=[A-Z])/.test(name)
+        ? '左'
+        : /(?:^|[_ .:/-])(?:right|r)(?:$|[_ .:/-])/i.test(name) || /^R(?=[A-Z])/.test(name)
+            ? '右'
+            : ''
+    const semantic = boneSemanticLabels.find(([pattern]) => pattern.test(name))?.[1]
+    if (semantic) {
+        const detail = /(?:twist|roll)/i.test(name) ? '（扭转）' : ''
+        const number = name.match(/\d+$/)?.[0]
+        return `${side}${semantic}${detail}${number ? ` ${number}` : ''}`
+    }
+    return translateTechnicalTokens(name) ?? name
+}
+
+export function translateMorphChannelLabel(name: string, locale: UiLocale = currentLocale): string {
+    if (locale === 'en' || !name) return name
+    return translateTechnicalTokens(name) ?? name
+}
+
+function translateOfficialRuntimeOption(text: string): string | undefined {
+    const canonical = text.trim()
+    const expression = officialExpressionLabels[canonical]
+    if (expression) return expression
+
+    const special: Readonly<Record<string, string>> = {
+        HomeWait02transition: '看板待机 2 过渡',
+        transition_HomeWait01: '看板待机 1 过渡',
+        W_HomeWait01_L: '武器看板待机 1（循环）',
+    }
+    if (special[canonical]) return special[canonical]
+
+    const match = canonical.match(/^(.+?)_(SE|S|L)$/)
+    const base = match?.[1] ?? canonical
+    const suffix = match?.[2]
+    const baseLabel = officialAnimationBaseLabels[base]
+    if (baseLabel) return suffix ? `${baseLabel}（${officialAnimationSuffixLabels[suffix]}）` : baseLabel
+
+    const technical = translateTechnicalTokens(base)
+    if (!technical) return undefined
+    return suffix ? `${technical}（${officialAnimationSuffixLabels[suffix]}）` : technical
+}
+
 let currentLocale: UiLocale = detectInitialLocale()
 let installed = false
 const originalText = new WeakMap<Text, string>()
@@ -252,6 +504,8 @@ export function translateUiText(text: string, locale: UiLocale = currentLocale):
     for (const [pattern, replacement] of uiTextPatterns) {
         if (pattern.test(text)) return text.replace(pattern, replacement)
     }
+    const runtimeOption = translateOfficialRuntimeOption(text)
+    if (runtimeOption) return runtimeOption
     return text
 }
 

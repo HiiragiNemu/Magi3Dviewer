@@ -74,10 +74,9 @@ if ($null -eq $primaryController) {
     throw "HomeOverrideController was not found for ${CharacterId}"
 }
 
-$candidateNames = [System.Collections.Generic.HashSet[string]]::new()
-$homeWait01Names = [System.Collections.Generic.HashSet[string]]::new()
-$bodyOverrides = [ordered]@{}
-$weaponHelpers = [System.Collections.Generic.HashSet[string]]::new()
+$candidatePathIds = [System.Collections.Generic.HashSet[string]]::new()
+$bodyOverrideCandidates = @{}
+$weaponHelperPathIds = [System.Collections.Generic.HashSet[string]]::new()
 foreach ($controller in $homeControllers) {
     $isWeaponController = (
         $controller.m_Name -like 'HomeOverrideControllerWeapon*' -or
@@ -90,42 +89,44 @@ foreach ($controller in $homeControllers) {
         $hasReplacement = $mapping.m_OverrideClip.TryGet([ref]$replacement)
         if (-not $hasOriginal -or -not $hasReplacement) { continue }
 
+        $replacementPathId = [string]$replacement.m_PathID
+
         $isBodyState = (
             $controller.m_Name -eq 'HomeOverrideController' -and
             $original.m_Name -match '^Home(?:Wait|Unique)'
         )
         if ($isBodyState -or $isWeaponController) {
-            $candidateNames.Add($replacement.m_Name) | Out-Null
+            $candidatePathIds.Add($replacementPathId) | Out-Null
         }
-        if ($controller.m_Name -eq 'HomeOverrideController') {
-            $bodyOverrides[$original.m_Name] = $replacement.m_Name
+        if ($isBodyState) {
+            if (-not $bodyOverrideCandidates.ContainsKey($original.m_Name)) {
+                $bodyOverrideCandidates[$original.m_Name] = @()
+            }
+            $bodyOverrideCandidates[$original.m_Name] += $replacementPathId
         }
         if (
             $isWeaponController -and
             $replacement.m_Name -match '^HomeWeapon.*Hide$'
         ) {
-            $weaponHelpers.Add($replacement.m_Name) | Out-Null
-        }
-        if (
-            $controller.m_Name -eq 'HomeOverrideController' -and
-            $original.m_Name -eq 'HomeWait01Loop'
-        ) {
-            $homeWait01Names.Add($replacement.m_Name) | Out-Null
+            $weaponHelperPathIds.Add($replacementPathId) | Out-Null
         }
     }
 }
-if ($homeWait01Names.Count -eq 0) {
+if (-not $bodyOverrideCandidates.ContainsKey('HomeWait01Loop')) {
     throw "HomeWait01Loop has no official override for ${CharacterId}"
 }
 
 [AssetStudio.AnimationClip[]]$clips = @(
     $objects | Where-Object {
-        $_ -is [AssetStudio.AnimationClip] -and $candidateNames.Contains($_.m_Name)
+        $_ -is [AssetStudio.AnimationClip] -and
+        $candidatePathIds.Contains([string]$_.m_PathID)
     }
 )
-$missing = @($homeWait01Names | Where-Object { $_ -notin $clips.m_Name })
+$loadedClipPathIds = [System.Collections.Generic.HashSet[string]]::new()
+$clips | ForEach-Object { $loadedClipPathIds.Add([string]$_.m_PathID) | Out-Null }
+$missing = @($candidatePathIds | Where-Object { -not $loadedClipPathIds.Contains($_) })
 if ($missing.Count -gt 0) {
-    throw "Home clips missing for ${CharacterId}: $($missing -join ', ')"
+    throw "Home clip path IDs missing for ${CharacterId}: $($missing -join ', ')"
 }
 
 foreach ($requiredState in @(
@@ -134,7 +135,7 @@ foreach ($requiredState in @(
     'HomeUnique01Start',
     'HomeUnique01Loop'
 )) {
-    if (-not $bodyOverrides.Contains($requiredState)) {
+    if (-not $bodyOverrideCandidates.ContainsKey($requiredState)) {
         throw "Official Home override is missing ${requiredState} for ${CharacterId}"
     }
 }
@@ -146,12 +147,64 @@ $converter = [AssetStudio.ModelConverter]::new(
     [AssetStudio.ImageFormat]::Png,
     $clips
 )
+if ($converter.AnimationList.Count -ne $clips.Count) {
+    throw "Animation conversion identity mismatch for ${CharacterId}: source=$($clips.Count) imported=$($converter.AnimationList.Count)"
+}
+$clipIdentities = @()
+$identityByPathId = @{}
+for ($index = 0; $index -lt $clips.Count; $index++) {
+    $sourceClip = $clips[$index]
+    $importedClip = $converter.AnimationList[$index]
+    $pathId = [string]$sourceClip.m_PathID
+    $identity = [ordered]@{
+        sourceClipPathId = $pathId
+        sourceName = $sourceClip.m_Name
+        importedName = $importedClip.Name
+        transformTrackCount = $importedClip.TrackList.Count
+    }
+    $clipIdentities += $identity
+    $identityByPathId[$pathId] = $identity
+}
+
+function Resolve-BodyState([string]$State) {
+    $candidates = @(
+        $bodyOverrideCandidates[$State] |
+            ForEach-Object { $identityByPathId[[string]$_] } |
+            Where-Object { $null -ne $_ } |
+            Sort-Object -Property @{ Expression = 'transformTrackCount'; Descending = $true }, sourceClipPathId
+    )
+    if ($candidates.Count -eq 0 -or $candidates[0].transformTrackCount -eq 0) {
+        throw "Official Home body state ${State} has no model-owned Transform clip for ${CharacterId}"
+    }
+    if (
+        $candidates.Count -gt 1 -and
+        $candidates[0].transformTrackCount -eq $candidates[1].transformTrackCount
+    ) {
+        throw "Official Home body state ${State} is ambiguous for ${CharacterId}: $($candidates[0].sourceClipPathId), $($candidates[1].sourceClipPathId)"
+    }
+    return $candidates[0]
+}
+
+$wait01 = Resolve-BodyState 'HomeWait01Loop'
+$wait02 = Resolve-BodyState 'HomeWait02Loop'
+$uniqueStart = Resolve-BodyState 'HomeUnique01Start'
+$uniqueLoop = Resolve-BodyState 'HomeUnique01Loop'
+$weaponHelpers = @(
+    $weaponHelperPathIds |
+        ForEach-Object { $identityByPathId[[string]$_] } |
+        Where-Object { $null -ne $_ } |
+        Sort-Object importedName
+)
 [AssetStudio.ModelExporter]::ExportFbx(
     $outputFile,
     $converter,
     $false,
     [single]0.25,
-    $false,
+    # Home clips animate terminal spring/end Transforms that are not always
+    # referenced by SkinnedMeshRenderer bones. AssetStudio's allNodes=false
+    # export drops those nodes and redirects their curves onto a surviving
+    # parent during FBX conversion. Preserve the complete official hierarchy.
+    $true,
     $true,
     $true,
     $true,
@@ -165,27 +218,33 @@ $converter = [AssetStudio.ModelConverter]::new(
 
 $result = Get-Item -LiteralPath $outputFile
 $metadata = [ordered]@{
-    schema = 1
+    schema = 2
     characterId = [int]$CharacterId
     unityVersion = $UnityVersion
     source = "home/doll_house/chara_${CharacterId}01_home"
     controllers = @($homeControllers.m_Name | Sort-Object -Unique)
     actions = [ordered]@{
         wait01 = [ordered]@{
-            loopFamily = $bodyOverrides['HomeWait01Loop']
+            loopFamily = $wait01.importedName
+            sourceClipPathId = $wait01.sourceClipPathId
         }
         wait02 = [ordered]@{
-            loopFamily = $bodyOverrides['HomeWait02Loop']
+            loopFamily = $wait02.importedName
+            sourceClipPathId = $wait02.sourceClipPathId
         }
         unique01 = [ordered]@{
-            startFamily = $bodyOverrides['HomeUnique01Start']
-            loopFamily = $bodyOverrides['HomeUnique01Loop']
+            startFamily = $uniqueStart.importedName
+            startSourceClipPathId = $uniqueStart.sourceClipPathId
+            loopFamily = $uniqueLoop.importedName
+            loopSourceClipPathId = $uniqueLoop.sourceClipPathId
             enterTransitionSeconds = 0.2
             startExitNormalizedTime = 1.0
             startToLoopTransitionSeconds = 0.0
         }
     }
-    helpers = @($weaponHelpers | Sort-Object)
+    helpers = @($weaponHelpers.importedName | Sort-Object -Unique)
+    helperSourceClipPathIds = @($weaponHelpers.sourceClipPathId | Sort-Object -Unique)
+    clipIdentities = @($clipIdentities)
 }
 if ($MetadataOutputPath) {
     $metadataFile = [System.IO.Path]::GetFullPath($MetadataOutputPath)

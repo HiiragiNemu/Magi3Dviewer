@@ -71,7 +71,7 @@ export async function loadOfficialGemResources(
     return { matCaps, fallbackMatCap, textures: [...new Set(textures)] };
 }
 
-function selectOfficialMatCap(
+export function selectOfficialMatCap(
     resources: OfficialGemResources,
     profile?: OfficialMaterialProfile,
 ): THREE.Texture | undefined {
@@ -127,6 +127,10 @@ export function setOfficialMaterialProfileUniforms(
     set('uRdShadowOffset', value.shadow.offset);
     set('uRdShadowFeather', value.shadow.feather);
     set('uMaterialReceiveSelfShadow', value.shadow.receiveSelfShadow ? 1 : 0);
+    set(
+        'uRdOfficialAdditionalLightInfluenceByLuminance',
+        value.additionalLightInfluenceByLuminance,
+    );
     setColor('uMaterialEmissionColor', value.emissionColor);
     set('uMaterialIsGem', gem.enabled ? 1 : 0);
     // GeneralMaterial is shared by every recovered FBX draw group.  The
@@ -194,14 +198,147 @@ export function injectOfficialGemShader(
         uniform float uGemFresnelMaskByMetallic;
         ${shader.fragmentShader}
     `.replace(
-        '#include <opaque_fragment>',
+        '// END diffuseColor manipulation',
         /* glsl */ `
+        // JP 2022.3.62f2 ReDriveToon main_gem blob 95. The official Gem
+        // normal and both half vectors are evaluated in view space. In that
+        // space MatrixV * (MatrixInvV[2] * 2 + H1) is exactly (0, 0, 2) + H1.
         vec3 rdGemNormalVs = normalize(normal);
-        // JP 2022.3.62f2 ReDriveToon vs_TEXCOORD5 is the world normal
-        // transformed by unity_MatrixV. Three normal is already that
-        // view-space normal, so the native MatCap UV is direct and does not
-        // depend on the view direction.
-        vec2 rdGemMatCapUv = rdGemNormalVs.xy * 0.5 + 0.5;
+        float rdGemShadowSelector = 0.0;
+        float rdGemDepthSelector = 0.0;
+        float rdGemHardHighlightMask = 0.0;
+
+        if (uMaterialIsGem > 0.5) {
+            vec3 rdGemViewVs = normalize(geometryViewDir);
+            // Official main_gem builds both specular half-vectors from the
+            // effective character-light direction. This includes the global
+            // character-light override instead of falling back to the stage's
+            // physical main-light direction.
+            vec3 rdGemLightVs = normalize(rdToonCharacterLightDirection);
+            vec3 rdGemHalfOneVs = normalize(rdGemViewVs + rdGemLightVs);
+            vec3 rdGemHalfTwoVs = normalize(
+                rdGemHalfOneVs + vec3(0.0, 0.0, 2.0)
+            );
+            vec3 rdGemCorrectedNormalVs = normalize(vec3(
+                -rdGemNormalVs.x,
+                -rdGemNormalVs.y + uGemHeightCorrection,
+                rdGemNormalVs.z
+            ));
+            float rdGemCoordinateOne = saturate(dot(
+                rdGemCorrectedNormalVs,
+                rdGemHalfOneVs
+            ));
+            float rdGemCoordinateTwo = saturate(dot(
+                rdGemCorrectedNormalVs,
+                rdGemHalfTwoVs
+            ));
+            // Official main_gem keeps _GemHeightCorrection on the shadow/base
+            // band only. The two hard-highlight lobes use the original
+            // normalized view-space normal for every Gem material.
+            float rdGemHighlightCoordinateOne = saturate(dot(
+                rdGemNormalVs,
+                rdGemHalfOneVs
+            ));
+            float rdGemHighlightCoordinateTwo = saturate(dot(
+                rdGemNormalVs,
+                rdGemHalfTwoVs
+            ));
+
+            // The native depth selector only exists for transparent Gem
+            // materials. The Viewer capability flag prevents its 1x1 fallback
+            // depth texture from impersonating a captured CameraDepthTexture;
+            // once active, the comparison below is the blob-95 expression.
+            float rdGemDepthBranchEnabled =
+                step(0.0000001, abs(uGemUseDepthDiff)) *
+                step(0.0000001, abs(uGemTransparency)) *
+                step(0.0000001, abs(uRdDepthRimExperimentEnabled));
+            if (rdGemDepthBranchEnabled > 0.5) {
+                float rdGemFragmentEyeDepth =
+                    rdDepthRimLinearEye(gl_FragCoord.z);
+                float rdGemSceneEyeDepth = rdDepthRimFetchEye(
+                    ivec2(trunc(gl_FragCoord.xy))
+                );
+                float rdGemDepthDifference = clamp(
+                    5.0 * (
+                        rdGemSceneEyeDepth -
+                        (rdGemFragmentEyeDepth - 0.00999999978)
+                    ),
+                    0.0,
+                    1.0
+                );
+                rdGemDepthSelector =
+                    rdGemDepthDifference >=
+                        1.0 - uGemDepthDiffThreshold
+                    ? 0.0
+                    : 1.0;
+            }
+
+            float rdGemFirstShadowThreshold =
+                0.660000026 -
+                0.340000004 * uGemFirstShadowSize;
+            float rdGemSecondShadowThreshold =
+                0.933000028 -
+                0.0670000017 * uGemSecondShadowSize;
+            float rdGemMiddleBand = max(
+                step(
+                    rdGemFirstShadowThreshold,
+                    rdGemCoordinateOne
+                ) - step(
+                    rdGemSecondShadowThreshold,
+                    rdGemCoordinateTwo
+                ),
+                0.0
+            );
+            float rdGemNdotV = saturate(dot(
+                rdGemNormalVs,
+                rdGemViewVs
+            ));
+            float rdGemRimShadow = step(
+                uGemRimFresnel,
+                1.0 - rdGemNdotV
+            );
+            rdGemShadowSelector = saturate(
+                1.0 - rdGemMiddleBand +
+                rdGemRimShadow +
+                rdGemDepthSelector
+            );
+            diffuseColor.rgb = mix(
+                rdToonBaseColor,
+                rdToonShadowColor * uGlobalCharacterShadowTint,
+                rdGemShadowSelector
+            );
+
+            // Blob 95 reuses this selector as the 0.2..1.0 light carrier.
+            rdToonBaseWeight = rdGemShadowSelector;
+
+            float rdGemFirstHighlightThreshold =
+                0.966000021 -
+                0.0350000001 * uGemFirstHighlightSize;
+            float rdGemSecondHighlightThreshold =
+                0.997500002 -
+                0.00300000003 * uGemSecondHighlightSize;
+            rdGemHardHighlightMask = min(
+                step(
+                    rdGemFirstHighlightThreshold,
+                    rdGemHighlightCoordinateOne
+                ) + step(
+                    rdGemSecondHighlightThreshold,
+                    rdGemHighlightCoordinateTwo
+                ),
+                1.0
+            );
+
+            // The official alpha path adds the same depth selector.
+            diffuseColor.a = saturate(
+                diffuseColor.a + rdGemDepthSelector
+            );
+        }
+
+        // ReDriveToon executes MatCap after Gem Base/Shadow selection and
+        // before SH + main-light multiplication. Blob 95 samples with the raw
+        // interpolated vertex view-normal (vs_TEXCOORD5.xy), deliberately
+        // before the fragment normal is normalized for lighting.
+        vec2 rdGemMatCapUv = vNormal.xy * 0.5 + 0.5;
         vec3 rdGemMatCapTexture = texture2D(
             tGemMatCap,
             rdGemMatCapUv
@@ -222,135 +359,10 @@ export function injectOfficialGemShader(
             saturate(uMaterialMatCapMaskBySpecular)
         );
 
-        if (uMaterialIsGem > 0.5) {
-            vec3 rdGemView = normalize(geometryViewDir);
-            float rdGemNdotV = saturate(dot(rdGemNormalVs, rdGemView));
-
-            // Official Gem size values are signed artistic offsets rather than
-            // literal widths. Map them around two stable view-normal bands.
-            float rdGemHeight = saturate(
-                rdGemNormalVs.y * 0.5 + 0.5 +
-                (uGemHeightCorrection - 0.5) * 0.26
-            );
-            float rdGemFirstCenter = clamp(0.70 + uGemFirstHighlightSize * 0.18, 0.08, 0.92);
-            float rdGemSecondCenter = clamp(0.33 + uGemSecondHighlightSize * 0.20, 0.08, 0.92);
-            float rdGemFirstWidth = 0.09 + abs(uGemFirstHighlightSize) * 0.06;
-            float rdGemSecondWidth = 0.10 + abs(uGemSecondHighlightSize) * 0.07;
-            float rdGemHighlightOne = exp2(
-                -pow((rdGemHeight - rdGemFirstCenter) / rdGemFirstWidth, 2.0) * 3.0
-            );
-            float rdGemHighlightTwo = exp2(
-                -pow((rdGemHeight - rdGemSecondCenter) / rdGemSecondWidth, 2.0) * 3.0
-            );
-            float rdGemShadowOne = smoothstep(
-                0.0,
-                1.0,
-                (0.5 - rdGemHeight) + uGemFirstShadowSize * 0.20
-            );
-            float rdGemShadowTwo = smoothstep(
-                0.0,
-                1.0,
-                (rdGemHeight - 0.5) + uGemSecondShadowSize * 0.20
-            );
-
-            float rdGemFresnel = 1.0 - rdGemNdotV;
-            float rdGemFresnelBand = smoothstep(
-                clamp(uGemFresnelThreshold - uGemFresnelFeather, 0.0, 1.0),
-                clamp(uGemFresnelThreshold + uGemFresnelFeather, 0.001, 1.0),
-                rdGemFresnel
-            );
-            rdGemFresnelBand *= mix(
-                1.0,
-                rdToonMetallicMask,
-                saturate(uGemFresnelMaskByMetallic)
-            );
-
-            // Official transparent GemDepthDiff is a selector before MatCap,
-            // not a final colour tint. It is additionally bounded by the
-            // global CameraDepthTexture experiment so disabled output is
-            // byte-for-byte the pre-prototype path.
-            // mt_chara_100101_weapon_a_sj has Transparency=0, therefore its
-            // official GemDepthDiff contribution is exactly zero.
-            float rdGemDepthBranchEnabled =
-                step(0.0000001, abs(uGemUseDepthDiff)) *
-                step(0.0000001, abs(uGemTransparency)) *
-                step(0.0000001, abs(uRdDepthRimExperimentEnabled));
-            float rdGemDepthSelector = 0.0;
-            if (rdGemDepthBranchEnabled > 0.5) {
-                float rdGemCenterZ =
-                    rdDepthRimLinearEye(gl_FragCoord.z);
-                float rdGemCenterTextureZ = rdDepthRimFetchEye(
-                    ivec2(trunc(gl_FragCoord.xy))
-                );
-                float rdGemDepthDifference = clamp(
-                    5.0 * (
-                        rdGemCenterTextureZ -
-                        (rdGemCenterZ - 0.01)
-                    ),
-                    0.0,
-                    1.0
-                );
-                rdGemDepthSelector =
-                    rdGemDepthDifference >=
-                        1.0 - uGemDepthDiffThreshold
-                    ? 0.0
-                    : 1.0;
-            }
-
-            vec3 rdGemDepthSelectedBase = mix(
-                diffuseColor.rgb,
-                rdToonShadowColor,
-                rdGemDepthSelector
-            );
-            vec3 rdGemBase = max(
-                outgoingLight,
-                rdGemDepthSelectedBase * 0.68
-            );
-            float rdGemInternal =
-                rdGemHighlightOne * 0.58 +
-                rdGemHighlightTwo * 0.42 -
-                rdGemShadowOne * 0.18 -
-                rdGemShadowTwo * 0.12;
-            rdGemBase *= 0.84 + rdGemInternal;
-
-            if (uMaterialMatCapEnabled > 0.5) {
-                // Current-JP ReDriveToon executable MatCap blend, per channel:
-                // base<=0.5 => base*matcap; base>0.5 =>
-                // 1 - 2*(1-base)*(1-matcap). The serialized MatCapIntensity and
-                // Control B/G masks then interpolate/extrapolate from base.
-                vec3 rdGemMatCapLow = rdGemMatCap * rdGemBase;
-                vec3 rdGemMatCapHigh =
-                    vec3(1.0) -
-                    (vec3(1.0) - rdGemBase) *
-                    (vec3(1.0) - rdGemMatCap) * 2.0;
-                vec3 rdGemMatCapBlend = mix(
-                    rdGemMatCapLow,
-                    rdGemMatCapHigh,
-                    step(vec3(0.5), rdGemBase)
-                );
-                float rdGemMatCapFactor =
-                    uMaterialMatCapIntensity * rdGemMatCapMask;
-                rdGemBase +=
-                    rdGemMatCapFactor *
-                    (rdGemMatCapBlend - rdGemBase);
-            }
-
-            rdGemBase += vec3(1.0) *
-                rdGemFresnelBand *
-                max(uGemRimFresnel, 0.0) * 0.72;
-
-            outgoingLight = max(rdGemBase, vec3(0.0));
-        }
-
-        // _UseMatCap is an independent base-shader feature. Apply it to
-        // regular body/metal/weapon slots as well; Gem has already consumed
-        // the same official operator inside its own authored band result.
-        if (
-            uMaterialMatCapEnabled > 0.5 &&
-            uMaterialIsGem <= 0.5
-        ) {
-            vec3 rdMatCapBase = outgoingLight;
-            vec3 rdMatCapLow = rdGemMatCap * rdMatCapBase;
+        if (uMaterialMatCapEnabled > 0.5) {
+            vec3 rdMatCapBase = diffuseColor.rgb;
+            vec3 rdMatCapLow =
+                rdGemMatCap * rdMatCapBase * 2.0;
             vec3 rdMatCapHigh =
                 vec3(1.0) -
                 (vec3(1.0) - rdMatCapBase) *
@@ -358,16 +370,58 @@ export function injectOfficialGemShader(
             vec3 rdMatCapBlend = mix(
                 rdMatCapLow,
                 rdMatCapHigh,
-                step(vec3(0.5), rdMatCapBase)
+                vec3(1.0) - step(rdMatCapBase, vec3(0.5))
             );
-            outgoingLight +=
+            float rdActiveMatCapMask = mix(
+                rdGemMatCapMask,
+                mix(
+                    1.0,
+                    rdToonMetallicMask,
+                    saturate(uMaterialMatCapMaskByMetallic)
+                ),
+                step(0.5, uMaterialIsGem)
+            );
+            diffuseColor.rgb +=
                 uMaterialMatCapIntensity *
-                rdGemMatCapMask *
+                rdActiveMatCapMask *
                 (rdMatCapBlend - rdMatCapBase);
-            outgoingLight = max(outgoingLight, vec3(0.0));
         }
 
-        #include <opaque_fragment>
+        // END diffuseColor manipulation
+        `,
+    ).replace(
+        /* glsl */ `
+                float rdHardSpecular =
+                    step(0.966000021, rdNdotH) *
+                    rdToonSpecularMask *
+                    (1.0 - step(0.5, uMaterialAnisotropy));
+        `,
+        /* glsl */ `
+                float rdHardSpecular =
+                    step(0.966000021, rdNdotH) *
+                    rdToonSpecularMask *
+                    (1.0 - step(0.5, uMaterialAnisotropy)) *
+                    (1.0 - step(0.5, uMaterialIsGem));
+        `,
+    ).replace(
+        '                #ifdef HAS_SPECULAR_GRADIENT',
+        /* glsl */ `
+                if (uMaterialIsGem > 0.5) {
+                    vec3 rdGemLightCarrier =
+                        rdToonSceneLightColor *
+                        (
+                            rdGemShadowSelector * 0.800000012 +
+                            0.200000003
+                        );
+                    outgoingLight +=
+                        rdGemLightCarrier *
+                        rdToonMainLightColor *
+                        uRdDepthRimMainColor *
+                        rdGemHardHighlightMask *
+                        (1.0 - step(0.5, uMaterialAnisotropy));
+                }
+
+                #ifdef HAS_SPECULAR_GRADIENT
         `,
     );
 }

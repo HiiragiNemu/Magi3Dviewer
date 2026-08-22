@@ -19,7 +19,14 @@ const compiled = ts.transpileModule(readFileSync(sourcePath, 'utf8'), {
     },
     fileName: sourcePath,
 })
-writeFileSync(runtimePath, compiled.outputText, 'utf8')
+writeFileSync(
+    runtimePath,
+    compiled.outputText.replace(
+        "from './unityLighting'",
+        "from './src/viewer/unityLighting.ts'",
+    ),
+    'utf8',
+)
 const lightmaps = await import(pathToFileURL(runtimePath).href)
 
 after(() => {
@@ -108,7 +115,7 @@ test('binds 104 hierarchy suffixes with shared RGBM texture and independent ST',
         assert.equal(material.lightMapIntensity, 0.75)
         assert.equal(
             material.customProgramCacheKey(),
-            'existing-stage-key:unity-2022.3-rgbm-lightmap-v1',
+            'existing-stage-key:unity-2022.3-rgbm-lightmap-v2-pi',
         )
     }
 
@@ -131,7 +138,7 @@ test('binds 104 hierarchy suffixes with shared RGBM texture and independent ST',
     )
     assert.match(
         shader.fragmentShader,
-        /pow\( lightMapTexel\.a, 2\.2 \).*34\.493242/s,
+        /pow\( lightMapTexel\.a, 2\.2 \).*34\.4932404 \* 3\.141592653589793/s,
     )
     assert.deepEqual(
         shader.uniforms.uStageLightmapST.value.toArray(),
@@ -188,4 +195,134 @@ test('reports ambiguous suffixes and validates the second UV set before mutation
         /missingUv1=1/,
     )
     assert.equal(leftMesh.material, material)
+})
+
+test('selects the exact Unity lightmap by each renderer lightmapIndex', () => {
+    const root = new THREE.Group()
+    const material = new THREE.MeshStandardMaterial()
+    const left = makeRenderer(root, 'left', material)
+    const right = makeRenderer(root, 'right', material)
+    const first = new THREE.Texture()
+    const second = new THREE.Texture()
+    const bindings = [
+        {
+            rendererHierarchyPath: 'left',
+            lightmapIndex: 0,
+            lightmapScaleOffset: [1, 1, 0, 0],
+        },
+        {
+            rendererHierarchyPath: 'right',
+            lightmapIndex: 1,
+            lightmapScaleOffset: [0.5, 0.5, 0.25, 0.25],
+        },
+    ]
+    const application = lightmaps.applyStageLightmaps(
+        root,
+        [first, second],
+        bindings,
+        { strict: true },
+    )
+    assert.equal(left.material.lightMap, first)
+    assert.equal(right.material.lightMap, second)
+    assert.deepEqual(application.missingLightmapPaths, [])
+    application.dispose()
+
+    assert.throws(
+        () => lightmaps.applyStageLightmaps(
+            root,
+            [first],
+            bindings,
+            { strict: true },
+        ),
+        /missingLightmap=1/,
+    )
+
+    assert.throws(
+        () => lightmaps.applyStageLightmaps(
+            root,
+            [first, second],
+            bindings,
+            {
+                directionalLightmaps: [new THREE.Texture()],
+                strict: true,
+            },
+        ),
+        /missingDirectionalLightmap=1/,
+    )
+})
+
+test('evaluates Unity directional lightmaps in reflected Viewer world space', () => {
+    const root = new THREE.Group()
+    const source = new THREE.MeshStandardMaterial()
+    const mesh = makeRenderer(root, 'directional', source)
+    const color = new THREE.Texture()
+    const direction = new THREE.Texture()
+    direction.flipY = true
+    direction.colorSpace = THREE.SRGBColorSpace
+    const application = lightmaps.applyStageLightmaps(
+        root,
+        color,
+        [{
+            rendererHierarchyPath: 'directional',
+            lightmapIndex: 0,
+            lightmapScaleOffset: [1, 1, 0, 0],
+        }],
+        { directionalLightmaps: [direction], strict: true },
+    )
+    assert.equal(direction.flipY, false)
+    assert.equal(direction.colorSpace, THREE.NoColorSpace)
+    assert.match(
+        mesh.material.customProgramCacheKey(),
+        /unity-2022\.3-rgbm-directional-lightmap-v2-pi/,
+    )
+    const shader = {
+        uniforms: {},
+        vertexShader: '#include <uv_pars_vertex>\n#include <uv_vertex>',
+        fragmentShader: '#include <common>\n#include <lights_fragment_maps>',
+    }
+    mesh.material.onBeforeCompile(shader, {})
+    assert.equal(shader.uniforms.uStageLightmapDirection.value, direction)
+    assert.match(shader.fragmentShader, /stageDirection\.xyz - vec3\( 0\.5 \)/)
+    assert.match(shader.fragmentShader, /stageDirectionVector\.x = -stageDirectionVector\.x/)
+    assert.match(shader.fragmentShader, /inverseTransformDirection\( normal, viewMatrix \)/)
+    assert.match(shader.fragmentShader, /stageHalfLambert \/ max\( 1e-4, stageDirection\.w \)/)
+    assert.match(
+        shader.fragmentShader,
+        /\* 3\.141592653589793 \* lightMapIntensity/,
+        'Unity baked irradiance must cancel Three MeshStandard BRDF_Lambert 1/pi',
+    )
+    application.dispose()
+})
+
+test('uses exact linear BC6H lightmaps without applying the RGBM alpha decoder', () => {
+    const root = new THREE.Group()
+    const source = new THREE.MeshStandardMaterial()
+    const mesh = makeRenderer(root, 'bc6h', source)
+    const color = new THREE.Texture()
+    const application = lightmaps.applyStageLightmaps(
+        root,
+        color,
+        [{
+            rendererHierarchyPath: 'bc6h',
+            lightmapIndex: 0,
+            lightmapScaleOffset: [1, 1, 0, 0],
+        }],
+        { encoding: 'unity-bc6h-linear', strict: true },
+    )
+    assert.match(
+        mesh.material.customProgramCacheKey(),
+        /unity-2022\.3-bc6h-lightmap-v1-pi/,
+    )
+    const shader = {
+        uniforms: {},
+        vertexShader: '#include <uv_pars_vertex>\n#include <uv_vertex>',
+        fragmentShader: '#include <lights_fragment_maps>',
+    }
+    mesh.material.onBeforeCompile(shader, {})
+    assert.match(
+        shader.fragmentShader,
+        /lightMapTexel\.rgb \* 3\.141592653589793 \* lightMapIntensity/,
+    )
+    assert.doesNotMatch(shader.fragmentShader, /pow\( lightMapTexel\.a/)
+    application.dispose()
 })

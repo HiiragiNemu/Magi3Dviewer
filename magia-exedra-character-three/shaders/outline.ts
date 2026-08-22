@@ -1,11 +1,15 @@
 import * as THREE from 'three'
 import { toonStylizationOptions } from './stylization'
+import { ReDriveBakedNormalAttribute } from '../bakedNormal'
+import type { CharacterPerspectiveReference } from '../renderProfile'
 
 /** Serialized ReDriveToon `_OutlineWidth` default and range. */
 export const OutlineThickness = 5
 export const OutlineColor = '#000000'
 
-interface OutlineMaterialCreationOptions {
+export interface OutlineMaterialCreationOptions {
+    /** Serialized `_UseOutline`; false slots are omitted from the draw list. */
+    enabled?: boolean
     /** ReDriveToon `_OutlineWidth`, in the official 0.001..10 units. */
     thickness?: number
     color?: THREE.ColorRepresentation
@@ -16,6 +20,7 @@ interface OutlineMaterialCreationOptions {
     emissionColor?: THREE.ColorRepresentation
     outlineZOffset?: number
     faceOutlineAdjust?: number
+    characterPerspectiveReference?: CharacterPerspectiveReference
 }
 
 export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) {
@@ -46,6 +51,14 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
                 uVertexColorAvailable: { value: 0 },
                 uOutlineZOffset: { value: options?.outlineZOffset ?? 0 },
                 uFaceOutlineAdjust: { value: options?.faceOutlineAdjust ?? 0 },
+                uRdCharacterFacePositionWS: { value: new THREE.Vector3() },
+                uRdCharacterCancelPerspective: {
+                    value: options?.characterPerspectiveReference
+                        ?.characterCancelPerspective ?? 0,
+                },
+                uRdGlobalCharacterCancelPerspective: {
+                    value: options?.characterPerspectiveReference ? 1 : 0,
+                },
             },
         ]),
         vertexShader: /*glsl*/`
@@ -58,7 +71,11 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
             uniform float uVertexColorAvailable;
             uniform float uOutlineZOffset;
             uniform float uFaceOutlineAdjust;
+            uniform vec3 uRdCharacterFacePositionWS;
+            uniform float uRdCharacterCancelPerspective;
+            uniform float uRdGlobalCharacterCancelPerspective;
             attribute vec3 color;
+            attribute vec3 ${ReDriveBakedNormalAttribute};
             varying vec2 vUv;
             varying vec3 vOutlineNormalVS;
             #include <skinning_pars_vertex>
@@ -69,6 +86,7 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
                 #include <skinbase_vertex>
                 #include <begin_vertex>
                 #include <beginnormal_vertex>
+                objectNormal = normalize(${ReDriveBakedNormalAttribute});
                 #include <skinnormal_vertex>
                 #include <skinning_vertex>
 
@@ -92,6 +110,34 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
                     outlineNormalVS * outlineScale * outlineVertexWidth;
 
                 gl_Position = projectionMatrix * mvPosition;
+                vec3 rdCancelWorldPosition =
+                    (modelMatrix * vec4(transformed, 1.0)).xyz;
+                float rdCancelPerspectiveFactor = max(
+                    1.0 - distance(
+                        rdCancelWorldPosition,
+                        uRdCharacterFacePositionWS
+                    ) * 2.25,
+                    0.0
+                );
+                rdCancelPerspectiveFactor *=
+                    uRdGlobalCharacterCancelPerspective *
+                    uRdCharacterCancelPerspective *
+                    clamp(rdCancelWorldPosition.y, 0.0, 1.0);
+                vec3 rdCancelFacePositionVS =
+                    (viewMatrix * vec4(
+                        uRdCharacterFacePositionWS,
+                        1.0
+                    )).xyz;
+                vec2 rdPerspectiveCancelledXY =
+                    abs(gl_Position.w) * gl_Position.xy /
+                    abs(rdCancelFacePositionVS.z);
+                if (uOrthographic < 0.5) {
+                    gl_Position.xy = mix(
+                        gl_Position.xy,
+                        rdPerspectiveCancelledXY,
+                        rdCancelPerspectiveFactor
+                    );
+                }
                 float outlineDepthOffset =
                     uOutlineZOffset +
                     mix(0.0, clamp(color.b, 0.0, 1.0), uVertexColorAvailable) *
@@ -143,7 +189,7 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
                     outlineBase = mix(
                         uColor,
                         outlineShadow,
-                        clamp(uOutlineTexBlend, 0.0, 1.0)
+                        uOutlineTexBlend
                     );
                 #endif
 
@@ -188,6 +234,11 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
         lights: true,
         toneMapped: true,
     })
+
+    if (options?.characterPerspectiveReference) {
+        material.uniforms.uRdCharacterFacePositionWS.value =
+            options.characterPerspectiveReference.facePosition
+    }
 
     if (alphaTex) {
         material.uniforms.tAlpha = { value: alphaTex }
@@ -239,4 +290,106 @@ export function addOutlineToMesh(
 
     mesh.add(outlineMesh)
     return outlineMesh
+}
+
+function createOutlineGroupGeometry(
+    source: THREE.BufferGeometry,
+    start: number,
+    count: number,
+): THREE.BufferGeometry {
+    // A group view shares immutable vertex/index buffers with the source and
+    // owns only its draw range. This avoids cloning the complete character
+    // geometry once per Unity material slot.
+    const geometry = new THREE.BufferGeometry()
+    geometry.name = `${source.name}:official-outline-group`
+    if (source.index) geometry.setIndex(source.index)
+    for (const [name, attribute] of Object.entries(source.attributes)) {
+        geometry.setAttribute(name, attribute)
+    }
+    geometry.morphAttributes = source.morphAttributes
+    geometry.morphTargetsRelative = source.morphTargetsRelative
+    geometry.boundingBox = source.boundingBox
+    geometry.boundingSphere = source.boundingSphere
+    geometry.setDrawRange(start, count)
+    return geometry
+}
+
+/**
+ * Build one outline draw for each official Unity geometry group. A distinct
+ * ShaderMaterial keeps `_OutlineWidth`, colours, texture blend and depth
+ * offsets bound to the exact `materialIndex`; disabled/transparent slots are
+ * omitted before WebGL render-list construction.
+ */
+export function addOfficialOutlineGroupsToMesh(
+    mesh: THREE.Mesh,
+    optionsByMaterialIndex: readonly OutlineMaterialCreationOptions[],
+): THREE.SkinnedMesh[] {
+    const drawRange = mesh.geometry.drawRange
+    const groups = mesh.geometry.groups.length > 0
+        ? mesh.geometry.groups
+        : [{
+            start: drawRange.start,
+            count: drawRange.count,
+            materialIndex: 0,
+        }]
+    const outlines: THREE.SkinnedMesh[] = []
+
+    for (const group of groups) {
+        const materialIndex = group.materialIndex ?? 0
+        const options = optionsByMaterialIndex[materialIndex]
+            ?? optionsByMaterialIndex[0]
+        if (options?.enabled === false) continue
+
+        const outlineMat = createOutlineMaterial(options)
+        const outlineGeometry = createOutlineGroupGeometry(
+            mesh.geometry,
+            group.start,
+            group.count,
+        )
+        const outlineMesh = new THREE.SkinnedMesh(
+            outlineGeometry,
+            outlineMat,
+        )
+        outlineMesh.name = `${mesh.name}:official-outline:${materialIndex}`
+        outlineMat.uniforms.uVertexColorAvailable.value =
+            mesh.geometry.getAttribute('color') ? 1 : 0
+
+        if (mesh instanceof THREE.SkinnedMesh && mesh.skeleton) {
+            outlineMesh.bind(mesh.skeleton, mesh.bindMatrix)
+        }
+        if (mesh.morphTargetInfluences) {
+            outlineMesh.morphTargetInfluences = mesh.morphTargetInfluences
+        }
+        if (mesh.morphTargetDictionary) {
+            outlineMesh.morphTargetDictionary = mesh.morphTargetDictionary
+        }
+
+        outlineMesh.onBeforeRender = (_renderer, _scene, camera) => {
+            const uniforms = outlineMat.uniforms
+            if (camera instanceof THREE.OrthographicCamera) {
+                uniforms.uOrthographic.value = 1
+                uniforms.uOrthoY.value =
+                    Math.abs(camera.top - camera.bottom) /
+                    Math.max(2 * camera.zoom, 0.0001)
+                uniforms.uCameraNear.value = camera.near
+                uniforms.uCameraFar.value = camera.far
+            } else {
+                uniforms.uOrthographic.value = 0
+                uniforms.uCurrentCameraFOV.value =
+                    camera instanceof THREE.PerspectiveCamera ? camera.fov : 60
+                if (camera instanceof THREE.PerspectiveCamera) {
+                    uniforms.uCameraNear.value = camera.near
+                    uniforms.uCameraFar.value = camera.far
+                }
+            }
+            ;(uniforms.uGlobalCharacterTint.value as THREE.Color).set(
+                toonStylizationOptions.characterTint,
+            )
+        }
+
+        mesh.add(outlineMesh)
+        outlines.push(outlineMesh)
+    }
+
+    return outlines
 }

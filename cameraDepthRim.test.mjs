@@ -2,14 +2,45 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
 
-const [depthRim, cameraDepth, shadow, hair, gem, scene] = await Promise.all([
+const [
+    depthRim,
+    cameraDepth,
+    shadow,
+    hair,
+    gem,
+    scene,
+    general,
+    materialProfilesText,
+    queueEvidenceText,
+    submeshGroups,
+] = await Promise.all([
     readFile('magia-exedra-character-three/shaders/depthRim.ts', 'utf8'),
     readFile('magia-exedra-character-three/scene/cameraDepth.ts', 'utf8'),
     readFile('magia-exedra-character-three/shaders/shadow.ts', 'utf8'),
     readFile('magia-exedra-character-three/shaders/hair.ts', 'utf8'),
     readFile('magia-exedra-character-three/shaders/gem.ts', 'utf8'),
     readFile('magia-exedra-character-three/scene/index.ts', 'utf8'),
+    readFile('magia-exedra-character-three/shaders/general.ts', 'utf8'),
+    readFile('magia-exedra-character-three/official-material-profiles.json', 'utf8'),
+    readFile('research/official-camera-depth-material-queue-evidence.json', 'utf8'),
+    readFile('magia-exedra-character-three/submeshGroups.generated.ts', 'utf8'),
 ])
+
+const materialProfiles = JSON.parse(materialProfilesText)
+const queueEvidence = JSON.parse(queueEvidenceText)
+
+function restoredGroupCounts(characterId, meshName) {
+    const characterBlock = submeshGroups.match(
+        new RegExp(`\\n    ${characterId}: \\{([\\s\\S]*?)\\n    \\},`),
+    )?.[1]
+    assert.ok(characterBlock, `missing character ${characterId}`)
+    const escapedMeshName = meshName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const values = characterBlock.match(
+        new RegExp(`"${escapedMeshName}": \\[([^\\]]+)\\]`),
+    )?.[1]
+    assert.ok(values, `missing ${characterId}/${meshName}`)
+    return values.split(',').map(value => Number(value.trim()))
+}
 
 const clamp01 = value => Math.max(0, Math.min(1, value))
 
@@ -49,24 +80,142 @@ function gemDepthSelector({
     return g >= 1 - threshold ? 0 : 1
 }
 
-test('prototype is default-off and owns an independent camera depth prepass', () => {
-    assert.match(depthRim, /enabled:\s*false/)
+test('official profile path is default-on and owns an independent camera depth prepass', () => {
+    assert.match(depthRim, /enabled:\s*true/)
     assert.match(cameraDepth, /new THREE\.DepthTexture/)
-    assert.match(cameraDepth, /object\.customDepthMaterial \?\?/)
-    assert.match(cameraDepth, /profile\?\.gem\.enabled && profile\.gem\.transparency/)
+    assert.match(cameraDepth, /mesh\.customDepthMaterial \?\?/)
+    assert.match(cameraDepth, /profile\.customRenderQueue >= 3000/)
+    assert.match(cameraDepth, /return Boolean\(profile\.gem\.transparency\)/)
+    assert.match(cameraDepth, /meshUsesOfficialCameraDepth/)
+    assert.match(cameraDepth, /profile\.depthRim\?\.useDepthTex/)
     assert.match(scene, /this\.cameraDepth\.render\(\)/)
     assert.doesNotMatch(cameraDepth, /backgroundScene\.traverse/)
 })
 
-test('alpha-cutout depth material owns its first-draw UV macro contract', () => {
+test('official CameraDepth queue evidence covers every mixed renderer without whole-mesh loss', () => {
+    assert.equal(queueEvidence.summary.bundleCount, 95)
+    assert.equal(queueEvidence.summary.materialRows, 1655)
+    assert.equal(queueEvidence.summary.transparentQueueRows, 48)
+    assert.equal(queueEvidence.summary.multiMaterialRenderers, 459)
+    assert.equal(queueEvidence.mixedTransparentQueueRenderers.length, 40)
+    assert.equal(queueEvidence.oldWholeMeshGemLossCases.length, 4)
+    assert.equal(queueEvidence.localFbxMixedTransparentQueueRenderers.length, 38)
+    assert.equal(queueEvidence.nonLocalOrAlternateMixedTransparentQueueRenderers.length, 2)
+    assert.deepEqual(
+        queueEvidence.oldWholeMeshGemLossCases.map(value => value.bundle),
+        [
+            'chara_100106_battle_unit',
+            'chara_105801_battle_unit',
+            'chara_115001_battle_unit',
+            'chara_115101_battle_unit',
+        ],
+    )
+
+    for (const renderer of queueEvidence.mixedTransparentQueueRenderers) {
+        for (const material of renderer.materials) {
+            const generated = materialProfiles.materials[material.name.toLowerCase()]
+            assert.ok(generated, `missing profile ${material.name}`)
+            assert.equal(
+                generated.customRenderQueue,
+                material.queue,
+                `${renderer.bundle}/${renderer.mesh}/${material.name} queue`,
+            )
+        }
+    }
+
+    for (const renderer of queueEvidence.localFbxMixedTransparentQueueRenderers) {
+        const characterId = Number(renderer.bundle.match(/chara_(\d+)_/)?.[1])
+        assert.equal(
+            restoredGroupCounts(characterId, renderer.mesh).length,
+            renderer.materials.length,
+            `${renderer.bundle}/${renderer.mesh} material groups`,
+        )
+    }
+})
+
+test('100107 weapon_b skips only queue-3000 alpha while 101901 keeps all opaque groups', () => {
+    const target = queueEvidence.targetCases.find(
+        value => value.bundle === 'chara_100107_battle_unit' && value.mesh === 'weapon_b_mesh',
+    )
+    assert.ok(target)
+    assert.deepEqual(restoredGroupCounts(100107, 'weapon_b_mesh'), [4077, 48, 168])
+    assert.deepEqual(
+        target.materials.map(value => [value.name, value.queue]),
+        [
+            ['mt_chara_100101_weapon_a', -1],
+            ['mt_chara_100101_weapon_a_alpha', 3000],
+            ['mt_chara_100101_weapon_a_sj', -1],
+        ],
+    )
+    assert.equal(
+        queueEvidence.mixedTransparentQueueRenderers.some(
+            value => value.bundle === 'chara_101901_battle_unit',
+        ),
+        false,
+    )
+    assert.equal(
+        materialProfiles.materials.mt_chara_100101_weapon_a_alpha.customRenderQueue,
+        3000,
+    )
+    assert.equal(
+        materialProfiles.materials.mt_chara_101901_body_sj.customRenderQueue,
+        -1,
+    )
+})
+
+test('all generated profiles carry the exact queue and opaque-range transparency stays a writer', () => {
+    const profiles = Object.values(materialProfiles.materials)
+    assert.equal(materialProfiles.materialCount, 1533)
+    assert.equal(
+        profiles.every(value => Number.isInteger(value.customRenderQueue)),
+        true,
+    )
+    assert.equal(
+        profiles.filter(value => value.customRenderQueue >= 3000).length,
+        46,
+    )
+    const opaqueRangeTransparency =
+        materialProfiles.materials.mt_chara_100201_acc_alpha
+    assert.equal(opaqueRangeTransparency.customRenderQueue, 2500)
+    assert.equal(opaqueRangeTransparency.gem.transparency, true)
+    assert.match(
+        cameraDepth,
+        /if \(profile\.customRenderQueue >= 0\) \{\s*return profile\.customRenderQueue >= 3000\s*\}/,
+    )
+})
+
+test('depth prepass retains restored groups and skips only their transparent material slots', () => {
+    assert.match(cameraDepth, /forwardMaterials\.map\(\(material, index\) =>/)
+    assert.match(cameraDepth, /\? this\.skipDepthMaterial\s*:\s*depthMaterial/)
+    assert.match(cameraDepth, /this\.skipDepthMaterial\.visible = false/)
+    assert.doesNotMatch(cameraDepth, /hasTransparentGem/)
+})
+
+test('alpha-cutout depth material owns an immutable official UV0 transform contract', () => {
     const mapAssignment = shadow.indexOf('material.map = alphaTex')
     const compileHook = shadow.indexOf('material.onBeforeCompile = shader =>')
     assert.ok(mapAssignment > 0 && mapAssignment < compileHook)
-    assert.match(shadow, /texture2D\(tAlpha, vMapUv\)\.a < uAlphaTest/)
+    assert.match(
+        shadow,
+        /if \(alphaTex\.matrixAutoUpdate\) alphaTex\.updateMatrix\(\)/,
+    )
+    assert.match(shadow, /uRdAlphaUvTransform = \{ value: alphaTex\.matrix \}/)
+    assert.match(
+        shadow,
+        /uRdAlphaUvTransform \* vec3\(uv, 1\.0\)/,
+    )
+    assert.match(
+        shadow,
+        /texture2D\(tAlpha, vRdAlphaCutoutUv\)\.a < uAlphaTest/,
+    )
+    assert.doesNotMatch(shadow, /texture2D\(tAlpha, vMapUv\)/)
 })
 
-test('static GLSL keeps recovered coordinates, constants and debug channels', () => {
+test('static GLSL keeps recovered coordinates, gates, constants and debug channels', () => {
     for (const token of [
+        'uRdDepthUseDepthTex',
+        'uRdDepthUseRimLight',
+        'uRdDepthDitherFade',
         'vRdDepthRimVertexColorG * uRdDepthTexWidth',
         '0.660000026',
         '0.850000024',
@@ -79,7 +228,43 @@ test('static GLSL keeps recovered coordinates, constants and debug channels', ()
         'rdDepthRim.x,',
         'rdDepthRim.y',
     ]) assert.ok(depthRim.includes(token), `missing ${token}`)
-    assert.match(depthRim, /uRdDepthRimVertexColorGAvailable > 0\.5/)
+    assert.match(depthRim, /step\(0\.5, uRdDepthUseDepthTex\)/)
+    assert.match(depthRim, /step\(0\.5, uRdDepthUseRimLight\)/)
+    assert.match(depthRim, /uRdDepthDitherFade <= 0\.5/)
+    assert.match(depthRim, /if \(rdDepthDitherTest < 0\.0\) discard/)
+    assert.match(depthRim, /if \(index == 12\) return 0\.941176474/)
+})
+
+test('depth shadow selects raw toon ramp before ShadowFeather', () => {
+    const rampIndex = general.indexOf('float rdToonRamp = saturate(')
+    const selectorMarker = general.indexOf(
+        '// RD_DEPTH_SHADOW_SELECTOR_BEGIN',
+        rampIndex,
+    )
+    const featherIndex = general.indexOf(
+        'float rdToonRampLow = saturate(',
+        selectorMarker,
+    )
+    assert.ok(rampIndex > 0 && rampIndex < selectorMarker)
+    assert.ok(selectorMarker < featherIndex)
+    assert.match(
+        depthRim,
+        /rdDepthShadowSignal >= 0\.100000001 \? 1\.0 : 0\.0/,
+    )
+    assert.match(depthRim, /rdToonRamp \*= rdDepthShadowSelector/)
+})
+
+test('rim uses official smoothstep and reuses the established scene-light carrier', () => {
+    assert.match(
+        depthRim,
+        /rdDepthRim = smoothstep\(\s*vec2\(0\.1\),\s*vec2\(0\.125\)/,
+    )
+    assert.match(
+        depthRim,
+        /rdDepthLightCarrier =\s*rdToonSceneLightColor \*\s*\(rdToonBaseWeight \* 0\.800000012 \+ 0\.200000003\)/,
+    )
+    assert.doesNotMatch(depthRim, /uGlobalCharacterLightingOverrideColor/)
+    assert.match(general, /\/\/ RD_DEPTH_RIM_COMPOSITE_BEGIN/)
 })
 
 test('CPU depth linearization matches perspective and orthographic endpoints', () => {
@@ -103,10 +288,8 @@ test('Body and Gem share depth signal while Hair alone applies 1-NdotV gate', ()
     assert.equal(hairClass.rim, 0)
     assert.match(depthRim, /1\.0 - uRdDepthRimIsHair \* rdDepthNdotV/)
     assert.match(depthRim, /profile\?\.gem\.enabled \? 1 : 0/)
-    assert.match(
-        hair,
-        /uRdDepthRimExperimentEnabled < 0\.5 \|\|\s*uRdDepthRimVertexColorGAvailable < 0\.5/,
-    )
+    assert.match(hair, /shared CameraDepthTexture signal gated by \(1 - NdotV\)/)
+    assert.doesNotMatch(hair, /0\.55\/0\.93\/0\.16 proxy[\s\S]*smoothstep/)
 })
 
 test('GemDepthDiff requires both official predicates and runs before MatCap', () => {

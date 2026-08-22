@@ -1,22 +1,31 @@
 import * as THREE from 'three'
 
 export interface HomeAnimationRuntime {
-    schema: 1
+    schema: 1 | 2
     characterId: number
     unityVersion: string
     source: string
     actions?: {
-        wait01: { loopFamily: string }
-        wait02: { loopFamily: string }
+        wait01: { loopFamily: string; sourceClipPathId?: string }
+        wait02: { loopFamily: string; sourceClipPathId?: string }
         unique01: {
             startFamily: string
+            startSourceClipPathId?: string
             loopFamily: string
+            loopSourceClipPathId?: string
             enterTransitionSeconds: number
             startExitNormalizedTime: number
             startToLoopTransitionSeconds: number
         }
     }
     helpers?: string[]
+    helperSourceClipPathIds?: string[]
+    clipIdentities?: Array<{
+        sourceClipPathId: string
+        sourceName: string
+        importedName: string
+        transformTrackCount: number
+    }>
     /** Helpers for an optional weapon model absent from the Viewer FBX. */
     externalHelpers?: string[]
     nodePaths: Record<string, string>
@@ -82,6 +91,13 @@ function getObjectPath(object: THREE.Object3D): string {
     return parts.join('/')
 }
 
+function getCharacterLocalPath(path: string, characterId: number): string | undefined {
+    const anchor = `chara_${characterId}`
+    const parts = path.split('/')
+    const index = parts.indexOf(anchor)
+    return index < 0 ? undefined : parts.slice(index).join('/')
+}
+
 /**
  * AssetStudio's auxiliary Home export and the production battle FBX contain
  * the same hierarchy but Three assigns fresh UUIDs each time it parses them.
@@ -94,19 +110,34 @@ export function attachHomeAnimationRuntime(
     root: THREE.Group,
     runtime: HomeAnimationRuntime,
 ): THREE.AnimationClip[] {
-    if (runtime.schema !== 1) {
+    if (runtime.schema !== 1 && runtime.schema !== 2) {
         throw new Error(`Unsupported Home animation schema: ${runtime.schema}`)
     }
 
     const referencedPaths = new Set(Object.values(runtime.nodePaths))
+    const referencedLocalPaths = new Set(
+        [...referencedPaths]
+            .map(path => getCharacterLocalPath(path, runtime.characterId))
+            .filter((path): path is string => path != undefined),
+    )
     const objectsByPath = new Map<string, THREE.Object3D>()
+    const objectsByLocalPath = new Map<string, THREE.Object3D>()
     root.traverse(object => {
         const path = getObjectPath(object)
-        if (!referencedPaths.has(path)) return
-        if (objectsByPath.has(path)) {
-            throw new Error(`Ambiguous Home animation target path in character FBX: ${path}`)
+        if (referencedPaths.has(path)) {
+            if (objectsByPath.has(path)) {
+                throw new Error(`Ambiguous Home animation target path in character FBX: ${path}`)
+            }
+            objectsByPath.set(path, object)
         }
-        objectsByPath.set(path, object)
+        const localPath = getCharacterLocalPath(path, runtime.characterId)
+        if (!localPath || !referencedLocalPaths.has(localPath)) return
+        if (objectsByLocalPath.has(localPath)) {
+            throw new Error(
+                `Ambiguous character-local Home animation target path in character FBX: ${localPath}`,
+            )
+        }
+        objectsByLocalPath.set(localPath, object)
     })
 
     const clips = runtime.clips.map(serialized => {
@@ -117,7 +148,13 @@ export function attachHomeAnimationRuntime(
             }
             const sourceNodeId = track.name.slice(0, separator)
             const sourcePath = runtime.nodePaths[sourceNodeId]
-            const target = sourcePath ? objectsByPath.get(sourcePath) : undefined
+            const sourceLocalPath = sourcePath
+                ? getCharacterLocalPath(sourcePath, runtime.characterId)
+                : undefined
+            const target = sourcePath
+                ? objectsByPath.get(sourcePath)
+                    ?? (sourceLocalPath ? objectsByLocalPath.get(sourceLocalPath) : undefined)
+                : undefined
             if (!target) {
                 throw new Error(
                     `Home animation target is absent from production FBX: ${sourcePath ?? sourceNodeId}`,
@@ -139,7 +176,7 @@ export function attachHomeAnimationRuntime(
     return clips
 }
 
-function clampWeight(value: number): number {
+function clamp01(value: number): number {
     return THREE.MathUtils.clamp(value, 0, 1)
 }
 
@@ -167,31 +204,94 @@ function isMorphTargetMesh(mesh: THREE.Mesh): mesh is MorphTargetMesh {
     return !!mesh.morphTargetDictionary && !!mesh.morphTargetInfluences
 }
 
+function isEyeClosureMorph(name: string): boolean {
+    return /^Eyelid_Close(?:_[A-Za-z0-9]+)?_[LR]$/.test(name)
+}
+
+function conflictsWithStandardBlink(name: string): boolean {
+    return /^Eyelid_/.test(name)
+}
+
+function getDistinctExpressionNames(
+    meshes: MorphTargetMesh[],
+    runtime: HomeExpressionRuntime,
+): string[] {
+    const orderedNames = runtime.expressionOrder.filter(
+        name => !!runtime.expressions[name],
+    )
+    if (
+        runtime.expressions[runtime.defaultExpression]
+        && !orderedNames.includes(runtime.defaultExpression)
+    ) {
+        orderedNames.unshift(runtime.defaultExpression)
+    }
+
+    const availableMorphNames = [...new Set(
+        meshes.flatMap(mesh => Object.keys(mesh.morphTargetDictionary)),
+    )].sort()
+    const signatureFor = (name: string) => JSON.stringify(
+        availableMorphNames.map(morphName => (
+            runtime.expressions[name].weights[morphName] ?? 0
+        )),
+    )
+    const defaultSignature = runtime.expressions[runtime.defaultExpression]
+        ? signatureFor(runtime.defaultExpression)
+        : undefined
+    const seen = new Set<string>()
+    const distinct: string[] = []
+
+    for (const name of orderedNames) {
+        const signature = signatureFor(name)
+        // Keep the official default name for its snapshot instead of an
+        // earlier state whose clip resolves to the same constant weights.
+        if (signature === defaultSignature && name !== runtime.defaultExpression) {
+            continue
+        }
+        if (seen.has(signature)) continue
+        seen.add(signature)
+        distinct.push(name)
+    }
+
+    return distinct
+}
+
 /**
  * Unity's Home controller has four layers, but expression and blink are states
- * in the same `FaceLayer`.  Selecting a FaceXX state therefore replaces the
- * automatic blink state machine; it must never be composited on top of a
- * selected expression.  `FaceDefault` returns that layer to the blink branch,
- * while `FaceDefaultLayer` continues to provide the character's base face.
+ * in the same `FaceLayer`. Static selections preserve that exact behaviour.
+ * The Viewer additionally offers an explicit expression+blink preview mode for
+ * expressions whose exported snapshot does not already close either eye.
+ * `FaceDefault` returns the layer to the official default blink branch.
  */
 export class CharacterExpressionController {
     readonly runtime: HomeExpressionRuntime
     readonly meshes: MorphTargetMesh[]
     readonly expressions: string[]
-    autoBlink = true
+    autoBlink: boolean
+    manualBlinkWeight = 0
+    mouthCornerWeight = 0
+    expressionWeight = 1
+    expressionTransitionSeconds = 0
     mouthOpen = false
 
     private _current: string
     private elapsed = 0
     private mouthTime = 0
-    private faceLayerState: 'automatic-blink' | 'expression' = 'automatic-blink'
+    private expressionTransitionElapsed = 0
+    private expressionTransitionFrom: Map<string, number> | null = null
+    private faceLayerState:
+        | 'automatic-blink'
+        | 'expression'
+        | 'expression-auto-blink' = 'automatic-blink'
     private readonly controlledNames: Set<string>
+    private readonly mouthCornerUpNames: Set<string>
+    private readonly mouthCornerDownNames: Set<string>
 
     constructor(meshes: THREE.Mesh[], runtime: HomeExpressionRuntime) {
         this.runtime = runtime
         this.meshes = meshes.filter(isMorphTargetMesh)
-        this.expressions = runtime.expressionOrder.filter(name => !!runtime.expressions[name])
+        this.expressions = getDistinctExpressionNames(this.meshes, runtime)
         this._current = runtime.defaultExpression
+        this.autoBlink = !!runtime.blink.controller
         this.controlledNames = new Set([
             ...Object.values(runtime.expressions).flatMap(expression => Object.keys(expression.weights)),
             ...Object.keys(runtime.blink.weights),
@@ -200,6 +300,17 @@ export class CharacterExpressionController {
         if (runtime.mouth.curveTarget) {
             this.controlledNames.add(runtime.mouth.curveTarget)
         }
+        const availableControlledNames = [...this.controlledNames].filter(name => (
+            this.meshes.some(mesh => name in mesh.morphTargetDictionary)
+        ))
+        // These are discovered from each character's exported Home bindings;
+        // a character never receives a control for a morph it does not own.
+        this.mouthCornerUpNames = new Set(availableControlledNames.filter(
+            name => /^Mouth_Up_[LR]$/.test(name),
+        ))
+        this.mouthCornerDownNames = new Set(availableControlledNames.filter(
+            name => /^Mouth_Down_[LR]$/.test(name),
+        ))
 
         if (!runtime.expressions[this._current]) {
             throw new Error(`Default Home expression is missing: ${this._current}`)
@@ -218,7 +329,48 @@ export class CharacterExpressionController {
         return this.faceLayerState === 'automatic-blink'
     }
 
-    set(name: string) {
+    get expressionAutoBlinkActive(): boolean {
+        return this.faceLayerState === 'expression-auto-blink'
+    }
+
+    get automaticBlinkAvailable(): boolean {
+        if (!this.runtime.blink.controller) return false
+        return this.manualBlinkAvailable
+    }
+
+    get manualBlinkAvailable(): boolean {
+        return this.supportsManualBlink(
+            this.faceLayerState === 'automatic-blink'
+                ? this.runtime.defaultExpression
+                : this._current,
+        )
+    }
+
+    get mouthCornerControlAvailable(): boolean {
+        return this.mouthCornerUpNames.size > 0 || this.mouthCornerDownNames.size > 0
+    }
+
+    supportsAutomaticBlink(name: string): boolean {
+        const canonical = this.runtime.aliases[name] ?? name
+        return !!this.runtime.blink.controller && this.supportsManualBlink(canonical)
+    }
+
+    supportsManualBlink(name: string = this._current): boolean {
+        const canonical = this.runtime.aliases[name] ?? name
+        const expression = this.runtime.expressions[canonical]
+        if (!expression) return false
+        if (!Object.keys(this.runtime.blink.weights).some(morphName => (
+            this.meshes.some(mesh => morphName in mesh.morphTargetDictionary)
+        ))) return false
+
+        return !Object.entries(expression.weights).some(([morphName, weight]) => (
+            weight >= 0.8
+            && isEyeClosureMorph(morphName)
+            && this.meshes.some(mesh => morphName in mesh.morphTargetDictionary)
+        ))
+    }
+
+    set(name: string, automaticBlink = false) {
         if (name === 'HomeFace00_Default') {
             this.resetToDefault()
             return
@@ -227,23 +379,73 @@ export class CharacterExpressionController {
         if (!this.runtime.expressions[canonical]) {
             throw new Error(`Home expression not found: ${name}`)
         }
+        this.beginExpressionTransition()
         this._current = canonical
-        this.faceLayerState = 'expression'
+        this.autoBlink = automaticBlink && this.supportsAutomaticBlink(canonical)
+        this.faceLayerState = this.autoBlink
+            ? 'expression-auto-blink'
+            : 'expression'
         this.apply()
     }
 
     /** Mirrors the controller's `FaceDefault` trigger. */
     resetToDefault() {
+        this.beginExpressionTransition()
         this._current = this.runtime.defaultExpression
         this.faceLayerState = 'automatic-blink'
+        this.autoBlink = !!this.runtime.blink.controller
         this.elapsed = 0
         this.apply()
     }
 
+    setAutomaticBlink(enabled: boolean) {
+        this.autoBlink = enabled && this.automaticBlinkAvailable
+        if (this.faceLayerState === 'expression-auto-blink' && !this.autoBlink) {
+            this.faceLayerState = 'expression'
+        } else if (
+            this.faceLayerState === 'expression'
+            && this.autoBlink
+            && this.supportsAutomaticBlink(this._current)
+        ) {
+            this.faceLayerState = 'expression-auto-blink'
+        }
+        this.apply()
+    }
+
+    setManualBlinkWeight(weight: number) {
+        this.manualBlinkWeight = clamp01(weight)
+        this.apply()
+    }
+
+    setMouthCornerWeight(weight: number) {
+        this.mouthCornerWeight = THREE.MathUtils.clamp(weight, -1, 1)
+        this.apply()
+    }
+
+    setExpressionWeight(weight: number) {
+        this.expressionWeight = clamp01(weight)
+        this.apply()
+    }
+
+    setExpressionTransitionSeconds(seconds: number) {
+        this.expressionTransitionSeconds = Math.max(0, seconds)
+        if (this.expressionTransitionSeconds === 0) {
+            this.expressionTransitionFrom = null
+        }
+        this.apply()
+    }
+
     update(delta: number) {
-        this.elapsed += Math.max(0, delta)
+        const safeDelta = Math.max(0, delta)
+        this.elapsed += safeDelta
+        if (this.expressionTransitionFrom) {
+            this.expressionTransitionElapsed += safeDelta
+            if (this.expressionTransitionElapsed >= this.expressionTransitionSeconds) {
+                this.expressionTransitionFrom = null
+            }
+        }
         if (this.mouthOpen) {
-            this.mouthTime = (this.mouthTime + Math.max(0, delta)) % this.runtime.mouth.duration
+            this.mouthTime = (this.mouthTime + safeDelta) % this.runtime.mouth.duration
         } else {
             this.mouthTime = 0
         }
@@ -252,7 +454,7 @@ export class CharacterExpressionController {
 
     private blinkWeight(): number {
         if (
-            this.faceLayerState !== 'automatic-blink'
+            this.faceLayerState === 'expression'
             || !this.autoBlink
             || !this.runtime.blink.controller
         ) return 0
@@ -270,40 +472,122 @@ export class CharacterExpressionController {
 
         if (time < blinkStart || time >= blinkEnd) return 0
         if (time < fullBlinkStart) {
-            return clampWeight((time - blinkStart) / controller.fadeInSeconds)
+            return clamp01((time - blinkStart) / controller.fadeInSeconds)
         }
         if (time < fadeOutStart) return 1
-        return clampWeight(1 - (time - fadeOutStart) / controller.fadeOutSeconds)
+        return clamp01(1 - (time - fadeOutStart) / controller.fadeOutSeconds)
+    }
+
+    private expressionTargetWeight(name: string): number {
+        const defaultFace = this.runtime.expressions[this.runtime.defaultExpression].weights
+        const selectedFace = this.runtime.expressions[this._current].weights
+        if (this.faceLayerState === 'automatic-blink') return defaultFace[name] ?? 0
+        return THREE.MathUtils.lerp(
+            defaultFace[name] ?? 0,
+            selectedFace[name] ?? 0,
+            this.expressionWeight,
+        )
+    }
+
+    private expressionBaseWeight(name: string): number {
+        const target = this.expressionTargetWeight(name)
+        if (!this.expressionTransitionFrom || this.expressionTransitionSeconds <= 0) {
+            return target
+        }
+        const progress = clamp01(
+            this.expressionTransitionElapsed / this.expressionTransitionSeconds,
+        )
+        return THREE.MathUtils.lerp(
+            this.expressionTransitionFrom.get(name) ?? 0,
+            target,
+            progress,
+        )
+    }
+
+    private beginExpressionTransition() {
+        if (this.expressionTransitionSeconds <= 0) {
+            this.expressionTransitionFrom = null
+            this.expressionTransitionElapsed = 0
+            return
+        }
+        this.expressionTransitionFrom = new Map(
+            [...this.controlledNames].map(name => [name, this.expressionBaseWeight(name)]),
+        )
+        this.expressionTransitionElapsed = 0
     }
 
     private apply() {
-        const base = this.runtime.expressions[this._current].weights
-        const blink = this.blinkWeight()
+        const selectedExpression = this.faceLayerState !== 'automatic-blink'
+        const blinkSupported = this.supportsManualBlink(
+            selectedExpression ? this._current : this.runtime.defaultExpression,
+        )
+        const blink = blinkSupported
+            ? Math.max(this.manualBlinkWeight, this.blinkWeight())
+            : 0
         const mouthCurve = this.mouthOpen
-            ? clampWeight(evaluateCubicSegment(
+            ? evaluateCubicSegment(
                 this.runtime.mouth.curveSegments,
                 this.mouthTime,
-            ) / 100)
+            ) / 100
             : 0
 
         for (const mesh of this.meshes) {
             for (const name of this.controlledNames) {
                 const index = mesh.morphTargetDictionary[name]
                 if (index == undefined) continue
-                const baseWeight = base[name] ?? 0
-                const blinkLayer = (this.runtime.blink.weights[name] ?? 0) * blink
-                const mouthLayer = this.mouthOpen
-                    ? Math.max(
-                        this.runtime.mouth.curveTarget
-                            && name === this.runtime.mouth.curveTarget
-                            ? mouthCurve
-                            : 0,
-                        this.runtime.mouth.constantWeights[name] ?? 0,
-                    )
-                    : 0
-                mesh.morphTargetInfluences[index] = clampWeight(
-                    Math.max(baseWeight, blinkLayer, mouthLayer),
-                )
+                // Every official FaceXX clip is a full constant snapshot. A
+                // missing entry therefore means the keyed value was zero, not
+                // "inherit". Manual expression strength blends that complete
+                // snapshot against this character's official default face.
+                let value = this.expressionBaseWeight(name)
+
+                const blinkTarget = this.runtime.blink.weights[name]
+                if (
+                    blink > 0
+                    && blinkTarget != undefined
+                ) {
+                    // Blend from the active face snapshot. Taking Math.max or
+                    // stacking both closure families recreates the sideways
+                    // second blink reported by users.
+                    value = THREE.MathUtils.lerp(value, blinkTarget, blink)
+                }
+                if (
+                    selectedExpression
+                    && blink > 0
+                    && blinkTarget == undefined
+                    && conflictsWithStandardBlink(name)
+                ) {
+                    // Fade every expression-specific eyelid channel away while
+                    // the standard blink channel fades in. Keeping anger, sad,
+                    // open or alternate-close eyelids stacked with the official
+                    // blink recreates the sideways/doubled eyelid defect.
+                    value = THREE.MathUtils.lerp(value, 0, blink)
+                }
+
+                const cornerWeight = Math.abs(this.mouthCornerWeight)
+                if (cornerWeight > 0) {
+                    const raising = this.mouthCornerWeight > 0
+                    if (this.mouthCornerUpNames.has(name)) {
+                        value = THREE.MathUtils.lerp(value, raising ? 1 : 0, cornerWeight)
+                    } else if (this.mouthCornerDownNames.has(name)) {
+                        value = THREE.MathUtils.lerp(value, raising ? 0 : 1, cornerWeight)
+                    }
+                }
+
+                if (this.mouthOpen) {
+                    // MouthLayer is the final Override layer.  Only bindings
+                    // present in HomeMouthOpen replace the face result.  Unity
+                    // blend-shape weights are signed and unbounded (official
+                    // data uses -1.0 and 2.0), so never clamp or max-composite.
+                    if (this.runtime.mouth.curveTarget === name) {
+                        value = mouthCurve
+                    }
+                    const constantWeight = this.runtime.mouth.constantWeights[name]
+                    if (constantWeight != undefined) {
+                        value = constantWeight
+                    }
+                }
+                mesh.morphTargetInfluences[index] = value
             }
         }
     }

@@ -4,7 +4,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
 import {
     createGeneralMaterial,
     createFaceMaterial,
-    addOutlineToMesh,
+    addOfficialOutlineGroupsToMesh,
     createBodyInsideMaterial,
     createHairMaterial,
     createDepthMaterial,
@@ -13,13 +13,17 @@ import {
     setAngelRingCameraUniforms,
     setOfficialAngelRingMaterialProfileUniforms,
     setOfficialMaterialProfileUniforms,
+    setOfficialFaceMaterialProfileUniforms,
+    selectOfficialMatCap,
     setDepthRimVertexColorAvailability,
     MaterialUserData,
+    type OfficialGemResources,
 } from './shaders'
 import { ObjFindByKey, ObjFilterByKey, humanizeBytes, fetchAndTryDecompressGzip } from './utils';
 import MagiaExedraCharacter3D, { type ObjectUserData } from './character';
 import {
     createAngelRingReference,
+    createCharacterPerspectiveReference,
     getCharacterReDriveProfile,
     inferMaterialFeatures,
 } from './renderProfile';
@@ -30,6 +34,11 @@ import {
 } from './materialProfile';
 import { createFaceDirectionReference, getOfficialFaceProfile } from './faceProfile';
 import { restoreOfficialSubmeshGroups } from './submeshGroups';
+import {
+    parseReDriveBakedNormals,
+    restoreReDriveBakedNormalAttribute,
+    type ReDriveBakedNormalData,
+} from './bakedNormal';
 import {
     attachHomeAnimationRuntime,
     type HomeAnimationRuntime,
@@ -101,6 +110,17 @@ function getMaterialNames(mesh: THREE.Mesh): string[] {
     return materials.map((material, index) => material?.name || `${mesh.name}:material-${index}`)
 }
 
+function getModelObjectPath(object: THREE.Object3D, root: THREE.Object3D): string {
+    const names: string[] = []
+    let current: THREE.Object3D | null = object
+    while (current) {
+        if (current.name) names.push(current.name)
+        if (current === root) break
+        current = current.parent
+    }
+    return names.reverse().join('/')
+}
+
 /**
  * FBX geometry groups refer to original Unity material slots. Replacing an array
  * with one aggregate material erased that information and made body Soul Gems,
@@ -114,6 +134,7 @@ function bindOfficialMaterialGroups(
     mesh: THREE.Mesh,
     material: THREE.Material,
     profiles: OfficialMaterialProfile[],
+    gemResources?: OfficialGemResources,
 ) {
     const groups = mesh.geometry.groups
     const highestGroupMaterialIndex = groups.reduce(
@@ -182,6 +203,12 @@ function bindOfficialMaterialGroups(
         )?.materialIndex ?? 0
         const profile = slotProfiles[index] ?? slotProfiles[0]
         setOfficialMaterialProfileUniforms(shader, profile)
+        setOfficialFaceMaterialProfileUniforms(shader, profile)
+        if (shader && gemResources) {
+            const matCap = selectOfficialMatCap(gemResources, profile)
+            shader.uniforms.tGemMatCap ??= { value: matCap ?? null }
+            shader.uniforms.tGemMatCap.value = matCap ?? null
+        }
         setOfficialAngelRingMaterialProfileUniforms(shader, profile)
         setAngelRingCameraUniforms(shader, renderer, camera)
         setDepthRimVertexColorAvailability(
@@ -199,6 +226,243 @@ function setStencil(material: THREE.Material | THREE.Material[], ref: number) {
         item.stencilFunc = THREE.AlwaysStencilFunc
         item.stencilZPass = THREE.ReplaceStencilOp
     })
+}
+
+const OFFICIAL_HAIR_MASK_STENCIL_REF = 0x80
+const CHARACTER_OPAQUE_RENDER_ORDER = 2
+
+interface OfficialGeometryGroup {
+    start: number
+    count: number
+    materialIndex?: number
+}
+
+function mapOfficialOpaqueQueueToRenderOrder(queue: number): number {
+    return CHARACTER_OPAQUE_RENDER_ORDER + (queue - 2000) / 1000
+}
+
+function createSharedMaterialGroupGeometry(
+    source: THREE.BufferGeometry,
+    group: OfficialGeometryGroup,
+): THREE.BufferGeometry {
+    const geometry = new THREE.BufferGeometry()
+    geometry.name = `${source.name}:official-material-group`
+    if (source.index) geometry.setIndex(source.index)
+    for (const [name, attribute] of Object.entries(source.attributes)) {
+        geometry.setAttribute(name, attribute)
+    }
+    geometry.morphAttributes = source.morphAttributes
+    geometry.morphTargetsRelative = source.morphTargetsRelative
+    geometry.boundingBox = source.boundingBox
+    geometry.boundingSphere = source.boundingSphere
+    geometry.setDrawRange(group.start, group.count)
+    return geometry
+}
+
+function configureStencilTest(
+    material: THREE.Material,
+    func: THREE.StencilFunc,
+    writeMask: number,
+) {
+    material.stencilWrite = true
+    material.stencilRef = OFFICIAL_HAIR_MASK_STENCIL_REF
+    material.stencilFunc = func
+    material.stencilFuncMask = OFFICIAL_HAIR_MASK_STENCIL_REF
+    material.stencilWriteMask = writeMask
+    material.stencilFail = THREE.KeepStencilOp
+    material.stencilZFail = THREE.KeepStencilOp
+    material.stencilZPass = THREE.KeepStencilOp
+}
+
+/**
+ * 101901's eye/eyebrow mask materials are queue 2001 stencil writers. Preserve
+ * the existing low seven-bit outline reference while writing Unity's bit 128;
+ * the queue-2002 hair_out draws then select outside/inside that authored mask.
+ */
+function install101901FaceMaskStencil(
+    characterId: number,
+    materials: THREE.Material | THREE.Material[],
+    profiles: OfficialMaterialProfile[],
+    outlineMeshes: THREE.SkinnedMesh[],
+    outlineRef: number,
+) {
+    if (characterId !== 101901 || !Array.isArray(materials)) return
+    const lowerRef = outlineRef & 0x7f
+    const maskNames = new Set([
+        'mt_chara_101901_eyebrow_mask',
+        'mt_chara_101901_eye_mask',
+    ])
+    materials.forEach((material, index) => {
+        material.stencilFuncMask = 0x7f
+        material.stencilWriteMask = 0x7f
+        if (!maskNames.has(profiles[index]?.name)) return
+        material.stencilRef = lowerRef | OFFICIAL_HAIR_MASK_STENCIL_REF
+        material.stencilFunc = THREE.AlwaysStencilFunc
+        material.stencilFuncMask = 0xff
+        material.stencilWriteMask = 0xff
+        material.stencilZPass = THREE.ReplaceStencilOp
+    })
+    outlineMeshes.forEach(outlineMesh => {
+        const outlineMaterials = Array.isArray(outlineMesh.material)
+            ? outlineMesh.material
+            : [outlineMesh.material]
+        outlineMaterials.forEach(material => {
+            material.stencilRef = lowerRef
+            material.stencilFuncMask = 0x7f
+            material.stencilWriteMask = 0
+        })
+    })
+}
+
+function configure101901HairOutOutline(
+    outlineMeshes: readonly THREE.SkinnedMesh[],
+    queue: number,
+) {
+    const outlineMesh = outlineMeshes.find(mesh =>
+        mesh.name.endsWith('official-outline:1')
+    )
+    if (!outlineMesh) {
+        throw new Error('101901 hair_out official outline group is missing')
+    }
+    outlineMesh.renderOrder = 3 + (queue - 2000) / 1000
+    const outlineMaterials = Array.isArray(outlineMesh.material)
+        ? outlineMesh.material
+        : [outlineMesh.material]
+    for (const outlineMaterial of outlineMaterials) {
+        configureStencilTest(outlineMaterial, THREE.NotEqualStencilFunc, 0)
+    }
+}
+
+/**
+ * Unity renders 101901 Hair_Mesh slot 1 as an independent queue-2002 draw and
+ * enables its RdToonStencilMaskPass. Build two child draws that share the
+ * source vertex/index buffers, Skeleton and live morph arrays. Slot 0 remains
+ * on the original SkinnedMesh, so no texture, skin or animation is duplicated.
+ */
+function install101901HairOutRuntime(
+    characterId: number,
+    mesh: THREE.Mesh,
+    profiles: OfficialMaterialProfile[],
+    outlineMeshes: readonly THREE.SkinnedMesh[],
+    userData: ObjectUserData,
+): boolean {
+    if (characterId !== 101901 || mesh.name.toLowerCase() !== 'hair_mesh') {
+        return false
+    }
+    if (!(mesh instanceof THREE.SkinnedMesh) || !mesh.skeleton) return false
+    if (!Array.isArray(mesh.material)) return false
+
+    const hairOutMaterialIndex = profiles.findIndex(
+        profile => profile.name === 'mt_chara_101901_hair_out',
+    )
+    const hairOutProfile = profiles[hairOutMaterialIndex]
+    const hairOutGroup = mesh.geometry.groups.find(
+        (group: OfficialGeometryGroup) =>
+            (group.materialIndex ?? 0) === hairOutMaterialIndex,
+    )
+    if (
+        hairOutMaterialIndex !== 1
+        || !hairOutProfile
+        || hairOutProfile.customRenderQueue !== 2002
+        || !hairOutGroup
+        || hairOutGroup.count !== 2400
+    ) {
+        throw new Error('101901 hair_out official slot/queue/range mismatch')
+    }
+
+    const materials = mesh.material
+    const hairOutMaterial = materials[hairOutMaterialIndex]
+    configure101901HairOutOutline(
+        outlineMeshes,
+        hairOutProfile.customRenderQueue,
+    )
+    const sourceOnBeforeRender = mesh.onBeforeRender
+    const groupGeometry = createSharedMaterialGroupGeometry(
+        mesh.geometry,
+        hairOutGroup,
+    )
+    const hairOutMesh = new THREE.SkinnedMesh(groupGeometry, hairOutMaterial)
+    hairOutMesh.name = `${mesh.name}:mt_chara_101901_hair_out:forward`
+    hairOutMesh.bind(mesh.skeleton, mesh.bindMatrix)
+    hairOutMesh.bindMode = mesh.bindMode
+    hairOutMesh.morphTargetInfluences = mesh.morphTargetInfluences
+    hairOutMesh.morphTargetDictionary = mesh.morphTargetDictionary
+    hairOutMesh.castShadow = mesh.castShadow
+    hairOutMesh.receiveShadow = mesh.receiveShadow
+    hairOutMesh.frustumCulled = mesh.frustumCulled
+    hairOutMesh.renderOrder = mapOfficialOpaqueQueueToRenderOrder(
+        hairOutProfile.customRenderQueue,
+    )
+    hairOutMesh.userData.officialMaterialProfiles = [hairOutProfile]
+    configureStencilTest(hairOutMaterial, THREE.NotEqualStencilFunc, 0)
+
+    hairOutMesh.onBeforeRender = function (
+        renderer,
+        scene,
+        camera,
+        geometry,
+        renderMaterial,
+        _group,
+    ) {
+        sourceOnBeforeRender.call(
+            this,
+            renderer,
+            scene,
+            camera,
+            geometry,
+            renderMaterial,
+            { materialIndex: hairOutMaterialIndex } as unknown as THREE.Group,
+        )
+    }
+
+    const hairOutMaskMaterial = hairOutMaterial.clone()
+    hairOutMaskMaterial.name =
+        `${hairOutMaterial.name}:RdToonStencilMaskPass`
+    hairOutMaskMaterial.onBeforeCompile = hairOutMaterial.onBeforeCompile
+    hairOutMaskMaterial.customProgramCacheKey = () =>
+        `${hairOutMaterial.customProgramCacheKey()}:stencil-mask`
+    hairOutMaskMaterial.userData = new MaterialUserData()
+    hairOutMaskMaterial.userData.officialMaterialProfile = hairOutProfile
+    hairOutMaskMaterial.opacity = 1 - 0.75
+    hairOutMaskMaterial.transparent = false
+    hairOutMaskMaterial.blending = THREE.CustomBlending
+    hairOutMaskMaterial.blendSrc = THREE.SrcAlphaFactor
+    hairOutMaskMaterial.blendDst = THREE.OneMinusSrcAlphaFactor
+    hairOutMaskMaterial.blendEquation = THREE.AddEquation
+    hairOutMaskMaterial.depthTest = true
+    hairOutMaskMaterial.depthWrite = true
+    configureStencilTest(hairOutMaskMaterial, THREE.EqualStencilFunc, 0)
+
+    const hairOutMaskMesh = new THREE.SkinnedMesh(
+        createSharedMaterialGroupGeometry(mesh.geometry, hairOutGroup),
+        hairOutMaskMaterial,
+    )
+    hairOutMaskMesh.name =
+        `${mesh.name}:mt_chara_101901_hair_out:stencil-mask`
+    hairOutMaskMesh.bind(mesh.skeleton, mesh.bindMatrix)
+    hairOutMaskMesh.bindMode = mesh.bindMode
+    hairOutMaskMesh.morphTargetInfluences = mesh.morphTargetInfluences
+    hairOutMaskMesh.morphTargetDictionary = mesh.morphTargetDictionary
+    hairOutMaskMesh.castShadow = mesh.castShadow
+    hairOutMaskMesh.receiveShadow = mesh.receiveShadow
+    hairOutMaskMesh.frustumCulled = mesh.frustumCulled
+    hairOutMaskMesh.renderOrder = hairOutMesh.renderOrder + 0.0001
+    hairOutMaskMesh.userData.officialMaterialProfiles = [hairOutProfile]
+    hairOutMaskMesh.onBeforeRender = hairOutMesh.onBeforeRender
+
+    const mainGroups = mesh.geometry.groups.filter(
+        (group: OfficialGeometryGroup) =>
+            (group.materialIndex ?? 0) !== hairOutMaterialIndex,
+    )
+    mesh.geometry.clearGroups()
+    mainGroups.forEach((group: OfficialGeometryGroup) => {
+        mesh.geometry.addGroup(group.start, group.count, group.materialIndex ?? 0)
+    })
+    mesh.material = [materials[0]]
+    mesh.add(hairOutMesh)
+    mesh.add(hairOutMaskMesh)
+    userData.meshes.push(hairOutMesh, hairOutMaskMesh)
+    return true
 }
 
 export async function loadCharacter(
@@ -228,6 +492,10 @@ export async function loadCharacter(
     const homeExpressionUrl = ObjFindByKey(
         files,
         path => path.endsWith('home-expressions.json'),
+    )
+    const bakedNormalUrl = ObjFindByKey(
+        files,
+        path => path.endsWith('redrive-baked-normals.bin.gz'),
     )
     const texturePathUrl = ObjFilterByKey(files, path => path.includes('.png'))
     const specularGradientMap = ObjFindByKey(
@@ -297,6 +565,29 @@ export async function loadCharacter(
             return
         }
 
+            let bakedNormalData: ReDriveBakedNormalData | undefined
+            if (bakedNormalUrl) {
+                loadProgressCallback('Loading official baked normals...')
+                try {
+                    const bakedNormalBlob = await fetchAndTryDecompressGzip(
+                        bakedNormalUrl,
+                    )
+                    bakedNormalData = parseReDriveBakedNormals(
+                        await bakedNormalBlob.arrayBuffer(),
+                    )
+                    if (bakedNormalData.characterId !== characterId) {
+                        throw new Error(
+                            `Baked-normal character ${bakedNormalData.characterId} `
+                            + `does not match model ${characterId}`,
+                        )
+                    }
+                } catch (error) {
+                    loadProgressCallback('Baked normals FAILED')
+                    reject(error)
+                    return
+                }
+            }
+
             let homeAnimationRuntime: HomeAnimationRuntime | undefined
             let homeExpressionRuntime: HomeExpressionRuntime | undefined
             if (homeAnimationUrl || homeExpressionUrl) {
@@ -335,15 +626,50 @@ export async function loadCharacter(
             modelObject.updateMatrixWorld(true)
             const meshes: THREE.Mesh[] = []
             const recoveredVertexColorGeometries = new Set<THREE.BufferGeometry>()
+            const recoveredBakedNormalGeometries = new Set<THREE.BufferGeometry>()
+            const matchedBakedNormalMeshes = new Set<string>()
+            let geometryChannelError: unknown
             modelObject.traverse(child => {
+                if (geometryChannelError) return
                 if (!(child as THREE.Mesh).isMesh) return
                 const mesh = child as THREE.Mesh
                 meshes.push(mesh)
-                if (!recoveredVertexColorGeometries.has(mesh.geometry)) {
-                    restoreReDriveCharacterVertexColorChannels(mesh.geometry)
-                    recoveredVertexColorGeometries.add(mesh.geometry)
+                try {
+                    if (!recoveredVertexColorGeometries.has(mesh.geometry)) {
+                        restoreReDriveCharacterVertexColorChannels(mesh.geometry)
+                        recoveredVertexColorGeometries.add(mesh.geometry)
+                    }
+                    if (!recoveredBakedNormalGeometries.has(mesh.geometry)) {
+                        let bakedNormalKey = mesh.name
+                        let official = bakedNormalData?.meshes.get(bakedNormalKey)
+                        if (!official && bakedNormalData) {
+                            const objectPath = getModelObjectPath(mesh, modelObject)
+                            bakedNormalKey = `${mesh.name}\x00${objectPath}`
+                            official = bakedNormalData.meshes.get(bakedNormalKey)
+                        }
+                        if (official) matchedBakedNormalMeshes.add(bakedNormalKey)
+                        restoreReDriveBakedNormalAttribute(mesh.geometry, official)
+                        recoveredBakedNormalGeometries.add(mesh.geometry)
+                    }
+                } catch (error) {
+                    geometryChannelError = error
                 }
             })
+            if (
+                geometryChannelError
+                || (bakedNormalData
+                    && matchedBakedNormalMeshes.size !== bakedNormalData.meshes.size)
+            ) {
+                loadProgressCallback('Geometry channels FAILED')
+                reject(
+                    geometryChannelError
+                    ?? new Error(
+                        `FBX matched ${matchedBakedNormalMeshes.size} of `
+                        + `${bakedNormalData!.meshes.size} baked-normal meshes`,
+                    ),
+                )
+                return
+            }
 
             const userData: ObjectUserData = {
                 characterId,
@@ -355,6 +681,17 @@ export async function loadCharacter(
                 homeExpressionRuntime,
             }
             modelObject.userData = userData
+
+            const characterPerspectiveReference =
+                createCharacterPerspectiveReference(
+                    modelObject,
+                    characterProfile,
+                )
+            if (characterPerspectiveReference) {
+                userData.animationLoops.push(
+                    characterPerspectiveReference.update,
+                )
+            }
 
             const character = new MagiaExedraCharacter3D(modelObject)
             resolve(character)
@@ -443,6 +780,7 @@ export async function loadCharacter(
                         materialProfiles,
                         featureProfile,
                         specularGradientMap,
+                        characterPerspectiveReference,
                     }
 
                     let alphaTex: THREE.Texture | undefined
@@ -562,6 +900,7 @@ export async function loadCharacter(
                         }
                     }
 
+                    let officialGemResources: OfficialGemResources | undefined
                     if (materialProfiles.some(
                         profile => profile.gem.enabled || profile.matCap.enabled,
                     )) {
@@ -570,9 +909,15 @@ export async function loadCharacter(
                             materialProfiles,
                             texturePathUrl,
                         )
+                        officialGemResources = extension.resources
                         textures.push(...extension.resources.textures)
                     }
-                    bindOfficialMaterialGroups(mesh, material, materialProfiles)
+                    bindOfficialMaterialGroups(
+                        mesh,
+                        material,
+                        materialProfiles,
+                        officialGemResources,
+                    )
                     userData.textures.push(...textures)
 
                     if (alphaTex) {
@@ -583,32 +928,69 @@ export async function loadCharacter(
                     if (name.includes('weapon')) mesh.frustumCulled = false
                     mesh.renderOrder = name.includes('hair') ? 1 : 2
 
-                    const firstOutlineWidth =
-                        materialProfiles[0]?.outlineWidth
-                    const uniformOutlineWidth = materialProfiles.every(
-                        profile => profile.outlineWidth === firstOutlineWidth,
+                    const outlineMeshes = addOfficialOutlineGroupsToMesh(
+                        mesh,
+                        materialProfiles.map(profile => ({
+                            // Blob 6 suppresses both `_UseOutline == 0` and
+                            // transparent material slots before extrusion.
+                            enabled:
+                                profile.outline.enabled &&
+                                !Boolean(profile.gem.transparency),
+                            thickness: profile.outlineWidth,
+                            color: new THREE.Color().setRGB(
+                                ...profile.outline.color,
+                            ),
+                            alphaTex,
+                            shadowTex: outlineShadowTex,
+                            texBlend: profile.outline.texBlend,
+                            emissionColor: new THREE.Color().setRGB(
+                                ...profile.outline.emissionColor,
+                            ),
+                            outlineZOffset: profile.outline.zOffset,
+                            faceOutlineAdjust:
+                                profile.source === 'official-export'
+                                    ? profile.outline.faceOutlineAdjust
+                                    : outlineFaceAdjust,
+                            characterPerspectiveReference,
+                        })),
                     )
-                        ? firstOutlineWidth
-                        : undefined
-                    const outlineMesh = addOutlineToMesh(mesh, {
-                        // Weapon_a is a single official material slot, so its
-                        // recovered 6.18 width can be applied exactly. Keep the
-                        // existing global default for mixed-width meshes until
-                        // outline submesh groups are split per draw.
-                        thickness: uniformOutlineWidth,
-                        alphaTex,
-                        shadowTex: outlineShadowTex,
-                        faceOutlineAdjust: outlineFaceAdjust,
+                    userData.outlineMeshes.push(...outlineMeshes)
+                    outlineMeshes.forEach(outlineMesh => {
+                        outlineMesh.renderOrder = 3
                     })
-                    userData.outlineMeshes.push(outlineMesh)
-                    outlineMesh.renderOrder = 3
 
                     if (name.includes('face') || name.includes('weapon')) {
-                        setStencil(mesh.material, stencilRefCount)
-                        outlineMesh.material.stencilWrite = true
-                        outlineMesh.material.stencilRef = stencilRefCount
-                        outlineMesh.material.stencilFunc = THREE.NotEqualStencilFunc
+                        const outlineStencilRef = stencilRefCount
+                        setStencil(mesh.material, outlineStencilRef)
+                        outlineMeshes.forEach(outlineMesh => {
+                            const outlineMaterials = Array.isArray(outlineMesh.material)
+                                ? outlineMesh.material
+                                : [outlineMesh.material]
+                            outlineMaterials.forEach(outlineMaterial => {
+                                outlineMaterial.stencilWrite = true
+                                outlineMaterial.stencilRef = outlineStencilRef
+                                outlineMaterial.stencilFunc = THREE.NotEqualStencilFunc
+                            })
+                        })
+                        if (name.includes('face')) {
+                            install101901FaceMaskStencil(
+                                characterId,
+                                mesh.material,
+                                materialProfiles,
+                                outlineMeshes,
+                                outlineStencilRef,
+                            )
+                        }
                         stencilRefCount++
+                    }
+                    if (name.includes('hair')) {
+                        install101901HairOutRuntime(
+                            characterId,
+                            mesh,
+                            materialProfiles,
+                            outlineMeshes,
+                            userData,
+                        )
                     }
                 } catch (error) {
                     console.error(`Error applying texture to "${mesh.name}":`, error)

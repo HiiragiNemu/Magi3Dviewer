@@ -1,7 +1,7 @@
 import { ARButton } from 'three/examples/jsm/Addons.js';
 import { scene } from '../scene';
 import { disableSceneCamera, enableSceneCamera } from './camera';
-import { savePhoto } from './shots';
+import { setupCaptureRecordingControls } from './shots';
 
 export * from './camera'
 export * from './shots'
@@ -15,9 +15,9 @@ const cameraModeList = document.getElementById('camera-mode-list') as HTMLDivEle
 const btnCameraBackground = document.getElementById('camera-mode-background') as HTMLButtonElement
 // const btnCameraAR = document.getElementById('camera-mode-ar') as HTMLButtonElement
 const btnCameraOff = document.getElementById('camera-off') as HTMLButtonElement
-export const btnCameraShot = document.getElementById('camera-shot-btn') as HTMLButtonElement
 
 export function setupCameraModeButtons() {
+    setupCaptureRecordingControls()
     arButton.removeAttribute('style')
     const arButtonObserver = new MutationObserver(records => {
         for (const record of records) {
@@ -50,5 +50,4 @@ export function setupCameraModeButtons() {
         document.body.classList.remove('camera-active')
     }
 
-    btnCameraShot.onclick = savePhoto
 }

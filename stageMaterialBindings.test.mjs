@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
+import * as THREE from 'three'
 
 const source = await readFile(
     new URL('./src/viewer/stageMaterialBindings.ts', import.meta.url),
@@ -10,6 +11,37 @@ assert.match(
     source,
     /const retainedTextures = collectObjectMaterialTextures\(object\)/,
     'material replacement must inventory textures still owned by the stage',
+)
+
+assert.match(
+    source,
+    /shader\.fragmentShader = installUrpSpotAttenuation\(shader\.fragmentShader\)/,
+    'official lit materials must expand the Three light chunk before replacing spot attenuation',
+)
+assert.match(
+    source,
+    /fragmentShader\.includes\('#include <lights_pars_begin>'\)[\s\S]*?fragmentShader\.replace\('#include <lights_pars_begin>', urpChunk\)/,
+    'the runtime must replace the unexpanded chunk token received by onBeforeCompile',
+)
+assert.match(
+    THREE.ShaderChunk.lights_pars_begin,
+    /return smoothstep\( coneCosine, penumbraCosine, angleCosine \);/,
+    'fixture must continue to exercise Three smoothstep spot attenuation',
+)
+assert.match(source, /return rdUrpSpot \* rdUrpSpot;/)
+assert.match(
+    source,
+    /shader\.fragmentShader = suppressUnusedUnitySphericalHarmonics\([\s\S]*?shader\.fragmentShader[\s\S]*?\)/,
+    'BgUber must not consume the LightProbe coefficients declared unused by the official program',
+)
+assert.match(
+    source,
+    /BACKGROUND_GLOBAL_SHADER_FAMILIES\.has\(binding\.sourceShader\)/,
+    'SH suppression must follow the recovered shader family instead of a scene id',
+)
+assert.match(
+    source,
+    /Official compiled BgUber declares Unity SH as unused/,
 )
 assert.match(
     source,
@@ -69,7 +101,7 @@ assert.match(
 )
 assert.match(
     source,
-    /export interface StageTextureSet[\s\S]*?base\?: StageTextureBinding[\s\S]*?normal\?: StageTextureBinding[\s\S]*?smoothness\?: StageTextureBinding[\s\S]*?blend\?: StageTextureBinding[\s\S]*?matCap\?: StageTextureBinding/,
+    /export interface StageTextureSet[\s\S]*?base\?: StageTextureBinding[\s\S]*?normal\?: StageTextureBinding[\s\S]*?smoothness\?: StageTextureBinding[\s\S]*?blend\?: StageTextureBinding[\s\S]*?matCap\?: StageTextureBinding[\s\S]*?emission\?: StageTextureBinding/,
     'material bindings must carry independent descriptors for every authored texture slot',
 )
 assert.match(
@@ -160,6 +192,101 @@ assert.match(
     source,
     /if \(textures\.normalMap\) standardParameters\.normalMap = textures\.normalMap/,
     'materials without an official normal map must omit the undefined parameter',
+)
+assert.match(
+    source,
+    /if \(textures\.emissionMap\) standardParameters\.emissiveMap = textures\.emissionMap/,
+    'lit materials must bind the exact serialized emission texture independently',
+)
+assert.match(
+    source,
+    /formula: 'base \+ emissionMap\.rgb \* emissionColor\.rgb'/,
+    'unlit materials must expose the compiled BgUnlit emission equation',
+)
+assert.match(
+    source,
+    /diffuseColor\.rgb \+= texture2D\( uStageEmissionMap, vStageEmissionMapUv \)\.rgb \* uStageEmissionColor;/,
+    'BgUnlit must add sampled emission using its independent UV transform',
+)
+assert.match(
+    source,
+    /outgoingLight - totalEmissiveRadiance[\s\S]*?\+ totalEmissiveRadiance/,
+    'unlitness adjustment must preserve emission at the compiled final-add position',
+)
+assert.match(
+    source,
+    /stageMatCapLow = stageMatCapBase \* stageMatCapSample[\s\S]*?stageMatCapHigh = vec3\( 1\.0 \)[\s\S]*?stageMatCapViewNormal = normal[\s\S]*?#include <lights_physical_fragment>/,
+    'BgUber matcap must use the compiled overlay operator and view-normal XY before physical lighting',
+)
+assert.doesNotMatch(
+    source,
+    /stageMatCapViewDir = normalize\( vViewPosition \)/,
+    'matcap coordinates must not use the rejected view-direction basis',
+)
+assert.match(
+    source,
+    /stagePackedNormal\.ag \* 2\.0 - 1\.0[\s\S]*?1\.0 - dot\( stageNormalXY, stageNormalXY \)[\s\S]*?stageNormalXY \* normalScale/,
+    'BgUber normal maps must decode Unity A/G packing and rebuild Z before applying strength',
+)
+assert.match(
+    source,
+    /metalness: binding\.metallicFromSmoothnessMap[\s\S]*?\? 1[\s\S]*?: binding\.metallic/,
+    'a metallic map must not be multiplied by the serialized zero scalar',
+)
+assert.match(
+    source,
+    /smoothnessFromBaseAlpha[\s\S]*?diffuseColor\.a \* uStageSmoothness/,
+    'the albedo-alpha smoothness variant must drive roughness from sampled base alpha',
+)
+assert.match(
+    source,
+    /fogFactor \*= uStageFogInfluence[\s\S]*?mix\( gl_FragColor\.rgb, fogColor, fogFactor \)/,
+    'each material must apply its serialized fog influence instead of globally fogging the sky',
+)
+assert.match(
+    source,
+    /vec3\( 0\.298911989, 0\.586610973, 0\.114478 \)[\s\S]*?vec3\( 0\.217600003 \)[\s\S]*?uStageBgColorAdjustments\.x[\s\S]*?uStageBgColorAdjustments\.y[\s\S]*?uStageBgColorAdjustments\.z \* uStageBackgroundTint/,
+    'material-level background grading must retain the official compiled pivot, luma and operation order',
+)
+assert.match(
+    source,
+    /#include <fog_fragment>\n+gl_FragColor\.rgb \*= uStageGlobalBackgroundTint/,
+    'global background tint must execute after material fog like the official shader',
+)
+assert.match(
+    source,
+    /BACKGROUND_GLOBAL_PROVEN_BYPASS_FAMILIES[\s\S]*?'Creative\/Effect\/Particle\/Common'/,
+    'shader families proven not to consume Bg globals must remain outside material grading',
+)
+assert.match(
+    source,
+    /backgroundShaderGlobalsApplied[\s\S]*?unknownBackgroundGlobalSources\.length === 0/,
+    'the fullscreen approximation may be bypassed only with complete shader-family authority',
+)
+assert.match(
+    source,
+    /renderQueue\?: number[\s\S]*?validKeywords\?: string\[\][\s\S]*?invalidKeywords\?: string\[\][\s\S]*?disabledShaderPasses\?: string\[\][\s\S]*?normalPacking\?: 'unity-dxt5nm-ag'[\s\S]*?smoothnessFromBaseAlpha\?: boolean[\s\S]*?fogInfluence\?: number/,
+    'runtime descriptors must preserve exact queue, keyword, pass, normal, smoothness and fog state',
+)
+assert.match(
+    source,
+    /const matCapMap = \(binding\.useMatCap \?\? Boolean\(textures\.matCapMap\)\)/,
+    'matcap texture presence alone must not override the serialized _UseMatCap gate',
+)
+assert.match(
+    source,
+    /function effectiveUnityRenderQueue[\s\S]*?binding\.renderQueue >= 0[\s\S]*?Creative\/Effect\/Particle\/Common[\s\S]*?return 3000[\s\S]*?return 2000/,
+    'custom and shader-default Unity queues must resolve automatically',
+)
+assert.match(
+    source,
+    /mesh\.renderOrder = \(queue - 2000\) \/ 1000/,
+    'single-material stage meshes must execute their recovered Unity queue ordering',
+)
+assert.match(
+    source,
+    /stageUnityRenderQueueStatus = 'mixed-groups-require-split'/,
+    'mixed-queue geometry must stay explicitly unresolved rather than silently flattening queues',
 )
 
 const rawWeight = 77 / 255
