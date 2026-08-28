@@ -1,3 +1,57 @@
+@font-face {
+    font-family: 'MagiReaderExedraTangYuan';
+    src: url('/voice/fonts/exedra-zh-tangyuan.0901bb62ccd1.full.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MagiReaderExedraTsukuOldGothic';
+    src: url('/voice/fonts/exedra-jp-ui-tsuku.431afe7080dc.full.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'MagiReaderExedraLiberationSans';
+    src: url('/voice/fonts/exedra-en-ui-liberation.878023cf83e0.full.woff2') format('woff2');
+    font-display: swap;
+}
+
+:root {
+    --viewer-ui-font-zh: 'MagiReaderExedraTangYuan', sans-serif;
+    --viewer-ui-font-ja: 'MagiReaderExedraTsukuOldGothic', sans-serif;
+    --viewer-ui-font-en: 'MagiReaderExedraLiberationSans', sans-serif;
+    --viewer-ui-font: var(--viewer-ui-font-en);
+}
+
+:root[lang='zh-CN'] {
+    --viewer-ui-font: var(--viewer-ui-font-zh);
+}
+
+:root[lang='ja-JP'] {
+    --viewer-ui-font: var(--viewer-ui-font-ja);
+}
+
+:root[lang='en'] {
+    --viewer-ui-font: var(--viewer-ui-font-en);
+}
+
+body,
+button,
+select,
+input,
+textarea,
+output:not(#voice-subtitle-overlay) {
+    font-family: var(--viewer-ui-font);
+}
+
+#voice-panel,
+#voice-panel select,
+#voice-panel button,
+#voice-panel input,
+#voice-panel output {
+    font-family: var(--viewer-ui-font) !important;
+}
+
 body {
     background-color: #444;
     color: white;
