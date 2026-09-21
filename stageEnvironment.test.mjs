@@ -52,4 +52,5 @@ test('runtime uses linear BC6H and the external-cube X reflection', () => {
     assert.match(source, /THREE\.RGB_BPTC_UNSIGNED_Format/)
     assert.match(source, /THREE\.LinearSRGBColorSpace/)
     assert.match(source, /external-cubemap-x-flip/)
+    assert.match(source, /STAGE_ASSET_HTML_FALLBACK/)
 })

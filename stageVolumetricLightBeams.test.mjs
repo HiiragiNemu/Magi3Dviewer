@@ -128,7 +128,7 @@ test('generated VLB profile binds exact anchor, queue and depth consumer', () =>
         depthBlendConsumerCount: 1,
         deferredDustParticleCount: 1,
         configAuthority:
-            'D:\\SteamLibrary\\steamapps\\common\\MadokaExedra\\MadokaExedra_Data\\resources.assets',
+            'repository:official-player-data/resources.assets',
         pluginVersion: 1970,
         sharedMeshSides: 24,
         sharedMeshSegments: 5,

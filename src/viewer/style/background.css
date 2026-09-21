@@ -14,17 +14,18 @@
 }
 
 #background-select .icon-hover-popitem {
-    top: -15px;
-    max-width: calc(100vw - var(--side-dock-width));
+    top: 8px;
+    max-width: calc(100vw - 16px);
 }
 
 #background-list {
     display: grid;
-    grid-template-columns: repeat(3, 80px);
+    grid-template-columns: repeat(3, minmax(64px, 80px));
     grid-auto-rows: 60px;
     row-gap: 6px;
     column-gap: 6px;
-    max-height: calc(100vh - 180px);
+    max-width: calc(100vw - 34px);
+    max-height: calc(100vh - 116px);
     overflow-y: auto;
     scrollbar-width: thin;
 }
@@ -67,4 +68,10 @@
     height: var(--size);
     padding: 0;
     margin-right: 0.2em;
+}
+
+@media (max-width: 300px) {
+    #background-list {
+        grid-template-columns: repeat(2, minmax(64px, 80px));
+    }
 }

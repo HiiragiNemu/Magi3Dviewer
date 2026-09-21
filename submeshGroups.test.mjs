@@ -29,21 +29,23 @@ function generatedCharacterIds() {
         .sort((left, right) => left - right)
 }
 
-async function localBattleModelIds() {
+async function localOfficialModelIds() {
     const entries = await readdir(
         new URL('./magia-exedra-character-three/models/', import.meta.url),
         { withFileTypes: true },
     )
     return entries
         .filter(entry => entry.isDirectory())
-        .map(entry => entry.name.match(/^chara_(\d+)_battle_unit$/)?.[1])
+        .map(entry => entry.name.match(
+            /^chara_(\d+)(?:_(?:battle_unit|model))?$/,
+        )?.[1])
         .filter(Boolean)
         .map(Number)
         .sort((left, right) => left - right)
 }
 
-test('generated character keys exactly cover the local battle-model corpus', async () => {
-    assert.deepEqual(generatedCharacterIds(), await localBattleModelIds())
+test('generated character keys exactly cover the local official-model corpus', async () => {
+    assert.deepEqual(generatedCharacterIds(), await localOfficialModelIds())
 })
 
 test('100101 draw ranges come from its own official Unity Mesh submeshes', () => {

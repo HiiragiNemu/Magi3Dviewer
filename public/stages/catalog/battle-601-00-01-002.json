@@ -1,0 +1,43 @@
+{
+  "id": "battle-601-00-01-002",
+  "stableKey": "AssetBundles/battle/stage/bg_3d_601_00_01_002",
+  "name": "Darkness Witch - Floor 2",
+  "category": "battle",
+  "official": true,
+  "dioramaBackgroundMstId": 110212,
+  "backgroundResourceName": "bg_3d_601_00_01_002",
+  "assetBundleName": "battle/stage/bg_3d_601_00_01_002",
+  "type": "fbx",
+  "url": "./stages/official/battle-601-00-01-002/bg_3d_601_00_01_002.fbxdata",
+  "sceneProfileUrl": "./stages/official/battle-601-00-01-002/scene-profile.json",
+  "scale": 1,
+  "position": [
+    0,
+    0,
+    0
+  ],
+  "rotation": [
+    0,
+    0,
+    0
+  ],
+  "evidence": [
+    "official Steam JP AssetBundle source-reference closure; source bundles were not copied",
+    "bounded AssetStudioModCLI splitObjects export of bg_3d_601_00_01_002 only",
+    "automatic scene-profile extractor: Light/Material/ReDriveVolume/lightmap/UV1/ReflectionProbe/particle records",
+    "scene-name-cross-region.v1.json stable key dioramaBackgroundMstId=110212"
+  ],
+  "dynamic": {
+    "expected": true,
+    "status": "partial",
+    "missing": [
+      "BattleBackground consumer",
+      "GlobalVolumeController runtime orchestration"
+    ],
+    "evidence": [
+      "1 official particle preset + 2 particle systems",
+      "8 runtime lights",
+      "1 BC6H ReDrive reflection environment"
+    ]
+  }
+}

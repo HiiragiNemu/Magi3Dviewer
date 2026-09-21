@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import { DDSLoader } from 'three/addons/loaders/DDSLoader.js'
 import { UNITY_TO_THREE_DIFFUSE_IRRADIANCE } from './unityLighting'
+import { resolveRuntimeAssetUrl } from './runtimeProductDelivery'
+import { loadNativeLightmapMips } from './stageNativeLightmapMips'
 
 export const UNITY_LIGHTMAP_RGBM_EXPONENT = 2.2
 export const UNITY_LIGHTMAP_RGBM_MULTIPLIER = 34.4932404
@@ -48,6 +50,23 @@ export interface StageLightmapApplication extends StageLightmapMatchResult {
     missingLightmapPaths: string[]
     missingDirectionalLightmapPaths: string[]
     dispose: () => void
+}
+
+/**
+ * True when every lightmap binding that resolved to the currently loaded FBX
+ * can execute. Unmatched serialized bindings can belong to prefab/dependency
+ * renderers that are not instantiated by that FBX and remain diagnostic.
+ */
+export function hasCompleteActiveStageLightmapCoverage(
+    application: StageLightmapApplication | undefined,
+) {
+    return application != undefined
+        && application.matchedRendererCount > 0
+        && application.ambiguousBindingPaths.length === 0
+        && application.missingSecondUvPaths.length === 0
+        && application.unsupportedMaterialPaths.length === 0
+        && application.missingLightmapPaths.length === 0
+        && application.missingDirectionalLightmapPaths.length === 0
 }
 
 interface StageShader {
@@ -157,11 +176,17 @@ export async function loadStageLightmap(
     renderer: THREE.WebGLRenderer,
     signal: AbortSignal,
 ) {
+    if (/\.native-mips\.json(?:[?#]|$)/i.test(url)) {
+        if (encoding !== 'unity-rgbm-linear') {
+            throw new Error('Native RGBA8 mip manifest requires unity-rgbm-linear')
+        }
+        return loadNativeLightmapMips(url, renderer, signal)
+    }
     if (encoding === 'unity-bc6h-linear') {
         if (!renderer.extensions.has('EXT_texture_compression_bptc')) {
             throw new Error('This GPU does not expose EXT_texture_compression_bptc')
         }
-        const response = await fetch(new URL(url, document.baseURI).href, {
+        const response = await fetch(await resolveRuntimeAssetUrl(url, signal), {
             cache: 'no-cache',
             signal,
         })
@@ -174,7 +199,7 @@ export async function loadStageLightmap(
     }
 
     const texture = await new THREE.TextureLoader().loadAsync(
-        new URL(url, document.baseURI).href,
+        await resolveRuntimeAssetUrl(url, signal),
     )
     if (signal.aborted) {
         texture.dispose()
@@ -190,7 +215,14 @@ export function getStageHierarchyPath(
     const parts: string[] = []
     let current: THREE.Object3D | null = object
     while (current) {
-        if (current.name) parts.unshift(current.name)
+        // FBXLoader keeps the unsanitized Unity/FBX name in userData.
+        const originalName = current.userData.originalName
+        // Keep the caller-selected runtime carrier prefix for UV1 required paths.
+        const name = current !== root
+            && typeof originalName === 'string' && originalName.length > 0
+            ? originalName
+            : current.name
+        if (name) parts.unshift(name)
         if (current === root) break
         current = current.parent
     }
@@ -397,9 +429,14 @@ function installUnityLightmapMaterial(
     encoding: StageLightmapEncoding = 'unity-rgbm-linear',
 ) {
     const material = source.clone() as LightMappedMaterial
+    material.onBeforeRender = source.onBeforeRender
     const previousCompile = source.onBeforeCompile
     const previousCacheKey = source.customProgramCacheKey
     const stageScaleOffset = new THREE.Vector4(...scaleOffset)
+    material.userData.stageBatchLightmap = {
+        texture: lightmap.uuid, scaleOffset: [...scaleOffset], intensity,
+        directional: directionalLightmap?.uuid ?? null, encoding,
+    }
 
     material.lightMap = lightmap
     material.lightMapIntensity = intensity

@@ -96,6 +96,8 @@ export interface OfficialAngelRingMaterialProfile {
     uvMode: boolean;
     /** Which exported `_AngelRingMap` the material binds. */
     map: OfficialAngelRingMap;
+    /** Stable serialized Texture2D identity; null when no map was resolved. */
+    texture: string | null;
     /** Serialized `_RimLightColor`, also used by the AngelRing shader branch. */
     rimLightColor: readonly [number, number, number];
 }
@@ -126,6 +128,10 @@ export interface OfficialFaceMaterialProfile {
     useGradientMap: boolean;
     /** Serialized `_ShouldApplyFaceAdditional`; exceptional main-face overlay. */
     shouldApplyAdditional: boolean;
+    /** Exact serialized Texture2D identity from this slot's `_FaceAdditionalMap` PPtr. */
+    additionalTexture: string | null;
+    /** DepthOnly `_FaceAreaCameraDepthTextureZWriteOffset`, in eye-space units. */
+    cameraDepthTextureZWriteOffset: number;
     /** Serialized `_HighlightThreshold`; official transition width is 0.05. */
     highlightThreshold: number;
     /** Serialized `_HighlightRotation`, in turns. */
@@ -136,11 +142,151 @@ export interface OfficialFaceMaterialProfile {
     cheekColor: readonly [number, number, number];
 }
 
+export interface OfficialStencilProfile {
+    /** Serialized ReDriveToon `_StencilMode`; mode 1 writes, mode 2 selects. */
+    mode: number;
+    /** Serialized Unity `CompareFunction` value from `_StencilComp`. */
+    comparison: number;
+    /** Serialized `_StencilNum`. The character face/hair contract uses bit 128. */
+    reference: number;
+    /** Serialized Unity `StencilOp` value from `_StencilPassOp`. */
+    passOperation: number;
+    /** Serialized `_StencilTransparency` used by RdToonStencilMaskPass. */
+    transparency: number;
+}
+
+/**
+ * Serialized parameters for a compiled character shader outside the ordinary
+ * ReDriveToon family. The shader name and every scalar come from Material
+ * serialization; consumers select this branch by shader identity rather than
+ * by character or mesh name.
+ */
+export interface OfficialAkumaWeaponProfile {
+    source: { CAB: string; materialPathID: string; shaderPathID: string };
+    floats: Readonly<Record<string, number>>;
+    colors: Readonly<Record<string, readonly number[]>>;
+    textures: Readonly<Record<string, {
+        name: string; fileId: number; pathId: string;
+        sampler: OfficialTextureSamplerProfile;
+    }>>;
+}
+
+export interface OfficialCustomCharacterShaderProfile {
+    /** Exact serialized UniqueWeapon payload; never inferred from a mesh ID. */
+    akumaWeapon?: OfficialAkumaWeaponProfile;
+    name: string;
+    baseColor: readonly [number, number, number, number];
+    emissionColor: readonly [number, number, number, number];
+    /** Exact Texture2D identities used by custom ReDrive-family variants. */
+    baseTexture?: string | null;
+    shadowTexture?: string | null;
+    controlTexture?: string | null;
+    noiseTexture: string | null;
+    noiseTiling: number;
+    noiseIntensity: number;
+    noiseThreshold: number;
+    ditherFade: number;
+    useVertexColorG: boolean;
+    vertexColorThreshold: number;
+    /** Literal forward-pass alpha-test threshold from the compiled program. */
+    forwardCutoff: number;
+    /** Literal outline-pass inverse alpha-test threshold. */
+    outlineCutoff: number;
+    /** Serialized custom-variant switches; absent on NamaeShader. */
+    isCosmic?: boolean;
+    alphaClipping?: boolean;
+    fillColor?: readonly [number, number, number, number];
+    cosmicTexture?: string | null;
+    cosmicNoiseTexture?: string | null;
+    cosmicTiling?: number;
+    cosmicScroll?: readonly [number, number];
+    cosmicMaskByControlAlpha?: boolean;
+    cosmicNoiseInfluence?: number;
+    cosmicNoiseTiling?: number;
+    cosmicNoiseSpeed?: number;
+}
+
+/**
+ * Serialized `main_base` Cosmic branch.  Ordinary ReDriveToon materials can
+ * enable this feature; it is not limited to the Doppel-Iroha shader identity.
+ */
+export interface OfficialNullCosmicBaseMap {
+    materialName: string; materialCab: string; materialPathId: string;
+    shaderName: string; shaderCab: string; shaderPathId: string;
+    property: '_BaseMap'; fileId: 0; pathId: '0'; status: 'NULL';
+    shaderDefault: 'white';
+    shadow: { property: '_ShadowTex'; fileId: 0; pathId: '0'; status: 'NULL';
+        shaderDefault: 'white'; colorProperty: '_ShadowColor';
+        color: readonly [number, number, number, number] };
+}
+
+/** Only an explicit serialized NULL with the recovered shader default is
+ * untextured. Missing/unresolved names and unsupported null variants still fail. */
+export function hasOfficialNullCosmicBaseMap(profile: OfficialMaterialProfile): boolean {
+    const cosmic = profile.cosmic, binding = cosmic.nullBaseMap;
+    return cosmic.enabled && cosmic.baseTexture === null && cosmic.shadowTexture === null &&
+        !cosmic.isScreenBaseMap && !cosmic.alphaClipping &&
+        !profile.surface.transparency && Boolean(binding &&
+            binding.materialName === profile.name &&
+            /^CAB-[0-9a-f]{32}$/.test(binding.materialCab) &&
+            /^-?[1-9][0-9]*$/.test(binding.materialPathId) &&
+            binding.shaderName === 'Creative/Character/ReDriveToon' &&
+            /^CAB-[0-9a-f]{32}$/.test(binding.shaderCab) &&
+            /^-?[1-9][0-9]*$/.test(binding.shaderPathId) &&
+            binding.property === '_BaseMap' && binding.fileId === 0 &&
+            binding.pathId === '0' && binding.status === 'NULL' &&
+            binding.shaderDefault === 'white' && binding.shadow &&
+            binding.shadow.property === '_ShadowTex' && binding.shadow.fileId === 0 &&
+            binding.shadow.pathId === '0' && binding.shadow.status === 'NULL' &&
+            binding.shadow.shaderDefault === 'white' && binding.shadow.colorProperty === '_ShadowColor' &&
+            binding.shadow.color.length === 4 && binding.shadow.color.every(Number.isFinite));
+}
+
+export interface OfficialCosmicProfile {
+    /** Exact material/PPtr/shader-default provenance, not a missing-texture fallback. */
+    nullBaseMap?: OfficialNullCosmicBaseMap;
+    enabled: boolean;
+    alphaClipping: boolean;
+    baseColor: readonly [number, number, number, number];
+    isScreenBaseMap: boolean;
+    baseTexture: string | null;
+    shadowTexture: string | null;
+    controlTexture: string | null;
+    baseMapTiling: number;
+    baseMapScroll: readonly [number, number];
+    texture: string | null;
+    noiseTexture: string | null;
+    tiling: number;
+    scroll: readonly [number, number];
+    maskByControlAlpha: boolean;
+    noiseInfluence: number;
+    noiseTiling: number;
+    noiseSpeed: number;
+    getShadowTexture: boolean;
+    getShadowTint: boolean;
+    applyAmbientLighting: boolean;
+    overlay: boolean;
+    shadowTintColor: readonly [number, number, number];
+}
+
 export interface OfficialMaterialProfile {
     name: string;
     source: 'official-export' | 'name-convention' | 'default';
     /** Serialized Unity `Material.m_CustomRenderQueue`; -1 uses shader default. */
     customRenderQueue: number;
+    /** Exact forward-pass blend/depth state serialized on this material slot. */
+    surface: {
+        /** Serialized `_Transparency`; independent from mesh-level alpha maps. */
+        transparency: boolean;
+        /** Serialized `_ZWrite`. */
+        zWrite: boolean;
+        /** Serialized UnityEngine.Rendering.BlendMode `_SrcBlend`. */
+        srcBlend: number;
+        /** Serialized UnityEngine.Rendering.BlendMode `_DstBlend`. */
+        dstBlend: number;
+    };
+    /** Serialized `_IsAlphaAdditive`; adds authored feature luminance to alpha. */
+    isAlphaAdditive: boolean;
     /** Legacy aggregate flag retained for existing feature-variant selection. */
     anisotropy: boolean;
     anisotropyProfile: OfficialAnisotropyProfile;
@@ -151,6 +297,8 @@ export interface OfficialMaterialProfile {
     outlineWidth: number;
     outline: OfficialOutlineProfile;
     face: OfficialFaceMaterialProfile;
+    /** Exact per-material stencil routing; never infer it from queue or name. */
+    stencil: OfficialStencilProfile;
     /** Base ReDriveToon MatCap branch; it is not owned by Gem. */
     matCap: OfficialMatCapProfile;
     gem: OfficialGemProfile;
@@ -158,6 +306,8 @@ export interface OfficialMaterialProfile {
     shadow: {
         offset: number;
         feather: number;
+        /** Serialized `_ShadowOffsetMapOffset` added to ControlMap R. */
+        offsetMapOffset: number;
         castSelfShadow: boolean;
         receiveSelfShadow: boolean;
     };
@@ -166,23 +316,81 @@ export interface OfficialMaterialProfile {
     additionalLightInfluenceByLuminance: number;
     /** Serialized HDR `_EmissionColor`, kept in linear shader units. */
     emissionColor: readonly [number, number, number];
+    /** Standard ReDriveToon `main_base` Cosmic feature family. */
+    cosmic: OfficialCosmicProfile;
+    /** Present only when the serialized shader is not ordinary ReDriveToon. */
+    customShader?: OfficialCustomCharacterShaderProfile;
+}
+
+export type OfficialSurfaceTextureSlot =
+    | '_BaseMap'
+    | '_ShadowTex'
+    | '_ControlMap'
+    | '_FaceAdditionalMap'
+    | '_AngelRingMap'
+    | '_CosmicTex'
+    | '_CosmicNoiseTex';
+
+/** Exact Unity Texture2D importer state serialized by the official bundle. */
+export interface OfficialTextureSamplerProfile {
+    name: string;
+    slots: readonly OfficialSurfaceTextureSlot[];
+    width: number;
+    height: number;
+    textureFormat: number;
+    mipCount: number;
+    /** Unity TextureColorSpace: 0=Linear, 1=sRGB. */
+    colorSpace: number;
+    /** Unity FilterMode: 0=Point, 1=Bilinear, 2=Trilinear. */
+    filterMode: number;
+    aniso: number;
+    mipBias: number;
+    /** Unity TextureWrapMode values. */
+    wrapU: number;
+    wrapV: number;
+    wrapW: number;
 }
 
 interface OfficialMaterialProfileFile {
-    schema: 1;
+    schema: 4;
     unityVersion: string;
+    textureSamplers: Record<string, OfficialTextureSamplerProfile>;
     materials: Record<string, Partial<OfficialMaterialProfile>>;
 }
 
 let generatedOfficialMaterials = new Map<string, Partial<OfficialMaterialProfile>>();
+let generatedOfficialTextureSamplers = new Map<
+    string,
+    OfficialTextureSamplerProfile
+>();
 let officialMaterialProfilesPromise: Promise<void> | undefined;
+
+export function normalizeOfficialTextureName(value: string): string {
+    return (value
+        .replace(/\\/g, '/')
+        .split('/')
+        .pop() ?? '')
+        .split(/[?#]/, 1)[0]
+        .replace(/\.(png|jpe?g|webp)$/i, '')
+        .trim()
+        .toLowerCase();
+}
 
 function installOfficialMaterialProfiles(data: unknown): void {
     const profileFile = data as OfficialMaterialProfileFile;
-    if (profileFile?.schema !== 1 || profileFile.unityVersion !== '2022.3.62f2') {
-        throw new Error('Official JP material profiles require Unity 2022.3.62f2');
+    if (
+        profileFile?.schema !== 4
+        || profileFile.unityVersion !== '2022.3.62f2'
+        || !profileFile.textureSamplers
+    ) {
+        throw new Error(
+            'Official JP material profiles require schema 4 and Unity 2022.3.62f2',
+        );
     }
     generatedOfficialMaterials = new Map(Object.entries(profileFile.materials));
+    generatedOfficialTextureSamplers = new Map(
+        Object.entries(profileFile.textureSamplers),
+    );
 }
 
 /**
@@ -209,6 +417,25 @@ export async function loadOfficialMaterialProfiles(data?: unknown): Promise<void
         installOfficialMaterialProfiles(await response.json());
     });
     await officialMaterialProfilesPromise;
+}
+
+export function getOfficialTextureSamplerProfile(
+    textureNameOrUrl: string,
+): OfficialTextureSamplerProfile | undefined {
+    const normalized = normalizeOfficialTextureName(textureNameOrUrl);
+    const direct = generatedOfficialTextureSamplers.get(normalized);
+    if (direct) return direct;
+
+    // Vite emits production assets as `<Texture2D name>-<8-char hash>.png`.
+    // The hash belongs to the web container, not the serialized Unity name.
+    // Resolve it only after an exact lookup misses so legitimate authored names
+    // remain untouched and every material slot still binds by Texture2D name.
+    const emittedAssetName = normalized.match(
+        /^(.*)-[A-Za-z0-9_-]{8}$/,
+    )?.[1];
+    return emittedAssetName
+        ? generatedOfficialTextureSamplers.get(emittedAssetName)
+        : undefined;
 }
 
 const ANISO_DISABLED: OfficialAnisotropyProfile = {
@@ -267,10 +494,20 @@ const OFFICIAL_FACE_MATERIAL_DEFAULT: OfficialFaceMaterialProfile = {
     isEye: false,
     useGradientMap: false,
     shouldApplyAdditional: false,
+    additionalTexture: null,
+    cameraDepthTextureZWriteOffset: 0.05,
     highlightThreshold: 0.5,
     highlightRotation: 0,
     cheekValue: 1,
     cheekColor: [1, 0.7, 0.7],
+};
+
+const OFFICIAL_STENCIL_DEFAULT: OfficialStencilProfile = {
+    mode: 0,
+    comparison: 0,
+    reference: 0,
+    passOperation: 0,
+    transparency: 0.75,
 };
 
 const GEM_DISABLED: OfficialGemProfile = {
@@ -325,7 +562,7 @@ const OFFICIAL_HAIR_CHARACTER_IDS = new Set([
     100207, 100301, 100302, 100303, 100304, 100305, 100401, 100402, 100403,
     100501, 100502, 100503, 100504, 100601, 100701, 100702, 100801, 100804,
     100805, 100901, 100903, 101001, 101101, 101201, 101301, 101401, 101501,
-    101601, 101701, 101801, 101901, 102001, 102101, 102102, 102201, 102301,
+    101601, 101701, 101801, 101901, 102001, 101002, 102101, 102102, 102201, 102301,
     102401, 102501, 102601, 105801, 105901, 106101, 106201, 106701, 106801,
     106901, 107001, 107101, 107201, 107401, 107601, 108001, 108002, 108101,
     108201, 108301, 108401, 108601, 108602, 109001, 109201, 110401, 110701,
@@ -409,6 +646,7 @@ function getOfficialAngelRingMaterialProfile(
         enabled: isHair && map !== 'none',
         uvMode: isHair && HAIR_UV_ANGEL_RING.has(normalizedName),
         map,
+        texture: map === 'common' ? 'RDToon_AngelRingMap' : null,
         rimLightColor: ANGEL_RING_COLORS.get(normalizedName) ?? [1, 1, 1],
     };
 }
@@ -657,6 +895,43 @@ const OFFICIAL_MATERIALS = new Map<string, Partial<OfficialMaterialProfile>>([
             fresnelMaskByMetallic: false,
         },
     }],
+    // 101002 is present in the native runtime-material-channel export but was
+    // absent from the generated material table. Keep its two hair slots
+    // source-backed in generic FBX loads as well as native-resource loads.
+    ['mt_chara_101002_hair', {
+        source: 'official-export',
+        customRenderQueue: -1,
+        surface: { transparency: false, zWrite: true, srcBlend: 1, dstBlend: 0 },
+        outline: {
+            enabled: true,
+            color: [0, 0, 0],
+            emissionColor: [0, 0, 0],
+            texBlend: 0.2,
+            zOffset: 0,
+            faceOutlineAdjust: 3.299999952316284,
+        },
+        stencil: { mode: 2, comparison: 6, reference: 128, passOperation: 0, transparency: 0.75 },
+        shadow: { offset: 0.30000001192092896, feather: 0, offsetMapOffset: 0, castSelfShadow: true, receiveSelfShadow: true },
+        depthRim: { useDepthTex: true, useRimLight: true, ditherFade: 0, width: 1, yOffset: 0, rimDiffThreshold: 0.019999999552965164, shadowDiffThreshold: 0.029999999329447746 },
+        additionalLightInfluenceByLuminance: 1,
+    }],
+    ['mt_chara_101002_hair_out', {
+        source: 'official-export',
+        customRenderQueue: 2002,
+        surface: { transparency: false, zWrite: true, srcBlend: 1, dstBlend: 0 },
+        outline: {
+            enabled: true,
+            color: [0, 0, 0],
+            emissionColor: [0, 0, 0],
+            texBlend: 0.2,
+            zOffset: 0,
+            faceOutlineAdjust: 3.299999952316284,
+        },
+        stencil: { mode: 2, comparison: 6, reference: 128, passOperation: 0, transparency: 0.75 },
+        shadow: { offset: 0.30000001192092896, feather: 0, offsetMapOffset: 0, castSelfShadow: true, receiveSelfShadow: true },
+        depthRim: { useDepthTex: true, useRimLight: true, ditherFade: 0, width: 1, yOffset: 0, rimDiffThreshold: 0.019999999552965164, shadowDiffThreshold: 0.029999999329447746 },
+        additionalLightInfluenceByLuminance: 1,
+    }],
 ]);
 
 function copyGem(profile: OfficialGemProfile): OfficialGemProfile {
@@ -688,6 +963,38 @@ function copyFaceMaterial(
     };
 }
 
+function copyStencil(profile: OfficialStencilProfile): OfficialStencilProfile {
+    return { ...profile };
+}
+
+function copyCustomCharacterShader(
+    profile: OfficialCustomCharacterShaderProfile,
+): OfficialCustomCharacterShaderProfile {
+    return {
+        ...profile,
+        baseColor: [...profile.baseColor] as [number, number, number, number],
+        emissionColor: [
+            ...profile.emissionColor,
+        ] as [number, number, number, number],
+        fillColor: profile.fillColor
+            ? [...profile.fillColor] as [number, number, number, number]
+            : undefined,
+        cosmicScroll: profile.cosmicScroll
+            ? [...profile.cosmicScroll] as [number, number]
+            : undefined,
+    };
+}
+
+function copyCosmic(profile: OfficialCosmicProfile): OfficialCosmicProfile {
+    return {
+        ...profile,
+        baseColor: [...profile.baseColor] as [number, number, number, number],
+        baseMapScroll: [...profile.baseMapScroll] as [number, number],
+        scroll: [...profile.scroll] as [number, number],
+        shadowTintColor: [...profile.shadowTintColor] as [number, number, number],
+    };
+}
+
 /** AssetStudio/FBXLoader may append `::Material` or a numeric duplicate suffix. */
 export function normalizeOfficialMaterialName(name: string): string {
     return name
@@ -696,6 +1003,17 @@ export function normalizeOfficialMaterialName(name: string): string {
         .replace(/::material$/i, '')
         .replace(/\.\d+$/g, '')
         .toLowerCase();
+}
+
+/**
+ * True when the optional compiled face-additional branch is active. The
+ * gradient-enabled main-face variant has its own pre-gate carrier; mask slots
+ * remain independent and consume their serialized PPtr without name guesses.
+ */
+export function resolveOfficialFaceAdditionalActive(
+    profile: OfficialMaterialProfile,
+): boolean {
+    return profile.face.shouldApplyAdditional;
 }
 
 export function getOfficialMaterialProfile(name: string): OfficialMaterialProfile {
@@ -707,6 +1025,13 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
             ? 'name-convention'
             : 'default',
         customRenderQueue: -1,
+        surface: {
+            transparency: false,
+            zWrite: true,
+            srcBlend: 1,
+            dstBlend: 0,
+        },
+        isAlphaAdditive: false,
         anisotropy: normalized.includes('aniso'),
         anisotropyProfile: {
             ...(normalized.includes('aniso') ? GENERIC_ANISO : ANISO_DISABLED),
@@ -723,6 +1048,7 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
                 || normalized.includes('_eyebrow_mask'),
             isEye: normalized.includes('_eye_mask'),
         },
+        stencil: copyStencil(OFFICIAL_STENCIL_DEFAULT),
         matCap: copyMatCap(
             inferredGem
                 ? {
@@ -739,12 +1065,38 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         shadow: {
             offset: 0.3,
             feather: 0,
+            offsetMapOffset: 0,
             castSelfShadow: true,
             receiveSelfShadow: true,
         },
         depthRim: copyDepthRim(OFFICIAL_DEPTH_RIM_DEFAULT),
         additionalLightInfluenceByLuminance: 0,
         emissionColor: [0, 0, 0],
+        cosmic: {
+            enabled: false,
+            alphaClipping: false,
+            baseColor: [1, 1, 1, 1],
+            isScreenBaseMap: false,
+            baseTexture: null,
+            shadowTexture: null,
+            controlTexture: null,
+            baseMapTiling: 1,
+            baseMapScroll: [0, 0],
+            texture: null,
+            noiseTexture: null,
+            tiling: 1,
+            scroll: [0, 0],
+            maskByControlAlpha: false,
+            noiseInfluence: 1,
+            noiseTiling: 1,
+            noiseSpeed: 1,
+            getShadowTexture: false,
+            getShadowTint: false,
+            applyAmbientLighting: false,
+            overlay: false,
+            shadowTintColor: [1, 1, 1],
+        },
+        customShader: undefined,
     };
     const generated = generatedOfficialMaterials.get(normalized);
     const manual = OFFICIAL_MATERIALS.get(normalized);
@@ -759,6 +1111,9 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         ...base,
         ...official,
         name: normalized,
+        surface: official.surface
+            ? { ...official.surface }
+            : { ...base.surface },
         anisotropyProfile: official.anisotropyProfile
             ? { ...official.anisotropyProfile }
             : { ...base.anisotropyProfile },
@@ -771,6 +1126,9 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         face: official.face
             ? copyFaceMaterial(official.face as OfficialFaceMaterialProfile)
             : copyFaceMaterial(base.face),
+        stencil: official.stencil
+            ? copyStencil(official.stencil as OfficialStencilProfile)
+            : copyStencil(base.stencil),
         matCap: official.matCap
             ? copyMatCap(official.matCap as OfficialMatCapProfile)
             : copyMatCap(base.matCap),
@@ -778,13 +1136,23 @@ export function getOfficialMaterialProfile(name: string): OfficialMaterialProfil
         angelRing: official.angelRing
             ? { ...official.angelRing }
             : base.angelRing,
-        shadow: official.shadow ? { ...official.shadow } : { ...base.shadow },
+        shadow: official.shadow
+            ? { ...base.shadow, ...official.shadow }
+            : { ...base.shadow },
         depthRim: official.depthRim
             ? copyDepthRim(official.depthRim as OfficialDepthRimProfile)
             : copyDepthRim(base.depthRim),
         emissionColor: official.emissionColor
             ? [...official.emissionColor] as [number, number, number]
             : [...base.emissionColor] as [number, number, number],
+        cosmic: official.cosmic
+            ? copyCosmic(official.cosmic as OfficialCosmicProfile)
+            : copyCosmic(base.cosmic),
+        customShader: official.customShader
+            ? copyCustomCharacterShader(
+                official.customShader as OfficialCustomCharacterShaderProfile,
+            )
+            : undefined,
     };
 }
 

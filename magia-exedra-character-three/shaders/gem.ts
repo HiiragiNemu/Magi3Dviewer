@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type { OfficialMaterialProfile } from '../materialProfile';
 import { createDefaultMaterialProfile } from '../materialProfile';
-import { loadTexture, MaximizeTextureQuality } from '../texture';
+import { ApplyOfficialMatCapSampling, loadTexture } from '../texture';
 import DefaultGemMatCap from '../models/chara_109801_battle_unit/matcap02_invert.png';
 import OfficialSoftMetallicMatCap from '../models/common/matcap_SoftMetallic.png';
 import { setDepthRimMaterialProfileUniforms } from './depthRim';
@@ -10,6 +10,60 @@ export interface OfficialGemResources {
     matCaps: Map<string, THREE.Texture>;
     fallbackMatCap?: THREE.Texture;
     textures: THREE.Texture[];
+}
+
+export interface OfficialToonShadowSlotRuntime {
+    materialName: string;
+    shadowOffset: number;
+    shadowFeather: number;
+    shadowOffsetMapOffset: number;
+    castSelfShadow: boolean;
+    receiveSelfShadow: boolean;
+    additionalLightInfluenceByLuminance: number;
+    uniforms: {
+        uRdShadowOffset: number;
+        uRdShadowFeather: number;
+        uRdShadowOffsetMapOffset: number;
+        uMaterialReceiveSelfShadow: number;
+    };
+}
+
+export interface OfficialGemSlotRuntime {
+    materialName: string;
+    gemEnabled: boolean;
+    opaque: boolean;
+    useDepthDiff: boolean;
+    effectiveDepthDiff: boolean;
+    /** Literal ReDriveToon UniversalForward pass state. */
+    officialForwardCull: 'back';
+    /** Diagnostic proof that unrestricted Viewer orbit adds no extra shell. */
+    viewerBackfaceCompensation: false;
+    heightCorrection: number;
+    rimFresnel: number;
+    surface: {
+        transparency: boolean;
+        zWrite: boolean;
+        srcBlend: number;
+        dstBlend: number;
+    };
+    matCap: {
+        enabled: boolean;
+        source: string;
+        texture: string | null;
+        intensity: number;
+        maskByMetallic: boolean;
+        maskBySpecular: boolean;
+    };
+    uniforms: {
+        uMaterialIsGem: number;
+        uMaterialSpecialJewel: number;
+        uGemTransparency: number;
+        uGemUseDepthDiff: number;
+        uGemHeightCorrection: number;
+        uGemRimFresnel: number;
+        uMaterialMatCapEnabled: number;
+        uMaterialMatCapIntensity: number;
+    };
 }
 
 function normalizeTextureName(value: string): string {
@@ -48,25 +102,31 @@ export async function loadOfficialGemResources(
     for (const name of requested) {
         const url = urlsByName.get(name);
         if (!url) continue;
-        const texture = await loadTexture(url, { colorSpace: THREE.NoColorSpace });
-        texture.wrapS = THREE.ClampToEdgeWrapping;
-        texture.wrapT = THREE.ClampToEdgeWrapping;
-        MaximizeTextureQuality(texture);
+        const texture = await loadTexture(url);
+        if (!ApplyOfficialMatCapSampling(texture, name)) {
+            texture.dispose();
+            console.warn('Official MatCap sampler metadata is missing:', name);
+            continue;
+        }
         matCaps.set(name, texture);
         textures.push(texture);
     }
 
     // A bounded fallback keeps older/name-inferred profiles usable. Recovered
     // profiles with an exact PPtr select their own Texture2D below.
-    const fallbackUrl = [...urlsByName.entries()].find(([name]) => (
+    const fallbackEntry = [...urlsByName.entries()].find(([name]) => (
         name.includes('matcap') && name !== 'matcap_softmetallic'
-    ))?.[1] ?? DefaultGemMatCap;
-    const fallbackMatCap = await loadTexture(fallbackUrl, {
-        colorSpace: THREE.NoColorSpace,
-    });
-    fallbackMatCap.wrapS = THREE.ClampToEdgeWrapping;
-    fallbackMatCap.wrapT = THREE.ClampToEdgeWrapping;
-    MaximizeTextureQuality(fallbackMatCap);
+    ));
+    let fallbackName = fallbackEntry?.[0] ?? 'matcap02_invert';
+    let fallbackMatCap = await loadTexture(
+        fallbackEntry?.[1] ?? DefaultGemMatCap,
+    );
+    if (!ApplyOfficialMatCapSampling(fallbackMatCap, fallbackName)) {
+        fallbackMatCap.dispose();
+        fallbackName = 'matcap02_invert';
+        fallbackMatCap = await loadTexture(DefaultGemMatCap);
+        ApplyOfficialMatCapSampling(fallbackMatCap, fallbackName);
+    }
     textures.push(fallbackMatCap);
     return { matCaps, fallbackMatCap, textures: [...new Set(textures)] };
 }
@@ -114,6 +174,10 @@ export function setOfficialMaterialProfileUniforms(
     setColor('uMaterialAnisoColor', aniso.color);
     set('uMaterialAnisoThreshold', aniso.threshold);
     set('uMaterialAnisoFeather', aniso.feather);
+    set('uMaterialIsAlphaAdditive', value.isAlphaAdditive ? 1 : 0);
+    set('uMaterialSurfaceAlphaMode', value.source === 'official-export'
+        ? (value.surface.transparency || value.cosmic?.alphaClipping ? 1 : 0)
+        : -1);
     // Material defaults are authoritative. FresnelAnimationAttributeReceiver
     // will eventually overwrite the same per-renderer uniforms from Timeline.
     set('uFresnelEnabled', fresnel.enabled ? 1 : 0);
@@ -122,10 +186,11 @@ export function setOfficialMaterialProfileUniforms(
     set('uFresnelThreshold', fresnel.threshold);
     set('uFresnelFeather', fresnel.feather);
     set('uFresnelMaskByMetallic', fresnel.maskByMetallic ? 1 : 0);
-    set('uMaterialOutlineOffset', value.outlineOffset ? 1 : 0);
-    set('uMaterialSkinOutlineOffset', value.skinOutlineOffset ? 1 : 0);
+    if (typeof value.outlineOffset === 'boolean') set('uMaterialOutlineOffset', value.outlineOffset ? 1 : 0);
+    if (typeof value.skinOutlineOffset === 'boolean') set('uMaterialSkinOutlineOffset', value.skinOutlineOffset ? 1 : 0);
     set('uRdShadowOffset', value.shadow.offset);
     set('uRdShadowFeather', value.shadow.feather);
+    set('uRdShadowOffsetMapOffset', value.shadow.offsetMapOffset);
     set('uMaterialReceiveSelfShadow', value.shadow.receiveSelfShadow ? 1 : 0);
     set(
         'uRdOfficialAdditionalLightInfluenceByLuminance',
@@ -154,10 +219,92 @@ export function setOfficialMaterialProfileUniforms(
     set('uGemDepthDiffThreshold', gem.depthDiffThreshold);
     set('uGemHeightCorrection', gem.heightCorrection);
     set('uGemRimFresnel', gem.rimFresnel);
-    set('uGemFresnelThreshold', gem.fresnelThreshold);
-    set('uGemFresnelFeather', gem.fresnelFeather);
-    set('uGemFresnelMaskByMetallic', gem.fresnelMaskByMetallic ? 1 : 0);
+    if (typeof gem.fresnelThreshold === 'number') set('uGemFresnelThreshold', gem.fresnelThreshold);
+    if (typeof gem.fresnelFeather === 'number') set('uGemFresnelFeather', gem.fresnelFeather);
+    if (typeof gem.fresnelMaskByMetallic === 'boolean') set('uGemFresnelMaskByMetallic', gem.fresnelMaskByMetallic ? 1 : 0);
     setDepthRimMaterialProfileUniforms(shader, value);
+    return {
+        materialName: value.name,
+        shadowOffset: value.shadow.offset,
+        shadowFeather: value.shadow.feather,
+        shadowOffsetMapOffset: value.shadow.offsetMapOffset,
+        castSelfShadow: value.shadow.castSelfShadow,
+        receiveSelfShadow: value.shadow.receiveSelfShadow,
+        additionalLightInfluenceByLuminance:
+            value.additionalLightInfluenceByLuminance,
+        uniforms: {
+            uRdShadowOffset: shader.uniforms.uRdShadowOffset.value,
+            uRdShadowFeather: shader.uniforms.uRdShadowFeather.value,
+            uRdShadowOffsetMapOffset:
+                shader.uniforms.uRdShadowOffsetMapOffset.value,
+            uMaterialReceiveSelfShadow:
+                shader.uniforms.uMaterialReceiveSelfShadow.value,
+        },
+    } satisfies OfficialToonShadowSlotRuntime;
+}
+
+/**
+ * Exposes the exact serialized Gem/MatCap branch selected for the current draw
+ * group. This is diagnostic state only: it reads uniforms after the profile
+ * consumer has populated them and does not alter rendering.
+ */
+export function createOfficialGemSlotRuntime(
+    shader: THREE.WebGLProgramParametersWithUniforms | undefined,
+    profile: OfficialMaterialProfile | undefined,
+): OfficialGemSlotRuntime | undefined {
+    if (!shader) return undefined;
+    const value = profile ?? createDefaultMaterialProfile();
+    const gem = value.gem;
+    const matCap = value.matCap;
+    const uniform = (key: string) => Number(shader.uniforms[key]?.value ?? 0);
+    const transparency = value.surface.transparency;
+    return {
+        materialName: value.name,
+        gemEnabled: gem.enabled,
+        opaque: !transparency,
+        useDepthDiff: gem.useDepthDiff,
+        effectiveDepthDiff: gem.useDepthDiff && transparency,
+        officialForwardCull: 'back',
+        viewerBackfaceCompensation: false,
+        heightCorrection: gem.heightCorrection,
+        rimFresnel: gem.rimFresnel,
+        surface: { ...value.surface },
+        matCap: {
+            enabled: matCap.enabled,
+            source: matCap.source,
+            texture: matCap.texture ?? null,
+            intensity: matCap.intensity,
+            maskByMetallic: matCap.maskByMetallic,
+            maskBySpecular: matCap.maskBySpecular,
+        },
+        uniforms: {
+            uMaterialIsGem: uniform('uMaterialIsGem'),
+            uMaterialSpecialJewel: uniform('uMaterialSpecialJewel'),
+            uGemTransparency: uniform('uGemTransparency'),
+            uGemUseDepthDiff: uniform('uGemUseDepthDiff'),
+            uGemHeightCorrection: uniform('uGemHeightCorrection'),
+            uGemRimFresnel: uniform('uGemRimFresnel'),
+            uMaterialMatCapEnabled: uniform('uMaterialMatCapEnabled'),
+            uMaterialMatCapIntensity: uniform('uMaterialMatCapIntensity'),
+        },
+    };
+}
+
+export function collectOfficialToonShadowRuntime(root: THREE.Object3D) {
+    const result: Array<Record<string, unknown>> = [];
+    root.traverse(object => {
+        const runtime = object.userData.officialToonShadowRuntime;
+        if (!runtime) return;
+        result.push({
+            meshName: object.name,
+            ...runtime,
+        });
+    });
+    return result;
+}
+
+if (typeof window !== 'undefined') {
+    Object.assign(window, { collectOfficialToonShadowRuntime });
 }
 
 /**
@@ -203,7 +350,12 @@ export function injectOfficialGemShader(
         // JP 2022.3.62f2 ReDriveToon main_gem blob 95. The official Gem
         // normal and both half vectors are evaluated in view space. In that
         // space MatrixV * (MatrixInvV[2] * 2 + H1) is exactly (0, 0, 2) + H1.
-        vec3 rdGemNormalVs = normalize(normal);
+        // main_gem blob 95 keeps two distinct view-space normals:
+        // vs_NORMAL0 (the final surface normal) drives Fresnel/highlights,
+        // while vs_TEXCOORD5 (the interpolated vertex normal) drives the
+        // folded Gem bands and MatCap coordinates.
+        vec3 rdGemSurfaceNormalVs = normalize(normal);
+        vec3 rdGemVertexNormalVs = normalize(vNormal);
         float rdGemShadowSelector = 0.0;
         float rdGemDepthSelector = 0.0;
         float rdGemHardHighlightMask = 0.0;
@@ -219,10 +371,14 @@ export function injectOfficialGemShader(
             vec3 rdGemHalfTwoVs = normalize(
                 rdGemHalfOneVs + vec3(0.0, 0.0, 2.0)
             );
+            // blob 95 lines 597-599 normalize the complete vs_TEXCOORD5.xyz;
+            // lines 665-670 then fold that vertex normal and apply the
+            // serialized height correction. Using the post-normal-map surface
+            // normal here makes the authored Gem band collapse at side views.
             vec3 rdGemCorrectedNormalVs = normalize(vec3(
-                -rdGemNormalVs.x,
-                -rdGemNormalVs.y + uGemHeightCorrection,
-                rdGemNormalVs.z
+                -rdGemVertexNormalVs.x,
+                -rdGemVertexNormalVs.y + uGemHeightCorrection,
+                rdGemVertexNormalVs.z
             ));
             float rdGemCoordinateOne = saturate(dot(
                 rdGemCorrectedNormalVs,
@@ -236,11 +392,11 @@ export function injectOfficialGemShader(
             // band only. The two hard-highlight lobes use the original
             // normalized view-space normal for every Gem material.
             float rdGemHighlightCoordinateOne = saturate(dot(
-                rdGemNormalVs,
+                rdGemSurfaceNormalVs,
                 rdGemHalfOneVs
             ));
             float rdGemHighlightCoordinateTwo = saturate(dot(
-                rdGemNormalVs,
+                rdGemSurfaceNormalVs,
                 rdGemHalfTwoVs
             ));
 
@@ -290,7 +446,7 @@ export function injectOfficialGemShader(
                 0.0
             );
             float rdGemNdotV = saturate(dot(
-                rdGemNormalVs,
+                rdGemSurfaceNormalVs,
                 rdGemViewVs
             ));
             float rdGemRimShadow = step(
@@ -335,10 +491,11 @@ export function injectOfficialGemShader(
         }
 
         // ReDriveToon executes MatCap after Gem Base/Shadow selection and
-        // before SH + main-light multiplication. Blob 95 samples with the raw
-        // interpolated vertex view-normal (vs_TEXCOORD5.xy), deliberately
-        // before the fragment normal is normalized for lighting.
-        vec2 rdGemMatCapUv = vNormal.xy * 0.5 + 0.5;
+        // before SH + main-light multiplication. Blob 95 samples the raw
+        // interpolated vertex view-normal (vs_TEXCOORD5.xy). Keep that literal
+        // front-face mapping; the free-orbit backface closure above only flips
+        // the opposite-facing shell normal.
+        vec2 rdGemMatCapUv = rdGemVertexNormalVs.xy * 0.5 + 0.5;
         vec3 rdGemMatCapTexture = texture2D(
             tGemMatCap,
             rdGemMatCapUv
@@ -385,6 +542,12 @@ export function injectOfficialGemShader(
                 uMaterialMatCapIntensity *
                 rdActiveMatCapMask *
                 (rdMatCapBlend - rdMatCapBase);
+            diffuseColor.a +=
+                saturate((dot(
+                    vec3(0.298911989, 0.586610973, 0.114478),
+                    rdMatCapBlend
+                ) - 0.5) * 2.0) *
+                saturate(uMaterialIsAlphaAdditive);
         }
 
         // END diffuseColor manipulation

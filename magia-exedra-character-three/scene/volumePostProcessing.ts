@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js'
 
 /**
  * Runtime subset of Unity/URP Volume post processing used by recovered stages.
@@ -17,6 +18,8 @@ export const ReDriveVolumePostProcessingShader = {
         uSaturation: { value: 0 },
         uHueShift: { value: 0 },
         uColorFilter: { value: new THREE.Color(1, 1, 1) },
+        uChromaticAberrationEnabled: { value: 0 },
+        uChromaticAberrationIntensity: { value: 0 },
         /** 0=None, 1=Unity URP 2022.3 ACES. */
         uToneMappingMode: { value: 0 },
         uVignetteEnabled: { value: 0 },
@@ -26,6 +29,12 @@ export const ReDriveVolumePostProcessingShader = {
         uVignetteSmoothness: { value: 0.2 },
         uVignetteRounded: { value: 0 },
         uVignetteAspectRatio: { value: 1 },
+        uFilmGrainEnabled: { value: 0 },
+        uFilmGrainTexture: { value: null },
+        uFilmGrainIntensity: { value: 0 },
+        uFilmGrainResponse: { value: 0.8 },
+        uFilmGrainScale: { value: new THREE.Vector2(1, 1) },
+        uFilmGrainOffset: { value: new THREE.Vector2(0, 0) },
     },
     vertexShader: /* glsl */ `
         varying vec2 vUv;
@@ -42,6 +51,8 @@ export const ReDriveVolumePostProcessingShader = {
         uniform float uSaturation;
         uniform float uHueShift;
         uniform vec3 uColorFilter;
+        uniform float uChromaticAberrationEnabled;
+        uniform float uChromaticAberrationIntensity;
         uniform float uToneMappingMode;
         uniform float uVignetteEnabled;
         uniform vec3 uVignetteColor;
@@ -50,6 +61,12 @@ export const ReDriveVolumePostProcessingShader = {
         uniform float uVignetteSmoothness;
         uniform float uVignetteRounded;
         uniform float uVignetteAspectRatio;
+        uniform float uFilmGrainEnabled;
+        uniform sampler2D uFilmGrainTexture;
+        uniform float uFilmGrainIntensity;
+        uniform float uFilmGrainResponse;
+        uniform vec2 uFilmGrainScale;
+        uniform vec2 uFilmGrainOffset;
         varying vec2 vUv;
 
         const float RD_PI = 3.141592653589793;
@@ -244,7 +261,26 @@ export const ReDriveVolumePostProcessingShader = {
 
         void main() {
             vec4 source = texture2D(tDiffuse, vUv);
-            vec3 color = source.rgb;
+            vec3 color;
+
+            if (
+                uChromaticAberrationEnabled > 0.5
+                && uChromaticAberrationIntensity > 0.0001
+            ) {
+                // Unity URP 14 UberPost: fast chromatic aberration is exactly
+                // three source samples and scales serialized intensity by .05.
+                vec2 coords = 2.0 * vUv - 1.0;
+                float chromaAmount = uChromaticAberrationIntensity * 0.05;
+                vec2 end = vUv - coords * dot(coords, coords) * chromaAmount;
+                vec2 delta = (end - vUv) / 3.0;
+                color = vec3(
+                    source.r,
+                    texture2D(tDiffuse, vUv + delta).g,
+                    texture2D(tDiffuse, vUv + delta * 2.0).b
+                );
+            } else {
+                color = source.rgb;
+            }
 
             if (uVignetteEnabled > 0.5 && uVignetteIntensity > 0.0001) {
                 // Unity URP 14 (Unity 2022.3) SetupVignette multiplies the
@@ -279,7 +315,108 @@ export const ReDriveVolumePostProcessingShader = {
                 color = mix(vec3(luma), color, saturation);
             }
 
+            if (uFilmGrainEnabled > 0.5 && uFilmGrainIntensity > 0.0001) {
+                // Unity URP 14 Common.hlsl ApplyGrain and PostProcessUtils:
+                // alpha-channel grain, neutral .5, intensity * 4, luminance
+                // response after color grading, LinearRepeat sampler.
+                float grain = texture2D(
+                    uFilmGrainTexture,
+                    vUv * uFilmGrainScale + uFilmGrainOffset
+                ).a;
+                grain = (grain - 0.5) * 2.0;
+                float lum = dot(color, vec3(0.2126729, 0.7151522, 0.0721750));
+                lum = 1.0 - sqrt(lum);
+                lum = mix(1.0, lum, uFilmGrainResponse);
+                color = color
+                    + color * grain * (uFilmGrainIntensity * 4.0) * lum;
+            }
+
             gl_FragColor = vec4(max(color, vec3(0.0)), source.a);
         }
     `,
+}
+
+export interface FilmGrainRuntimeState {
+    enabled: boolean
+    frameIndex: number
+    textureSize: [number, number]
+    drawingBufferSize: [number, number]
+    scale: [number, number]
+    offset: [number, number]
+    sampler: 'linear-repeat'
+    intensityScale: 4
+    offsetSource: 'two-random-values-per-render'
+}
+
+/**
+ * ShaderPass wrapper for URP's per-frame FilmGrain tiling parameters.
+ *
+ * PostProcessUtils derives scale from drawing-buffer/texture dimensions and
+ * refreshes two random offsets each frame. Native Unity's random sequence is
+ * process-state dependent; the Viewer preserves the same two-uniform-random
+ * mechanism without treating a captured frame's offsets as stable asset data.
+ */
+export class ReDriveVolumePostProcessingPass extends ShaderPass {
+    readonly filmGrainRuntime: FilmGrainRuntimeState = {
+        enabled: false,
+        frameIndex: 0,
+        textureSize: [0, 0],
+        drawingBufferSize: [0, 0],
+        scale: [0, 0],
+        offset: [0, 0],
+        sampler: 'linear-repeat',
+        intensityScale: 4,
+        offsetSource: 'two-random-values-per-render',
+    }
+
+    private readonly drawingBufferSize = new THREE.Vector2()
+
+    constructor() {
+        super(ReDriveVolumePostProcessingShader)
+        this.enabled = false
+    }
+
+    resetFilmGrainRuntime() {
+        this.filmGrainRuntime.enabled = false
+        this.filmGrainRuntime.frameIndex = 0
+        this.filmGrainRuntime.textureSize = [0, 0]
+        this.filmGrainRuntime.drawingBufferSize = [0, 0]
+        this.filmGrainRuntime.scale = [0, 0]
+        this.filmGrainRuntime.offset = [0, 0]
+    }
+
+    override render(
+        renderer: THREE.WebGLRenderer,
+        writeBuffer: THREE.WebGLRenderTarget,
+        readBuffer: THREE.WebGLRenderTarget,
+        deltaTime: number,
+        maskActive: boolean,
+    ) {
+        const enabled = this.uniforms.uFilmGrainEnabled.value > 0.5
+        const texture = this.uniforms.uFilmGrainTexture.value as THREE.Texture | null
+        const image = texture?.image as { width?: number, height?: number } | undefined
+        const textureWidth = Number(image?.width ?? 0)
+        const textureHeight = Number(image?.height ?? 0)
+        if (enabled && textureWidth > 0 && textureHeight > 0) {
+            renderer.getDrawingBufferSize(this.drawingBufferSize)
+            const scaleX = this.drawingBufferSize.x / textureWidth
+            const scaleY = this.drawingBufferSize.y / textureHeight
+            const offsetX = Math.random()
+            const offsetY = Math.random()
+            this.uniforms.uFilmGrainScale.value.set(scaleX, scaleY)
+            this.uniforms.uFilmGrainOffset.value.set(offsetX, offsetY)
+            this.filmGrainRuntime.enabled = true
+            this.filmGrainRuntime.frameIndex += 1
+            this.filmGrainRuntime.textureSize = [textureWidth, textureHeight]
+            this.filmGrainRuntime.drawingBufferSize = [
+                this.drawingBufferSize.x,
+                this.drawingBufferSize.y,
+            ]
+            this.filmGrainRuntime.scale = [scaleX, scaleY]
+            this.filmGrainRuntime.offset = [offsetX, offsetY]
+        } else {
+            this.filmGrainRuntime.enabled = false
+        }
+        super.render(renderer, writeBuffer, readBuffer, deltaTime, maskActive)
+    }
 }

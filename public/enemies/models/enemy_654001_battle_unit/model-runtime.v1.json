@@ -1,0 +1,372 @@
+{
+  "schema": "magius.enemy-model-runtime.v1",
+  "modelPrefabName": "enemy_654001_battle_unit",
+  "unityVersion": "2022.3.62f2",
+  "rootName": "enemy_654001_battle_unit",
+  "sourceBundleKey": "AssetBundles/battle/enemy/enemy_654001_battle_unit",
+  "dependencyBundleKeys": [
+    "AssetBundles/shader/common/texture/cloud_noise",
+    "AssetBundles/shader/enemy_uber",
+    "AssetBundles/model/battle_unit/e7af55510c1bce54b85854fb279a92e5",
+    "AssetBundles/shader/effect",
+    "AssetBundles/shader/common/texture/simple_noise",
+    "AssetBundles/animator/battle_unit/203042a3621d3164cb4540936061f93d",
+    "AssetBundles/texture/battle_unit/144b274b740a4a847bdb030ff308bd2c",
+    "AssetBundles/texture/battle_unit/41db974afc8618c43ae4177fded3932b",
+    "AssetBundles/animator/battle_unit/71a243caa5c4b004594fa27627cc2186"
+  ],
+  "modelBundleKeys": [
+    "AssetBundles/model/battle_unit/e7af55510c1bce54b85854fb279a92e5"
+  ],
+  "animatorBundleKeys": [
+    "AssetBundles/animator/battle_unit/203042a3621d3164cb4540936061f93d",
+    "AssetBundles/animator/battle_unit/71a243caa5c4b004594fa27627cc2186"
+  ],
+  "textureBundleKeys": [
+    "AssetBundles/texture/battle_unit/144b274b740a4a847bdb030ff308bd2c",
+    "AssetBundles/texture/battle_unit/41db974afc8618c43ae4177fded3932b"
+  ],
+  "shaderBundleKeys": [
+    "AssetBundles/shader/common/texture/cloud_noise",
+    "AssetBundles/shader/enemy_uber",
+    "AssetBundles/shader/effect",
+    "AssetBundles/shader/common/texture/simple_noise"
+  ],
+  "controllers": [
+    {
+      "type": "AnimatorController",
+      "pathId": "201050322075546145",
+      "name": "EnemyDefault"
+    },
+    {
+      "type": "AnimatorOverrideController",
+      "pathId": "8898329528784846715",
+      "name": "enemy_654001_model"
+    },
+    {
+      "type": "AnimatorController",
+      "pathId": "201050322075546145",
+      "name": "EnemyDefault"
+    },
+    {
+      "type": "AnimatorOverrideController",
+      "pathId": "3420585259921448349",
+      "name": "enemy_654001_weapon_a_model"
+    }
+  ],
+  "clips": [
+    {
+      "pathId": "-7318612711536120170",
+      "sourceName": "Attack",
+      "runtimeName": "Attack",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-7318612711536120170",
+      "sourceName": "Attack",
+      "runtimeName": "Attack_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-6961174274137531351",
+      "sourceName": "Abnormality_L",
+      "runtimeName": "Abnormality_L",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 61
+    },
+    {
+      "pathId": "-6133563632105523281",
+      "sourceName": "Down_SE",
+      "runtimeName": "Down_SE",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 61
+    },
+    {
+      "pathId": "-5882742877256905680",
+      "sourceName": "Abnormality_S",
+      "runtimeName": "Abnormality_S",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-5882742877256905680",
+      "sourceName": "Abnormality_S",
+      "runtimeName": "Abnormality_S_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-4302430826712377044",
+      "sourceName": "Abnormality_E",
+      "runtimeName": "Abnormality_E",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-4302430826712377044",
+      "sourceName": "Abnormality_E",
+      "runtimeName": "Abnormality_E_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-4108527823123309168",
+      "sourceName": "BuffDebuff_Color_SE",
+      "runtimeName": "BuffDebuff_Color_SE",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-4108527823123309168",
+      "sourceName": "BuffDebuff_Color_SE",
+      "runtimeName": "BuffDebuff_Color_SE_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-3039783462124726250",
+      "sourceName": "Wait",
+      "runtimeName": "Wait",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-3039783462124726250",
+      "sourceName": "Wait",
+      "runtimeName": "Wait_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-2910214253027362258",
+      "sourceName": "Abnormality_E",
+      "runtimeName": "Abnormality_E_2",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 61
+    },
+    {
+      "pathId": "-2831843390703844613",
+      "sourceName": "Down_SE",
+      "runtimeName": "Down_SE_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 1
+    },
+    {
+      "pathId": "-2339230774341367805",
+      "sourceName": "Damage_Abnormality",
+      "runtimeName": "Damage_Abnormality",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-2339230774341367805",
+      "sourceName": "Damage_Abnormality",
+      "runtimeName": "Damage_Abnormality_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-417280598910446579",
+      "sourceName": "Damage_SE",
+      "runtimeName": "Damage_SE",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 1
+    },
+    {
+      "pathId": "-294260958595093627",
+      "sourceName": "Wait_L",
+      "runtimeName": "Wait_L",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 1
+    },
+    {
+      "pathId": "-232488306442334884",
+      "sourceName": "Damage",
+      "runtimeName": "Damage",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-232488306442334884",
+      "sourceName": "Damage",
+      "runtimeName": "Damage_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "490001811087709064",
+      "sourceName": "Abnormality_L",
+      "runtimeName": "Abnormality_L_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "490001811087709064",
+      "sourceName": "Abnormality_L",
+      "runtimeName": "Abnormality_L_2",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "820031091170312472",
+      "sourceName": "Damage_SE",
+      "runtimeName": "Damage_SE_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 61
+    },
+    {
+      "pathId": "2485526768216804431",
+      "sourceName": "Down",
+      "runtimeName": "Down",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "2485526768216804431",
+      "sourceName": "Down",
+      "runtimeName": "Down_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "3390087444193813931",
+      "sourceName": "Abnormality_E",
+      "runtimeName": "Abnormality_E_3",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 1
+    },
+    {
+      "pathId": "4418675985599910716",
+      "sourceName": "Wait_L",
+      "runtimeName": "Wait_L_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 61
+    },
+    {
+      "pathId": "5954629597237631472",
+      "sourceName": "Abnormality_S",
+      "runtimeName": "Abnormality_S_2",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 61
+    },
+    {
+      "pathId": "8021878223422875510",
+      "sourceName": "Abnormality_L",
+      "runtimeName": "Abnormality_L_3",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 1
+    },
+    {
+      "pathId": "8622069362600161607",
+      "sourceName": "Abnormality_S",
+      "runtimeName": "Abnormality_S_3",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 1
+    }
+  ],
+  "materials": [
+    {
+      "pathId": "-4541868401033188185",
+      "name": "mt_enemy_654001_core_emission1"
+    },
+    {
+      "pathId": "-2918202323974845641",
+      "name": "mt_enemy_654001_weapon_a_grip_color"
+    },
+    {
+      "pathId": "-2103755888640647574",
+      "name": "mt_enemy_654001_eye_emission1"
+    },
+    {
+      "pathId": "-1217488359724439370",
+      "name": "mt_enemy_654001_body_matcap1"
+    },
+    {
+      "pathId": "-314423218572810695",
+      "name": "eff_smoke"
+    },
+    {
+      "pathId": "81638780718586680",
+      "name": "mt_enemy_654001_weapon_a_blade_matcap1"
+    },
+    {
+      "pathId": "1439354620318830323",
+      "name": "mt_enemy_654001_weapon_a_matcap1"
+    },
+    {
+      "pathId": "1730585254398641157",
+      "name": "mt_enemy_654001_smoke"
+    },
+    {
+      "pathId": "3729308940590329905",
+      "name": "mt_enemy_654001_leather_matcap1"
+    },
+    {
+      "pathId": "5969566282037467835",
+      "name": "eff_fire_dissolve"
+    },
+    {
+      "pathId": "6891295023275566862",
+      "name": "eff_grain"
+    },
+    {
+      "pathId": "-4541868401033188185",
+      "name": "mt_enemy_654001_core_emission1"
+    },
+    {
+      "pathId": "-2103755888640647574",
+      "name": "mt_enemy_654001_eye_emission1"
+    },
+    {
+      "pathId": "-1217488359724439370",
+      "name": "mt_enemy_654001_body_matcap1"
+    },
+    {
+      "pathId": "1730585254398641157",
+      "name": "mt_enemy_654001_smoke"
+    },
+    {
+      "pathId": "3729308940590329905",
+      "name": "mt_enemy_654001_leather_matcap1"
+    }
+  ],
+  "runtime": {
+    "modelUrl": "/enemies/models/enemy_654001_battle_unit/VisualRoot.fbxdata",
+    "textureFiles": [
+      "enemy_654001_weapon_a_color.png",
+      "matcap_softmercury.png"
+    ]
+  }
+}

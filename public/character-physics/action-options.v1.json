@@ -1,0 +1,694 @@
+{
+  "schema": "magius.character-physics-action-options.v1",
+  "lookupKey": "characterResourceId+phaseStableKey",
+  "bindingIdentity": "sourceStableKey+Unity pathID+exact phase-relative path",
+  "counts": {
+    "characters": 2,
+    "actionPhases": 4,
+    "actionRegistrationBindings": 4,
+    "auxiliaryRegistrationBindings": 3,
+    "relatedViewerActionOptions": 6,
+    "relatedViewerActionsSourceAvailable": 5,
+    "relatedViewerActionsUnavailable": 1,
+    "failClosed": 0
+  },
+  "policy": {
+    "phaseToViewerActionMapping": "not-inferred",
+    "externalBinding": "exact-registration-only",
+    "missingBinding": "fail-closed",
+    "uiAvailability": "show-source-options;disable-unregistered-playback"
+  },
+  "entries": [
+    {
+      "stableKey": "character-physics-action-phase:source=battle/character/chara_113701_battle_unit|timelineAssetPathID=2175247223405468023",
+      "optionValue": "character-physics-action-phase:source=battle/character/chara_113701_battle_unit|timelineAssetPathID=2175247223405468023",
+      "character": {
+        "style3dCharacterMstId": 100102,
+        "characterResourceId": 113701,
+        "resourceName": "chara_113701_battle_unit",
+        "displayName": "アルティメットまどか/魔法少女"
+      },
+      "phaseKind": "special-skill-reserve-and-pre-special",
+      "officialDisplayName": "CharacterSpReserveAndPreSpTimeline113701",
+      "phaseRoot": {
+        "officialGameObjectName": "CharacterSpReserveAndPreSpTimeline113701",
+        "binding": {
+          "stableKey": "unity-transform:bundle=battle/character/chara_113701_battle_unit|pathID=-5880277461495092600",
+          "transformPathID": "-5880277461495092600",
+          "gameObjectPathID": "-1354652559092869662",
+          "hierarchyPath": "CharacterSpReserveAndPreSpTimeline113701",
+          "modelRelativePath": null,
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -6.0
+            },
+            "localRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        }
+      },
+      "timeline": {
+        "playableDirectorPathID": "6205608978701261262",
+        "timelineAssetPathID": "2175247223405468023",
+        "timelineAssetName": "CharacterSpReserveAndPreSpTimeline113701",
+        "durationMode": 0,
+        "fixedDurationSeconds": 1.6666666666666667,
+        "frameRate": 60.0,
+        "initialState": 1,
+        "wrapMode": 2
+      },
+      "registrationBindings": [
+        {
+          "stableKey": "character-physics-action-phase:source=battle/character/chara_113701_battle_unit|timelineAssetPathID=2175247223405468023|binding=unity-transform:bundle=battle/character/chara_113701_battle_unit|pathID=-5398742658366186005",
+          "componentKind": "MagicaWindZone",
+          "componentStableKey": "unity-component:bundle=battle/character/chara_113701_battle_unit|pathID=-4831004374295997224",
+          "bindingStableKey": "unity-transform:bundle=battle/character/chara_113701_battle_unit|pathID=-5398742658366186005",
+          "exactRelativePath": "WindZone",
+          "binding": {
+            "stableKey": "unity-transform:bundle=battle/character/chara_113701_battle_unit|pathID=-5398742658366186005",
+            "transformPathID": "-5398742658366186005",
+            "gameObjectPathID": "-3950837431448682597",
+            "hierarchyPath": "CharacterSpReserveAndPreSpTimeline113701/WindZone",
+            "modelRelativePath": null,
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 3.0
+              },
+              "localRotation": {
+                "x": -0.0,
+                "y": 0.9914448857307434,
+                "z": 0.13052624464035034,
+                "w": 0.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          "activation": {
+            "componentEnabled": true,
+            "gameObjectActive": true,
+            "activeInHierarchy": true
+          }
+        }
+      ],
+      "availability": {
+        "sourceStatus": "source-ready",
+        "bindingStatus": "runtime-ready",
+        "playbackStatus": "consumer-pending",
+        "failClosedReasons": [
+          "official-action-phase-playback-consumer-not-attached"
+        ]
+      }
+    },
+    {
+      "stableKey": "character-physics-action-phase:source=battle/character/chara_113701_battle_unit|timelineAssetPathID=-9136698297804353728",
+      "optionValue": "character-physics-action-phase:source=battle/character/chara_113701_battle_unit|timelineAssetPathID=-9136698297804353728",
+      "character": {
+        "style3dCharacterMstId": 100102,
+        "characterResourceId": 113701,
+        "resourceName": "chara_113701_battle_unit",
+        "displayName": "アルティメットまどか/魔法少女"
+      },
+      "phaseKind": "special-skill-reserve",
+      "officialDisplayName": "SpecialSkillReserveTimeline113701",
+      "phaseRoot": {
+        "officialGameObjectName": "CharacterSpReserveTimeline113701",
+        "binding": {
+          "stableKey": "unity-transform:bundle=battle/character/chara_113701_battle_unit|pathID=4336582231380102880",
+          "transformPathID": "4336582231380102880",
+          "gameObjectPathID": "-7796807789547483648",
+          "hierarchyPath": "CharacterSpReserveTimeline113701",
+          "modelRelativePath": null,
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -6.0
+            },
+            "localRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        }
+      },
+      "timeline": {
+        "playableDirectorPathID": "6081478423251562152",
+        "timelineAssetPathID": "-9136698297804353728",
+        "timelineAssetName": "SpecialSkillReserveTimeline113701",
+        "durationMode": 0,
+        "fixedDurationSeconds": 0.0,
+        "frameRate": 60.0,
+        "initialState": 1,
+        "wrapMode": 2
+      },
+      "registrationBindings": [
+        {
+          "stableKey": "character-physics-action-phase:source=battle/character/chara_113701_battle_unit|timelineAssetPathID=-9136698297804353728|binding=unity-transform:bundle=battle/character/chara_113701_battle_unit|pathID=4625768391994278359",
+          "componentKind": "MagicaWindZone",
+          "componentStableKey": "unity-component:bundle=battle/character/chara_113701_battle_unit|pathID=1411922482204877688",
+          "bindingStableKey": "unity-transform:bundle=battle/character/chara_113701_battle_unit|pathID=4625768391994278359",
+          "exactRelativePath": "WindZone",
+          "binding": {
+            "stableKey": "unity-transform:bundle=battle/character/chara_113701_battle_unit|pathID=4625768391994278359",
+            "transformPathID": "4625768391994278359",
+            "gameObjectPathID": "4041179349790236370",
+            "hierarchyPath": "CharacterSpReserveTimeline113701/WindZone",
+            "modelRelativePath": null,
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 3.0
+              },
+              "localRotation": {
+                "x": -0.0,
+                "y": 0.9914448857307434,
+                "z": 0.13052624464035034,
+                "w": 0.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          "activation": {
+            "componentEnabled": true,
+            "gameObjectActive": true,
+            "activeInHierarchy": true
+          }
+        }
+      ],
+      "availability": {
+        "sourceStatus": "source-ready",
+        "bindingStatus": "runtime-ready",
+        "playbackStatus": "consumer-pending",
+        "failClosedReasons": [
+          "official-action-phase-playback-consumer-not-attached"
+        ]
+      }
+    },
+    {
+      "stableKey": "character-physics-action-phase:source=battle/character/chara_113801_battle_unit|timelineAssetPathID=-4708267002429676574",
+      "optionValue": "character-physics-action-phase:source=battle/character/chara_113801_battle_unit|timelineAssetPathID=-4708267002429676574",
+      "character": {
+        "style3dCharacterMstId": 113801,
+        "characterResourceId": 113801,
+        "resourceName": "chara_113801_battle_unit",
+        "displayName": "悪魔ほむら/魔法少女"
+      },
+      "phaseKind": "special-skill-reserve-and-pre-special",
+      "officialDisplayName": "CharacterSpReserveAndPreSpTimeline113801",
+      "phaseRoot": {
+        "officialGameObjectName": "CharacterSpReserveAndPreSpTimeline113801",
+        "binding": {
+          "stableKey": "unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=-818057441804196266",
+          "transformPathID": "-818057441804196266",
+          "gameObjectPathID": "2092446788672522403",
+          "hierarchyPath": "CharacterSpReserveAndPreSpTimeline113801",
+          "modelRelativePath": null,
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -6.0
+            },
+            "localRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        }
+      },
+      "timeline": {
+        "playableDirectorPathID": "2544092863923626801",
+        "timelineAssetPathID": "-4708267002429676574",
+        "timelineAssetName": "CharacterSpReserveAndPreSpTimeline113801",
+        "durationMode": 0,
+        "fixedDurationSeconds": 1.6666666666666667,
+        "frameRate": 60.0,
+        "initialState": 1,
+        "wrapMode": 2
+      },
+      "registrationBindings": [
+        {
+          "stableKey": "character-physics-action-phase:source=battle/character/chara_113801_battle_unit|timelineAssetPathID=-4708267002429676574|binding=unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=8405514293429869145",
+          "componentKind": "MagicaWindZone",
+          "componentStableKey": "unity-component:bundle=battle/character/chara_113801_battle_unit|pathID=8289888256128292077",
+          "bindingStableKey": "unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=8405514293429869145",
+          "exactRelativePath": "WindZone",
+          "binding": {
+            "stableKey": "unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=8405514293429869145",
+            "transformPathID": "8405514293429869145",
+            "gameObjectPathID": "-6743758015971550228",
+            "hierarchyPath": "CharacterSpReserveAndPreSpTimeline113801/WindZone",
+            "modelRelativePath": null,
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 3.0
+              },
+              "localRotation": {
+                "x": -0.0,
+                "y": 0.9914448857307434,
+                "z": 0.13052624464035034,
+                "w": 0.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          "activation": {
+            "componentEnabled": true,
+            "gameObjectActive": true,
+            "activeInHierarchy": true
+          }
+        }
+      ],
+      "availability": {
+        "sourceStatus": "source-ready",
+        "bindingStatus": "runtime-ready",
+        "playbackStatus": "consumer-pending",
+        "failClosedReasons": [
+          "official-action-phase-playback-consumer-not-attached"
+        ]
+      }
+    },
+    {
+      "stableKey": "character-physics-action-phase:source=battle/character/chara_113801_battle_unit|timelineAssetPathID=-6779827358699740058",
+      "optionValue": "character-physics-action-phase:source=battle/character/chara_113801_battle_unit|timelineAssetPathID=-6779827358699740058",
+      "character": {
+        "style3dCharacterMstId": 113801,
+        "characterResourceId": 113801,
+        "resourceName": "chara_113801_battle_unit",
+        "displayName": "悪魔ほむら/魔法少女"
+      },
+      "phaseKind": "special-skill-reserve",
+      "officialDisplayName": "SpecialSkillReserveTimeline113801",
+      "phaseRoot": {
+        "officialGameObjectName": "CharacterSpReserveTimeline113801",
+        "binding": {
+          "stableKey": "unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=-7377763875265986894",
+          "transformPathID": "-7377763875265986894",
+          "gameObjectPathID": "-4138018719354420507",
+          "hierarchyPath": "CharacterSpReserveTimeline113801",
+          "modelRelativePath": null,
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -6.0
+            },
+            "localRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        }
+      },
+      "timeline": {
+        "playableDirectorPathID": "452147227101594328",
+        "timelineAssetPathID": "-6779827358699740058",
+        "timelineAssetName": "SpecialSkillReserveTimeline113801",
+        "durationMode": 0,
+        "fixedDurationSeconds": 0.0,
+        "frameRate": 60.0,
+        "initialState": 1,
+        "wrapMode": 2
+      },
+      "registrationBindings": [
+        {
+          "stableKey": "character-physics-action-phase:source=battle/character/chara_113801_battle_unit|timelineAssetPathID=-6779827358699740058|binding=unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=821346753960713699",
+          "componentKind": "MagicaWindZone",
+          "componentStableKey": "unity-component:bundle=battle/character/chara_113801_battle_unit|pathID=-668315389718705868",
+          "bindingStableKey": "unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=821346753960713699",
+          "exactRelativePath": "WindZone",
+          "binding": {
+            "stableKey": "unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=821346753960713699",
+            "transformPathID": "821346753960713699",
+            "gameObjectPathID": "-5740066855811211417",
+            "hierarchyPath": "CharacterSpReserveTimeline113801/WindZone",
+            "modelRelativePath": null,
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 3.0
+              },
+              "localRotation": {
+                "x": -0.0,
+                "y": 0.9914448857307434,
+                "z": 0.13052624464035034,
+                "w": 0.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          "activation": {
+            "componentEnabled": true,
+            "gameObjectActive": true,
+            "activeInHierarchy": true
+          }
+        }
+      ],
+      "availability": {
+        "sourceStatus": "source-ready",
+        "bindingStatus": "runtime-ready",
+        "playbackStatus": "consumer-pending",
+        "failClosedReasons": [
+          "official-action-phase-playback-consumer-not-attached"
+        ]
+      }
+    }
+  ],
+  "viewerActionOptions": [
+    {
+      "actionId": "official-combat:113701:11370101:1085:108501:chara_113701_normalattack_00",
+      "label": "Madoka Kaname · Nothing to Despair, Ever · Basic Attack",
+      "characterResourceId": 113701,
+      "style3dCharacterMstId": 100102,
+      "availability": {
+        "status": "source-available",
+        "reason": null,
+        "regionBundlePresence": {
+          "steamJP": true,
+          "jpMobile": true,
+          "tw": true
+        }
+      },
+      "semantic": "normalAttack",
+      "directionName": "chara_113701_normalattack_00",
+      "runtimeUrl": "/character-actions/combat-jump/runtime/113701/runtime.v1.json.gz",
+      "phaseBindingRelation": "character-identity-only-no-phase-inference"
+    },
+    {
+      "actionId": "official-combat:113701:11370101:1086:108601:chara_113701_singleskill_00",
+      "label": "Madoka Kaname · Nothing to Despair, Ever · Light Arrow",
+      "characterResourceId": 113701,
+      "style3dCharacterMstId": 100102,
+      "availability": {
+        "status": "source-available",
+        "reason": null,
+        "regionBundlePresence": {
+          "steamJP": true,
+          "jpMobile": true,
+          "tw": true
+        }
+      },
+      "semantic": "skill",
+      "directionName": "chara_113701_singleskill_00",
+      "runtimeUrl": "/character-actions/combat-jump/runtime/113701/runtime.v1.json.gz",
+      "phaseBindingRelation": "character-identity-only-no-phase-inference"
+    },
+    {
+      "actionId": "official-combat:113701:11370101:1087:108701:special_skill_direction_11370101",
+      "label": "Madoka Kaname · Nothing to Despair, Ever · Nothing to Despair, Ever",
+      "characterResourceId": 113701,
+      "style3dCharacterMstId": 100102,
+      "availability": {
+        "status": "unavailable",
+        "reason": "1 external weapon/attachment copy clips require separate instances",
+        "regionBundlePresence": {
+          "steamJP": true,
+          "jpMobile": true,
+          "tw": true
+        }
+      },
+      "semantic": "special",
+      "directionName": "special_skill_direction_11370101",
+      "runtimeUrl": null,
+      "phaseBindingRelation": "character-identity-only-no-phase-inference"
+    },
+    {
+      "actionId": "official-combat:113801:11380101:1238:123801:chara_113801_normalattack_00",
+      "label": "Homura Akemi · Falsified Phenomena · Basic Attack",
+      "characterResourceId": 113801,
+      "style3dCharacterMstId": 113801,
+      "availability": {
+        "status": "source-available",
+        "reason": null,
+        "regionBundlePresence": {
+          "steamJP": true,
+          "jpMobile": true,
+          "tw": true
+        }
+      },
+      "semantic": "normalAttack",
+      "directionName": "chara_113801_normalattack_00",
+      "runtimeUrl": "/character-actions/combat-jump/runtime/113801/runtime.v1.json.gz",
+      "phaseBindingRelation": "character-identity-only-no-phase-inference"
+    },
+    {
+      "actionId": "official-combat:113801:11380101:1239:123901:chara_113801_wholeskill_01",
+      "label": "Homura Akemi · Falsified Phenomena · Doll Toss",
+      "characterResourceId": 113801,
+      "style3dCharacterMstId": 113801,
+      "availability": {
+        "status": "source-available",
+        "reason": null,
+        "regionBundlePresence": {
+          "steamJP": true,
+          "jpMobile": true,
+          "tw": true
+        }
+      },
+      "semantic": "skill",
+      "directionName": "chara_113801_wholeskill_01",
+      "runtimeUrl": "/character-actions/combat-jump/runtime/113801/runtime.v1.json.gz",
+      "phaseBindingRelation": "character-identity-only-no-phase-inference"
+    },
+    {
+      "actionId": "official-combat:113801:11380101:1240:124001:special_skill_direction_11380101",
+      "label": "Homura Akemi · Falsified Phenomena · Falsified Phenomena",
+      "characterResourceId": 113801,
+      "style3dCharacterMstId": 113801,
+      "availability": {
+        "status": "source-available",
+        "reason": null,
+        "regionBundlePresence": {
+          "steamJP": true,
+          "jpMobile": true,
+          "tw": true
+        }
+      },
+      "semantic": "special",
+      "directionName": "special_skill_direction_11380101",
+      "runtimeUrl": "/character-actions/combat-jump/runtime/113801/runtime.v1.json.gz",
+      "phaseBindingRelation": "character-identity-only-no-phase-inference"
+    }
+  ],
+  "auxiliaryRegistrations": [
+    {
+      "stableKey": "character-physics-auxiliary-binding:source=battle/character/chara_113701_battle_unit|componentPathID=-7961013035143824551",
+      "character": {
+        "style3dCharacterMstId": 100102,
+        "characterResourceId": 113701,
+        "resourceName": "chara_113701_battle_unit",
+        "displayName": "アルティメットまどか/魔法少女"
+      },
+      "componentKind": "MeshCollider",
+      "componentStableKey": "unity-component:bundle=battle/character/chara_113701_battle_unit|pathID=-7961013035143824551",
+      "prefabRootName": "eff_ui_SwitchSkill_Button_113701_02",
+      "bindingStableKey": "unity-transform:bundle=battle/character/chara_113701_battle_unit|pathID=8074392700209141162",
+      "exactRelativePath": "dummy_01/dummy_loop/back_03",
+      "binding": {
+        "stableKey": "unity-transform:bundle=battle/character/chara_113701_battle_unit|pathID=8074392700209141162",
+        "transformPathID": "8074392700209141162",
+        "gameObjectPathID": "-142234703182356088",
+        "hierarchyPath": "eff_ui_SwitchSkill_Button_113701_02/dummy_01/dummy_loop/back_03",
+        "modelRelativePath": null,
+        "visualRootRelativePath": null,
+        "localTRS": {
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 10.0,
+            "y": 10.0,
+            "z": 10.0
+          }
+        }
+      },
+      "activation": {
+        "componentEnabled": true,
+        "gameObjectActive": true,
+        "activeInHierarchy": true
+      },
+      "scope": "auxiliary-prefab-registration",
+      "selectableAction": false,
+      "availability": {
+        "sourceStatus": "source-ready",
+        "bindingStatus": "runtime-ready",
+        "failClosedReasons": []
+      }
+    },
+    {
+      "stableKey": "character-physics-auxiliary-binding:source=battle/character/chara_113801_battle_unit|componentPathID=5539499425831050691",
+      "character": {
+        "style3dCharacterMstId": 113801,
+        "characterResourceId": 113801,
+        "resourceName": "chara_113801_battle_unit",
+        "displayName": "悪魔ほむら/魔法少女"
+      },
+      "componentKind": "MeshCollider",
+      "componentStableKey": "unity-component:bundle=battle/character/chara_113801_battle_unit|pathID=5539499425831050691",
+      "prefabRootName": "eff_ui_SwitchSkill_Button_113801_02",
+      "bindingStableKey": "unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=-1182946807660858858",
+      "exactRelativePath": "dummy_01/back_03",
+      "binding": {
+        "stableKey": "unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=-1182946807660858858",
+        "transformPathID": "-1182946807660858858",
+        "gameObjectPathID": "-456243414938459916",
+        "hierarchyPath": "eff_ui_SwitchSkill_Button_113801_02/dummy_01/back_03",
+        "modelRelativePath": null,
+        "visualRootRelativePath": null,
+        "localTRS": {
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 10.0,
+            "y": 10.0,
+            "z": 10.0
+          }
+        }
+      },
+      "activation": {
+        "componentEnabled": true,
+        "gameObjectActive": true,
+        "activeInHierarchy": true
+      },
+      "scope": "auxiliary-prefab-registration",
+      "selectableAction": false,
+      "availability": {
+        "sourceStatus": "source-ready",
+        "bindingStatus": "runtime-ready",
+        "failClosedReasons": []
+      }
+    },
+    {
+      "stableKey": "character-physics-auxiliary-binding:source=battle/character/chara_113801_battle_unit|componentPathID=759577841743016468",
+      "character": {
+        "style3dCharacterMstId": 113801,
+        "characterResourceId": 113801,
+        "resourceName": "chara_113801_battle_unit",
+        "displayName": "悪魔ほむら/魔法少女"
+      },
+      "componentKind": "MeshCollider",
+      "componentStableKey": "unity-component:bundle=battle/character/chara_113801_battle_unit|pathID=759577841743016468",
+      "prefabRootName": "eff_ui_SwitchSkill_Button_113801_01",
+      "bindingStableKey": "unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=-1577766245834484296",
+      "exactRelativePath": "dummy_01/back_05",
+      "binding": {
+        "stableKey": "unity-transform:bundle=battle/character/chara_113801_battle_unit|pathID=-1577766245834484296",
+        "transformPathID": "-1577766245834484296",
+        "gameObjectPathID": "-7217237710244216348",
+        "hierarchyPath": "eff_ui_SwitchSkill_Button_113801_01/dummy_01/back_05",
+        "modelRelativePath": null,
+        "visualRootRelativePath": null,
+        "localTRS": {
+          "localPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "localRotation": {
+            "x": -0.0,
+            "y": -0.0,
+            "z": -0.0,
+            "w": 1.0
+          },
+          "localScale": {
+            "x": 10.0,
+            "y": 10.0,
+            "z": 10.0
+          }
+        }
+      },
+      "activation": {
+        "componentEnabled": true,
+        "gameObjectActive": true,
+        "activeInHierarchy": true
+      },
+      "scope": "auxiliary-prefab-registration",
+      "selectableAction": false,
+      "availability": {
+        "sourceStatus": "source-ready",
+        "bindingStatus": "runtime-ready",
+        "failClosedReasons": []
+      }
+    }
+  ],
+  "failClosedRecords": []
+}

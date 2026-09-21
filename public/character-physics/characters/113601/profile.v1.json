@@ -1,0 +1,140 @@
+{
+  "schema": "magius.character-physics-profile.v1",
+  "stableKey": "character-physics:style3dCharacterMstId=113601|resourceName=chara_113601_model",
+  "identity": {
+    "style3dCharacterMstId": 113601,
+    "characterResourceId": 113601,
+    "resourceName": "chara_113601_model",
+    "displayName": "ヨダカ"
+  },
+  "source": {
+    "sourceStableKey": "assetbundle:home/chara_113601_model",
+    "logicalKey": "home/chara_113601_model",
+    "unityVersion": "2022.3.62f2"
+  },
+  "runtime": {
+    "status": "runtime-ready",
+    "failClosedReasons": [],
+    "bindingPolicy": {
+      "identity": "logicalKey+pathID+exact-model-relative-path",
+      "nameFallback": false,
+      "missingBinding": "fail-closed-component",
+      "writerPolicy": "single-post-animation-physics-writer",
+      "actionOwnedBonePolicy": "animation-pose-is-read-only-input"
+    },
+    "fixedStepSeconds": 0.011111111111111112,
+    "maximumCatchUpSteps": 3
+  },
+  "counts": {
+    "magicaCloth": 0,
+    "magicaCapsuleCollider": 0,
+    "magicaSphereCollider": 0,
+    "magicaPlaneCollider": 0,
+    "otherMagicaComponents": 0,
+    "magicaWindZone": 0,
+    "nativePhysicsComponents": 1,
+    "physicsTransformBindings": 1,
+    "runtimeReadyCloth": 0,
+    "inactiveCloth": 0,
+    "failClosedCloth": 0
+  },
+  "components": {
+    "cloth": [],
+    "colliders": [],
+    "windZones": [],
+    "otherMagica": [],
+    "native": [
+      {
+        "type": "SphereCollider",
+        "stableKey": "unity-component:bundle=home/chara_113601_model|pathID=-8417501127290779720",
+        "componentPathID": "-8417501127290779720",
+        "binding": {
+          "stableKey": "unity-transform:bundle=home/chara_113601_model|pathID=1057236468115066219",
+          "transformPathID": "1057236468115066219",
+          "gameObjectPathID": "7940509137851372781",
+          "hierarchyPath": "chara_113601_model/chara_113601",
+          "modelRelativePath": null,
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "localRotation": {
+              "x": -0.0,
+              "y": -0.0,
+              "z": -0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        "activation": {
+          "componentEnabled": true,
+          "gameObjectActive": true,
+          "activeInHierarchy": true
+        },
+        "serialized": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "7940509137851372781"
+          },
+          "m_Material": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "m_IncludeLayers": {
+            "m_Bits": 0
+          },
+          "m_ExcludeLayers": {
+            "m_Bits": 0
+          },
+          "m_LayerOverridePriority": 0,
+          "m_IsTrigger": false,
+          "m_ProvidesContacts": false,
+          "m_Enabled": true,
+          "m_Radius": 0.4000000059604645,
+          "m_Center": {
+            "x": 0.0,
+            "y": 0.25,
+            "z": 0.0
+          }
+        },
+        "scope": "persistent-model"
+      }
+    ]
+  },
+  "physicsTransformBindings": [
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113601_model|pathID=1057236468115066219",
+      "transformPathID": "1057236468115066219",
+      "gameObjectPathID": "7940509137851372781",
+      "hierarchyPath": "chara_113601_model/chara_113601",
+      "modelRelativePath": null,
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": -0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    }
+  ]
+}

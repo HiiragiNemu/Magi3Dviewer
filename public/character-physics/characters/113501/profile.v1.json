@@ -1,0 +1,4831 @@
+{
+  "schema": "magius.character-physics-profile.v1",
+  "stableKey": "character-physics:style3dCharacterMstId=113501|resourceName=chara_113501_model",
+  "identity": {
+    "style3dCharacterMstId": 113501,
+    "characterResourceId": 113501,
+    "resourceName": "chara_113501_model",
+    "displayName": "A-Q"
+  },
+  "source": {
+    "sourceStableKey": "assetbundle:home/chara_113501_model",
+    "logicalKey": "home/chara_113501_model",
+    "unityVersion": "2022.3.62f2"
+  },
+  "runtime": {
+    "status": "runtime-ready",
+    "failClosedReasons": [],
+    "bindingPolicy": {
+      "identity": "logicalKey+pathID+exact-model-relative-path",
+      "nameFallback": false,
+      "missingBinding": "fail-closed-component",
+      "writerPolicy": "single-post-animation-physics-writer",
+      "actionOwnedBonePolicy": "animation-pose-is-read-only-input"
+    },
+    "fixedStepSeconds": 0.011111111111111112,
+    "maximumCatchUpSteps": 3
+  },
+  "counts": {
+    "magicaCloth": 4,
+    "magicaCapsuleCollider": 0,
+    "magicaSphereCollider": 0,
+    "magicaPlaneCollider": 1,
+    "otherMagicaComponents": 0,
+    "magicaWindZone": 0,
+    "nativePhysicsComponents": 1,
+    "physicsTransformBindings": 31,
+    "runtimeReadyCloth": 4,
+    "inactiveCloth": 0,
+    "failClosedCloth": 0
+  },
+  "components": {
+    "cloth": [
+      {
+        "stableKey": "unity-component:bundle=home/chara_113501_model|pathID=-4171332357999029911",
+        "componentPathID": "-4171332357999029911",
+        "binding": {
+          "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8028381216589068925",
+          "transformPathID": "-8028381216589068925",
+          "gameObjectPathID": "-5830942711579378082",
+          "hierarchyPath": "chara_113501_model/Yure/Magica Cloth_LongEar_L_01",
+          "modelRelativePath": null,
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "localRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        "centerTransformBindingStableKeys": [
+          "unity-transform:bundle=home/chara_113501_model|pathID=-8028381216589068925",
+          "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+          "unity-transform:bundle=home/chara_113501_model|pathID=8371956646723750843"
+        ],
+        "centerTransformCandidates": [
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8028381216589068925",
+            "identityBridgeStableKeys": [],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-8028381216589068925"
+            ],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=8371956646723750843",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-8028381216589068925",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310"
+            ],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-8028381216589068925",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+              "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279"
+            ],
+            "exactExportRelativePath": "chara_113501"
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-6647695241575405314",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-8028381216589068925",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+              "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279",
+              "unity-transform:bundle=home/chara_113501_model|pathID=-6647695241575405314"
+            ],
+            "exactExportRelativePath": "chara_113501/Root"
+          }
+        ],
+        "activation": {
+          "componentEnabled": true,
+          "gameObjectActive": true,
+          "activeInHierarchy": true
+        },
+        "runtimeBinding": {
+          "status": "runtime-ready",
+          "failClosedReasons": []
+        },
+        "rootBoneBindings": [
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2794268116850074910",
+            "transformPathID": "2794268116850074910",
+            "gameObjectPathID": "-1390989902335636613",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.06599999964237213,
+                "z": -0.054999999701976776
+              },
+              "localRotation": {
+                "x": -0.382526695728302,
+                "y": -0.5947043895721436,
+                "z": 0.39796313643455505,
+                "w": 0.5844871997833252
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          }
+        ],
+        "chainBindings": [
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2794268116850074910",
+            "transformPathID": "2794268116850074910",
+            "gameObjectPathID": "-1390989902335636613",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.06599999964237213,
+                "z": -0.054999999701976776
+              },
+              "localRotation": {
+                "x": -0.382526695728302,
+                "y": -0.5947043895721436,
+                "z": 0.39796313643455505,
+                "w": 0.5844871997833252
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-5835605550930119030",
+            "transformPathID": "-5835605550930119030",
+            "gameObjectPathID": "3859840325421586879",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.07199999690055847,
+                "y": -1.776356799695581e-17,
+                "z": -1.776356799695581e-17
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8209433404303846968",
+            "transformPathID": "-8209433404303846968",
+            "gameObjectPathID": "4154787236275997868",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.058000002056360245,
+                "y": 0.0,
+                "z": -3.552713599391162e-17
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.06366144865751266,
+                "w": 0.9979715943336487
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=6085620620239944593",
+            "transformPathID": "6085620620239944593",
+            "gameObjectPathID": "8042094311162366786",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.03999999910593033,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0019257443491369486,
+                "y": 0.017345834523439407,
+                "z": -0.11032582074403763,
+                "w": 0.9937422275543213
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-4811167593422177125",
+            "transformPathID": "-4811167593422177125",
+            "gameObjectPathID": "328985704598639230",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.0,
+                "z": 0.019999999552965164
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.02181439846754074,
+                "z": -0.0,
+                "w": 0.9997620582580566
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8564986119118185905",
+            "transformPathID": "-8564986119118185905",
+            "gameObjectPathID": "5943942379837944480",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07/LongEar_L_08",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07/LongEar_L_08",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.0430000014603138,
+                "y": -7.105427198782324e-17,
+                "z": -4.440891999238953e-18
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2832372078982873107",
+            "transformPathID": "2832372078982873107",
+            "gameObjectPathID": "6081678803319497259",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 1.776356799695581e-17,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-1397909881034360956",
+            "transformPathID": "-1397909881034360956",
+            "gameObjectPathID": "7631053099328475321",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05/LongEar_L_06",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05/LongEar_L_06",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.0430000014603138,
+                "y": -1.776356799695581e-17,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=4512141268339993992",
+            "transformPathID": "4512141268339993992",
+            "gameObjectPathID": "-7287509503685361969",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.0,
+                "z": -0.019999999552965164
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": 0.02181439846754074,
+                "z": -0.0,
+                "w": 0.9997620582580566
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=8119568357477917420",
+            "transformPathID": "8119568357477917420",
+            "gameObjectPathID": "2818985495284586828",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09/LongEar_L_10",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09/LongEar_L_10",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.0430000014603138,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-3590370921827187918",
+            "transformPathID": "-3590370921827187918",
+            "gameObjectPathID": "1338423988717835976",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/Ear_Ring_L",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/Ear_Ring_L",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.022499999031424522,
+                "y": 1.776356799695581e-17,
+                "z": -1.776356799695581e-17
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          }
+        ],
+        "collisionBoneBindings": [],
+        "colliderReferences": [
+          {
+            "stableKey": "unity-component:bundle=home/chara_113501_model|pathID=3272151300770851987",
+            "componentPathID": "3272151300770851987",
+            "resolved": true,
+            "script": "MagicaPlaneCollider",
+            "binding": {
+              "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=6034021798748785370",
+              "transformPathID": "6034021798748785370",
+              "gameObjectPathID": "2556831459606198410",
+              "hierarchyPath": "chara_113501_model/chara_113501/Root/Magica Plane Collider_Ground(Root)",
+              "modelRelativePath": "Root/Magica Plane Collider_Ground(Root)",
+              "visualRootRelativePath": null,
+              "localTRS": {
+                "localPosition": {
+                  "x": 0.0,
+                  "y": 0.0010000000474974513,
+                  "z": 0.0
+                },
+                "localRotation": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 1.0
+                },
+                "localScale": {
+                  "x": 3.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              }
+            }
+          }
+        ],
+        "serializeData": {
+          "clothType": 1,
+          "sourceRenderers": [],
+          "paintMode": 0,
+          "paintMaps": [],
+          "rootBones": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "2794268116850074910"
+            }
+          ],
+          "connectionMode": 0,
+          "rotationalInterpolation": 1.0,
+          "rootRotation": 1.0,
+          "updateMode": 10,
+          "animationPoseRatio": 1.0,
+          "reductionSetting": {
+            "simpleDistance": 0.0,
+            "shapeDistance": 0.0
+          },
+          "customSkinningSetting": {
+            "enable": 0,
+            "skinningBones": []
+          },
+          "normalAlignmentSetting": {
+            "alignmentMode": 0,
+            "adjustmentTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "cullingSettings": {
+            "cameraCullingMode": 30,
+            "cameraCullingMethod": 0,
+            "cameraCullingRenderers": []
+          },
+          "normalAxis": 1,
+          "gravity": 0.0,
+          "gravityDirection": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          "gravityFalloff": 0.0,
+          "stablizationTimeAfterReset": 0.0,
+          "damping": {
+            "value": 0.8899999856948853,
+            "useCurve": 0,
+            "curve": {
+              "m_Curve": [
+                {
+                  "time": 0.0,
+                  "value": 1.0,
+                  "inSlope": 0.0,
+                  "outSlope": 0.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                },
+                {
+                  "time": 1.0,
+                  "value": 1.0,
+                  "inSlope": 0.0,
+                  "outSlope": 0.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                }
+              ],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "radius": {
+            "value": 0.014999999664723873,
+            "useCurve": 1,
+            "curve": {
+              "m_Curve": [
+                {
+                  "time": 0.279571533203125,
+                  "value": 0.0,
+                  "inSlope": 1.388062834739685,
+                  "outSlope": 1.388062834739685,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.3333333432674408
+                },
+                {
+                  "time": 1.0,
+                  "value": 1.0,
+                  "inSlope": 1.388062834739685,
+                  "outSlope": 1.388062834739685,
+                  "weightedMode": 0,
+                  "inWeight": 0.3333333432674408,
+                  "outWeight": 0.0
+                }
+              ],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "inertiaConstraint": {
+            "anchor": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "anchorInertia": 0.0,
+            "worldInertia": 1.0,
+            "movementInertiaSmoothing": 0.5,
+            "movementSpeedLimit": {
+              "value": 5.0,
+              "use": 1
+            },
+            "rotationSpeedLimit": {
+              "value": 720.0,
+              "use": 1
+            },
+            "localInertia": 0.4129999876022339,
+            "localMovementSpeedLimit": {
+              "value": 5.0,
+              "use": 0
+            },
+            "localRotationSpeedLimit": {
+              "value": 720.0,
+              "use": 0
+            },
+            "depthInertia": 0.0,
+            "centrifualAcceleration": 0.0,
+            "particleSpeedLimit": {
+              "value": 4.0,
+              "use": 1
+            },
+            "teleportMode": 0,
+            "teleportDistance": 0.5,
+            "teleportRotation": 90.0
+          },
+          "tetherConstraint": {
+            "distanceCompression": 0.0
+          },
+          "distanceConstraint": {
+            "stiffness": {
+              "value": 0.0,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": -0.5,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.5,
+                    "inSlope": -0.5,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "triangleBendingConstraint": {
+            "stiffness": 0.0
+          },
+          "angleRestorationConstraint": {
+            "useAngleRestoration": 1,
+            "stiffness": {
+              "value": 1.0,
+              "useCurve": 1,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": -0.800000011920929,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.20000000298023224,
+                    "inSlope": -0.800000011920929,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "velocityAttenuation": 0.859000027179718,
+            "gravityFalloff": 0.0
+          },
+          "angleLimitConstraint": {
+            "useAngleLimit": 1,
+            "limitAngle": {
+              "value": 21.0,
+              "useCurve": 1,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "stiffness": 1.0
+          },
+          "motionConstraint": {
+            "useMaxDistance": 0,
+            "maxDistance": {
+              "value": 0.30000001192092896,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "useBackstop": 0,
+            "backstopRadius": 10.0,
+            "backstopDistance": {
+              "value": 0.0,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "stiffness": 1.0
+          },
+          "colliderCollisionConstraint": {
+            "mode": 1,
+            "friction": 0.007000000216066837,
+            "colliderList": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "3272151300770851987"
+              }
+            ],
+            "collisionBones": [],
+            "limitDistance": {
+              "value": 0.05000000074505806,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "selfCollisionConstraint": {
+            "selfMode": 0,
+            "surfaceThickness": {
+              "value": 0.004999999888241291,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.5,
+                    "inSlope": 0.0,
+                    "outSlope": 0.5,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.5,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "syncMode": 0,
+            "syncPartner": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "clothMass": 0.0
+          },
+          "wind": {
+            "influence": 1.0,
+            "frequency": 1.0,
+            "turbulence": 1.0,
+            "blend": 0.699999988079071,
+            "synchronization": 0.699999988079071,
+            "depthWeight": 0.0,
+            "movingWind": 0.0
+          },
+          "springConstraint": {
+            "useSpring": 1,
+            "springPower": 0.03999999910593033,
+            "limitDistance": 0.10000000149011612,
+            "normalLimitRatio": 1.0,
+            "springNoise": 0.0
+          }
+        },
+        "serializeData2": {
+          "selectionData": {
+            "positions": [
+              {
+                "x": -0.054999999701976776,
+                "y": 0.19899767637252808,
+                "z": 0.09715509414672852
+              },
+              {
+                "x": -0.08313265442848206,
+                "y": 0.13274404406547546,
+                "z": 0.09542012214660645
+              },
+              {
+                "x": -0.10579507052898407,
+                "y": 0.0793730691075325,
+                "z": 0.09402275085449219
+              },
+              {
+                "x": -0.12597617506980896,
+                "y": 0.044849105179309845,
+                "z": 0.09311866760253906
+              },
+              {
+                "x": -0.13871358335018158,
+                "y": 0.031687088310718536,
+                "z": 0.07340764999389648
+              },
+              {
+                "x": -0.16793277859687805,
+                "y": 0.00024302303791046143,
+                "z": 0.0759592056274414
+              },
+              {
+                "x": -0.13776206970214844,
+                "y": 0.031661733984947205,
+                "z": 0.11339640617370605
+              },
+              {
+                "x": -0.16707047820091248,
+                "y": 0.00022003799676895142,
+                "z": 0.1121976375579834
+              },
+              {
+                "x": -0.1382378190755844,
+                "y": 0.031674422323703766,
+                "z": 0.09340190887451172
+              },
+              {
+                "x": -0.16752949357032776,
+                "y": 0.0002015829086303711,
+                "z": 0.09407901763916016
+              },
+              {
+                "x": -0.09192410856485367,
+                "y": 0.11203979700803757,
+                "z": 0.09487795829772949
+              }
+            ],
+            "attributes": [
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 1
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 0
+              }
+            ],
+            "maxConnectionDistance": 0.07200000435113907,
+            "userEdit": 1
+          },
+          "preBuildData": {
+            "enabled": 0,
+            "buildId": "0d1fcfc0",
+            "preBuildScriptableObject": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "uniquePreBuildData": {
+              "version": 0,
+              "buildResult": {
+                "result": 0,
+                "warning": 0
+              },
+              "renderSetupDataList": [],
+              "proxyMesh": {
+                "transformData": {
+                  "transformArray": []
+                }
+              },
+              "renderMeshList": []
+            }
+          }
+        },
+        "runtimeProperties": {
+          "animationPoseRatioProperty": 1.0,
+          "gravityProperty": 0.5400000214576721,
+          "dampingProperty": 0.8899999856948853,
+          "worldInertiaProperty": 1.0,
+          "localInertiaProperty": 0.4129999876022339,
+          "windInfluenceProperty": 1.0
+        }
+      },
+      {
+        "stableKey": "unity-component:bundle=home/chara_113501_model|pathID=-58277916808791612",
+        "componentPathID": "-58277916808791612",
+        "binding": {
+          "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-969758895528023787",
+          "transformPathID": "-969758895528023787",
+          "gameObjectPathID": "327559500929778849",
+          "hierarchyPath": "chara_113501_model/Yure/Magica Cloth_LongEar_R",
+          "modelRelativePath": null,
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "localRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        "centerTransformBindingStableKeys": [
+          "unity-transform:bundle=home/chara_113501_model|pathID=-969758895528023787",
+          "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+          "unity-transform:bundle=home/chara_113501_model|pathID=8371956646723750843"
+        ],
+        "centerTransformCandidates": [
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-969758895528023787",
+            "identityBridgeStableKeys": [],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-969758895528023787"
+            ],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=8371956646723750843",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-969758895528023787",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310"
+            ],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-969758895528023787",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+              "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279"
+            ],
+            "exactExportRelativePath": "chara_113501"
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-6647695241575405314",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-969758895528023787",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+              "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279",
+              "unity-transform:bundle=home/chara_113501_model|pathID=-6647695241575405314"
+            ],
+            "exactExportRelativePath": "chara_113501/Root"
+          }
+        ],
+        "activation": {
+          "componentEnabled": true,
+          "gameObjectActive": true,
+          "activeInHierarchy": true
+        },
+        "runtimeBinding": {
+          "status": "runtime-ready",
+          "failClosedReasons": []
+        },
+        "rootBoneBindings": [
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8012064772349820015",
+            "transformPathID": "-8012064772349820015",
+            "gameObjectPathID": "-2860078082294677025",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.06599999964237213,
+                "z": 0.054999999701976776
+              },
+              "localRotation": {
+                "x": 0.5947043895721436,
+                "y": -0.382526695728302,
+                "z": 0.5844871997833252,
+                "w": -0.39796313643455505
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          }
+        ],
+        "chainBindings": [
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8012064772349820015",
+            "transformPathID": "-8012064772349820015",
+            "gameObjectPathID": "-2860078082294677025",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.06599999964237213,
+                "z": 0.054999999701976776
+              },
+              "localRotation": {
+                "x": 0.5947043895721436,
+                "y": -0.382526695728302,
+                "z": 0.5844871997833252,
+                "w": -0.39796313643455505
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-3569394456812790483",
+            "transformPathID": "-3569394456812790483",
+            "gameObjectPathID": "-2345994881992881096",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.07199999690055847,
+                "y": -1.776356799695581e-17,
+                "z": -1.776356799695581e-17
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-9056920673293287940",
+            "transformPathID": "-9056920673293287940",
+            "gameObjectPathID": "-7125443362916319765",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.058000002056360245,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": -2.9768184131820255e-16,
+                "y": 1.8989373564143043e-17,
+                "z": -0.06366144865751266,
+                "w": 0.9979715943336487
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-6623793296212749325",
+            "transformPathID": "-6623793296212749325",
+            "gameObjectPathID": "-7282982319043932723",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.03999999910593033,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0019257443491369486,
+                "y": 0.017345834523439407,
+                "z": -0.11032582074403763,
+                "w": 0.9937422275543213
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-4674233124845343015",
+            "transformPathID": "-4674233124845343015",
+            "gameObjectPathID": "1978829656337789550",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.017999999225139618,
+                "y": 0.0,
+                "z": 0.019999999552965164
+              },
+              "localRotation": {
+                "x": 1.4897615585596213e-08,
+                "y": 0.02181439846754074,
+                "z": -3.2505986791164787e-10,
+                "w": 0.9997620582580566
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7021961958438994726",
+            "transformPathID": "7021961958438994726",
+            "gameObjectPathID": "3202406622560030903",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09/LongEar_R_10",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09/LongEar_R_10",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.0430000014603138,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=3468326546590029580",
+            "transformPathID": "3468326546590029580",
+            "gameObjectPathID": "3409062752530432564",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.017999999225139618,
+                "y": 0.0,
+                "z": -0.019999999552965164
+              },
+              "localRotation": {
+                "x": 1.0534204619716547e-08,
+                "y": -0.02181439846754074,
+                "z": 2.2985198466773937e-10,
+                "w": 0.9997620582580566
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-4095858457637421352",
+            "transformPathID": "-4095858457637421352",
+            "gameObjectPathID": "7382820964030243497",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07/LongEar_R_08",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07/LongEar_R_08",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.0430000014603138,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=5360482799397912475",
+            "transformPathID": "5360482799397912475",
+            "gameObjectPathID": "3609189316368583142",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.017999999225139618,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=3545557755703941344",
+            "transformPathID": "3545557755703941344",
+            "gameObjectPathID": "-7492257016670263002",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05/LongEar_R_06",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05/LongEar_R_06",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.0430000014603138,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=1225005841952154441",
+            "transformPathID": "1225005841952154441",
+            "gameObjectPathID": "7687425330599862481",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/Ear_Ring_R",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/Ear_Ring_R",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.022499999031424522,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          }
+        ],
+        "collisionBoneBindings": [],
+        "colliderReferences": [
+          {
+            "stableKey": "unity-component:bundle=home/chara_113501_model|pathID=3272151300770851987",
+            "componentPathID": "3272151300770851987",
+            "resolved": true,
+            "script": "MagicaPlaneCollider",
+            "binding": {
+              "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=6034021798748785370",
+              "transformPathID": "6034021798748785370",
+              "gameObjectPathID": "2556831459606198410",
+              "hierarchyPath": "chara_113501_model/chara_113501/Root/Magica Plane Collider_Ground(Root)",
+              "modelRelativePath": "Root/Magica Plane Collider_Ground(Root)",
+              "visualRootRelativePath": null,
+              "localTRS": {
+                "localPosition": {
+                  "x": 0.0,
+                  "y": 0.0010000000474974513,
+                  "z": 0.0
+                },
+                "localRotation": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 1.0
+                },
+                "localScale": {
+                  "x": 3.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              }
+            }
+          }
+        ],
+        "serializeData": {
+          "clothType": 1,
+          "sourceRenderers": [],
+          "paintMode": 0,
+          "paintMaps": [],
+          "rootBones": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "-8012064772349820015"
+            }
+          ],
+          "connectionMode": 0,
+          "rotationalInterpolation": 1.0,
+          "rootRotation": 1.0,
+          "updateMode": 10,
+          "animationPoseRatio": 1.0,
+          "reductionSetting": {
+            "simpleDistance": 0.0,
+            "shapeDistance": 0.0
+          },
+          "customSkinningSetting": {
+            "enable": 0,
+            "skinningBones": []
+          },
+          "normalAlignmentSetting": {
+            "alignmentMode": 0,
+            "adjustmentTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "cullingSettings": {
+            "cameraCullingMode": 30,
+            "cameraCullingMethod": 0,
+            "cameraCullingRenderers": []
+          },
+          "normalAxis": 1,
+          "gravity": 0.0,
+          "gravityDirection": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          "gravityFalloff": 0.0,
+          "stablizationTimeAfterReset": 0.10000000149011612,
+          "damping": {
+            "value": 0.05000000074505806,
+            "useCurve": 0,
+            "curve": {
+              "m_Curve": [
+                {
+                  "time": 0.0,
+                  "value": 1.0,
+                  "inSlope": 0.0,
+                  "outSlope": 0.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                },
+                {
+                  "time": 1.0,
+                  "value": 1.0,
+                  "inSlope": 0.0,
+                  "outSlope": 0.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                }
+              ],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "radius": {
+            "value": 0.008999999612569809,
+            "useCurve": 1,
+            "curve": {
+              "m_Curve": [
+                {
+                  "time": 0.0,
+                  "value": 0.0,
+                  "inSlope": 1.0,
+                  "outSlope": 1.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                },
+                {
+                  "time": 1.0,
+                  "value": 1.0,
+                  "inSlope": 1.0,
+                  "outSlope": 1.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                }
+              ],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "inertiaConstraint": {
+            "anchor": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "anchorInertia": 0.0,
+            "worldInertia": 1.0,
+            "movementInertiaSmoothing": 0.5,
+            "movementSpeedLimit": {
+              "value": 5.0,
+              "use": 1
+            },
+            "rotationSpeedLimit": {
+              "value": 720.0,
+              "use": 1
+            },
+            "localInertia": 0.4129999876022339,
+            "localMovementSpeedLimit": {
+              "value": 5.0,
+              "use": 0
+            },
+            "localRotationSpeedLimit": {
+              "value": 720.0,
+              "use": 0
+            },
+            "depthInertia": 0.0,
+            "centrifualAcceleration": 0.0,
+            "particleSpeedLimit": {
+              "value": 4.0,
+              "use": 1
+            },
+            "teleportMode": 0,
+            "teleportDistance": 0.5,
+            "teleportRotation": 90.0
+          },
+          "tetherConstraint": {
+            "distanceCompression": 0.8999999761581421
+          },
+          "distanceConstraint": {
+            "stiffness": {
+              "value": 1.0,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": -0.5,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.5,
+                    "inSlope": -0.5,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "triangleBendingConstraint": {
+            "stiffness": 1.0
+          },
+          "angleRestorationConstraint": {
+            "useAngleRestoration": 1,
+            "stiffness": {
+              "value": 1.0,
+              "useCurve": 1,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": -0.800000011920929,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.20000000298023224,
+                    "inSlope": -0.800000011920929,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "velocityAttenuation": 0.800000011920929,
+            "gravityFalloff": 0.0
+          },
+          "angleLimitConstraint": {
+            "useAngleLimit": 1,
+            "limitAngle": {
+              "value": 0.0,
+              "useCurve": 1,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "stiffness": 1.0
+          },
+          "motionConstraint": {
+            "useMaxDistance": 0,
+            "maxDistance": {
+              "value": 0.30000001192092896,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "useBackstop": 0,
+            "backstopRadius": 10.0,
+            "backstopDistance": {
+              "value": 0.0,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "stiffness": 1.0
+          },
+          "colliderCollisionConstraint": {
+            "mode": 1,
+            "friction": 0.05000000074505806,
+            "colliderList": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "3272151300770851987"
+              }
+            ],
+            "collisionBones": [],
+            "limitDistance": {
+              "value": 0.05000000074505806,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "selfCollisionConstraint": {
+            "selfMode": 0,
+            "surfaceThickness": {
+              "value": 0.004999999888241291,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.5,
+                    "inSlope": 0.0,
+                    "outSlope": 0.5,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.5,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "syncMode": 0,
+            "syncPartner": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "clothMass": 0.0
+          },
+          "wind": {
+            "influence": 1.0,
+            "frequency": 1.0,
+            "turbulence": 1.0,
+            "blend": 0.699999988079071,
+            "synchronization": 0.699999988079071,
+            "depthWeight": 0.0,
+            "movingWind": 0.0
+          },
+          "springConstraint": {
+            "useSpring": 1,
+            "springPower": 0.03999999910593033,
+            "limitDistance": 0.10000000149011612,
+            "normalLimitRatio": 1.0,
+            "springNoise": 0.0
+          }
+        },
+        "serializeData2": {
+          "selectionData": {
+            "positions": [
+              {
+                "x": 0.054999999701976776,
+                "y": 0.19899767637252808,
+                "z": 0.09715509414672852
+              },
+              {
+                "x": 0.08313263207674026,
+                "y": 0.13274404406547546,
+                "z": 0.09542012214660645
+              },
+              {
+                "x": 0.10579503327608109,
+                "y": 0.07937305420637131,
+                "z": 0.09402275085449219
+              },
+              {
+                "x": 0.12597614526748657,
+                "y": 0.04484907537698746,
+                "z": 0.09311866760253906
+              },
+              {
+                "x": 0.138713538646698,
+                "y": 0.031687043607234955,
+                "z": 0.07340764999389648
+              },
+              {
+                "x": 0.16793271899223328,
+                "y": 0.0002429857850074768,
+                "z": 0.0759592056274414
+              },
+              {
+                "x": 0.13776201009750366,
+                "y": 0.03166171908378601,
+                "z": 0.11339640617370605
+              },
+              {
+                "x": 0.1670704185962677,
+                "y": 0.00022003799676895142,
+                "z": 0.1121976375579834
+              },
+              {
+                "x": 0.13823777437210083,
+                "y": 0.03167440742254257,
+                "z": 0.09340190887451172
+              },
+              {
+                "x": 0.16752944886684418,
+                "y": 0.00020156055688858032,
+                "z": 0.09407901763916016
+              },
+              {
+                "x": 0.09192408621311188,
+                "y": 0.11203978210687637,
+                "z": 0.09487795829772949
+              }
+            ],
+            "attributes": [
+              {
+                "Value": 1
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 2
+              }
+            ],
+            "maxConnectionDistance": 0.07199998944997787,
+            "userEdit": 1
+          },
+          "preBuildData": {
+            "enabled": 0,
+            "buildId": "0d1fcfc0",
+            "preBuildScriptableObject": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "uniquePreBuildData": {
+              "version": 0,
+              "buildResult": {
+                "result": 0,
+                "warning": 0
+              },
+              "renderSetupDataList": [],
+              "proxyMesh": {
+                "transformData": {
+                  "transformArray": []
+                }
+              },
+              "renderMeshList": []
+            }
+          }
+        },
+        "runtimeProperties": {
+          "animationPoseRatioProperty": 1.0,
+          "gravityProperty": 0.0,
+          "dampingProperty": 0.05000000074505806,
+          "worldInertiaProperty": 1.0,
+          "localInertiaProperty": 0.4129999876022339,
+          "windInfluenceProperty": 1.0
+        }
+      },
+      {
+        "stableKey": "unity-component:bundle=home/chara_113501_model|pathID=2757863112245406027",
+        "componentPathID": "2757863112245406027",
+        "binding": {
+          "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-2878559436879658152",
+          "transformPathID": "-2878559436879658152",
+          "gameObjectPathID": "-1254286547753541196",
+          "hierarchyPath": "chara_113501_model/Yure/Magica Cloth_LongEar_R_01",
+          "modelRelativePath": null,
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "localRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        "centerTransformBindingStableKeys": [
+          "unity-transform:bundle=home/chara_113501_model|pathID=-2878559436879658152",
+          "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+          "unity-transform:bundle=home/chara_113501_model|pathID=8371956646723750843"
+        ],
+        "centerTransformCandidates": [
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-2878559436879658152",
+            "identityBridgeStableKeys": [],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-2878559436879658152"
+            ],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=8371956646723750843",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-2878559436879658152",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310"
+            ],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-2878559436879658152",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+              "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279"
+            ],
+            "exactExportRelativePath": "chara_113501"
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-6647695241575405314",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=-2878559436879658152",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+              "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279",
+              "unity-transform:bundle=home/chara_113501_model|pathID=-6647695241575405314"
+            ],
+            "exactExportRelativePath": "chara_113501/Root"
+          }
+        ],
+        "activation": {
+          "componentEnabled": true,
+          "gameObjectActive": true,
+          "activeInHierarchy": true
+        },
+        "runtimeBinding": {
+          "status": "runtime-ready",
+          "failClosedReasons": []
+        },
+        "rootBoneBindings": [
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8012064772349820015",
+            "transformPathID": "-8012064772349820015",
+            "gameObjectPathID": "-2860078082294677025",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.06599999964237213,
+                "z": 0.054999999701976776
+              },
+              "localRotation": {
+                "x": 0.5947043895721436,
+                "y": -0.382526695728302,
+                "z": 0.5844871997833252,
+                "w": -0.39796313643455505
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          }
+        ],
+        "chainBindings": [
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8012064772349820015",
+            "transformPathID": "-8012064772349820015",
+            "gameObjectPathID": "-2860078082294677025",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.06599999964237213,
+                "z": 0.054999999701976776
+              },
+              "localRotation": {
+                "x": 0.5947043895721436,
+                "y": -0.382526695728302,
+                "z": 0.5844871997833252,
+                "w": -0.39796313643455505
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-3569394456812790483",
+            "transformPathID": "-3569394456812790483",
+            "gameObjectPathID": "-2345994881992881096",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.07199999690055847,
+                "y": -1.776356799695581e-17,
+                "z": -1.776356799695581e-17
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-9056920673293287940",
+            "transformPathID": "-9056920673293287940",
+            "gameObjectPathID": "-7125443362916319765",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.058000002056360245,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": -2.9768184131820255e-16,
+                "y": 1.8989373564143043e-17,
+                "z": -0.06366144865751266,
+                "w": 0.9979715943336487
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-6623793296212749325",
+            "transformPathID": "-6623793296212749325",
+            "gameObjectPathID": "-7282982319043932723",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.03999999910593033,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0019257443491369486,
+                "y": 0.017345834523439407,
+                "z": -0.11032582074403763,
+                "w": 0.9937422275543213
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-4674233124845343015",
+            "transformPathID": "-4674233124845343015",
+            "gameObjectPathID": "1978829656337789550",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.017999999225139618,
+                "y": 0.0,
+                "z": 0.019999999552965164
+              },
+              "localRotation": {
+                "x": 1.4897615585596213e-08,
+                "y": 0.02181439846754074,
+                "z": -3.2505986791164787e-10,
+                "w": 0.9997620582580566
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7021961958438994726",
+            "transformPathID": "7021961958438994726",
+            "gameObjectPathID": "3202406622560030903",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09/LongEar_R_10",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09/LongEar_R_10",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.0430000014603138,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=3468326546590029580",
+            "transformPathID": "3468326546590029580",
+            "gameObjectPathID": "3409062752530432564",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.017999999225139618,
+                "y": 0.0,
+                "z": -0.019999999552965164
+              },
+              "localRotation": {
+                "x": 1.0534204619716547e-08,
+                "y": -0.02181439846754074,
+                "z": 2.2985198466773937e-10,
+                "w": 0.9997620582580566
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-4095858457637421352",
+            "transformPathID": "-4095858457637421352",
+            "gameObjectPathID": "7382820964030243497",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07/LongEar_R_08",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07/LongEar_R_08",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.0430000014603138,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=5360482799397912475",
+            "transformPathID": "5360482799397912475",
+            "gameObjectPathID": "3609189316368583142",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.017999999225139618,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=3545557755703941344",
+            "transformPathID": "3545557755703941344",
+            "gameObjectPathID": "-7492257016670263002",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05/LongEar_R_06",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05/LongEar_R_06",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.0430000014603138,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=1225005841952154441",
+            "transformPathID": "1225005841952154441",
+            "gameObjectPathID": "7687425330599862481",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/Ear_Ring_R",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/Ear_Ring_R",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": 0.022499999031424522,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          }
+        ],
+        "collisionBoneBindings": [],
+        "colliderReferences": [
+          {
+            "stableKey": "unity-component:bundle=home/chara_113501_model|pathID=3272151300770851987",
+            "componentPathID": "3272151300770851987",
+            "resolved": true,
+            "script": "MagicaPlaneCollider",
+            "binding": {
+              "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=6034021798748785370",
+              "transformPathID": "6034021798748785370",
+              "gameObjectPathID": "2556831459606198410",
+              "hierarchyPath": "chara_113501_model/chara_113501/Root/Magica Plane Collider_Ground(Root)",
+              "modelRelativePath": "Root/Magica Plane Collider_Ground(Root)",
+              "visualRootRelativePath": null,
+              "localTRS": {
+                "localPosition": {
+                  "x": 0.0,
+                  "y": 0.0010000000474974513,
+                  "z": 0.0
+                },
+                "localRotation": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 1.0
+                },
+                "localScale": {
+                  "x": 3.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              }
+            }
+          }
+        ],
+        "serializeData": {
+          "clothType": 1,
+          "sourceRenderers": [],
+          "paintMode": 0,
+          "paintMaps": [],
+          "rootBones": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "-8012064772349820015"
+            }
+          ],
+          "connectionMode": 0,
+          "rotationalInterpolation": 1.0,
+          "rootRotation": 1.0,
+          "updateMode": 10,
+          "animationPoseRatio": 1.0,
+          "reductionSetting": {
+            "simpleDistance": 0.0,
+            "shapeDistance": 0.0
+          },
+          "customSkinningSetting": {
+            "enable": 0,
+            "skinningBones": []
+          },
+          "normalAlignmentSetting": {
+            "alignmentMode": 0,
+            "adjustmentTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "cullingSettings": {
+            "cameraCullingMode": 30,
+            "cameraCullingMethod": 0,
+            "cameraCullingRenderers": []
+          },
+          "normalAxis": 1,
+          "gravity": 0.0,
+          "gravityDirection": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          "gravityFalloff": 0.0,
+          "stablizationTimeAfterReset": 0.10000000149011612,
+          "damping": {
+            "value": 0.05000000074505806,
+            "useCurve": 0,
+            "curve": {
+              "m_Curve": [
+                {
+                  "time": 0.0,
+                  "value": 1.0,
+                  "inSlope": 0.0,
+                  "outSlope": 0.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                },
+                {
+                  "time": 1.0,
+                  "value": 1.0,
+                  "inSlope": 0.0,
+                  "outSlope": 0.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                }
+              ],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "radius": {
+            "value": 0.017000000923871994,
+            "useCurve": 1,
+            "curve": {
+              "m_Curve": [
+                {
+                  "time": 0.0,
+                  "value": 0.0,
+                  "inSlope": 1.0,
+                  "outSlope": 1.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                },
+                {
+                  "time": 1.0,
+                  "value": 1.0,
+                  "inSlope": 1.0,
+                  "outSlope": 1.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                }
+              ],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "inertiaConstraint": {
+            "anchor": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "anchorInertia": 0.0,
+            "worldInertia": 1.0,
+            "movementInertiaSmoothing": 0.5,
+            "movementSpeedLimit": {
+              "value": 5.0,
+              "use": 1
+            },
+            "rotationSpeedLimit": {
+              "value": 720.0,
+              "use": 1
+            },
+            "localInertia": 0.4129999876022339,
+            "localMovementSpeedLimit": {
+              "value": 5.0,
+              "use": 0
+            },
+            "localRotationSpeedLimit": {
+              "value": 720.0,
+              "use": 0
+            },
+            "depthInertia": 0.0,
+            "centrifualAcceleration": 0.0,
+            "particleSpeedLimit": {
+              "value": 4.0,
+              "use": 1
+            },
+            "teleportMode": 0,
+            "teleportDistance": 0.5,
+            "teleportRotation": 90.0
+          },
+          "tetherConstraint": {
+            "distanceCompression": 0.8999999761581421
+          },
+          "distanceConstraint": {
+            "stiffness": {
+              "value": 1.0,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": -0.5,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.5,
+                    "inSlope": -0.5,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "triangleBendingConstraint": {
+            "stiffness": 1.0
+          },
+          "angleRestorationConstraint": {
+            "useAngleRestoration": 1,
+            "stiffness": {
+              "value": 1.0,
+              "useCurve": 1,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": -0.800000011920929,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.20000000298023224,
+                    "inSlope": -0.800000011920929,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "velocityAttenuation": 0.800000011920929,
+            "gravityFalloff": 0.0
+          },
+          "angleLimitConstraint": {
+            "useAngleLimit": 1,
+            "limitAngle": {
+              "value": 0.0,
+              "useCurve": 1,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "stiffness": 1.0
+          },
+          "motionConstraint": {
+            "useMaxDistance": 0,
+            "maxDistance": {
+              "value": 0.30000001192092896,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "useBackstop": 0,
+            "backstopRadius": 10.0,
+            "backstopDistance": {
+              "value": 0.0,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "stiffness": 1.0
+          },
+          "colliderCollisionConstraint": {
+            "mode": 1,
+            "friction": 0.05000000074505806,
+            "colliderList": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "3272151300770851987"
+              }
+            ],
+            "collisionBones": [],
+            "limitDistance": {
+              "value": 0.05000000074505806,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "selfCollisionConstraint": {
+            "selfMode": 0,
+            "surfaceThickness": {
+              "value": 0.004999999888241291,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.5,
+                    "inSlope": 0.0,
+                    "outSlope": 0.5,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.5,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "syncMode": 0,
+            "syncPartner": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "clothMass": 0.0
+          },
+          "wind": {
+            "influence": 1.0,
+            "frequency": 1.0,
+            "turbulence": 1.0,
+            "blend": 0.699999988079071,
+            "synchronization": 0.699999988079071,
+            "depthWeight": 0.0,
+            "movingWind": 0.0
+          },
+          "springConstraint": {
+            "useSpring": 1,
+            "springPower": 0.03999999910593033,
+            "limitDistance": 0.10000000149011612,
+            "normalLimitRatio": 1.0,
+            "springNoise": 0.0
+          }
+        },
+        "serializeData2": {
+          "selectionData": {
+            "positions": [
+              {
+                "x": 0.054999999701976776,
+                "y": 0.19899767637252808,
+                "z": 0.09715509414672852
+              },
+              {
+                "x": 0.08313263207674026,
+                "y": 0.13274404406547546,
+                "z": 0.09542012214660645
+              },
+              {
+                "x": 0.10579503327608109,
+                "y": 0.07937305420637131,
+                "z": 0.09402275085449219
+              },
+              {
+                "x": 0.12597614526748657,
+                "y": 0.04484907537698746,
+                "z": 0.09311866760253906
+              },
+              {
+                "x": 0.138713538646698,
+                "y": 0.031687043607234955,
+                "z": 0.07340764999389648
+              },
+              {
+                "x": 0.16793271899223328,
+                "y": 0.0002429857850074768,
+                "z": 0.0759592056274414
+              },
+              {
+                "x": 0.13776201009750366,
+                "y": 0.03166171908378601,
+                "z": 0.11339640617370605
+              },
+              {
+                "x": 0.1670704185962677,
+                "y": 0.00022003799676895142,
+                "z": 0.1121976375579834
+              },
+              {
+                "x": 0.13823777437210083,
+                "y": 0.03167440742254257,
+                "z": 0.09340190887451172
+              },
+              {
+                "x": 0.16752944886684418,
+                "y": 0.00020156055688858032,
+                "z": 0.09407901763916016
+              },
+              {
+                "x": 0.09192408621311188,
+                "y": 0.11203978210687637,
+                "z": 0.09487795829772949
+              }
+            ],
+            "attributes": [
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 1
+              },
+              {
+                "Value": 1
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 0
+              }
+            ],
+            "maxConnectionDistance": 0.07199998944997787,
+            "userEdit": 1
+          },
+          "preBuildData": {
+            "enabled": 0,
+            "buildId": "0d1fcfc0",
+            "preBuildScriptableObject": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "uniquePreBuildData": {
+              "version": 0,
+              "buildResult": {
+                "result": 0,
+                "warning": 0
+              },
+              "renderSetupDataList": [],
+              "proxyMesh": {
+                "transformData": {
+                  "transformArray": []
+                }
+              },
+              "renderMeshList": []
+            }
+          }
+        },
+        "runtimeProperties": {
+          "animationPoseRatioProperty": 1.0,
+          "gravityProperty": 0.0,
+          "dampingProperty": 0.05000000074505806,
+          "worldInertiaProperty": 1.0,
+          "localInertiaProperty": 0.4129999876022339,
+          "windInfluenceProperty": 1.0
+        }
+      },
+      {
+        "stableKey": "unity-component:bundle=home/chara_113501_model|pathID=6246890487585556302",
+        "componentPathID": "6246890487585556302",
+        "binding": {
+          "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7111888880241791134",
+          "transformPathID": "7111888880241791134",
+          "gameObjectPathID": "-1389469563400697359",
+          "hierarchyPath": "chara_113501_model/Yure/Magica Cloth_LongEar_L",
+          "modelRelativePath": null,
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "localRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        "centerTransformBindingStableKeys": [
+          "unity-transform:bundle=home/chara_113501_model|pathID=7111888880241791134",
+          "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+          "unity-transform:bundle=home/chara_113501_model|pathID=8371956646723750843"
+        ],
+        "centerTransformCandidates": [
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7111888880241791134",
+            "identityBridgeStableKeys": [],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=7111888880241791134"
+            ],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=8371956646723750843",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=7111888880241791134",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310"
+            ],
+            "exactExportRelativePath": null
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=7111888880241791134",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+              "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279"
+            ],
+            "exactExportRelativePath": "chara_113501"
+          },
+          {
+            "bindingStableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-6647695241575405314",
+            "identityBridgeStableKeys": [
+              "unity-transform:bundle=home/chara_113501_model|pathID=7111888880241791134",
+              "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+              "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279",
+              "unity-transform:bundle=home/chara_113501_model|pathID=-6647695241575405314"
+            ],
+            "exactExportRelativePath": "chara_113501/Root"
+          }
+        ],
+        "activation": {
+          "componentEnabled": true,
+          "gameObjectActive": true,
+          "activeInHierarchy": true
+        },
+        "runtimeBinding": {
+          "status": "runtime-ready",
+          "failClosedReasons": []
+        },
+        "rootBoneBindings": [
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2794268116850074910",
+            "transformPathID": "2794268116850074910",
+            "gameObjectPathID": "-1390989902335636613",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.06599999964237213,
+                "z": -0.054999999701976776
+              },
+              "localRotation": {
+                "x": -0.382526695728302,
+                "y": -0.5947043895721436,
+                "z": 0.39796313643455505,
+                "w": 0.5844871997833252
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          }
+        ],
+        "chainBindings": [
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2794268116850074910",
+            "transformPathID": "2794268116850074910",
+            "gameObjectPathID": "-1390989902335636613",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.06599999964237213,
+                "z": -0.054999999701976776
+              },
+              "localRotation": {
+                "x": -0.382526695728302,
+                "y": -0.5947043895721436,
+                "z": 0.39796313643455505,
+                "w": 0.5844871997833252
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-5835605550930119030",
+            "transformPathID": "-5835605550930119030",
+            "gameObjectPathID": "3859840325421586879",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.07199999690055847,
+                "y": -1.776356799695581e-17,
+                "z": -1.776356799695581e-17
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8209433404303846968",
+            "transformPathID": "-8209433404303846968",
+            "gameObjectPathID": "4154787236275997868",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.058000002056360245,
+                "y": 0.0,
+                "z": -3.552713599391162e-17
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.06366144865751266,
+                "w": 0.9979715943336487
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=6085620620239944593",
+            "transformPathID": "6085620620239944593",
+            "gameObjectPathID": "8042094311162366786",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.03999999910593033,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0019257443491369486,
+                "y": 0.017345834523439407,
+                "z": -0.11032582074403763,
+                "w": 0.9937422275543213
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-4811167593422177125",
+            "transformPathID": "-4811167593422177125",
+            "gameObjectPathID": "328985704598639230",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.0,
+                "z": 0.019999999552965164
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.02181439846754074,
+                "z": -0.0,
+                "w": 0.9997620582580566
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8564986119118185905",
+            "transformPathID": "-8564986119118185905",
+            "gameObjectPathID": "5943942379837944480",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07/LongEar_L_08",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07/LongEar_L_08",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.0430000014603138,
+                "y": -7.105427198782324e-17,
+                "z": -4.440891999238953e-18
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2832372078982873107",
+            "transformPathID": "2832372078982873107",
+            "gameObjectPathID": "6081678803319497259",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 1.776356799695581e-17,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-1397909881034360956",
+            "transformPathID": "-1397909881034360956",
+            "gameObjectPathID": "7631053099328475321",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05/LongEar_L_06",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05/LongEar_L_06",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.0430000014603138,
+                "y": -1.776356799695581e-17,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=4512141268339993992",
+            "transformPathID": "4512141268339993992",
+            "gameObjectPathID": "-7287509503685361969",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.017999999225139618,
+                "y": 0.0,
+                "z": -0.019999999552965164
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": 0.02181439846754074,
+                "z": -0.0,
+                "w": 0.9997620582580566
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=8119568357477917420",
+            "transformPathID": "8119568357477917420",
+            "gameObjectPathID": "2818985495284586828",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09/LongEar_L_10",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09/LongEar_L_10",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.0430000014603138,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          },
+          {
+            "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-3590370921827187918",
+            "transformPathID": "-3590370921827187918",
+            "gameObjectPathID": "1338423988717835976",
+            "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/Ear_Ring_L",
+            "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/Ear_Ring_L",
+            "visualRootRelativePath": null,
+            "localTRS": {
+              "localPosition": {
+                "x": -0.022499999031424522,
+                "y": 1.776356799695581e-17,
+                "z": -1.776356799695581e-17
+              },
+              "localRotation": {
+                "x": 0.0,
+                "y": -0.0,
+                "z": -0.0,
+                "w": 1.0
+              },
+              "localScale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+              }
+            }
+          }
+        ],
+        "collisionBoneBindings": [],
+        "colliderReferences": [
+          {
+            "stableKey": "unity-component:bundle=home/chara_113501_model|pathID=3272151300770851987",
+            "componentPathID": "3272151300770851987",
+            "resolved": true,
+            "script": "MagicaPlaneCollider",
+            "binding": {
+              "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=6034021798748785370",
+              "transformPathID": "6034021798748785370",
+              "gameObjectPathID": "2556831459606198410",
+              "hierarchyPath": "chara_113501_model/chara_113501/Root/Magica Plane Collider_Ground(Root)",
+              "modelRelativePath": "Root/Magica Plane Collider_Ground(Root)",
+              "visualRootRelativePath": null,
+              "localTRS": {
+                "localPosition": {
+                  "x": 0.0,
+                  "y": 0.0010000000474974513,
+                  "z": 0.0
+                },
+                "localRotation": {
+                  "x": 0.0,
+                  "y": 0.0,
+                  "z": 0.0,
+                  "w": 1.0
+                },
+                "localScale": {
+                  "x": 3.0,
+                  "y": 1.0,
+                  "z": 1.0
+                }
+              }
+            }
+          }
+        ],
+        "serializeData": {
+          "clothType": 1,
+          "sourceRenderers": [],
+          "paintMode": 0,
+          "paintMaps": [],
+          "rootBones": [
+            {
+              "m_FileID": 0,
+              "m_PathID": "2794268116850074910"
+            }
+          ],
+          "connectionMode": 0,
+          "rotationalInterpolation": 1.0,
+          "rootRotation": 1.0,
+          "updateMode": 10,
+          "animationPoseRatio": 1.0,
+          "reductionSetting": {
+            "simpleDistance": 0.0,
+            "shapeDistance": 0.0
+          },
+          "customSkinningSetting": {
+            "enable": 0,
+            "skinningBones": []
+          },
+          "normalAlignmentSetting": {
+            "alignmentMode": 0,
+            "adjustmentTransform": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            }
+          },
+          "cullingSettings": {
+            "cameraCullingMode": 30,
+            "cameraCullingMethod": 0,
+            "cameraCullingRenderers": []
+          },
+          "normalAxis": 1,
+          "gravity": 0.2800000011920929,
+          "gravityDirection": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          "gravityFalloff": 0.0,
+          "stablizationTimeAfterReset": 0.10000000149011612,
+          "damping": {
+            "value": 1.0,
+            "useCurve": 0,
+            "curve": {
+              "m_Curve": [
+                {
+                  "time": 0.0,
+                  "value": 1.0,
+                  "inSlope": 0.0,
+                  "outSlope": 0.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                },
+                {
+                  "time": 1.0,
+                  "value": 1.0,
+                  "inSlope": 0.0,
+                  "outSlope": 0.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                }
+              ],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "radius": {
+            "value": 0.0010000000474974513,
+            "useCurve": 1,
+            "curve": {
+              "m_Curve": [
+                {
+                  "time": 0.0,
+                  "value": 0.0,
+                  "inSlope": 1.0,
+                  "outSlope": 1.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                },
+                {
+                  "time": 1.0,
+                  "value": 1.0,
+                  "inSlope": 1.0,
+                  "outSlope": 1.0,
+                  "weightedMode": 0,
+                  "inWeight": 0.0,
+                  "outWeight": 0.0
+                }
+              ],
+              "m_PreInfinity": 2,
+              "m_PostInfinity": 2,
+              "m_RotationOrder": 4
+            }
+          },
+          "inertiaConstraint": {
+            "anchor": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "anchorInertia": 0.0,
+            "worldInertia": 1.0,
+            "movementInertiaSmoothing": 0.5,
+            "movementSpeedLimit": {
+              "value": 5.0,
+              "use": 1
+            },
+            "rotationSpeedLimit": {
+              "value": 720.0,
+              "use": 1
+            },
+            "localInertia": 0.4129999876022339,
+            "localMovementSpeedLimit": {
+              "value": 5.0,
+              "use": 0
+            },
+            "localRotationSpeedLimit": {
+              "value": 720.0,
+              "use": 0
+            },
+            "depthInertia": 0.0,
+            "centrifualAcceleration": 0.0,
+            "particleSpeedLimit": {
+              "value": 4.0,
+              "use": 1
+            },
+            "teleportMode": 0,
+            "teleportDistance": 0.5,
+            "teleportRotation": 90.0
+          },
+          "tetherConstraint": {
+            "distanceCompression": 0.8999999761581421
+          },
+          "distanceConstraint": {
+            "stiffness": {
+              "value": 1.0,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": -0.5,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.5,
+                    "inSlope": -0.5,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "triangleBendingConstraint": {
+            "stiffness": 1.0
+          },
+          "angleRestorationConstraint": {
+            "useAngleRestoration": 1,
+            "stiffness": {
+              "value": 1.0,
+              "useCurve": 1,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": -0.800000011920929,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.20000000298023224,
+                    "inSlope": -0.800000011920929,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "velocityAttenuation": 0.800000011920929,
+            "gravityFalloff": 0.0
+          },
+          "angleLimitConstraint": {
+            "useAngleLimit": 1,
+            "limitAngle": {
+              "value": 10.0,
+              "useCurve": 1,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0,
+                    "inSlope": 0.0,
+                    "outSlope": 1.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 1.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "stiffness": 1.0
+          },
+          "motionConstraint": {
+            "useMaxDistance": 0,
+            "maxDistance": {
+              "value": 0.30000001192092896,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "useBackstop": 0,
+            "backstopRadius": 10.0,
+            "backstopDistance": {
+              "value": 0.0,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "stiffness": 1.0
+          },
+          "colliderCollisionConstraint": {
+            "mode": 1,
+            "friction": 0.05000000074505806,
+            "colliderList": [
+              {
+                "m_FileID": 0,
+                "m_PathID": "3272151300770851987"
+              }
+            ],
+            "collisionBones": [],
+            "limitDistance": {
+              "value": 0.05000000074505806,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.0,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            }
+          },
+          "selfCollisionConstraint": {
+            "selfMode": 0,
+            "surfaceThickness": {
+              "value": 0.004999999888241291,
+              "useCurve": 0,
+              "curve": {
+                "m_Curve": [
+                  {
+                    "time": 0.0,
+                    "value": 0.5,
+                    "inSlope": 0.0,
+                    "outSlope": 0.5,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0,
+                    "inSlope": 0.5,
+                    "outSlope": 0.0,
+                    "weightedMode": 0,
+                    "inWeight": 0.0,
+                    "outWeight": 0.0
+                  }
+                ],
+                "m_PreInfinity": 2,
+                "m_PostInfinity": 2,
+                "m_RotationOrder": 4
+              }
+            },
+            "syncMode": 0,
+            "syncPartner": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "clothMass": 0.0
+          },
+          "wind": {
+            "influence": 1.0,
+            "frequency": 1.0,
+            "turbulence": 1.0,
+            "blend": 0.699999988079071,
+            "synchronization": 0.699999988079071,
+            "depthWeight": 0.0,
+            "movingWind": 0.0
+          },
+          "springConstraint": {
+            "useSpring": 1,
+            "springPower": 0.03999999910593033,
+            "limitDistance": 0.10000000149011612,
+            "normalLimitRatio": 1.0,
+            "springNoise": 0.0
+          }
+        },
+        "serializeData2": {
+          "selectionData": {
+            "positions": [
+              {
+                "x": -0.054999999701976776,
+                "y": 0.19899767637252808,
+                "z": 0.09715509414672852
+              },
+              {
+                "x": -0.08313265442848206,
+                "y": 0.13274404406547546,
+                "z": 0.09542012214660645
+              },
+              {
+                "x": -0.10579507052898407,
+                "y": 0.0793730691075325,
+                "z": 0.09402275085449219
+              },
+              {
+                "x": -0.12597617506980896,
+                "y": 0.044849105179309845,
+                "z": 0.09311866760253906
+              },
+              {
+                "x": -0.13871358335018158,
+                "y": 0.031687088310718536,
+                "z": 0.07340764999389648
+              },
+              {
+                "x": -0.16793277859687805,
+                "y": 0.00024302303791046143,
+                "z": 0.0759592056274414
+              },
+              {
+                "x": -0.13776206970214844,
+                "y": 0.031661733984947205,
+                "z": 0.11339640617370605
+              },
+              {
+                "x": -0.16707047820091248,
+                "y": 0.00022003799676895142,
+                "z": 0.1121976375579834
+              },
+              {
+                "x": -0.1382378190755844,
+                "y": 0.031674422323703766,
+                "z": 0.09340190887451172
+              },
+              {
+                "x": -0.16752949357032776,
+                "y": 0.0002015829086303711,
+                "z": 0.09407901763916016
+              },
+              {
+                "x": -0.09192410856485367,
+                "y": 0.11203979700803757,
+                "z": 0.09487795829772949
+              }
+            ],
+            "attributes": [
+              {
+                "Value": 1
+              },
+              {
+                "Value": 2
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 0
+              },
+              {
+                "Value": 2
+              }
+            ],
+            "maxConnectionDistance": 0.07200000435113907,
+            "userEdit": 1
+          },
+          "preBuildData": {
+            "enabled": 0,
+            "buildId": "0d1fcfc0",
+            "preBuildScriptableObject": {
+              "m_FileID": 0,
+              "m_PathID": "0"
+            },
+            "uniquePreBuildData": {
+              "version": 0,
+              "buildResult": {
+                "result": 0,
+                "warning": 0
+              },
+              "renderSetupDataList": [],
+              "proxyMesh": {
+                "transformData": {
+                  "transformArray": []
+                }
+              },
+              "renderMeshList": []
+            }
+          }
+        },
+        "runtimeProperties": {
+          "animationPoseRatioProperty": 1.0,
+          "gravityProperty": 0.0,
+          "dampingProperty": 0.05000000074505806,
+          "worldInertiaProperty": 1.0,
+          "localInertiaProperty": 0.4129999876022339,
+          "windInfluenceProperty": 1.0
+        }
+      }
+    ],
+    "colliders": [
+      {
+        "script": "MagicaPlaneCollider",
+        "stableKey": "unity-component:bundle=home/chara_113501_model|pathID=3272151300770851987",
+        "componentPathID": "3272151300770851987",
+        "binding": {
+          "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=6034021798748785370",
+          "transformPathID": "6034021798748785370",
+          "gameObjectPathID": "2556831459606198410",
+          "hierarchyPath": "chara_113501_model/chara_113501/Root/Magica Plane Collider_Ground(Root)",
+          "modelRelativePath": "Root/Magica Plane Collider_Ground(Root)",
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0010000000474974513,
+              "z": 0.0
+            },
+            "localRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 3.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        "activation": {
+          "componentEnabled": true,
+          "gameObjectActive": true,
+          "activeInHierarchy": true
+        },
+        "settings": {
+          "m_Enabled": 1,
+          "center": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "size": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        }
+      }
+    ],
+    "windZones": [],
+    "otherMagica": [],
+    "native": [
+      {
+        "type": "SphereCollider",
+        "stableKey": "unity-component:bundle=home/chara_113501_model|pathID=4399284450488230445",
+        "componentPathID": "4399284450488230445",
+        "binding": {
+          "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279",
+          "transformPathID": "7633398545599199279",
+          "gameObjectPathID": "-3270525882059864458",
+          "hierarchyPath": "chara_113501_model/chara_113501",
+          "modelRelativePath": null,
+          "visualRootRelativePath": null,
+          "localTRS": {
+            "localPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "localRotation": {
+              "x": -0.0,
+              "y": -0.0,
+              "z": -0.0,
+              "w": 1.0
+            },
+            "localScale": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0
+            }
+          }
+        },
+        "activation": {
+          "componentEnabled": true,
+          "gameObjectActive": true,
+          "activeInHierarchy": true
+        },
+        "serialized": {
+          "m_GameObject": {
+            "m_FileID": 0,
+            "m_PathID": "-3270525882059864458"
+          },
+          "m_Material": {
+            "m_FileID": 0,
+            "m_PathID": "0"
+          },
+          "m_IncludeLayers": {
+            "m_Bits": 0
+          },
+          "m_ExcludeLayers": {
+            "m_Bits": 0
+          },
+          "m_LayerOverridePriority": 0,
+          "m_IsTrigger": false,
+          "m_ProvidesContacts": false,
+          "m_Enabled": true,
+          "m_Radius": 0.30000001192092896,
+          "m_Center": {
+            "x": 0.0,
+            "y": 0.10000000149011612,
+            "z": 0.0
+          }
+        },
+        "scope": "persistent-model"
+      }
+    ]
+  },
+  "physicsTransformBindings": [
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-9056920673293287940",
+      "transformPathID": "-9056920673293287940",
+      "gameObjectPathID": "-7125443362916319765",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.058000002056360245,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": -2.9768184131820255e-16,
+          "y": 1.8989373564143043e-17,
+          "z": -0.06366144865751266,
+          "w": 0.9979715943336487
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8564986119118185905",
+      "transformPathID": "-8564986119118185905",
+      "gameObjectPathID": "5943942379837944480",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07/LongEar_L_08",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07/LongEar_L_08",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.0430000014603138,
+          "y": -7.105427198782324e-17,
+          "z": -4.440891999238953e-18
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8209433404303846968",
+      "transformPathID": "-8209433404303846968",
+      "gameObjectPathID": "4154787236275997868",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.058000002056360245,
+          "y": 0.0,
+          "z": -3.552713599391162e-17
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.06366144865751266,
+          "w": 0.9979715943336487
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8028381216589068925",
+      "transformPathID": "-8028381216589068925",
+      "gameObjectPathID": "-5830942711579378082",
+      "hierarchyPath": "chara_113501_model/Yure/Magica Cloth_LongEar_L_01",
+      "modelRelativePath": null,
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-8012064772349820015",
+      "transformPathID": "-8012064772349820015",
+      "gameObjectPathID": "-2860078082294677025",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.017999999225139618,
+          "y": 0.06599999964237213,
+          "z": 0.054999999701976776
+        },
+        "localRotation": {
+          "x": 0.5947043895721436,
+          "y": -0.382526695728302,
+          "z": 0.5844871997833252,
+          "w": -0.39796313643455505
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-6647695241575405314",
+      "transformPathID": "-6647695241575405314",
+      "gameObjectPathID": "5618201283184829082",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root",
+      "modelRelativePath": "Root",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-6623793296212749325",
+      "transformPathID": "-6623793296212749325",
+      "gameObjectPathID": "-7282982319043932723",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.03999999910593033,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0019257443491369486,
+          "y": 0.017345834523439407,
+          "z": -0.11032582074403763,
+          "w": 0.9937422275543213
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-5835605550930119030",
+      "transformPathID": "-5835605550930119030",
+      "gameObjectPathID": "3859840325421586879",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.07199999690055847,
+          "y": -1.776356799695581e-17,
+          "z": -1.776356799695581e-17
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-4811167593422177125",
+      "transformPathID": "-4811167593422177125",
+      "gameObjectPathID": "328985704598639230",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_07",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.017999999225139618,
+          "y": 0.0,
+          "z": 0.019999999552965164
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.02181439846754074,
+          "z": -0.0,
+          "w": 0.9997620582580566
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-4674233124845343015",
+      "transformPathID": "-4674233124845343015",
+      "gameObjectPathID": "1978829656337789550",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.017999999225139618,
+          "y": 0.0,
+          "z": 0.019999999552965164
+        },
+        "localRotation": {
+          "x": 1.4897615585596213e-08,
+          "y": 0.02181439846754074,
+          "z": -3.2505986791164787e-10,
+          "w": 0.9997620582580566
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-4095858457637421352",
+      "transformPathID": "-4095858457637421352",
+      "gameObjectPathID": "7382820964030243497",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07/LongEar_R_08",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07/LongEar_R_08",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0430000014603138,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-3590370921827187918",
+      "transformPathID": "-3590370921827187918",
+      "gameObjectPathID": "1338423988717835976",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/Ear_Ring_L",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/Ear_Ring_L",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.022499999031424522,
+          "y": 1.776356799695581e-17,
+          "z": -1.776356799695581e-17
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-3569394456812790483",
+      "transformPathID": "-3569394456812790483",
+      "gameObjectPathID": "-2345994881992881096",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.07199999690055847,
+          "y": -1.776356799695581e-17,
+          "z": -1.776356799695581e-17
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-2878559436879658152",
+      "transformPathID": "-2878559436879658152",
+      "gameObjectPathID": "-1254286547753541196",
+      "hierarchyPath": "chara_113501_model/Yure/Magica Cloth_LongEar_R_01",
+      "modelRelativePath": null,
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-1397909881034360956",
+      "transformPathID": "-1397909881034360956",
+      "gameObjectPathID": "7631053099328475321",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05/LongEar_L_06",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05/LongEar_L_06",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.0430000014603138,
+          "y": -1.776356799695581e-17,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=-969758895528023787",
+      "transformPathID": "-969758895528023787",
+      "gameObjectPathID": "327559500929778849",
+      "hierarchyPath": "chara_113501_model/Yure/Magica Cloth_LongEar_R",
+      "modelRelativePath": null,
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=1225005841952154441",
+      "transformPathID": "1225005841952154441",
+      "gameObjectPathID": "7687425330599862481",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/Ear_Ring_R",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/Ear_Ring_R",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.022499999031424522,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2666302301100427310",
+      "transformPathID": "2666302301100427310",
+      "gameObjectPathID": "3345512345847672616",
+      "hierarchyPath": "chara_113501_model/Yure",
+      "modelRelativePath": null,
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2794268116850074910",
+      "transformPathID": "2794268116850074910",
+      "gameObjectPathID": "-1390989902335636613",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.017999999225139618,
+          "y": 0.06599999964237213,
+          "z": -0.054999999701976776
+        },
+        "localRotation": {
+          "x": -0.382526695728302,
+          "y": -0.5947043895721436,
+          "z": 0.39796313643455505,
+          "w": 0.5844871997833252
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=2832372078982873107",
+      "transformPathID": "2832372078982873107",
+      "gameObjectPathID": "6081678803319497259",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_05",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.017999999225139618,
+          "y": 1.776356799695581e-17,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=3468326546590029580",
+      "transformPathID": "3468326546590029580",
+      "gameObjectPathID": "3409062752530432564",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_07",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.017999999225139618,
+          "y": 0.0,
+          "z": -0.019999999552965164
+        },
+        "localRotation": {
+          "x": 1.0534204619716547e-08,
+          "y": -0.02181439846754074,
+          "z": 2.2985198466773937e-10,
+          "w": 0.9997620582580566
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=3545557755703941344",
+      "transformPathID": "3545557755703941344",
+      "gameObjectPathID": "-7492257016670263002",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05/LongEar_R_06",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05/LongEar_R_06",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0430000014603138,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=4512141268339993992",
+      "transformPathID": "4512141268339993992",
+      "gameObjectPathID": "-7287509503685361969",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.017999999225139618,
+          "y": 0.0,
+          "z": -0.019999999552965164
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": 0.02181439846754074,
+          "z": -0.0,
+          "w": 0.9997620582580566
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=5360482799397912475",
+      "transformPathID": "5360482799397912475",
+      "gameObjectPathID": "3609189316368583142",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_05",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.017999999225139618,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=6034021798748785370",
+      "transformPathID": "6034021798748785370",
+      "gameObjectPathID": "2556831459606198410",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Magica Plane Collider_Ground(Root)",
+      "modelRelativePath": "Root/Magica Plane Collider_Ground(Root)",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0,
+          "y": 0.0010000000474974513,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 3.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=6085620620239944593",
+      "transformPathID": "6085620620239944593",
+      "gameObjectPathID": "8042094311162366786",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.03999999910593033,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0019257443491369486,
+          "y": 0.017345834523439407,
+          "z": -0.11032582074403763,
+          "w": 0.9937422275543213
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7021961958438994726",
+      "transformPathID": "7021961958438994726",
+      "gameObjectPathID": "3202406622560030903",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09/LongEar_R_10",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_R_01/LongEar_R_02/LongEar_R_03/LongEar_R_04/LongEar_R_09/LongEar_R_10",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0430000014603138,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7111888880241791134",
+      "transformPathID": "7111888880241791134",
+      "gameObjectPathID": "-1389469563400697359",
+      "hierarchyPath": "chara_113501_model/Yure/Magica Cloth_LongEar_L",
+      "modelRelativePath": null,
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=7633398545599199279",
+      "transformPathID": "7633398545599199279",
+      "gameObjectPathID": "-3270525882059864458",
+      "hierarchyPath": "chara_113501_model/chara_113501",
+      "modelRelativePath": null,
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": -0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=8119568357477917420",
+      "transformPathID": "8119568357477917420",
+      "gameObjectPathID": "2818985495284586828",
+      "hierarchyPath": "chara_113501_model/chara_113501/Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09/LongEar_L_10",
+      "modelRelativePath": "Root/Hip/Spine/Waist/Chest/Neck/Head/LongEar_L_01/LongEar_L_02/LongEar_L_03/LongEar_L_04/LongEar_L_09/LongEar_L_10",
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -0.0430000014603138,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "localRotation": {
+          "x": 0.0,
+          "y": -0.0,
+          "z": -0.0,
+          "w": 1.0
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    },
+    {
+      "stableKey": "unity-transform:bundle=home/chara_113501_model|pathID=8371956646723750843",
+      "transformPathID": "8371956646723750843",
+      "gameObjectPathID": "2320958994463657746",
+      "hierarchyPath": "chara_113501_model",
+      "modelRelativePath": null,
+      "visualRootRelativePath": null,
+      "localTRS": {
+        "localPosition": {
+          "x": -1.2990000247955322,
+          "y": 0.0,
+          "z": -2.2690000534057617
+        },
+        "localRotation": {
+          "x": -0.0,
+          "y": 0.2748776376247406,
+          "z": -0.0,
+          "w": 0.9614792466163635
+        },
+        "localScale": {
+          "x": 1.0,
+          "y": 1.0,
+          "z": 1.0
+        }
+      }
+    }
+  ]
+}

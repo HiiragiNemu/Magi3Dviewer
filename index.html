@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./vite.svg" />
+    <link rel="stylesheet" href="./src/style.css" />
+    <link rel="stylesheet" href="./src/viewer/performanceEditor/workspace.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <title>Magius3Dviewer | Magia Exedra Official-Style 3D Shader Viewer</title>
     <meta name="description" content="Magius3Dviewer is an independent Magia Exedra WebGL 3D viewer with official-style ReDriveToon shading, AngelRing hair highlights, multi-character staging and selectable 3D scenes, based on the original Magi3Dviewer project.">
@@ -25,9 +27,8 @@
 <body>
     <div id="app">
         <div id="menu">
-            <button id="menu-collapse-toggle" class="main-toolbar-toggle" data-i18n-ignore="true" type="button" title="Collapse controls" aria-label="Collapse controls" aria-controls="menu-controls" aria-expanded="true"><span aria-hidden="true">△</span></button>
             <div id="menu-controls">
-                <div>
+                <div data-performance-resource="characters">
                     <img src="src/icons/accessibility_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Model">
                     <select id="character-selector" class="target-true" title="Choose model"></select>
                     <button id="character-add-cross-btn" class="target-true" title="Remove selected model">❌</button>
@@ -38,13 +39,21 @@
                             <select id="character-add-selector"></select>
                         </div>
                     </span>
+                    <label class="character-search-label" for="character-search-input">Search:</label>
+                    <span id="character-search-box" class="character-search-box">
+                        <input id="character-search-input" type="search" placeholder="ID / Name" aria-label="Search characters by name or ID" aria-controls="character-search-results" aria-expanded="false" autocomplete="off" spellcheck="false">
+                        <span id="character-search-results" class="character-search-results" role="listbox" aria-label="Matching characters" hidden></span>
+                    </span>
                 </div>
 
-                <div>
+                <div class="animation-controls" data-performance-resource="actions">
                     <img src="src/icons/emoji_people_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Animation">
                     <select id="animation-selector" class="target-true" title="Choose animation"></select>
                     <button id="animation-play" class="target-true" style="display: none;" title="Play animation"><img src="src/icons/play_arrow_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
                     <button id="animation-pause" class="target-true" title="Pause animation"><img src="src/icons/pause_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
+                    <input id="animation-slider" class="target-true" type="range" min="0" max="1" step="0.01" value="0" aria-label="Animation timeline">
+                    <output id="animation-progress-value" class="target-true" aria-live="off">0%</output>
+                    <output id="animation-action-status" class="target-true" data-i18n-ignore="true" aria-live="polite" hidden></output>
                     <button id="action-panel-toggle" class="target-true" type="button" title="Show action parameters" aria-controls="action-parameter-panel" aria-expanded="false">Action panel</button>
                     <span class="target-false">&lt;No target selected&gt;</span>
                 </div>
@@ -60,13 +69,69 @@
                     <span class="target-false">&lt;No target selected&gt;</span>
                 </div>
 
-                <div>
+                <div id="toolbar-tools" role="group" aria-label="Viewer tools">
+                    <div id="menu-icons">
+                        <select id="language-toggle" data-i18n-ignore="true" title="UI language" aria-label="UI language">
+                            <option value="zh-CN">简中</option>
+                            <option value="ja-JP">日本語</option>
+                            <option value="en">EN</option>
+                        </select>
+                        <button id="theme-set-light" type="button" title="Use light theme"><img src="src/icons/light_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                        <button id="theme-set-dark" type="button" title="Use dark theme"><img src="src/icons/dark_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+
+                        <div id="background-select" class="icon-hover-container" title="Change background">
+                            <button type="button" aria-haspopup="true"><img src="src/icons/wallpaper_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                            <div class="icon-hover-popitem">
+                                <div id="background-list">
+                                    <button id="background-clear" type="button"><img src="src/icons/block_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                                </div>
+                                <button id="background-choose-file" type="button"><img src="src/icons/add_photo_alternate_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg">Choose from album</button>
+                            </div>
+                        </div>
+
+                        <button id="capture-controls-toggle" class="target-true" type="button" title="Take a photo" aria-label="Take a photo" aria-controls="position-controls-wrapper" aria-expanded="false"><img src="src/icons/camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+
+                        <div id="camera-mode-selector" class="icon-hover-container" title="Select camera mode">
+                            <button type="button" aria-haspopup="true"><img src="src/icons/photo_camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                            <div id="camera-mode-list" class="icon-hover-popitem center">
+                                <button id="camera-mode-background" type="button">Camera background</button>
+                                <!-- <button id="camera-mode-ar">AR</button> -->
+                            </div>
+                        </div>
+                        <button id="camera-off" type="button" title="Turn off camera background"><img src="src/icons/no_photography_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                        <button id="fullscreen-btn" type="button" title="Fullscreen"><img src="src/icons/fullscreen_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                        <button id="transform-set-translate" type="button" title="Adjust character position" style="display: none;"><img src="src/icons/drag_pan_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                        <button id="transform-set-rotate" type="button" title="Adjust character rotation" style="display: none;"><img src="src/icons/360_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                    </div>
+
+                    <div id="perf-stat" title="PerformanceMetrics">
+                        <div id="perf-time" style="display: none;"></div>
+                        <div id="perf-stat-js"></div>
+                    </div>
+                </div>
+                <div data-performance-resource="scenes">
                     <img src="src/icons/wallpaper_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="3D Stage">
                     <select id="stage-selector" title="Choose 3D stage"></select>
                 </div>
 
                 <button id="render-settings-toggle" data-i18n-ignore="true" type="button" title="Show rendering controls" aria-controls="advanced-controls-dock" aria-expanded="false">Rendering controls</button>
                 <button id="position-controls-toggle" class="target-true" data-i18n-ignore="true" type="button" title="Show character movement" aria-controls="position-controls-wrapper" aria-expanded="false">Character movement</button>
+                <button id="locomotion-mode-toggle" class="target-true" data-i18n-ignore="true" type="button" title="Enable TPS character control" aria-controls="locomotion-hud" aria-pressed="false">TPS Move: Off</button>
+                <button id="character-list-panel-toggle" data-i18n-ignore="true" type="button" title="Show character list" aria-label="Show character list" aria-controls="character-list-panel" aria-expanded="false">Characters</button>
+                <button id="stage-list-panel-toggle" data-i18n-ignore="true" type="button" title="Show scene list" aria-label="Show scene list" aria-controls="stage-list-panel" aria-expanded="false">Scenes</button>
+                <div id="enemy-toolbar-control">
+                    <img src="src/icons/accessibility_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Enemy">
+                    <select id="enemy-toolbar-select" data-i18n-ignore="true" title="Choose enemy" aria-label="Choose enemy" disabled>
+                        <option value="">Loading enemy list...</option>
+                    </select>
+                    <button id="enemy-toolbar-add" data-i18n-ignore="true" type="button" title="Add selected enemy" aria-label="Add selected enemy" disabled>➕</button>
+                    <button id="enemy-toolbar-remove" data-i18n-ignore="true" type="button" title="Remove: Selected enemy" aria-label="Remove: Selected enemy" disabled>✕</button>
+                </div>
+                <button id="enemy-panel-toggle" data-i18n-ignore="true" type="button" title="Show enemies" aria-label="Show enemies" aria-controls="enemy-panel" aria-expanded="false">Enemies</button>
+                <button id="combat-vfx-panel-toggle" data-i18n-ignore="true" type="button" title="Show combat effects" aria-label="Show combat effects" aria-controls="combat-vfx-panel" aria-expanded="false">Combat effects</button>
+                <button id="voice-panel-toggle" data-i18n-ignore="true" type="button" title="Show voice and subtitles" aria-label="Show voice and subtitles" aria-controls="voice-panel" aria-expanded="false">Voice / Subtitles</button>
+
+                <button id="menu-collapse-toggle" class="main-toolbar-toggle" data-i18n-ignore="true" type="button" title="Collapse controls" aria-label="Collapse controls" aria-controls="menu-controls" aria-expanded="true"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4.5 18 12 5.5 19.5 18Z"></path></svg></span></button>
             </div>
         </div>
 
@@ -76,12 +141,23 @@
                     <strong id="render-settings-title">Rendering controls</strong>
                     <button id="render-settings-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
                 </header>
-                <div class="floating-panel-scroll"><div id="three-gui"></div></div>
+                <div class="floating-panel-scroll">
+                    <div id="stage-shadow-quality-control">
+                        <label for="stage-shadow-quality">Shadow quality</label>
+                        <select id="stage-shadow-quality" title="Shadow quality">
+                            <option value="official" selected>Official quality</option>
+                            <option value="balanced">Balanced</option>
+                            <option value="performance">Performance first</option>
+                        </select>
+                    </div>
+                    <div id="three-gui"></div>
+                </div>
             </aside>
 
             <main id="viewer">
                 <img id="bg-image" alt="">
                 <video id="camera-bg" disablePictureInPicture></video>
+                <output id="voice-subtitle-overlay" data-i18n-ignore="true" aria-live="polite" hidden></output>
                 <div id="position-controls-wrapper" aria-hidden="true">
                     <div id="position-controls" class="target-true">
                         <div id="recording-spec-controls" aria-label="Recording format">
@@ -129,44 +205,28 @@
                         <button id="character-rotate-right" type="button" title="Turn character right">Y+</button>
                     </div>
                 </div>
+                <div id="locomotion-hud" class="is-collapsed" aria-hidden="true">
+                    <div class="locomotion-hud-header">
+                        <strong>TPS</strong>
+                        <output id="locomotion-state-output">idle</output>
+                        <output id="locomotion-clip-output">clip: —</output>
+                        <button id="locomotion-hud-toggle" type="button" aria-controls="locomotion-hud-details" aria-expanded="false" title="Show TPS actions">＋</button>
+                    </div>
+                    <div id="locomotion-hud-details">
+                        <div class="locomotion-help">WASD / ↑↓←→ move · Shift run · Space jump · click view for mouse look · Esc release</div>
+                        <div id="locomotion-action-bindings" aria-label="Action key bindings">
+                            <label><span data-i18n-ignore="true">Q</span><select id="locomotion-action-q" title="Q action"></select></label>
+                            <label><span data-i18n-ignore="true">R</span><select id="locomotion-action-r" title="R action"></select></label>
+                            <label><span data-i18n-ignore="true">E</span><select id="locomotion-action-e" title="E action"></select></label>
+                            <label><span data-i18n-ignore="true">F</span><select id="locomotion-action-f" title="F action"></select></label>
+                            <label><span data-i18n-ignore="true">T</span><select id="locomotion-action-t" title="T action"></select></label>
+                            <label><span data-i18n-ignore="true">X</span><select id="locomotion-action-x" title="X action"></select></label>
+                        </div>
+                        <output id="locomotion-action-feedback" aria-live="polite">Click the Viewer to capture the mouse.</output>
+                    </div>
+                </div>
             </main>
 
-            <aside id="side-dock" aria-label="Viewer tools">
-                <div id="menu-icons">
-                <button id="language-toggle" type="button" data-i18n-ignore="true" title="Switch to Simplified Chinese" aria-label="Switch to Simplified Chinese" aria-pressed="false"><span aria-hidden="true">中</span></button>
-                <button id="theme-set-light" title="Use light theme"><img src="src/icons/light_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-                <button id="theme-set-dark" title="Use dark theme"><img src="src/icons/dark_mode_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-
-                <div id="background-select" class="icon-hover-container" title="Change background">
-                    <button><img src="src/icons/wallpaper_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-                    <div class="icon-hover-popitem">
-                        <div id="background-list">
-                            <button id="background-clear"><img src="src/icons/block_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-                        </div>
-                        <button id="background-choose-file"><img src="src/icons/add_photo_alternate_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg">Choose from album</button>
-                    </div>
-                </div>
-
-                <div id="camera-mode-selector" class="icon-hover-container" title="Select camera mode">
-                    <button><img src="src/icons/photo_camera_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-                    <div id="camera-mode-list" class="icon-hover-popitem center">
-                        <button id="camera-mode-background">Camera background</button>
-                        <!-- <button id="camera-mode-ar">AR</button> -->
-                    </div>
-                </div>
-                <button id="camera-off" title="Turn off camera background"><img src="src/icons/no_photography_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-
-                <button id="fullscreen-btn" title="Fullscreen"><img src="src/icons/fullscreen_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-
-                <button id="transform-set-translate" title="Adjust character position" style="display: none;"><img src="src/icons/drag_pan_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-                <button id="transform-set-rotate" title="Adjust character rotation" style="display: none;"><img src="src/icons/360_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
-                </div>
-
-                <div id="perf-stat">
-                    <div id="perf-time" style="display: none;"></div>
-                    <div id="perf-stat-js"></div>
-                </div>
-            </aside>
         </div>
 
         <section id="action-parameter-panel" class="floating-panel parameter-panel" role="dialog" aria-modal="false" aria-labelledby="action-parameter-title" aria-hidden="true">
@@ -177,19 +237,50 @@
             <div class="floating-panel-scroll">
                 <div id="action-basic-controls" class="parameter-basics target-true">
                     <label>
-                        <span>Timeline</span>
-                        <input id="animation-slider" type="range">
-                    </label>
-                    <label>
                         <span>Animation speed</span>
                         <input id="animation-speed" type="range" min="0" max="2" step="0.05" value="1">
                         <output id="animation-speed-value">1.00×</output>
                     </label>
                 </div>
+                <details id="character-physics-action-options" class="character-physics-action-options target-true" open>
+                    <summary>
+                        <strong>Physics action options</strong>
+                        <output id="character-physics-action-options-status" aria-live="polite">Loading physics action options...</output>
+                    </summary>
+                    <div class="character-physics-action-options-body">
+                        <section aria-labelledby="character-physics-phase-title">
+                            <h3 id="character-physics-phase-title">Physics phases</h3>
+                            <div id="character-physics-phase-list" class="character-physics-option-list" aria-live="polite"></div>
+                        </section>
+                        <section aria-labelledby="character-physics-related-action-title">
+                            <h3 id="character-physics-related-action-title">Related official actions</h3>
+                            <div id="character-physics-related-action-list" class="character-physics-option-list" aria-live="polite"></div>
+                        </section>
+                    </div>
+                </details>
                 <div class="direct-pose-toolbar target-true">
                     <button id="action-direct-edit-toggle" type="button" aria-pressed="false" data-i18n-ignore="true">Direct drag pose</button>
-                    <output id="action-direct-edit-target" aria-live="polite" data-i18n-ignore="true">Click a body part, then drag it or use the rotation rings</output>
+                    <div class="direct-pose-mode" role="group" aria-label="Transform mode">
+                        <button id="action-direct-translate" type="button" aria-pressed="true" data-i18n-ignore="true">Move XYZ</button>
+                        <button id="action-direct-rotate" type="button" aria-pressed="false" data-i18n-ignore="true">Rotate XYZ</button>
+                    </div>
+                    <output id="action-direct-edit-target" aria-live="polite" data-i18n-ignore="true">Click a body part, then drag the XYZ arrows</output>
                 </div>
+                <section class="model-part-controls target-true" aria-labelledby="model-part-controls-title">
+                    <header>
+                        <strong id="model-part-controls-title">Model part visibility</strong>
+                        <button id="action-show-all-parts" type="button">Show all parts</button>
+                    </header>
+                    <div class="selected-model-part-control">
+                        <output id="action-selected-part" aria-live="polite" data-i18n-ignore="true">No model part selected</output>
+                        <button id="action-selected-part-visibility" type="button" disabled data-i18n-ignore="true">Hide selected part</button>
+                    </div>
+                    <label class="model-part-search" for="action-model-part-search">
+                        <span>Model part search</span>
+                        <input id="action-model-part-search" type="search" placeholder="Search model parts">
+                    </label>
+                    <div id="action-model-part-list" class="model-part-list" aria-live="polite"></div>
+                </section>
                 <label class="parameter-search">
                     <span>Bone search</span>
                     <input id="action-channel-search" type="search" placeholder="Search bones">
@@ -241,10 +332,235 @@
             </footer>
         </section>
 
+        <section id="character-list-panel" class="floating-panel runtime-selection-panel" role="dialog" aria-modal="false" aria-labelledby="character-list-panel-title" aria-hidden="true">
+            <header class="floating-panel-header">
+                <strong id="character-list-panel-title">Characters</strong>
+                <button id="character-list-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
+            </header>
+            <div class="floating-panel-scroll runtime-selection-panel-content">
+                <label class="runtime-selection-field" for="character-list-search">
+                    <span>Search characters</span>
+                    <input id="character-list-search" type="search" placeholder="Type a name or ID" autocomplete="off">
+                </label>
+                <div class="runtime-selection-browser">
+                    <section class="runtime-selection-catalog">
+                        <div class="runtime-selection-field runtime-selection-list-field">
+                            <span id="character-list-label">Character list</span>
+                            <select id="character-list-select" class="runtime-selection-native-list" size="12" data-i18n-ignore="true" aria-label="Character list" aria-hidden="true" tabindex="-1" hidden disabled></select>
+                            <div id="character-list-grid" class="runtime-selection-thumbnail-grid character-thumbnail-grid" role="listbox" aria-labelledby="character-list-label" data-i18n-ignore="true"></div>
+                        </div>
+                        <output id="character-list-status" data-i18n-ignore="true" aria-live="polite">Available characters</output>
+                    </section>
+                    <aside class="runtime-selection-selection">
+                        <article class="runtime-selection-card runtime-selection-preview-card">
+                            <div class="runtime-selection-preview-frame">
+                                <img id="character-list-preview" alt="" hidden>
+                            </div>
+                            <div class="runtime-selection-preview-copy">
+                                <strong>Selected character</strong>
+                                <output id="character-list-detail" data-i18n-ignore="true">No character selected</output>
+                            </div>
+                        </article>
+                        <button id="character-list-use" type="button" disabled>Switch character</button>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="stage-list-panel" class="floating-panel runtime-selection-panel" role="dialog" aria-modal="false" aria-labelledby="stage-list-panel-title" aria-hidden="true">
+            <header class="floating-panel-header">
+                <strong id="stage-list-panel-title">Scenes</strong>
+                <button id="stage-list-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
+            </header>
+            <div class="floating-panel-scroll runtime-selection-panel-content">
+                <label class="runtime-selection-field" for="stage-list-search">
+                    <span>Search scenes</span>
+                    <input id="stage-list-search" type="search" placeholder="Type a name or ID" autocomplete="off">
+                </label>
+                <div class="runtime-selection-browser">
+                    <section class="runtime-selection-catalog">
+                        <div class="runtime-selection-field runtime-selection-list-field">
+                            <span id="stage-list-label">Scene list</span>
+                            <select id="stage-list-select" class="runtime-selection-native-list" size="12" data-i18n-ignore="true" aria-label="Scene list" aria-hidden="true" tabindex="-1" hidden disabled></select>
+                            <div id="stage-list-grid" class="runtime-selection-thumbnail-grid scene-thumbnail-grid" role="listbox" aria-labelledby="stage-list-label" data-i18n-ignore="true"></div>
+                        </div>
+                        <output id="stage-list-status" data-i18n-ignore="true" aria-live="polite">Available scenes</output>
+                    </section>
+                    <aside class="runtime-selection-selection">
+                        <article class="runtime-selection-card runtime-selection-preview-card">
+                            <div class="runtime-selection-preview-frame">
+                                <img id="stage-list-preview" alt="" hidden>
+                            </div>
+                            <div class="runtime-selection-preview-copy">
+                                <strong>Selected scene</strong>
+                                <output id="stage-list-detail" data-i18n-ignore="true">No scene selected</output>
+                            </div>
+                        </article>
+                        <button id="stage-list-use" type="button" disabled>Load selected scene</button>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="enemy-panel" class="floating-panel" role="dialog" aria-modal="false" aria-labelledby="enemy-panel-title" aria-hidden="true">
+            <header class="floating-panel-header">
+                <strong id="enemy-panel-title">Enemies</strong>
+                <button id="enemy-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
+            </header>
+            <div class="floating-panel-scroll enemy-panel-content">
+                <div class="enemy-catalog-column">
+                    <label class="enemy-field" for="enemy-catalog-search">
+                        <span>Search enemies</span>
+                        <input id="enemy-catalog-search" type="search" placeholder="Type a name or ID" autocomplete="off">
+                    </label>
+                    <label class="enemy-field enemy-catalog-field" for="enemy-catalog-select">
+                        <span>Enemy list</span>
+                        <select id="enemy-catalog-select" size="10" data-i18n-ignore="true" aria-label="Enemy list" disabled></select>
+                    </label>
+                    <output id="enemy-catalog-status" data-i18n-ignore="true" aria-live="polite">Loading enemy list...</output>
+                </div>
+                <div class="enemy-instance-column">
+                    <div class="enemy-selected-card">
+                        <img id="enemy-preview-image" alt="" hidden>
+                        <div>
+                            <strong>Selected enemy</strong>
+                            <output id="enemy-selected-detail" data-i18n-ignore="true">No enemy selected</output>
+                        </div>
+                    </div>
+                    <div class="enemy-add-controls">
+                        <label for="enemy-add-quantity">
+                            <span>Quantity</span>
+                            <input id="enemy-add-quantity" type="number" min="1" max="8" step="1" value="1" inputmode="numeric">
+                        </label>
+                        <button id="enemy-add-button" type="button" disabled>Add enemy</button>
+                    </div>
+                    <section class="enemy-active-section" aria-labelledby="enemy-active-title">
+                        <header>
+                            <strong id="enemy-active-title">Active enemies</strong>
+                            <button id="enemy-clear-button" type="button" disabled>Clear all</button>
+                        </header>
+                        <div id="enemy-instance-list" data-i18n-ignore="true" aria-live="polite"></div>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        <section id="combat-vfx-panel" class="floating-panel runtime-selection-panel combat-vfx-panel" role="dialog" aria-modal="false" aria-labelledby="combat-vfx-panel-title" aria-hidden="true">
+            <header class="floating-panel-header">
+                <strong id="combat-vfx-panel-title">Combat effects</strong>
+                <button id="combat-vfx-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
+            </header>
+            <div class="floating-panel-scroll runtime-selection-panel-content combat-vfx-panel-content">
+                <div class="combat-vfx-panel-toolbar">
+                    <label class="combat-vfx-enabled-control" for="combat-vfx-enabled">
+                        <input id="combat-vfx-enabled" type="checkbox" checked>
+                        <span>Enable combat effects</span>
+                    </label>
+                    <label class="runtime-selection-field" for="combat-vfx-domain">
+                        <span>Effect source</span>
+                        <select id="combat-vfx-domain">
+                            <option value="">All combat effects</option>
+                            <option value="enemy">Enemy combat effects</option>
+                            <option value="character">Magical girl combat effects</option>
+                        </select>
+                    </label>
+                </div>
+                <label class="runtime-selection-field" for="combat-vfx-search">
+                    <span>Search combat effects</span>
+                    <input id="combat-vfx-search" type="search" placeholder="Type a stable key or direction key" autocomplete="off">
+                </label>
+                <label class="runtime-selection-field runtime-selection-list-field" for="combat-vfx-list">
+                    <span>Combat effect list</span>
+                    <select id="combat-vfx-list" size="12" data-i18n-ignore="true" aria-label="Combat effect list" disabled></select>
+                </label>
+                <output id="combat-vfx-catalog-status" data-i18n-ignore="true" aria-live="polite">Loading combat effects...</output>
+                <article class="runtime-selection-card combat-vfx-selection-card">
+                    <strong>Selected combat effect</strong>
+                    <output id="combat-vfx-selection-detail" data-i18n-ignore="true">No combat effect selected</output>
+                    <output id="combat-vfx-selection-reason" class="combat-vfx-unavailable-reason" data-i18n-ignore="true" hidden></output>
+                </article>
+                <div class="combat-vfx-actions">
+                    <button id="combat-vfx-play" type="button" disabled>Play selected effect</button>
+                    <button id="combat-vfx-stop" type="button" disabled>Stop all effects</button>
+                </div>
+                <output id="combat-vfx-runtime-status" class="combat-vfx-runtime-status" data-i18n-ignore="true" aria-live="polite"></output>
+                <output id="combat-vfx-operation-status" class="combat-vfx-operation-status" data-i18n-ignore="true" aria-live="polite"></output>
+            </div>
+        </section>
+
+        <section id="voice-panel" class="floating-panel voice-panel" role="dialog" aria-modal="false" aria-labelledby="voice-panel-title" aria-hidden="true">
+            <header class="floating-panel-header voice-panel-header">
+                <strong id="voice-panel-title">看板语音</strong>
+                <button id="voice-panel-close" class="floating-panel-close" type="button" title="关闭" aria-label="关闭">×</button>
+            </header>
+            <div class="voice-panel-content">
+                <div class="voice-toolbar">
+                    <label id="voice-subtitle-mode-label" for="voice-subtitle-mode">字幕语言:</label>
+                    <select id="voice-subtitle-mode" data-i18n-ignore="true" aria-label="字幕语言">
+                            <option value="zh-Hans" selected>中文</option>
+                        <option value="ja-Jpan">日本語</option>
+                        <option value="en-Latn">English</option>
+                    </select>
+                    <button id="voice-stop" type="button" disabled>停止</button>
+                    <button id="voice-play-queue" type="button" disabled>顺序播放</button>
+                </div>
+                <div class="voice-options">
+                    <label><input id="voice-subtitle-toggle" type="checkbox" checked><span id="voice-subtitle-toggle-label">显示字幕</span></label>
+                    <label><input id="voice-motion-toggle" type="checkbox" checked><span id="voice-motion-toggle-label">跟随原始动作</span></label>
+                    <label><input id="voice-expression-toggle" type="checkbox" checked><span id="voice-expression-toggle-label">跟随原始表情</span></label>
+                </div>
+                <details id="voice-multitrack-section" class="voice-workspace-section">
+                    <summary id="voice-multitrack-summary">多音轨</summary>
+                    <div id="voice-workspace-body" class="voice-workspace-body" role="listbox" aria-label="多音轨" tabindex="0">
+                        <section class="voice-workspace-group" aria-labelledby="voice-character-tracks-title">
+                            <strong id="voice-character-tracks-title">角色音轨</strong>
+                            <div id="voice-character-tracks" class="voice-workspace-tracks"></div>
+                        </section>
+                        <section class="voice-workspace-group" aria-labelledby="voice-background-tracks-title">
+                            <div class="voice-workspace-group-heading">
+                                <strong id="voice-background-tracks-title">背景音轨</strong>
+                                <button id="voice-background-track-add" type="button">添加背景音轨</button>
+                                <input id="voice-background-track-file" type="file" accept=".ogg,.flac,.wav,.mp3" hidden>
+                            </div>
+                            <div id="voice-background-tracks" class="voice-workspace-tracks"></div>
+                            <small id="voice-background-lipsync-note">背景音轨不驱动口型</small>
+                        </section>
+                        <output id="voice-workspace-status" class="voice-workspace-status" data-i18n-ignore="true" aria-live="polite"></output>
+                    </div>
+                </details>
+                <div class="voice-status-row">
+                    <output id="voice-catalog-status" class="voice-status" data-i18n-ignore="true" aria-live="polite">正在加载语音目录……</output>
+                    <output id="voice-subtitle-status" class="voice-subtitle-resolution" data-i18n-ignore="true" aria-live="polite" hidden></output>
+                </div>
+                <div id="voice-list" class="voice-list" role="list" aria-label="语音清单" aria-busy="true"></div>
+                <div id="voice-transport" class="voice-transport" role="group" aria-label="语音播放控制">
+                    <button id="voice-previous" type="button" disabled>上一条</button>
+                    <button id="voice-play" type="button" disabled>播放</button>
+                    <button id="voice-pause" type="button" disabled>暂停</button>
+                    <button id="voice-resume" type="button" disabled>继续</button>
+                    <button id="voice-next" type="button" disabled>下一条</button>
+                </div>
+                <div class="voice-progress-control">
+                    <input id="voice-progress" type="range" min="0" max="1" step="0.01" value="0" aria-label="语音进度" disabled>
+                    <output id="voice-progress-value" data-i18n-ignore="true">0:00 / —</output>
+                </div>
+                <output id="voice-operation-status" class="voice-operation-status" data-i18n-ignore="true" aria-live="polite"></output>
+                <output id="voice-runtime-status" class="voice-runtime-status" data-i18n-ignore="true" aria-live="polite"></output>
+            </div>
+            <div class="voice-panel-resize-handle" role="separator" aria-label="调整面板大小" aria-orientation="horizontal"></div>
+            <div class="voice-panel-footer" aria-hidden="true"></div>
+        </section>
+
         <div id="stat">
             <span class="demo">Magius3Dviewer is loading the official-style shader and character model...</span>
-            <div style="text-align: center;">
-                <span id="load-progress"></span>
+        </div>
+        <div id="load-progress-card" class="viewer-model-preload" hidden>
+            <span class="viewer-model-preload-icon" aria-hidden="true"></span>
+            <div class="viewer-model-preload-copy" role="status" aria-live="polite">
+                <strong id="load-progress">资源加载</strong>
+                <span id="load-progress-file"></span>
+                <div id="load-progress-track" class="viewer-model-preload-track" role="progressbar" aria-label="已发现资源加载进度" aria-valuemin="0" aria-valuemax="1"><span id="load-progress-bar"></span></div>
+                <div class="viewer-model-preload-metrics"><span id="load-progress-count">0 / 0 个已发现文件</span><span id="load-progress-bytes">0 B / 总量待确认</span><output id="load-progress-percent" hidden></output></div>
             </div>
         </div>
 

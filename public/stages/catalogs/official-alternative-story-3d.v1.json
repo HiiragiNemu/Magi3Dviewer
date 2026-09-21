@@ -1,0 +1,594 @@
+{
+  "schema": "magius.official-stage-catalog.v1",
+  "version": 1,
+  "family": "alternative-story-3d",
+  "stages": [
+    {
+      "id": "alternative-background-alternative-bg-model-00",
+      "stableKey": "AssetBundles/alternative_story/3d/background/alternative_bg_model_00",
+      "name": "alternative_bg_model_00",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/background/alternative_bg_model_00",
+      "backgroundResourceName": "alternative_bg_model_00",
+      "type": "fbx",
+      "url": "./stages/official/alternative-background-alternative-bg-model-00/alternative_bg_model_00.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 2050342,
+        "externalCabCount": 3,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/alternative-background-alternative-bg-model-00/scene-profile.json"
+    },
+    {
+      "id": "alternative-background-alternative-bg-model-01",
+      "stableKey": "AssetBundles/alternative_story/3d/background/alternative_bg_model_01",
+      "name": "alternative_bg_model_01",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/background/alternative_bg_model_01",
+      "backgroundResourceName": "alternative_bg_model_01",
+      "type": "fbx",
+      "url": "./stages/official/alternative-background-alternative-bg-model-01/alternative_bg_model_01.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 2168968,
+        "externalCabCount": 3,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/alternative-background-alternative-bg-model-01/scene-profile.json"
+    },
+    {
+      "id": "alternative-stage-model-alternative-stage-model-0-released",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_model/alternative_stage_model_0_released",
+      "name": "alternative_stage_model_0_released",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_model/alternative_stage_model_0_released",
+      "backgroundResourceName": "alternative_stage_model_0_released",
+      "type": "gltf",
+      "url": "./stages/official/alternative-stage-model-alternative-stage-model-0-released/scene.gltf",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": false,
+        "status": "product-presentation",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "official-image-plane"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "image",
+        "fullyResolved": true,
+        "sourceBytes": 826854,
+        "externalCabCount": 1,
+        "syntheticMarker": false
+      }
+    },
+    {
+      "id": "alternative-stage-model-alternative-stage-model-00-released",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_model/alternative_stage_model_00_released",
+      "name": "alternative_stage_model_00_released",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_model/alternative_stage_model_00_released",
+      "backgroundResourceName": "alternative_stage_model_00_released",
+      "type": "gltf",
+      "url": "./stages/official/alternative-stage-model-alternative-stage-model-00-released/scene.gltf",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": false,
+        "status": "product-presentation",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "official-image-plane"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "image",
+        "fullyResolved": true,
+        "sourceBytes": 827274,
+        "externalCabCount": 1,
+        "syntheticMarker": false
+      }
+    },
+    {
+      "id": "alternative-stage-model-alternative-stage-model-01-released",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_model/alternative_stage_model_01_released",
+      "name": "alternative_stage_model_01_released",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_model/alternative_stage_model_01_released",
+      "backgroundResourceName": "alternative_stage_model_01_released",
+      "type": "fbx",
+      "url": "./stages/official/alternative-stage-model-alternative-stage-model-01-released/alternative_stage_model_01_released.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 2073952,
+        "externalCabCount": 3,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/alternative-stage-model-alternative-stage-model-01-released/scene-profile.json"
+    },
+    {
+      "id": "alternative-stage-model-alternative-stage-model-01-unreleased",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_model/alternative_stage_model_01_unreleased",
+      "name": "alternative_stage_model_01_unreleased",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_model/alternative_stage_model_01_unreleased",
+      "backgroundResourceName": "alternative_stage_model_01_unreleased",
+      "type": "gltf",
+      "url": "./stages/official/alternative-stage-model-alternative-stage-model-01-unreleased/scene.gltf",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": false,
+        "status": "product-presentation",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "official-image-plane"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "image",
+        "fullyResolved": true,
+        "sourceBytes": 1575255,
+        "externalCabCount": 3,
+        "syntheticMarker": false
+      }
+    },
+    {
+      "id": "alternative-stage-model-alternative-stage-model-1-released",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_model/alternative_stage_model_1_released",
+      "name": "alternative_stage_model_1_released",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_model/alternative_stage_model_1_released",
+      "backgroundResourceName": "alternative_stage_model_1_released",
+      "type": "fbx",
+      "url": "./stages/official/alternative-stage-model-alternative-stage-model-1-released/alternative_stage_model_1_released.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 2075234,
+        "externalCabCount": 3,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/alternative-stage-model-alternative-stage-model-1-released/scene-profile.json"
+    },
+    {
+      "id": "alternative-stage-model-alternative-stage-model-1-unreleased",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_model/alternative_stage_model_1_unreleased",
+      "name": "alternative_stage_model_1_unreleased",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_model/alternative_stage_model_1_unreleased",
+      "backgroundResourceName": "alternative_stage_model_1_unreleased",
+      "type": "fbx",
+      "url": "./stages/official/alternative-stage-model-alternative-stage-model-1-unreleased/alternative_stage_model_1_unreleased.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 1573404,
+        "externalCabCount": 3,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/alternative-stage-model-alternative-stage-model-1-unreleased/scene-profile.json"
+    },
+    {
+      "id": "alternative-stage-position-alternative-stage-position-0",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_position/alternative_stage_position_0",
+      "name": "alternative_stage_position_0",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_position/alternative_stage_position_0",
+      "backgroundResourceName": "alternative_stage_position_0",
+      "type": "fbx",
+      "url": "./stages/official/alternative-stage-position-alternative-stage-position-0/alternative_stage_position_0.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 337237,
+        "externalCabCount": 0,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/alternative-stage-position-alternative-stage-position-0/scene-profile.json"
+    },
+    {
+      "id": "alternative-stage-position-alternative-stage-position-00",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_position/alternative_stage_position_00",
+      "name": "alternative_stage_position_00",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_position/alternative_stage_position_00",
+      "backgroundResourceName": "alternative_stage_position_00",
+      "type": "fbx",
+      "url": "./stages/official/alternative-stage-position-alternative-stage-position-00/alternative_stage_position_00.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 24770,
+        "externalCabCount": 0,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/alternative-stage-position-alternative-stage-position-00/scene-profile.json"
+    },
+    {
+      "id": "alternative-stage-position-alternative-stage-position-01",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_position/alternative_stage_position_01",
+      "name": "alternative_stage_position_01",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_position/alternative_stage_position_01",
+      "backgroundResourceName": "alternative_stage_position_01",
+      "type": "fbx",
+      "url": "./stages/official/alternative-stage-position-alternative-stage-position-01/alternative_stage_position_01.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 73647,
+        "externalCabCount": 1,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/alternative-stage-position-alternative-stage-position-01/scene-profile.json"
+    },
+    {
+      "id": "alternative-stage-position-alternative-stage-position-02",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_position/alternative_stage_position_02",
+      "name": "alternative_stage_position_02",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_position/alternative_stage_position_02",
+      "backgroundResourceName": "alternative_stage_position_02",
+      "type": "fbx",
+      "url": "./stages/official/alternative-stage-position-alternative-stage-position-02/alternative_stage_position_02.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 27053,
+        "externalCabCount": 0,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/alternative-stage-position-alternative-stage-position-02/scene-profile.json"
+    },
+    {
+      "id": "alternative-stage-position-alternative-stage-position-1",
+      "stableKey": "AssetBundles/alternative_story/3d/story_1/stage_position/alternative_stage_position_1",
+      "name": "alternative_stage_position_1",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "adv",
+      "family": "alternative-story-3d",
+      "official": true,
+      "assetBundleName": "alternative_story/3d/story_1/stage_position/alternative_stage_position_1",
+      "backgroundResourceName": "alternative_stage_position_1",
+      "type": "fbx",
+      "url": "./stages/official/alternative-stage-position-alternative-stage-position-1/alternative_stage_position_1.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 73628,
+        "externalCabCount": 1,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/alternative-stage-position-alternative-stage-position-1/scene-profile.json"
+    }
+  ],
+  "counts": {
+    "visible": 13,
+    "target": 13,
+    "fullyResolved": 13
+  }
+}

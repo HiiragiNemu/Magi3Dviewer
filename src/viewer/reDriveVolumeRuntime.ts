@@ -8,6 +8,7 @@ import {
 } from 'magia-exedra-character-three/shaders'
 import { scene, recoveredFillLight, recoveredHemisphereLight } from './scene'
 import { unityShL2ToThree } from './unityLighting'
+import { captureStageRecord, captureStageFields, captureStageUniforms } from './stageCommitState'
 
 export type RdBlendMode = 0 | 1 | 2 | 3
 export type Rgba = [number, number, number, number]
@@ -134,6 +135,38 @@ function ensureReDriveRuntimeInitialized(): InitialState {
     }
     initialState ??= captureInitialState()
     return initialState
+}
+
+/** Restore captured values directly: do not retry the consumer that just failed. */
+export function captureReDriveVolumeRuntime() {
+    const previousInitialState = initialState
+    const previousAttached = probesAttached
+    const parents = [lightProbe.parent, backgroundLightProbe.parent]
+    const restoreOptions = captureStageRecord(toonStylizationOptions)
+    const direction = getReDriveCharacterLightingDirectionState()
+    const restoreDepth = captureStageRecord(DepthRimExperiment)
+    const restoreProbes = [lightProbe, backgroundLightProbe]
+        .map(probe => captureStageFields(probe, ['intensity', 'sh']))
+    const restoreUniforms = scene.characters.flatMap(entry =>
+        entry.character?.userData.meshes ?? []).flatMap(mesh =>
+        (Array.isArray(mesh.material) ? mesh.material : [mesh.material])
+            .flatMap(material => material.userData.shader?.uniforms
+                ? [captureStageUniforms(material.userData.shader.uniforms)] : []))
+    return () => {
+        restoreOptions()
+        setReDriveCharacterLightingOverrideDirection(direction.enabled, direction.eulerDegrees)
+        restoreDepth()
+        restoreProbes.forEach(restore => restore())
+        restoreUniforms.forEach(restore => restore())
+        ;[lightProbe, backgroundLightProbe].forEach((probe, index) => {
+            if (probe.parent !== parents[index]) {
+                probe.removeFromParent()
+                parents[index]?.add(probe)
+            }
+        })
+        initialState = previousInitialState
+        probesAttached = previousAttached
+    }
 }
 
 function color(value: string | Rgba | undefined, fallback = '#ffffff'): THREE.Color {
@@ -489,25 +522,36 @@ export function applyReDriveVolumeRuntime(
         && rimDirectionOverride
         && validRimDirection
         && rim.intensity > 0.0001
-    // Preserve the existing material/main Rim path and add the compiled
-    // ReDriveToon pass' second CameraDepthTexture signal in parallel. The
-    // scene/Timeline globals drive that opposing depth edge on both Body
-    // decorations and Hair; replacing the main Rim would remove an already
-    // visible reflection layer instead of restoring the missing one.
-    toonStylizationOptions.rimEnabled = additionalRimEnabled
-    toonStylizationOptions.rimColor = `#${rim.color.getHexString()}`
-    // Unity stores HDR colour magnitude in the RGB components.
-    toonStylizationOptions.rimStrength = rim.intensity
+    // `_globalCharacterAdditionalRimLight*` belongs only to the compiled
+    // CameraDepthTexture second sample. The old Web normal/view Fresnel band
+    // is an inspection approximation, not a second official consumer. Feeding
+    // the same HDR scene colour into both paths created a broad smooth halo
+    // which Bloom then expanded over the character and erased the hard toon
+    // separation. Keep that legacy carrier disabled while a ReDriveVolume is
+    // active and preserve the serialized HDR magnitude in the depth carrier.
+    toonStylizationOptions.rimEnabled = false
     if (additionalRimEnabled && rimDirection) {
-        toonStylizationOptions.rimDirectionX = rimDirection[0]
-        toonStylizationOptions.rimDirectionY = rimDirection[1]
-        DepthRimExperiment.additionalDirectionVS.set(...rimDirection)
+        // Native SetGlobalShaderParams negates both Volume XY components
+        // (TW 0x4763170-0x47631A4); the depth shader consumes GPU XY as-is.
+        DepthRimExperiment.additionalDirectionVS.set(
+            -rimDirection[0], -rimDirection[1],
+        )
         DepthRimExperiment.additionalColor
             .copy(rim.color)
             .multiplyScalar(rim.intensity)
     } else {
         DepthRimExperiment.additionalDirectionVS.set(0, 0)
         DepthRimExperiment.additionalColor.setRGB(0, 0, 0)
+    }
+
+    scene.scene.userData.reDriveCharacterAdditionalRim = {
+        enabled: additionalRimEnabled,
+        carrier: 'camera-depth-second-sample',
+        legacySurfaceCarrierEnabled: false,
+        directionView: DepthRimExperiment.additionalDirectionVS.toArray(),
+        colorLinearHdr: DepthRimExperiment.additionalColor.toArray(),
+        colorOverride: rimColorOverride,
+        directionOverride: rimDirectionOverride,
     }
 
     scene.scene.userData.reDriveVolumeRuntime = profile
@@ -565,6 +609,7 @@ export function resetReDriveVolumeRuntime() {
         initial.additionalRimDirection,
     )
     DepthRimExperiment.additionalColor.copy(initial.additionalRimColor)
+    delete scene.scene.userData.reDriveCharacterAdditionalRim
     delete scene.scene.userData.reDriveVolumeRuntime
     updateCharacterUniforms()
 }

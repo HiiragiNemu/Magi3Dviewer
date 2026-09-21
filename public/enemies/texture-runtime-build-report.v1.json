@@ -1,0 +1,3970 @@
+{
+  "schema": "magius.enemy-texture-runtime-build-report.v1",
+  "counts": {
+    "models": 493,
+    "uniqueTextureProducts": 1969,
+    "runtimeReadyTextureProducts": 1969,
+    "failClosedTextureProducts": 0,
+    "textureReferences": 22372,
+    "runtimeReadyTextureReferences": 22372,
+    "failClosedTextureReferences": 0,
+    "requiredTextureReferences": 7182,
+    "missingRequiredTextureReferences": 0,
+    "textureRuntimeReadyModels": 493,
+    "textureFailClosedModels": 0,
+    "publishedBytes": 564810901,
+    "declaredBundleTasks": 1151,
+    "declaredBundleMatches": 1967,
+    "declaredBundleFailures": 0,
+    "cabIndexMappedBundles": 70,
+    "stageProfilesRead": 399,
+    "vfxProfilesRead": 654
+  },
+  "products": [
+    {
+      "modelPrefabName": "enemy_600001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 78,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 28,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 26,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 44,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 22,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 17,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 20,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 39,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 26,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 26,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 41,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 43,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 20,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 21,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 90,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 28,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_600020_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 94,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 28,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 34,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 30,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 30,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 21,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 38,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 41,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 49,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 26,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_601012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 67,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 32,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 22,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 52,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 82,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 68,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 82,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 82,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 82,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 88,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 94,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 48,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 14,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 125,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 34,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602020_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 131,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 34,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602021_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 42,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602022_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 68,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602023_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 68,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602024_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 68,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602025_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 73,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602026_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 78,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602027_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 41,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602028_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 66,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 22,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602029_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 82,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602030_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 98,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 28,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602031_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 140,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 64,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602032_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602033_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 62,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602034_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 65,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 21,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_602035_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 102,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 144,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 43,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 84,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 21,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 7,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 21,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 21,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 16,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 27,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 84,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 84,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 84,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 88,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 90,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 77,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 22,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 146,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 43,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 148,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 43,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 157,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 48,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_603019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 194,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 57,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 66,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 23,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 23,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 20,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 20,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604020_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 20,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604021_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 20,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604022_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604023_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_604024_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 74,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 84,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 27,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 57,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 57,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605020_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605021_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 57,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605022_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605023_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 99,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 31,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_605024_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 100,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 31,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 22,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606020_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606021_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606022_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606023_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 23,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_606024_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 24,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 52,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 17,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 29,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 29,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 16,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607020_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607021_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 16,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607022_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607023_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 60,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 17,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607024_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 67,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 19,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607025_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 23,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607026_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 35,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607027_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 76,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607028_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 60,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607029_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 65,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 22,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_607030_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 102,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 31,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 53,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 25,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 63,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 27,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 75,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 75,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 42,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 17,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 75,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 75,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 42,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 17,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 70,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608020_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 75,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608021_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 75,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608022_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 42,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 17,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608023_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 64,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 28,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_608024_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 65,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 25,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 22,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 32,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 32,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 32,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 33,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609020_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 34,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609021_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 35,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609022_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609023_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609024_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 26,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609025_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 35,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 13,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_609026_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 72,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 22,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_610001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 98,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_610002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 118,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 32,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_610003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 111,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_610004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 118,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 32,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_610005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 118,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 32,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_610006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 126,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 32,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_610007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 127,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 32,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_610008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 66,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 18,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_610009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 104,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_610010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 110,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 30,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_611001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 84,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 31,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_611002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_611003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 21,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_611004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_611005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_611006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 23,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_611007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 23,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 9,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_611008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_611009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 88,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 31,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_611010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 98,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 33,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 44,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 14,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612020_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612021_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612022_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612023_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 16,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612024_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612025_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612026_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612027_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612028_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612029_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 16,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612030_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612033_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 47,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 14,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_612034_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 48,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 14,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_613001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 40,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_613002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_613003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_613004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_615001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 24,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_615002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_615003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_615004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_615005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_615006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 16,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_615007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 16,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_615008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_615009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 26,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_615010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 27,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 58,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 58,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 58,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 58,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 58,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 58,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 44,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 44,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 44,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 44,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 44,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_616013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 44,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_617001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 58,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_617002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_617003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_617004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_617005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_617006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_617007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_617008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_617009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 65,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_617010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 71,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 38,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 16,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 17,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 15,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 44,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 46,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 12,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 18,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_618012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 16,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 106,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 31,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 141,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 41,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 24,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 32,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 107,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 32,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 107,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 32,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 107,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 32,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 120,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 31,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 125,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 31,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 57,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 17,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 155,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 41,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_619013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 160,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 41,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_620001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 110,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 37,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_620002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_620003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 120,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 37,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_620004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 117,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 37,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_620005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_620006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_620007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_620008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 65,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_620009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 66,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_620010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 43,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 13,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 98,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 28,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 124,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 32,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 112,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 28,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 113,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 28,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 154,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 38,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 168,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 38,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 17,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 17,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_621015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_625001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 131,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 55,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_625002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 76,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_625003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 155,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 55,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_625004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 167,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 55,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_625005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 76,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_625006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 76,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_625007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 76,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_625008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 91,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_625009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 95,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 20,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_625010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 53,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_638001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 196,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 65,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_638002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 211,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 65,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_638003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 226,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 65,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_639002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 65,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 27,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_639003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 85,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 27,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_639004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 105,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 27,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_639005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 195,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 48,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_639006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 208,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 48,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_639007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 214,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 48,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_641001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 65,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 19,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_641002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 65,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 19,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_641003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 65,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 19,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_641004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 65,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 19,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_641005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 74,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 19,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_641006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 80,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 19,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_641007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 52,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_648001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 29,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_648002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_648003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 34,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_648004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 36,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_648005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_648006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_648007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_648008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 8,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_648009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 9,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_648010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 10,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_649001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_649002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_649003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 71,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_649004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 73,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 24,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_649005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_649006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_649007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_649008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 8,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 2,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_649009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 9,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_649010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 10,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 20,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 27,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 13,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 13,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 22,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 28,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 30,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 32,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 30,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650011_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 34,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650012_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 39,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650013_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 39,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 13,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650014_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 48,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 13,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650015_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650016_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650017_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650018_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 20,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 6,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650019_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 20,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650020_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 14,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 5,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650021_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650022_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650023_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 6,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 3,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650024_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 22,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650025_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 8,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650026_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 11,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650033_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 22,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650034_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 22,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650035_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 22,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650036_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 32,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650037_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 32,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650038_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650039_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650040_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 25,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650041_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 35,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650042_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 33,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 11,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650043_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 30,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650044_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 30,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650045_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 30,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650046_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 38,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650047_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 38,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650048_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 33,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 14,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650049_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 32,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650050_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 32,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650051_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 32,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650052_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 40,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650053_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 40,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650054_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 35,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650055_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 30,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650056_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 30,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650057_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 30,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650058_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 38,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650059_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 38,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 15,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_650060_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 33,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 14,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_651001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 48,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 16,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_654001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 48,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 18,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_654002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 48,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 18,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_654003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 48,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 18,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_654004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 48,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 18,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_654005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 18,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_654006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 56,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 18,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_654007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 49,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 18,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_656001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 57,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 26,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_656002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 71,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 26,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_656003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 83,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 26,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_656004_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 10,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_656005_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 10,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_656006_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 10,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_656007_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 10,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_656008_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 16,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_656009_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 18,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_656010_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 12,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 4,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_658001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 144,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 40,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_658002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 152,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 40,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_658003_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 165,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 40,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_689001_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 97,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 38,
+      "missingRequiredRuntimeTextureReferences": 0
+    },
+    {
+      "modelPrefabName": "enemy_689002_battle_unit",
+      "textureRuntimeReady": true,
+      "runtimeTextureReferences": 26,
+      "missingRuntimeTextureReferences": 0,
+      "requiredRuntimeTextureReferences": 10,
+      "missingRequiredRuntimeTextureReferences": 0
+    }
+  ],
+  "extractFailures": []
+}

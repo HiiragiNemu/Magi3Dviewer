@@ -132,6 +132,133 @@
     text-align: right;
 }
 
+.character-physics-action-options {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.character-physics-action-options > summary {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.character-physics-action-options > summary strong {
+    flex: 0 0 auto;
+    font-size: 11px;
+}
+
+#character-physics-action-options-status {
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    color: #b9c7d8;
+    font-size: 10px;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#character-physics-action-options-status[data-status="error"] {
+    color: #ff9a9a;
+}
+
+.character-physics-action-options-body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0 10px 9px;
+}
+
+.character-physics-action-options-body > section {
+    min-width: 0;
+}
+
+.character-physics-action-options-body h3 {
+    margin: 0 0 5px;
+    color: #9fdac8;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.character-physics-option-list {
+    display: grid;
+    gap: 4px;
+}
+
+.character-physics-option-row {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 6px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 5px;
+}
+
+.character-physics-option-row.is-unavailable {
+    opacity: 0.66;
+}
+
+.character-physics-option-heading,
+.character-physics-option-copy {
+    display: grid;
+    min-width: 0;
+    flex: 1 1 auto;
+    gap: 2px;
+}
+
+.character-physics-option-heading strong,
+.character-physics-option-copy strong,
+.character-physics-option-heading span,
+.character-physics-option-reason {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.character-physics-option-heading strong,
+.character-physics-option-copy strong {
+    font-size: 9px;
+}
+
+.character-physics-option-heading span,
+.character-physics-option-reason,
+.character-physics-option-empty {
+    color: #aeb9c9;
+    font-size: 8px;
+}
+
+.character-physics-option-empty {
+    margin: 0;
+    padding: 7px 5px;
+}
+
+.character-physics-phase-row button,
+.character-physics-related-action-row button {
+    min-height: 26px;
+    flex: 0 0 auto;
+    padding: 3px 8px;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 4px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 9px;
+}
+
+.character-physics-phase-row button:disabled,
+.character-physics-related-action-row button:disabled {
+    cursor: default;
+    opacity: 0.45;
+}
+
 .direct-pose-toolbar {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
@@ -141,7 +268,15 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-#action-direct-edit-toggle {
+.direct-pose-mode {
+    display: flex;
+    min-width: 0;
+    gap: 4px;
+}
+
+#action-direct-edit-toggle,
+.direct-pose-mode button,
+.model-part-controls button {
     min-height: 32px;
     padding: 4px 10px;
     color: inherit;
@@ -151,19 +286,121 @@
     cursor: pointer;
 }
 
-#action-direct-edit-toggle[aria-pressed="true"] {
+.direct-pose-mode button {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+#action-direct-edit-toggle[aria-pressed="true"],
+.direct-pose-mode button[aria-pressed="true"] {
     color: #dffff4;
     background: rgba(0, 122, 91, 0.45);
     border-color: rgba(33, 205, 155, 0.85);
 }
 
 #action-direct-edit-target {
+    grid-column: 1 / -1;
     min-width: 0;
     overflow: hidden;
     color: #b9c7d8;
     font-size: 11px;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.model-part-controls {
+    display: grid;
+    gap: 6px;
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.model-part-controls > header,
+.selected-model-part-control,
+.model-part-search {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 6px;
+}
+
+.model-part-controls > header strong,
+.model-part-search span {
+    flex: 0 0 auto;
+}
+
+.model-part-controls > header button {
+    margin-left: auto;
+}
+
+.model-part-controls button {
+    min-height: 28px;
+    padding: 3px 8px;
+}
+
+.selected-model-part-control output {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    color: #b9c7d8;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.model-part-search input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 28px;
+    padding: 3px 7px;
+    color: inherit;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.model-part-list {
+    display: grid;
+    max-height: 142px;
+    overflow: auto;
+}
+
+.model-part-row {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr) 4.5em;
+    align-items: center;
+    min-width: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.model-part-row > input {
+    justify-self: center;
+}
+
+.model-part-row .model-part-select {
+    min-width: 0;
+    overflow: hidden;
+    background: transparent;
+    border-color: transparent;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.model-part-row output {
+    color: #aeb9c9;
+    font-size: 9px;
+    text-align: right;
+}
+
+.model-part-row.direct-selected {
+    background: rgba(0, 137, 103, 0.24);
+    outline: 1px solid rgba(53, 221, 170, 0.7);
+    outline-offset: -1px;
+}
+
+.model-part-row.part-hidden .model-part-select {
+    opacity: 0.55;
 }
 
 body.direct-pose-editing #viewer canvas {
@@ -296,15 +533,51 @@ body.theme-light .floating-panel {
 body.theme-light .floating-panel-header,
 body.theme-light .floating-panel-footer,
 body.theme-light .parameter-basics,
+body.theme-light .character-physics-action-options,
 body.theme-light .direct-pose-toolbar,
+body.theme-light .model-part-controls,
+body.theme-light .model-part-row,
 body.theme-light .parameter-channel-row {
     border-color: rgba(0, 0, 0, 0.12);
 }
 
-body.theme-light .parameter-search input {
+body.theme-light .parameter-search input,
+body.theme-light .model-part-search input {
     color: #222;
     background: #fff;
     border-color: rgba(0, 0, 0, 0.2);
+}
+
+body.theme-light #character-physics-action-options-status,
+body.theme-light .character-physics-option-heading span,
+body.theme-light .character-physics-option-reason,
+body.theme-light .character-physics-option-empty {
+    color: #46515e;
+}
+
+body.theme-light .character-physics-action-options-body h3 {
+    color: #075f48;
+}
+
+body.theme-light .character-physics-option-row {
+    background: rgba(0, 0, 0, 0.035);
+    border-color: rgba(0, 0, 0, 0.14);
+}
+
+.character-physics-option-row.is-active {
+    border-color: rgba(82, 214, 174, 0.62);
+    background: rgba(35, 151, 117, 0.12);
+}
+
+body.theme-light .character-physics-phase-row button,
+body.theme-light .character-physics-related-action-row button {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.22);
+}
+
+body.theme-light .character-physics-option-row.is-active {
+    border-color: rgba(0, 126, 91, 0.55);
+    background: rgba(0, 126, 91, 0.08);
 }
 
 body.theme-light .parameter-axis-legend {
@@ -322,7 +595,14 @@ body.theme-light #action-direct-edit-target {
     color: #46515e;
 }
 
-body.theme-light #action-direct-edit-toggle {
+body.theme-light .selected-model-part-control output,
+body.theme-light .model-part-row output {
+    color: #46515e;
+}
+
+body.theme-light #action-direct-edit-toggle,
+body.theme-light .direct-pose-mode button,
+body.theme-light .model-part-controls button {
     background: rgba(0, 0, 0, 0.05);
     border-color: rgba(0, 0, 0, 0.22);
 }
@@ -345,6 +625,10 @@ body.theme-light #action-direct-edit-toggle {
     .parameter-bone-row {
         grid-template-columns: minmax(92px, 1fr) repeat(3, minmax(50px, 0.75fr));
         gap: 3px;
+    }
+
+    .character-physics-action-options-body {
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .parameter-axis-control {

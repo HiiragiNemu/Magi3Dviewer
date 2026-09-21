@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { parseHomeExpressionSchema2, type HomeExpressionSchema2 } from './homeExpressionSchema2.ts'
 
 export interface HomeAnimationRuntime {
     schema: 1 | 2
@@ -40,7 +41,12 @@ export interface HomeAnimationRuntime {
 export interface HomeExpressionDefinition {
     duration: number
     weights: Record<string, number>
+    curves?: Record<string, Array<{
+        time: number
+        coeff: [number, number, number, number]
+    }>>
     unresolvedAttributes?: number[]
+    unresolvedAttributeNames?: string[]
 }
 
 export interface HomeBlinkControllerDefinition {
@@ -56,9 +62,9 @@ export interface HomeBlinkControllerDefinition {
 }
 
 export interface HomeExpressionRuntime {
-    schema: 1
+    schema: 1 | 2
     characterId: number
-    unityVersion: string
+    unityVersion: string | null
     source: string
     defaultExpression: string
     morphTargetCount: number
@@ -81,6 +87,93 @@ export interface HomeExpressionRuntime {
         constantWeights: Record<string, number>
         unresolvedAttributes: number[]
     }
+}
+
+/**
+ * Convert the current-build schema2 Home expression export into the existing
+ * controller contract without discarding any streamed expression curves.
+ * Coefficients are normalized once at the adapter boundary because schema2
+ * stores the source Unity cubic in percent units.
+ */
+export function adaptHomeExpressionSchema2(
+    schema: HomeExpressionSchema2,
+    options: {
+        unityVersion?: string | null
+        source?: string
+    },
+): HomeExpressionRuntime {
+    const expressions: Record<string, HomeExpressionDefinition> = {}
+    for (const name of schema.expressionOrder) {
+        const source = schema.expressions[name]
+        if (!source) continue
+        const curves: NonNullable<HomeExpressionDefinition['curves']> = {}
+        for (const track of source.curveTracks) {
+            curves[track.morphTarget] = track.segments.map(segment => ({
+                time: segment.time,
+                coeff: segment.coeff.map(value => value / 100) as [number, number, number, number],
+            }))
+        }
+        expressions[name] = {
+            duration: source.duration,
+            weights: { ...source.constantWeights },
+            curves,
+            unresolvedAttributeNames: [...source.unresolvedAttributes],
+        }
+    }
+    const mouthClip = schema.auxiliaryClips?.HomeMouthOpen
+    const mouthTrack = mouthClip?.curveTracks[0]
+    const blinkClip = schema.auxiliaryClips?.HomeEyeBlink
+    const states = schema.blinkControllerStates
+    const state = (name: string) => states?.[name] as { m_Speed?: number; m_TransitionConstantArray?: Array<{ data?: { m_ExitTime?: number; m_TransitionDuration?: number } }> } | undefined
+    const transition = (name: string) => state(name)?.m_TransitionConstantArray?.[0]?.data
+    const empty = transition('Home_Eye_Empty')
+    const blink = transition('Home_Eye_Blink')
+    const afterBlink = transition('Home_Eye_Empty_1')
+    const interval = transition('Home_Eye_BlinkInterval')
+    const blinkController = empty && blink && afterBlink && interval ? {
+        emptyExitTime: empty.m_ExitTime!, fadeInSeconds: empty.m_TransitionDuration!,
+        blinkExitTime: blink.m_ExitTime!, fadeOutSeconds: blink.m_TransitionDuration!,
+        afterBlinkExitTime: afterBlink.m_ExitTime!, afterBlinkTransitionSeconds: afterBlink.m_TransitionDuration!,
+        intervalSpeed: state('Home_Eye_BlinkInterval')!.m_Speed!,
+        intervalExitTime: interval.m_ExitTime!, intervalTransitionSeconds: interval.m_TransitionDuration!,
+    } : null
+    return {
+        schema: 2,
+        characterId: schema.characterId,
+        unityVersion: options.unityVersion ?? null,
+        source: options.source ?? 'home-expression-schema2',
+        defaultExpression: schema.defaultExpression,
+        morphTargetCount: schema.morphTargetCount,
+        expressionOrder: [...schema.expressionOrder],
+        aliases: { ...schema.aliases },
+        expressions,
+        blink: {
+            duration: blinkClip?.duration ?? 0,
+            weights: { ...blinkClip?.constantWeights },
+            controller: blinkController,
+        },
+        mouth: {
+            duration: mouthClip?.duration ?? 0,
+            curveTarget: mouthTrack?.morphTarget ?? schema.mouthCurveTarget ?? null,
+            curveSegments: mouthTrack?.segments.map(segment => ({ time: segment.time, coeff: [...segment.coeff] as [number, number, number, number] })) ?? [],
+            constantWeights: { ...mouthClip?.constantWeights },
+            unresolvedAttributes: (mouthClip?.unresolvedAttributes ?? []).flatMap(value => {
+                if (typeof value === 'number') return [value]
+                if (value && typeof value === 'object' && 'serializedAttribute' in value && typeof value.serializedAttribute === 'number') return [value.serializedAttribute]
+                return []
+            }),
+        },
+    }
+}
+
+function normalizeHomeExpressionRuntime(runtime: HomeExpressionRuntime): HomeExpressionRuntime {
+    const candidate = runtime as unknown as Record<string, unknown>
+    if (candidate.schema !== 2 || candidate.blink !== undefined || candidate.mouth !== undefined) return runtime
+    const parsed = parseHomeExpressionSchema2({ ...candidate, schema: 'home-expression-schema2' })
+    return adaptHomeExpressionSchema2(parsed, {
+        unityVersion: typeof candidate.unityVersion === 'string' ? candidate.unityVersion : undefined,
+        source: typeof candidate.source === 'string' ? candidate.source : undefined,
+    })
 }
 
 function getObjectPath(object: THREE.Object3D): string {
@@ -200,6 +293,53 @@ interface MorphTargetMesh extends THREE.Mesh {
     morphTargetInfluences: number[]
 }
 
+/** Exact live storage owned by one CharacterExpressionController. */
+export interface HomeMorphChannelBinding {
+    readonly mesh: THREE.Mesh
+    readonly index: number
+    readonly influences: number[]
+}
+
+export interface HomeMorphChannelLeaseRequest {
+    readonly bindings: readonly HomeMorphChannelBinding[]
+    /** Existing caller-configured expression/editor transition, in seconds. */
+    readonly releaseTransitionSeconds: number
+    /** Check the retained actor, generation and disposal state, without side effects. */
+    readonly isCurrent: () => boolean
+}
+
+export type HomeMorphChannelLeaseResult =
+    | {
+        status: 'ready'
+        release(): void
+        releaseToEvaluator(): HomeMorphEvaluatorReturnResult
+        prepareReleaseToEvaluator(): HomeMorphEvaluatorReturnPreparation
+    }
+    | {
+        status: 'unavailable'
+        reason: 'empty-bindings' | 'invalid-binding' | 'stale' | 'overlap'
+            | 'reentrant' | 'transition-unavailable'
+    }
+
+export type HomeMorphEvaluatorReturnResult = { status: 'ready' }
+    | { status: 'unavailable'; reason: 'released' | 'stale' | 'invalid-binding' | 'reentrant' }
+
+/** Preflight a complete provider batch before changing any native write mask. */
+export type HomeMorphEvaluatorReturnPreparation =
+    | { status: 'ready'; commit(): HomeMorphEvaluatorReturnResult; rollback(): void }
+    | Extract<HomeMorphEvaluatorReturnResult, { status: 'unavailable' }>
+
+interface RetainedMorphChannel extends HomeMorphChannelBinding {
+    readonly names: string[]
+}
+
+interface MorphChannelReturn {
+    from: number
+    elapsed: number
+    seconds: number
+    isCurrent: () => boolean
+}
+
 function isMorphTargetMesh(mesh: THREE.Mesh): mesh is MorphTargetMesh {
     return !!mesh.morphTargetDictionary && !!mesh.morphTargetInfluences
 }
@@ -277,6 +417,7 @@ export class CharacterExpressionController {
     private elapsed = 0
     private mouthTime = 0
     private expressionTransitionElapsed = 0
+    private expressionElapsed = 0
     private expressionTransitionFrom: Map<string, number> | null = null
     private faceLayerState:
         | 'automatic-blink'
@@ -285,8 +426,16 @@ export class CharacterExpressionController {
     private readonly controlledNames: Set<string>
     private readonly mouthCornerUpNames: Set<string>
     private readonly mouthCornerDownNames: Set<string>
+    private readonly morphChannels = new Map<THREE.Mesh, Map<number, RetainedMorphChannel>>()
+    private readonly leasedMorphChannels = new Set<RetainedMorphChannel>()
+    // The reservation remains held while the external compositor reads fresh
+    // native values. Only the write mask is lifted, not overlap ownership.
+    private readonly evaluatorMorphChannels = new Map<RetainedMorphChannel, () => boolean>()
+    private readonly returningMorphChannels = new Map<RetainedMorphChannel, MorphChannelReturn>()
+    private morphChannelOperation = false
 
     constructor(meshes: THREE.Mesh[], runtime: HomeExpressionRuntime) {
+        runtime = normalizeHomeExpressionRuntime(runtime)
         this.runtime = runtime
         this.meshes = meshes.filter(isMorphTargetMesh)
         this.expressions = getDistinctExpressionNames(this.meshes, runtime)
@@ -318,7 +467,135 @@ export class CharacterExpressionController {
         if (this.meshes.length === 0) {
             throw new Error('Home expression runtime requires an exported morph-target mesh')
         }
+        for (const mesh of this.meshes) {
+            const channels = new Map<number, RetainedMorphChannel>()
+            for (const name of this.controlledNames) {
+                const index = mesh.morphTargetDictionary[name]
+                if (!Number.isInteger(index) || index < 0 || index >= mesh.morphTargetInfluences.length) continue
+                let channel = channels.get(index)
+                if (!channel) {
+                    channel = { mesh, index, influences: mesh.morphTargetInfluences, names: [] }
+                    channels.set(index, channel)
+                }
+                channel.names.push(name)
+            }
+            this.morphChannels.set(mesh, channels)
+        }
         this.apply()
+    }
+
+    /** Yield only these native writes; expression, blink and mouth clocks keep running. */
+    acquireMorphChannels(request: HomeMorphChannelLeaseRequest): HomeMorphChannelLeaseResult {
+        if (this.morphChannelOperation) return { status: 'unavailable', reason: 'reentrant' }
+        if (request.bindings.length === 0) return { status: 'unavailable', reason: 'empty-bindings' }
+        const seconds = request.releaseTransitionSeconds
+        if (!Number.isFinite(seconds) || seconds <= 0) {
+            return { status: 'unavailable', reason: 'transition-unavailable' }
+        }
+        this.morphChannelOperation = true
+        try {
+            // Resolve the complete batch before committing any ownership.
+            const isCurrent = request.isCurrent
+            if (!this.morphCallerCurrent(isCurrent)) return { status: 'unavailable', reason: 'stale' }
+            const channels = new Set<RetainedMorphChannel>()
+            for (const binding of request.bindings) {
+                const channel = this.morphChannels.get(binding.mesh)?.get(binding.index)
+                if (!channel || channel.influences !== binding.influences || !this.morphChannelCurrent(channel)) {
+                    return { status: 'unavailable', reason: 'invalid-binding' }
+                }
+                if (channels.has(channel) || this.leasedMorphChannels.has(channel)) {
+                    return { status: 'unavailable', reason: 'overlap' }
+                }
+                channels.add(channel)
+            }
+            for (const channel of channels) {
+                this.leasedMorphChannels.add(channel)
+                this.returningMorphChannels.delete(channel)
+            }
+            let released = false
+            let evaluatorOnly = false
+            const validateReturn = (): HomeMorphEvaluatorReturnResult => {
+                if (this.morphChannelOperation) return { status: 'unavailable', reason: 'reentrant' }
+                if (released) return { status: 'unavailable', reason: 'released' }
+                this.morphChannelOperation = true
+                try {
+                    if (!this.morphCallerCurrent(isCurrent)) return { status: 'unavailable', reason: 'stale' }
+                    if ([...channels].some(channel => !this.morphChannelCurrent(channel)
+                        || !this.leasedMorphChannels.has(channel))) return { status: 'unavailable', reason: 'invalid-binding' }
+                    return { status: 'ready' }
+                } finally { this.morphChannelOperation = false }
+            }
+            const prepareReleaseToEvaluator = (): HomeMorphEvaluatorReturnPreparation => {
+                const valid = validateReturn()
+                if (valid.status !== 'ready') return valid
+                let changed = false
+                return {
+                    status: 'ready',
+                    commit: () => {
+                        const current = validateReturn()
+                        if (current.status !== 'ready') return current
+                        if (!evaluatorOnly) {
+                            evaluatorOnly = changed = true
+                            for (const channel of channels) {
+                                this.evaluatorMorphChannels.set(channel, isCurrent)
+                                this.returningMorphChannels.delete(channel)
+                            }
+                        }
+                        return { status: 'ready' }
+                    },
+                    rollback: () => {
+                        if (!changed || released) return
+                        changed = false
+                        evaluatorOnly = false
+                        for (const channel of channels) this.evaluatorMorphChannels.delete(channel)
+                    },
+                }
+            }
+            return {
+                status: 'ready',
+                prepareReleaseToEvaluator,
+                releaseToEvaluator: () => {
+                    const prepared = prepareReleaseToEvaluator()
+                    return prepared.status === 'ready' ? prepared.commit() : prepared
+                },
+                release: () => {
+                    if (released || this.morphChannelOperation) return
+                    this.morphChannelOperation = true
+                    released = true
+                    try {
+                        const current = this.morphCallerCurrent(isCurrent)
+                        for (const channel of channels) {
+                            this.leasedMorphChannels.delete(channel)
+                            this.evaluatorMorphChannels.delete(channel)
+                            // The external compositor already owns the one return.
+                            if (evaluatorOnly) continue
+                            // No synchronous release writes, including stale generations.
+                            if (!current || !this.morphChannelCurrent(channel)) continue
+                            const from = channel.influences[channel.index]
+                            if (!Number.isFinite(from)) continue
+                            this.returningMorphChannels.set(channel, {
+                                from, elapsed: 0, seconds, isCurrent,
+                            })
+                        }
+                    } finally {
+                        this.morphChannelOperation = false
+                    }
+                },
+            }
+        } finally {
+            this.morphChannelOperation = false
+        }
+    }
+
+    private morphCallerCurrent(isCurrent: () => boolean): boolean {
+        try { return isCurrent() === true } catch { return false }
+    }
+
+    private morphChannelCurrent(channel: RetainedMorphChannel): boolean {
+        return this.meshes.includes(channel.mesh as MorphTargetMesh)
+            && channel.mesh.morphTargetInfluences === channel.influences
+            && channel.index < channel.influences.length
+            && channel.names.every(name => channel.mesh.morphTargetDictionary?.[name] === channel.index)
     }
 
     get current(): string {
@@ -381,6 +658,7 @@ export class CharacterExpressionController {
         }
         this.beginExpressionTransition()
         this._current = canonical
+        this.expressionElapsed = 0
         this.autoBlink = automaticBlink && this.supportsAutomaticBlink(canonical)
         this.faceLayerState = this.autoBlink
             ? 'expression-auto-blink'
@@ -392,6 +670,7 @@ export class CharacterExpressionController {
     resetToDefault() {
         this.beginExpressionTransition()
         this._current = this.runtime.defaultExpression
+        this.expressionElapsed = 0
         this.faceLayerState = 'automatic-blink'
         this.autoBlink = !!this.runtime.blink.controller
         this.elapsed = 0
@@ -438,6 +717,7 @@ export class CharacterExpressionController {
     update(delta: number) {
         const safeDelta = Math.max(0, delta)
         this.elapsed += safeDelta
+        this.expressionElapsed += safeDelta
         if (this.expressionTransitionFrom) {
             this.expressionTransitionElapsed += safeDelta
             if (this.expressionTransitionElapsed >= this.expressionTransitionSeconds) {
@@ -448,6 +728,9 @@ export class CharacterExpressionController {
             this.mouthTime = (this.mouthTime + safeDelta) % this.runtime.mouth.duration
         } else {
             this.mouthTime = 0
+        }
+        for (const returning of this.returningMorphChannels.values()) {
+            returning.elapsed += safeDelta
         }
         this.apply()
     }
@@ -480,11 +763,16 @@ export class CharacterExpressionController {
 
     private expressionTargetWeight(name: string): number {
         const defaultFace = this.runtime.expressions[this.runtime.defaultExpression].weights
-        const selectedFace = this.runtime.expressions[this._current].weights
+        const selectedExpression = this.runtime.expressions[this._current]
+        const selectedFace = selectedExpression.weights
+        const selectedCurve = selectedExpression.curves?.[name]
+        const selectedCurveValue = selectedCurve
+            ? evaluateCubicSegment(selectedCurve, Math.min(this.expressionElapsed, selectedExpression.duration))
+            : selectedFace[name] ?? 0
         if (this.faceLayerState === 'automatic-blink') return defaultFace[name] ?? 0
         return THREE.MathUtils.lerp(
             defaultFace[name] ?? 0,
-            selectedFace[name] ?? 0,
+            selectedCurve ? selectedCurveValue : selectedFace[name] ?? 0,
             this.expressionWeight,
         )
     }
@@ -517,6 +805,8 @@ export class CharacterExpressionController {
     }
 
     private apply() {
+        // Caller validation can reenter a setter; never write through a partial batch.
+        if (this.morphChannelOperation) return
         const selectedExpression = this.faceLayerState !== 'automatic-blink'
         const blinkSupported = this.supportsManualBlink(
             selectedExpression ? this._current : this.runtime.defaultExpression,
@@ -535,6 +825,17 @@ export class CharacterExpressionController {
             for (const name of this.controlledNames) {
                 const index = mesh.morphTargetDictionary[name]
                 if (index == undefined) continue
+                const channel = this.morphChannels.get(mesh)?.get(index)
+                if (!channel || !channel.names.includes(name) || !this.morphChannelCurrent(channel)) continue
+                const evaluatorCurrent = this.evaluatorMorphChannels.get(channel)
+                if (this.leasedMorphChannels.has(channel) && !evaluatorCurrent) continue
+                if (evaluatorCurrent) {
+                    this.morphChannelOperation = true
+                    let current: boolean
+                    try { current = this.morphCallerCurrent(evaluatorCurrent) }
+                    finally { this.morphChannelOperation = false }
+                    if (!current || !this.morphChannelCurrent(channel)) continue
+                }
                 // Every official FaceXX clip is a full constant snapshot. A
                 // missing entry therefore means the keyed value was zero, not
                 // "inherit". Manual expression strength blends that complete
@@ -587,7 +888,21 @@ export class CharacterExpressionController {
                         value = constantWeight
                     }
                 }
-                mesh.morphTargetInfluences[index] = value
+                const returning = this.returningMorphChannels.get(channel)
+                if (returning) {
+                    this.morphChannelOperation = true
+                    let current: boolean
+                    try { current = this.morphCallerCurrent(returning.isCurrent) }
+                    finally { this.morphChannelOperation = false }
+                    if (!current || !this.morphChannelCurrent(channel)) {
+                        this.returningMorphChannels.delete(channel)
+                        continue
+                    }
+                    const progress = clamp01(returning.elapsed / returning.seconds)
+                    value = THREE.MathUtils.lerp(returning.from, value, progress)
+                    if (progress >= 1) this.returningMorphChannels.delete(channel)
+                }
+                channel.influences[index] = value
             }
         }
     }

@@ -1,3 +1,8 @@
+import { getNonBattleExpressionRuntime } from '../../magia-exedra-character-three/nonBattleExpressionRuntime.ts'
+import { createLoadingProgressPanel } from './loadingProgressPanel'
+import { createViewportFraming } from './performanceEditor/viewportFraming'
+import { mountPerformanceWorkspace } from './performanceEditor/workspace'
+import { createJointNodeLayer, beginJointPointerDrag, beginExistingJointGizmoPointerDrag } from './performanceEditor/jointNodes'
 import * as THREE from 'three'
 import Stats from 'three/addons/libs/stats.module.js';
 import { scene } from './scene';
@@ -8,22 +13,74 @@ import { guiOptions, restoreThemePreference, setupBackgroundImageSelector, updat
 import { TransformControls, type TransformControlsMode } from 'three/examples/jsm/Addons.js';
 import { presetImport } from './controllers/presets';
 import { setupCameraModeButtons } from './camera'
+import { setupCombatVfxPanel } from './combatVfxPanel'
+import {
+    setupCharacterPhysicsActionOptionsUi,
+    type CharacterPhysicsActionOptionsUiController,
+} from './characterPhysicsActionOptionsUi'
+import { setupEnemyPanel, type EnemyPanelController } from './enemyPanel'
+import { formatCharacterTrilingualName } from './localization/characterNames'
 import { translateBoneChannelLabel, translateMorphChannelLabel, translateUiText } from './localization/zhCN'
+import { setupRuntimeSelectionPanels } from './runtimeSelectionPanels'
+import { setupVoicePanel, type VoicePanelController, type VoicePanelWorkspaceCharacter } from './voicePanel'
+import { createViewerVoiceWorkspaceRuntime } from './voiceWorkspaceRuntime'
+import { mountPerformanceEditor, type ActorDescriptor, type ChannelSelection, type DragRequest } from './performanceEditor'
+import { fetchVoiceCatalogManifest, VoiceCatalog } from './voice/catalog'
+import { getViewerCharacterPhysicsAttachment } from './characterPhysics'
+import type { VoicePoseAvailability, VoicePoseChannelLease } from './voice/poseChannels'
+import {
+    STAGE_SHADOW_QUALITY_CHANGE_EVENT,
+    getStageShadowQuality,
+    getStageShadowQualityState,
+    setStageShadowQuality,
+    type StageShadowQuality,
+} from './stages'
+import {
+    attachViewerLocomotion,
+    detachViewerLocomotion,
+    selectViewerLocomotion,
+    setViewerLocomotionEnabled,
+    setupViewerLocomotion,
+    teleportViewerCharacter,
+    createViewerPerformanceHost,
+} from './viewerLocomotion'
+import {
+    characterUiControlState,
+    createPrimaryCharacterCatalog,
+    resolvePrimaryCharacterSelection,
+    searchPrimaryCharacterCatalog,
+    type PrimaryCharacterCatalogEntry,
+} from './uiCharacterCatalog'
 
 const characterSelector = document.getElementById('character-selector') as HTMLSelectElement
 const characterAddCrossBtn = document.getElementById('character-add-cross-btn') as HTMLButtonElement
 const characterAddSelector = document.getElementById('character-add-selector') as HTMLSelectElement
+const characterSearchInput = document.getElementById('character-search-input') as HTMLInputElement
+const characterSearchResults = document.getElementById('character-search-results') as HTMLElement
+const locomotionModeToggle = document.getElementById('locomotion-mode-toggle') as HTMLButtonElement
+const combatVfxPanelToggle = document.getElementById('combat-vfx-panel-toggle') as HTMLButtonElement
+const combatVfxPanel = document.getElementById('combat-vfx-panel') as HTMLElement
+const characterPhysicsActionOptions = document.getElementById('character-physics-action-options') as HTMLElement
 const animationSelector = document.getElementById('animation-selector') as HTMLSelectElement
 const animationPlayBtn = document.getElementById('animation-play') as HTMLButtonElement
 const animationPauseBtn = document.getElementById('animation-pause') as HTMLButtonElement
 const animationSlider = document.getElementById('animation-slider') as HTMLInputElement
+const animationProgressValue = document.getElementById('animation-progress-value') as HTMLOutputElement
+const animationActionStatus = document.getElementById('animation-action-status') as HTMLOutputElement
 const animationSpeed = document.getElementById('animation-speed') as HTMLInputElement
 const animationSpeedValue = document.getElementById('animation-speed-value') as HTMLOutputElement
 const actionPanelToggle = document.getElementById('action-panel-toggle') as HTMLButtonElement
 const actionPanel = document.getElementById('action-parameter-panel') as HTMLElement
 const actionPanelClose = document.getElementById('action-panel-close') as HTMLButtonElement
 const actionDirectEditToggle = document.getElementById('action-direct-edit-toggle') as HTMLButtonElement
+const actionDirectTranslate = document.getElementById('action-direct-translate') as HTMLButtonElement
+const actionDirectRotate = document.getElementById('action-direct-rotate') as HTMLButtonElement
 const actionDirectEditTarget = document.getElementById('action-direct-edit-target') as HTMLOutputElement
+const actionSelectedPart = document.getElementById('action-selected-part') as HTMLOutputElement
+const actionSelectedPartVisibility = document.getElementById('action-selected-part-visibility') as HTMLButtonElement
+const actionShowAllParts = document.getElementById('action-show-all-parts') as HTMLButtonElement
+const actionModelPartSearch = document.getElementById('action-model-part-search') as HTMLInputElement
+const actionModelPartList = document.getElementById('action-model-part-list') as HTMLElement
 const actionChannelSearch = document.getElementById('action-channel-search') as HTMLInputElement
 const actionChannelList = document.getElementById('action-channel-list') as HTMLElement
 const actionParametersReset = document.getElementById('action-parameters-reset') as HTMLButtonElement
@@ -45,11 +102,12 @@ const expressionChannelList = document.getElementById('expression-channel-list')
 const expressionParametersReset = document.getElementById('expression-parameters-reset') as HTMLButtonElement
 const fullscreenBtn = document.getElementById('fullscreen-btn') as HTMLButtonElement
 const menuCollapseToggle = document.getElementById('menu-collapse-toggle') as HTMLButtonElement
-const menuCollapseGlyph = menuCollapseToggle.querySelector('span') as HTMLSpanElement
 const renderSettingsToggle = document.getElementById('render-settings-toggle') as HTMLButtonElement
 const advancedControlsDock = document.getElementById('advanced-controls-dock') as HTMLElement
 const renderSettingsClose = document.getElementById('render-settings-close') as HTMLButtonElement
+const stageShadowQualitySelect = document.getElementById('stage-shadow-quality') as HTMLSelectElement
 const positionControlsToggle = document.getElementById('position-controls-toggle') as HTMLButtonElement
+const captureControlsToggle = document.getElementById('capture-controls-toggle') as HTMLButtonElement
 const positionControlsWrapper = document.getElementById('position-controls-wrapper') as HTMLElement
 const characterMoveUpBtn = document.getElementById('character-move-up') as HTMLButtonElement
 const characterMoveDownBtn = document.getElementById('character-move-down') as HTMLButtonElement
@@ -69,13 +127,39 @@ const characterTransformDefaults = new WeakMap<THREE.Object3D, {
 const characterMoveStep = 0.05
 const characterRotateStep = THREE.MathUtils.degToRad(5)
 
+type CharacterActionsApi = Window['magiusViewerLocomotion']['characterActions']
+type CharacterActionCatalogSnapshot = ReturnType<CharacterActionsApi['catalog']>
+type CharacterActionCatalogEntry = CharacterActionCatalogSnapshot['entries'][number]
+type CharacterActionPlaybackState = ReturnType<CharacterActionsApi['state']>
+type CharacterActionPlaybackRateState = CharacterActionPlaybackState & { playbackRate?: number }
+type CharacterActionsPlaybackRateApi = CharacterActionsApi & {
+    setPlaybackRate?: (playbackRate: number) => CharacterActionPlaybackRateState
+}
+
+const baseAnimationNamesByCharacter = new WeakMap<THREE.Object3D, readonly string[]>()
+let characterActionCatalogSnapshot: CharacterActionCatalogSnapshot | undefined
+let characterActionPlaybackState: CharacterActionPlaybackState | undefined
+let characterActionCatalogUnsubscribe: (() => void) | undefined
+let characterActionStateUnsubscribe: (() => void) | undefined
+let characterActionRefreshToken = 0
+let characterActionOperationToken = 0
+let characterActionPendingId: string | undefined
+let animationSelectorCharacter: THREE.Object3D | undefined
+let characterActionConsumerSetup = false
+let voicePanelController: VoicePanelController | undefined
+let enemyPanelController: EnemyPanelController | undefined
+let characterPhysicsActionOptionsUi: CharacterPhysicsActionOptionsUiController | undefined
+
 type PoseAxis = 'x' | 'y' | 'z'
 
 interface ManualPoseEntry {
     bone: THREE.Bone
     offsets: THREE.Vector3
+    positionOffsets: THREE.Vector3
     lastBase?: THREE.Quaternion
     lastApplied?: THREE.Quaternion
+    lastBasePosition?: THREE.Vector3
+    lastAppliedPosition?: THREE.Vector3
 }
 
 interface ManualMorphEntry {
@@ -90,11 +174,14 @@ type MorphTargetMesh = THREE.Mesh & {
 
 const manualPoseByCharacter = new WeakMap<THREE.Object3D, Map<string, ManualPoseEntry>>()
 const manualMorphsByCharacter = new WeakMap<THREE.Object3D, Map<string, ManualMorphEntry>>()
+const modelPartsByCharacter = new WeakMap<THREE.Object3D, Map<string, ModelPartEntry>>()
+const animationPlaybackRateByCharacter = new WeakMap<THREE.Object3D, number>()
 
 interface DirectPoseSelection {
     object: THREE.Object3D
     entry: ManualPoseEntry
     base: THREE.Quaternion
+    basePosition: THREE.Vector3
 }
 
 interface DirectPosePointerDrag {
@@ -105,45 +192,345 @@ interface DirectPosePointerDrag {
     selection: DirectPoseSelection
 }
 
+interface ModelPartEntry {
+    object: THREE.Mesh
+    defaultVisible: boolean
+    path: string
+    label: string
+}
+
+type DirectPoseTransformMode = 'translate' | 'rotate'
+
 let directPoseControls: TransformControls | undefined
 let directPoseControlsHelper: THREE.Object3D | undefined
 let directPoseSelection: DirectPoseSelection | undefined
+let selectedModelPart: ModelPartEntry | undefined
 let directPosePointerDrag: DirectPosePointerDrag | undefined
 let directPoseEditingEnabled = false
+// Direct bone editing is joint rotation only; actor translation belongs to root
+// placement and end-effector movement belongs to the IK editor.
+let directPoseTransformMode: DirectPoseTransformMode = 'rotate'
 let directPoseGizmoDragging = false
 let directPoseOrbitControlsWasEnabled = true
 let directPoseOutlineSelection: THREE.Object3D[] = []
+let singleCharacterTransformControls: TransformControls | undefined
+let singleCharacterTransformControlsHelper: THREE.Object3D | undefined
+let singleCharacterTransformActive = false
+let singleCharacterTransformOrbitWasEnabled = true
+let singleObjectTransformOnChange: (() => void) | undefined
+let performanceEditorController: ReturnType<typeof mountPerformanceEditor> | undefined
+let performanceHost: ReturnType<typeof createViewerPerformanceHost> | undefined
+const performanceEditorTransitionSeconds = 0.18
+const performanceActorListeners = new Set<() => void>()
+const performanceExternalLeases = new Map<THREE.Object3D, {
+    generation: number; channels: ChannelSelection
+    bones: ReadonlySet<THREE.Object3D>
+    morphs: readonly { mesh: THREE.Mesh; index: number; influences: number[] }[]
+}>()
+let performanceGizmoActive = false
+let performanceGizmoControl: TransformControls | undefined
+let performanceGizmoPointerDown: ((event: PointerEvent) => boolean) | undefined
+let performanceJointPointer: PointerEvent | undefined
+let disposePerformanceEditorUi: (() => void) | undefined
 
-const loadProgressEl = document.getElementById('load-progress')!
-let lastProgressText = ''
+function notifyPerformanceActors() {
+    for (const listener of performanceActorListeners) listener()
+}
+
+function listPerformanceActors(): ActorDescriptor[] {
+    return scene.characters.flatMap(entry => {
+        const character = entry.character
+        if (!character || entry.loading || entry.removed || character.disposed) return []
+        const generation = entry.loadGeneration ?? 0
+        const resourceId = String(character.userData.characterId)
+        return [{ object: character.object, generation,
+            label: formatCharacterTrilingualName(resourceId, characters.getCharacterNameById(resourceId)),
+            actions: character.animations,
+            isCurrent: () => !entry.loading && !entry.removed && !character.disposed
+                && entry.character === character && (entry.loadGeneration ?? 0) === generation
+                && scene.characters.includes(entry),
+        }]
+    })
+}
+
+function resolvePerformanceNativeConflicts(actor: ActorDescriptor, bones: readonly THREE.Object3D[]) {
+    const unavailable = (reason: string) => ({ status: 'unavailable' as const, reason })
+    if (!actor.isCurrent()) return unavailable('Stale performance actor generation')
+    const attachment = getViewerCharacterPhysicsAttachment(actor.object)
+    if (!attachment || attachment.status !== 'ready' || !attachment.runtime) {
+        return unavailable(`Native attachment is ${attachment?.status ?? 'absent'}`)
+    }
+    if (attachment.root !== actor.object) return unavailable('Native attachment root mismatch')
+    // Read current output ownership every call; a binding refresh invalidates a prior snapshot.
+    const snapshot = attachment.runtime.getWritableChannelSnapshot()
+    if (snapshot.status !== 'ready') return unavailable(`Native writable channels: ${snapshot.reason}`)
+    if (snapshot.root !== actor.object) return unavailable('Native writable snapshot root mismatch')
+    for (const bone of bones) {
+        let parent: THREE.Object3D | null = bone
+        while (parent && parent !== actor.object) parent = parent.parent
+        if (!parent) return unavailable('Native query contains a foreign or detached bone')
+    }
+    const requested = new Set(bones)
+    return { status: 'ready' as const, value: snapshot.outputs
+        .filter(output => requested.has(output.object))
+        .map(output => `${output.ownerStableKey}:${output.object.uuid}:${output.channels.join('/')}`) }
+}
+
+function acquirePerformanceExternalChannels(actor: ActorDescriptor, channels: ChannelSelection) {
+    const unavailable = (reason: string) => ({ status: 'unavailable' as const, reason })
+    if (!actor.isCurrent()) return unavailable('Stale performance actor generation')
+    if (performanceExternalLeases.has(actor.object)) return unavailable('External actor channels already leased')
+    if (directPoseGizmoDragging || directPosePointerDrag || singleCharacterTransformControls?.dragging
+        || scene.transformControls.dragging) return unavailable('Another transform drag is active')
+    const adapter = performanceEditorController?.runtime.actors.get(actor.object.uuid)
+    if (!adapter?.current || adapter.descriptor.object !== actor.object || adapter.descriptor.generation !== actor.generation) {
+        return unavailable('Exact performance actor adapter absent')
+    }
+    const bones = channels.bones.map(key => adapter.bones.get(key))
+    if (bones.some(bone => !bone)) return unavailable('Exact performance bone channel absent')
+    const morphs: { mesh: THREE.Mesh; index: number; influences: number[] }[] = []
+    const meshes = channels.morphs.length ? getMorphTargetMeshes(actor.object) : []
+    for (const key of channels.morphs) {
+        const morph = adapter.morphs.get(key)
+        if (!morph) return unavailable('Exact performance morph channel absent')
+        const matches = meshes.filter(mesh => mesh.morphTargetInfluences === morph.values)
+        if (matches.length !== 1) return unavailable('Exact performance morph storage is absent or shared')
+        morphs.push({ mesh: matches[0], index: morph.index, influences: morph.values })
+    }
+    // Existing nonzero legacy overrides retain their own exact channels. Do not
+    // silently discard them or resume them later with a discontinuous jump.
+    if ([...manualPoseByCharacter.get(actor.object)?.values() ?? []].some(entry => bones.includes(entry.bone)
+        && (entry.offsets.lengthSq() > 0 || entry.positionOffsets.lengthSq() > 0))) {
+        return unavailable('Existing manual pose override owns a requested channel')
+    }
+    if ([...manualMorphsByCharacter.get(actor.object)?.keys() ?? []].some(name => morphs.some(binding => binding.mesh.morphTargetDictionary?.[name] === binding.index))) {
+        return unavailable('Existing manual expression override owns a requested channel')
+    }
+    // Until the matching provider release lands, absence is an explicit capability
+    // failure. Ordinary release is not an evaluator-only handoff.
+    let voice: (VoicePoseChannelLease & { beginMorphReturn?(): VoicePoseAvailability<void> }) | undefined
+    if (bones.length || morphs.length || channels.action) {
+        if (!voicePanelController?.acquirePoseChannels) return unavailable('Voice pose-channel yield provider pending')
+        const result = voicePanelController.acquirePoseChannels({
+            actor: { object: actor.object, uuid: actor.object.uuid, generation: actor.generation, isCurrent: actor.isCurrent },
+            bones: bones as THREE.Object3D[], morphs, action: channels.action,
+            releaseTransitionSeconds: performanceEditorTransitionSeconds,
+        })
+        if (result.status !== 'ready') return result
+        voice = result.value
+    }
+    const previousRoot = scene.transformControls.object
+    try {
+        if (channels.root && previousRoot === actor.object) scene.transformControls.detach()
+        if (singleCharacterTransformControls?.object === actor.object) clearSingleCharacterTransform()
+    } catch (error) {
+        voice?.release()
+        if (previousRoot === actor.object && actor.isCurrent()) scene.transformControls.attach(actor.object)
+        throw error
+    }
+    const lease = { generation: actor.generation, channels, bones: new Set(bones as THREE.Object3D[]), morphs }
+    performanceExternalLeases.set(actor.object, lease)
+    let released = false
+    const active = () => !released && actor.isCurrent() && (!voice || voice.active)
+        && performanceExternalLeases.get(actor.object) === lease
+    return { status: 'ready' as const, value: {
+        get active() { return active() },
+        beginMorphReturn(): VoicePoseAvailability<void> {
+            if (!active()) return unavailable('Stale external morph return authority')
+            if (!morphs.length) return { status: 'ready', value: undefined }
+            if (!voice?.beginMorphReturn) return unavailable('Voice evaluator-only morph return provider pending')
+            // Keep the real lease and manual masks. The provider yields only its
+            // producer writes; ACTION owns the single final return compositor.
+            return voice.beginMorphReturn()
+        },
+        release() {
+        if (released) return
+        released = true
+        try { voice?.release() } finally {
+            if (performanceExternalLeases.get(actor.object) === lease) {
+                performanceExternalLeases.delete(actor.object)
+                if (previousRoot === actor.object && actor.isCurrent()
+                    && scene.characterSelected?.character?.object === actor.object && !performanceGizmoActive) {
+                    scene.transformControls.attach(actor.object)
+                }
+            }
+        }
+    } } }
+}
+
+function isPerformanceBoneLeased(bone: THREE.Object3D) {
+    for (let parent: THREE.Object3D | null = bone; parent; parent = parent.parent) {
+        if (performanceExternalLeases.get(parent)?.bones.has(bone)) return true
+    }
+    return false
+}
+
+function isPerformanceMorphLeased(mesh: THREE.Mesh, index: number) {
+    for (let parent: THREE.Object3D | null = mesh; parent; parent = parent.parent) {
+        if (performanceExternalLeases.get(parent)?.morphs.some(binding => binding.mesh === mesh && binding.index === index)) return true
+    }
+    return false
+}
+
+function acquirePerformanceGizmo(request: DragRequest) {
+    const actor = performanceEditorController?.runtime.actors.get(request.actorKey)
+    if (!actor?.current || !performanceExternalLeases.has(actor.descriptor.object)) {
+        return { status: 'unavailable' as const, reason: 'Exact performance actor lease absent' }
+    }
+    if (performanceGizmoActive || directPoseGizmoDragging || directPosePointerDrag) {
+        return { status: 'unavailable' as const, reason: 'Another pointer/gizmo owner is active' }
+    }
+    setDirectPoseEditing(false)
+    clearSingleCharacterTransform()
+    const previousRoot = scene.transformControls.object
+    scene.transformControls.detach()
+    const orbitEnabled = scene.controls.enabled
+    const control = new TransformControls(scene.camera, scene.renderer.domElement)
+    const helper = control.getHelper()
+    // The IK proxy has world-space placement and must belong to the scene for a gizmo.
+    const addedProxy = request.mode === 'ik' && !request.object.parent
+    if (addedProxy) scene.scene.add(request.object)
+    scene.scene.add(helper)
+    control.mode = request.mode === 'joint' ? 'rotate' : 'translate'
+    control.space = request.mode === 'joint' ? 'local' : 'world'
+    control.attach(request.object)
+    performanceGizmoActive = true
+    performanceGizmoControl = control
+    let releaseNodePointer: (() => void) | undefined
+    control.addEventListener('dragging-changed', event => { scene.controls.enabled = event.value ? false : orbitEnabled })
+    control.addEventListener('objectChange', () => {
+        try { request.onChange(request.mode === 'ik' ? request.object.getWorldPosition(new THREE.Vector3()) : undefined) }
+        catch (error) { release(); throw error }
+    })
+    control.addEventListener('mouseUp', () => { try { request.onEnd() } finally { release() } })
+    let released = false
+    const release = () => {
+        if (released) return
+        released = true
+        releaseNodePointer?.()
+        control.detach(); control.dispose(); helper.removeFromParent()
+        if (performanceGizmoControl === control) { performanceGizmoControl = undefined; performanceGizmoPointerDown = undefined }
+        if (addedProxy) request.object.removeFromParent()
+        performanceGizmoActive = false
+        scene.controls.enabled = orbitEnabled
+        if (previousRoot && scene.characterSelected?.character?.object === previousRoot
+            && !performanceExternalLeases.get(previousRoot)?.channels.root) scene.transformControls.attach(previousRoot)
+    }
+    performanceGizmoPointerDown = event => {
+        if (released) return false
+        // Claim a real current-axis hit in the node layer's capture phase, before Orbit.
+        const pointerRelease = beginExistingJointGizmoPointerDrag(control, scene.renderer.domElement, event)
+        if (!pointerRelease) return false
+        releaseNodePointer = pointerRelease
+        return true
+    }
+    if (performanceJointPointer && request.mode !== 'root') {
+        try { releaseNodePointer = beginJointPointerDrag(control, scene.renderer.domElement, performanceJointPointer, request.mode) }
+        catch (error) { release(); return { status: 'unavailable' as const, reason: error instanceof Error ? error.message : String(error) } }
+    }
+    return { status: 'ready' as const, value: release }
+}
+
+function setupPerformanceEditor() {
+    if (performanceEditorController) return
+    const menu = document.getElementById('menu-controls')
+    if (!menu) throw new Error('Performance editor mount container absent')
+    const workspace = document.getElementById('workspace')
+    if (!workspace) throw new Error('Performance editor workspace absent')
+    const toggle = document.createElement('button')
+    toggle.type = 'button'; toggle.textContent = 'Performance / 表演'
+    toggle.id = 'performance-editor-toggle'; toggle.setAttribute('aria-controls', 'performance-editor-panel')
+    toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('data-i18n-ignore', 'true')
+    const panel = document.createElement('aside')
+    panel.id = 'performance-editor-panel'; panel.hidden = true
+    // The hidden mount owns editor lifecycle; regions are placed around #viewer.
+    menu.append(toggle); workspace.append(panel)
+    let layout: ReturnType<typeof mountPerformanceWorkspace> | undefined
+    let jointNodes: ReturnType<typeof createJointNodeLayer> | undefined
+    let framing: ReturnType<typeof createViewportFraming> | undefined
+    const host = createViewerPerformanceHost({
+        acquireExternalChannels: acquirePerformanceExternalChannels,
+        nativePhysicsConflicts: resolvePerformanceNativeConflicts,
+    })
+    performanceHost = host
+    let pending = false, disposed = false
+    const changed = () => {
+        if (pending || disposed) return
+        pending = true
+        queueMicrotask(() => { pending = false; if (!disposed) notifyPerformanceActors() })
+    }
+    scene.scene.addEventListener('childadded', changed); scene.scene.addEventListener('childremoved', changed)
+    try {
+        performanceEditorController = mountPerformanceEditor(panel, {
+            actorSource: { list: listPerformanceActors, subscribe(listener) { performanceActorListeners.add(listener); return () => { performanceActorListeners.delete(listener) } } },
+            channelHost: host.channelHost, framePort: host.framePort,
+            transformHost: { acquire: acquirePerformanceGizmo },
+            transitionSeconds: performanceEditorTransitionSeconds,
+        })
+        const editor = performanceEditorController
+        jointNodes = createJointNodeLayer({ scene: scene.scene, camera: scene.camera, canvas: scene.renderer.domElement, runtime: editor.runtime,
+            selection: editor.panel.getPoseSelection, subscribeSelection: editor.panel.subscribePoseSelection,
+            subscribeFrame: listener => host.framePort.subscribeFinalPoseBeforeCamera(listener),
+            interactionBlocked: event => !!(directPoseGizmoDragging || directPosePointerDrag || scene.transformControls.dragging
+                || performanceGizmoControl?.dragging || performanceGizmoPointerDown?.(event)),
+            select: (identity, pointer) => { performanceJointPointer = pointer
+                try { return editor.panel.selectJointFromCanvas(identity) } finally { performanceJointPointer = undefined } },
+            showCandidates: editor.panel.showJointCandidates, clearCandidates: editor.panel.clearJointCandidates, report: editor.panel.reportJointError,
+        })
+        framing = createViewportFraming({ camera: scene.camera, controls: scene.controls, canvas: scene.renderer.domElement,
+            selectedActor: () => {
+                const selection = editor.panel.getPoseSelection()
+                const actor = selection && editor.runtime.actors.get(selection.actorKey)
+                return actor?.current && actor.descriptor.generation === selection!.generation ? actor.descriptor.object : undefined
+            }, report: editor.panel.reportJointError,
+            schedule: callback => requestAnimationFrame(callback), cancel: id => cancelAnimationFrame(id),
+        })
+        layout = mountPerformanceWorkspace({
+            workspace, panel: performanceEditorController.panel, toggle,
+            onExit: () => performanceEditorController?.runtime.stop(),
+            onOpenChange: open => { framing?.setEnabled(open); jointNodes?.setEnabled(open) },
+            onFrameActor: () => framing?.frame(),
+        })
+        // Load the official voice manifest independently of the voice popup so
+        // timeline projects can drive several actors without stealing its player.
+        void fetchVoiceCatalogManifest().then(manifest => {
+            performanceEditorController?.audio.setCatalog(new VoiceCatalog(manifest))
+        }).catch(() => {
+            // The dock remains usable for pose/action-only projects; the audio
+            // lane reports the per-track catalog error when tracks are present.
+        })
+    } catch (error) {
+        disposed = true; scene.scene.removeEventListener('childadded', changed); scene.scene.removeEventListener('childremoved', changed)
+        layout?.dispose(); framing?.dispose(); jointNodes?.dispose(); performanceEditorController?.dispose(); performanceEditorController = undefined
+        host.dispose(); performanceHost = undefined; panel.remove(); toggle.remove(); throw error
+    }
+    disposePerformanceEditorUi = () => {
+        if (disposed) return
+        disposed = true
+        scene.scene.removeEventListener('childadded', changed); scene.scene.removeEventListener('childremoved', changed)
+        layout?.dispose()
+        framing?.dispose()
+        jointNodes?.dispose()
+        performanceEditorController?.dispose(); performanceEditorController = undefined
+        host.dispose(); performanceHost = undefined; performanceActorListeners.clear(); performanceExternalLeases.clear()
+        panel.remove(); toggle.remove()
+    }
+}
+
+const loadingProgressPanel = createLoadingProgressPanel(document)
+
 document.addEventListener('magius:localechange', () => {
-    if (lastProgressText) loadProgressEl.textContent = translateUiText(lastProgressText)
+    renderCharacterActionStatus()
 })
 
 const perfStatJsContainer = document.getElementById('perf-stat-js') as HTMLDivElement
 
 characterAddCrossBtn.onclick = removeSelectedCharacter
-animationPlayBtn.onclick = () => {
-    const animation = scene.characterSelected?.character?.animation
-    if (animation) {
-        resumeOrReplaySelectedAnimation(animation, animationSelector.value)
-    }
-    updateAnimationControls()
-}
-animationPauseBtn.onclick = () => { scene.characterSelected?.character && (scene.characterSelected.character.animation.paused = true); updateAnimationControls() }
-animationSlider.oninput = () => {
-    if (scene.characterSelected?.character) {
-        const animation = scene.characterSelected.character.animation
-        animation.paused = true
-        animation.time = parseFloat(animationSlider.value)
-        updateAnimationControls()
-    }
-}
+animationPlayBtn.onclick = playSelectedAnimation
+animationPauseBtn.onclick = pauseSelectedAnimation
+animationSlider.oninput = seekSelectedAnimation
 animationSpeed.oninput = () => {
-    const animation = scene.characterSelected?.character?.animation
-    if (!animation) return
-    animation.mixer.timeScale = THREE.MathUtils.clamp(parseFloat(animationSpeed.value), 0, 2)
-    updateAnimationControls()
+    setSelectedAnimationPlaybackRate(parseFloat(animationSpeed.value), true)
 }
 expressionAutoBlink.onchange = () => {
     const expression = scene.characterSelected?.character?.expression
@@ -182,9 +569,15 @@ const transformRotateBtn = document.getElementById('transform-set-rotate') as HT
 transformTranslateBtn.onclick = () => setTransformMode('translate')
 transformRotateBtn.onclick = () => setTransformMode('rotate')
 
-const characterIdList = characters.getCharacterIdList()
-const characterSelectDict = characterIdList.reduce((obj, id) => {
-    obj[`${id} - ${characters.getCharacterNameById(id)}`] = id
+const primaryCharacterCatalog = createPrimaryCharacterCatalog(
+    characters.getCharacterIdList(),
+    characters.getNonBattleCharacterCatalog(),
+    id => formatCharacterTrilingualName(id, characters.getCharacterNameById(id)),
+)
+const primaryCharacterById = new Map(primaryCharacterCatalog.map(entry => [entry.id, entry]))
+const characterIdList = primaryCharacterCatalog.map(entry => entry.id)
+const characterSelectDict = primaryCharacterCatalog.reduce((obj, entry) => {
+    obj[`${entry.id} - ${entry.name}`] = entry.id
     return obj
 }, {} as Record<string, string>)
 console.log(Object.keys(characterSelectDict).join('\n'))
@@ -194,22 +587,60 @@ const stats = new Stats()
 export function setupViewer() {
     setupMenuCollapseToggle()
     setupDockControls()
+    enemyPanelController = setupEnemyPanel({
+        onInstanceWillRemove: instance => {
+            if (singleCharacterTransformControls?.object === instance.object) {
+                clearSingleCharacterTransform()
+            }
+        },
+    })
+    setupStageShadowQualityControl()
     setupParameterControls()
     setupDirectPoseEditing()
     setupCharacterMovementControls()
+    setupViewerLocomotion()
+    setupCharacterActionConsumer()
+    characterPhysicsActionOptionsUi = setupCharacterPhysicsActionOptionsUi({
+        currentCharacterResourceId: () => {
+            const characterId = Number(scene.characterSelected?.character?.userData.characterId)
+            return Number.isFinite(characterId) ? characterId : null
+        },
+        currentActionStatus: () => characterActionsApi().state().status,
+        physicsPhaseState: () => characterActionsApi().physicsPhaseState(),
+        activatePhase: stableKey => characterActionsApi().activatePhysicsPhase(stableKey),
+        resolveAction: resolveCharacterPhysicsRelatedAction,
+        playAction: playCharacterPhysicsRelatedAction,
+    })
     restoreThemePreference()
     initSelector(
         characterSelector,
         characterSelectDict,
-        changeCharacter
+        changeCharacterFromSelector
     );
+    annotateCharacterSelectorOptions(characterSelector)
+    syncCharacterUiCapabilityGates(null)
 
+    setupCharacterSearch()
     setupCharacterAddSelector()
+    setupRuntimeSelectionPanels()
+    setupCombatVfxPanel()
+    voicePanelController = setupVoicePanel({
+        workspaceRuntime: createViewerVoiceWorkspaceRuntime(),
+    })
+    syncVoiceCharacter()
     setupViewerInputHandler()
+    setupPerformanceEditor()
     setupBackgroundImageSelector()
     setupCameraModeButtons()
 
     scene.animateLoopCallback = animateLoop
+
+    window.addEventListener('pagehide', () => {
+        disposePerformanceEditorUi?.()
+        characterPhysicsActionOptionsUi?.dispose()
+        characterPhysicsActionOptionsUi = undefined
+        void voicePanelController?.dispose()
+    }, { once: true })
 
     scene.transformControls.addEventListener('change', () => {
         if (scene.characterSelected?.character) {
@@ -226,24 +657,483 @@ export function setupViewer() {
     perfStatJsContainer.appendChild(stats.dom)
 }
 
+function characterActionsApi(): CharacterActionsApi {
+    return window.magiusViewerLocomotion.characterActions
+}
+
+function characterActionsPlaybackRateApi(): CharacterActionsPlaybackRateApi {
+    return characterActionsApi() as CharacterActionsPlaybackRateApi
+}
+
+function clampAnimationPlaybackRate(value: number) {
+    return THREE.MathUtils.clamp(Number.isFinite(value) ? value : 1, 0, 2)
+}
+
+function renderAnimationPlaybackRate(playbackRate: number) {
+    const value = clampAnimationPlaybackRate(playbackRate)
+    animationSpeed.value = value.toFixed(2)
+    animationSpeedValue.value = `${value.toFixed(2)}×`
+    animationSpeedValue.textContent = animationSpeedValue.value
+}
+
+function selectedAnimationPlaybackRate() {
+    const character = scene.characterSelected?.character
+    if (!character) return 1
+    const stored = animationPlaybackRateByCharacter.get(character.object)
+    if (stored != undefined) return stored
+    const runtimeRate = (characterActionsPlaybackRateApi().state() as CharacterActionPlaybackRateState).playbackRate
+    const initial = clampAnimationPlaybackRate(
+        Number.isFinite(runtimeRate) ? Number(runtimeRate) : character.animation.mixer.timeScale,
+    )
+    animationPlaybackRateByCharacter.set(character.object, initial)
+    return initial
+}
+
+function setSelectedAnimationPlaybackRate(value: number, notifyActionRuntime: boolean) {
+    const character = scene.characterSelected?.character
+    if (!character) return
+    const playbackRate = clampAnimationPlaybackRate(value)
+    animationPlaybackRateByCharacter.set(character.object, playbackRate)
+    character.animation.mixer.timeScale = playbackRate
+    if (notifyActionRuntime && selectedCharacterActionOption()) {
+        const api = characterActionsPlaybackRateApi()
+        if (api.setPlaybackRate) {
+            setCharacterActionPlaybackState(api.setPlaybackRate(playbackRate))
+        }
+    }
+    renderAnimationPlaybackRate(playbackRate)
+}
+
+function applySelectedAnimationPlaybackRate() {
+    const animation = scene.characterSelected?.character?.animation
+    if (!animation) return
+    const playbackRate = selectedAnimationPlaybackRate()
+    if (Math.abs(animation.mixer.timeScale - playbackRate) > 1e-6) {
+        animation.mixer.timeScale = playbackRate
+    }
+}
+
+function selectedCharacterActionOption(): HTMLOptionElement | undefined {
+    const option = animationSelector.selectedOptions[0]
+    return option?.dataset.characterAction === 'true' ? option : undefined
+}
+
+function selectedCharacterCatalogEntries(): readonly CharacterActionCatalogEntry[] {
+    const characterId = Number(scene.characterSelected?.character?.userData.characterId)
+    if (!Number.isFinite(characterId)) return []
+    if (characterActionCatalogSnapshot?.selectedCharacterId !== characterId) return []
+    return characterActionCatalogSnapshot.entries
+}
+
+function resolveCharacterPhysicsRelatedAction(actionId: string) {
+    const entry = selectedCharacterCatalogEntries().find(candidate => candidate.id === actionId)
+    if (entry) {
+        const availability = entry.consumerAvailability
+        return {
+            playable: availability.currentCharacter && availability.playable,
+            status: availability.status,
+            reason: availability.reason,
+        }
+    }
+    const loadStatus = characterActionCatalogSnapshot?.loadStatus ?? 'not-requested'
+    return {
+        playable: false,
+        status: loadStatus,
+        reason: loadStatus === 'error'
+            ? characterActionCatalogSnapshot?.error || 'character-action-catalog-error'
+            : undefined,
+    }
+}
+
+async function playCharacterPhysicsRelatedAction(actionId: string) {
+    await refreshCharacterActionCatalog()
+    const option = [...animationSelector.options].find(candidate => (
+        candidate.dataset.characterAction === 'true' && candidate.value === actionId
+    ))
+    if (!option) throw new Error(`character-action-not-listed:${actionId}`)
+    if (option.disabled || option.dataset.playable !== 'true') {
+        throw new Error(
+            option.dataset.unavailableReason
+            || option.dataset.availabilityStatus
+            || `character-action-unavailable:${actionId}`,
+        )
+    }
+    animationSelector.value = actionId
+    await onAnimationSelectionChanged()
+}
+
+function showCharacterActionStatus(text: string, status = '') {
+    if (!text) {
+        animationActionStatus.hidden = true
+        animationActionStatus.value = ''
+        animationActionStatus.textContent = ''
+        delete animationActionStatus.dataset.status
+        animationActionStatus.removeAttribute('title')
+        return
+    }
+    animationActionStatus.hidden = false
+    animationActionStatus.value = text
+    animationActionStatus.textContent = text
+    animationActionStatus.title = text
+    if (status) animationActionStatus.dataset.status = status
+    else delete animationActionStatus.dataset.status
+}
+
+function renderCharacterActionStatus() {
+    if (!scene.characterSelected?.character) {
+        showCharacterActionStatus('')
+        return
+    }
+
+    // Legacy/model-owned clips use the same selector as the official resource
+    // catalog, but their playback state is owned by the character runtime.  Do
+    // not report an unrelated official-catalog failure while one is selected.
+    const selectedLegacyOption = animationSelector.selectedOptions[0]
+    if (
+        selectedLegacyOption?.dataset.animationSource === 'legacy'
+        && selectedLegacyOption.value
+    ) {
+        showCharacterActionStatus('')
+        return
+    }
+
+    const snapshot = characterActionCatalogSnapshot
+    if (!snapshot || snapshot.loadStatus === 'not-requested' || snapshot.loadStatus === 'loading') {
+        showCharacterActionStatus(translateUiText('Loading official character actions...'), 'loading')
+        return
+    }
+    if (snapshot.loadStatus === 'error') {
+        const prefix = translateUiText('Official character actions could not be loaded')
+        showCharacterActionStatus(snapshot.error ? `${prefix}: ${snapshot.error}` : prefix, 'error')
+        return
+    }
+
+    const entries = selectedCharacterCatalogEntries()
+    if (entries.length === 0) {
+        showCharacterActionStatus(translateUiText('No official character actions for this character'), 'unavailable')
+        return
+    }
+
+    const selectedOption = selectedCharacterActionOption()
+    if (selectedOption && characterActionPendingId === selectedOption.value) {
+        showCharacterActionStatus(translateUiText('Loading official character action...'), 'loading')
+        return
+    }
+
+    const state = characterActionPlaybackState
+    if (selectedOption && state?.actionId === selectedOption.value) {
+        const label = selectedOption.dataset.actionLabel || selectedOption.textContent || selectedOption.value
+        const statusLabels: Partial<Record<CharacterActionPlaybackState['status'], string>> = {
+            playing: 'Playing official character action',
+            paused: 'Paused official character action',
+            interrupted: 'Official character action interrupted',
+            unavailable: 'Official character action unavailable',
+        }
+        const canonical = statusLabels[state.status]
+        if (canonical) {
+            const reason = state.reason ? `: ${state.reason}` : ''
+            showCharacterActionStatus(`${translateUiText(canonical)} — ${label}${reason}`, state.status)
+            return
+        }
+    }
+
+    if (!entries.some(entry => entry.consumerAvailability.playable)) {
+        if (entries.some(entry => (
+            entry.consumerAvailability.status === 'not-requested'
+            || entry.consumerAvailability.status === 'loading'
+        ))) {
+            showCharacterActionStatus(translateUiText('Loading official character actions...'), 'loading')
+            return
+        }
+        const detail = entries.find(entry => entry.consumerAvailability.reason)?.consumerAvailability.reason
+            ?? entries[0]?.consumerAvailability.status
+        const prefix = translateUiText('No playable official character actions')
+        showCharacterActionStatus(detail ? `${prefix}: ${detail}` : prefix, 'unavailable')
+        return
+    }
+
+    showCharacterActionStatus('')
+}
+
+function renderAnimationSelector() {
+    const character = scene.characterSelected?.character
+    const object = character?.object
+    const sameCharacter = !!object && animationSelectorCharacter === object
+    const previousOption = animationSelector.selectedOptions[0]
+    const previousActionId = sameCharacter && previousOption?.dataset.characterAction === 'true'
+        ? previousOption.value
+        : undefined
+    const previousLegacyName = sameCharacter && previousOption?.dataset.animationSource === 'legacy'
+        ? previousOption.value
+        : undefined
+
+    animationSelector.innerHTML = ''
+    animationSelector.onchange = () => { void onAnimationSelectionChanged() }
+    animationSelectorCharacter = object
+
+    const emptyOption = document.createElement('option')
+    emptyOption.value = ''
+    emptyOption.textContent = '<No animation>'
+    emptyOption.dataset.animationSource = 'legacy'
+    animationSelector.appendChild(emptyOption)
+
+    if (!character || !object) {
+        animationSelector.value = ''
+        renderCharacterActionStatus()
+        return
+    }
+
+    const legacyNames = baseAnimationNamesByCharacter.get(object) ?? character.animations
+    for (const name of legacyNames) {
+        const option = document.createElement('option')
+        option.value = name
+        option.textContent = name
+        option.dataset.animationSource = 'legacy'
+        animationSelector.appendChild(option)
+    }
+
+    const entries = selectedCharacterCatalogEntries()
+    const groups = new Map<string, { label: string; entries: CharacterActionCatalogEntry[] }>()
+    for (const entry of entries) {
+        const group = groups.get(entry.groupId) ?? { label: entry.group, entries: [] }
+        group.entries.push(entry)
+        groups.set(entry.groupId, group)
+    }
+    for (const [groupId, group] of groups) {
+        const optionGroup = document.createElement('optgroup')
+        optionGroup.label = group.label
+        optionGroup.dataset.groupId = groupId
+        optionGroup.setAttribute('data-i18n-ignore', 'true')
+        for (const entry of group.entries) {
+            const availability = entry.consumerAvailability
+            const playable = availability.currentCharacter && availability.playable
+            const detail = availability.reason || availability.status
+            const option = document.createElement('option')
+            option.value = entry.id
+            option.disabled = !playable
+            option.textContent = `${entry.label} · ${entry.playback}${playable ? '' : ` — ${detail}`}`
+            option.title = `${entry.id} · ${entry.group} · ${entry.playback}${playable ? '' : ` · ${detail}`}`
+            option.dataset.characterAction = 'true'
+            option.dataset.actionLabel = entry.label
+            option.dataset.groupId = entry.groupId
+            option.dataset.group = entry.group
+            option.dataset.playback = entry.playback
+            option.dataset.currentCharacter = String(availability.currentCharacter)
+            option.dataset.availabilityStatus = availability.status
+            option.dataset.playable = String(playable)
+            if (availability.reason) option.dataset.unavailableReason = availability.reason
+            optionGroup.appendChild(option)
+        }
+        animationSelector.appendChild(optionGroup)
+    }
+
+    const characterId = Number(character.userData.characterId)
+    const stateActionId = characterActionPlaybackState?.characterId === characterId
+        ? characterActionPlaybackState.actionId
+        : undefined
+    const wantedActionId = stateActionId || previousActionId
+    const actionOption = wantedActionId
+        ? [...animationSelector.options].find(option => (
+            option.dataset.characterAction === 'true' && option.value === wantedActionId
+        ))
+        : undefined
+    const currentLegacyName = legacyNames.includes(character.animation.current || '')
+        ? character.animation.current
+        : undefined
+    const wantedLegacyName = previousLegacyName || currentLegacyName
+    const legacyOption = wantedLegacyName
+        ? [...animationSelector.options].find(option => (
+            option.dataset.animationSource === 'legacy' && option.value === wantedLegacyName
+        ))
+        : undefined
+    ;(actionOption || legacyOption || emptyOption).selected = true
+    renderCharacterActionStatus()
+}
+
+function applyCharacterActionCatalog(snapshot: CharacterActionCatalogSnapshot) {
+    characterActionCatalogSnapshot = snapshot
+    renderAnimationSelector()
+    characterPhysicsActionOptionsUi?.refresh()
+}
+
+function setCharacterActionPlaybackState(state: CharacterActionPlaybackState) {
+    const previous = characterActionPlaybackState
+    characterActionPlaybackState = state
+    if (
+        previous?.status !== state.status
+        || previous?.actionId !== state.actionId
+        || previous?.characterId !== state.characterId
+        || previous?.reason !== state.reason
+    ) {
+        renderCharacterActionStatus()
+    }
+    characterPhysicsActionOptionsUi?.refresh()
+}
+
+function disposeCharacterActionPlayback() {
+    characterActionOperationToken++
+    characterActionPendingId = undefined
+    setCharacterActionPlaybackState(characterActionsApi().dispose())
+}
+
+async function playSelectedAnimation() {
+    const actionOption = selectedCharacterActionOption()
+    if (!actionOption) {
+        disposeCharacterActionPlayback()
+        const animation = scene.characterSelected?.character?.animation
+        if (animation) resumeOrReplaySelectedAnimation(animation, animationSelector.value)
+        updateAnimationControls()
+        return
+    }
+    if (actionOption.disabled || actionOption.dataset.playable !== 'true') {
+        const reason = actionOption.dataset.unavailableReason || actionOption.dataset.availabilityStatus
+        const prefix = translateUiText('Official character action unavailable')
+        showCharacterActionStatus(reason ? `${prefix}: ${reason}` : prefix, 'unavailable')
+        return
+    }
+
+    const actionId = actionOption.value
+    const token = ++characterActionOperationToken
+    characterActionPendingId = actionId
+    renderCharacterActionStatus()
+    try {
+        const state = await characterActionsApi().play(actionId)
+        if (token !== characterActionOperationToken) return
+        characterActionPendingId = undefined
+        setCharacterActionPlaybackState(state)
+        setSelectedAnimationPlaybackRate(selectedAnimationPlaybackRate(), true)
+        // subscribeState may publish the same playing state before play() resolves.
+        // Re-render after clearing the pending marker so the loading label cannot stick.
+        renderCharacterActionStatus()
+    } catch (error) {
+        if (token !== characterActionOperationToken) return
+        characterActionPendingId = undefined
+        const reason = error instanceof Error ? error.message : String(error)
+        const prefix = translateUiText('Official character action unavailable')
+        showCharacterActionStatus(`${prefix}: ${reason}`, 'error')
+    }
+    updateAnimationControls()
+}
+
+function pauseSelectedAnimation() {
+    if (selectedCharacterActionOption()) {
+        setCharacterActionPlaybackState(characterActionsApi().pause())
+    } else if (scene.characterSelected?.character) {
+        scene.characterSelected.character.animation.paused = true
+    }
+    updateAnimationControls()
+}
+
+function seekSelectedAnimation() {
+    const requestedTime = parseFloat(animationSlider.value)
+    if (!Number.isFinite(requestedTime)) return
+    if (selectedCharacterActionOption()) {
+        characterActionsApi().pause()
+        setCharacterActionPlaybackState(characterActionsApi().seek(requestedTime))
+        updateAnimationControls()
+        return
+    }
+
+    const animation = scene.characterSelected?.character?.animation
+    if (!animation) return
+    if (animation.clamped && animationSelector.value) {
+        animation.play(animationSelector.value, animationSelector.value.endsWith('_L'))
+    }
+    animation.paused = true
+    animation.time = THREE.MathUtils.clamp(requestedTime, 0, Math.max(0, animation.duration))
+    updateAnimationControls()
+}
+
+async function onAnimationSelectionChanged() {
+    const actionOption = selectedCharacterActionOption()
+    if (actionOption) {
+        await playSelectedAnimation()
+        return
+    }
+
+    disposeCharacterActionPlayback()
+    const animation = scene.characterSelected?.character?.animation
+    if (!animation) return
+    const value = animationSelector.value
+    if (value) animation.play(value, value.endsWith('_L'))
+    else animation.clear()
+    updateAnimationControls()
+}
+
+async function refreshCharacterActionCatalog() {
+    const selectedObject = scene.characterSelected?.character?.object
+    const token = ++characterActionRefreshToken
+    const api = characterActionsApi()
+    applyCharacterActionCatalog(api.catalog())
+    if (!selectedObject) return
+    try {
+        await api.ready()
+    } catch {
+        // The catalog snapshot carries the exact load error for the visible status.
+    }
+    if (token !== characterActionRefreshToken) return
+    if (scene.characterSelected?.character?.object !== selectedObject) return
+    setCharacterActionPlaybackState(api.state())
+    applyCharacterActionCatalog(api.catalog())
+}
+
+function setupCharacterActionConsumer() {
+    if (characterActionConsumerSetup) return
+    characterActionConsumerSetup = true
+    const api = characterActionsApi()
+    characterActionCatalogUnsubscribe = api.subscribeCatalog(applyCharacterActionCatalog)
+    characterActionStateUnsubscribe = api.subscribeState(setCharacterActionPlaybackState)
+
+    window.addEventListener('pagehide', () => {
+        characterActionRefreshToken++
+        characterActionOperationToken++
+        characterActionPendingId = undefined
+        api.dispose()
+        characterActionCatalogUnsubscribe?.()
+        characterActionStateUnsubscribe?.()
+        characterActionCatalogUnsubscribe = undefined
+        characterActionStateUnsubscribe = undefined
+    }, { once: true })
+}
+
 function setupMenuCollapseToggle() {
-    const setCollapsed = (collapsed: boolean) => {
-        document.body.classList.toggle('menu-ui-collapsed', collapsed)
+    const transitionDuration = 220
+    let collapsed = false
+    let transitionTimer: number | undefined
+
+    const updateToggleLabel = () => {
         menuCollapseToggle.classList.toggle('controls-collapsed', collapsed)
         menuCollapseToggle.setAttribute('aria-expanded', String(!collapsed))
-        menuCollapseGlyph.textContent = '△'
         const label = translateUiText(collapsed ? 'Expand controls' : 'Collapse controls')
         menuCollapseToggle.title = label
         menuCollapseToggle.setAttribute('aria-label', label)
     }
 
-    menuCollapseToggle.onclick = () => {
-        setCollapsed(!document.body.classList.contains('menu-ui-collapsed'))
+    const setCollapsed = (nextCollapsed: boolean, animate = true) => {
+        collapsed = nextCollapsed
+        if (transitionTimer !== undefined) window.clearTimeout(transitionTimer)
+        document.body.classList.remove('menu-ui-collapsing', 'menu-ui-expanding')
+        updateToggleLabel()
+
+        if (!animate) {
+            document.body.classList.toggle('menu-ui-collapsed', collapsed)
+            return
+        }
+
+        document.body.classList.remove('menu-ui-collapsed')
+        document.body.classList.add(collapsed ? 'menu-ui-collapsing' : 'menu-ui-expanding')
+        transitionTimer = window.setTimeout(() => {
+            document.body.classList.remove('menu-ui-collapsing', 'menu-ui-expanding')
+            document.body.classList.toggle('menu-ui-collapsed', collapsed)
+            transitionTimer = undefined
+        }, transitionDuration)
     }
-    document.addEventListener('magius:localechange', () => {
-        setCollapsed(document.body.classList.contains('menu-ui-collapsed'))
-    })
-    setCollapsed(false)
+
+    menuCollapseToggle.onclick = () => {
+        setCollapsed(!collapsed)
+    }
+    document.addEventListener('magius:localechange', updateToggleLabel)
+    setCollapsed(false, false)
 }
 
 function setupDockControls() {
@@ -262,10 +1152,14 @@ function setupDockControls() {
         document.body.classList.toggle('position-controls-open', open)
         positionControlsWrapper.setAttribute('aria-hidden', String(!open))
         positionControlsToggle.setAttribute('aria-expanded', String(open))
+        captureControlsToggle.setAttribute('aria-expanded', String(open))
         const label = translateUiText(open ? 'Hide character movement' : 'Character movement')
         positionControlsToggle.textContent = label
         positionControlsToggle.title = label
         positionControlsToggle.setAttribute('aria-label', label)
+        const captureLabel = translateUiText(open ? 'Hide character movement' : 'Take a photo')
+        captureControlsToggle.title = captureLabel
+        captureControlsToggle.setAttribute('aria-label', captureLabel)
     }
 
     const setActionPanelOpen = (open: boolean) => {
@@ -292,6 +1186,9 @@ function setupDockControls() {
         setAdvancedControlsOpen(!document.body.classList.contains('advanced-controls-open'))
     }
     positionControlsToggle.onclick = () => {
+        setPositionControlsOpen(!document.body.classList.contains('position-controls-open'))
+    }
+    captureControlsToggle.onclick = () => {
         setPositionControlsOpen(!document.body.classList.contains('position-controls-open'))
     }
     actionPanelToggle.onclick = () => setActionPanelOpen(!actionPanel.classList.contains('is-open'))
@@ -323,6 +1220,61 @@ function setupDockControls() {
     setPositionControlsOpen(false)
     setActionPanelOpen(false)
     setExpressionPanelOpen(false)
+    setupToolbarPopovers()
+}
+
+function setupStageShadowQualityControl() {
+    const syncFromState = (quality: StageShadowQuality) => {
+        stageShadowQualitySelect.value = quality
+    }
+
+    stageShadowQualitySelect.value = getStageShadowQuality()
+    stageShadowQualitySelect.onchange = () => {
+        setStageShadowQuality(stageShadowQualitySelect.value as StageShadowQuality)
+    }
+    document.addEventListener(STAGE_SHADOW_QUALITY_CHANGE_EVENT, event => {
+        const state = (event as CustomEvent<ReturnType<typeof getStageShadowQualityState>>).detail
+        syncFromState(state.quality)
+    })
+}
+
+function setupToolbarPopovers() {
+    const containers = Array.from(document.querySelectorAll<HTMLElement>('#toolbar-tools .icon-hover-container'))
+
+    const positionPopover = (container: HTMLElement) => {
+        const trigger = container.querySelector<HTMLElement>(':scope > button')
+        const popover = container.querySelector<HTMLElement>(':scope > .icon-hover-popitem')
+        if (!trigger || !popover) return
+
+        const triggerRect = trigger.getBoundingClientRect()
+        const popoverRect = popover.getBoundingClientRect()
+        if (popoverRect.width <= 0 || popoverRect.height <= 0) return
+
+        const padding = 8
+        const centeredLeft = triggerRect.left + triggerRect.width / 2 - popoverRect.width / 2
+        const left = THREE.MathUtils.clamp(centeredLeft, padding, Math.max(padding, window.innerWidth - popoverRect.width - padding))
+        const below = triggerRect.bottom
+        const top = below + popoverRect.height <= window.innerHeight - padding
+            ? below
+            : Math.max(padding, triggerRect.top - popoverRect.height)
+
+        popover.style.left = `${left}px`
+        popover.style.right = 'auto'
+        popover.style.top = `${top}px`
+        popover.style.transform = 'none'
+    }
+
+    const schedulePosition = (container: HTMLElement) => {
+        requestAnimationFrame(() => positionPopover(container))
+    }
+
+    for (const container of containers) {
+        container.addEventListener('pointerenter', () => schedulePosition(container))
+        container.addEventListener('focusin', () => schedulePosition(container))
+    }
+    window.addEventListener('resize', () => {
+        for (const container of containers) schedulePosition(container)
+    })
 }
 
 function setupFloatingPanelDrag(panel: HTMLElement, handle: HTMLElement) {
@@ -361,14 +1313,21 @@ function setupFloatingPanelDrag(panel: HTMLElement, handle: HTMLElement) {
 function setupParameterControls() {
     actionChannelSearch.addEventListener('input', () => filterParameterRows(actionChannelList, actionChannelSearch.value))
     expressionChannelSearch.addEventListener('input', () => filterParameterRows(expressionChannelList, expressionChannelSearch.value))
+    actionModelPartSearch.addEventListener('input', () => filterModelPartRows())
     actionDirectEditToggle.onclick = () => setDirectPoseEditing(!directPoseEditingEnabled)
+    actionDirectTranslate.onclick = () => setDirectPoseTransformMode('translate')
+    actionDirectRotate.onclick = () => setDirectPoseTransformMode('rotate')
+    actionSelectedPartVisibility.onclick = () => setSelectedModelPartVisibility(!selectedModelPart?.object.visible)
+    actionShowAllParts.onclick = showAllModelParts
     actionParametersReset.onclick = resetActionParameters
     expressionParametersReset.onclick = resetExpressionParameters
     document.addEventListener('magius:localechange', () => {
         rebuildActionParameterChannels()
+        rebuildModelPartVisibilityControls()
         rebuildExpressionParameterChannels()
         updateDirectPoseUi()
     })
+    rebuildModelPartVisibilityControls()
     updateDirectPoseUi()
 }
 
@@ -462,10 +1421,151 @@ function getPoseEntries(object: THREE.Object3D) {
         next.set(child.uuid, existing.get(child.uuid) ?? {
             bone: child,
             offsets: new THREE.Vector3(),
+            positionOffsets: new THREE.Vector3(),
         })
     })
     manualPoseByCharacter.set(object, next)
     return next
+}
+
+function getModelPartEntries(object: THREE.Object3D) {
+    const existing = modelPartsByCharacter.get(object) ?? new Map<string, ModelPartEntry>()
+    const next = new Map<string, ModelPartEntry>()
+    let unnamedIndex = 0
+    object.traverse(child => {
+        if (!(child instanceof THREE.Mesh)) return
+        const previous = existing.get(child.uuid)
+        const path = getObjectPath(child, object)
+        const label = child.name || `${translateUiText('Model part')} ${++unnamedIndex}`
+        next.set(child.uuid, {
+            object: child,
+            defaultVisible: previous?.defaultVisible ?? child.visible,
+            path,
+            label,
+        })
+    })
+    modelPartsByCharacter.set(object, next)
+    if (selectedModelPart) selectedModelPart = next.get(selectedModelPart.object.uuid)
+    return next
+}
+
+function filterModelPartRows() {
+    const query = actionModelPartSearch.value.trim().toLocaleLowerCase()
+    actionModelPartList.querySelectorAll<HTMLElement>('.model-part-row').forEach(row => {
+        row.hidden = Boolean(query) && !(row.dataset.filterValue ?? '').includes(query)
+    })
+}
+
+function updateModelPartVisibilityUi(scrollSelected = false) {
+    const object = scene.characterSelected?.character?.object
+    const entries = object ? getModelPartEntries(object) : new Map<string, ModelPartEntry>()
+    if (selectedModelPart && !entries.has(selectedModelPart.object.uuid)) selectedModelPart = undefined
+
+    actionModelPartList.querySelectorAll<HTMLElement>('.model-part-row').forEach(row => {
+        const entry = entries.get(row.dataset.modelPartUuid ?? '')
+        row.classList.toggle('direct-selected', entry === selectedModelPart)
+        row.classList.toggle('part-hidden', entry ? !entry.object.visible : false)
+        const checkbox = row.querySelector<HTMLInputElement>('input[type="checkbox"]')
+        const status = row.querySelector<HTMLOutputElement>('output')
+        if (checkbox && entry) checkbox.checked = entry.object.visible
+        if (status && entry) {
+            status.value = translateUiText(entry.object.visible ? 'Visible' : 'Hidden')
+            status.textContent = status.value
+        }
+    })
+
+    const selectedRow = selectedModelPart
+        ? actionModelPartList.querySelector<HTMLElement>(`[data-model-part-uuid="${selectedModelPart.object.uuid}"]`)
+        : null
+    if (scrollSelected && selectedRow) selectedRow.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+
+    const selectedText = selectedModelPart
+        ? `${translateUiText('Selected model part')}: ${selectedModelPart.label}`
+        : translateUiText('No model part selected')
+    actionSelectedPart.value = selectedText
+    actionSelectedPart.textContent = selectedText
+    actionSelectedPart.title = selectedModelPart?.path ?? selectedText
+    actionSelectedPartVisibility.disabled = !selectedModelPart
+    const visibilityLabel = translateUiText(selectedModelPart?.object.visible ? 'Hide selected part' : 'Show selected part')
+    actionSelectedPartVisibility.textContent = visibilityLabel
+    actionSelectedPartVisibility.title = visibilityLabel
+    actionShowAllParts.disabled = entries.size === 0 || [...entries.values()].every(entry => entry.object.visible)
+}
+
+function selectModelPart(entry: ModelPartEntry | undefined, scrollSelected = false) {
+    selectedModelPart = entry
+    updateModelPartVisibilityUi(scrollSelected)
+}
+
+function setSelectedModelPartVisibility(visible: boolean) {
+    if (!selectedModelPart) return
+    selectedModelPart.object.visible = visible
+    updateModelPartVisibilityUi()
+}
+
+function showAllModelParts() {
+    const object = scene.characterSelected?.character?.object
+    if (!object) return
+    getModelPartEntries(object).forEach(entry => { entry.object.visible = true })
+    updateModelPartVisibilityUi()
+}
+
+function restoreModelPartVisibility(object: THREE.Object3D) {
+    getModelPartEntries(object).forEach(entry => { entry.object.visible = entry.defaultVisible })
+    updateModelPartVisibilityUi()
+}
+
+function rebuildModelPartVisibilityControls() {
+    actionModelPartList.replaceChildren()
+    const object = scene.characterSelected?.character?.object
+    if (!object) {
+        selectedModelPart = undefined
+        createParameterEmptyState(actionModelPartList, 'Select a character to edit action parameters')
+        updateModelPartVisibilityUi()
+        return
+    }
+
+    const entries = [...getModelPartEntries(object).values()].sort((a, b) => (
+        a.path.localeCompare(b.path) || a.object.uuid.localeCompare(b.object.uuid)
+    ))
+    if (entries.length === 0) {
+        createParameterEmptyState(actionModelPartList, 'No model parts')
+        updateModelPartVisibilityUi()
+        return
+    }
+
+    for (const entry of entries) {
+        const row = document.createElement('div')
+        row.className = 'model-part-row'
+        row.dataset.i18nIgnore = 'true'
+        row.dataset.modelPartUuid = entry.object.uuid
+        row.dataset.filterValue = `${entry.label} ${entry.path}`.toLocaleLowerCase()
+
+        const visible = document.createElement('input')
+        visible.type = 'checkbox'
+        visible.checked = entry.object.visible
+        visible.title = translateUiText('Visible')
+        visible.setAttribute('aria-label', `${translateUiText('Visible')}: ${entry.label}`)
+        visible.addEventListener('change', () => {
+            entry.object.visible = visible.checked
+            selectModelPart(entry)
+        })
+
+        const select = document.createElement('button')
+        select.type = 'button'
+        select.className = 'model-part-select'
+        select.textContent = entry.label
+        select.title = entry.path
+        select.onclick = () => selectModelPart(entry, true)
+
+        const status = document.createElement('output')
+        status.value = translateUiText(entry.object.visible ? 'Visible' : 'Hidden')
+        status.textContent = status.value
+        row.append(visible, select, status)
+        actionModelPartList.append(row)
+    }
+    filterModelPartRows()
+    updateModelPartVisibilityUi()
 }
 
 function rebuildActionParameterChannels() {
@@ -548,6 +1648,7 @@ function rebuildActionParameterChannels() {
                 output.value = `${Number(input.value).toFixed(1)}°`
                 output.textContent = output.value
                 input.addEventListener('input', () => {
+                    if (isPerformanceBoneLeased(entry.bone)) { input.value = entry.offsets[axis].toFixed(1); return }
                     entry.offsets[axis] = parseFloat(input.value)
                     output.value = `${entry.offsets[axis].toFixed(1)}°`
                     output.textContent = output.value
@@ -564,6 +1665,7 @@ function rebuildActionParameterChannels() {
 }
 
 function applyPoseEntry(entry: ManualPoseEntry) {
+    if (isPerformanceBoneLeased(entry.bone)) return
     if (
         entry.lastApplied
         && entry.lastBase
@@ -572,24 +1674,36 @@ function applyPoseEntry(entry: ManualPoseEntry) {
         entry.bone.quaternion.copy(entry.lastBase)
     }
 
+    if (
+        entry.lastAppliedPosition
+        && entry.lastBasePosition
+        && entry.bone.position.distanceToSquared(entry.lastAppliedPosition) < 1e-10
+    ) {
+        entry.bone.position.copy(entry.lastBasePosition)
+    }
+
     const hasOffset = Math.abs(entry.offsets.x) > 1e-6
         || Math.abs(entry.offsets.y) > 1e-6
         || Math.abs(entry.offsets.z) > 1e-6
-    if (!hasOffset) {
+    if (hasOffset) {
+        entry.lastBase = entry.bone.quaternion.clone()
+        const rotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(
+            THREE.MathUtils.degToRad(entry.offsets.x),
+            THREE.MathUtils.degToRad(entry.offsets.y),
+            THREE.MathUtils.degToRad(entry.offsets.z),
+            'XYZ',
+        ))
+        entry.bone.quaternion.multiply(rotation)
+        entry.lastApplied = entry.bone.quaternion.clone()
+    } else {
         entry.lastBase = undefined
         entry.lastApplied = undefined
-        return
     }
 
-    entry.lastBase = entry.bone.quaternion.clone()
-    const rotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(
-        THREE.MathUtils.degToRad(entry.offsets.x),
-        THREE.MathUtils.degToRad(entry.offsets.y),
-        THREE.MathUtils.degToRad(entry.offsets.z),
-        'XYZ',
-    ))
-    entry.bone.quaternion.multiply(rotation)
-    entry.lastApplied = entry.bone.quaternion.clone()
+    // Joint translation is fail-closed: authored bones remain rotation-only.
+    // Root placement and IK translation are handled by their dedicated hosts.
+    entry.lastBasePosition = undefined
+    entry.lastAppliedPosition = undefined
 }
 
 function applyManualPoseOverrides() {
@@ -608,19 +1722,33 @@ function resetActionParameters() {
     if (!object) return
     const entries = manualPoseByCharacter.get(object)
     entries?.forEach(entry => {
+        if (isPerformanceBoneLeased(entry.bone)) return
         if (
             entry.lastApplied
             && entry.lastBase
             && entry.bone.quaternion.angleTo(entry.lastApplied) < 1e-5
         ) entry.bone.quaternion.copy(entry.lastBase)
+        if (
+            entry.lastAppliedPosition
+            && entry.lastBasePosition
+            && entry.bone.position.distanceToSquared(entry.lastAppliedPosition) < 1e-10
+        ) entry.bone.position.copy(entry.lastBasePosition)
         entry.offsets.set(0, 0, 0)
+        entry.positionOffsets.set(0, 0, 0)
         entry.lastBase = undefined
         entry.lastApplied = undefined
+        entry.lastBasePosition = undefined
+        entry.lastAppliedPosition = undefined
     })
     if (directPoseSelection?.object === object) {
         directPoseSelection.base.copy(directPoseSelection.entry.bone.quaternion)
+        directPoseSelection.basePosition.copy(directPoseSelection.entry.bone.position)
     }
+    restoreModelPartVisibility(object)
+    setSelectedAnimationPlaybackRate(1, true)
+    setDirectPoseTransformMode('translate')
     rebuildActionParameterChannels()
+    rebuildModelPartVisibilityControls()
 }
 
 function getPoseEntryBase(entry: ManualPoseEntry) {
@@ -630,6 +1758,15 @@ function getPoseEntryBase(entry: ManualPoseEntry) {
         && entry.bone.quaternion.angleTo(entry.lastApplied) < 1e-5
     ) return entry.lastBase.clone()
     return entry.bone.quaternion.clone()
+}
+
+function getPoseEntryPositionBase(entry: ManualPoseEntry) {
+    if (
+        entry.lastAppliedPosition
+        && entry.lastBasePosition
+        && entry.bone.position.distanceToSquared(entry.lastAppliedPosition) < 1e-10
+    ) return entry.lastBasePosition.clone()
+    return entry.bone.position.clone()
 }
 
 function syncPoseEntryControls(entry: ManualPoseEntry) {
@@ -646,14 +1783,42 @@ function syncPoseEntryControls(entry: ManualPoseEntry) {
     }
 }
 
+function setDirectPoseTransformMode(mode: DirectPoseTransformMode) {
+    directPoseTransformMode = mode === 'translate' ? 'rotate' : mode
+    directPosePointerDrag = undefined
+    if (directPoseSelection) {
+        directPoseSelection.base = getPoseEntryBase(directPoseSelection.entry)
+        directPoseSelection.basePosition = getPoseEntryPositionBase(directPoseSelection.entry)
+    }
+    if (directPoseControls) {
+        directPoseControls.mode = directPoseTransformMode
+        directPoseControls.space = 'local'
+        directPoseControls.showX = true
+        directPoseControls.showY = true
+        directPoseControls.showZ = true
+    }
+    updateDirectPoseUi()
+}
+
 function updateDirectPoseUi(scrollSelected = false) {
     const object = scene.characterSelected?.character?.object
     actionDirectEditToggle.disabled = !object
+    actionDirectTranslate.disabled = true
+    actionDirectRotate.disabled = !object
     actionDirectEditToggle.setAttribute('aria-pressed', String(directPoseEditingEnabled))
     actionDirectEditToggle.textContent = translateUiText(
         directPoseEditingEnabled ? 'Exit direct drag pose' : 'Direct drag pose',
     )
-    actionDirectEditToggle.title = translateUiText('Drag vertically for local X, horizontally for local Z; hold Alt for local Y')
+    actionDirectTranslate.setAttribute('aria-pressed', String(directPoseTransformMode === 'translate'))
+    actionDirectRotate.setAttribute('aria-pressed', String(directPoseTransformMode === 'rotate'))
+    actionDirectTranslate.textContent = translateUiText('Move XYZ (Root / IK only)')
+    actionDirectTranslate.title = translateUiText('Joint translation is unavailable; use Root placement or IK target')
+    actionDirectRotate.textContent = translateUiText('Rotate XYZ')
+    actionDirectEditToggle.title = translateUiText(
+        directPoseTransformMode === 'translate'
+            ? 'Drag the XYZ arrows, or drag the body part in the camera plane; hold Alt for depth'
+            : 'Drag vertically for local X, horizontally for local Z; hold Alt for local Y',
+    )
 
     actionChannelList.querySelectorAll('.parameter-bone-row.direct-selected')
         .forEach(row => row.classList.remove('direct-selected'))
@@ -664,21 +1829,34 @@ function updateDirectPoseUi(scrollSelected = false) {
     selectedRow?.classList.add('direct-selected')
     if (scrollSelected && selectedRow) selectedRow.scrollIntoView({ block: 'center', behavior: 'smooth' })
 
+    const selectedOffsets = directPoseSelection
+        ? directPoseTransformMode === 'translate'
+            ? directPoseSelection.entry.positionOffsets.toArray().map(value => value.toFixed(3))
+            : directPoseSelection.entry.offsets.toArray().map(value => `${value.toFixed(1)}°`)
+        : []
     const targetText = directPoseSelection
-        ? `${translateUiText('Selected bone')}: ${translateBoneChannelLabel(directPoseSelection.entry.bone.name || 'Unnamed bone')}`
-        : translateUiText('Click a body part, then drag it or use the rotation rings')
+        ? `${translateUiText('Selected bone')}: ${translateBoneChannelLabel(directPoseSelection.entry.bone.name || 'Unnamed bone')} · X ${selectedOffsets[0]} · Y ${selectedOffsets[1]} · Z ${selectedOffsets[2]}`
+        : translateUiText(
+            directPoseTransformMode === 'translate'
+                ? 'Click a body part, then drag the XYZ arrows'
+                : 'Click a body part, then drag it or use the rotation rings',
+        )
     actionDirectEditTarget.value = targetText
     actionDirectEditTarget.textContent = targetText
+    updateModelPartVisibilityUi(scrollSelected)
 }
 
-function selectDirectPoseBone(object: THREE.Object3D, bone: THREE.Bone) {
+function selectDirectPoseBone(object: THREE.Object3D, bone: THREE.Bone, part?: THREE.Mesh) {
+    if (isPerformanceBoneLeased(bone)) return
     const entry = getPoseEntries(object).get(bone.uuid)
     if (!entry || !directPoseControls || !directPoseControlsHelper) return
     directPoseSelection = {
         object,
         entry,
         base: getPoseEntryBase(entry),
+        basePosition: getPoseEntryPositionBase(entry),
     }
+    if (part) selectModelPart(getModelPartEntries(object).get(part.uuid))
     directPoseControls.attach(bone)
     directPoseControls.enabled = true
     directPoseControlsHelper.visible = true
@@ -695,6 +1873,7 @@ function clearDirectPoseSelection() {
 }
 
 function setDirectPoseEditing(enabled: boolean) {
+    if (enabled && performanceGizmoActive) return
     const object = scene.characterSelected?.character?.object
     if (enabled && !object) return
     if (directPoseEditingEnabled === enabled) {
@@ -705,6 +1884,7 @@ function setDirectPoseEditing(enabled: boolean) {
     directPoseEditingEnabled = enabled
     document.body.classList.toggle('direct-pose-editing', enabled)
     if (enabled) {
+        clearSingleCharacterTransform()
         directPoseOrbitControlsWasEnabled = scene.controls.enabled
         directPoseOutlineSelection = [...scene.effects.outlinePass.selectedObjects]
         scene.effects.outlinePass.selectedObjects = []
@@ -736,6 +1916,7 @@ function syncDirectPoseOffsetsFromBone() {
     selection.entry.lastBase = selection.base.clone()
     selection.entry.lastApplied = selection.entry.bone.quaternion.clone()
     syncPoseEntryControls(selection.entry)
+    updateDirectPoseUi()
 }
 
 function getBufferAttributeComponent(
@@ -778,14 +1959,14 @@ function getWeightedBoneAtPointer(event: PointerEvent) {
         }
         const dominant = [...scores].sort((a, b) => b[1] - a[1])[0]?.[0]
         const bone = dominant == undefined ? undefined : mesh.skeleton.bones[dominant]
-        if (bone && entries.has(bone.uuid)) return { object, bone }
+        if (bone && entries.has(bone.uuid)) return { object, bone, part: mesh }
     }
     return undefined
 }
 
 function setupDirectPoseEditing() {
     directPoseControls = new TransformControls(scene.camera, scene.renderer.domElement)
-    directPoseControls.mode = 'rotate'
+    directPoseControls.mode = directPoseTransformMode
     directPoseControls.space = 'local'
     directPoseControls.size = 0.72
     directPoseControls.enabled = false
@@ -797,6 +1978,7 @@ function setupDirectPoseEditing() {
         directPoseGizmoDragging = Boolean(event.value)
         if (directPoseGizmoDragging && directPoseSelection) {
             directPoseSelection.base = getPoseEntryBase(directPoseSelection.entry)
+            directPoseSelection.basePosition = getPoseEntryPositionBase(directPoseSelection.entry)
         } else if (directPoseSelection) {
             syncDirectPoseOffsetsFromBone()
         }
@@ -816,7 +1998,7 @@ function setupDirectPoseEditing() {
             actionDirectEditTarget.textContent = message
             return
         }
-        selectDirectPoseBone(weighted.object, weighted.bone)
+        selectDirectPoseBone(weighted.object, weighted.bone, weighted.part)
         if (!directPoseSelection) return
         directPosePointerDrag = {
             pointerId: event.pointerId,
@@ -832,9 +2014,9 @@ function setupDirectPoseEditing() {
     canvas.addEventListener('pointermove', event => {
         const drag = directPosePointerDrag
         if (!drag || drag.pointerId !== event.pointerId) return
-        const sensitivity = event.shiftKey ? 0.18 : 0.35
         const dx = event.clientX - drag.startX
         const dy = event.clientY - drag.startY
+        const sensitivity = event.shiftKey ? 0.18 : 0.35
         if (event.altKey) {
             drag.selection.entry.offsets.y = THREE.MathUtils.clamp(drag.startOffsets.y + dx * sensitivity, -180, 180)
         } else {
@@ -843,6 +2025,7 @@ function setupDirectPoseEditing() {
         }
         applyPoseEntry(drag.selection.entry)
         syncPoseEntryControls(drag.selection.entry)
+        updateDirectPoseUi()
         event.preventDefault()
         event.stopPropagation()
     })
@@ -940,6 +2123,9 @@ function rebuildExpressionParameterChannels() {
             output.value = currentValue.toFixed(2)
             output.textContent = output.value
             input.addEventListener('input', () => {
+                if (meshes.some(mesh => isPerformanceMorphLeased(mesh, mesh.morphTargetDictionary[name]))) {
+                    input.value = getMorphValue(meshes, name).toFixed(2); return
+                }
                 let map = manualMorphsByCharacter.get(object)
                 if (!map) {
                     map = new Map()
@@ -979,7 +2165,7 @@ function applyManualExpressionOverrides() {
         for (const mesh of getMorphTargetMeshes(object)) {
             for (const [name, entry] of overrides) {
                 const index = mesh.morphTargetDictionary[name]
-                if (index != undefined) mesh.morphTargetInfluences[index] = entry.value
+                if (index != undefined && !isPerformanceMorphLeased(mesh, index)) mesh.morphTargetInfluences[index] = entry.value
             }
         }
     }
@@ -992,7 +2178,7 @@ function resetExpressionParameters() {
     overrides?.forEach((entry, name) => {
         entry.baselineByMesh.forEach((value, mesh) => {
             const index = mesh.morphTargetDictionary[name]
-            if (index != undefined) mesh.morphTargetInfluences[index] = value
+            if (index != undefined && !isPerformanceMorphLeased(mesh, index)) mesh.morphTargetInfluences[index] = value
         })
     })
     overrides?.clear()
@@ -1024,7 +2210,7 @@ function updateSelectedCharacterTransformUi() {
 
 function moveSelectedCharacter(horizontal: number, vertical: number) {
     const object = scene.characterSelected?.character?.object
-    if (!object) return
+    if (!object || performanceExternalLeases.get(object)?.channels.root) return
     rememberCharacterTransform(object)
 
     scene.camera.updateMatrixWorld()
@@ -1044,7 +2230,7 @@ function moveSelectedCharacter(horizontal: number, vertical: number) {
 
 function rotateSelectedCharacter(delta: number) {
     const object = scene.characterSelected?.character?.object
-    if (!object) return
+    if (!object || performanceExternalLeases.get(object)?.channels.root) return
     rememberCharacterTransform(object)
     object.rotateY(delta)
     updateSelectedCharacterTransformUi()
@@ -1052,7 +2238,7 @@ function rotateSelectedCharacter(delta: number) {
 
 function tiltSelectedCharacter(delta: number) {
     const object = scene.characterSelected?.character?.object
-    if (!object) return
+    if (!object || performanceExternalLeases.get(object)?.channels.root) return
     rememberCharacterTransform(object)
 
     scene.camera.updateMatrixWorld()
@@ -1069,11 +2255,13 @@ function tiltSelectedCharacter(delta: number) {
 
 function resetSelectedCharacterTransform() {
     const object = scene.characterSelected?.character?.object
-    if (!object) return
+    if (!object || performanceExternalLeases.get(object)?.channels.root) return
     const initial = characterTransformDefaults.get(object)
     if (!initial) return
-    object.position.copy(initial.position)
-    object.quaternion.copy(initial.quaternion)
+    if (!teleportViewerCharacter(object, initial.position, initial.quaternion)) {
+        object.position.copy(initial.position)
+        object.quaternion.copy(initial.quaternion)
+    }
     updateSelectedCharacterTransformUi()
 }
 
@@ -1114,8 +2302,221 @@ function setupCharacterMovementControls() {
     characterTransformResetBtn.onclick = resetSelectedCharacterTransform
 }
 
+type CharacterSearchEntry = PrimaryCharacterCatalogEntry
+
+function searchCharacters(query: string, limit = 40): CharacterSearchEntry[] {
+    return searchPrimaryCharacterCatalog(primaryCharacterCatalog, query, limit)
+}
+
+function annotateCharacterSelectorOptions(selector: HTMLSelectElement): void {
+    for (const option of selector.options) {
+        const entry = primaryCharacterById.get(option.value)
+        if (!entry) continue
+        option.dataset.characterKind = entry.kind
+        option.dataset.characterStableIdentity = entry.stableIdentity
+        option.dataset.characterBattleCapability = String(entry.capabilities.battle)
+        option.dataset.characterTpsCapability = String(entry.capabilities.tps)
+        option.dataset.characterDungeonCapability = String(entry.capabilities.dungeon)
+        option.dataset.characterActionScope = entry.capabilities.actions
+        option.dataset.characterPhysicsScope = entry.capabilities.physics
+        option.title = [entry.name, ...entry.aliases].join(' · ')
+    }
+}
+
+function syncCharacterUiCapabilityGates(characterId: string | number | null): void {
+    const entry = characterId === null
+        ? undefined
+        : resolvePrimaryCharacterSelection(primaryCharacterCatalog, characterId)
+    if (!entry) {
+        locomotionModeToggle.disabled = true
+        combatVfxPanelToggle.disabled = true
+        delete document.documentElement.dataset.magiusCharacterUiCapabilities
+        return
+    }
+
+    const state = characterUiControlState(entry)
+    if (state.tpsDisabled) setViewerLocomotionEnabled(false)
+    locomotionModeToggle.disabled = state.tpsDisabled
+    locomotionModeToggle.dataset.characterTpsCapability = String(entry.capabilities.tps)
+    locomotionModeToggle.dataset.characterDungeonCapability = String(entry.capabilities.dungeon)
+    combatVfxPanelToggle.disabled = state.battleDisabled
+    combatVfxPanelToggle.dataset.characterBattleCapability = String(entry.capabilities.battle)
+    actionPanelToggle.dataset.characterActionScope = state.actionScope
+    characterPhysicsActionOptions.dataset.characterPhysicsScope = state.physicsScope
+
+    if (state.battleDisabled) {
+        combatVfxPanel.classList.remove('is-open')
+        combatVfxPanel.setAttribute('aria-hidden', 'true')
+        combatVfxPanelToggle.setAttribute('aria-expanded', 'false')
+    }
+    document.documentElement.dataset.magiusCharacterUiCapabilities = JSON.stringify({
+        characterId: entry.id,
+        kind: entry.kind,
+        visible: entry.visible,
+        ...entry.capabilities,
+    })
+}
+
+function setupCharacterSearch() {
+    if (characterSearchResults.parentElement !== document.body) {
+        document.body.appendChild(characterSearchResults)
+    }
+
+    let currentResults: CharacterSearchEntry[] = []
+    let activeIndex = -1
+
+    const updateInputWidth = () => {
+        const viewportWidth = window.innerWidth
+        const textLength = Array.from(characterSearchInput.value.trim()).length
+        const baseChars = textLength > 0 ? textLength + 2 : 8
+        const maxChars = viewportWidth < 760 ? 20 : 26
+        const clampedChars = Math.max(8, Math.min(baseChars, maxChars))
+        const approximatePx = Math.round(clampedChars * (viewportWidth < 760 ? 8 : 8.6) + 16)
+        const minPx = viewportWidth < 520 ? 82 : 88
+        const maxPx = Math.min(viewportWidth - 16, viewportWidth < 760 ? 220 : 260)
+        const widthPx = Math.max(minPx, Math.min(approximatePx, maxPx))
+        document.getElementById('character-search-box')?.style.setProperty('--character-search-width', `${widthPx}px`)
+    }
+
+    const updateResultsPosition = () => {
+        const rect = characterSearchInput.getBoundingClientRect()
+        const viewportWidth = window.innerWidth
+        const viewportHeight = window.innerHeight
+        const width = Math.min(Math.max(rect.width, 320), viewportWidth - 16)
+        let left = Math.min(rect.left, viewportWidth - width - 8)
+        left = Math.max(8, left)
+        const estimatedHeight = Math.min(420, viewportHeight * 0.7)
+        let top = rect.bottom + 4
+        if (top + estimatedHeight > viewportHeight - 8) {
+            top = Math.max(8, rect.top - estimatedHeight - 4)
+        }
+        characterSearchResults.style.left = `${left}px`
+        characterSearchResults.style.top = `${top}px`
+        characterSearchResults.style.width = `${width}px`
+    }
+
+    const hideResults = () => {
+        characterSearchResults.hidden = true
+        characterSearchResults.innerHTML = ''
+        characterSearchInput.setAttribute('aria-expanded', 'false')
+        currentResults = []
+        activeIndex = -1
+    }
+
+    const updateActiveResult = () => {
+        const buttons = characterSearchResults.querySelectorAll<HTMLButtonElement>('.character-search-result')
+        buttons.forEach((button, index) => {
+            button.setAttribute('aria-selected', String(index === activeIndex))
+        })
+        buttons[activeIndex]?.scrollIntoView({ block: 'nearest' })
+    }
+
+    const selectSearchEntry = (entry: CharacterSearchEntry) => {
+        characterSelector.value = entry.id
+        if (characterSelector.value !== entry.id) return
+        characterSelector.dispatchEvent(new Event('change', { bubbles: true }))
+        characterSearchInput.value = `${entry.id} ${entry.name}`.trim()
+        updateInputWidth()
+        hideResults()
+    }
+
+    const renderResults = (results: CharacterSearchEntry[]) => {
+        characterSearchResults.innerHTML = ''
+        currentResults = results
+        activeIndex = results.length > 0 ? 0 : -1
+
+        if (results.length === 0) {
+            const empty = document.createElement('span')
+            empty.className = 'character-search-empty'
+            empty.textContent = translateUiText('No matching characters')
+            characterSearchResults.appendChild(empty)
+        } else {
+            results.forEach((entry, index) => {
+                const button = document.createElement('button')
+                button.type = 'button'
+                button.className = 'character-search-result'
+                button.dataset.characterId = entry.id
+                button.setAttribute('role', 'option')
+                button.setAttribute('aria-selected', String(index === activeIndex))
+
+                const id = document.createElement('span')
+                id.className = 'character-search-result-id'
+                id.textContent = entry.id
+                const name = document.createElement('span')
+                name.className = 'character-search-result-name'
+                name.textContent = entry.name
+                button.append(id, name)
+
+                button.addEventListener('mouseenter', () => {
+                    activeIndex = index
+                    updateActiveResult()
+                })
+                button.addEventListener('mousedown', event => {
+                    event.preventDefault()
+                    selectSearchEntry(entry)
+                })
+                characterSearchResults.appendChild(button)
+            })
+        }
+
+        updateResultsPosition()
+        characterSearchResults.hidden = false
+        characterSearchInput.setAttribute('aria-expanded', 'true')
+    }
+
+    const renderQuery = () => {
+        updateInputWidth()
+        const query = characterSearchInput.value.trim()
+        if (!query) {
+            hideResults()
+            return
+        }
+        renderResults(searchCharacters(query))
+    }
+
+    updateInputWidth()
+    characterSearchInput.addEventListener('input', renderQuery)
+    characterSearchInput.addEventListener('focus', renderQuery)
+    characterSearchInput.addEventListener('blur', () => window.setTimeout(hideResults, 120))
+    characterSearchInput.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            hideResults()
+            characterSearchInput.blur()
+            return
+        }
+        if (event.key === 'ArrowDown' && currentResults.length > 0) {
+            event.preventDefault()
+            activeIndex = Math.min(activeIndex + 1, currentResults.length - 1)
+            updateActiveResult()
+            return
+        }
+        if (event.key === 'ArrowUp' && currentResults.length > 0) {
+            event.preventDefault()
+            activeIndex = Math.max(activeIndex - 1, 0)
+            updateActiveResult()
+            return
+        }
+        if (event.key === 'Enter' && currentResults.length > 0) {
+            event.preventDefault()
+            const entry = currentResults[Math.max(activeIndex, 0)]
+            if (entry) selectSearchEntry(entry)
+        }
+    })
+    window.addEventListener('resize', () => {
+        updateInputWidth()
+        if (!characterSearchResults.hidden) updateResultsPosition()
+    })
+    window.addEventListener('scroll', () => {
+        if (!characterSearchResults.hidden) updateResultsPosition()
+    }, true)
+    document.addEventListener('magius:localechange', () => {
+        if (!characterSearchResults.hidden) renderQuery()
+    })
+}
+
 function setupCharacterAddSelector() {
     initSelector(characterAddSelector, { '< Select a character to add >': '', ...characterSelectDict });
+    annotateCharacterSelectorOptions(characterAddSelector)
     characterAddSelector.value = ''
 
     characterAddSelector.addEventListener('focus', () => {
@@ -1135,7 +2536,9 @@ function setupCharacterAddSelector() {
 }
 
 function setupViewerInputHandler() {
+    setupSingleCharacterTransformControls()
     scene.renderer.domElement.addEventListener('click', mouseClickHandler)
+    scene.renderer.domElement.addEventListener('dblclick', mouseDoubleClickHandler)
     scene.renderer.domElement.addEventListener('mousedown', mouseDownHandler)
     scene.renderer.domElement.addEventListener('mousemove', mouseMoveHandler)
 
@@ -1143,9 +2546,29 @@ function setupViewerInputHandler() {
     let mouseMoveY = 0
 
     function mouseClickHandler(e: PointerEvent | MouseEvent) {
-        if (directPoseEditingEnabled) return
+        if (directPoseEditingEnabled || performanceGizmoActive) return
         if (Math.abs(mouseMoveX) > 3 || Math.abs(mouseMoveY) > 3) return
         selectCharacterByMouse(e)
+    }
+
+    function mouseDoubleClickHandler(e: MouseEvent) {
+        if (directPoseEditingEnabled || performanceGizmoActive) return
+        if (scene.characters.length === 1) {
+            const character = scene.getIntersectedCharacter(e.offsetX, e.offsetY)
+            if (character?.character?.object) {
+                if (character !== scene.characterSelected) selectCharacter(character)
+                activateSingleCharacterTransform(character)
+                e.preventDefault()
+                e.stopPropagation()
+                return
+            }
+        }
+        const enemy = enemyPanelController?.getIntersectedEnemy(e.clientX, e.clientY)
+        if (!enemy) return
+        enemyPanelController?.selectInstance(enemy.instanceId)
+        activateObjectTransform(enemy.object, () => enemyPanelController?.refreshInstances())
+        e.preventDefault()
+        e.stopPropagation()
     }
 
     function mouseDownHandler(_e: MouseEvent) {
@@ -1160,23 +2583,52 @@ function setupViewerInputHandler() {
         }
     }
 
+    function tpsMoveKeepsCharacterSelectedOnEmptyViewerClick(): boolean {
+        return document.body.classList.contains('locomotion-mode-enabled')
+    }
+
     function selectCharacterByMouse(e: PointerEvent | MouseEvent) {
         const character = scene.getIntersectedCharacter(e.offsetX, e.offsetY)
         if (character) {
             if (character != scene.characterSelected) {
                 selectCharacter(character)
             }
-        } else if (scene.characters.length > 1 && scene.characterSelected) {
+        } else if (
+            scene.characters.length > 1
+            && scene.characterSelected
+            && !tpsMoveKeepsCharacterSelectedOnEmptyViewerClick()
+        ) {
             deselectCharacter()
         }
     }
 }
 
 function animateLoop() {
+    applySelectedAnimationPlaybackRate()
     applyManualPoseOverrides()
     applyManualExpressionOverrides()
+    voicePanelController?.update()
+    performanceHost?.flushFinalPoseBeforeCamera()
     stats.update()
     updateAnimationControls()
+}
+
+function syncVoiceCharacter() {
+    notifyPerformanceActors()
+    const workspaceCharacters: VoicePanelWorkspaceCharacter[] = scene.characters.flatMap(sceneCharacter => {
+        const character = sceneCharacter.character
+        if (!character?.object) return []
+        return [{
+            actorKey: character.object.uuid,
+            characterResourceId: String(character.userData.characterId ?? ''),
+            target: character,
+        }]
+    })
+    voicePanelController?.setWorkspaceCharacters(workspaceCharacters)
+    voicePanelController?.setCharacter(
+        String(scene.characterSelected?.character?.userData.characterId ?? '') || null,
+        scene.characterSelected?.character ?? null,
+    )
 }
 
 async function tryChangeCharacterByHash() {
@@ -1192,9 +2644,26 @@ async function tryChangeCharacterByHash() {
     selectCharacter(sceneCharacter)
 }
 
+function consumeExpectedCharacterSelectionAbort<T>(selection: Promise<T>): Promise<T | undefined> {
+    return selection.catch(error => {
+        const abortError = (
+            (error instanceof DOMException || error instanceof Error)
+            && error.name === 'AbortError'
+        )
+        if (abortError) return undefined
+        throw error
+    })
+}
+
+function changeCharacterFromSelector(id: string) {
+    return consumeExpectedCharacterSelectionAbort(changeCharacter(id))
+}
+
 async function changeCharacter(id: number | string) {
     if (typeof id == 'number') id = id.toString()
 
+    voicePanelController?.setCharacter(null, null)
+    disposeCharacterActionPlayback()
     characterSelector.value = id
     updateCharacterController(null)
 
@@ -1207,7 +2676,12 @@ async function changeCharacter(id: number | string) {
 
 function removeSelectedCharacter() {
     if (scene.characterSelected) {
-        scene.removeCharacter(scene.characterSelected)
+        const removedCharacter = scene.characterSelected
+        voicePanelController?.setCharacter(null, null)
+        disposeCharacterActionPlayback()
+        detachViewerLocomotion(removedCharacter)
+        scene.removeCharacter(removedCharacter)
+        scene.characterSelected = undefined
         deselectCharacter()
     }
 }
@@ -1221,6 +2695,7 @@ async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneC
             position: sceneCharacter.character.object.position,
             rotation: sceneCharacter.character.object.rotation,
         }
+        detachViewerLocomotion(sceneCharacter)
     }
 
     return scene.switchCharacter(
@@ -1250,10 +2725,13 @@ async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneC
             character.object.position.copy(calculateNewCharacterPosition(sceneCharacter))
         }
         rememberCharacterTransform(character.object, true)
+        baseAnimationNamesByCharacter.set(character.object, [...character.animations])
 
         if (character.animation.default) {
             character.animation.play(character.animation.default, true)
         }
+
+        attachViewerLocomotion(sceneCharacter)
 
         return sceneCharacter
     })
@@ -1270,6 +2748,8 @@ function syncExpressionControls() {
     ]
 
     if (!expression) {
+        const storyExpression = getNonBattleExpressionRuntime(scene.characterSelected?.character)
+        if (storyExpression) expressionSelector.value = storyExpression.current ?? officialDefaultFaceState
         inputs.forEach(input => { input.disabled = true })
         expressionAutoBlink.checked = false
         expressionManualBlink.value = '0'
@@ -1300,35 +2780,46 @@ function syncExpressionControls() {
 }
 
 function selectCharacter(sceneCharacter: SceneCharacter) {
+    performanceEditorController?.runtime.endDrag()
+    clearSingleCharacterTransform()
     setDirectPoseEditing(false)
+    if (scene.characterSelected && scene.characterSelected !== sceneCharacter) {
+        disposeCharacterActionPlayback()
+    }
     scene.characterSelected = sceneCharacter
 
     const character = sceneCharacter.character
     if (!character) return
+    if (performanceExternalLeases.get(character.object)?.channels.root) scene.transformControls.detach()
+    syncVoiceCharacter()
     rememberCharacterTransform(character.object)
 
     characterSelector.value = character.userData.characterId.toString()
-
-    initSelector(
-        animationSelector,
-        character.animations.reduce((obj, name) => {
-            obj[name] = name
-            return obj
-        }, { '<No animation>': '' } as Record<string, string>),
-        value => {
-            if (value) {
-                character.animation.play(value, value.endsWith('_L'))
-            } else {
-                character.animation.clear()
-            }
-        }
-    );
-
-    animationSelector.value = character.animation.current || ''
+    syncCharacterUiCapabilityGates(character.userData.characterId)
+    selectViewerLocomotion(sceneCharacter)
+    setCharacterActionPlaybackState(characterActionsApi().state())
+    applyCharacterActionCatalog(characterActionsApi().catalog())
+    void refreshCharacterActionCatalog()
     updateAnimationControls()
     rebuildActionParameterChannels()
+    rebuildModelPartVisibilityControls()
 
-    if (character.expression) {
+    const storyExpression = getNonBattleExpressionRuntime(character)
+    if (storyExpression) {
+        expressionSelector.disabled = false
+        expressionSelector.title = 'Authored story face/action (full native animation)'
+        initSelector(expressionSelector, storyExpression.actions.reduce((options, action) => {
+            options[action.label] = action.id
+            return options
+        }, { 'Default face/action': officialDefaultFaceState } as Record<string, string>), value => {
+            if (value === officialDefaultFaceState) storyExpression.resetToDefault()
+            else storyExpression.play(value)
+            updateAnimationControls()
+            syncExpressionControls()
+            rebuildExpressionParameterChannels()
+        })
+    } else if (character.expression) {
+        expressionSelector.title = ''
         expressionSelector.disabled = false
         initSelector(
             expressionSelector,
@@ -1349,6 +2840,7 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
             },
         )
     } else {
+        expressionSelector.title = ''
         expressionSelector.disabled = true
         initSelector(expressionSelector, { '<No expression data>': '' })
     }
@@ -1362,10 +2854,20 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
 }
 
 export function deselectCharacter() {
+    clearSingleCharacterTransform()
     setDirectPoseEditing(false)
+    disposeCharacterActionPlayback()
     scene.characterSelected = undefined
+    syncCharacterUiCapabilityGates(null)
+    syncVoiceCharacter()
+    selectViewerLocomotion(undefined)
+    characterActionRefreshToken++
+    setCharacterActionPlaybackState(characterActionsApi().state())
+    applyCharacterActionCatalog(characterActionsApi().catalog())
     syncExpressionControls()
     rebuildActionParameterChannels()
+    selectedModelPart = undefined
+    rebuildModelPartVisibilityControls()
     rebuildExpressionParameterChannels()
 
     updateCharacterController(null)
@@ -1390,66 +2892,168 @@ function calculateNewCharacterPosition(newCharacter: SceneCharacter): THREE.Vect
     return new THREE.Vector3(0, 0, 0);
 }
 
-export function displayProgress(text: string) {
-    lastProgressText = text
-    if (text) {
-        loadProgressEl.style.removeProperty('display')
-        loadProgressEl.textContent = translateUiText(text)
-    } else {
-        loadProgressEl.style.display = 'none'
-    }
+export function displayProgress(
+    text: string,
+    detail?: { fileName?: string; loaded?: number; total?: number; phase?: string },
+) {
+    loadingProgressPanel.legacy(translateUiText(text), detail)
 }
 
 export function hideAllDemoItems() {
     document.body.classList.add('no-demo')
 }
 
-function updateAnimationControls() {
-    if (scene.characterSelected?.character) {
-        const animation = scene.characterSelected.character.animation
-        animationSpeed.disabled = false
-        animationSpeed.value = animation.mixer.timeScale.toFixed(2)
-        animationSpeedValue.value = `${animation.mixer.timeScale.toFixed(2)}×`
-        animationSpeedValue.textContent = animationSpeedValue.value
+function showAnimationTimeline(durationSeconds: number, timeSeconds: number) {
+    const duration = Math.max(0, durationSeconds)
+    const currentTime = THREE.MathUtils.clamp(timeSeconds, 0, duration)
+    const normalizedProgress = duration > 0 ? currentTime / duration : 0
+    animationSlider.style.removeProperty('display')
+    animationProgressValue.style.removeProperty('display')
+    animationSlider.disabled = duration <= 0
+    animationSlider.min = '0'
+    animationSlider.max = duration.toString()
+    animationSlider.step = '0.01'
+    animationSlider.value = currentTime.toString()
+    animationSlider.dataset.animationTime = currentTime.toFixed(4)
+    animationSlider.dataset.animationDuration = duration.toFixed(4)
+    animationSlider.dataset.animationProgress = normalizedProgress.toFixed(6)
+    const progressLabel = `${Math.round(normalizedProgress * 100)}%`
+    animationSlider.setAttribute('aria-valuetext', progressLabel)
+    animationProgressValue.value = progressLabel
+    animationProgressValue.textContent = progressLabel
+}
 
-        if (animationSelector.value) {
-            if (animation.paused || animation.clamped) {
-                animationPlayBtn.style.removeProperty('display')
-                animationPauseBtn.style.display = 'none'
-            } else {
-                animationPlayBtn.style.display = 'none'
-                animationPauseBtn.style.removeProperty('display')
-            }
-            animationSlider.style.removeProperty('display')
-            animationSlider.min = '0'
-            animationSlider.max = (animation.duration - 0.01).toString()
-            animationSlider.step = '0.01'
-            animationSlider.value = animation.time.toString()
-        } else {
-            animationPauseBtn.style.display = 'none'
-            animationPlayBtn.style.display = 'none'
-            animationSlider.style.display = 'none'
-        }
-    } else {
+function hideAnimationTimeline() {
+    animationSlider.style.display = 'none'
+    animationProgressValue.style.display = 'none'
+}
+
+function updateAnimationControls() {
+    const character = scene.characterSelected?.character
+    if (!character) {
         animationPlayBtn.style.display = 'none'
         animationPauseBtn.style.display = 'none'
-        animationSlider.style.display = 'none'
+        hideAnimationTimeline()
         animationSpeed.disabled = true
         animationSpeed.value = '1'
         animationSpeedValue.value = '1.00×'
         animationSpeedValue.textContent = animationSpeedValue.value
+        renderCharacterActionStatus()
+        return
+    }
+
+    const animation = character.animation
+    animationSpeed.disabled = false
+    renderAnimationPlaybackRate(selectedAnimationPlaybackRate())
+
+    const actionOption = selectedCharacterActionOption()
+    if (actionOption) {
+        const state = characterActionsApi().state()
+        setCharacterActionPlaybackState(state)
+        const stateMatchesSelection = state.actionId === actionOption.value
+        const playing = stateMatchesSelection && state.status === 'playing'
+        const playable = actionOption.dataset.playable === 'true' && !actionOption.disabled
+        if (playing) {
+            animationPlayBtn.style.display = 'none'
+            animationPauseBtn.style.removeProperty('display')
+        } else {
+            animationPauseBtn.style.display = 'none'
+            if (playable) animationPlayBtn.style.removeProperty('display')
+            else animationPlayBtn.style.display = 'none'
+        }
+        if (stateMatchesSelection && state.durationSeconds > 0) {
+            showAnimationTimeline(state.durationSeconds, state.timeSeconds)
+        } else {
+            hideAnimationTimeline()
+        }
+        return
+    }
+
+    if (animationSelector.value) {
+        if (animation.paused || animation.clamped) {
+            animationPlayBtn.style.removeProperty('display')
+            animationPauseBtn.style.display = 'none'
+        } else {
+            animationPlayBtn.style.display = 'none'
+            animationPauseBtn.style.removeProperty('display')
+        }
+        showAnimationTimeline(animation.duration, animation.time)
+    } else {
+        animationPauseBtn.style.display = 'none'
+        animationPlayBtn.style.display = 'none'
+        hideAnimationTimeline()
     }
 }
 
+function setupSingleCharacterTransformControls() {
+    singleCharacterTransformControls = new TransformControls(scene.camera, scene.renderer.domElement)
+    singleCharacterTransformControls.mode = 'translate'
+    singleCharacterTransformControls.space = 'world'
+    singleCharacterTransformControls.size = 0.85
+    singleCharacterTransformControls.enabled = false
+    singleCharacterTransformControlsHelper = singleCharacterTransformControls.getHelper()
+    singleCharacterTransformControlsHelper.visible = false
+    scene.scene.add(singleCharacterTransformControlsHelper)
+
+    singleCharacterTransformControls.addEventListener('dragging-changed', event => {
+        const dragging = Boolean(event.value)
+        if (dragging) {
+            singleCharacterTransformOrbitWasEnabled = scene.controls.enabled
+            scene.controls.enabled = false
+        } else if (!directPoseEditingEnabled) {
+            scene.controls.enabled = singleCharacterTransformOrbitWasEnabled
+        }
+    })
+    singleCharacterTransformControls.addEventListener('objectChange', () => {
+        singleObjectTransformOnChange?.()
+    })
+}
+
+function clearSingleCharacterTransform() {
+    singleCharacterTransformControls?.detach()
+    if (singleCharacterTransformControls) singleCharacterTransformControls.enabled = false
+    if (singleCharacterTransformControlsHelper) singleCharacterTransformControlsHelper.visible = false
+    singleCharacterTransformActive = false
+    singleObjectTransformOnChange = undefined
+    if (!directPoseEditingEnabled) scene.controls.enabled = singleCharacterTransformOrbitWasEnabled
+    updateTransformModeButtons()
+}
+
+function activateSingleCharacterTransform(sceneCharacter: SceneCharacter) {
+    const object = sceneCharacter.character?.object
+    if (!object || scene.characters.length !== 1 || !singleCharacterTransformControls || !singleCharacterTransformControlsHelper) return
+    activateObjectTransform(object, () => {
+        if (sceneCharacter.character) updateCharacterController(sceneCharacter.character)
+    })
+}
+
+function activateObjectTransform(object: THREE.Object3D, onObjectChange?: () => void) {
+    if (performanceExternalLeases.get(object)?.channels.root || performanceGizmoActive) return
+    if (!singleCharacterTransformControls || !singleCharacterTransformControlsHelper) return
+    singleCharacterTransformActive = true
+    singleCharacterTransformOrbitWasEnabled = scene.controls.enabled
+    singleObjectTransformOnChange = onObjectChange
+    singleCharacterTransformControls.attach(object)
+    singleCharacterTransformControls.enabled = true
+    singleCharacterTransformControlsHelper.visible = true
+    setTransformMode('translate')
+}
+
 function setTransformMode(mode: TransformControlsMode) {
+    if (performanceGizmoActive || (scene.characterSelected?.character?.object
+        && performanceExternalLeases.get(scene.characterSelected.character.object)?.channels.root)) return
+    const controls = singleCharacterTransformActive && singleCharacterTransformControls
+        ? singleCharacterTransformControls
+        : scene.transformControls
     if (mode == 'rotate') {
-        scene.transformControls.showX = false
-        scene.transformControls.showZ = false
+        controls.showX = false
+        controls.showZ = false
     } else {
-        scene.transformControls.showX = true
-        scene.transformControls.showZ = true
+        controls.showX = true
+        controls.showZ = true
     }
-    scene.transformControls.mode = mode
+    controls.showY = true
+    controls.mode = mode
 
     updateTransformModeButtons()
 }
@@ -1458,8 +3062,11 @@ function updateTransformModeButtons() {
     transformTranslateBtn.style.display = 'none'
     transformRotateBtn.style.display = 'none'
 
-    if (scene.characterSelectionVisible) {
-        if (scene.transformControls.mode == 'translate') {
+    if (scene.characterSelectionVisible || singleCharacterTransformActive) {
+        const mode = singleCharacterTransformActive && singleCharacterTransformControls
+            ? singleCharacterTransformControls.mode
+            : scene.transformControls.mode
+        if (mode == 'translate') {
             transformRotateBtn.style.removeProperty('display')
         } else {
             transformTranslateBtn.style.removeProperty('display')

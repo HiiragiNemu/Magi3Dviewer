@@ -3,18 +3,25 @@
 }
 
 .icon-hover-popitem {
-    position: absolute;
+    position: fixed;
     top: 0;
-    right: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    left: 8px;
+    right: auto;
+    z-index: 100;
+    max-width: calc(100vw - 16px);
+    max-height: calc(100vh - 16px);
+    overflow: auto;
+    background-color: rgba(12, 12, 20, 0.94);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 6px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.38);
     padding: 8px 8px 2px 8px;
     width: max-content;
     display: none;
 }
 
 .icon-hover-popitem.center {
-    top: 50%;
-    transform: translateY(-50%);
+    transform: none;
 }
 
 .icon-hover-container:hover .icon-hover-popitem,
@@ -26,4 +33,10 @@
     display: block;
     width: 100%;
     margin-bottom: 6px;
+}
+
+body.theme-light .icon-hover-popitem {
+    background-color: rgba(248, 248, 252, 0.97);
+    border-color: rgba(0, 0, 0, 0.18);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
 }

@@ -60,7 +60,7 @@ test('serialized Vignette has an explicit full-composite runtime pass', () => {
   const grading = shader.indexOf('if (uToneMappingMode > 0.5')
   assert.ok(vignette >= 0 && grading > vignette)
   assert.doesNotMatch(shader.slice(vignette, grading), /smoothstep\(/)
-  assert.match(effects, /volumePostProcessPass = new ShaderPass/)
+  assert.match(effects, /volumePostProcessPass = new ReDriveVolumePostProcessingPass/)
 
   const paraffin = effects.indexOf('this.composer.addPass(this.paraffinPass)')
   const volume = effects.indexOf('this.composer.addPass(this.volumePostProcessPass)')
@@ -69,12 +69,53 @@ test('serialized Vignette has an explicit full-composite runtime pass', () => {
   assert.match(scene, /this\.effects\.volumePostProcessPass\.enabled/)
 })
 
+test('serialized ChromaticAberration uses the exact URP 14 fast three-sample operator', () => {
+  assert.match(shader, /uChromaticAberrationIntensity \* 0\.05/)
+  assert.match(shader, /vec2 coords = 2\.0 \* vUv - 1\.0/)
+  assert.match(shader, /coords \* dot\(coords, coords\) \* chromaAmount/)
+  assert.match(shader, /vec2 delta = \(end - vUv\) \/ 3\.0/)
+  assert.match(shader, /texture2D\(tDiffuse, vUv \+ delta\)\.g/)
+  assert.match(shader, /texture2D\(tDiffuse, vUv \+ delta \* 2\.0\)\.b/)
+  const chroma = shader.indexOf('if (\n                uChromaticAberrationEnabled')
+  const vignette = shader.indexOf('if (uVignetteEnabled > 0.5')
+  assert.ok(chroma >= 0 && vignette > chroma)
+  assert.match(stages, /profile\?\.chromaticAberration/)
+  assert.match(stages, /uChromaticAberrationEnabled\.value/)
+})
+
+test('serialized FilmGrain uses official texture alpha, tiling, response, and intensity units', () => {
+  assert.match(shader, /class ReDriveVolumePostProcessingPass extends ShaderPass/)
+  assert.match(shader, /texture2D\([\s\S]*uFilmGrainTexture[\s\S]*uFilmGrainScale \+ uFilmGrainOffset/)
+  assert.match(shader, /grain = \(grain - 0\.5\) \* 2\.0/)
+  assert.match(shader, /vec3\(0\.2126729, 0\.7151522, 0\.0721750\)/)
+  assert.match(shader, /lum = 1\.0 - sqrt\(lum\)/)
+  assert.match(shader, /mix\(1\.0, lum, uFilmGrainResponse\)/)
+  assert.match(shader, /uFilmGrainIntensity \* 4\.0/)
+  assert.match(shader, /getDrawingBufferSize\(this\.drawingBufferSize\)/)
+  assert.match(shader, /this\.drawingBufferSize\.x \/ textureWidth/)
+  assert.match(shader, /this\.drawingBufferSize\.y \/ textureHeight/)
+  assert.match(shader, /const offsetX = Math\.random\(\)/)
+  assert.match(shader, /const offsetY = Math\.random\(\)/)
+  const grading = shader.indexOf('if (uToneMappingMode > 0.5')
+  const grain = shader.indexOf('if (uFilmGrainEnabled > 0.5')
+  assert.ok(grading >= 0 && grain > grading)
+  assert.match(effects, /new ReDriveVolumePostProcessingPass\(\)/)
+  assert.match(stages, /texture\.wrapS = THREE\.RepeatWrapping/)
+  assert.match(stages, /texture\.wrapT = THREE\.RepeatWrapping/)
+  assert.match(stages, /texture\.minFilter = THREE\.LinearFilter/)
+  assert.match(stages, /texture\.magFilter = THREE\.LinearFilter/)
+  assert.match(stages, /loaded\.filmGrain = await load\(filmGrain\.textureUrl, 'film-grain'\)/)
+})
+
 test('stage profiles apply and reset both recovered Volume components', () => {
   assert.match(stages, /interface StageVolumePostProcessingProfile/)
   assert.match(stages, /function applyStageVolumePostProcessing/)
   assert.match(stages, /pass\.uniforms\.uColorAdjustEnabled\.value/)
   assert.match(stages, /pass\.uniforms\.uVignetteEnabled\.value/)
   assert.match(stages, /pass\.uniforms\.uVignetteAspectRatio\.value/)
+  assert.match(stages, /pass\.uniforms\.uChromaticAberrationIntensity\.value/)
+  assert.match(stages, /pass\.uniforms\.uFilmGrainTexture\.value/)
+  assert.match(stages, /runtime: pass\.filmGrainRuntime/)
   assert.match(
     stages,
     /profile\.source === 'ReDriveVolume'[\s\S]*scene\.setColorFilter\(\{ brightness: 1, contrast: 1, saturation: 1 \}\)/,

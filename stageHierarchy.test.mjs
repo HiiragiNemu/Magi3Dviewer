@@ -47,6 +47,43 @@ test('invalid hierarchy path does not loosely skip missing intermediate nodes', 
   assert.equal(api.resolveStageHierarchyPath(wrapper, 'StageRoot/Unknown/MainLight'), undefined)
 })
 
+test('serialized path joins a uniquely renamed runtime carrier root', () => {
+  const carrier = new THREE.Group(); carrier.name = 'Stage:dungeon-intro-0001-001'
+  const direction = new THREE.Group(); direction.name = 'PrologueDungeonDirection'; carrier.add(direction)
+  const background = new THREE.Group(); background.name = 'Background'; direction.add(background)
+  const bg02 = new THREE.Group(); bg02.name = 'intro_3dbg_0002'; background.add(bg02)
+
+  assert.equal(
+    api.resolveStageHierarchyPath(carrier, 'level_intro_0001_001'),
+    carrier,
+  )
+  assert.equal(
+    api.resolveStageHierarchyPath(
+      carrier,
+      'level_intro_0001_001/PrologueDungeonDirection/Background/intro_3dbg_0002',
+    ),
+    bg02,
+  )
+})
+
+test('renamed-root suffix join remains fail-closed when two carriers match', () => {
+  const wrapper = new THREE.Group(); wrapper.name = 'Wrapper'
+  for (const name of ['Stage:first', 'Stage:second']) {
+    const carrier = new THREE.Group(); carrier.name = name; wrapper.add(carrier)
+    const direction = new THREE.Group(); direction.name = 'PrologueDungeonDirection'; carrier.add(direction)
+    const background = new THREE.Group(); background.name = 'Background'; direction.add(background)
+    const bg02 = new THREE.Group(); bg02.name = 'intro_3dbg_0002'; background.add(bg02)
+  }
+
+  assert.equal(
+    api.resolveStageHierarchyPath(
+      wrapper,
+      'level_intro_0001_001/PrologueDungeonDirection/Background/intro_3dbg_0002',
+    ),
+    undefined,
+  )
+})
+
 test('raw Unity paths resolve FBXLoader-sanitized component node names', () => {
   const wrapper = new THREE.Group(); wrapper.name = 'Wrapper'
   const prefab = new THREE.Group(); prefab.name = 'StageRoot'; wrapper.add(prefab)

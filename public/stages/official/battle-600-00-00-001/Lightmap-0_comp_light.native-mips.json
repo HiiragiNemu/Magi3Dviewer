@@ -1,0 +1,104 @@
+{
+  "schema": "unity-native-lightmap-mips.v1",
+  "encoding": "unity-rgbm-linear",
+  "dataFormat": "rgba8",
+  "dataUrl": "./Lightmap-0_comp_light.native-rgba8.bin",
+  "width": 1024,
+  "height": 1024,
+  "mipCount": 11,
+  "byteLength": 5592404,
+  "mips": [
+    {
+      "level": 0,
+      "width": 1024,
+      "height": 1024,
+      "offset": 0,
+      "bytes": 4194304
+    },
+    {
+      "level": 1,
+      "width": 512,
+      "height": 512,
+      "offset": 4194304,
+      "bytes": 1048576
+    },
+    {
+      "level": 2,
+      "width": 256,
+      "height": 256,
+      "offset": 5242880,
+      "bytes": 262144
+    },
+    {
+      "level": 3,
+      "width": 128,
+      "height": 128,
+      "offset": 5505024,
+      "bytes": 65536
+    },
+    {
+      "level": 4,
+      "width": 64,
+      "height": 64,
+      "offset": 5570560,
+      "bytes": 16384
+    },
+    {
+      "level": 5,
+      "width": 32,
+      "height": 32,
+      "offset": 5586944,
+      "bytes": 4096
+    },
+    {
+      "level": 6,
+      "width": 16,
+      "height": 16,
+      "offset": 5591040,
+      "bytes": 1024
+    },
+    {
+      "level": 7,
+      "width": 8,
+      "height": 8,
+      "offset": 5592064,
+      "bytes": 256
+    },
+    {
+      "level": 8,
+      "width": 4,
+      "height": 4,
+      "offset": 5592320,
+      "bytes": 64
+    },
+    {
+      "level": 9,
+      "width": 2,
+      "height": 2,
+      "offset": 5592384,
+      "bytes": 16
+    },
+    {
+      "level": 10,
+      "width": 1,
+      "height": 1,
+      "offset": 5592400,
+      "bytes": 4
+    }
+  ],
+  "sampler": {
+    "filterMode": 1,
+    "anisotropy": 3,
+    "wrapU": 1,
+    "wrapV": 1,
+    "mipBias": 0.0
+  },
+  "source": {
+    "region": "TW-Android",
+    "cab": "CAB-aae5b15c1b2fca139b0ca5b1f9b430dd",
+    "texturePathID": "-6871819407381423220",
+    "format": "ETC2_RGBA8",
+    "payloadBytes": 1398128,
+    "conversion": "each original mip ETC2 decompressed, BGRA-to-RGBA channel reorder only; no resize/color conversion/flip"
+  }
+}

@@ -252,6 +252,139 @@ body.theme-light #position-controls button:hover {
     background: rgba(0, 0, 0, 0.13);
 }
 
+#locomotion-hud {
+    display: none;
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    z-index: 35;
+    width: min(430px, calc(100% - 16px));
+    padding: 5px 6px;
+    color: #edf4ff;
+    background: rgba(12, 17, 29, 0.86);
+    border: 1px solid rgba(125, 164, 231, 0.48);
+    border-radius: 8px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.32);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    pointer-events: auto;
+}
+
+body.locomotion-mode-enabled #locomotion-hud {
+    display: grid;
+    gap: 4px;
+}
+
+body.locomotion-pointer-locked #locomotion-hud {
+    border-color: rgba(91, 229, 156, 0.86);
+}
+
+.locomotion-hud-header {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) 22px;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+#locomotion-hud-toggle {
+    width: 22px;
+    height: 20px;
+    min-width: 0;
+    padding: 0;
+    color: inherit;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    font: inherit;
+    font-weight: 700;
+    line-height: 18px;
+}
+
+#locomotion-hud-details {
+    display: grid;
+    gap: 4px;
+}
+
+#locomotion-hud.is-collapsed {
+    width: min(330px, calc(100% - 16px));
+}
+
+#locomotion-hud.is-collapsed #locomotion-hud-details {
+    display: none;
+}
+
+#locomotion-state-output {
+    color: #71e6a9;
+    font-weight: 700;
+}
+
+#locomotion-clip-output {
+    overflow: hidden;
+    color: #b8c7e1;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.locomotion-help,
+#locomotion-action-feedback {
+    color: #b8c7e1;
+    font-size: 10px;
+    line-height: 1.35;
+}
+
+#locomotion-action-bindings {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+}
+
+#locomotion-action-bindings label {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    align-items: center;
+    gap: 3px;
+    min-width: 0;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+#locomotion-action-bindings select {
+    width: 100%;
+    min-width: 0;
+    height: 22px;
+    color: #edf4ff;
+    background: #202a3e;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    font: inherit;
+    font-size: 10px;
+}
+
+body.theme-light #locomotion-hud {
+    color: #172033;
+    background: rgba(244, 247, 252, 0.92);
+    border-color: rgba(46, 92, 166, 0.42);
+}
+
+body.theme-light .locomotion-help,
+body.theme-light #locomotion-action-feedback,
+body.theme-light #locomotion-clip-output {
+    color: #45536b;
+}
+
+body.theme-light #locomotion-action-bindings select {
+    color: #172033;
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+body.theme-light #locomotion-hud-toggle {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
 #menu-controls .spacer {
     display: none;
 }
@@ -271,6 +404,14 @@ body.theme-light #position-controls button:hover {
         min-height: 28px;
         padding: 3px 4px;
         font-size: 10px;
+    }
+
+    #locomotion-hud {
+        width: min(390px, calc(100% - 16px));
+    }
+
+    #locomotion-action-bindings {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     #face-manual-controls>label {

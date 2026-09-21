@@ -1,0 +1,102 @@
+{
+  "schema": "magius.official-stage-catalog.v1",
+  "version": 1,
+  "family": "home-dollhouse-3d-background",
+  "stages": [
+    {
+      "id": "dollhouse-doll-house-3d-background-bg-3d-661-00-00-001",
+      "stableKey": "AssetBundles/home/doll_house_3d_background/bg_3d_661_00_00_001",
+      "name": "bg_3d_661_00_00_001",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "gallery",
+      "family": "home-dollhouse-3d-background",
+      "official": true,
+      "assetBundleName": "home/doll_house_3d_background/bg_3d_661_00_00_001",
+      "backgroundResourceName": "bg_3d_661_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/dollhouse-doll-house-3d-background-bg-3d-661-00-00-001/bg_3d_661_00_00_001.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 25766557,
+        "externalCabCount": 5,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/dollhouse-doll-house-3d-background-bg-3d-661-00-00-001/scene-profile.json"
+    },
+    {
+      "id": "dollhouse-doll-house-3d-background-bg-3d-661-00-00-002",
+      "stableKey": "AssetBundles/home/doll_house_3d_background/bg_3d_661_00_00_002",
+      "name": "bg_3d_661_00_00_002",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "gallery",
+      "family": "home-dollhouse-3d-background",
+      "official": true,
+      "assetBundleName": "home/doll_house_3d_background/bg_3d_661_00_00_002",
+      "backgroundResourceName": "bg_3d_661_00_00_002",
+      "type": "fbx",
+      "url": "./stages/official/dollhouse-doll-house-3d-background-bg-3d-661-00-00-002/bg_3d_661_00_00_002.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 6196394,
+        "externalCabCount": 5,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/dollhouse-doll-house-3d-background-bg-3d-661-00-00-002/scene-profile.json"
+    }
+  ],
+  "counts": {
+    "visible": 2,
+    "target": 2,
+    "fullyResolved": 2
+  }
+}

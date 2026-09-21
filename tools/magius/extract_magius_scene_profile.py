@@ -16,6 +16,7 @@ import json
 import math
 import re
 import struct
+import zlib
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Iterable
@@ -35,13 +36,29 @@ REFLECTION_PROBE_USAGE = {
     3: "simple",
 }
 UNITY_TEXTURE_FORMAT_BC6H = 24
+UNITY_TEXTURE_FORMAT_RGBA_HALF = 17
 VOLUME_CLASSES = {
     "Bloom",
+    "ChromaticAberration",
     "ColorAdjustments",
+    "FilmGrain",
     "ReDriveVolume",
     "Tonemapping",
     "Vignette",
 }
+FILM_GRAIN_PRESET_NAMES = {
+    0: "Thin01",
+    1: "Thin02",
+    2: "Medium01",
+    3: "Medium02",
+    4: "Medium03",
+    5: "Medium04",
+    6: "Medium05",
+    7: "Medium06",
+    8: "Large01",
+    9: "Large02",
+}
+FILM_GRAIN_CUSTOM = 10
 REDRIVE_PARAMETERS = {
     "_skyboxMaterial": "skyboxMaterial",
     "_skyboxIntensity": "skyboxIntensity",
@@ -106,6 +123,15 @@ def parse_args() -> argparse.Namespace:
         help=(
             "Optional exact player resources.assets containing the global "
             "VLBConfigOverride"
+        ),
+    )
+    parser.add_argument(
+        "--player-global-managers",
+        type=Path,
+        default=None,
+        help=(
+            "Optional exact player globalgamemanagers.assets containing the "
+            "URP built-in FilmGrain preset textures"
         ),
     )
     return parser.parse_args()
@@ -357,11 +383,24 @@ def streamed_clip_frames(words: Iterable[int]) -> list[dict[str, Any]]:
             keys.append(
                 {
                     "curveIndex": int(index),
+                    "coefficients": [float(value) for value in coefficients],
                     "value": float(coefficients[3]),
                 }
             )
-        if math.isfinite(time) and time >= 0:
-            frames.append({"time": float(time), "keys": keys})
+        if math.isfinite(time):
+            # Unity stores the initial value of every streamed curve in a
+            # sentinel frame at -FLT_MAX.  Object-reference curves rely on
+            # that frame for their first Sprite, so retain it at clip time 0.
+            initial = time <= -3.0e38
+            if initial or time >= 0:
+                frames.append(
+                    {
+                        "time": 0.0 if initial else float(time),
+                        "serializedTime": float(time),
+                        "initial": initial,
+                        "keys": keys,
+                    }
+                )
     if offset != len(payload):
         raise ValueError("StreamedClip payload was not consumed exactly")
     return frames
@@ -378,7 +417,103 @@ def generic_binding_scalar_count(binding: Any) -> int:
     return 1
 
 
-def serialized_component_clip_record(reader: Any) -> dict[str, Any] | None:
+def _asset_file_name(value: Any) -> str | None:
+    assets_file = getattr(value, "assets_file", None) or getattr(value, "assetsfile", None)
+    return str(getattr(assets_file, "name", "")) or None
+
+
+def _sprite_asset_record(sprite: Any) -> dict[str, Any]:
+    reader = sprite.object_reader
+    render_data = sprite.m_RD
+    texture = render_data.texture
+    texture_rect = render_data.textureRect
+    texture_offset = render_data.textureRectOffset
+    atlas_offset = getattr(render_data, "atlasRectOffset", None)
+    asset_file = str(reader.assets_file.name)
+    path_id = int(reader.path_id)
+    return {
+        "stableKey": f"sprite:{asset_file.lower()}#{path_id}",
+        "pathID": str(path_id),
+        "assetFile": asset_file,
+        "name": str(sprite.m_Name),
+        "rect": vector(sprite.m_Rect, ("x", "y", "width", "height")),
+        "pivot": vector(sprite.m_Pivot, ("x", "y")),
+        "offset": vector(sprite.m_Offset, ("x", "y")),
+        "border": vector(sprite.m_Border),
+        "pixelsPerUnit": float(sprite.m_PixelsToUnits),
+        "extrude": int(sprite.m_Extrude),
+        "isPolygon": bool(sprite.m_IsPolygon),
+        "renderData": {
+            "settingsRaw": int(render_data.settingsRaw),
+            "textureRect": vector(texture_rect, ("x", "y", "width", "height")),
+            "textureRectOffset": vector(texture_offset, ("x", "y")),
+            "atlasRectOffset": vector(atlas_offset, ("x", "y"))
+            if atlas_offset is not None
+            else None,
+            "downscaleMultiplier": float(render_data.downscaleMultiplier),
+            "texture": {
+                "fileID": int(texture.file_id),
+                "pathID": str(texture.path_id),
+                "assetFile": _asset_file_name(texture),
+            },
+        },
+    }
+
+
+def _pptr_curve_mapping_records(clip: Any) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    mapping_records: list[dict[str, Any]] = []
+    sprite_assets: dict[str, dict[str, Any]] = {}
+    for mapping_index, pointer in enumerate(clip.m_ClipBindingConstant.pptrCurveMapping):
+        pointer_record: dict[str, Any] = {
+            "mappingIndex": mapping_index,
+            "pointer": {
+                "fileID": int(pointer.file_id),
+                "pathID": str(pointer.path_id),
+                "assetFile": _asset_file_name(pointer),
+            },
+            "objectType": None,
+            "stableObjectKey": None,
+        }
+        if int(pointer.path_id):
+            target = pointer.read()
+            target_reader = target.object_reader
+            target_asset_file = str(target_reader.assets_file.name)
+            target_type = target.__class__.__name__
+            stable_object_key = (
+                f"{target_type.lower()}:{target_asset_file.lower()}#{int(target_reader.path_id)}"
+            )
+            pointer_record.update(
+                {
+                    "objectType": target_type,
+                    "stableObjectKey": stable_object_key,
+                    "targetPathID": str(target_reader.path_id),
+                    "targetAssetFile": target_asset_file,
+                    "targetName": str(getattr(target, "m_Name", "")),
+                }
+            )
+            if target_type == "Sprite":
+                sprite_record = _sprite_asset_record(target)
+                pointer_record["spriteStableKey"] = sprite_record["stableKey"]
+                sprite_assets[sprite_record["stableKey"]] = sprite_record
+        mapping_records.append(pointer_record)
+    return mapping_records, [sprite_assets[key] for key in sorted(sprite_assets)]
+
+
+def validated_pptr_mapping_index(value: Any, mapping_count: int, clip_name: str) -> int:
+    """Return one exact Unity PPtr mapping index or fail closed."""
+
+    numeric_value = float(value)
+    if not math.isfinite(numeric_value) or not numeric_value.is_integer():
+        raise ValueError(f"{clip_name}: non-integral PPtr mapping index: {numeric_value}")
+    mapping_index = int(numeric_value)
+    if not 0 <= mapping_index < mapping_count:
+        raise ValueError(f"{clip_name}: PPtr mapping index out of range: {mapping_index}")
+    return mapping_index
+
+
+def serialized_component_clip_record(
+    reader: Any, *, include_transform_only: bool = False
+) -> dict[str, Any] | None:
     """Return hash-addressed non-Transform curves retained in player data.
 
     Player bundles discard EditorCurveBinding.propertyName strings. The hash,
@@ -388,7 +523,7 @@ def serialized_component_clip_record(reader: Any) -> dict[str, Any] | None:
 
     clip = reader.read()
     bindings = list(clip.m_ClipBindingConstant.genericBindings)
-    if not any(int(binding.typeID) != 4 for binding in bindings):
+    if not bindings or (not include_transform_only and not any(int(binding.typeID) != 4 for binding in bindings)):
         return None
     packed = clip.m_MuscleClip.m_Clip.data
     scalar_owners: list[tuple[int, int]] = []
@@ -397,16 +532,52 @@ def serialized_component_clip_record(reader: Any) -> dict[str, Any] | None:
             (binding_index, component_index)
             for component_index in range(generic_binding_scalar_count(binding))
         )
-    values: list[list[dict[str, float]]] = [[] for _ in scalar_owners]
-    for frame in streamed_clip_frames(packed.m_StreamedClip.data):
-        for key in frame["keys"]:
-            index = key["curveIndex"]
-            if 0 <= index < len(values):
-                values[index].append(
-                    {"time": frame["time"], "value": key["value"]}
-                )
-    streamed_count = int(packed.m_StreamedClip.curveCount)
+    streamed_frames = streamed_clip_frames(packed.m_StreamedClip.data)
+    serialized_streamed_count = int(packed.m_StreamedClip.curveCount)
+    observed_streamed_count = max(
+        (
+            int(key["curveIndex"]) + 1
+            for frame in streamed_frames
+            for key in frame["keys"]
+        ),
+        default=0,
+    )
+    effective_streamed_count = max(serialized_streamed_count, observed_streamed_count)
     dense_count = int(packed.m_DenseClip.m_CurveCount)
+    constant_count = len(packed.m_ConstantClip.data)
+    packed_scalar_count = effective_streamed_count + dense_count + constant_count
+    if len(scalar_owners) != packed_scalar_count:
+        raise ValueError(
+            f"{clip.m_Name}: packed scalar/binding count mismatch "
+            f"(bindings={len(scalar_owners)}, packed={packed_scalar_count}, "
+            f"serializedStreamed={serialized_streamed_count}, "
+            f"observedStreamed={observed_streamed_count})"
+        )
+
+    pptr_mapping, sprite_assets = _pptr_curve_mapping_records(clip)
+    values: list[list[dict[str, Any]]] = [[] for _ in scalar_owners]
+    for frame in streamed_frames:
+        for key in frame["keys"]:
+            index = int(key["curveIndex"])
+            if not 0 <= index < effective_streamed_count:
+                raise ValueError(f"{clip.m_Name}: streamed curve index out of range: {index}")
+            binding_index, _component_index = scalar_owners[index]
+            binding = bindings[binding_index]
+            key_record: dict[str, Any] = {
+                "time": frame["time"],
+                "serializedTime": frame["serializedTime"],
+                "initial": bool(frame["initial"]),
+                "coefficients": key["coefficients"],
+                "storage": "streamed-initial" if frame["initial"] else "streamed",
+            }
+            if bool(binding.isPPtrCurve):
+                key_record["mappingIndex"] = validated_pptr_mapping_index(
+                    key["value"], len(pptr_mapping), str(clip.m_Name)
+                )
+                key_record["interpolation"] = "step"
+            else:
+                key_record["value"] = float(key["value"])
+            values[index].append(key_record)
     for frame_index in range(int(packed.m_DenseClip.m_FrameCount)):
         time = float(
             packed.m_DenseClip.m_BeginTime
@@ -414,26 +585,34 @@ def serialized_component_clip_record(reader: Any) -> dict[str, Any] | None:
         )
         frame_offset = frame_index * dense_count
         for dense_index in range(dense_count):
-            scalar_index = streamed_count + dense_index
+            scalar_index = effective_streamed_count + dense_index
+            binding_index, _component_index = scalar_owners[scalar_index]
+            if bool(bindings[binding_index].isPPtrCurve):
+                raise ValueError(f"{clip.m_Name}: PPtr curve stored in DenseClip")
             values[scalar_index].append(
                 {
                     "time": time,
                     "value": float(
                         packed.m_DenseClip.m_SampleArray[frame_offset + dense_index]
                     ),
+                    "storage": "dense",
                 }
             )
-    constant_base = streamed_count + dense_count
+    constant_base = effective_streamed_count + dense_count
     stop_time = float(clip.m_MuscleClip.m_StopTime)
     for constant_index, value in enumerate(packed.m_ConstantClip.data):
         scalar_index = constant_base + constant_index
+        binding_index, _component_index = scalar_owners[scalar_index]
+        if bool(bindings[binding_index].isPPtrCurve):
+            raise ValueError(f"{clip.m_Name}: PPtr curve stored in ConstantClip")
         values[scalar_index] = [
-            {"time": 0.0, "value": float(value)},
-            {"time": stop_time, "value": float(value)},
+            {"time": 0.0, "value": float(value), "storage": "constant"},
+            {
+                "time": stop_time,
+                "value": float(value),
+                "storage": "constant",
+            },
         ]
-    if len(values) != streamed_count + dense_count + len(packed.m_ConstantClip.data):
-        raise ValueError(f"{clip.m_Name}: packed scalar/binding count mismatch")
-
     scalar_index = 0
     output_bindings: list[dict[str, Any]] = []
     for binding_index, binding in enumerate(bindings):
@@ -457,12 +636,20 @@ def serialized_component_clip_record(reader: Any) -> dict[str, Any] | None:
     return {
         "pathID": str(reader.path_id),
         "name": str(clip.m_Name),
+        "decodeStatus": "complete",
         "sampleRate": float(clip.m_SampleRate),
         "duration": stop_time,
         "loop": bool(clip.m_MuscleClip.m_LoopTime),
-        "streamedCurveCount": streamed_count,
+        "streamedCurveCount": serialized_streamed_count,
+        "observedStreamedCurveCount": observed_streamed_count,
+        "effectiveStreamedCurveCount": effective_streamed_count,
         "denseCurveCount": dense_count,
-        "constantCurveCount": len(packed.m_ConstantClip.data),
+        "constantCurveCount": constant_count,
+        "genericBindingCount": len(bindings),
+        "bindingScalarCount": len(scalar_owners),
+        "packedScalarCount": packed_scalar_count,
+        "pptrCurveMapping": pptr_mapping,
+        "spriteAssets": sprite_assets,
         "bindings": output_bindings,
     }
 
@@ -646,6 +833,96 @@ def export_texture(pointer: Any, destination: Path) -> bool:
     return True
 
 
+def film_grain_texture_source(
+    preset_type: int,
+    custom_pointer: Any,
+    player_global_managers: Path | None,
+    product_dir: Path | None,
+    prefix: str,
+    export_assets: bool,
+) -> dict[str, Any]:
+    """Resolve the exact URP FilmGrain Texture2D selected by serialized type.
+
+    URP 14 stores ten built-in presets in the player global managers and uses
+    the Volume texture PPtr only for FilmGrainLookup.Custom. The runtime sampler
+    remains LinearRepeat regardless of the Texture2D import filter mode.
+    """
+
+    reader: Any = None
+    source_kind: str
+    if preset_type == FILM_GRAIN_CUSTOM:
+        source_kind = "serialized-custom-pptr"
+        if custom_pointer is not None and pointer_path_id(custom_pointer):
+            reader = custom_pointer.deref()
+    else:
+        source_kind = "urp-player-preset"
+        expected_name = FILM_GRAIN_PRESET_NAMES.get(preset_type)
+        if expected_name is None:
+            raise ValueError(f"Unsupported FilmGrainLookup value: {preset_type}")
+        if player_global_managers is not None:
+            if not player_global_managers.is_file():
+                raise FileNotFoundError(player_global_managers)
+            player = UnityPy.load(str(player_global_managers))
+            matches = [
+                candidate
+                for candidate in player.objects
+                if candidate.type.name == "Texture2D"
+                and str(getattr(candidate.read(), "m_Name", "")) == expected_name
+            ]
+            if len(matches) != 1:
+                raise ValueError(
+                    f"FilmGrain preset {expected_name} resolved {len(matches)} textures"
+                )
+            reader = matches[0]
+
+    record: dict[str, Any] = {
+        "lookup": preset_type,
+        "lookupName": FILM_GRAIN_PRESET_NAMES.get(preset_type, "Custom"),
+        "sourceKind": source_kind,
+        "sampler": {"filter": "linear", "wrapU": "repeat", "wrapV": "repeat"},
+        "resolved": reader is not None,
+    }
+    if reader is None:
+        return record
+
+    data = reader.read()
+    if reader.type.name != "Texture2D":
+        raise ValueError(f"FilmGrain source is not Texture2D: {reader.type.name}")
+    settings = data.m_TextureSettings
+    filename = f"film-grain-{str(data.m_Name).lower()}.png"
+    destination = product_dir / filename if product_dir is not None else None
+    wrote = False
+    if export_assets:
+        if destination is None:
+            raise ValueError("--export-assets FilmGrain requires --product-dir")
+        wrote = export_texture(reader, destination)
+    record.update(
+        {
+            "pathID": str(reader.path_id),
+            "cab": str(reader.assets_file.name),
+            "name": str(data.m_Name),
+            "width": int(data.m_Width),
+            "height": int(data.m_Height),
+            "textureFormat": int(data.m_TextureFormat),
+            "mipCount": int(data.m_MipCount),
+            "serializedColorSpace": int(data.m_ColorSpace),
+            "serializedTextureSettings": {
+                "filterMode": int(settings.m_FilterMode),
+                "aniso": int(settings.m_Aniso),
+                "mipBias": float(settings.m_MipBias),
+                "wrapU": int(settings.m_WrapU),
+                "wrapV": int(settings.m_WrapV),
+                "wrapW": int(settings.m_WrapW),
+            },
+            "url": url_join(prefix, filename)
+            if destination is not None and (destination.is_file() or export_assets)
+            else None,
+            "wrote": wrote,
+        }
+    )
+    return record
+
+
 def cubemap_face_uv(
     direction_x: float,
     direction_y: float,
@@ -821,6 +1098,90 @@ def build_bc6h_cubemap_dds(
     return b"DDS " + header + extended_header + payload, mip_byte_counts
 
 
+def rgba16f_mip_byte_counts(width: int, height: int, mip_count: int) -> list[int]:
+    result: list[int] = []
+    for _ in range(mip_count):
+        result.append(width * height * 4 * 2)
+        width = max(1, width >> 1)
+        height = max(1, height >> 1)
+    return result
+
+
+def build_rgba16f_cubemap_dds(
+    payload: bytes,
+    width: int,
+    height: int,
+    mip_count: int,
+    face_chain_size: int,
+) -> tuple[bytes, list[int]]:
+    """Wrap Unity's exact RGBAHalf face-major mip chains in DDS DX10."""
+
+    mip_byte_counts = rgba16f_mip_byte_counts(width, height, mip_count)
+    expected_face_chain_size = sum(mip_byte_counts)
+    if face_chain_size != expected_face_chain_size:
+        raise ValueError(
+            "Unsupported RGBAHalf face-chain layout: "
+            f"serialized={face_chain_size}, expected={expected_face_chain_size}"
+        )
+    if len(payload) != face_chain_size * 6:
+        raise ValueError(
+            f"Unsupported RGBAHalf cubemap payload: {len(payload)} "
+            f"!= {face_chain_size} * 6"
+        )
+
+    ddsd_caps = 0x1
+    ddsd_height = 0x2
+    ddsd_width = 0x4
+    ddsd_pitch = 0x8
+    ddsd_pixel_format = 0x1000
+    ddsd_mipmap_count = 0x20000
+    ddpf_fourcc = 0x4
+    ddscaps_complex = 0x8
+    ddscaps_texture = 0x1000
+    ddscaps_mipmap = 0x400000
+    ddscaps2_all_cubemap_faces = 0xFE00
+    dxgi_format_r16g16b16a16_float = 10
+    d3d10_resource_dimension_texture2d = 3
+    d3d11_resource_misc_texturecube = 0x4
+
+    header = (
+        struct.pack(
+            "<7I",
+            124,
+            ddsd_caps
+            | ddsd_height
+            | ddsd_width
+            | ddsd_pitch
+            | ddsd_pixel_format
+            | ddsd_mipmap_count,
+            height,
+            width,
+            width * 4 * 2,
+            0,
+            mip_count,
+        )
+        + struct.pack("<11I", *([0] * 11))
+        + struct.pack("<II4s5I", 32, ddpf_fourcc, b"DX10", 0, 0, 0, 0, 0)
+        + struct.pack(
+            "<5I",
+            ddscaps_texture | ddscaps_complex | ddscaps_mipmap,
+            ddscaps2_all_cubemap_faces,
+            0,
+            0,
+            0,
+        )
+    )
+    extended_header = struct.pack(
+        "<5I",
+        dxgi_format_r16g16b16a16_float,
+        d3d10_resource_dimension_texture2d,
+        d3d11_resource_misc_texturecube,
+        1,
+        0,
+    )
+    return b"DDS " + header + extended_header + payload, mip_byte_counts
+
+
 def build_bc6h_texture2d_dds(
     payload: bytes,
     width: int,
@@ -929,6 +1290,44 @@ def export_cubemap_bc6h_dds(pointer: Any, destination: Path) -> dict[str, Any]:
     }
 
 
+def export_cubemap_rgba16f_dds(pointer: Any, destination: Path) -> dict[str, Any]:
+    data = pointer.read()
+    if int(data.m_TextureFormat) != UNITY_TEXTURE_FORMAT_RGBA_HALF:
+        raise ValueError(f"Cubemap is not RGBAHalf: {data.m_Name}")
+    payload = bytes(data.get_image_data())
+    dds, mip_byte_counts = build_rgba16f_cubemap_dds(
+        payload,
+        int(data.m_Width),
+        int(data.m_Height),
+        int(data.m_MipCount),
+        int(data.m_CompleteImageSize),
+    )
+    wrote = not destination.is_file()
+    if wrote:
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(dds)
+    elif destination.read_bytes() != dds:
+        raise ValueError(
+            f"Existing RGBAHalf DDS differs from serialized cubemap: {destination}"
+        )
+    return {
+        "pathID": str(pointer_path_id(pointer)),
+        "name": str(data.m_Name),
+        "width": int(data.m_Width),
+        "height": int(data.m_Height),
+        "mipCount": int(data.m_MipCount),
+        "encoding": "R16G16B16A16_FLOAT",
+        "container": "DDS_DX10",
+        "dataOffset": len(dds) - len(payload),
+        "sourcePayloadByteCount": len(payload),
+        "faceChainByteCount": int(data.m_CompleteImageSize),
+        "mipByteCounts": mip_byte_counts,
+        "faceOrder": ["+X", "-X", "+Y", "-Y", "+Z", "-Z"],
+        "serializedColorSpace": int(data.m_ColorSpace),
+        "wrote": wrote,
+    }
+
+
 def texture_binding(
     pointer: Any,
     tex_env: Any,
@@ -960,9 +1359,13 @@ def texture_binding(
             "sourceTexturePathId": record["pathID"],
             "sourceTextureCab": record["cab"],
             "serializedColorSpace": color_space,
-            "colorSpace": "srgb"
-            if slot in {"base", "blend", "matCap", "emission"}
-            else "linear",
+            "colorSpace": (
+                "srgb"
+                if slot in {"base", "blend", "matCap", "emission"}
+                else "linear"
+                if slot in {"normal", "smoothness"}
+                else color_space
+            ),
             "coordinates": coordinates,
             "transform": {
                 "scale": vector(tex_env.m_Scale)[:2],
@@ -1089,6 +1492,21 @@ def material_records(
                     mapped["sourceProperty"] = property_name
                     mapped_textures[slot] = mapped
                     break
+        serialized_textures: dict[str, dict[str, Any]] = {}
+        for property_name, tex_env in tex_envs.items():
+            if not pointer_path_id(tex_env.m_Texture):
+                continue
+            mapped = texture_binding(
+                tex_env.m_Texture,
+                tex_env,
+                property_name,
+                prefix,
+                product_dir,
+                export_assets,
+            )
+            if mapped:
+                mapped["sourceProperty"] = property_name
+                serialized_textures[property_name] = mapped
         name = str(obj.m_Name)
         if has_keyword_state and shader_name == "Creative/Bg/BgUberShader":
             if "_METALLICSPECGLOSSMAP" not in valid_keywords:
@@ -1104,13 +1522,6 @@ def material_records(
             "Creative/Bg/BgUberShader",
             "Creative/Bg/BgUnlit",
         }
-        if (
-            not mapped_textures.get("base")
-            and not has_visible_emission
-            and not is_supported_untextured_background
-        ):
-            continue
-
         unlitness = floats.get("_Unlitness", 0.0)
         binding: dict[str, Any] = {
             "materialName": name,
@@ -1124,6 +1535,9 @@ def material_records(
             if unlitness >= 0.999 or "unlit" in shader_name.lower()
             else "lit",
             "textures": mapped_textures,
+            "serializedTextures": serialized_textures,
+            "serializedFloats": floats,
+            "serializedColors": colors,
             "unlitness": unlitness,
             "smoothness": floats.get("_Smoothness", 0.0),
             "metallic": floats.get("_Metallic", 0.0),
@@ -1468,7 +1882,9 @@ def build_uv1_companion(
     source_bundle: str,
     source_revision: str,
     model_url: str,
+    lightmapped_paths: set[str] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    lightmapped_paths = lightmapped_paths or set()
     mesh_filters: dict[int, Any] = {}
     renderers: list[tuple[Any, Any]] = []
     unsupported: list[dict[str, Any]] = []
@@ -1513,8 +1929,6 @@ def build_uv1_companion(
             mesh_reader = pointer.deref()
             handler = MeshHandler(pointer.read())
             handler.process()
-            if not handler.m_UV1:
-                continue
             indices = [
                 index
                 for submesh in handler.get_triangles()
@@ -1523,11 +1937,23 @@ def build_uv1_companion(
             ]
             if not indices:
                 continue
-            values = [
-                coordinate
-                for index in indices
-                for coordinate in handler.m_UV1[index][:2]
-            ]
+            if handler.m_UV1:
+                values = [
+                    coordinate
+                    for index in indices
+                    for coordinate in handler.m_UV1[index][:2]
+                ]
+                uv1_source = "serialized-mesh-uv1"
+            elif path in lightmapped_paths:
+                # Unity's official LIGHTMAP_ON vertex program consumes
+                # TEXCOORD1 exclusively. A mesh that omits that attribute
+                # therefore supplies the generic zero value before the
+                # serialized unity_LightmapST transform; preserve that exact
+                # input instead of substituting UV0 or dropping the binding.
+                values = [0.0] * (len(indices) * 2)
+                uv1_source = "missing-attribute-zero"
+            else:
+                continue
             payload = struct.pack("<" + "f" * len(values), *values)
         except Exception as error:
             unsupported.append(
@@ -1558,6 +1984,7 @@ def build_uv1_companion(
                 "vertexCount": len(indices),
                 "sourceMeshPathID": str(mesh_reader.path_id),
                 "sourceMeshCab": mesh_cab,
+                "uv1Source": uv1_source,
                 "uv1Base64": base64.b64encode(payload).decode("ascii"),
             },
         )
@@ -1572,6 +1999,10 @@ def build_uv1_companion(
             "fbxPath": model_url,
             "uvConvention": "Unity triangle corners CBA -> Three r182; U/V unchanged",
             "mappedMeshCount": len(nodes),
+            "zeroFilledLightmapMeshCount": sum(
+                geometry["uv1Source"] == "missing-attribute-zero"
+                for geometry in geometries.values()
+            ),
             "geometries": geometries,
             "nodes": nodes,
         },
@@ -1588,6 +2019,102 @@ def manifest_file_paths(manifest: dict[str, Any]) -> list[Path]:
     ]
 
 
+def mesh_channel_values(
+    values: Any,
+    components: int,
+    *,
+    reflect_x: bool = False,
+    normalize_color32: bool = False,
+) -> list[float]:
+    """Flatten UnityPy MeshHandler vector/tuple channels into float32 values."""
+
+    source = list(values or [])
+    vectors: list[list[float]] = []
+    for value in source:
+        if hasattr(value, "x"):
+            vector_values = [
+                getattr(value, component)
+                for component in ("x", "y", "z", "w")[:components]
+            ]
+        else:
+            vector_values = list(value[:components])
+        numeric = [float(component) for component in vector_values]
+        if reflect_x and numeric:
+            numeric[0] = -numeric[0]
+        vectors.append(numeric)
+    color32 = normalize_color32 and any(
+        abs(component) > 1.0
+        for vector_value in vectors
+        for component in vector_value
+    )
+    return [
+        component / 255.0 if color32 else component
+        for vector_value in vectors
+        for component in vector_value
+    ]
+
+
+def particle_mesh_geometry(reader: Any) -> dict[str, Any]:
+    """Serialize one exact ParticleSystemRenderer Mesh for browser instancing."""
+
+    mesh = reader.read()
+    handler = MeshHandler(mesh)
+    handler.process()
+    vertex_count = int(handler.m_VertexCount)
+    positions = mesh_channel_values(handler.m_Vertices, 3, reflect_x=True)
+    normals = mesh_channel_values(handler.m_Normals, 3, reflect_x=True)
+    uv0 = mesh_channel_values(handler.m_UV0, 2)
+    colors = mesh_channel_values(
+        handler.m_Colors,
+        4,
+        normalize_color32=True,
+    )
+    indices = [
+        int(index)
+        for submesh in handler.get_triangles()
+        for triangle in submesh
+        # Reflecting X changes winding; CBA restores Unity's visible front face.
+        for index in (triangle[2], triangle[1], triangle[0])
+    ]
+    if vertex_count <= 0 or len(positions) != vertex_count * 3 or not indices:
+        raise ValueError(
+            f"invalid particle mesh vertices={vertex_count} "
+            f"positionValues={len(positions)} indices={len(indices)}"
+        )
+    if normals and len(normals) != vertex_count * 3:
+        raise ValueError("particle mesh normal channel mismatch")
+    if uv0 and len(uv0) != vertex_count * 2:
+        raise ValueError("particle mesh UV0 channel mismatch")
+    if colors and len(colors) != vertex_count * 4:
+        raise ValueError("particle mesh color channel mismatch")
+
+    index_type = "uint16" if vertex_count <= 0xFFFF else "uint32"
+    index_format = "H" if index_type == "uint16" else "I"
+
+    def float32_base64(values: list[float]) -> str | None:
+        if not values:
+            return None
+        return base64.b64encode(
+            struct.pack("<" + "f" * len(values), *values)
+        ).decode("ascii")
+
+    return {
+        "pathID": str(reader.path_id),
+        "name": str(getattr(mesh, "m_Name", "")),
+        "vertexCount": vertex_count,
+        "indexCount": len(indices),
+        "indexType": index_type,
+        "positionsBase64": float32_base64(positions),
+        "normalsBase64": float32_base64(normals),
+        "uv0Base64": float32_base64(uv0),
+        "colorsBase64": float32_base64(colors),
+        "indicesBase64": base64.b64encode(
+            struct.pack("<" + index_format * len(indices), *indices)
+        ).decode("ascii"),
+        "coordinateConvention": "Unity mesh reflect X; triangle CBA",
+    }
+
+
 def build_scene_profile(
     manifest_path: Path,
     stage_id: str | None,
@@ -1596,6 +2123,7 @@ def build_scene_profile(
     export_assets: bool = False,
     model_url: str = "",
     player_resources: Path | None = None,
+    player_global_managers: Path | None = None,
 ) -> dict[str, Any]:
     manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
     unity_version = str(manifest.get("unityVersion") or "2022.3.62f2")
@@ -1651,7 +2179,7 @@ def build_scene_profile(
             if reader.type.name in {"MeshRenderer", "SkinnedMeshRenderer"}:
                 renderer_go_ids.append(go_id)
                 renderer_components.append((reader, obj))
-        if reader.type.name == "Transform":
+        if reader.type.name in {"Transform", "RectTransform"}:
             transforms[int(reader.path_id)] = {
                 "pathID": int(reader.path_id),
                 "gameObjectPathID": go_id,
@@ -1806,6 +2334,230 @@ def build_scene_profile(
                 }
             )
 
+    animation_playable_clip_by_asset = {
+        path_id: pointer_path_id(tree.get("m_Clip"))
+        for path_id, (name, tree) in mono_components.items()
+        if name == "AnimationPlayableAsset" and pointer_path_id(tree.get("m_Clip"))
+    }
+    animation_track_trees = {
+        path_id: tree
+        for path_id, (name, tree) in mono_components.items()
+        if name == "AnimationTrack"
+    }
+    timeline_binding_roots_by_clip_path_id: dict[int, list[dict[str, Any]]] = (
+        defaultdict(list)
+    )
+    activation_track_trees = {
+        path_id: tree
+        for path_id, (name, tree) in mono_components.items()
+        if name == "ActivationTrack"
+    }
+    activation_directors: list[dict[str, Any]] = []
+    playable_director_records: list[dict[str, Any]] = []
+    activation_game_object_ids: set[int] = set()
+    for reader in stage_objects:
+        if reader.type.name != "PlayableDirector":
+            continue
+        try:
+            tree = clean(reader.read_typetree())
+        except Exception as error:
+            playable_director_records.append(
+                {
+                    "directorPathID": str(reader.path_id),
+                    "error": repr(error),
+                }
+            )
+            continue
+        director_path_id = int(reader.path_id)
+        director_go_id = component_go.get(director_path_id, 0)
+        playable_asset_path_id = pointer_path_id(tree.get("m_PlayableAsset"))
+        initial_state = int(tree.get("m_InitialState", 0))
+        wrap_mode = int(tree.get("m_WrapMode", 0))
+        bindings = tree.get("m_SceneBindings", [])
+        if not isinstance(bindings, list):
+            bindings = []
+        playable_director_records.append(
+            {
+                "directorPathID": str(director_path_id),
+                "gameObjectPathID": str(director_go_id),
+                "hierarchyPath": hierarchy(director_go_id)
+                if director_go_id
+                else None,
+                "enabled": bool(tree.get("m_Enabled", 1)),
+                "playableAssetPathID": str(playable_asset_path_id),
+                "initialState": initial_state,
+                "wrapMode": wrap_mode,
+                "bindingCount": len(bindings),
+            }
+        )
+        tracks: list[dict[str, Any]] = []
+        for binding in bindings:
+            if not isinstance(binding, dict):
+                continue
+            track_path_id = pointer_path_id(binding.get("key"))
+            target_object_path_id = pointer_path_id(binding.get("value"))
+            target_go_id = component_go.get(
+                target_object_path_id,
+                target_object_path_id if target_object_path_id in game_objects else 0,
+            )
+            animation_track = animation_track_trees.get(track_path_id)
+            if animation_track is not None and target_go_id:
+                clip_segments: list[dict[str, Any]] = []
+                infinite_clip_path_id = pointer_path_id(
+                    animation_track.get("m_InfiniteClip")
+                )
+                if infinite_clip_path_id:
+                    clip_segments.append(
+                        {
+                            "clipPathID": infinite_clip_path_id,
+                            "assetPathID": 0,
+                            "start": 0.0,
+                            "duration": None,
+                            "clipIn": float(
+                                animation_track.get("m_InfiniteClipTimeOffset", 0.0)
+                            ),
+                            "timeScale": 1.0,
+                            "source": "animation-track-infinite-clip",
+                        }
+                    )
+                for timeline_clip in animation_track.get("m_Clips", []):
+                    if not isinstance(timeline_clip, dict):
+                        continue
+                    asset_path_id = pointer_path_id(timeline_clip.get("m_Asset"))
+                    clip_path_id = animation_playable_clip_by_asset.get(asset_path_id, 0)
+                    if not clip_path_id:
+                        continue
+                    clip_segments.append(
+                        {
+                            "clipPathID": clip_path_id,
+                            "assetPathID": asset_path_id,
+                            "start": float(timeline_clip.get("m_Start", 0.0)),
+                            "duration": float(timeline_clip.get("m_Duration", 0.0)),
+                            "clipIn": float(timeline_clip.get("m_ClipIn", 0.0)),
+                            "timeScale": float(timeline_clip.get("m_TimeScale", 1.0)),
+                            "source": "animation-playable-asset",
+                        }
+                    )
+                for segment in clip_segments:
+                    timeline_binding_roots_by_clip_path_id[segment["clipPathID"]].append(
+                        {
+                            "source": segment.pop("source"),
+                            "directorPathID": str(director_path_id),
+                            "trackPathID": str(track_path_id),
+                            "trackName": str(animation_track.get("m_Name", "")),
+                            "targetObjectPathID": str(target_object_path_id),
+                            "targetObjectType": reader_by_path_id[
+                                target_object_path_id
+                            ].type.name
+                            if target_object_path_id in reader_by_path_id
+                            else None,
+                            "gameObjectPathID": str(target_go_id),
+                            "hierarchyPath": hierarchy(target_go_id),
+                            **{
+                                key: value
+                                for key, value in segment.items()
+                                if key != "clipPathID"
+                            },
+                        }
+                    )
+            track = activation_track_trees.get(track_path_id)
+            if track is None:
+                continue
+            target_go_id = pointer_path_id(binding.get("value"))
+            clips = []
+            for clip in track.get("m_Clips", []):
+                if not isinstance(clip, dict):
+                    continue
+                clips.append(
+                    {
+                        "start": float(clip.get("m_Start", 0.0)),
+                        "duration": float(clip.get("m_Duration", 0.0)),
+                        "clipIn": float(clip.get("m_ClipIn", 0.0)),
+                        "timeScale": float(clip.get("m_TimeScale", 1.0)),
+                        "assetPathID": str(pointer_path_id(clip.get("m_Asset"))),
+                        "displayName": str(clip.get("m_DisplayName", "")),
+                    }
+                )
+            clips.sort(key=lambda clip: (clip["start"], clip["assetPathID"]))
+            tracks.append(
+                {
+                    "trackPathID": str(track_path_id),
+                    "name": str(track.get("m_Name", "")),
+                    "enabled": bool(track.get("m_Enabled", 1)),
+                    "muted": bool(track.get("m_Muted", 0)),
+                    "locked": bool(track.get("m_Locked", 0)),
+                    "postPlaybackState": int(track.get("m_PostPlaybackState", 3)),
+                    "targetGameObjectPathID": str(target_go_id),
+                    "targetHierarchyPath": hierarchy(target_go_id)
+                    if target_go_id
+                    else None,
+                    "targetInitialSelfActive": bool(
+                        game_objects.get(target_go_id, {}).get("active", True)
+                    ),
+                    "targetInitialActiveInHierarchy": active_in_hierarchy(target_go_id)
+                    if target_go_id
+                    else True,
+                    "clips": clips,
+                }
+            )
+            current_go_id = target_go_id
+            seen_game_objects: set[int] = set()
+            while current_go_id and current_go_id not in seen_game_objects:
+                seen_game_objects.add(current_go_id)
+                activation_game_object_ids.add(current_go_id)
+                current_go_id = parent_game_object(current_go_id)
+        if tracks:
+            tracks.sort(key=lambda track: (track["trackPathID"], track["name"]))
+            duration = max(
+                (
+                    clip["start"] + clip["duration"]
+                    for track in tracks
+                    for clip in track["clips"]
+                ),
+                default=0.0,
+            )
+            activation_directors.append(
+                {
+                    "directorPathID": str(director_path_id),
+                    "gameObjectPathID": str(director_go_id),
+                    "hierarchyPath": hierarchy(director_go_id)
+                    if director_go_id
+                    else None,
+                    "enabled": bool(tree.get("m_Enabled", 1)),
+                    "playableAssetPathID": str(playable_asset_path_id),
+                    "initialState": initial_state,
+                    "initialStateName": {0: "paused", 1: "playing"}.get(
+                        initial_state, "unknown"
+                    ),
+                    "wrapMode": wrap_mode,
+                    "wrapModeName": {0: "hold", 1: "loop", 2: "none"}.get(
+                        wrap_mode, "unknown"
+                    ),
+                    "duration": duration,
+                    "tracks": tracks,
+                }
+            )
+    activation_directors.sort(
+        key=lambda director: (
+            director.get("hierarchyPath") or "",
+            director["directorPathID"],
+        )
+    )
+    playable_director_records.sort(key=lambda director: director["directorPathID"])
+    activation_game_object_states = [
+        {
+            "gameObjectPathID": str(go_id),
+            "hierarchyPath": hierarchy(go_id),
+            "activeSelf": bool(game_objects.get(go_id, {}).get("active", True)),
+            "activeInHierarchy": active_in_hierarchy(go_id),
+        }
+        for go_id in sorted(
+            activation_game_object_ids,
+            key=lambda candidate: (hierarchy(candidate), str(candidate)),
+        )
+        if go_id in game_objects
+    ]
+
     component_clips = [
         record
         for record in (
@@ -1840,10 +2592,29 @@ def build_scene_profile(
         except Exception:
             continue
         go_id = component_go.get(int(reader.path_id), 0)
+        renderer_meshes: list[dict[str, Any]] = []
+        for index, field in enumerate(("m_Mesh", "m_Mesh1", "m_Mesh2", "m_Mesh3")):
+            pointer = getattr(typed, field, None)
+            mesh_path_id = pointer_path_id(pointer)
+            if not mesh_path_id:
+                continue
+            renderer_meshes.append(
+                {
+                    "pathID": str(mesh_path_id),
+                    "name": pointer_name(pointer),
+                    "weight": float(
+                        tree.get(
+                            "m_MeshWeighting" if index == 0 else f"m_MeshWeighting{index}",
+                            1.0,
+                        )
+                    ),
+                }
+            )
         particle_renderers[go_id] = {
             "pathID": str(reader.path_id),
             "enabled": bool(tree.get("m_Enabled", True)),
             "renderMode": int(tree.get("m_RenderMode", 0)),
+            "meshDistribution": int(tree.get("m_MeshDistribution", 0)),
             "sortMode": int(tree.get("m_SortMode", 0)),
             "sortingLayerID": int(tree.get("m_SortingLayerID", 0)),
             "sortingOrder": int(tree.get("m_SortingOrder", 0)),
@@ -1851,12 +2622,41 @@ def build_scene_profile(
             "maxParticleSize": float(tree.get("m_MaxParticleSize", 0.5)),
             "renderAlignment": int(tree.get("m_RenderAlignment", 0)),
             "pivot": tree.get("m_Pivot"),
+            "flip": tree.get("m_Flip"),
+            "enableGPUInstancing": bool(tree.get("m_EnableGPUInstancing", False)),
+            "applyActiveColorSpace": bool(tree.get("m_ApplyActiveColorSpace", True)),
+            "allowRoll": bool(tree.get("m_AllowRoll", True)),
+            "meshes": renderer_meshes,
             "materials": [
                 name
                 for name in (pointer_name(pointer) for pointer in typed.m_Materials)
                 if name
             ],
         }
+
+    particle_mesh_ids = sorted(
+        {
+            int(mesh["pathID"])
+            for renderer in particle_renderers.values()
+            if renderer.get("renderMode") == 4
+            for mesh in renderer.get("meshes", [])
+        }
+    )
+    particle_meshes: list[dict[str, Any]] = []
+    particle_mesh_failures: list[dict[str, str]] = []
+    for path_id in particle_mesh_ids:
+        mesh_reader = reader_by_path_id.get(path_id)
+        if mesh_reader is None or mesh_reader.type.name != "Mesh":
+            particle_mesh_failures.append(
+                {"pathID": str(path_id), "reason": "mesh-reader-missing"}
+            )
+            continue
+        try:
+            particle_meshes.append(particle_mesh_geometry(mesh_reader))
+        except Exception as error:
+            particle_mesh_failures.append(
+                {"pathID": str(path_id), "reason": repr(error)}
+            )
 
     particle_candidates: list[dict[str, Any]] = []
     for reader in stage_objects:
@@ -1967,6 +2767,12 @@ def build_scene_profile(
                     "maxParticleSize",
                     "renderAlignment",
                     "pivot",
+                    "flip",
+                    "meshDistribution",
+                    "enableGPUInstancing",
+                    "applyActiveColorSpace",
+                    "allowRoll",
+                    "meshes",
                 )
                 if key in renderer
             },
@@ -1977,6 +2783,13 @@ def build_scene_profile(
                 "hierarchyPath": hierarchy(go_id) if go_id else None,
                 "carrierHierarchyPath": carrier_component_path(go_id)
                 if go_id
+                else None,
+                "serializedWorldMatrix": [
+                    value
+                    for row in world(transform_by_go[go_id]["pathID"])
+                    for value in row
+                ]
+                if go_id in transform_by_go
                 else None,
                 "active": active_in_hierarchy(go_id) if go_id else True,
                 "materials": renderer.get("materials", []),
@@ -2003,6 +2816,7 @@ def build_scene_profile(
             "pathID": candidate["pathID"],
             "hierarchyPath": candidate["hierarchyPath"],
             "carrierHierarchyPath": candidate["carrierHierarchyPath"],
+            "serializedWorldMatrix": candidate["serializedWorldMatrix"],
             "active": candidate["active"],
             "presetId": particle_preset_ids[
                 json.dumps(candidate["preset"], ensure_ascii=False, sort_keys=True)
@@ -2042,25 +2856,28 @@ def build_scene_profile(
         go_id = component_go.get(int(reader.path_id), 0)
         controller = animator.m_Controller
         controller_name = pointer_name(controller)
-        clip_names: list[str] = []
+        clip_records: list[dict[str, str]] = []
         try:
             controller_value = controller.read() if controller else None
-            clip_names = list(dict.fromkeys(
-                name
-                for name in (
-                    pointer_name(pointer)
-                    for pointer in getattr(controller_value, "m_AnimationClips", [])
-                )
-                if name
-            ))
+            clip_records = list({
+                pointer_path_id(pointer): {
+                    "pathID": str(pointer_path_id(pointer)),
+                    "name": name,
+                }
+                for pointer in getattr(controller_value, "m_AnimationClips", [])
+                if pointer_path_id(pointer)
+                and (name := pointer_name(pointer))
+            }.values())
         except Exception:
             pass
         animator_records[int(reader.path_id)] = {
             "pathID": str(reader.path_id),
+            "gameObjectPathID": str(go_id),
             "hierarchyPath": hierarchy(go_id) if go_id else None,
             "controllerPathID": str(pointer_path_id(controller)),
             "controllerName": controller_name,
-            "clipNames": clip_names,
+            "clipNames": [record["name"] for record in clip_records],
+            "clips": clip_records,
         }
 
     animator_randomizers = []
@@ -2101,6 +2918,7 @@ def build_scene_profile(
                 "pathID": str(reader.path_id),
                 "name": game_objects[go_id]["name"],
                 "hierarchyPath": hierarchy(go_id),
+                "activeSelf": bool(game_objects[go_id].get("active", True)),
                 "active": active_in_hierarchy(go_id),
                 "enabled": bool(obj.m_Enabled),
                 "type": kind,
@@ -2134,6 +2952,7 @@ def build_scene_profile(
         lights_by_game_object[go_id] = light_record
 
     active_lights = [light for light in lights if light["active"] and light["enabled"]]
+    enabled_lights = [light for light in lights if light["enabled"]]
     main_candidates = [
         light
         for light in active_lights
@@ -2141,11 +2960,14 @@ def build_scene_profile(
     ]
     main_light = max(main_candidates, key=lambda light: light["intensity"], default=None)
     runtime_lights: list[dict[str, Any]] = []
-    for light in active_lights:
+    for light in enabled_lights:
         light["role"] = "character-key" if light is main_light else "background"
         profile: dict[str, Any] = {
             "name": light["name"],
             "type": light["type"],
+            "activeSelf": light["activeSelf"],
+            "active": light["active"],
+            "enabled": light["enabled"],
             "anchorPath": light["hierarchyPath"],
             "anchorNode": light["name"],
             "color": light["color"],
@@ -2303,26 +3125,46 @@ def build_scene_profile(
     )
     reflection_probe_pointer: Any = None
     reflection_probe_component_path_id: int | None = None
+    film_grain_texture_pointer: Any = None
+    film_grain_component_path_id: int | None = None
     for volume in volume_trace:
         for component_path_id in volume["componentPathIDs"]:
             numeric_path_id = int(component_path_id)
             component = mono_components.get(numeric_path_id)
-            if not component or component[0] != "ReDriveVolume":
+            if not component:
                 continue
-            parameter_tree = component[1].get("_reflectionProbe")
-            if not (
-                isinstance(parameter_tree, dict)
-                and parameter_tree.get("m_OverrideState")
-            ):
+            if component[0] == "FilmGrain":
+                film_grain_component_path_id = numeric_path_id
+                parameter_tree = component[1].get("texture")
+                if not (
+                    isinstance(parameter_tree, dict)
+                    and parameter_tree.get("m_OverrideState")
+                ):
+                    continue
+                typed = mono_typed.get(numeric_path_id)
+                typed_parameter = getattr(typed, "texture", None)
+                pointer = getattr(typed_parameter, "m_Value", None)
+                if pointer_path_id(pointer):
+                    film_grain_texture_pointer = pointer
+                    film_grain_component_path_id = numeric_path_id
                 continue
-            typed = mono_typed.get(numeric_path_id)
-            typed_parameter = getattr(typed, "_reflectionProbe", None)
-            pointer = getattr(typed_parameter, "m_Value", None)
-            if pointer_path_id(pointer):
-                reflection_probe_pointer = pointer
-                reflection_probe_component_path_id = numeric_path_id
+            if component[0] == "ReDriveVolume":
+                parameter_tree = component[1].get("_reflectionProbe")
+                if not (
+                    isinstance(parameter_tree, dict)
+                    and parameter_tree.get("m_OverrideState")
+                ):
+                    continue
+                typed = mono_typed.get(numeric_path_id)
+                typed_parameter = getattr(typed, "_reflectionProbe", None)
+                pointer = getattr(typed_parameter, "m_Value", None)
+                if pointer_path_id(pointer):
+                    reflection_probe_pointer = pointer
+                    reflection_probe_component_path_id = numeric_path_id
     redrive = resolved.get("ReDriveVolume")
     bloom = resolved.get("Bloom")
+    chromatic_aberration = resolved.get("ChromaticAberration")
+    film_grain = resolved.get("FilmGrain")
     tonemapping = resolved.get("Tonemapping")
     adjustments = resolved.get("ColorAdjustments")
     vignette = resolved.get("Vignette")
@@ -2433,6 +3275,15 @@ def build_scene_profile(
             "tint": clean(parameter(bloom, "tint", [1, 1, 1, 1])),
         }
     post: dict[str, Any] = {}
+    film_grain_texture_record: dict[str, Any] | None = None
+    if chromatic_aberration:
+        intensity = float(parameter(chromatic_aberration, "intensity", 0.0))
+        post["chromaticAberration"] = {
+            "active": intensity > 0,
+            "intensity": intensity,
+            "operator": "urp-2022.3-fast-3-sample",
+            "amountScale": 0.05,
+        }
     if adjustments:
         color_adjustments: dict[str, Any] = {"active": True}
         for source, target in (
@@ -2446,6 +3297,30 @@ def build_scene_profile(
             if value is not None:
                 color_adjustments[target] = clean(value)
         post["colorAdjustments"] = color_adjustments
+    if film_grain:
+        grain_type = int(parameter(film_grain, "type", 0))
+        grain_intensity = float(parameter(film_grain, "intensity", 0.0))
+        grain_response = float(parameter(film_grain, "response", 0.8))
+        film_grain_texture_record = film_grain_texture_source(
+            grain_type,
+            film_grain_texture_pointer,
+            player_global_managers,
+            product_dir,
+            asset_prefix,
+            export_assets,
+        )
+        film_grain_profile: dict[str, Any] = {
+            "active": grain_intensity > 0 and film_grain_texture_record["resolved"],
+            "type": grain_type,
+            "lookupName": film_grain_texture_record["lookupName"],
+            "intensity": grain_intensity,
+            "response": grain_response,
+            "intensityScale": 4.0,
+            "sampler": film_grain_texture_record["sampler"],
+        }
+        if film_grain_texture_record.get("url"):
+            film_grain_profile["textureUrl"] = film_grain_texture_record["url"]
+        post["filmGrain"] = film_grain_profile
     if vignette:
         intensity = float(parameter(vignette, "intensity", 0.0))
         post["vignette"] = {
@@ -2513,7 +3388,12 @@ def build_scene_profile(
     uv1 = existing_companion(product_dir, asset_prefix, ("uv1-companion.json",))
     generated_uv1: dict[str, Any] | None = None
     uv1_failures: list[dict[str, Any]] = []
+    uv1_blocking_failures: list[dict[str, Any]] = []
     if export_assets and product_dir is not None and not uv1:
+        lightmapped_paths = {
+            record["rendererHierarchyPath"]
+            for record in lightmap_binding_document["renderers"]
+        }
         generated_uv1, uv1_failures = build_uv1_companion(
             stage_objects,
             component_go,
@@ -2522,8 +3402,32 @@ def build_scene_profile(
             str(manifest["scene"]),
             f"{unity_version}:{manifest['scene']}:{sum(path.stat().st_size for path in paths)}",
             model_url,
+            lightmapped_paths,
         )
-        if generated_uv1["nodes"] and not uv1_failures:
+        generated_paths = {
+            record["hierarchyPath"] for record in generated_uv1["nodes"]
+        }
+        uv1_blocking_failures = [
+            record
+            for record in uv1_failures
+            if not record.get("hierarchyPath")
+            or (
+                record["hierarchyPath"] in lightmapped_paths
+                and record["hierarchyPath"] not in generated_paths
+            )
+        ]
+        failed_paths = {
+            record.get("hierarchyPath") for record in uv1_blocking_failures
+        }
+        uv1_blocking_failures.extend(
+            {
+                "hierarchyPath": path,
+                "reason": "lightmapped-renderer-has-no-uv1-companion",
+            }
+            for path in sorted(lightmapped_paths - generated_paths)
+            if path not in failed_paths
+        )
+        if generated_uv1["nodes"] and not uv1_blocking_failures:
             path = product_dir / "uv1-companion.json"
             path.write_text(
                 json.dumps(generated_uv1, ensure_ascii=False, separators=(",", ":")),
@@ -2567,6 +3471,14 @@ def build_scene_profile(
                 ".png", "-bc6h.dds"
             )
             probe_encoding = "unity-bc6h-uf16"
+        elif (
+            int(reflection_probe_data.m_TextureFormat)
+            == UNITY_TEXTURE_FORMAT_RGBA_HALF
+        ):
+            probe_filename = texture_filename(str(reflection_probe_data.m_Name)).replace(
+                ".png", "-rgba16f.dds"
+            )
+            probe_encoding = "unity-rgba16f"
         else:
             probe_filename = texture_filename(str(reflection_probe_data.m_Name)).replace(
                 ".png", "-equirectangular.png"
@@ -2583,15 +3495,16 @@ def build_scene_profile(
         )
     reflection_probe_export: dict[str, Any] | None = None
     reflection_probe_export_error: str | None = None
-    should_validate_bc6h = (
+    should_validate_exact_cubemap = (
         reflection_probe_data is not None
-        and int(reflection_probe_data.m_TextureFormat) == UNITY_TEXTURE_FORMAT_BC6H
+        and int(reflection_probe_data.m_TextureFormat)
+        in {UNITY_TEXTURE_FORMAT_BC6H, UNITY_TEXTURE_FORMAT_RGBA_HALF}
     )
     if (
         export_assets
         and product_dir is not None
         and reflection_probe_pointer is not None
-        and (not probe_url or should_validate_bc6h)
+        and (not probe_url or should_validate_exact_cubemap)
     ):
         try:
             if not probe_filename or reflection_probe_data is None:
@@ -2599,6 +3512,14 @@ def build_scene_profile(
             destination = product_dir / probe_filename
             if int(reflection_probe_data.m_TextureFormat) == UNITY_TEXTURE_FORMAT_BC6H:
                 reflection_probe_export = export_cubemap_bc6h_dds(
+                    reflection_probe_pointer,
+                    destination,
+                )
+            elif (
+                int(reflection_probe_data.m_TextureFormat)
+                == UNITY_TEXTURE_FORMAT_RGBA_HALF
+            ):
+                reflection_probe_export = export_cubemap_rgba16f_dds(
                     reflection_probe_pointer,
                     destination,
                 )
@@ -2651,6 +3572,14 @@ def build_scene_profile(
                         ".png", "-bc6h.dds"
                     )
                     texture_encoding = "unity-bc6h-uf16"
+                elif (
+                    int(texture_data.m_TextureFormat)
+                    == UNITY_TEXTURE_FORMAT_RGBA_HALF
+                ):
+                    filename = texture_filename(str(texture_data.m_Name)).replace(
+                        ".png", "-rgba16f.dds"
+                    )
+                    texture_encoding = "unity-rgba16f"
                 else:
                     filename = texture_filename(str(texture_data.m_Name)).replace(
                         ".png", "-equirectangular.png"
@@ -2665,6 +3594,14 @@ def build_scene_profile(
                     destination = product_dir / filename
                     if int(texture_data.m_TextureFormat) == UNITY_TEXTURE_FORMAT_BC6H:
                         texture_export = export_cubemap_bc6h_dds(
+                            texture_pointer,
+                            destination,
+                        )
+                    elif (
+                        int(texture_data.m_TextureFormat)
+                        == UNITY_TEXTURE_FORMAT_RGBA_HALF
+                    ):
+                        texture_export = export_cubemap_rgba16f_dds(
                             texture_pointer,
                             destination,
                         )
@@ -2750,6 +3687,228 @@ def build_scene_profile(
         product_dir,
         export_assets,
     )
+
+    # Player AnimationClips retain CRC32 transform/property hashes, while the
+    # same frozen closure still contains the Animator roots, full GameObject
+    # hierarchy, renderer material slots and serialized material property
+    # names. Join those authorities here so the browser consumer never guesses
+    # a scene name, material slot or shader field.
+    animators_by_clip_path_id: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for animator in animator_records.values():
+        for clip in animator.get("clips", []):
+            animators_by_clip_path_id[clip["pathID"]].append(animator)
+
+    renderer_material_names_by_go: dict[int, list[str]] = defaultdict(list)
+    for renderer_reader, renderer in renderer_components:
+        go_id = component_go.get(int(renderer_reader.path_id), 0)
+        if not go_id:
+            continue
+        names = renderer_material_names_by_go[go_id]
+        for pointer in getattr(renderer, "m_Materials", []):
+            name = pointer_name(pointer)
+            if name and name not in names:
+                names.append(name)
+
+    material_colors_by_low_hash: dict[int, list[str]] = defaultdict(list)
+    for material in raw_materials:
+        for property_name in material.get("colors", {}):
+            low_hash = zlib.crc32(property_name.encode("utf-8")) & 0x0FFFFFFF
+            if property_name not in material_colors_by_low_hash[low_hash]:
+                material_colors_by_low_hash[low_hash].append(property_name)
+
+    rgba_components = ("r", "g", "b", "a")
+
+    components_by_go: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    for component_path_id, go_id in component_go.items():
+        component_reader = reader_by_path_id.get(component_path_id)
+        if component_reader is None:
+            continue
+        component_record: dict[str, Any] = {
+            "componentPathID": str(component_path_id),
+            "type": component_reader.type.name,
+        }
+        if component_reader.type.name == "SpriteRenderer":
+            try:
+                sprite_renderer_tree = clean(component_reader.read_typetree())
+                component_record["fields"] = {
+                    key: sprite_renderer_tree[key]
+                    for key in (
+                        "m_Enabled",
+                        "m_Color",
+                        "m_FlipX",
+                        "m_FlipY",
+                        "m_DrawMode",
+                        "m_Size",
+                        "m_MaskInteraction",
+                        "m_SortingLayerID",
+                        "m_SortingOrder",
+                    )
+                    if key in sprite_renderer_tree
+                }
+            except Exception:
+                component_record["fields"] = {}
+        mono = mono_components.get(component_path_id)
+        if mono is not None:
+            component_record["className"] = mono[0]
+            component_record["fields"] = mono[1]
+        components_by_go[go_id].append(component_record)
+
+    def hashed_component_properties(
+        tree: Any,
+        property_hash: int,
+        prefix: str = "",
+    ) -> list[str]:
+        if not isinstance(tree, dict):
+            return []
+        matches: list[str] = []
+        for name, nested in tree.items():
+            path = f"{prefix}.{name}" if prefix else name
+            if zlib.crc32(name.encode("utf-8")) & 0xFFFFFFFF == property_hash:
+                matches.append(path)
+            matches.extend(hashed_component_properties(nested, property_hash, path))
+        return matches
+
+    for clip in component_clips:
+        clip_animators = animators_by_clip_path_id.get(clip["pathID"], [])
+        binding_roots = [
+            {
+                "source": "animator-controller",
+                "animatorPathID": animator["pathID"],
+                "hierarchyPath": animator["hierarchyPath"],
+            }
+            for animator in clip_animators
+            if animator.get("hierarchyPath")
+        ]
+        binding_roots.extend(
+            timeline_binding_roots_by_clip_path_id.get(int(clip["pathID"]), [])
+        )
+        deduplicated_roots: list[dict[str, Any]] = []
+        seen_roots: set[tuple[str, str, str]] = set()
+        for root in binding_roots:
+            key = (
+                str(root.get("hierarchyPath") or ""),
+                str(root.get("directorPathID") or ""),
+                str(root.get("trackPathID") or root.get("animatorPathID") or ""),
+            )
+            if not key[0] or key in seen_roots:
+                continue
+            seen_roots.add(key)
+            deduplicated_roots.append(root)
+        clip["bindingRoots"] = deduplicated_roots
+        targets_by_hash: dict[int, list[dict[str, Any]]] = defaultdict(list)
+        binding_hierarchy_by_path: dict[str, dict[str, Any]] = {}
+        for binding_root in deduplicated_roots:
+            root_path = binding_root.get("hierarchyPath")
+            if not root_path:
+                continue
+            prefix = f"{root_path}/"
+            for go_id in game_objects:
+                full_path = hierarchy(go_id)
+                if full_path == root_path:
+                    relative_path = ""
+                elif full_path.startswith(prefix):
+                    relative_path = full_path[len(prefix) :]
+                else:
+                    continue
+                transform = transform_by_go.get(go_id, {})
+                binding_hierarchy_by_path[full_path] = {
+                    "gameObjectPathID": str(go_id),
+                    "hierarchyPath": full_path,
+                    "active": bool(game_objects.get(go_id, {}).get("active", True)),
+                    "localPosition": transform.get("localPosition", [0.0, 0.0, 0.0]),
+                    "localRotation": transform.get(
+                        "localRotation", [0.0, 0.0, 0.0, 1.0]
+                    ),
+                    "localScale": transform.get("localScale", [1.0, 1.0, 1.0]),
+                }
+                transform_hash = zlib.crc32(relative_path.encode("utf-8")) & 0xFFFFFFFF
+                targets_by_hash[transform_hash].append(
+                    {
+                        "animatorPathID": binding_root.get("animatorPathID"),
+                        "directorPathID": binding_root.get("directorPathID"),
+                        "trackPathID": binding_root.get("trackPathID"),
+                        "bindingRootHierarchyPath": root_path,
+                        "relativePath": relative_path,
+                        "hierarchyPath": full_path,
+                        "gameObjectPathID": str(go_id),
+                        "materialNames": renderer_material_names_by_go.get(go_id, []),
+                        "pathAuthority": "binding-root-relative-crc32",
+                    }
+                )
+        clip["bindingHierarchy"] = [
+            binding_hierarchy_by_path[path]
+            for path in sorted(
+                binding_hierarchy_by_path,
+                key=lambda value: (value.count("/"), value),
+            )
+        ]
+
+        for binding in clip["bindings"]:
+            transform_hash = int(binding["transformPathHash"])
+            binding["targets"] = targets_by_hash.get(transform_hash, [])
+            property_hash = int(binding["propertyNameHash"])
+            component_candidates: list[dict[str, Any]] = []
+            for target in binding["targets"]:
+                go_id = int(target["gameObjectPathID"])
+                for component in components_by_go.get(go_id, []):
+                    if int(binding["typeID"]) == 212 and component["type"] == "SpriteRenderer":
+                        component_candidates.append(
+                            {
+                                "hierarchyPath": target["hierarchyPath"],
+                                "componentPathID": component["componentPathID"],
+                                "componentType": component["type"],
+                                "propertyName": "m_Sprite",
+                                "propertyAuthority": "unity-sprite-renderer-pptr-binding",
+                                "serializedState": component.get("fields", {}),
+                            }
+                        )
+                    elif int(binding["typeID"]) == 114 and component["type"] == "MonoBehaviour":
+                        for property_path in hashed_component_properties(
+                            component.get("fields"), property_hash
+                        ):
+                            component_candidates.append(
+                                {
+                                    "hierarchyPath": target["hierarchyPath"],
+                                    "componentPathID": component["componentPathID"],
+                                    "componentType": component["type"],
+                                    "componentClass": component.get("className"),
+                                    "propertyName": property_path.split(".")[-1],
+                                    "propertyPath": property_path,
+                                    "propertyAuthority": "exact-component-field-crc32",
+                                    "serializedState": component.get("fields", {}),
+                                }
+                            )
+            binding["componentCandidates"] = component_candidates
+            if (
+                int(binding["typeID"]) == 1
+                and property_hash == zlib.crc32(b"m_IsActive") & 0xFFFFFFFF
+            ):
+                binding["propertyName"] = "m_IsActive"
+                binding["propertyNameAuthority"] = "exact-component-crc32"
+            elif bool(binding.get("isPPtrCurve")) and component_candidates:
+                property_names = {
+                    candidate["propertyName"] for candidate in component_candidates
+                }
+                if len(property_names) == 1:
+                    binding["propertyName"] = next(iter(property_names))
+                    binding["propertyNameAuthority"] = component_candidates[0][
+                        "propertyAuthority"
+                    ]
+            elif int(binding["typeID"]) == 23 and int(binding["customType"]) == 22:
+                property_candidates = material_colors_by_low_hash.get(
+                    property_hash & 0x0FFFFFFF,
+                    [],
+                )
+                if len(property_candidates) == 1:
+                    material_property = property_candidates[0]
+                    component = rgba_components[(property_hash >> 28) & 0x3]
+                    binding["materialPropertyName"] = material_property
+                    binding["materialPropertyComponent"] = component
+                    binding["propertyName"] = f"{material_property}.{component}"
+                    binding["propertyNameAuthority"] = (
+                        "serialized-material-color-crc32-low28+packed-component"
+                    )
+
     runtime_profile: dict[str, Any] = {}
     if volumetric_light_beams:
         runtime_profile["volumetricLightBeams"] = volumetric_light_beams
@@ -2760,16 +3919,18 @@ def build_scene_profile(
     if particle_systems:
         runtime_profile["particlePresets"] = particle_presets
         runtime_profile["particleSystems"] = particle_systems
+        if particle_meshes:
+            runtime_profile["particleMeshes"] = particle_meshes
     if rotators:
         runtime_profile["rotators"] = rotators
     if component_clips:
-        # These curves are automatically decoded, but player bundles preserve
-        # only property hashes. Runtime application remains gated on an exact
-        # hash-to-property authority rather than a guessed material field.
         runtime_profile["serializedComponentClips"] = component_clips
     if animator_randomizers:
         runtime_profile["animatorRandomizers"] = animator_randomizers
-    if particle_systems or rotators or volumetric_dust_particles:
+    if activation_directors:
+        runtime_profile["gameObjectStates"] = activation_game_object_states
+        runtime_profile["activationDirectors"] = activation_directors
+    if particle_systems or rotators or volumetric_dust_particles or component_clips:
         # Serialized playOnAwake particle systems and native Update-driven
         # components need the shared stage clock even when no transform clip
         # survived the FBX carrier export.
@@ -2805,8 +3966,13 @@ def build_scene_profile(
             "serializedComponentClips": component_clips,
             "animators": list(animator_records.values()),
             "animatorRandomizers": animator_randomizers,
+            "playableDirectors": playable_director_records,
+            "activationGameObjectStates": activation_game_object_states,
+            "activationDirectors": activation_directors,
             "particlePresets": particle_presets,
             "particleSystems": particle_systems,
+            "particleMeshes": particle_meshes,
+            "particleMeshFailures": particle_mesh_failures,
             "rotators": rotators,
             "volumetricLightBeamConfig": vlb_player_config,
             "volumetricLightBeams": volumetric_light_beams,
@@ -2842,6 +4008,7 @@ def build_scene_profile(
                 if generated_uv1
                 else None,
                 "uv1Failures": uv1_failures,
+                "uv1BlockingFailures": uv1_blocking_failures,
             },
             "reflectionProbes": probes,
             "rendererReflectionProbeBindings": renderer_reflection_records,
@@ -2857,6 +4024,12 @@ def build_scene_profile(
                 "environmentEncoding": probe_encoding,
                 "export": reflection_probe_export,
                 "exportError": reflection_probe_export_error,
+            },
+            "filmGrainTexture": {
+                "componentPathID": str(film_grain_component_path_id)
+                if film_grain_component_path_id is not None
+                else None,
+                "texture": film_grain_texture_record,
             },
             "unsupportedTonemappingMode": tone_mode
             if tone_mode not in {0, 2}
@@ -2881,6 +4054,7 @@ def main() -> int:
         args.export_assets,
         args.model_url,
         args.player_resources,
+        args.player_global_managers,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(

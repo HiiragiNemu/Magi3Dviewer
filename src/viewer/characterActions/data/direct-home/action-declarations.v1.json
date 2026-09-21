@@ -1,0 +1,5906 @@
+{
+  "schema": "magius.direct-home-action-declarations.v1",
+  "generatedAt": "2026-08-26T16:24:59.743Z",
+  "group": {
+    "id": "official-home-direct-controller",
+    "label": "官方看板动作"
+  },
+  "counts": {
+    "characters": 2,
+    "entries": 70
+  },
+  "entries": [
+    {
+      "id": "official-home:113401:Wait",
+      "label": "Wait",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "Wait",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "loop": {
+            "name": "Wait",
+            "pathId": "5623532774686513685",
+            "durationSeconds": 2.133333444595337,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 0,
+              "name": "Wait",
+              "stateNameHash": 3722194139,
+              "fullPath": "Base Layer.Wait",
+              "fullPathHash": 4104353417,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:Chair",
+      "label": "Chair",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "Chair",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "loop": {
+            "name": "chara_113401_Sit01",
+            "pathId": "-1449512472433930138",
+            "durationSeconds": 3,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 1,
+              "name": "Chair",
+              "stateNameHash": 1690463105,
+              "fullPath": "Base Layer.Chair",
+              "fullPathHash": 3784188931,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:Sit",
+      "label": "Sit",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "Sit",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "loop": {
+            "name": "chara_113401_Sit02",
+            "pathId": "-2939370081888258692",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 2,
+              "name": "Sit",
+              "stateNameHash": 1928080432,
+              "fullPath": "Base Layer.Sit",
+              "fullPathHash": 3565151817,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Chair/Anger",
+      "label": "TapMotion_Chair/Anger",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Chair/Anger",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Anger_Sit01",
+            "pathId": "-1912093564210445455",
+            "durationSeconds": 3,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 52,
+              "name": "Anger",
+              "stateNameHash": 2471580803,
+              "fullPath": "Base Layer.TapMotion_Chair.Anger",
+              "fullPathHash": 4104075558,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Chair/Joy",
+      "label": "TapMotion_Chair/Joy",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Chair/Joy",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Joy_Sit01",
+            "pathId": "-8654969571623180622",
+            "durationSeconds": 2.3333332538604736,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 53,
+              "name": "Joy",
+              "stateNameHash": 1240494068,
+              "fullPath": "Base Layer.TapMotion_Chair.Joy",
+              "fullPathHash": 33661676,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Chair/No",
+      "label": "TapMotion_Chair/No",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Chair/No",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_No_Sit01",
+            "pathId": "-68441118651047814",
+            "durationSeconds": 1.5,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 57,
+              "name": "No",
+              "stateNameHash": 4063104189,
+              "fullPath": "Base Layer.TapMotion_Chair.No",
+              "fullPathHash": 121066392,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Chair/Puzzled",
+      "label": "TapMotion_Chair/Puzzled",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Chair/Puzzled",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Puzzled_Sit01",
+            "pathId": "100222791321820903",
+            "durationSeconds": 2.3333332538604736,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 54,
+              "name": "Puzzled",
+              "stateNameHash": 1093540554,
+              "fullPath": "Base Layer.TapMotion_Chair.Puzzled",
+              "fullPathHash": 2707236941,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Chair/Sorrow",
+      "label": "TapMotion_Chair/Sorrow",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Chair/Sorrow",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Sorrow_Sit01",
+            "pathId": "-3847579283050520605",
+            "durationSeconds": 2.3333332538604736,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 58,
+              "name": "Sorrow",
+              "stateNameHash": 2600303800,
+              "fullPath": "Base Layer.TapMotion_Chair.Sorrow",
+              "fullPathHash": 1009182130,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Chair/Surprise",
+      "label": "TapMotion_Chair/Surprise",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Chair/Surprise",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Surprise_Sit01",
+            "pathId": "-7387620641791729964",
+            "durationSeconds": 1.8333333730697632,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 55,
+              "name": "Surprise",
+              "stateNameHash": 1687455,
+              "fullPath": "Base Layer.TapMotion_Chair.Surprise",
+              "fullPathHash": 1931860526,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Chair/Yes",
+      "label": "TapMotion_Chair/Yes",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Chair/Yes",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Yes_Sit01",
+            "pathId": "1313401522607460105",
+            "durationSeconds": 1.5,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 56,
+              "name": "Yes",
+              "stateNameHash": 1303016265,
+              "fullPath": "Base Layer.TapMotion_Chair.Yes",
+              "fullPathHash": 106675793,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Sit/Anger",
+      "label": "TapMotion_Sit/Anger",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Anger",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Anger_Sit02",
+            "pathId": "-7186159201418825132",
+            "durationSeconds": 2.133333444595337,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 63,
+              "name": "Anger",
+              "stateNameHash": 2471580803,
+              "fullPath": "Base Layer.TapMotion_Sit.Anger",
+              "fullPathHash": 1710036836,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Sit/Joy",
+      "label": "TapMotion_Sit/Joy",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Joy",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Joy_Sit02",
+            "pathId": "-4986623498418295504",
+            "durationSeconds": 2.3333332538604736,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 62,
+              "name": "Joy",
+              "stateNameHash": 1240494068,
+              "fullPath": "Base Layer.TapMotion_Sit.Joy",
+              "fullPathHash": 740010291,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Sit/No",
+      "label": "TapMotion_Sit/No",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/No",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_No_Sit02",
+            "pathId": "-5732890003721211196",
+            "durationSeconds": 1.5,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 61,
+              "name": "No",
+              "stateNameHash": 4063104189,
+              "fullPath": "Base Layer.TapMotion_Sit.No",
+              "fullPathHash": 2838564325,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Sit/Puzzled",
+      "label": "TapMotion_Sit/Puzzled",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Puzzled",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Puzzled_Sit02",
+            "pathId": "6344465756823230830",
+            "durationSeconds": 2.3333332538604736,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 66,
+              "name": "Puzzled",
+              "stateNameHash": 1093540554,
+              "fullPath": "Base Layer.TapMotion_Sit.Puzzled",
+              "fullPathHash": 3217332599,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Sit/Sorrow",
+      "label": "TapMotion_Sit/Sorrow",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Sorrow",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Sorrow_Sit02_S",
+            "pathId": "-5781092717109042938",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Sorrow_Sit02_L",
+            "pathId": "2378130482727806554",
+            "durationSeconds": 1.6666667461395264,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Sorrow_Sit02_E",
+            "pathId": "-3191187820486599109",
+            "durationSeconds": 0.5333333015441895,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 64,
+              "name": "Sorrow_S",
+              "stateNameHash": 4214739056,
+              "fullPath": "Base Layer.TapMotion_Sit.Sorrow_S",
+              "fullPathHash": 1310324162,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 67,
+              "name": "Sorrow_L",
+              "stateNameHash": 1983896965,
+              "fullPath": "Base Layer.TapMotion_Sit.Sorrow_L",
+              "fullPathHash": 3272734775,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 68,
+              "name": "Sorrow_E",
+              "stateNameHash": 266560801,
+              "fullPath": "Base Layer.TapMotion_Sit.Sorrow_E",
+              "fullPathHash": 3134013587,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Sit/Surprise",
+      "label": "TapMotion_Sit/Surprise",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Surprise",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Surprise_Sit02",
+            "pathId": "3600237315094809994",
+            "durationSeconds": 1.8333333730697632,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 65,
+              "name": "Surprise",
+              "stateNameHash": 1687455,
+              "fullPath": "Base Layer.TapMotion_Sit.Surprise",
+              "fullPathHash": 3040320045,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Sit/Yes",
+      "label": "TapMotion_Sit/Yes",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Yes",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Yes_Sit02",
+            "pathId": "-5239507939971478690",
+            "durationSeconds": 0.800000011920929,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 60,
+              "name": "Yes",
+              "stateNameHash": 1303016265,
+              "fullPath": "Base Layer.TapMotion_Sit.Yes",
+              "fullPathHash": 675394958,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Agree",
+      "label": "TapMotion_Stand/Agree",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Agree",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Agree",
+            "pathId": "3684632938760240446",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 35,
+              "name": "Agree",
+              "stateNameHash": 2003304277,
+              "fullPath": "Base Layer.TapMotion_Stand.Agree",
+              "fullPathHash": 2366019504,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Anger",
+      "label": "TapMotion_Stand/Anger",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Anger",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Anger_S",
+            "pathId": "-5853007219839580173",
+            "durationSeconds": 0.8999999761581421,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Anger_L",
+            "pathId": "-6442095139438734222",
+            "durationSeconds": 2.133333206176758,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Anger_E",
+            "pathId": "-1003010974939298352",
+            "durationSeconds": 1.3333334922790527,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 16,
+              "name": "Anger_S",
+              "stateNameHash": 4063272478,
+              "fullPath": "Base Layer.TapMotion_Stand.Anger_S",
+              "fullPathHash": 2454751932,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 17,
+              "name": "Anger_L",
+              "stateNameHash": 2134414315,
+              "fullPath": "Base Layer.TapMotion_Stand.Anger_L",
+              "fullPathHash": 525895497,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 12,
+              "name": "Anger_E",
+              "stateNameHash": 115616591,
+              "fullPath": "Base Layer.TapMotion_Stand.Anger_E",
+              "fullPathHash": 1719943149,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Dimly",
+      "label": "TapMotion_Stand/Dimly",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Dimly",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Dimly_S",
+            "pathId": "8096572199541327389",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Dimly_L",
+            "pathId": "-3792544309820644599",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Dimly_E",
+            "pathId": "7726244384403935406",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 29,
+              "name": "Dimly_S",
+              "stateNameHash": 2262841803,
+              "fullPath": "Base Layer.TapMotion_Stand.Dimly_S",
+              "fullPathHash": 3867159913,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 30,
+              "name": "Dimly_L",
+              "stateNameHash": 199767102,
+              "fullPath": "Base Layer.TapMotion_Stand.Dimly_L",
+              "fullPathHash": 1804083356,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 31,
+              "name": "Dimly_E",
+              "stateNameHash": 1916046490,
+              "fullPath": "Base Layer.TapMotion_Stand.Dimly_E",
+              "fullPathHash": 307533880,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Donwcast",
+      "label": "TapMotion_Stand/Donwcast",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Donwcast",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Downcast_S",
+            "pathId": "-8451285804914350085",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Downcast_L",
+            "pathId": "2440898683653977778",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Downcast_E",
+            "pathId": "7907768960542658504",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 45,
+              "name": "Donwcast_S",
+              "stateNameHash": 3568201943,
+              "fullPath": "Base Layer.TapMotion_Stand.Donwcast_S",
+              "fullPathHash": 1833848756,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 46,
+              "name": "Donwcast_L",
+              "stateNameHash": 1504083234,
+              "fullPath": "Base Layer.TapMotion_Stand.Donwcast_L",
+              "fullPathHash": 3762700865,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 47,
+              "name": "Donwcast_E",
+              "stateNameHash": 544916870,
+              "fullPath": "Base Layer.TapMotion_Stand.Donwcast_E",
+              "fullPathHash": 2577070821,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Impressed",
+      "label": "TapMotion_Stand/Impressed",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Impressed",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Impressed_S",
+            "pathId": "4929687381932676909",
+            "durationSeconds": 1.5,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Impressed_L",
+            "pathId": "2021049753647288337",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Impressed_E",
+            "pathId": "1858515225755596488",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 42,
+              "name": "Impressed_S",
+              "stateNameHash": 2590043988,
+              "fullPath": "Base Layer.TapMotion_Stand.Impressed_S",
+              "fullPathHash": 1315061641,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 43,
+              "name": "Impressed_L",
+              "stateNameHash": 392749729,
+              "fullPath": "Base Layer.TapMotion_Stand.Impressed_L",
+              "fullPathHash": 3278516860,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 44,
+              "name": "Impressed_E",
+              "stateNameHash": 1857313285,
+              "fullPath": "Base Layer.TapMotion_Stand.Impressed_E",
+              "fullPathHash": 3132525272,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Joy",
+      "label": "TapMotion_Stand/Joy",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Joy",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Joy_S",
+            "pathId": "8978721395920018958",
+            "durationSeconds": 0.4833333194255829,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Joy_L",
+            "pathId": "-5266557245551157695",
+            "durationSeconds": 1.100000023841858,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Joy_E",
+            "pathId": "6365844754868832579",
+            "durationSeconds": 0.7499998807907104,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 15,
+              "name": "Joy_S",
+              "stateNameHash": 591741610,
+              "fullPath": "Base Layer.TapMotion_Stand.Joy_S",
+              "fullPathHash": 3643025999,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 18,
+              "name": "Joy_L",
+              "stateNameHash": 2924302175,
+              "fullPath": "Base Layer.TapMotion_Stand.Joy_L",
+              "fullPathHash": 1412179898,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 19,
+              "name": "Joy_E",
+              "stateNameHash": 3616667643,
+              "fullPath": "Base Layer.TapMotion_Stand.Joy_E",
+              "fullPathHash": 770744094,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Joy02",
+      "label": "TapMotion_Stand/Joy02",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Joy02",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Joy02_S",
+            "pathId": "-7506337375449522863",
+            "durationSeconds": 0.8999999761581421,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Joy02_L",
+            "pathId": "-5864320932357913231",
+            "durationSeconds": 2.133333206176758,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Joy02_E",
+            "pathId": "-6446664571153037172",
+            "durationSeconds": 1.2333335876464844,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 36,
+              "name": "Joy02_S",
+              "stateNameHash": 1760707314,
+              "fullPath": "Base Layer.TapMotion_Stand.Joy02_S",
+              "fullPathHash": 143808080,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 37,
+              "name": "Joy02_L",
+              "stateNameHash": 3858386695,
+              "fullPath": "Base Layer.TapMotion_Stand.Joy02_L",
+              "fullPathHash": 2241485733,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 38,
+              "name": "Joy02_E",
+              "stateNameHash": 2619799459,
+              "fullPath": "Base Layer.TapMotion_Stand.Joy02_E",
+              "fullPathHash": 4232504065,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/No",
+      "label": "TapMotion_Stand/No",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/No",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_No",
+            "pathId": "-5524013278390317905",
+            "durationSeconds": 1.5,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 25,
+              "name": "No",
+              "stateNameHash": 4063104189,
+              "fullPath": "Base Layer.TapMotion_Stand.No",
+              "fullPathHash": 480264282,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Puzzled",
+      "label": "TapMotion_Stand/Puzzled",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Puzzled",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Puzzled_S",
+            "pathId": "1631465770871570559",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Puzzled_L",
+            "pathId": "7454103276538066878",
+            "durationSeconds": 2.133333444595337,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Puzzled_E",
+            "pathId": "-6565797454122534555",
+            "durationSeconds": 0.6666665077209473,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 14,
+              "name": "Puzzled_S",
+              "stateNameHash": 1123013818,
+              "fullPath": "Base Layer.TapMotion_Stand.Puzzled_S",
+              "fullPathHash": 3288645324,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 20,
+              "name": "Puzzled_L",
+              "stateNameHash": 3488078159,
+              "fullPath": "Base Layer.TapMotion_Stand.Puzzled_L",
+              "fullPathHash": 1225569081,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 21,
+              "name": "Puzzled_E",
+              "stateNameHash": 3057345003,
+              "fullPath": "Base Layer.TapMotion_Stand.Puzzled_E",
+              "fullPathHash": 818940829,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Sorrow",
+      "label": "TapMotion_Stand/Sorrow",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Sorrow",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Sorrow_S",
+            "pathId": "-1935519944724270962",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Sorrow_L",
+            "pathId": "8554270881646278049",
+            "durationSeconds": 2.133333444595337,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Sorrow_E",
+            "pathId": "-3432653580461655835",
+            "durationSeconds": 0.6666665077209473,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 26,
+              "name": "Sorrow_S",
+              "stateNameHash": 4214739056,
+              "fullPath": "Base Layer.TapMotion_Stand.Sorrow_S",
+              "fullPathHash": 3280958112,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 27,
+              "name": "Sorrow_L",
+              "stateNameHash": 1983896965,
+              "fullPath": "Base Layer.TapMotion_Stand.Sorrow_L",
+              "fullPathHash": 1317502805,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 28,
+              "name": "Sorrow_E",
+              "stateNameHash": 266560801,
+              "fullPath": "Base Layer.TapMotion_Stand.Sorrow_E",
+              "fullPathHash": 928761841,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Surprise",
+      "label": "TapMotion_Stand/Surprise",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Surprise",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Surprise_S",
+            "pathId": "5297995814978140013",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Surprise_L",
+            "pathId": "-4854987541797863797",
+            "durationSeconds": 2.133333444595337,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Surprise_E",
+            "pathId": "7869795251233450092",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 13,
+              "name": "Surprise_S",
+              "stateNameHash": 597650427,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise_S",
+              "fullPathHash": 2592035992,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 22,
+              "name": "Surprise_L",
+              "stateNameHash": 2929157646,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise_L",
+              "fullPathHash": 393697645,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 23,
+              "name": "Surprise_E",
+              "stateNameHash": 3612073642,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise_E",
+              "fullPathHash": 1856758217,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Surprise02",
+      "label": "TapMotion_Stand/Surprise02",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Surprise02",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Surprise02_S",
+            "pathId": "208425095809475400",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Surprise02_L",
+            "pathId": "4789547551474596403",
+            "durationSeconds": 2.133333444595337,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Surprise02_E",
+            "pathId": "3024702155523744794",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 32,
+              "name": "Surprise02_S",
+              "stateNameHash": 2313205329,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise02_S",
+              "fullPathHash": 1901468392,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 33,
+              "name": "Surprise02_L",
+              "stateNameHash": 82361252,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise02_L",
+              "fullPathHash": 4234024733,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 34,
+              "name": "Surprise02_E",
+              "stateNameHash": 2100560640,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise02_E",
+              "fullPathHash": 2239934393,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Talk01",
+      "label": "TapMotion_Stand/Talk01",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Talk01",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Talk01_S",
+            "pathId": "1492618624762684235",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Talk01_S",
+            "pathId": "1492618624762684235",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Talk01_S",
+            "pathId": "1492618624762684235",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 39,
+              "name": "Talk01_S",
+              "stateNameHash": 312007338,
+              "fullPath": "Base Layer.TapMotion_Stand.Talk01_S",
+              "fullPathHash": 706771066,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 40,
+              "name": "Talk01_L",
+              "stateNameHash": 2677069663,
+              "fullPath": "Base Layer.TapMotion_Stand.Talk01_L",
+              "fullPathHash": 2804446607,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 41,
+              "name": "Talk01_E",
+              "stateNameHash": 3863769083,
+              "fullPath": "Base Layer.TapMotion_Stand.Talk01_E",
+              "fullPathHash": 3740585259,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Talk02",
+      "label": "TapMotion_Stand/Talk02",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Talk02",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Talk02_S",
+            "pathId": "7162990177293378270",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Talk02_L",
+            "pathId": "6907262421977206598",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Talk02_E",
+            "pathId": "4917804887047252581",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 48,
+              "name": "Talk02_S",
+              "stateNameHash": 283010291,
+              "fullPath": "Base Layer.TapMotion_Stand.Talk02_S",
+              "fullPathHash": 677824035,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 49,
+              "name": "Talk02_L",
+              "stateNameHash": 2648074502,
+              "fullPath": "Base Layer.TapMotion_Stand.Talk02_L",
+              "fullPathHash": 2775501782,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 50,
+              "name": "Talk02_E",
+              "stateNameHash": 3825914274,
+              "fullPath": "Base Layer.TapMotion_Stand.Talk02_E",
+              "fullPathHash": 3702682482,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:TapMotion_Stand/Yes",
+      "label": "TapMotion_Stand/Yes",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Yes",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Yes",
+            "pathId": "5281322170395746649",
+            "durationSeconds": 0.800000011920929,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 24,
+              "name": "Yes",
+              "stateNameHash": 1303016265,
+              "fullPath": "Base Layer.TapMotion_Stand.Yes",
+              "fullPathHash": 1932167902,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:UniqueMotion/Chase",
+      "label": "UniqueMotion/Chase",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "UniqueMotion/Chase",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "loop": {
+            "name": "chara_113401_CircleRun",
+            "pathId": "-3033934037429741712",
+            "durationSeconds": 7.5,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 71,
+              "name": "Chase",
+              "stateNameHash": 1463555229,
+              "fullPath": "Base Layer.UniqueMotion.Chase",
+              "fullPathHash": 1094987286,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:UniqueMotion/NamaeWorry",
+      "label": "UniqueMotion/NamaeWorry",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "UniqueMotion/NamaeWorry",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "loop": {
+            "name": "chara_113401_Sorrow_Sit02_L",
+            "pathId": "2378130482727806554",
+            "durationSeconds": 1.6666667461395264,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 70,
+              "name": "NamaeWorry",
+              "stateNameHash": 2619620364,
+              "fullPath": "Base Layer.UniqueMotion.NamaeWorry",
+              "fullPathHash": 2214472053,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:UniqueMotion/YodakaFallDown",
+      "label": "UniqueMotion/YodakaFallDown",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "UniqueMotion/YodakaFallDown",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "loop": {
+            "name": "chara_113401_Run-Down-Run",
+            "pathId": "6055824871169592627",
+            "durationSeconds": 29.33333396911621,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 72,
+              "name": "YodakaFallDown",
+              "stateNameHash": 3577352145,
+              "fullPath": "Base Layer.UniqueMotion.YodakaFallDown",
+              "fullPathHash": 792699196,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:WaitMotion/chara_113401_Wait03",
+      "label": "WaitMotion/chara_113401_Wait03",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "WaitMotion/chara_113401_Wait03",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "chara_113401_Wait03_S",
+            "pathId": "-8283633742875564199",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113401_Wait03_L",
+            "pathId": "-8449119587963308134",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113401_Wait03_E",
+            "pathId": "-1378125164357219184",
+            "durationSeconds": 0.6666667461395264,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 5,
+              "name": "chara_113401_Wait03_S",
+              "stateNameHash": 2376853280,
+              "fullPath": "Base Layer.WaitMotion.chara_113401_Wait03_S",
+              "fullPathHash": 4262665020,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 6,
+              "name": "chara_113401_Wait03_L",
+              "stateNameHash": 10742485,
+              "fullPath": "Base Layer.WaitMotion.chara_113401_Wait03_L",
+              "fullPathHash": 1931155145,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 10,
+              "name": "chara_113401_Wait03_E",
+              "stateNameHash": 2038387313,
+              "fullPath": "Base Layer.WaitMotion.chara_113401_Wait03_E",
+              "fullPathHash": 180858477,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:WaitMotion/Wait 0",
+      "label": "WaitMotion/Wait 0",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "WaitMotion/Wait 0",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "loop": {
+            "name": "Wait",
+            "pathId": "5623532774686513685",
+            "durationSeconds": 2.133333444595337,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 9,
+              "name": "Wait 0",
+              "stateNameHash": 2727389978,
+              "fullPath": "Base Layer.WaitMotion.Wait 0",
+              "fullPathHash": 2613118240,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113401:WaitMotion/Wait02",
+      "label": "WaitMotion/Wait02",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113401",
+        "style3dCharacterMstId": "113401",
+        "resourceName": "chara_113401_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113401_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "WaitMotion/Wait02",
+        "controllerPathId": "8103184246897463375",
+        "sequence": {
+          "start": {
+            "name": "Wait02_S",
+            "pathId": "-3711843753819749596",
+            "durationSeconds": 0.5,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "Wait02_L",
+            "pathId": "5335396438453709008",
+            "durationSeconds": 4.833333492279053,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "Wait02_E",
+            "pathId": "4941239296590368281",
+            "durationSeconds": 0.6666665077209473,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 7,
+              "name": "Wait02_S",
+              "stateNameHash": 741143280,
+              "fullPath": "Base Layer.WaitMotion.Wait02_S",
+              "fullPathHash": 954964791,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 4,
+              "name": "Wait02_L",
+              "stateNameHash": 2703556357,
+              "fullPath": "Base Layer.WaitMotion.Wait02_L",
+              "fullPathHash": 3051591362,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "8103184246897463375",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 8,
+              "name": "Wait02_E",
+              "stateNameHash": 3640149921,
+              "fullPath": "Base Layer.WaitMotion.Wait02_E",
+              "fullPathHash": 3426692710,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113401_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:Wait",
+      "label": "Wait",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "Wait",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "loop": {
+            "name": "Wait",
+            "pathId": "-5240203638914273105",
+            "durationSeconds": 1.6666666269302368,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 0,
+              "name": "Wait",
+              "stateNameHash": 3722194139,
+              "fullPath": "Base Layer.Wait",
+              "fullPathHash": 4104353417,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 0,
+              "name": "Wait",
+              "stateNameHash": 3722194139,
+              "fullPath": "Eyes Layer.Wait",
+              "fullPathHash": 3448662738,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:Sit",
+      "label": "Sit",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "Sit",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "loop": {
+            "name": "Wait02_L",
+            "pathId": "3596342329066022146",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 1,
+              "name": "Sit",
+              "stateNameHash": 1928080432,
+              "fullPath": "Base Layer.Sit",
+              "fullPathHash": 3565151817,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 2,
+              "name": "Sit",
+              "stateNameHash": 1928080432,
+              "fullPath": "Eyes Layer.Sit",
+              "fullPathHash": 4207968170,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:Sleep",
+      "label": "Sleep",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "Sleep",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "loop": {
+            "name": "Wait03_L",
+            "pathId": "5987162821588521670",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 2,
+              "name": "Sleep",
+              "stateNameHash": 3472027048,
+              "fullPath": "Base Layer.Sleep",
+              "fullPathHash": 1270784554,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 1,
+              "name": "Sleep",
+              "stateNameHash": 3472027048,
+              "fullPath": "Eyes Layer.Sleep",
+              "fullPathHash": 3074295626,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/Anger",
+      "label": "TapMotion_Sit/Anger",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Anger",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Anger_Sit_S",
+            "pathId": "-2807986347165426552",
+            "durationSeconds": 1.6666666269302368,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Anger_Sit_L",
+            "pathId": "-6748840143421124891",
+            "durationSeconds": 1.6666666269302368,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Anger_Sit_E",
+            "pathId": "-2516563315171535730",
+            "durationSeconds": 0.6666667461395264,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 47,
+              "name": "Anger_S",
+              "stateNameHash": 4063272478,
+              "fullPath": "Base Layer.TapMotion_Sit.Anger_S",
+              "fullPathHash": 215621027,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 47,
+              "name": "Anger_S",
+              "stateNameHash": 4063272478,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Anger_S",
+              "fullPathHash": 3272208128,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 48,
+              "name": "Anger_L",
+              "stateNameHash": 2134414315,
+              "fullPath": "Base Layer.TapMotion_Sit.Anger_L",
+              "fullPathHash": 2178027606,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 48,
+              "name": "Anger_L",
+              "stateNameHash": 2134414315,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Anger_L",
+              "fullPathHash": 1308746485,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 49,
+              "name": "Anger_E",
+              "stateNameHash": 115616591,
+              "fullPath": "Base Layer.TapMotion_Sit.Anger_E",
+              "fullPathHash": 4161710322,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 49,
+              "name": "Anger_E",
+              "stateNameHash": 115616591,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Anger_E",
+              "fullPathHash": 937253457,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/Joy",
+      "label": "TapMotion_Sit/Joy",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Joy",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Joy_Sit_S",
+            "pathId": "1160220111188642596",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Joy_Sit _L",
+            "pathId": "-7776256070346189675",
+            "durationSeconds": 1.6666667461395264,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Joy_Sit_E",
+            "pathId": "4659832905728507360",
+            "durationSeconds": 0.5666666030883789,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 44,
+              "name": "Joy_S",
+              "stateNameHash": 591741610,
+              "fullPath": "Base Layer.TapMotion_Sit.Joy_S",
+              "fullPathHash": 3589865805,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 44,
+              "name": "Joy_S",
+              "stateNameHash": 591741610,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Joy_S",
+              "fullPathHash": 3020016094,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 45,
+              "name": "Joy_L",
+              "stateNameHash": 2924302175,
+              "fullPath": "Base Layer.TapMotion_Sit.Joy_L",
+              "fullPathHash": 1492192440,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 45,
+              "name": "Joy_L",
+              "stateNameHash": 2924302175,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Joy_L",
+              "fullPathHash": 956941355,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 46,
+              "name": "Joy_E",
+              "stateNameHash": 3616667643,
+              "fullPath": "Base Layer.TapMotion_Sit.Joy_E",
+              "fullPathHash": 556643356,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 46,
+              "name": "Joy_E",
+              "stateNameHash": 3616667643,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Joy_E",
+              "fullPathHash": 1087732879,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/LookUp",
+      "label": "TapMotion_Sit/LookUp",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/LookUp",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Look up_S",
+            "pathId": "-8939785993796203640",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Look up_L",
+            "pathId": "-175483874104441707",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Look up_E",
+            "pathId": "-5759136320179649255",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 68,
+              "name": "LookUp_S",
+              "stateNameHash": 382540033,
+              "fullPath": "Base Layer.TapMotion_Sit.LookUp_S",
+              "fullPathHash": 2749578419,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 68,
+              "name": "LookUp_S",
+              "stateNameHash": 382540033,
+              "fullPath": "Eyes Layer.TapMotion_Sit.LookUp_S",
+              "fullPathHash": 3975355667,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 69,
+              "name": "LookUp_L",
+              "stateNameHash": 2613384436,
+              "fullPath": "Base Layer.TapMotion_Sit.LookUp_L",
+              "fullPathHash": 787165510,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 69,
+              "name": "LookUp_L",
+              "stateNameHash": 2613384436,
+              "fullPath": "Eyes Layer.TapMotion_Sit.LookUp_L",
+              "fullPathHash": 1643843814,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 70,
+              "name": "LookUp_E",
+              "stateNameHash": 3793333328,
+              "fullPath": "Base Layer.TapMotion_Sit.LookUp_E",
+              "fullPathHash": 1463257570,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 70,
+              "name": "LookUp_E",
+              "stateNameHash": 3793333328,
+              "fullPath": "Eyes Layer.TapMotion_Sit.LookUp_E",
+              "fullPathHash": 405252162,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/No",
+      "label": "TapMotion_Sit/No",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/No",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_No_Sit",
+            "pathId": "-5645111228931287605",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 43,
+              "name": "No",
+              "stateNameHash": 4063104189,
+              "fullPath": "Base Layer.TapMotion_Sit.No",
+              "fullPathHash": 2838564325,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 43,
+              "name": "No",
+              "stateNameHash": 4063104189,
+              "fullPath": "Eyes Layer.TapMotion_Sit.No",
+              "fullPathHash": 2013616898,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/Puzzled",
+      "label": "TapMotion_Sit/Puzzled",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Puzzled",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Puzzled_Sit_S",
+            "pathId": "-3176613681187156516",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Puzzled_Sit_L",
+            "pathId": "-4866340790912402273",
+            "durationSeconds": 1.6666667461395264,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Puzzled_Sit_E",
+            "pathId": "-6420848639759162296",
+            "durationSeconds": 1.0999999046325684,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 56,
+              "name": "Puzzled_S",
+              "stateNameHash": 1123013818,
+              "fullPath": "Base Layer.TapMotion_Sit.Puzzled_S",
+              "fullPathHash": 1731536959,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 56,
+              "name": "Puzzled_S",
+              "stateNameHash": 1123013818,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Puzzled_S",
+              "fullPathHash": 2980879350,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 57,
+              "name": "Puzzled_L",
+              "stateNameHash": 3488078159,
+              "fullPath": "Base Layer.TapMotion_Sit.Puzzled_L",
+              "fullPathHash": 3929875914,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 57,
+              "name": "Puzzled_L",
+              "stateNameHash": 3488078159,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Puzzled_L",
+              "fullPathHash": 1017419267,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 58,
+              "name": "Puzzled_E",
+              "stateNameHash": 3057345003,
+              "fullPath": "Base Layer.TapMotion_Sit.Puzzled_E",
+              "fullPathHash": 2481036654,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 58,
+              "name": "Puzzled_E",
+              "stateNameHash": 3057345003,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Puzzled_E",
+              "fullPathHash": 1165504167,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/Smile",
+      "label": "TapMotion_Sit/Smile",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Smile",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Smile_Sit_S",
+            "pathId": "1906778710043285938",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Smile_Sit_L",
+            "pathId": "-8609806173493586999",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Smile_Sit_E",
+            "pathId": "-64028841735296426",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 59,
+              "name": "Smile_S",
+              "stateNameHash": 1605641545,
+              "fullPath": "Base Layer.TapMotion_Sit.Smile_S",
+              "fullPathHash": 2707334900,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 59,
+              "name": "Smile_S",
+              "stateNameHash": 1605641545,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Smile_S",
+              "fullPathHash": 1854755927,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 60,
+              "name": "Smile_L",
+              "stateNameHash": 3535546556,
+              "fullPath": "Base Layer.TapMotion_Sit.Smile_L",
+              "fullPathHash": 743877377,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 60,
+              "name": "Smile_L",
+              "stateNameHash": 3535546556,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Smile_L",
+              "fullPathHash": 3817167266,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 61,
+              "name": "Smile_E",
+              "stateNameHash": 2875232280,
+              "fullPath": "Base Layer.TapMotion_Sit.Smile_E",
+              "fullPathHash": 1435112357,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 61,
+              "name": "Smile_E",
+              "stateNameHash": 2875232280,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Smile_E",
+              "fullPathHash": 2589581574,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/Sorrow",
+      "label": "TapMotion_Sit/Sorrow",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Sorrow",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Sorrow_Sit_S",
+            "pathId": "6439782238607648310",
+            "durationSeconds": 0.8333333134651184,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Sorrow_Sit_L",
+            "pathId": "7348573989946176113",
+            "durationSeconds": 1.6666667461395264,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Sorrow_Sit_E",
+            "pathId": "-6332987997571657187",
+            "durationSeconds": 0.75,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 50,
+              "name": "Sorrow_S",
+              "stateNameHash": 4214739056,
+              "fullPath": "Base Layer.TapMotion_Sit.Sorrow_S",
+              "fullPathHash": 1310324162,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 50,
+              "name": "Sorrow_S",
+              "stateNameHash": 4214739056,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Sorrow_S",
+              "fullPathHash": 17421410,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 51,
+              "name": "Sorrow_L",
+              "stateNameHash": 1983896965,
+              "fullPath": "Base Layer.TapMotion_Sit.Sorrow_L",
+              "fullPathHash": 3272734775,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 51,
+              "name": "Sorrow_L",
+              "stateNameHash": 1983896965,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Sorrow_L",
+              "fullPathHash": 2348931479,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 52,
+              "name": "Sorrow_E",
+              "stateNameHash": 266560801,
+              "fullPath": "Base Layer.TapMotion_Sit.Sorrow_E",
+              "fullPathHash": 3134013587,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 52,
+              "name": "Sorrow_E",
+              "stateNameHash": 266560801,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Sorrow_E",
+              "fullPathHash": 4124926259,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/Surprise",
+      "label": "TapMotion_Sit/Surprise",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Surprise",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Surprise_Sit_S",
+            "pathId": "-8532374295160782930",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Surprise_Sit_L",
+            "pathId": "2336548983474377448",
+            "durationSeconds": 0.6666666269302368,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Surprise_Sit_E",
+            "pathId": "2112089196417158058",
+            "durationSeconds": 0.6666666269302368,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 53,
+              "name": "Surprise_S",
+              "stateNameHash": 597650427,
+              "fullPath": "Base Layer.TapMotion_Sit.Surprise_S",
+              "fullPathHash": 3194537640,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 53,
+              "name": "Surprise_S",
+              "stateNameHash": 597650427,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Surprise_S",
+              "fullPathHash": 1543906575,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 54,
+              "name": "Surprise_L",
+              "stateNameHash": 2929157646,
+              "fullPath": "Base Layer.TapMotion_Sit.Surprise_L",
+              "fullPathHash": 861981533,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 54,
+              "name": "Surprise_L",
+              "stateNameHash": 2929157646,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Surprise_L",
+              "fullPathHash": 3507366138,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 55,
+              "name": "Surprise_E",
+              "stateNameHash": 3612073642,
+              "fullPath": "Base Layer.TapMotion_Sit.Surprise_E",
+              "fullPathHash": 1253864441,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 55,
+              "name": "Surprise_E",
+              "stateNameHash": 3612073642,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Surprise_E",
+              "fullPathHash": 2832371806,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/Surprise02",
+      "label": "TapMotion_Sit/Surprise02",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Surprise02",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Surprise02_Sit_S",
+            "pathId": "4958564993243914510",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Surprise02_Sit_L",
+            "pathId": "1648623296332218471",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Surprise02_Sit_E",
+            "pathId": "2389678477303129947",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 62,
+              "name": "Surprise02_S",
+              "stateNameHash": 2313205329,
+              "fullPath": "Base Layer.TapMotion_Sit.Surprise02_S",
+              "fullPathHash": 2953968228,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 62,
+              "name": "Surprise02_S",
+              "stateNameHash": 2313205329,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Surprise02_S",
+              "fullPathHash": 1750368742,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 63,
+              "name": "Surprise02_L",
+              "stateNameHash": 82361252,
+              "fullPath": "Base Layer.TapMotion_Sit.Surprise02_L",
+              "fullPathHash": 1025111953,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 63,
+              "name": "Surprise02_L",
+              "stateNameHash": 82361252,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Surprise02_L",
+              "fullPathHash": 3848047635,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 64,
+              "name": "Surprise02_E",
+              "stateNameHash": 2100560640,
+              "fullPath": "Base Layer.TapMotion_Sit.Surprise02_E",
+              "fullPathHash": 1153781557,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 64,
+              "name": "Surprise02_E",
+              "stateNameHash": 2100560640,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Surprise02_E",
+              "fullPathHash": 2625647799,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/Talk",
+      "label": "TapMotion_Sit/Talk",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Talk",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Talk_Sit_S",
+            "pathId": "6403204489733575836",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Talk_Sit_L",
+            "pathId": "849301605935390224",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Talk_Sit (2)",
+            "pathId": "-4575019251235893805",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 65,
+              "name": "Talk_S",
+              "stateNameHash": 2025625616,
+              "fullPath": "Base Layer.TapMotion_Sit.Talk_S",
+              "fullPathHash": 1176785800,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 65,
+              "name": "Talk_S",
+              "stateNameHash": 2025625616,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Talk_S",
+              "fullPathHash": 792947134,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 66,
+              "name": "Talk_L",
+              "stateNameHash": 4122252773,
+              "fullPath": "Base Layer.TapMotion_Sit.Talk_L",
+              "fullPathHash": 3408682621,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 66,
+              "name": "Talk_L",
+              "stateNameHash": 4122252773,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Talk_L",
+              "fullPathHash": 2722849867,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 67,
+              "name": "Talk_E",
+              "stateNameHash": 2355637569,
+              "fullPath": "Base Layer.TapMotion_Sit.Talk_E",
+              "fullPathHash": 3002132185,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 67,
+              "name": "Talk_E",
+              "stateNameHash": 2355637569,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Talk_E",
+              "fullPathHash": 3684162799,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Sit/Yes",
+      "label": "TapMotion_Sit/Yes",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Sit/Yes",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Yes_Sit",
+            "pathId": "8355746918852516594",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 42,
+              "name": "Yes",
+              "stateNameHash": 1303016265,
+              "fullPath": "Base Layer.TapMotion_Sit.Yes",
+              "fullPathHash": 675394958,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 42,
+              "name": "Yes",
+              "stateNameHash": 1303016265,
+              "fullPath": "Eyes Layer.TapMotion_Sit.Yes",
+              "fullPathHash": 385807875,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/Anger",
+      "label": "TapMotion_Stand/Anger",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Anger",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Anger_S",
+            "pathId": "-6340979561779514237",
+            "durationSeconds": 1.6666666269302368,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Anger_L",
+            "pathId": "9203383085192786568",
+            "durationSeconds": 1.6666666269302368,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Anger (2)",
+            "pathId": "5618397121424977917",
+            "durationSeconds": 0.6666667461395264,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 24,
+              "name": "Anger_S",
+              "stateNameHash": 4063272478,
+              "fullPath": "Base Layer.TapMotion_Stand.Anger_S",
+              "fullPathHash": 2454751932,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 24,
+              "name": "Anger_S",
+              "stateNameHash": 4063272478,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Anger_S",
+              "fullPathHash": 1154038133,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 35,
+              "name": "Anger_L",
+              "stateNameHash": 2134414315,
+              "fullPath": "Base Layer.TapMotion_Stand.Anger_L",
+              "fullPathHash": 525895497,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 35,
+              "name": "Anger_L",
+              "stateNameHash": 2134414315,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Anger_L",
+              "fullPathHash": 3384882304,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 37,
+              "name": "Anger_E",
+              "stateNameHash": 115616591,
+              "fullPath": "Base Layer.TapMotion_Stand.Anger_E",
+              "fullPathHash": 1719943149,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 37,
+              "name": "Anger_E",
+              "stateNameHash": 115616591,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Anger_E",
+              "fullPathHash": 2954726436,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/Exciting",
+      "label": "TapMotion_Stand/Exciting",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Exciting",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Exciting_S",
+            "pathId": "8490690231998414638",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Exciting_L",
+            "pathId": "1578776848043569746",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Exciting_E",
+            "pathId": "-6836836924611685199",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 12,
+              "name": "Exciting_S",
+              "stateNameHash": 3449367962,
+              "fullPath": "Base Layer.TapMotion_Stand.Exciting_S",
+              "fullPathHash": 1954091769,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 12,
+              "name": "Exciting_S",
+              "stateNameHash": 3449367962,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Exciting_S",
+              "fullPathHash": 2889640315,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 14,
+              "name": "Exciting_L",
+              "stateNameHash": 1083252847,
+              "fullPath": "Base Layer.TapMotion_Stand.Exciting_L",
+              "fullPathHash": 4184940300,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 14,
+              "name": "Exciting_L",
+              "stateNameHash": 1083252847,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Exciting_L",
+              "fullPathHash": 557081742,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 16,
+              "name": "Exciting_E",
+              "stateNameHash": 961386699,
+              "fullPath": "Base Layer.TapMotion_Stand.Exciting_E",
+              "fullPathHash": 2158864296,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 16,
+              "name": "Exciting_E",
+              "stateNameHash": 961386699,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Exciting_E",
+              "fullPathHash": 1491655722,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/Joy",
+      "label": "TapMotion_Stand/Joy",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Joy",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Joy_S",
+            "pathId": "2945489153920048443",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Joy_L",
+            "pathId": "8087103189694779716",
+            "durationSeconds": 1.6666667461395264,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Joy_E",
+            "pathId": "411169251067915498",
+            "durationSeconds": 0.5666666030883789,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 21,
+              "name": "Joy_S",
+              "stateNameHash": 591741610,
+              "fullPath": "Base Layer.TapMotion_Stand.Joy_S",
+              "fullPathHash": 3643025999,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 21,
+              "name": "Joy_S",
+              "stateNameHash": 591741610,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Joy_S",
+              "fullPathHash": 385341676,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 20,
+              "name": "Joy_L",
+              "stateNameHash": 2924302175,
+              "fullPath": "Base Layer.TapMotion_Stand.Joy_L",
+              "fullPathHash": 1412179898,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 20,
+              "name": "Joy_L",
+              "stateNameHash": 2924302175,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Joy_L",
+              "fullPathHash": 2617234713,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 30,
+              "name": "Joy_E",
+              "stateNameHash": 3616667643,
+              "fullPath": "Base Layer.TapMotion_Stand.Joy_E",
+              "fullPathHash": 770744094,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 30,
+              "name": "Joy_E",
+              "stateNameHash": 3616667643,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Joy_E",
+              "fullPathHash": 3793972669,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/No",
+      "label": "TapMotion_Stand/No",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/No",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_No",
+            "pathId": "-4453126449515476409",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 31,
+              "name": "No",
+              "stateNameHash": 4063104189,
+              "fullPath": "Base Layer.TapMotion_Stand.No",
+              "fullPathHash": 480264282,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 31,
+              "name": "No",
+              "stateNameHash": 4063104189,
+              "fullPath": "Eyes Layer.TapMotion_Stand.No",
+              "fullPathHash": 2409037956,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/Puzzled",
+      "label": "TapMotion_Stand/Puzzled",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Puzzled",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Puzzled_S",
+            "pathId": "-5825951477355253432",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Puzzled_L",
+            "pathId": "-7938920021679808756",
+            "durationSeconds": 1.6666667461395264,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Puzzled_E",
+            "pathId": "1436659463818517094",
+            "durationSeconds": 1.0999999046325684,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 13,
+              "name": "Puzzled_S",
+              "stateNameHash": 1123013818,
+              "fullPath": "Base Layer.TapMotion_Stand.Puzzled_S",
+              "fullPathHash": 3288645324,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 13,
+              "name": "Puzzled_S",
+              "stateNameHash": 1123013818,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Puzzled_S",
+              "fullPathHash": 2354374244,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 25,
+              "name": "Puzzled_L",
+              "stateNameHash": 3488078159,
+              "fullPath": "Base Layer.TapMotion_Stand.Puzzled_L",
+              "fullPathHash": 1225569081,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 25,
+              "name": "Puzzled_L",
+              "stateNameHash": 3488078159,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Puzzled_L",
+              "fullPathHash": 22866833,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 17,
+              "name": "Puzzled_E",
+              "stateNameHash": 3057345003,
+              "fullPath": "Base Layer.TapMotion_Stand.Puzzled_E",
+              "fullPathHash": 818940829,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 17,
+              "name": "Puzzled_E",
+              "stateNameHash": 3057345003,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Puzzled_E",
+              "fullPathHash": 2021675829,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/Smile",
+      "label": "TapMotion_Stand/Smile",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Smile",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Smile_S",
+            "pathId": "-2354894213358065914",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Smile_L",
+            "pathId": "-4380350606224487136",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Smile_E",
+            "pathId": "1532635761100120668",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 18,
+              "name": "Smile_S",
+              "stateNameHash": 1605641545,
+              "fullPath": "Base Layer.TapMotion_Stand.Smile_S",
+              "fullPathHash": 1070871019,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 18,
+              "name": "Smile_S",
+              "stateNameHash": 1605641545,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Smile_S",
+              "fullPathHash": 3914170914,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 19,
+              "name": "Smile_L",
+              "stateNameHash": 3535546556,
+              "fullPath": "Base Layer.TapMotion_Stand.Smile_L",
+              "fullPathHash": 3000777758,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 19,
+              "name": "Smile_L",
+              "stateNameHash": 3535546556,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Smile_L",
+              "fullPathHash": 1682280407,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 23,
+              "name": "Smile_E",
+              "stateNameHash": 2875232280,
+              "fullPath": "Base Layer.TapMotion_Stand.Smile_E",
+              "fullPathHash": 3405808826,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 23,
+              "name": "Smile_E",
+              "stateNameHash": 2875232280,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Smile_E",
+              "fullPathHash": 496580467,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/Sorrow",
+      "label": "TapMotion_Stand/Sorrow",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Sorrow",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Sorrow_S",
+            "pathId": "-8613047976719905572",
+            "durationSeconds": 0.8333333134651184,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Sorrow_L",
+            "pathId": "4553919633678908109",
+            "durationSeconds": 1.6666667461395264,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Sorrow_E",
+            "pathId": "-6375818787058520688",
+            "durationSeconds": 0.75,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 15,
+              "name": "Sorrow_S",
+              "stateNameHash": 4214739056,
+              "fullPath": "Base Layer.TapMotion_Stand.Sorrow_S",
+              "fullPathHash": 3280958112,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 15,
+              "name": "Sorrow_S",
+              "stateNameHash": 4214739056,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Sorrow_S",
+              "fullPathHash": 568430855,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 27,
+              "name": "Sorrow_L",
+              "stateNameHash": 1983896965,
+              "fullPath": "Base Layer.TapMotion_Stand.Sorrow_L",
+              "fullPathHash": 1317502805,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 27,
+              "name": "Sorrow_L",
+              "stateNameHash": 1983896965,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Sorrow_L",
+              "fullPathHash": 2900991218,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 22,
+              "name": "Sorrow_E",
+              "stateNameHash": 266560801,
+              "fullPath": "Base Layer.TapMotion_Stand.Sorrow_E",
+              "fullPathHash": 928761841,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 22,
+              "name": "Sorrow_E",
+              "stateNameHash": 266560801,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Sorrow_E",
+              "fullPathHash": 3577029718,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/Surprise",
+      "label": "TapMotion_Stand/Surprise",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Surprise",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Surprise_S",
+            "pathId": "-6669234263805834571",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Surprise_L",
+            "pathId": "-2675201589677072574",
+            "durationSeconds": 0.6666666269302368,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Surprise_E",
+            "pathId": "7997284440083611450",
+            "durationSeconds": 0.6666666269302368,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 40,
+              "name": "Surprise_S",
+              "stateNameHash": 597650427,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise_S",
+              "fullPathHash": 2592035992,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 40,
+              "name": "Surprise_S",
+              "stateNameHash": 597650427,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Surprise_S",
+              "fullPathHash": 1111109402,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 32,
+              "name": "Surprise_L",
+              "stateNameHash": 2929157646,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise_L",
+              "fullPathHash": 393697645,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 32,
+              "name": "Surprise_L",
+              "stateNameHash": 2929157646,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Surprise_L",
+              "fullPathHash": 3476169455,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 26,
+              "name": "Surprise_E",
+              "stateNameHash": 3612073642,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise_E",
+              "fullPathHash": 1856758217,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 26,
+              "name": "Surprise_E",
+              "stateNameHash": 3612073642,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Surprise_E",
+              "fullPathHash": 3069090379,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/Surprise02",
+      "label": "TapMotion_Stand/Surprise02",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Surprise02",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Surprise02_S",
+            "pathId": "-4985234133222743715",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Surprise02_L",
+            "pathId": "2992321963330932706",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Surprise02_E",
+            "pathId": "-8216464563039566105",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 28,
+              "name": "Surprise02_S",
+              "stateNameHash": 2313205329,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise02_S",
+              "fullPathHash": 1901468392,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 28,
+              "name": "Surprise02_S",
+              "stateNameHash": 2313205329,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Surprise02_S",
+              "fullPathHash": 3207893200,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 29,
+              "name": "Surprise02_L",
+              "stateNameHash": 82361252,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise02_L",
+              "fullPathHash": 4234024733,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 29,
+              "name": "Surprise02_L",
+              "stateNameHash": 82361252,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Surprise02_L",
+              "fullPathHash": 842833189,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 33,
+              "name": "Surprise02_E",
+              "stateNameHash": 2100560640,
+              "fullPath": "Base Layer.TapMotion_Stand.Surprise02_E",
+              "fullPathHash": 2239934393,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 33,
+              "name": "Surprise02_E",
+              "stateNameHash": 2100560640,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Surprise02_E",
+              "fullPathHash": 1272980865,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/Talk",
+      "label": "TapMotion_Stand/Talk",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Talk",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Talk_S",
+            "pathId": "9193240866992133290",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Talk_L",
+            "pathId": "6829239109970139435",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Talk_E",
+            "pathId": "-3955339342485019668",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 34,
+              "name": "Talk_S",
+              "stateNameHash": 2025625616,
+              "fullPath": "Base Layer.TapMotion_Stand.Talk_S",
+              "fullPathHash": 2821123983,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 34,
+              "name": "Talk_S",
+              "stateNameHash": 2025625616,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Talk_S",
+              "fullPathHash": 3879128623,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 38,
+              "name": "Talk_L",
+              "stateNameHash": 4122252773,
+              "fullPath": "Base Layer.TapMotion_Stand.Talk_L",
+              "fullPathHash": 623829626,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 38,
+              "name": "Talk_L",
+              "stateNameHash": 4122252773,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Talk_L",
+              "fullPathHash": 1782498266,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 39,
+              "name": "Talk_E",
+              "stateNameHash": 2355637569,
+              "fullPath": "Base Layer.TapMotion_Stand.Talk_E",
+              "fullPathHash": 1559386846,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 39,
+              "name": "Talk_E",
+              "stateNameHash": 2355637569,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Talk_E",
+              "fullPathHash": 333609854,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:TapMotion_Stand/Yes",
+      "label": "TapMotion_Stand/Yes",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "oneShot",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "TapMotion_Stand/Yes",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Yes",
+            "pathId": "-6743070521119802315",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 36,
+              "name": "Yes",
+              "stateNameHash": 1303016265,
+              "fullPath": "Base Layer.TapMotion_Stand.Yes",
+              "fullPathHash": 1932167902,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 36,
+              "name": "Yes",
+              "stateNameHash": 1303016265,
+              "fullPath": "Eyes Layer.TapMotion_Stand.Yes",
+              "fullPathHash": 315769421,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:UniqueMotion/AqRun",
+      "label": "UniqueMotion/AqRun",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "UniqueMotion/AqRun",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "loop": {
+            "name": "Take 001",
+            "pathId": "-7058141752745222705",
+            "durationSeconds": 16.30000114440918,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 78,
+              "name": "AqRun",
+              "stateNameHash": 3880286767,
+              "fullPath": "Base Layer.UniqueMotion.AqRun",
+              "fullPathHash": 4046471332,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 78,
+              "name": "AqRun",
+              "stateNameHash": 3880286767,
+              "fullPath": "Eyes Layer.UniqueMotion.AqRun",
+              "fullPathHash": 1644626042,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:UniqueMotion/Puzzled",
+      "label": "UniqueMotion/Puzzled",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "UniqueMotion/Puzzled",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Puzzled_Sit_S",
+            "pathId": "-3176613681187156516",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Puzzled_Sit_L",
+            "pathId": "-4866340790912402273",
+            "durationSeconds": 1.6666667461395264,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Puzzled_Sit_E",
+            "pathId": "-6420848639759162296",
+            "durationSeconds": 1.0999999046325684,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 72,
+              "name": "Puzzled_S",
+              "stateNameHash": 1123013818,
+              "fullPath": "Base Layer.UniqueMotion.Puzzled_S",
+              "fullPathHash": 1115276137,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 72,
+              "name": "Puzzled_S",
+              "stateNameHash": 1123013818,
+              "fullPath": "Eyes Layer.UniqueMotion.Puzzled_S",
+              "fullPathHash": 225043145,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 74,
+              "name": "Puzzled_L",
+              "stateNameHash": 3488078159,
+              "fullPath": "Base Layer.UniqueMotion.Puzzled_L",
+              "fullPathHash": 3480342172,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 74,
+              "name": "Puzzled_L",
+              "stateNameHash": 3488078159,
+              "fullPath": "Eyes Layer.UniqueMotion.Puzzled_L",
+              "fullPathHash": 2153901884,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 75,
+              "name": "Puzzled_E",
+              "stateNameHash": 3057345003,
+              "fullPath": "Base Layer.UniqueMotion.Puzzled_E",
+              "fullPathHash": 3064821304,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 75,
+              "name": "Puzzled_E",
+              "stateNameHash": 3057345003,
+              "fullPath": "Eyes Layer.UniqueMotion.Puzzled_E",
+              "fullPathHash": 4189935512,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:UniqueMotion/Smile",
+      "label": "UniqueMotion/Smile",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "UniqueMotion/Smile",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "chara_113501_Smile_Sit_S",
+            "pathId": "1906778710043285938",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "chara_113501_Smile_Sit_L",
+            "pathId": "-8609806173493586999",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "chara_113501_Smile_Sit_E",
+            "pathId": "-64028841735296426",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 73,
+              "name": "Smile_S",
+              "stateNameHash": 1605641545,
+              "fullPath": "Base Layer.UniqueMotion.Smile_S",
+              "fullPathHash": 1104128771,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 73,
+              "name": "Smile_S",
+              "stateNameHash": 1605641545,
+              "fullPath": "Eyes Layer.UniqueMotion.Smile_S",
+              "fullPathHash": 682135861,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 76,
+              "name": "Smile_L",
+              "stateNameHash": 3535546556,
+              "fullPath": "Base Layer.UniqueMotion.Smile_L",
+              "fullPathHash": 3435636470,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 76,
+              "name": "Smile_L",
+              "stateNameHash": 3535546556,
+              "fullPath": "Eyes Layer.UniqueMotion.Smile_L",
+              "fullPathHash": 2778766528,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 77,
+              "name": "Smile_E",
+              "stateNameHash": 2875232280,
+              "fullPath": "Base Layer.UniqueMotion.Smile_E",
+              "fullPathHash": 3038453330,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 77,
+              "name": "Smile_E",
+              "stateNameHash": 2875232280,
+              "fullPath": "Eyes Layer.UniqueMotion.Smile_E",
+              "fullPathHash": 3699123300,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:UniqueMotion/YodakaFallDown",
+      "label": "UniqueMotion/YodakaFallDown",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "UniqueMotion/YodakaFallDown",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "loop": {
+            "name": "chara_113501_Run-Down-Run",
+            "pathId": "1896209450876457484",
+            "durationSeconds": 29.33333396911621,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 79,
+              "name": "YodakaFallDown",
+              "stateNameHash": 3577352145,
+              "fullPath": "Base Layer.UniqueMotion.YodakaFallDown",
+              "fullPathHash": 792699196,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 79,
+              "name": "YodakaFallDown",
+              "stateNameHash": 3577352145,
+              "fullPath": "Eyes Layer.UniqueMotion.YodakaFallDown",
+              "fullPathHash": 743507531,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:WaitMotion/Wait 0",
+      "label": "WaitMotion/Wait 0",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "loop",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "WaitMotion/Wait 0",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "loop": {
+            "name": "Wait",
+            "pathId": "-5240203638914273105",
+            "durationSeconds": 1.6666666269302368,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 10,
+              "name": "Wait 0",
+              "stateNameHash": 2727389978,
+              "fullPath": "Base Layer.WaitMotion.Wait 0",
+              "fullPathHash": 2613118240,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 10,
+              "name": "Wait 0",
+              "stateNameHash": 2727389978,
+              "fullPath": "Eyes Layer.WaitMotion.Wait 0",
+              "fullPathHash": 2776516269,
+              "loop": true,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:WaitMotion/Wait02",
+      "label": "WaitMotion/Wait02",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "WaitMotion/Wait02",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "Wait02_S",
+            "pathId": "99098186438785355",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "Wait02_L",
+            "pathId": "3596342329066022146",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "Wait02_E",
+            "pathId": "-4743249727947206283",
+            "durationSeconds": 1,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 6,
+              "name": "Wait02_S",
+              "stateNameHash": 741143280,
+              "fullPath": "Base Layer.WaitMotion.Wait02_S",
+              "fullPathHash": 954964791,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 6,
+              "name": "Wait02_S",
+              "stateNameHash": 741143280,
+              "fullPath": "Eyes Layer.WaitMotion.Wait02_S",
+              "fullPathHash": 1494438820,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 5,
+              "name": "Wait02_L",
+              "stateNameHash": 2703556357,
+              "fullPath": "Base Layer.WaitMotion.Wait02_L",
+              "fullPathHash": 3051591362,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 5,
+              "name": "Wait02_L",
+              "stateNameHash": 2703556357,
+              "fullPath": "Eyes Layer.WaitMotion.Wait02_L",
+              "fullPathHash": 3558563409,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 4,
+              "name": "Wait02_E",
+              "stateNameHash": 3640149921,
+              "fullPath": "Base Layer.WaitMotion.Wait02_E",
+              "fullPathHash": 3426692710,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 4,
+              "name": "Wait02_E",
+              "stateNameHash": 3640149921,
+              "fullPath": "Eyes Layer.WaitMotion.Wait02_E",
+              "fullPathHash": 2915559157,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    },
+    {
+      "id": "official-home:113501:WaitMotion/Wait03",
+      "label": "WaitMotion/Wait03",
+      "groupId": "official-home-direct-controller",
+      "group": "官方看板动作",
+      "playbackKind": "timeline",
+      "characterIdentity": {
+        "characterId": "113501",
+        "style3dCharacterMstId": "113501",
+        "resourceName": "chara_113501_model",
+        "logicalBundleKey": "AssetBundles/home/chara_113501_model"
+      },
+      "availability": {
+        "status": "source-available"
+      },
+      "playback": {
+        "kind": "direct-controller-profile",
+        "profileActionId": "WaitMotion/Wait03",
+        "controllerPathId": "-4278097510018638778",
+        "sequence": {
+          "start": {
+            "name": "Wait03_S",
+            "pathId": "3992918727016478935",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "loop": {
+            "name": "Wait03_L",
+            "pathId": "5987162821588521670",
+            "durationSeconds": 2,
+            "sampleRate": 60
+          },
+          "end": {
+            "name": "Wait03_E",
+            "pathId": "-3354674938102926062",
+            "durationSeconds": 1.7666668891906738,
+            "sampleRate": 60
+          }
+        },
+        "phaseStates": {
+          "start": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 9,
+              "name": "Wait03_S",
+              "stateNameHash": 770611399,
+              "fullPath": "Base Layer.WaitMotion.Wait03_S",
+              "fullPathHash": 959049984,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 9,
+              "name": "Wait03_S",
+              "stateNameHash": 770611399,
+              "fullPath": "Eyes Layer.WaitMotion.Wait03_S",
+              "fullPathHash": 1490106771,
+              "loop": false,
+              "speed": 1
+            }
+          ],
+          "loop": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 8,
+              "name": "Wait03_L",
+              "stateNameHash": 2699466034,
+              "fullPath": "Base Layer.WaitMotion.Wait03_L",
+              "fullPathHash": 3022126325,
+              "loop": true,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 8,
+              "name": "Wait03_L",
+              "stateNameHash": 2699466034,
+              "fullPath": "Eyes Layer.WaitMotion.Wait03_L",
+              "fullPathHash": 3587781734,
+              "loop": true,
+              "speed": 1
+            }
+          ],
+          "end": [
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 0,
+              "layer": "Base Layer",
+              "stateIndex": 7,
+              "name": "Wait03_E",
+              "stateNameHash": 3644468630,
+              "fullPath": "Base Layer.WaitMotion.Wait03_E",
+              "fullPathHash": 3455927377,
+              "loop": false,
+              "speed": 1
+            },
+            {
+              "controllerPathId": "-4278097510018638778",
+              "layerIndex": 1,
+              "layer": "Eyes Layer",
+              "stateIndex": 7,
+              "name": "Wait03_E",
+              "stateNameHash": 3644468630,
+              "fullPath": "Eyes Layer.WaitMotion.Wait03_E",
+              "fullPathHash": 2886044866,
+              "loop": false,
+              "speed": 1
+            }
+          ]
+        }
+      },
+      "sourceFamily": {
+        "id": "home/chara_113501_model",
+        "compatibility": "native-only"
+      },
+      "attachmentPolicy": "embedded-rig-only-no-external-companion"
+    }
+  ]
+}

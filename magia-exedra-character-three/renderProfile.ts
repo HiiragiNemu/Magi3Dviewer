@@ -30,7 +30,8 @@ export interface CharacterReDriveProfile {
 
 /**
  * Generated from 95 official `battle/character/chara_*_battle_unit` bundles
- * by `tools/magius/extract_magius_character_render_profiles.py`.
+ * plus the direct-home A-Q 113501 bundle. Battle rows come from
+ * `tools/magius/extract_magius_character_render_profiles.py`.
  *
  * All current character controllers serialize TransformDirection values
  * forward=3 (negX), up=1 (Y), right=2 (Z). Head offsets are character-specific.
@@ -135,7 +136,7 @@ const CHARACTER_PROFILES = new Map<number, CharacterReDriveProfile>([
     [115001, { characterId: 115001, styleId: 115001, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.18, angelRingEnabled: true, hairUvAngelRing: false }],
     [115101, { characterId: 115101, styleId: 115101, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.19, angelRingEnabled: true, hairUvAngelRing: false }],
     [115201, { characterId: 115201, styleId: 115201, source: 'official-export', headBoneName: 'Head', faceForwardAxis: '-x', faceUpAxis: 'y', faceRightAxis: 'z', headOffset: 0.215, angelRingEnabled: true, hairUvAngelRing: false }],
-    // 95 resource-character profiles from the official top-level bundle export.
+    // 95 battle profiles; direct-home A-Q is installed by the generated table below.
     // END GENERATED JP CHARACTER PROFILES
 ]);
 
@@ -227,6 +228,7 @@ export function findCharacterHeadBone(root: THREE.Object3D, profile: CharacterRe
 export interface CharacterPerspectiveReference {
     headBone: THREE.Object3D;
     localUp: THREE.Vector3;
+    localForward: THREE.Vector3;
     headOffset: number;
     characterCancelPerspective: number;
     facePosition: THREE.Vector3;
@@ -245,7 +247,21 @@ export function createCharacterPerspectiveReference(
     const headBone = findCharacterHeadBone(root, profile);
     if (!headBone || profile.headOffset == undefined) return undefined;
 
-    const localUp = unityDirectionToThreeFbx(profile.faceUpAxis);
+    return createCharacterPerspectiveReferenceFromHead({
+        headBone,
+        localUp: unityDirectionToThreeFbx(profile.faceUpAxis),
+        localForward: unityDirectionToThreeFbx(profile.faceForwardAxis),
+        headOffset: profile.headOffset,
+        characterCancelPerspective: profile.characterCancelPerspective ?? 1,
+    });
+}
+
+/** Share the native resolved Head/axes with the existing common vertex path.
+ * This constructor does not look up a character ID or guess a Head bone. */
+export function createCharacterPerspectiveReferenceFromHead(
+    source: AngelRingReference,
+): CharacterPerspectiveReference {
+    const { headBone, localUp, localForward } = source;
     const headPosition = new THREE.Vector3();
     const headQuaternion = new THREE.Quaternion();
     const faceUp = new THREE.Vector3();
@@ -253,9 +269,9 @@ export function createCharacterPerspectiveReference(
     const reference: CharacterPerspectiveReference = {
         headBone,
         localUp,
-        headOffset: profile.headOffset,
-        characterCancelPerspective:
-            profile.characterCancelPerspective ?? 1,
+        localForward,
+        headOffset: source.headOffset,
+        characterCancelPerspective: source.characterCancelPerspective,
         facePosition,
         update: () => {
             headBone.updateWorldMatrix(true, false);
@@ -274,13 +290,10 @@ export function createCharacterPerspectiveReference(
 export interface AngelRingReference {
     headBone: THREE.Object3D;
     localUp: THREE.Vector3;
-    localRight: THREE.Vector3;
     localForward: THREE.Vector3;
     headOffset: number;
-    bandHalfWidth: number;
-    projectionRadius: number;
-    uvMode: boolean;
-    estimated: boolean;
+    /** Serialized ReDriveToonMaterialController perspective multiplier. */
+    characterCancelPerspective: number;
 }
 
 /**
@@ -297,49 +310,17 @@ export function unityDirectionToThreeFbx(axis: ReDriveAxis): THREE.Vector3 {
     return direction;
 }
 
-const BOX_CORNERS = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
-
-function setBoxCorners(box: THREE.Box3): THREE.Vector3[] {
-    const { min, max } = box;
-    return BOX_CORNERS.map((corner, index) => corner.set(index & 1 ? max.x : min.x, index & 2 ? max.y : min.y, index & 4 ? max.z : min.z));
-}
-
-export function createAngelRingReference(root: THREE.Object3D, hairMesh: THREE.Mesh, profile: CharacterReDriveProfile): AngelRingReference | undefined {
-    if (!profile.angelRingEnabled) return undefined;
+export function createAngelRingReference(root: THREE.Object3D, _hairMesh: THREE.Mesh, profile: CharacterReDriveProfile): AngelRingReference | undefined {
+    if (!profile.angelRingEnabled || profile.headOffset == undefined) return undefined;
     const headBone = findCharacterHeadBone(root, profile);
     if (!headBone) return undefined;
-    root.updateMatrixWorld(true);
-    hairMesh.updateWorldMatrix(true, false);
-    headBone.updateWorldMatrix(true, false);
-    const headPosition = new THREE.Vector3();
-    const headQuaternion = new THREE.Quaternion();
-    headBone.getWorldPosition(headPosition);
-    headBone.getWorldQuaternion(headQuaternion);
-    const up = unityDirectionToThreeFbx(profile.faceUpAxis).applyQuaternion(headQuaternion).normalize();
-    const right = unityDirectionToThreeFbx(profile.faceRightAxis).applyQuaternion(headQuaternion).normalize();
-    const forward = unityDirectionToThreeFbx(profile.faceForwardAxis).applyQuaternion(headQuaternion).normalize();
-    const box = new THREE.Box3().setFromObject(hairMesh);
-    if (box.isEmpty()) return undefined;
-    let maxUp = -Infinity;
-    let radius = 0;
-    for (const corner of setBoxCorners(box)) {
-        const delta = corner.clone().sub(headPosition);
-        maxUp = Math.max(maxUp, delta.dot(up));
-        radius = Math.max(radius, Math.abs(delta.dot(right)), Math.abs(delta.dot(forward)));
-    }
-    const crownHeight = THREE.MathUtils.clamp(maxUp, 0.08, 0.42);
-    const estimatedOffset = THREE.MathUtils.clamp(crownHeight * 0.66, 0.055, 0.24);
-    const estimatedBandHalfWidth = THREE.MathUtils.clamp(crownHeight * 0.12, 0.020, 0.040);
     return {
         headBone,
         localUp: unityDirectionToThreeFbx(profile.faceUpAxis),
-        localRight: unityDirectionToThreeFbx(profile.faceRightAxis),
         localForward: unityDirectionToThreeFbx(profile.faceForwardAxis),
-        headOffset: profile.headOffset ?? estimatedOffset,
-        bandHalfWidth: estimatedBandHalfWidth,
-        projectionRadius: THREE.MathUtils.clamp(radius, 0.12, 0.65),
-        uvMode: profile.hairUvAngelRing ?? false,
-        estimated: profile.headOffset == undefined,
+        headOffset: profile.headOffset,
+        characterCancelPerspective:
+            profile.characterCancelPerspective ?? 1,
     };
 }
 

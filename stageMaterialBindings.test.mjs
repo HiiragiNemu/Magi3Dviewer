@@ -6,6 +6,75 @@ const source = await readFile(
     new URL('./src/viewer/stageMaterialBindings.ts', import.meta.url),
     'utf8',
 )
+const battle616Profile = JSON.parse(await readFile(
+    new URL(
+        './public/stages/official/battle-616-00-01-001/scene-profile.json',
+        import.meta.url,
+    ),
+    'utf8',
+))
+const groundScrollAuthority = JSON.parse(await readFile(
+    new URL(
+        './artifacts/coordination/20260901-unified-baseline-supervisor/resource-scene-contract-ready-battle616-s3.json',
+        import.meta.url,
+    ),
+    'utf8',
+))
+
+const battle616Ground = battle616Profile.materialBindings.find(
+    binding => binding.materialName === 'mt_bg3d616_01_01_ground',
+)
+assert.ok(battle616Ground, 'battle-616 official ground binding must remain published')
+assert.deepEqual(
+    battle616Ground.serializedColors?._UV_Scroll,
+    [0.017999999225139618, 0, 0, 0],
+    'battle-616 must retain the exact official +X base UV scroll vector',
+)
+assert.equal(battle616Ground.multiUvScroll, undefined)
+assert.equal(battle616Ground.flowMap, undefined)
+assert.deepEqual(battle616Ground.textures.base.transform.scale, [1.5, 1.5])
+assert.deepEqual(battle616Ground.textures.normal.transform.scale, [1.5, 1.5])
+assert.match(
+    groundScrollAuthority.gates.find(
+        gate => gate.command.includes('stream scan'),
+    )?.literalResult ?? '',
+    /profiles=399 bytes=3034968216 materialBindings=6160[\s\S]*?_UV_Scroll=4568 nonzero=132 across 93 profiles malformed=0; battle616=19 bindings\/17 fields\/1 nonzero/,
+    'the bounded corpus authority must retain the 132 nonzero / 93 profile denominator',
+)
+
+assert.match(
+    source,
+    /function resolveStageBaseUvScroll[\s\S]*?binding\.multiUvScroll \|\| binding\.flowMap[\s\S]*?binding\.serializedColors\?\._UV_Scroll[\s\S]*?speed\.every\(Number\.isFinite\)[\s\S]*?speed\[0\] === 0 && speed\[1\] === 0/,
+    'generic base UV scroll must consume only finite nonzero serialized _UV_Scroll outside multi/flow paths',
+)
+assert.match(
+    source,
+    /const scroll = resolveStageBaseUvScroll\(binding\)[\s\S]*?if \(!baseMap \|\| !scroll\) return/,
+    'missing BaseMap or rejected official scroll state must remain a no-op',
+)
+assert.match(
+    source,
+    /vMapUv \+= uStageBaseUvScroll \* uStageBaseUvTime;[\s\S]*?vNormalMapUv \+= uStageBaseUvScroll \* uStageBaseUvTime;/,
+    'BaseMap and NormalMap must receive the same official transformed-UV time offset',
+)
+assert.match(
+    source,
+    /findStageRuntimeTime\(mesh\) \?\? performance\.now\(\) \* 0\.001/,
+    'base UV scroll must use the shared stage clock with the existing monotonic fallback',
+)
+assert.match(
+    source,
+    /const previousMeshOnBeforeRender = mesh\.onBeforeRender[\s\S]*?mesh\.onBeforeRender = function[\s\S]*?previousMeshOnBeforeRender\.call/,
+    'the stage clock update must stay on the mesh when later lightmap/probe material clones replace material callbacks',
+)
+const baseUvConsumer = source.match(
+    /function resolveStageBaseUvScroll[\s\S]*?function createAtlasTexture/,
+)?.[0] ?? ''
+assert.doesNotMatch(
+    baseUvConsumer,
+    /battle-|stageId|materialName|pathID|BlendTex|_1stScrollSpeed|_2ndScrollSpeed|_ScrollTexture/,
+    'base UV scroll consumer must not contain scene/material special cases or unrelated scroll routes',
+)
 
 assert.match(
     source,
@@ -56,7 +125,7 @@ assert.doesNotMatch(
 
 assert.match(
     source,
-    /additive:\s*THREE\.AdditiveBlending/,
+    /blending === 'additive' \? THREE\.AdditiveBlending/,
     'serialized additive background materials must retain additive blending',
 )
 assert.match(

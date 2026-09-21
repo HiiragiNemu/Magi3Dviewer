@@ -26,6 +26,18 @@ function descendByNames(
     return candidates.length === 1 ? candidates[0] : undefined
 }
 
+function uniqueResolved(
+    starts: readonly THREE.Object3D[],
+    segments: readonly string[],
+): THREE.Object3D | undefined {
+    const resolved = new Set<THREE.Object3D>()
+    for (const start of starts) {
+        const candidate = descendByNames(start, segments)
+        if (candidate) resolved.add(candidate)
+    }
+    return resolved.size === 1 ? resolved.values().next().value : undefined
+}
+
 /**
  * Resolve an exact serialized Unity GameObject hierarchy path against the FBX/
  * GLTF scene tree.
@@ -60,11 +72,26 @@ export function resolveStageHierarchyPath(
             )
         ) starts.push(candidate)
     })
-    for (const start of starts) {
-        const resolved = descendByNames(start, segments.slice(1))
-        if (resolved) return resolved
+    const exact = uniqueResolved(starts, segments.slice(1))
+    if (exact) return exact
+
+    // A one-segment Unity path names the prefab root itself. When the loader
+    // renamed that root, the supplied carrier is the corresponding runtime
+    // object. Preserve ambiguity if exact original-name roots still exist.
+    if (segments.length === 1) {
+        return starts.length === 0 ? root : undefined
     }
-    return undefined
+
+    // The Viewer deliberately gives the loaded carrier root a stable stage
+    // identity (for example `Stage:dungeon-intro-0001-001`). AssetStudio's
+    // serialized paths still begin with the original prefab root
+    // (`level_intro_0001_001`). Drop only that first root segment and resolve
+    // the complete remaining direct-child chain. This is not a loose
+    // getObjectByName fallback: every intermediate segment remains mandatory,
+    // and two carriers exposing the same suffix stay unresolved.
+    const suffixStarts: THREE.Object3D[] = []
+    root.traverse(candidate => suffixStarts.push(candidate))
+    return uniqueResolved(suffixStarts, segments.slice(1))
 }
 
 export function resolveStageAnchor(

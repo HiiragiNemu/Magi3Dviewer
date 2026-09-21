@@ -184,8 +184,19 @@ export function boxProjectedCubemapDirection(
         reflection.y > 0 ? boxMax.y : boxMin.y,
         reflection.z > 0 ? boxMax.z : boxMin.z,
     )
-    const distances = selected.sub(position).divide(reflection)
-    const distance = Math.min(distances.x, distances.y, distances.z)
+    // Parallel axes do not bound the ray exit; avoid both 0/0 and signed infinity.
+    const activeX = reflection.x !== 0
+    const activeY = reflection.y !== 0
+    const activeZ = reflection.z !== 0
+    if (!activeX && !activeY && !activeZ) return reflection.clone()
+    const distances = selected.sub(position).divide(new THREE.Vector3(
+        activeX ? reflection.x : 1,
+        activeY ? reflection.y : 1,
+        activeZ ? reflection.z : 1,
+    ))
+    let distance = activeX ? distances.x : activeY ? distances.y : distances.z
+    if (activeY) distance = Math.min(distance, distances.y)
+    if (activeZ) distance = Math.min(distance, distances.z)
     return position.clone()
         .sub(probePosition)
         .addScaledVector(reflection, distance)
@@ -204,8 +215,10 @@ export function applyStageReflectionProbes(
 
     const runtimeProbes = loadedProbes.map(({ profile, texture }) => {
         validateProbeProfile(profile)
-        if (profile.encoding !== 'unity-bc6h-uf16' || !isCubeTexture(texture)) {
-            throw new Error(`Reflection probe ${profile.id} is not an exact BC6H cubemap`)
+        if (!isCubeTexture(texture)) {
+            throw new Error(
+                `Reflection probe ${profile.id} is not an exact Unity cubemap`,
+            )
         }
         const boxMin = unityPointToViewer(profile.boxMin)
         const boxMax = unityPointToViewer(profile.boxMax)
@@ -435,6 +448,10 @@ function installProbeMaterial(
     // Three uses this only to enable the physical IBL branch. The custom chunk
     // samples the untouched Unity BC6H face/mip chains through separate uniforms.
     material.envMap = globalEnvironment
+    material.userData.stageBatchGlobalProbe = {
+        texture: globalEnvironment.uuid, intensity: globalIntensity,
+        reflectionProbeUsage: state.reflectionProbeUsage,
+    }
     material.userData.stageReflectionProbeShader = {
         source: 'Unity URP 14 GlobalIllumination.hlsl',
         boxProjection: true,
@@ -581,7 +598,14 @@ function hierarchyPath(object: THREE.Object3D, root: THREE.Object3D) {
     const parts: string[] = []
     let current: THREE.Object3D | null = object
     while (current) {
-        if (current.name) parts.unshift(current.name)
+        // FBXLoader keeps the unsanitized Unity/FBX name in userData.
+        const originalName = current.userData.originalName
+        // Keep the caller-selected runtime carrier prefix for UV1 required paths.
+        const name = current !== root
+            && typeof originalName === 'string' && originalName.length > 0
+            ? originalName
+            : current.name
+        if (name) parts.unshift(name)
         if (current === root) break
         current = current.parent
     }
@@ -750,14 +774,24 @@ vec3 stageBoxProjectedCubemapDirection(
     vec3 boxMax,
     float enabled
 ) {
-    if (enabled > 0.5) {
+    bvec3 activeAxes = notEqual(reflectionWS, vec3(0.0));
+    if (enabled > 0.5 && any(activeAxes)) {
         vec3 boxMinMax = vec3(
             reflectionWS.x > 0.0 ? boxMax.x : boxMin.x,
             reflectionWS.y > 0.0 ? boxMax.y : boxMin.y,
             reflectionWS.z > 0.0 ? boxMax.z : boxMin.z
         );
-        vec3 rbMinMax = (boxMinMax - positionWS) / reflectionWS;
-        float fa = min(min(rbMinMax.x, rbMinMax.y), rbMinMax.z);
+        // Substitute only exact-zero divisors; their distances never enter the minimum.
+        // Keeping the divisor finite also prevents dead-lane ANGLE constant folding.
+        vec3 divisor = vec3(
+            activeAxes.x ? reflectionWS.x : 1.0,
+            activeAxes.y ? reflectionWS.y : 1.0,
+            activeAxes.z ? reflectionWS.z : 1.0
+        );
+        vec3 rbMinMax = (boxMinMax - positionWS) / divisor;
+        float fa = activeAxes.x ? rbMinMax.x : (activeAxes.y ? rbMinMax.y : rbMinMax.z);
+        if (activeAxes.y) fa = min(fa, rbMinMax.y);
+        if (activeAxes.z) fa = min(fa, rbMinMax.z);
         vec3 worldPos = positionWS - cubemapPositionWS;
         return worldPos + reflectionWS * fa;
     }
@@ -816,6 +850,7 @@ vec3 getIBLRadiance(
     ).xyz;
     float mip = stagePerceptualRoughnessToMipmapLevel(roughness);
 
+    vec3 irradiance = vec3(0.0);
     if (uStageReflectionProbeUsage > 2.5 && uStageProbeCount > 0.5) {
         vec3 simpleDirection = stageBoxProjectedCubemapDirection(
             reflectionStage,
@@ -825,86 +860,86 @@ vec3 getIBLRadiance(
             uStageProbe0BoxMax,
             uStageProbe0BoxProjection
         );
-        return stageSampleProbe0(simpleDirection, mip);
-    }
-    float weightProbe0 = 0.0;
-    float weightProbe1 = 0.0;
-    float totalWeight = 0.0;
+        irradiance = stageSampleProbe0(simpleDirection, mip);
+    } else {
+        float weightProbe0 = 0.0;
+        float weightProbe1 = 0.0;
+        float totalWeight = 0.0;
 
-    if (uStageProbeCount > 0.5) {
-        float desiredWeightProbe0 = stageCalculateProbeWeight(
-            positionStage,
-            uStageProbe0BoxMin,
-            uStageProbe0BoxMax,
-            uStageProbe0BlendDistance
-        );
-        weightProbe0 = desiredWeightProbe0;
-
-        if (uStageProbeCount > 1.5) {
-            float desiredWeightProbe1 = stageCalculateProbeWeight(
+        if (uStageProbeCount > 0.5) {
+            float desiredWeightProbe0 = stageCalculateProbeWeight(
                 positionStage,
+                uStageProbe0BoxMin,
+                uStageProbe0BoxMax,
+                uStageProbe0BlendDistance
+            );
+            weightProbe0 = desiredWeightProbe0;
+
+            if (uStageProbeCount > 1.5) {
+                float desiredWeightProbe1 = stageCalculateProbeWeight(
+                    positionStage,
+                    uStageProbe1BoxMin,
+                    uStageProbe1BoxMax,
+                    uStageProbe1BlendDistance
+                );
+                float probe0Volume = stageProbeVolumeSqrMagnitude(
+                    uStageProbe0BoxMin,
+                    uStageProbe0BoxMax
+                );
+                float probe1Volume = stageProbeVolumeSqrMagnitude(
+                    uStageProbe1BoxMin,
+                    uStageProbe1BoxMax
+                );
+                float volumeDiff = probe0Volume - probe1Volume;
+                float importanceSign = sign(
+                    uStageProbe0Importance - uStageProbe1Importance
+                );
+                bool probe0Dominant = importanceSign > 0.0
+                    || (importanceSign == 0.0 && volumeDiff < -0.0001);
+                bool probe1Dominant = importanceSign < 0.0
+                    || (importanceSign == 0.0 && volumeDiff > 0.0001);
+                weightProbe0 = probe1Dominant
+                    ? min(desiredWeightProbe0, 1.0 - desiredWeightProbe1)
+                    : desiredWeightProbe0;
+                weightProbe1 = probe0Dominant
+                    ? min(desiredWeightProbe1, 1.0 - desiredWeightProbe0)
+                    : desiredWeightProbe1;
+                totalWeight = weightProbe0 + weightProbe1;
+                weightProbe0 /= max(totalWeight, 1.0);
+                weightProbe1 /= max(totalWeight, 1.0);
+            }
+            totalWeight = weightProbe0 + weightProbe1;
+        }
+
+        if (weightProbe0 > 0.01) {
+            vec3 direction0 = stageBoxProjectedCubemapDirection(
+                reflectionStage,
+                positionStage,
+                uStageProbe0Position,
+                uStageProbe0BoxMin,
+                uStageProbe0BoxMax,
+                uStageProbe0BoxProjection
+            );
+            irradiance += weightProbe0 * stageSampleProbe0(direction0, mip);
+        }
+        if (weightProbe1 > 0.01) {
+            vec3 direction1 = stageBoxProjectedCubemapDirection(
+                reflectionStage,
+                positionStage,
+                uStageProbe1Position,
                 uStageProbe1BoxMin,
                 uStageProbe1BoxMax,
-                uStageProbe1BlendDistance
+                uStageProbe1BoxProjection
             );
-            float probe0Volume = stageProbeVolumeSqrMagnitude(
-                uStageProbe0BoxMin,
-                uStageProbe0BoxMax
-            );
-            float probe1Volume = stageProbeVolumeSqrMagnitude(
-                uStageProbe1BoxMin,
-                uStageProbe1BoxMax
-            );
-            float volumeDiff = probe0Volume - probe1Volume;
-            float importanceSign = sign(
-                uStageProbe0Importance - uStageProbe1Importance
-            );
-            bool probe0Dominant = importanceSign > 0.0
-                || (importanceSign == 0.0 && volumeDiff < -0.0001);
-            bool probe1Dominant = importanceSign < 0.0
-                || (importanceSign == 0.0 && volumeDiff > 0.0001);
-            weightProbe0 = probe1Dominant
-                ? min(desiredWeightProbe0, 1.0 - desiredWeightProbe1)
-                : desiredWeightProbe0;
-            weightProbe1 = probe0Dominant
-                ? min(desiredWeightProbe1, 1.0 - desiredWeightProbe0)
-                : desiredWeightProbe1;
-            totalWeight = weightProbe0 + weightProbe1;
-            weightProbe0 /= max(totalWeight, 1.0);
-            weightProbe1 /= max(totalWeight, 1.0);
+            irradiance += weightProbe1 * stageSampleProbe1(direction1, mip);
         }
-        totalWeight = weightProbe0 + weightProbe1;
-    }
-
-    vec3 irradiance = vec3(0.0);
-    if (weightProbe0 > 0.01) {
-        vec3 direction0 = stageBoxProjectedCubemapDirection(
-            reflectionStage,
-            positionStage,
-            uStageProbe0Position,
-            uStageProbe0BoxMin,
-            uStageProbe0BoxMax,
-            uStageProbe0BoxProjection
-        );
-        irradiance += weightProbe0 * stageSampleProbe0(direction0, mip);
-    }
-    if (weightProbe1 > 0.01) {
-        vec3 direction1 = stageBoxProjectedCubemapDirection(
-            reflectionStage,
-            positionStage,
-            uStageProbe1Position,
-            uStageProbe1BoxMin,
-            uStageProbe1BoxMax,
-            uStageProbe1BoxProjection
-        );
-        irradiance += weightProbe1 * stageSampleProbe1(direction1, mip);
-    }
-    if (totalWeight < 0.99) {
-        irradiance += (1.0 - totalWeight) * textureCubeLodEXT(
-            uStageGlobalProbe,
-            stageUnityCubeDirection(reflectionStage),
-            min(mip, uStageGlobalMaxMip)
-        ).rgb * uStageGlobalIntensity;
+        if (totalWeight < 0.99) {
+            irradiance += (1.0 - totalWeight) * textureCubeLodEXT(
+                uStageGlobalProbe,
+                stageUnityCubeDirection(reflectionStage),
+                min(mip, uStageGlobalMaxMip)
+            ).rgb * uStageGlobalIntensity;
+        }
     }
     return irradiance;
 }
@@ -930,3 +965,4 @@ vec3 getIBLAnisotropyRadiance(
 
 #endif
 `
+

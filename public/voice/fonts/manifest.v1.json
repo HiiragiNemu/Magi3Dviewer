@@ -1,0 +1,227 @@
+{
+  "schema": "magius.viewer-font-assets.v1",
+  "generatedAt": "2026-08-28T13:05:45.895380+08:00",
+  "repository": "https://github.com/HiiragiNemu/Magi3Dviewer",
+  "runtimeRoot": "/voice/fonts",
+  "steamAuthority": {
+    "serializedFile": "D:\\SteamLibrary\\steamapps\\common\\MadokaExedra\\MadokaExedra_Data\\resources.assets",
+    "localizeFontSettings": {
+      "pathID": 74211,
+      "listCount": 2,
+      "entries": [
+        {
+          "type": "TextMeshPro",
+          "isDefault": true,
+          "sourceName": "",
+          "language": "en-Latn",
+          "isBuiltIn": true,
+          "assetBundleName": "",
+          "assetName": ""
+        },
+        {
+          "type": "UnityEngineFont",
+          "isDefault": true,
+          "sourceName": "",
+          "language": "en-Latn",
+          "isBuiltIn": true,
+          "assetBundleName": "",
+          "assetName": ""
+        }
+      ]
+    },
+    "tmpSettings": {
+      "pathID": 74222,
+      "name": "TMP Settings",
+      "defaultFontAssetPathID": 74219
+    },
+    "englishTmpChain": {
+      "defaultFontAsset": {
+        "pathID": 74219,
+        "name": "LiberationSans SDF",
+        "materialPathID": 347,
+        "atlasTexturePathID": 536,
+        "fallbackFontAssetPathID": 74218
+      },
+      "fallbackFontAsset": {
+        "pathID": 74218,
+        "name": "LiberationSans SDF - Fallback",
+        "materialPathID": 346,
+        "atlasTexturePathID": 535,
+        "sourceFontPathID": 806
+      },
+      "sourceFont": {
+        "pathID": 806,
+        "name": "LiberationSans",
+        "embeddedFontDataBytes": 350200
+      }
+    },
+    "japaneseAssets": {
+      "ui": {
+        "tmpFontAssetPathID": 74200,
+        "tmpName": "FOT-TSUKUOLDGOTHICSTD-B SDF",
+        "sourceFontPathID": 803
+      },
+      "story": {
+        "tmpFontAssetPathID": 74203,
+        "tmpName": "NewCinema SDF",
+        "sourceFontPathID": 805
+      }
+    }
+  },
+  "consumerContract": {
+    "zh-Hans-ui": "exedra-zh-tangyuan",
+    "zh-Hans-story": "exedra-zh-tangyuan",
+    "ja-Jpan-ui": "exedra-jp-ui-tsuku",
+    "ja-Jpan-story": "exedra-jp-story-newcinema",
+    "en-Latn-ui": "exedra-en-ui-liberationsans",
+    "englishConclusion": "Steam English UI uses built-in LiberationSans SDF; it is not a TsukuOldGothic language replacement. Tsuku includes complete printable ASCII but is the JP UI asset."
+  },
+  "fonts": [
+    {
+      "id": "exedra-zh-tangyuan",
+      "label": "猫啃网糖圆体",
+      "roles": [
+        "zh-Hans-ui",
+        "zh-Hans-story"
+      ],
+      "runtimeUrl": "/voice/fonts/exedra-zh-tangyuan.0901bb62ccd1.full.woff2",
+      "file": "exedra-zh-tangyuan.0901bb62ccd1.full.woff2",
+      "runtimeReady": true,
+      "authority": "non-game localization font",
+      "bytes": 1386160,
+      "sha256": "0901bb62ccd113f214201a8760146875bec0769664765a66172a5fe79e19b411",
+      "familyNames": [
+        "MaoKenTangYuan (beta)",
+        "猫啃网糖圆体 (测试版)",
+        "MaoKenTang",
+        "猫啃网糖圆体"
+      ],
+      "fullNames": [
+        "MaoKenTangYuan-beta",
+        "猫啃网糖圆体-测试版",
+        "MaoKenTan",
+        "猫啃网糖圆"
+      ],
+      "postScriptNames": [
+        "MaoKenTangYuan-beta",
+        "MaoKenTan"
+      ],
+      "unicodeCodePoints": 7528,
+      "coverage": {
+        "asciiPrintable": 95,
+        "asciiPrintableExpected": 95,
+        "latinLetters": 52,
+        "latinLettersExpected": 52,
+        "hiragana": 83,
+        "katakana": 87,
+        "cjkUnified": 6765
+      }
+    },
+    {
+      "id": "exedra-jp-ui-tsuku",
+      "label": "FOT-TsukuOldGothic Std B",
+      "roles": [
+        "ja-Jpan-ui"
+      ],
+      "runtimeUrl": "/voice/fonts/exedra-jp-ui-tsuku.431afe7080dc.full.woff2",
+      "file": "exedra-jp-ui-tsuku.431afe7080dc.full.woff2",
+      "runtimeReady": true,
+      "authority": "Steam Font pathID=803; TMP_FontAsset pathID=74200",
+      "bytes": 2750668,
+      "sha256": "431afe7080dcb5c6337bf2ab6ec1d04449123aa4841a1f85a9bdfd3c5bd8b7b3",
+      "familyNames": [
+        "FOT-TsukuOldGothic Std",
+        "FOT-筑紫オールドゴシック Std",
+        "FOT-TsukuOldGothic Std B",
+        "FOT-筑紫オールドゴシック Std B"
+      ],
+      "fullNames": [
+        "FOT-TsukuOldGothic Std B",
+        "FOT-筑紫オールドゴシック Std B",
+        "TsukuOldGothicStd-B"
+      ],
+      "postScriptNames": [
+        "TsukuOldGothicStd-B"
+      ],
+      "unicodeCodePoints": 8252,
+      "coverage": {
+        "asciiPrintable": 95,
+        "asciiPrintableExpected": 95,
+        "latinLetters": 52,
+        "latinLettersExpected": 52,
+        "hiragana": 90,
+        "katakana": 94,
+        "cjkUnified": 6714
+      }
+    },
+    {
+      "id": "exedra-jp-story-newcinema",
+      "label": "FOT-NewCinemaA Std D",
+      "roles": [
+        "ja-Jpan-story"
+      ],
+      "runtimeUrl": "/voice/fonts/exedra-jp-story-newcinema.687768deeccd.full.woff2",
+      "file": "exedra-jp-story-newcinema.687768deeccd.full.woff2",
+      "runtimeReady": true,
+      "authority": "Steam Font pathID=805; TMP_FontAsset pathID=74203",
+      "bytes": 3370224,
+      "sha256": "687768deeccd50f66a4aefc7f30bc7d8095be462628507715f26be7f8eea7762",
+      "familyNames": [
+        "FOT-NewCinemaA Std",
+        "FOT-ニューシネマA Std",
+        "FOT-NewCinemaA Std D",
+        "FOT-ニューシネマA Std D"
+      ],
+      "fullNames": [
+        "FOT-NewCinemaA Std D",
+        "FOT-ニューシネマA Std D",
+        "NewCinemaAStd-D"
+      ],
+      "postScriptNames": [
+        "NewCinemaAStd-D"
+      ],
+      "unicodeCodePoints": 8251,
+      "coverage": {
+        "asciiPrintable": 95,
+        "asciiPrintableExpected": 95,
+        "latinLetters": 52,
+        "latinLettersExpected": 52,
+        "hiragana": 90,
+        "katakana": 94,
+        "cjkUnified": 6714
+      }
+    },
+    {
+      "id": "exedra-en-ui-liberationsans",
+      "label": "Liberation Sans",
+      "roles": [
+        "en-Latn-ui"
+      ],
+      "runtimeUrl": "/voice/fonts/exedra-en-ui-liberationsans.15c0f084faa4.full.woff2",
+      "file": "exedra-en-ui-liberationsans.15c0f084faa4.full.woff2",
+      "runtimeReady": true,
+      "authority": "Steam LocalizeFontSettings pathID=74211 en-Latn built-in default -> TMP Settings pathID=74222 m_defaultFontAsset pathID=74219 LiberationSans SDF; source Font pathID=806",
+      "bytes": 134764,
+      "sha256": "15c0f084faa477ac06a187a16bc3109448cececf29058d3aae82f53a860307ae",
+      "familyNames": [
+        "Liberation Sans"
+      ],
+      "fullNames": [
+        "Liberation Sans"
+      ],
+      "postScriptNames": [
+        "LiberationSans"
+      ],
+      "unicodeCodePoints": 2294,
+      "coverage": {
+        "asciiPrintable": 95,
+        "asciiPrintableExpected": 95,
+        "latinLetters": 52,
+        "latinLettersExpected": 52,
+        "hiragana": 0,
+        "katakana": 0,
+        "cjkUnified": 0
+      }
+    }
+  ]
+}

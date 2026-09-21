@@ -78,6 +78,7 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
             attribute vec3 ${ReDriveBakedNormalAttribute};
             varying vec2 vUv;
             varying vec3 vOutlineNormalVS;
+            varying vec3 vOutlineViewDirectionVS;
             #include <skinning_pars_vertex>
 
             void main() {
@@ -92,6 +93,7 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
 
                 vec4 mvPosition = modelViewMatrix * vec4(transformed, 1.0);
                 vec3 outlineNormalVS = normalize(normalMatrix * objectNormal);
+                vOutlineViewDirectionVS = normalize(-mvPosition.xyz);
                 float outlineVertexWidth = mix(
                     1.0,
                     clamp(color.r, 0.0, 1.0),
@@ -173,6 +175,7 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
             uniform sampler2D tShadow;
             varying vec2 vUv;
             varying vec3 vOutlineNormalVS;
+            varying vec3 vOutlineViewDirectionVS;
             #include <common>
             #include <lights_pars_begin>
 
@@ -351,6 +354,7 @@ export function addOfficialOutlineGroupsToMesh(
             outlineMat,
         )
         outlineMesh.name = `${mesh.name}:official-outline:${materialIndex}`
+        outlineMesh.userData.officialMaterialIndex = materialIndex
         outlineMat.uniforms.uVertexColorAvailable.value =
             mesh.geometry.getAttribute('color') ? 1 : 0
 

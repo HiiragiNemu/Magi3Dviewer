@@ -1,0 +1,399 @@
+{
+  "schema": "magius.enemy-model-runtime.v1",
+  "modelPrefabName": "enemy_605026_battle_unit",
+  "unityVersion": null,
+  "parserUnityVersion": "2022.3.62f2",
+  "sourcePlatform": "AndroidJP",
+  "rootName": "enemy_605026_battle_unit",
+  "sourceBundleKey": "AssetBundles/battle/enemy/enemy_605026_battle_unit",
+  "dependencyBundleKeys": [
+    "AssetBundles/animator/battle_unit/66a59b3a5b3af06449e3350fb33ea1fc",
+    "AssetBundles/model/battle_unit/745995278f7c249c080bb2eaadc9ced1",
+    "AssetBundles/shader/common/texture/cloud_noise",
+    "AssetBundles/shader/common/texture/matcap_mercury",
+    "AssetBundles/shader/common/texture/simple_noise",
+    "AssetBundles/shader/common/texture/swirl_noise2",
+    "AssetBundles/shader/effect",
+    "AssetBundles/shader/enemy_uber",
+    "AssetBundles/texture/battle_unit/d7bc5da3166b842efbed55bcc1306fcc",
+    "AssetBundles/texture/bg/88b3081adb3760649825384bb32b6def"
+  ],
+  "modelBundleKeys": [
+    "AssetBundles/model/battle_unit/745995278f7c249c080bb2eaadc9ced1"
+  ],
+  "animatorBundleKeys": [
+    "AssetBundles/animator/battle_unit/66a59b3a5b3af06449e3350fb33ea1fc"
+  ],
+  "textureBundleKeys": [
+    "AssetBundles/texture/battle_unit/d7bc5da3166b842efbed55bcc1306fcc",
+    "AssetBundles/texture/bg/88b3081adb3760649825384bb32b6def"
+  ],
+  "shaderBundleKeys": [
+    "AssetBundles/shader/common/texture/cloud_noise",
+    "AssetBundles/shader/common/texture/matcap_mercury",
+    "AssetBundles/shader/common/texture/simple_noise",
+    "AssetBundles/shader/common/texture/swirl_noise2",
+    "AssetBundles/shader/effect",
+    "AssetBundles/shader/enemy_uber"
+  ],
+  "controllers": [
+    {
+      "type": "AnimatorOverrideController",
+      "pathId": "-7814797113536942061",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "name": "enemy_605001_model"
+    },
+    {
+      "type": "AnimatorController",
+      "pathId": "201050322075546145",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "name": "EnemyDefault"
+    }
+  ],
+  "clips": [
+    {
+      "pathId": "-8749348789923405128",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Abnormality_S",
+      "runtimeName": "Abnormality_S",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 82
+    },
+    {
+      "pathId": "-7318612711536120170",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Attack",
+      "runtimeName": "Attack",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-6763823307930892035",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "sourceName": "Recorded_01",
+      "runtimeName": "Recorded_01",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-5882742877256905680",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Abnormality_S",
+      "runtimeName": "Abnormality_S_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-4302430826712377044",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Abnormality_E",
+      "runtimeName": "Abnormality_E",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-4108527823123309168",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "BuffDebuff_Color_SE",
+      "runtimeName": "BuffDebuff_Color_SE",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-3297998120889309420",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Abnormality_E",
+      "runtimeName": "Abnormality_E_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 82
+    },
+    {
+      "pathId": "-3039783462124726250",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Wait",
+      "runtimeName": "Wait",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-2339230774341367805",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Damage_Abnormality",
+      "runtimeName": "Damage_Abnormality",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-1970310219140790870",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Attack_SE",
+      "runtimeName": "Attack_SE",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 82
+    },
+    {
+      "pathId": "-232488306442334884",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Damage",
+      "runtimeName": "Damage",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "-227502143768460905",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Abnormality_L",
+      "runtimeName": "Abnormality_L",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 82
+    },
+    {
+      "pathId": "232736707409019345",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Down_SE",
+      "runtimeName": "Down_SE",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 82
+    },
+    {
+      "pathId": "232736707409019345",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "sourceName": "Down_SE",
+      "runtimeName": "Down_SE_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 82
+    },
+    {
+      "pathId": "490001811087709064",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Abnormality_L",
+      "runtimeName": "Abnormality_L_1",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "2485526768216804431",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Down",
+      "runtimeName": "Down",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 0
+    },
+    {
+      "pathId": "3741779203183799049",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Damage_SE",
+      "runtimeName": "Damage_SE",
+      "durationSeconds": null,
+      "sampleRate": 60.0,
+      "transformTrackCount": 82
+    },
+    {
+      "pathId": "4860035924394599003",
+      "sourceCab": "CAB-3b76a5fb070c59740bb4f9c423912967",
+      "sourceName": "Wait_L",
+      "runtimeName": "Wait_L",
+      "durationSeconds": null,
+      "sampleRate": 30.0,
+      "transformTrackCount": 82
+    }
+  ],
+  "materials": [
+    {
+      "pathId": "-8785457324747928003",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_cmn_smoke_02_ab"
+    },
+    {
+      "pathId": "5076613170510402620",
+      "sourceCab": "CAB-393c1a891c671c6056b2c4428d0b5f68",
+      "name": "mt_enemy_605001_light_R03_color"
+    },
+    {
+      "pathId": "4686385907363077874",
+      "sourceCab": "CAB-393c1a891c671c6056b2c4428d0b5f68",
+      "name": "mt_enemy_605001_light_L03_color"
+    },
+    {
+      "pathId": "-2803415143525079771",
+      "sourceCab": "CAB-393c1a891c671c6056b2c4428d0b5f68",
+      "name": "mt_enemy_605001_light_R01_color"
+    },
+    {
+      "pathId": "-5918417243702221207",
+      "sourceCab": "CAB-393c1a891c671c6056b2c4428d0b5f68",
+      "name": "mt_enemy_605001_body_color"
+    },
+    {
+      "pathId": "-8437767597241177115",
+      "sourceCab": "CAB-393c1a891c671c6056b2c4428d0b5f68",
+      "name": "mt_enemy_605001_light_L02_color"
+    },
+    {
+      "pathId": "-8741038476546664673",
+      "sourceCab": "CAB-393c1a891c671c6056b2c4428d0b5f68",
+      "name": "mt_enemy_605001_light_color"
+    },
+    {
+      "pathId": "8867628801934491472",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_602035_glare_02_ab"
+    },
+    {
+      "pathId": "8845016844201977986",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_cmn_grain_05_ab"
+    },
+    {
+      "pathId": "8208173439967897462",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "mt_halo_pattern2_color"
+    },
+    {
+      "pathId": "8022554924455427486",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_602035_grain_05_ab"
+    },
+    {
+      "pathId": "7695232662376256767",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "mt_eff_WitchGiselaRust"
+    },
+    {
+      "pathId": "7494047159927912436",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "mt_letter_gin_color"
+    },
+    {
+      "pathId": "5304792568446515955",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "mt_parts_pattern2_color"
+    },
+    {
+      "pathId": "3153374290268349857",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_dead_trail_01_ab"
+    },
+    {
+      "pathId": "-427375659852242517",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_602035_glare_06_add"
+    },
+    {
+      "pathId": "-446661594098315044",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "mt_light_pattern2_color"
+    },
+    {
+      "pathId": "-467690725740050199",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_602035_fire_dissolve_01_ab"
+    },
+    {
+      "pathId": "-2038678673960155924",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_602035_fire_17_ab"
+    },
+    {
+      "pathId": "-2614136397767079058",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "mt_edge_pattern2_color"
+    },
+    {
+      "pathId": "-3032601806977353250",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_cmn_glare_06_add"
+    },
+    {
+      "pathId": "-5918417243702221207",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "mt_enemy_605001_body_color"
+    },
+    {
+      "pathId": "-6165273282736848539",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "mt_WitchGiselaRust"
+    },
+    {
+      "pathId": "-6650269932679469732",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_602035_smoke_40_ab"
+    },
+    {
+      "pathId": "-7919571629740992329",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "eff_cmn_fire_dissolve_01_ab"
+    },
+    {
+      "pathId": "-8132973301008106931",
+      "sourceCab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "name": "mt_ray_pattern2_color"
+    },
+    {
+      "pathId": "5087636090818324841",
+      "sourceCab": "CAB-393c1a891c671c6056b2c4428d0b5f68",
+      "name": "mt_enemy_605001_light_R02_color"
+    },
+    {
+      "pathId": "6527946124096430923",
+      "sourceCab": "CAB-393c1a891c671c6056b2c4428d0b5f68",
+      "name": "mt_enemy_605001_light_L01_color"
+    }
+  ],
+  "runtime": {
+    "modelUrl": "/enemies/models/enemy_605026_battle_unit/VisualRoot.fbxdata",
+    "textureFiles": [
+      "edge_color.png",
+      "enemy_605001_body_color.png",
+      "gisela_rust.png",
+      "halo_pattern2_color.png",
+      "letter_gin_color.png",
+      "parts_color.png",
+      "ray_color.png"
+    ]
+  },
+  "acceptance": {
+    "cpu": "PASS",
+    "playableBaseClips": [
+      "Abnormality_S",
+      "Abnormality_E_1",
+      "Attack_SE",
+      "Abnormality_L",
+      "Down_SE",
+      "Down_SE_1",
+      "Damage_SE",
+      "Wait_L"
+    ],
+    "emptyBaseClips": [
+      "Attack",
+      "Recorded_01",
+      "Abnormality_S_1",
+      "Abnormality_E",
+      "BuffDebuff_Color_SE",
+      "Wait",
+      "Damage_Abnormality",
+      "Damage",
+      "Abnormality_L_1",
+      "Down"
+    ],
+    "nativeDirection": "TYPED_UNAVAILABLE",
+    "visual": "NOT_RUN",
+    "defaultAnimation": "Wait_L"
+  }
+}

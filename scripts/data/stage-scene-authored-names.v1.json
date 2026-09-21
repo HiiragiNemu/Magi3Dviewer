@@ -1,0 +1,57 @@
+{
+  "schema": "magius.stage-scene-authored-name-projection.v1",
+  "version": 1,
+  "encoding": "UTF-8",
+  "newline": "LF",
+  "authority": {
+    "path": "artifacts/runtime/20260824-tw-battle-616-00-01-001-official-ab-full-run/resource-static-authority.json",
+    "jsonPointer": "/identity/displayNameAuthority/authoredDisplayNameContract",
+    "canonicalIdentityField": "viewerStageId",
+    "note": "Authored display text is projected by stable scene identity; loading and joins remain resource-keyed."
+  },
+  "entries": [
+    {
+      "viewerStageId": "battle-616-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_616_00_01_001",
+      "catalogPath": "public/stages/catalog/battle-616-00-01-001.json",
+      "catalogFallback": "[Official dynamic partial/Battle] 616-00-01-001",
+      "displayNames": {
+        "zhHant": "象徵魔女的魔女結界",
+        "zhCN": "象征魔女的魔女结界"
+      },
+      "productProjection": {
+        "viewerStageId": "battle-616-00-01-001",
+        "backgroundResourceName": "bg_3d_616_00_01_001",
+        "stagePrefabName": "bg_3d_616_00_01_001",
+        "sourceKind": "authored-stage",
+        "names": {
+          "en": {
+            "value": null,
+            "available": false,
+            "quality": "typed-blank",
+            "source": "artifacts/runtime/20260824-tw-battle-616-00-01-001-official-ab-full-run/resource-static-authority.json#displayNameAuthority"
+          },
+          "ja": {
+            "value": null,
+            "available": false,
+            "quality": "typed-blank",
+            "source": "artifacts/runtime/20260824-tw-battle-616-00-01-001-official-ab-full-run/resource-static-authority.json#displayNameAuthority"
+          },
+          "zhHant": {
+            "value": "象徵魔女的魔女結界",
+            "available": true,
+            "quality": "authored",
+            "source": "artifacts/runtime/20260824-tw-battle-616-00-01-001-official-ab-full-run/resource-static-authority.json#authoredDisplayNameContract"
+          }
+        },
+        "resourceLookup": {
+          "directRelativePath": "battle/stage/bg_3d_616_00_01_001",
+          "steamLogicalPath": "AssetBundles/battle/stage/bg_3d_616_00_01_001",
+          "steamCatalogPresent": true,
+          "twFullPath": "battle/stage/bg_3d_616_00_01_001",
+          "twCatalogPresent": true
+        }
+      }
+    }
+  ]
+}

@@ -1,14 +1,17 @@
-# Magi3Dviewer
+# Magius3Dviewer
 
-View Magia Exedra 3D character models in the web browser  
-Includes all characters from Madoka Magica and Magia Record
+Magius3Dviewer is an independently maintained, browser-based 3D viewer for
+Magia Exedra characters, official scenes, enemy models and combat VFX.
 
 Built with [three.js](https://github.com/mrdoob/three.js/)
 
-**Demo: [magi3dviewer.haojiezhe12345.top](https://magi3dviewer.haojiezhe12345.top)**
+**Website: [magius3dviewer.pages.dev](https://magius3dviewer.pages.dev/)**
 
 ## Features
 - View all 3D character models from the game
+- Browse 581 data-driven official scene products and the protected existing scene set
+- Browse 514 enemy records backed by 493 render-ready model and thumbnail products
+- Preview direction-keyed enemy and character combat VFX products
 - Add multiple characters to the scene, and arrange them
 - Play and seek animations, or T-pose without animations
 - Custom lighting, includes color, strength and angle
@@ -18,6 +21,64 @@ Built with [three.js](https://github.com/mrdoob/three.js/)
   - Color filters with brightness, contrast, saturation
   - And additionally, AR mode
 - Export and share presets
+
+## Install and run
+
+Requirements: a current Node.js LTS release and npm.
+
+```sh
+npm ci
+npm run dev
+```
+
+The development server and production build consume only files declared by this
+repository and its lockfile. A game installation, sibling checkout, junction or
+machine-specific `C:/` or `D:/` path is not a runtime prerequisite.
+
+To run the full native-resource release gate (requires the extracted research
+corpus and shader-authority fixtures in addition to this source checkout):
+
+```sh
+npm run build
+npm run preview
+```
+
+To produce the bounded website artifact without copying the 16+ GiB raw
+product corpus into the website, run:
+
+```sh
+npm run build:deploy
+```
+
+This command runs the catalog, UI, delivery and gateway gates before compiling
+the application. Its final packaging step also verifies local action-runtime
+authorities and the original shared enemy-texture corpus against the release
+manifests. Those extracted build inputs must be present for packaging; a source
+checkout alone can run the bounded tests and compile the client, but is not a
+complete native-resource packaging workspace.
+
+`build:deploy` keeps catalogs, thumbnails, character-action products and the app
+in `dist-deploy/`. Official stage, enemy-model and target VFX payloads resolve
+from repository-owned GitHub Release ZIP products through
+`/catalogs/runtime-product-delivery.v1.json`; local development continues to use
+the workspace files directly.
+
+GitHub Release assets do not expose browser CORS headers. The repository's
+zero-dependency Worker at
+`magius3dviewer-runtime-products.crynetsystemscell.workers.dev` adds only CORS
+and streams the fixed `HiiragiNemu/Magi3Dviewer` release tags; it is not an
+arbitrary URL proxy. GitHub Releases remain the product authority.
+
+## Project status and data contracts
+
+- Scene catalog: `/stages/catalog.json`
+- Enemy catalog: `/enemies/manifest.v1.json`
+- Combat VFX catalog: `/vfx/catalog.v1.json`
+- UI-neutral combined catalog: `/catalogs/official-resources.v1.json`
+
+Catalog lookups use stable resource keys. Missing or incomplete products fail
+closed instead of selecting a different scene, model or effect by numeric-ID
+special case.
 
 ## Screenshots
 
@@ -51,7 +112,10 @@ Each mesh has 3 kinds of material: `color`, `shadow` and `ctrl`.
 - Blue: Metalness
 - Alpha: The alpha map for the mesh
 
-The alpha map can be the alpha channel of either `shadow` or `ctrl`, depending on the character.
+Official material profiles select surface alpha per draw: transparent/cutout
+surfaces use the authored `shadow` alpha and available shadow-color alpha, while
+opaque surfaces remain opaque. Legacy profiles retain their original alpha-map
+selection. This is separate from the hair AngelRing highlight.
 
 ### Face shader
 
@@ -211,3 +275,15 @@ The list may not be up to date with the repository.
 - 115001 - 八九寺真宵/魔法少女
 - 115101 - 忍野忍/魔法少女
 - 115201 - まどか先輩/魔法少女 (WIP)
+
+## Website deployment
+
+The maintained source branch is `magius3dviewer`. The production website is served
+by Cloudflare Pages; it is deployed from a tested, frozen `build:deploy` artifact.
+GitHub Releases remain the authority for runtime product ZIPs. A source push does
+not dispatch the retired GitHub Pages deployment workflow.
+
+The full native-resource tests intentionally fail when required extracted
+resource/authority inputs are missing; they are not substitutes for the bounded
+deployment gates or browser checks. Local coordination reports and machine-local
+capture logs are not part of the published application source.

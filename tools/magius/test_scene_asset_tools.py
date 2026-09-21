@@ -622,6 +622,37 @@ class SceneProfileTests(unittest.TestCase):
         self.assertEqual(actual_mip_byte_counts, mip_byte_counts)
         self.assertEqual(dds[148:], payload)
 
+    def test_rgba16f_cubemap_dds_preserves_all_face_mip_bytes(self) -> None:
+        self.assertEqual(scene_profiles.UNITY_TEXTURE_FORMAT_RGBA_HALF, 17)
+        width = 8
+        height = 8
+        mip_count = 4
+        mip_byte_counts = scene_profiles.rgba16f_mip_byte_counts(
+            width,
+            height,
+            mip_count,
+        )
+        face_chain_size = sum(mip_byte_counts)
+        payload = bytes(index % 251 for index in range(face_chain_size * 6))
+        dds, actual_mip_byte_counts = scene_profiles.build_rgba16f_cubemap_dds(
+            payload,
+            width,
+            height,
+            mip_count,
+            face_chain_size,
+        )
+        header = struct.unpack("<37I", dds[:148])
+        self.assertEqual(dds[:4], b"DDS ")
+        self.assertEqual(header[1], 124)
+        self.assertEqual(header[3:5], (height, width))
+        self.assertEqual(header[5], width * 8)
+        self.assertEqual(header[7], mip_count)
+        self.assertEqual(header[28], 0xFE00)
+        self.assertEqual(header[32], 10)
+        self.assertEqual(header[34], 0x4)
+        self.assertEqual(actual_mip_byte_counts, mip_byte_counts)
+        self.assertEqual(dds[148:], payload)
+
     def test_bc6h_texture2d_dds_preserves_exact_lightmap_mips(self) -> None:
         self.assertEqual(scene_profiles.UNITY_TEXTURE_FORMAT_BC6H, 24)
         width = 8

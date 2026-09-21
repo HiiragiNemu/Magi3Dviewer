@@ -4,6 +4,7 @@ import type {
     MaterialFeatureProfile,
 } from '../renderProfile';
 import type { OfficialMaterialProfile } from '../materialProfile';
+import type { NativeSlotResources } from '../nativeMaterialScope';
 
 export * from './userdata'
 export * from './general'
@@ -17,8 +18,13 @@ export * from './gem'
 export * from './gemExtension'
 export * from './depthRim'
 export * from './perspective'
+export * from './namae'
 
 export interface MaterialCreationOptions {
+    /** Exact per-model resources; absent preserves the legacy f2 path. */
+    nativeResources?: NativeSlotResources;
+    /** Explicit native NULL BaseMap contract; no synthetic texture is created. */
+    officialNullBaseMap?: OfficialMaterialProfile;
     colorMap: string;
     shadowMap?: string;
     ctrlMap?: string;

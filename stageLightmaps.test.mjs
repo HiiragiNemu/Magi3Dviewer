@@ -4,7 +4,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import test, { after } from 'node:test'
 import * as THREE from 'three'
-import ts from 'typescript'
+import { buildSync } from 'esbuild'
 
 const repositoryRoot = dirname(fileURLToPath(import.meta.url))
 const sourcePath = join(repositoryRoot, 'src', 'viewer', 'stageLightmaps.ts')
@@ -12,21 +12,9 @@ const runtimePath = join(
     repositoryRoot,
     `.stage-lightmaps-under-test-${process.pid}-${Date.now()}.mjs`,
 )
-const compiled = ts.transpileModule(readFileSync(sourcePath, 'utf8'), {
-    compilerOptions: {
-        module: ts.ModuleKind.ES2022,
-        target: ts.ScriptTarget.ES2022,
-    },
-    fileName: sourcePath,
-})
-writeFileSync(
-    runtimePath,
-    compiled.outputText.replace(
-        "from './unityLighting'",
-        "from './src/viewer/unityLighting.ts'",
-    ),
-    'utf8',
-)
+// Bundle the actual source and its native-mip dependency; no resolver stubs.
+const compiled = buildSync({entryPoints:[sourcePath],bundle:true,platform:'node',format:'esm',packages:'external',write:false})
+writeFileSync(runtimePath,compiled.outputFiles[0].contents)
 const lightmaps = await import(pathToFileURL(runtimePath).href)
 
 after(() => {
@@ -54,6 +42,49 @@ function makeRenderer(parent, name, material) {
     parent.add(mesh)
     return mesh
 }
+
+test('baked coverage follows active FBX carriers, not dormant serialized bindings', () => {
+    const completeActiveCoverage = {
+        matchedRendererCount: 25,
+        unmatchedBindingPaths: Array.from(
+            { length: 222 },
+            (_, index) => `DormantPrefab/Renderer${index}`,
+        ),
+        ambiguousBindingPaths: [],
+        missingSecondUvPaths: [],
+        unsupportedMaterialPaths: [],
+        missingLightmapPaths: [],
+        missingDirectionalLightmapPaths: [],
+    }
+    assert.equal(
+        lightmaps.hasCompleteActiveStageLightmapCoverage(completeActiveCoverage),
+        true,
+    )
+
+    for (const field of [
+        'ambiguousBindingPaths',
+        'missingSecondUvPaths',
+        'unsupportedMaterialPaths',
+        'missingLightmapPaths',
+        'missingDirectionalLightmapPaths',
+    ]) {
+        assert.equal(
+            lightmaps.hasCompleteActiveStageLightmapCoverage({
+                ...completeActiveCoverage,
+                [field]: ['Active/Renderer'],
+            }),
+            false,
+            field,
+        )
+    }
+    assert.equal(
+        lightmaps.hasCompleteActiveStageLightmapCoverage({
+            ...completeActiveCoverage,
+            matchedRendererCount: 0,
+        }),
+        false,
+    )
+})
 
 test('binds 104 hierarchy suffixes with shared RGBM texture and independent ST', () => {
     const root = new THREE.Group()
@@ -326,3 +357,26 @@ test('uses exact linear BC6H lightmaps without applying the RGBM alpha decoder',
     assert.doesNotMatch(shader.fragmentShader, /pow\( lightMapTexel\.a/)
     application.dispose()
 })
+
+test('FBX original names preserve spaces and the runtime root prefix', () => {
+    const root = new THREE.Group(); root.name = 'Stage:fixture'; root.userData.originalName = 'UnityScene';
+    const material = new THREE.MeshStandardMaterial();
+    const a = makeRenderer(root, 'mesh_part', material); a.userData.originalName = 'mesh part';
+    const b = makeRenderer(root, 'mesh_part', material); b.userData.originalName = 'mesh_part';
+    const bindings = ['mesh part', 'mesh_part'].map(name => ({rendererHierarchyPath:'UnityScene/'+name,lightmapIndex:0,lightmapScaleOffset:[1,1,0,0]}));
+    const r = lightmaps.matchStageLightmapBindings(root, bindings);
+    assert.equal(r.matches.length, 2); assert.equal(r.matches[0].mesh, a); assert.equal(r.matches[1].mesh, b);
+    assert.equal(lightmaps.getStageHierarchyPath(a, root), 'Stage:fixture/mesh part');
+    makeRenderer(root, 'mesh_part', material).userData.originalName = 'mesh part';
+    assert.equal(lightmaps.matchStageLightmapBindings(root, [bindings[0]]).ambiguousBindingPaths.length, 1);
+});
+test('lightmap clones retain render-time animation callbacks and restore originals', () => {
+    const root = new THREE.Group(); root.name = 'Root';
+    const material = new THREE.MeshStandardMaterial(); material.userData.advance = 0;
+    material.onBeforeRender = function () { this.userData.advance++; };
+    const mesh = makeRenderer(root, 'atlas', material);
+    const r = lightmaps.applyStageLightmaps(root, new THREE.Texture(), [{rendererHierarchyPath:'Root/atlas',lightmapIndex:0,lightmapScaleOffset:[1,1,0,0]}], {strict:true});
+    assert.notEqual(mesh.material, material); assert.equal(mesh.material.onBeforeRender, material.onBeforeRender);
+    mesh.material.onBeforeRender(); assert.equal(mesh.material.userData.advance, 1); assert.equal(material.userData.advance, 0);
+    r.dispose(); assert.equal(mesh.material, material);
+});

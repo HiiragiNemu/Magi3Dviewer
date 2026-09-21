@@ -35,10 +35,16 @@ export interface StageUv1CompanionApplication {
     installedMeshCount: number
     installedGeometryCount: number
     clonedSharedGeometryCount: number
+    coverageMode: 'all-companion-nodes' | 'required-runtime-paths'
+    requiredRuntimePathCount: number
+    matchedRequiredRuntimePathCount: number
+    missingRequiredRuntimePaths: string[]
     unmatchedCompanionPaths: string[]
     ambiguousCompanionPaths: string[]
     missingGeometryKeys: string[]
     vertexCountMismatchPaths: string[]
+    equivalentDuplicateMeshCount: number
+    equivalentDuplicateRejectionReasons: string[]
 }
 
 interface CandidateMesh {
@@ -90,7 +96,15 @@ export async function loadStageUv1Companion(
 export function applyStageUv1Companion(
     root: THREE.Object3D,
     companion: StageUv1Companion,
-    options: { strict?: boolean } = {},
+    options: {
+        strict?: boolean
+        /**
+         * Exact paths of currently instantiated renderers that consume the
+         * baked lightmap. Serialized companion records for prefab/dependency
+         * renderers that are not present in this FBX remain diagnostic only.
+         */
+        requiredRuntimePaths?: readonly string[]
+    } = {},
 ): StageUv1CompanionApplication {
     const meshes: CandidateMesh[] = []
     root.traverse(object => {
@@ -105,6 +119,9 @@ export function applyStageUv1Companion(
     const vertexCountMismatchPaths: string[] = []
     const assignments: Assignment[] = []
     const claimedMeshes = new Set<THREE.Mesh>()
+    let matchedNodeCount = 0
+    let equivalentDuplicateMeshCount = 0
+    const equivalentDuplicateRejectionReasons: string[] = []
 
     const orderedNodes = [...companion.nodes].sort((left, right) =>
         pathDepth(right.hierarchyPath) - pathDepth(left.hierarchyPath),
@@ -129,47 +146,102 @@ export function applyStageUv1Companion(
             unmatchedCompanionPaths.push(node.hierarchyPath)
             continue
         }
-        if (candidates.length > 1) {
-            ambiguousCompanionPaths.push(node.hierarchyPath)
-            continue
-        }
-
         const geometry = companion.geometries[node.geometryKey]
         if (!geometry) {
             missingGeometryKeys.push(node.geometryKey)
             continue
         }
-        const candidate = candidates[0]
-        const targetVertexCount = candidate.mesh.geometry.getAttribute('position')?.count
-        if (targetVertexCount !== geometry.vertexCount) {
+
+        // AssetStudio can emit multiple Mesh carriers with the same exact
+        // hierarchy path for one serialized Unity Mesh. Admit that duplicate
+        // only when every pre-UV1 geometry channel is byte-equivalent; a true
+        // path collision remains fail-closed.
+        const duplicateRuntimePath = normalizeHierarchyPath(candidates[0].path)
+        const duplicateDifferences = candidates.map(candidate => {
+            if (normalizeHierarchyPath(candidate.path) !== duplicateRuntimePath) {
+                return 'path'
+            }
+            const count = candidate.mesh.geometry.getAttribute('position')?.count
+            if (count !== geometry.vertexCount) {
+                return `vertex-count:${count ?? 'missing'}`
+            }
+            return describeUv1CarrierGeometryDifference(
+                candidates[0].mesh.geometry,
+                candidate.mesh.geometry,
+            )
+        })
+        const exactEquivalentDuplicates = candidates.length > 1
+            && duplicateDifferences.every(difference => difference == undefined)
+        if (candidates.length > 1 && !exactEquivalentDuplicates) {
+            ambiguousCompanionPaths.push(node.hierarchyPath)
+            equivalentDuplicateRejectionReasons.push(
+                `${node.hierarchyPath}:${duplicateDifferences.join(',')}`,
+            )
+            continue
+        }
+
+        const resolvedCandidates = exactEquivalentDuplicates
+            ? candidates
+            : [candidates[0]]
+        if (resolvedCandidates.some(candidate =>
+            candidate.mesh.geometry.getAttribute('position')?.count
+                !== geometry.vertexCount
+        )) {
             vertexCountMismatchPaths.push(node.hierarchyPath)
             continue
         }
-        claimedMeshes.add(candidate.mesh)
-        assignments.push({
-            mesh: candidate.mesh,
-            path: candidate.path,
-            node,
-            geometry,
-        })
+        matchedNodeCount++
+        equivalentDuplicateMeshCount += resolvedCandidates.length - 1
+        for (const candidate of resolvedCandidates) {
+            claimedMeshes.add(candidate.mesh)
+            assignments.push({
+                mesh: candidate.mesh,
+                path: candidate.path,
+                node,
+                geometry,
+            })
+        }
     }
 
+    const requiredRuntimePaths = options.requiredRuntimePaths == undefined
+        ? undefined
+        : [...new Set(options.requiredRuntimePaths.map(normalizeHierarchyPath))]
+    const assignedRuntimePaths = new Set(
+        assignments.map(assignment => normalizeHierarchyPath(assignment.path)),
+    )
+    const missingRequiredRuntimePaths = requiredRuntimePaths?.filter(
+        path => !assignedRuntimePaths.has(path),
+    ) ?? []
+    const matchedRequiredRuntimePathCount =
+        (requiredRuntimePaths?.length ?? 0) - missingRequiredRuntimePaths.length
+    const coverageFailure = requiredRuntimePaths == undefined
+        ? unmatchedCompanionPaths.length > 0
+            || matchedNodeCount !== companion.nodes.length
+        : missingRequiredRuntimePaths.length > 0
     const strictFailure =
-        unmatchedCompanionPaths.length > 0
+        coverageFailure
         || ambiguousCompanionPaths.length > 0
         || missingGeometryKeys.length > 0
         || vertexCountMismatchPaths.length > 0
-        || assignments.length !== companion.nodes.length
 
     if (options.strict && strictFailure) {
         throw new Error([
             'Stage UV1 companion did not resolve exactly.',
             `declared=${companion.nodes.length}`,
-            `matched=${assignments.length}`,
+            `matched=${matchedNodeCount}`,
             `unmatched=${unmatchedCompanionPaths.length}`,
+            `coverage=${requiredRuntimePaths == undefined
+                ? 'all-companion-nodes'
+                : 'required-runtime-paths'}`,
+            `required=${requiredRuntimePaths?.length ?? companion.nodes.length}`,
+            `matchedRequired=${requiredRuntimePaths == undefined
+                ? matchedNodeCount
+                : matchedRequiredRuntimePathCount}`,
+            `missingRequired=${missingRequiredRuntimePaths.length}`,
             `ambiguous=${ambiguousCompanionPaths.length}`,
             `missingGeometry=${missingGeometryKeys.length}`,
             `vertexMismatch=${vertexCountMismatchPaths.length}`,
+            `duplicateReject=${equivalentDuplicateRejectionReasons.join('|')}`,
         ].join(' '))
     }
 
@@ -221,15 +293,119 @@ export function applyStageUv1Companion(
         stageId: companion.stageId,
         sourceRevision: companion.sourceRevision,
         declaredNodeCount: companion.nodes.length,
-        matchedNodeCount: assignments.length,
+        matchedNodeCount,
         installedMeshCount: assignments.length,
         installedGeometryCount,
         clonedSharedGeometryCount,
+        coverageMode: requiredRuntimePaths == undefined
+            ? 'all-companion-nodes'
+            : 'required-runtime-paths',
+        requiredRuntimePathCount:
+            requiredRuntimePaths?.length ?? companion.nodes.length,
+        matchedRequiredRuntimePathCount: requiredRuntimePaths == undefined
+            ? matchedNodeCount
+            : matchedRequiredRuntimePathCount,
+        missingRequiredRuntimePaths,
         unmatchedCompanionPaths,
         ambiguousCompanionPaths,
         missingGeometryKeys,
         vertexCountMismatchPaths,
+        equivalentDuplicateMeshCount,
+        equivalentDuplicateRejectionReasons,
     }
+}
+
+function describeUv1CarrierGeometryDifference(
+    left: THREE.BufferGeometry,
+    right: THREE.BufferGeometry,
+) {
+    if (left === right) return undefined
+    if (left.morphTargetsRelative !== right.morphTargetsRelative) {
+        return 'morph-relative'
+    }
+    if (
+        left.drawRange.start !== right.drawRange.start
+        || left.drawRange.count !== right.drawRange.count
+    ) return 'draw-range'
+    if (!areGroupsEquivalent(left.groups, right.groups)) return 'groups'
+    if (!areAttributesEquivalent(left.index, right.index)) return 'index'
+
+    // Compare only immutable FBX source channels. Material assembly may add
+    // derived attributes (for example tangents) to one carrier before UV1 is
+    // restored; those do not change serialized Mesh identity.
+    const sourceAttributeNames = [
+        'position',
+        'normal',
+        'uv',
+        'color',
+        'skinIndex',
+        'skinWeight',
+    ] as const
+    for (const name of sourceAttributeNames) {
+        if (!areAttributesEquivalent(left.getAttribute(name), right.getAttribute(name))) {
+            return `attribute:${name}`
+        }
+    }
+
+    const leftMorphAttributes = left.morphAttributes as Record<
+        string,
+        Array<THREE.BufferAttribute | THREE.InterleavedBufferAttribute>
+    >
+    const rightMorphAttributes = right.morphAttributes as Record<
+        string,
+        Array<THREE.BufferAttribute | THREE.InterleavedBufferAttribute>
+    >
+    const leftMorphNames = Object.keys(leftMorphAttributes).sort()
+    const rightMorphNames = Object.keys(rightMorphAttributes).sort()
+    if (!arraysEqual(leftMorphNames, rightMorphNames)) return 'morph-names'
+    for (const name of leftMorphNames) {
+        const leftMorphs = leftMorphAttributes[name]
+        const rightMorphs = rightMorphAttributes[name]
+        if (leftMorphs.length !== rightMorphs.length) return `morph-count:${name}`
+        for (let index = 0; index < leftMorphs.length; index++) {
+            if (!areAttributesEquivalent(leftMorphs[index], rightMorphs[index])) {
+                return `morph-attribute:${name}:${index}`
+            }
+        }
+    }
+    return undefined
+}
+
+function areGroupsEquivalent(
+    left: readonly THREE.BufferGeometry['groups'][number][],
+    right: readonly THREE.BufferGeometry['groups'][number][],
+) {
+    return left.length === right.length && left.every((group, index) =>
+        group.start === right[index].start
+        && group.count === right[index].count
+        && group.materialIndex === right[index].materialIndex
+    )
+}
+
+function areAttributesEquivalent(
+    left: THREE.BufferAttribute | THREE.InterleavedBufferAttribute | null | undefined,
+    right: THREE.BufferAttribute | THREE.InterleavedBufferAttribute | null | undefined,
+) {
+    if (left === right) return true
+    if (!left || !right) return false
+    if (
+        'isInterleavedBufferAttribute' in left
+        || 'isInterleavedBufferAttribute' in right
+        || left.itemSize !== right.itemSize
+        || left.count !== right.count
+        || left.normalized !== right.normalized
+        || left.array.constructor !== right.array.constructor
+        || left.array.length !== right.array.length
+    ) return false
+    for (let index = 0; index < left.array.length; index++) {
+        if (!Object.is(left.array[index], right.array[index])) return false
+    }
+    return true
+}
+
+function arraysEqual<T>(left: readonly T[], right: readonly T[]) {
+    return left.length === right.length
+        && left.every((value, index) => value === right[index])
 }
 
 function decodeUv1(record: StageUv1GeometryRecord) {
@@ -273,6 +449,10 @@ function getHierarchyPath(object: THREE.Object3D, root: THREE.Object3D) {
 function normalizeHierarchyPath(path: string) {
     return path
         .replaceAll('\\', '/')
+        // FBXLoader sanitizes node names through PropertyBinding by replacing
+        // spaces with underscores. Companion paths preserve the source names;
+        // canonicalize both forms before suffix matching.
+        .replace(/\s/g, '_')
         .split('/')
         .filter(Boolean)
         .join('/')

@@ -1,0 +1,533 @@
+{
+  "schema": "magius.nonbattle-character-profile.v1",
+  "stableKey": "style3d-character:style3dCharacterMstId=113601|resourceName=chara_113601_model",
+  "identity": {
+    "identityKey": "style3dCharacterMstId=113601|resourceName=chara_113601_model",
+    "style3dCharacterMstId": 113601,
+    "resourceName": "chara_113601_model",
+    "canonicalName": "ヨダカ",
+    "alias": "ヨタカ"
+  },
+  "classification": {
+    "sourceFamily": "story-cutscene",
+    "ordinaryCharacterSelector": false,
+    "battle": false,
+    "tps": false,
+    "dungeon": false,
+    "magicalGirl": false
+  },
+  "publication": {
+    "status": "new-candidate",
+    "technicalStatus": "runtime-ready",
+    "userAcceptance": "pending",
+    "failClosedReasons": []
+  },
+  "source": {
+    "sourceStableKey": "assetbundle:home/chara_113601_model",
+    "logicalKey": "home/chara_113601_model",
+    "prefab": "assets/webresources/assetbundles/outer/home/chara_113601_model.prefab",
+    "unityVersion": "2022.3.62f2"
+  },
+  "model": {
+    "outerRootPath": "chara_113601_model",
+    "neutralRenderRootPath": "chara_113601_model/chara_113601",
+    "rootPolicy": "validate-authored-outer-then-neutralize-without-reparenting-rig",
+    "authoredOuterPlacement": {
+      "unity": {
+        "position": [
+          6.199999809265137,
+          0.11999999731779099,
+          -4.375
+        ],
+        "quaternion": [
+          0.0,
+          -0.4154156744480133,
+          0.0,
+          0.9096317291259766
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "viewer": {
+        "position": [
+          -6.199999809265137,
+          0.11999999731779099,
+          -4.375
+        ],
+        "quaternion": [
+          0.0,
+          0.4154156744480133,
+          -0.0,
+          0.9096317291259766
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "viewerPlacement": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "renderers": [
+      {
+        "hierarchyPath": "chara_113601_model/chara_113601/chara/Body_Mesh",
+        "meshName": "Body_Mesh",
+        "rendererPathId": "1217016013388438858",
+        "meshPathId": "1530215294039857575",
+        "sourceVertexCount": 3566,
+        "expandedIndexCount": 14286,
+        "boneCount": 48,
+        "bindPoseCount": 48
+      },
+      {
+        "hierarchyPath": "chara_113601_model/chara_113601/chara/Eye_L_Mesh",
+        "meshName": "Eye_L_Mesh",
+        "rendererPathId": "-1671271859037327755",
+        "meshPathId": "-1854272533829632044",
+        "sourceVertexCount": 82,
+        "expandedIndexCount": 384,
+        "boneCount": 1,
+        "bindPoseCount": 1
+      },
+      {
+        "hierarchyPath": "chara_113601_model/chara_113601/chara/Eye_R_Mesh",
+        "meshName": "Eye_R_Mesh",
+        "rendererPathId": "-6381279742482591484",
+        "meshPathId": "-1092291027146177491",
+        "sourceVertexCount": 258,
+        "expandedIndexCount": 1440,
+        "boneCount": 4,
+        "bindPoseCount": 4
+      },
+      {
+        "hierarchyPath": "chara_113601_model/chara_113601/chara/Head_Mesh",
+        "meshName": "Head_Mesh",
+        "rendererPathId": "7075315528037031178",
+        "meshPathId": "574696378260241655",
+        "sourceVertexCount": 2589,
+        "expandedIndexCount": 12588,
+        "boneCount": 60,
+        "bindPoseCount": 60
+      },
+      {
+        "hierarchyPath": "chara_113601_model/chara_113601/chara/Tangue_Mesh",
+        "meshName": "Tangue_Mesh",
+        "rendererPathId": "-1376208912962696081",
+        "meshPathId": "-5040285992979390861",
+        "sourceVertexCount": 141,
+        "expandedIndexCount": 708,
+        "boneCount": 5,
+        "bindPoseCount": 5
+      },
+      {
+        "hierarchyPath": "chara_113601_model/chara_113601/chara/WingHand_Mesh",
+        "meshName": "WingHand_Mesh",
+        "rendererPathId": "2363013169659867733",
+        "meshPathId": "6999695215113865891",
+        "sourceVertexCount": 908,
+        "expandedIndexCount": 4776,
+        "boneCount": 55,
+        "bindPoseCount": 55
+      },
+      {
+        "hierarchyPath": "chara_113601_model/chara_113601/chara/Wing_Mesh",
+        "meshName": "Wing_Mesh",
+        "rendererPathId": "4127889114873445118",
+        "meshPathId": "2913627719055933724",
+        "sourceVertexCount": 1328,
+        "expandedIndexCount": 7056,
+        "boneCount": 55,
+        "bindPoseCount": 55
+      }
+    ],
+    "rendererTextureBindings": [
+      {
+        "meshName": "Eye_L_Mesh",
+        "sourceMaterialPathId": "1336752404538202619",
+        "sourceMaterialName": "mt_chara_113601_head",
+        "sourceTextureStem": "head",
+        "projectedTextureStem": "eye_l",
+        "requiredTextureKinds": [
+          "color",
+          "shadow",
+          "ctrl"
+        ],
+        "policy": "project-authority-material-texture-set"
+      },
+      {
+        "meshName": "Eye_R_Mesh",
+        "sourceMaterialPathId": "1336752404538202619",
+        "sourceMaterialName": "mt_chara_113601_head",
+        "sourceTextureStem": "head",
+        "projectedTextureStem": "eye_r",
+        "requiredTextureKinds": [
+          "color",
+          "shadow",
+          "ctrl"
+        ],
+        "policy": "project-authority-material-texture-set"
+      },
+      {
+        "meshName": "Tangue_Mesh",
+        "sourceMaterialPathId": "1336752404538202619",
+        "sourceMaterialName": "mt_chara_113601_head",
+        "sourceTextureStem": "head",
+        "projectedTextureStem": "tangue",
+        "requiredTextureKinds": [
+          "color",
+          "shadow",
+          "ctrl"
+        ],
+        "policy": "project-authority-material-texture-set"
+      }
+    ],
+    "skinBindPoseClosure": {
+      "stableKey": "skin-bindpose-closure:style3dCharacterMstId=113601|resourceName=chara_113601_model",
+      "policy": "postmultiply-exported-inverses-by-authored-outer-viewer-matrix",
+      "anchorRendererPath": "chara_113601_model/chara_113601/chara/Body_Mesh",
+      "anchorBoneName": "Root",
+      "sourceAnchorInverse": [
+        0.6548596406918643,
+        0,
+        0.7557505216623555,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -0.7557505216623555,
+        0,
+        0.6548596406918643,
+        0,
+        0.7537211151121892,
+        -0.11999999731779099,
+        7.550664018185538,
+        1
+      ],
+      "targetAnchorInverse": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    "nativeTransformClosures": [
+      {
+        "stableKey": "unity-transform:bundle=home/chara_113601_model|pathID=6463519818794593097",
+        "path": "chara_113601_model/chara_113601/Root/Hip/Spine/Chest/Neck/Eye_R1/Eye_R2",
+        "aliases": [],
+        "sourceExpected": {
+          "position": [
+            0,
+            -4.440892098500626e-16,
+            -1.7763568394002505e-15
+          ],
+          "quaternion": [
+            -0.18106912592663518,
+            0.020959306428345884,
+            -0.011904546189516795,
+            0.9784246726840959
+          ],
+          "scale": [
+            1.0005535661247256,
+            1.1180694160326556,
+            0.9628032589386498
+          ]
+        },
+        "target": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "quaternion": [
+            -0.16162952780723572,
+            0.01979290507733822,
+            -0.012852368876338005,
+            0.986569344997406
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "policy": "validate-export-decomposition-then-restore-unity-reflection"
+      },
+      {
+        "stableKey": "unity-transform:bundle=home/chara_113601_model|pathID=-2662405915341137812",
+        "path": "chara_113601_model/eff_yodaka_wing_drop/Plane Transform 1",
+        "aliases": [
+          "chara_113601_model/eff_yodaka_wing_drop/Plane_Transform_1"
+        ],
+        "sourceExpected": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "target": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "quaternion": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "renameTo": "Plane Transform 1",
+        "policy": "restore-authority-helper-identity"
+      }
+    ]
+  },
+  "storyController": {
+    "activeControllerPathId": "-3051724465002089795",
+    "name": "chara_113601_yodaka",
+    "defaultAction": "Wait",
+    "clipCount": 23,
+    "clips": [
+      {
+        "pathId": "5759264336333126586",
+        "name": "chara_113601_Anger_E",
+        "durationSeconds": 0.8333332538604736,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-6697554083658839157",
+        "name": "chara_113601_Anger_L",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "4623663908809942676",
+        "name": "chara_113601_Anger_S",
+        "durationSeconds": 0.5,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-298142170981503848",
+        "name": "chara_113601_CircleRun",
+        "durationSeconds": 7.5,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "8998427725454816018",
+        "name": "chara_113601_Joy_E",
+        "durationSeconds": 0.40000009536743164,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "2987189345554409481",
+        "name": "chara_113601_Joy_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-3413699070292621682",
+        "name": "chara_113601_Joy_S",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "3349302699107276092",
+        "name": "chara_113601_No",
+        "durationSeconds": 1.5,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "7187964455966533682",
+        "name": "chara_113601_Puzzled_E",
+        "durationSeconds": 0.6333332061767578,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-310855626460961661",
+        "name": "chara_113601_Puzzled_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-6644393622007869801",
+        "name": "chara_113601_Puzzled_S",
+        "durationSeconds": 0.6666666865348816,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "7594912605412689815",
+        "name": "chara_113601_Run-Down-Run",
+        "durationSeconds": 29.33333396911621,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "5273032990309188307",
+        "name": "chara_113601_Sorrow_E",
+        "durationSeconds": 2.3333334922790527,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-9124271219280996014",
+        "name": "chara_113601_Sorrow_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-429047311297102728",
+        "name": "chara_113601_Sorrow_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "2102561415092829087",
+        "name": "chara_113601_Surprise_E",
+        "durationSeconds": 0.40000009536743164,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-1062494539500192271",
+        "name": "chara_113601_Surprise_L",
+        "durationSeconds": 0.6666666269302368,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-2118444739551285148",
+        "name": "chara_113601_Surprise_S",
+        "durationSeconds": 0.5,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "7869661825291539894",
+        "name": "chara_113601_Wait02",
+        "durationSeconds": 5.599999904632568,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-419265285060186777",
+        "name": "chara_113601_Wait03",
+        "durationSeconds": 3.7166666984558105,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "1827114004534278057",
+        "name": "chara_113601_Walk_Catch_Walk",
+        "durationSeconds": 47.266666412353516,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "5141360708532701084",
+        "name": "chara_113601_Yes",
+        "durationSeconds": 1.100000023841858,
+        "sampleRate": 60.0
+      },
+      {
+        "pathId": "-3761144154397984190",
+        "name": "Wait",
+        "durationSeconds": 3.1666667461395264,
+        "sampleRate": 60.0
+      }
+    ]
+  },
+  "effects": [
+    {
+      "stableKey": "nonbattle-effect:style3dCharacterMstId=113601|name=eff_yodaka_wing_drop",
+      "productFileName": "wing-drop-effect.v1.json",
+      "rootPath": "chara_113601_model/eff_yodaka_wing_drop",
+      "helperPath": "chara_113601_model/eff_yodaka_wing_drop/Plane Transform 1",
+      "playOnAwake": true,
+      "expectedParticleSystems": 1
+    }
+  ],
+  "physics": {
+    "attachment": "required",
+    "writerPolicy": "existing-character-physics-single-writer",
+    "profileStableKey": "character-physics:style3dCharacterMstId=113601|resourceName=chara_113601_model",
+    "productUrl": "/character-physics/characters/113601/profile.v1.json",
+    "expectedClothComponentStableKeys": [],
+    "expectedClothTeams": 0,
+    "expectedMagicaColliders": 0,
+    "expectedNativeColliderStableKeys": [
+      "unity-component:bundle=home/chara_113601_model|pathID=-8417501127290779720"
+    ],
+    "expectedNativeColliders": 1
+  },
+  "scenario": {
+    "exactScenarioAssetId": "Yodaka",
+    "nativeOwnerComponent": "HomeModelObjectCharacterYodaka",
+    "nativeOwnerComponentPathId": "6928845033473554577",
+    "modelTransformPathId": "420320619361242573",
+    "variablePostures": [
+      0
+    ],
+    "actionTypeCounts": {
+      "ChangeCamera": 25,
+      "CharacterLooks": 3,
+      "CharacterTalk": 55,
+      "OnlyMotion": 31,
+      "SetActive": 8
+    },
+    "motionCounts": {
+      "Anger": 8,
+      "Joy": 13,
+      "No": 1,
+      "Puzzled": 4,
+      "Sorrow": 5,
+      "Surprise": 11,
+      "Wait": 23,
+      "Wait02": 3,
+      "Wait03": 2,
+      "Yes": 10
+    }
+  }
+}

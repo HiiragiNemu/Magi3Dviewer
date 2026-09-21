@@ -1,4 +1,3 @@
-import './style.css'
 import './polyfills'
 import { setupViewer } from './viewer'
 import { installLocalization } from './viewer/localization/zhCN'

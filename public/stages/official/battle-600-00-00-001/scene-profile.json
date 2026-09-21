@@ -1,0 +1,1850 @@
+{
+  "schemaVersion": 1,
+  "stageId": "battle-600-00-00-001",
+  "coordinateSpace": {
+    "source": "unity-world",
+    "viewer": "assetstudio-fbx-reflect-x"
+  },
+  "materialBindings": [
+    {
+      "materialName": "mt_bg3d600A_00_groundAAlpha",
+      "sourceShader": "Creative/Bg/BgUberShader",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "disabledShaderPasses": [],
+      "shading": "lit",
+      "unlitness": 0,
+      "smoothness": 0,
+      "metallic": 0,
+      "vertexColorBlend": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": true,
+      "receiveShadow": true,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "alphaTest": 0.5,
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_groundAAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-1458560298851987815",
+          "sourceTextureCab": "CAB-4acccb04fcc329989606a115e63a3c44",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 12,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/734787269a275d74f96ac5d520c153a3"
+        }
+      }
+    },
+    {
+      "materialName": "mt_bg3d600A_00_groundBAlpha",
+      "sourceShader": "Creative/Bg/BgUberShader",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "lit",
+      "unlitness": 0,
+      "smoothness": 0,
+      "metallic": 0,
+      "vertexColorBlend": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "alphaTest": 0.5,
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_groundBAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-5400233002816121009",
+          "sourceTextureCab": "CAB-0f51caefa0ea781c0e41331b6df3c324",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/9f868eeac0fd6024391ec3157bd5793f"
+        }
+      }
+    },
+    {
+      "materialName": "mt_bg3d600A_00_propAlpha3",
+      "materialPattern": "^mt_bg3d600A_00_propAlpha3(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUnlit",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON",
+        "_NORMALMAP",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "unlit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_propAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "2648090868556930103",
+          "sourceTextureCab": "CAB-2158482d9b2b092d3a111617542c901b",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/6c7eb55af5e3e5546822c10402a5f770"
+        },
+        "matCap": {
+          "url": "./stages/official/battle-600-00-00-001/matcap_sunset_02.tw-native-mip0.png",
+          "sourceProperty": "_MatCapTex",
+          "sourceTexturePathId": "-5034374025722903887",
+          "sourceTextureCab": "CAB-aae5b15c1b2fca139b0ca5b1f9b430dd",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "view-normal"
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 9,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "battle/stage/bg_3d_600_00_00_001",
+          "nativeMipManifestUrl": "./stages/official/battle-600-00-00-001/matcap_sunset_02.tw-native-mips.json"
+        }
+      },
+      "unlitness": 1,
+      "smoothness": 0.25,
+      "metallic": 0,
+      "normalScale": 1,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 0.5,
+      "useMatCap": true,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "alphaTest": 0.5
+    },
+    {
+      "materialName": "mt_bg3d600A_00_propAlpha2",
+      "materialPattern": "^mt_bg3d600A_00_propAlpha2(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUnlit",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON",
+        "_NORMALMAP",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "unlit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_propAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "2648090868556930103",
+          "sourceTextureCab": "CAB-2158482d9b2b092d3a111617542c901b",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/6c7eb55af5e3e5546822c10402a5f770"
+        },
+        "matCap": {
+          "url": "./stages/official/battle-600-00-00-001/matcap_sunset_01.tw-native-mip0.png",
+          "sourceProperty": "_MatCapTex",
+          "sourceTexturePathId": "6976693679647337298",
+          "sourceTextureCab": "CAB-aae5b15c1b2fca139b0ca5b1f9b430dd",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "view-normal"
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 9,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "battle/stage/bg_3d_600_00_00_001",
+          "nativeMipManifestUrl": "./stages/official/battle-600-00-00-001/matcap_sunset_01.tw-native-mips.json"
+        }
+      },
+      "unlitness": 1,
+      "smoothness": 0.30000001192092896,
+      "metallic": 0,
+      "normalScale": 1,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 0.5,
+      "useMatCap": true,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "alphaTest": 0.5
+    },
+    {
+      "materialName": "mt_bg3d600A_00_propScissors",
+      "materialPattern": "^mt_bg3d600A_00_propScissors(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUnlit",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON",
+        "_EMISSION",
+        "_NORMALMAP",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "unlit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_propAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "2648090868556930103",
+          "sourceTextureCab": "CAB-2158482d9b2b092d3a111617542c901b",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/6c7eb55af5e3e5546822c10402a5f770"
+        },
+        "emission": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_propAlpha_col.png",
+          "sourceProperty": "_EmissionMap",
+          "sourceTexturePathId": "2648090868556930103",
+          "sourceTextureCab": "CAB-2158482d9b2b092d3a111617542c901b",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/6c7eb55af5e3e5546822c10402a5f770"
+        }
+      },
+      "unlitness": 1,
+      "smoothness": 0.6000000238418579,
+      "metallic": 0,
+      "normalScale": 1,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "alphaTest": 0.5
+    },
+    {
+      "materialName": "mt_bg3d600A_00_trafficOfficerAlphaA",
+      "materialPattern": "^mt_bg3d600A_00_trafficOfficerAlphaA(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUberShader",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON",
+        "_FLIPBOOK"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "lit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_trafficOfficerAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-2890621127834126392",
+          "sourceTextureCab": "CAB-7ef1fd281b114932c9cdd58ad0284f3c",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/36bd84d692979ee41980372f3692f97a"
+        }
+      },
+      "unlitness": 0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "alphaTest": 0.5,
+      "atlas": {
+        "columns": 3,
+        "rows": 2,
+        "offset": 0,
+        "framesPerSecond": 7
+      }
+    },
+    {
+      "materialName": "mt_bg3d600A_00_trafficOfficerAlphaB",
+      "materialPattern": "^mt_bg3d600A_00_trafficOfficerAlphaB(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUberShader",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON",
+        "_FLIPBOOK"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "lit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_trafficOfficerAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-2890621127834126392",
+          "sourceTextureCab": "CAB-7ef1fd281b114932c9cdd58ad0284f3c",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/36bd84d692979ee41980372f3692f97a"
+        }
+      },
+      "unlitness": 0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "alphaTest": 0.5,
+      "atlas": {
+        "columns": 3,
+        "rows": 2,
+        "offset": 2,
+        "framesPerSecond": 7
+      }
+    },
+    {
+      "materialName": "mt_bg3d600A_00_trafficOfficerAlphaC",
+      "materialPattern": "^mt_bg3d600A_00_trafficOfficerAlphaC(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUberShader",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON",
+        "_FLIPBOOK"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "lit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_trafficOfficerAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-2890621127834126392",
+          "sourceTextureCab": "CAB-7ef1fd281b114932c9cdd58ad0284f3c",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/36bd84d692979ee41980372f3692f97a"
+        }
+      },
+      "unlitness": 0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "alphaTest": 0.5,
+      "atlas": {
+        "columns": 3,
+        "rows": 2,
+        "offset": 4,
+        "framesPerSecond": 7
+      }
+    },
+    {
+      "materialName": "mt_bg3d600A_00_propAlpha_Metallic",
+      "materialPattern": "^mt_bg3d600A_00_propAlpha_Metallic(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUberShader",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON",
+        "_NORMALMAP"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "lit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_propAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "2648090868556930103",
+          "sourceTextureCab": "CAB-2158482d9b2b092d3a111617542c901b",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/6c7eb55af5e3e5546822c10402a5f770"
+        },
+        "normal": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_propAlpha_nml.png",
+          "sourceProperty": "_BumpMap",
+          "sourceTexturePathId": "-3047327842544153887",
+          "sourceTextureCab": "CAB-a1e9743ac319321ce64ae886ce3fe4e6",
+          "serializedColorSpace": "linear",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/db0699ca4b99e2e47a1f998fad033338"
+        }
+      },
+      "unlitness": 0.4000000059604645,
+      "smoothness": 0.25,
+      "metallic": 0,
+      "normalScale": 1,
+      "normalPacking": "unity-dxt5nm-ag",
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 0.35100001096725464,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "alphaTest": 0.5
+    },
+    {
+      "materialName": "mt_bg3d600A_00_propAlpha",
+      "materialPattern": "^mt_bg3d600A_00_propAlpha(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUnlit",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON",
+        "_NORMALMAP",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "unlit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_propAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "2648090868556930103",
+          "sourceTextureCab": "CAB-2158482d9b2b092d3a111617542c901b",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/6c7eb55af5e3e5546822c10402a5f770"
+        },
+        "matCap": {
+          "url": "./stages/official/battle-600-00-00-001/matcap_sunset_01.tw-native-mip0.png",
+          "sourceProperty": "_MatCapTex",
+          "sourceTexturePathId": "6976693679647337298",
+          "sourceTextureCab": "CAB-aae5b15c1b2fca139b0ca5b1f9b430dd",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "view-normal"
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 9,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "battle/stage/bg_3d_600_00_00_001",
+          "nativeMipManifestUrl": "./stages/official/battle-600-00-00-001/matcap_sunset_01.tw-native-mips.json"
+        }
+      },
+      "unlitness": 1,
+      "smoothness": 0.25,
+      "metallic": 0,
+      "normalScale": 1,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 0.29499998688697815,
+      "useMatCap": true,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "alphaTest": 0.5
+    },
+    {
+      "materialName": "mt_bg3d600A_00_holeAlpha",
+      "materialPattern": "^mt_bg3d600A_00_holeAlpha(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUberShader",
+      "renderQueue": 3000,
+      "validKeywords": [
+        "_ALPHAPREMULTIPLY_ON",
+        "_ALPHATEST_ON",
+        "_RECEIVE_SHADOWS_OFF",
+        "_SURFACE_TYPE_TRANSPARENT"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER",
+        "DepthOnly"
+      ],
+      "shading": "lit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_propAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "2648090868556930103",
+          "sourceTextureCab": "CAB-2158482d9b2b092d3a111617542c901b",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/6c7eb55af5e3e5546822c10402a5f770"
+        }
+      },
+      "unlitness": 0.5,
+      "smoothness": 0.25,
+      "metallic": 0,
+      "normalScale": 1,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1,
+      "transparent": true,
+      "depthWrite": false,
+      "alphaToCoverage": false,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "alphaTest": 0,
+      "blending": "normal"
+    },
+    {
+      "materialName": "mt_bg3d600A_00_organsAlpha",
+      "materialPattern": "^mt_bg3d600A_00_organsAlpha(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUnlit",
+      "renderQueue": 2450,
+      "validKeywords": [
+        "_ALPHATEST_ON"
+      ],
+      "invalidKeywords": [
+        "_ALPHACLIP_ON",
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON",
+        "_NORMALMAP",
+        "_RECEIVE_SHADOWS_OFF"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "unlit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_propAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "2648090868556930103",
+          "sourceTextureCab": "CAB-2158482d9b2b092d3a111617542c901b",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/6c7eb55af5e3e5546822c10402a5f770"
+        }
+      },
+      "unlitness": 1,
+      "smoothness": 0.30000001192092896,
+      "metallic": 0,
+      "normalScale": 1,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": true,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "alphaTest": 0.5
+    },
+    {
+      "materialName": "mt_bg3d600A_00_sky",
+      "materialPattern": "^mt_bg3d600A_00_sky(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUnlit",
+      "renderQueue": 2000,
+      "validKeywords": [],
+      "invalidKeywords": [
+        "_DROPFRAME_HUESHIFT_ON",
+        "_DROPFRAME_MULTISCROLL_ON",
+        "_RECEIVESHADOWS_ON"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "unlit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_sky_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "3383636149897436939",
+          "sourceTextureCab": "CAB-77184a24b25668bad5fc79e25ee3b258",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/cd0989919e3a7264e8e74f06ed8d23c8"
+        }
+      },
+      "unlitness": 1,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 0,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": false,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "front",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "emissionColor": [
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "sourceRecords": {
+    "stableId": "SCENE-BOSS-SOURCE-PROFILE/GROUND-BASEMAP-01",
+    "region": "TW-Android",
+    "unityVersion": "2022.3.62f3",
+    "unityVersionBasis": "Parser profile; original header omitted",
+    "rootCab": "CAB-aae5b15c1b2fca139b0ca5b1f9b430dd",
+    "bundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\battle\\stage\\bg_3d_600_00_00_001",
+    "scope": "Two source-exact diffuse bindings only; no catalog/status/light/runtime activation",
+    "affectedRendererCount": 18,
+    "fieldProvenance": [
+      {
+        "material": "mt_bg3d600A_00_groundAAlpha",
+        "materialPathID": "-8527882741447856417",
+        "property": "_BaseMap",
+        "source": {
+          "pointer": {
+            "fileID": 2,
+            "pathID": "-1458560298851987815",
+            "cab": "CAB-4acccb04fcc329989606a115e63a3c44",
+            "type": "Texture2D",
+            "name": "bg3d600A_00_groundAAlpha_col",
+            "status": "RESOLVED"
+          },
+          "scale": [
+            1,
+            1
+          ],
+          "offset": [
+            0,
+            0
+          ]
+        },
+        "profileTexture": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_groundAAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-1458560298851987815",
+          "sourceTextureCab": "CAB-4acccb04fcc329989606a115e63a3c44",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 12,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/734787269a275d74f96ac5d520c153a3"
+        }
+      },
+      {
+        "material": "mt_bg3d600A_00_groundBAlpha",
+        "materialPathID": "-1589583002611752817",
+        "property": "_BaseMap",
+        "source": {
+          "pointer": {
+            "fileID": 6,
+            "pathID": "-5400233002816121009",
+            "cab": "CAB-0f51caefa0ea781c0e41331b6df3c324",
+            "type": "Texture2D",
+            "name": "bg3d600A_00_groundBAlpha_col",
+            "status": "RESOLVED"
+          },
+          "scale": [
+            1,
+            1
+          ],
+          "offset": [
+            0,
+            0
+          ]
+        },
+        "profileTexture": {
+          "url": "./stages/official/battle-600-00-00-001/bg3d600A_00_groundBAlpha_col.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "-5400233002816121009",
+          "sourceTextureCab": "CAB-0f51caefa0ea781c0e41331b6df3c324",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1,
+              1
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d",
+          "sourceTextureBundle": "texture/bg/9f868eeac0fd6024391ec3157bd5793f"
+        }
+      }
+    ],
+    "lightingAndUv1Evidence": "See evidence/tw-profile-extracted.json and scene-source-mapping.json; not enabled by this candidate",
+    "nativeLightmapIntegration": {
+      "stableId": "BOSS-UV1-NATIVE-LIGHTMAP-INTEGRATION",
+      "sourceRegion": "TW-Android",
+      "sourceRevision": "rU2k",
+      "addedClosure": {
+        "uv1Renderers": 234,
+        "lightmapRenderers": 234,
+        "nativeMipLevels": 11,
+        "encoding": "unity-rgbm-linear",
+        "decodedMipBytes": 5592404,
+        "generatedMipmaps": false
+      },
+      "retainedDiffuse": {
+        "materialBindingCount": 2,
+        "affectedRendererCount": 18,
+        "sourceRecord": "SCENE-BOSS-SOURCE-PROFILE/GROUND-BASEMAP-01"
+      },
+      "retainedResearchProfile": {
+        "source": "public/stages/catalog.json",
+        "stageId": "battle-600-00-00-001",
+        "classification": "legacy manual-research; not native lighting recovery",
+        "preservedFields": [
+          "id",
+          "source",
+          "backgroundColor",
+          "fog",
+          "ambientLight",
+          "directionalLight",
+          "renderer",
+          "colorFilter",
+          "bloom"
+        ]
+      },
+      "newlyEnabledNativeLighting": {
+        "gpuCubemap": false,
+        "hdrEnvironment": false,
+        "sevenLights": false,
+        "reDriveVolume": false
+      },
+      "wholeSceneClosure": "OPEN",
+      "inheritedEvidence": {
+        "uv1Source": "steam/uv1-lightmap-closure/source-ready-handoff.json:234/234; consumer483/483; independent953/953",
+        "nativeMips": "gpu/native-lightmap-mips/source-ready-handoff.json:11levels; consumer48/48",
+        "browser": "gpu/native-lightmap-mips/browser-verification.json:parent27/27;11readback byte-exact; reused, not rerun"
+      },
+      "boundary": "Only234 native UV1/lightmap bindings and11 original-mip sampling are added. Existing sourceRecords/materialBindings/coordinateSpace are retained. Catalog/dynamic/status/acceptance unchanged; other materials, native Lights/Volume/reflection/runtime and full scene visuals remain open."
+    }
+  },
+  "renderProfile": {
+    "id": "bg_3d_600_00_00_001",
+    "source": "ReDriveVolume",
+    "backgroundColor": "#000000",
+    "fog": {
+      "color": "#000000",
+      "near": 35,
+      "far": 200
+    },
+    "renderer": {
+      "toneMapping": "aces",
+      "exposure": 0.85
+    },
+    "colorFilter": {
+      "brightness": 1,
+      "contrast": 1,
+      "saturation": 1
+    },
+    "bloom": {
+      "enabled": true,
+      "strength": 1.0,
+      "radius": 0.699999988079071,
+      "threshold": 0.800000011920929
+    },
+    "lightmap": {
+      "textureUrl": "./stages/official/battle-600-00-00-001/Lightmap-0_comp_light.native-mips.json",
+      "bindingsUrl": "./stages/official/battle-600-00-00-001/lightmap-bindings.json",
+      "uv1CompanionUrl": "./stages/official/battle-600-00-00-001/uv1-companion.json",
+      "encoding": "unity-rgbm-linear",
+      "intensity": 1
+    },
+    "stageLayer": 6,
+    "lights": [
+      {
+        "name": "BgLight01",
+        "type": "spot",
+        "activeSelf": true,
+        "active": true,
+        "enabled": true,
+        "color": [
+          1.0,
+          0.814470112323761,
+          0.0,
+          1.0
+        ],
+        "intensity": 400.0,
+        "cullingMask": 64,
+        "lightmapping": 1,
+        "role": "background",
+        "shadow": {
+          "type": 0,
+          "strength": 1.0,
+          "bias": 0.05000000074505806,
+          "normalBias": 0.4000000059604645,
+          "nearPlane": 0.20000000298023224
+        },
+        "additionalLightData": {
+          "renderingLayers": 1,
+          "lightLayerMask": 1,
+          "shadowResolutionTier": 2,
+          "softShadowQuality": 0
+        },
+        "anchorNode": "BgLight01",
+        "anchorPath": "bg_3d_600_00_00_001/Light/BgLight01",
+        "position": [
+          0.0,
+          16.0,
+          0.0
+        ],
+        "castShadow": false,
+        "target": [
+          0.0,
+          15.000000000000009,
+          -1.3435883843274954e-07
+        ],
+        "range": 30.0,
+        "outerAngleDegrees": 50.0,
+        "innerAngleDegrees": 30.0
+      },
+      {
+        "name": "BgLight02",
+        "type": "point",
+        "activeSelf": true,
+        "active": true,
+        "enabled": true,
+        "color": [
+          0.9529411792755127,
+          0.7525724768638611,
+          0.3921568691730499,
+          1.0
+        ],
+        "intensity": 120.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "shadow": {
+          "type": 0,
+          "strength": 1.0,
+          "bias": 0.05000000074505806,
+          "normalBias": 0.4000000059604645,
+          "nearPlane": 0.20000000298023224
+        },
+        "additionalLightData": {
+          "renderingLayers": 1,
+          "lightLayerMask": 1,
+          "shadowResolutionTier": 2,
+          "softShadowQuality": 0
+        },
+        "anchorNode": "BgLight02",
+        "anchorPath": "bg_3d_600_00_00_001/Light/BgLight02",
+        "position": [
+          7.150000095367432,
+          6.079999923706055,
+          -25.950000762939453
+        ],
+        "castShadow": false,
+        "range": 30.0
+      },
+      {
+        "name": "BgLight04",
+        "type": "point",
+        "activeSelf": true,
+        "active": true,
+        "enabled": true,
+        "color": [
+          1.0,
+          0.0156862735748291,
+          0.261384516954422,
+          1.0
+        ],
+        "intensity": 300.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "shadow": {
+          "type": 0,
+          "strength": 1.0,
+          "bias": 0.05000000074505806,
+          "normalBias": 0.4000000059604645,
+          "nearPlane": 0.20000000298023224
+        },
+        "additionalLightData": {
+          "renderingLayers": 1,
+          "lightLayerMask": 1,
+          "shadowResolutionTier": 2,
+          "softShadowQuality": 0
+        },
+        "anchorNode": "BgLight04",
+        "anchorPath": "bg_3d_600_00_00_001/Light/BgLight04",
+        "position": [
+          -22.969999313354492,
+          14.369999885559082,
+          9.100000381469727
+        ],
+        "castShadow": false,
+        "range": 30.0
+      },
+      {
+        "name": "BgLight05_01",
+        "type": "spot",
+        "activeSelf": true,
+        "active": true,
+        "enabled": true,
+        "color": [
+          1.0,
+          0.16470588743686676,
+          0.01568627543747425,
+          1.0
+        ],
+        "intensity": 600.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "shadow": {
+          "type": 0,
+          "strength": 1.0,
+          "bias": 0.05000000074505806,
+          "normalBias": 0.4000000059604645,
+          "nearPlane": 0.20000000298023224
+        },
+        "additionalLightData": {
+          "renderingLayers": 1,
+          "lightLayerMask": 1,
+          "shadowResolutionTier": 2,
+          "softShadowQuality": 0
+        },
+        "anchorNode": "BgLight05_01",
+        "anchorPath": "bg_3d_600_00_00_001/Light/BgLight05_01",
+        "position": [
+          -15.350000381469727,
+          16.709999084472656,
+          -26.559999465942383
+        ],
+        "castShadow": false,
+        "target": [
+          -15.29475378627474,
+          16.553593586509223,
+          -27.546146074680745
+        ],
+        "range": 50.0,
+        "outerAngleDegrees": 170.0,
+        "innerAngleDegrees": 70.0
+      },
+      {
+        "name": "BgLight05",
+        "type": "spot",
+        "activeSelf": true,
+        "active": true,
+        "enabled": true,
+        "color": [
+          1.0,
+          0.16470588743686676,
+          0.01568627543747425,
+          1.0
+        ],
+        "intensity": 600.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "shadow": {
+          "type": 0,
+          "strength": 1.0,
+          "bias": 0.05000000074505806,
+          "normalBias": 0.4000000059604645,
+          "nearPlane": 0.20000000298023224
+        },
+        "additionalLightData": {
+          "renderingLayers": 1,
+          "lightLayerMask": 1,
+          "shadowResolutionTier": 2,
+          "softShadowQuality": 0
+        },
+        "anchorNode": "BgLight05",
+        "anchorPath": "bg_3d_600_00_00_001/Light/BgLight05",
+        "position": [
+          11.699999809265137,
+          20.899999618530273,
+          28.5
+        ],
+        "castShadow": false,
+        "target": [
+          11.739356708017409,
+          20.19818112784737,
+          29.211267770010824
+        ],
+        "range": 50.0,
+        "outerAngleDegrees": 170.0,
+        "innerAngleDegrees": 70.0
+      },
+      {
+        "name": "BgLight03",
+        "type": "point",
+        "activeSelf": true,
+        "active": true,
+        "enabled": true,
+        "color": [
+          1.0,
+          0.9506531357765198,
+          0.7594339847564697,
+          1.0
+        ],
+        "intensity": 400.0,
+        "cullingMask": 64,
+        "lightmapping": 2,
+        "role": "background",
+        "shadow": {
+          "type": 0,
+          "strength": 1.0,
+          "bias": 0.05000000074505806,
+          "normalBias": 0.4000000059604645,
+          "nearPlane": 0.20000000298023224
+        },
+        "additionalLightData": {
+          "renderingLayers": 1,
+          "lightLayerMask": 1,
+          "shadowResolutionTier": 2,
+          "softShadowQuality": 0
+        },
+        "anchorNode": "BgLight03",
+        "anchorPath": "bg_3d_600_00_00_001/Light/BgLight03",
+        "position": [
+          13.899999618530273,
+          5.460000038146973,
+          9.329999923706055
+        ],
+        "castShadow": false,
+        "range": 500.0
+      },
+      {
+        "name": "MainLight",
+        "type": "directional",
+        "activeSelf": true,
+        "active": true,
+        "enabled": true,
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "intensity": 1.0,
+        "cullingMask": 2147483647,
+        "lightmapping": 1,
+        "role": "character-key",
+        "shadow": {
+          "type": 2,
+          "strength": 1.0,
+          "bias": 0.0,
+          "normalBias": 0.0,
+          "nearPlane": 0.10000000149011612
+        },
+        "additionalLightData": {
+          "renderingLayers": 1,
+          "lightLayerMask": 1,
+          "shadowResolutionTier": 2,
+          "softShadowQuality": 1
+        },
+        "anchorNode": "MainLight",
+        "anchorPath": "bg_3d_600_00_00_001/Light/MainLight",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "castShadow": true,
+        "target": [
+          -0.4131758861264719,
+          -0.7660443915787982,
+          -0.49240397769948363
+        ]
+      }
+    ],
+    "postProcessing": {
+      "colorAdjustments": {
+        "contrast": 10.0,
+        "saturation": 15.0,
+        "active": true
+      },
+      "vignette": {
+        "color": [
+          0.11320751905441284,
+          0.08597363531589508,
+          0.08597363531589508,
+          1.0
+        ],
+        "intensity": 0.4000000059604645,
+        "smoothness": 0.30000001192092896,
+        "active": true
+      }
+    },
+    "reDriveVolume": {
+      "skyboxIntensity": 1.0,
+      "overrides": {
+        "skyboxIntensity": true,
+        "shAmbient": true,
+        "characterShadowTint": true,
+        "characterLightingOverrideColor": true,
+        "characterLightingOverrideRatio": true,
+        "characterAdditionalRimLightColor": true,
+        "characterAdditionalRimLightDirection": true,
+        "backgroundShadowStrengthAdditive": true,
+        "backgroundPostExposure": true,
+        "backgroundContrast": true,
+        "backgroundSaturation": true,
+        "backgroundBackgroundTint": true
+      },
+      "shAmbient": [
+        0.05081179365515709,
+        -1.0546018919255218e-10,
+        0.0,
+        -3.5400259112972066e-11,
+        0.0,
+        1.844383951121742e-10,
+        -5.587935447692871e-09,
+        0.0,
+        -1.3396784126484818e-08,
+        0.05081179365515709,
+        -1.0546018919255218e-10,
+        0.0,
+        -3.5400259112972066e-11,
+        0.0,
+        1.844383951121742e-10,
+        -5.587935447692871e-09,
+        0.0,
+        -1.3396784126484818e-08,
+        0.05081179365515709,
+        -1.0546018919255218e-10,
+        0.0,
+        -3.5400259112972066e-11,
+        0.0,
+        1.844383951121742e-10,
+        -5.587935447692871e-09,
+        0.0,
+        -1.3396784126484818e-08
+      ],
+      "characterShadowTint": [
+        0.800000011920929,
+        0.747826099395752,
+        0.7200000286102295,
+        1.0
+      ],
+      "characterLightingOverrideColor": [
+        1.0,
+        0.7357867360115051,
+        0.6084905862808228,
+        1.0
+      ],
+      "characterLightingOverrideRatio": 0.5,
+      "characterAdditionalRimLightColor": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "characterAdditionalRimLightDirection": [
+        1.0,
+        -1.0
+      ],
+      "backgroundShadowStrengthAdditive": 0.25,
+      "backgroundPostExposure": 0.20000000298023224,
+      "backgroundContrast": -5.0,
+      "backgroundSaturation": 5.0,
+      "backgroundBackgroundTint": [
+        1.0,
+        0.874509871006012,
+        0.803921639919281,
+        1.0
+      ]
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { assertReleaseMaterialCorpus } from './releaseCorpusTestSupport.mjs'
 import assert from 'node:assert/strict'
 import { readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -220,6 +221,68 @@ test('100107 regular body and Aniso slots restore non-Gem MatCap', () => {
   assert.equal(aniso.anisotropyProfile.enabled, true)
 })
 
+test('official Gem slots remain opaque while neighboring draw groups stay non-Gem', () => {
+  const fixtures = [
+    ['mt_chara_100101_body_SJ', false, 0.550000011920929, 0.5],
+    ['mt_chara_108301_body_SJ', true, -0.1599999964237213, 0.722000002861023],
+    ['mt_chara_101901_body_SJ', false, -0.375, 0.5389999747276306],
+  ]
+  for (const [name, useDepthDiff, heightCorrection, rimFresnel] of fixtures) {
+    const value = profile(name)
+    assert.equal(value.source, 'official-export')
+    assert.equal(value.gem.enabled, true)
+    assert.equal(value.gem.transparency, false)
+    assert.equal(value.gem.useDepthDiff, useDepthDiff)
+    assert.equal(value.gem.useDepthDiff && value.gem.transparency, false)
+    assert.deepEqual(value.surface, {
+      transparency: false,
+      zWrite: true,
+      srcBlend: 1,
+      dstBlend: 0,
+    })
+    assert.equal(value.gem.heightCorrection, heightCorrection)
+    assert.equal(value.gem.rimFresnel, rimFresnel)
+    assert.equal(value.matCap.enabled, true)
+  }
+
+  for (const name of [
+    'mt_chara_100101_body',
+    'mt_chara_100101_body_Aniso',
+    'mt_chara_100102_body',
+    'mt_chara_108301_body',
+    'mt_chara_101901_body',
+  ]) {
+    const value = profile(name)
+    assert.equal(value.source, 'official-export')
+    assert.equal(value.gem.enabled, false)
+  }
+  assert.match(gemShader, /export function createOfficialGemSlotRuntime\(/)
+  assert.match(gemShader, /opaque: !transparency/)
+  assert.match(
+    loader,
+    /officialGemRuntime[\s\S]*?depthWrite: renderMaterial\.depthWrite[\s\S]*?transparent: renderMaterial\.transparent/,
+  )
+})
+
+test('108301 mixed Body slots no longer inherit transparency from body_alpha', () => {
+  for (const name of [
+    'mt_chara_108301_body_alpha',
+    'mt_chara_108301_body_Aniso',
+    'mt_chara_108301_body_SJ',
+    'mt_chara_108301_body_Gold',
+    'mt_chara_108301_body',
+  ]) {
+    assert.deepEqual(profile(name).surface, {
+      transparency: false,
+      zWrite: true,
+      srcBlend: 1,
+      dstBlend: 0,
+    })
+  }
+  assert.match(loader, /applyOfficialSurfaceRenderState\(slotMaterial, slotProfile\)/)
+  assert.match(loader, /material\.transparent = surface\.transparency \|\| usesBlending/)
+})
+
 test('resolved profile aggregation replaces material-name feature guesses', () => {
   assert.deepEqual(
     renderProfiles.inferMaterialFeatures([
@@ -259,7 +322,10 @@ test('100107 and 101901 official hair remains non-Aniso', () => {
 })
 
 test('base MatCap executes before scene light for regular and Gem materials', () => {
-  assert.match(gemShader, /rdGemMatCapUv = vNormal\.xy \* 0\.5 \+ 0\.5/)
+  assert.match(gemShader, /rdGemMatCapUv = rdGemVertexNormalVs\.xy \* 0\.5 \+ 0\.5/)
+  assert.doesNotMatch(gemShader, /rdGemOfficialViewNormalXY/)
+  assert.doesNotMatch(gemShader, /gl_FrontFacing/)
+  assert.match(gemShader, /viewerBackfaceCompensation: false/)
   assert.match(gemShader, /if \(uMaterialMatCapEnabled > 0\.5\)/)
   assert.doesNotMatch(
     gemShader,
@@ -280,7 +346,7 @@ test('base MatCap executes before scene light for regular and Gem materials', ()
   assert.match(loader, /profile => profile\.gem\.enabled \|\| profile\.matCap\.enabled/)
   assert.match(loader, /addOfficialOutlineGroupsToMesh\(/)
   assert.match(loader, /thickness: profile\.outlineWidth/)
-  assert.match(gemExtension, /official-matcap-gem-v9/)
+  assert.match(gemExtension, /official-matcap-gem-v10/)
 })
 
 test('each recovered material slot retains its exact MatCap Texture2D binding', () => {
@@ -313,22 +379,33 @@ test('each recovered material slot retains its exact MatCap Texture2D binding', 
 })
 
 test('all local JP material bundles drive sharp shadow, self-shadow and HDR emission uniforms', () => {
-  assert.equal(generatedProfiles.schema, 1)
+  assert.equal(generatedProfiles.schema, 4)
   assert.equal(generatedProfiles.unityVersion, '2022.3.62f2')
-  assert.equal(generatedProfiles.bundleCount, 95)
-  assert.equal(generatedProfiles.materialCount, 1533)
+  const { historical, added } = assertReleaseMaterialCorpus(generatedProfiles)
 
   const socks = profile('mt_chara_101901_body_Socks')
   const weapon = profile('mt_chara_101901_weapon_a')
   assert.equal(socks.shadow.offset, 0.30000001192092896)
   assert.equal(socks.shadow.feather, 0)
+  assert.equal(socks.shadow.offsetMapOffset, 0)
   assert.equal(socks.shadow.receiveSelfShadow, true)
   assert.equal(weapon.shadow.castSelfShadow, false)
   assert.equal(weapon.shadow.receiveSelfShadow, false)
+  assert.equal(
+    profile('mt_chara_102101_weapon_a_trs_out').shadow.offsetMapOffset,
+    1,
+  )
+  assert.equal(profile('mt_chara_107201_hair').shadow.offsetMapOffset, 1)
+  assert.equal(
+    profile('mt_chara_111701_acc_alpha').shadow.offsetMapOffset,
+    0.14000000059604645,
+  )
 
   const officialHair = Object.entries(generatedProfiles.materials)
     .filter(([, value]) => value.angelRing?.isHair)
-  assert.equal(officialHair.length, 169)
+  assert.equal(historical.filter(value => value.angelRing?.isHair).length, 169)
+    assert.equal(added.filter(value => value.angelRing?.isHair).length, 2)
+    assert.equal(officialHair.length, 171)
   for (const [name, value] of officialHair) {
     assert.equal(
       value.shadow?.feather,
@@ -339,6 +416,15 @@ test('all local JP material bundles drive sharp shadow, self-shadow and HDR emis
 
   assert.match(gemShader, /set\('uRdShadowOffset', value\.shadow\.offset\)/)
   assert.match(gemShader, /set\('uRdShadowFeather', value\.shadow\.feather\)/)
+  assert.match(
+    gemShader,
+    /set\('uRdShadowOffsetMapOffset', value\.shadow\.offsetMapOffset\)/,
+  )
+  assert.match(gemShader, /collectOfficialToonShadowRuntime/)
+  assert.match(
+    loader,
+    /officialToonShadowRuntime[\s\S]*?materialIndex:[\s\S]*?groupStart:[\s\S]*?groupCount:/,
+  )
   assert.match(
     gemShader,
     /uRdOfficialAdditionalLightInfluenceByLuminance[\s\S]*?value\.additionalLightInfluenceByLuminance/,

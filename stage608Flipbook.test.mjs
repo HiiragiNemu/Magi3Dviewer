@@ -26,7 +26,10 @@ for (const name of [
 // current-JP render-state gate because the two violin materials differ there.
 const source = fs.readFileSync('src/viewer/stageMaterialBindings.ts', 'utf8');
 for (const token of [
-  'texture.repeat.set(1 / atlas.columns, 1 / atlas.rows)',
+  'source.scale[0] / atlas.columns',
+  'source.scale[1] / atlas.rows',
+  'texture.repeat.set(...transform.scale)',
+  'texture.offset.set(...transform.offset)',
   'Math.floor(',
   '* framesPerSecond',
   '(frameOffset + elapsedFrame) % frameCount',

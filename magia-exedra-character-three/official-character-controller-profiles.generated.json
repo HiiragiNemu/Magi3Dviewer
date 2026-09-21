@@ -1,7 +1,7 @@
 {
   "schema": "magius-character-controller-runtime-profiles-v1",
   "unityVersion": "2022.3.62f2",
-  "profileCount": 95,
+  "profileCount": 97,
   "profiles": [
     {
       "characterId": 100101,
@@ -1024,6 +1024,18 @@
       "hairUvAngelRing": false
     },
     {
+      "characterId": 113501,
+      "headOffset": 0.029999999329447746,
+      "faceForwardAxis": "-x",
+      "faceUpAxis": "y",
+      "faceRightAxis": "z",
+      "headBoneName": "Head",
+      "characterCancelPerspective": 1.0,
+      "additionalLightInfluenceByLuminance": 0.0,
+      "angelRingEnabled": false,
+      "hairUvAngelRing": false
+    },
+    {
       "characterId": 113701,
       "headOffset": 0.16699999570846558,
       "faceForwardAxis": "-x",
@@ -1134,6 +1146,18 @@
     {
       "characterId": 115201,
       "headOffset": 0.2150000035762787,
+      "faceForwardAxis": "-x",
+      "faceUpAxis": "y",
+      "faceRightAxis": "z",
+      "headBoneName": "Head",
+      "characterCancelPerspective": 1.0,
+      "additionalLightInfluenceByLuminance": 0.0,
+      "angelRingEnabled": true,
+      "hairUvAngelRing": false
+    },
+    {
+      "characterId": 110702,
+      "headOffset": 0.20000000298023224,
       "faceForwardAxis": "-x",
       "faceUpAxis": "y",
       "faceRightAxis": "z",

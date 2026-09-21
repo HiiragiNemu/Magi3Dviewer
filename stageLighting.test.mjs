@@ -38,6 +38,10 @@ assert.match(
     /localLightIntensityScale: UNITY_TO_THREE_DIFFUSE_IRRADIANCE/,
     'debug state must expose Unity-to-Three Lambert normalization',
 )
+const lightmapsSource = await readFile(
+    new URL('./src/viewer/stageLightmaps.ts', import.meta.url),
+    'utf8',
+)
 assert.equal(
     unityDiffuseRadianceToThree(2.5),
     2.5 * Math.PI,
@@ -51,13 +55,26 @@ assert.match(
 )
 assert.match(
     stagesSource,
-    /activeStageLightmap\.matchedRendererCount[\s\S]*=== profileTextures\.lightmapBindings\?\.length/,
-    'the baked-light decision must require complete binding coverage',
+    /const bakedLightmapsActive\s*=\s*[\s\S]*?hasCompleteActiveStageLightmapCoverage\(activeStageLightmap\)/,
+    'the baked-light decision must require complete active-carrier coverage',
+)
+const activeCoverageStart = lightmapsSource.indexOf(
+    'export function hasCompleteActiveStageLightmapCoverage',
+)
+const activeCoverageEnd = lightmapsSource.indexOf('\n}', activeCoverageStart)
+const activeCoverageSource = lightmapsSource.slice(
+    activeCoverageStart,
+    activeCoverageEnd + 2,
 )
 assert.match(
-    stagesSource,
-    /unmatchedBindingPaths\.length === 0[\s\S]*ambiguousBindingPaths\.length === 0[\s\S]*missingSecondUvPaths\.length === 0[\s\S]*unsupportedMaterialPaths\.length === 0/,
-    'partial or unsupported lightmap bindings must retain realtime fallback lights',
+    activeCoverageSource,
+    /matchedRendererCount > 0[\s\S]*ambiguousBindingPaths\.length === 0[\s\S]*missingSecondUvPaths\.length === 0[\s\S]*unsupportedMaterialPaths\.length === 0/,
+    'partial or unsupported active lightmap bindings must retain realtime fallback lights',
+)
+assert.doesNotMatch(
+    activeCoverageSource,
+    /unmatchedBindingPaths/,
+    'serialized dependency bindings absent from the loaded FBX are diagnostic only',
 )
 assert.match(
     stagesSource,
@@ -83,7 +100,7 @@ assert.match(
 )
 assert.match(
     stagesSource,
-    /addForegroundStageLight\(type, profile, effectiveIntensity, anchor\)/,
+    /addForegroundStageLight\([\s\S]*?type,[\s\S]*?runtimeProfile,[\s\S]*?effectiveIntensity,[\s\S]*?anchor,[\s\S]*?\)/,
     'all-layer additional lights must be reproduced in the character render scene',
 )
 assert.match(
@@ -147,9 +164,33 @@ assert.match(
     'Additional Rim activation must require valid colour and direction overrides',
 )
 assert.doesNotMatch(
-    volumeSource,
-    /rimEnabled\s*=\s*rimOverride\s*&&/,
-    'a colour-only override must not enable static Additional Rim',
+  volumeSource,
+  /rimEnabled\s*=\s*rimOverride\s*&&/,
+  'a colour-only override must not enable static Additional Rim',
+)
+assert.match(
+  volumeSource,
+  /toonStylizationOptions\.rimEnabled = false/,
+  'scene Additional Rim must not enter the legacy smooth normal/view carrier',
+)
+const additionalRimApplyStart = volumeSource.indexOf('const rim = colorAndIntensity')
+const additionalRimApplyEnd = volumeSource.indexOf(
+  'scene.scene.userData.reDriveVolumeRuntime = profile',
+  additionalRimApplyStart,
+)
+assert.ok(
+  additionalRimApplyStart >= 0 && additionalRimApplyEnd > additionalRimApplyStart,
+  'Additional Rim apply block must remain discoverable',
+)
+assert.doesNotMatch(
+  volumeSource.slice(additionalRimApplyStart, additionalRimApplyEnd),
+  /toonStylizationOptions\.rim(?:Color|Strength|DirectionX|DirectionY)\s*=/,
+  'serialized Additional Rim fields must have only the CameraDepthTexture consumer',
+)
+assert.match(
+  volumeSource,
+  /carrier: 'camera-depth-second-sample'[\s\S]*legacySurfaceCarrierEnabled: false/,
+  'runtime debug must expose the literal hard-edge carrier decision',
 )
 
 const effectiveIntensity = (type, raw) => {

@@ -1,0 +1,1110 @@
+{
+  "enemyMstId": 605026,
+  "modelPrefabName": "enemy_605026_battle_unit",
+  "sourceBundleKey": "AssetBundles/battle/enemy/enemy_605026_battle_unit",
+  "embeddedDirectors": [
+    {
+      "cab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+      "pathID": "4242517342027465688",
+      "native": {
+        "m_GameObject": {
+          "m_FileID": 0,
+          "m_PathID": 6408979047800408513
+        },
+        "m_Enabled": 1,
+        "m_PlayableAsset": {
+          "m_FileID": 0,
+          "m_PathID": 6095763214904854810
+        },
+        "m_InitialState": 0,
+        "m_WrapMode": 2,
+        "m_DirectorUpdateMode": 1,
+        "m_InitialTime": 0.0,
+        "m_SceneBindings": [
+          {
+            "key": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "value": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          },
+          {
+            "key": {
+              "m_FileID": 0,
+              "m_PathID": -2908661846582278001
+            },
+            "value": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          },
+          {
+            "key": {
+              "m_FileID": 0,
+              "m_PathID": 2044936871931049126
+            },
+            "value": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          },
+          {
+            "key": {
+              "m_FileID": 0,
+              "m_PathID": 4728185695549982905
+            },
+            "value": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          },
+          {
+            "key": {
+              "m_FileID": 0,
+              "m_PathID": 4573691734669102390
+            },
+            "value": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            }
+          }
+        ],
+        "m_ExposedReferences": {
+          "m_References": [
+            [
+              "-1540064236",
+              {
+                "m_FileID": 0,
+                "m_PathID": 4594909078983948680
+              }
+            ],
+            [
+              "-722369020",
+              {
+                "m_FileID": 0,
+                "m_PathID": 0
+              }
+            ],
+            [
+              "-114356955",
+              {
+                "m_FileID": 0,
+                "m_PathID": -9084013568407235569
+              }
+            ],
+            [
+              "115723069",
+              {
+                "m_FileID": 0,
+                "m_PathID": -2986391763736735240
+              }
+            ],
+            [
+              "1898459778",
+              {
+                "m_FileID": 0,
+                "m_PathID": 4732662007825366407
+              }
+            ]
+          ]
+        }
+      },
+      "timeline": {
+        "cab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+        "pathID": "6095763214904854810",
+        "name": "enemy_605001_death"
+      },
+      "tracks": [
+        {
+          "cab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+          "pathID": "-6542996175146024243",
+          "native": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -5888585824096903559
+            },
+            "m_Name": "Markers",
+            "m_Version": 3,
+            "m_AnimClip": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Locked": 0,
+            "m_Muted": 0,
+            "m_CustomPlayableFullTypename": "",
+            "m_Curves": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Parent": {
+              "m_FileID": 0,
+              "m_PathID": 6095763214904854810
+            },
+            "m_Children": [],
+            "m_Clips": [],
+            "m_Markers": {
+              "m_Objects": [
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -2367780054919052842
+                },
+                {
+                  "m_FileID": 0,
+                  "m_PathID": -1596001405379427754
+                }
+              ]
+            }
+          }
+        },
+        {
+          "cab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+          "pathID": "-2908661846582278001",
+          "native": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 2236857596319517741
+            },
+            "m_Name": "Cinemachine Track",
+            "m_Version": 3,
+            "m_AnimClip": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Locked": 0,
+            "m_Muted": 0,
+            "m_CustomPlayableFullTypename": "",
+            "m_Curves": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Parent": {
+              "m_FileID": 0,
+              "m_PathID": 6095763214904854810
+            },
+            "m_Children": [],
+            "m_Clips": [
+              {
+                "m_Version": 1,
+                "m_Start": 0.0,
+                "m_ClipIn": 0.0,
+                "m_Asset": {
+                  "m_FileID": 0,
+                  "m_PathID": -1414252895433246962
+                },
+                "m_Duration": 3.666666666666666,
+                "m_TimeScale": 1.0,
+                "m_ParentTrack": {
+                  "m_FileID": 0,
+                  "m_PathID": -2908661846582278001
+                },
+                "m_EaseInDuration": 0.0,
+                "m_EaseOutDuration": 0.0,
+                "m_BlendInDuration": -1.0,
+                "m_BlendOutDuration": 3.666666666666666,
+                "m_MixInCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 0.0,
+                      "inSlope": 2.0,
+                      "outSlope": 2.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 1.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_MixOutCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 1.0,
+                      "inSlope": -2.0,
+                      "outSlope": -2.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 0.0,
+                      "inSlope": -0.0,
+                      "outSlope": -0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_BlendInCurveMode": 1,
+                "m_BlendOutCurveMode": 0,
+                "m_ExposedParameterNames": [],
+                "m_AnimationCurves": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Recordable": 0,
+                "m_PostExtrapolationMode": 0,
+                "m_PreExtrapolationMode": 0,
+                "m_PostExtrapolationTime": 0.0,
+                "m_PreExtrapolationTime": 0.0,
+                "m_DisplayName": "Virtual Camera_01"
+              },
+              {
+                "m_Version": 1,
+                "m_Start": 0.0,
+                "m_ClipIn": 0.0,
+                "m_Asset": {
+                  "m_FileID": 0,
+                  "m_PathID": -3157320163491568047
+                },
+                "m_Duration": 3.666666666666667,
+                "m_TimeScale": 1.0,
+                "m_ParentTrack": {
+                  "m_FileID": 0,
+                  "m_PathID": -2908661846582278001
+                },
+                "m_EaseInDuration": 0.0,
+                "m_EaseOutDuration": 0.0,
+                "m_BlendInDuration": 3.666666666666666,
+                "m_BlendOutDuration": -1.0,
+                "m_MixInCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 0.0,
+                      "inSlope": 2.0,
+                      "outSlope": 2.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 1.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_MixOutCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 1.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 0.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_BlendInCurveMode": 1,
+                "m_BlendOutCurveMode": 0,
+                "m_ExposedParameterNames": [],
+                "m_AnimationCurves": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Recordable": 0,
+                "m_PostExtrapolationMode": 0,
+                "m_PreExtrapolationMode": 0,
+                "m_PostExtrapolationTime": 0.0,
+                "m_PreExtrapolationTime": 0.0,
+                "m_DisplayName": "Virtual Camera_02"
+              }
+            ],
+            "m_Markers": {
+              "m_Objects": []
+            }
+          }
+        },
+        {
+          "cab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+          "pathID": "2044936871931049126",
+          "native": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -1326188021205359011
+            },
+            "m_Name": "Self Animation Track",
+            "m_Version": 3,
+            "m_AnimClip": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Locked": 0,
+            "m_Muted": 0,
+            "m_CustomPlayableFullTypename": "",
+            "m_Curves": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Parent": {
+              "m_FileID": 0,
+              "m_PathID": 6095763214904854810
+            },
+            "m_Children": [],
+            "m_Clips": [
+              {
+                "m_Version": 1,
+                "m_Start": 0.0,
+                "m_ClipIn": 0.0,
+                "m_Asset": {
+                  "m_FileID": 0,
+                  "m_PathID": 2248591045125127567
+                },
+                "m_Duration": 3.666666666666667,
+                "m_TimeScale": 1.0,
+                "m_ParentTrack": {
+                  "m_FileID": 0,
+                  "m_PathID": 2044936871931049126
+                },
+                "m_EaseInDuration": 0.0,
+                "m_EaseOutDuration": 0.0,
+                "m_BlendInDuration": -1.0,
+                "m_BlendOutDuration": -1.0,
+                "m_MixInCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 0.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 1.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_MixOutCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 1.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 0.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_BlendInCurveMode": 0,
+                "m_BlendOutCurveMode": 0,
+                "m_ExposedParameterNames": [],
+                "m_AnimationCurves": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Recordable": 0,
+                "m_PostExtrapolationMode": 1,
+                "m_PreExtrapolationMode": 1,
+                "m_PostExtrapolationTime": Infinity,
+                "m_PreExtrapolationTime": 0.0,
+                "m_DisplayName": "Down_SE"
+              }
+            ],
+            "m_Markers": {
+              "m_Objects": []
+            },
+            "m_InfiniteClipPreExtrapolation": 0,
+            "m_InfiniteClipPostExtrapolation": 0,
+            "m_InfiniteClipOffsetPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "m_InfiniteClipOffsetEulerAngles": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "m_InfiniteClipTimeOffset": 0.0,
+            "m_InfiniteClipRemoveOffset": 0,
+            "m_InfiniteClipApplyFootIK": 1,
+            "mInfiniteClipLoop": 0,
+            "m_MatchTargetFields": 63,
+            "m_Position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "m_EulerAngles": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "m_AvatarMask": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_ApplyAvatarMask": 1,
+            "m_TrackOffset": 0,
+            "m_InfiniteClip": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_OpenClipOffsetRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "m_Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "m_ApplyOffsets": 0
+          }
+        },
+        {
+          "cab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+          "pathID": "4573691734669102390",
+          "native": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -1326188021205359011
+            },
+            "m_Name": "Halo Mat Controller 0 Track",
+            "m_Version": 3,
+            "m_AnimClip": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Locked": 0,
+            "m_Muted": 0,
+            "m_CustomPlayableFullTypename": "",
+            "m_Curves": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Parent": {
+              "m_FileID": 0,
+              "m_PathID": 5424574423614124795
+            },
+            "m_Children": [],
+            "m_Clips": [
+              {
+                "m_Version": 1,
+                "m_Start": 0.9833333333333333,
+                "m_ClipIn": 0.0,
+                "m_Asset": {
+                  "m_FileID": 0,
+                  "m_PathID": 6956478658799751011
+                },
+                "m_Duration": 1.918611699901521,
+                "m_TimeScale": 1.0,
+                "m_ParentTrack": {
+                  "m_FileID": 0,
+                  "m_PathID": 4573691734669102390
+                },
+                "m_EaseInDuration": 0.0,
+                "m_EaseOutDuration": 0.0,
+                "m_BlendInDuration": -1.0,
+                "m_BlendOutDuration": -1.0,
+                "m_MixInCurve": {
+                  "m_Curve": [],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_MixOutCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 1.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 0.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_BlendInCurveMode": 0,
+                "m_BlendOutCurveMode": 0,
+                "m_ExposedParameterNames": [],
+                "m_AnimationCurves": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Recordable": 1,
+                "m_PostExtrapolationMode": 1,
+                "m_PreExtrapolationMode": 1,
+                "m_PostExtrapolationTime": Infinity,
+                "m_PreExtrapolationTime": 0.9833333333333333,
+                "m_DisplayName": "Recorded_01"
+              }
+            ],
+            "m_Markers": {
+              "m_Objects": []
+            },
+            "m_InfiniteClipPreExtrapolation": 1,
+            "m_InfiniteClipPostExtrapolation": 1,
+            "m_InfiniteClipOffsetPosition": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "m_InfiniteClipOffsetEulerAngles": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "m_InfiniteClipTimeOffset": 0.0,
+            "m_InfiniteClipRemoveOffset": 0,
+            "m_InfiniteClipApplyFootIK": 1,
+            "mInfiniteClipLoop": 0,
+            "m_MatchTargetFields": 63,
+            "m_Position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "m_EulerAngles": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0
+            },
+            "m_AvatarMask": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_ApplyAvatarMask": 1,
+            "m_TrackOffset": 0,
+            "m_InfiniteClip": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_OpenClipOffsetRotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "m_Rotation": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "m_ApplyOffsets": 0
+          }
+        },
+        {
+          "cab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+          "pathID": "4728185695549982905",
+          "native": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 6460273619985427263
+            },
+            "m_Name": "Timeline Witch Material Controller Track",
+            "m_Version": 3,
+            "m_AnimClip": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Locked": 0,
+            "m_Muted": 0,
+            "m_CustomPlayableFullTypename": "",
+            "m_Curves": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Parent": {
+              "m_FileID": 0,
+              "m_PathID": 6095763214904854810
+            },
+            "m_Children": [],
+            "m_Clips": [
+              {
+                "m_Version": 1,
+                "m_Start": 1.0,
+                "m_ClipIn": 0.0,
+                "m_Asset": {
+                  "m_FileID": 0,
+                  "m_PathID": 1988253557094197189
+                },
+                "m_Duration": 1.3333333333333335,
+                "m_TimeScale": 1.0,
+                "m_ParentTrack": {
+                  "m_FileID": 0,
+                  "m_PathID": 4728185695549982905
+                },
+                "m_EaseInDuration": 0.0,
+                "m_EaseOutDuration": 0.0,
+                "m_BlendInDuration": -1.0,
+                "m_BlendOutDuration": 1.3,
+                "m_MixInCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 0.0,
+                      "inSlope": 1.0,
+                      "outSlope": 1.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 1.0,
+                      "inSlope": 1.0,
+                      "outSlope": 1.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_MixOutCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 1.0,
+                      "inSlope": -1.0,
+                      "outSlope": -1.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 0.0,
+                      "inSlope": -1.0,
+                      "outSlope": -1.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_BlendInCurveMode": 1,
+                "m_BlendOutCurveMode": 1,
+                "m_ExposedParameterNames": [],
+                "m_AnimationCurves": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Recordable": 0,
+                "m_PostExtrapolationMode": 0,
+                "m_PreExtrapolationMode": 0,
+                "m_PostExtrapolationTime": 0.0,
+                "m_PreExtrapolationTime": 0.0,
+                "m_DisplayName": "TimelineWitchMaterialControllerClip"
+              },
+              {
+                "m_Version": 1,
+                "m_Start": 1.0333333333333334,
+                "m_ClipIn": 0.0,
+                "m_Asset": {
+                  "m_FileID": 0,
+                  "m_PathID": 2991431170325391652
+                },
+                "m_Duration": 2.633333333333333,
+                "m_TimeScale": 1.0,
+                "m_ParentTrack": {
+                  "m_FileID": 0,
+                  "m_PathID": 4728185695549982905
+                },
+                "m_EaseInDuration": 0.0,
+                "m_EaseOutDuration": 0.0,
+                "m_BlendInDuration": 1.3,
+                "m_BlendOutDuration": -1.0,
+                "m_MixInCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 0.0,
+                      "inSlope": 1.0,
+                      "outSlope": 1.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 1.0,
+                      "inSlope": 1.0,
+                      "outSlope": 1.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_MixOutCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 1.0,
+                      "inSlope": -1.0,
+                      "outSlope": -1.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 0.0,
+                      "inSlope": -1.0,
+                      "outSlope": -1.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_BlendInCurveMode": 0,
+                "m_BlendOutCurveMode": 1,
+                "m_ExposedParameterNames": [],
+                "m_AnimationCurves": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Recordable": 0,
+                "m_PostExtrapolationMode": 0,
+                "m_PreExtrapolationMode": 0,
+                "m_PostExtrapolationTime": 0.0,
+                "m_PreExtrapolationTime": 0.0,
+                "m_DisplayName": "TimelineWitchMaterialControllerClip"
+              }
+            ],
+            "m_Markers": {
+              "m_Objects": []
+            }
+          }
+        },
+        {
+          "cab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+          "pathID": "5424574423614124795",
+          "native": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -5833018095569713451
+            },
+            "m_Name": "Halo Mat Controller",
+            "m_Version": 3,
+            "m_AnimClip": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Locked": 0,
+            "m_Muted": 0,
+            "m_CustomPlayableFullTypename": "",
+            "m_Curves": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Parent": {
+              "m_FileID": 0,
+              "m_PathID": 6095763214904854810
+            },
+            "m_Children": [
+              {
+                "m_FileID": 0,
+                "m_PathID": 4573691734669102390
+              }
+            ],
+            "m_Clips": [],
+            "m_Markers": {
+              "m_Objects": []
+            }
+          }
+        },
+        {
+          "cab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+          "pathID": "5967457324861208991",
+          "native": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 2982053574549838320
+            },
+            "m_Name": "Control Track Offset",
+            "m_Version": 3,
+            "m_AnimClip": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Locked": 0,
+            "m_Muted": 0,
+            "m_CustomPlayableFullTypename": "",
+            "m_Curves": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Parent": {
+              "m_FileID": 0,
+              "m_PathID": 6095763214904854810
+            },
+            "m_Children": [],
+            "m_Clips": [
+              {
+                "m_Version": 1,
+                "m_Start": 1.2666666666666666,
+                "m_ClipIn": 0.0,
+                "m_Asset": {
+                  "m_FileID": 0,
+                  "m_PathID": 3240950602128042225
+                },
+                "m_Duration": 2.3999999999999995,
+                "m_TimeScale": 1.0,
+                "m_ParentTrack": {
+                  "m_FileID": 0,
+                  "m_PathID": 5967457324861208991
+                },
+                "m_EaseInDuration": 0.0,
+                "m_EaseOutDuration": 0.0,
+                "m_BlendInDuration": 0.0,
+                "m_BlendOutDuration": 0.0,
+                "m_MixInCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 0.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 1.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_MixOutCurve": {
+                  "m_Curve": [
+                    {
+                      "time": 0.0,
+                      "value": 1.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    },
+                    {
+                      "time": 1.0,
+                      "value": 0.0,
+                      "inSlope": 0.0,
+                      "outSlope": 0.0,
+                      "weightedMode": 0,
+                      "inWeight": 0.0,
+                      "outWeight": 0.0
+                    }
+                  ],
+                  "m_PreInfinity": 2,
+                  "m_PostInfinity": 2,
+                  "m_RotationOrder": 4
+                },
+                "m_BlendInCurveMode": 0,
+                "m_BlendOutCurveMode": 0,
+                "m_ExposedParameterNames": [],
+                "m_AnimationCurves": {
+                  "m_FileID": 0,
+                  "m_PathID": 0
+                },
+                "m_Recordable": 0,
+                "m_PostExtrapolationMode": 0,
+                "m_PreExtrapolationMode": 0,
+                "m_PostExtrapolationTime": 0.0,
+                "m_PreExtrapolationTime": 0.0,
+                "m_DisplayName": "eff_common_act_dead_001"
+              }
+            ],
+            "m_Markers": {
+              "m_Objects": []
+            }
+          }
+        },
+        {
+          "cab": "CAB-b13d998cce06c6fe8f0675e2e30b4e36",
+          "pathID": "6095763214904854810",
+          "native": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -657477701292886207
+            },
+            "m_Name": "enemy_605001_death",
+            "m_Version": 0,
+            "m_Tracks": [
+              {
+                "m_FileID": 0,
+                "m_PathID": -2908661846582278001
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": 2044936871931049126
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": 4728185695549982905
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": 5967457324861208991
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": 5424574423614124795
+              }
+            ],
+            "m_FixedDuration": 0.0,
+            "m_EditorSettings": {
+              "m_Framerate": 60.0,
+              "m_ScenePreview": 1
+            },
+            "m_DurationMode": 0,
+            "m_MarkerTrack": {
+              "m_FileID": 0,
+              "m_PathID": -6542996175146024243
+            }
+          }
+        }
+      ],
+      "status": "TYPED_UNAVAILABLE__DIRECTOR_CAMERA_MATERIAL_PARTICLE_LIFECYCLE_NOT_IMPORTED"
+    }
+  ],
+  "particleSystems": 56,
+  "masterSkillJoin": "NO_DIRECT_APPEARANCE_OR_SKILLSET_JOIN_IN_CURRENT_MASTER_AUDIT",
+  "fullAttackVfx": "NOT_IMPLEMENTED_NOT_ACCEPTED"
+}

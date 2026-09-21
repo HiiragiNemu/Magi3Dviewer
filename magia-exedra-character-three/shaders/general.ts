@@ -1,10 +1,16 @@
 import * as THREE from 'three';
 import { MaterialUserData, type MaterialCreationOptions, type MaterialCreationResult } from '.';
-import { loadTexture, MaximizeTextureQuality } from '../texture';
+import {
+    ApplyOfficialCharacterSurfaceSampling,
+    ApplyOfficialSpecularGradientSampling,
+    loadTexture,
+} from '../texture';
+import { getOfficialTextureSamplerProfile, hasOfficialNullCosmicBaseMap } from '../materialProfile';
 import { injectToonStylization, ToonStylizationUniforms } from './stylization';
 import { setOfficialMaterialProfileUniforms } from './gem';
 import { injectCharacterPerspectiveCancellation } from './perspective';
 import { injectReDriveDepthRimShader } from './depthRim';
+import { applyNativeSlotShaderBindings } from '../nativeMaterialScope';
 
 export const ShadowTexOptions = {
     preMix: 0.82,
@@ -149,6 +155,11 @@ interface GeneralMaterialCreationOptions extends MaterialCreationOptions {
         this: THREE.Material,
         shader: THREE.WebGLProgramParametersWithUniforms,
     ) => any;
+    /** Fragment extensions that consume the character-tint stage it creates. */
+    onAfterStylization?: (
+        this: THREE.Material,
+        shader: THREE.WebGLProgramParametersWithUniforms,
+    ) => void;
 }
 
 /**
@@ -168,17 +179,46 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
     if (options.alphaSrc == 'shadow' && !options.shadowMap) options.alphaSrc = undefined;
     if (options.alphaSrc == 'ctrl' && !options.ctrlMap) options.alphaSrc = undefined;
 
-    const [colorTex, shadowTex, ctrlTex, specularGradientTex] = await Promise.all([
-        loadTexture(options.colorMap, { colorSpace: THREE.SRGBColorSpace }),
+    const native = options.nativeResources;
+    const nullBase = options.officialNullBaseMap;
+    if (nullBase && (native || options.colorMap || !hasOfficialNullCosmicBaseMap(nullBase))) {
+        throw new Error('Invalid serialized NULL Cosmic BaseMap contract');
+    }
+    const [colorTex, shadowTex, ctrlTex, specularGradientTex] = native ? [
+        native.textures._BaseMap ?? null,
+        native.textures._ShadowTex ?? undefined,
+        native.textures._ControlMap ?? undefined,
+        native.textures._SpecularGradientMap ?? undefined,
+    ] : await Promise.all([
+        nullBase ? Promise.resolve(null) : loadTexture(options.colorMap, { colorSpace: THREE.SRGBColorSpace }),
         options.shadowMap ? loadTexture(options.shadowMap, { colorSpace: THREE.SRGBColorSpace }) : Promise.resolve(undefined),
         options.ctrlMap ? loadTexture(options.ctrlMap) : Promise.resolve(undefined),
         options.specularGradientMap ? loadTexture(options.specularGradientMap) : Promise.resolve(undefined),
     ]);
 
-    MaximizeTextureQuality(colorTex, shadowTex, ctrlTex, specularGradientTex);
-    if (specularGradientTex) {
-        specularGradientTex.wrapS = THREE.ClampToEdgeWrapping
-        specularGradientTex.wrapT = THREE.ClampToEdgeWrapping
+    const officialTextureSampling = native ? undefined : {
+        baseMap: colorTex ? ApplyOfficialCharacterSurfaceSampling(
+            colorTex,
+            options.colorMap,
+            getOfficialTextureSamplerProfile(options.colorMap),
+        ) : undefined,
+        shadowTex: shadowTex && options.shadowMap
+            ? ApplyOfficialCharacterSurfaceSampling(
+                shadowTex,
+                options.shadowMap,
+                getOfficialTextureSamplerProfile(options.shadowMap),
+            )
+            : undefined,
+        controlMap: ctrlTex && options.ctrlMap
+            ? ApplyOfficialCharacterSurfaceSampling(
+                ctrlTex,
+                options.ctrlMap,
+                getOfficialTextureSamplerProfile(options.ctrlMap),
+            )
+            : undefined,
+    };
+    if (specularGradientTex && !native) {
+        ApplyOfficialSpecularGradientSampling(specularGradientTex)
     }
 
     const material = new THREE.MeshStandardMaterial({
@@ -187,14 +227,28 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         metalness: 0,
         transparent: Boolean(options.alphaSrc),
     });
+    if (native) {
+        material.color.setRGB(native.baseColor[0], native.baseColor[1], native.baseColor[2]);
+        material.opacity = native.baseColor[3];
+    }
+
+    if (nullBase) {
+        const color = nullBase.cosmic.baseColor;
+        material.color.setRGB(color[0], color[1], color[2]);
+        material.opacity = color[3];
+    }
 
     const userData = new MaterialUserData()
     material.userData = userData
+    userData.officialTextureSampling = officialTextureSampling
+    if (native) Object.assign(userData, { nativeMaterialKey: native.key, nativeTextureSampling: native.sampling, nativeUnknowns: native.unknowns });
     const anisotropy = options.featureProfile?.anisotropy ?? false
     const specialJewel = options.featureProfile?.specialJewel ?? false
 
     const programCacheKey = JSON.stringify({
         colorMap: options.colorMap,
+        nullBaseMap: nullBase?.cosmic.nullBaseMap,
+        nullBaseColor: nullBase?.cosmic.baseColor,
         shadowMap: options.shadowMap,
         ctrlMap: options.ctrlMap,
         specularGradientMap: options.specularGradientMap,
@@ -222,6 +276,9 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
         shader.uniforms.uMaterialAnisoColor = { value: new THREE.Color(1, 1, 1) }
         shader.uniforms.uMaterialAnisoThreshold = { value: 0.9 }
         shader.uniforms.uMaterialAnisoFeather = { value: 0 }
+        shader.uniforms.uMaterialIsAlphaAdditive = { value: 0 }
+        shader.uniforms.uMaterialSurfaceAlphaMode = { value: -1 }
+        shader.uniforms.uMaterialShadowAlphaScale = { value: native?.shadowColor[3] ?? 1 }
         shader.uniforms.uMaterialSpecialJewel = { value: specialJewel ? 1 : 0 }
 
         if (shadowTex) {
@@ -264,6 +321,9 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             uniform vec3 uMaterialAnisoColor;
             uniform float uMaterialAnisoThreshold;
             uniform float uMaterialAnisoFeather;
+            uniform float uMaterialIsAlphaAdditive;
+            uniform float uMaterialSurfaceAlphaMode;
+            uniform float uMaterialShadowAlphaScale;
             uniform float uMaterialSpecialJewel;
             uniform float uMaterialReceiveSelfShadow;
             uniform vec3 uMaterialEmissionColor;
@@ -315,11 +375,24 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             `
         ).replace(
             '#include <alphamap_fragment>',
-            {
-                ctrl: /*glsl*/ `diffuseColor.a = texCtrl.a;`,
-                shadow: /*glsl*/ `diffuseColor.a = texShadow.a;`,
-                none: /*glsl*/ `diffuseColor.a = 1.0;`,
-            }[options.alphaSrc || 'none']
+            /*glsl*/ `
+            ${ {
+                ctrl: `diffuseColor.a = texCtrl.a;`,
+                shadow: `diffuseColor.a = texShadow.a;`,
+                none: `diffuseColor.a = 1.0;`,
+            }[options.alphaSrc || 'none'] }
+            // ReDrive main_base blob 90: Transparency/AlphaClipping selects
+            // ShadowTex.a * ShadowColor.a, never ControlMap.a. Resolve per draw
+            // slot so an alpha sleeve does not make its opaque body transparent.
+            if (uMaterialSurfaceAlphaMode >= 0.0) {
+                diffuseColor.a = 1.0;
+                #ifdef HAS_SHADOW
+                    if (uMaterialSurfaceAlphaMode > 0.5) {
+                        diffuseColor.a = texShadow.a * uMaterialShadowAlphaScale;
+                    }
+                #endif
+            }
+            `
         ).replace(
             '#include <lights_physical_fragment>',
             /*glsl*/`
@@ -488,7 +561,14 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                     uMaterialAnisoColor *
                     rdAnisoBand *
                     rdAnisoMetallicMask;
-                outgoingLight += rdAnisoColor * saturate(uMaterialAnisotropy);
+                vec3 rdAnisoContribution =
+                    rdAnisoColor * saturate(uMaterialAnisotropy);
+                outgoingLight += rdAnisoContribution;
+                diffuseColor.a +=
+                    saturate(dot(
+                        vec3(0.298911989, 0.586610973, 0.114478),
+                        rdAnisoContribution
+                    )) * saturate(uMaterialIsAlphaAdditive);
 
                 // JP 2022.3.62f2 main_hair blob 98: the primary response is a
                 // hard N.H gate, not the former hand-tuned pow/strength lobe.
@@ -527,6 +607,12 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
                         rdSpecularOverlayHigh,
                         vec3(1.0) - step(outgoingLight, vec3(0.5))
                     );
+                    diffuseColor.a +=
+                        saturate((dot(
+                            vec3(0.298911989, 0.586610973, 0.114478),
+                            rdSpecularOverlay
+                        ) - 0.5) * 2.0) *
+                        saturate(uMaterialIsAlphaAdditive);
                     float rdSpecularFresnelGate = mix(
                         1.0,
                         1.0 - saturate(uFresnelEnabled),
@@ -578,11 +664,20 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             vec3 rdToonFresnelSceneCarrier =
                 rdToonSceneLightColor *
                 (rdToonBaseWeight * 0.800000012 + 0.200000003);
-            outgoingLight +=
+            vec3 rdToonFresnelContribution =
                 rdToonFresnelSceneCarrier *
                 uFresnelColor *
                 rdToonFresnelMask *
                 saturate(uFresnelEnabled);
+            outgoingLight += rdToonFresnelContribution;
+            diffuseColor.a +=
+                saturate(dot(
+                    vec3(0.298911989, 0.586610973, 0.114478),
+                    rdToonFresnelContribution
+                )) * saturate(uMaterialIsAlphaAdditive);
+            diffuseColor.a = saturate(diffuseColor.a);
+
+            // RD_OFFICIAL_COSMIC_COMPOSITE
 
             // RD_DEPTH_RIM_COMPOSITE_BEGIN
 
@@ -602,6 +697,7 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
             options.characterPerspectiveReference,
         );
         injectToonStylization(shader, uniforms);
+        options.onAfterStylization?.call(this, shader);
         injectReDriveDepthRimShader(shader);
         shader.fragmentShader = shader.fragmentShader.replace(
             '#include <opaque_fragment>',
@@ -757,6 +853,18 @@ export async function createGeneralMaterial(options: GeneralMaterialCreationOpti
 
         runtimeUserData.shader = shader;
         runtimeUserData.shaderUniforms = uniforms;
+        if (native || nullBase) {
+            // Custom control/shadow samples use original UV0, independently
+            // of BaseMap's transform and even when BaseMap is explicitly null.
+            shader.defines.USE_UV = true;
+            shader.fragmentShader = shader.fragmentShader.replace(/vMapUv/g, 'vUv');
+            const exactShadowColor = native ? native.shadowColor : nullBase!.cosmic.nullBaseMap!.shadow.color;
+            shader.uniforms.rdNativeShadowColor = { value: new THREE.Color(exactShadowColor[0], exactShadowColor[1], exactShadowColor[2]) };
+            shader.fragmentShader = 'uniform vec3 rdNativeShadowColor;\n' + shader.fragmentShader
+                .replace('vec3 rdToonShadowColor = diffuseColor.rgb;', 'vec3 rdToonShadowColor = rdNativeShadowColor;')
+                .replace('rdToonShadowColor = texShadow.rgb;', 'rdToonShadowColor = texShadow.rgb * rdNativeShadowColor;');
+            if (native) applyNativeSlotShaderBindings(shader, native);
+        }
     };
 
     return {

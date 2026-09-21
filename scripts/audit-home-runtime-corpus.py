@@ -197,8 +197,14 @@ def audit_character(directory: Path) -> dict[str, Any]:
             name for name in ordered_names if ordered_names.count(name) > 1
         })
 
-        if runtime.get("schema") != 1:
+        expression_schema = runtime.get("schema")
+        if expression_schema not in (1, 2):
             record["errors"].append("expression-schema")
+        elif expression_schema == 2:
+            # Schema 2 is the typed dynamic evaluator contract.  Any unresolved
+            # attribute rows remain counted and unavailable; they are never
+            # projected into guessed morph channels.
+            pass
         if runtime.get("characterId") != character_id:
             record["errors"].append("expression-character-id")
         if broken_aliases:

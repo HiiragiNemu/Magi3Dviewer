@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "unityVersion": "2022.3.62f2",
+  "scannedBattleUnitCount": 92,
+  "profileCount": 1,
+  "profiles": [
+    {
+      "source": {
+        "bundle": "battle/character/chara_115201_battle_unit",
+        "characterId": 115201,
+        "componentPathId": "8280859703183668957",
+        "rootGameObjectPathId": "4217548358760434280",
+        "rootGameObjectName": "chara_115201_model"
+      },
+      "head": {
+        "name": "Head",
+        "path": "chara_115201_battle_unit/VisualRoot/chara_115201_model/chara_115201/Root/Hip/Spine/Waist/Chest/Neck/Head"
+      },
+      "faceForwardDirection": 3,
+      "faceForwardAxis": "-x",
+      "faceUpAxis": "y",
+      "faceRightAxis": "z",
+      "meshes": {
+        "faceFrontRight": "Face_R_Mesh",
+        "faceFrontLeft": "Face_L_Mesh",
+        "faceSide": "Face_Side_Mesh",
+        "facepartsFront": "Faceparts_Front_Mesh",
+        "facepartsSide": "Faceparts_Side_Mesh",
+        "mouthFrontRight": "Mouth_R_Mesh",
+        "mouthFrontLeft": "Mouth_L_Mesh",
+        "mouthSide": "Mouth_Side_Mesh"
+      },
+      "switchAngle": 65.0,
+      "hysteresisAngle": 2.5,
+      "controlBone": {
+        "name": "MouthScaleOffset",
+        "path": "chara_115201_battle_unit/VisualRoot/chara_115201_model/chara_115201/Root/Hip/Spine/Waist/Chest/Neck/Head/MouthScaleOffset"
+      },
+      "elevationMin": 5.0,
+      "elevationMax": 85.0,
+      "cameraDownOffsetAtMax": 0.10000000149011612,
+      "yScaleAtMax": 0.0,
+      "localZElevationMin": 5.0,
+      "localZElevationMax": 85.0,
+      "localZOffsetAtMax": -0.10000000149011612,
+      "localZFrontBackBlend": 0.5,
+      "boneHideAngle": 95.0,
+      "boneHideElevationAngle": 40.0,
+      "shouldDrawGizmo": true
+    }
+  ]
+}

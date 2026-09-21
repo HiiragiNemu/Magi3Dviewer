@@ -1,0 +1,57 @@
+{
+  "schema": "magius.official-stage-catalog.v1",
+  "version": 1,
+  "family": "gallery-3d-controller",
+  "stages": [
+    {
+      "id": "gallery-controller-gallery-bg3d-gallery",
+      "stableKey": "AssetBundles/gallery/bg3d_gallery",
+      "name": "bg3d_gallery",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "gallery",
+      "family": "gallery-3d-controller",
+      "official": true,
+      "assetBundleName": "gallery/bg3d_gallery",
+      "backgroundResourceName": "bg3d_gallery",
+      "type": "fbx",
+      "url": "./stages/official/gallery-controller-gallery-bg3d-gallery/bg3d_gallery.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 7313581,
+        "externalCabCount": 7,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/gallery-controller-gallery-bg3d-gallery/scene-profile.json"
+    }
+  ],
+  "counts": {
+    "visible": 1,
+    "target": 1,
+    "fullyResolved": 1
+  }
+}

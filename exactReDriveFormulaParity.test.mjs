@@ -76,13 +76,25 @@ assert.ok(!gem.includes('rdGemMatCapMask * 0.34'));
 assert.ok(!gem.includes('step(vec3(0.5), rdGemBase)'));
 assert.ok(!gem.includes('step(vec3(0.5), rdMatCapBase)'));
 
+// Blob 95 samples the literal interpolated view-normal. It contains no
+// Viewer-only free-orbit backface normal flip.
+assert.ok(gem.includes('vec2 rdGemMatCapUv = rdGemVertexNormalVs.xy * 0.5 + 0.5;'))
+assert.ok(!gem.includes('rdGemOfficialViewNormalXY'))
+assert.ok(!gem.includes('gl_FrontFacing'))
+assert.ok(!gem.includes('rdGemVertexNormalVs = -rdGemVertexNormalVs;'))
+assert.ok(gem.includes("officialForwardCull: 'back'"))
+assert.ok(gem.includes('viewerBackfaceCompensation: false'))
+
 // JP 2022.3.62f2 main_gem blob 95: view-space folded normal, two
 // half-vector coordinates, hard step bands and ShadowTex selection.
 for (const token of [
   'rdGemHalfOneVs = normalize(rdGemViewVs + rdGemLightVs)',
   'rdGemHalfOneVs + vec3(0.0, 0.0, 2.0)',
-  '-rdGemNormalVs.x,',
-  '-rdGemNormalVs.y + uGemHeightCorrection,',
+  'vec3 rdGemSurfaceNormalVs = normalize(normal);',
+  'vec3 rdGemVertexNormalVs = normalize(vNormal);',
+  '-rdGemVertexNormalVs.x,',
+  '-rdGemVertexNormalVs.y + uGemHeightCorrection,',
+  'rdGemVertexNormalVs.z',
   '0.660000026 -',
   '0.340000004 * uGemFirstShadowSize',
   '0.933000028 -',
@@ -99,6 +111,19 @@ for (const token of [
   'rdGemHardHighlightMask *',
   'diffuseColor.a + rdGemDepthSelector',
 ]) assert.ok(gem.includes(token), `missing blob-95 Gem token: ${token}`)
+assert.ok(
+  gem.indexOf('vec3 rdGemVertexNormalVs = normalize(vNormal);') <
+    gem.indexOf('vec3 rdGemCorrectedNormalVs = normalize(vec3('),
+  'blob-95 must normalize the complete vertex view-normal before height correction',
+)
+assert.ok(!gem.includes('normalize(rdGemSurfaceNormalVs.xz)'))
+assert.ok(!gem.includes('-rdGemSurfaceNormalVs.x,'))
+assert.ok(!gem.includes('rdGemSurfaceNormalVs.z\n            ));'))
+assert.ok(
+  gem.indexOf('rdGemSurfaceNormalVs,') <
+    gem.indexOf('float rdGemFirstHighlightThreshold'),
+  'blob-95 hard Gem highlights must retain the final surface normal',
+)
 
 const selectorIndex = gem.indexOf('rdGemShadowSelector = saturate(')
 const matCapIndex = gem.indexOf('vec2 rdGemMatCapUv')
@@ -230,18 +255,22 @@ for (const token of [
 );
 assert.ok(!general.includes('rdToonAmbientColor = irradiance'));
 
-const anisoIndex = general.indexOf('outgoingLight += rdAnisoColor')
+const anisoIndex = general.indexOf('outgoingLight += rdAnisoContribution')
 const hardIndex = general.indexOf('float rdHardSpecular')
 const gradientIndex = general.indexOf('vec3 rdSpecularGradient')
 const overlayIndex = general.indexOf('(rdSpecularOverlay - outgoingLight)')
+const fresnelIndex = general.indexOf('vec3 rdToonFresnelContribution')
+const alphaClampIndex = general.indexOf('diffuseColor.a = saturate(diffuseColor.a)')
+const cosmicIndex = general.indexOf('// RD_OFFICIAL_COSMIC_COMPOSITE')
 const emissionIndex = general.indexOf(
   'outgoingLight +=\n                totalEmissiveRadiance',
 )
 assert.ok(
   anisoIndex >= 0 && anisoIndex < hardIndex &&
   hardIndex < gradientIndex && gradientIndex < overlayIndex &&
-  overlayIndex < emissionIndex,
-  'compiled material order must be Aniso -> hard spec -> RGB Overlay -> emission',
+  overlayIndex < fresnelIndex && fresnelIndex < alphaClampIndex &&
+  alphaClampIndex < cosmicIndex && cosmicIndex < emissionIndex,
+  'compiled material order must be Aniso -> hard spec -> RGB Overlay -> Fresnel/alpha -> Cosmic -> emission',
 )
 
 const overlay = (base, gradient) => base.map((value, index) => (

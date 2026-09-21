@@ -66,8 +66,15 @@ export function setDepthRimMaterialProfileUniforms(
         shader.uniforms[name].value = value
     }
     const depthRim = profile?.depthRim
+    // The official `_ISEYE + _USE_DEPTHTEX_RIM_SHADOW` compiled variant keeps
+    // the serialized `_UseDepthTex` value only as an unused uniform and removes
+    // `_CameraDepthTexture` from the fragment program. Reproduce that shader
+    // specialization from the serialized `_IsEye` field, not a character ID.
+    const effectiveUseDepthTex = Boolean(
+        depthRim?.useDepthTex && !profile?.face.isEye,
+    )
     setNumber('uRdDepthRimProfilePresent', profile ? 1 : 0)
-    setNumber('uRdDepthUseDepthTex', depthRim?.useDepthTex ? 1 : 0)
+    setNumber('uRdDepthUseDepthTex', effectiveUseDepthTex ? 1 : 0)
     setNumber('uRdDepthUseRimLight', depthRim?.useRimLight ? 1 : 0)
     setNumber('uRdDepthDitherFade', depthRim?.ditherFade ?? 0)
     setNumber('uRdDepthTexWidth', depthRim?.width ?? 1)
@@ -200,6 +207,75 @@ export function injectReDriveDepthRimShader(
 
         ${shader.fragmentShader}
     `.replace(
+        '// RD_FACE_GRADIENT_DEPTH_SAMPLE_BEGIN',
+        /* glsl */ `
+        float rdFaceGradientDepthSignal = 1.0;
+        float rdFaceDepthProfileEnabled =
+            step(0.5, uRdDepthRimExperimentEnabled) *
+            step(0.5, uRdDepthRimProfilePresent);
+
+        if (rdFaceDepthProfileEnabled > 0.5) {
+            float rdFaceDepthDitherValue = rdDepthRimDitherBayer(
+                ivec2(gl_FragCoord.xy)
+            );
+            float rdFaceDepthDitherTest =
+                (1.0 - uRdDepthDitherFade) -
+                (
+                    uRdDepthDitherFade *
+                    (0.5 - rdFaceDepthDitherValue) +
+                    0.5
+                );
+            if (rdFaceDepthDitherTest < 0.0) discard;
+        }
+
+        float rdFaceDepthChainEnabled =
+            rdFaceDepthProfileEnabled *
+            step(0.5, uRdDepthUseDepthTex) *
+            step(0.5, uRdDepthRimVertexColorGAvailable);
+        if (
+            rdFaceDepthChainEnabled > 0.5 &&
+            uRdDepthDitherFade <= 0.5
+        ) {
+            float rdDepthCenterZ = rdDepthRimLinearEye(gl_FragCoord.z);
+            float rdFaceDepthDistanceScale = mix(
+                1.0 / max(rdDepthCenterZ, 0.0000001),
+                0.850000024,
+                step(0.5, uRdDepthRimOrthographic)
+            );
+            float rdFaceDepthWidth =
+                vRdDepthRimVertexColorG * uRdDepthTexWidth;
+            vec2 rdFaceDepthExtent = vec2(
+                rdFaceDepthWidth * 0.660000026,
+                rdFaceDepthWidth * 0.660000026 + uRdDepthTexYOffset
+            );
+            rdFaceDepthExtent *= uRdDepthRimAspectFix;
+            rdFaceDepthExtent *= uRdDepthRimFovOrOrthoFix;
+            rdFaceDepthExtent *= rdFaceDepthDistanceScale;
+            vec2 rdFaceDepthMainDeltaPx =
+                rdFaceDepthExtent *
+                rdToonMainLightDirection.xy *
+                uRdDepthRimViewportSize;
+            ivec2 rdFaceDepthMaxPixel =
+                ivec2(uRdDepthRimViewportSize) - ivec2(1);
+            ivec2 rdFaceDepthMainPixel = clamp(
+                ivec2(trunc(gl_FragCoord.xy + rdFaceDepthMainDeltaPx)),
+                ivec2(0),
+                rdFaceDepthMaxPixel
+            );
+            float rdDepthMainZ = rdDepthRimFetchEye(
+                rdFaceDepthMainPixel
+            );
+            rdFaceGradientDepthSignal = clamp(
+                50.0 * (
+                    rdDepthMainZ -
+                    (rdDepthCenterZ - 0.00999999978)
+                ),
+                0.0,
+                1.0
+            );
+        }
+        `,
+    ).replace(
         '// RD_DEPTH_RIM_SAMPLE_BEGIN',
         /* glsl */ `
         float rdDepthShadowSignal = 1.0;
@@ -305,6 +381,10 @@ export function injectReDriveDepthRimShader(
             );
             rdDepthRim *= step(0.5, uRdDepthUseRimLight);
         }
+        // JP blob 98 clamps (projected AngelRingMap + main depth rim) once.
+        // The projected hair variant updates this carrier before composite;
+        // keeping one signal prevents two independent light additions.
+        float rdDepthRimMainCompositeSignal = rdDepthRim.x;
         `,
     ).replace(
         '// RD_DEPTH_SHADOW_SELECTOR_BEGIN',
@@ -333,7 +413,7 @@ export function injectReDriveDepthRimShader(
             outgoingLight +=
                 rdDepthLightCarrier *
                 rdDepthBaseLuma *
-                rdDepthRim.x *
+                rdDepthRimMainCompositeSignal *
                 uRdDepthRimMainColor;
             outgoingLight +=
                 rdDepthLightCarrier *

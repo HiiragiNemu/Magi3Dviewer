@@ -1,0 +1,5862 @@
+{
+  "schema": "magius.official-stage-catalog.v1",
+  "version": 1,
+  "family": "battle-direct",
+  "stages": [
+    {
+      "id": "battle-600-01-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_01_00_001",
+      "name": "Rose Garden Witch Part II - Boss Floor",
+      "names": {
+        "en": "Rose Garden Witch Part II - Boss Floor",
+        "ja": "薔薇園の魔女 後編 ボス階層",
+        "zhHant": "薔薇園的魔女 後篇 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_01_00_001",
+      "backgroundResourceName": "bg_3d_600_01_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-01-00-001/bg_3d_600_01_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-01-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2793533,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-600-01-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_01_01_001",
+      "name": "Rose Garden Witch Part II - Floor 1",
+      "names": {
+        "en": "Rose Garden Witch Part II - Floor 1",
+        "ja": "薔薇園の魔女 後編 第1階層",
+        "zhHant": "薔薇園的魔女 後篇 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_01_01_001",
+      "backgroundResourceName": "bg_3d_600_01_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-01-01-001/bg_3d_600_01_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-01-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1837208,
+        "externalCabCount": 15
+      }
+    },
+    {
+      "id": "battle-600-01-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_01_01_002",
+      "name": "Rose Garden Witch Part II - Floor 2",
+      "names": {
+        "en": "Rose Garden Witch Part II - Floor 2",
+        "ja": "薔薇園の魔女 後編 第2階層",
+        "zhHant": "薔薇園的魔女 後篇 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_01_01_002",
+      "backgroundResourceName": "bg_3d_600_01_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-01-01-002/bg_3d_600_01_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-01-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1908379,
+        "externalCabCount": 19
+      }
+    },
+    {
+      "id": "battle-600-01-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_01_01_003",
+      "name": "Rose Garden Witch Part II - Floor 3",
+      "names": {
+        "en": "Rose Garden Witch Part II - Floor 3",
+        "ja": "薔薇園の魔女 後編 第3階層",
+        "zhHant": "薔薇園的魔女 後篇 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_01_01_003",
+      "backgroundResourceName": "bg_3d_600_01_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-01-01-003/bg_3d_600_01_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-01-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4593091,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-600-10-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_10_00_001",
+      "name": "Rose Garden Witch - Boss Floor (Christmas)",
+      "names": {
+        "en": "Rose Garden Witch - Boss Floor (Christmas)",
+        "ja": "薔薇園の魔女 ボス階層 クリスマス",
+        "zhHant": "薔薇園的魔女 BOSS層 聖誕節"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_10_00_001",
+      "backgroundResourceName": "bg_3d_600_10_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-10-00-001/bg_3d_600_10_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-10-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3704230,
+        "externalCabCount": 23
+      }
+    },
+    {
+      "id": "battle-600-10-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_10_01_001",
+      "name": "Rose Garden Witch - Floor 1 (Christmas)",
+      "names": {
+        "en": "Rose Garden Witch - Floor 1 (Christmas)",
+        "ja": "薔薇園の魔女 第1階層 クリスマス",
+        "zhHant": "薔薇園的魔女 第1層 聖誕節"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_10_01_001",
+      "backgroundResourceName": "bg_3d_600_10_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-10-01-001/bg_3d_600_10_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-10-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3445218,
+        "externalCabCount": 28
+      }
+    },
+    {
+      "id": "battle-600-10-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_10_01_002",
+      "name": "Rose Garden Witch - Floor 2 (Christmas)",
+      "names": {
+        "en": "Rose Garden Witch - Floor 2 (Christmas)",
+        "ja": "薔薇園の魔女 第2階層 クリスマス",
+        "zhHant": "薔薇園的魔女 第2層 聖誕節"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_10_01_002",
+      "backgroundResourceName": "bg_3d_600_10_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-10-01-002/bg_3d_600_10_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-10-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2317875,
+        "externalCabCount": 30
+      }
+    },
+    {
+      "id": "battle-600-10-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_10_01_003",
+      "name": "Rose Garden Witch - Floor 3 (Christmas)",
+      "names": {
+        "en": "Rose Garden Witch - Floor 3 (Christmas)",
+        "ja": "薔薇園の魔女 第3階層 クリスマス",
+        "zhHant": "薔薇園的魔女 第3層 聖誕節"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_10_01_003",
+      "backgroundResourceName": "bg_3d_600_10_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-10-01-003/bg_3d_600_10_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-10-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1202411,
+        "externalCabCount": 15
+      }
+    },
+    {
+      "id": "battle-601-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_601_00_00_001",
+      "name": "Darkness Witch - Boss Floor",
+      "names": {
+        "en": "Darkness Witch - Boss Floor",
+        "ja": "暗闇の魔女 ボス階層",
+        "zhHant": "黑暗的魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_601_00_00_001",
+      "backgroundResourceName": "bg_3d_601_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-601-00-00-001/bg_3d_601_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-601-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1289542,
+        "externalCabCount": 13
+      }
+    },
+    {
+      "id": "battle-601-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_601_00_01_003",
+      "name": "Darkness Witch - Floor 3",
+      "names": {
+        "en": "Darkness Witch - Floor 3",
+        "ja": "暗闇の魔女 第3階層",
+        "zhHant": "黑暗的魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_601_00_01_003",
+      "backgroundResourceName": "bg_3d_601_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-601-00-01-003/bg_3d_601_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-601-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1758909,
+        "externalCabCount": 20
+      }
+    },
+    {
+      "id": "battle-601-14-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_601_14_00_001",
+      "name": "Darkness Witch (Apex Form) - Boss Floor",
+      "names": {
+        "en": "Darkness Witch (Apex Form) - Boss Floor",
+        "ja": "【天辺の姿】暗闇の魔女 ボス階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_601_14_00_001",
+      "backgroundResourceName": "bg_3d_601_14_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-601-14-00-001/bg_3d_601_14_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-601-14-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1287924,
+        "externalCabCount": 13
+      }
+    },
+    {
+      "id": "battle-601-15-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_601_15_00_001",
+      "name": "Darkness Witch (Apex Overdrive Form) - Boss Floor",
+      "names": {
+        "en": "Darkness Witch (Apex Overdrive Form) - Boss Floor",
+        "ja": "【天辺越えの姿】暗闇の魔女 ボス階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_601_15_00_001",
+      "backgroundResourceName": "bg_3d_601_15_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-601-15-00-001/bg_3d_601_15_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-601-15-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1286501,
+        "externalCabCount": 13
+      }
+    },
+    {
+      "id": "battle-602-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_602_00_01_001",
+      "name": "Dessert Witch - Floor 1",
+      "names": {
+        "en": "Dessert Witch - Floor 1",
+        "ja": "お菓子の魔女 第1階層",
+        "zhHant": "點心的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_602_00_01_001",
+      "backgroundResourceName": "bg_3d_602_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-602-00-01-001/bg_3d_602_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-602-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3692243,
+        "externalCabCount": 8
+      }
+    },
+    {
+      "id": "battle-602-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_602_00_01_002",
+      "name": "Dessert Witch - Floor 2",
+      "names": {
+        "en": "Dessert Witch - Floor 2",
+        "ja": "お菓子の魔女 第2階層",
+        "zhHant": "點心的魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_602_00_01_002",
+      "backgroundResourceName": "bg_3d_602_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-602-00-01-002/bg_3d_602_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-602-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1276395,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-602-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_602_00_01_003",
+      "name": "Dessert Witch - Floor 3",
+      "names": {
+        "en": "Dessert Witch - Floor 3",
+        "ja": "お菓子の魔女 第3階層",
+        "zhHant": "點心的魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_602_00_01_003",
+      "backgroundResourceName": "bg_3d_602_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-602-00-01-003/bg_3d_602_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-602-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2247900,
+        "externalCabCount": 18
+      }
+    },
+    {
+      "id": "battle-602-11-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_602_11_00_001",
+      "name": "Dessert Witch - Boss Floor (Halloween)",
+      "names": {
+        "en": "Dessert Witch - Boss Floor (Halloween)",
+        "ja": "お菓子の魔女 ボス階層 ハロウィン",
+        "zhHant": "點心的魔女 BOSS層 萬聖節"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_602_11_00_001",
+      "backgroundResourceName": "bg_3d_602_11_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-602-11-00-001/bg_3d_602_11_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-602-11-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4935663,
+        "externalCabCount": 21
+      }
+    },
+    {
+      "id": "battle-602-11-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_602_11_01_001",
+      "name": "Dessert Witch - Floor 1 (Halloween)",
+      "names": {
+        "en": "Dessert Witch - Floor 1 (Halloween)",
+        "ja": "お菓子の魔女 第1階層 ハロウィン",
+        "zhHant": "點心的魔女 第1層 萬聖節"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_602_11_01_001",
+      "backgroundResourceName": "bg_3d_602_11_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-602-11-01-001/bg_3d_602_11_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-602-11-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3975360,
+        "externalCabCount": 10
+      }
+    },
+    {
+      "id": "battle-602-11-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_602_11_01_002",
+      "name": "Dessert Witch - Floor 2 (Halloween)",
+      "names": {
+        "en": "Dessert Witch - Floor 2 (Halloween)",
+        "ja": "お菓子の魔女 第2階層 ハロウィン",
+        "zhHant": "點心的魔女 第2層 萬聖節"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_602_11_01_002",
+      "backgroundResourceName": "bg_3d_602_11_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-602-11-01-002/bg_3d_602_11_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-602-11-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2545799,
+        "externalCabCount": 12
+      }
+    },
+    {
+      "id": "battle-602-11-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_602_11_01_003",
+      "name": "Dessert Witch - Floor 3 (Halloween)",
+      "names": {
+        "en": "Dessert Witch - Floor 3 (Halloween)",
+        "ja": "お菓子の魔女 第3階層 ハロウィン",
+        "zhHant": "點心的魔女 第3層 萬聖節"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_602_11_01_003",
+      "backgroundResourceName": "bg_3d_602_11_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-602-11-01-003/bg_3d_602_11_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-602-11-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1855064,
+        "externalCabCount": 21
+      }
+    },
+    {
+      "id": "battle-602-14-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_602_14_00_001",
+      "name": "Dessert Witch (Apex Form) - Boss Floor",
+      "names": {
+        "en": "Dessert Witch (Apex Form) - Boss Floor",
+        "ja": "【天辺の姿】お菓子の魔女 ボス階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_602_14_00_001",
+      "backgroundResourceName": "bg_3d_602_14_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-602-14-00-001/bg_3d_602_14_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-602-14-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4630030,
+        "externalCabCount": 16
+      }
+    },
+    {
+      "id": "battle-602-15-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_602_15_00_001",
+      "name": "Dessert Witch (Apex Overdrive Form) - Boss Floor",
+      "names": {
+        "en": "Dessert Witch (Apex Overdrive Form) - Boss Floor",
+        "ja": "【天辺越えの姿】お菓子の魔女 ボス階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_602_15_00_001",
+      "backgroundResourceName": "bg_3d_602_15_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-602-15-00-001/bg_3d_602_15_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-602-15-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4629824,
+        "externalCabCount": 16
+      }
+    },
+    {
+      "id": "battle-603-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_603_00_01_001",
+      "name": "Box Witch - Floor 1",
+      "names": {
+        "en": "Box Witch - Floor 1",
+        "ja": "ハコの魔女 第1階層",
+        "zhHant": "箱之魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_603_00_01_001",
+      "backgroundResourceName": "bg_3d_603_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-603-00-01-001/bg_3d_603_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-603-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3410855,
+        "externalCabCount": 16
+      }
+    },
+    {
+      "id": "battle-603-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_603_00_01_002",
+      "name": "Box Witch - Floor 2",
+      "names": {
+        "en": "Box Witch - Floor 2",
+        "ja": "ハコの魔女 第2階層",
+        "zhHant": "箱之魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_603_00_01_002",
+      "backgroundResourceName": "bg_3d_603_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-603-00-01-002/bg_3d_603_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-603-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1050909,
+        "externalCabCount": 14
+      }
+    },
+    {
+      "id": "battle-603-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_603_00_01_003",
+      "name": "Box Witch - Floor 3",
+      "names": {
+        "en": "Box Witch - Floor 3",
+        "ja": "ハコの魔女 第3階層",
+        "zhHant": "箱之魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_603_00_01_003",
+      "backgroundResourceName": "bg_3d_603_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-603-00-01-003/bg_3d_603_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-603-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 561148,
+        "externalCabCount": 10
+      }
+    },
+    {
+      "id": "battle-603-14-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_603_14_00_001",
+      "name": "Box Witch (Apex Form) - Boss Floor",
+      "names": {
+        "en": "Box Witch (Apex Form) - Boss Floor",
+        "ja": "【天辺の姿】ハコの魔女 ボス階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_603_14_00_001",
+      "backgroundResourceName": "bg_3d_603_14_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-603-14-00-001/bg_3d_603_14_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-603-14-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 405742,
+        "externalCabCount": 12
+      }
+    },
+    {
+      "id": "battle-603-15-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_603_15_00_001",
+      "name": "Box Witch (Apex Overdrive Form) - Boss Floor",
+      "names": {
+        "en": "Box Witch (Apex Overdrive Form) - Boss Floor",
+        "ja": "【天辺越えの姿】ハコの魔女 ボス階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_603_15_00_001",
+      "backgroundResourceName": "bg_3d_603_15_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-603-15-00-001/bg_3d_603_15_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-603-15-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 404779,
+        "externalCabCount": 12
+      }
+    },
+    {
+      "id": "battle-604-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_604_00_00_001",
+      "name": "Graffiti Witch - Boss Floor",
+      "names": {
+        "en": "Graffiti Witch - Boss Floor",
+        "ja": "落書きの魔女 ボス階層",
+        "zhHant": "塗鴉的魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_604_00_00_001",
+      "backgroundResourceName": "bg_3d_604_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-604-00-00-001/bg_3d_604_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-604-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2404865,
+        "externalCabCount": 14
+      }
+    },
+    {
+      "id": "battle-604-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_604_00_01_001",
+      "name": "Graffiti Witch - Floor 1",
+      "names": {
+        "en": "Graffiti Witch - Floor 1",
+        "ja": "落書きの魔女 第1階層",
+        "zhHant": "塗鴉的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_604_00_01_001",
+      "backgroundResourceName": "bg_3d_604_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-604-00-01-001/bg_3d_604_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-604-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1902790,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-604-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_604_00_01_002",
+      "name": "Graffiti Witch - Floor 2",
+      "names": {
+        "en": "Graffiti Witch - Floor 2",
+        "ja": "落書きの魔女 第2階層",
+        "zhHant": "塗鴉的魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_604_00_01_002",
+      "backgroundResourceName": "bg_3d_604_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-604-00-01-002/bg_3d_604_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-604-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3943810,
+        "externalCabCount": 14
+      }
+    },
+    {
+      "id": "battle-604-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_604_00_01_003",
+      "name": "Graffiti Witch - Floor 3",
+      "names": {
+        "en": "Graffiti Witch - Floor 3",
+        "ja": "落書きの魔女 第3階層",
+        "zhHant": "塗鴉的魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_604_00_01_003",
+      "backgroundResourceName": "bg_3d_604_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-604-00-01-003/bg_3d_604_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-604-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4070004,
+        "externalCabCount": 19
+      }
+    },
+    {
+      "id": "battle-605-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_605_00_00_001",
+      "name": "Silver Witch - Boss Floor",
+      "names": {
+        "en": "Silver Witch - Boss Floor",
+        "ja": "銀の魔女 ボス階層",
+        "zhHant": "銀之魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_605_00_00_001",
+      "backgroundResourceName": "bg_3d_605_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-605-00-00-001/bg_3d_605_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-605-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2443952,
+        "externalCabCount": 14
+      }
+    },
+    {
+      "id": "battle-605-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_605_00_01_001",
+      "name": "Silver Witch - Floor 1",
+      "names": {
+        "en": "Silver Witch - Floor 1",
+        "ja": "銀の魔女 第1階層",
+        "zhHant": "銀之魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_605_00_01_001",
+      "backgroundResourceName": "bg_3d_605_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-605-00-01-001/bg_3d_605_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-605-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1582448,
+        "externalCabCount": 9
+      }
+    },
+    {
+      "id": "battle-605-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_605_00_01_002",
+      "name": "Silver Witch - Floor 2",
+      "names": {
+        "en": "Silver Witch - Floor 2",
+        "ja": "銀の魔女 第2階層",
+        "zhHant": "銀之魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_605_00_01_002",
+      "backgroundResourceName": "bg_3d_605_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-605-00-01-002/bg_3d_605_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-605-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1680983,
+        "externalCabCount": 12
+      }
+    },
+    {
+      "id": "battle-605-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_605_00_01_003",
+      "name": "Silver Witch - Floor 3",
+      "names": {
+        "en": "Silver Witch - Floor 3",
+        "ja": "銀の魔女 第3階層",
+        "zhHant": "銀之魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_605_00_01_003",
+      "backgroundResourceName": "bg_3d_605_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-605-00-01-003/bg_3d_605_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-605-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2143605,
+        "externalCabCount": 14
+      }
+    },
+    {
+      "id": "battle-606-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_606_00_00_001",
+      "name": "Shadow Witch - Boss Floor",
+      "names": {
+        "en": "Shadow Witch - Boss Floor",
+        "ja": "影の魔女 ボス階層",
+        "zhHant": "影之魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_606_00_00_001",
+      "backgroundResourceName": "bg_3d_606_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-606-00-00-001/bg_3d_606_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-606-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1426060,
+        "externalCabCount": 13
+      }
+    },
+    {
+      "id": "battle-606-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_606_00_01_001",
+      "name": "Shadow Witch - Floor 1",
+      "names": {
+        "en": "Shadow Witch - Floor 1",
+        "ja": "影の魔女 第1階層",
+        "zhHant": "影之魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_606_00_01_001",
+      "backgroundResourceName": "bg_3d_606_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-606-00-01-001/bg_3d_606_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-606-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2644200,
+        "externalCabCount": 22
+      }
+    },
+    {
+      "id": "battle-606-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_606_00_01_002",
+      "name": "Shadow Witch - Floor 2",
+      "names": {
+        "en": "Shadow Witch - Floor 2",
+        "ja": "影の魔女 第2階層",
+        "zhHant": "影之魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_606_00_01_002",
+      "backgroundResourceName": "bg_3d_606_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-606-00-01-002/bg_3d_606_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-606-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3636186,
+        "externalCabCount": 14
+      }
+    },
+    {
+      "id": "battle-606-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_606_00_01_003",
+      "name": "Shadow Witch - Floor 3",
+      "names": {
+        "en": "Shadow Witch - Floor 3",
+        "ja": "影の魔女 第3階層",
+        "zhHant": "影之魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_606_00_01_003",
+      "backgroundResourceName": "bg_3d_606_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-606-00-01-003/bg_3d_606_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-606-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2803694,
+        "externalCabCount": 16
+      }
+    },
+    {
+      "id": "battle-607-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_607_00_00_001",
+      "name": "Dog Witch - Boss Floor",
+      "names": {
+        "en": "Dog Witch - Boss Floor",
+        "ja": "犬の魔女 ボス階層",
+        "zhHant": "犬之魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_607_00_00_001",
+      "backgroundResourceName": "bg_3d_607_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-607-00-00-001/bg_3d_607_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-607-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 155881,
+        "externalCabCount": 5
+      }
+    },
+    {
+      "id": "battle-607-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_607_00_01_001",
+      "name": "Dog Witch - Floor 1",
+      "names": {
+        "en": "Dog Witch - Floor 1",
+        "ja": "犬の魔女 第1階層",
+        "zhHant": "犬之魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_607_00_01_001",
+      "backgroundResourceName": "bg_3d_607_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-607-00-01-001/bg_3d_607_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-607-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2933100,
+        "externalCabCount": 9
+      }
+    },
+    {
+      "id": "battle-607-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_607_00_01_002",
+      "name": "Dog Witch - Floor 2",
+      "names": {
+        "en": "Dog Witch - Floor 2",
+        "ja": "犬の魔女 第2階層",
+        "zhHant": "犬之魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_607_00_01_002",
+      "backgroundResourceName": "bg_3d_607_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-607-00-01-002/bg_3d_607_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-607-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3973803,
+        "externalCabCount": 23
+      }
+    },
+    {
+      "id": "battle-607-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_607_00_01_003",
+      "name": "Dog Witch - Floor 3",
+      "names": {
+        "en": "Dog Witch - Floor 3",
+        "ja": "犬の魔女 第3階層",
+        "zhHant": "犬之魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_607_00_01_003",
+      "backgroundResourceName": "bg_3d_607_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-607-00-01-003/bg_3d_607_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-607-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4153676,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-607-14-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_607_14_00_001",
+      "name": "Dog Witch (Apex Form) - Boss Floor",
+      "names": {
+        "en": "Dog Witch (Apex Form) - Boss Floor",
+        "ja": "【天辺の姿】犬の魔女 ボス階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_607_14_00_001",
+      "backgroundResourceName": "bg_3d_607_14_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-607-14-00-001/bg_3d_607_14_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-607-14-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 156980,
+        "externalCabCount": 5
+      }
+    },
+    {
+      "id": "battle-607-15-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_607_15_00_001",
+      "name": "Dog Witch (Apex Overdrive Form) - Boss Floor",
+      "names": {
+        "en": "Dog Witch (Apex Overdrive Form) - Boss Floor",
+        "ja": "【天辺越えの姿】犬の魔女 ボス階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_607_15_00_001",
+      "backgroundResourceName": "bg_3d_607_15_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-607-15-00-001/bg_3d_607_15_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-607-15-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 156210,
+        "externalCabCount": 5
+      }
+    },
+    {
+      "id": "battle-607-16-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_607_16_00_001",
+      "name": "Dog Witch - Boss Floor (Summer)",
+      "names": {
+        "en": "Dog Witch - Boss Floor (Summer)",
+        "ja": "犬の魔女 ボス階層 サマー",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_607_16_00_001",
+      "backgroundResourceName": "bg_3d_607_16_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-607-16-00-001/bg_3d_607_16_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-607-16-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 106147,
+        "externalCabCount": 9
+      }
+    },
+    {
+      "id": "battle-607-16-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_607_16_01_001",
+      "name": "Dog Witch - Floor 2 (Summer)",
+      "names": {
+        "en": "Dog Witch - Floor 2 (Summer)",
+        "ja": "犬の魔女 第2階層 サマー",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_607_16_01_001",
+      "backgroundResourceName": "bg_3d_607_16_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-607-16-01-001/bg_3d_607_16_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-607-16-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4557399,
+        "externalCabCount": 35
+      }
+    },
+    {
+      "id": "battle-608-00-00-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_608_00_00_002",
+      "name": "Mermaid Witch - Boss Floor: Red Hall",
+      "names": {
+        "en": "Mermaid Witch - Boss Floor: Red Hall",
+        "ja": "人魚の魔女 ボス階層 赤いホール",
+        "zhHant": "人魚的魔女 首腦層 紅色大廳"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_608_00_00_002",
+      "backgroundResourceName": "bg_3d_608_00_00_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-608-00-00-002/bg_3d_608_00_00_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-608-00-00-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 7959166,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-608-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_608_00_01_001",
+      "name": "Mermaid Witch - Floor 1",
+      "names": {
+        "en": "Mermaid Witch - Floor 1",
+        "ja": "人魚の魔女 第1階層",
+        "zhHant": "人魚的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_608_00_01_001",
+      "backgroundResourceName": "bg_3d_608_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-608-00-01-001/bg_3d_608_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-608-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1884045,
+        "externalCabCount": 12
+      }
+    },
+    {
+      "id": "battle-608-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_608_00_01_002",
+      "name": "Mermaid Witch - Floor 2",
+      "names": {
+        "en": "Mermaid Witch - Floor 2",
+        "ja": "人魚の魔女 第2階層",
+        "zhHant": "人魚的魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_608_00_01_002",
+      "backgroundResourceName": "bg_3d_608_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-608-00-01-002/bg_3d_608_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-608-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2600153,
+        "externalCabCount": 16
+      }
+    },
+    {
+      "id": "battle-608-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_608_00_01_003",
+      "name": "Mermaid Witch - Floor 3",
+      "names": {
+        "en": "Mermaid Witch - Floor 3",
+        "ja": "人魚の魔女 第3階層",
+        "zhHant": "人魚的魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_608_00_01_003",
+      "backgroundResourceName": "bg_3d_608_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-608-00-01-003/bg_3d_608_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-608-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2495657,
+        "externalCabCount": 12
+      }
+    },
+    {
+      "id": "battle-609-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_609_00_00_001",
+      "name": "Artist Witch - Boss Floor",
+      "names": {
+        "en": "Artist Witch - Boss Floor",
+        "ja": "芸術家の魔女 ボス階層",
+        "zhHant": "藝術家的魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_609_00_00_001",
+      "backgroundResourceName": "bg_3d_609_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-609-00-00-001/bg_3d_609_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-609-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1487799,
+        "externalCabCount": 9
+      }
+    },
+    {
+      "id": "battle-609-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_609_00_01_001",
+      "name": "Artist Witch - Floor 1",
+      "names": {
+        "en": "Artist Witch - Floor 1",
+        "ja": "芸術家の魔女 第1階層",
+        "zhHant": "藝術家的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_609_00_01_001",
+      "backgroundResourceName": "bg_3d_609_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-609-00-01-001/bg_3d_609_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-609-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2263528,
+        "externalCabCount": 8
+      }
+    },
+    {
+      "id": "battle-609-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_609_00_01_002",
+      "name": "Artist Witch - Floor 2",
+      "names": {
+        "en": "Artist Witch - Floor 2",
+        "ja": "芸術家の魔女 第2階層",
+        "zhHant": "藝術家的魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_609_00_01_002",
+      "backgroundResourceName": "bg_3d_609_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-609-00-01-002/bg_3d_609_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-609-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1082200,
+        "externalCabCount": 10
+      }
+    },
+    {
+      "id": "battle-609-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_609_00_01_003",
+      "name": "Artist Witch - Floor 3",
+      "names": {
+        "en": "Artist Witch - Floor 3",
+        "ja": "芸術家の魔女 第3階層",
+        "zhHant": "藝術家的魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_609_00_01_003",
+      "backgroundResourceName": "bg_3d_609_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-609-00-01-003/bg_3d_609_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-609-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1171619,
+        "externalCabCount": 9
+      }
+    },
+    {
+      "id": "battle-609-14-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_609_14_00_001",
+      "name": "Artist Witch (Apex Form) - Boss Floor",
+      "names": {
+        "en": "Artist Witch (Apex Form) - Boss Floor",
+        "ja": "【天辺の姿】芸術家の魔女 ボス階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_609_14_00_001",
+      "backgroundResourceName": "bg_3d_609_14_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-609-14-00-001/bg_3d_609_14_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-609-14-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1489091,
+        "externalCabCount": 9
+      }
+    },
+    {
+      "id": "battle-609-15-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_609_15_01_001",
+      "name": "Artist Witch (Apex Overdrive Form) - Boss Floor",
+      "names": {
+        "en": "Artist Witch (Apex Overdrive Form) - Boss Floor",
+        "ja": "【天辺越えの姿】芸術家の魔女 ボス階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_609_15_01_001",
+      "backgroundResourceName": "bg_3d_609_15_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-609-15-01-001/bg_3d_609_15_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-609-15-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1487736,
+        "externalCabCount": 9
+      }
+    },
+    {
+      "id": "battle-610-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_610_00_00_001",
+      "name": "Chairperson Witch - Boss Floor",
+      "names": {
+        "en": "Chairperson Witch - Boss Floor",
+        "ja": "委員長の魔女 ボス階層",
+        "zhHant": "班長的魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_610_00_00_001",
+      "backgroundResourceName": "bg_3d_610_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-610-00-00-001/bg_3d_610_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-610-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1374012,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-610-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_610_00_01_001",
+      "name": "Chairperson Witch - Floor 1",
+      "names": {
+        "en": "Chairperson Witch - Floor 1",
+        "ja": "委員長の魔女 第1階層",
+        "zhHant": "班長的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_610_00_01_001",
+      "backgroundResourceName": "bg_3d_610_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-610-00-01-001/bg_3d_610_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-610-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 883900,
+        "externalCabCount": 13
+      }
+    },
+    {
+      "id": "battle-610-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_610_00_01_002",
+      "name": "Chairperson Witch - Floor 2",
+      "names": {
+        "en": "Chairperson Witch - Floor 2",
+        "ja": "委員長の魔女 第2階層",
+        "zhHant": "班長的魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_610_00_01_002",
+      "backgroundResourceName": "bg_3d_610_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-610-00-01-002/bg_3d_610_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-610-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1194131,
+        "externalCabCount": 10
+      }
+    },
+    {
+      "id": "battle-610-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_610_00_01_003",
+      "name": "Chairperson Witch - Floor 3",
+      "names": {
+        "en": "Chairperson Witch - Floor 3",
+        "ja": "委員長の魔女 第3階層",
+        "zhHant": "班長的魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_610_00_01_003",
+      "backgroundResourceName": "bg_3d_610_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-610-00-01-003/bg_3d_610_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-610-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2535621,
+        "externalCabCount": 13
+      }
+    },
+    {
+      "id": "battle-611-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_611_00_00_001",
+      "name": "Birdcage Witch - Boss Floor",
+      "names": {
+        "en": "Birdcage Witch - Boss Floor",
+        "ja": "鳥かごの魔女 ボス階層",
+        "zhHant": "鳥籠的魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_611_00_00_001",
+      "backgroundResourceName": "bg_3d_611_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-611-00-00-001/bg_3d_611_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-611-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2148884,
+        "externalCabCount": 12
+      }
+    },
+    {
+      "id": "battle-611-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_611_00_01_001",
+      "name": "Birdcage Witch - Floor 1",
+      "names": {
+        "en": "Birdcage Witch - Floor 1",
+        "ja": "鳥かごの魔女 第1階層",
+        "zhHant": "鳥籠的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_611_00_01_001",
+      "backgroundResourceName": "bg_3d_611_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-611-00-01-001/bg_3d_611_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-611-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 5663652,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-611-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_611_00_01_002",
+      "name": "Birdcage Witch - Floor 2",
+      "names": {
+        "en": "Birdcage Witch - Floor 2",
+        "ja": "鳥かごの魔女 第2階層",
+        "zhHant": "鳥籠的魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_611_00_01_002",
+      "backgroundResourceName": "bg_3d_611_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-611-00-01-002/bg_3d_611_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-611-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3793304,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-611-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_611_00_01_003",
+      "name": "Birdcage Witch - Floor 3",
+      "names": {
+        "en": "Birdcage Witch - Floor 3",
+        "ja": "鳥かごの魔女 第3階層",
+        "zhHant": "鳥籠的魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_611_00_01_003",
+      "backgroundResourceName": "bg_3d_611_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-611-00-01-003/bg_3d_611_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-611-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3731333,
+        "externalCabCount": 8
+      }
+    },
+    {
+      "id": "battle-612-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_612_00_00_001",
+      "name": "Stage Witch - Floor 1: Boss Floor",
+      "names": {
+        "en": "Stage Witch - Floor 1: Boss Floor",
+        "ja": "舞台装置の魔女 第1階層 ボス階層",
+        "zhHant": "舞台裝置的魔女 第1層 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_612_00_00_001",
+      "backgroundResourceName": "bg_3d_612_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-612-00-00-001/bg_3d_612_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-612-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 8412376,
+        "externalCabCount": 21
+      }
+    },
+    {
+      "id": "battle-612-00-00-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_612_00_00_002",
+      "name": "Stage Witch - Floor 2: Boss Floor",
+      "names": {
+        "en": "Stage Witch - Floor 2: Boss Floor",
+        "ja": "舞台装置の魔女 第2階層 ボス階層",
+        "zhHant": "舞台裝置的魔女 第2層 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_612_00_00_002",
+      "backgroundResourceName": "bg_3d_612_00_00_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-612-00-00-002/bg_3d_612_00_00_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-612-00-00-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 7879313,
+        "externalCabCount": 18
+      }
+    },
+    {
+      "id": "battle-612-00-00-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_612_00_00_003",
+      "name": "Stage Witch - Boss Floor",
+      "names": {
+        "en": "Stage Witch - Boss Floor",
+        "ja": "舞台装置の魔女 ボス階層",
+        "zhHant": "舞台裝置的魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_612_00_00_003",
+      "backgroundResourceName": "bg_3d_612_00_00_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-612-00-00-003/bg_3d_612_00_00_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-612-00-00-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 8068688,
+        "externalCabCount": 19
+      }
+    },
+    {
+      "id": "battle-612-00-00-004",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_612_00_00_004",
+      "name": "Witch of Good Fortune - Boss Floor",
+      "names": {
+        "en": "Witch of Good Fortune - Boss Floor",
+        "ja": "幸福の魔女 ボス階層",
+        "zhHant": "幸福之魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_612_00_00_004",
+      "backgroundResourceName": "bg_3d_612_00_00_004",
+      "type": "fbx",
+      "url": "./stages/official/battle-612-00-00-004/bg_3d_612_00_00_004.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-612-00-00-004/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 6552991,
+        "externalCabCount": 37
+      }
+    },
+    {
+      "id": "battle-612-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_612_00_01_001",
+      "name": "Stage Witch - Floor 1",
+      "names": {
+        "en": "Stage Witch - Floor 1",
+        "ja": "舞台装置の魔女 第1階層",
+        "zhHant": "舞台裝置的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_612_00_01_001",
+      "backgroundResourceName": "bg_3d_612_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-612-00-01-001/bg_3d_612_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-612-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 5435874,
+        "externalCabCount": 15
+      }
+    },
+    {
+      "id": "battle-612-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_612_00_01_002",
+      "name": "Stage Witch - Floor 2",
+      "names": {
+        "en": "Stage Witch - Floor 2",
+        "ja": "舞台装置の魔女 第2階層",
+        "zhHant": "舞台裝置的魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_612_00_01_002",
+      "backgroundResourceName": "bg_3d_612_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-612-00-01-002/bg_3d_612_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-612-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 7287807,
+        "externalCabCount": 33
+      }
+    },
+    {
+      "id": "battle-613-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_613_00_00_001",
+      "name": "Rubber Witch - Boss Floor",
+      "names": {
+        "en": "Rubber Witch - Boss Floor",
+        "ja": "ゴムの魔女 ボス階層",
+        "zhHant": "橡膠的魔女（Paola）無_首腦作戰_01"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_613_00_00_001",
+      "backgroundResourceName": "bg_3d_613_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-613-00-00-001/bg_3d_613_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-613-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3269794,
+        "externalCabCount": 15
+      }
+    },
+    {
+      "id": "battle-613-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_613_00_01_001",
+      "name": "Rubber Witch - Floor 1",
+      "names": {
+        "en": "Rubber Witch - Floor 1",
+        "ja": "ゴムの魔女 第1階層",
+        "zhHant": "橡膠的魔女（Paola）無_無名小卒作戰_01"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_613_00_01_001",
+      "backgroundResourceName": "bg_3d_613_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-613-00-01-001/bg_3d_613_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-613-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3594788,
+        "externalCabCount": 16
+      }
+    },
+    {
+      "id": "battle-615-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_615_00_00_001",
+      "name": "Needle Witch - Boss Floor",
+      "names": {
+        "en": "Needle Witch - Boss Floor",
+        "ja": "針の魔女 ボス階層",
+        "zhHant": "針之魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_615_00_00_001",
+      "backgroundResourceName": "bg_3d_615_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-615-00-00-001/bg_3d_615_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-615-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3249676,
+        "externalCabCount": 13
+      }
+    },
+    {
+      "id": "battle-615-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_615_00_01_001",
+      "name": "Needle Witch - Floor 1",
+      "names": {
+        "en": "Needle Witch - Floor 1",
+        "ja": "針の魔女 第1階層",
+        "zhHant": "針之魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_615_00_01_001",
+      "backgroundResourceName": "bg_3d_615_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-615-00-01-001/bg_3d_615_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-615-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3719263,
+        "externalCabCount": 15
+      }
+    },
+    {
+      "id": "battle-615-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_615_00_01_002",
+      "name": "Needle Witch - Floor 2",
+      "names": {
+        "en": "Needle Witch - Floor 2",
+        "ja": "針の魔女 第2階層",
+        "zhHant": "針之魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_615_00_01_002",
+      "backgroundResourceName": "bg_3d_615_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-615-00-01-002/bg_3d_615_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-615-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1693703,
+        "externalCabCount": 16
+      }
+    },
+    {
+      "id": "battle-615-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_615_00_01_003",
+      "name": "Needle Witch - Floor 3",
+      "names": {
+        "en": "Needle Witch - Floor 3",
+        "ja": "針の魔女 第3階層",
+        "zhHant": "針之魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_615_00_01_003",
+      "backgroundResourceName": "bg_3d_615_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-615-00-01-003/bg_3d_615_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-615-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3278103,
+        "externalCabCount": 19
+      }
+    },
+    {
+      "id": "battle-617-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_617_00_00_001",
+      "name": "Sandbox Witch - Boss Floor",
+      "names": {
+        "en": "Sandbox Witch - Boss Floor",
+        "ja": "砂場の魔女 ボス階層",
+        "zhHant": "沙地的魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_617_00_00_001",
+      "backgroundResourceName": "bg_3d_617_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-617-00-00-001/bg_3d_617_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-617-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2254625,
+        "externalCabCount": 14
+      }
+    },
+    {
+      "id": "battle-617-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_617_00_01_001",
+      "name": "Sandbox Witch - Floor 1",
+      "names": {
+        "en": "Sandbox Witch - Floor 1",
+        "ja": "砂場の魔女 第1階層",
+        "zhHant": "沙地的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_617_00_01_001",
+      "backgroundResourceName": "bg_3d_617_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-617-00-01-001/bg_3d_617_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-617-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1899403,
+        "externalCabCount": 13
+      }
+    },
+    {
+      "id": "battle-617-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_617_00_01_002",
+      "name": "Sandbox Witch - Floor 2",
+      "names": {
+        "en": "Sandbox Witch - Floor 2",
+        "ja": "砂場の魔女 第2階層",
+        "zhHant": "沙地的魔女 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_617_00_01_002",
+      "backgroundResourceName": "bg_3d_617_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-617-00-01-002/bg_3d_617_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-617-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4113293,
+        "externalCabCount": 20
+      }
+    },
+    {
+      "id": "battle-617-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_617_00_01_003",
+      "name": "Sandbox Witch - Floor 3",
+      "names": {
+        "en": "Sandbox Witch - Floor 3",
+        "ja": "砂場の魔女 第3階層",
+        "zhHant": "沙地的魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_617_00_01_003",
+      "backgroundResourceName": "bg_3d_617_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-617-00-01-003/bg_3d_617_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-617-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2213717,
+        "externalCabCount": 18
+      }
+    },
+    {
+      "id": "battle-618-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_618_00_00_001",
+      "name": "Rumor of the Commoner's Horse - Boss Floor",
+      "names": {
+        "en": "Rumor of the Commoner's Horse - Boss Floor",
+        "ja": "マチビト馬のうわさ ボス階層",
+        "zhHant": "尋人馬的謠言 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_618_00_00_001",
+      "backgroundResourceName": "bg_3d_618_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-618-00-00-001/bg_3d_618_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-618-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 9399788,
+        "externalCabCount": 14
+      }
+    },
+    {
+      "id": "battle-618-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_618_00_01_001",
+      "name": "Rumor of the Commoner's Horse - Floor 1",
+      "names": {
+        "en": "Rumor of the Commoner's Horse - Floor 1",
+        "ja": "マチビト馬のうわさ 第1階層",
+        "zhHant": "尋人馬的謠言 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_618_00_01_001",
+      "backgroundResourceName": "bg_3d_618_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-618-00-01-001/bg_3d_618_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-618-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 9469259,
+        "externalCabCount": 12
+      }
+    },
+    {
+      "id": "battle-618-12-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_618_12_00_001",
+      "name": "Uwasa of the Commoner's Horse - Boss Floor (New Year's)",
+      "names": {
+        "en": "Uwasa of the Commoner's Horse - Boss Floor (New Year's)",
+        "ja": "マチビト馬のウワサ ボス階層 正月",
+        "zhHant": "尋人馬的謠言 BOSS層 新年"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_618_12_00_001",
+      "backgroundResourceName": "bg_3d_618_12_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-618-12-00-001/bg_3d_618_12_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-618-12-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3742889,
+        "externalCabCount": 13
+      }
+    },
+    {
+      "id": "battle-618-12-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_618_12_01_001",
+      "name": "Uwasa of the Commoner's Horse - Floor 1 (New Year's)",
+      "names": {
+        "en": "Uwasa of the Commoner's Horse - Floor 1 (New Year's)",
+        "ja": "マチビト馬のウワサ 第1階層 正月",
+        "zhHant": "尋人馬的謠言 第1層 新年"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_618_12_01_001",
+      "backgroundResourceName": "bg_3d_618_12_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-618-12-01-001/bg_3d_618_12_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-618-12-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 8881787,
+        "externalCabCount": 19
+      }
+    },
+    {
+      "id": "battle-619-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_619_00_00_001",
+      "name": "Rumor of the Anonymous AI - Boss Floor",
+      "names": {
+        "en": "Rumor of the Anonymous AI - Boss Floor",
+        "ja": "名無し人工知能のうわさ ボス階層",
+        "zhHant": "無名人工智慧的謠言 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_619_00_00_001",
+      "backgroundResourceName": "bg_3d_619_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-619-00-00-001/bg_3d_619_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-619-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 10871584,
+        "externalCabCount": 14
+      }
+    },
+    {
+      "id": "battle-619-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_619_00_01_001",
+      "name": "Rumor of the Anonymous AI - Floor 1",
+      "names": {
+        "en": "Rumor of the Anonymous AI - Floor 1",
+        "ja": "名無し人工知能のうわさ 第1階層",
+        "zhHant": "無名人工智慧的謠言 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_619_00_01_001",
+      "backgroundResourceName": "bg_3d_619_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-619-00-01-001/bg_3d_619_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-619-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 5077119,
+        "externalCabCount": 12
+      }
+    },
+    {
+      "id": "battle-620-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_620_00_00_001",
+      "name": "Rumor of the Chelation Land Ferris Wheel - Boss Floor",
+      "names": {
+        "en": "Rumor of the Chelation Land Ferris Wheel - Boss Floor",
+        "ja": "キレートビッグフェリスのうわさ ボス階層",
+        "zhHant": "螯合大摩天輪的謠言 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_620_00_00_001",
+      "backgroundResourceName": "bg_3d_620_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-620-00-00-001/bg_3d_620_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-620-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4911775,
+        "externalCabCount": 13
+      }
+    },
+    {
+      "id": "battle-620-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_620_00_01_001",
+      "name": "Rumor of the Chelation Land Ferris Wheel - Floor 1",
+      "names": {
+        "en": "Rumor of the Chelation Land Ferris Wheel - Floor 1",
+        "ja": "キレートビッグフェリスのうわさ 第1階層",
+        "zhHant": "螯合大摩天輪的謠言 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_620_00_01_001",
+      "backgroundResourceName": "bg_3d_620_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-620-00-01-001/bg_3d_620_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-620-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4983984,
+        "externalCabCount": 18
+      }
+    },
+    {
+      "id": "battle-620-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_620_00_01_002",
+      "name": "Rumor of the Chelation Land Ferris Wheel - Floor 2",
+      "names": {
+        "en": "Rumor of the Chelation Land Ferris Wheel - Floor 2",
+        "ja": "キレートビッグフェリスのうわさ 第2階層",
+        "zhHant": "螯合大摩天輪的謠言 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_620_00_01_002",
+      "backgroundResourceName": "bg_3d_620_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-620-00-01-002/bg_3d_620_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-620-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 6419384,
+        "externalCabCount": 18
+      }
+    },
+    {
+      "id": "battle-620-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_620_00_01_003",
+      "name": "Rumor of the Chelation Land Ferris Wheel - Floor 3",
+      "names": {
+        "en": "Rumor of the Chelation Land Ferris Wheel - Floor 3",
+        "ja": "キレートビッグフェリスのうわさ 第3階層",
+        "zhHant": "螯合大摩天輪的謠言 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_620_00_01_003",
+      "backgroundResourceName": "bg_3d_620_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-620-00-01-003/bg_3d_620_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-620-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3700449,
+        "externalCabCount": 15
+      }
+    },
+    {
+      "id": "battle-621-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_621_00_00_001",
+      "name": "Blessed Witch - Boss Floor",
+      "names": {
+        "en": "Blessed Witch - Boss Floor",
+        "ja": "幸福な魔女 ボス階層",
+        "zhHant": "幸福的魔女 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_621_00_00_001",
+      "backgroundResourceName": "bg_3d_621_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-621-00-00-001/bg_3d_621_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-621-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3265296,
+        "externalCabCount": 50
+      }
+    },
+    {
+      "id": "battle-621-00-00-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_621_00_00_002",
+      "name": "Witch of Good Fortune - Floor 2: Boss Floor 1",
+      "names": {
+        "en": "Witch of Good Fortune - Floor 2: Boss Floor 1",
+        "ja": "幸福の魔女 第2階層 ボス階層1",
+        "zhHant": "幸福之魔女 第2層 首腦層1"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_621_00_00_002",
+      "backgroundResourceName": "bg_3d_621_00_00_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-621-00-00-002/bg_3d_621_00_00_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-621-00-00-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3708290,
+        "externalCabCount": 51
+      }
+    },
+    {
+      "id": "battle-621-00-00-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_621_00_00_003",
+      "name": "Witch of Good Fortune - Floor 2: Boss Floor 3",
+      "names": {
+        "en": "Witch of Good Fortune - Floor 2: Boss Floor 3",
+        "ja": "幸福の魔女 第2階層 ボス階層3",
+        "zhHant": "幸福之魔女 第2層 首腦層3"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_621_00_00_003",
+      "backgroundResourceName": "bg_3d_621_00_00_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-621-00-00-003/bg_3d_621_00_00_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-621-00-00-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4444630,
+        "externalCabCount": 52
+      }
+    },
+    {
+      "id": "battle-621-00-00-004",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_621_00_00_004",
+      "name": "Witch of Good Fortune - Floor 2: Boss Floor 2",
+      "names": {
+        "en": "Witch of Good Fortune - Floor 2: Boss Floor 2",
+        "ja": "幸福の魔女 第2階層 ボス階層2",
+        "zhHant": "幸福之魔女 第2層 首腦層2"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_621_00_00_004",
+      "backgroundResourceName": "bg_3d_621_00_00_004",
+      "type": "fbx",
+      "url": "./stages/official/battle-621-00-00-004/bg_3d_621_00_00_004.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-621-00-00-004/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 5099947,
+        "externalCabCount": 58
+      }
+    },
+    {
+      "id": "battle-621-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_621_00_01_001",
+      "name": "Blessed Witch - Floor 1",
+      "names": {
+        "en": "Blessed Witch - Floor 1",
+        "ja": "幸福な魔女 第1階層",
+        "zhHant": "幸福的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_621_00_01_001",
+      "backgroundResourceName": "bg_3d_621_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-621-00-01-001/bg_3d_621_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-621-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2381517,
+        "externalCabCount": 27
+      }
+    },
+    {
+      "id": "battle-621-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_621_00_01_002",
+      "name": "Witch of Good Fortune - Floor 2-1",
+      "names": {
+        "en": "Witch of Good Fortune - Floor 2-1",
+        "ja": "幸福の魔女 第2階層1",
+        "zhHant": "幸福之魔女 第2層1"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_621_00_01_002",
+      "backgroundResourceName": "bg_3d_621_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-621-00-01-002/bg_3d_621_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-621-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3419969,
+        "externalCabCount": 47
+      }
+    },
+    {
+      "id": "battle-621-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_621_00_01_003",
+      "name": "Witch of Good Fortune - Floor 2-2",
+      "names": {
+        "en": "Witch of Good Fortune - Floor 2-2",
+        "ja": "幸福の魔女 第2階層2",
+        "zhHant": "幸福之魔女 第2層2"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_621_00_01_003",
+      "backgroundResourceName": "bg_3d_621_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-621-00-01-003/bg_3d_621_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-621-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4044259,
+        "externalCabCount": 47
+      }
+    },
+    {
+      "id": "battle-625-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_625_00_00_001",
+      "name": "Bunny Eared Witch - Boss Floor",
+      "names": {
+        "en": "Bunny Eared Witch - Boss Floor",
+        "ja": "立ち耳の魔女 ボス階層",
+        "zhHant": "立耳的魔女 BOSS層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_625_00_00_001",
+      "backgroundResourceName": "bg_3d_625_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-625-00-00-001/bg_3d_625_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-625-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3220003,
+        "externalCabCount": 6
+      }
+    },
+    {
+      "id": "battle-625-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_625_00_01_001",
+      "name": "Bunny Eared Witch - Floor 1",
+      "names": {
+        "en": "Bunny Eared Witch - Floor 1",
+        "ja": "立ち耳の魔女 第1階層",
+        "zhHant": "立耳的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_625_00_01_001",
+      "backgroundResourceName": "bg_3d_625_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-625-00-01-001/bg_3d_625_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-625-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3624594,
+        "externalCabCount": 9
+      }
+    },
+    {
+      "id": "battle-636-00-02-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_636_00_02_001",
+      "name": "bg_3d_636_00_02_001",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_636_00_02_001",
+      "backgroundResourceName": "bg_3d_636_00_02_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-636-00-02-001/bg_3d_636_00_02_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-636-00-02-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3067026,
+        "externalCabCount": 12
+      }
+    },
+    {
+      "id": "battle-637-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_637_00_00_001",
+      "name": "France - Tourelles Fortress (Noon)",
+      "names": {
+        "en": "France - Tourelles Fortress (Noon)",
+        "ja": "フランス/トゥーレル砦(昼)",
+        "zhHant": "法國／土列爾堡壘（白天）"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_637_00_00_001",
+      "backgroundResourceName": "bg_3d_637_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-637-00-00-001/bg_3d_637_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-637-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2885576,
+        "externalCabCount": 26
+      }
+    },
+    {
+      "id": "battle-637-00-00-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_637_00_00_002",
+      "name": "France - Tourelles Fortress - Post-Collapse (Noon)",
+      "names": {
+        "en": "France - Tourelles Fortress - Post-Collapse (Noon)",
+        "ja": "フランス/トゥーレル砦/崩壊後(昼)",
+        "zhHant": "法國／土列爾堡壘／崩毀後（白天）"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_637_00_00_002",
+      "backgroundResourceName": "bg_3d_637_00_00_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-637-00-00-002/bg_3d_637_00_00_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-637-00-00-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 7056887,
+        "externalCabCount": 31
+      }
+    },
+    {
+      "id": "battle-637-00-00-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_637_00_00_003",
+      "name": "France - Plains - Corbeau Battle",
+      "names": {
+        "en": "France - Plains - Corbeau Battle",
+        "ja": "フランス/平原/コルボー戦",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_637_00_00_003",
+      "backgroundResourceName": "bg_3d_637_00_00_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-637-00-00-003/bg_3d_637_00_00_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-637-00-00-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 7691429,
+        "externalCabCount": 34
+      }
+    },
+    {
+      "id": "battle-638-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_638_00_00_001",
+      "name": "France - Plains - Lapine Battle",
+      "names": {
+        "en": "France - Plains - Lapine Battle",
+        "ja": "フランス/平原/ラピヌ戦",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_638_00_00_001",
+      "backgroundResourceName": "bg_3d_638_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-638-00-00-001/bg_3d_638_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-638-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 7664490,
+        "externalCabCount": 31
+      }
+    },
+    {
+      "id": "battle-639-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_639_00_00_001",
+      "name": "France - Rouen",
+      "names": {
+        "en": "France - Rouen",
+        "ja": "フランス/ルーアン",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_639_00_00_001",
+      "backgroundResourceName": "bg_3d_639_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-639-00-00-001/bg_3d_639_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-639-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 843477,
+        "externalCabCount": 21
+      }
+    },
+    {
+      "id": "battle-639-00-00-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_639_00_00_002",
+      "name": "France - Rouen 2",
+      "names": {
+        "en": "France - Rouen 2",
+        "ja": "フランス/ルーアン2",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_639_00_00_002",
+      "backgroundResourceName": "bg_3d_639_00_00_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-639-00-00-002/bg_3d_639_00_00_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-639-00-00-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2253251,
+        "externalCabCount": 26
+      }
+    },
+    {
+      "id": "battle-641-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_641_00_01_001",
+      "name": "Wraith - Floor 1",
+      "names": {
+        "en": "Wraith - Floor 1",
+        "ja": "魔獣 第1階層",
+        "zhHant": "魔獸 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_641_00_01_001",
+      "backgroundResourceName": "bg_3d_641_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-641-00-01-001/bg_3d_641_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-641-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1900767,
+        "externalCabCount": 19
+      }
+    },
+    {
+      "id": "battle-650-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_650_00_01_001",
+      "name": "Nutcracker Witch - Floor 1",
+      "names": {
+        "en": "Nutcracker Witch - Floor 1",
+        "ja": "くるみ割りの魔女 第1階層",
+        "zhHant": "胡桃鉗的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_650_00_01_001",
+      "backgroundResourceName": "bg_3d_650_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-650-00-01-001/bg_3d_650_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-650-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1746617,
+        "externalCabCount": 32
+      }
+    },
+    {
+      "id": "battle-650-01-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_650_01_00_001",
+      "name": "Nutcracker Witch - Boss Floor 1",
+      "names": {
+        "en": "Nutcracker Witch - Boss Floor 1",
+        "ja": "くるみ割りの魔女 ボス階層1",
+        "zhHant": "胡桃鉗的魔女 BOSS層1"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_650_01_00_001",
+      "backgroundResourceName": "bg_3d_650_01_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-650-01-00-001/bg_3d_650_01_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-650-01-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4499766,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-650-01-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_650_01_01_001",
+      "name": "Nutcracker Witch - Floor 3",
+      "names": {
+        "en": "Nutcracker Witch - Floor 3",
+        "ja": "くるみ割りの魔女 第3階層",
+        "zhHant": "胡桃鉗的魔女 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_650_01_01_001",
+      "backgroundResourceName": "bg_3d_650_01_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-650-01-01-001/bg_3d_650_01_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-650-01-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3697347,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-650-02-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_650_02_00_001",
+      "name": "Nutcracker Witch - Boss Floor 2",
+      "names": {
+        "en": "Nutcracker Witch - Boss Floor 2",
+        "ja": "くるみ割りの魔女 ボス階層2",
+        "zhHant": "胡桃鉗的魔女 BOSS層2"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_650_02_00_001",
+      "backgroundResourceName": "bg_3d_650_02_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-650-02-00-001/bg_3d_650_02_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-650-02-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 7396343,
+        "externalCabCount": 23
+      }
+    },
+    {
+      "id": "battle-650-02-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_650_02_01_001",
+      "name": "Nutcracker Witch - Floor 6",
+      "names": {
+        "en": "Nutcracker Witch - Floor 6",
+        "ja": "くるみ割りの魔女 第6階層",
+        "zhHant": "胡桃鉗的魔女 第6層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_650_02_01_001",
+      "backgroundResourceName": "bg_3d_650_02_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-650-02-01-001/bg_3d_650_02_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-650-02-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 8594602,
+        "externalCabCount": 33
+      }
+    },
+    {
+      "id": "battle-652-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_652_00_00_001",
+      "name": "Nightmare - Boss Floor 1",
+      "names": {
+        "en": "Nightmare - Boss Floor 1",
+        "ja": "ナイトメア ボス階層1",
+        "zhHant": "夢魘 BOSS層1"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_652_00_00_001",
+      "backgroundResourceName": "bg_3d_652_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-652-00-00-001/bg_3d_652_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-652-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1144323,
+        "externalCabCount": 15
+      }
+    },
+    {
+      "id": "battle-652-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_652_00_01_001",
+      "name": "Nightmare - Floor 1",
+      "names": {
+        "en": "Nightmare - Floor 1",
+        "ja": "ナイトメア 第1階層",
+        "zhHant": "夢魘 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_652_00_01_001",
+      "backgroundResourceName": "bg_3d_652_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-652-00-01-001/bg_3d_652_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-652-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1566558,
+        "externalCabCount": 10
+      }
+    },
+    {
+      "id": "battle-652-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_652_00_01_002",
+      "name": "Nightmare - Floor 2",
+      "names": {
+        "en": "Nightmare - Floor 2",
+        "ja": "ナイトメア 第2階層",
+        "zhHant": "夢魘 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_652_00_01_002",
+      "backgroundResourceName": "bg_3d_652_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-652-00-01-002/bg_3d_652_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-652-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 5133572,
+        "externalCabCount": 19
+      }
+    },
+    {
+      "id": "battle-652-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_652_00_01_003",
+      "name": "Nightmare - Floor 2-2",
+      "names": {
+        "en": "Nightmare - Floor 2-2",
+        "ja": "ナイトメア 第2階層2",
+        "zhHant": "夢魘 第2層2"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_652_00_01_003",
+      "backgroundResourceName": "bg_3d_652_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-652-00-01-003/bg_3d_652_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-652-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1989004,
+        "externalCabCount": 16
+      }
+    },
+    {
+      "id": "battle-652-01-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_652_01_00_001",
+      "name": "Nightmare - Boss Floor 2",
+      "names": {
+        "en": "Nightmare - Boss Floor 2",
+        "ja": "ナイトメア ボス階層2",
+        "zhHant": "夢魘 BOSS層2"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_652_01_00_001",
+      "backgroundResourceName": "bg_3d_652_01_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-652-01-00-001/bg_3d_652_01_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-652-01-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 6672626,
+        "externalCabCount": 24
+      }
+    },
+    {
+      "id": "battle-652-01-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_652_01_01_001",
+      "name": "Nightmare - Floor 3",
+      "names": {
+        "en": "Nightmare - Floor 3",
+        "ja": "ナイトメア 第3階層",
+        "zhHant": "夢魘 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_652_01_01_001",
+      "backgroundResourceName": "bg_3d_652_01_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-652-01-01-001/bg_3d_652_01_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-652-01-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2934550,
+        "externalCabCount": 17
+      }
+    },
+    {
+      "id": "battle-652-01-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_652_01_01_002",
+      "name": "Nightmare - Floor 4",
+      "names": {
+        "en": "Nightmare - Floor 4",
+        "ja": "ナイトメア 第4階層",
+        "zhHant": "夢魘 第4層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_652_01_01_002",
+      "backgroundResourceName": "bg_3d_652_01_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-652-01-01-002/bg_3d_652_01_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-652-01-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 6419176,
+        "externalCabCount": 23
+      }
+    },
+    {
+      "id": "battle-653-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_653_00_00_001",
+      "name": "Limitless White Void",
+      "names": {
+        "en": "Limitless White Void",
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_653_00_00_001",
+      "backgroundResourceName": "bg_3d_653_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-653-00-00-001/bg_3d_653_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-653-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 333753,
+        "externalCabCount": 11
+      }
+    },
+    {
+      "id": "battle-654-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_654_00_01_001",
+      "name": "France - Plains (Noon)",
+      "names": {
+        "en": "France - Plains (Noon)",
+        "ja": "フランス/平原(昼)",
+        "zhHant": "法國／平原（白天）"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_654_00_01_001",
+      "backgroundResourceName": "bg_3d_654_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-654-00-01-001/bg_3d_654_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-654-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 9230485,
+        "externalCabCount": 21
+      }
+    },
+    {
+      "id": "battle-654-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_654_00_01_002",
+      "name": "France - Fortress - Outside 2 (Noon)",
+      "names": {
+        "en": "France - Fortress - Outside 2 (Noon)",
+        "ja": "フランス/砦/外観2(昼)",
+        "zhHant": "法國／堡壘／外觀2（白天）"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_654_00_01_002",
+      "backgroundResourceName": "bg_3d_654_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-654-00-01-002/bg_3d_654_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-654-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3094705,
+        "externalCabCount": 25
+      }
+    },
+    {
+      "id": "battle-654-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_654_00_01_003",
+      "name": "France - Fortress - Inside (Noon)",
+      "names": {
+        "en": "France - Fortress - Inside (Noon)",
+        "ja": "フランス/砦/内部(昼)",
+        "zhHant": "法國／堡壘／內部（白天）"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_654_00_01_003",
+      "backgroundResourceName": "bg_3d_654_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-654-00-01-003/bg_3d_654_00_01_003.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-654-00-01-003/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 5795886,
+        "externalCabCount": 31
+      }
+    },
+    {
+      "id": "battle-654-01-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_654_01_01_001",
+      "name": "France - Plains (Evening)",
+      "names": {
+        "en": "France - Plains (Evening)",
+        "ja": "フランス/平原(夕)",
+        "zhHant": "法國／平原（下午）"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_654_01_01_001",
+      "backgroundResourceName": "bg_3d_654_01_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-654-01-01-001/bg_3d_654_01_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-654-01-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 9167226,
+        "externalCabCount": 18
+      }
+    },
+    {
+      "id": "battle-656-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_656_00_00_001",
+      "name": "Critic Witch - Boss Floor",
+      "names": {
+        "en": "Critic Witch - Boss Floor",
+        "ja": "批評家の魔女 ボス階層",
+        "zhHant": "評論家魔女 BOSS層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_656_00_00_001",
+      "backgroundResourceName": "bg_3d_656_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-656-00-00-001/bg_3d_656_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-656-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3652551,
+        "externalCabCount": 19
+      }
+    },
+    {
+      "id": "battle-656-00-00-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_656_00_00_002",
+      "name": "Critic Witch - Boss Floor 2",
+      "names": {
+        "en": "Critic Witch - Boss Floor 2",
+        "ja": "批評家の魔女 ボス階層2",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_656_00_00_002",
+      "backgroundResourceName": "bg_3d_656_00_00_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-656-00-00-002/bg_3d_656_00_00_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-656-00-00-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 3094888,
+        "externalCabCount": 16
+      }
+    },
+    {
+      "id": "battle-656-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_656_00_01_001",
+      "name": "Critic Witch - Floor 1",
+      "names": {
+        "en": "Critic Witch - Floor 1",
+        "ja": "批評家の魔女 第1階層",
+        "zhHant": "評論家魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_656_00_01_001",
+      "backgroundResourceName": "bg_3d_656_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-656-00-01-001/bg_3d_656_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-656-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2938691,
+        "externalCabCount": 19
+      }
+    },
+    {
+      "id": "battle-656-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_656_00_01_002",
+      "name": "Critic Witch - Floor 2",
+      "names": {
+        "en": "Critic Witch - Floor 2",
+        "ja": "批評家の魔女 第2階層",
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_656_00_01_002",
+      "backgroundResourceName": "bg_3d_656_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-656-00-01-002/bg_3d_656_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-656-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 2673623,
+        "externalCabCount": 21
+      }
+    },
+    {
+      "id": "battle-658-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_658_00_00_001",
+      "name": "Wraith - Boss Floor",
+      "names": {
+        "en": "Wraith - Boss Floor",
+        "ja": "魔獣 ボス階層",
+        "zhHant": "魔獸 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_658_00_00_001",
+      "backgroundResourceName": "bg_3d_658_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-658-00-00-001/bg_3d_658_00_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-658-00-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 4651997,
+        "externalCabCount": 21
+      }
+    },
+    {
+      "id": "battle-689-13-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_689_13_00_001",
+      "name": "Chocolate Witch - Boss Floor",
+      "names": {
+        "en": "Chocolate Witch - Boss Floor",
+        "ja": "チョコレートの魔女 ボス階層",
+        "zhHant": "巧克力的魔女 BOSS層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_689_13_00_001",
+      "backgroundResourceName": "bg_3d_689_13_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-689-13-00-001/bg_3d_689_13_00_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-689-13-00-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 676195,
+        "externalCabCount": 15
+      }
+    },
+    {
+      "id": "battle-689-13-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_689_13_01_001",
+      "name": "Chocolate Witch - Floor 1",
+      "names": {
+        "en": "Chocolate Witch - Floor 1",
+        "ja": "チョコレートの魔女 第1階層",
+        "zhHant": "巧克力的魔女 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_689_13_01_001",
+      "backgroundResourceName": "bg_3d_689_13_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-689-13-01-001/bg_3d_689_13_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-689-13-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1006158,
+        "externalCabCount": 23
+      }
+    },
+    {
+      "id": "battle-pvp-stage",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_pvp_stage",
+      "name": "bg_3d_pvp_stage",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_pvp_stage",
+      "backgroundResourceName": "bg_3d_pvp_stage",
+      "type": "fbx",
+      "url": "./stages/official/battle-pvp-stage/bg_3d_pvp_stage.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-pvp-stage/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 1245847,
+        "externalCabCount": 9
+      }
+    },
+    {
+      "id": "battle-600-00-00-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_00_00_001",
+      "name": "Rose Garden Witch Part I - Boss Floor",
+      "names": {
+        "en": "Rose Garden Witch Part I - Boss Floor",
+        "ja": "薔薇園の魔女 前編 ボス階層",
+        "zhHant": "薔薇園的魔女 前篇 首腦層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_00_00_001",
+      "backgroundResourceName": "bg_3d_600_00_00_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-00-00-001/bg_3d_600_00_00_001.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "partial",
+        "evidence": [
+          "official FBX product present",
+          "Partial material-only scene profile: exact ground diffuse; native UV1/lightmaps, lights/Volume and runtime remain unresolved."
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": false,
+        "sourceBytes": 0,
+        "externalCabCount": 0
+      },
+      "sceneProfileUrl": "./stages/official/battle-600-00-00-001/scene-profile.json",
+      "evidence": [
+        "TW Android exact groundA/B diffuse PPtr mapped to18 existing carrier renderers; no lighting/runtime recovery claim."
+      ]
+    },
+    {
+      "id": "battle-600-00-01-001",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_00_01_001",
+      "name": "Rose Garden Witch Part I - Floor 1",
+      "names": {
+        "en": "Rose Garden Witch Part I - Floor 1",
+        "ja": "薔薇園の魔女 前編 第1階層",
+        "zhHant": "薔薇園的魔女 前篇 第1層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_00_01_001",
+      "backgroundResourceName": "bg_3d_600_00_01_001",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-00-01-001/bg_3d_600_00_01_001.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-00-01-001/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 0,
+        "externalCabCount": 0
+      }
+    },
+    {
+      "id": "battle-600-00-01-002",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_00_01_002",
+      "name": "Rose Garden Witch Part I - Floor 2",
+      "names": {
+        "en": "Rose Garden Witch Part I - Floor 2",
+        "ja": "薔薇園の魔女 前編 第2階層",
+        "zhHant": "薔薇園的魔女 前篇 第2層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_00_01_002",
+      "backgroundResourceName": "bg_3d_600_00_01_002",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-00-01-002/bg_3d_600_00_01_002.fbxdata",
+      "sceneProfileUrl": "./stages/official/battle-600-00-01-002/scene-profile.json",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": true,
+        "sourceBytes": 0,
+        "externalCabCount": 0
+      }
+    },
+    {
+      "id": "battle-600-00-01-003",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_600_00_01_003",
+      "name": "Rose Garden Witch Part I - Floor 3",
+      "names": {
+        "en": "Rose Garden Witch Part I - Floor 3",
+        "ja": "薔薇園の魔女 前編 第3階層",
+        "zhHant": "薔薇園的魔女 前篇 第3層"
+      },
+      "category": "battle",
+      "family": "battle-direct",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_600_00_01_003",
+      "backgroundResourceName": "bg_3d_600_00_01_003",
+      "type": "fbx",
+      "url": "./stages/official/battle-600-00-01-003/bg_3d_600_00_01_003-animated.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "partial",
+        "evidence": [
+          "official animated FBX product present",
+          "scene-profile not yet extracted; runtime uses FBX materials and lightmap assets"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-stage-product.v1",
+        "fullyResolved": false,
+        "sourceBytes": 0,
+        "externalCabCount": 0
+      }
+    }
+  ],
+  "counts": {
+    "visible": 136,
+    "target": 136,
+    "fullyResolved": 134
+  }
+}

@@ -2,9 +2,24 @@ import MagiaExedraCharacter3D from './character'
 import characterMstList from './getStyle3dCharacterMstList.json'
 import { loadCharacter, type LoadCharacterCallbacks } from "./loader"
 import { ObjFilterByKey } from './utils'
+import {
+    getNonBattleCharacterEntryById,
+    getNonBattleCharacterEntryByStableKey,
+    isNonBattleCharacterId,
+    listNonBattleCharacterCatalogEntries,
+    requireNonBattleCharacterEntryByStableKey,
+} from './nonBattleCharacterCatalog'
+import { loadNonBattleCharacter } from './nonBattleCharacterLoader'
 
 import { MagiaExedraScene3D } from './scene'
-export { MagiaExedraCharacterThree, MagiaExedraScene3D }
+export {
+    MagiaExedraCharacterThree,
+    MagiaExedraScene3D,
+    getNonBattleCharacterEntryById,
+    getNonBattleCharacterEntryByStableKey,
+    isNonBattleCharacterId,
+    listNonBattleCharacterCatalogEntries,
+}
 
 export default class MagiaExedraCharacterThree {
     files: Record<string, string>
@@ -55,13 +70,15 @@ export default class MagiaExedraCharacterThree {
 
     /** Returns resource IDs (the ID in asset files), sorted by `sortOrder` from mst list */
     getCharacterIdList() {
-        let ids = Object.keys(this.files)
+        const ids = [...new Set(Object.keys(this.files)
             .filter(x => x.includes('.fbx'))
-            .map(x => x.match(/chara_(\d+).*\//)![1])
+            .map(x => x.match(/chara_(\d+).*\//)![1]))]
+            .filter(id => !isNonBattleCharacterId(id))
 
-        let sortedMst = characterMstList.payload.mstList.sort((a, b) => a.sortOrder - b.sortOrder)
-        let unmatchedIds = ids.filter(x => !sortedMst.some(y => y.resourceName.includes(x)))
-        let sortedIds = [...unmatchedIds]
+        const sortedMst = [...characterMstList.payload.mstList]
+            .sort((a, b) => a.sortOrder - b.sortOrder)
+        const unmatchedIds = ids.filter(x => !sortedMst.some(y => y.resourceName.includes(x)))
+        const sortedIds = [...unmatchedIds]
 
         sortedMst.forEach(x => {
             let id = ids.find(y => x.resourceName.includes(y))
@@ -69,6 +86,21 @@ export default class MagiaExedraCharacterThree {
         })
 
         return sortedIds
+    }
+
+    /** Returns only typed story/cutscene presentation products present in this manager. */
+    getNonBattleCharacterCatalog() {
+        return listNonBattleCharacterCatalogEntries().filter(entry => (
+            Object.keys(this.files).some(path => path.includes(`${entry.resourceName}/`))
+        ))
+    }
+
+    getNonBattleCharacterEntryByStableKey(stableKey: string) {
+        const entry = requireNonBattleCharacterEntryByStableKey(stableKey)
+        if (!this.getNonBattleCharacterCatalog().some(value => value.stableKey === stableKey)) {
+            throw new Error(`Could not find files for nonbattle character "${stableKey}"`)
+        }
+        return entry
     }
 
     getCharacterNameById(id: number | string): string {
@@ -94,6 +126,18 @@ export default class MagiaExedraCharacterThree {
         if (Object.keys(files).length == 0) {
             throw new Error(`Could not find files for character "${id}"`)
         }
+        const nonBattleEntry = getNonBattleCharacterEntryById(id)
+        if (nonBattleEntry) {
+            return await loadNonBattleCharacter(files, nonBattleEntry, callbacks)
+        }
         return await loadCharacter(files, callbacks)
+    }
+
+    async loadNonBattleCharacterByStableKey(
+        stableKey: string,
+        callbacks?: Partial<LoadCharacterCallbacks>,
+    ): Promise<MagiaExedraCharacter3D> {
+        const entry = this.getNonBattleCharacterEntryByStableKey(stableKey)
+        return await this.loadCharacterById(entry.style3dCharacterMstId, callbacks)
     }
 }

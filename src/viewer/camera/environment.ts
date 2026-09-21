@@ -134,7 +134,7 @@ if (false) {
 }
 
 function enableTestEnvironmentMap() {
-    new HDRLoader().load('https://sbcode.net/img/spruit_sunrise_1k.hdr', (texture) => {
+    new HDRLoader().load('/environment/spruit_sunrise_1k.hdr', (texture) => {
         texture.mapping = THREE.EquirectangularReflectionMapping
         scene.scene.environment = texture
         scene.scene.background = texture

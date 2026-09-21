@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
+import { resolveCachedRuntimeAssetUrl } from './runtimeProductDelivery';
 
 let installed = false;
 
@@ -33,7 +34,9 @@ export function installOfficialStageTextureResolver() {
             const decoded = decodeURIComponent(requestedUrl).replace(/\\/g, '/');
             const fileName = decoded.split('/').filter(Boolean).at(-1);
             if (!fileName) return requestedUrl;
-            return new URL(encodeURIComponent(fileName).replace(/%2F/gi, '/'), stageBase).href;
+            return resolveCachedRuntimeAssetUrl(
+                new URL(encodeURIComponent(fileName).replace(/%2F/gi, '/'), stageBase).href,
+            );
         });
 
         try {

@@ -1,0 +1,711 @@
+{
+  "schema": "magius.nonbattle-character-profile.v1",
+  "stableKey": "style3d-character:style3dCharacterMstId=113501|resourceName=chara_113501_model",
+  "identity": {
+    "identityKey": "style3dCharacterMstId=113501|resourceName=chara_113501_model",
+    "style3dCharacterMstId": 113501,
+    "resourceName": "chara_113501_model",
+    "canonicalName": "A-Q",
+    "alias": "A-Q"
+  },
+  "classification": {
+    "sourceFamily": "story-cutscene",
+    "ordinaryCharacterSelector": false,
+    "battle": false,
+    "tps": false,
+    "dungeon": false,
+    "magicalGirl": false
+  },
+  "publication": {
+    "status": "new-candidate",
+    "technicalStatus": "runtime-ready",
+    "userAcceptance": "pending",
+    "failClosedReasons": []
+  },
+  "source": {
+    "sourceStableKey": "assetbundle:home/chara_113501_model",
+    "logicalKey": "home/chara_113501_model",
+    "prefab": "assets/webresources/assetbundles/outer/home/chara_113501_model.prefab",
+    "unityVersion": "2022.3.62f2"
+  },
+  "model": {
+    "outerRootPath": "chara_113501_model",
+    "neutralRenderRootPath": "chara_113501_model/chara_113501",
+    "rootPolicy": "validate-authored-outer-then-neutralize-without-reparenting-rig",
+    "authoredOuterPlacement": {
+      "unity": {
+        "position": [
+          -1.2990000247955322,
+          0.0,
+          -2.2690000534057617
+        ],
+        "quaternion": [
+          -0.0,
+          0.2748776376247406,
+          -0.0,
+          0.9614792466163635
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "viewer": {
+        "position": [
+          1.2990000247955322,
+          0,
+          -2.2690000534057617
+        ],
+        "quaternion": [
+          0,
+          -0.2748776233859177,
+          0,
+          0.9614792208684021
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    "viewerPlacement": {
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "quaternion": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "renderers": [
+      {
+        "hierarchyPath": "chara_113501_model/chara_113501/chara/Body_Mesh",
+        "meshName": "Body_Mesh",
+        "rendererPathId": "4614459510941682014",
+        "meshPathId": "-7841414977588179481",
+        "sourceVertexCount": 2074,
+        "expandedIndexCount": 10728,
+        "boneCount": 53,
+        "bindPoseCount": 53,
+        "rootBonePath": "chara_113501_model/chara_113501/Root/Hip"
+      },
+      {
+        "hierarchyPath": "chara_113501_model/chara_113501/chara/Face_Mesh",
+        "meshName": "Face_Mesh",
+        "rendererPathId": "2117280375574445152",
+        "meshPathId": "-364862887904314704",
+        "sourceVertexCount": 2501,
+        "expandedIndexCount": 11928,
+        "boneCount": 82,
+        "bindPoseCount": 82,
+        "rootBonePath": "chara_113501_model/chara_113501/Root"
+      }
+    ]
+  },
+  "storyController": {
+    "activeControllerPathId": "-4278097510018638778",
+    "name": "chara_113501_a-q",
+    "defaultAction": "Wait",
+    "clipCount": 67,
+    "clips": [
+      {
+        "pathId": "5618397121424977917",
+        "name": "chara_113501_Anger (2)",
+        "durationSeconds": 0.6666667461395264,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "9203383085192786568",
+        "name": "chara_113501_Anger_L",
+        "durationSeconds": 1.6666666269302368,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-6340979561779514237",
+        "name": "chara_113501_Anger_S",
+        "durationSeconds": 1.6666666269302368,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-2516563315171535730",
+        "name": "chara_113501_Anger_Sit_E",
+        "durationSeconds": 0.6666667461395264,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-6748840143421124891",
+        "name": "chara_113501_Anger_Sit_L",
+        "durationSeconds": 1.6666666269302368,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-2807986347165426552",
+        "name": "chara_113501_Anger_Sit_S",
+        "durationSeconds": 1.6666666269302368,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-6836836924611685199",
+        "name": "chara_113501_Exciting_E",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "1578776848043569746",
+        "name": "chara_113501_Exciting_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "8490690231998414638",
+        "name": "chara_113501_Exciting_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "411169251067915498",
+        "name": "chara_113501_Joy_E",
+        "durationSeconds": 0.5666666030883789,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "8087103189694779716",
+        "name": "chara_113501_Joy_L",
+        "durationSeconds": 1.6666667461395264,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "2945489153920048443",
+        "name": "chara_113501_Joy_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-7776256070346189675",
+        "name": "chara_113501_Joy_Sit _L",
+        "durationSeconds": 1.6666667461395264,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "4659832905728507360",
+        "name": "chara_113501_Joy_Sit_E",
+        "durationSeconds": 0.5666666030883789,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "1160220111188642596",
+        "name": "chara_113501_Joy_Sit_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-5759136320179649255",
+        "name": "chara_113501_Look up_E",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-175483874104441707",
+        "name": "chara_113501_Look up_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-8939785993796203640",
+        "name": "chara_113501_Look up_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-4453126449515476409",
+        "name": "chara_113501_No",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-5645111228931287605",
+        "name": "chara_113501_No_Sit",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "1436659463818517094",
+        "name": "chara_113501_Puzzled_E",
+        "durationSeconds": 1.0999999046325684,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-7938920021679808756",
+        "name": "chara_113501_Puzzled_L",
+        "durationSeconds": 1.6666667461395264,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-5825951477355253432",
+        "name": "chara_113501_Puzzled_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-6420848639759162296",
+        "name": "chara_113501_Puzzled_Sit_E",
+        "durationSeconds": 1.0999999046325684,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-4866340790912402273",
+        "name": "chara_113501_Puzzled_Sit_L",
+        "durationSeconds": 1.6666667461395264,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-3176613681187156516",
+        "name": "chara_113501_Puzzled_Sit_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "1896209450876457484",
+        "name": "chara_113501_Run-Down-Run",
+        "durationSeconds": 29.33333396911621,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "1532635761100120668",
+        "name": "chara_113501_Smile_E",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-4380350606224487136",
+        "name": "chara_113501_Smile_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-2354894213358065914",
+        "name": "chara_113501_Smile_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-64028841735296426",
+        "name": "chara_113501_Smile_Sit_E",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-8609806173493586999",
+        "name": "chara_113501_Smile_Sit_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "1906778710043285938",
+        "name": "chara_113501_Smile_Sit_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-6375818787058520688",
+        "name": "chara_113501_Sorrow_E",
+        "durationSeconds": 0.75,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "4553919633678908109",
+        "name": "chara_113501_Sorrow_L",
+        "durationSeconds": 1.6666667461395264,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-8613047976719905572",
+        "name": "chara_113501_Sorrow_S",
+        "durationSeconds": 0.8333333134651184,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-6332987997571657187",
+        "name": "chara_113501_Sorrow_Sit_E",
+        "durationSeconds": 0.75,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "7348573989946176113",
+        "name": "chara_113501_Sorrow_Sit_L",
+        "durationSeconds": 1.6666667461395264,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "6439782238607648310",
+        "name": "chara_113501_Sorrow_Sit_S",
+        "durationSeconds": 0.8333333134651184,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-8216464563039566105",
+        "name": "chara_113501_Surprise02_E",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "2992321963330932706",
+        "name": "chara_113501_Surprise02_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-4985234133222743715",
+        "name": "chara_113501_Surprise02_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "2389678477303129947",
+        "name": "chara_113501_Surprise02_Sit_E",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "1648623296332218471",
+        "name": "chara_113501_Surprise02_Sit_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "4958564993243914510",
+        "name": "chara_113501_Surprise02_Sit_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "7997284440083611450",
+        "name": "chara_113501_Surprise_E",
+        "durationSeconds": 0.6666666269302368,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-2675201589677072574",
+        "name": "chara_113501_Surprise_L",
+        "durationSeconds": 0.6666666269302368,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-6669234263805834571",
+        "name": "chara_113501_Surprise_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "2112089196417158058",
+        "name": "chara_113501_Surprise_Sit_E",
+        "durationSeconds": 0.6666666269302368,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "2336548983474377448",
+        "name": "chara_113501_Surprise_Sit_L",
+        "durationSeconds": 0.6666666269302368,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-8532374295160782930",
+        "name": "chara_113501_Surprise_Sit_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-3955339342485019668",
+        "name": "chara_113501_Talk_E",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "6829239109970139435",
+        "name": "chara_113501_Talk_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "9193240866992133290",
+        "name": "chara_113501_Talk_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-4575019251235893805",
+        "name": "chara_113501_Talk_Sit (2)",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "849301605935390224",
+        "name": "chara_113501_Talk_Sit_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "6403204489733575836",
+        "name": "chara_113501_Talk_Sit_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-6743070521119802315",
+        "name": "chara_113501_Yes",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "8355746918852516594",
+        "name": "chara_113501_Yes_Sit",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-7058141752745222705",
+        "name": "Take 001",
+        "durationSeconds": 16.30000114440918,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-5240203638914273105",
+        "name": "Wait",
+        "durationSeconds": 1.6666666269302368,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-4743249727947206283",
+        "name": "Wait02_E",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "3596342329066022146",
+        "name": "Wait02_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "99098186438785355",
+        "name": "Wait02_S",
+        "durationSeconds": 1.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "-3354674938102926062",
+        "name": "Wait03_E",
+        "durationSeconds": 1.7666668891906738,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "5987162821588521670",
+        "name": "Wait03_L",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      },
+      {
+        "pathId": "3992918727016478935",
+        "name": "Wait03_S",
+        "durationSeconds": 2.0,
+        "sampleRate": 60.0,
+        "bindingCount": 246,
+        "uniqueBindingPathCount": 82
+      }
+    ]
+  },
+  "physics": {
+    "attachment": "required",
+    "writerPolicy": "existing-character-physics-single-writer",
+    "profileStableKey": "character-physics:style3dCharacterMstId=113501|resourceName=chara_113501_model",
+    "productUrl": "/character-physics/characters/113501/profile.v1.json",
+    "expectedClothComponentStableKeys": [
+      "unity-component:bundle=home/chara_113501_model|pathID=-4171332357999029911",
+      "unity-component:bundle=home/chara_113501_model|pathID=-58277916808791612",
+      "unity-component:bundle=home/chara_113501_model|pathID=2757863112245406027",
+      "unity-component:bundle=home/chara_113501_model|pathID=6246890487585556302"
+    ],
+    "expectedPlaneColliderStableKey": "unity-component:bundle=home/chara_113501_model|pathID=3272151300770851987",
+    "expectedClothTeams": 4,
+    "expectedMagicaColliders": 1
+  },
+  "scenario": {
+    "exactScenarioAssetId": "Aq",
+    "nativeOwnerComponent": "HomeModelObjectCharacterAq",
+    "nativeOwnerComponentPathId": "7634962230936977438",
+    "modelTransformPathId": "8371956646723750843",
+    "variablePostures": [
+      0,
+      2
+    ],
+    "actionTypeCounts": {
+      "ChangeCamera": 216,
+      "CharacterLooks": 403,
+      "CharacterTalk": 1812,
+      "OnlyMotion": 391,
+      "SetActive": 13
+    },
+    "motionCounts": {
+      "Anger": 17,
+      "Exciting": 19,
+      "Joy": 127,
+      "Look up": 1,
+      "LookUp": 38,
+      "No": 84,
+      "Puzzled": 56,
+      "Smile": 49,
+      "Sorrow": 30,
+      "Surprise": 18,
+      "Surprise02": 6,
+      "Talk": 107,
+      "Wait": 57,
+      "Wait02": 616,
+      "Wait03": 5,
+      "Yes": 75,
+      "ZOOM_DefaultToIn": 50
+    }
+  }
+}

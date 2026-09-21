@@ -1,0 +1,179 @@
+/* Compact opt-in editor shell: one task page and one track list own scrolling. */
+#app[data-performance-mode="editing"] { display: block; height: 100dvh; min-height: 0; }
+#app[data-performance-mode="editing"] #menu { display: none; }
+#workspace[data-performance-mode="editing"] {
+    display: grid; width: 100%; height: 100%; min-height: 0; min-width: 0;
+    grid-template-columns: clamp(240px, 22vw, 300px) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) clamp(152px, 23vh, 220px);
+    grid-template-areas: "header header" "resources viewport" "timeline timeline";
+    gap: 6px; padding: 6px; box-sizing: border-box; overflow: hidden;
+}
+#workspace[data-performance-mode="editing"] > #viewer {
+    grid-area: viewport; min-height: 0; min-width: 0; border-radius: 6px;
+    width: 100%; height: 100%; position: relative;
+}
+#workspace[data-performance-mode="editing"] > #viewer > canvas { max-width: 100%; max-height: 100%; }
+#workspace[data-performance-mode="editing"] :is(.performance-workspace-region, .performance-task-page, .performance-task-tabs, .performance-transport, .performance-chart-host) { box-sizing: border-box; min-width: 0; min-height: 0; }
+.performance-workspace-region[hidden], .performance-task-page[hidden] { display: none !important; }
+.performance-workspace-region {
+    color: #e7e7eb; background: #18212b; border: 1px solid #435060; border-radius: 6px;
+    font-size: 12px; line-height: 1.35; overflow-wrap: anywhere;
+}
+.performance-workspace-header { grid-area: header; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; padding: 5px 8px; }
+.performance-workspace-header strong { margin-right: 4px; font-size: 13px; }
+.performance-workspace-header > output { margin-left: auto; max-width: min(36vw, 400px); font-size: 11px; }
+.performance-workspace-header details { font-size: 11px; max-width: 330px; }
+.performance-workspace-header summary { cursor: pointer; }
+.performance-workspace-header small { display: block; }
+.performance-workspace-resources { grid-area: resources; display: grid; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; }
+.performance-task-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; padding: 5px; border-bottom: 1px solid #435060; }
+.performance-task-tabs button { white-space: nowrap; }
+.performance-task-tabs button[aria-selected="true"] { background: #355575; border-color: #91b9df; }
+.performance-task-page { overflow: auto; padding: 8px; scrollbar-gutter: stable; overscroll-behavior: contain; }
+.performance-task-page.performance-task-subpages { display: grid; grid-template-rows: auto minmax(0, 1fr); padding: 0; overflow: hidden; }
+.performance-task-page.performance-audio-workspace { grid-template-rows: auto minmax(0, 1fr) auto; }
+.performance-audio-common { padding: 5px 8px; border-top: 1px solid #435060; min-width: 0; }
+.performance-audio-common > output:empty { display: none; }
+.performance-audio-common > output { display: block; font-size: 11px; overflow-wrap: anywhere; }
+.performance-workspace-region :is(button, select, input, textarea) { box-sizing: border-box; min-width: 0; max-width: 100%; font: inherit; }
+.performance-workspace-region :is(button, select, input:not([type="checkbox"]):not([type="range"]), textarea) {
+    min-height: 27px; color: inherit; background: #232f3f; border: 1px solid #63758c; border-radius: 4px; padding: 3px 5px;
+}
+.performance-workspace-region button { cursor: pointer; }
+.performance-workspace-region button:disabled { opacity: .5; }
+.performance-workspace-region :is(button, select, input, textarea):focus-visible { outline: 2px solid #82c8ff; outline-offset: -2px; }
+.performance-workspace-region :is(h3,h4) { font-size: 12px; margin: 0 0 6px; }
+.performance-task-page > section > h4 { display: none; }
+.performance-task-page > section { min-height: min-content; }
+.performance-task-page [data-performance-resource] { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; min-width: 0; }
+.performance-task-page [data-performance-resource] > img { width: 18px; height: 18px; }
+.performance-task-page [data-performance-resource] select { flex: 1 1 150px; }
+.performance-task-page .character-search-box { flex: 1 1 100%; width: 100%; min-width: 0; }
+.performance-task-page .character-search-results { position: relative; inset: auto; max-width: 100%; }
+.performance-task-page #animation-slider { flex: 1 1 100%; }
+.performance-task-page [data-testid="performance-project-section"] { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.performance-task-page [data-testid="performance-project-section"] :is(textarea,input[type="file"]) { grid-column: 1 / -1; width: 100%; }
+.performance-task-page [data-testid="performance-timeline-section"] { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.performance-task-page [data-testid="performance-timeline-section"] > select { grid-column: 1 / -1; }
+.performance-task-page [data-testid="performance-viewport-gizmo-hint"] { font-size: 11px; margin: 4px 0; }
+.performance-workspace-timeline { grid-area: timeline; display: grid; grid-template-rows: auto minmax(0, 1fr); padding: 6px; gap: 5px; overflow: hidden; }
+.performance-transport { display: grid; grid-template-columns: auto auto auto 80px minmax(80px, 1fr); align-items: center; gap: 6px; }
+.performance-transport > input[type="number"] { width: 80px; }
+.performance-transport > input[type="range"] { width: 100%; margin: 0; }
+.performance-chart-host { display: grid; grid-template-rows: minmax(0,1fr); }
+.performance-chart-host > .performance-timeline-chart { max-height: none; height: 100%; }
+#workspace[data-performance-mode="editing"][data-performance-dock="collapsed"] { grid-template-columns: minmax(0,1fr); grid-template-areas: "header" "viewport" "timeline"; }
+#workspace[data-performance-mode="editing"][data-performance-dock="collapsed"] > .performance-workspace-resources { display: none; }
+@media (max-width: 1100px) {
+    #workspace[data-performance-mode="editing"] { grid-template-columns: 240px minmax(0,1fr); grid-template-rows: auto minmax(0,1fr) 152px; }
+    .performance-workspace-header > output { max-width: 230px; }
+}
+@media (max-width: 700px) {
+    #workspace[data-performance-mode="editing"] { grid-template-columns: 210px minmax(0,1fr); }
+    .performance-workspace-header strong { font-size: 12px; }
+    .performance-workspace-header > output { max-width: 100%; }
+    .performance-task-tabs { gap: 2px; padding: 3px; }
+    .performance-task-tabs button { font-size: 11px; padding: 3px; }
+}
+body.theme-light .performance-workspace-region { color: #202735; background: #f5f7fa; border-color: #9ba7b8; }
+body.theme-light .performance-workspace-region :is(button, select, input:not([type="checkbox"]), textarea) { background: #fff; border-color: #9ba7b8; }
+body.theme-light .performance-task-tabs button[aria-selected="true"] { background: #d7e8f8; border-color: #5a80a9; }
+/* Shared time axis: all keys on one lane per track, with an inset for endpoints. */
+.performance-timeline-chart {
+    --performance-time: 0%;
+    min-width: 0;
+    max-height: 220px;
+    overflow: auto;
+    scrollbar-gutter: stable;
+    border: 1px solid #63758c;
+    border-radius: 4px;
+}
+.performance-timeline-row {
+    display: grid;
+    grid-template-columns: minmax(70px, 28%) minmax(0, 1fr);
+    align-items: center;
+    min-height: 30px;
+    border-bottom: 1px solid #63758c55;
+}
+.performance-timeline-track-label {
+    min-width: 0;
+    padding: 4px 6px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-right: 1px solid #63758c;
+}
+.performance-timeline-rail { position: relative; height: 30px; min-width: 0; margin: 0 14px; }
+.performance-timeline-key-lane {
+    background: repeating-linear-gradient(to right, #63758c33 0 1px, transparent 1px 10%);
+}
+.performance-timeline-key-lane::after, .performance-timeline-cursor {
+    content: "";
+    position: absolute;
+    left: var(--performance-time);
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: #ffbf59;
+    pointer-events: none;
+}
+.performance-timeline-ruler { position: sticky; top: 0; z-index: 2; background: #18212b; }
+.performance-timeline-tick { position: absolute; top: 5px; transform: translateX(-50%); white-space: nowrap; font-size: 10px; }
+.performance-timeline-chart .performance-timeline-key {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    min-height: 24px;
+    min-width: 24px;
+    padding: 0;
+    border: 1px solid transparent;
+    background: transparent;
+    color: #a9cbed;
+    line-height: 22px;
+    cursor: pointer;
+    z-index: 1;
+}
+.performance-timeline-chart .performance-timeline-key[aria-pressed="true"] { color: #ffbf59; border-color: currentColor; background: #3a3429; }
+body.theme-light .performance-timeline-ruler { background: #f5f7fa; }
+body.theme-light .performance-timeline-chart .performance-timeline-key { color: #244b79; background: transparent; border-color: transparent; }
+body.theme-light .performance-timeline-chart .performance-timeline-key[aria-pressed="true"] { color: #734600; background: #ffe4ae; border-color: currentColor; }
+
+/* Audio authoring only; preserves the shared timeline/marker layout above. */
+.performance-audio-editor { display: grid; gap: 6px; min-width: 0; }
+.performance-audio-field { display: grid; gap: 3px; min-width: 0; }
+.performance-audio-field:has([type="checkbox"]) { display: flex; align-items: center; gap: 6px; }
+.performance-audio-numbers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.performance-audio-editor select, .performance-audio-editor input { width: 100%; box-sizing: border-box; }
+.performance-audio-editor [type="checkbox"] { width: auto; }
+.performance-audio-editor select[size] { height: 100px; }
+.performance-audio-actions { display: flex; flex-wrap: wrap; gap: 4px; }
+.performance-audio-tracks { display: grid; gap: 6px; max-height: 240px; overflow: auto; }
+.performance-audio-track { display: grid; gap: 3px; min-width: 0; border: 1px solid #63758c; border-radius: 4px; padding: 6px; }
+.performance-audio-track [aria-pressed="true"] { outline: 1px solid #82c8ff; }
+.performance-audio-editor output, .performance-audio-track details { white-space: pre-wrap; overflow-wrap: anywhere; }
+.performance-audio-error { color: #ef8d87; }
+.performance-audio-track meter { width: 100%; height: 10px; }
+.performance-audio-level-text, .performance-audio-note { font-size: 11px; }
+.performance-audio-note { margin: 0; opacity: .8; }
+
+/* Only the active task page scrolls; rows never create a second nested scroller. */
+.performance-task-page .performance-audio-tracks { max-height: none; overflow: visible; }
+.performance-task-page .performance-audio-field { margin: 0 0 6px; }
+.performance-task-page .performance-audio-numbers { margin-bottom: 6px; }
+.performance-task-page select[size] { width: 100%; height: 88px; }
+.performance-task-page > output { display: block; font-size: 11px; margin-bottom: 6px; }
+.performance-audio-common .performance-audio-actions { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
+.performance-audio-common button { font-size: 11px; }
+
+/* Sticky ruler must not intercept keys scrolled back into view. */
+.performance-chart-host > .performance-timeline-chart { scroll-padding-top: 32px; }
+.performance-workspace-timeline .performance-timeline-chart .performance-timeline-key { min-height: 24px; scroll-margin-top: 32px; scroll-margin-bottom: 4px; }
+
+/* The toolbar used an invisible select laid over a decorative plus. In the task
+   dock expose the real select in normal flow, beside its picker button. */
+.performance-task-page .button-dropdown { display: flex; flex: 1 1 100%; gap: 4px; min-width: 0; }
+.performance-task-page .button-dropdown > div { position: static; inset: auto; opacity: 1; overflow: visible; flex: 1; min-width: 0; }
+.performance-task-page .button-dropdown > div > select { width: 100%; height: auto; }
+.performance-audio-common .performance-audio-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }

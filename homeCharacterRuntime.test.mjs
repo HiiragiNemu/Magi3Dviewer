@@ -1,3 +1,4 @@
+import { releaseCorpus } from './releaseCorpusTestSupport.mjs'
 import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import test from 'node:test'
@@ -818,7 +819,11 @@ test('Home runtimes cover every Viewer character with an available local JP bund
         assert.ok(expression.expressionOrder.length >= 1)
         covered.push(characterId)
     }
-    assert.equal(covered.length, 91)
+    const historicalCovered = covered.filter(id => id !== 110702).sort((a, b) => a - b)
+    assert.equal(historicalCovered.length, 92)
+    assert.deepEqual(historicalCovered, releaseCorpus.historicalHomeCharacterIds)
+    assert.deepEqual(covered.filter(id => id === 110702), [110702])
+    assert.equal(covered.length, 93)
     assert.equal(covered.includes(100101), true)
     assert.equal(covered.includes(100102), true)
 

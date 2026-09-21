@@ -1,13 +1,40 @@
+import { getLoadingTask, startLoadingTask, readLoadingResponse, yieldLoadingFrame } from '../../magia-exedra-character-three/loadingProgress.ts'
 import * as THREE from 'three'
+import { enableRigidStageCulling } from './stageRigidCulling'
+import { batchStaticStageMeshes, hasStageRuntimeMeshWriters } from './stageStaticBatching'
+import { captureStageFields, captureStageRecord, captureStageUniforms } from './stageCommitState'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { fetchAndTryDecompressGzip } from 'magia-exedra-character-three/utils'
 import { scene, recoveredFillLight, recoveredHemisphereLight } from './scene'
 import { gui } from './controllers/GUI'
 import { loadStageCatalogTree } from './stageCatalog'
+import {
+    resolveCachedRuntimeAssetUrl,
+    resolvePageAssetUrl,
+    resolveRuntimeAssetUrl,
+} from './runtimeProductDelivery'
+import { getUiLocale } from './localization/zhCN'
+import {
+    getStageSceneNameRecord,
+    loadStageSceneNameIndex,
+    resolveStageSceneDisplayName,
+    type StageSceneNameIndex,
+} from './stageSceneLocalization'
 import officialCameraPresetRuntimeProfiles from './official-camera-presets.generated.json'
+import { resolveStageCameraPresetId } from './stageCameraPresetRouting'
+import { withBundledStageTransformAnimations } from './stageTransformAnimationCatalog'
 import { resolveStageAnchor } from './stageHierarchy'
 import { STAGE_CHARACTER_SHADOW_CASTERS_ENABLED } from './stageCharacterShadowBridge'
+import {
+    StageMainLightCascadeController,
+    resolveOfficialMainShadowDistance,
+    resolveOfficialUrpDirectionalShadowPlan,
+    resolveOfficialUrpDirectionalCascadeBias,
+    resolveStageShadowQualityProfile,
+    type StageMainLightCascadeOptions,
+    type StageShadowQuality,
+} from './stageMainLightCascades'
 import type {
     StageFidelityComponentEvidence,
     StageFidelityLayerCounts,
@@ -18,12 +45,16 @@ import {
 } from './stageMaterialBindings'
 import {
     applyStageLightmaps,
+    hasCompleteActiveStageLightmapCoverage,
     loadStageLightmap,
+    matchStageLightmapBindings,
     type StageLightmapApplication,
     type StageLightmapBinding,
     type StageLightmapEncoding,
 } from './stageLightmaps'
 import {
+    convertStageEnvironmentToCubemap,
+    disposeStageEnvironmentTexture,
     loadStageEnvironment,
     type StageEnvironmentEncoding,
 } from './stageEnvironment'
@@ -41,11 +72,13 @@ import {
 } from './stageUv1Companion'
 import {
     applyReDriveVolumeRuntime,
+    captureReDriveVolumeRuntime,
     resetReDriveVolumeRuntime,
     resolveReDriveBackgroundShaderGlobals,
     type ReDriveVolumeRuntimeProfile,
     type Rgba,
 } from './reDriveVolumeRuntime'
+
 import {
     createStageRuntimeController,
     type StageRuntimeController,
@@ -91,6 +124,12 @@ export interface StageSpawnPoint {
 export interface StageLightProfile {
     name?: string
     type?: 'directional' | 'point' | 'spot'
+    /** Serialized GameObject active-in-hierarchy state. */
+    active?: boolean
+    /** Serialized Light GameObject.m_IsActive, independent of parent phase. */
+    activeSelf?: boolean
+    /** Serialized Light.m_Enabled state. */
+    enabled?: boolean
     /** Legacy loose FBX node-name anchor. */
     anchorNode?: string
     /** Exact serialized Unity hierarchy path; preferred when available. */
@@ -145,8 +184,35 @@ export interface StageVolumeVignetteProfile {
     rounded?: boolean
 }
 
+export interface StageVolumeChromaticAberrationProfile {
+    active?: boolean
+    /** Serialized URP intensity in [0, 1]; UberPost multiplies by 0.05. */
+    intensity: number
+    operator?: 'urp-2022.3-fast-3-sample'
+    amountScale?: 0.05
+}
+
+export interface StageVolumeFilmGrainProfile {
+    active?: boolean
+    /** Serialized FilmGrainLookup enum (0..9 presets, 10 custom). */
+    type: number
+    lookupName?: string
+    textureUrl: string
+    /** Serialized URP intensity in [0, 1]; PostProcessUtils multiplies by 4. */
+    intensity: number
+    response: number
+    intensityScale?: 4
+    sampler?: {
+        filter: 'linear'
+        wrapU: 'repeat'
+        wrapV: 'repeat'
+    }
+}
+
 export interface StageVolumePostProcessingProfile {
+    chromaticAberration?: StageVolumeChromaticAberrationProfile
     colorAdjustments?: StageVolumeColorAdjustmentsProfile
+    filmGrain?: StageVolumeFilmGrainProfile
     vignette?: StageVolumeVignetteProfile
 }
 
@@ -244,6 +310,10 @@ export interface StageDefinition {
     category?: StageCategory
     official?: boolean
     assetBundleName?: string
+    /** Stable MasterData join key from getDioramaBackgroundMstList. */
+    dioramaBackgroundMstId?: number
+    /** Official scene resource key used by the AssetBundle path. */
+    backgroundResourceName?: string
     /** Exact AssetBundle-manifest evidence retained with exported stages. */
     bundleProvenance?: StageBundleProvenance
     type: 'procedural' | 'gltf' | 'fbx' | 'group'
@@ -280,9 +350,13 @@ export interface StageDefinition {
     dynamic?: {
         expected: boolean
         status: 'recovered' | 'partial' | 'pending' | 'static'
+            | 'product-presentation' | 'absent'
         clipNames?: string[]
         missing?: string[]
         evidence?: string[]
+    }
+    product?: {
+        fullyResolved?: boolean
     }
     credit?: string
     evidence?: string[]
@@ -336,6 +410,35 @@ const builtInStages: StageDefinition[] = [
     { id: 'none', name: '[Research] No 3D stage', category: 'research', official: false, type: 'procedural' },
     { id: 'sky-reference', name: '[Research] Sky lighting reference (procedural)', category: 'research', official: false, type: 'procedural', preset: 'sky-reference' },
     { id: 'studio', name: '[Research] Neutral shader studio', category: 'research', official: false, type: 'procedural', preset: 'studio' },
+    {
+        id: 'face-shadow-qa',
+        name: '[QA] Face-shadow neutral lighting studio',
+        category: 'research',
+        official: false,
+        type: 'procedural',
+        preset: 'studio',
+        renderProfile: {
+            source: 'manual-research',
+            backgroundColor: '#6f7480',
+            fog: null,
+            ambientLight: { color: '#ffffff', intensity: 0.42 },
+            directionalLight: {
+                name: 'FaceShadowKey',
+                type: 'directional',
+                color: '#fff6e8',
+                intensity: 1.25,
+                position: [4, 8, 6],
+                target: [0, 1, 0],
+                castShadow: true,
+                role: 'character-key',
+                shadow: { type: 2, strength: 0.82, bias: 0.0005, normalBias: 0.02, nearPlane: 0.1 },
+            },
+            renderer: { toneMapping: 'aces', exposure: 1 },
+            colorFilter: { brightness: 1, contrast: 1, saturation: 1 },
+            bloom: { enabled: false, strength: 0, radius: 0, threshold: 1 },
+            camera: { position: [0, 1.7, 5.2], target: [0, 1.1, 0], fov: 32, near: 0.05, far: 100 },
+        },
+    },
     { id: 'battle-arena', name: '[Research] Battle arena prototype', category: 'research', official: false, type: 'procedural', preset: 'battle-arena' },
 ]
 
@@ -347,6 +450,8 @@ const foregroundStageLightRoot = new THREE.Group()
 foregroundStageLightRoot.name = 'Magius3DviewerForegroundStageLightRoot'
 scene.scene.add(foregroundStageLightRoot)
 let activeStageRuntime: StageRuntimeController | undefined
+let stageSceneNameIndex: StageSceneNameIndex | undefined
+let stageSceneNameError: string | null = null
 let activeStageVolumetricLightBeams: StageVolumetricLightBeamController | undefined
 
 const stageFolder = gui.addFolder('3D Stage').close()
@@ -409,15 +514,178 @@ let currentStageId = 'none'
 let activeProfileTextures: THREE.Texture[] = []
 let activeStageLightmap: StageLightmapApplication | undefined
 let activeStageReflectionProbes: StageReflectionProbeApplication | undefined
+let activeStageMainLightCascades: StageMainLightCascadeController | undefined
+let activeStageMainLightCascadeOptions: StageMainLightCascadeOptions | undefined
+let stageShadowQuality: StageShadowQuality = 'official'
 let stageLoadEpoch = 0
 let pendingStageLoad: AbortController | undefined
+let lastStageLoadFailure: {
+    requestedStageId: string
+    checkpoint: string
+    message: string
+} | undefined
+export type StageVisibleContentClassification =
+    | 'formal-scene'
+    | 'product-presentation'
+    | 'incomplete-product'
+    | 'empty-geometry'
+
+export interface StageVisibleContentSnapshot {
+    stageId: string
+    classification: StageVisibleContentClassification
+    accepted: boolean
+    reason: string
+    meshCount: number
+    visibleMeshCount: number
+    drawableMeshCount: number
+    materialSlotCount: number
+    mappedMaterialSlotCount: number
+    bounds: {
+        min: [number, number, number]
+        max: [number, number, number]
+        size: [number, number, number]
+        center: [number, number, number]
+    } | null
+    cameraFrustumMeshCount: number
+    drawnMeshCount: number
+    drawProbeFrames: number
+    drawProbeComplete: boolean
+    dynamicStatus: NonNullable<StageDefinition['dynamic']>['status'] | null
+    markerEvidence: string[]
+    materials: string[]
+    geometryAttributeSets: Record<string, number>
+    lightCount: number
+    animationNames: string[]
+}
+
+interface StageVisibleContentInspection {
+    snapshot: StageVisibleContentSnapshot
+    meshes: THREE.Mesh[]
+}
+
+let activeStageVisibleContent: StageVisibleContentSnapshot | undefined
+let lastCandidateVisibleContent: StageVisibleContentSnapshot | undefined
+let cancelActiveStageDrawProbe: (() => void) | undefined
 let activeCharacterKeyLightAnchor: THREE.Object3D | undefined
+let activeCharacterKeyLightBaseVisible = true
 interface ForegroundStageLightBinding {
     light: THREE.PointLight | THREE.SpotLight | THREE.DirectionalLight
     anchor?: THREE.Object3D
     profile: StageLightProfile
 }
 let activeForegroundStageLightBindings: ForegroundStageLightBinding[] = []
+
+scene.addBeforeRenderCallback(() => activeStageMainLightCascades?.update())
+
+export type { StageShadowQuality } from './stageMainLightCascades'
+
+export const STAGE_SHADOW_QUALITY_CHANGE_EVENT =
+    'magius:stage-shadow-quality-change' as const
+
+export interface StageShadowQualityState {
+    quality: StageShadowQuality
+    active: boolean
+    officialDefaultsActive: boolean
+    cascadeCount: number
+    cascadeMapSize: number
+    cascadeSplits: number[]
+}
+
+export function getStageShadowQuality(): StageShadowQuality {
+    return stageShadowQuality
+}
+
+export function getStageShadowQualityState(): StageShadowQualityState {
+    const active = activeStageMainLightCascades?.getDebugState()
+    const selected = resolveStageShadowQualityProfile(stageShadowQuality)
+    return {
+        quality: stageShadowQuality,
+        active: active != undefined,
+        officialDefaultsActive: stageShadowQuality === 'official',
+        cascadeCount: active?.cascadeCount ?? selected.cascadeCount,
+        cascadeMapSize: active?.cascadeMapSize ?? selected.cascadeMapSize,
+        cascadeSplits: [
+            ...(active?.cascadeSplits ?? selected.cascadeSplits),
+        ],
+    }
+}
+
+/**
+ * Session-only opt-in quality switch. Startup always begins at `official`;
+ * no localStorage or scene-profile field persists a lower budget.
+ */
+export function setStageShadowQuality(quality: StageShadowQuality): void {
+    resolveStageShadowQualityProfile(quality)
+    if (quality === stageShadowQuality) return
+
+    const previousQuality = stageShadowQuality
+    const options = activeStageMainLightCascadeOptions
+    if (!options) {
+        stageShadowQuality = quality
+        dispatchStageShadowQualityChange()
+        return
+    }
+
+    activeStageMainLightCascades?.dispose()
+    activeStageMainLightCascades = undefined
+    stageShadowQuality = quality
+    try {
+        activeStageMainLightCascades = createStageMainLightCascades(options)
+    } catch (error) {
+        stageShadowQuality = previousQuality
+        try {
+            activeStageMainLightCascades = createStageMainLightCascades(options)
+            publishStageMainLightCascadeDebugState()
+        } catch (rollbackError) {
+            activeStageMainLightCascadeOptions = undefined
+            throw new AggregateError(
+                [error, rollbackError],
+                'Stage shadow quality switch and rollback both failed',
+            )
+        }
+        throw error
+    }
+    publishStageMainLightCascadeDebugState()
+    dispatchStageShadowQualityChange()
+}
+
+function createStageMainLightCascades(
+    options: StageMainLightCascadeOptions,
+) {
+    return new StageMainLightCascadeController({
+        ...options,
+        quality: stageShadowQuality,
+    })
+}
+
+function installStageMainLightCascades(
+    options: StageMainLightCascadeOptions,
+) {
+    activeStageMainLightCascades?.dispose()
+    activeStageMainLightCascades = undefined
+    activeStageMainLightCascadeOptions = options
+    try {
+        activeStageMainLightCascades = createStageMainLightCascades(options)
+    } catch (error) {
+        activeStageMainLightCascadeOptions = undefined
+        throw error
+    }
+    publishStageMainLightCascadeDebugState()
+}
+
+function publishStageMainLightCascadeDebugState() {
+    const debug = activeStageMainLightCascades?.getDebugState() ?? null
+    const stageObject = activeStageMainLightCascadeOptions?.stageObject
+    if (stageObject) stageObject.userData.stageMainLightCascades = debug
+    stageRoot.userData.stageMainLightCascades = debug
+}
+
+function dispatchStageShadowQualityChange() {
+    if (typeof document === 'undefined') return
+    document.dispatchEvent(new CustomEvent(STAGE_SHADOW_QUALITY_CHANGE_EVENT, {
+        detail: getStageShadowQualityState(),
+    }))
+}
 
 interface LoadedExternalStage {
     object: THREE.Object3D
@@ -434,6 +702,7 @@ interface LoadedProfileTextures {
     lightmapIntensity?: number
     lightmapEncoding?: StageLightmapEncoding
     uv1Companion?: StageUv1Companion
+    filmGrain?: THREE.Texture
     textures: THREE.Texture[]
 }
 
@@ -497,7 +766,94 @@ const initialSceneState = {
     cameraLayersMask: scene.camera.layers.mask,
 }
 
+function attachStageSceneMetadata(definition: StageDefinition) {
+    const record = getStageSceneNameRecord(stageSceneNameIndex, definition.id)
+    if (!record) return definition
+    const recordDioramaBackgroundMstId = record.dioramaBackgroundMstId
+    return {
+        ...definition,
+        ...(definition.dioramaBackgroundMstId === undefined
+            && typeof recordDioramaBackgroundMstId === 'number'
+            && Number.isFinite(recordDioramaBackgroundMstId)
+            ? { dioramaBackgroundMstId: recordDioramaBackgroundMstId }
+            : {}),
+        backgroundResourceName:
+            definition.backgroundResourceName ?? record.backgroundResourceName,
+    }
+}
+
+function stageDisplayName(definition: StageDefinition) {
+    return resolveStageSceneDisplayName(
+        getStageSceneNameRecord(stageSceneNameIndex, definition.id),
+        getUiLocale(),
+        definition.name,
+    )
+}
+
+function createStageSelectorOption(definition: StageDefinition) {
+    const option = document.createElement('option')
+    const record = getStageSceneNameRecord(stageSceneNameIndex, definition.id)
+    option.value = definition.id
+    option.textContent = stageDisplayName(definition)
+    option.dataset.category = definition.category ?? 'research'
+    option.dataset.official = definition.official ? 'true' : 'false'
+    option.dataset.dynamic = definition.dynamic?.status ?? 'unspecified'
+    option.dataset.i18nIgnore = 'true'
+    // Never advertise a partial/pending official product as a selectable
+    // production scene.  Those entries remain in the catalog for provenance,
+    // but selecting them would otherwise load an incomplete candidate and then
+    // silently snap the selector back to the previous scene.
+    if (
+        definition.official
+        && (definition.dynamic?.status === 'partial'
+            || definition.dynamic?.status === 'pending')
+    ) {
+        option.disabled = true
+        option.title = 'Scene package is still incomplete; choose a recovered scene.'
+    }
+    if (definition.dynamic?.status === 'product-presentation') {
+        const reason = getUiLocale() === 'zh-CN' ? '真实场景待恢复' : 'Scene content awaiting restoration'
+        option.disabled = true
+        option.dataset.availability = 'restoration-pending'
+        option.title = reason
+        option.textContent += ` · ${reason}`
+    }
+    if (record) {
+        if (
+            typeof record.dioramaBackgroundMstId === 'number'
+            && Number.isFinite(record.dioramaBackgroundMstId)
+        ) {
+            option.dataset.dioramaBackgroundMstId = String(record.dioramaBackgroundMstId)
+        }
+        option.dataset.backgroundResourceName = record.backgroundResourceName
+    }
+    return option
+}
+
+function refreshStageSelectorLabels() {
+    for (const option of stageSelector.options) {
+        const definition = definitions.find(stage => stage.id === option.value)
+        if (definition) {
+            const updated = createStageSelectorOption(definition)
+            option.textContent = updated.textContent
+            option.title = updated.title
+            option.disabled = updated.disabled
+        }
+    }
+}
+
+document.addEventListener('magius:localechange', refreshStageSelectorLabels)
+
 export async function setupStageSelector() {
+    try {
+        stageSceneNameIndex = await loadStageSceneNameIndex()
+        stageSceneNameError = null
+    } catch (error) {
+        stageSceneNameIndex = undefined
+        stageSceneNameError = error instanceof Error ? error.message : String(error)
+        console.warn('Could not load official stage names:', error)
+    }
+
     try {
         const loaded = await loadStageCatalogTree<StageDefinition>(
             './stages/catalog.json',
@@ -508,9 +864,22 @@ export async function setupStageSelector() {
                 `Could not load stage ${error.kind} ${error.url}: ${error.message}`,
             )
         }
-        const catalogStages = loaded.stages.filter((stage, index, all) =>
-            all.findIndex(candidate => candidate.id === stage.id) === index
-        )
+        const stageDefinitionQuality = (stage: StageDefinition) => {
+            let score = 0
+            if (stage.sceneProfileUrl) score += 4
+            if (stage.dynamic?.status === 'recovered') score += 4
+            if (stage.product?.fullyResolved) score += 2
+            if (stage.url?.includes('-animated.')) score += 1
+            if (stage.dynamic?.status === 'partial') score -= 2
+            if (stage.dynamic?.status === 'pending') score -= 4
+            return score
+        }
+        const catalogStages = [...loaded.stages]
+            .sort((left, right) => stageDefinitionQuality(right) - stageDefinitionQuality(left))
+            .filter((stage, index, all) =>
+                all.findIndex(candidate => candidate.id === stage.id) === index
+            )
+            .map(attachStageSceneMetadata)
         for (const stage of catalogStages) {
             if (!stage.bundleProvenance) continue
             stage.bundleProvenance = normalizeStageBundleProvenance(
@@ -550,17 +919,188 @@ export async function setupStageSelector() {
         console.warn('Could not load external stage catalog:', error)
     }
 
-    stageSelector.replaceChildren(...definitions.map(definition => {
-        const option = document.createElement('option')
-        option.value = definition.id
-        option.textContent = definition.name
-        option.dataset.category = definition.category ?? 'research'
-        option.dataset.official = definition.official ? 'true' : 'false'
-        option.dataset.dynamic = definition.dynamic?.status ?? 'unspecified'
-        return option
-    }))
+    stageSelector.replaceChildren(...definitions.map(createStageSelectorOption))
     stageSelector.addEventListener('change', () => void loadStageById(stageSelector.value))
     await loadStageById('sky-reference')
+}
+
+function isEffectivelyVisible(object: THREE.Object3D, root: THREE.Object3D) {
+    let cursor: THREE.Object3D | null = object
+    while (cursor) {
+        if (!cursor.visible) return false
+        if (cursor === root) return true
+        cursor = cursor.parent
+    }
+    return false
+}
+
+function materialHasRenderableMap(material: THREE.Material) {
+    if (Object.values(material).some(value => value instanceof THREE.Texture)) return true
+    const uniforms = (material as THREE.ShaderMaterial).uniforms
+    return uniforms != undefined && Object.values(uniforms).some(uniform =>
+        uniform?.value instanceof THREE.Texture)
+}
+
+function inspectStageVisibleContent(
+    definition: StageDefinition,
+    object: THREE.Object3D,
+): StageVisibleContentInspection {
+    const meshes: THREE.Mesh[] = []
+    const materials = new Set<string>()
+    const geometryAttributeSets = new Map<string, number>()
+    let visibleMeshCount = 0
+    let drawableMeshCount = 0
+    let materialSlotCount = 0
+    let mappedMaterialSlotCount = 0
+    let lightCount = 0
+
+    object.updateWorldMatrix(true, true)
+    object.traverse(child => {
+        const mesh = child as THREE.Mesh
+        if (mesh.isMesh) {
+            meshes.push(mesh)
+            const visible = isEffectivelyVisible(mesh, object)
+            if (visible) visibleMeshCount++
+            const attributeSet = Object.keys(mesh.geometry.attributes).sort().join(',')
+                || '<none>'
+            geometryAttributeSets.set(
+                attributeSet,
+                (geometryAttributeSets.get(attributeSet) ?? 0) + 1,
+            )
+            const meshMaterials = Array.isArray(mesh.material)
+                ? mesh.material
+                : [mesh.material]
+            materialSlotCount += meshMaterials.length
+            mappedMaterialSlotCount += meshMaterials.filter(materialHasRenderableMap).length
+            meshMaterials.forEach(material => materials.add(material.name))
+            const positionCount = mesh.geometry.getAttribute('position')?.count ?? 0
+            const hasVisibleMaterial = meshMaterials.some(material =>
+                material.visible && (!(material as THREE.Material & { opacity?: number }).transparent
+                    || (material as THREE.Material & { opacity?: number }).opacity !== 0))
+            if (visible && positionCount > 0 && hasVisibleMaterial) drawableMeshCount++
+        }
+        if ((child as THREE.Light).isLight) lightCount++
+    })
+
+    const markerEvidence = definition.dynamic?.evidence?.filter(value =>
+        /marker|presentation/i.test(value)) ?? []
+    const productPresentation = definition.dynamic?.status === 'product-presentation'
+        || markerEvidence.length > 0
+    const incompleteProduct = Boolean(
+        definition.official
+        && definition.type !== 'procedural'
+        && definition.dynamic?.status === 'pending'
+        && !definition.sceneProfileUrl
+        && !(definition.materialBindings?.length)
+        && materialSlotCount > 0
+        && mappedMaterialSlotCount === 0,
+    )
+    const classification: StageVisibleContentClassification = productPresentation
+        ? 'product-presentation'
+        : meshes.length === 0
+            ? 'empty-geometry'
+            : incompleteProduct
+                ? 'incomplete-product'
+                : 'formal-scene'
+    const reason = {
+        'product-presentation': 'catalog identifies a marker/product-presentation, not formal scene content',
+        'empty-geometry': 'loaded candidate contains no mesh geometry',
+        'incomplete-product': 'official geometry is present but material/profile closure is pending',
+        'formal-scene': drawableMeshCount > 0 && visibleMeshCount > 0
+            ? 'candidate has formal drawable scene content'
+            : 'formal scene candidate has no visible drawable mesh',
+    }[classification]
+    const bounds = meshes.length > 0 ? new THREE.Box3().setFromObject(object) : null
+    const size = bounds?.getSize(new THREE.Vector3())
+    const center = bounds?.getCenter(new THREE.Vector3())
+    const snapshot: StageVisibleContentSnapshot = {
+        stageId: definition.id,
+        classification,
+        accepted: classification === 'formal-scene'
+            && drawableMeshCount > 0
+            && visibleMeshCount > 0,
+        reason,
+        meshCount: meshes.length,
+        visibleMeshCount,
+        drawableMeshCount,
+        materialSlotCount,
+        mappedMaterialSlotCount,
+        bounds: bounds && size && center ? {
+            min: bounds.min.toArray(),
+            max: bounds.max.toArray(),
+            size: size.toArray(),
+            center: center.toArray(),
+        } : null,
+        cameraFrustumMeshCount: 0,
+        drawnMeshCount: 0,
+        drawProbeFrames: 0,
+        drawProbeComplete: false,
+        dynamicStatus: definition.dynamic?.status ?? null,
+        markerEvidence,
+        materials: [...materials].sort(),
+        geometryAttributeSets: Object.fromEntries([...geometryAttributeSets].sort()),
+        lightCount,
+        animationNames: object.animations.map(clip => clip.name),
+    }
+    return { snapshot, meshes }
+}
+
+function updateStageCameraEvidence(inspection: StageVisibleContentInspection) {
+    scene.camera.updateMatrixWorld(true)
+    const projectionView = new THREE.Matrix4().multiplyMatrices(
+        scene.camera.projectionMatrix,
+        scene.camera.matrixWorldInverse,
+    )
+    const frustum = new THREE.Frustum().setFromProjectionMatrix(projectionView)
+    inspection.snapshot.cameraFrustumMeshCount = inspection.meshes.filter(mesh =>
+        isEffectivelyVisible(mesh, activeStageObject ?? mesh)
+        && mesh.layers.test(scene.camera.layers)
+        && frustum.intersectsObject(mesh)).length
+    if (activeStageObject) {
+        const bounds = new THREE.Box3().setFromObject(activeStageObject)
+        const size = bounds.getSize(new THREE.Vector3())
+        const center = bounds.getCenter(new THREE.Vector3())
+        inspection.snapshot.bounds = {
+            min: bounds.min.toArray(),
+            max: bounds.max.toArray(),
+            size: size.toArray(),
+            center: center.toArray(),
+        }
+    }
+}
+
+function armBoundedStageDrawProbe(inspection: StageVisibleContentInspection) {
+    cancelActiveStageDrawProbe?.()
+    const { snapshot, meshes } = inspection
+    const drawHits = new Set<string>()
+    const restorers = meshes.map(mesh => {
+        const original = mesh.onBeforeRender
+        mesh.onBeforeRender = function (renderer, renderedScene, camera, geometry, material, group) {
+            drawHits.add(mesh.uuid)
+            snapshot.drawnMeshCount = drawHits.size
+            original.call(this, renderer, renderedScene, camera, geometry, material, group)
+        }
+        return () => {
+            if (mesh.onBeforeRender !== original) mesh.onBeforeRender = original
+        }
+    })
+    let frameHandle = 0
+    let stopped = false
+    const stop = () => {
+        if (stopped) return
+        stopped = true
+        if (frameHandle) cancelAnimationFrame(frameHandle)
+        restorers.forEach(restore => restore())
+        snapshot.drawProbeComplete = true
+        cancelActiveStageDrawProbe = undefined
+    }
+    const nextFrame = () => {
+        snapshot.drawProbeFrames++
+        if (snapshot.drawProbeFrames >= 2) stop()
+        else frameHandle = requestAnimationFrame(nextFrame)
+    }
+    frameHandle = requestAnimationFrame(nextFrame)
+    cancelActiveStageDrawProbe = stop
 }
 
 export async function loadStageById(id: string) {
@@ -568,56 +1108,199 @@ export async function loadStageById(id: string) {
     const catalogDefinition =
         definitions.find(stage => stage.id === id) ?? builtInStages[0]
     let definition = catalogDefinition
+    let loadCheckpoint = 'catalog-resolved'
     pendingStageLoad?.abort()
     const loadController = new AbortController()
     pendingStageLoad = loadController
+    const loadingTask = startLoadingTask('场景加载', loadController.signal, 'stage')
+    const reportStageLoadProgress = (text: string, fileName?: string) => {
+        if (loadEpoch !== stageLoadEpoch || loadController.signal.aborted) return
+        loadingTask.phase('assembling', fileName, text)
+    }
     stageSelector.disabled = true
+    let stageCommit: ReturnType<typeof createStageCommitTransaction> | undefined
     let candidateObject: THREE.Object3D | undefined
     let candidateTextures: THREE.Texture[] = []
+    let candidateLightmap: StageLightmapApplication | undefined
+    let candidateReflectionProbes: StageReflectionProbeApplication | undefined
+    let candidateVisibleContent: StageVisibleContentInspection | undefined
     let sceneProfilePackage: StageSceneProfilePackage | undefined
+    let resolvedCameraPresetId = resolveStageCameraPresetId(
+        catalogDefinition.id,
+        undefined,
+        officialCameraPresetById,
+    )
 
     try {
+        reportStageLoadProgress(`Loading stage...`, catalogDefinition.id)
         if (catalogDefinition.sceneProfileUrl) {
+            reportStageLoadProgress('Loading scene profile...', catalogDefinition.sceneProfileUrl.split('/').pop())
             sceneProfilePackage = await loadStageSceneProfilePackage(
                 catalogDefinition.sceneProfileUrl,
                 catalogDefinition.id,
                 loadController.signal,
             )
             assertCurrentStageLoad(loadEpoch, loadController.signal)
+            loadCheckpoint = 'scene-profile-loaded'
+            resolvedCameraPresetId = resolveStageCameraPresetId(
+                catalogDefinition.id,
+                sceneProfilePackage.cameraPresetId,
+                officialCameraPresetById,
+            )
             definition = mergeGeneratedStageProfile(
                 catalogDefinition,
                 sceneProfilePackage,
+            )
+        } else {
+            definition = applyOfficialCameraPreset(
+                catalogDefinition,
+                resolvedCameraPresetId,
             )
         }
         let profileTextures: LoadedProfileTextures = { textures: [] }
         if (definition.id !== 'none') {
             if (definition.type === 'procedural') {
+                reportStageLoadProgress('Building procedural stage...', definition.id)
                 candidateObject = createProceduralStage(
                     definition.preset ?? 'studio',
                 )
             } else {
+                reportStageLoadProgress('Loading stage model...', definition.url?.split('/').pop())
                 const loaded = await loadExternalStage(
                     definition,
                     loadController.signal,
                 )
-                assertCurrentStageLoad(loadEpoch, loadController.signal)
                 candidateObject = loaded.object
                 candidateTextures.push(...loaded.textures)
+                assertCurrentStageLoad(loadEpoch, loadController.signal)
+                loadCheckpoint = 'external-stage-loaded'
             }
 
             profileTextures = await preloadStageProfileTextures(
                 definition.renderProfile,
                 loadController.signal,
             )
-            assertCurrentStageLoad(loadEpoch, loadController.signal)
             candidateTextures.push(...profileTextures.textures)
+            assertCurrentStageLoad(loadEpoch, loadController.signal)
+            loadCheckpoint = 'profile-textures-loaded'
+            reportStageLoadProgress('Checking stage content...', definition.id)
+            candidateVisibleContent = inspectStageVisibleContent(definition, candidateObject!)
+            lastCandidateVisibleContent = candidateVisibleContent.snapshot
+            loadCheckpoint = 'visible-content-inspected'
+            if (!candidateVisibleContent.snapshot.accepted) {
+                throw new Error(
+                    `Stage visible-content gate rejected ${definition.id}: `
+                    + `${candidateVisibleContent.snapshot.classification}; `
+                    + candidateVisibleContent.snapshot.reason,
+                )
+            }
+
+            // Validate/mutate only candidate-owned geometry and materials. A
+            // detached carrier supplies the prospective world transform without
+            // moving the visible scene, lights, camera, or shader globals.
+            const object = candidateObject!
+            object.name = `Stage:${definition.id}`
+            prepareStageObject(object, definition.renderProfile?.stageLayer)
+            const candidateCarrier = new THREE.Group()
+            candidateCarrier.position.set(...(definition.position ?? [0, 0, 0]))
+            candidateCarrier.rotation.y = definition.rotation?.[1] ?? 0
+            candidateCarrier.scale.setScalar(definition.scale ?? 1)
+            object.rotation.x = definition.rotation?.[0] ?? 0
+            object.rotation.z = definition.rotation?.[2] ?? 0
+            candidateCarrier.add(object)
+            candidateCarrier.updateWorldMatrix(true, true)
+            if (profileTextures.uv1Companion) {
+                if (profileTextures.uv1Companion.stageId !== definition.id) {
+                    throw new Error(
+                        `Stage UV1 companion targets ${profileTextures.uv1Companion.stageId}, `
+                        + `not ${definition.id}`,
+                    )
+                }
+                loadCheckpoint = 'applying-uv1-companion'
+                const activeLightmapRendererPaths =
+                    profileTextures.lightmapBindings == undefined
+                        ? undefined
+                        : matchStageLightmapBindings(
+                            object,
+                            profileTextures.lightmapBindings,
+                        ).matches.map(match => match.rendererHierarchyPath)
+                const uv1Debug = applyStageUv1Companion(
+                    object,
+                    profileTextures.uv1Companion,
+                    {
+                        strict: true,
+                        requiredRuntimePaths: activeLightmapRendererPaths,
+                    },
+                )
+                object.userData.stageUv1Companion = uv1Debug
+                loadCheckpoint = 'uv1-companion-applied'
+            }
+            if (profileTextures.lightmaps?.length && profileTextures.lightmapBindings) {
+                loadCheckpoint = 'applying-lightmaps'
+                candidateLightmap = applyStageLightmaps(
+                    object,
+                    profileTextures.lightmaps,
+                    profileTextures.lightmapBindings,
+                    {
+                        intensity: profileTextures.lightmapIntensity ?? 1,
+                        directionalLightmaps: profileTextures.directionalLightmaps,
+                        encoding: profileTextures.lightmapEncoding,
+                    },
+                )
+                const {
+                    matches,
+                    dispose: _dispose,
+                    ...lightmapDebug
+                } = candidateLightmap
+                object.userData.stageLightmaps = {
+                    ...lightmapDebug,
+                    matchedPaths: matches.map(match => match.rendererHierarchyPath),
+                }
+                loadCheckpoint = 'lightmaps-applied'
+                if (!hasCompleteActiveStageLightmapCoverage(candidateLightmap)) {
+                    console.warn(
+                        `Stage "${definition.id}" active lightmap bindings are incomplete:`,
+                        object.userData.stageLightmaps,
+                    )
+                }
+            }
+            const reflectionRenderProfile = definition.renderProfile
+            if (
+                reflectionRenderProfile
+                && profileTextures.environment
+                && isCubeTexture(profileTextures.environment)
+            ) {
+                candidateReflectionProbes = applyStageReflectionProbes(
+                    object,
+                    profileTextures.reflectionProbes ?? [],
+                    profileTextures.environment,
+                    reflectionRenderProfile.environmentIntensity ?? 1,
+                    reflectionRenderProfile.reflectionProbeBindings,
+                )
+                object.userData.stageReflectionProbes =
+                    candidateReflectionProbes.getDebugState()
+            }
+
+            // Exact-state batching excludes runtime source-object writers, not
+            // separately owned particles or declarations. Retain the
+            // original hierarchy and collision triangles; only submissions share.
+            const batching = batchStaticStageMeshes(object, {
+                hasRuntimeOrTransformWriter: hasStageRuntimeMeshWriters(definition.runtime, true),
+                transformAnimations: definition.runtime?.transformAnimations,
+            })
+            object.userData.stageStaticBatching = batching.stats
+            candidateVisibleContent.meshes.push(...batching.meshes)
+            loadCheckpoint = 'candidate-bindings-prepared'
         }
 
-        // Every asynchronous operation has completed. Only now replace the
-        // currently visible stage, so a failed/superseded load cannot leave the
-        // selector pointing at an empty scene.
-        clearStageObject()
+        // Preserve the prior live resources and exact global state until every
+        // global consumer has accepted the candidate. This commit is synchronous.
+        stageCommit = createStageCommitTransaction()
+        stageCommit.begin()
+        clearStageObject(true)
+        loadCheckpoint = 'restoring-default-profile'
         restoreSceneProfile()
+        loadCheckpoint = 'previous-stage-detached'
         if (definition.id === 'none') {
             scene.backgroundSceneEnabled = false
             currentStageId = definition.id
@@ -629,16 +1312,32 @@ export async function loadStageById(id: string) {
             stageRoot.userData.stageDynamic = definition.dynamic ?? null
             stageRoot.userData.sceneProfilePackage = sceneProfilePackage ?? null
             stageRoot.userData.cameraPresetId =
-                sceneProfilePackage?.cameraPresetId ?? null
+                resolvedCameraPresetId ?? null
+            lastStageLoadFailure = undefined
+            stageRoot.userData.stageLoadFailure = null
+            activeStageVisibleContent = undefined
+            stageRoot.userData.stageVisibleContent = null
+            stageCommit.commit()
+            stageCommit = undefined
             return
         }
 
         const object = candidateObject!
-        prepareStageObject(object, definition.renderProfile?.stageLayer)
-        object.name = `Stage:${definition.id}`
+        scene.stageCharacterShadows.stageLayer = definition.renderProfile?.stageLayer ?? 0
+        if (definition.renderProfile?.stageLayer != undefined) {
+            scene.camera.layers.enable(definition.renderProfile.stageLayer)
+        }
+        activeStageLightmap = candidateLightmap
+        candidateLightmap = undefined
+        activeStageReflectionProbes = candidateReflectionProbes
+        candidateReflectionProbes = undefined
+        stageRoot.userData.stageUv1Companion = object.userData.stageUv1Companion ?? null
+        stageRoot.userData.stageLightmaps = object.userData.stageLightmaps ?? null
+        stageRoot.userData.stageReflectionProbes = object.userData.stageReflectionProbes ?? null
         activeStageObject = object
         activeStageDefinition = definition
         stageRoot.add(object)
+        loadCheckpoint = 'stage-object-activated'
         activeProfileTextures = candidateTextures
         candidateTextures = []
         candidateObject = undefined
@@ -657,7 +1356,7 @@ export async function loadStageById(id: string) {
         stageRoot.userData.stageDynamic = definition.dynamic ?? null
         stageRoot.userData.sceneProfilePackage = sceneProfilePackage ?? null
         stageRoot.userData.cameraPresetId =
-            sceneProfilePackage?.cameraPresetId ?? null
+            resolvedCameraPresetId ?? null
 
         const [x, y, z] = definition.position ?? [0, 0, 0]
         const [rx, ry, rz] = definition.rotation ?? [0, 0, 0]
@@ -672,110 +1371,35 @@ export async function loadStageById(id: string) {
         object.rotation.x = rx
         object.rotation.z = rz
         updateStageTransform()
-        if (profileTextures.uv1Companion) {
-            if (profileTextures.uv1Companion.stageId !== definition.id) {
-                throw new Error(
-                    `Stage UV1 companion targets ${profileTextures.uv1Companion.stageId}, `
-                    + `not ${definition.id}`,
-                )
-            }
-            const uv1Debug = applyStageUv1Companion(
-                object,
-                profileTextures.uv1Companion,
-                { strict: true },
-            )
-            object.userData.stageUv1Companion = uv1Debug
-            stageRoot.userData.stageUv1Companion = uv1Debug
-        }
-        if (profileTextures.lightmaps?.length && profileTextures.lightmapBindings) {
-            activeStageLightmap = applyStageLightmaps(
-                object,
-                profileTextures.lightmaps,
-                profileTextures.lightmapBindings,
-                {
-                    intensity: profileTextures.lightmapIntensity ?? 1,
-                    directionalLightmaps: profileTextures.directionalLightmaps,
-                    encoding: profileTextures.lightmapEncoding,
-                },
-            )
-            const {
-                matches,
-                dispose: _dispose,
-                ...lightmapDebug
-            } = activeStageLightmap
-            object.userData.stageLightmaps = {
-                ...lightmapDebug,
-                matchedPaths: matches.map(match => match.rendererHierarchyPath),
-            }
-            stageRoot.userData.stageLightmaps = object.userData.stageLightmaps
-            if (
-                activeStageLightmap.unmatchedBindingPaths.length > 0
-                || activeStageLightmap.ambiguousBindingPaths.length > 0
-                || activeStageLightmap.missingSecondUvPaths.length > 0
-                || activeStageLightmap.unsupportedMaterialPaths.length > 0
-                || activeStageLightmap.missingLightmapPaths.length > 0
-                || activeStageLightmap.missingDirectionalLightmapPaths.length > 0
-            ) {
-                console.warn(
-                    `Stage "${definition.id}" lightmap bindings are incomplete:`,
-                    object.userData.stageLightmaps,
-                )
-            }
-        }
-        // Decide whether baked Unity lights are already represented only after
-        // the lightmap pass has inspected the exported geometry. AssetStudio's
-        // FBX export currently drops UV2 on several official stages, so blindly
-        // skipping every Baked light leaves those stages almost black. Partial
-        // coverage is not sufficient either: unmatched or UV2-less renderers
-        // still need the bounded realtime fallback.
-        const bakedLightmapsActive = activeStageLightmap != undefined
-            && activeStageLightmap.matchedRendererCount > 0
-            && activeStageLightmap.matchedRendererCount
-                === profileTextures.lightmapBindings?.length
-            && activeStageLightmap.unmatchedBindingPaths.length === 0
-            && activeStageLightmap.ambiguousBindingPaths.length === 0
-            && activeStageLightmap.missingSecondUvPaths.length === 0
-            && activeStageLightmap.unsupportedMaterialPaths.length === 0
-            && activeStageLightmap.missingLightmapPaths.length === 0
-            && activeStageLightmap.missingDirectionalLightmapPaths.length === 0
-        if (
-            definition.renderProfile?.environmentEncoding === 'unity-bc6h-uf16'
-            && profileTextures.environment
-            && isCubeTexture(profileTextures.environment)
-        ) {
-            activeStageReflectionProbes = applyStageReflectionProbes(
-                object,
-                profileTextures.reflectionProbes ?? [],
-                profileTextures.environment,
-                definition.renderProfile.environmentIntensity ?? 1,
-                definition.renderProfile.reflectionProbeBindings,
-            )
-            object.userData.stageReflectionProbes =
-                activeStageReflectionProbes.getDebugState()
-            stageRoot.userData.stageReflectionProbes =
-                object.userData.stageReflectionProbes
-        }
+        const bakedLightmapsActive =
+            hasCompleteActiveStageLightmapCoverage(activeStageLightmap)
+        loadCheckpoint = 'applying-render-profile'
         applyStageRenderProfile(
             definition.renderProfile,
             object,
             profileTextures,
             bakedLightmapsActive,
+            definition.category,
         )
+        loadCheckpoint = 'render-profile-applied'
+        loadCheckpoint = 'creating-volumetric-runtime'
         activeStageVolumetricLightBeams = createStageVolumetricLightBeamController(
             object,
             definition.runtime?.volumetricLightBeamConfig,
             definition.runtime?.volumetricLightBeams,
             definition.runtime?.volumetricDustParticles,
-            scene.effects,
+            stageCommit.depthRegistrar,
         )
         stageRoot.userData.stageVolumetricLightBeams =
             activeStageVolumetricLightBeams?.getDebugState() ?? null
+        loadCheckpoint = 'creating-stage-runtime'
         activeStageRuntime = createStageRuntimeController(
             object,
             definition.runtime,
             updateActiveStageDynamicBindings,
             definition.materialBindings ?? [],
             activeProfileTextures,
+            stageCommit.depthRegistrar,
         )
         if (activeStageRuntime) {
             const debugState = activeStageRuntime.getDebugState()
@@ -791,15 +1415,41 @@ export async function loadStageById(id: string) {
             console.log('Started official stage runtime:', debugState)
         }
         updateActiveStageDynamicBindings()
+        if (candidateVisibleContent) {
+            activeStageVisibleContent = candidateVisibleContent.snapshot
+            updateStageCameraEvidence(candidateVisibleContent)
+            stageRoot.userData.stageVisibleContent = activeStageVisibleContent
+        }
         stageFolder.controllersRecursive().forEach(controller => controller.updateDisplay())
+        lastStageLoadFailure = undefined
+        stageRoot.userData.stageLoadFailure = null
+        stageCommit.commit()
+        stageCommit = undefined
+        loadingTask.complete()
+        // The diagnostic probe is not a loading consumer. Its failure must not
+        // misreport a successfully committed stage as a failed transaction.
+        if (candidateVisibleContent) {
+            try { armBoundedStageDrawProbe(candidateVisibleContent) }
+            catch (error) { console.warn('Stage draw probe failed:', error) }
+        }
     } catch (error) {
+        loadingTask.fail(error)
+        stageCommit?.rollback()
+        candidateReflectionProbes?.dispose()
+        candidateLightmap?.dispose()
         candidateObject && disposeStageObject(candidateObject)
-        candidateTextures.forEach(texture => texture.dispose())
+        candidateTextures.forEach(disposeStageEnvironmentTexture)
         if (
             loadEpoch !== stageLoadEpoch
             || loadController.signal.aborted
             || isAbortError(error)
         ) return
+        lastStageLoadFailure = {
+            requestedStageId: catalogDefinition.id,
+            checkpoint: loadCheckpoint,
+            message: error instanceof Error ? error.message : String(error),
+        }
+        stageRoot.userData.stageLoadFailure = lastStageLoadFailure
         console.error(`Could not load 3D stage "${definition.name}":`, error)
         stageSelector.value = currentStageId
     } finally {
@@ -813,14 +1463,18 @@ async function loadStageSceneProfilePackage(
     expectedStageId: string,
     signal: AbortSignal,
 ): Promise<StageSceneProfilePackage> {
-    const url = new URL(reference, document.baseURI).href
+    const canonicalUrl = resolvePageAssetUrl(reference)
+    const url = await resolveRuntimeAssetUrl(reference, signal)
     const response = await fetch(url, { cache: 'no-cache', signal })
     if (!response.ok) {
         throw new Error(`Could not load generated scene profile: ${response.status}`)
     }
-    const value = await response.json() as StageSceneProfilePackage
+    const profileBytes = await readLoadingResponse(response, { url, signal })
+    getLoadingTask(signal)?.phase('decoding', reference)
+    await yieldLoadingFrame(signal)
+    const value = JSON.parse(new TextDecoder().decode(profileBytes)) as StageSceneProfilePackage
     if (!value || value.schemaVersion !== 1) {
-        throw new Error(`Generated scene profile ${url} has unsupported schema`)
+        throw new Error(`Generated scene profile ${canonicalUrl} has unsupported schema`)
     }
     if (value.stageId && value.stageId !== expectedStageId) {
         throw new Error(
@@ -834,9 +1488,9 @@ async function loadStageSceneProfilePackage(
             || value.coordinateSpace.viewer !== 'assetstudio-fbx-reflect-x'
         )
     ) {
-        throw new Error(`Generated scene profile ${url} has unsupported coordinates`)
+        throw new Error(`Generated scene profile ${canonicalUrl} has unsupported coordinates`)
     }
-    return value
+    return withBundledStageTransformAnimations(value, expectedStageId)
 }
 
 function mergeGeneratedStageProfile(
@@ -845,17 +1499,12 @@ function mergeGeneratedStageProfile(
 ): StageDefinition {
     const serializedRenderProfile =
         generated.renderProfile ?? definition.renderProfile
-    const cameraPreset = resolveOfficialCameraPreset(generated.cameraPresetId)
-    const renderProfile = cameraPreset
-        ? {
-            ...serializedRenderProfile,
-            camera: {
-                ...serializedRenderProfile?.camera,
-                ...cameraPreset,
-            },
-        }
-        : serializedRenderProfile
-    return {
+    const cameraPresetId = resolveStageCameraPresetId(
+        definition.id,
+        generated.cameraPresetId,
+        officialCameraPresetById,
+    )
+    return applyOfficialCameraPreset({
         ...definition,
         // Serialized bundle truth owns shader/material fields. Historical
         // carrier entries can still supply animation-only extensions that the
@@ -868,7 +1517,25 @@ function mergeGeneratedStageProfile(
         runtime: mergeGeneratedStageRuntime(definition.runtime, generated.runtime),
         // Lighting, Volume and renderer state are bundle truth and therefore
         // replace historical hand-copied render profiles atomically.
-        renderProfile,
+        renderProfile: serializedRenderProfile,
+    }, cameraPresetId)
+}
+
+function applyOfficialCameraPreset(
+    definition: StageDefinition,
+    cameraPresetId: string | undefined,
+): StageDefinition {
+    const cameraPreset = resolveOfficialCameraPreset(cameraPresetId)
+    if (!cameraPreset) return definition
+    return {
+        ...definition,
+        renderProfile: {
+            ...definition.renderProfile,
+            camera: {
+                ...definition.renderProfile?.camera,
+                ...cameraPreset,
+            },
+        },
     }
 }
 
@@ -913,6 +1580,7 @@ export function mergeGeneratedStageRuntime(
         // voice tracks and playback controls remain valid extensions.
         particlePresets: generated.particlePresets ?? authored.particlePresets,
         particleSystems: generated.particleSystems ?? authored.particleSystems,
+        particleMeshes: generated.particleMeshes ?? authored.particleMeshes,
         volumetricLightBeamConfig:
             generated.volumetricLightBeamConfig
             ?? authored.volumetricLightBeamConfig,
@@ -921,10 +1589,15 @@ export function mergeGeneratedStageRuntime(
         volumetricDustParticles:
             generated.volumetricDustParticles
             ?? authored.volumetricDustParticles,
+        transformAnimations: generated.transformAnimations ?? authored.transformAnimations,
         serializedComponentClips:
             generated.serializedComponentClips ?? authored.serializedComponentClips,
         animatorRandomizers:
             generated.animatorRandomizers ?? authored.animatorRandomizers,
+        gameObjectStates:
+            generated.gameObjectStates ?? authored.gameObjectStates,
+        activationDirectors:
+            generated.activationDirectors ?? authored.activationDirectors,
         rotators: generated.rotators ?? authored.rotators,
         autoplay: authoredOwnsPlayback
             ? authored.autoplay
@@ -999,39 +1672,18 @@ export function getCurrentStageRuntimeDebugState() {
 }
 
 export function getCurrentStageDebugState() {
-    let meshes = 0
-    let lights = 0
-    const materials = new Set<string>()
-    const geometryAttributeSets = new Map<string, number>()
-    activeStageObject?.traverse(child => {
-        const mesh = child as THREE.Mesh
-        if (mesh.isMesh) {
-            meshes++
-            const attributeSet =
-                Object.keys(mesh.geometry.attributes).sort().join(',')
-                || '<none>'
-            geometryAttributeSets.set(
-                attributeSet,
-                (geometryAttributeSets.get(attributeSet) ?? 0) + 1,
-            )
-            const meshMaterials = Array.isArray(mesh.material)
-                ? mesh.material
-                : [mesh.material]
-            meshMaterials.forEach(material => materials.add(material.name))
-        }
-        if ((child as THREE.Light).isLight) lights++
-    })
+    const visibleContent = activeStageVisibleContent
     return {
         id: currentStageId,
         hasObject: activeStageObject != undefined,
         objectName: activeStageObject?.name,
-        meshes,
-        geometryAttributeSets:
-            Object.fromEntries([...geometryAttributeSets].sort()),
-        materials: [...materials].sort(),
-        lights,
-        animationNames:
-            activeStageObject?.animations.map(clip => clip.name) ?? [],
+        meshes: visibleContent?.meshCount ?? 0,
+        geometryAttributeSets: visibleContent?.geometryAttributeSets ?? {},
+        materials: visibleContent?.materials ?? [],
+        lights: visibleContent?.lightCount ?? 0,
+        animationNames: visibleContent?.animationNames ?? [],
+        visibleContent: visibleContent ?? null,
+        lastCandidateVisibleContent: lastCandidateVisibleContent ?? null,
         materialBindings:
             activeStageObject?.userData.stageMaterialBindings ?? null,
         lightmaps:
@@ -1042,8 +1694,18 @@ export function getCurrentStageDebugState() {
             activeStageObject?.userData.stageLights ?? null,
         reflectionProbes:
             activeStageObject?.userData.stageReflectionProbes ?? null,
+        mainLightCascades:
+            stageRoot.userData.stageMainLightCascades ?? null,
+        shadowQuality: getStageShadowQualityState(),
+        loadFailure: lastStageLoadFailure ?? null,
         sceneProfilePackage:
             stageRoot.userData.sceneProfilePackage ?? null,
+        sceneNameIndex: {
+            loaded: Boolean(stageSceneNameIndex),
+            error: stageSceneNameError,
+            dioramaSceneCount: stageSceneNameIndex?.dioramaScenes.length ?? 0,
+            current: getStageSceneNameRecord(stageSceneNameIndex, currentStageId) ?? null,
+        },
         cameraPresetId:
             stageRoot.userData.cameraPresetId ?? null,
         dynamic: activeStageDefinition?.dynamic ?? null,
@@ -1124,28 +1786,158 @@ function updateStageTransform() {
     updateActiveStageDynamicBindings()
 }
 
-function clearStageObject() {
-    activeStageRuntime?.dispose()
-    activeStageRuntime = undefined
-    activeStageVolumetricLightBeams?.dispose()
-    activeStageVolumetricLightBeams = undefined
-    activeStageReflectionProbes?.dispose()
-    activeStageReflectionProbes = undefined
-    activeStageLightmap?.dispose()
-    activeStageLightmap = undefined
-    activeCharacterKeyLightAnchor = undefined
-    activeForegroundStageLightBindings.forEach(({ light }) => {
+function captureActiveStageResources() {
+    return {
+        object: activeStageObject, definition: activeStageDefinition,
+        textures: activeProfileTextures, lightmap: activeStageLightmap,
+        reflectionProbes: activeStageReflectionProbes, runtime: activeStageRuntime,
+        volumetric: activeStageVolumetricLightBeams, cascades: activeStageMainLightCascades,
+        cascadeOptions: activeStageMainLightCascadeOptions,
+        keyAnchor: activeCharacterKeyLightAnchor, keyVisible: activeCharacterKeyLightBaseVisible,
+        foregroundBindings: activeForegroundStageLightBindings,
+        foregroundChildren: [...foregroundStageLightRoot.children],
+        visibleContent: activeStageVisibleContent, cancelDrawProbe: cancelActiveStageDrawProbe,
+    }
+}
+
+function releaseStageResources(resources: ReturnType<typeof captureActiveStageResources>) {
+    // Retirement is after successful commit. One disposal listener must not
+    // turn an accepted new scene into a false load failure or skip other cleanup.
+    const release = (action: () => void) => {
+        try { action() } catch (error) { console.error('Stage resource retirement failed:', error) }
+    }
+    release(() => resources.cancelDrawProbe?.())
+    release(() => resources.runtime?.dispose())
+    release(() => resources.volumetric?.dispose())
+    release(() => resources.reflectionProbes?.dispose())
+    release(() => resources.cascades?.dispose())
+    release(() => resources.lightmap?.dispose())
+    resources.foregroundBindings.forEach(({ light }) => release(() => {
         light.shadow.map?.dispose()
         light.shadow.map = null
-    })
+    }))
+    if (resources.object) release(() => disposeStageObject(resources.object!))
+    resources.textures.forEach(texture => release(() => disposeStageEnvironmentTexture(texture)))
+}
+
+/** No await from begin through commit/rollback: no frame sees a partial state. */
+function createStageCommitTransaction() {
+    const previous = captureActiveStageResources()
+    const previousId = currentStageId
+    const previousSelector = stageSelector.value
+    const previousShadow = scene.directionalLight.shadow
+    const clearAlpha = scene.renderer.getClearAlpha()
+    const restoreReDrive = captureReDriveVolumeRuntime()
+    const restorers = [
+        captureStageRecord(stageOptions), captureStageRecord(stageRuntimeOptions),
+        captureStageRecord(stageRoot.userData),
+        captureStageFields(stageRoot, ['position', 'quaternion', 'scale', 'visible', 'children']),
+        captureStageFields(foregroundStageLightRoot, ['visible']),
+        captureStageFields(scene, ['backgroundSceneEnabled']),
+        captureStageRecord(scene.camera), captureStageRecord(scene.controls),
+        captureStageFields(scene.renderer, ['toneMapping', 'toneMappingExposure']),
+        captureStageFields(scene.renderer.domElement.style, ['filter']),
+        captureStageRecord(scene.stageCharacterShadows),
+        ...[scene.scene, scene.backgroundScene].flatMap(value => [
+            captureStageFields(value, ['background', 'environment', 'environmentIntensity',
+                'backgroundIntensity', 'fog']), captureStageRecord(value.userData),
+        ]),
+        ...[scene.ambientLight, scene.backgroundAmbientLight, recoveredHemisphereLight,
+            recoveredFillLight, scene.directionalLight, recoveredFillLight.target,
+            scene.directionalLight.target].map(light => captureStageRecord(light)),
+        ...[scene.effects.bloomPass, scene.effects.urpBloomPass,
+            scene.effects.volumePostProcessPass, scene.effects.backgroundColorAdjustPass,
+            scene.effects.paraffinPass].map(pass => captureStageRecord(pass)),
+        ...[scene.effects.volumePostProcessPass, scene.effects.backgroundColorAdjustPass,
+            scene.effects.paraffinPass].map(pass => captureStageUniforms(pass.uniforms)),
+        captureStageRecord(scene.effects.volumePostProcessPass.filmGrainRuntime),
+    ]
+    const candidateDepthReleases = new Set<() => void>()
+    let started = false
+    let finished = false
+    return {
+        // Includes registrations made by a constructor that throws before its
+        // controller can be assigned to activeStageRuntime/VolumetricLightBeams.
+        depthRegistrar: {
+            registerBackgroundDepthConsumer(
+                consumer: Parameters<typeof scene.effects.registerBackgroundDepthConsumer>[0],
+            ) {
+                const unregister = scene.effects.registerBackgroundDepthConsumer(consumer)
+                const release = () => { candidateDepthReleases.delete(release); unregister() }
+                candidateDepthReleases.add(release)
+                return release
+            },
+        },
+        begin() {
+            const candidateShadow = previousShadow.clone()
+            started = true
+            previous.cascades?.suspend()
+            // restoreSceneProfile/configureShadow may dispose a shadow map when
+            // changing its resolution. Give them an unallocated candidate shadow.
+            scene.directionalLight.shadow = candidateShadow
+        },
+        commit() {
+            finished = true
+            releaseStageResources(previous)
+            try { previousShadow.dispose() }
+            catch (error) { console.error('Stage shadow retirement failed:', error) }
+            candidateDepthReleases.clear()
+        },
+        rollback() {
+            if (!started || finished) return
+            finished = true
+            if (activeStageObject !== previous.object || activeProfileTextures !== previous.textures) {
+                clearStageObject()
+            }
+            candidateDepthReleases.forEach(release => release())
+            if (scene.directionalLight.shadow !== previousShadow) scene.directionalLight.shadow.dispose()
+            scene.directionalLight.shadow = previousShadow
+            restoreReDrive()
+            restorers.forEach(restore => restore())
+            scene.renderer.setClearAlpha(clearAlpha)
+            activeStageObject = previous.object
+            activeStageDefinition = previous.definition
+            activeProfileTextures = previous.textures
+            activeStageLightmap = previous.lightmap
+            activeStageReflectionProbes = previous.reflectionProbes
+            activeStageRuntime = previous.runtime
+            activeStageVolumetricLightBeams = previous.volumetric
+            activeStageMainLightCascades = previous.cascades
+            activeStageMainLightCascadeOptions = previous.cascadeOptions
+            activeCharacterKeyLightAnchor = previous.keyAnchor
+            activeCharacterKeyLightBaseVisible = previous.keyVisible
+            activeForegroundStageLightBindings = previous.foregroundBindings
+            activeStageVisibleContent = previous.visibleContent
+            cancelActiveStageDrawProbe = previous.cancelDrawProbe
+            currentStageId = previousId
+            stageSelector.value = previousSelector
+            // The children array snapshot preserves order; restore parent links
+            // without add() appending a duplicate to that exact original array.
+            if (previous.object) previous.object.parent = stageRoot
+            previous.foregroundChildren.forEach(child => foregroundStageLightRoot.add(child))
+            previous.cascades?.resume()
+            stageRoot.updateWorldMatrix(true, true)
+        },
+    }
+}
+
+function clearStageObject(retainResources = false) {
+    const resources = captureActiveStageResources()
+    if (!retainResources) releaseStageResources(resources)
+    cancelActiveStageDrawProbe = undefined
+    activeStageVisibleContent = undefined
+    activeStageRuntime = undefined
+    activeStageVolumetricLightBeams = undefined
+    activeStageReflectionProbes = undefined
+    activeStageMainLightCascades = undefined
+    activeStageMainLightCascadeOptions = undefined
+    activeStageLightmap = undefined
+    activeCharacterKeyLightAnchor = undefined
+    activeCharacterKeyLightBaseVisible = true
     activeForegroundStageLightBindings = []
     foregroundStageLightRoot.clear()
-    if (activeStageObject) {
-        stageRoot.remove(activeStageObject)
-        disposeStageObject(activeStageObject)
-        activeStageObject = undefined
-    }
-    activeProfileTextures.forEach(texture => texture.dispose())
+    if (activeStageObject) stageRoot.remove(activeStageObject)
+    activeStageObject = undefined
     activeProfileTextures = []
     stageRoot.userData.stageDefinition = null
     stageRoot.userData.reDriveVolume = null
@@ -1156,21 +1948,21 @@ function clearStageObject() {
     stageRoot.userData.stageLightmaps = null
     stageRoot.userData.stageUv1Companion = null
     stageRoot.userData.stageReflectionProbes = null
+    stageRoot.userData.stageMainLightCascades = null
     stageRoot.userData.sceneProfilePackage = null
     stageRoot.userData.cameraPresetId = null
+    stageRoot.userData.stageVisibleContent = null
 }
 
 function prepareStageObject(object: THREE.Object3D, stageLayer?: number) {
     const maxAnisotropy = scene.renderer.capabilities.getMaxAnisotropy()
-    scene.stageCharacterShadows.stageLayer = stageLayer ?? 0
-    if (stageLayer != undefined) scene.camera.layers.enable(stageLayer)
     object.traverse(child => {
         if (stageLayer != undefined) child.layers.set(stageLayer)
         const mesh = child as THREE.Mesh
         if (!mesh.isMesh) return
         mesh.castShadow = mesh.userData.stageCastShadow ?? true
         mesh.receiveShadow = mesh.userData.stageReceiveShadow ?? true
-        mesh.frustumCulled = false
+        enableRigidStageCulling(mesh)
 
         const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
         materials.forEach(material => {
@@ -1209,6 +2001,9 @@ function disposeStageObject(object: THREE.Object3D) {
 
         const mesh = child as THREE.Mesh
         if (!mesh.isMesh) return
+        if ((mesh as THREE.InstancedMesh).isInstancedMesh && mesh.userData.stageStaticBatchOwned) {
+            ;(mesh as THREE.InstancedMesh).dispose()
+        }
         if (mesh.geometry && !disposedGeometries.has(mesh.geometry)) {
             mesh.geometry.dispose()
             disposedGeometries.add(mesh.geometry)
@@ -1275,6 +2070,8 @@ async function loadExternalStage(
     }
 
     try {
+        getLoadingTask(signal)?.phase('assembling', undefined, '组装场景材质')
+        await yieldLoadingFrame(signal)
         const bindingResult = await applyStageMaterialBindings(
             object,
             definition.materialBindings,
@@ -1299,27 +2096,37 @@ async function loadExternalStageAsset(
     definition: StageAssetDefinition,
     signal: AbortSignal,
 ): Promise<THREE.Object3D> {
-    const url = new URL(definition.url, document.baseURI).href
+    const canonicalUrl = resolvePageAssetUrl(definition.url)
+    const payloadUrl = await resolveRuntimeAssetUrl(definition.url, signal)
+    const manager = new THREE.LoadingManager()
+    manager.setURLModifier(resolveCachedRuntimeAssetUrl)
+    const loadingTask = getLoadingTask(signal)
+    manager.onStart = url => loadingTask?.resource(url, false)
+    manager.onProgress = url => loadingTask?.resource(url, true)
+    const blob = await fetchAndTryDecompressGzip(
+        payloadUrl,
+        undefined,
+        undefined,
+        signal,
+    )
+    signal.throwIfAborted()
+    loadingTask?.phase('decoding', canonicalUrl)
+    await yieldLoadingFrame(signal)
+    const resourcePath = new URL('.', canonicalUrl).href
     const object = definition.type === 'gltf'
         ? await (async () => {
-            signal.throwIfAborted()
-            const gltf = await new GLTFLoader().loadAsync(url)
+            const gltf = await new GLTFLoader(manager).parseAsync(
+                await blob.text(),
+                resourcePath,
+            )
             signal.throwIfAborted()
             gltf.scene.animations = gltf.animations
             return gltf.scene
         })()
         : await (async () => {
-            const blob = await fetchAndTryDecompressGzip(
-                url,
-                undefined,
-                undefined,
-                signal,
-            )
-            signal.throwIfAborted()
             const arrayBuffer = await blob.arrayBuffer()
             signal.throwIfAborted()
-            const resourcePath = new URL('.', url).href
-            return new FBXLoader().parse(arrayBuffer, resourcePath)
+            return new FBXLoader(manager).parse(arrayBuffer, resourcePath)
         })()
 
     if (definition.id) object.name = definition.id
@@ -1340,12 +2147,31 @@ async function preloadStageProfileTextures(
 
     const load = async (
         url: string,
-        kind: 'environment' | 'lightmap' = 'environment',
+        kind: 'environment' | 'lightmap' | 'film-grain' = 'environment',
     ) => {
         signal.throwIfAborted()
-        const texture = await new THREE.TextureLoader().loadAsync(
-            new URL(url, document.baseURI).href,
-        )
+        const resolvedUrl = await resolveRuntimeAssetUrl(url, signal)
+        const response = await fetch(resolvedUrl, {
+            method: resolvedUrl.startsWith('blob:') ? 'GET' : 'HEAD',
+            cache: 'no-cache',
+            signal,
+        })
+        // Blob URLs support GET only; release the unused validation body.
+        await response.body?.cancel().catch(() => undefined)
+        signal.throwIfAborted()
+        const contentType = response.headers.get('content-type')?.toLowerCase() ?? ''
+        if (!response.ok) {
+            throw new Error(`STAGE_ASSET_HTTP_${response.status}: ${resolvedUrl}`)
+        }
+        if (contentType.includes('text/html')) {
+            throw new Error(`STAGE_ASSET_HTML_FALLBACK: ${resolvedUrl}`)
+        }
+        const loadingTask = getLoadingTask(signal)
+        loadingTask?.phase('decoding', url, '载入场景材质贴图')
+        loadingTask?.resource(url, false)
+        await yieldLoadingFrame(signal)
+        const texture = await new THREE.TextureLoader().loadAsync(resolvedUrl)
+        loadingTask?.resource(url, true)
         if (signal.aborted) {
             texture.dispose()
             signal.throwIfAborted()
@@ -1353,10 +2179,22 @@ async function preloadStageProfileTextures(
         if (kind === 'environment') {
             texture.mapping = THREE.EquirectangularReflectionMapping
             texture.colorSpace = THREE.SRGBColorSpace
-        } else {
+        } else if (kind === 'lightmap') {
             texture.mapping = THREE.UVMapping
             texture.colorSpace = THREE.NoColorSpace
             texture.flipY = false
+        } else {
+            // URP's UberPost binds the Alpha8 preset through
+            // sampler_LinearRepeat; import filterMode does not own sampling.
+            texture.mapping = THREE.UVMapping
+            texture.colorSpace = THREE.NoColorSpace
+            texture.flipY = false
+            texture.wrapS = THREE.RepeatWrapping
+            texture.wrapT = THREE.RepeatWrapping
+            texture.minFilter = THREE.LinearFilter
+            texture.magFilter = THREE.LinearFilter
+            texture.generateMipmaps = false
+            texture.anisotropy = 1
         }
         texture.needsUpdate = true
         loaded.textures.push(texture)
@@ -1368,35 +2206,54 @@ async function preloadStageProfileTextures(
             loaded.background = await load(profile.backgroundTextureUrl)
         }
         if (profile.environmentTextureUrl) {
-            loaded.environment = await loadStageEnvironment(
+            let environment = await loadStageEnvironment(
                 profile.environmentTextureUrl,
                 profile.environmentEncoding ?? 'srgb-image',
                 scene.renderer,
                 signal,
             )
+            if (profile.reflectionProbes?.length && !isCubeTexture(environment)) {
+                environment = convertStageEnvironmentToCubemap(
+                    environment,
+                    scene.renderer,
+                )
+            }
+            loaded.environment = environment
             loaded.textures.push(loaded.environment)
         }
         if (profile.reflectionProbes?.length) {
             loaded.reflectionProbes = []
             for (const probe of profile.reflectionProbes) {
-                if (probe.encoding !== 'unity-bc6h-uf16') {
-                    throw new Error(
-                        `Reflection probe ${probe.id} has unsupported encoding ${probe.encoding}`,
-                    )
-                }
-                const texture = await loadStageEnvironment(
+                let texture = await loadStageEnvironment(
                     probe.textureUrl,
                     probe.encoding,
                     scene.renderer,
                     signal,
                 )
                 if (!isCubeTexture(texture)) {
-                    texture.dispose()
+                    texture = convertStageEnvironmentToCubemap(
+                        texture,
+                        scene.renderer,
+                    )
+                }
+                if (!isCubeTexture(texture)) {
+                    disposeStageEnvironmentTexture(texture)
                     throw new Error(`Reflection probe ${probe.id} did not load as a cubemap`)
                 }
                 loaded.reflectionProbes.push({ profile: probe, texture })
                 loaded.textures.push(texture)
             }
+        }
+        const filmGrain = profile.postProcessing?.filmGrain
+        if (
+            filmGrain
+            && filmGrain.active !== false
+            && filmGrain.intensity > 0
+        ) {
+            if (!filmGrain.textureUrl) {
+                throw new Error('Active serialized FilmGrain has no texture URL')
+            }
+            loaded.filmGrain = await load(filmGrain.textureUrl, 'film-grain')
         }
         if (profile.lightmap) {
             if (
@@ -1450,14 +2307,19 @@ async function preloadStageProfileTextures(
                     }
                 }
             }
+            const bindingsUrl = await resolveRuntimeAssetUrl(profile.lightmap.bindingsUrl, signal)
             const response = await fetch(
-                new URL(profile.lightmap.bindingsUrl, document.baseURI).href,
+                bindingsUrl,
                 { cache: 'no-cache', signal },
             )
             if (!response.ok) {
                 throw new Error(
                     `Could not load stage lightmap bindings: ${response.status}`,
                 )
+            }
+            const bindingsContentType = response.headers.get('content-type')?.toLowerCase() ?? ''
+            if (bindingsContentType.includes('text/html')) {
+                throw new Error(`STAGE_ASSET_HTML_FALLBACK: ${bindingsUrl}`)
             }
             const bindingDocument = await response.json() as {
                 renderers?: StageLightmapBinding[]
@@ -1469,14 +2331,17 @@ async function preloadStageProfileTextures(
             loaded.lightmapIntensity = profile.lightmap.intensity
             if (profile.lightmap.uv1CompanionUrl) {
                 loaded.uv1Companion = await loadStageUv1Companion(
-                    profile.lightmap.uv1CompanionUrl,
+                    await resolveRuntimeAssetUrl(
+                        profile.lightmap.uv1CompanionUrl,
+                        signal,
+                    ),
                     signal,
                 )
             }
         }
         return loaded
     } catch (error) {
-        loaded.textures.forEach(texture => texture.dispose())
+        loaded.textures.forEach(disposeStageEnvironmentTexture)
         throw error
     }
 }
@@ -1498,8 +2363,20 @@ function createStageColor(value: string | Rgba) {
 const keyLightAnchorPosition = new THREE.Vector3()
 const keyLightAnchorDirection = new THREE.Vector3()
 
+function visibleInStageHierarchy(object: THREE.Object3D | undefined) {
+    let current = object
+    while (current) {
+        if (!current.visible) return false
+        current = current.parent ?? undefined
+    }
+    return true
+}
+
 function updateCharacterKeyLightFromAnchor() {
     if (!activeCharacterKeyLightAnchor) return
+    scene.directionalLight.visible = activeCharacterKeyLightBaseVisible
+        && stageRoot.visible
+        && visibleInStageHierarchy(activeCharacterKeyLightAnchor)
     activeCharacterKeyLightAnchor.updateWorldMatrix(true, false)
     activeCharacterKeyLightAnchor.getWorldPosition(keyLightAnchorPosition)
     activeCharacterKeyLightAnchor
@@ -1520,6 +2397,9 @@ function updateForegroundStageLightBindings() {
     foregroundStageLightRoot.visible = stageRoot.visible
     stageRoot.updateWorldMatrix(true, false)
     activeForegroundStageLightBindings.forEach(({ light, anchor, profile }) => {
+        light.visible = (profile.activeSelf ?? profile.active) !== false
+            && profile.enabled !== false
+            && (!anchor || visibleInStageHierarchy(anchor))
         if (anchor) {
             anchor.updateWorldMatrix(true, false)
             anchor.getWorldPosition(foregroundLightPosition)
@@ -1613,9 +2493,14 @@ function resolveOfficialShadowMapResolution(profile: StageLightProfile) {
     return officialUrpShadowResolution.additionalLight
 }
 
+function profileRequestsRealtimeShadow(profile: StageLightProfile) {
+    return profile.castShadow
+        ?? Boolean(profile.shadow && profile.shadow.type !== 0)
+}
+
 function configureShadow(light: THREE.Light, profile: StageLightProfile) {
     const shadow = profile.shadow
-    light.castShadow = profile.castShadow ?? Boolean(shadow && shadow.type !== 0)
+    light.castShadow = profileRequestsRealtimeShadow(profile)
     if (!light.castShadow || !('shadow' in light)) return
 
     const shadowLight = light as THREE.DirectionalLight | THREE.PointLight | THREE.SpotLight
@@ -1623,8 +2508,6 @@ function configureShadow(light: THREE.Light, profile: StageLightProfile) {
         STAGE_CHARACTER_SHADOW_CASTERS_ENABLED
     ] = profileAffectsUnityLayer(profile, 0)
     shadowLight.shadow.intensity = THREE.MathUtils.clamp(shadow?.strength ?? 1, 0, 1)
-    shadowLight.shadow.bias = -(shadow?.bias ?? 0) * 0.001
-    shadowLight.shadow.normalBias = shadow?.normalBias ?? 0
     if (shadow?.nearPlane != undefined) shadowLight.shadow.camera.near = shadow.nearPlane
     const resolution = resolveOfficialShadowMapResolution(profile)
     if (
@@ -1636,6 +2519,26 @@ function configureShadow(light: THREE.Light, profile: StageLightProfile) {
         shadowLight.shadow.mapSize.set(resolution, resolution)
     }
     shadowLight.shadow.camera.updateProjectionMatrix()
+    if (shadowLight instanceof THREE.DirectionalLight) {
+        const camera = shadowLight.shadow.camera as THREE.OrthographicCamera
+        const bias = resolveOfficialUrpDirectionalCascadeBias({
+            frustumSize: camera.right - camera.left,
+            shadowResolution: resolution,
+            shadowNear: camera.near,
+            shadowFar: camera.far,
+            unityShadowBias: shadow?.bias ?? 0,
+            unityShadowNormalBias: shadow?.normalBias ?? 0,
+        })
+        shadowLight.shadow.bias = bias.receiverDepthBias
+        shadowLight.shadow.normalBias = bias.receiverNormalBias
+        shadowLight.shadow.camera.userData.officialUrpBias = bias
+    } else {
+        // Punctual-light projection needs its own range/FOV conversion. Keep
+        // the existing bounded depth fallback and avoid treating Unity's
+        // dimensionless normal bias as a world-space metre offset.
+        shadowLight.shadow.bias = -(shadow?.bias ?? 0) * 0.001
+        shadowLight.shadow.normalBias = 0
+    }
 }
 
 function profileAffectsUnityLayer(profile: StageLightProfile, layer: number) {
@@ -1665,6 +2568,8 @@ function createOfficialLight(
         light = new THREE.DirectionalLight('#ffffff', effectiveIntensity)
     }
     applyLightColor(light, profile.color)
+    light.visible = (profile.activeSelf ?? profile.active) !== false
+        && profile.enabled !== false
     configureShadow(light, profile)
     return light
 }
@@ -1766,8 +2671,23 @@ function applyOfficialStageLights(
     stageObject: THREE.Object3D,
     stageLayer?: number,
     bakedLightmapsActive = false,
+    stageCategory?: StageCategory,
 ) {
     if (!profiles?.length) return
+
+    const directionalShadowPlan = resolveOfficialUrpDirectionalShadowPlan(
+        profiles.map(profile => ({
+            directional: (profile.type ?? 'directional') === 'directional',
+            role: profile.role ?? null,
+            active: (profile.activeSelf ?? profile.active) !== false
+                && profile.enabled !== false,
+            affectsStageLayer: stageLayer == undefined
+                || profileAffectsUnityLayer(profile, stageLayer),
+            skippedAsBaked:
+                profile.lightmapping === 2 && bakedLightmapsActive,
+            requestsShadow: profileRequestsRealtimeShadow(profile),
+        })),
+    )
 
     const debugRecords: Array<{
         index: number
@@ -1786,6 +2706,14 @@ function applyOfficialStageLights(
         affectsCharacterLayer: boolean
         affectsStageLayer: boolean
         additionalLightData: StageLightProfile['additionalLightData'] | null
+        serializedCastShadow: boolean
+        runtimeCastShadow: boolean
+        shadowConsumer:
+            | 'main-cascade'
+            | 'additional-directional-unshadowed'
+            | 'legacy-directional-shadow'
+            | 'additional-punctual'
+            | 'none'
     }> = []
     stageObject.userData.stageLights = {
         bakedLightmapValue: 2,
@@ -1794,6 +2722,9 @@ function applyOfficialStageLights(
         localLightIntensityScaleReason:
             'Unity URP diffuse has no 1/pi; Three MeshStandard BRDF_Lambert does',
         sourceColorSpace: 'unity-srgb',
+        directionalShadowAuthority:
+            'URP14 one cascaded directional MainLight; additional realtime shadow atlas is punctual',
+        mainDirectionalProfileIndex: directionalShadowPlan.mainProfileIndex,
         records: debugRecords,
     }
 
@@ -1804,6 +2735,19 @@ function applyOfficialStageLights(
         const affectsCharacterLayer = profileAffectsUnityLayer(profile, 0)
         const affectsStageLayer = stageLayer == undefined
             || profileAffectsUnityLayer(profile, stageLayer)
+        const active = (profile.activeSelf ?? profile.active) !== false
+            && profile.enabled !== false
+        const skippedAsBaked = profile.lightmapping === 2
+            && bakedLightmapsActive
+        const serializedCastShadow = profileRequestsRealtimeShadow(profile)
+        const directionalPlanRecord = directionalShadowPlan.records[index]
+        const runtimeCastShadow = type === 'directional'
+            ? directionalPlanRecord.runtimeCastShadow
+            : active && !skippedAsBaked && serializedCastShadow
+        const runtimeProfile = type === 'directional'
+            && serializedCastShadow !== runtimeCastShadow
+            ? { ...profile, castShadow: runtimeCastShadow }
+            : profile
         const debugBase = {
             index,
             name: profile.name ?? `OfficialStageLight:${index}`,
@@ -1816,6 +2760,13 @@ function applyOfficialStageLights(
             affectsCharacterLayer,
             affectsStageLayer,
             additionalLightData: profile.additionalLightData ?? null,
+            serializedCastShadow,
+            runtimeCastShadow,
+            shadowConsumer: type === 'directional'
+                ? directionalPlanRecord.consumer
+                : runtimeCastShadow
+                    ? 'additional-punctual' as const
+                    : 'none' as const,
             anchorNode: profile.anchorNode ?? null,
             anchorPath: profile.anchorPath ?? null,
             anchorResolved:
@@ -1840,7 +2791,11 @@ function applyOfficialStageLights(
             light.name = profile.name ?? light.name
             applyLightColor(light, profile.color)
             light.intensity = effectiveIntensity
-            configureShadow(light, profile)
+            activeCharacterKeyLightBaseVisible =
+                (profile.activeSelf ?? profile.active) !== false
+                && profile.enabled !== false
+            light.visible = activeCharacterKeyLightBaseVisible
+            configureShadow(light, runtimeProfile)
 
             if (anchor) {
                 activeCharacterKeyLightAnchor = anchor
@@ -1863,12 +2818,29 @@ function applyOfficialStageLights(
             if (affectsStageLayer) {
                 const stageLight = createOfficialLight(
                     type,
-                    profile,
+                    runtimeProfile,
                     effectiveIntensity,
                 ) as THREE.DirectionalLight
                 stageLight.name = `${profile.name ?? 'MainLight'}:Background`
                 if (stageLayer != undefined) stageLight.layers.set(stageLayer)
                 attachOfficialStageLight(stageLight, stageObject, profile, anchor)
+                if (stageLight.castShadow) {
+                    installStageMainLightCascades({
+                        camera: scene.camera,
+                        parent: scene.backgroundScene,
+                        stageObject,
+                        sourceLight: stageLight,
+                        stageLayer: stageLayer ?? 0,
+                        maxShadowDistance:
+                            resolveOfficialMainShadowDistance(stageCategory),
+                        shadowCasterGateKey:
+                            STAGE_CHARACTER_SHADOW_CASTERS_ENABLED,
+                        characterCastersEnabled: affectsCharacterLayer,
+                        unityShadowBias: profile.shadow?.bias ?? 0,
+                        unityShadowNormalBias:
+                            profile.shadow?.normalBias ?? 0,
+                    })
+                }
             }
             debugRecords.push({
                 ...debugBase,
@@ -1879,14 +2851,19 @@ function applyOfficialStageLights(
         }
 
         if (affectsStageLayer) {
-            const light = createOfficialLight(type, profile, effectiveIntensity)
+            const light = createOfficialLight(type, runtimeProfile, effectiveIntensity)
             light.name = profile.name ?? `OfficialStageLight:${index}`
             if (stageLayer != undefined) light.layers.set(stageLayer)
 
             attachOfficialStageLight(light, stageObject, profile, anchor)
         }
         if (affectsCharacterLayer) {
-            addForegroundStageLight(type, profile, effectiveIntensity, anchor)
+            addForegroundStageLight(
+                type,
+                runtimeProfile,
+                effectiveIntensity,
+                anchor,
+            )
         }
         debugRecords.push({
             ...debugBase,
@@ -1901,6 +2878,7 @@ function applyStageRenderProfile(
     stageObject?: THREE.Object3D,
     loadedTextures: LoadedProfileTextures = { textures: [] },
     bakedLightmapsActive = false,
+    stageCategory?: StageCategory,
 ) {
     if (!profile) return
 
@@ -1975,6 +2953,7 @@ function applyStageRenderProfile(
             stageObject,
             profile.stageLayer,
             bakedLightmapsActive,
+            stageCategory,
         )
     }
 
@@ -2029,6 +3008,7 @@ function applyStageRenderProfile(
     applyStageVolumePostProcessing(
         resolveStageVolumePostProcessing(profile),
         unityAces ? 'aces' : 'none',
+        loadedTextures.filmGrain,
     )
     if (profile.camera) {
         if (profile.camera.position) {
@@ -2060,12 +3040,26 @@ function setVolumePassColor(
 function applyStageVolumePostProcessing(
     profile: StageVolumePostProcessingProfile | undefined,
     toneMapping: 'none' | 'aces' = 'none',
+    filmGrainTexture?: THREE.Texture,
 ) {
     const pass = scene.effects.volumePostProcessPass
+    const chromaticAberration = profile?.chromaticAberration
     const colorAdjustments = profile?.colorAdjustments
+    const filmGrain = profile?.filmGrain
     const vignette = profile?.vignette
+    const chromaticAberrationEnabled = Boolean(
+        chromaticAberration
+        && chromaticAberration.active !== false
+        && chromaticAberration.intensity > 0,
+    )
     const colorAdjustEnabled = Boolean(
         colorAdjustments && colorAdjustments.active !== false,
+    )
+    const filmGrainEnabled = Boolean(
+        filmGrain
+        && filmGrain.active !== false
+        && filmGrain.intensity > 0
+        && filmGrainTexture,
     )
     const vignetteEnabled = Boolean(
         vignette
@@ -2073,7 +3067,15 @@ function applyStageVolumePostProcessing(
         && (vignette.intensity ?? 0) > 0,
     )
 
-    pass.enabled = colorAdjustEnabled || vignetteEnabled || toneMapping === 'aces'
+    pass.enabled = chromaticAberrationEnabled
+        || colorAdjustEnabled
+        || filmGrainEnabled
+        || vignetteEnabled
+        || toneMapping === 'aces'
+    pass.uniforms.uChromaticAberrationEnabled.value =
+        chromaticAberrationEnabled ? 1 : 0
+    pass.uniforms.uChromaticAberrationIntensity.value =
+        chromaticAberrationEnabled ? chromaticAberration?.intensity ?? 0 : 0
     pass.uniforms.uToneMappingMode.value = toneMapping === 'aces' ? 1 : 0
     pass.uniforms.uColorAdjustEnabled.value = colorAdjustEnabled ? 1 : 0
     pass.uniforms.uPostExposure.value = colorAdjustEnabled
@@ -2119,11 +3121,31 @@ function applyStageVolumePostProcessing(
     pass.uniforms.uVignetteAspectRatio.value = drawingBufferSize.x
         / Math.max(drawingBufferSize.y, 1)
 
+    pass.uniforms.uFilmGrainEnabled.value = filmGrainEnabled ? 1 : 0
+    pass.uniforms.uFilmGrainTexture.value = filmGrainEnabled
+        ? filmGrainTexture
+        : null
+    pass.uniforms.uFilmGrainIntensity.value = filmGrainEnabled
+        ? filmGrain?.intensity ?? 0
+        : 0
+    pass.uniforms.uFilmGrainResponse.value = filmGrainEnabled
+        ? THREE.MathUtils.clamp(filmGrain?.response ?? 0.8, 0, 1)
+        : 0.8
+    pass.resetFilmGrainRuntime()
+
     scene.scene.userData.stageVolumePostProcessing = pass.enabled
         ? {
+            chromaticAberration: chromaticAberrationEnabled
+                ? { ...chromaticAberration }
+                : null,
             colorAdjustments: colorAdjustEnabled
                 ? { ...colorAdjustments }
                 : null,
+            filmGrain: filmGrainEnabled ? {
+                ...filmGrain,
+                textureName: filmGrainTexture?.name || null,
+                runtime: pass.filmGrainRuntime,
+            } : null,
             vignette: vignetteEnabled ? { ...vignette } : null,
             toneMapping,
         }

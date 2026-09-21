@@ -2,10 +2,15 @@ import { defineConfig } from 'vite'
 import legacy from '@vitejs/plugin-legacy'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import { visualizer } from "rollup-plugin-visualizer"
+import { magiusCompressedAssetProxyPlugin } from './viteCompressedAssetProxy.mjs'
+
+const lightweightDeployment = process.env.MAGIUS_DEPLOY_LIGHTWEIGHT === '1'
 
 export default defineConfig({
+  publicDir: lightweightDeployment ? false : 'public',
   base: '',
   plugins: [
+    magiusCompressedAssetProxyPlugin(),
     legacy({
       // tested working on chrome 61, firefox 68
       targets: ['chrome >= 49'],
@@ -16,6 +21,9 @@ export default defineConfig({
     visualizer(),
   ],
   build: {
+    outDir: lightweightDeployment
+      ? process.env.MAGIUS_DEPLOY_OUT_DIR || 'dist-deploy'
+      : 'dist',
     // minify: false,
     sourcemap: true,
     // Explicit application and vendor budgets are enforced after the build.
@@ -23,6 +31,10 @@ export default defineConfig({
     // isolated Three.js core chunk.
     chunkSizeWarningLimit: 900,
     rollupOptions: {
+      input: {
+        main: 'index.html',
+        resourcePreview: 'resource-preview.html',
+      },
       output: {
         manualChunks(id) {
           const normalized = id.replace(/\\/g, '/')
@@ -31,7 +43,11 @@ export default defineConfig({
           // subsystems independently. These checks run before node_modules so
           // imported assets remain owned by their application subsystem.
           if (normalized.includes('/magia-exedra-character-three/')) {
-            return 'character-runtime'
+            // The character scene imports Viewer screen/shadow passes, and
+            // the Viewer manager extends the character library class. Splitting
+            // this connected runtime makes the preview entry evaluate the
+            // derived class before its base; keep both entry orders equivalent.
+            return 'viewer-runtime'
           }
           if (normalized.includes('/src/viewer/localization/')) {
             return 'viewer-localization'
@@ -80,6 +96,19 @@ export default defineConfig({
     },
   },
   server: {
-    allowedHosts: true
+    allowedHosts: true,
+    watch: {
+      // Runtime products are fetched by URL and do not need HMR. Excluding
+      // their large corpora prevents the default source preview from opening
+      // a file watcher for every official asset.
+      ignored: [
+        '**/artifacts/**',
+        '**/dist*/**',
+        '**/public/stages/**',
+        '**/public/character-actions/**',
+        '**/public/vfx/**',
+        '**/magia-exedra-character-three/models/**',
+      ],
+    },
   }
 })

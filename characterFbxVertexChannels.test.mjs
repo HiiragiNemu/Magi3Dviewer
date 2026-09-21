@@ -1,8 +1,11 @@
+import { createHash } from 'node:crypto'
 import assert from 'node:assert/strict'
 import { readFileSync, readdirSync } from 'node:fs'
 import { test } from 'node:test'
 import { gunzipSync } from 'node:zlib'
+import * as THREE from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
+import ts from 'typescript'
 
 const compressed = readFileSync(
   new URL(
@@ -82,6 +85,34 @@ const submeshSource = readFileSync(
   'utf8',
 )
 
+function loadTypeScriptCommonJs(path, requireMap = {}) {
+  const compiled = ts.transpileModule(readFileSync(path, 'utf8'), {
+    compilerOptions: {
+      esModuleInterop: true,
+      module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ES2022,
+    },
+    fileName: path,
+    reportDiagnostics: true,
+  })
+  assert.deepEqual(compiled.diagnostics ?? [], [])
+  const module = { exports: {} }
+  Function('exports', 'require', 'module', compiled.outputText)(
+    module.exports,
+    specifier => {
+      if (Object.hasOwn(requireMap, specifier)) return requireMap[specifier]
+      throw new Error(`Unexpected fixture import ${specifier}`)
+    },
+    module,
+  )
+  return module.exports
+}
+
+const bakedNormalRuntime = loadTypeScriptCommonJs(
+  'magia-exedra-character-three/bakedNormal.ts',
+  { three: THREE },
+)
+
 function parseBakedNormalFixture() {
   const compressedNormals = readFileSync(new URL(
     './magia-exedra-character-three/models/chara_101901_battle_unit/redrive-baked-normals.bin.gz',
@@ -109,6 +140,48 @@ function parseBakedNormalFixture() {
     offset += vertexCount * 3 * Float32Array.BYTES_PER_ELEMENT
   }
   return { compressedNormals, payload, characterId, meshes, offset }
+}
+
+function parseBakedNormalRuntime(path) {
+  const payload = gunzipSync(readFileSync(path))
+  const arrayBuffer = payload.buffer.slice(
+    payload.byteOffset,
+    payload.byteOffset + payload.byteLength,
+  )
+  return bakedNormalRuntime.parseReDriveBakedNormals(arrayBuffer)
+}
+
+function parseCharacterFbx(path) {
+  const payload = gunzipSync(readFileSync(path))
+  const arrayBuffer = payload.buffer.slice(
+    payload.byteOffset,
+    payload.byteOffset + payload.byteLength,
+  )
+  const originalTextureLoad = THREE.TextureLoader.prototype.load
+  THREE.TextureLoader.prototype.load = function (_url, onLoad) {
+    const texture = new THREE.Texture()
+    if (onLoad) queueMicrotask(() => onLoad(texture))
+    return texture
+  }
+  try {
+    return new FBXLoader(new THREE.LoadingManager()).parse(
+      arrayBuffer,
+      'file:///baked-normal-runtime-fixture/',
+    )
+  } finally {
+    THREE.TextureLoader.prototype.load = originalTextureLoad
+  }
+}
+
+function getObjectPath(object, root) {
+  const names = []
+  let current = object
+  while (current) {
+    if (current.name) names.push(current.name)
+    if (current === root) break
+    current = current.parent
+  }
+  return names.reverse().join('/')
 }
 
 test('JP 100101 FBX preserves the serialized Direct vertex-colour channel', () => {
@@ -211,11 +284,79 @@ test('101901 restores the official object-space outline normal reconstructed fro
   )
   assert.match(loaderSource, /parseReDriveBakedNormals/)
   assert.match(loaderSource, /restoreReDriveBakedNormalAttribute/)
+  assert.match(loaderSource, /selectReDriveBakedNormalValues/)
+  assert.match(loaderSource, /reDriveBakedNormalBinding/)
   assert.match(loaderSource, /matchedBakedNormalMeshes\.size !== bakedNormalData\.meshes\.size/)
   assert.match(characterSource, /redrive-baked-normals\.bin\*/)
 })
 
-test('all 90 Viewer models carry bounded official baked-normal companions', () => {
+test('real duplicate-name Weapon meshes bind only exact-count official normals', () => {
+  const fixtureIds = [
+    111401, 109801, 108001, 107601, 107101, 106901, 102601, 102501,
+    108002,
+  ]
+  const expectedRejectedCounts = new Map([
+    [111401, [1572, 2862]],
+    [109801, [1416, 2568]],
+    [108001, [5910, 7152]],
+    [107601, [3060, 6366]],
+    [107101, [6000, 4770]],
+    [106901, [5862, 3924]],
+    [102601, [2436, 132]],
+    [102501, [132, 2436]],
+  ])
+  const runtimeRows = []
+  for (const characterId of fixtureIds) {
+    const directory = `magia-exedra-character-three/models/chara_${characterId}_battle_unit`
+    const root = parseCharacterFbx(`${directory}/VisualRoot.fbx.gz`)
+    const official = parseBakedNormalRuntime(
+      `${directory}/redrive-baked-normals.bin.gz`,
+    )
+    assert.equal(official.characterId, characterId)
+    const matched = new Set()
+    const rejected = []
+    root.traverse(object => {
+      if (!object.isMesh) return
+      const normal = object.geometry.getAttribute('normal')
+      assert.ok(normal && normal.itemSize >= 3, `${characterId} ${object.name}`)
+      const selection = bakedNormalRuntime.selectReDriveBakedNormalValues(
+        official,
+        object.name,
+        getObjectPath(object, root),
+        normal.count,
+      )
+      if (selection.key) matched.add(selection.key)
+      rejected.push(...selection.rejected.map(value => ({
+        mesh: object.name,
+        ...value,
+      })))
+    })
+    assert.equal(
+      matched.size,
+      official.meshes.size,
+      `${characterId} must consume every companion record`,
+    )
+    if (characterId === 108002) {
+      assert.deepEqual(rejected, [])
+    } else {
+      assert.equal(rejected.length, 1, `${characterId} rejected candidate count`)
+      const [officialVertexCount, fbxVertexCount] =
+        expectedRejectedCounts.get(characterId)
+      assert.equal(rejected[0].officialVertexCount, officialVertexCount)
+      assert.equal(rejected[0].fbxVertexCount, fbxVertexCount)
+    }
+    runtimeRows.push({
+      characterId,
+      companionRecords: official.meshes.size,
+      matchedRecords: matched.size,
+      rejected,
+    })
+  }
+  assert.equal(runtimeRows.filter(row => row.rejected.length === 1).length, 8)
+  assert.equal(runtimeRows.find(row => row.characterId === 108002).rejected.length, 0)
+})
+
+test('all shipped Viewer models carry bounded official baked-normal companions', () => {
   const expectedByCharacter = new Map()
   for (const character of submeshSource.matchAll(
     /^    (\d+): \{\n(?<body>.*?)^    \},$/gms,
@@ -239,12 +380,13 @@ test('all 90 Viewer models carry bounded official baked-normal companions', () =
   const modelDirectories = readdirSync(modelRoot, { withFileTypes: true })
     .filter(entry => entry.isDirectory() && /^chara_\d+_battle_unit$/.test(entry.name))
     .sort((left, right) => left.name.localeCompare(right.name))
-  assert.equal(modelDirectories.length, 90)
+  assert.equal(modelDirectories.length, new Set(modelDirectories.map(entry => entry.name.match(/^chara_(\d+)_battle_unit$/)[1])).size)
 
   let compressedBytes = 0
   let recordCount = 0
   let vertexCount = 0
   const keysByCharacter = new Map()
+  const totalsByCharacter = new Map()
   for (const directory of modelDirectories) {
     const characterId = Number(directory.name.match(/chara_(\d+)_battle_unit/)[1])
     const compressedPayload = readFileSync(new URL(
@@ -258,6 +400,7 @@ test('all 90 Viewer models carry bounded official baked-normal companions', () =
     const meshRecords = payload.readUInt32LE(12)
     recordCount += meshRecords
     const keys = []
+    let characterVertices = 0
     let offset = 16
     for (let meshIndex = 0; meshIndex < meshRecords; meshIndex++) {
       const nameLength = payload.readUInt16LE(offset)
@@ -270,6 +413,7 @@ test('all 90 Viewer models carry bounded official baked-normal companions', () =
       assert.equal(count, expectedByCharacter.get(characterId).get(meshName))
       keys.push(key)
       vertexCount += count
+      characterVertices += count
       offset += count * 3 * Float32Array.BYTES_PER_ELEMENT
     }
     assert.equal(offset, payload.length)
@@ -277,11 +421,23 @@ test('all 90 Viewer models carry bounded official baked-normal companions', () =
     assert.ok(keys.some(key => key.toLowerCase().includes('hair')))
     assert.ok(keys.some(key => key.toLowerCase().includes('face')))
     keysByCharacter.set(characterId, keys)
+    totalsByCharacter.set(characterId, {
+      compressedBytes: compressedPayload.length, recordCount: meshRecords, vertexCount: characterVertices,
+      sha256: createHash('sha256').update(compressedPayload).digest('hex'),
+    })
   }
 
-  assert.equal(compressedBytes, 25_282_929)
-  assert.equal(recordCount, 519)
-  assert.equal(vertexCount, 6_795_993)
+  const ashley = totalsByCharacter.get(110702)
+  assert.deepEqual(ashley, {
+    compressedBytes: 345_235, recordCount: 6, vertexCount: 89_997,
+    sha256: '7146ad4f80f160d720192293620303584f8595dc6210325bc65430e23d7e4c7f',
+  })
+  assert.equal(compressedBytes - ashley.compressedBytes, 25_639_438)
+  assert.equal(recordCount - ashley.recordCount, 527)
+  assert.equal(vertexCount - ashley.vertexCount, 6_886_551)
+  assert.equal(compressedBytes, 25_984_673)
+  assert.equal(recordCount, 533)
+  assert.equal(vertexCount, 6_976_548)
   assert.equal(
     keysByCharacter.get(100403).filter(key => key.startsWith('Weapon_Mesh\0')).length,
     2,

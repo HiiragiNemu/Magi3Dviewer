@@ -1,0 +1,89 @@
+{
+  "schema": "magius.nonbattle-character-catalog.v1",
+  "lookupKey": "style3dCharacterMstId|resourceName",
+  "counts": {
+    "entries": 3,
+    "sourceReady": 3,
+    "technicalRuntimeReady": 3,
+    "newCandidate": 3,
+    "userAccepted": 0,
+    "failClosed": 0
+  },
+  "entries": [
+    {
+      "stableKey": "style3d-character:style3dCharacterMstId=113401|resourceName=chara_113401_model",
+      "identityKey": "style3dCharacterMstId=113401|resourceName=chara_113401_model",
+      "style3dCharacterMstId": 113401,
+      "resourceName": "chara_113401_model",
+      "names": {
+        "ja": "名前のない少女",
+        "displayName": "名前のない少女 / NAMAE",
+        "alias": "NAMAE"
+      },
+      "sourceFamily": "story-cutscene",
+      "profileUrl": "./characters/113401/profile.v1.json",
+      "publicationStatus": "new-candidate",
+      "technicalStatus": "runtime-ready",
+      "userAcceptance": "pending",
+      "failClosedReasons": [],
+      "eligibility": {
+        "ordinaryCharacterSelector": false,
+        "battle": false,
+        "tps": false,
+        "dungeon": false,
+        "magicalGirl": false,
+        "storyCutscene": true
+      }
+    },
+    {
+      "stableKey": "style3d-character:style3dCharacterMstId=113501|resourceName=chara_113501_model",
+      "identityKey": "style3dCharacterMstId=113501|resourceName=chara_113501_model",
+      "style3dCharacterMstId": 113501,
+      "resourceName": "chara_113501_model",
+      "names": {
+        "ja": "A-Q",
+        "displayName": "A-Q",
+        "alias": "A-Q"
+      },
+      "sourceFamily": "story-cutscene",
+      "profileUrl": "./characters/113501/profile.v1.json",
+      "publicationStatus": "new-candidate",
+      "technicalStatus": "runtime-ready",
+      "userAcceptance": "pending",
+      "failClosedReasons": [],
+      "eligibility": {
+        "ordinaryCharacterSelector": false,
+        "battle": false,
+        "tps": false,
+        "dungeon": false,
+        "magicalGirl": false,
+        "storyCutscene": true
+      }
+    },
+    {
+      "stableKey": "style3d-character:style3dCharacterMstId=113601|resourceName=chara_113601_model",
+      "identityKey": "style3dCharacterMstId=113601|resourceName=chara_113601_model",
+      "style3dCharacterMstId": 113601,
+      "resourceName": "chara_113601_model",
+      "names": {
+        "ja": "ヨダカ",
+        "displayName": "ヨダカ / ヨタカ",
+        "alias": "ヨタカ"
+      },
+      "sourceFamily": "story-cutscene",
+      "profileUrl": "./characters/113601/profile.v1.json",
+      "publicationStatus": "new-candidate",
+      "technicalStatus": "runtime-ready",
+      "userAcceptance": "pending",
+      "failClosedReasons": [],
+      "eligibility": {
+        "ordinaryCharacterSelector": false,
+        "battle": false,
+        "tps": false,
+        "dungeon": false,
+        "magicalGirl": false,
+        "storyCutscene": true
+      }
+    }
+  ]
+}

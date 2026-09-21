@@ -1,0 +1,882 @@
+{
+  "schema": "magius-official-dungeon-character-corpus-v1",
+  "region": "steam-ja-Jpan",
+  "assetRoot": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles",
+  "boundedDirectory": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\dungeon\\character",
+  "bundleCount": 9,
+  "records": [
+    {
+      "sourceCharacterId": 100101,
+      "logicalKey": "dungeon/character/100101",
+      "animationBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\dungeon\\character\\100101",
+      "battleModelBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\battle\\character\\chara_100101_battle_unit",
+      "battleModelPresent": true,
+      "controllers": [
+        {
+          "pathID": "-4233459992635956272",
+          "name": "100101"
+        }
+      ],
+      "clips": [
+        {
+          "pathID": "-8394645744265750784",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 525,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        },
+        {
+          "pathID": "-6253601249404779368",
+          "name": "DungeonWait_L",
+          "durationSeconds": 1.9833333492279053,
+          "sampleRate": 60.0,
+          "genericBindings": 525,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "-4965333852850318191",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 525,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "-4499443093515439926",
+          "name": "Base",
+          "durationSeconds": 0.08333331346511841,
+          "sampleRate": 60.0,
+          "genericBindings": 60,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "1908368646861292102",
+          "name": "Blink",
+          "durationSeconds": 0.25,
+          "sampleRate": 60.0,
+          "genericBindings": 60,
+          "loopTime": false,
+          "locomotionSemantic": null
+        }
+      ],
+      "locomotionClips": [
+        {
+          "pathID": "-8394645744265750784",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 525,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        },
+        {
+          "pathID": "-6253601249404779368",
+          "name": "DungeonWait_L",
+          "durationSeconds": 1.9833333492279053,
+          "sampleRate": 60.0,
+          "genericBindings": 525,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "-4965333852850318191",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 525,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        }
+      ],
+      "externalWeaponPolicy": "body-only clips; never bind external sibling weapon animator/model roots"
+    },
+    {
+      "sourceCharacterId": 100102,
+      "logicalKey": "dungeon/character/100102",
+      "animationBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\dungeon\\character\\100102",
+      "battleModelBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\battle\\character\\chara_100102_battle_unit",
+      "battleModelPresent": true,
+      "controllers": [
+        {
+          "pathID": "4850806762718510075",
+          "name": "100102"
+        }
+      ],
+      "clips": [
+        {
+          "pathID": "-8181591152384496668",
+          "name": "DungeonRunFeceUp_L",
+          "durationSeconds": 0.8166667222976685,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "-8053955689726883446",
+          "name": "FaceBlink",
+          "durationSeconds": 0.1666666716337204,
+          "sampleRate": 60.0,
+          "genericBindings": 16,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "-8001233860802716549",
+          "name": "DungeonWait_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "-7565874101449763096",
+          "name": "DungeonRunFeceDown_L",
+          "durationSeconds": 0.8166667222976685,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "-4680502103520955256",
+          "name": "DungeonWait_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "-4423495424398549897",
+          "name": "DungeonWalkFeceUp_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "-2770654677155457730",
+          "name": "DungeonWalkFeceDown_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "-2707444981814965735",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166667222976685,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "-2470702348575474233",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        },
+        {
+          "pathID": "1039055911760101997",
+          "name": "Dungeon01",
+          "durationSeconds": 0.13333334028720856,
+          "sampleRate": 60.0,
+          "genericBindings": 58,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "3021741329944247456",
+          "name": "DungeonWait_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        }
+      ],
+      "locomotionClips": [
+        {
+          "pathID": "-8001233860802716549",
+          "name": "DungeonWait_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "-4680502103520955256",
+          "name": "DungeonWait_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "-2707444981814965735",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166667222976685,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "-2470702348575474233",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        },
+        {
+          "pathID": "3021741329944247456",
+          "name": "DungeonWait_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 435,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        }
+      ],
+      "externalWeaponPolicy": "body-only clips; never bind external sibling weapon animator/model roots"
+    },
+    {
+      "sourceCharacterId": 100201,
+      "logicalKey": "dungeon/character/100201",
+      "animationBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\dungeon\\character\\100201",
+      "battleModelBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\battle\\character\\chara_100201_battle_unit",
+      "battleModelPresent": true,
+      "controllers": [
+        {
+          "pathID": "6411218269470645876",
+          "name": "100201"
+        }
+      ],
+      "clips": [
+        {
+          "pathID": "2166187276406549931",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 498,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "2319855360330369786",
+          "name": "FaceBlink",
+          "durationSeconds": 0.1666666716337204,
+          "sampleRate": 60.0,
+          "genericBindings": 18,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "5552686802114471708",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4333332777023315,
+          "sampleRate": 60.0,
+          "genericBindings": 500,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        },
+        {
+          "pathID": "8751942567244016571",
+          "name": "FaceBlinkEmpty",
+          "durationSeconds": 0.1666666716337204,
+          "sampleRate": 60.0,
+          "genericBindings": 1,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "8769611855754149605",
+          "name": "DungeonWait_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 498,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        }
+      ],
+      "locomotionClips": [
+        {
+          "pathID": "2166187276406549931",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 498,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "5552686802114471708",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4333332777023315,
+          "sampleRate": 60.0,
+          "genericBindings": 500,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        },
+        {
+          "pathID": "8769611855754149605",
+          "name": "DungeonWait_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 498,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        }
+      ],
+      "externalWeaponPolicy": "body-only clips; never bind external sibling weapon animator/model roots"
+    },
+    {
+      "sourceCharacterId": 100202,
+      "logicalKey": "dungeon/character/100202",
+      "animationBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\dungeon\\character\\100202",
+      "battleModelBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\battle\\character\\chara_100202_battle_unit",
+      "battleModelPresent": true,
+      "controllers": [
+        {
+          "pathID": "5516319598753555346",
+          "name": "100202"
+        }
+      ],
+      "clips": [
+        {
+          "pathID": "-4355229156055609924",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4333332777023315,
+          "sampleRate": 60.0,
+          "genericBindings": 528,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        },
+        {
+          "pathID": "892626598538995427",
+          "name": "FaceBlink",
+          "durationSeconds": 0.1666666716337204,
+          "sampleRate": 60.0,
+          "genericBindings": 19,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "3455679281145208352",
+          "name": "DungeonWait_L",
+          "durationSeconds": 1.9833333492279053,
+          "sampleRate": 60.0,
+          "genericBindings": 528,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "6870887992539170635",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 528,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "8751942567244016571",
+          "name": "FaceBlinkEmpty",
+          "durationSeconds": 0.1666666716337204,
+          "sampleRate": 60.0,
+          "genericBindings": 1,
+          "loopTime": false,
+          "locomotionSemantic": null
+        }
+      ],
+      "locomotionClips": [
+        {
+          "pathID": "-4355229156055609924",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4333332777023315,
+          "sampleRate": 60.0,
+          "genericBindings": 528,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        },
+        {
+          "pathID": "3455679281145208352",
+          "name": "DungeonWait_L",
+          "durationSeconds": 1.9833333492279053,
+          "sampleRate": 60.0,
+          "genericBindings": 528,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "6870887992539170635",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 528,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        }
+      ],
+      "externalWeaponPolicy": "body-only clips; never bind external sibling weapon animator/model roots"
+    },
+    {
+      "sourceCharacterId": 100301,
+      "logicalKey": "dungeon/character/100301",
+      "animationBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\dungeon\\character\\100301",
+      "battleModelBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\battle\\character\\chara_100301_battle_unit",
+      "battleModelPresent": true,
+      "controllers": [
+        {
+          "pathID": "-7281104000621840803",
+          "name": "100301"
+        }
+      ],
+      "clips": [
+        {
+          "pathID": "-6532624707838147585",
+          "name": "DungeonWait_L",
+          "durationSeconds": 1.9833333492279053,
+          "sampleRate": 60.0,
+          "genericBindings": 510,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "-2942221244478808616",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 510,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "343756687195308975",
+          "name": "FaceBlink",
+          "durationSeconds": 0.1666666716337204,
+          "sampleRate": 60.0,
+          "genericBindings": 16,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "4412818012340897786",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 510,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        },
+        {
+          "pathID": "6098067214139949490",
+          "name": "Base",
+          "durationSeconds": 0.13333332538604736,
+          "sampleRate": 60.0,
+          "genericBindings": 62,
+          "loopTime": false,
+          "locomotionSemantic": null
+        }
+      ],
+      "locomotionClips": [
+        {
+          "pathID": "-6532624707838147585",
+          "name": "DungeonWait_L",
+          "durationSeconds": 1.9833333492279053,
+          "sampleRate": 60.0,
+          "genericBindings": 510,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "-2942221244478808616",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 510,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "4412818012340897786",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 510,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        }
+      ],
+      "externalWeaponPolicy": "body-only clips; never bind external sibling weapon animator/model roots"
+    },
+    {
+      "sourceCharacterId": 100401,
+      "logicalKey": "dungeon/character/100401",
+      "animationBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\dungeon\\character\\100401",
+      "battleModelBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\battle\\character\\chara_100401_battle_unit",
+      "battleModelPresent": true,
+      "controllers": [
+        {
+          "pathID": "-1771187518691738302",
+          "name": "100401"
+        }
+      ],
+      "clips": [
+        {
+          "pathID": "-5446492736864252298",
+          "name": "Base",
+          "durationSeconds": 0.13333332538604736,
+          "sampleRate": 60.0,
+          "genericBindings": 60,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "742638201645580318",
+          "name": "DungeonWait_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 453,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "5503013215689000878",
+          "name": "FaceBlink",
+          "durationSeconds": 0.1666666716337204,
+          "sampleRate": 60.0,
+          "genericBindings": 16,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "6622641385317462365",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 453,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "8007403257406808017",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 453,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        }
+      ],
+      "locomotionClips": [
+        {
+          "pathID": "742638201645580318",
+          "name": "DungeonWait_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 453,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "6622641385317462365",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 453,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "8007403257406808017",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 453,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        }
+      ],
+      "externalWeaponPolicy": "body-only clips; never bind external sibling weapon animator/model roots"
+    },
+    {
+      "sourceCharacterId": 100501,
+      "logicalKey": "dungeon/character/100501",
+      "animationBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\dungeon\\character\\100501",
+      "battleModelBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\battle\\character\\chara_100501_battle_unit",
+      "battleModelPresent": true,
+      "controllers": [
+        {
+          "pathID": "-8272103785561582854",
+          "name": "100501"
+        }
+      ],
+      "clips": [
+        {
+          "pathID": "-7248231595885939743",
+          "name": "Standby_L",
+          "durationSeconds": 2.0,
+          "sampleRate": 60.0,
+          "genericBindings": 522,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "-6391903494703138077",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 522,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "-810531650809174840",
+          "name": "FaceBlink",
+          "durationSeconds": 0.1666666716337204,
+          "sampleRate": 60.0,
+          "genericBindings": 18,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "3878111692854401183",
+          "name": "Base",
+          "durationSeconds": 0.13333332538604736,
+          "sampleRate": 60.0,
+          "genericBindings": 82,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "5505469539607669684",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4666666984558105,
+          "sampleRate": 60.0,
+          "genericBindings": 522,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        }
+      ],
+      "locomotionClips": [
+        {
+          "pathID": "-6391903494703138077",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 522,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "5505469539607669684",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4666666984558105,
+          "sampleRate": 60.0,
+          "genericBindings": 522,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        }
+      ],
+      "externalWeaponPolicy": "body-only clips; never bind external sibling weapon animator/model roots"
+    },
+    {
+      "sourceCharacterId": 100801,
+      "logicalKey": "dungeon/character/100801",
+      "animationBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\dungeon\\character\\100801",
+      "battleModelBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\battle\\character\\chara_100801_battle_unit",
+      "battleModelPresent": true,
+      "controllers": [
+        {
+          "pathID": "-661026868254652081",
+          "name": "100801"
+        }
+      ],
+      "clips": [
+        {
+          "pathID": "-5469110810528762504",
+          "name": "DungeonWait_L",
+          "durationSeconds": 1.9833333492279053,
+          "sampleRate": 60.0,
+          "genericBindings": 531,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "234885326858738213",
+          "name": "Base",
+          "durationSeconds": 0.13333334028720856,
+          "sampleRate": 60.0,
+          "genericBindings": 66,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "2124044840696100266",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 531,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "4842258427157087973",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 531,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        },
+        {
+          "pathID": "7791652212084760061",
+          "name": "FaceBlink",
+          "durationSeconds": 0.1666666716337204,
+          "sampleRate": 60.0,
+          "genericBindings": 18,
+          "loopTime": false,
+          "locomotionSemantic": null
+        }
+      ],
+      "locomotionClips": [
+        {
+          "pathID": "-5469110810528762504",
+          "name": "DungeonWait_L",
+          "durationSeconds": 1.9833333492279053,
+          "sampleRate": 60.0,
+          "genericBindings": 531,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "2124044840696100266",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 531,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "4842258427157087973",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 531,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        }
+      ],
+      "externalWeaponPolicy": "body-only clips; never bind external sibling weapon animator/model roots"
+    },
+    {
+      "sourceCharacterId": 111501,
+      "logicalKey": "dungeon/character/111501",
+      "animationBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\dungeon\\character\\111501",
+      "battleModelBundle": "D:\\magia\\Madoka Magica Magia Exedra TW\\AssetBundles\\battle\\character\\chara_111501_battle_unit",
+      "battleModelPresent": true,
+      "controllers": [
+        {
+          "pathID": "-7721054230590721748",
+          "name": "111501"
+        }
+      ],
+      "clips": [
+        {
+          "pathID": "-8147342306671538667",
+          "name": "DungeonWait_L",
+          "durationSeconds": 1.9833333492279053,
+          "sampleRate": 60.0,
+          "genericBindings": 537,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "-218955251112955242",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 537,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "272111145149557703",
+          "name": "Base",
+          "durationSeconds": 0.13333334028720856,
+          "sampleRate": 60.0,
+          "genericBindings": 64,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "4072280381527356391",
+          "name": "FaceBlink",
+          "durationSeconds": 0.1666666716337204,
+          "sampleRate": 60.0,
+          "genericBindings": 20,
+          "loopTime": false,
+          "locomotionSemantic": null
+        },
+        {
+          "pathID": "8704101074324104010",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 537,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        }
+      ],
+      "locomotionClips": [
+        {
+          "pathID": "-8147342306671538667",
+          "name": "DungeonWait_L",
+          "durationSeconds": 1.9833333492279053,
+          "sampleRate": 60.0,
+          "genericBindings": 537,
+          "loopTime": false,
+          "locomotionSemantic": "idle"
+        },
+        {
+          "pathID": "-218955251112955242",
+          "name": "DungeonRun_L",
+          "durationSeconds": 0.8166666626930237,
+          "sampleRate": 60.0,
+          "genericBindings": 537,
+          "loopTime": false,
+          "locomotionSemantic": "run"
+        },
+        {
+          "pathID": "8704101074324104010",
+          "name": "DungeonWalk_L",
+          "durationSeconds": 1.4500000476837158,
+          "sampleRate": 60.0,
+          "genericBindings": 537,
+          "loopTime": false,
+          "locomotionSemantic": "walk"
+        }
+      ],
+      "externalWeaponPolicy": "body-only clips; never bind external sibling weapon animator/model roots"
+    }
+  ]
+}

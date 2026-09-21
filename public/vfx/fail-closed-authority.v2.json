@@ -1,0 +1,7 @@
+{
+  "schema": "magius.all-direction-combat-vfx.fail-closed-authority.v2",
+  "generatedAt": "2026-09-01T15:07:31.740Z",
+  "count": 0,
+  "entries": [],
+  "consumerRule": "fail closed by subjectKind + directionName; do not substitute another direction or infer by clip name"
+}

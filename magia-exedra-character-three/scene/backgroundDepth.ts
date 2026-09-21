@@ -72,6 +72,8 @@ export class BackgroundDepthPass extends Pass {
         if (this.consumers.size === 0) return;
 
         const previousTarget = renderer.getRenderTarget();
+        const previousShadowAutoUpdate = renderer.shadowMap.autoUpdate;
+        const previousShadowNeedsUpdate = renderer.shadowMap.needsUpdate;
         const previousAutoClear = renderer.autoClear;
         const visibility = [...this.consumers].map(consumer => ({
             object: consumer.object,
@@ -79,6 +81,10 @@ export class BackgroundDepthPass extends Pass {
         }));
         try {
             for (const entry of visibility) entry.object.visible = false;
+            // Only this depth target is consumed; normal colour rendering owns
+            // light-shadow updates with the original caster materials restored.
+            renderer.shadowMap.autoUpdate = false;
+            renderer.shadowMap.needsUpdate = false;
             renderer.autoClear = true;
             renderer.setRenderTarget(this.renderTarget);
             renderer.clear(true, true, false);
@@ -86,6 +92,8 @@ export class BackgroundDepthPass extends Pass {
         } finally {
             for (const entry of visibility) entry.object.visible = entry.visible;
             renderer.setRenderTarget(previousTarget);
+            renderer.shadowMap.autoUpdate = previousShadowAutoUpdate;
+            renderer.shadowMap.needsUpdate = previousShadowNeedsUpdate;
             renderer.autoClear = previousAutoClear;
         }
     }

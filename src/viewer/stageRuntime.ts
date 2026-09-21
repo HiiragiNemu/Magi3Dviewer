@@ -5,9 +5,12 @@ import {
     removeAnimationLoop,
 } from 'magia-exedra-character-three/renderer'
 import { resolveStageHierarchyPath } from './stageHierarchy'
+import { prepareStageTransformAnimations, type StageTransformAnimationProfile } from './stageTransformAnimations'
 import type { StageMaterialBinding } from './stageMaterialBindings'
 import {
     StageParticleRuntimeController,
+    type OfficialParticleMaterialProfile,
+    type StageParticleDepthRegistrar,
     type StageParticleRuntimeDebugState,
 } from './stageParticles'
 
@@ -67,9 +70,30 @@ export interface StageParticleSystemProfile {
     hierarchyPath: string
     /** Collision-safe FBX carrier path derived from the nearest Renderer PathID. */
     carrierHierarchyPath?: string
+    /**
+     * Serialized Unity world transform, row-major. Empty ParticleSystem
+     * GameObjects are omitted by the FBX carrier; this preserves their exact
+     * authored placement without relying on a scene-specific name fallback.
+     */
+    serializedWorldMatrix?: number[]
     active: boolean
     presetId: string
     materials: string[]
+}
+
+/** Exact serialized Mesh used by ParticleSystemRenderer.renderMode=Mesh. */
+export interface StageParticleMeshProfile {
+    pathID: string
+    name: string
+    vertexCount: number
+    indexCount: number
+    indexType: 'uint16' | 'uint32'
+    positionsBase64: string
+    normalsBase64?: string
+    uv0Base64?: string
+    colorsBase64?: string
+    indicesBase64: string
+    coordinateConvention: 'Unity mesh reflect X; triangle CBA'
 }
 
 export interface StageSerializedComponentClipProfile {
@@ -208,6 +232,54 @@ export interface StageVolumetricDustParticlesProfile {
     alphaAdditionalRuntime: number
 }
 
+export interface StageGameObjectStateProfile {
+    gameObjectPathID: string
+    hierarchyPath: string
+    /** Exact serialized GameObject.m_IsActive value. */
+    activeSelf: boolean
+    activeInHierarchy: boolean
+}
+
+export interface StageActivationClipProfile {
+    start: number
+    duration: number
+    clipIn: number
+    timeScale: number
+    assetPathID: string
+    displayName: string
+}
+
+export interface StageActivationTrackProfile {
+    trackPathID: string
+    name: string
+    enabled: boolean
+    muted: boolean
+    locked: boolean
+    /** Unity Timeline ActivationTrack.PostPlaybackState. */
+    postPlaybackState: 0 | 1 | 2 | 3
+    targetGameObjectPathID: string
+    targetHierarchyPath: string
+    targetInitialSelfActive: boolean
+    targetInitialActiveInHierarchy: boolean
+    clips: StageActivationClipProfile[]
+}
+
+export interface StageActivationDirectorProfile {
+    directorPathID: string
+    gameObjectPathID: string
+    hierarchyPath?: string
+    enabled: boolean
+    playableAssetPathID: string
+    /** UnityEngine.Playables.PlayState: Paused=0, Playing=1. */
+    initialState: number
+    initialStateName?: 'paused' | 'playing' | 'unknown'
+    /** UnityEngine.Playables.DirectorWrapMode: Hold=0, Loop=1, None=2. */
+    wrapMode: number
+    wrapModeName?: 'hold' | 'loop' | 'none' | 'unknown'
+    duration: number
+    tracks: StageActivationTrackProfile[]
+}
+
 export interface StageRuntimeProfile {
     /** Exact AnimationClip names. Prefix/family matching is intentionally not used. */
     clipNames?: string[]
@@ -219,8 +291,14 @@ export interface StageRuntimeProfile {
     rotators?: StageRotatorProfile[]
     particlePresets?: StageParticlePresetProfile[]
     particleSystems?: StageParticleSystemProfile[]
+    particleMeshes?: StageParticleMeshProfile[]
     serializedComponentClips?: StageSerializedComponentClipProfile[]
+    transformAnimations?: StageTransformAnimationProfile
     animatorRandomizers?: StageAnimatorRandomizerProfile[]
+    gameObjectStates?: StageGameObjectStateProfile[]
+    activationDirectors?: StageActivationDirectorProfile[]
+    /** Optional authored story-phase selection; generated profiles do not guess it. */
+    activationDirectorPathID?: string
     volumetricLightBeamConfig?: StageVolumetricLightBeamConfigProfile
     volumetricLightBeams?: StageVolumetricLightBeamProfile[]
     volumetricDustParticles?: StageVolumetricDustParticlesProfile[]
@@ -252,6 +330,7 @@ export interface StageRuntimeDebugState {
     timeScale: number
     loop: boolean
     rootName: string
+    transformAnimations?: NonNullable<ReturnType<typeof prepareStageTransformAnimations>>['debug']
     requestedClipNames: string[]
     playingClipNames: string[]
     missingClipNames: string[]
@@ -263,6 +342,20 @@ export interface StageRuntimeDebugState {
     activeRotatorNames: string[]
     missingRotatorNames: string[]
     ambiguousRotatorNames: string[]
+    activation: {
+        requestedDirectorPathIDs: string[]
+        selectedDirectorPathID: string | null
+        selectedDirectorTime: number | null
+        requestedGameObjectStateCount: number
+        resolvedGameObjectStateCount: number
+        missingGameObjectStatePaths: string[]
+        missingTargetPaths: string[]
+        targetStates: Array<{
+            trackPathID: string
+            targetHierarchyPath: string
+            visible: boolean | null
+        }>
+    }
     particles?: StageParticleRuntimeDebugState
 }
 
@@ -279,6 +372,108 @@ function unique(values: string[] | undefined) {
     return [...new Set(values ?? [])]
 }
 
+interface BoundStageGameObjectState {
+    profile: StageGameObjectStateProfile
+    object: THREE.Object3D
+}
+
+interface BoundStageActivationTrack {
+    profile: StageActivationTrackProfile
+    object?: THREE.Object3D
+}
+
+interface BoundStageActivationDirector {
+    profile: StageActivationDirectorProfile
+    tracks: BoundStageActivationTrack[]
+}
+
+function serializedParticleMaterials(
+    bindings: readonly StageMaterialBinding[],
+): OfficialParticleMaterialProfile[] {
+    return bindings.flatMap(binding => {
+        if (!binding.materialName) return []
+        return [{
+            name: binding.materialName,
+            validKeywords: binding.validKeywords,
+            invalidKeywords: binding.invalidKeywords,
+            textures: Object.fromEntries(
+                Object.entries(binding.serializedTextures ?? {}).map(
+                    ([property, texture]) => [property, {
+                        url: texture.url,
+                        scale: [...texture.transform.scale],
+                        offset: [...texture.transform.offset],
+                        pointer: {
+                            pathID: texture.sourceTexturePathId,
+                            resolved: true,
+                        },
+                    }],
+                ),
+            ),
+            floats: binding.serializedFloats,
+            colors: binding.serializedColors,
+        }]
+    })
+}
+
+function activationClipContains(
+    clip: StageActivationClipProfile,
+    time: number,
+) {
+    const start = finiteNonNegative(clip.start, 0)
+    const duration = finiteNonNegative(clip.duration, 0)
+    const end = start + duration
+    const epsilon = Math.max(1e-9, Math.abs(end) * 1e-12)
+    return duration > 0
+        && time + epsilon >= start
+        && time < end - epsilon
+}
+
+function activationTrackHasInput(
+    track: StageActivationTrackProfile,
+    time: number,
+) {
+    return track.clips.some(clip => activationClipContains(clip, time))
+}
+
+function lastDirectorEvaluationTime(duration: number) {
+    if (!(duration > 0)) return 0
+    return Math.max(0, duration - Math.max(1e-7, duration * 1e-9))
+}
+
+function activationTrackVisibleAtTime(
+    director: StageActivationDirectorProfile,
+    track: StageActivationTrackProfile,
+    time: number,
+): boolean | undefined {
+    if (!director.enabled || !track.enabled || track.muted) return undefined
+    const duration = finiteNonNegative(director.duration, 0)
+    let evaluationTime = finiteNonNegative(time, 0)
+    if (duration > 0 && director.wrapMode === 1) {
+        evaluationTime %= duration
+        return activationTrackHasInput(track, evaluationTime)
+    }
+    if (duration <= 0 || evaluationTime < duration) {
+        return activationTrackHasInput(track, evaluationTime)
+    }
+
+    const finalVisible = activationTrackHasInput(
+        track,
+        lastDirectorEvaluationTime(duration),
+    )
+    if (director.wrapMode === 0) return finalVisible
+
+    // ActivationTrack.cs serializes Active=0, Inactive=1, Revert=2,
+    // LeaveAsIs=3. For LeaveAsIs, retain the final ProcessFrame result.
+    switch (track.postPlaybackState) {
+        case 0: return true
+        case 1: return false
+        case 2: return track.targetInitialSelfActive
+        case 3:
+        default:
+            return finalVisible
+    }
+}
+
 /**
  * Owns the animation and future voice timeline for one loaded stage root.
  *
@@ -288,6 +483,7 @@ function unique(values: string[] | undefined) {
  */
 export class StageRuntimeController {
     private readonly root: THREE.Object3D
+    private readonly transformAnimations?: ReturnType<typeof prepareStageTransformAnimations>
     private readonly profile: StageRuntimeProfile
     private readonly mixer?: THREE.AnimationMixer
     private readonly requestedClipNames: string[]
@@ -296,12 +492,21 @@ export class StageRuntimeController {
     private readonly activeRotators: ActiveStageRotator[]
     private readonly missingRotatorNames: string[]
     private readonly ambiguousRotatorNames: string[]
+    private readonly gameObjectStateBindings: BoundStageGameObjectState[]
+    private readonly missingGameObjectStatePaths: string[]
+    private readonly activationDirectors = new Map<
+        string,
+        BoundStageActivationDirector
+    >()
+    private readonly missingActivationTargetPaths: string[]
+    private readonly originalVisibilities = new Map<THREE.Object3D, boolean>()
     private readonly particleRuntime?: StageParticleRuntimeController
     private readonly animationLoop: () => void
     private readonly afterUpdate?: () => void
     private _time: number
     private _timeScale: number
     private _paused: boolean
+    private _activationDirectorPathID?: string
     private _disposed = false
 
     constructor(
@@ -310,14 +515,59 @@ export class StageRuntimeController {
         afterUpdate?: () => void,
         materialBindings: readonly StageMaterialBinding[] = [],
         textures: readonly THREE.Texture[] = [],
+        depthRegistrar?: StageParticleDepthRegistrar,
     ) {
         this.root = root
         this.profile = profile
         this.afterUpdate = afterUpdate
-        this.requestedClipNames = unique(profile.clipNames)
+        this.transformAnimations = prepareStageTransformAnimations(
+            root, profile.transformAnimations, (profile.rotators?.length ?? 0) > 0,
+        )
+        this.requestedClipNames = unique([
+            ...(profile.clipNames ?? []),
+            ...(this.transformAnimations?.clips.map(entry => entry.clip.name) ?? []),
+        ])
+
+        this.gameObjectStateBindings = []
+        this.missingGameObjectStatePaths = []
+        for (const state of profile.gameObjectStates ?? []) {
+            const object = resolveStageHierarchyPath(root, state.hierarchyPath)
+            if (!object) {
+                this.missingGameObjectStatePaths.push(state.hierarchyPath)
+                continue
+            }
+            if (!this.originalVisibilities.has(object)) {
+                this.originalVisibilities.set(object, object.visible)
+            }
+            this.gameObjectStateBindings.push({ profile: state, object })
+        }
+        this.missingActivationTargetPaths = []
+        for (const director of profile.activationDirectors ?? []) {
+            const tracks = director.tracks.map(track => {
+                const object = resolveStageHierarchyPath(
+                    root,
+                    track.targetHierarchyPath,
+                )
+                if (!object) {
+                    this.missingActivationTargetPaths.push(
+                        `${director.directorPathID}:${track.trackPathID}:`
+                        + track.targetHierarchyPath,
+                    )
+                } else if (!this.originalVisibilities.has(object)) {
+                    this.originalVisibilities.set(object, object.visible)
+                }
+                return { profile: track, object }
+            })
+            this.activationDirectors.set(director.directorPathID, {
+                profile: director,
+                tracks,
+            })
+        }
+        this.restoreSerializedGameObjectStates()
 
         const clipsByName = new Map(
-            root.animations.map(clip => [clip.name, clip] as const),
+            [...root.animations, ...(this.transformAnimations?.clips.map(entry => entry.clip) ?? [])]
+                .map(clip => [clip.name, clip] as const),
         )
         this.playingClips = this.requestedClipNames
             .map(name => clipsByName.get(name))
@@ -361,7 +611,8 @@ export class StageRuntimeController {
             this.mixer = new THREE.AnimationMixer(root)
             for (const clip of this.playingClips) {
                 const action = this.mixer.clipAction(clip)
-                if (profile.loop ?? true) {
+                const nativeLoop = this.transformAnimations?.clips.find(entry => entry.clip === clip)?.loop
+                if (nativeLoop ?? profile.loop ?? true) {
                     action.setLoop(THREE.LoopRepeat, Infinity)
                     action.clampWhenFinished = false
                 } else {
@@ -375,6 +626,16 @@ export class StageRuntimeController {
         this._time = finiteNonNegative(profile.startTime, 0)
         this._timeScale = finiteNonNegative(profile.timeScale, 1)
         this._paused = profile.autoplay === false
+        const serializedPlayingDirector = (profile.activationDirectors ?? [])
+            .find(director => director.enabled && director.initialState === 1)
+        const requestedActivationDirector = profile.activationDirectorPathID
+            ?? serializedPlayingDirector?.directorPathID
+        if (
+            requestedActivationDirector
+            && this.activationDirectors.has(requestedActivationDirector)
+        ) {
+            this._activationDirectorPathID = requestedActivationDirector
+        }
         if ((profile.particleSystems?.length ?? 0) > 0) {
             this.particleRuntime = new StageParticleRuntimeController(
                 root,
@@ -382,11 +643,19 @@ export class StageRuntimeController {
                 profile.particleSystems ?? [],
                 materialBindings,
                 textures,
+                {
+                    particleMeshes: profile.particleMeshes ?? [],
+                    officialMaterials:
+                        serializedParticleMaterials(materialBindings),
+                    depthRegistrar,
+                },
             )
         }
+        this.transformAnimations?.claim()
         this.mixer?.setTime(this._time)
         this.applyRotatorDelta(this._time)
         this.particleRuntime?.update(this._time)
+        this.applyActivationDirectorAtTime(this._time)
         this.runAfterUpdate()
         this.publishTime()
 
@@ -425,13 +694,30 @@ export class StageRuntimeController {
         this._timeScale = finiteNonNegative(value, this._timeScale)
     }
 
+    /** Select one exact serialized PlayableDirector for a story phase. */
+    setActivationDirector(pathID?: string) {
+        if (this._disposed) return false
+        if (pathID != undefined && !this.activationDirectors.has(pathID)) {
+            return false
+        }
+        this._activationDirectorPathID = pathID
+        this.applyActivationDirectorAtTime(this._time)
+        this.runAfterUpdate()
+        this.publishTime()
+        return true
+    }
+
     seek(time: number) {
         if (this._disposed) return
         const previousTime = this._time
         this._time = finiteNonNegative(time, this._time)
+        for (const entry of this.transformAnimations?.clips ?? []) {
+            this.mixer?.clipAction(entry.clip).reset().play()
+        }
         this.mixer?.setTime(this._time)
         this.applyRotatorDelta(this._time - previousTime)
         this.particleRuntime?.update(this._time)
+        this.applyActivationDirectorAtTime(this._time)
         this.runAfterUpdate()
         this.publishTime()
     }
@@ -463,6 +749,7 @@ export class StageRuntimeController {
         }
         this.applyRotatorDelta(this._time - previousTime)
         this.particleRuntime?.update(this._time)
+        this.applyActivationDirectorAtTime(this._time)
         this.runAfterUpdate()
         this.publishTime()
     }
@@ -524,6 +811,7 @@ export class StageRuntimeController {
             timeScale: this._timeScale,
             loop: this.profile.loop ?? true,
             rootName: this.root.name,
+            transformAnimations: this.transformAnimations?.debug,
             requestedClipNames: [...this.requestedClipNames],
             playingClipNames: this.playingClips.map(clip => clip.name),
             missingClipNames: [...this.missingClipNames],
@@ -546,6 +834,24 @@ export class StageRuntimeController {
                 ),
             missingRotatorNames: [...this.missingRotatorNames],
             ambiguousRotatorNames: [...this.ambiguousRotatorNames],
+            activation: {
+                requestedDirectorPathIDs: (this.profile.activationDirectors ?? [])
+                    .map(director => director.directorPathID),
+                selectedDirectorPathID: this._activationDirectorPathID ?? null,
+                selectedDirectorTime:
+                    this._activationDirectorPathID == undefined
+                        ? null
+                        : this._time,
+                requestedGameObjectStateCount:
+                    this.profile.gameObjectStates?.length ?? 0,
+                resolvedGameObjectStateCount:
+                    this.gameObjectStateBindings.length,
+                missingGameObjectStatePaths: [
+                    ...this.missingGameObjectStatePaths,
+                ],
+                missingTargetPaths: [...this.missingActivationTargetPaths],
+                targetStates: this.getActivationTargetStates(),
+            },
             particles: this.particleRuntime?.getDebugState(),
         }
     }
@@ -556,7 +862,11 @@ export class StageRuntimeController {
         removeAnimationLoop(this.animationLoop)
         this.mixer?.stopAllAction()
         this.mixer?.uncacheRoot(this.root)
+        this.transformAnimations?.dispose()
         this.particleRuntime?.dispose()
+        for (const [object, visible] of this.originalVisibilities) {
+            object.visible = visible
+        }
         delete this.root.userData.stageRuntimeTime
         delete this.root.userData.stageRuntime
         this._disposed = true
@@ -581,11 +891,78 @@ export class StageRuntimeController {
                     + Math.max(0, duration - offset)
             })
             .filter((value): value is number => value != undefined)
-        const duration = Math.max(animationDuration, ...voiceDurations, 0)
+        const activationDuration = this._activationDirectorPathID == undefined
+            ? 0
+            : finiteNonNegative(
+                this.activationDirectors.get(this._activationDirectorPathID)
+                    ?.profile.duration,
+                0,
+            )
+        const duration = Math.max(
+            animationDuration,
+            activationDuration,
+            ...voiceDurations,
+            0,
+        )
         return duration > 0 ? duration : undefined
     }
 
+    private restoreSerializedGameObjectStates() {
+        for (const { profile, object } of this.gameObjectStateBindings) {
+            object.visible = profile.activeSelf
+        }
+        for (const director of this.activationDirectors.values()) {
+            for (const { profile, object } of director.tracks) {
+                if (!object) continue
+                if (
+                    !this.gameObjectStateBindings.some(
+                        binding => binding.object === object,
+                    )
+                ) object.visible = profile.targetInitialSelfActive
+            }
+        }
+    }
+
+    private applyActivationDirectorAtTime(time: number) {
+        this.restoreSerializedGameObjectStates()
+        if (this._activationDirectorPathID == undefined) return
+        const director = this.activationDirectors.get(
+            this._activationDirectorPathID,
+        )
+        if (!director) return
+
+        const targetStates = new Map<THREE.Object3D, boolean>()
+        for (const { profile, object } of director.tracks) {
+            if (!object) continue
+            const visible = activationTrackVisibleAtTime(
+                director.profile,
+                profile,
+                time,
+            )
+            if (visible == undefined) continue
+            targetStates.set(
+                object,
+                (targetStates.get(object) ?? false) || visible,
+            )
+        }
+        for (const [object, visible] of targetStates) object.visible = visible
+    }
+
+    private getActivationTargetStates() {
+        if (this._activationDirectorPathID == undefined) return []
+        const director = this.activationDirectors.get(
+            this._activationDirectorPathID,
+        )
+        if (!director) return []
+        return director.tracks.map(({ profile, object }) => ({
+            trackPathID: profile.trackPathID,
+            targetHierarchyPath: profile.targetHierarchyPath,
+            visible: object?.visible ?? null,
+        }))
+    }
+
     private runAfterUpdate() {
+        this.transformAnimations?.updateBatches()
         try {
             this.afterUpdate?.()
         } catch (error) {
@@ -620,6 +997,7 @@ export function createStageRuntimeController(
     afterUpdate?: () => void,
     materialBindings: readonly StageMaterialBinding[] = [],
     textures: readonly THREE.Texture[] = [],
+    depthRegistrar?: StageParticleDepthRegistrar,
 ) {
     return profile == undefined
         ? undefined
@@ -629,5 +1007,6 @@ export function createStageRuntimeController(
             afterUpdate,
             materialBindings,
             textures,
+            depthRegistrar,
         )
 }

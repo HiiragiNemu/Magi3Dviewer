@@ -1,4 +1,10 @@
-export type UiLocale = 'en' | 'zh-CN'
+import {
+    translateJaJpBoneChannelLabel,
+    translateJaJpMorphChannelLabel,
+    translateJaJpUiText,
+} from './jaJP'
+
+export type UiLocale = 'en' | 'zh-CN' | 'ja-JP'
 
 const LOCALE_STORAGE_KEY = 'magius3dviewer.locale'
 
@@ -17,11 +23,17 @@ const pageMetadata: Record<UiLocale, {
         description: 'Magius3Dviewer 是独立的 Magia Exedra WebGL 3D 查看器，研究并复现 ReDriveToon、AngelRing、多角色编排与可切换 3D 场景；项目基于原始 Magi3Dviewer。',
         ogDescription: '研究并复现 ReDriveToon、AngelRing 与场景编排控制的 Magia Exedra 3D 查看器。',
     },
+    'ja-JP': {
+        title: 'Magius3Dviewer｜Magia Exedra 公式風3Dシェーダービューアー',
+        description: 'Magius3Dviewer は、ReDriveToon、AngelRing、複数キャラクター配置、切り替え可能な3Dシーンを再現する独立した Magia Exedra WebGL 3Dビューアーです。',
+        ogDescription: 'ReDriveToon、AngelRing、シーン配置機能を備えた Magia Exedra 3Dビューアー。',
+    },
 }
 
 /**
  * English remains the canonical UI key so lil-gui preset names and shared URLs
- * stay stable. Simplified Chinese is a presentation layer applied to the DOM.
+ * stay stable. Simplified Chinese and Japanese are presentation layers applied
+ * to the DOM.
  */
 export const zhCnUiText: Readonly<Record<string, string>> = {
     'Magius3Dviewer is loading the official-style shader and character model...': 'Magius3Dviewer 正在加载官方风格着色器与角色模型……',
@@ -31,6 +43,237 @@ export const zhCnUiText: Readonly<Record<string, string>> = {
     'Remove selected model': '移除当前角色模型',
     '<No target selected>': '<未选择角色>',
     'Add model': '添加角色模型',
+    'Search:': '搜索：',
+    'ID / Name': '编号 / 名称',
+    'Search characters by name or ID': '按角色名称或编号搜索',
+    'Characters': '角色',
+    'Show character list': '展开角色清单',
+    'Hide character list': '收起角色清单',
+    'Search characters': '搜索角色',
+    'Character list': '角色清单',
+    'Selected character': '所选角色',
+    'No character selected': '未选择角色',
+    'Available characters': '可用角色',
+    'Matching characters': '匹配角色',
+    'No matching characters': '没有匹配的角色',
+    'Switch character': '切换角色',
+    'Character selected in viewer': '已在查看器中选择角色',
+    'Magical girls': '魔法少女',
+    'Show magical girl list': '展开魔法少女清单',
+    'Hide magical girl list': '收起魔法少女清单',
+    'Search magical girls': '搜索魔法少女',
+    'Magical girl list': '魔法少女清单',
+    'Selected magical girl': '所选魔法少女',
+    'No magical girl selected': '未选择魔法少女',
+    'Available magical girls': '可用魔法少女',
+    'Matching magical girls': '匹配魔法少女',
+    'No matching magical girls': '没有匹配的魔法少女',
+    'Switch magical girl': '切换魔法少女',
+    'Magical girl selected in viewer': '已在查看器中选择魔法少女',
+    'Show scene list': '展开场景清单',
+    'Hide scene list': '收起场景清单',
+    'Search scenes': '搜索场景',
+    'Scene list': '场景清单',
+    'Selected scene': '所选场景',
+    'No scene selected': '未选择场景',
+    'Available scenes': '可用场景',
+    'Matching scenes': '匹配场景',
+    'No matching scenes': '没有匹配的场景',
+    'Load selected scene': '加载所选场景',
+    'Scene selected in viewer': '已在查看器中选择场景',
+    'Enemies': '敌人',
+    'Choose enemy': '选择敌人',
+    'Add selected enemy': '添加所选敌人',
+    'Show enemies': '展开敌人清单',
+    'Hide enemies': '收起敌人清单',
+    'Search enemies': '搜索敌人',
+    'Type a name or ID': '输入名称或 ID',
+    'Enemy list': '敌人清单',
+    "Enemy animation loop": "循环敌人动作",
+    "Enemy animation speed": "敌人动作速度",
+    "Play enemy animation": "播放敌人动作",
+    "Enemy animation": "敌人动作",
+    "Pause enemy animation": "暂停敌人动作",
+    "Resume enemy animation": "继续敌人动作",
+    "Enemy animation paused": "敌人动作已暂停",
+    "Enemy animation playing": "敌人动作播放中",
+    'Selected enemy': '所选敌人',
+    'No enemy selected': '未选择敌人',
+    'Quantity': '数量',
+    'Add enemy': '添加敌人',
+    'Active enemies': '已添加的敌人',
+    'No enemies added': '尚未添加敌人',
+    'Remove': '移除',
+    'Clear all': '全部移除',
+    'Loading enemy list...': '正在加载敌人清单……',
+    'Available enemies': '可用敌人',
+    'Matching enemies': '匹配敌人',
+    'No matching enemies': '没有匹配的敌人',
+    'Adding enemy...': '正在添加敌人……',
+    'Adding enemies...': '正在批量添加敌人……',
+    'Enemy added': '已添加敌人',
+    'Enemies added': '已添加敌人',
+    'Enemy removed': '已移除敌人',
+    'All enemies removed': '已全部移除',
+    'Enemy list could not be loaded': '敌人清单加载失败',
+    'Enemy data is invalid': '敌人数据无效',
+    'Enemy was not found': '未找到该敌人',
+    'Enemy model is not ready': '该敌人模型尚未就绪',
+    'Enemy model could not be loaded': '敌人模型加载失败',
+    'Enemy model could not be read': '敌人模型解析失败',
+    'Unexpected enemy error': '敌人加载发生未知错误',
+    'Combat effects': '战斗特效',
+    'Show combat effects': '展开战斗特效',
+    'Hide combat effects': '收起战斗特效',
+    'Enable combat effects': '启用战斗特效',
+    'Effect source': '特效来源',
+    'All combat effects': '全部战斗特效',
+    'Enemy combat effects': '敌人战斗特效',
+    'Magical girl combat effects': '魔法少女战斗特效',
+    'Search combat effects': '搜索战斗特效',
+    'Type a stable key or direction key': '输入稳定键或方向键',
+    'Combat effect list': '战斗特效清单',
+    'Loading combat effects...': '正在加载战斗特效……',
+    'Combat effects could not be loaded': '战斗特效加载失败',
+    'Available combat effects': '可用战斗特效',
+    'Matching combat effects': '匹配战斗特效',
+    'No matching combat effects': '没有匹配的战斗特效',
+    'Selected combat effect': '所选战斗特效',
+    'No combat effect selected': '未选择战斗特效',
+    'Playable': '可播放',
+    'Direction key': '方向键',
+    'Unavailable reason': '不可用原因',
+    'Play selected effect': '播放所选特效',
+    'Stop all effects': '停止全部特效',
+    'Installed': '已接入',
+    'Active effects': '活动特效',
+    'Suppressed cues': '已抑制触发',
+    'Combat effects enabled': '战斗特效已开启',
+    'Combat effects disabled; active effects cleared': '战斗特效已关闭；活动特效已清空',
+    'All combat effects stopped': '已停止全部战斗特效',
+    'Loading selected combat effect...': '正在载入所选战斗特效……',
+    'Combat effect started': '战斗特效已播放',
+    'Combat effect cue suppressed': '战斗特效触发已抑制',
+    'Combat effect could not be played': '战斗特效播放失败',
+    'Voice / Subtitles': '语音/字幕',
+    'UI language': '界面语言',
+    'Home voice': '看板语音',
+    'Show voice and subtitles': '展开语音与字幕',
+    'Hide voice and subtitles': '收起语音与字幕',
+    'Auto sequence': '自动顺序播放',
+    'Subtitles': '字幕',
+    'Subtitle language': '字幕语言',
+    'Show subtitles': '显示字幕',
+    'Follow original motion': '跟随原始动作',
+    'Follow original expression': '跟随原始表情',
+    'Subtitle source': '字幕来源',
+    'Official subtitle language': '官方字幕语言',
+    'Fallback': '回退',
+    'Voice list': '语音清单',
+    'Loading voice catalog...': '正在加载语音目录……',
+    'Voice catalog ready': '语音目录已就绪',
+    'Voice catalog could not be loaded': '语音目录加载失败',
+    'Select a magical girl to view voices': '请选择魔法少女以查看语音',
+    'Voices': '条语音',
+    'Selected voice': '所选语音',
+    'No voice selected': '未选择语音',
+    'Voice playback controls': '语音播放控制',
+    'Play sequence': '顺序播放',
+    'Multitrack audio': '多音轨',
+    'Character tracks': '角色音轨',
+    'Background tracks': '背景音轨',
+    'Background track': '背景音轨',
+    'Upload audio': '上传音频',
+    'Add background track': '添加背景音轨',
+    'No loaded characters': '当前没有已加载角色',
+    'No background tracks': '尚未添加背景音轨',
+    'No audio loaded': '未选择音频',
+    'Multitrack runtime is not connected': '多音轨运行时尚未接入',
+    'Audio workspace operation failed': '音轨操作失败',
+    'Clear track': '清空音轨',
+    'Delete track': '删除音轨',
+    'Volume': '音量',
+    'Loop': '循环',
+    'Background tracks do not drive lip sync': '背景音轨不驱动口型',
+    'Previous': '上一条',
+    'Next': '下一条',
+    'Resume': '继续',
+    'Voice timeline': '语音进度',
+    'Order': '顺序',
+    'Cue name': 'Cue 名称',
+    'Playback': '播放状态',
+    'Lip sync': '口型同步',
+    'Mouth carrier': '口型载体',
+    'idle': '待机',
+    'empty': '空',
+    'loading': '加载中',
+    'ready': '已就绪',
+    'playing': '播放中',
+    'paused': '已暂停',
+    'ended': '已结束',
+    'error': '错误',
+    'disposed': '已释放',
+    'multiwave': '多波合成',
+    'official-binary': '官方二态',
+    'Loading selected voice...': '正在加载所选语音……',
+    'Voice playback started': '语音已开始播放',
+    'Voice operation was not started': '语音操作未启动',
+    'Voice operation failed': '语音操作失败',
+    'Loading voice sequence...': '正在加载语音队列……',
+    'Voice sequence started': '语音队列已开始播放',
+    'Loading previous voice...': '正在加载上一条语音……',
+    'Previous voice started': '上一条语音已开始播放',
+    'Loading next voice...': '正在加载下一条语音……',
+    'Next voice started': '下一条语音已开始播放',
+    'Voice playback paused': '语音已暂停',
+    'Resuming voice...': '正在继续语音……',
+    'Voice playback resumed': '语音已继续播放',
+    'Voice playback stopped': '语音已停止',
+    'Resources': '资源',
+    'Show official resources': '展开官方资源目录',
+    'Hide official resources': '收起官方资源目录',
+    'Official resources': '官方资源目录',
+    'Resource type': '资源类型',
+    'Scenes': '场景',
+    'Enemy models': '敌人模型',
+    'VFX': '视觉特效',
+    'VFX domain': '特效归属',
+    'All VFX': '全部特效',
+    'Enemy VFX': '敌人特效',
+    'Character VFX': '角色特效',
+    'Search official resources': '搜索官方资源',
+    'Name, ID, or stable key': '名称、ID 或稳定键',
+    'Official resource list': '官方资源清单',
+    'Loading official resources...': '正在加载官方资源目录……',
+    'Official resources could not be loaded': '官方资源目录加载失败',
+    'Available official resources': '可用官方资源',
+    'Matching official resources': '匹配的官方资源',
+    'No matching official resources': '没有匹配的官方资源',
+    'Selected resource': '所选资源',
+    'No official resource selected': '未选择官方资源',
+    'Use selected stage': '在查看器中使用场景',
+    'Open in enemy panel': '在敌人面板中选择',
+    'No direct viewer action': '无直接查看器操作',
+    'Open release preview': '打开 Release 独立预览',
+    'Resource selected in viewer': '已在查看器中选择资源',
+    'Runtime ready': '运行时可用',
+    'Unavailable': '不可用',
+    'Stable key': '稳定键',
+    'Display name': '显示名称',
+    'English': '英文',
+    'Japanese': '日文',
+    'Traditional Chinese': '繁体中文',
+    'Family': '资源族',
+    'Model key': '模型键',
+    'Record IDs': '记录 ID',
+    'Domain': '归属',
+    'Owner': '所有者',
+    'Direction': '动作方向',
+    'Status': '状态',
+    'Reason': '原因',
+    'Scene is not present in the viewer selector': '查看器场景选择框中没有该场景',
+    'Enemy is not present in the enemy selector': '敌人选择框中没有该敌人',
+    'This resource is not runtime-ready': '该资源的运行时尚未就绪',
     'Animation': '动作',
     'Choose animation': '选择动作',
     'Choose expression': '选择表情',
@@ -48,12 +291,25 @@ export const zhCnUiText: Readonly<Record<string, string>> = {
     "Adjust this character's available mouth-corner bindings": '调节当前角色实际拥有的嘴角绑定（左为下垂，右为上扬）',
     'Play animation': '播放动作',
     'Pause animation': '暂停动作',
+    'Loading official character actions...': '正在载入官方角色动作……',
+    'Loading official character action...': '正在载入官方角色动作……',
+    'Official character actions could not be loaded': '官方角色动作载入失败',
+    'No official character actions for this character': '当前角色没有官方探索动作',
+    'No playable official character actions': '当前角色没有可播放的官方探索动作',
+    'Playing official character action': '正在播放官方角色动作',
+    'Paused official character action': '官方角色动作已暂停',
+    'Official character action interrupted': '官方角色动作已中断',
+    'Official character action unavailable': '官方角色动作当前不可用',
     'Choose 3D stage': '选择 3D 场景',
     'Collapse controls': '折叠控制栏',
     'Expand controls': '展开控制栏',
     'Rendering controls': '渲染设置',
     'Show rendering controls': '展开渲染设置',
     'Hide rendering controls': '收起渲染设置',
+    'Shadow quality': '阴影画质',
+    'Official quality': '官方画质',
+    'Balanced': '均衡',
+    'Performance first': '性能优先',
     'Action panel': '动作面板',
     'Show action parameters': '展开动作参数',
     'Hide action parameters': '收起动作参数',
@@ -78,10 +334,26 @@ export const zhCnUiText: Readonly<Record<string, string>> = {
     'Reset expression parameters': '重置表情参数',
     'Direct drag pose': '直接拖拽编辑动作',
     'Exit direct drag pose': '退出拖拽编辑',
+    'Transform mode': '变换模式',
+    'Move XYZ': '移动 XYZ',
+    'Rotate XYZ': '旋转 XYZ',
+    'Click a body part, then drag the XYZ arrows': '点击身体部位后拖拽 XYZ 箭头',
+    'Drag the XYZ arrows, or drag the body part in the camera plane; hold Alt for depth': '拖拽 XYZ 箭头，或直接拖动身体部位；按住 Alt 调整前后深度',
     'Click a body part, then drag it or use the rotation rings': '点击身体部位后直接拖拽，或使用旋转环精调',
     'Drag vertically for local X, horizontally for local Z; hold Alt for local Y': '纵向拖拽调局部 X，横向拖拽调局部 Z；按住 Alt 调局部 Y',
     'No weighted bone at this point': '此处没有可编辑的蒙皮骨骼',
     'Selected bone': '当前骨骼',
+    'Model part': '模型部件',
+    'Model part visibility': '模型部件显示',
+    'Model part search': '模型部件搜索',
+    'Search model parts': '搜索模型部件',
+    'No model parts': '当前角色没有可切换的模型部件',
+    'Selected model part': '当前模型部件',
+    'No model part selected': '未选择模型部件',
+    'Hide selected part': '隐藏选中部件',
+    'Show selected part': '显示选中部件',
+    'Show all parts': '显示全部部件',
+    'Hidden': '隐藏',
     'Common body controls': '常用肢体设置',
     'All bone controls': '全部骨骼设置',
     'Common expression controls': '常用表情设置',
@@ -191,6 +463,27 @@ export const zhCnUiText: Readonly<Record<string, string>> = {
     'Place characters at stage spawns': '将角色放置到场景出生点',
     'Seek (seconds)': '定位时间（秒）',
     'Time scale': '时间倍率',
+    'Physics action options': '物理动作选项',
+    'Loading physics action options...': '正在加载物理动作选项……',
+    'Physics phases': '物理动作阶段',
+    'Related official actions': '相关官方动作',
+    'Special skill reserve': '必杀技预备阶段',
+    'Special skill reserve and pre-special': '必杀技预备及前置阶段',
+    'Awaiting official action phase consumer': '等待官方动作阶段接入',
+    'Activate phase': '启用阶段',
+    'Phase active': '阶段已启用',
+    'Release phase': '释放阶段',
+    'Activating...': '正在启用……',
+    'Activating physics phase...': '正在启用物理阶段……',
+    'Physics phase active': '物理阶段已启用',
+    'Action-owned phase root': '官方动作阶段节点',
+    'External phase root': '外部阶段节点',
+    'Ready for active official action': '可接入当前官方动作',
+    'Play an official action before activating this phase': '请先播放该角色的官方动作，再启用此阶段',
+    'No physics action phases for this character': '该角色没有物理动作阶段',
+    'No related official actions for this character': '该角色没有相关官方动作',
+    'Physics action options unavailable': '物理动作选项不可用',
+    'Select a character to view physics action options': '选择角色后查看物理动作选项',
     'Play': '播放',
     'Pause': '暂停',
     'Restart': '重新开始',
@@ -445,6 +738,7 @@ function translateTechnicalTokens(value: string): string | undefined {
 
 export function translateBoneChannelLabel(name: string, locale: UiLocale = currentLocale): string {
     if (locale === 'en' || !name) return name
+    if (locale === 'ja-JP') return translateJaJpBoneChannelLabel(name)
     const side = /(?:^|[_ .:/-])(?:left|l)(?:$|[_ .:/-])/i.test(name) || /^L(?=[A-Z])/.test(name)
         ? '左'
         : /(?:^|[_ .:/-])(?:right|r)(?:$|[_ .:/-])/i.test(name) || /^R(?=[A-Z])/.test(name)
@@ -461,6 +755,7 @@ export function translateBoneChannelLabel(name: string, locale: UiLocale = curre
 
 export function translateMorphChannelLabel(name: string, locale: UiLocale = currentLocale): string {
     if (locale === 'en' || !name) return name
+    if (locale === 'ja-JP') return translateJaJpMorphChannelLabel(name)
     return translateTechnicalTokens(name) ?? name
 }
 
@@ -499,6 +794,7 @@ export function getUiLocale(): UiLocale {
 
 export function translateUiText(text: string, locale: UiLocale = currentLocale): string {
     if (locale === 'en' || !text) return text
+    if (locale === 'ja-JP') return translateJaJpUiText(text)
     const exact = zhCnUiText[text]
     if (exact) return exact
     for (const [pattern, replacement] of uiTextPatterns) {
@@ -517,9 +813,10 @@ export function installLocalization() {
     if (installed) return
     installed = true
 
-    const toggle = document.getElementById('language-toggle') as HTMLButtonElement | null
-    toggle?.addEventListener('click', () => {
-        setUiLocale(currentLocale === 'en' ? 'zh-CN' : 'en')
+    const selector = document.getElementById('language-toggle') as HTMLSelectElement | null
+    selector?.addEventListener('change', () => {
+        if (isUiLocale(selector.value)) setUiLocale(selector.value)
+        else selector.value = currentLocale
     })
 
     applyLocale(currentLocale, false)
@@ -556,6 +853,7 @@ function applyLocale(locale: UiLocale, persist: boolean) {
     }
 
     document.documentElement.lang = locale
+    document.documentElement.dataset.uiLocale = locale
     translateTree(document)
     applyDocumentMetadata(locale)
     updateLanguageToggle(locale)
@@ -625,15 +923,12 @@ function shouldIgnore(element: Element) {
 }
 
 function updateLanguageToggle(locale: UiLocale) {
-    const toggle = document.getElementById('language-toggle') as HTMLButtonElement | null
-    if (!toggle) return
-
-    const targetIsChinese = locale === 'en'
-    toggle.textContent = targetIsChinese ? '中' : 'EN'
-    toggle.title = targetIsChinese ? 'Switch to Simplified Chinese' : '切换为英文'
-    toggle.setAttribute('aria-label', toggle.title)
-    toggle.setAttribute('aria-pressed', String(locale === 'zh-CN'))
-    toggle.dataset.currentLocale = locale
+    const selector = document.getElementById('language-toggle') as HTMLSelectElement | null
+    if (!selector) return
+    selector.value = locale
+    selector.title = translateUiText('UI language', locale)
+    selector.setAttribute('aria-label', selector.title)
+    selector.dataset.currentLocale = locale
 }
 
 function applyDocumentMetadata(locale: UiLocale) {
@@ -661,7 +956,7 @@ function applyDocumentMetadata(locale: UiLocale) {
 function detectInitialLocale(): UiLocale {
     try {
         const saved = localStorage.getItem(LOCALE_STORAGE_KEY)
-        if (saved === 'en' || saved === 'zh-CN') return saved
+        if (isUiLocale(saved)) return saved
     } catch {
         // Fall through to browser-language detection.
     }
@@ -669,7 +964,11 @@ function detectInitialLocale(): UiLocale {
     const languages = navigator.languages?.length
         ? navigator.languages
         : [navigator.language]
-    return languages.some(language => language.toLowerCase().startsWith('zh'))
-        ? 'zh-CN'
-        : 'en'
+    if (languages.some(language => language.toLowerCase().startsWith('zh'))) return 'zh-CN'
+    if (languages.some(language => language.toLowerCase().startsWith('ja'))) return 'ja-JP'
+    return 'en'
+}
+
+function isUiLocale(value: string | null): value is UiLocale {
+    return value === 'en' || value === 'zh-CN' || value === 'ja-JP'
 }

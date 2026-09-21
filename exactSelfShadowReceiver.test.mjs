@@ -59,7 +59,11 @@ test('receiver NdotL fix gets view-space normal and light direction', () => {
   );
   assert.match(
     face,
-    /rdToonSelfShadowVisibility\(\s*vRdToonWorldPosition,\s*vFaceSelfShadowNormalVS\s*\)/,
+    /float rdMaskNdotL = dot\(\s*rdFaceLightVS,\s*normalize\(vFaceSelfShadowNormalVS\)\s*\)/,
+  );
+  assert.doesNotMatch(
+    face,
+    /rdToonSelfShadowVisibility\(\s*vRdToonWorldPosition/,
   );
 });
 

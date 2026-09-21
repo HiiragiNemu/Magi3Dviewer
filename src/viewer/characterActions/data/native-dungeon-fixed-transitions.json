@@ -1,0 +1,357 @@
+{
+  "schema": "native-dungeon-fixed-transitions.v1",
+  "scope": "fixed durations only; no state selection, interruption, stairs or curves",
+  "profiles": [
+    {
+      "characterId": 100201,
+      "controllerPathId": "6411218269470645876",
+      "modelKey": "battle/character/chara_100201_battle_unit",
+      "transitions": [
+        {
+          "fromClipPathId": "8769611855754149605",
+          "toClipPathId": "5552686802114471708",
+          "seconds": 0.25,
+          "sourceState": "Idle",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "5552686802114471708",
+          "toClipPathId": "8769611855754149605",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Idle",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "5552686802114471708",
+          "toClipPathId": "2166187276406549931",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Run",
+          "sourceTransitionOrdinal": 1
+        },
+        {
+          "fromClipPathId": "2166187276406549931",
+          "toClipPathId": "5552686802114471708",
+          "seconds": 0.25,
+          "sourceState": "Run",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        }
+      ]
+    },
+    {
+      "characterId": 100202,
+      "controllerPathId": "5516319598753555346",
+      "modelKey": "battle/character/chara_100202_battle_unit",
+      "transitions": [
+        {
+          "fromClipPathId": "3455679281145208352",
+          "toClipPathId": "-4355229156055609924",
+          "seconds": 0.25,
+          "sourceState": "Idle",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "-4355229156055609924",
+          "toClipPathId": "3455679281145208352",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Idle",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "-4355229156055609924",
+          "toClipPathId": "6870887992539170635",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Run",
+          "sourceTransitionOrdinal": 1
+        },
+        {
+          "fromClipPathId": "6870887992539170635",
+          "toClipPathId": "-4355229156055609924",
+          "seconds": 0.25,
+          "sourceState": "Run",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        }
+      ]
+    },
+    {
+      "characterId": 100301,
+      "controllerPathId": "-7281104000621840803",
+      "modelKey": "battle/character/chara_100301_battle_unit",
+      "transitions": [
+        {
+          "fromClipPathId": "-6532624707838147585",
+          "toClipPathId": "4412818012340897786",
+          "seconds": 0.15000000596046448,
+          "sourceState": "Idle",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "4412818012340897786",
+          "toClipPathId": "-6532624707838147585",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Idle",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "4412818012340897786",
+          "toClipPathId": "-2942221244478808616",
+          "seconds": 0.15000000596046448,
+          "sourceState": "Walk",
+          "destinationState": "Run",
+          "sourceTransitionOrdinal": 1
+        },
+        {
+          "fromClipPathId": "-2942221244478808616",
+          "toClipPathId": "4412818012340897786",
+          "seconds": 0.25,
+          "sourceState": "Run",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        }
+      ]
+    },
+    {
+      "characterId": 100401,
+      "controllerPathId": "-1771187518691738302",
+      "modelKey": "battle/character/chara_100401_battle_unit",
+      "transitions": [
+        {
+          "fromClipPathId": "742638201645580318",
+          "toClipPathId": "8007403257406808017",
+          "seconds": 0.15000000596046448,
+          "sourceState": "Idle",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "8007403257406808017",
+          "toClipPathId": "742638201645580318",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Idle",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "8007403257406808017",
+          "toClipPathId": "6622641385317462365",
+          "seconds": 0.15000000596046448,
+          "sourceState": "Walk",
+          "destinationState": "Run",
+          "sourceTransitionOrdinal": 1
+        },
+        {
+          "fromClipPathId": "6622641385317462365",
+          "toClipPathId": "8007403257406808017",
+          "seconds": 0.25,
+          "sourceState": "Run",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        }
+      ]
+    },
+    {
+      "characterId": 100501,
+      "controllerPathId": "-8272103785561582854",
+      "modelKey": "battle/character/chara_100501_battle_unit",
+      "transitions": [
+        {
+          "fromClipPathId": "-7248231595885939743",
+          "toClipPathId": "5505469539607669684",
+          "seconds": 0.25,
+          "sourceState": "Idle",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "5505469539607669684",
+          "toClipPathId": "-7248231595885939743",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Idle",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "5505469539607669684",
+          "toClipPathId": "-6391903494703138077",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Run",
+          "sourceTransitionOrdinal": 1
+        },
+        {
+          "fromClipPathId": "-6391903494703138077",
+          "toClipPathId": "5505469539607669684",
+          "seconds": 0.25,
+          "sourceState": "Run",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        }
+      ]
+    },
+    {
+      "characterId": 100801,
+      "controllerPathId": "-661026868254652081",
+      "modelKey": "battle/character/chara_100801_battle_unit",
+      "transitions": [
+        {
+          "fromClipPathId": "-5469110810528762504",
+          "toClipPathId": "4842258427157087973",
+          "seconds": 0.25,
+          "sourceState": "Idle",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "4842258427157087973",
+          "toClipPathId": "-5469110810528762504",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Idle",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "4842258427157087973",
+          "toClipPathId": "2124044840696100266",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Run",
+          "sourceTransitionOrdinal": 1
+        },
+        {
+          "fromClipPathId": "2124044840696100266",
+          "toClipPathId": "4842258427157087973",
+          "seconds": 0.25,
+          "sourceState": "Run",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        }
+      ]
+    },
+    {
+      "characterId": 109201,
+      "controllerPathId": "1642633670405897010",
+      "modelKey": "battle/character/chara_109201_battle_unit",
+      "transitions": [
+        {
+          "fromClipPathId": "-6900520452219772459",
+          "toClipPathId": "-5436747686551487151",
+          "seconds": 0.25,
+          "sourceState": "Idle",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "-5436747686551487151",
+          "toClipPathId": "-6900520452219772459",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Idle",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "-5436747686551487151",
+          "toClipPathId": "6679185130116629858",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Run",
+          "sourceTransitionOrdinal": 1
+        },
+        {
+          "fromClipPathId": "6679185130116629858",
+          "toClipPathId": "-5436747686551487151",
+          "seconds": 0.25,
+          "sourceState": "Run",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        }
+      ]
+    },
+    {
+      "characterId": 111501,
+      "controllerPathId": "-7721054230590721748",
+      "modelKey": "battle/character/chara_111501_battle_unit",
+      "transitions": [
+        {
+          "fromClipPathId": "-8147342306671538667",
+          "toClipPathId": "8704101074324104010",
+          "seconds": 0.25,
+          "sourceState": "Idle",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "8704101074324104010",
+          "toClipPathId": "-8147342306671538667",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Idle",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "8704101074324104010",
+          "toClipPathId": "-218955251112955242",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Run",
+          "sourceTransitionOrdinal": 1
+        },
+        {
+          "fromClipPathId": "-218955251112955242",
+          "toClipPathId": "8704101074324104010",
+          "seconds": 0.25,
+          "sourceState": "Run",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        }
+      ]
+    },
+    {
+      "characterId": 114501,
+      "controllerPathId": "-4140883676091326356",
+      "modelKey": "battle/character/chara_114501_battle_unit",
+      "transitions": [
+        {
+          "fromClipPathId": "5782248522466762648",
+          "toClipPathId": "-3773370322729148958",
+          "seconds": 0.25,
+          "sourceState": "Idle",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "-3773370322729148958",
+          "toClipPathId": "5782248522466762648",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Idle",
+          "sourceTransitionOrdinal": 0
+        },
+        {
+          "fromClipPathId": "-3773370322729148958",
+          "toClipPathId": "6481958219775334976",
+          "seconds": 0.25,
+          "sourceState": "Walk",
+          "destinationState": "Run",
+          "sourceTransitionOrdinal": 1
+        },
+        {
+          "fromClipPathId": "6481958219775334976",
+          "toClipPathId": "-3773370322729148958",
+          "seconds": 0.25,
+          "sourceState": "Run",
+          "destinationState": "Walk",
+          "sourceTransitionOrdinal": 0
+        }
+      ]
+    }
+  ]
+}

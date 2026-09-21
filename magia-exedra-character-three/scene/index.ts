@@ -1,6 +1,11 @@
+import { startLoadingTask } from '../loadingProgress.ts'
 import * as THREE from 'three';
 import type MagiaExedraCharacterThree from '..'
-import { createRenderer } from '../renderer'
+import {
+    createRenderer,
+    getRenderPauseState,
+    updateCameraRenderLoops,
+} from '../renderer'
 import type MagiaExedraCharacter3D from '../character'
 import type { LoadCharacterCallbacks } from '../loader';
 import { SceneShadowController } from './shadow'
@@ -10,14 +15,22 @@ import { ReDriveSelfShadowController } from './selfShadow'
 import { ReDriveCameraDepthController } from './cameraDepth'
 import { updateReDriveCharacterLightingDirection } from '../shaders/stylization'
 import { StageCharacterShadowBridge } from '../../src/viewer/stageCharacterShadowBridge'
-
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
+import { readDiagnosticCameraInitialState } from './diagnosticCamera'
 
 export interface SceneCharacter {
     character?: MagiaExedraCharacter3D
     loading: boolean
+    loadGeneration?: number
+    loadController?: AbortController
+    loadPromise?: Promise<SceneCharacter>
+    requestedId?: number | string
+    retainedCharacter?: MagiaExedraCharacter3D
+    activeProgressCallback?: (progress: string) => any
+    /** @deprecated superseded by the single generation-owned transaction */
     pending?: number | string
+    /** @deprecated superseded by loadPromise */
     pendingResolve?: (value: SceneCharacter) => void
     removed: boolean
 }
@@ -26,6 +39,38 @@ export interface ColorFilter {
     brightness: number
     contrast: number
     saturation: number
+}
+
+interface ReDriveDiagnosticUniform {
+    id?: string | number
+    type?: number
+    size?: number
+    seq?: ReDriveDiagnosticUniform[]
+}
+
+interface ReDriveDiagnosticProgram {
+    id?: number
+    name?: string
+    cacheKey?: string
+    program?: WebGLProgram
+    getUniforms?: () => { seq?: ReDriveDiagnosticUniform[] }
+}
+
+interface ReDriveTextureUnitOverflowRecord {
+    programId: number | null
+    programName: string | null
+    cacheKey: string
+    requestedTextureUnits: number
+    count: number
+    samplers: Array<{ name: string; type: number; size: number }>
+}
+
+interface ReDriveTextureUnitAssignmentRecord {
+    programId: number | null
+    programName: string | null
+    uniformName: string
+    assignedUnits: number[]
+    count: number
 }
 
 export class MagiaExedraScene3D {
@@ -47,7 +92,11 @@ export class MagiaExedraScene3D {
 
     camera: THREE.PerspectiveCamera
     cameraRotation: number | undefined = undefined
-    static cameraInitialFov = 15
+    // Official ReDrive camera globals write 1 / Camera.fieldOfView to
+    // _GlobalFOVorOrthoSizeFix. The live 1536x864 character draw and its
+    // MatrixVP both resolve to 40 degrees. Keeping the Viewer at 15 degrees
+    // inflated every projected-common AngelRing footprint by 40 / 15.
+    static cameraInitialFov = 40
     static cameraInitialPosition: [number, number, number] = [0, 1.5, 7.5]
 
     controls: OrbitControls
@@ -67,6 +116,7 @@ export class MagiaExedraScene3D {
     shadow: SceneShadowController
     selfShadow: ReDriveSelfShadowController
     cameraDepth: ReDriveCameraDepthController
+    private beforeRenderCallbacks = new Set<() => void>()
     static shadowEnabled = true
     static shadowResolution = 4096
     static shadowBias = 0
@@ -94,8 +144,9 @@ export class MagiaExedraScene3D {
                 || this.effects.urpBloomPass.enabled
                 || this.effects.backgroundColorAdjustPass.enabled
                 || this.effects.paraffinPass.enabled
-                || this.effects.volumePostProcessPass.enabled
-                || this.effects.effectiveAntiAliasing !== 'None'
+            || this.effects.volumePostProcessPass.enabled
+            || this.effects.combatVfxScreenPass.enabled
+            || this.effects.effectiveAntiAliasing !== 'None'
             ) {
                 return true
             }
@@ -113,6 +164,19 @@ export class MagiaExedraScene3D {
     private foregroundCaptureActive = false
     private captureRenderIntervalMs = 0
     private nextCaptureRenderAt = 0
+    private nextVisualDiagnosticAt = 0
+    private textureUnitOverflowRecords = new Map<
+        string,
+        ReDriveTextureUnitOverflowRecord
+    >()
+    private textureUnitOverflowAssignments = new Map<
+        string,
+        ReDriveTextureUnitAssignmentRecord
+    >()
+    private textureUnitAssignments = new Map<
+        string,
+        ReDriveTextureUnitAssignmentRecord
+    >()
 
     taaCount = 0
 
@@ -136,12 +200,16 @@ export class MagiaExedraScene3D {
             antialias: false,
             powerPreference: 'high-performance',
             alpha: true, // transparent background
-            preserveDrawingBuffer: true, // allow it to be captured, for photo mode
+            // Photo/export paths render and copy synchronously below. Keeping
+            // every interactive frame alive forces Chromium to retain another
+            // full-resolution back buffer for every open Viewer page.
+            preserveDrawingBuffer: false,
         });
         this.renderer.setPixelRatio(this.getRenderPixelRatio());
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         this.renderer.xr.enabled = true
+        this.installTextureUnitOverflowDiagnostic()
 
         this.setColorFilter(MagiaExedraScene3D.colorFilter)
 
@@ -188,6 +256,27 @@ export class MagiaExedraScene3D {
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.enableDamping = true;
         this.controls.target.set(...MagiaExedraScene3D.controlsInitialTarget);
+        const diagnosticCamera = readDiagnosticCameraInitialState(
+            window.location.search,
+        )
+        if (diagnosticCamera?.position) {
+            this.camera.position.set(...diagnosticCamera.position)
+        }
+        if (diagnosticCamera?.target) {
+            this.controls.target.set(...diagnosticCamera.target)
+        }
+        if (diagnosticCamera) {
+            this.controls.update()
+            this.renderer.domElement.dataset.reDriveDiagnosticCameraInitialState =
+                JSON.stringify({
+                    ...diagnosticCamera,
+                    orbitUnrestricted:
+                        this.controls.minPolarAngle === 0
+                        && this.controls.maxPolarAngle === Math.PI
+                        && this.controls.minDistance === 0
+                        && this.controls.maxDistance === Infinity,
+                })
+        }
 
         this.selfShadow = new ReDriveSelfShadowController(this)
         this.cameraDepth = new ReDriveCameraDepthController(this)
@@ -224,7 +313,9 @@ export class MagiaExedraScene3D {
                     this.nextCaptureRenderAt += this.captureRenderIntervalMs
                 } while (this.nextCaptureRenderAt <= timestamp)
             }
+            updateCameraRenderLoops(this.camera)
             this.stageCharacterShadows.update()
+            this.beforeRenderCallbacks.forEach(callback => callback())
             updateReDriveCharacterLightingDirection(this.camera)
             this.selfShadow.render()
             this.cameraDepth.render()
@@ -236,6 +327,7 @@ export class MagiaExedraScene3D {
             this.perfRender.start()
             this.renderCurrentFrame()
             this.perfRender.stop()
+            this.publishVisualDiagnostic(timestamp)
         })
 
         window.addEventListener('resize', () => {
@@ -245,6 +337,345 @@ export class MagiaExedraScene3D {
                 host?.clientHeight || window.innerHeight,
             )
         });
+    }
+
+    private installTextureUnitOverflowDiagnostic() {
+        if (
+            new URLSearchParams(window.location.search).get('diagnostic')
+            !== 'gem-view-angle'
+        ) return
+
+        const gl = this.renderer.getContext() as WebGL2RenderingContext
+        const maxTextureUnits = Number(gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS))
+        const samplerTypes = new Set<number>([
+            gl.SAMPLER_2D,
+            gl.SAMPLER_CUBE,
+            gl.SAMPLER_2D_SHADOW,
+            gl.SAMPLER_CUBE_SHADOW,
+            gl.SAMPLER_2D_ARRAY,
+            gl.SAMPLER_2D_ARRAY_SHADOW,
+            gl.INT_SAMPLER_2D,
+            gl.INT_SAMPLER_2D_ARRAY,
+            gl.UNSIGNED_INT_SAMPLER_2D,
+            gl.UNSIGNED_INT_SAMPLER_2D_ARRAY,
+        ])
+        const originalWarn = console.warn.bind(console)
+        console.warn = (...args: unknown[]) => {
+            const message = args.map(value => String(value)).join(' ')
+            const match = message.match(
+                /Trying to use (\d+) texture units while this GPU supports only (\d+)/,
+            )
+            if (match) {
+                const requestedTextureUnits = Number(match[1])
+                const currentProgram = gl.getParameter(
+                    gl.CURRENT_PROGRAM,
+                ) as WebGLProgram | null
+                const programs = (this.renderer.info.programs ?? []) as unknown as
+                    ReDriveDiagnosticProgram[]
+                const program = programs.find(entry =>
+                    entry.program === currentProgram
+                )
+                const samplers: ReDriveTextureUnitOverflowRecord['samplers'] = []
+                if (currentProgram) {
+                    const uniformCount = Number(gl.getProgramParameter(
+                        currentProgram,
+                        gl.ACTIVE_UNIFORMS,
+                    ))
+                    for (let index = 0; index < uniformCount; index += 1) {
+                        const uniform = gl.getActiveUniform(currentProgram, index)
+                        if (!uniform || !samplerTypes.has(uniform.type)) continue
+                        samplers.push({
+                            name: uniform.name.replace(/\[0\]$/, ''),
+                            type: uniform.type,
+                            size: Math.max(1, uniform.size),
+                        })
+                    }
+                }
+                const cacheKey = String(program?.cacheKey ?? '')
+                const key = [
+                    program?.id ?? 'unknown',
+                    program?.name ?? '',
+                    requestedTextureUnits,
+                    samplers.map(sampler =>
+                        `${sampler.name}:${sampler.size}`
+                    ).join(','),
+                ].join('|')
+                const existing = this.textureUnitOverflowRecords.get(key)
+                if (existing) existing.count += 1
+                else this.textureUnitOverflowRecords.set(key, {
+                    programId: program?.id ?? null,
+                    programName: program?.name ?? null,
+                    cacheKey,
+                    requestedTextureUnits,
+                    count: 1,
+                    samplers,
+                })
+            }
+            originalWarn(...args)
+        }
+
+        this.renderer.domElement.dataset.reDriveTextureUnitLimit = String(
+            maxTextureUnits,
+        )
+        this.renderer.domElement.dataset.reDriveTextureUnitDiagnosticMode =
+            'periodic-program-snapshot'
+    }
+
+    private publishVisualDiagnostic(timestamp: number) {
+        if (
+            new URLSearchParams(window.location.search).get('diagnostic')
+            !== 'gem-view-angle'
+            || timestamp < this.nextVisualDiagnosticAt
+        ) return
+        this.nextVisualDiagnosticAt = timestamp + 5000
+
+        const gl = this.renderer.getContext() as WebGL2RenderingContext
+        const maxTextureUnits = Number(gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS))
+        const rendererInfo = gl.getExtension('WEBGL_debug_renderer_info')
+        const samplerTypes = new Set<number>([
+            gl.SAMPLER_2D,
+            gl.SAMPLER_CUBE,
+            gl.SAMPLER_2D_SHADOW,
+            gl.SAMPLER_CUBE_SHADOW,
+            gl.SAMPLER_2D_ARRAY,
+            gl.SAMPLER_2D_ARRAY_SHADOW,
+            gl.INT_SAMPLER_2D,
+            gl.INT_SAMPLER_2D_ARRAY,
+            gl.UNSIGNED_INT_SAMPLER_2D,
+            gl.UNSIGNED_INT_SAMPLER_2D_ARRAY,
+        ])
+        const collectSamplers = (
+            uniforms: readonly ReDriveDiagnosticUniform[] = [],
+            prefix = '',
+        ): Array<{ name: string; type: number; size: number }> =>
+            uniforms.flatMap(uniform => {
+                const name = prefix
+                    ? `${prefix}.${String(uniform.id ?? '')}`
+                    : String(uniform.id ?? '')
+                if (uniform.seq) return collectSamplers(uniform.seq, name)
+                if (uniform.type == undefined || !samplerTypes.has(uniform.type)) {
+                    return []
+                }
+                return [{
+                    name,
+                    type: uniform.type,
+                    size: Math.max(1, uniform.size ?? 1),
+                }]
+            })
+        const programs = (this.renderer.info.programs ?? []) as unknown as
+            ReDriveDiagnosticProgram[]
+        const programSamplers = programs.map(program => {
+            const samplers = collectSamplers(program.getUniforms?.().seq).map(
+                sampler => {
+                    if (!program.program) return {
+                        ...sampler,
+                        assignedUnits: [] as number[],
+                    }
+                    const location = gl.getUniformLocation(
+                        program.program,
+                        sampler.size > 1
+                            ? `${sampler.name}[0]`
+                            : sampler.name,
+                    )
+                    const assigned = location
+                        ? gl.getUniform(program.program, location)
+                        : null
+                    return {
+                        ...sampler,
+                        assignedUnits: typeof assigned === 'number'
+                            ? [assigned]
+                            : assigned && typeof assigned.length === 'number'
+                                ? Array.from(assigned as ArrayLike<number>)
+                                : [],
+                    }
+                },
+            )
+            const cacheKey = String(program.cacheKey ?? '')
+            return {
+                id: program.id ?? null,
+                name: program.name ?? null,
+                kind: cacheKey.includes('"faceSdf":true')
+                    ? 'face'
+                    : cacheKey.includes('"specialJewel":true')
+                        ? 'gem-capable'
+                        : cacheKey.includes('angelRing')
+                            ? 'hair-capable'
+                            : 'other',
+                textureUnits: samplers.reduce(
+                    (total, sampler) => total + sampler.size,
+                    0,
+                ),
+                samplers,
+            }
+        }).sort((a, b) => b.textureUnits - a.textureUnits)
+
+        // Read the current sampler assignments once per diagnostic snapshot.
+        // Never wrap uniform1i/uniform1iv/getUniformLocation: those functions
+        // are hot for every draw and made multiple diagnostic Viewer tabs
+        // spend CPU time recording the renderer rather than rendering.
+        this.textureUnitAssignments.clear()
+        this.textureUnitOverflowAssignments.clear()
+        for (const program of programSamplers) {
+            for (const sampler of program.samplers) {
+                if (sampler.assignedUnits.length === 0) continue
+                const key = [
+                    program.id ?? 'unknown',
+                    program.name ?? '',
+                    sampler.name,
+                    sampler.assignedUnits.join(','),
+                ].join('|')
+                const record: ReDriveTextureUnitAssignmentRecord = {
+                    programId: program.id,
+                    programName: program.name,
+                    uniformName: sampler.name,
+                    assignedUnits: sampler.assignedUnits,
+                    count: 1,
+                }
+                this.textureUnitAssignments.set(key, record)
+                if (sampler.assignedUnits.some(unit => unit >= maxTextureUnits)) {
+                    this.textureUnitOverflowAssignments.set(key, record)
+                }
+            }
+        }
+
+        const lightPosition = this.directionalLight.getWorldPosition(
+            new THREE.Vector3(),
+        )
+        const lightTarget = this.directionalLight.target.getWorldPosition(
+            new THREE.Vector3(),
+        )
+        const mainLightWorld = lightPosition.sub(lightTarget).normalize()
+        const mainLightView = mainLightWorld.clone().transformDirection(
+            this.camera.matrixWorldInverse,
+        )
+        const characters = this.characters.flatMap(entry => {
+            const character = entry.character
+            if (!character) return []
+            const meshes: Array<Record<string, unknown>> = []
+            character.object.traverse(object => {
+                const mesh = object as THREE.Mesh
+                if (!mesh.isMesh) return
+                const materials = Array.isArray(mesh.material)
+                    ? mesh.material
+                    : [mesh.material]
+                if (
+                    !/(face|hair|body|gem|eye|eyebrow)/i.test(mesh.name)
+                    && !materials.some(material =>
+                        /(face|hair|body|gem|eye|eyebrow|_sj)/i.test(material.name)
+                    )
+                ) return
+                meshes.push({
+                    name: mesh.name,
+                    renderOrder: mesh.renderOrder,
+                    groups: mesh.geometry.groups.map(group => ({
+                        start: group.start,
+                        count: group.count,
+                        materialIndex: group.materialIndex ?? 0,
+                    })),
+                    materials: materials.map((material, materialIndex) => ({
+                        materialIndex,
+                        name: material.name,
+                        depthTest: material.depthTest,
+                        depthWrite: material.depthWrite,
+                        transparent: material.transparent,
+                        opacity: material.opacity,
+                        stencilWrite: material.stencilWrite,
+                        stencilRef: material.stencilRef,
+                        stencilFunc: material.stencilFunc,
+                        stencilFuncMask: material.stencilFuncMask,
+                        stencilWriteMask: material.stencilWriteMask,
+                    })),
+                    stencilWriters:
+                        mesh.userData.officialStencilWriters ?? null,
+                    stencilSelectors:
+                        mesh.userData.officialStencilSelectors ?? null,
+                    gemRuntime: mesh.userData.officialGemRuntime ?? null,
+                    toonShadowRuntime:
+                        mesh.userData.officialToonShadowRuntime ?? null,
+                    angelRingRuntime:
+                        mesh.userData.officialAngelRingRuntime ?? null,
+                })
+            })
+            return [{
+                characterId: character.object.userData.characterId ?? null,
+                meshes,
+            }]
+        })
+
+        this.renderer.domElement.dataset.reDriveVisualDiagnostic = JSON.stringify({
+            schemaVersion: 1,
+            camera: {
+                fov: this.camera.fov,
+                aspect: this.camera.aspect,
+                near: this.camera.near,
+                far: this.camera.far,
+                position: this.camera.position.toArray(),
+                target: this.controls.target.toArray(),
+                forwardElevationDegrees:
+                    (this.controls.getPolarAngle() - Math.PI / 2)
+                    * 180 / Math.PI,
+                interactiveOrbitLimits: {
+                    minPolarAngleRadians: this.controls.minPolarAngle,
+                    maxPolarAngleRadians: this.controls.maxPolarAngle,
+                    minDistance: this.controls.minDistance,
+                    maxDistance: Number.isFinite(this.controls.maxDistance)
+                        ? this.controls.maxDistance
+                        : null,
+                    unrestricted:
+                        this.controls.minPolarAngle === 0
+                        && this.controls.maxPolarAngle === Math.PI
+                        && this.controls.minDistance === 0
+                        && this.controls.maxDistance === Infinity,
+                },
+            },
+            mainLight: {
+                world: mainLightWorld.toArray(),
+                view: mainLightView.toArray(),
+                color: this.directionalLight.color.toArray(),
+                intensity: this.directionalLight.intensity,
+                castShadow: this.directionalLight.castShadow,
+            },
+            reDriveCharacterLightingOverrideDirection:
+                this.scene.userData.reDriveCharacterLightingOverrideDirection
+                ?? null,
+            gpu: {
+                acceleratedRenderer: rendererInfo
+                    ? gl.getParameter(rendererInfo.UNMASKED_RENDERER_WEBGL)
+                    : gl.getParameter(gl.RENDERER),
+                vendor: rendererInfo
+                    ? gl.getParameter(rendererInfo.UNMASKED_VENDOR_WEBGL)
+                    : gl.getParameter(gl.VENDOR),
+                isWebGL2: this.renderer.capabilities.isWebGL2,
+                maxFragmentTextureUnits:
+                    gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS),
+                drawingBuffer: [gl.drawingBufferWidth, gl.drawingBufferHeight],
+                render: { ...this.renderer.info.render },
+                memory: { ...this.renderer.info.memory },
+                programs: programSamplers,
+                textureUnitOverflows: [
+                    ...this.textureUnitOverflowRecords.values(),
+                ].sort((a, b) =>
+                    b.requestedTextureUnits - a.requestedTextureUnits
+                    || b.count - a.count
+                ),
+                textureUnitOverflowAssignments: [
+                    ...this.textureUnitOverflowAssignments.values(),
+                ].sort((a, b) =>
+                    Math.max(...b.assignedUnits) - Math.max(...a.assignedUnits)
+                    || b.count - a.count
+                ),
+                textureUnitAssignments: [
+                    ...this.textureUnitAssignments.values(),
+                ],
+            },
+            renderPause: getRenderPauseState(),
+            characters,
+        })
+    }
+
+    addBeforeRenderCallback(callback: () => void) {
+        this.beforeRenderCallbacks.add(callback)
+        return () => this.beforeRenderCallbacks.delete(callback)
     }
 
     renderCurrentFrame() {
@@ -588,87 +1019,216 @@ export class MagiaExedraScene3D {
         }
     }
 
-    async switchCharacter(sceneCharacter: SceneCharacter | undefined, id: number | string, callbacks?: Partial<LoadCharacterCallbacks>): Promise<SceneCharacter> {
+    switchCharacter(
+        sceneCharacter: SceneCharacter | undefined,
+        id: number | string,
+        callbacks?: Partial<LoadCharacterCallbacks>,
+    ): Promise<SceneCharacter> {
         if (!sceneCharacter) {
             sceneCharacter = {
                 loading: false,
+                loadGeneration: 0,
                 removed: false,
             }
             this.characters.push(sceneCharacter)
         }
 
-        return new Promise((resolve, reject) => {
-            const isSelected = this.characterSelected == sceneCharacter
+        const target = sceneCharacter
+        const targetKey = String(id)
+        if (target.removed) {
+            return Promise.reject(new Error('Character already removed'))
+        }
+        if (
+            target.loading
+            && String(target.requestedId) === targetKey
+            && target.loadPromise
+        ) {
+            return target.loadPromise
+        }
+        if (
+            !target.loading
+            && String(target.character?.userData.characterId) === targetKey
+        ) {
+            return Promise.resolve(target)
+        }
 
-            if (sceneCharacter.removed) {
-                // reject('Character already removed')
-                return
-            }
+        target.loadController?.abort(
+            new DOMException('Superseded by a newer character selection', 'AbortError'),
+        )
+        const generation = (target.loadGeneration ?? 0) + 1
+        const controller = new AbortController()
+        const externalSignal = callbacks?.signal
+        const forwardExternalAbort = () => controller.abort(externalSignal?.reason)
+        externalSignal?.addEventListener('abort', forwardExternalAbort, { once: true })
+        if (externalSignal?.aborted) forwardExternalAbort()
 
-            if (sceneCharacter.loading) {
-                sceneCharacter.pending = id
-                sceneCharacter.pendingResolve = resolve
-                return
-            }
-            sceneCharacter.loading = true
-            sceneCharacter.pending = undefined
+        target.loadGeneration = generation
+        target.loadController = controller
+        target.requestedId = id
+        target.loading = true
+        target.activeProgressCallback = callbacks?.loadProgressCallback
+        target.pending = undefined
+        target.pendingResolve = undefined
 
-            if (sceneCharacter.character) {
-                if (isSelected) this.characterSelected = undefined // clear selected temporarily to avoid errors in OutlinePass / TransformControls
-                this.stageCharacterShadows.remove(sceneCharacter.character.object)
-                this.scene.remove(sceneCharacter.character.object)
-                sceneCharacter.character.dispose()
-                sceneCharacter.character = undefined
-                if (isSelected) this.characterSelected = sceneCharacter // select it afterwards but with empty character
-            }
+        const isSelected = this.characterSelected === target
+        if (target.character && !target.retainedCharacter) {
+            if (isSelected) this.characterSelected = undefined
+            target.retainedCharacter = target.character
+            this.stageCharacterShadows.remove(target.character.object)
+            this.scene.remove(target.character.object)
+            target.character = undefined
+            if (isSelected) this.characterSelected = target
+        }
 
-            this.characterManager.loadCharacterById(id, callbacks)
-                .then(character => {
-                    if (sceneCharacter.pending || sceneCharacter.removed) {
-                        character.dispose() // dispose if not adding to scene
-                        return
+        const loadingTask = startLoadingTask('角色加载', controller.signal)
+        let loaderReachedFinish = false
+        let lastProgress = ''
+        const guardedCallbacks: Partial<LoadCharacterCallbacks> = {
+            ...callbacks,
+            signal: controller.signal,
+            loadProgressCallback: (progress, detail) => {
+                lastProgress = progress
+                if (
+                    target.loadGeneration === generation
+                    && !target.removed
+                ) callbacks?.loadProgressCallback?.(progress, detail)
+            },
+            modelLoadedCallback: model => {
+                if (
+                    target.loadGeneration === generation
+                    && !target.removed
+                ) callbacks?.modelLoadedCallback?.(model)
+            },
+            loadFinishCallback: () => {
+                loaderReachedFinish = true
+            },
+        }
+
+        const transaction = (async (): Promise<SceneCharacter> => {
+            let loadedCharacter: MagiaExedraCharacter3D | undefined
+            try {
+                loadedCharacter = await this.characterManager.loadCharacterById(
+                    id,
+                    guardedCallbacks,
+                )
+                if (!loaderReachedFinish) {
+                    throw new Error(
+                        `Character ${targetKey} resolved before loadFinish`,
+                    )
+                }
+                if (
+                    controller.signal.aborted
+                    || target.removed
+                    || target.loadGeneration !== generation
+                ) {
+                    loadedCharacter.dispose()
+                    throw (
+                        controller.signal.reason instanceof Error
+                            ? controller.signal.reason
+                            : new DOMException('Stale character transaction', 'AbortError')
+                    )
+                }
+
+                loadingTask.phase('assembling')
+                target.retainedCharacter?.dispose()
+                target.retainedCharacter = undefined
+                target.character = loadedCharacter
+                this.scene.add(loadedCharacter.object)
+                this.stageCharacterShadows.add(loadedCharacter.object)
+                if (this.characterSelected === target) {
+                    this.characterSelected = target
+                }
+                try {
+                    callbacks?.loadFinishCallback?.(loadedCharacter)
+                } catch (callbackError) {
+                    console.error('Character loadFinish callback failed:', callbackError)
+                }
+                loadingTask.complete()
+                return target
+            } catch (error) {
+                loadingTask.fail(error)
+                if (
+                    target.loadGeneration === generation
+                    && !target.removed
+                ) {
+                    if (lastProgress !== '') {
+                        callbacks?.loadProgressCallback?.('')
+                        lastProgress = ''
                     }
-
-                    sceneCharacter.character = character
-                    this.scene.add(sceneCharacter.character.object)
-                    this.stageCharacterShadows.add(sceneCharacter.character.object)
-
-                    if (this.characterSelected == sceneCharacter) {
-                        this.characterSelected = sceneCharacter // select again to restore OutlinePass and TransformControls
+                    if (
+                        loadedCharacter
+                        && !loadedCharacter.disposed
+                        && target.character !== loadedCharacter
+                    ) {
+                        loadedCharacter.dispose()
                     }
-
-                    resolve(sceneCharacter)
-                })
-                .catch(e => {
-                    if (sceneCharacter.pending || sceneCharacter.removed) return // skip errors if stale
-                    reject(e)
-                })
-                .finally(() => {
-                    sceneCharacter.loading = false
-
-                    if (sceneCharacter.removed) return
-
-                    if (sceneCharacter.pending) {
-                        // load and resolve pending character
-                        this.switchCharacter(sceneCharacter, sceneCharacter.pending, callbacks).then(x => {
-                            if (!sceneCharacter.pending) sceneCharacter.pendingResolve!(x)
-                        })
+                    const retained = target.retainedCharacter
+                    if (retained && !retained.disposed) {
+                        target.character = retained
+                        target.retainedCharacter = undefined
+                        this.scene.add(retained.object)
+                        this.stageCharacterShadows.add(retained.object)
+                        if (this.characterSelected === target) {
+                            this.characterSelected = target
+                        }
                     }
-                })
-        })
+                }
+                throw error
+            } finally {
+                externalSignal?.removeEventListener(
+                    'abort',
+                    forwardExternalAbort,
+                )
+                if (target.loadGeneration === generation) {
+                    target.loading = false
+                    target.loadController = undefined
+                    target.loadPromise = undefined
+                    target.requestedId = undefined
+                    target.activeProgressCallback = undefined
+                }
+            }
+        })()
+        target.loadPromise = transaction
+        return transaction
     }
 
     async addCharacter(id: number | string, callbacks?: Partial<LoadCharacterCallbacks>) {
         return await this.switchCharacter(undefined, id, callbacks)
     }
 
+    async addNonBattleCharacter(
+        stableKey: string,
+        callbacks?: Partial<LoadCharacterCallbacks>,
+    ) {
+        const entry = this.characterManager.getNonBattleCharacterEntryByStableKey(stableKey)
+        return await this.switchCharacter(
+            undefined,
+            entry.style3dCharacterMstId,
+            callbacks,
+        )
+    }
+
     removeCharacter(sceneCharacter: SceneCharacter) {
         sceneCharacter.removed = true
+        sceneCharacter.loadGeneration = (sceneCharacter.loadGeneration ?? 0) + 1
+        sceneCharacter.loadController?.abort(
+            new DOMException('Character was removed', 'AbortError'),
+        )
+        sceneCharacter.activeProgressCallback?.('')
+        sceneCharacter.activeProgressCallback = undefined
+        sceneCharacter.loadController = undefined
+        sceneCharacter.loadPromise = undefined
+        sceneCharacter.requestedId = undefined
+        sceneCharacter.loading = false
         if (sceneCharacter.character) {
             this.stageCharacterShadows.remove(sceneCharacter.character.object)
             this.scene.remove(sceneCharacter.character.object)
             sceneCharacter.character.dispose()
             sceneCharacter.character = undefined
+        }
+        if (sceneCharacter.retainedCharacter) {
+            sceneCharacter.retainedCharacter.dispose()
+            sceneCharacter.retainedCharacter = undefined
         }
         this.characters = this.characters.filter(x => x != sceneCharacter)
         if (this.characterSelected == sceneCharacter) this.characterSelected = undefined

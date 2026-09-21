@@ -1,3 +1,4 @@
+import { assertReleaseMaterialCorpus } from './releaseCorpusTestSupport.mjs'
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import test from 'node:test'
@@ -13,6 +14,10 @@ const [
     materialProfilesText,
     queueEvidenceText,
     submeshGroups,
+    materialProfileSource,
+    extractor,
+    loader,
+    officialFaceDepthOnly,
 ] = await Promise.all([
     readFile('magia-exedra-character-three/shaders/depthRim.ts', 'utf8'),
     readFile('magia-exedra-character-three/scene/cameraDepth.ts', 'utf8'),
@@ -24,6 +29,13 @@ const [
     readFile('magia-exedra-character-three/official-material-profiles.json', 'utf8'),
     readFile('research/official-camera-depth-material-queue-evidence.json', 'utf8'),
     readFile('magia-exedra-character-three/submeshGroups.generated.ts', 'utf8'),
+    readFile('magia-exedra-character-three/materialProfile.ts', 'utf8'),
+    readFile('scripts/extract-official-material-profiles.py', 'utf8'),
+    readFile('magia-exedra-character-three/loader.ts', 'utf8'),
+    readFile(
+        'artifacts/verification/20260824-108301-hair-cheek-shadow-visual-fail/iteration-14-official-face-gradient-mouth-nose/official-evidence/tw-depth-only/Creative-Character-ReDriveToon-pass7-depthonly-face-blob433.glsl',
+        'utf8',
+    ),
 ])
 
 const materialProfiles = JSON.parse(materialProfilesText)
@@ -80,16 +92,44 @@ function gemDepthSelector({
     return g >= 1 - threshold ? 0 : 1
 }
 
-test('official profile path is default-on and owns an independent camera depth prepass', () => {
+test('official depth path joins opaque stage and character roots without a depth clear', () => {
     assert.match(depthRim, /enabled:\s*true/)
     assert.match(cameraDepth, /new THREE\.DepthTexture/)
-    assert.match(cameraDepth, /mesh\.customDepthMaterial \?\?/)
-    assert.match(cameraDepth, /profile\.customRenderQueue >= 3000/)
-    assert.match(cameraDepth, /return Boolean\(profile\.gem\.transparency\)/)
+    assert.match(cameraDepth, /officialOpaqueLayerMask = 0x7fffffff/)
+    assert.match(cameraDepth, /officialOpaqueRenderQueueMax = 2500/)
+    assert.match(cameraDepth, /if \(mesh\.customDepthMaterial\)/)
+    assert.match(cameraDepth, /stageUnityMaterialState\s*\?\.effectiveRenderQueue/)
+    assert.match(cameraDepth, /magiusEnemyRenderQueue/)
+    assert.match(cameraDepth, /queue > officialOpaqueRenderQueueMax/)
     assert.match(cameraDepth, /meshUsesOfficialCameraDepth/)
     assert.match(cameraDepth, /profile\.depthRim\?\.useDepthTex/)
     assert.match(scene, /this\.cameraDepth\.render\(\)/)
-    assert.doesNotMatch(cameraDepth, /backgroundScene\.traverse/)
+
+    const prepareStart = cameraDepth.indexOf(
+        'this.prepareSceneDepth(',
+        cameraDepth.indexOf('    render() {'),
+    )
+    const backgroundPrepare = cameraDepth.indexOf(
+        'this.scene.backgroundScene,\n                    camera,',
+        prepareStart,
+    )
+    const foregroundPrepare = cameraDepth.indexOf(
+        'this.scene.scene,\n                camera,',
+        backgroundPrepare,
+    )
+    const clear = cameraDepth.indexOf('renderer.clear(true, true, false)')
+    const backgroundRender = cameraDepth.indexOf(
+        'renderer.render(this.scene.backgroundScene, camera)',
+    )
+    const foregroundRender = cameraDepth.indexOf(
+        'renderer.render(this.scene.scene, camera)',
+        backgroundRender,
+    )
+    assert.ok(backgroundPrepare > 0 && foregroundPrepare > backgroundPrepare)
+    assert.ok(clear > foregroundPrepare)
+    assert.ok(backgroundRender > clear && foregroundRender > backgroundRender)
+    assert.match(cameraDepth, /renderer\.autoClear = false/)
+    assert.doesNotMatch(cameraDepth, /renderer\.clearDepth\(/)
 })
 
 test('official CameraDepth queue evidence covers every mixed renderer without whole-mesh loss', () => {
@@ -163,16 +203,25 @@ test('100107 weapon_b skips only queue-3000 alpha while 101901 keeps all opaque 
     )
 })
 
-test('all generated profiles carry the exact queue and opaque-range transparency stays a writer', () => {
+test('all generated profiles carry exact queues and RenderQueueRange opaque ends at 2500', () => {
     const profiles = Object.values(materialProfiles.materials)
-    assert.equal(materialProfiles.materialCount, 1533)
+    const { historical, added } = assertReleaseMaterialCorpus(materialProfiles)
     assert.equal(
         profiles.every(value => Number.isInteger(value.customRenderQueue)),
         true,
     )
+    assert.equal(historical.filter(value => value.customRenderQueue >= 3000).length, 46)
+    assert.equal(added.filter(value => value.customRenderQueue >= 3000).length, 1)
+    assert.equal(profiles.filter(value => value.customRenderQueue >= 3000).length, 47)
+    assert.equal(historical.filter(value => value.customRenderQueue > 2500).length, 48)
+    assert.equal(added.filter(value => value.customRenderQueue > 2500).length, 1)
+    assert.equal(profiles.filter(value => value.customRenderQueue > 2500).length, 49)
     assert.equal(
-        profiles.filter(value => value.customRenderQueue >= 3000).length,
-        46,
+        profiles.filter(value =>
+            value.customRenderQueue > 2500 &&
+            value.customRenderQueue < 3000
+        ).length,
+        2,
     )
     const opaqueRangeTransparency =
         materialProfiles.materials.mt_chara_100201_acc_alpha
@@ -180,15 +229,262 @@ test('all generated profiles carry the exact queue and opaque-range transparency
     assert.equal(opaqueRangeTransparency.gem.transparency, true)
     assert.match(
         cameraDepth,
-        /if \(profile\.customRenderQueue >= 0\) \{\s*return profile\.customRenderQueue >= 3000\s*\}/,
+        /if \(profile && profile\.customRenderQueue >= 0\) \{\s*return profile\.customRenderQueue\s*\}/,
+    )
+    assert.match(
+        cameraDepth,
+        /if \(queue != undefined\) return queue > officialOpaqueRenderQueueMax/,
     )
 })
 
 test('depth prepass retains restored groups and skips only their transparent material slots', () => {
     assert.match(cameraDepth, /forwardMaterials\.map\(\(material, index\) =>/)
-    assert.match(cameraDepth, /\? this\.skipDepthMaterial\s*:\s*depthMaterial/)
+    assert.match(
+        cameraDepth,
+        /slot\.transparent\s*\? this\.skipDepthMaterial\s*:\s*slot\.depthMaterial/,
+    )
     assert.match(cameraDepth, /this\.skipDepthMaterial\.visible = false/)
     assert.doesNotMatch(cameraDepth, /hasTransparentGem/)
+})
+
+test('depth prepass preserves official cutouts, camera visibility and helper exclusions', () => {
+    for (const token of [
+        'sourceMaterial.alphaTest > 0',
+        'depthMaterial.map = map',
+        'depthMaterial.alphaMap = alphaMap',
+        'depthMaterial.alphaTest = sourceMaterial.alphaTest',
+        'depthMaterial.side = sourceMaterial.side',
+        'depthMaterial.displacementMap = displacementMap',
+        'isVisibleInHierarchy(mesh)',
+        'isOfficialCameraDepthLayer(mesh, camera)',
+        "stencilRole === 'selector-mask'",
+        "mesh.name.includes(':official-outline:')",
+        'current === this.scene.stageCharacterShadows.root',
+    ]) assert.ok(cameraDepth.includes(token), 'missing ' + token)
+    assert.match(
+        cameraDepth,
+        /object\.layers\.mask &\s*camera\.layers\.mask &\s*officialOpaqueLayerMask/,
+    )
+    assert.match(cameraDepth, /isLine\?: boolean/)
+    assert.match(cameraDepth, /isPoints\?: boolean/)
+    assert.match(cameraDepth, /isSprite\?: boolean/)
+    assert.match(cameraDepth, /object\.visible = false/)
+    assert.match(cameraDepth, /snapshot\.object\.visible = snapshot\.visible/)
+})
+
+test('depth scope is generic and restores all material renderer and XR state', () => {
+    assert.match(cameraDepth, /snapshot\.mesh\.material = snapshot\.material/)
+    assert.match(cameraDepth, /snapshot\.mesh\.visible = snapshot\.visible/)
+    assert.match(cameraDepth, /renderer\.setRenderTarget\(previousTarget\)/)
+    assert.match(
+        cameraDepth,
+        /renderer\.setClearColor\(previousClearColor, previousClearAlpha\)/,
+    )
+    assert.match(cameraDepth, /renderer\.autoClear = previousAutoClear/)
+    assert.match(cameraDepth, /renderer\.xr\.enabled = previousXrEnabled/)
+    assert.doesNotMatch(
+        cameraDepth,
+        /(?:characterId|stageId|materialPathID)\s*(?:===|==)|case\s+(?:100102|108301|101901|100107|100805)/,
+    )
+})
+test('opaque-scope fixture accepts only official camera-visible opaque draws', function () {
+    function drawEligible(fixture) {
+        const layerVisible = Boolean(
+            fixture.objectLayer &
+            fixture.cameraLayer &
+            0x7fffffff
+        )
+        return Boolean(
+            fixture.consumer &&
+            fixture.visible &&
+            layerVisible &&
+            fixture.queue <= 2500
+        )
+    }
+
+    const fixtures = [
+        { label: 'opaque', consumer: true, visible: true, objectLayer: 1, cameraLayer: 1, queue: 2000, expected: true },
+        { label: 'alpha-cutout opaque', consumer: true, visible: true, objectLayer: 1, cameraLayer: 1, queue: 2450, alphaTest: 0.5, expected: true },
+        { label: 'transparent queue', consumer: true, visible: true, objectLayer: 1, cameraLayer: 1, queue: 2501, expected: false },
+        { label: 'invisible hierarchy', consumer: true, visible: false, objectLayer: 1, cameraLayer: 1, queue: 2000, expected: false },
+        { label: 'camera-layer mismatch', consumer: true, visible: true, objectLayer: 2, cameraLayer: 1, queue: 2000, expected: false },
+        { label: 'official layer31 exclusion', consumer: true, visible: true, objectLayer: 0x80000000, cameraLayer: 0xffffffff, queue: 2000, expected: false },
+        { label: 'no CameraDepth consumer', consumer: false, visible: true, objectLayer: 1, cameraLayer: 1, queue: 2000, expected: false },
+    ]
+    for (const fixture of fixtures) {
+        assert.equal(drawEligible(fixture), fixture.expected, fixture.label)
+    }
+})
+
+test('nested Viewer helper roots and prepare/render failures restore exact state', function () {
+    const renderStart = cameraDepth.indexOf('    render() {')
+    const renderEnd = cameraDepth.indexOf('    dispose()', renderStart)
+    const renderBody = cameraDepth.slice(renderStart, renderEnd)
+    const tryIndex = renderBody.indexOf('        try {')
+    const detachIndex = renderBody.indexOf('this.detachViewerDepthHelperRoots(')
+    const backgroundPrepare = renderBody.indexOf(
+        'this.scene.backgroundScene,\n                    camera,',
+    )
+    const foregroundPrepare = renderBody.indexOf(
+        'this.scene.scene,\n                camera,',
+        backgroundPrepare,
+    )
+    const finallyIndex = renderBody.indexOf('        } finally {')
+    const helperRestore = renderBody.indexOf(
+        'this.restoreViewerDepthHelperRoots(detachedHelperSnapshots)',
+        finallyIndex,
+    )
+
+    assert.ok(renderStart >= 0 && renderEnd >= 0)
+    assert.ok(tryIndex >= 0 && tryIndex < detachIndex)
+    assert.ok(detachIndex < backgroundPrepare)
+    assert.ok(backgroundPrepare < foregroundPrepare)
+    assert.ok(foregroundPrepare < finallyIndex)
+    assert.ok(finallyIndex < helperRestore)
+    assert.match(cameraDepth, /isTransformControlsRoot\?: boolean/)
+    assert.match(cameraDepth, /collectViewerDepthHelperRoots\(object, snapshots\)/)
+    assert.match(cameraDepth, /snapshots\.push\(\{ object, parent, index \}\)/)
+    assert.match(cameraDepth, /snapshot\.object\.parent = null/)
+    assert.match(cameraDepth, /snapshot\.object\.parent = snapshot\.parent/)
+    assert.match(renderBody, /let depthReady = false/)
+    assert.match(renderBody, /if \(!depthReady\) state\.enabled\.value = 0/)
+
+    const requiredFinallyRestores = [
+        'snapshot.mesh.material = snapshot.material',
+        'snapshot.mesh.visible = snapshot.visible',
+        'snapshot.object.visible = snapshot.visible',
+        'renderer.setRenderTarget(previousTarget)',
+        'renderer.setClearColor(previousClearColor, previousClearAlpha)',
+        'renderer.autoClear = previousAutoClear',
+        'renderer.xr.enabled = previousXrEnabled',
+    ]
+    for (const token of requiredFinallyRestores) {
+        assert.ok(
+            renderBody.indexOf(token, finallyIndex) >= finallyIndex,
+            'restore outside finally: ' + token,
+        )
+    }
+
+    for (const failurePhase of ['prepare', 'render']) {
+        const state = {
+            material: 'forward',
+            visible: true,
+            helperParent: 'scene',
+            helperIndex: 2,
+            renderTarget: 'display',
+            clearColor: 'original',
+            autoClear: true,
+            xr: true,
+            depthEnabled: true,
+        }
+        const original = { ...state }
+        assert.throws(function () {
+            try {
+                state.helperParent = null
+                state.helperIndex = -1
+                state.material = 'depth'
+                state.visible = false
+                state.depthEnabled = false
+                if (failurePhase === 'prepare') {
+                    throw new Error('prepare-throw')
+                }
+                state.renderTarget = 'camera-depth'
+                state.clearColor = 'transparent-black'
+                state.autoClear = false
+                state.xr = false
+                throw new Error('render-throw')
+            } finally {
+                Object.assign(state, original)
+            }
+        }, new RegExp(failurePhase + '-throw'))
+        assert.deepEqual(state, original, failurePhase)
+    }
+})
+test('all face profiles carry the official camera-depth write offset', () => {
+    const profiles = Object.values(materialProfiles.materials)
+    assert.equal(
+        profiles.every(profile =>
+            Number.isFinite(profile.face.cameraDepthTextureZWriteOffset)
+        ),
+        true,
+    )
+    assert.equal(
+        materialProfiles.materials.mt_chara_100102_face.face
+            .cameraDepthTextureZWriteOffset,
+        0.03999999910593033,
+    )
+    for (const name of [
+        'mt_chara_108301_face',
+        'mt_chara_101901_face',
+        'mt_chara_100101_face',
+    ]) {
+        assert.equal(
+            materialProfiles.materials[name].face
+                .cameraDepthTextureZWriteOffset,
+            0.05000000074505806,
+        )
+    }
+    assert.match(
+        extractor,
+        /"cameraDepthTextureZWriteOffset": number\(\s*"_FaceAreaCameraDepthTextureZWriteOffset",\s*0\.05,?\s*\)/,
+    )
+    assert.match(
+        materialProfileSource,
+        /cameraDepthTextureZWriteOffset: number;/,
+    )
+})
+
+test('face DepthOnly writes the serialized offset before forward depth gating', () => {
+    assert.match(
+        officialFaceDepthOnly,
+        /abs\(u_xlat1\.w\) \+ _FaceAreaCameraDepthTextureZWriteOffset/,
+    )
+    assert.match(
+        officialFaceDepthOnly,
+        /\(-_FaceAreaCameraDepthTextureZWriteOffset\) \/ u_xlat8\.x/,
+    )
+    assert.match(
+        cameraDepth,
+        /faceDepthMaterials = new Map<\s*THREE\.Mesh/,
+    )
+    assert.match(cameraDepth, /profile\?\.face\.isFace/)
+    assert.match(
+        cameraDepth,
+        /uRdFaceAreaCameraDepthTextureZWriteOffset/,
+    )
+    assert.match(
+        cameraDepth,
+        /max\(\s*abs\(gl_Position\.w\) \+\s*uRdFaceAreaCameraDepthTextureZWriteOffset,\s*uRdCameraNear \+ 5\.96046448e-08\s*\)/,
+    )
+    assert.match(
+        cameraDepth,
+        /gl_Position\.z \+=\s*-uRdFaceAreaCameraDepthTextureZWriteOffset \*\s*projectionMatrix\[2\]\[2\]/,
+    )
+    assert.match(
+        cameraDepth,
+        /injectCharacterPerspectiveCancellation\(shader, reference\)/,
+    )
+    assert.match(loader, /mesh\.userData\.characterPerspectiveReference =\s*characterPerspectiveReference/)
+    assert.match(cameraDepth, /officialFaceCameraDepthRuntime/)
+    assert.doesNotMatch(
+        `${cameraDepth}\n${loader}`,
+        /(?:characterId|faceProfile\.characterId)\s*(?:===|==)\s*(?:100102|108301|101901|100107)|case\s+(?:100102|108301|101901|100107)/,
+    )
+})
+
+test('face depth offset leaves the existing Body Hair Gem signal unchanged', () => {
+    assert.match(
+        depthRim,
+        /rdDepthCenterZ - uRdDepthShadowDiffThreshold/,
+    )
+    assert.match(
+        depthRim,
+        /rdDepthShadowSignal >= 0\.100000001 \? 1\.0 : 0\.0/,
+    )
+    assert.doesNotMatch(
+        cameraDepth,
+        /opaqueDepthMaterial\.onBeforeCompile\s*=/,
+    )
 })
 
 test('alpha-cutout depth material owns an immutable official UV0 transform contract', () => {

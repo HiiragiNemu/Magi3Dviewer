@@ -1,323 +1,259 @@
-import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+import test from 'node:test'
+import ts from 'typescript'
+import * as THREE from 'three'
 
-const shaderSource = await readFile(
-    new URL(
-        './magia-exedra-character-three/shaders/hair.ts',
-        import.meta.url,
-    ),
-    'utf8',
-);
-const perspectiveSource = await readFile(
-    new URL(
-        './magia-exedra-character-three/shaders/perspective.ts',
-        import.meta.url,
-    ),
-    'utf8',
-);
-const generalSource = await readFile(
-    new URL(
-        './magia-exedra-character-three/shaders/general.ts',
-        import.meta.url,
-    ),
-    'utf8',
-);
-const faceSource = await readFile(
-    new URL(
-        './magia-exedra-character-three/shaders/face.ts',
-        import.meta.url,
-    ),
-    'utf8',
-);
-const outlineSource = await readFile(
-    new URL(
-        './magia-exedra-character-three/shaders/outline.ts',
-        import.meta.url,
-    ),
-    'utf8',
-);
-const runtimeProfiles = JSON.parse(await readFile(
-    new URL(
-        './magia-exedra-character-three/official-character-controller-profiles.generated.json',
-        import.meta.url,
-    ),
-    'utf8',
-));
+const read = path => readFileSync(path, 'utf8')
+const hairSource = read('magia-exedra-character-three/shaders/hair.ts')
+const renderProfileSource = read('magia-exedra-character-three/renderProfile.ts')
+const textureSource = read('magia-exedra-character-three/texture.ts')
+const materialProfiles = JSON.parse(read(
+  'magia-exedra-character-three/official-material-profiles.json',
+))
 
-assert.match(
-    shaderSource,
-    /vAngelRingFaceClip/,
-    'AngelRing must be anchored to projected FacePositionWS',
-);
-
-assert.match(
-    perspectiveSource,
-    /1\.0 - distance\([\s\S]*\* 2\.25/,
-    'compiled perspective cancellation must preserve the official 2.25 distance falloff',
-);
-assert.match(
-    perspectiveSource,
-    /clamp\(rdCancelWorldPosition\.y, 0\.0, 1\.0\)/,
-    'compiled perspective cancellation must preserve the official world-Y gate',
-);
-assert.match(
-    perspectiveSource,
-    /abs\(gl_Position\.w\) \* gl_Position\.xy \/[\s\S]*abs\(rdCancelFacePositionVS\.z\)/,
-    'compiled perspective cancellation must use clip W divided by FacePosition view depth',
-);
-assert.match(
-    generalSource,
-    /injectCharacterPerspectiveCancellation\([\s\S]*options\.characterPerspectiveReference/,
-    'body, hair, accessories and props must share the character perspective pass',
-);
-assert.match(
-    faceSource,
-    /injectCharacterPerspectiveCancellation\([\s\S]*options\.characterPerspectiveReference/,
-    'face geometry must share the character perspective pass',
-);
-assert.match(
-    outlineSource,
-    /rdCancelPerspectiveFactor[\s\S]*uRdCharacterCancelPerspective/,
-    'outline geometry must remain registered to perspective-cancelled surfaces',
-);
-assert.equal(runtimeProfiles.profileCount, 95);
-assert.equal(runtimeProfiles.profiles.length, 95);
-const official101901 = runtimeProfiles.profiles.find(
-    profile => profile.characterId === 101901,
-);
-assert.ok(official101901);
-assert.equal(official101901.headOffset, 0.18000000715255737);
-assert.equal(official101901.characterCancelPerspective, 1);
-
-const officialCancelPerspective = ({ clipX, clipY, clipW, faceViewZ,
-    worldY, distanceToFace, character = 1, global = 1 }) => {
-    const factor = Math.max(1 - distanceToFace * 2.25, 0) *
-        global * character * Math.min(Math.max(worldY, 0), 1);
-    const targetScale = Math.abs(clipW) / Math.abs(faceViewZ);
-    return {
-        factor,
-        xy: [
-            clipX + (clipX * targetScale - clipX) * factor,
-            clipY + (clipY * targetScale - clipY) * factor,
-        ],
-    };
-};
-assert.deepEqual(
-    officialCancelPerspective({
-        clipX: 0.3,
-        clipY: -0.2,
-        clipW: 2,
-        faceViewZ: -4,
-        worldY: 1,
-        distanceToFace: 0,
-    }),
-    { factor: 1, xy: [0.15, -0.1] },
-);
-assert.equal(
-    officialCancelPerspective({
-        clipX: 0.3,
-        clipY: -0.2,
-        clipW: 2,
-        faceViewZ: -4,
-        worldY: 1,
-        distanceToFace: 1,
-    }).factor,
-    0,
-);
-assert.match(
-    shaderSource,
-    /gl_FragCoord\.xy\s*\/\s*max\(uAngelRingViewportSize/,
-    'official projection must use fragment screen position',
-);
-assert.match(
-    shaderSource,
-    /uAngelRingAspectFix\.value\.set\(height \/ width, 1\)/,
-    'portrait-safe AngelRing projection must use inverse display aspect',
-);
-assert.doesNotMatch(
-    shaderSource,
-    /uAngelRingAspectFix\.value\.set\(width \/ height, 1\)/,
-    'width / height collapses AngelRing horizontally on portrait screens',
-);
-assert.match(
-    shaderSource,
-    /mat3\(viewMatrix\) \* uAngelRingFaceUp/,
-    'Head Up view-space component remains required by the official curve blend',
-);
-assert.match(
-    shaderSource,
-    /rdAngelFaceRightXY\s*=\s*vec2\(\s*rdAngelFaceUpVS\.y,\s*-rdAngelFaceUpVS\.x/,
-    'blob 98 rotates AngelRing X with (FaceUpVS.y, -FaceUpVS.x)',
-);
-assert.match(
-    shaderSource,
-    /dot\(\s*rdAngelRectCoordinate,\s*rdAngelFaceUpXY\s*\)/,
-    'blob 98 rotates AngelRing Y directly with FaceUpVS.xy',
-);
-assert.doesNotMatch(
-    shaderSource,
-    /rdAngelFaceUpUv|rdAngelProjectedUp|rdAngelProjectedRight/,
-    'the official branch does not project and normalize a second Head Up endpoint',
-);
-assert.match(
-    shaderSource,
-    /rdAngelBackFactor \*\s*rdAngelBackFactor \*\s*15\.0/,
-    'missing official continuous front/back projection shift',
-);
-assert.match(
-    shaderSource,
-    /sin\(\s*rdAngelRotated\.x \*\s*3\.14159265358979323846/,
-    'AngelRing must use the official sin(pi * U) tapered arch',
-);
-assert.match(
-    shaderSource,
-    /rdAngelArch \* 0\.414999992/,
-    'missing official lower AngelRing curve coefficient',
-);
-assert.doesNotMatch(
-    shaderSource,
-    /rdAngelViewGate|rdAngelFrontHemisphereGate/,
-    'official 360-degree AngelRing must not kill front or rear views',
-);
-assert.match(
-    shaderSource,
-    /uHairDepthRimEnabled/,
-    'official hair materials retain the CameraDepthTexture material gate',
-);
-assert.doesNotMatch(
-    shaderSource,
-    /mix\(0\.15, 1\.0, rdHairLightSide\)/,
-    'the removed picture-matched hair edge proxy must not return',
-);
-assert.match(
-    shaderSource,
-    /if \(uAngelRingUvMode > 0\.5\)/,
-    'character-authored UV AngelRing mode must remain intact',
-);
-
-// Recovered map-shape coefficients: the center arch has a wider upper than
-// lower reach, and both converge to zero at U=0/1.
-const ringShape = u => {
-    const arch = Math.sin(u * Math.PI);
-    return { lower: -arch * 0.414999992, upper: arch * 0.5 };
-};
-assert.deepEqual(ringShape(0), { lower: -0, upper: 0 });
-assert.ok(ringShape(0.5).lower < 0);
-assert.ok(ringShape(0.5).upper > 0);
-assert.ok(Math.abs(ringShape(1).lower) < 1e-7);
-assert.ok(Math.abs(ringShape(1).upper) < 1e-7);
-
-console.log('Official AngelRing projection invariants passed.');
-
-
-// Numeric parity gate for JP 2022.3.62f2 main_hair blob 98 lines 932-982.
-// The front-facing fixture uses FaceForwardVS.z = -cos(pitch), while FaceUpVS
-// is (0, cos(pitch), sin(pitch)). This preserves the official continuous
-// 360-degree branch rather than adding a front/rear visibility gate.
-const officialBlobProjection = ({ width, height, fov, distance, pitch }) => {
-    const radians = pitch * Math.PI / 180;
-    const faceUpVS = [0, Math.cos(radians), Math.sin(radians)];
-    const faceForwardVS = [0, Math.sin(radians), -Math.cos(radians)];
-    const inverseDistance = 1 / distance;
-    const aspectFix = [height / width, 1];
-    const fovFix = 1 / fov;
-    const unitScale = aspectFix.map(value => value * fovFix * inverseDistance);
-    const rectHalf = unitScale.map(value => value * 10);
-    const backFactor = faceForwardVS[2] * -0.5 + 0.5;
-    const viewShift = [
-        Math.sin(faceUpVS[1] * Math.PI / 2) * backFactor * backFactor * 15 * unitScale[0],
-        faceUpVS[2] * -3 * unitScale[1],
-    ];
-    return {
-        aspectFix,
-        fovFix,
-        rectHalf,
-        center: [0.5 - viewShift[0], 0.5 - viewShift[1]],
-        pixelHalf: [rectHalf[0] * width, rectHalf[1] * height],
-    };
-};
-
-const readablePortProjection = ({ width, height, fov, distance, pitch }) => {
-    const radians = pitch * Math.PI / 180;
-    const upY = Math.cos(radians);
-    const upZ = Math.sin(radians);
-    const forwardZ = -Math.cos(radians);
-    const scaleY = (1 / fov) * (1 / distance);
-    const scaleX = (height / width) * scaleY;
-    const halfX = scaleX * 10;
-    const halfY = scaleY * 10;
-    const back = forwardZ * -0.5 + 0.5;
-    const shiftX = Math.sin(upY * Math.PI / 2) * back ** 2 * 15 * scaleX;
-    const shiftY = upZ * -3 * scaleY;
-    return {
-        aspectFix: [height / width, 1],
-        fovFix: 1 / fov,
-        rectHalf: [halfX, halfY],
-        center: [0.5 - shiftX, 0.5 - shiftY],
-        pixelHalf: [halfX * width, halfY * height],
-    };
-};
-
-const numericFixtures = [];
-for (const [width, height] of [[1920, 1080], [1080, 1920]]) {
-    for (const fov of [15, 40, 60]) {
-        for (const distance of [1.5, 3, 6]) {
-            for (const pitch of [-60, -30, 0, 30, 60]) {
-                const fixture = { width, height, fov, distance, pitch };
-                const official = officialBlobProjection(fixture);
-                const port = readablePortProjection(fixture);
-                for (const key of ['aspectFix', 'rectHalf', 'center', 'pixelHalf']) {
-                    for (let index = 0; index < official[key].length; index++) {
-                        assert.ok(
-                            Math.abs(official[key][index] - port[key][index]) < 1e-12,
-                            `${key}[${index}] diverged for ${JSON.stringify(fixture)}`,
-                        );
-                    }
-                }
-                assert.ok(Math.abs(official.fovFix - port.fovFix) < 1e-12);
-                assert.ok(
-                    Math.abs(official.pixelHalf[0] - official.pixelHalf[1]) < 1e-9,
-                    `inverse display aspect must preserve a circular pixel footprint: ${JSON.stringify(fixture)}`,
-                );
-                numericFixtures.push({ ...fixture, ...official });
-            }
-        }
-    }
+function sourceCallable(source, name, bindings = {}) {
+  const ast = ts.createSourceFile('fixture.ts', source, ts.ScriptTarget.Latest, true)
+  let declaration
+  function visit(node) {
+    if ((ts.isFunctionDeclaration(node) || ts.isVariableDeclaration(node))
+      && node.name?.getText(ast) === name) declaration = node
+    ts.forEachChild(node, visit)
+  }
+  visit(ast)
+  assert.ok(declaration, `Missing source callable: ${name}`)
+  const text = ts.isVariableDeclaration(declaration)
+    ? `const ${name} = ${declaration.initializer.getText(ast)};`
+    : declaration.getText(ast).replace(/^export\s+/, '')
+  const js = ts.transpileModule(text, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText
+  return Function(...Object.keys(bindings), `${js}; return ${name}`)(...Object.values(bindings))
 }
-assert.equal(numericFixtures.length, 90);
 
-const liveTwCameraGlobals = {
-    viewport: [1920, 1080],
-    globalAspectFix: [0.5625, 1],
-    globalFOVorOrthoSizeFix: 0.02500000037252903,
-    currentCameraFOV: 40,
-};
-assert.deepEqual(
-    liveTwCameraGlobals.globalAspectFix,
-    [liveTwCameraGlobals.viewport[1] / liveTwCameraGlobals.viewport[0], 1],
-    'official TW runtime confirms _GlobalAspectFix = (height / width, 1)',
-);
-assert.ok(
-    Math.abs(
-        liveTwCameraGlobals.globalFOVorOrthoSizeFix -
-        1 / liveTwCameraGlobals.currentCameraFOV
-    ) < 1e-8,
-    'official TW runtime confirms _GlobalFOVorOrthoSizeFix = 1 / Camera.fieldOfView',
-);
+test('draw-time AngelRing reference follows final head pose and preserves the existing draw hook', () => {
+  const loader = read('magia-exedra-character-three/loader.ts')
+  const install = sourceCallable(loader, 'installAngelRingDrawReferenceUpdate')
+  assert.match(loader, /installAngelRingDrawReferenceUpdate\(mesh, result\.updateAngelRingReference\)/)
+  assert.doesNotMatch(loader, /animationLoops\.push\(result\.updateAngelRingReference\)/)
+  const head = new THREE.Bone()
+  head.position.set(0, 1, 0)
+  const shader = { uniforms: Object.fromEntries(['uAngelRingFacePosition', 'uAngelRingFaceUp', 'uAngelRingFaceForward'].map(key => [key, { value: new THREE.Vector3() }])) }
+  const update = sourceCallable(hairSource, 'updateAngelRingReference', {
+    reference: { headBone: head, localUp: new THREE.Vector3(0, 1, 0), localForward: new THREE.Vector3(1, 0, 0), headOffset: 0.167 },
+    projectedShaders: new Set([shader]),
+    headPosition: new THREE.Vector3(), headQuaternion: new THREE.Quaternion(),
+    facePosition: new THREE.Vector3(), faceUp: new THREE.Vector3(), faceForward: new THREE.Vector3(),
+  })
+  let requestedAngle = 0
+  let calls = 0
+  const args = [{}, {}, { camera: 'first' }, {}, {}, {}]
+  const mesh = { onBeforeRender(...actual) {
+    assert.equal(this, mesh)
+    assert.deepEqual(actual, args)
+    head.quaternion.setFromAxisAngle(new THREE.Vector3(1, 0, 0), requestedAngle)
+    calls++
+  } }
+  install(mesh, update)
+  update() // Earlier animation-time sample is deliberately stale.
+  for (const degrees of [30, -20, 0]) {
+    requestedAngle = THREE.MathUtils.degToRad(degrees)
+    mesh.onBeforeRender(...args)
+    const expectedUp = new THREE.Vector3(0, Math.cos(requestedAngle), Math.sin(requestedAngle))
+    assert.ok(shader.uniforms.uAngelRingFaceUp.value.distanceTo(expectedUp) < 1e-12)
+    const expectedOrigin = new THREE.Vector3(0, 1, 0).addScaledVector(expectedUp, 0.167)
+    assert.ok(shader.uniforms.uAngelRingFacePosition.value.distanceTo(expectedOrigin) < 1e-12)
+  }
+  assert.equal(calls, 3)
+  const pose = head.quaternion.clone()
+  update()
+  assert.ok(head.quaternion.equals(pose), 'Uniform refresh never changes the bone pose')
+})
 
-const normalDistance = pitch => officialBlobProjection({
-    width: 1920,
-    height: 1080,
-    fov: 40,
-    distance: 3,
-    pitch,
-});
-assert.ok(
-    Math.abs(normalDistance(60).center[1] - 0.5) < 0.022,
-    'at FOV 40 and distance 3, the official pitch shift stays below 2.2% of viewport height',
-);
-const near = officialBlobProjection({ width: 1920, height: 1080, fov: 40, distance: 1.5, pitch: 0 });
-const far = officialBlobProjection({ width: 1920, height: 1080, fov: 40, distance: 3, pitch: 0 });
-assert.ok(Math.abs(near.rectHalf[1] / far.rectHalf[1] - 2) < 1e-12);
+test('UV AngelRing contribution is composed before global tint and opaque output', () => {
+  // This fragment extension runs after stylization creates the tint statement.
+  // The full material-construction tests separately verify the real hook order.
+  const start = hairSource.indexOf('onAfterStylization(shader)')
+  assert.ok(start >= 0)
+  const end = hairSource.indexOf('onBeforeCompile(shader)', start)
+  assert.ok(end > start)
+  const uvBranch = hairSource.slice(start, end)
+  const ast = ts.createSourceFile('uv.ts', `const extension = {${uvBranch}}`, ts.ScriptTarget.Latest, true)
+  assert.equal(ast.parseDiagnostics.length, 0)
+  let assignment
+  function visit(node) {
+    if (ts.isBinaryExpression(node) && node.left.getText(ast) === 'shader.fragmentShader') assignment = node
+    ts.forEachChild(node, visit)
+  }
+  visit(ast)
+  assert.ok(assignment)
+  const shader = { fragmentShader: 'vec3 outgoingLight = base;\noutgoingLight *= uGlobalCharacterTint;\n#include <opaque_fragment>' }
+  const js = ts.transpileModule(assignment.getText(ast), { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText
+  Function('shader', js)(shader)
+  const contribution = shader.fragmentShader.indexOf('outgoingLight +=')
+  const tint = shader.fragmentShader.indexOf('outgoingLight *= uGlobalCharacterTint;')
+  const output = shader.fragmentShader.indexOf('#include <opaque_fragment>')
+  assert.ok(contribution >= 0 && contribution < tint && tint < output, 'Source injection must add UV highlight before tint/output')
+  assert.equal((shader.fragmentShader.match(/outgoingLight \*= uGlobalCharacterTint;/g) ?? []).length, 1)
+  assert.doesNotMatch(uvBranch, /gl_FragColor\.rgb \+=/)
+  const base = [0.2, 0.25, 0.3], highlight = [0.192, 0.1008, 0.0432], tintRgb = [0.5, 0.75, 0.25]
+  const native = base.map((v, i) => (v + highlight[i]) * tintRgb[i])
+  const old = base.map((v, i) => v * tintRgb[i] + highlight[i])
+  const delta = old.map((v, i) => v - native[i])
+  for (const [i, expected] of [0.096, 0.0252, 0.0324].entries()) assert.ok(Math.abs(delta[i] - expected) < 1e-12)
+})
+const officialBlob = read(
+  'artifacts/research/20260813-shader-reverse/official-shaders/' +
+  'main_hair__blob-98__FOG_LINEAR___MAIN_LIGHT_SHADOWS___' +
+  'MAIN_LIGHT_SHADOWS_CASCADE___ADDITIONAL_LIGHT_SHADOWS___' +
+  'IS_HAIR___USE_DEPTHTEX_RIM_SHADOW.glsl',
+)
 
-console.log('Official AngelRing numeric fixtures passed: 90/90.');
+const rejectedViewerCompensation =
+  /FreeOrbitBasisBlend|angelRingHeadAttachment|ProjectedRectMask|MapLowerBounds|MIN_FACE_UP_VIEW_Z|MAX_FACE_UP_VIEW_Z|HeadAttachment|projectionRadius|bandHalfWidth/
+
+function officialProjectedUv({
+  fragmentUv,
+  faceUv,
+  faceUpVS,
+  faceForwardVS,
+  inverseDistance,
+  aspectFix,
+  fovFix,
+  orthographic = false,
+}) {
+  const distanceScale = orthographic ? 0.875 : inverseDistance
+  const unitScale = [
+    aspectFix[0] * fovFix * distanceScale,
+    aspectFix[1] * fovFix * distanceScale,
+  ]
+  const rectHalf = [unitScale[0] * 10, unitScale[1] * 10]
+  const back = faceForwardVS[2] * -0.5 + 0.5
+  const shift = [
+    Math.sin(faceUpVS[1] * 1.57079637) * back * back * 15 * unitScale[0],
+    faceUpVS[2] * -3 * unitScale[1],
+  ]
+  const rect = [
+    (fragmentUv[0] + shift[0] - (faceUv[0] - rectHalf[0])) /
+      (rectHalf[0] * 2) - 0.5,
+    (fragmentUv[1] + shift[1] - (faceUv[1] - rectHalf[1])) /
+      (rectHalf[1] * 2) - 0.5,
+  ]
+  const rotated = [
+    rect[0] * faceUpVS[1] + rect[1] * -faceUpVS[0] + 0.5,
+    rect[0] * faceUpVS[0] + rect[1] * faceUpVS[1] + 0.5,
+  ]
+  const arch = Math.sin(rotated[0] * 3.14159274)
+  const lower = rotated[1] - arch * 0.414999992
+  const upper = rotated[1] + arch * 0.5
+  const zBlend = faceUpVS[2] * 0.5 + 0.5
+  return [rotated[0], lower + (upper - lower) * zBlend]
+}
+
+test('projected AngelRing explicitly uses observed head-frame Y lock; native formula kept as evidence', () => {
+  assert.match(officialBlob, /float\(1\.0\) \/ float\(u_xlat66\)/)
+  assert.match(officialBlob, /\? 0\.875 : u_xlat66/)
+  assert.match(officialBlob, /u_xlat16_7\.y \* 1\.57079637/)
+  assert.match(officialBlob, /u_xlat16_83 = u_xlat16_7\.x \* 3\.14159274/)
+  assert.match(officialBlob, /0\.414999992/)
+  assert.match(officialBlob, /texture\(_AngelRingMap, u_xlat16_7\.xz/)
+
+  const projectedStart = hairSource.indexOf('projectedShaders.add(shader)')
+  assert.ok(projectedStart >= 0)
+  const projected = hairSource.slice(projectedStart)
+  assert.match(projected, /vAngelRingWorldPosition/)
+  assert.match(projected, /vec4\(transformed, 1\.0\)/)
+  assert.match(projected, /rdAngelHeadLockedUv\(/)
+  assert.match(projected, /texture2D\(\s*tAngelRingMap,\s*rdAngelMapUv\s*\)\.r/)
+  assert.match(hairSource, /viewerCompensation: true/)
+  assert.match(hairSource, /nativeReference: 'main_hair\/blob98\/fragment-932-1000'/)
+  assert.match(hairSource, /viewer-angel-ring-head-frame-ylock-v1/)
+  assert.match(hairSource, /outsideRangeSampling: 'serialized-sampler'/)
+  assert.doesNotMatch(projected, /rdAngelFaceUpVS\.z/)
+  assert.doesNotMatch(hairSource, rejectedViewerCompensation)
+  assert.doesNotMatch(hairSource, /100102|108301|101901|100107|100805/)
+})
+
+test('official common sampler remains ClampToEdge with no Viewer bounds mask', () => {
+  const begin = textureSource.indexOf('export function ApplyOfficialCommonAngelRingSampling')
+  const end = textureSource.indexOf('\n}', begin) + 2
+  const commonSampler = textureSource.slice(begin, end)
+  assert.match(commonSampler, /THREE\.ClampToEdgeWrapping[\s\S]*THREE\.ClampToEdgeWrapping/)
+  assert.doesNotMatch(hairSource, /step\(\s*vec2\(0\.0\),\s*rdAngelMapUv|rdAngelProjectedRectMask/)
+
+  const farHairUv = officialProjectedUv({
+    fragmentUv: [0, 0],
+    faceUv: [0.5, 0.5],
+    faceUpVS: [0, 1, 0],
+    faceForwardVS: [0, 0, 0],
+    inverseDistance: 1 / 3,
+    aspectFix: [0.5625, 1],
+    fovFix: 1 / 40,
+  })
+  assert.ok(
+    farHairUv.some(value => value < 0 || value > 1),
+    `expected official projected UV outside [0,1], got ${farHairUv}`,
+  )
+  assert.equal(
+    hairSource.includes('rdAngelProjectedRectMask'),
+    false,
+    'official ClampToEdge sampling is preserved even outside [0,1]',
+  )
+})
+
+test('all official controller profiles provide serialized head origin fields', () => {
+  const rows = [...renderProfileSource.matchAll(/\[\d{6}, \{ characterId:/g)]
+  const offsets = [...renderProfileSource.matchAll(/headOffset: [0-9]/g)]
+  assert.equal(rows.length, 95)
+  assert.equal(offsets.length, rows.length)
+  assert.match(
+    renderProfileSource,
+    /if \(!profile\.angelRingEnabled \|\| profile\.headOffset == undefined\) return undefined/,
+  )
+  const createStart = renderProfileSource.indexOf('export function createAngelRingReference')
+  const createEnd = renderProfileSource.indexOf('\n}', createStart) + 2
+  const createReference = renderProfileSource.slice(createStart, createEnd)
+  assert.match(createReference, /headOffset: profile\.headOffset/)
+  assert.doesNotMatch(createReference, /Box3|MathUtils|estimated|skin|attachment/)
+  assert.doesNotMatch(renderProfileSource, /installAngelRingHeadAttachment|angelRingHeadAttachment/)
+})
+
+test('101901, 100107, 100805 and neighbors keep serialized branch routing', () => {
+  assert.match(
+    renderProfileSource,
+    /\[100107, \{ characterId: 100107, styleId: 100101,[^\n]*headOffset: 0\.167,[^\n]*hairUvAngelRing: false/,
+  )
+  assert.match(
+    renderProfileSource,
+    /\[100805, \{ characterId: 100805, styleId: 100802,[^\n]*headOffset: 0\.2,[^\n]*hairUvAngelRing: false/,
+  )
+  assert.match(
+    renderProfileSource,
+    /\[101901, \{ characterId: 101901, styleId: 101901,[^\n]*headOffset: 0\.18,[^\n]*hairUvAngelRing: false/,
+  )
+  assert.match(
+    renderProfileSource,
+    /\[108301, \{ characterId: 108301, styleId: 108301,[^\n]*headOffset: 0\.201,[^\n]*hairUvAngelRing: true/,
+  )
+
+  const cases = {
+    mt_chara_101901_hair: [true, false, 'common'],
+    mt_chara_101901_hair_out: [true, false, 'common'],
+    mt_chara_100805_hair: [true, false, 'common'],
+    mt_chara_100805_hair_out: [true, false, 'common'],
+    mt_chara_100805_hair_alpha: [false, false, 'none'],
+    mt_chara_100102_hair: [true, false, 'common'],
+    mt_chara_100102_hair_out: [true, false, 'common'],
+    mt_chara_100101_hair: [true, false, 'common'],
+    mt_chara_100101_hair_out: [true, false, 'common'],
+    mt_chara_108301_hair: [true, true, 'character'],
+    mt_chara_108301_hair_out: [true, true, 'character'],
+  }
+  for (const [name, expected] of Object.entries(cases)) {
+    const profile = materialProfiles.materials[name]?.angelRing
+    assert.ok(profile, name)
+    assert.deepEqual(
+      [profile.enabled, profile.uvMode, profile.map],
+      expected,
+      name,
+    )
+  }
+})

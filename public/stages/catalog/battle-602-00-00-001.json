@@ -1,0 +1,45 @@
+{
+  "id": "battle-602-00-00-001",
+  "stableKey": "AssetBundles/battle/stage/bg_3d_602_00_00_001",
+  "name": "Dessert Witch - Boss Floor",
+  "category": "battle",
+  "official": true,
+  "dioramaBackgroundMstId": 110319,
+  "backgroundResourceName": "bg_3d_602_00_00_001",
+  "assetBundleName": "battle/stage/bg_3d_602_00_00_001",
+  "type": "fbx",
+  "url": "./stages/official/battle-602-00-00-001/bg_3d_602_00_00_001.fbxdata",
+  "sceneProfileUrl": "./stages/official/battle-602-00-00-001/scene-profile.json",
+  "scale": 1,
+  "position": [
+    0,
+    0,
+    0
+  ],
+  "rotation": [
+    0,
+    0,
+    0
+  ],
+  "evidence": [
+    "official Steam JP AssetBundle source-reference closure; source bundles were not copied",
+    "existing AssetStudioModCLI splitObjects FBX from artifacts/bulk-stage-expansion-20260817/probe-602-00-00-001",
+    "automatic scene-profile extractor: Light/Material/ReDriveVolume/lightmap/UV1/runtime records",
+    "scene-name-cross-region.v1.json stable key dioramaBackgroundMstId=110319"
+  ],
+  "dynamic": {
+    "expected": true,
+    "status": "partial",
+    "missing": [
+      "AnimatorFPSController consumer",
+      "DOTweenPath consumer",
+      "SoloRaid phase-volume switching",
+      "battle enemy/foothold semantics"
+    ],
+    "evidence": [
+      "5 serialized component clips",
+      "1 volumetric light beam + 1 dust profile",
+      "27 official Animator components retained in source records"
+    ]
+  }
+}

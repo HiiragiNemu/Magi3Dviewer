@@ -4,7 +4,7 @@ import type { MagiaExedraScene3D } from '..';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { ReDriveBackgroundColorAdjustmentsShader } from './backgroundColorAdjustments';
-import { ReDriveVolumePostProcessingShader } from './volumePostProcessing';
+import { ReDriveVolumePostProcessingPass } from './volumePostProcessing';
 import { ReDriveUrpBloomPass } from './urpBloom';
 import { ReDriveParaffinShader } from './reDriveParaffin';
 import {
@@ -22,9 +22,14 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { FXAAPass } from 'three/addons/postprocessing/FXAAPass.js';
+import { CombatVfxScreenPass } from '../../src/viewer/combatVfxScreenEffects';
 
 export type SceneComposerAntiAliasing = 'None' | 'MSAA' | 'TAA' | 'SSAA' | 'SMAA' | 'FXAA'
-export const defaultSceneComposerAntiAliasing: SceneComposerAntiAliasing = 'FXAA'
+// Preserve high-frequency toon outlines and texture hatching. FXAA smooths by
+// blurring contrast edges, which visibly softens the official line work even
+// when the drawing buffer is already native DPR. SMAA keeps the post-process
+// path required by split-light scenes without stacking renderer MSAA.
+export const defaultSceneComposerAntiAliasing: SceneComposerAntiAliasing = 'SMAA'
 
 export class SceneEffectsController {
     scene: MagiaExedraScene3D
@@ -49,8 +54,10 @@ export class SceneEffectsController {
     /** Source-equivalent Unity 2022.3 URP Bloom for recovered volumes. */
     urpBloomPass: ReDriveUrpBloomPass
     paraffinPass: ShaderPass
-    /** Full-composite Unity Volume ColorAdjustments/Vignette subset. */
-    volumePostProcessPass: ShaderPass
+    /** Full-composite serialized Unity Volume operator pass. */
+    volumePostProcessPass: ReDriveVolumePostProcessingPass
+    /** Transient Q/E Timeline screen tracks; one persistent pass, no frame RT churn. */
+    combatVfxScreenPass: CombatVfxScreenPass
 
     smaaPass: SMAAPass
     outputPass: OutputPass
@@ -102,10 +109,9 @@ export class SceneEffectsController {
         this.paraffinPass = new ShaderPass(ReDriveParaffinShader)
         this.paraffinPass.enabled = false
 
-        this.volumePostProcessPass = new ShaderPass(
-            ReDriveVolumePostProcessingShader,
-        )
-        this.volumePostProcessPass.enabled = false
+        this.volumePostProcessPass = new ReDriveVolumePostProcessingPass()
+
+        this.combatVfxScreenPass = new CombatVfxScreenPass()
 
         this.smaaPass = new SMAAPass()
         this.smaaPass.enabled = false
@@ -138,6 +144,7 @@ export class SceneEffectsController {
         this.composer.addPass(this.outlinePass)
         this.composer.addPass(this.paraffinPass)
         this.composer.addPass(this.volumePostProcessPass)
+        this.composer.addPass(this.combatVfxScreenPass)
         this.composer.addPass(this.smaaPass)
         this.composer.addPass(this.outputPass)
         this.composer.addPass(this.fxaaPass)

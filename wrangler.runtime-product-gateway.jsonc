@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "magius3dviewer-runtime-products",
+  "main": "workers/runtime-product-gateway.mjs",
+  "compatibility_date": "2026-08-25",
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": {
+    "RUNTIME_PRODUCT_HEALTH_RELEASE_TAG": "runtime-products-v1-a",
+    "RUNTIME_PRODUCT_HEALTH_ASSET_NAME": "0660-stage-dungeon-10000-bg-3d-intro-0001-001.zip"
+  },
+  "secrets": {
+    "required": [
+      "GITHUB_RELEASE_TOKEN"
+    ]
+  },
+  "observability": {
+    "enabled": true
+  }
+}

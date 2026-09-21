@@ -50,7 +50,7 @@ test('self-shadow depth writer uses a separate comparison sampler', () => {
   )
 })
 
-test('self-shadow is applied through authored toon shadow textures and face SDF', () => {
+test('self-shadow remains on authored toon surfaces while official FaceGradient omits the unavailable sampler', () => {
   const general = read('magia-exedra-character-three/shaders/general.ts')
   const face = read('magia-exedra-character-three/shaders/face.ts')
   const stylization = read('magia-exedra-character-three/shaders/stylization.ts')
@@ -59,7 +59,8 @@ test('self-shadow is applied through authored toon shadow textures and face SDF'
   assert.match(general, /rdToonBaseWeight \*= mix\(/)
   assert.match(general, /rdToonSelfShadowVisibility\(/)
   assert.match(general, /uMaterialReceiveSelfShadow/)
-  assert.match(face, /rdCombinedFaceLight \*= rdToonSelfShadowVisibility/)
+  assert.doesNotMatch(face, /rdCombinedFaceLight \*= rdToonSelfShadowVisibility/)
+  assert.match(face, /rdGradientFaceLight \*= step\(0\.899999976, rdFaceGradientDepthSignal\)/)
   assert.match(scene, /this\.selfShadow\.render\(\)/)
 })
 

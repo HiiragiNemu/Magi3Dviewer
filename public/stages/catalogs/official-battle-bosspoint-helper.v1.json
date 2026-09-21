@@ -1,0 +1,417 @@
+{
+  "schema": "magius.official-stage-catalog.v1",
+  "version": 1,
+  "family": "battle-bosspoint-helper",
+  "stages": [
+    {
+      "id": "bosspoint-stage-bg-3d-610-00-00-001-bosspoint",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_610_00_00_001_bosspoint",
+      "name": "bg_3d_610_00_00_001_bosspoint",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-bosspoint-helper",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_610_00_00_001_bosspoint",
+      "backgroundResourceName": "bg_3d_610_00_00_001_bosspoint",
+      "type": "fbx",
+      "url": "./stages/official/bosspoint-stage-bg-3d-610-00-00-001-bosspoint/bg_3d_610_00_00_001_bosspoint.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 1374151,
+        "externalCabCount": 11,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/bosspoint-stage-bg-3d-610-00-00-001-bosspoint/scene-profile.json"
+    },
+    {
+      "id": "bosspoint-stage-bg-3d-612-00-00-004-bosspoint",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_612_00_00_004_bosspoint",
+      "name": "bg_3d_612_00_00_004_bosspoint",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-bosspoint-helper",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_612_00_00_004_bosspoint",
+      "backgroundResourceName": "bg_3d_612_00_00_004_bosspoint",
+      "type": "fbx",
+      "url": "./stages/official/bosspoint-stage-bg-3d-612-00-00-004-bosspoint/bg_3d_612_00_00_004_bosspoint.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 6554024,
+        "externalCabCount": 37,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/bosspoint-stage-bg-3d-612-00-00-004-bosspoint/scene-profile.json"
+    },
+    {
+      "id": "bosspoint-stage-bg-3d-612-00-01-002-bosspoint",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_612_00_01_002_bosspoint",
+      "name": "bg_3d_612_00_01_002_bosspoint",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-bosspoint-helper",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_612_00_01_002_bosspoint",
+      "backgroundResourceName": "bg_3d_612_00_01_002_bosspoint",
+      "type": "fbx",
+      "url": "./stages/official/bosspoint-stage-bg-3d-612-00-01-002-bosspoint/bg_3d_612_00_01_002_bosspoint.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 7288721,
+        "externalCabCount": 33,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/bosspoint-stage-bg-3d-612-00-01-002-bosspoint/scene-profile.json"
+    },
+    {
+      "id": "bosspoint-stage-bg-3d-621-00-00-004-bosspoint",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_621_00_00_004_bosspoint",
+      "name": "bg_3d_621_00_00_004_bosspoint",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-bosspoint-helper",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_621_00_00_004_bosspoint",
+      "backgroundResourceName": "bg_3d_621_00_00_004_bosspoint",
+      "type": "fbx",
+      "url": "./stages/official/bosspoint-stage-bg-3d-621-00-00-004-bosspoint/bg_3d_621_00_00_004_bosspoint.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 5100223,
+        "externalCabCount": 58,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/bosspoint-stage-bg-3d-621-00-00-004-bosspoint/scene-profile.json"
+    },
+    {
+      "id": "bosspoint-stage-bg-3d-637-00-00-001-bosspoint",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_637_00_00_001_bosspoint",
+      "name": "bg_3d_637_00_00_001_bosspoint",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-bosspoint-helper",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_637_00_00_001_bosspoint",
+      "backgroundResourceName": "bg_3d_637_00_00_001_bosspoint",
+      "type": "fbx",
+      "url": "./stages/official/bosspoint-stage-bg-3d-637-00-00-001-bosspoint/bg_3d_637_00_00_001_bosspoint.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 2886432,
+        "externalCabCount": 26,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/bosspoint-stage-bg-3d-637-00-00-001-bosspoint/scene-profile.json"
+    },
+    {
+      "id": "bosspoint-stage-bg-3d-637-00-00-002-bosspoint",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_637_00_00_002_bosspoint",
+      "name": "bg_3d_637_00_00_002_bosspoint",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-bosspoint-helper",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_637_00_00_002_bosspoint",
+      "backgroundResourceName": "bg_3d_637_00_00_002_bosspoint",
+      "type": "fbx",
+      "url": "./stages/official/bosspoint-stage-bg-3d-637-00-00-002-bosspoint/bg_3d_637_00_00_002_bosspoint.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 7061140,
+        "externalCabCount": 31,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/bosspoint-stage-bg-3d-637-00-00-002-bosspoint/scene-profile.json"
+    },
+    {
+      "id": "bosspoint-stage-bg-3d-639-00-00-002-bosspoint",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_639_00_00_002_bosspoint",
+      "name": "bg_3d_639_00_00_002_bosspoint",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-bosspoint-helper",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_639_00_00_002_bosspoint",
+      "backgroundResourceName": "bg_3d_639_00_00_002_bosspoint",
+      "type": "fbx",
+      "url": "./stages/official/bosspoint-stage-bg-3d-639-00-00-002-bosspoint/bg_3d_639_00_00_002_bosspoint.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 2255290,
+        "externalCabCount": 26,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/bosspoint-stage-bg-3d-639-00-00-002-bosspoint/scene-profile.json"
+    },
+    {
+      "id": "bosspoint-stage-bg-3d-650-01-00-001-bosspoint",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_650_01_00_001_bosspoint",
+      "name": "bg_3d_650_01_00_001_bosspoint",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-bosspoint-helper",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_650_01_00_001_bosspoint",
+      "backgroundResourceName": "bg_3d_650_01_00_001_bosspoint",
+      "type": "fbx",
+      "url": "./stages/official/bosspoint-stage-bg-3d-650-01-00-001-bosspoint/bg_3d_650_01_00_001_bosspoint.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 4498255,
+        "externalCabCount": 11,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/bosspoint-stage-bg-3d-650-01-00-001-bosspoint/scene-profile.json"
+    },
+    {
+      "id": "bosspoint-stage-bg-3d-650-02-00-001-bosspoint",
+      "stableKey": "AssetBundles/battle/stage/bg_3d_650_02_00_001_bosspoint",
+      "name": "bg_3d_650_02_00_001_bosspoint",
+      "names": {
+        "en": null,
+        "ja": null,
+        "zhHant": null
+      },
+      "category": "battle",
+      "family": "battle-bosspoint-helper",
+      "official": true,
+      "assetBundleName": "battle/stage/bg_3d_650_02_00_001_bosspoint",
+      "backgroundResourceName": "bg_3d_650_02_00_001_bosspoint",
+      "type": "fbx",
+      "url": "./stages/official/bosspoint-stage-bg-3d-650-02-00-001-bosspoint/bg_3d_650_02_00_001_bosspoint.fbxdata",
+      "scale": 1,
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "dynamic": {
+        "expected": true,
+        "status": "recovered",
+        "evidence": [
+          "dependency-closed official bundle product",
+          "serialized scene profile with lights/materials/runtime components"
+        ]
+      },
+      "product": {
+        "schema": "magius.official-scene-product.v1",
+        "kind": "geometry",
+        "fullyResolved": true,
+        "sourceBytes": 7395668,
+        "externalCabCount": 23,
+        "syntheticMarker": false
+      },
+      "sceneProfileUrl": "./stages/official/bosspoint-stage-bg-3d-650-02-00-001-bosspoint/scene-profile.json"
+    }
+  ],
+  "counts": {
+    "visible": 9,
+    "target": 9,
+    "fullyResolved": 9
+  }
+}

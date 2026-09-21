@@ -1,0 +1,120 @@
+{
+  "schema": "unity-native-matcap-mips.v1",
+  "role": "matCap",
+  "encoding": "srgb-color",
+  "dataFormat": "rgba8",
+  "dataUrl": "./matcap_sunset_02.tw-native-mips.rgba8.bin",
+  "width": 256,
+  "height": 256,
+  "mipCount": 9,
+  "byteLength": 349524,
+  "mips": [
+    {
+      "level": 0,
+      "width": 256,
+      "height": 256,
+      "offset": 0,
+      "bytes": 262144,
+      "nativeOffset": 0,
+      "nativeBytes": 29584
+    },
+    {
+      "level": 1,
+      "width": 128,
+      "height": 128,
+      "offset": 262144,
+      "bytes": 65536,
+      "nativeOffset": 29584,
+      "nativeBytes": 7744
+    },
+    {
+      "level": 2,
+      "width": 64,
+      "height": 64,
+      "offset": 327680,
+      "bytes": 16384,
+      "nativeOffset": 37328,
+      "nativeBytes": 1936
+    },
+    {
+      "level": 3,
+      "width": 32,
+      "height": 32,
+      "offset": 344064,
+      "bytes": 4096,
+      "nativeOffset": 39264,
+      "nativeBytes": 576
+    },
+    {
+      "level": 4,
+      "width": 16,
+      "height": 16,
+      "offset": 348160,
+      "bytes": 1024,
+      "nativeOffset": 39840,
+      "nativeBytes": 144
+    },
+    {
+      "level": 5,
+      "width": 8,
+      "height": 8,
+      "offset": 349184,
+      "bytes": 256,
+      "nativeOffset": 39984,
+      "nativeBytes": 64
+    },
+    {
+      "level": 6,
+      "width": 4,
+      "height": 4,
+      "offset": 349440,
+      "bytes": 64,
+      "nativeOffset": 40048,
+      "nativeBytes": 16
+    },
+    {
+      "level": 7,
+      "width": 2,
+      "height": 2,
+      "offset": 349504,
+      "bytes": 16,
+      "nativeOffset": 40064,
+      "nativeBytes": 16
+    },
+    {
+      "level": 8,
+      "width": 1,
+      "height": 1,
+      "offset": 349520,
+      "bytes": 4,
+      "nativeOffset": 40080,
+      "nativeBytes": 16
+    }
+  ],
+  "orientation": "native-rows: equivalent to UnityPy PNG flip followed by TextureLoader flipY=true; DataTexture flipY=false",
+  "sampler": {
+    "filter": "bilinear",
+    "wrap": {
+      "u": "repeat",
+      "v": "repeat"
+    },
+    "anisotropy": 1,
+    "mipBias": 0
+  },
+  "source": {
+    "platform": "tw-android",
+    "bundle": "battle/stage/bg_3d_600_00_00_001",
+    "cab": "CAB-aae5b15c1b2fca139b0ca5b1f9b430dd",
+    "pathID": "-5034374025722903887",
+    "name": "matcap_sunset_02",
+    "format": 50,
+    "formatName": "ASTC_RGB_6x6",
+    "serializedColorSpace": "srgb",
+    "sourceColorSpaceFlag": 1,
+    "stream": {
+      "offset": 1782816,
+      "size": 40096,
+      "path": "archive:/CAB-aae5b15c1b2fca139b0ca5b1f9b430dd/CAB-aae5b15c1b2fca139b0ca5b1f9b430dd.resS"
+    }
+  }
+}

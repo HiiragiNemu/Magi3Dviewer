@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { spawnSync } from 'node:child_process'
@@ -19,9 +19,9 @@ test('all locally shipped official Home runtimes pass the global corpus gate', (
         })
         assert.equal(normal.status, 0, normal.stderr || normal.stdout)
         const report = JSON.parse(readFileSync(output, 'utf8'))
-        assert.equal(report.summary.characterDirectoryCount, 91)
-        assert.equal(report.summary.animationRuntimeCount, 91)
-        assert.equal(report.summary.expressionRuntimeCount, 91)
+        assert.equal(report.summary.characterDirectoryCount, report.characters.length)
+        assert.equal(report.summary.animationRuntimeCount, report.characters.filter(row => row.animationRuntime).length)
+        assert.equal(report.summary.expressionRuntimeCount, report.characters.filter(row => row.expressionRuntime).length)
         assert.deepEqual(report.summary.missingAnimationCharacterIds, [])
         assert.deepEqual(report.summary.missingExpressionCharacterIds, [])
         // 100101 intentionally uses the exact Style3DCharacterMst alias to
@@ -48,9 +48,6 @@ test('all locally shipped official Home runtimes pass the global corpus gate', (
             { encoding: 'utf8' },
         )
         assert.equal(strict.status, 0, strict.stderr || strict.stdout)
-
-        // The official Steam source root is a local evidence fixture and is not shipped to Pages CI.
-        if (!existsSync(officialHomeRoot)) return
 
         const officialStrict = spawnSync(
             python,

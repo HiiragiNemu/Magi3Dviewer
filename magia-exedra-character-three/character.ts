@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { disposeObject } from './utils';
 import { addAnimationLoop, getClockDelta, removeAnimationLoop } from './renderer';
+import { createAnimationPoseChannels, type AnimationPoseChannelRequest } from './animationPoseChannels';
 import {
     CharacterExpressionController,
     type HomeAnimationRuntime,
@@ -14,6 +15,7 @@ export interface ObjectUserData {
     textures: THREE.Texture[]
     outlineMeshes: THREE.SkinnedMesh[]
     animationLoops: Function[]
+    disposeCallbacks: Array<() => void>
     homeAnimationRuntime?: HomeAnimationRuntime
     homeExpressionRuntime?: HomeExpressionRuntime
 }
@@ -54,6 +56,11 @@ function getHomeLoopAfterStart(
     }
     const match = name.match(/^(Home(?:Wait|Unique)\d+?)_(?:S|SE)\d?$/)
     return match ? `${match[1]}_L` : undefined
+}
+
+export interface ChatacterAnimationPlayOptions {
+    transitionSeconds?: number
+    localTimeSeconds?: number
 }
 
 export default class MagiaExedraCharacter3D {
@@ -106,6 +113,8 @@ export default class MagiaExedraCharacter3D {
     }
 
     dispose() {
+        this.userData.disposeCallbacks.forEach(callback => callback())
+        this.userData.disposeCallbacks.length = 0
         removeAnimationLoop(this.animationLoop)
         this.animation.mixer.stopAllAction()
         this.animation.mixer.uncacheRoot(this.object)
@@ -119,6 +128,7 @@ export default class MagiaExedraCharacter3D {
 export class ChatacterAnimation {
     private _character: MagiaExedraCharacter3D
     mixer: THREE.AnimationMixer
+    private poseChannels: ReturnType<typeof createAnimationPoseChannels>
     private _default?: string | null = null
     private _current?: string
     private _clamped = false
@@ -131,11 +141,14 @@ export class ChatacterAnimation {
     constructor(character: MagiaExedraCharacter3D) {
         this._character = character
         this.mixer = new THREE.AnimationMixer(this._character.object)
+        this.poseChannels = createAnimationPoseChannels(this._character.object, this.mixer, () => !this._character.disposed)
 
         this.mixer.addEventListener('finished', this.onFinishHandler)
     }
 
-    play(name: string, loop = false) {
+    acquirePoseChannels(request: AnimationPoseChannelRequest) { return this.poseChannels.acquire(request) }
+
+    play(name: string, loop = false, options: ChatacterAnimationPlayOptions = {}) {
         /*
         Character, weapon and partially masked body motion can be exported as
         separate AnimationClips. The numbered clip is not consistently the
@@ -168,8 +181,21 @@ export class ChatacterAnimation {
 
         const uniqueAction = this._character.userData.homeAnimationRuntime
             ?.actions?.unique01
-        const enterTransitionSeconds = queuedHomeLoop
-            ? uniqueAction?.enterTransitionSeconds ?? 0
+        const requestedTransitionSeconds = options.transitionSeconds
+        const enterTransitionSeconds = (
+            typeof requestedTransitionSeconds === 'number'
+            && Number.isFinite(requestedTransitionSeconds)
+        )
+            ? Math.max(0, requestedTransitionSeconds)
+            : queuedHomeLoop
+                ? uniqueAction?.enterTransitionSeconds ?? 0
+                : 0
+        const requestedLocalTimeSeconds = options.localTimeSeconds
+        const localTimeSeconds = (
+            typeof requestedLocalTimeSeconds === 'number'
+            && Number.isFinite(requestedLocalTimeSeconds)
+        )
+            ? Math.max(0, requestedLocalTimeSeconds)
             : 0
         if (enterTransitionSeconds > 0 && this._activeActions.length > 0) {
             for (const action of this._activeActions) {
@@ -191,7 +217,13 @@ export class ChatacterAnimation {
                 action.clampWhenFinished = true;
             }
 
-            action.reset().play()
+            action.reset()
+            action.time = animation.duration > 0
+                ? loop
+                    ? localTimeSeconds % animation.duration
+                    : Math.min(localTimeSeconds, animation.duration)
+                : 0
+            action.play()
             if (enterTransitionSeconds > 0) {
                 action.fadeIn(enterTransitionSeconds)
             }
@@ -203,9 +235,11 @@ export class ChatacterAnimation {
         this._activeActions = nextActions
 
         this.paused = false
-        this.time = 0
         this._current = getAnimationFamilyName(name)
         this._clamped = false
+        // Evaluate the requested local action time immediately without calling
+        // mixer.setTime(), which would rewind and invalidate scheduled fades.
+        this.mixer.update(0)
 
         console.log('Playing animation family:', this._current, animations.map(x => x.name))
     }
@@ -341,6 +375,7 @@ export class ChatacterAnimation {
         if (this._default === null) {
             this._default = this._character.animations.find(x => x === 'HomeWait01_L')
                 ?? this._character.animations.find(x => x.startsWith('CommonWait') || x.startsWith('DungeonWait'))
+                ?? this._character.animations.find(x => x === 'Wait')
             if (!this._default) {
                 console.warn(`Default animation not found in "${this._character.object.name}"`)
             }
@@ -371,7 +406,8 @@ export class ChatacterAnimation {
                 return this.duration
             } else {
                 const duration = this.duration
-                return duration > 0 ? this.mixer.time % duration : 0
+                const localTime = this._activeActions[0]?.time ?? 0
+                return duration > 0 ? localTime % duration : 0
             }
         } else {
             return 0

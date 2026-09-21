@@ -10,6 +10,17 @@ export interface ReDriveBakedNormalData {
     meshes: Map<string, Float32Array>
 }
 
+export interface ReDriveBakedNormalSelection {
+    source: 'official-path' | 'official-name' | 'fbx-normal'
+    key?: string
+    values?: Float32Array
+    rejected: Array<{
+        key: string
+        officialVertexCount: number
+        fbxVertexCount: number
+    }>
+}
+
 /** Parse the bounded binary companion emitted by extract-official-baked-normals.py. */
 export function parseReDriveBakedNormals(
     buffer: ArrayBuffer,
@@ -66,6 +77,41 @@ export function parseReDriveBakedNormals(
         )
     }
     return { characterId, meshes }
+}
+
+/**
+ * Resolve a baked-normal record without letting an ambiguous plain mesh name
+ * bind to a different same-named FBX geometry.  Path-qualified records win;
+ * legacy plain-name records remain valid only when their vertex count is exact.
+ */
+export function selectReDriveBakedNormalValues(
+    data: ReDriveBakedNormalData | undefined,
+    meshName: string,
+    objectPath: string,
+    fbxVertexCount: number,
+): ReDriveBakedNormalSelection {
+    if (!data) return { source: 'fbx-normal', rejected: [] }
+
+    const pathKey = `${meshName}\x00${objectPath}`
+    const candidates = pathKey === meshName
+        ? [meshName]
+        : [pathKey, meshName]
+    const rejected: ReDriveBakedNormalSelection['rejected'] = []
+    for (const key of candidates) {
+        const values = data.meshes.get(key)
+        if (!values) continue
+        const officialVertexCount = values.length / 3
+        if (officialVertexCount === fbxVertexCount) {
+            return {
+                source: key === pathKey ? 'official-path' : 'official-name',
+                key,
+                values,
+                rejected,
+            }
+        }
+        rejected.push({ key, officialVertexCount, fbxVertexCount })
+    }
+    return { source: 'fbx-normal', rejected }
 }
 
 /**

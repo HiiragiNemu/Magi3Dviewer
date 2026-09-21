@@ -1,14 +1,24 @@
 {
-  "name": "magi3dviewer",
+  "name": "magius3dviewer",
   "private": true,
   "version": "0.0.0",
+  "description": "Independent browser viewer for Magia Exedra characters, official scenes, enemy models, and combat VFX.",
+  "homepage": "https://magius3dviewer.pages.dev/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HiiragiNemu/Magi3Dviewer.git"
+  },
+  "author": "HiiragiNemu",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
     "build": "npm run test:release && tsc && vite build",
-    "test:release": "node --test cameraDepthRim.test.mjs exactReDriveFormulaParity.test.mjs reDriveCharacterLightingDirection.test.mjs characterFbxVertexChannels.test.mjs nativeSelfShadow.test.mjs exactSelfShadowReceiver.test.mjs officialMaterialFresnelAniso.test.mjs characterSurfaceParity.test.mjs homeCharacterRuntime.test.mjs homeRuntimeCorpusAudit.test.mjs homeAnimationIntegrityGate.test.mjs officialOutline.test.mjs officialFaceEyePass.test.mjs sceneGemSpecularFix.test.mjs steamSceneClosureIndex.test.mjs twGlesRuntimeEvidence.test.mjs stageFidelity.test.mjs stageHierarchy.test.mjs stageMainLightCoordinateParity.test.mjs reDriveSkyboxIntensity.test.mjs stageCatalog.test.mjs stageBundleMultiManifest.test.mjs reDriveBackgroundRuntime.test.mjs stageVolumePostProcessing.test.mjs stage600001Integration.test.mjs stage600003Integration.test.mjs stage601Integration.test.mjs stage603Integration.test.mjs stage608Uv1Lightmap.test.mjs angelRingHeadLock.test.mjs materialProfileUniforms.test.mjs stageAlphaCutoutFixes.test.mjs stageBundleCatalog.test.mjs stageBundleProvenance.test.mjs stageLighting.test.mjs stageLightmaps.test.mjs stageCharacterShadowBridge.test.mjs stageEnvironment.test.mjs stageReflectionProbes.test.mjs stageMaterialBindings.test.mjs stageTextureBindingJoin.test.mjs stageTextureBindingsIntegration.test.mjs stageTextureSamplingExtractor.test.mjs stageRuntime.test.mjs stageVolumetricLightBeams.test.mjs submeshGroups.test.mjs uiLocalization.test.mjs",
+    "build:deploy": "npm run test:deploy && tsc && node scripts/build-deployment.mjs",
+    "test:deploy": "node --test stageCatalog.test.mjs uiLocalization.test.mjs officialResourceCatalog.test.mjs runtimeProductDelivery.test.mjs runtimeProductGateway.test.mjs localVoiceDelivery.test.mjs viteCompressedAssetProxy.test.mjs stageVisibleContentGate.test.mjs viewerTpsExit.test.mjs parameterizedGaitFrame.test.mjs officialCosmicNullBase.test.mjs nativeCompanionPackaging.test.mjs localizedCharacterCatalog.test.mjs nativeCharacterController.test.mjs officialAkumaWeapon.test.mjs",
+    "test:release": "node --test stageTransformAnimations.test.mjs performanceAudioLane.test.mjs performanceAudioTimelineBridge.test.mjs performanceChainIK.test.mjs enemyAnimationInteraction.test.mjs enemyIdleSelection.test.mjs enemyAnimationRuntime.test.mjs cameraDepthRim.test.mjs exactReDriveFormulaParity.test.mjs reDriveCharacterLightingDirection.test.mjs characterFbxVertexChannels.test.mjs nativeSelfShadow.test.mjs exactSelfShadowReceiver.test.mjs officialMaterialFresnelAniso.test.mjs officialNamaeShader.test.mjs doppelIrohaHair.test.mjs characterSurfaceParity.test.mjs officialCharacterSurfaceSampler.test.mjs officialAngelRingSampler.test.mjs homeCharacterRuntime.test.mjs homeRuntimeCorpusAudit.test.mjs homeAnimationIntegrityGate.test.mjs officialOutline.test.mjs officialFaceEyePass.test.mjs officialFaceAdditionalSampler.test.mjs officialFaceHairStencilRuntime.test.mjs officialFaceMeshSwitcherRuntime.test.mjs sceneGemSpecularFix.test.mjs steamSceneClosureIndex.test.mjs twGlesRuntimeEvidence.test.mjs stageFidelity.test.mjs stageHierarchy.test.mjs stageMainLightCoordinateParity.test.mjs stageMainLightCascades.test.mjs reDriveSkyboxIntensity.test.mjs stageCatalog.test.mjs stageBundleMultiManifest.test.mjs reDriveBackgroundRuntime.test.mjs stageVolumePostProcessing.test.mjs stage600001Integration.test.mjs stage600003Integration.test.mjs stage601Integration.test.mjs stage603Integration.test.mjs stage608Uv1Lightmap.test.mjs angelRingHeadLock.test.mjs materialProfileUniforms.test.mjs stageAlphaCutoutFixes.test.mjs stageBundleCatalog.test.mjs stageBundleProvenance.test.mjs stageLighting.test.mjs stageLightmaps.test.mjs stageCharacterShadowBridge.test.mjs stageEnvironment.test.mjs stageEnvironmentPayload.test.mjs stageReflectionProbes.test.mjs stageMaterialBindings.test.mjs stageTextureBindingJoin.test.mjs stageTextureBindingsIntegration.test.mjs stageTextureSamplingExtractor.test.mjs stageRuntime.test.mjs sceneProfileRuntime.test.mjs stageVolumetricLightBeams.test.mjs submeshGroups.test.mjs uiLocalization.test.mjs combatVfx.test.mjs stageSceneLocalization.test.mjs stageGeneratedCorpus.test.mjs officialResourceCatalog.test.mjs enemyResourceLayer.test.mjs enemyVfxResourceLayer.test.mjs resourceProductPreview.test.mjs runtimeProductDelivery.test.mjs runtimeProductGateway.test.mjs localVoiceDelivery.test.mjs viteCompressedAssetProxy.test.mjs g22NativeJumpIntegration.test.mjs stageVisibleContentGate.test.mjs officialCosmicNullBase.test.mjs nativeCompanionPackaging.test.mjs localizedCharacterCatalog.test.mjs nativeCharacterController.test.mjs officialAkumaWeapon.test.mjs",
     "postinstall": "patch-package",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host",
+    "dev:local": "node scripts/local-source-preview.mjs"
   },
   "devDependencies": {
     "@types/three": "^0.182.0",

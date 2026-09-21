@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Magius Official Resource Preview</title>
+    <style>
+      :root { color-scheme: dark; font-family: Inter, system-ui, sans-serif; }
+      * { box-sizing: border-box; }
+      body { margin: 0; overflow: hidden; background: #0a0d14; color: #f4f6ff; }
+      canvas { display: block; width: 100vw; height: 100vh; }
+      #panel { position: fixed; inset: 16px auto auto 16px; z-index: 2; width: min(440px, calc(100vw - 32px)); padding: 14px 16px; border: 1px solid #ffffff28; border-radius: 12px; background: #111725e8; box-shadow: 0 16px 50px #0008; backdrop-filter: blur(10px); }
+      h1 { margin: 0 0 7px; font-size: 16px; }
+      #identity { color: #a9c7ff; overflow-wrap: anywhere; }
+      #status { margin-top: 8px; white-space: pre-wrap; font: 12px/1.5 ui-monospace, Consolas, monospace; color: #d8deec; }
+      #error { color: #ff9da8; }
+      a { color: #8fc7ff; }
+    </style>
+  </head>
+  <body>
+    <section id="panel">
+      <h1>Magius Official Resource Preview</h1>
+      <div id="identity">Loading…</div>
+      <div id="status"></div>
+      <div id="error"></div>
+    </section>
+    <script type="module" src="/src/previews/resourcePreview.ts"></script>
+  </body>
+</html>

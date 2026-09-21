@@ -7,10 +7,35 @@ import * as THREE from 'three'
 import ts from 'typescript'
 
 const repositoryRoot = dirname(fileURLToPath(import.meta.url))
+const introProfile = JSON.parse(readFileSync(join(
+    repositoryRoot,
+    'public',
+    'stages',
+    'official',
+    'dungeon-intro-0001-001',
+    'scene-profile.json',
+), 'utf8'))
+const memoryStoryProfile = JSON.parse(readFileSync(join(
+    repositoryRoot,
+    'public',
+    'stages',
+    'official',
+    'gallery-memory-room-story',
+    'scene-profile.json',
+), 'utf8'))
+const battle601Profile = JSON.parse(readFileSync(join(
+    repositoryRoot,
+    'public',
+    'stages',
+    'official',
+    'battle-601-00-01-001',
+    'scene-profile.json',
+), 'utf8'))
 const nonce = `${process.pid}-${Date.now()}`
 const mockPath = join(repositoryRoot, `.stage-runtime-renderer-${nonce}.mjs`)
 const runtimePath = join(repositoryRoot, `.stage-runtime-under-test-${nonce}.mjs`)
 const hierarchyPath = join(repositoryRoot, `.stage-hierarchy-under-test-${nonce}.mjs`)
+const transformPath = join(repositoryRoot, `.stage-transform-under-test-${nonce}.mjs`)
 const particlePath = join(repositoryRoot, `.stage-particles-under-test-${nonce}.mjs`)
 
 writeFileSync(mockPath, `
@@ -58,7 +83,13 @@ const particleCompiled = ts.transpileModule(particleSource, {
 })
 writeFileSync(particlePath, particleCompiled.outputText, 'utf8')
 
+writeFileSync(transformPath, ts.transpileModule(
+    readFileSync(join(repositoryRoot, 'src/viewer/stageTransformAnimations.ts'), 'utf8'),
+    { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } },
+).outputText, 'utf8')
+
 const source = readFileSync(sourcePath, 'utf8')
+    .replace("'./stageTransformAnimations'", `'./${basename(transformPath)}'`)
     .replace(
         "'magia-exedra-character-three/renderer'",
         `'./${basename(mockPath)}'`,
@@ -89,6 +120,7 @@ after(() => {
     rmSync(mockPath, { force: true })
     rmSync(hierarchyPath, { force: true })
     rmSync(particlePath, { force: true })
+    rmSync(transformPath, { force: true })
 })
 
 function makeAnimatedStageRoot() {
@@ -302,6 +334,83 @@ test('voice source offset shortens the non-looping shared timeline', () => {
     controller.dispose()
 })
 
+function makeIntroActivationRoot() {
+    const root = new THREE.Group()
+    root.name = 'level_intro_0001_001'
+    for (const state of introProfile.runtime.gameObjectStates) {
+        const segments = state.hierarchyPath.split('/')
+        assert.equal(segments[0], root.name)
+        let parent = root
+        for (const segment of segments.slice(1)) {
+            let child = parent.children.find(candidate => candidate.name === segment)
+            if (!child) {
+                child = new THREE.Group()
+                child.name = segment
+                parent.add(child)
+            }
+            parent = child
+        }
+    }
+    return root
+}
+
+test('serialized ActivationTracks restore Intro initial phase and seek exact directors', () => {
+    const root = makeIntroActivationRoot()
+    const runtimeProfile = {
+        autoplay: false,
+        loop: false,
+        gameObjectStates: introProfile.runtime.gameObjectStates,
+        activationDirectors: introProfile.runtime.activationDirectors,
+    }
+    const controller = new runtime.StageRuntimeController(root, runtimeProfile)
+    const bg1 = root.getObjectByName('intro_3dbg_0001')
+    const bg2 = root.getObjectByName('intro_3dbg_0002')
+    const bg3 = root.getObjectByName('intro_3dbg_0003')
+    assert.ok(bg1 && bg2 && bg3)
+
+    assert.deepEqual([bg1.visible, bg2.visible, bg3.visible], [false, true, false])
+    assert.equal(controller.getDebugState().activation.requestedDirectorPathIDs.length, 2)
+    assert.equal(controller.getDebugState().activation.resolvedGameObjectStateCount, 6)
+    assert.deepEqual(controller.getDebugState().activation.missingTargetPaths, [])
+
+    const director01 = runtimeProfile.activationDirectors.find(
+        director => director.hierarchyPath.endsWith('/01'),
+    )
+    const director02 = runtimeProfile.activationDirectors.find(
+        director => director.hierarchyPath.endsWith('/02'),
+    )
+    assert.ok(director01 && director02)
+    assert.equal(controller.setActivationDirector(director01.directorPathID), true)
+    controller.seek(0)
+    assert.deepEqual([bg1.visible, bg2.visible, bg3.visible], [true, false, false])
+    controller.seek(13)
+    assert.deepEqual([bg1.visible, bg2.visible, bg3.visible], [false, true, false])
+    controller.seek(director01.duration)
+    assert.deepEqual(
+        [bg1.visible, bg2.visible, bg3.visible],
+        [false, true, false],
+        'LeaveAsIs must retain the final Bg02 ProcessFrame result',
+    )
+
+    assert.equal(controller.setActivationDirector(director02.directorPathID), true)
+    controller.seek(0)
+    assert.deepEqual([bg1.visible, bg2.visible, bg3.visible], [false, true, false])
+    controller.seek(3)
+    assert.deepEqual([bg1.visible, bg2.visible, bg3.visible], [false, false, true])
+    controller.seek(director02.duration)
+    assert.deepEqual([bg1.visible, bg2.visible, bg3.visible], [false, false, true])
+    assert.equal(controller.setActivationDirector('missing-director'), false)
+    assert.equal(
+        controller.getDebugState().activation.selectedDirectorPathID,
+        director02.directorPathID,
+    )
+
+    assert.equal(controller.setActivationDirector(undefined), true)
+    assert.deepEqual([bg1.visible, bg2.visible, bg3.visible], [false, true, false])
+    controller.dispose()
+    assert.deepEqual([bg1.visible, bg2.visible, bg3.visible], [true, true, true])
+})
+
 test('generated Unity particle records bind exact hierarchy/material and share stage time', () => {
     assert.equal(particles.evaluateStageMinMaxCurve({
         minMaxState: 3,
@@ -313,6 +422,43 @@ test('generated Unity particle records bind exact hierarchy/material and share s
         minColor: [0, 0.25, 0.5, 0.75],
         maxColor: [1, 0.75, 0.5, 0.25],
     }, 0.25), [0.25, 0.375, 0.5, 0.625])
+    const officialNoiseFixture = {
+        enabled: true,
+        frequency: 0.45,
+        quality: 2,
+        damping: true,
+        octaves: 1,
+        octaveMultiplier: 0.5,
+        octaveScale: 2,
+        scrollSpeed: { minMaxState: 0, scalar: 1 },
+    }
+    const highQualityNoise = particles.sampleStageParticleCurlNoise(
+        [0.2, -0.4, 0.7],
+        0.75,
+        officialNoiseFixture,
+        123,
+    )
+    assert.deepEqual(
+        particles.sampleStageParticleCurlNoise(
+            [0.2, -0.4, 0.7],
+            0.75,
+            officialNoiseFixture,
+            123,
+        ),
+        highQualityNoise,
+        'serialized seed/time/field sampling must be deterministic',
+    )
+    assert.ok(highQualityNoise.some(value => Math.abs(value) > 1e-6))
+    assert.notDeepEqual(
+        particles.sampleStageParticleCurlNoise(
+            [0.2, -0.4, 0.7],
+            0.75,
+            { ...officialNoiseFixture, quality: 0 },
+            123,
+        ),
+        highQualityNoise,
+        'official Low=1D and High=3D quality paths must remain distinct',
+    )
 
     const root = new THREE.Group()
     root.name = 'Root'
@@ -361,7 +507,19 @@ test('generated Unity particle records bind exact hierarchy/material and share s
                 m_Rotation: [0, 0, 0],
                 m_Scale: [1, 1, 1],
             },
-            modules: {},
+            modules: {
+                noise: {
+                    ...officialNoiseFixture,
+                    strength: { minMaxState: 0, scalar: 0.36 },
+                    strengthY: { minMaxState: 0, scalar: 1 },
+                    strengthZ: { minMaxState: 0, scalar: 1 },
+                    separateAxes: false,
+                    remapEnabled: false,
+                    positionAmount: { minMaxState: 0, scalar: 1 },
+                    rotationAmount: { minMaxState: 0, scalar: 0 },
+                    sizeAmount: { minMaxState: 0, scalar: 0 },
+                },
+            },
             renderer: { sortingOrder: 7 },
         }],
         particleSystems: [{
@@ -380,18 +538,290 @@ test('generated Unity particle records bind exact hierarchy/material and share s
     }], [texture])
 
     const initial = controller.getDebugState().particles
+    assert.equal(initial.declaredSystemCount, 1)
+    assert.equal(initial.inactiveSystemCount, 0)
+    assert.equal(initial.nonDrawableSystemCount, 0)
+    assert.equal(initial.drawableSystemCount, 1)
     assert.equal(initial.activeSystemCount, 1)
     assert.equal(initial.missingAnchorPaths.length, 0)
     assert.equal(initial.missingMaterialNames.length, 0)
     assert.equal(initial.randomSeedAuthority, 'serialized')
+    assert.equal(initial.noiseModuleSystemCount, 1)
+    assert.equal(initial.noiseModuleAppliedCount, 1)
+    assert.deepEqual(initial.noiseQualityCounts, { '2:3D': 1 })
+    assert.deepEqual(initial.unsupportedModules, [])
     assert.equal(anchor.children[0].name, 'UnityParticleSystem:1')
     assert.equal(anchor.children[0].renderOrder, 7)
 
     controller.update(0.5)
     assert.equal(controller.time, 0.5)
     assert.equal(controller.getDebugState().particles.activeParticleCount, 2)
+    const positionValues = anchor.children[0].geometry.getAttribute('position').array
+    assert.ok(
+        [...positionValues.slice(0, 6)].some(value => Math.abs(value) > 1e-6),
+        'serialized noise must alter an active particle position',
+    )
 
     controller.dispose()
     assert.equal(anchor.children.length, 0)
     texture.dispose()
+})
+
+test('battle 601 consumes both serialized shooting-star trail slots and leaves no module fallback', () => {
+    const presetsById = new Map(
+        battle601Profile.runtime.particlePresets.map(preset => [preset.id, preset]),
+    )
+    const trailSystems = battle601Profile.runtime.particleSystems.filter(system =>
+        presetsById.get(system.presetId)?.modules?.trails?.enabled === true)
+    assert.equal(trailSystems.length, 2)
+    assert.ok(trailSystems.every(system => system.materials.length === 2))
+    assert.ok(trailSystems.every(system =>
+        system.materials[0] === 'bg3d601_00_EffShootingStar_A'
+        && system.materials[1] === 'bg3d601_00_EffShootingStar_B'))
+
+    const root = new THREE.Group()
+    root.name = 'bg_3d_601_00_01_001'
+    for (const system of trailSystems) {
+        let parent = root
+        for (const segment of system.hierarchyPath.split('/').slice(1)) {
+            let child = parent.children.find(candidate => candidate.name === segment)
+            if (!child) {
+                child = new THREE.Group()
+                child.name = segment
+                parent.add(child)
+            }
+            parent = child
+        }
+    }
+
+    const controller = new particles.StageParticleRuntimeController(
+        root,
+        battle601Profile.runtime.particlePresets,
+        trailSystems,
+        battle601Profile.materialBindings,
+        [],
+    )
+    const trails = []
+    root.traverse(object => {
+        if (object.name.startsWith('UnityParticleTrail:')) trails.push(object)
+    })
+    assert.equal(trails.length, 2)
+    const maximumDrawCounts = new Map(trails.map(trail => [trail.name, 0]))
+    let maximumActiveTrailSegments = 0
+    const duration = Math.max(...trailSystems.map(system =>
+        presetsById.get(system.presetId).duration))
+    for (let phase = 1; phase <= 20; phase++) {
+        controller.update(duration * phase / 20)
+        maximumActiveTrailSegments = Math.max(
+            maximumActiveTrailSegments,
+            controller.getDebugState().activeTrailSegmentCount,
+        )
+        for (const trail of trails) {
+            maximumDrawCounts.set(
+                trail.name,
+                Math.max(
+                    maximumDrawCounts.get(trail.name),
+                    trail.geometry.drawRange.count,
+                ),
+            )
+        }
+    }
+    const debug = controller.getDebugState()
+    assert.equal(debug.trailModuleSystemCount, 2)
+    assert.equal(debug.trailModuleAppliedCount, 2)
+    assert.ok(
+        maximumActiveTrailSegments > 0,
+        JSON.stringify(debug),
+    )
+    assert.deepEqual(debug.trailTextureModeCounts, { '0:stretch': 2 })
+    assert.deepEqual(debug.missingTrailMaterialNames, [])
+    assert.deepEqual(debug.unsupportedTrailModes, [])
+    assert.deepEqual(debug.unsupportedModules, [])
+    assert.ok([...maximumDrawCounts.values()].some(count => count > 0))
+
+    for (const trail of trails) {
+        assert.equal(
+            trail.material.name,
+            'StageParticleTrail:bg3d601_00_EffShootingStar_B',
+        )
+        const maximumDrawCount = maximumDrawCounts.get(trail.name)
+        assert.equal(maximumDrawCount % 6, 0)
+        for (const attribute of [
+            'position',
+            'stagePrevious',
+            'stageNext',
+            'stageSide',
+            'stageWidth',
+            'stageColor',
+            'stageTrailUv',
+        ]) {
+            assert.ok(trail.geometry.getAttribute(attribute), `missing ${attribute}`)
+        }
+        if (maximumDrawCount > 0) {
+            const sides = trail.geometry.getAttribute('stageSide').array.slice(
+                0,
+                maximumDrawCount,
+            )
+            assert.ok([...sides].every(value => value === -1 || value === 1))
+            const widths = trail.geometry.getAttribute('stageWidth').array.slice(
+                0,
+                maximumDrawCount,
+            )
+            assert.ok([...widths].every(value => value > 0))
+        }
+    }
+    controller.dispose()
+    assert.equal(root.getObjectByName(`UnityParticleTrail:${trailSystems[0].pathID}`), undefined)
+})
+
+test('Memory story reports 20 declared systems and binds all 14 drawable active systems', () => {
+    const root = new THREE.Group()
+    root.name = 'bg3d_gallery_story'
+    const ensurePath = value => {
+        const segments = value.split('/')
+        assert.equal(segments[0], root.name)
+        let parent = root
+        for (const segment of segments.slice(1)) {
+            let child = parent.children.find(candidate => candidate.name === segment)
+            if (!child) {
+                child = new THREE.Group()
+                child.name = segment
+                parent.add(child)
+            }
+            parent = child
+        }
+    }
+    for (const system of memoryStoryProfile.runtime.particleSystems) {
+        if (system.active && system.materials.length > 0) {
+            ensurePath(system.hierarchyPath)
+        }
+    }
+
+    const depthTexture = new THREE.DepthTexture(64, 32)
+    const depthRegistrations = []
+    const depthRegistrar = {
+        registerBackgroundDepthConsumer(consumer) {
+            consumer.depthTextureUniform.value = depthTexture
+            consumer.resolutionUniform.value.set(64, 32)
+            const registration = { consumer, active: true }
+            depthRegistrations.push(registration)
+            return () => {
+                registration.active = false
+                consumer.depthTextureUniform.value = null
+            }
+        },
+    }
+
+    const controller = new runtime.StageRuntimeController(root, {
+        autoplay: false,
+        particlePresets: memoryStoryProfile.runtime.particlePresets,
+        particleSystems: memoryStoryProfile.runtime.particleSystems,
+        particleMeshes: memoryStoryProfile.runtime.particleMeshes,
+    }, undefined, memoryStoryProfile.materialBindings, [], depthRegistrar)
+    const debug = controller.getDebugState().particles
+    assert.equal(debug.declaredSystemCount, 20)
+    assert.equal(debug.inactiveSystemCount, 4)
+    assert.equal(debug.nonDrawableSystemCount, 2)
+    assert.equal(debug.drawableSystemCount, 14)
+    assert.equal(debug.requestedSystemCount, 14)
+    assert.deepEqual(debug.missingAnchorPaths, [])
+    assert.deepEqual(debug.missingMaterialNames, [])
+    assert.equal(debug.rendererModeCounts['4:mesh'], 6)
+    assert.equal(debug.meshRendererSystemCount, 6)
+    assert.equal(debug.meshRendererAppliedCount, 5)
+    assert.equal(debug.noiseModuleSystemCount, 2)
+    assert.equal(debug.noiseModuleAppliedCount, 2)
+    assert.deepEqual(debug.noiseQualityCounts, { '2:3D': 2 })
+    assert.equal(debug.trailModuleSystemCount, 0)
+    assert.equal(debug.trailModuleAppliedCount, 0)
+    assert.equal(debug.activeTrailSegmentCount, 0)
+    assert.deepEqual(debug.trailTextureModeCounts, {})
+    assert.equal(debug.softParticleDeclaredSystemCount, 9)
+    assert.equal(debug.softParticleAppliedSystemCount, 9)
+    assert.equal(debug.softParticleDepthConsumerCount, 9)
+    assert.deepEqual(debug.depthFunctionCounts, {
+        '4:less-equal': 13,
+        '8:always': 1,
+    })
+    assert.deepEqual(
+        [...new Set(debug.softParticleFields.map(field => field.surfaceFadeFar))]
+            .sort((left, right) => left - right),
+        [
+            0.10000000149011612,
+            0.20000000298023224,
+            0.30000001192092896,
+            0.4000000059604645,
+            1,
+            5,
+        ],
+    )
+    assert.ok(debug.softParticleFields.every(field => (
+        field.surfaceFadeNear === 0
+        && field.depthRegistered
+        && field.zTest === 4
+    )))
+    assert.equal(depthRegistrations.length, 9)
+    assert.ok(depthRegistrations.every(({ consumer, active }) => (
+        active
+        && consumer.depthTextureUniform.value === depthTexture
+        && consumer.resolutionUniform.value.equals(new THREE.Vector2(64, 32))
+        && consumer.object.material.uniforms.uUseSoftParticle.value === 1
+    )))
+    assert.deepEqual(debug.missingTrailMaterialNames, [])
+    assert.deepEqual(debug.unsupportedTrailModes, [])
+    assert.deepEqual(debug.missingRendererMeshPathIDs, [])
+    assert.deepEqual(debug.unsupportedShapeTypes, [])
+    assert.deepEqual(debug.unsupportedModules, [])
+    assert.equal(
+        root.getObjectsByProperty('name', root.name).length,
+        1,
+    )
+    const meshParticles = []
+    root.traverse(object => {
+        if (object.name.startsWith('UnityMeshParticleSystem:')) {
+            meshParticles.push(object)
+        }
+    })
+    assert.equal(meshParticles.length, 5)
+    assert.ok(meshParticles.every(object => object.geometry.isInstancedBufferGeometry))
+    controller.dispose()
+    assert.ok(depthRegistrations.every(registration => !registration.active))
+    assert.ok(depthRegistrations.every(
+        registration => registration.consumer.depthTextureUniform.value === null,
+    ))
+    depthTexture.dispose()
+})
+
+test('Memory story reconstructs FBX-omitted particle anchors from serialized transforms', () => {
+    const root = new THREE.Group()
+    root.name = 'bg3d_gallery_story'
+    const controller = new runtime.StageRuntimeController(root, {
+        autoplay: false,
+        particlePresets: memoryStoryProfile.runtime.particlePresets,
+        particleSystems: memoryStoryProfile.runtime.particleSystems,
+        particleMeshes: memoryStoryProfile.runtime.particleMeshes,
+    }, undefined, memoryStoryProfile.materialBindings, [])
+    const debug = controller.getDebugState().particles
+    assert.equal(debug.drawableSystemCount, 14)
+    assert.equal(debug.requestedSystemCount, 14)
+    assert.deepEqual(debug.missingAnchorPaths, [])
+    assert.equal(debug.carrierHierarchyFallbackCount, 0)
+    assert.equal(debug.serializedTransformFallbackCount, 14)
+
+    const anchors = root.children.filter(object =>
+        object.name.startsWith('SerializedParticleAnchor:'))
+    assert.equal(anchors.length, 14)
+    const hikari = root.getObjectByName(
+        'SerializedParticleAnchor:-4372603861926079263',
+    )
+    assert.ok(hikari)
+    assert.deepEqual(hikari.position.toArray(), [0, 3, 0])
+    assert.equal(hikari.children[0].name, 'UnityParticleSystem:-4372603861926079263')
+
+    controller.dispose()
+    assert.equal(
+        root.children.filter(object =>
+            object.name.startsWith('SerializedParticleAnchor:')).length,
+        0,
+    )
 })

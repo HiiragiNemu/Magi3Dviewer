@@ -1,0 +1,49 @@
+{
+  "id": "battle-600-01-00-001",
+  "stableKey": "AssetBundles/battle/stage/bg_3d_600_01_00_001",
+  "name": "Rose Garden Witch Part II - Boss Floor",
+  "category": "battle",
+  "official": true,
+  "assetBundleName": "battle/stage/bg_3d_600_01_00_001",
+  "type": "fbx",
+  "url": "./stages/official/battle-600-01-00-001/bg_3d_600_01_00_001.fbxdata",
+  "sceneProfileUrl": "./stages/official/battle-600-01-00-001/scene-profile.json",
+  "scale": 1,
+  "position": [
+    0,
+    0,
+    0
+  ],
+  "rotation": [
+    0,
+    0,
+    0
+  ],
+  "spawnPoints": [
+    {
+      "id": "actor-0",
+      "name": "Actor 0",
+      "role": "actor",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "product": {
+    "schema": "magius.official-stage-product.v1",
+    "fullyResolved": true,
+    "sourceBytes": 2793533,
+    "externalCabCount": 11
+  },
+  "evidence": [
+    "official-resources.v1 scene record",
+    "scene-profile.json and FBX resource closure present"
+  ]
+}

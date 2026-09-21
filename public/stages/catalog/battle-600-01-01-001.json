@@ -1,0 +1,49 @@
+{
+  "id": "battle-600-01-01-001",
+  "stableKey": "AssetBundles/battle/stage/bg_3d_600_01_01_001",
+  "name": "Rose Garden Witch Part II - Floor 1",
+  "category": "battle",
+  "official": true,
+  "assetBundleName": "battle/stage/bg_3d_600_01_01_001",
+  "type": "fbx",
+  "url": "./stages/official/battle-600-01-01-001/bg_3d_600_01_01_001.fbxdata",
+  "sceneProfileUrl": "./stages/official/battle-600-01-01-001/scene-profile.json",
+  "scale": 1,
+  "position": [
+    0,
+    0,
+    0
+  ],
+  "rotation": [
+    0,
+    0,
+    0
+  ],
+  "spawnPoints": [
+    {
+      "id": "actor-0",
+      "name": "Actor 0",
+      "role": "actor",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "product": {
+    "schema": "magius.official-stage-product.v1",
+    "fullyResolved": true,
+    "sourceBytes": 1837208,
+    "externalCabCount": 15
+  },
+  "evidence": [
+    "official-resources.v1 scene record",
+    "scene-profile.json and FBX resource closure present"
+  ]
+}

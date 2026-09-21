@@ -1,3 +1,4 @@
+import { assertReleaseMaterialCorpus } from './releaseCorpusTestSupport.mjs'
 import assert from 'node:assert/strict'
 import { readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -60,8 +61,7 @@ test('100101/100107 shared body Aniso uses exact current-JP material values', ()
 })
 
 test('official material corpus carries per-slot CameraDepthTexture and rim gates', () => {
-  assert.equal(officialMaterialProfileData.bundleCount, 95)
-  assert.equal(officialMaterialProfileData.materialCount, 1533)
+  const { historical, added } = assertReleaseMaterialCorpus(officialMaterialProfileData)
   const value = profiles.getOfficialMaterialProfile('mt_chara_100101_hair')
   assert.equal(value.source, 'official-export')
   assert.deepEqual(value.depthRim, {
@@ -82,6 +82,7 @@ test('official material corpus drives Hair and AngelRing from serialized values'
     enabled: true,
     uvMode: false,
     map: 'common',
+    texture: 'RDToon_AngelRingMap',
     rimLightColor: [1, 1, 1],
   })
 
@@ -91,6 +92,7 @@ test('official material corpus drives Hair and AngelRing from serialized values'
     enabled: true,
     uvMode: true,
     map: 'character',
+    texture: 'chara_108101_hair_highlight',
     rimLightColor: [
       0.686274528503418,
       0.6431372761726379,
@@ -139,7 +141,7 @@ test('per-material uniforms override the global debug Fresnel without enabling i
     general,
     /mix\([\s\S]*?rdToonSceneLightRaw[\s\S]*?uGlobalCharacterLightingOverrideColor[\s\S]*?uGlobalCharacterLightingOverrideRatio/,
   )
-  assert.match(general, /outgoingLight \+= rdAnisoColor \* saturate\(uMaterialAnisotropy\)/)
+  assert.match(general, /vec3 rdAnisoContribution =[\s\S]*?outgoingLight \+= rdAnisoContribution/)
   assert.doesNotMatch(general, /rdAnisoTangent/)
   assert.doesNotMatch(general, /1\.18, saturate\(uMaterialAnisotropy\)/)
   assert.doesNotMatch(general, /1\.22, rdAnisoInfluence/)

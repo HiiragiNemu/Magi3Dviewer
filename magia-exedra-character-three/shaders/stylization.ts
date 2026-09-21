@@ -45,10 +45,13 @@ export interface ToonStylizationOptions {
  *
  * SetGlobalShaderParams stores (0, 0, -1) as lightOriginDir, converts the
  * serialized Vector3 from degrees to radians, calls Quaternion.Euler, then
- * rotates lightOriginDir. Unity's Euler order is ZXY. AssetStudio reflects the
- * Unity-world X axis while exporting the FBX, so the rotated Unity vector must
- * receive that same reflection before entering Viewer world space. The final
- * shader value is view-space because Three's fragment normal is view-space.
+ * rotates lightOriginDir. Unity applies those rotations Z, then X, then Y.
+ * Quaternion composition therefore has to be qY * qX * qZ; passing the label
+ * "ZXY" to THREE.Euler reverses that composition and does not match Unity.
+ * AssetStudio reflects the Unity-world X axis while exporting the FBX, so the
+ * rotated Unity vector must receive that same reflection before entering Viewer
+ * world space. The final shader value is view-space because Three's fragment
+ * normal is view-space.
  *
  * The gate and Euler are owned by the effective scene Volume stack. Captures
  * legitimately differ by context; these values are only the reset fallback.
@@ -73,7 +76,12 @@ export const reDriveCharacterLightingDirectionUniformState = {
     eulerDegrees: new THREE.Vector3(),
 };
 
-const characterLightingEuler = new THREE.Euler(0, 0, 0, 'ZXY');
+const characterLightingXAxis = new THREE.Vector3(1, 0, 0);
+const characterLightingYAxis = new THREE.Vector3(0, 1, 0);
+const characterLightingZAxis = new THREE.Vector3(0, 0, 1);
+const characterLightingRotationX = new THREE.Quaternion();
+const characterLightingRotationY = new THREE.Quaternion();
+const characterLightingRotationZ = new THREE.Quaternion();
 const characterLightingRotation = new THREE.Quaternion();
 
 export function setReDriveCharacterLightingOverrideDirection(
@@ -86,13 +94,24 @@ export function setReDriveCharacterLightingOverrideDirection(
     const state = reDriveCharacterLightingDirectionUniformState;
     state.enabled.value = enabled ? 1 : 0;
     state.eulerDegrees.set(...safeEuler);
-    characterLightingEuler.set(
+    characterLightingRotationX.setFromAxisAngle(
+        characterLightingXAxis,
         THREE.MathUtils.degToRad(safeEuler[0]),
-        THREE.MathUtils.degToRad(safeEuler[1]),
-        THREE.MathUtils.degToRad(safeEuler[2]),
-        'ZXY',
     );
-    characterLightingRotation.setFromEuler(characterLightingEuler);
+    characterLightingRotationY.setFromAxisAngle(
+        characterLightingYAxis,
+        THREE.MathUtils.degToRad(safeEuler[1]),
+    );
+    characterLightingRotationZ.setFromAxisAngle(
+        characterLightingZAxis,
+        THREE.MathUtils.degToRad(safeEuler[2]),
+    );
+    // Unity Quaternion.Euler applies Z -> X -> Y to a vector. Quaternion
+    // multiplication is written in the opposite textual order.
+    characterLightingRotation
+        .copy(characterLightingRotationY)
+        .multiply(characterLightingRotationX)
+        .multiply(characterLightingRotationZ);
     state.directionUnityWorld.value
         .set(...officialReDriveCharacterLightingDirectionDefaults.lightOriginDirection)
         .applyQuaternion(characterLightingRotation)
