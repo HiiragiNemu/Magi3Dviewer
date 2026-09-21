@@ -148,7 +148,7 @@ function officialProjectedUv({
   return [rotated[0], lower + (upper - lower) * zBlend]
 }
 
-test('projected AngelRing explicitly uses observed head-frame Y lock; native formula kept as evidence', () => {
+test('projected AngelRing is a literal main_hair blob 98 port', () => {
   assert.match(officialBlob, /float\(1\.0\) \/ float\(u_xlat66\)/)
   assert.match(officialBlob, /\? 0\.875 : u_xlat66/)
   assert.match(officialBlob, /u_xlat16_7\.y \* 1\.57079637/)
@@ -159,16 +159,20 @@ test('projected AngelRing explicitly uses observed head-frame Y lock; native for
   const projectedStart = hairSource.indexOf('projectedShaders.add(shader)')
   assert.ok(projectedStart >= 0)
   const projected = hairSource.slice(projectedStart)
-  assert.match(projected, /vAngelRingWorldPosition/)
-  assert.match(projected, /vec4\(transformed, 1\.0\)/)
-  assert.match(projected, /rdAngelHeadLockedUv\(/)
+  assert.match(projected, /gl_FragCoord\.xy \/ uAngelRingViewportSize/)
+  assert.match(projected, /1\.0 \/ distance\(\s*cameraPosition,\s*uAngelRingFacePosition/)
+  assert.match(projected, /0\.875/)
+  assert.match(projected, /rdAngelUnitScale \* 10\.0/)
+  assert.match(projected, /rdAngelFaceUpVS\.y \* 1\.57079637/)
+  assert.match(projected, /rdAngelBackFactor \*\s*rdAngelBackFactor \*\s*15\.0/)
+  assert.match(projected, /rdAngelFaceUpVS\.z \* -3\.0/)
+  assert.match(projected, /rdAngelRotated\.x \* 3\.14159274/)
+  assert.match(projected, /rdAngelArch \* 0\.414999992/)
   assert.match(projected, /texture2D\(\s*tAngelRingMap,\s*rdAngelMapUv\s*\)\.r/)
-  assert.match(hairSource, /viewerCompensation: true/)
-  assert.match(hairSource, /nativeReference: 'main_hair\/blob98\/fragment-932-1000'/)
-  assert.match(hairSource, /viewer-angel-ring-head-frame-ylock-v1/)
-  assert.match(hairSource, /outsideRangeSampling: 'serialized-sampler'/)
-  assert.doesNotMatch(projected, /rdAngelFaceUpVS\.z/)
   assert.doesNotMatch(hairSource, rejectedViewerCompensation)
+  assert.match(hairSource, /viewerCompensation: false/)
+  assert.match(hairSource, /outsideRangeSampling: 'serialized-sampler'/)
+  assert.match(hairSource, /official-angel-ring-main-hair-blob98-v1/)
   assert.doesNotMatch(hairSource, /100102|108301|101901|100107|100805/)
 })
 

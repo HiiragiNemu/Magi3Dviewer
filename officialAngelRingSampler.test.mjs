@@ -66,7 +66,7 @@ test('108301 official YuugenHighlight is UV locked and camera zoom invariant', (
     /cameraPosition|uAngelRingFovOrOrthoFix|uAngelRingAspectFix|gl_FragCoord/,
   )
   const projectedBranch = hairSource.slice(projectedStart)
-  assert.match(projectedBranch, /viewMatrix/)
+  assert.match(projectedBranch, /cameraPosition/)
   assert.match(projectedBranch, /uAngelRingFovOrOrthoFix/)
   assert.match(projectedBranch, /texture2D\(\s*tAngelRingMap,\s*rdAngelMapUv/)
   assert.match(
@@ -80,7 +80,7 @@ test('108301 official YuugenHighlight is UV locked and camera zoom invariant', (
   )
   assert.match(
     hairSource,
-    /viewer-angel-ring-head-frame-ylock-v1/,
+    /official-angel-ring-main-hair-blob98-v1/,
   )
 
   const material = generated.materials.mt_chara_108301_hair
@@ -389,7 +389,7 @@ for (const name of [
       assert.match(fragment, /rdDepthRimMainCompositeSignal\s*=\s*clamp\(/)
       assert.match(fragment, /rdDepthRimMainCompositeSignal\s*\*\s*uRdDepthRimMainColor/)
       assert.ok(fragment.indexOf('vec2 rdAngelMapUv') < fragment.indexOf('rdDepthRimMainCompositeSignal *'))
-      assert.match(shader.vertexShader, /vAngelRingWorldPosition\s*=\s*\(modelMatrix \* vec4\(transformed, 1\.0\)\)\.xyz/)
+      assert.match(shader.vertexShader, /mat3\(viewMatrix\) \* uAngelRingFaceForward/)
       assert.doesNotMatch(fragment, /texture2D\(\s*tAngelRingMap,\s*vAngelRingUv/)
       const texture = profile.angelRing.map === 'common' ? 'RDToon_AngelRingMap.png' : profile.angelRing.texture
       assert.equal(shader.uniforms.tAngelRingMap.value.name, texture)

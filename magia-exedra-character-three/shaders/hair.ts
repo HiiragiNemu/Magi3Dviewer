@@ -54,9 +54,8 @@ export interface OfficialAngelRingSlotRuntime {
         uAngelRingOrthographic: number;
     };
     compiledProjection: {
-        source: 'viewer-head-frame-ylock-v1';
-        nativeReference: 'main_hair/blob98/fragment-932-1000';
-        viewerCompensation: true;
+        source: 'main_hair/blob98/fragment-932-1000';
+        viewerCompensation: false;
         outsideRangeSampling: 'serialized-sampler';
     };
 }
@@ -190,9 +189,8 @@ export function setOfficialAngelRingMaterialProfileUniforms(
             ),
         },
         compiledProjection: {
-            source: 'viewer-head-frame-ylock-v1',
-            nativeReference: 'main_hair/blob98/fragment-932-1000',
-            viewerCompensation: true,
+            source: 'main_hair/blob98/fragment-932-1000',
+            viewerCompensation: false,
             outsideRangeSampling: 'serialized-sampler',
         },
     };
@@ -257,55 +255,19 @@ export function setAngelRingCameraUniforms(
     setNumberUniform(shader, 'uAngelRingOrthographic', orthographic);
 }
 
-/** Viewer coordinate correction requested from observed head-height locking.
- * Uses the native neutral orthographic scale; not a literal blob98 projection.
+/**
+ * Head-locked AngelRing reconstruction.
+ *
+ * The material controller fixes the ring origin to
+ * `Head.position + FaceUp * headOffset`. JP 3.11's compiled forward pass then
+ * projects that origin into screen space, rotates the fragment coordinate by
+ * the Head Up axis in view space, and bends V with `sin(pi * U)`. This is not a
+ * flat world-space band and it intentionally remains continuous through a
+ * 360-degree camera orbit; deep shadow attenuates it through character light.
+ *
+ * `_YuugenHighlight` mode remains character-authored and samples the material
+ * map directly with the base hair UV.
  */
-export const angelRingHeadLockedUvGLSL = /* glsl */ `
-vec2 rdAngelHeadLockedUv(
-    vec3 worldPosition, vec3 facePosition, vec3 faceUp,
-    vec3 faceForward, vec3 cameraViewZ
-) {
-    vec3 up = normalize(faceUp);
-    vec3 right = cross(up, faceForward);
-    if (dot(right, right) < 0.0000000001) {
-        right = cross(up, abs(up.y) < 0.9
-            ? vec3(0.0, 1.0, 0.0) : vec3(1.0, 0.0, 0.0));
-    }
-    right = normalize(right);
-    vec3 forward = cross(right, up);
-    vec3 delta = vec3(
-        worldPosition.x - facePosition.x,
-        worldPosition.y - facePosition.y,
-        worldPosition.z - facePosition.z
-    );
-    float pitch = dot(cameraViewZ, up);
-    vec3 horizontalView = vec3(
-        cameraViewZ.x - up.x * pitch,
-        cameraViewZ.y - up.y * pitch,
-        cameraViewZ.z - up.z * pitch
-    );
-    // At an exact head-up pole yaw has no direction: use the head-forward
-    // basis rather than normalize zero. This fallback never changes V.
-    vec3 yawView = forward;
-    if (dot(horizontalView, horizontalView) > 0.0000000001) {
-        yawView = normalize(horizontalView);
-    }
-    vec3 yawRight = cross(up, yawView);
-    // blob98 orthographic: (worldY / (2*halfHeight)) /
-    // (20 * 0.875 / (100*halfHeight)) = worldY * 100/(40*0.875).
-    float unitScale = 100.0 / (40.0 * 0.875);
-    float back = dot(forward, yawView) * -0.5 + 0.5;
-    float u = dot(delta, yawRight) * unitScale + 0.5
-        + back * back * (15.0 / 20.0);
-    // Use head-local X, not yaw-shifted U, for the neutral native arch.
-    // Hence yaw can move U without moving or resizing the vertical band.
-    float headU = dot(delta, right) * unitScale + 0.5;
-    float v = dot(delta, up) * unitScale + 0.5
-        + sin(headU * 3.14159274) * (0.5 - 0.414999992) * 0.5;
-    return vec2(u, v);
-}
-`;
-
 export async function createHairMaterial(
     options: HairMaterialCreationOptions,
 ): Promise<HairMaterialCreationResult> {
@@ -491,23 +453,36 @@ export async function createHairMaterial(
             updateAngelRingReference();
 
             shader.vertexShader = /* glsl */ `
-                varying vec3 vAngelRingWorldPosition;
+                uniform vec3 uAngelRingFacePosition;
+                uniform vec3 uAngelRingFaceUp;
+                uniform vec3 uAngelRingFaceForward;
+                varying vec3 vAngelRingFaceClip;
+                varying vec3 vAngelRingFaceUpVS;
+                varying vec3 vAngelRingFaceForwardVS;
                 ${shader.vertexShader}
             `.replace(
                 '#include <project_vertex>',
                 /* glsl */ `
                 #include <project_vertex>
-                // transformed already contains morph and skin deformation.
-                vAngelRingWorldPosition =
-                    (modelMatrix * vec4(transformed, 1.0)).xyz;
+                vec4 rdAngelFaceClip =
+                    projectionMatrix *
+                    viewMatrix *
+                    vec4(uAngelRingFacePosition, 1.0);
+                vAngelRingFaceClip = vec3(
+                    rdAngelFaceClip.xy,
+                    rdAngelFaceClip.w
+                );
+                vAngelRingFaceUpVS =
+                    mat3(viewMatrix) * uAngelRingFaceUp;
+                vAngelRingFaceForwardVS =
+                    mat3(viewMatrix) * uAngelRingFaceForward;
                 `,
             );
 
             shader.fragmentShader = /* glsl */ `
-                varying vec3 vAngelRingWorldPosition;
-                uniform vec3 uAngelRingFaceUp;
-                uniform vec3 uAngelRingFaceForward;
-                ${angelRingHeadLockedUvGLSL}
+                varying vec3 vAngelRingFaceClip;
+                varying vec3 vAngelRingFaceUpVS;
+                varying vec3 vAngelRingFaceForwardVS;
                 uniform sampler2D tAngelRingMap;
                 uniform float uAngelRingEnabled;
                 uniform float uAngelRingMaterialEnabled;
@@ -524,14 +499,78 @@ export async function createHairMaterial(
                 float rdAngelActive =
                     uAngelRingEnabled * uAngelRingMaterialEnabled;
                 if (rdAngelActive > 0.0) {
-                    // User-observed Y lock: only the input coordinate domain
-                    // differs from blob98; sampler and composite remain intact.
-                    vec2 rdAngelMapUv = rdAngelHeadLockedUv(
-                        vAngelRingWorldPosition,
-                        uAngelRingFacePosition,
-                        uAngelRingFaceUp,
-                        uAngelRingFaceForward,
-                        vec3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2])
+                    // Literal WebGL port of official main_hair blob 98,
+                    // fragment lines 932-982. There is no Viewer camera
+                    // envelope, bounds mask, bone mask, or projection clamp.
+                    vec2 rdAngelFragmentUv =
+                        gl_FragCoord.xy / uAngelRingViewportSize;
+                    vec2 rdAngelFaceUv =
+                        vAngelRingFaceClip.xy / vAngelRingFaceClip.z;
+                    rdAngelFaceUv =
+                        rdAngelFaceUv * 0.5 + vec2(0.5);
+
+                    vec3 rdAngelFaceUpVS = vAngelRingFaceUpVS;
+                    vec3 rdAngelFaceForwardVS = vAngelRingFaceForwardVS;
+                    float rdAngelInverseDistance = 1.0 / distance(
+                        cameraPosition,
+                        uAngelRingFacePosition
+                    );
+                    rdAngelInverseDistance = mix(
+                        rdAngelInverseDistance,
+                        0.875,
+                        step(0.5, uAngelRingOrthographic)
+                    );
+                    vec2 rdAngelUnitScale =
+                        uAngelRingAspectFix *
+                        uAngelRingFovOrOrthoFix *
+                        rdAngelInverseDistance;
+                    vec2 rdAngelRectHalf = rdAngelUnitScale * 10.0;
+
+                    float rdAngelBackFactor =
+                        rdAngelFaceForwardVS.z * -0.5 + 0.5;
+                    vec2 rdAngelViewShift = vec2(
+                        sin(rdAngelFaceUpVS.y * 1.57079637) *
+                        rdAngelBackFactor *
+                        rdAngelBackFactor *
+                        15.0,
+                        rdAngelFaceUpVS.z * -3.0
+                    ) * rdAngelUnitScale;
+                    vec2 rdAngelRectCoordinate =
+                        (
+                            rdAngelFragmentUv +
+                            rdAngelViewShift -
+                            (rdAngelFaceUv - rdAngelRectHalf)
+                        ) /
+                        (rdAngelRectHalf * 2.0) -
+                        vec2(0.5);
+                    vec2 rdAngelRotated = vec2(
+                        dot(
+                            rdAngelRectCoordinate,
+                            vec2(
+                                rdAngelFaceUpVS.y,
+                                -rdAngelFaceUpVS.x
+                            )
+                        ),
+                        dot(
+                            rdAngelRectCoordinate,
+                            rdAngelFaceUpVS.xy
+                        )
+                    ) + vec2(0.5);
+                    float rdAngelArch = sin(
+                        rdAngelRotated.x * 3.14159274
+                    );
+                    float rdAngelLowerV =
+                        rdAngelRotated.y -
+                        rdAngelArch * 0.414999992;
+                    float rdAngelUpperV =
+                        rdAngelRotated.y + rdAngelArch * 0.5;
+                    vec2 rdAngelMapUv = vec2(
+                        rdAngelRotated.x,
+                        mix(
+                            rdAngelLowerV,
+                            rdAngelUpperV,
+                            rdAngelFaceUpVS.z * 0.5 + 0.5
+                        )
                     );
                     float rdAngelMap = texture2D(
                         tAngelRingMap,
@@ -566,7 +605,7 @@ export async function createHairMaterial(
         const branch = resolveOfficialAngelRingBranch(profile);
         return [
             baseProgramCacheKey.call(this),
-            'viewer-angel-ring-head-frame-ylock-v1',
+            'official-angel-ring-main-hair-blob98-v1',
             branch,
             profile?.angelRing.map ?? 'none',
         ].join(':');

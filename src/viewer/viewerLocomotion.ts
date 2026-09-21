@@ -1447,9 +1447,6 @@ const TPS_CAMERA_POINTER = Object.freeze({
     maxCssPixelsPerEvent: 42,
     minPitchRadians: THREE.MathUtils.degToRad(-18),
     maxPitchRadians: THREE.MathUtils.degToRad(55),
-    responsePerSecond: 11,
-    maxYawTargetLeadRadians: THREE.MathUtils.degToRad(45),
-    maxPitchTargetLeadRadians: THREE.MathUtils.degToRad(20),
     wheelMetersPerDelta: 0.0035,
     maxWheelDeltaPerEvent: 120,
     maxDistanceMeters: 10,
@@ -1478,18 +1475,9 @@ function applyTpsCameraPointerDelta(
     const yawBefore = cameraYawTargetUnwrapped
     const pitchBefore = cameraPitchTarget
     const requestedYaw = cameraYawTargetUnwrapped - dx * TPS_CAMERA_POINTER.yawRadiansPerCssPixel
-    cameraYawTargetUnwrapped = THREE.MathUtils.clamp(
-        requestedYaw,
-        cameraYawUnwrapped - TPS_CAMERA_POINTER.maxYawTargetLeadRadians,
-        cameraYawUnwrapped + TPS_CAMERA_POINTER.maxYawTargetLeadRadians,
-    )
-    const requestedPitch = cameraPitchTarget + dy * TPS_CAMERA_POINTER.pitchRadiansPerCssPixel
+    cameraYawTargetUnwrapped = requestedYaw
     cameraPitchTarget = THREE.MathUtils.clamp(
-        THREE.MathUtils.clamp(
-            requestedPitch,
-            cameraPitch - TPS_CAMERA_POINTER.maxPitchTargetLeadRadians,
-            cameraPitch + TPS_CAMERA_POINTER.maxPitchTargetLeadRadians,
-        ),
+        cameraPitchTarget + dy * TPS_CAMERA_POINTER.pitchRadiansPerCssPixel,
         TPS_CAMERA_POINTER.minPitchRadians,
         TPS_CAMERA_POINTER.maxPitchRadians,
     )
@@ -1507,17 +1495,6 @@ function applyTpsCameraPointerDelta(
     if (cameraInputTrace.length > 60) {
         cameraInputTrace.splice(0, cameraInputTrace.length - 60)
     }
-}
-
-function dampUnwrappedCameraYaw(
-    current: number,
-    target: number,
-    deltaSeconds: number,
-): number {
-    const blend = 1 - Math.exp(
-        -Math.max(0, deltaSeconds) * TPS_CAMERA_POINTER.responsePerSecond,
-    )
-    return current + (target - current) * blend
 }
 
 function objectIsWorldVisible(object: THREE.Object3D): boolean {
@@ -11351,31 +11328,19 @@ function cameraRelativeInput(binding: ViewerLocomotionBinding, input: ReturnType
     }
 }
 
-function updateTpsCamera(binding: ViewerLocomotionBinding, deltaSeconds: number): void {
+function updateTpsCamera(binding: ViewerLocomotionBinding, _deltaSeconds: number): void {
     // OrbitControls has its own camera writer. Keep it suspended for the whole
     // TPS frame even when another editor releases its controls lease mid-frame.
     scene.controls.enabled = false
-    cameraYawUnwrapped = dampUnwrappedCameraYaw(
-        cameraYawUnwrapped,
-        cameraYawTargetUnwrapped,
-        deltaSeconds,
-    )
+    // Pointer deltas already define a linear angular displacement. Consume
+    // them once, without queuing angular or positional catch-up after release.
+    cameraYawUnwrapped = cameraYawTargetUnwrapped
     cameraPitch = THREE.MathUtils.clamp(
-        THREE.MathUtils.damp(
-            cameraPitch,
-            cameraPitchTarget,
-            TPS_CAMERA_POINTER.responsePerSecond,
-            Math.max(0, deltaSeconds),
-        ),
+        cameraPitchTarget,
         TPS_CAMERA_POINTER.minPitchRadians,
         TPS_CAMERA_POINTER.maxPitchRadians,
     )
-    cameraDistance = THREE.MathUtils.damp(
-        cameraDistance,
-        cameraDistanceTarget,
-        TPS_CAMERA_POINTER.responsePerSecond,
-        Math.max(0, deltaSeconds),
-    )
+    cameraDistance = cameraDistanceTarget
     binding.character.object.getWorldPosition(cameraTarget)
     cameraTarget.y += 1.05
     const horizontal = Math.cos(cameraPitch) * cameraDistance
@@ -11384,8 +11349,7 @@ function updateTpsCamera(binding: ViewerLocomotionBinding, deltaSeconds: number)
         cameraTarget.y + Math.sin(cameraPitch) * cameraDistance,
         cameraTarget.z + Math.cos(cameraYawUnwrapped) * horizontal,
     )
-    const blend = 1 - Math.exp(-Math.max(0, deltaSeconds) * 14)
-    scene.camera.position.lerp(desired, blend)
+    scene.camera.position.copy(desired)
     scene.camera.up.set(0, 1, 0)
     scene.camera.lookAt(cameraTarget)
     scene.controls.target.copy(cameraTarget)
