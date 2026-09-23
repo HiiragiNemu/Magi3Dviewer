@@ -14,10 +14,10 @@ const mods={};for(const [key,file]of Object.entries({core:path.join(base,'src/vi
  const out=path.join(runDir,key+'.mjs');await build({entryPoints:[file],outfile:out,bundle:true,platform:'node',format:'esm',target:'es2022',logLevel:'silent',plugins:[{name:'three',setup(b){b.onResolve({filter:/^three$/},()=>({path:pathToFileURL(req.resolve('three')).href,external:true}))}}]});mods[key]=await import(pathToFileURL(out).href+'?t='+Date.now());}
 const {CharacterLocomotionController,FlatGroundCollisionWorld,normalizeAnimationFamilyName}=mods.core,{ChatacterAnimation}=mods.animation;
 const vsrc=fs.readFileSync(path.join(base,'src/viewer/viewerLocomotion.ts'),'utf8'),ast=ts.createSourceFile('viewer.ts',vsrc,ts.ScriptTarget.Latest,true);
-const names=['setViewerLocomotionEnabled','isViewerTpsLocomotionFamily','releaseViewerTpsMovement','createTargetRigLocomotionTransitionPolicy','isNativeDungeonAnimation','deactivateNativeDungeonPresentation','familyEquals'];
+const names=['setViewerLocomotionEnabled','updateLocomotionModeLabel','isViewerTpsLocomotionFamily','releaseViewerTpsMovement','createTargetRigLocomotionTransitionPolicy','isNativeDungeonAnimation','deactivateNativeDungeonPresentation','familyEquals'];
 const functions=ast.statements.filter(n=>ts.isFunctionDeclaration(n)&&names.includes(n.name?.text)).map(n=>n.getText(ast).replace(/^export /,''));
 const js=ts.transpileModule(functions.join('\n'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None}}).outputText;
-const fakeElement=()=>({value:'',textContent:'',classList:{toggle(){},remove(){}},setAttribute(){}});
+const fakeElement=()=>{const attributes=new Map();return {value:'',textContent:'',title:'',classList:{toggle(){},remove(){}},setAttribute(name,value){attributes.set(name,String(value))},getAttribute(name){return attributes.get(name)??null}}};
 function fixture(native=false){
  const object=new THREE.Group(),leg=new THREE.Bone();leg.name='Leg';object.add(leg);object.position.set(3,0,5);
  object.animations=['HomeWait01_L','HomeWait02_L','OwnAction_L','Idle_L','Walk_L','Run_L'].map((name,i)=>new THREE.AnimationClip(name,2,[new THREE.QuaternionKeyframeTrack('Leg.quaternion',[0,2],[...new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0),i*.1).toArray(),...new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0),i*.1+.08).toArray()])]));
@@ -33,8 +33,9 @@ function fixture(native=false){
 }
 function createViewer(bs){ // retain the actual closure, not a copied enabled getter
  const document={body:fakeElement(),pointerLockElement:null,exitPointerLock(){}},claims=new Map(),scene={renderer:{domElement:{}},controls:{enabled:true}};
- const deps={normalizeAnimationFamilyName,bindings:new Set(bs),selectedBinding:()=>bs[0],getViewerCharacterControlAuthority:()=>({tps:true}),pressed:new Set(),feedbackOutput:fakeElement(),document,viewerPerformanceClaims:claims,characterActionPlaybackBlocksLocomotion:b=>b.blocked,targetRigLocomotionTransitionSeconds:{recovery:.3},captureOrbitControlsLease(){},setNativeDungeonExternalAttachmentsHidden(){},activateNativeDungeonController(){},modeToggle:fakeElement(),hud:fakeElement(),scene,ensureOrbitControlsCurrentCanvas(){},syncCameraRigFromCurrentView(){},handoffFinalTpsCameraToOrbitControls(){},updateHud(){}};
- return {api:new Function(...Object.keys(deps),`let enabled=false,jumpQueued=false,virtualInput,cameraDragPointerId,cameraFreeLookFallbackActive=false;${js};return {set:setViewerLocomotionEnabled,get enabled(){return enabled}}`)(...Object.values(deps)),claims};
+ const translations=[];
+ const deps={translateUiText:text=>{translations.push(text);return `translated:${text}`},normalizeAnimationFamilyName,bindings:new Set(bs),selectedBinding:()=>bs[0],getViewerCharacterControlAuthority:()=>({tps:true}),pressed:new Set(),feedbackOutput:fakeElement(),document,viewerPerformanceClaims:claims,characterActionPlaybackBlocksLocomotion:b=>b.blocked,targetRigLocomotionTransitionSeconds:{recovery:.3},captureOrbitControlsLease(){},setNativeDungeonExternalAttachmentsHidden(){},activateNativeDungeonController(){},modeToggle:fakeElement(),hud:fakeElement(),scene,ensureOrbitControlsCurrentCanvas(){},syncCameraRigFromCurrentView(){},handoffFinalTpsCameraToOrbitControls(){},updateHud(){}};
+ return {api:new Function(...Object.keys(deps),`let enabled=false,jumpQueued=false,virtualInput,cameraDragPointerId,cameraFreeLookFallbackActive=false;${js};return {set:setViewerLocomotionEnabled,get enabled(){return enabled}}`)(...Object.values(deps)),claims,modeToggle:deps.modeToggle,translations};
 }
 for(const native of [false,true])for(const run of [false,true])test(`${native?'native':'generated'} ${run?'run':'walk'} exit restores selected Home and releases motion without root teleport`,()=>{
  const b=fixture(native),{api}=createViewer([b]);api.set(true);b.controller.setInput({moveX:0,moveZ:1,run,jumpPressed:false});for(let i=0;i<30;i++){b.snapshot=b.controller.advance(1/60);b.character.animation.mixer.update(1/60)}
@@ -48,3 +49,17 @@ test('ordinary authored family selected during TPS is retained instead of overwr
 test('release clears queued jump and fractional step without stepping collision or changing grounded state',()=>{const b=fixture();b.controller.setInput({moveX:1,moveZ:0,run:true,jumpPressed:true});b.controller.advance(.001);const before=b.character.object.position.clone(),diag={...b.controller.getStepDiagnostics()};assert.equal(typeof b.controller.releaseMovement,'function');b.controller.releaseMovement();assert.deepEqual(b.controller.getStepDiagnostics(),diag);assert.ok(b.character.object.position.equals(before));assert.equal(b.controller.snapshot().grounded,true);b.controller.advance(1/60);assert.equal(b.controller.snapshot().state,'idle');assert.equal(b.controller.snapshot().takeoffRemainingSeconds,0)});
 test('repeated off is idempotent for the current authored animation time',()=>{const b=fixture(),{api}=createViewer([b]);api.set(false);b.character.animation.mixer.update(.7);const time=b.character.animation.time;api.set(false);assert.equal(b.character.animation.time,time);assert.equal(b.character.animation.current,'HomeWait02_L')});
 test('actual target-rig shared Home idle is a return destination, not a generated movement owner',()=>{const b=fixture();b.locomotionAnimations.idle='HomeWait01_L';b.character.animation.play('HomeWait01_L',true);const {api}=createViewer([b]);api.set(true);b.controller.setInput({moveX:0,moveZ:1,run:false,jumpPressed:false});b.snapshot=b.controller.advance(.05);assert.equal(b.character.animation.current,'Walk_L');api.set(false);assert.equal(b.character.animation.current,'HomeWait01_L');assert.equal(b.snapshot.state,'idle')});
+
+test('mode label uses the real updater and translated visible and accessible text on every toggle',()=>{
+ const {api,modeToggle,translations}=createViewer([fixture()]);
+ for(const enabled of [true,false,false]){
+  api.set(enabled);
+  const text=enabled?'TPS Move: On':'TPS Move: Off',label=enabled?'Disable TPS character control':'Enable TPS character control';
+  assert.equal(api.enabled,enabled);
+  assert.equal(modeToggle.textContent,`translated:${text}`);
+  assert.equal(modeToggle.title,`translated:${label}`);
+  assert.equal(modeToggle.getAttribute('aria-label'),`translated:${label}`);
+  assert.equal(modeToggle.getAttribute('aria-pressed'),String(enabled));
+  assert.deepEqual(translations.splice(0),[text,label]);
+ }
+});

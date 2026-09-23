@@ -86,6 +86,25 @@ function normalizeSearchText(value: unknown): string {
     return String(value ?? '').normalize('NFKC').trim().toLocaleLowerCase()
 }
 
+// Counts describe the catalog and selector state, never successful loads or acceptance.
+export function formatSceneCatalogStatus(
+    visible: ReadonlyArray<Pick<HTMLOptionElement, 'disabled' | 'dataset'>>,
+    total: number,
+): string {
+    const official = visible.filter(option => option.dataset.official === 'true').length
+    const builtin = visible.filter(option => option.dataset.official === 'false').length
+    const pending = visible.filter(option => option.disabled).length
+    const unknown = visible.length - official - builtin
+    return [
+        `${translateUiText('Scene catalog')}: ${visible.length} / ${total}`,
+        `${translateUiText('Official entries')}: ${official}`,
+        `${translateUiText('Built-in references')}: ${builtin}`,
+        `${translateUiText('Selectable entries')}: ${visible.length - pending}`,
+        `${translateUiText('Awaiting restoration')}: ${pending}`,
+        ...(unknown ? [`${translateUiText('Unclassified entries')}: ${unknown}`] : []),
+    ].join(' · ')
+}
+
 function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
     const elements = getElements(config)
     if (elements.panel.dataset.runtimeSelectionSetup === 'true') return
@@ -240,9 +259,14 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
         const statusLabel = visible.length === 0
             ? config.emptyLabel
             : query ? config.matchingLabel : config.availableLabel
-        elements.status.textContent = visible.length === 0
-            ? translateUiText(statusLabel)
-            : `${translateUiText(statusLabel)}: ${visible.length} / ${options.length}`
+        elements.status.textContent = config.thumbnailKind === 'scene'
+            ? formatSceneCatalogStatus(visible, options.length)
+            : visible.length === 0
+                ? translateUiText(statusLabel)
+                : `${translateUiText(statusLabel)}: ${visible.length} / ${options.length}`
+        if (config.thumbnailKind === 'scene') {
+            elements.status.title = translateUiText('Catalog and selectable counts do not mean load-tested or user-accepted.')
+        }
         renderSelected()
     }
 
@@ -273,7 +297,7 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
     const sourceObserver = new MutationObserver(refreshList)
     sourceObserver.observe(elements.source, {
         attributes: true,
-        attributeFilter: ['disabled'],
+        attributeFilter: ['disabled', 'data-official'],
         characterData: true,
         childList: true,
         subtree: true,
@@ -337,7 +361,7 @@ export function setupRuntimeSelectionPanels(): void {
         toggleLabel: 'Scenes',
         showLabel: 'Show scene list',
         hideLabel: 'Hide scene list',
-        availableLabel: 'Available scenes',
+        availableLabel: 'Scene catalog',
         matchingLabel: 'Matching scenes',
         emptyLabel: 'No matching scenes',
         noSelectionLabel: 'No scene selected',

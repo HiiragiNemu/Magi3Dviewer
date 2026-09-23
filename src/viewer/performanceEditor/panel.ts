@@ -11,7 +11,7 @@ export function mountPerformancePanel(container: HTMLElement, runtime: Performan
     root.className = 'performance-editor performance-editor-dock'
     root.setAttribute('aria-label', 'Performance editor')
     root.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;padding:8px;border:1px solid currentColor;max-width:960px;max-height:42vh;overflow:auto;contain:layout paint'
-    const heading = document.createElement('h3'); heading.textContent = 'Performance / 表演'; root.append(heading)
+    const heading = document.createElement('h3'); heading.textContent = 'Performance'; root.append(heading)
     const status = document.createElement('output'); status.setAttribute('aria-live', 'polite'); status.setAttribute('aria-label', 'Performance status'); root.append(status)
     const addSelect = (label: string) => {
         const element = document.createElement('select'); element.setAttribute('aria-label', label); return element

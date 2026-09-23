@@ -1,4 +1,6 @@
+import { translateUiText } from './localization/zhCN'
 import * as THREE from 'three'
+import { specialWeaponDefinitions, loadSpecialWeapon, type LoadedSpecialWeapon } from './specialWeapons'
 import { createNativeDungeonFixedTransitionPolicy, nativeDungeonFixedTransitionSeconds, type NativeDungeonFixedTransitionPolicy } from './characterActions/nativeDungeonFixedTransitions'
 import { nativeCombatActionCue } from './combatNativeActionCue'
 import { readParsedBoneLocal } from '../../magia-exedra-character-three/authoredBoneLocals'
@@ -694,6 +696,8 @@ interface CombatJumpActionBinding {
     characterId: string
     entries: readonly CombatJumpActionResourceEntry[]
     loaded?: LoadedCombatJumpActionSet
+    specialWeapons?: Map<string, LoadedSpecialWeapon>
+    specialWeaponLoads?: Map<string, Promise<LoadedSpecialWeapon>>
     ready?: Promise<void>
     abortController?: AbortController
     loadAttempts: number
@@ -784,6 +788,7 @@ interface ActiveCombatSkeletonPlayback {
     playback: CombatSkeletonPlaybackController
     roles: readonly CombatSkeletonRolePlayback[]
     attachments: readonly CombatSkeletonAttachmentPlayback[]
+    specialWeapon?: LoadedSpecialWeapon
 }
 
 const combatSkeletonPreviewPrefix = 'viewer-combat-skeleton:'
@@ -845,6 +850,8 @@ interface ViewerCharacterActionPhysicsPhaseBinding {
 }
 
 interface ViewerCharacterActionPlaybackState {
+    repetitions?: number
+    completedRepetitions?: number
     status: ViewerCharacterActionPlaybackStatus
     actionId?: string
     characterId?: number
@@ -8067,6 +8074,190 @@ function emitViewerCombatEffectCue(cue: CombatEffectCue): void {
 }
 
 // One request token per selected-actor play; pending cancellation never starts a stale action.
+interface ViewerCharacterActionPlayOptions {
+    /** undefined: authored default; 0: infinite; positive integer: complete runs. */
+    repetitions?: number
+}
+interface ViewerCharacterActionRepetition {
+    actionId: string
+    requested: number
+    completed: number
+    pendingFinish: boolean
+    finished?: boolean
+    localTime: number
+    lastMixerTime: number
+    seeking: boolean
+    clipActions?: readonly THREE.AnimationAction[]
+    gate?: THREE.AnimationAction
+    dispose?: () => void
+}
+const viewerCharacterActionRepetitions = new WeakMap<ViewerLocomotionBinding, ViewerCharacterActionRepetition>()
+
+function clearViewerCharacterActionRepetition(binding: ViewerLocomotionBinding): void {
+    viewerCharacterActionRepetitions.get(binding)?.dispose?.()
+    viewerCharacterActionRepetitions.delete(binding)
+    delete binding.characterActionPlayback.repetitions
+    delete binding.characterActionPlayback.completedRepetitions
+}
+
+function viewerCharacterActionRepeatability(actionId: string): { supported: boolean; reason?: string } {
+    const entry = viewerCharacterActionCatalogSnapshot().entries.find(item => item.id === actionId)
+    if (!entry?.consumerAvailability.playable) return {
+        supported: false, reason: entry?.consumerAvailability.reason ?? 'action is unknown or unavailable for the selected actor',
+    }
+    if (entry.sourceKind === 'combat-jump') return {
+        supported: false, reason: 'controller-owned three-phase jump supports one launch only; landing and travel are not a repeatable clip timeline',
+    }
+    if (entry.sourceKind === 'locomotion-profile') return {
+        supported: false, reason: 'locomotion profile selection is not a finite action',
+    }
+    return { supported: true }
+}
+
+function configureViewerCharacterActionRepetition(binding: ViewerLocomotionBinding, requested: number | undefined): void {
+    clearViewerCharacterActionRepetition(binding)
+    if (requested === undefined || binding.combatJumpActions.activeJumpDonorPlayback) return
+    const state = binding.characterActionPlayback
+    if (state.status !== 'playing' || !state.actionId || !(state.durationSeconds > 0)) return
+    const repeat: ViewerCharacterActionRepetition = {
+        actionId: state.actionId, requested, completed: 0, pendingFinish: false, seeking: false,
+        localTime: state.timeSeconds, lastMixerTime: binding.character.animation.mixer.time,
+    }
+    viewerCharacterActionRepetitions.set(binding, repeat)
+    state.loop = requested === 0
+    state.repetitions = requested
+    state.completedRepetitions = 0
+    if (binding.directHomeActions.active?.timeline || binding.combatJumpActions.activeSkeletonPlayback) return
+    // One family run is gated by its longest actual member, never by a shorter
+    // helper's finish event. Reuse these loaded actions for subsequent runs.
+    const runtime = binding.character.animation as unknown as { _activeActions: THREE.AnimationAction[]; _clamped: boolean }
+    const actions = runtime._activeActions
+    if (!actions?.length) throw new Error('repeatable action has no active mixer family')
+    repeat.clipActions = [...actions]
+    repeat.gate = actions.reduce((a, b) => a.getClip().duration >= b.getClip().duration ? a : b)
+    for (const action of actions) {
+        action.setLoop(THREE.LoopOnce, 1)
+        action.clampWhenFinished = true
+    }
+    const finished = (event: { action: THREE.AnimationAction }) => {
+        if (viewerCharacterActionRepetitions.get(binding) !== repeat || repeat.seeking) return
+        if (event.action === repeat.gate) repeat.pendingFinish = true
+    }
+    binding.character.animation.mixer.addEventListener('finished', finished)
+    repeat.dispose = () => binding.character.animation.mixer.removeEventListener('finished', finished)
+}
+
+/** Returns true only when an existing loaded flow was restarted. */
+function repeatCompletedViewerCharacterAction(binding: ViewerLocomotionBinding): boolean {
+    const repeat = viewerCharacterActionRepetitions.get(binding)
+    if (!repeat || repeat.actionId !== binding.characterActionPlayback.actionId) return false
+    if (repeat.finished) return false
+    repeat.completed += 1
+    binding.characterActionPlayback.completedRepetitions = repeat.completed
+    if (repeat.requested !== 0 && repeat.completed >= repeat.requested) {
+        repeat.dispose?.()
+        repeat.finished = true
+        return false
+    }
+    repeat.pendingFinish = false
+    repeat.localTime = 0
+    repeat.lastMixerTime = binding.character.animation.mixer.time
+    const direct = binding.directHomeActions.active
+    const skeleton = binding.combatJumpActions.activeSkeletonPlayback
+    if (direct?.timeline) {
+        seekActiveDirectHomePlayback(binding, direct, 0)
+        direct.timeline.play()
+    } else if (skeleton) {
+        skeleton.playback.seek(0)
+        skeleton.playback.play()
+        applyCombatSkeletonPose(binding, skeleton)
+    } else {
+        const runtime = binding.character.animation as unknown as { _clamped: boolean }
+        runtime._clamped = false
+        for (const action of repeat.clipActions ?? []) action.reset().setLoop(THREE.LoopOnce, 1).play()
+        binding.character.animation.paused = false
+    }
+    binding.characterActionPlayback.timeSeconds = 0
+    emitStartedViewerCharacterActionCue(binding, repeat.actionId)
+    emitCharacterActionPlaybackState(binding)
+    return true
+}
+
+/** A UI seek moves within this run. It never advances the repeat counter. */
+function seekViewerCharacterActionMixer(binding: ViewerLocomotionBinding, time: number): void {
+    const repeat = viewerCharacterActionRepetitions.get(binding)
+    if (!repeat?.clipActions) { binding.character.animation.time = time; return }
+    repeat.seeking = true
+    repeat.pendingFinish = false
+    repeat.localTime = time
+    repeat.lastMixerTime = binding.character.animation.mixer.time
+    const runtime = binding.character.animation as unknown as { _clamped: boolean }
+    try {
+        runtime._clamped = false
+        for (const action of repeat.clipActions) {
+            action.time = Math.min(time, action.getClip().duration)
+            action.paused = false
+        }
+        binding.character.animation.mixer.update(0)
+    } finally { repeat.seeking = false }
+}
+
+/** Consume complete timeline runs without discarding a frame's boundary remainder. */
+function advanceViewerCharacterActionTimelineRepetition(binding: ViewerLocomotionBinding, delta: number): boolean {
+    const repeat = viewerCharacterActionRepetitions.get(binding)
+    const direct = binding.directHomeActions.active
+    const skeleton = binding.combatJumpActions.activeSkeletonPlayback
+    if (!repeat || (!direct?.timeline && !skeleton) || delta <= 0) return false
+    let remaining = delta
+    const duration = binding.characterActionPlayback.durationSeconds
+    while (remaining > 0) {
+        const current = direct?.timeline?.time ?? skeleton!.playback.state().timeSeconds
+        const step = Math.min(remaining, Math.max(0, duration - current))
+        if (direct?.timeline) direct.timeline.update(step)
+        else skeleton!.playback.step(step)
+        remaining = Math.max(0, remaining - step)
+        const time = direct?.timeline?.time ?? skeleton!.playback.state().timeSeconds
+        if (time < duration - 1e-9) break
+        if (!repeatCompletedViewerCharacterAction(binding)) break
+    }
+    return true
+}
+
+function synchronizeViewerCharacterActionClipRepetition(binding: ViewerLocomotionBinding, deltaSeconds: number): boolean {
+    const repeat = viewerCharacterActionRepetitions.get(binding)
+    if (!repeat?.gate || !repeat.clipActions) return false
+    const animation = binding.character.animation
+    const runtime = animation as unknown as { _clamped: boolean }
+    if (binding.characterActionPlayback.status !== 'playing' || animation.paused) return true
+    // The mixer has already advanced this frame. Its clock includes mixer speed;
+    // action.timeScale supplies the remaining authored per-action speed.
+    const elapsed = Math.max(0, animation.mixer.time - repeat.lastMixerTime) * repeat.gate.timeScale
+    repeat.lastMixerTime = animation.mixer.time
+    let time = repeat.localTime + elapsed
+    const duration = binding.characterActionPlayback.durationSeconds
+    runtime._clamped = false
+    let restarted = false
+    if (deltaSeconds > 0) while (time >= duration - 1e-9) {
+        time = Math.max(0, time - duration)
+        if (!repeatCompletedViewerCharacterAction(binding)) {
+            animation.paused = true
+            runtime._clamped = true
+            binding.characterActionPlayback = {
+                ...binding.characterActionPlayback, status: 'idle', timeSeconds: duration,
+                reason: 'requested complete action runs finished',
+            }
+            releaseViewerCharacterActionPhysicsPhase(binding, 'requested action repetitions completed')
+            emitCharacterActionPlaybackState(binding)
+            return true
+        }
+        restarted = true
+    }
+    repeat.localTime = time
+    if (restarted) seekViewerCharacterActionMixer(binding, time)
+    binding.characterActionPlayback.timeSeconds = time
+    return true
+}
+
 const viewerCharacterActionPlayRequests = new WeakMap<ViewerLocomotionBinding, { loading: boolean }>()
 
 function emitStartedViewerCharacterActionCue(binding: ViewerLocomotionBinding, actionId: string): void {
@@ -9093,8 +9284,20 @@ function combatSkeletonAttachments(
 
 function applyCombatSkeletonAttachmentPose(
     attachment: CombatSkeletonAttachmentPlayback,
+    rootOffsetWorld?: THREE.Vector3,
 ): void {
     restoreExternalAttachmentModelRoot(attachment)
+    if (rootOffsetWorld) {
+        const offset = rootOffsetWorld.clone()
+        if (attachment.object.parent) {
+            attachment.object.parent.updateWorldMatrix(true, false)
+            const inverseParent = attachment.object.parent.matrixWorld.clone().invert()
+            offset.applyMatrix3(new THREE.Matrix3().setFromMatrix4(inverseParent))
+        }
+        attachment.object.position.add(offset)
+        attachment.object.updateMatrix()
+        attachment.object.updateWorldMatrix(false, true)
+    }
     attachment.object.visible = true
 }
 
@@ -9539,6 +9742,30 @@ function attachCombatJumpPreviewClips(
         ...generated,
     ]
     return { previews, sequences }
+}
+
+async function ensureCombatSpecialWeapon(binding: ViewerLocomotionBinding, sourceId: string): Promise<void> {
+    const definition = specialWeaponDefinitions.find(value => value.actionId === sourceId
+        && value.characterId === binding.combatJumpActions.characterId)
+    if (!definition) return
+    const combat = binding.combatJumpActions
+    combat.specialWeapons ??= new Map()
+    combat.specialWeaponLoads ??= new Map()
+    if (combat.specialWeapons.has(sourceId)) return
+    let loading = combat.specialWeaponLoads.get(sourceId)
+    if (!loading) {
+        loading = loadSpecialWeapon(definition, combat.abortController?.signal).then(weapon => {
+            if (combat.status === 'disposed' || binding.character.disposed) {
+                weapon.dispose(); throw new Error('Character detached during special weapon load')
+            }
+            weapon.reset()
+            combat.specialWeapons!.set(sourceId, weapon)
+            return weapon
+        })
+        combat.specialWeaponLoads.set(sourceId, loading)
+    }
+    try { await loading }
+    finally { if (combat.specialWeaponLoads.get(sourceId) === loading) combat.specialWeaponLoads.delete(sourceId) }
 }
 
 function ensureCombatJumpActions(binding: ViewerLocomotionBinding): Promise<void> {
@@ -10065,6 +10292,7 @@ export function detachViewerLocomotion(sceneCharacter?: SceneCharacter): void {
     if (!binding) return
     viewerPerformanceClaims.get(object)?.dispose()
     viewerCharacterActionPlayRequests.delete(binding)
+    clearViewerCharacterActionRepetition(binding)
     binding.nativeDungeonActions.status = 'disposed'
     binding.nativeDungeonActions.abortController?.abort()
     binding.combatJumpActions.status = 'disposed'
@@ -10072,6 +10300,8 @@ export function detachViewerLocomotion(sceneCharacter?: SceneCharacter): void {
     releaseViewerCharacterActionPhysicsPhase(binding, 'character detached')
     stopActiveCombatJumpDonorPlayback(binding)
     stopActiveCombatSkeletonPlayback(binding)
+    for (const weapon of binding.combatJumpActions.specialWeapons?.values() ?? []) weapon.dispose()
+    binding.combatJumpActions.specialWeapons?.clear()
     stopActiveDirectHomePlayback(binding)
     setNativeDungeonExternalAttachmentsHidden(binding, false)
     deactivateNativeDungeonPresentation(binding, false)
@@ -10208,8 +10438,28 @@ function applyCombatSkeletonPose(
     }
     binding.character.animation.mixer.update(0)
     publishViewerPerformanceTimelineProducer(binding, active, minimumRevision)
+    // The body mixer suppresses cinematic Root.position. Apply that same
+    // origin removal to every active sibling weapon, including phase blends.
+    // This is template-only: Dungeon/TPS/jump donors keep their own policies.
+    const body = active.roles.find(role => role.role === 'body')
+    const rootOffsetWorld = new THREE.Vector3()
+    const sampledOffset = new THREE.Vector3()
+    let hasRootOffset = false
+    for (const sample of [
+        { action: body?.previousAction, phase: body?.previousPhase },
+        { action: body?.currentAction, phase: body?.currentPhase },
+    ]) {
+        if (!sample.action || !sample.phase) continue
+        if (binding.combatJumpActions.loaded?.sampleSuppressedBodyRootWorldOffset(
+            active.sourceEntryId, sample.phase.phase, sample.action.time, sampledOffset,
+        )) {
+            rootOffsetWorld.addScaledVector(sampledOffset, sample.action.getEffectiveWeight())
+            hasRootOffset = true
+        }
+    }
+    active.specialWeapon?.sample(timeSeconds)
     for (const attachment of active.attachments) {
-        applyCombatSkeletonAttachmentPose(attachment)
+        applyCombatSkeletonAttachmentPose(attachment, hasRootOffset ? rootOffsetWorld : undefined)
     }
 }
 
@@ -10219,6 +10469,7 @@ function stopActiveCombatSkeletonPlayback(binding: ViewerLocomotionBinding): voi
     binding.tpsPoseTransition?.begin()
     for (const role of active.roles) stopCombatSkeletonRole(role)
     active.playback.pause()
+    active.specialWeapon?.reset()
     binding.combatJumpActions.activeSkeletonPlayback = undefined
     binding.character.animation.clear()
     binding.character.animation.paused = false
@@ -10450,6 +10701,20 @@ function startCombatSkeletonPlayback(
     binding.character.animation.paused = true
     setNativeDungeonExternalAttachmentsHidden(binding, true)
     const attachments = combatSkeletonAttachments(binding, roles)
+    const specialWeapon = binding.combatJumpActions.specialWeapons?.get(entry.id)
+    if (specialWeapon) {
+        // The SP rig is a PlayerSlot sibling in the native cinematic, not a
+        // child of either hand. Its own scale track owns appearance/disappearance.
+        const parent = attachments[0]?.object.parent ?? binding.character.object
+        parent.add(specialWeapon.object)
+        specialWeapon.object.position.set(0, 0, 0)
+        specialWeapon.object.quaternion.identity()
+        specialWeapon.object.scale.set(1, 1, 1)
+        specialWeapon.wrapper.visible = true
+        attachments.push({ object: specialWeapon.object, restPosition: new THREE.Vector3(),
+            restQuaternion: new THREE.Quaternion(), restScale: new THREE.Vector3(1, 1, 1),
+            policy: 'authored-model-space-root' })
+    }
     for (const attachment of attachments) attachment.object.visible = true
     const active: ActiveCombatSkeletonPlayback = {
         catalogActionId,
@@ -10457,6 +10722,7 @@ function startCombatSkeletonPlayback(
         playback,
         roles,
         attachments,
+        specialWeapon,
     }
     binding.combatJumpActions.activeSkeletonPlayback = active
     playback.play()
@@ -10533,7 +10799,7 @@ function seekActiveDirectHomePlayback(
     const localTime = phase.phase === 'restore'
         ? 0
         : THREE.MathUtils.clamp(timeSeconds - phase.startTime, 0, phase.clip.durationSeconds)
-    binding.character.animation.time = localTime
+    seekViewerCharacterActionMixer(binding, localTime)
     publishViewerPerformanceTimelineProducer(binding, active, minimumRevision)
 }
 
@@ -10664,10 +10930,12 @@ function interruptViewerCharacterAction(
     binding: ViewerLocomotionBinding,
     reason: string,
 ): ViewerCharacterActionPlaybackSnapshot {
+    const finiteCompleted = viewerCharacterActionRepetitions.get(binding)?.finished
+    clearViewerCharacterActionRepetition(binding)
     if (viewerCharacterActionPlayRequests.get(binding)?.loading) viewerCharacterActionPlayRequests.delete(binding)
     const activeJumpDonor = binding.combatJumpActions.activeJumpDonorPlayback
     const hasPhysicsPhase = binding.characterActionPhysicsPhase.state.status !== 'idle'
-    if (!characterActionPlaybackBlocksLocomotion(binding) && !activeJumpDonor && !hasPhysicsPhase) {
+    if (!characterActionPlaybackBlocksLocomotion(binding) && !activeJumpDonor && !hasPhysicsPhase && !finiteCompleted) {
         return cloneCharacterActionPlaybackState(binding.characterActionPlayback)
     }
     binding.tpsPoseTransition?.begin()
@@ -10694,7 +10962,11 @@ function interruptViewerCharacterAction(
     return cloneCharacterActionPlaybackState(binding.characterActionPlayback)
 }
 
-async function playViewerCharacterAction(actionId: string): Promise<ViewerCharacterActionPlaybackSnapshot> {
+async function playViewerCharacterAction(actionId: string, options?: ViewerCharacterActionPlayOptions): Promise<ViewerCharacterActionPlaybackSnapshot> {
+    const repetitions = options?.repetitions
+    if (repetitions !== undefined && (!Number.isSafeInteger(repetitions) || repetitions < 0)) {
+        throw new TypeError('repetitions must be 0 or a positive safe integer')
+    }
     const binding = selectedBinding()
     if (!binding) {
         return {
@@ -10708,6 +10980,23 @@ async function playViewerCharacterAction(actionId: string): Promise<ViewerCharac
             physicsPhase: emptyCharacterActionPhysicsPhaseState(),
         }
     }
+    // Icons omit options: never re-create a flow or spend a repetition on resume.
+    if (options === undefined && binding.characterActionPlayback.actionId === actionId
+        && (binding.characterActionPlayback.status === 'playing' || binding.characterActionPlayback.status === 'paused')) {
+        if (binding.characterActionPlayback.status === 'paused') {
+            binding.directHomeActions.active?.timeline?.play()
+            binding.combatJumpActions.activeSkeletonPlayback?.playback.play()
+            binding.character.animation.paused = !!binding.combatJumpActions.activeSkeletonPlayback
+            applyViewerCharacterActionMixerRate(binding)
+            binding.characterActionPlayback = { ...binding.characterActionPlayback, status: 'playing', reason: undefined }
+            emitCharacterActionPlaybackState(binding)
+        }
+        return cloneCharacterActionPlaybackState(binding.characterActionPlayback)
+    }
+    // New explicit text play is a restart, even for the current ID/default count.
+    if (options !== undefined) interruptViewerCharacterAction(binding, 'explicit action replay')
+    clearViewerCharacterActionRepetition(binding)
+    binding.character.animation.clearRepetitionLimit()
     const request = { loading: false }
     const generation = binding.sceneCharacter.loadGeneration
     viewerCharacterActionPlayRequests.set(binding, request)
@@ -10726,10 +11015,12 @@ async function playViewerCharacterAction(actionId: string): Promise<ViewerCharac
     const started = () => {
         if (!currentRequest() || startCueEmitted) return
         startCueEmitted = true
+        configureViewerCharacterActionRepetition(binding, repetitions)
         emitStartedViewerCharacterActionCue(binding, actionId)
     }
     const locomotionProfilePrefix = 'viewer-locomotion-profile:101901:'
     if (actionId.startsWith(locomotionProfilePrefix)) {
+        if (repetitions !== undefined) throw new TypeError('locomotion profile selection is not a repeatable action')
         const variantId = actionId.slice(locomotionProfilePrefix.length)
         const variant = activateCharacterSpecificMotionVariant(binding, variantId)
         binding.characterActionPlayback = variant ? {
@@ -10832,6 +11123,10 @@ async function playViewerCharacterAction(actionId: string): Promise<ViewerCharac
             }
         } else {
             try {
+                request.loading = true
+                await ensureCombatSpecialWeapon(binding, skeletonSourceId)
+                if (!currentRequest()) return staleRequest()
+                request.loading = false
                 binding.characterActionPlayback = startCombatSkeletonPlayback(
                     binding,
                     previewEntry,
@@ -10839,6 +11134,7 @@ async function playViewerCharacterAction(actionId: string): Promise<ViewerCharac
                 )
                 started()
             } catch (error) {
+                request.loading = false
                 binding.characterActionPlayback = {
                     status: 'unavailable',
                     actionId,
@@ -10855,6 +11151,13 @@ async function playViewerCharacterAction(actionId: string): Promise<ViewerCharac
     }
     const combatEntry = binding.combatJumpActions.entries.find(entry => entry.id === actionId)
     if (combatEntry) {
+        if (repetitions !== undefined && repetitions !== 1) {
+            binding.characterActionPlayback = { ...emptyCharacterActionPlaybackState(binding.characterActionPlaybackRate),
+                status: 'unavailable', actionId, characterId: Number(binding.character.userData.characterId),
+                reason: 'controller-owned three-phase jump supports one launch only; repetitions 0 or greater than 1 are unavailable' }
+            emitCharacterActionPlaybackState(binding)
+            return cloneCharacterActionPlaybackState(binding.characterActionPlayback)
+        }
         if (
             binding.combatJumpActions.activeJumpDonorPlayback?.actionId === actionId
             && binding.characterActionPlayback.status === 'paused'
@@ -11053,6 +11356,10 @@ function pauseViewerCharacterAction(actorBinding?: ViewerLocomotionBinding): Vie
 function seekViewerCharacterAction(timeSeconds: number, actorBinding?: ViewerLocomotionBinding): ViewerCharacterActionPlaybackSnapshot {
     if (!Number.isFinite(timeSeconds)) throw new TypeError('character action seek time must be finite')
     const binding = actorBinding ?? selectedBinding()
+    if (binding && viewerCharacterActionRepetitions.get(binding)?.finished) {
+        binding.characterActionPlayback.status = 'paused'
+        binding.character.animation.paused = true
+    }
     if (!binding || !characterActionPlaybackBlocksLocomotion(binding)) {
         return binding
             ? cloneCharacterActionPlaybackState(binding.characterActionPlayback)
@@ -11069,7 +11376,7 @@ function seekViewerCharacterAction(timeSeconds: number, actorBinding?: ViewerLoc
     } else if (binding.directHomeActions.active) {
         seekActiveDirectHomePlayback(binding, binding.directHomeActions.active, time)
     } else {
-        binding.character.animation.time = time
+        seekViewerCharacterActionMixer(binding, time)
     }
     binding.characterActionPlayback = {
         ...binding.characterActionPlayback,
@@ -11096,6 +11403,7 @@ function disposeViewerCharacterAction(): ViewerCharacterActionPlaybackSnapshot {
     const binding = selectedBinding()
     if (!binding) return emptyCharacterActionPlaybackState()
     viewerCharacterActionPlayRequests.delete(binding)
+    clearViewerCharacterActionRepetition(binding)
     releaseViewerCharacterActionPhysicsPhase(binding, 'character action disposed')
     stopActiveCombatJumpDonorPlayback(binding)
     stopActiveCombatSkeletonPlayback(binding)
@@ -11121,7 +11429,7 @@ function synchronizeViewerCharacterActionState(
         if (activeDirectHome.timeline) {
             if (binding.characterActionPlayback.status === 'playing') {
                 const epoch = observeViewerPerformanceTimelineMixer(binding), minimumRevision = epoch.revision + 1
-                activeDirectHome.timeline.update(deltaSeconds)
+                if (!advanceViewerCharacterActionTimelineRepetition(binding, deltaSeconds)) activeDirectHome.timeline.update(deltaSeconds)
                 publishViewerPerformanceTimelineProducer(binding, activeDirectHome, minimumRevision)
             }
             binding.characterActionPlayback.timeSeconds = activeDirectHome.timeline.time
@@ -11130,9 +11438,11 @@ function synchronizeViewerCharacterActionState(
                 && !activeDirectHome.timeline.playing
                 && activeDirectHome.timeline.time >= activeDirectHome.timeline.duration - 1e-6
             ) {
+                if (deltaSeconds <= 0) return
                 releaseViewerCharacterActionPhysicsPhase(binding, 'direct Home action completed')
-                binding.directHomeActions.active = undefined
-                binding.character.animation.paused = false
+                const finiteCompleted = viewerCharacterActionRepetitions.get(binding)?.finished
+                if (!finiteCompleted) binding.directHomeActions.active = undefined
+                binding.character.animation.paused = !!finiteCompleted
                 binding.characterActionPlayback = {
                     ...binding.characterActionPlayback,
                     status: 'idle',
@@ -11148,6 +11458,7 @@ function synchronizeViewerCharacterActionState(
             interruptViewerCharacterAction(binding, 'direct Home animation mixer was changed by another control')
             return
         }
+        if (synchronizeViewerCharacterActionClipRepetition(binding, deltaSeconds)) return
         binding.characterActionPlayback.timeSeconds = binding.character.animation.time
         binding.characterActionPlayback.status = binding.character.animation.paused ? 'paused' : 'playing'
         if (!binding.character.animation.paused) {
@@ -11159,7 +11470,7 @@ function synchronizeViewerCharacterActionState(
     const activeSkeleton = binding.combatJumpActions.activeSkeletonPlayback
     if (activeSkeleton) {
         if (binding.characterActionPlayback.status === 'playing') {
-            activeSkeleton.playback.step(deltaSeconds)
+            if (!advanceViewerCharacterActionTimelineRepetition(binding, deltaSeconds)) activeSkeleton.playback.step(deltaSeconds)
             applyCombatSkeletonPose(binding, activeSkeleton)
         }
         const state = activeSkeleton.playback.state()
@@ -11169,16 +11480,21 @@ function synchronizeViewerCharacterActionState(
             && !state.playing
             && state.timeSeconds >= state.durationSeconds - 1e-6
         ) {
+            if (deltaSeconds <= 0) return
             releaseViewerCharacterActionPhysicsPhase(binding, 'combat skeleton action completed')
-            stopActiveCombatSkeletonPlayback(binding)
+            const finiteCompleted = viewerCharacterActionRepetitions.get(binding)?.finished
+            if (finiteCompleted) activeSkeleton.playback.pause()
+            else stopActiveCombatSkeletonPlayback(binding)
             binding.characterActionPlayback = {
                 ...binding.characterActionPlayback,
                 status: 'idle',
                 timeSeconds: state.durationSeconds,
                 reason: 'body/weapon preview completed; locomotion restored',
             }
-            if (enabled) resumeViewerLocomotionIdle(binding)
-            else deactivateNativeDungeonPresentation(binding, true)
+            if (!finiteCompleted) {
+                if (enabled) resumeViewerLocomotionIdle(binding)
+                else deactivateNativeDungeonPresentation(binding, true)
+            }
             emitCharacterActionPlaybackState(binding)
         }
         return
@@ -11189,6 +11505,7 @@ function synchronizeViewerCharacterActionState(
         interruptViewerCharacterAction(binding, 'animation mixer was changed by another control')
         return
     }
+    if (synchronizeViewerCharacterActionClipRepetition(binding, deltaSeconds)) return
     binding.characterActionPlayback.timeSeconds = binding.character.animation.time
     binding.characterActionPlayback.status = binding.character.animation.paused ? 'paused' : 'playing'
 }
@@ -11351,7 +11668,10 @@ function updateTpsCamera(binding: ViewerLocomotionBinding, _deltaSeconds: number
     )
     scene.camera.position.copy(desired)
     scene.camera.up.set(0, 1, 0)
-    scene.camera.lookAt(cameraTarget)
+    // Orientation is owned by yaw/pitch, not by the camera-to-target length.
+    // At zero dolly distance lookAt(cameraTarget) loses its direction and snaps
+    // to an unrelated heading. The same angular frame remains valid at zero.
+    scene.camera.quaternion.setFromEuler(new THREE.Euler(-cameraPitch, cameraYawUnwrapped, 0, 'YXZ'))
     scene.controls.target.copy(cameraTarget)
 }
 
@@ -11684,7 +12004,7 @@ function updateFrame(): void {
             rawInput.jumpPressed
             || Math.hypot(rawInput.moveX, rawInput.moveZ) > 1e-4
         )
-        if (hasMovementIntent && characterActionPlaybackBlocksLocomotion(binding)) {
+        if (hasMovementIntent && (characterActionPlaybackBlocksLocomotion(binding) || viewerCharacterActionRepetitions.get(binding)?.finished)) {
             interruptViewerCharacterAction(binding, 'movement input resumed TPS locomotion')
         }
         const playbackBlocksLocomotion = characterActionPlaybackBlocksLocomotion(binding)
@@ -11755,16 +12075,29 @@ function syncCameraRigFromCurrentView(): void {
     // TPS has no authored near-distance gate.  Zero is the geometric limit;
     // near-plane/culling policy remains independent from wheel navigation.
     cameraDistance = Math.min(offset.length(), TPS_CAMERA_POINTER.maxDistanceMeters)
-    cameraPitch = THREE.MathUtils.clamp(
-        Math.asin(THREE.MathUtils.clamp(offset.y / Math.max(cameraDistance, Number.EPSILON), -1, 1)),
-        TPS_CAMERA_POINTER.minPitchRadians,
-        TPS_CAMERA_POINTER.maxPitchRadians,
-    )
-    // Preserve the current unwrapped azimuth if the camera is almost vertical.
-    // The one-time TPS activation sync therefore never derives yaw from a
-    // near-zero horizontal projection.
-    if (Math.hypot(offset.x, offset.z) > 1e-4) {
-        cameraYawUnwrapped = Math.atan2(offset.x, offset.z)
+    const coincident = offset.length() <= Number.EPSILON * Math.max(1, cameraTarget.length()) * 16
+    if (coincident) {
+        // A coincident pivot has no positional heading. Recover the visible
+        // camera frame rather than deriving asin(0/0) or inventing pitch zero.
+        const forward = scene.camera.getWorldDirection(new THREE.Vector3())
+        cameraPitch = THREE.MathUtils.clamp(
+            Math.asin(THREE.MathUtils.clamp(-forward.y, -1, 1)),
+            TPS_CAMERA_POINTER.minPitchRadians,
+            TPS_CAMERA_POINTER.maxPitchRadians,
+        )
+        if (Math.hypot(forward.x, forward.z) > 1e-4) {
+            cameraYawUnwrapped = Math.atan2(-forward.x, -forward.z)
+        }
+    } else {
+        cameraPitch = THREE.MathUtils.clamp(
+            Math.asin(THREE.MathUtils.clamp(offset.y / cameraDistance, -1, 1)),
+            TPS_CAMERA_POINTER.minPitchRadians,
+            TPS_CAMERA_POINTER.maxPitchRadians,
+        )
+        // Preserve the current azimuth at a nearly vertical activation view.
+        if (Math.hypot(offset.x, offset.z) > 1e-4) {
+            cameraYawUnwrapped = Math.atan2(offset.x, offset.z)
+        }
     }
     cameraYawTargetUnwrapped = cameraYawUnwrapped
     cameraPitchTarget = cameraPitch
@@ -11799,7 +12132,10 @@ function handoffFinalTpsCameraToOrbitControls(): void {
     const finalQuaternion = scene.camera.quaternion.clone()
     const finalUp = scene.camera.up.clone()
     const finalZoom = scene.camera.zoom
-    const finalTargetDistance = scene.camera.position.distanceTo(scene.controls.target)
+    // Orbit also calls lookAt(target). At zero TPS dolly distance, retain the
+    // visible direction by placing its focus on the near plane, without moving
+    // the camera or limiting subsequent zoom input.
+    const finalTargetDistance = Math.max(scene.camera.position.distanceTo(scene.controls.target), scene.camera.near)
     const finalTarget = new THREE.Vector3(0, 0, -1)
         .applyQuaternion(finalQuaternion)
         .multiplyScalar(finalTargetDistance)
@@ -11935,7 +12271,7 @@ export function setViewerLocomotionEnabled(value: boolean): void {
         ))
     }
     modeToggle.setAttribute('aria-pressed', String(enabled))
-    modeToggle.textContent = enabled ? 'TPS Move: On' : 'TPS Move: Off'
+    updateLocomotionModeLabel()
     hud.setAttribute('aria-hidden', String(!enabled))
     if (enabled) {
         ensureOrbitControlsCurrentCanvas()
@@ -11954,7 +12290,17 @@ export function setViewerLocomotionEnabled(value: boolean): void {
     updateHud(selectedBinding())
 }
 
+function updateLocomotionModeLabel(): void {
+    modeToggle.textContent = translateUiText(enabled ? 'TPS Move: On' : 'TPS Move: Off')
+    const label = translateUiText(enabled ? 'Disable TPS character control' : 'Enable TPS character control')
+    modeToggle.title = label
+    modeToggle.setAttribute('aria-label', label)
+}
+
 function installInputHandlers(): void {
+    // Locale changes update presentation only, never re-enter camera/input setup.
+    document.addEventListener('magius:localechange', updateLocomotionModeLabel)
+    updateLocomotionModeLabel()
     hudToggle.addEventListener('click', event => {
         event.stopPropagation()
         const expanded = hud.classList.toggle('is-collapsed') === false
@@ -12305,8 +12651,11 @@ const publicApi = {
         catalogAll() {
             return viewerCharacterActionCatalogSnapshot(selectedCharacterId(), true)
         },
-        play(actionId: string) {
-            return playViewerCharacterAction(actionId)
+        play(actionId: string, options?: ViewerCharacterActionPlayOptions) {
+            return playViewerCharacterAction(actionId, options)
+        },
+        repeatability(actionId: string) {
+            return viewerCharacterActionRepeatability(actionId)
         },
         pause() {
             return pauseViewerCharacterAction()

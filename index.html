@@ -46,11 +46,13 @@
                     </span>
                 </div>
 
-                <div class="animation-controls" data-performance-resource="actions">
+                <div id="character-animation-controls" class="animation-controls" data-performance-resource="actions" hidden>
                     <img src="src/icons/emoji_people_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Animation">
                     <select id="animation-selector" class="target-true" title="Choose animation"></select>
-                    <button id="animation-play" class="target-true" style="display: none;" title="Play animation"><img src="src/icons/play_arrow_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
-                    <button id="animation-pause" class="target-true" title="Pause animation"><img src="src/icons/pause_24dp_000000_FILL1_wght300_GRAD0_opsz24.svg"></button>
+                    <input id="animation-repetitions" class="target-true" type="number" min="0" max="9007199254740991" step="1" placeholder="Default" aria-label="Total plays" title="Total plays: blank uses default, 0 repeats forever">
+                    <button id="animation-apply" class="target-true" type="button" title="Play selected animation">Play</button>
+                    <button id="animation-play" class="target-true" style="display: none;" title="Play animation"><img src="src/icons/playback-play.svg"></button>
+                    <button id="animation-pause" class="target-true" title="Pause animation"><img src="src/icons/playback-pause.svg"></button>
                     <input id="animation-slider" class="target-true" type="range" min="0" max="1" step="0.01" value="0" aria-label="Animation timeline">
                     <output id="animation-progress-value" class="target-true" aria-live="off">0%</output>
                     <output id="animation-action-status" class="target-true" data-i18n-ignore="true" aria-live="polite" hidden></output>
@@ -99,7 +101,9 @@
                             </div>
                         </div>
                         <button id="camera-off" type="button" title="Turn off camera background"><img src="src/icons/no_photography_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                        <button id="other-tools-toggle" data-i18n-ignore="true" type="button" title="About me" aria-label="About me" aria-controls="other-tools-panel" aria-expanded="false">About me</button>
                         <button id="fullscreen-btn" type="button" title="Fullscreen"><img src="src/icons/fullscreen_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
+                        <button id="transform-close" type="button" title="Hide transform controls" hidden>×</button>
                         <button id="transform-set-translate" type="button" title="Adjust character position" style="display: none;"><img src="src/icons/drag_pan_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                         <button id="transform-set-rotate" type="button" title="Adjust character rotation" style="display: none;"><img src="src/icons/360_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg"></button>
                     </div>
@@ -127,6 +131,7 @@
                     <button id="enemy-toolbar-add" data-i18n-ignore="true" type="button" title="Add selected enemy" aria-label="Add selected enemy" disabled>➕</button>
                     <button id="enemy-toolbar-remove" data-i18n-ignore="true" type="button" title="Remove: Selected enemy" aria-label="Remove: Selected enemy" disabled>✕</button>
                 </div>
+                <button id="weapon-panel-toggle" type="button" aria-controls="weapon-panel" aria-expanded="false">Weapons</button>
                 <button id="enemy-panel-toggle" data-i18n-ignore="true" type="button" title="Show enemies" aria-label="Show enemies" aria-controls="enemy-panel" aria-expanded="false">Enemies</button>
                 <button id="combat-vfx-panel-toggle" data-i18n-ignore="true" type="button" title="Show combat effects" aria-label="Show combat effects" aria-controls="combat-vfx-panel" aria-expanded="false">Combat effects</button>
                 <button id="voice-panel-toggle" data-i18n-ignore="true" type="button" title="Show voice and subtitles" aria-label="Show voice and subtitles" aria-controls="voice-panel" aria-expanded="false">Voice / Subtitles</button>
@@ -135,7 +140,6 @@
             </div>
         </div>
 
-        <div id="workspace">
             <aside id="advanced-controls-dock" class="floating-panel" role="dialog" aria-modal="false" aria-labelledby="render-settings-title" aria-hidden="true">
                 <header class="floating-panel-header">
                     <strong id="render-settings-title">Rendering controls</strong>
@@ -154,6 +158,7 @@
                 </div>
             </aside>
 
+        <div id="workspace">
             <main id="viewer">
                 <img id="bg-image" alt="">
                 <video id="camera-bg" disablePictureInPicture></video>
@@ -228,6 +233,78 @@
             </main>
 
         </div>
+
+        <section id="other-tools-panel" class="floating-panel other-tools-panel" role="dialog" aria-modal="false" aria-labelledby="other-tools-title" aria-hidden="true">
+            <header class="floating-panel-header">
+                <strong id="other-tools-title">About me</strong>
+                <button id="other-tools-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
+            </header>
+            <div class="floating-panel-scroll other-tools-body">
+                <p class="other-tools-attribution">When creating fan works with this tool, credit the tool author and provide a link to the tool.</p>
+                <a class="other-tools-card other-tools-card-l2d" href="https://magiaexedralive2dviewer.pages.dev/" target="_blank" rel="noopener noreferrer">
+                    <span class="other-tools-icon" aria-hidden="true" data-i18n-ignore="true">L2D</span>
+                    <span class="other-tools-info">
+                        <span class="other-tools-card-title">magia exedra / Magia Record Live2D Viewer</span>
+                    </span>
+                    <span class="other-tools-arrow" aria-hidden="true">→</span>
+                </a>
+                <a class="other-tools-card other-tools-card-download" href="https://madeinmagius-site.pages.dev/" target="_blank" rel="noopener noreferrer">
+                    <span class="other-tools-icon" aria-hidden="true" data-i18n-ignore="true">↓</span>
+                    <span class="other-tools-info">
+                        <span class="other-tools-card-title">MADE IN MAGIUS Downloads &amp; Tutorials</span>
+                    </span>
+                    <span class="other-tools-arrow" aria-hidden="true">→</span>
+                </a>
+                <a class="other-tools-card other-tools-card-sponsor" href="https://afdian.com/a/madeinmagius" target="_blank" rel="noopener noreferrer">
+                    <span class="other-tools-icon" aria-hidden="true" data-i18n-ignore="true">♥</span>
+                    <span class="other-tools-info">
+                        <span class="other-tools-card-title">Support MADE IN MAGIUS</span>
+                    </span>
+                    <span class="other-tools-arrow" aria-hidden="true">→</span>
+                </a>
+                <a class="other-tools-card other-tools-card-qq" href="https://pd.qq.com/qqweb/qunpro/share?_wv=3&amp;_wwv=128&amp;appChannel=share&amp;inviteCode=2oaXZG3lL1g&amp;attaContentID=e5616861ea2047e3820bf63bb854aa8e&amp;businessType=9&amp;from=181074&amp;biz=ka&amp;mainSourceId=share&amp;subSourceId=others&amp;b=9" target="_blank" rel="noopener noreferrer">
+                    <span class="other-tools-icon" aria-hidden="true" data-i18n-ignore="true">QQ</span>
+                    <span class="other-tools-info">
+                        <span class="other-tools-card-title">Join QQ Group</span>
+                        <span class="other-tools-subtitle">🐧 928098518</span>
+                    </span>
+                    <span class="other-tools-arrow" aria-hidden="true">→</span>
+                </a>
+                <a class="other-tools-card other-tools-card-bili" href="https://search.bilibili.com/all?keyword=MadeInMagius" target="_blank" rel="noopener noreferrer">
+                    <span class="other-tools-icon" aria-hidden="true" data-i18n-ignore="true">B</span>
+                    <span class="other-tools-info">
+                        <span class="other-tools-card-title">Bilibili MadeInMagius</span>
+                        <span class="other-tools-subtitle">Follow on Bilibili</span>
+                    </span>
+                    <span class="other-tools-arrow" aria-hidden="true">→</span>
+                </a>
+                <a class="other-tools-card other-tools-card-tool" href="https://magireco-call-search-cn.pages.dev/" target="_blank" rel="noopener noreferrer">
+                    <span class="other-tools-icon" aria-hidden="true" data-i18n-ignore="true">⌕</span>
+                    <span class="other-tools-info">
+                        <span class="other-tools-card-title">Magical Girl Name Search &amp; Height Compare</span>
+                        <span class="other-tools-subtitle">Magia Record / Magia Exedra</span>
+                    </span>
+                    <span class="other-tools-arrow" aria-hidden="true">→</span>
+                </a>
+                <a class="other-tools-card other-tools-card-reader" href="https://magireader.pages.dev/" target="_blank" rel="noopener noreferrer">
+                    <span class="other-tools-icon" aria-hidden="true" data-i18n-ignore="true">▤</span>
+                    <span class="other-tools-info">
+                        <span class="other-tools-card-title">Magia Record / MAGIA EXEDRA Story Reader</span>
+                        <span class="other-tools-subtitle">CN/JP Bilingual Story Archive &amp; Translation Platform</span>
+                    </span>
+                    <span class="other-tools-arrow" aria-hidden="true">→</span>
+                </a>
+                <a class="other-tools-card other-tools-card-wiki" href="https://exedra.wiki/wiki/Characters/zh" target="_blank" rel="noopener noreferrer">
+                    <span class="other-tools-icon" aria-hidden="true" data-i18n-ignore="true">WIKI</span>
+                    <span class="other-tools-info">
+                        <span class="other-tools-card-title">MAGIA EXEDRA Chinese WIKI</span>
+                        <span class="other-tools-subtitle">Character &amp; Event Stories &amp; Voices</span>
+                    </span>
+                    <span class="other-tools-arrow" aria-hidden="true">→</span>
+                </a>
+            </div>
+            <footer class="other-tools-footer" data-i18n-ignore="true">Made with ❤️ by MadeInMagius</footer>
+        </section>
 
         <section id="action-parameter-panel" class="floating-panel parameter-panel" role="dialog" aria-modal="false" aria-labelledby="action-parameter-title" aria-hidden="true">
             <header class="floating-panel-header">
@@ -399,6 +476,26 @@
                         <button id="stage-list-use" type="button" disabled>Load selected scene</button>
                     </aside>
                 </div>
+            </div>
+        </section>
+
+        <section id="weapon-panel" class="floating-panel" role="dialog" aria-modal="false" aria-labelledby="weapon-panel-title" aria-hidden="true">
+            <header class="floating-panel-header"><strong id="weapon-panel-title">Weapons</strong><button id="weapon-panel-close" class="floating-panel-close" type="button" aria-label="Close">×</button></header>
+            <div class="floating-panel-scroll weapon-panel-content">
+                <label for="weapon-search">Search characters by name or ID</label><input id="weapon-search" type="search" autocomplete="off">
+                <label for="weapon-character">Character weapon source</label><select id="weapon-character" data-i18n-ignore="true"></select>
+                <button id="weapon-load" type="button">Load weapons</button>
+                <label for="weapon-choice">Weapon model</label><select id="weapon-choice" data-i18n-ignore="true" disabled></select>
+                <button id="weapon-add" type="button" disabled>Add weapon</button>
+                <output id="weapon-status" data-i18n-ignore="true" aria-live="polite"></output>
+                <label for="weapon-instances">Placed weapons</label><select id="weapon-instances" data-i18n-ignore="true" size="3" disabled></select>
+                <div class="weapon-buttons"><button id="weapon-remove" type="button" disabled>Remove weapon</button><button id="weapon-clear" type="button" disabled>Clear weapons</button></div>
+                <fieldset id="weapon-transform-fields" disabled><legend>Weapon placement</legend>
+                    <div class="weapon-buttons"><button type="button" data-transform="translate">Move</button><button type="button" data-transform="rotate">Rotate</button><button type="button" data-transform="scale">Scale</button><button id="weapon-axis-close" type="button">Hide axes</button></div>
+                <div class="weapon-transform-row"><span>Position</span><label>X <input type="number" data-channel="position" data-axis="x" aria-label="Position X" step="0.05" value="0"></label><label>Y <input type="number" data-channel="position" data-axis="y" aria-label="Position Y" step="0.05" value="0"></label><label>Z <input type="number" data-channel="position" data-axis="z" aria-label="Position Z" step="0.05" value="0"></label></div>
+                <div class="weapon-transform-row"><span>Rotation (degrees)</span><label>X <input type="number" data-channel="rotation" data-axis="x" aria-label="Rotation (degrees) X" step="1" value="0"></label><label>Y <input type="number" data-channel="rotation" data-axis="y" aria-label="Rotation (degrees) Y" step="1" value="0"></label><label>Z <input type="number" data-channel="rotation" data-axis="z" aria-label="Rotation (degrees) Z" step="1" value="0"></label></div>
+                <div class="weapon-transform-row"><span>Scale</span><label>X <input type="number" data-channel="scale" data-axis="x" aria-label="Scale X" step="0.05" min="0.001" value="1"></label><label>Y <input type="number" data-channel="scale" data-axis="y" aria-label="Scale Y" step="0.05" min="0.001" value="1"></label><label>Z <input type="number" data-channel="scale" data-axis="z" aria-label="Scale Z" step="0.05" min="0.001" value="1"></label></div>
+                </fieldset>
             </div>
         </section>
 

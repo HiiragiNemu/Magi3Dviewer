@@ -1,3 +1,4 @@
+import { attachCharacterAngelRing } from '../angelRing/runtime'
 import { startLoadingTask } from '../loadingProgress.ts'
 import * as THREE from 'three';
 import type MagiaExedraCharacterThree from '..'
@@ -18,6 +19,7 @@ import { StageCharacterShadowBridge } from '../../src/viewer/stageCharacterShado
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
 import { readDiagnosticCameraInitialState } from './diagnosticCamera'
+import { installLinearOrbitWheel } from './linearOrbitWheel'
 
 export interface SceneCharacter {
     character?: MagiaExedraCharacter3D
@@ -254,6 +256,7 @@ export class MagiaExedraScene3D {
         this.camera.position.set(...MagiaExedraScene3D.cameraInitialPosition);
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        installLinearOrbitWheel(this.controls, this.camera)
         this.controls.enableDamping = true;
         this.controls.target.set(...MagiaExedraScene3D.controlsInitialTarget);
         const diagnosticCamera = readDiagnosticCameraInitialState(
@@ -297,7 +300,10 @@ export class MagiaExedraScene3D {
         // Rendering
         //
         this.renderer.setAnimationLoop(timestamp => {
-            this.controls.update();
+            // enabled gates Orbit input, not OrbitControls.update itself. An
+            // external camera owner (TPS/editor) must also own the rendered
+            // pose: pending Orbit damping must not overwrite it after update.
+            if (this.controls.enabled) this.controls.update();
             // apply user rotation
             if (this.cameraRotation != undefined) {
                 const rad = THREE.MathUtils.degToRad(this.cameraRotation)
@@ -321,8 +327,10 @@ export class MagiaExedraScene3D {
             this.cameraDepth.render()
 
             this.effects.outlinePass.enabled = this.characterSelectionVisible
-            this.transformControls.enabled = this.characterSelectionVisible
-            this.transformControlsHelper.visible = this.characterSelectionVisible
+            // Dismissed edit handles stay dismissed while actor selection remains intact.
+            const transformVisible = this.characterSelectionVisible && Boolean(this.transformControls.object)
+            this.transformControls.enabled = transformVisible
+            this.transformControlsHelper.visible = transformVisible
 
             this.perfRender.start()
             this.renderCurrentFrame()
@@ -1116,6 +1124,7 @@ export class MagiaExedraScene3D {
                         `Character ${targetKey} resolved before loadFinish`,
                     )
                 }
+                await attachCharacterAngelRing(this, loadedCharacter, controller.signal)
                 if (
                     controller.signal.aborted
                     || target.removed

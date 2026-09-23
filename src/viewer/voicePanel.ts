@@ -1,3 +1,4 @@
+import { setupFloatingPanelResize } from './floatingPanelInteraction'
 import { createVoicePoseChannelProvider, type VoicePoseChannelRequest, type VoicePoseAvailability, type VoicePoseChannelLease } from './voice/poseChannels.ts'
 import {
     VoicePlayer,
@@ -306,24 +307,12 @@ export function clampVoicePanelRect(
 
 export function clampVoicePanelDragRect(
     rect: VoicePanelRect,
-    viewportWidth: number,
-    viewportHeight: number,
-    visibleGrip = VOICE_PANEL_VISIBLE_GRIP,
+    _viewportWidth: number,
+    _viewportHeight: number,
+    _visibleGrip = VOICE_PANEL_VISIBLE_GRIP,
 ): VoicePanelRect {
-    const width = Math.max(1, rect.width)
-    const height = Math.max(1, rect.height)
-    const horizontalGrip = Math.min(width, Math.max(1, visibleGrip))
-    const verticalGrip = Math.min(height, Math.max(1, visibleGrip))
-    const minLeft = -width + horizontalGrip
-    const minTop = -height + verticalGrip
-    const maxLeft = Math.max(minLeft, viewportWidth - horizontalGrip)
-    const maxTop = Math.max(minTop, viewportHeight - verticalGrip)
-    return {
-        left: Math.min(Math.max(rect.left, minLeft), maxLeft),
-        top: Math.min(Math.max(rect.top, minTop), maxTop),
-        width,
-        height,
-    }
+    // User positioning is intentionally unbounded, including complete offscreen placement.
+    return { left: rect.left, top: rect.top, width: Math.max(1, rect.width), height: Math.max(1, rect.height) }
 }
 
 function readPanelRect(panel: HTMLElement): VoicePanelRect {
@@ -371,6 +360,7 @@ function setupVoicePanelInteraction(elements: VoicePanelElements): () => void {
     const abort = new AbortController()
     const signal = abort.signal
     const panel = elements.panel
+    const disposeTopLeftResize = setupFloatingPanelResize(panel, 'nw')
 
     interface Interaction {
         pointerId: number
@@ -390,10 +380,11 @@ function setupVoicePanelInteraction(elements: VoicePanelElements): () => void {
         panel.style.zIndex = String(highestVoicePanelZIndex)
     }
     const begin = (event: PointerEvent): Interaction | null => {
-        if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return null
+        if (!event.isPrimary || event.button !== 0) return null
         bringToFront()
         const rect = anchorVoicePanel(panel)
         panel.dataset.panelUserPositioned = 'true'
+        writePanelRect(panel, rect, true)
         document.documentElement.classList.add('floating-panel-interacting')
         return {
             pointerId: event.pointerId,
@@ -450,15 +441,13 @@ function setupVoicePanelInteraction(elements: VoicePanelElements): () => void {
     }, { signal })
     elements.resizeHandle.addEventListener('pointermove', event => {
         if (!resize || resize.pointerId !== event.pointerId) return
-        const maximumWidth = Math.max(1, window.innerWidth - resize.left - VOICE_PANEL_VIEWPORT_GAP)
-        const maximumHeight = Math.max(1, window.innerHeight - resize.top - VOICE_PANEL_VIEWPORT_GAP)
-        const minimumWidth = Math.min(320, maximumWidth)
-        const minimumHeight = Math.min(250, maximumHeight)
+        const minimumWidth = 320
+        const minimumHeight = 250
         writePanelRect(panel, {
             left: resize.left,
             top: resize.top,
-            width: Math.min(Math.max(resize.width + event.clientX - resize.startX, minimumWidth), maximumWidth),
-            height: Math.min(Math.max(resize.height + event.clientY - resize.startY, minimumHeight), maximumHeight),
+            width: Math.max(resize.width + event.clientX - resize.startX, minimumWidth),
+            height: Math.max(resize.height + event.clientY - resize.startY, minimumHeight),
         }, true)
         event.preventDefault()
     }, { signal })
@@ -472,6 +461,7 @@ function setupVoicePanelInteraction(elements: VoicePanelElements): () => void {
 
     return () => {
         abort.abort()
+        disposeTopLeftResize()
         document.documentElement.classList.remove('floating-panel-interacting')
     }
 }

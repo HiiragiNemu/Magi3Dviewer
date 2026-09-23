@@ -322,12 +322,35 @@ function resolveRendererBoundProfile(
     return undefined
 }
 
+/**
+ * Native EnemyUber COLOR is effect/control data, not a diffuse RGB multiplier.
+ * All 20 JP forward fragment variants read only COLOR.b for optional rim data.
+ * Keep the geometry attribute intact for future native vertex/effect consumers.
+ */
+function applyNativeEnemyVertexColorSemantics(
+    material: THREE.Material,
+    profile: EnemyMaterialProfile,
+): void {
+    const shader = profile.shader
+    const nativeEnemyUber = shader?.name === 'Creative/ReDriveEnemyUberShader'
+        || shader?.stableKey === 'unity-object:cab=CAB-174818d8255e64980e98e92fb951e5c4|pathID=-224638753075480067'
+    const fallback = material as THREE.Material & {
+        isMeshPhongMaterial?: boolean
+        isMeshLambertMaterial?: boolean
+        vertexColors?: boolean
+    }
+    if (nativeEnemyUber && (fallback.isMeshPhongMaterial || fallback.isMeshLambertMaterial)) {
+        fallback.vertexColors = false
+    }
+}
+
 function applyMaterialProfile(
     material: THREE.Material,
     profile: EnemyMaterialProfile,
     runtimeTextures?: EnemyRuntimeTextureMap,
 ): void {
     const runtime = profile.runtime
+    applyNativeEnemyVertexColorSemantics(material, profile)
     material.transparent = runtime.transparent
     material.depthWrite = runtime.depthWrite
     material.alphaToCoverage = runtime.alphaToCoverage
@@ -548,6 +571,9 @@ export class EnemyInstance {
     private activeAction: THREE.AnimationAction | undefined
     private activeAnimation: string | undefined
     private animationPausedValue = false
+    private repetitions?: number
+    private completedRepetitions = 0
+    private replayingFinalCycle = false
 
     constructor(instanceId: string, entry: EnemyManifestEntry, object: THREE.Group) {
         this.instanceId = instanceId
@@ -555,6 +581,16 @@ export class EnemyInstance {
         this.object = object
         this.object.name = instanceId
         this.mixer = new THREE.AnimationMixer(object)
+        this.mixer.addEventListener('loop', event => {
+            if (event.action === this.activeAction && this.repetitions !== undefined && !this.replayingFinalCycle) {
+                this.completedRepetitions += Math.max(0, event.loopDelta)
+            }
+        })
+        this.mixer.addEventListener('finished', event => {
+            if (event.action === this.activeAction && this.repetitions !== undefined && this.repetitions > 0) {
+                this.completedRepetitions = this.repetitions
+            }
+        })
         this.playDefaultAnimation()
     }
 
@@ -571,11 +607,41 @@ export class EnemyInstance {
     }
 
     get animationPaused(): boolean {
-        return this.animationPausedValue
+        return this.animationPausedValue || Boolean(this.activeAction?.paused)
     }
 
     setAnimationPaused(paused: boolean): void {
+        if (!paused && this.activeAction?.paused) {
+            // Resume never rewinds. A completed one-shot stays at its final pose;
+            // the separate Play/apply button is the explicit restart operation.
+            if (this.activeAction.clampWhenFinished && this.activeAction.time >= this.animationDuration) return
+            this.activeAction.paused = false
+        }
         this.animationPausedValue = paused
+    }
+
+    get animationCompletedRepetitions(): number { return this.completedRepetitions }
+
+    get animationTime(): number { return this.activeAction?.time ?? 0 }
+    get animationDuration(): number { return this.activeAction?.getClip().duration ?? 0 }
+
+    seekAnimation(timeSeconds: number): void {
+        const action = this.activeAction
+        if (!action || !Number.isFinite(timeSeconds)) return
+        // Match character scrubbing: pause and evaluate the requested pose immediately.
+        // Retire outgoing fades, otherwise they would contaminate a paused sampled pose.
+        this.mixer.stopAllAction()
+        if (this.repetitions !== undefined) {
+            this.replayingFinalCycle = this.repetitions > 0 && this.completedRepetitions >= this.repetitions
+            const remaining = this.repetitions === 0 ? Infinity : Math.max(1, this.repetitions - this.completedRepetitions)
+            action.setLoop(remaining > 1 ? THREE.LoopRepeat : THREE.LoopOnce, remaining)
+            action.clampWhenFinished = Number.isFinite(remaining)
+        }
+        action.reset().setEffectiveWeight(1).play()
+        action.time = THREE.MathUtils.clamp(timeSeconds, 0, this.animationDuration)
+        this.animationPausedValue = true
+        action.paused = true
+        this.mixer.update(0)
     }
 
     get animationOptions(): Readonly<{ idle?: string; walk?: string; run?: string; jump?: string }> {
@@ -611,14 +677,19 @@ export class EnemyInstance {
         return options.idle ?? options.walk ?? options.run ?? options.jump ?? this.animationNames[0]
     }
 
-    playAnimation(name: string, loop = false, transitionSeconds = 0.18, speed = 1): THREE.AnimationAction | undefined {
+    playAnimation(name: string, loop = false, transitionSeconds = 0.18, speed = 1, repetitions?: number): THREE.AnimationAction | undefined {
+        if (repetitions !== undefined && (!Number.isSafeInteger(repetitions) || repetitions < 0)) throw new RangeError('Invalid animation repetitions')
         const clip = THREE.AnimationClip.findByName(this.object.animations, name)
         // Empty exported placeholders are not playable motions. Reject before
         // fading/resetting the current action; zero-duration loops also yield NaN.
         if (!clip || !Number.isFinite(clip.duration) || clip.duration <= 0 || clip.tracks.length === 0) return undefined
         const action = this.mixer.clipAction(clip)
-        action.setLoop(loop ? THREE.LoopRepeat : THREE.LoopOnce, loop ? Infinity : 1)
-        action.clampWhenFinished = !loop
+        const total = repetitions === undefined ? (loop ? Infinity : 1) : repetitions === 0 ? Infinity : repetitions
+        this.repetitions = repetitions
+        this.completedRepetitions = 0
+        this.replayingFinalCycle = false
+        action.setLoop(total > 1 ? THREE.LoopRepeat : THREE.LoopOnce, total)
+        action.clampWhenFinished = Number.isFinite(total)
         action.timeScale = Number.isFinite(speed) ? Math.max(0.05, Math.min(4, speed)) : 1
         if (this.activeAction && this.activeAction !== action) {
             this.activeAction.fadeOut(Math.max(0, transitionSeconds))
@@ -643,6 +714,8 @@ export class EnemyInstance {
         this.activeAction?.fadeOut(0.08)
         this.activeAction = undefined
         this.activeAnimation = undefined
+        this.repetitions = undefined
+        this.completedRepetitions = 0
     }
 
     update(deltaSeconds: number): void {

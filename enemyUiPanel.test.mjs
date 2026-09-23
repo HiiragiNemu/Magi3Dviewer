@@ -74,7 +74,7 @@ test('enemy manager update loop is registered once and removed by panel disposal
 
     assert.match(panel, /let activeController: EnemyPanelController \| undefined/)
     assert.match(panel, /if \(activeController\) return activeController/)
-    assert.match(panel, /const tick = \(\) => enemyResources\.update\(getClockDelta\(\)\)/)
+    assert.match(panel, /const tick = \(\) => \{\s*enemyResources\.update\(getClockDelta\(\)\)[\s\S]*renderAnimationProgress\(\)/)
     assert.equal((panel.match(/addAnimationLoop\(tick\)/g) ?? []).length, 1)
     assert.equal((panel.match(/removeAnimationLoop\(tick\)/g) ?? []).length, 1)
     assert.match(panel, /window\.addEventListener\('pagehide', dispose, \{ once: true \}\)/)
@@ -110,6 +110,7 @@ test('enemy errors, localization, viewport sizing and manifest identity remain e
     assert.match(style, /\.enemy-panel-content \{[\s\S]*grid-template-columns:/)
     assert.match(style, /@media \(max-width: 520px\)[\s\S]*\.enemy-panel-content \{[\s\S]*grid-template-columns: minmax\(0, 1fr\);/)
     assert.equal(manifest.schema, 'magius.enemy-resource-manifest.v1')
-    assert.equal(manifest.entries.length, 514)
+    assert.equal(manifest.entries.length, manifest.counts.enemyRecords)
+    assert.equal(manifest.entries.length, 516)
     assert.ok(manifest.entries.every(entry => entry.thumbnail.url && entry.model.renderReady))
 })

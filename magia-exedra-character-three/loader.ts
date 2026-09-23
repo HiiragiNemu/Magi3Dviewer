@@ -253,7 +253,7 @@ function applyOfficialSurfaceRenderState(
  * an array entry for every group and update only scalar feature uniforms before
  * each draw call.
  */
-function bindOfficialMaterialGroups(
+export function bindOfficialMaterialGroups(
     mesh: THREE.Mesh,
     material: THREE.Material,
     profiles: OfficialMaterialProfile[],

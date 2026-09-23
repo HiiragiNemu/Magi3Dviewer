@@ -877,6 +877,22 @@ function requireExactTextureCoordinates(
     }
 }
 
+/**
+ * ReDriveEnemy forward pass clips the raw MainTex alpha when transparency and
+ * dither clipping are both off; this branch does not need _ALPHATEST_ON.
+ * JP pass3 blob86: cb4[0].w=threshold, cb4[6].w=transparency,
+ * cb4[7].x=dither. The serialized shader default for missing dither is zero.
+ */
+export function resolveOfficialStageAlphaTest(binding: StageMaterialBinding): number {
+    if (binding.alphaTest != undefined) return binding.alphaTest
+    if (binding.sourceShader !== 'Creative/ReDriveEnemyUberShader') return 0
+    const floats = binding.serializedFloats
+    if (floats?._Transparency !== 0) return 0
+    if ((floats._IsDitherClipping ?? 0) !== 0) return 0
+    const threshold = floats._AlphaClippingThreshold
+    return Number.isFinite(threshold) ? threshold : 0
+}
+
 async function createBoundMaterial(
     binding: StageMaterialBinding,
     mesh: THREE.Mesh,
@@ -906,7 +922,7 @@ async function createBoundMaterial(
         color,
         opacity,
         ...stageBlendingParameters(binding.blending),
-        alphaTest: binding.alphaTest ?? 0,
+        alphaTest: resolveOfficialStageAlphaTest(binding),
         transparent: binding.transparent ?? false,
         depthWrite: binding.depthWrite ?? true,
         side,

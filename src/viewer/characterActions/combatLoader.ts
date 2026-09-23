@@ -246,6 +246,11 @@ export class LoadedCombatJumpActionSet implements LoadedCombatJumpActionSetLike 
     readonly targetBindings: readonly CombatJumpTargetBinding[]
     readonly runtimeInventory
     private readonly clipByKey: Map<string, LoadedCombatJumpClip>
+    private readonly suppressedBodyRoots = new Map<string, {
+        object: THREE.Object3D
+        restPosition: THREE.Vector3
+        interpolant: THREE.Interpolant
+    }>()
 
     constructor(
         runtime: CombatJumpActionRuntime,
@@ -262,6 +267,35 @@ export class LoadedCombatJumpActionSet implements LoadedCombatJumpActionSetLike 
             `${clip.actionId}\u0000${clip.role}\u0000${clip.sequencePhase}`,
             clip,
         ]))
+        // Body Root.position remains controller-owned. Keep its exact source
+        // sampler so cinematic sibling weapons can receive the SAME origin
+        // removal without rewriting their own position/rotation/scale curves.
+        for (const loaded of clips) {
+            if (loaded.role !== 'body') continue
+            const serialized = runtime.clips.find(clip => clip.runtimeName === loaded.clip.name)
+            if (!serialized) continue
+            const sourceTrack = serialized.tracks.find(track => (
+                track.name.endsWith('.position')
+                && runtime.nodeBindings[track.name.split('.')[0]]?.sourcePath.endsWith('/Root')
+            ))
+            if (!sourceTrack) continue
+            const binding = runtime.nodeBindings[sourceTrack.name.split('.')[0]]
+            const object = resolveOrdinalBinding(root, binding)
+            if (!object) throw new CharacterActionResourceError(
+                'RIG_PATH_MISSING', 'Suppressed combat body root is missing', { path: binding.sourcePath },
+            )
+            const track = THREE.AnimationClip.parse({ ...serialized, tracks: [sourceTrack] } as never).tracks[0]
+            const interpolation = track.getInterpolation()
+            const interpolant = interpolation === THREE.InterpolateDiscrete
+                ? track.InterpolantFactoryMethodDiscrete()
+                : interpolation === THREE.InterpolateSmooth
+                    ? track.InterpolantFactoryMethodSmooth()
+                    : track.InterpolantFactoryMethodLinear()
+            this.suppressedBodyRoots.set(
+                `${loaded.actionId}\u0000${loaded.sequencePhase}`,
+                { object, restPosition: object.position.clone(), interpolant },
+            )
+        }
         const targetRoles = new Map<string, string>()
         const extensionTypes = new Set<'camera' | 'scene-root' | 'cloth-control' | 'combat-vfx-cue'>()
         for (const entry of entries) {
@@ -300,6 +334,22 @@ export class LoadedCombatJumpActionSet implements LoadedCombatJumpActionSetLike 
             clips: [...bodyInventory.values()],
             externalWeaponTargetIds: [],
         }
+    }
+
+    sampleSuppressedBodyRootWorldOffset(
+        actionId: string, sequencePhase: string, timeSeconds: number, target: THREE.Vector3,
+    ): boolean {
+        const source = this.suppressedBodyRoots.get(`${actionId}\u0000${sequencePhase}`)
+        if (!source) return false
+        const authored = new THREE.Vector3().fromArray(source.interpolant.evaluate(timeSeconds))
+        target.copy(source.restPosition)
+        if (source.object.parent) {
+            source.object.parent.updateWorldMatrix(true, false)
+            target.applyMatrix4(source.object.parent.matrixWorld)
+            authored.applyMatrix4(source.object.parent.matrixWorld)
+        }
+        target.sub(authored)
+        return true
     }
 
     getClip(actionId: string, role: string, sequencePhase: string): LoadedCombatJumpClip | undefined {

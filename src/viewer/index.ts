@@ -1,3 +1,5 @@
+import { setupWeaponPanel } from './weaponPanel'
+import { setupFloatingPanelDrag } from './floatingPanelInteraction'
 import { getNonBattleExpressionRuntime } from '../../magia-exedra-character-three/nonBattleExpressionRuntime.ts'
 import { createLoadingProgressPanel } from './loadingProgressPanel'
 import { createViewportFraming } from './performanceEditor/viewportFraming'
@@ -7,7 +9,7 @@ import * as THREE from 'three'
 import Stats from 'three/addons/libs/stats.module.js';
 import { scene } from './scene';
 import { type SceneCharacter } from 'magia-exedra-character-three/scene'
-import { initSelector, resumeOrReplaySelectedAnimation } from './controls'
+import { initSelector } from './controls'
 import { characters } from './character';
 import { guiOptions, restoreThemePreference, setupBackgroundImageSelector, updateCharacterController, updateCharacterOutline } from './controllers';
 import { TransformControls, type TransformControlsMode } from 'three/examples/jsm/Addons.js';
@@ -65,6 +67,7 @@ const animationSelector = document.getElementById('animation-selector') as HTMLS
 const animationPlayBtn = document.getElementById('animation-play') as HTMLButtonElement
 const animationPauseBtn = document.getElementById('animation-pause') as HTMLButtonElement
 const animationSlider = document.getElementById('animation-slider') as HTMLInputElement
+const animationRepetitions = document.getElementById('animation-repetitions') as HTMLInputElement
 const animationProgressValue = document.getElementById('animation-progress-value') as HTMLOutputElement
 const animationActionStatus = document.getElementById('animation-action-status') as HTMLOutputElement
 const animationSpeed = document.getElementById('animation-speed') as HTMLInputElement
@@ -438,9 +441,9 @@ function setupPerformanceEditor() {
     const workspace = document.getElementById('workspace')
     if (!workspace) throw new Error('Performance editor workspace absent')
     const toggle = document.createElement('button')
-    toggle.type = 'button'; toggle.textContent = 'Performance / 表演'
+    toggle.type = 'button'; toggle.textContent = 'Performance'
     toggle.id = 'performance-editor-toggle'; toggle.setAttribute('aria-controls', 'performance-editor-panel')
-    toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('data-i18n-ignore', 'true')
+    toggle.setAttribute('aria-expanded', 'false')
     const panel = document.createElement('aside')
     panel.id = 'performance-editor-panel'; panel.hidden = true
     // The hidden mount owns editor lifecycle; regions are placed around #viewer.
@@ -526,7 +529,8 @@ document.addEventListener('magius:localechange', () => {
 const perfStatJsContainer = document.getElementById('perf-stat-js') as HTMLDivElement
 
 characterAddCrossBtn.onclick = removeSelectedCharacter
-animationPlayBtn.onclick = playSelectedAnimation
+document.getElementById('animation-apply')!.onclick = playSelectedAnimation
+animationPlayBtn.onclick = resumeCurrentAnimation
 animationPauseBtn.onclick = pauseSelectedAnimation
 animationSlider.oninput = seekSelectedAnimation
 animationSpeed.oninput = () => {
@@ -564,6 +568,8 @@ expressionMouthCorner.oninput = () => {
 }
 fullscreenBtn.onclick = () => document.documentElement.requestFullscreen().then(() => (screen.orientation as any).lock('landscape').catch(() => undefined))
 
+const transformCloseBtn = document.getElementById('transform-close') as HTMLButtonElement
+transformCloseBtn.onclick = closeObjectTransform
 const transformTranslateBtn = document.getElementById('transform-set-translate') as HTMLButtonElement
 const transformRotateBtn = document.getElementById('transform-set-rotate') as HTMLButtonElement
 transformTranslateBtn.onclick = () => setTransformMode('translate')
@@ -585,6 +591,20 @@ console.log(Object.keys(characterSelectDict).join('\n'))
 const stats = new Stats()
 
 export function setupViewer() {
+    const weaponPanel = setupWeaponPanel({
+        files: characters.files,
+        characters: primaryCharacterCatalog.filter(entry => /^\d{6}$/.test(entry.id)),
+        scene: scene.scene,
+        initialPosition: () => (scene.characterSelected?.character?.object.getWorldPosition(new THREE.Vector3())
+            ?? scene.controls.target.clone()).add(new THREE.Vector3(1, 1, 0)),
+        transform: (object, mode, refresh) => {
+            if (!singleCharacterTransformActive || singleCharacterTransformControls?.object !== object) activateObjectTransform(object, refresh)
+            setTransformMode(mode)
+        },
+        detach: object => { if (singleCharacterTransformControls?.object === object) clearSingleCharacterTransform() },
+        closeTransform: closeObjectTransform,
+    })
+    window.addEventListener('pagehide', () => weaponPanel.dispose(), { once: true })
     setupMenuCollapseToggle()
     setupDockControls()
     enemyPanelController = setupEnemyPanel({
@@ -760,6 +780,7 @@ async function playCharacterPhysicsRelatedAction(actionId: string) {
     }
     animationSelector.value = actionId
     await onAnimationSelectionChanged()
+    await playSelectedAnimation()
 }
 
 function showCharacterActionStatus(text: string, status = '') {
@@ -824,8 +845,6 @@ function renderCharacterActionStatus() {
     if (selectedOption && state?.actionId === selectedOption.value) {
         const label = selectedOption.dataset.actionLabel || selectedOption.textContent || selectedOption.value
         const statusLabels: Partial<Record<CharacterActionPlaybackState['status'], string>> = {
-            playing: 'Playing official character action',
-            paused: 'Paused official character action',
             interrupted: 'Official character action interrupted',
             unavailable: 'Official character action unavailable',
         }
@@ -977,11 +996,17 @@ function disposeCharacterActionPlayback() {
 }
 
 async function playSelectedAnimation() {
+    if (!animationRepetitions.disabled && !animationRepetitions.reportValidity()) return
+    const repetitions = animationRepetitions.disabled || animationRepetitions.value === ''
+        ? undefined : animationRepetitions.valueAsNumber
     const actionOption = selectedCharacterActionOption()
     if (!actionOption) {
         disposeCharacterActionPlayback()
         const animation = scene.characterSelected?.character?.animation
-        if (animation) resumeOrReplaySelectedAnimation(animation, animationSelector.value)
+        if (animation && animationSelector.value) {
+            if (repetitions === undefined) animation.play(animationSelector.value, animationSelector.value.endsWith('_L'))
+            else animation.play(animationSelector.value, animationSelector.value.endsWith('_L'), { repetitions })
+        }
         updateAnimationControls()
         return
     }
@@ -992,12 +1017,13 @@ async function playSelectedAnimation() {
         return
     }
 
+    disposeCharacterActionPlayback()
     const actionId = actionOption.value
     const token = ++characterActionOperationToken
     characterActionPendingId = actionId
     renderCharacterActionStatus()
     try {
-        const state = await characterActionsApi().play(actionId)
+        const state = await characterActionsApi().play(actionId, { repetitions })
         if (token !== characterActionOperationToken) return
         characterActionPendingId = undefined
         setCharacterActionPlaybackState(state)
@@ -1015,8 +1041,29 @@ async function playSelectedAnimation() {
     updateAnimationControls()
 }
 
+function currentCatalogPlayback() {
+    const state = characterActionsApi().state()
+    return state.actionId && (state.status === 'playing' || state.status === 'paused'
+        || (state.status === 'idle' && state.repetitions !== undefined && (state.completedRepetitions ?? 0) > 0)) ? state : undefined
+}
+
+async function resumeCurrentAnimation() {
+    const state = currentCatalogPlayback()
+    if (state) {
+        // play(active ID) resumes the transport's paused instance. Never apply
+        // the dropdown draft here, and never restart a completed one-shot.
+        if (state.status === 'paused' && (state.loop || state.timeSeconds < state.durationSeconds)) {
+            setCharacterActionPlaybackState(await characterActionsApi().play(state.actionId!))
+        }
+    } else {
+        const animation = scene.characterSelected?.character?.animation
+        if (animation && !animation.clamped) animation.paused = false
+    }
+    updateAnimationControls()
+}
+
 function pauseSelectedAnimation() {
-    if (selectedCharacterActionOption()) {
+    if (currentCatalogPlayback()) {
         setCharacterActionPlaybackState(characterActionsApi().pause())
     } else if (scene.characterSelected?.character) {
         scene.characterSelected.character.animation.paused = true
@@ -1027,17 +1074,16 @@ function pauseSelectedAnimation() {
 function seekSelectedAnimation() {
     const requestedTime = parseFloat(animationSlider.value)
     if (!Number.isFinite(requestedTime)) return
-    if (selectedCharacterActionOption()) {
+    if (currentCatalogPlayback()) {
         characterActionsApi().pause()
         setCharacterActionPlaybackState(characterActionsApi().seek(requestedTime))
         updateAnimationControls()
         return
     }
-
     const animation = scene.characterSelected?.character?.animation
     if (!animation) return
-    if (animation.clamped && animationSelector.value) {
-        animation.play(animationSelector.value, animationSelector.value.endsWith('_L'))
+    if (animation.clamped && animation.current && animation.repetitions === undefined) {
+        animation.play(animation.current, animation.current.endsWith('_L'))
     }
     animation.paused = true
     animation.time = THREE.MathUtils.clamp(requestedTime, 0, Math.max(0, animation.duration))
@@ -1045,18 +1091,7 @@ function seekSelectedAnimation() {
 }
 
 async function onAnimationSelectionChanged() {
-    const actionOption = selectedCharacterActionOption()
-    if (actionOption) {
-        await playSelectedAnimation()
-        return
-    }
-
-    disposeCharacterActionPlayback()
-    const animation = scene.characterSelected?.character?.animation
-    if (!animation) return
-    const value = animationSelector.value
-    if (value) animation.play(value, value.endsWith('_L'))
-    else animation.clear()
+    // Draft selection does not switch, pause or resume the active action.
     updateAnimationControls()
 }
 
@@ -1137,6 +1172,25 @@ function setupMenuCollapseToggle() {
 }
 
 function setupDockControls() {
+    const otherToolsPanel = document.getElementById('other-tools-panel') as HTMLElement
+    const otherToolsToggle = document.getElementById('other-tools-toggle') as HTMLButtonElement
+    const otherToolsClose = document.getElementById('other-tools-close') as HTMLButtonElement
+    const setOtherToolsPanelOpen = (open: boolean) => {
+        const wasOpen = otherToolsPanel.classList.contains('is-open')
+        const restoreFocus = !open && otherToolsPanel.contains(document.activeElement)
+        otherToolsPanel.classList.toggle('is-open', open)
+        otherToolsPanel.setAttribute('aria-hidden', String(!open))
+        otherToolsToggle.setAttribute('aria-expanded', String(open))
+        const label = translateUiText('About me')
+        otherToolsToggle.textContent = label
+        otherToolsToggle.title = label
+        otherToolsToggle.setAttribute('aria-label', label)
+        if (open && !wasOpen) otherToolsClose.focus({ preventScroll: true })
+        else if (restoreFocus) otherToolsToggle.focus({ preventScroll: true })
+    }
+    otherToolsToggle.onclick = () => setOtherToolsPanelOpen(!otherToolsPanel.classList.contains('is-open'))
+    otherToolsClose.onclick = () => setOtherToolsPanelOpen(false)
+
     const setAdvancedControlsOpen = (open: boolean) => {
         document.body.classList.toggle('advanced-controls-open', open)
         advancedControlsDock.classList.toggle('is-open', open)
@@ -1197,25 +1251,29 @@ function setupDockControls() {
     actionPanelClose.onclick = () => setActionPanelOpen(false)
     expressionPanelClose.onclick = () => setExpressionPanelOpen(false)
 
-    for (const panel of [advancedControlsDock, actionPanel, expressionPanel]) {
+    for (const panel of document.querySelectorAll<HTMLElement>('.floating-panel:not(#voice-panel)')) {
         const header = panel.querySelector('.floating-panel-header') as HTMLElement | null
         if (header) setupFloatingPanelDrag(panel, header)
     }
 
     document.addEventListener('keydown', event => {
         if (event.key !== 'Escape') return
+        setOtherToolsPanelOpen(false)
+        closeObjectTransform()
         setDirectPoseEditing(false)
         setAdvancedControlsOpen(false)
         setActionPanelOpen(false)
         setExpressionPanelOpen(false)
     })
     document.addEventListener('magius:localechange', () => {
+        setOtherToolsPanelOpen(otherToolsPanel.classList.contains('is-open'))
         setAdvancedControlsOpen(document.body.classList.contains('advanced-controls-open'))
         setPositionControlsOpen(document.body.classList.contains('position-controls-open'))
         setActionPanelOpen(actionPanel.classList.contains('is-open'))
         setExpressionPanelOpen(expressionPanel.classList.contains('is-open'))
     })
 
+    setOtherToolsPanelOpen(false)
     setAdvancedControlsOpen(false)
     setPositionControlsOpen(false)
     setActionPanelOpen(false)
@@ -1275,39 +1333,6 @@ function setupToolbarPopovers() {
     window.addEventListener('resize', () => {
         for (const container of containers) schedulePosition(container)
     })
-}
-
-function setupFloatingPanelDrag(panel: HTMLElement, handle: HTMLElement) {
-    let pointerId: number | undefined
-    let offsetX = 0
-    let offsetY = 0
-
-    handle.addEventListener('pointerdown', event => {
-        if ((event.target as Element).closest('button')) return
-        const rect = panel.getBoundingClientRect()
-        pointerId = event.pointerId
-        offsetX = event.clientX - rect.left
-        offsetY = event.clientY - rect.top
-        panel.style.left = `${rect.left}px`
-        panel.style.top = `${rect.top}px`
-        panel.style.transform = 'none'
-        handle.setPointerCapture(pointerId)
-        event.preventDefault()
-    })
-    handle.addEventListener('pointermove', event => {
-        if (pointerId !== event.pointerId) return
-        const maxLeft = Math.max(0, window.innerWidth - panel.offsetWidth)
-        const maxTop = Math.max(0, window.innerHeight - panel.offsetHeight)
-        panel.style.left = `${THREE.MathUtils.clamp(event.clientX - offsetX, 0, maxLeft)}px`
-        panel.style.top = `${THREE.MathUtils.clamp(event.clientY - offsetY, 0, maxTop)}px`
-    })
-    const stopDragging = (event: PointerEvent) => {
-        if (pointerId !== event.pointerId) return
-        if (handle.hasPointerCapture(pointerId)) handle.releasePointerCapture(pointerId)
-        pointerId = undefined
-    }
-    handle.addEventListener('pointerup', stopDragging)
-    handle.addEventListener('pointercancel', stopDragging)
 }
 
 function setupParameterControls() {
@@ -2548,6 +2573,10 @@ function setupViewerInputHandler() {
     function mouseClickHandler(e: PointerEvent | MouseEvent) {
         if (directPoseEditingEnabled || performanceGizmoActive) return
         if (Math.abs(mouseMoveX) > 3 || Math.abs(mouseMoveY) > 3) return
+        if (singleCharacterTransformControls?.dragging || scene.transformControls.dragging
+            || singleCharacterTransformControls?.axis || scene.transformControls.axis) return
+        if (!scene.getIntersectedCharacter(e.offsetX, e.offsetY)
+            && !enemyPanelController?.getIntersectedEnemy(e.clientX, e.clientY)) closeObjectTransform()
         selectCharacterByMouse(e)
     }
 
@@ -2930,6 +2959,7 @@ function hideAnimationTimeline() {
 
 function updateAnimationControls() {
     const character = scene.characterSelected?.character
+    document.getElementById('character-animation-controls')!.hidden = !character
     if (!character) {
         animationPlayBtn.style.display = 'none'
         animationPauseBtn.style.display = 'none'
@@ -2945,42 +2975,28 @@ function updateAnimationControls() {
     const animation = character.animation
     animationSpeed.disabled = false
     renderAnimationPlaybackRate(selectedAnimationPlaybackRate())
-
-    const actionOption = selectedCharacterActionOption()
-    if (actionOption) {
-        const state = characterActionsApi().state()
+    const selectedAction = selectedCharacterActionOption()
+    const repeatability = selectedAction ? characterActionsApi().repeatability(selectedAction.value) : { supported: true }
+    animationRepetitions.disabled = !animationSelector.value || !repeatability.supported
+    animationRepetitions.title = repeatability.reason || translateUiText('Total plays: blank uses default, 0 repeats forever')
+    const applyButton = document.getElementById('animation-apply') as HTMLButtonElement
+    applyButton.disabled = !animationSelector.value || Boolean(selectedAction?.disabled)
+    const state = currentCatalogPlayback()
+    animationSlider.dataset.activeAnimation = state?.actionId ?? animation.current ?? ''
+    if (state) {
         setCharacterActionPlaybackState(state)
-        const stateMatchesSelection = state.actionId === actionOption.value
-        const playing = stateMatchesSelection && state.status === 'playing'
-        const playable = actionOption.dataset.playable === 'true' && !actionOption.disabled
-        if (playing) {
-            animationPlayBtn.style.display = 'none'
-            animationPauseBtn.style.removeProperty('display')
-        } else {
-            animationPauseBtn.style.display = 'none'
-            if (playable) animationPlayBtn.style.removeProperty('display')
-            else animationPlayBtn.style.display = 'none'
-        }
-        if (stateMatchesSelection && state.durationSeconds > 0) {
-            showAnimationTimeline(state.durationSeconds, state.timeSeconds)
-        } else {
-            hideAnimationTimeline()
-        }
-        return
-    }
-
-    if (animationSelector.value) {
-        if (animation.paused || animation.clamped) {
-            animationPlayBtn.style.removeProperty('display')
-            animationPauseBtn.style.display = 'none'
-        } else {
-            animationPlayBtn.style.display = 'none'
-            animationPauseBtn.style.removeProperty('display')
-        }
+        const playing = state.status === 'playing'
+        animationPlayBtn.style.display = playing ? 'none' : ''
+        animationPauseBtn.style.display = playing ? '' : 'none'
+        showAnimationTimeline(state.durationSeconds, state.timeSeconds)
+    } else if (animation.current) {
+        const playing = !animation.paused && !animation.clamped
+        animationPlayBtn.style.display = playing ? 'none' : ''
+        animationPauseBtn.style.display = playing ? '' : 'none'
         showAnimationTimeline(animation.duration, animation.time)
     } else {
-        animationPauseBtn.style.display = 'none'
         animationPlayBtn.style.display = 'none'
+        animationPauseBtn.style.display = 'none'
         hideAnimationTimeline()
     }
 }
@@ -3010,12 +3026,21 @@ function setupSingleCharacterTransformControls() {
 }
 
 function clearSingleCharacterTransform() {
+    const wasActive = singleCharacterTransformActive
     singleCharacterTransformControls?.detach()
     if (singleCharacterTransformControls) singleCharacterTransformControls.enabled = false
     if (singleCharacterTransformControlsHelper) singleCharacterTransformControlsHelper.visible = false
     singleCharacterTransformActive = false
     singleObjectTransformOnChange = undefined
-    if (!directPoseEditingEnabled) scene.controls.enabled = singleCharacterTransformOrbitWasEnabled
+    if (wasActive && !directPoseEditingEnabled) scene.controls.enabled = singleCharacterTransformOrbitWasEnabled
+    updateTransformModeButtons()
+}
+
+function closeObjectTransform() {
+    clearSingleCharacterTransform()
+    scene.transformControls.detach()
+    scene.transformControls.enabled = false
+    scene.transformControlsHelper.visible = false
     updateTransformModeButtons()
 }
 
@@ -3030,8 +3055,13 @@ function activateSingleCharacterTransform(sceneCharacter: SceneCharacter) {
 function activateObjectTransform(object: THREE.Object3D, onObjectChange?: () => void) {
     if (performanceExternalLeases.get(object)?.channels.root || performanceGizmoActive) return
     if (!singleCharacterTransformControls || !singleCharacterTransformControlsHelper) return
+    if (singleCharacterTransformActive && singleCharacterTransformControls.object === object) {
+        closeObjectTransform()
+        return
+    }
+    scene.transformControls.detach()
+    if (!singleCharacterTransformActive) singleCharacterTransformOrbitWasEnabled = scene.controls.enabled
     singleCharacterTransformActive = true
-    singleCharacterTransformOrbitWasEnabled = scene.controls.enabled
     singleObjectTransformOnChange = onObjectChange
     singleCharacterTransformControls.attach(object)
     singleCharacterTransformControls.enabled = true
@@ -3040,12 +3070,11 @@ function activateObjectTransform(object: THREE.Object3D, onObjectChange?: () => 
 }
 
 function setTransformMode(mode: TransformControlsMode) {
-    if (performanceGizmoActive || (scene.characterSelected?.character?.object
-        && performanceExternalLeases.get(scene.characterSelected.character.object)?.channels.root)) return
     const controls = singleCharacterTransformActive && singleCharacterTransformControls
         ? singleCharacterTransformControls
         : scene.transformControls
-    if (mode == 'rotate') {
+    if (performanceGizmoActive || (controls.object && performanceExternalLeases.get(controls.object)?.channels.root)) return
+    if (mode == 'rotate' && !controls.object?.userData.magiusIndependentWeapon) {
         controls.showX = false
         controls.showZ = false
     } else {
@@ -3062,7 +3091,8 @@ function updateTransformModeButtons() {
     transformTranslateBtn.style.display = 'none'
     transformRotateBtn.style.display = 'none'
 
-    if (scene.characterSelectionVisible || singleCharacterTransformActive) {
+    transformCloseBtn.hidden = !(singleCharacterTransformActive || (scene.characterSelectionVisible && scene.transformControls.object))
+    if (scene.characterSelectionVisible && scene.transformControls.object || singleCharacterTransformActive) {
         const mode = singleCharacterTransformActive && singleCharacterTransformControls
             ? singleCharacterTransformControls.mode
             : scene.transformControls.mode

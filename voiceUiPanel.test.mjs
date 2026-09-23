@@ -318,15 +318,15 @@ test('single play, queue, transport, subtitle visibility, motion and expression 
     assert.match(panel, /elements\.panel\.dataset\.scenarioExpressionApplied = String\(state\?\.scenario\.faceApplied \?\? false\)/)
 })
 
-test('panel can park mostly offscreen while retaining a visible grab strip, footer drag and resize', async () => {
+test('panel can move fully offscreen, retaining footer drag and both resize corners', async () => {
     const panel = await read('./src/viewer/voicePanel.ts')
     const style = await read('./src/viewer/style/viewer.css')
 
     assert.match(panel, /export function clampVoicePanelRect/)
     assert.match(panel, /export const VOICE_PANEL_VISIBLE_GRIP = 48 as const/)
     assert.match(panel, /export function clampVoicePanelDragRect/)
-    assert.match(panel, /const minLeft = -width \+ horizontalGrip/)
-    assert.match(panel, /const minTop = -height \+ verticalGrip/)
+    assert.match(panel, /left: rect\.left, top: rect\.top/)
+    assert.match(panel, /setupFloatingPanelResize\(panel, 'nw'\)/)
     assert.match(panel, /const userPositioned = panel\.dataset\.panelUserPositioned === 'true'/)
     assert.match(panel, /\? clampVoicePanelDragRect\(current, window\.innerWidth, window\.innerHeight\)/)
     assert.match(panel, /const next = clampVoicePanelDragRect\(\{/)
@@ -347,7 +347,7 @@ test('panel can park mostly offscreen while retaining a visible grab strip, foot
     assert.match(style, /\.voice-panel-footer\s*\{[^}]*cursor:\s*grab/)
 })
 
-test('offscreen drag helper executes with only a 48px recovery grip left visible', async () => {
+test('offscreen drag helper preserves all user requested offscreen positions', async () => {
     const panel = await read('./src/viewer/voicePanel.ts')
     const helperMatch = panel.match(/export function clampVoicePanelDragRect\([\s\S]*?function readPanelRect/)
     assert.ok(helperMatch, 'missing executable offscreen drag helper')
@@ -366,14 +366,14 @@ globalThis.__clampVoicePanelDragRect = clampVoicePanelDragRect;`,
     assert.equal(typeof clamp, 'function')
 
     const parkedTopLeft = clamp({ left: -999, top: -999, width: 520, height: 650 }, 1000, 800)
-    assert.equal(parkedTopLeft.left, -472)
-    assert.equal(parkedTopLeft.top, -602)
+    assert.equal(parkedTopLeft.left, -999)
+    assert.equal(parkedTopLeft.top, -999)
     assert.equal(parkedTopLeft.width, 520)
     assert.equal(parkedTopLeft.height, 650)
 
     const parkedBottomRight = clamp({ left: 9999, top: 9999, width: 520, height: 650 }, 1000, 800)
-    assert.equal(parkedBottomRight.left, 952)
-    assert.equal(parkedBottomRight.top, 752)
+    assert.equal(parkedBottomRight.left, 9999)
+    assert.equal(parkedBottomRight.top, 9999)
 })
 
 test('voice panel follows Viewer day/night theme and official presentation fonts', async () => {

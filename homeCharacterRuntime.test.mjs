@@ -648,11 +648,18 @@ test('Viewer loads Home runtimes before character construction and exposes both 
     assert.match(viewer, /expressionAutoBlink\.checked = expression\.autoBlink/)
     assert.match(viewer, /character\.expression\?\.set\(value, expressionAutoBlink\.checked\)/)
     assert.match(html, /id="expression-auto-blink"/)
-    assert.match(viewer, /animation\.paused \|\| animation\.clamped/)
+    assert.match(viewer, /!animation\.paused && !animation\.clamped/)
+    assert.match(viewer, /document\.getElementById\('animation-apply'\)!\.onclick = playSelectedAnimation/)
+    assert.match(viewer, /animationPlayBtn\.onclick = resumeCurrentAnimation/)
+    const resume = viewer.match(/async function resumeCurrentAnimation\(\)[\s\S]*?\r?\n}/)?.[0] ?? ''
+    assert.ok(resume, 'the icon must have a dedicated active-action resume handler')
+    assert.match(resume, /if \(animation && !animation\.clamped\) animation\.paused = false/)
+    assert.match(resume, /state\.timeSeconds < state\.durationSeconds/)
+    assert.doesNotMatch(resume, /animationSelector|animation\.play\(|\.reset\(/)
     assert.match(html, /id="expression-selector"/)
 })
 
-test('animation play control restarts a clamped one-shot and only resumes an unfinished action', () => {
+test('retained explicit replay helper restarts a clamped one-shot and resumes an unfinished action', () => {
     const replayCalls = []
     const finished = {
         paused: false,

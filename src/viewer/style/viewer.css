@@ -307,10 +307,10 @@ body.menu-ui-collapsed #app #menu #menu-controls > :not(.main-toolbar-toggle) {
 }
 
 #menu-controls .animation-controls #animation-slider {
-    flex: 0 1 84px;
-    width: clamp(72px, 8vw, 104px);
-    min-width: 72px;
-    max-width: 104px;
+    flex: 0 1 42px;
+    width: clamp(36px, 4vw, 52px);
+    min-width: 36px;
+    max-width: 52px;
     margin-left: 0;
 }
 
@@ -1899,7 +1899,7 @@ button img {
     }
 
     #menu-controls .animation-controls #animation-slider {
-        flex-basis: 72px;
+        flex-basis: 36px;
     }
 
     #menu-controls #animation-action-status {
@@ -1986,3 +1986,29 @@ button img {
 #app #menu .enemy-animation-controls input[type="number"] { width: 52px; }
 #app #menu .enemy-animation-controls label { display: inline-flex; align-items: center; }
 #app #menu .enemy-animation-controls button { width: auto; }
+
+/* Playback/edit controls have no empty-state footprint. */
+#app #menu #character-animation-controls[hidden],
+#app #menu #transform-close[hidden] { display: none; }
+#app #menu #enemy-animation-toggle { padding: 0; flex: 0 0 auto; }
+#app #menu #enemy-animation-toggle img { width: 1.4em; height: 1.4em; filter: none; display: block; padding: 0 4px; }
+#app #menu #enemy-animation-slider { width: clamp(50px, 6vw, 95px); min-width: 40px; }
+#app #menu #enemy-animation-progress { min-width: 3.5em; text-align: right; }
+
+#app #menu #animation-play img,
+#app #menu #animation-pause img,
+#app #menu #enemy-animation-toggle img { width: 26px; height: 26px; padding: 4px; filter: none; }
+.theme-light #app #menu #animation-play img,
+.theme-light #app #menu #animation-pause img,
+.theme-light #app #menu #enemy-animation-toggle img { filter: invert(1); }
+
+#app #menu #animation-repetitions, #app #menu #enemy-animation-repetitions { width: 5em; min-width: 4em; }
+
+/* This entry is a text button, not one of the fixed-size toolbar icons. */
+#app #menu #toolbar-tools > #menu-icons > #other-tools-toggle {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: max-content;
+    white-space: nowrap;
+    padding: 2px 6px;
+}

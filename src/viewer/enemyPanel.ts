@@ -154,93 +154,91 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
 
     const animationSection = document.createElement('section')
     animationSection.className = 'enemy-animation-controls'
+    animationSection.hidden = true
     animationSection.setAttribute('data-i18n-ignore', 'true')
-    animationSection.setAttribute('aria-label', 'Enemy animation')
     const animationSelect = document.createElement('select')
-    animationSelect.setAttribute('aria-label', 'Enemy animation')
-    const animationLoop = document.createElement('input')
-    animationLoop.type = 'checkbox'
-    animationLoop.checked = true
-    animationLoop.setAttribute('aria-label', 'Enemy animation loop')
-    const animationSpeed = document.createElement('input')
-    animationSpeed.type = 'number'
-    animationSpeed.min = '0.05'
-    animationSpeed.max = '4'
-    animationSpeed.step = '0.05'
-    animationSpeed.value = '1'
-    animationSpeed.setAttribute('aria-label', 'Enemy animation speed')
-    const animationPlay = document.createElement('button')
-    animationPlay.type = 'button'
-    animationPlay.textContent = 'Play'
-    animationPlay.setAttribute('aria-label', 'Play enemy animation')
-    const animationPause = document.createElement('button')
-    animationPause.type = 'button'
-    animationPause.setAttribute('aria-label', 'Pause enemy animation')
-    const animationTitle = document.createElement('span')
-    const animationLoopLabel = document.createElement('label')
-    const animationLoopText = document.createElement('span')
-    animationLoopLabel.append(animationLoop, animationLoopText)
-    animationSection.append(animationTitle, animationSelect, animationLoopLabel, animationSpeed, animationPlay, animationPause)
-    // Keep playback beside the enemy picker, not at the bottom of a closed panel.
+    animationSelect.id = 'enemy-animation-select'
+    const animationRepetitions = document.createElement('input')
+    animationRepetitions.id = 'enemy-animation-repetitions'
+    animationRepetitions.type = 'number'
+    animationRepetitions.min = '0'
+    animationRepetitions.max = String(Number.MAX_SAFE_INTEGER)
+    animationRepetitions.step = '1'
+    const animationApply = document.createElement('button')
+    animationApply.id = 'enemy-animation-apply'
+    animationApply.type = 'button'
+    const animationToggle = document.createElement('button')
+    animationToggle.id = 'enemy-animation-toggle'
+    animationToggle.type = 'button'
+    const animationIcon = document.createElement('img')
+    animationIcon.alt = ''
+    animationToggle.append(animationIcon)
+    const animationSlider = document.createElement('input')
+    animationSlider.id = 'enemy-animation-slider'
+    animationSlider.type = 'range'
+    animationSlider.min = '0'
+    animationSlider.max = '0'
+    animationSlider.step = '0.01'
+    const animationProgress = document.createElement('output')
+    animationProgress.id = 'enemy-animation-progress'
+    animationSection.append(animationSelect, animationRepetitions, animationApply, animationToggle, animationSlider, animationProgress)
     requireElement<HTMLElement>('enemy-toolbar-control').append(animationSection)
 
-    type AnimationDraft = { name: string; loop: boolean; speed: number }
-    // Animation controls are editor state for the selected instance, not global
-    // panel state.  Keying by object identity also prevents a replacement enemy
-    // with the same instance id from inheriting stale controls.
-    const animationDrafts = new WeakMap<EnemyInstance, AnimationDraft>()
-    const selectedAnimationDraft = (instance: EnemyInstance): AnimationDraft => {
-        const existing = animationDrafts.get(instance)
-        const names = instance.animationNames
-        const name = existing && names.includes(existing.name)
-            ? existing.name
-            : instance.currentAnimationName ?? instance.defaultAnimationName ?? names[0] ?? ''
-        const draft = existing
-            ? { ...existing, name }
-            : { name, loop: true, speed: 1 }
-        animationDrafts.set(instance, draft)
-        return draft
+    const pendingAnimations = new WeakMap<EnemyInstance, string>()
+    const pendingRepetitions = new WeakMap<EnemyInstance, string>()
+    const renderAnimationProgress = () => {
+        const instance = selectedInstance()
+        const duration = instance?.animationDuration ?? 0
+        const time = THREE.MathUtils.clamp(instance?.animationTime ?? 0, 0, duration)
+        animationSlider.disabled = busy || !instance || duration <= 0
+        animationSlider.max = String(duration)
+        animationSlider.value = String(time)
+        const progress = duration > 0 ? time / duration : 0
+        animationProgress.value = `${Math.round(progress * 100)}%`
+        animationSlider.setAttribute('aria-valuetext', `${time.toFixed(2)} / ${duration.toFixed(2)} s`)
+        animationSlider.dataset.animationTime = String(time)
+        animationSlider.dataset.animationDuration = String(duration)
+        animationSlider.dataset.activeAnimation = instance?.currentAnimationName ?? ''
+        animationToggle.disabled = busy || !instance?.currentAnimationName
+        const paused = !instance || instance.animationPaused
+        const key = paused ? 'Resume enemy animation' : 'Pause enemy animation'
+        animationToggle.title = translateUiText(key)
+        animationToggle.setAttribute('aria-label', translateUiText(key))
+        animationToggle.setAttribute('aria-pressed', String(paused))
+        // Reuse the same assets as character playback rather than two text buttons.
+        const iconSource = document.getElementById(paused ? 'animation-play' : 'animation-pause')
+            ?.querySelector('img')?.getAttribute('src') ?? ''
+        if (animationIcon.getAttribute('src') !== iconSource) animationIcon.setAttribute('src', iconSource)
     }
 
     const renderAnimationControls = () => {
         const instance = selectedInstance()
-        const draft = instance ? selectedAnimationDraft(instance) : undefined
+        animationSection.hidden = !instance
         animationSelect.replaceChildren(...instance
             ? instance.animationNames.map(name => {
                 const option = document.createElement('option')
                 option.value = name
                 option.textContent = name
                 return option
-            })
-            : [])
-        if (instance) {
-            animationSelect.value = draft?.name ?? ''
-            animationLoop.checked = draft?.loop ?? true
-            animationSpeed.value = String(draft?.speed ?? 1)
-        }
-        const disabled = busy || !instance || animationSelect.options.length === 0
-        animationSelect.disabled = disabled
-        animationLoop.disabled = disabled
-        animationSpeed.disabled = disabled
-        animationPlay.disabled = disabled
-        animationPause.disabled = busy || !instance?.currentAnimationName
-        animationSection.hidden = !instance
-        animationTitle.textContent = translateUiText('Enemy animation')
+            }) : [])
+        animationSelect.value = instance ? pendingAnimations.get(instance) ?? instance.currentAnimationName ?? '' : ''
+        animationSelect.disabled = busy || !instance || animationSelect.options.length === 0
+        animationApply.disabled = animationSelect.disabled
+        animationRepetitions.disabled = animationSelect.disabled
+        animationRepetitions.value = instance ? pendingRepetitions.get(instance) ?? '' : ''
+        animationRepetitions.placeholder = translateUiText('Default')
+        animationRepetitions.setAttribute('aria-label', translateUiText('Total plays'))
+        animationRepetitions.title = translateUiText('Total plays: blank uses default, 0 repeats forever')
+        animationApply.textContent = translateUiText('Play')
+        animationApply.setAttribute('aria-label', translateUiText('Play enemy animation'))
         for (const [element, key] of [
             [animationSection, 'Enemy animation'], [animationSelect, 'Enemy animation'],
-            [animationLoop, 'Enemy animation loop'], [animationSpeed, 'Enemy animation speed'],
-            [animationPlay, 'Play enemy animation'],
+            [animationSlider, 'Enemy animation progress'],
         ] as const) {
             element.setAttribute('aria-label', translateUiText(key))
             element.title = translateUiText(key)
         }
-        animationLoopText.textContent = translateUiText('Loop')
-        animationPlay.textContent = translateUiText('Play')
-        const pauseKey = instance?.animationPaused ? 'Resume enemy animation' : 'Pause enemy animation'
-        animationPause.textContent = translateUiText(pauseKey)
-        animationPause.title = translateUiText(pauseKey)
-        animationPause.setAttribute('aria-label', translateUiText(pauseKey))
-        animationPause.setAttribute('aria-pressed', String(Boolean(instance?.animationPaused)))
+        renderAnimationProgress()
     }
 
     const getIntersectedEnemy = (clientX: number, clientY: number): EnemyInstance | undefined => {
@@ -383,6 +381,9 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
     }
 
     const renderInstances = () => {
+        const addSelectedLabel = translateUiText('Add selected enemy')
+        elements.toolbarAdd.title = addSelectedLabel
+        elements.toolbarAdd.setAttribute('aria-label', addSelectedLabel)
         const instances = enemyResources.getInstances()
         const removeSelectedLabel = `${translateUiText('Remove')}: ${translateUiText('Selected enemy')}`
         elements.toolbarRemove.title = removeSelectedLabel
@@ -493,7 +494,10 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
         if (event.key === 'Escape') setOpen(false)
     }
 
-    const tick = () => enemyResources.update(getClockDelta())
+    const tick = () => {
+        enemyResources.update(getClockDelta())
+        if (!animationSection.hidden) renderAnimationProgress()
+    }
 
     const dispose = () => {
         if (disposed) return
@@ -581,58 +585,43 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
         renderInstances()
         setStatus({ key: 'All enemies removed', detail: String(removed) })
     }
-    animationPlay.onclick = () => {
+    animationSelect.onchange = () => {
         const instance = selectedInstance()
-        if (!instance) {
-            setStatus({ key: 'Select an enemy before playing animation' })
-            return
-        }
-        const draft = selectedAnimationDraft(instance)
-        const name = animationSelect.value || draft.name || instance.defaultAnimationName
-        const speed = Number(animationSpeed.value)
-        const normalizedSpeed = Number.isFinite(speed) ? Math.max(0.05, Math.min(4, speed)) : 1
-        const loop = animationLoop.checked
-        if (!name || !instance.playAnimation(name, loop, 0.18, normalizedSpeed)) {
+        if (busy || !instance) return
+        // A draft selection leaves the active transport and pose untouched.
+        pendingAnimations.set(instance, animationSelect.value)
+        renderAnimationControls()
+    }
+    animationRepetitions.oninput = () => {
+        const instance = selectedInstance()
+        if (instance) pendingRepetitions.set(instance, animationRepetitions.value)
+    }
+    animationApply.onclick = () => {
+        const instance = selectedInstance()
+        if (busy || !instance || !animationRepetitions.reportValidity()) return
+        const repetitions = animationRepetitions.value === '' ? undefined : animationRepetitions.valueAsNumber
+        const name = animationSelect.value
+        const loop = name.endsWith('_L') || /^(?:idle|wait|stand|breath)$/i.test(name)
+        if (!name || !instance.playAnimation(name, loop, 0.18, 1, repetitions)) {
             setStatus({ key: 'Animation is unavailable' })
             return
         }
-        animationDrafts.set(instance, { name, loop, speed: normalizedSpeed })
-        renderInstances()
+        pendingAnimations.delete(instance)
+        renderAnimationControls()
         setStatus({ key: 'Enemy animation playing', detail: name })
     }
-    animationPause.onclick = () => {
+    animationToggle.onclick = () => {
         const instance = selectedInstance()
         if (busy || !instance?.currentAnimationName) return
         instance.setAnimationPaused(!instance.animationPaused)
-        renderAnimationControls()
+        renderAnimationProgress()
         setStatus({ key: instance.animationPaused ? 'Enemy animation paused' : 'Enemy animation playing', detail: instance.currentAnimationName })
     }
-    animationSelect.onchange = () => {
+    animationSlider.oninput = () => {
         const instance = selectedInstance()
-        if (!instance) return
-        const draft = selectedAnimationDraft(instance)
-        draft.name = animationSelect.value
-        animationDrafts.set(instance, draft)
-        renderAnimationControls()
-    }
-    animationLoop.onchange = () => {
-        const instance = selectedInstance()
-        if (!instance) return
-        const draft = selectedAnimationDraft(instance)
-        draft.loop = animationLoop.checked
-        animationDrafts.set(instance, draft)
-        renderAnimationControls()
-    }
-    animationSpeed.onchange = () => {
-        const instance = selectedInstance()
-        const value = Number(animationSpeed.value)
-        const speed = Number.isFinite(value) ? Math.max(0.05, Math.min(4, value)) : 1
-        animationSpeed.value = String(speed)
-        if (instance) {
-            const draft = selectedAnimationDraft(instance)
-            draft.speed = speed
-            animationDrafts.set(instance, draft)
-        }
+        if (busy || !instance) return
+        instance.seekAnimation(Number(animationSlider.value))
+        renderAnimationProgress()
     }
     document.addEventListener('keydown', handleEscape)
     document.addEventListener('magius:localechange', handleLocaleChange)

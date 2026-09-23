@@ -59,6 +59,8 @@ function getHomeLoopAfterStart(
 }
 
 export interface ChatacterAnimationPlayOptions {
+    /** undefined: authored behavior; 0: forever; positive integer: total plays. */
+    repetitions?: number
     transitionSeconds?: number
     localTimeSeconds?: number
 }
@@ -136,6 +138,11 @@ export class ChatacterAnimation {
     private _queuedHomeGateAction?: THREE.AnimationAction
     private _activeActions: THREE.AnimationAction[] = []
     private _preparedFamilies = new Map<string, THREE.AnimationClip[]>()
+    private _repeatCompleted = 0
+    private _repeatLocalTime = 0
+    private _repetitions?: number
+    private _finishGateAction?: THREE.AnimationAction
+    private _queuedRepetitions?: number
     paused = false
 
     constructor(character: MagiaExedraCharacter3D) {
@@ -156,6 +163,10 @@ export class ChatacterAnimation {
         and other families where the unnumbered clip is full-body. The family is
         therefore ordered by binding coverage, not by suffix.
         */
+        const repetitions = options.repetitions
+        if (repetitions !== undefined && (!Number.isSafeInteger(repetitions) || repetitions < 0)) {
+            throw new RangeError('Animation repetitions must be a non-negative safe integer')
+        }
         const queuedHomeLoop = getHomeLoopAfterStart(
             name,
             this._character.userData.homeAnimationRuntime,
@@ -168,9 +179,11 @@ export class ChatacterAnimation {
         ) {
             loop = false
             this._queuedHomeLoop = queuedHomeLoop
+            this._queuedRepetitions = repetitions
         } else {
             this._queuedHomeLoop = undefined
             this._queuedHomeGateAction = undefined
+            this._queuedRepetitions = undefined
         }
 
         const animations = this.getPreparedAnimationClipsByName(name)
@@ -205,21 +218,21 @@ export class ChatacterAnimation {
             this.mixer.stopAllAction()
         }
 
+        this._repetitions = repetitions
+        this._repeatCompleted = 0
+        this._repeatLocalTime = 0
+        const totalPlays = queuedHomeLoop ? 1 : repetitions === undefined ? (loop ? Infinity : 1) : repetitions === 0 ? Infinity : repetitions
+        const repeat = totalPlays > 1
         const nextActions: THREE.AnimationAction[] = []
         for (const [index, animation] of animations.entries()) {
             const action = this.mixer.clipAction(animation);
 
-            if (loop) {
-                action.setLoop(THREE.LoopRepeat, Infinity);
-                action.clampWhenFinished = false;
-            } else {
-                action.setLoop(THREE.LoopOnce, 1);
-                action.clampWhenFinished = true;
-            }
+            action.setLoop(repetitions === undefined && repeat ? THREE.LoopRepeat : THREE.LoopOnce, totalPlays)
+            action.clampWhenFinished = repetitions !== undefined || Number.isFinite(totalPlays)
 
             action.reset()
             action.time = animation.duration > 0
-                ? loop
+                ? repeat
                     ? localTimeSeconds % animation.duration
                     : Math.min(localTimeSeconds, animation.duration)
                 : 0
@@ -233,6 +246,9 @@ export class ChatacterAnimation {
             }
         }
         this._activeActions = nextActions
+        this._finishGateAction = repetitions === undefined ? undefined : nextActions.reduce((longest, action) => (
+            action.getClip().duration > longest.getClip().duration ? action : longest
+        ))
 
         this.paused = false
         this._current = getAnimationFamilyName(name)
@@ -244,7 +260,17 @@ export class ChatacterAnimation {
         console.log('Playing animation family:', this._current, animations.map(x => x.name))
     }
 
+    get repetitions(): number | undefined { return this._repetitions }
+
+    /** Other transport owners may reuse the mixer without a legacy repeat request. */
+    clearRepetitionLimit() {
+        this._repetitions = undefined
+        this._finishGateAction = undefined
+        this._queuedRepetitions = undefined
+    }
+
     clear() {
+        this.clearRepetitionLimit()
         this.mixer.stopAllAction()
         this._activeActions = []
         this._current = undefined
@@ -352,7 +378,32 @@ export class ChatacterAnimation {
     animationLoop = () => {
         if (this.paused) return
         const delta = getClockDelta()
-        this.mixer.update(delta)
+        if (this._repetitions === undefined || this._queuedHomeLoop || !(this.duration > 0)) {
+            this.mixer.update(delta)
+            return
+        }
+        // A family repeats together, even when a weapon/helper clip is shorter.
+        // Split only at family boundaries, preserving the rest of this frame.
+        let remaining = delta * this.mixer.timeScale
+        if (!(remaining > 0)) return
+        const duration = this.duration
+        while (remaining > 0) {
+            const step = Math.min(remaining, Math.max(0, duration - this._repeatLocalTime))
+            this.mixer.update(step / this.mixer.timeScale)
+            this._repeatLocalTime += step
+            remaining = Math.max(0, remaining - step)
+            if (this._repeatLocalTime < duration - 1e-9) break
+            this._repeatCompleted++
+            if (this._repetitions !== 0 && this._repeatCompleted >= this._repetitions) {
+                this._repeatLocalTime = duration
+                this._clamped = true
+                this.paused = true
+                break
+            }
+            this._repeatLocalTime = 0
+            this._clamped = false
+            for (const action of this._activeActions) action.reset().setLoop(THREE.LoopOnce, 1).play()
+        }
     }
 
     onFinishHandler = (event: { action: THREE.AnimationAction }) => {
@@ -363,9 +414,12 @@ export class ChatacterAnimation {
             const loop = this._queuedHomeLoop
             this._queuedHomeLoop = undefined
             this._queuedHomeGateAction = undefined
-            this.play(loop, true)
+            const repetitions = this._queuedRepetitions
+            this._queuedRepetitions = undefined
+            this.play(loop, true, { repetitions })
             return
         }
+        if (this._finishGateAction && event.action !== this._finishGateAction) return
         if (event.action === this._queuedHomeGateAction || !this._queuedHomeGateAction) {
             this._clamped = true
         }
@@ -406,7 +460,7 @@ export class ChatacterAnimation {
                 return this.duration
             } else {
                 const duration = this.duration
-                const localTime = this._activeActions[0]?.time ?? 0
+                const localTime = this._repetitions !== undefined ? this._repeatLocalTime : this._activeActions[0]?.time ?? 0
                 return duration > 0 ? localTime % duration : 0
             }
         } else {
@@ -414,7 +468,17 @@ export class ChatacterAnimation {
         }
     }
     set time(value) {
-        this.mixer.setTime(value)
+        if (this._repetitions === undefined) { this.mixer.setTime(value); return }
+        if (!Number.isFinite(value)) return
+        if (this._clamped && this._repetitions > 0) this._repeatCompleted = Math.min(this._repeatCompleted, this._repetitions - 1)
+        this._repeatLocalTime = THREE.MathUtils.clamp(value, 0, this.duration)
+        for (const action of this._activeActions) {
+            if (this._clamped) action.reset().setLoop(THREE.LoopOnce, 1).play()
+            action.time = THREE.MathUtils.clamp(value, 0, action.getClip().duration)
+            action.clampWhenFinished = this._repetitions !== 0
+        }
+        this._clamped = false
+        this.mixer.update(0)
     }
 }
 
