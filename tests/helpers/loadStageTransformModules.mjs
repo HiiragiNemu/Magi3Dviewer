@@ -17,5 +17,5 @@ export function loadStageTransformModules() {
         Function('exports', 'require', 'module', compiled)(module.exports, load, module)
         return module.exports
     }
-    return { THREE, bridge: load('./stageTransformAnimations'), batching: load('./stageStaticBatching') }
+    return { THREE, bridge: load('./stageTransformAnimations'), batching: load('./stageStaticBatching'), visibility: load('./stageNativeVisibility') }
 }

@@ -2,6 +2,7 @@ import { getLoadingTask, startLoadingTask, readLoadingResponse, yieldLoadingFram
 import * as THREE from 'three'
 import { enableRigidStageCulling } from './stageRigidCulling'
 import { batchStaticStageMeshes, hasStageRuntimeMeshWriters } from './stageStaticBatching'
+import { applyStageNativeVisibility, type StageNativeVisibilityProfile } from './stageNativeVisibility'
 import { captureStageFields, captureStageRecord, captureStageUniforms } from './stageCommitState'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
@@ -329,6 +330,14 @@ export interface StageDefinition {
     sceneProfileUrl?: string
     renderProfile?: StageRenderProfile
     runtime?: StageRuntimeProfile
+    nativeVisibility?: StageNativeVisibilityProfile
+    /** Verified load/draw and resource delivery, independent of full effect fidelity. */
+    entryValidation?: {
+        status: 'load-tested'
+        visibleMeshCount: number
+        resourceFileCount: number
+        evidence: string[]
+    }
     fidelity?: {
         exact?: boolean
         components?: StageFidelityComponentEvidence
@@ -375,6 +384,7 @@ export interface StageSceneProfilePackage {
     materialBindings?: StageMaterialBinding[]
     spawnPoints?: StageSpawnPoint[]
     runtime?: StageRuntimeProfile
+    nativeVisibility?: StageNativeVisibilityProfile
     sourceRecords?: Record<string, unknown>
 }
 
@@ -799,17 +809,32 @@ function createStageSelectorOption(definition: StageDefinition) {
     option.dataset.official = definition.official ? 'true' : 'false'
     option.dataset.dynamic = definition.dynamic?.status ?? 'unspecified'
     option.dataset.i18nIgnore = 'true'
-    // Never advertise a partial/pending official product as a selectable
-    // production scene.  Those entries remain in the catalog for provenance,
-    // but selecting them would otherwise load an incomplete candidate and then
-    // silently snap the selector back to the previous scene.
+    // A tested drawable carrier may be entered while fidelity work continues.
+    // Do not equate entry readiness with recovered animation/effects, or enable
+    // untested, empty and presentation-only carriers merely because a URL exists.
+    const entry = definition.entryValidation
+    const loadTested = definition.type === 'fbx' && !!definition.url
+        && entry?.status === 'load-tested'
+        && Number.isInteger(entry.visibleMeshCount) && entry.visibleMeshCount > 0
+        && Number.isInteger(entry.resourceFileCount) && entry.resourceFileCount > 0
+        && Array.isArray(entry.evidence) && entry.evidence.length > 0
+        && entry.evidence.every(value => typeof value === 'string' && value.length > 0)
     if (
         definition.official
-        && (definition.dynamic?.status === 'partial'
-            || definition.dynamic?.status === 'pending')
+        && ((definition.dynamic?.status === 'partial' && !loadTested)
+            || definition.dynamic?.status === 'pending'
+            || definition.dynamic?.status === 'absent')
     ) {
         option.disabled = true
         option.title = 'Scene package is still incomplete; choose a recovered scene.'
+    }
+    if (loadTested && definition.dynamic?.status === 'partial') {
+        option.dataset.availability = 'load-tested-partial'
+        option.title = getUiLocale() === 'zh-CN'
+            ? '场景可进入；部分效果仍在恢复中。'
+            : getUiLocale() === 'ja-JP'
+                ? 'シーンは読み込み確認済みです。一部のエフェクトは復元中です。'
+                : 'Scene loading verified; some effects are still being restored.'
     }
     if (definition.dynamic?.status === 'product-presentation') {
         const reason = getUiLocale() === 'zh-CN' ? '真实场景待恢复' : 'Scene content awaiting restoration'
@@ -959,7 +984,7 @@ function inspectStageVisibleContent(
         const mesh = child as THREE.Mesh
         if (mesh.isMesh) {
             meshes.push(mesh)
-            const visible = isEffectivelyVisible(mesh, object)
+            const visible = isEffectivelyVisible(mesh, object) && mesh.layers.mask !== 0
             if (visible) visibleMeshCount++
             const attributeSet = Object.keys(mesh.geometry.attributes).sort().join(',')
                 || '<none>'
@@ -1183,6 +1208,11 @@ export async function loadStageById(id: string) {
             candidateTextures.push(...profileTextures.textures)
             assertCurrentStageLoad(loadEpoch, loadController.signal)
             loadCheckpoint = 'profile-textures-loaded'
+            const object = candidateObject!
+            object.name = `Stage:${definition.id}`
+            prepareStageObject(object, definition.renderProfile?.stageLayer)
+            object.userData.stageNativeVisibility =
+                applyStageNativeVisibility(object, definition.nativeVisibility)?.debug ?? null
             reportStageLoadProgress('Checking stage content...', definition.id)
             candidateVisibleContent = inspectStageVisibleContent(definition, candidateObject!)
             lastCandidateVisibleContent = candidateVisibleContent.snapshot
@@ -1198,9 +1228,6 @@ export async function loadStageById(id: string) {
             // Validate/mutate only candidate-owned geometry and materials. A
             // detached carrier supplies the prospective world transform without
             // moving the visible scene, lights, camera, or shader globals.
-            const object = candidateObject!
-            object.name = `Stage:${definition.id}`
-            prepareStageObject(object, definition.renderProfile?.stageLayer)
             const candidateCarrier = new THREE.Group()
             candidateCarrier.position.set(...(definition.position ?? [0, 0, 0]))
             candidateCarrier.rotation.y = definition.rotation?.[1] ?? 0
@@ -1515,6 +1542,7 @@ function mergeGeneratedStageProfile(
         ),
         spawnPoints: definition.spawnPoints ?? generated.spawnPoints,
         runtime: mergeGeneratedStageRuntime(definition.runtime, generated.runtime),
+        nativeVisibility: generated.nativeVisibility ?? definition.nativeVisibility,
         // Lighting, Volume and renderer state are bundle truth and therefore
         // replace historical hand-copied render profiles atomically.
         renderProfile: serializedRenderProfile,
@@ -1683,6 +1711,7 @@ export function getCurrentStageDebugState() {
         lights: visibleContent?.lightCount ?? 0,
         animationNames: visibleContent?.animationNames ?? [],
         visibleContent: visibleContent ?? null,
+        nativeVisibility: activeStageObject?.userData.stageNativeVisibility ?? null,
         lastCandidateVisibleContent: lastCandidateVisibleContent ?? null,
         materialBindings:
             activeStageObject?.userData.stageMaterialBindings ?? null,

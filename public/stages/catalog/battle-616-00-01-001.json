@@ -117,15 +117,15 @@
         0.7169811725616455,
         0.6946064233779907,
         0.6527234315872192,
-        1.0
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_lightning_col.png",
-      "smoothness": 0.0,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": true,
       "depthWrite": false,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -145,12 +145,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -159,7 +159,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -170,15 +170,15 @@
       "materialPattern": "^mt_bg3d616_01_01_cloth1(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_cloth_col.png",
       "smoothness": 0.4390000104904175,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
       "unlitness": 0.30000001192092896,
@@ -201,12 +201,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -215,7 +215,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -233,12 +233,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -247,7 +247,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -258,18 +258,18 @@
       "materialPattern": "^mt_bg3d616_01_01_crystal(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_crystal_col.png",
       "smoothness": 0.8999999761581421,
       "metallic": 0.25,
-      "normalScale": 1.0,
+      "normalScale": 1,
       "transparent": true,
       "depthWrite": false,
-      "unlitness": 0.0,
+      "unlitness": 0,
       "castShadow": true,
       "receiveShadow": false,
       "side": "front",
@@ -278,52 +278,52 @@
       "alphaToCoverage": false,
       "blending": "normal",
       "matCapMapUrl": "./stages/official/battle-616-00-01-001/matcap.png",
-      "matCapIntensity": 1.0,
+      "matCapIntensity": 1,
       "multiUvScroll": {
         "textureUrl": "./stages/official/battle-616-00-01-001/eff_gch_crystal_01.png",
         "first": {
           "tiling": [
-            3.0,
-            3.0
+            3,
+            3
           ],
           "offset": [
             0.15000000596046448,
-            0.0
+            0
           ],
           "speed": [
-            0.0,
-            0.0
+            0,
+            0
           ],
           "color": [
             0.6698113083839417,
             0.3886169493198395,
             0.3886169493198395,
-            1.0
+            1
           ],
           "opacity": 0.33000001311302185
         },
         "second": {
           "tiling": [
-            3.0,
-            3.0
+            3,
+            3
           ],
           "offset": [
-            0.0,
-            0.0
+            0,
+            0
           ],
           "speed": [
-            0.0,
-            0.0
+            0,
+            0
           ],
           "color": [
             0.20754718780517578,
             0.04797081649303436,
             0.0694771409034729,
-            1.0
+            1
           ],
           "opacity": 0.20000000298023224
         },
-        "additiveToMultiply": 0.0,
+        "additiveToMultiply": 0,
         "dropFrame": false
       },
       "textures": {
@@ -341,12 +341,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -355,7 +355,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -373,12 +373,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -387,7 +387,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -404,12 +404,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -418,7 +418,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 9,
           "evidence": "exact-unity-texture2d"
         }
@@ -429,15 +429,15 @@
       "materialPattern": "^mt_bg3d616_01_01_egg(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_egg_col.png",
       "smoothness": 0.45399999618530273,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
       "unlitness": 0.39100000262260437,
@@ -460,12 +460,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -474,7 +474,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -492,12 +492,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -506,7 +506,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -520,12 +520,12 @@
         0.8867924213409424,
         0.8867924213409424,
         0.8867924213409424,
-        1.0
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_ground_col.webp",
       "smoothness": 0.42500001192092896,
       "metallic": 0.25,
-      "normalScale": 1.0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
       "unlitness": 0.25,
@@ -555,8 +555,8 @@
               1.5
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -565,7 +565,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 12,
           "evidence": "exact-unity-texture2d"
         },
@@ -587,8 +587,8 @@
               1.5
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -597,7 +597,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 12,
           "evidence": "exact-unity-texture2d"
         },
@@ -619,8 +619,8 @@
               1.5
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -629,7 +629,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 12,
           "evidence": "exact-unity-texture2d"
         }
@@ -640,15 +640,15 @@
       "materialPattern": "^mt_bg3d616_01_01_perfume1(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_perfume_col.png",
       "smoothness": 0.550000011920929,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
       "unlitness": 0.30000001192092896,
@@ -674,12 +674,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -688,7 +688,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -706,12 +706,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -720,7 +720,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -738,12 +738,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -752,7 +752,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -763,15 +763,15 @@
       "materialPattern": "^mt_bg3d616_01_01_perfume2(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_perfume_col.png",
       "smoothness": 0.7490000128746033,
       "metallic": 0.7919999957084656,
-      "normalScale": 1.0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
       "unlitness": 0.20000000298023224,
@@ -797,12 +797,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -811,7 +811,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -829,12 +829,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -843,7 +843,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -861,12 +861,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -875,7 +875,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -886,18 +886,18 @@
       "materialPattern": "^mt_bg3d616_01_01_ring(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_crystal_col.png",
       "smoothness": 0.75,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 0.0,
+      "unlitness": 0,
       "castShadow": false,
       "receiveShadow": true,
       "side": "front",
@@ -917,12 +917,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -931,7 +931,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -949,12 +949,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -963,7 +963,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -977,15 +977,15 @@
         0.6415094137191772,
         0.6415094137191772,
         0.6415094137191772,
-        1.0
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_sky_col.png",
-      "smoothness": 0.0,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -1006,12 +1006,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1020,7 +1020,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -1031,18 +1031,18 @@
       "materialPattern": "^mt_bg3d616_01_01_sky2(?:\\.\\d+)?$",
       "shading": "unlit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_sky_col.png",
-      "smoothness": 0.0,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": true,
       "depthWrite": false,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -1064,12 +1064,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1078,7 +1078,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -1092,15 +1092,15 @@
         0.801886796951294,
         0.801886796951294,
         0.801886796951294,
-        1.0
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_sky_col.png",
-      "smoothness": 0.0,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": true,
       "depthWrite": false,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -1122,12 +1122,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1136,7 +1136,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -1147,18 +1147,18 @@
       "materialPattern": "^mt_bg3d616_01_01_sky4(?:\\.\\d+)?$",
       "shading": "unlit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_sky_col.png",
-      "smoothness": 0.0,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": true,
       "depthWrite": false,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -1180,12 +1180,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1194,7 +1194,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -1205,18 +1205,18 @@
       "materialPattern": "^mt_bg3d616_01_01_torsoM1(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_torsoM_col.png",
       "smoothness": 0.5799999833106995,
       "metallic": 0.6100000143051147,
-      "normalScale": 1.0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 0.0,
+      "unlitness": 0,
       "castShadow": true,
       "receiveShadow": true,
       "side": "front",
@@ -1239,12 +1239,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1253,7 +1253,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -1271,12 +1271,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1285,7 +1285,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -1303,12 +1303,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1317,7 +1317,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -1328,18 +1328,18 @@
       "materialPattern": "^mt_bg3d616_01_01_torsoM2(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_torsoM_col.png",
       "smoothness": 0.054999999701976776,
       "metallic": 0.2849999964237213,
-      "normalScale": 1.0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 0.0,
+      "unlitness": 0,
       "castShadow": true,
       "receiveShadow": true,
       "side": "front",
@@ -1362,12 +1362,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1376,7 +1376,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -1394,12 +1394,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1408,7 +1408,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -1426,12 +1426,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1440,7 +1440,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -1451,18 +1451,18 @@
       "materialPattern": "^mt_bg3d616_01_01_torsoS(?:\\.\\d+)?$",
       "shading": "unlit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_torsoS_col.png",
       "smoothness": 0.5,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -1483,12 +1483,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1497,7 +1497,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -1508,18 +1508,18 @@
       "materialPattern": "^mt_bg3d616_01_01_tree(?:\\.\\d+)?$",
       "shading": "unlit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_tree_col.png",
       "smoothness": 0.5,
-      "metallic": 1.0,
-      "normalScale": 1.0,
+      "metallic": 1,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -1540,12 +1540,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1554,7 +1554,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -1568,15 +1568,15 @@
         0.8584905862808228,
         0.8096075057983398,
         0.8058472871780396,
-        1.0
+        1
       ],
       "baseMapUrl": "./stages/official/battle-616-00-01-001/bg3d616_01_01_whitetree_col.png",
       "smoothness": 0.5,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -1597,12 +1597,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -1611,7 +1611,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -1629,7 +1629,7 @@
       0.5058823823928833
     ],
     "environmentTextureUrl": "./stages/official/battle-616-00-01-001/ReflectionProbe-1-equirectangular.png",
-    "environmentIntensity": 1.0,
+    "environmentIntensity": 1,
     "lightmap": {
       "textureUrl": "./stages/official/battle-616-00-01-001/Lightmap-0_comp_light.png",
       "bindingsUrl": "./stages/official/battle-616-00-01-001/lightmap-bindings.json",
@@ -1644,8 +1644,8 @@
         0.393326997756958,
         0.5058823823928833
       ],
-      "near": 15.0,
-      "far": 200.0,
+      "near": 15,
+      "far": 200,
       "affectsCharacters": false
     },
     "lights": [
@@ -1667,16 +1667,16 @@
           0.9339622855186462,
           0.9307515621185303,
           0.9295567870140076,
-          1.0
+          1
         ],
-        "intensity": 150.0,
+        "intensity": 150,
         "cullingMask": 64,
         "lightmapping": 1,
         "role": "background",
         "castShadow": false,
         "range": 12.4399995803833,
-        "outerAngleDegrees": 100.0,
-        "innerAngleDegrees": 0.0
+        "outerAngleDegrees": 100,
+        "innerAngleDegrees": 0
       },
       {
         "name": "MainLight",
@@ -1693,19 +1693,19 @@
           15.744616514854227
         ],
         "color": [
-          1.0,
-          1.0,
-          1.0,
-          1.0
+          1,
+          1,
+          1,
+          1
         ],
-        "intensity": 1.0,
+        "intensity": 1,
         "cullingMask": 4294967295,
         "lightmapping": 1,
         "role": "character-key",
         "castShadow": true,
         "shadow": {
           "type": 2,
-          "strength": 1.0,
+          "strength": 1,
           "bias": 0.05000000074505806,
           "normalBias": 0.4000000059604645,
           "nearPlane": 0.20000000298023224
@@ -1725,8 +1725,8 @@
     "postProcessing": {
       "colorAdjustments": {
         "active": true,
-        "contrast": 10.0,
-        "saturation": 15.0
+        "contrast": 10,
+        "saturation": 15
       },
       "vignette": {
         "active": true,
@@ -1734,7 +1734,7 @@
           0.14150941371917725,
           0.10746705532073975,
           0.10746705532073975,
-          1.0
+          1
         ],
         "center": [
           0.5,
@@ -1746,69 +1746,69 @@
       }
     },
     "reDriveVolume": {
-      "skyboxIntensity": 1.0,
+      "skyboxIntensity": 1,
       "shAmbient": [
         0.2121584117412567,
-        -1.4029760686540271e-09,
-        0.0,
+        -1.4029760686540271e-9,
+        0,
         -2.9623651622012748e-12,
-        0.0,
+        0,
         2.3548496486114345e-10,
-        -1.3783574104309082e-07,
-        0.0,
-        -9.586976545961079e-08,
+        -1.3783574104309082e-7,
+        0,
+        -9.586976545961079e-8,
         0.2121584117412567,
-        -1.4029760686540271e-09,
-        0.0,
+        -1.4029760686540271e-9,
+        0,
         -2.9623651622012748e-12,
-        0.0,
+        0,
         2.3548496486114345e-10,
-        -1.3783574104309082e-07,
-        0.0,
-        -9.586976545961079e-08,
+        -1.3783574104309082e-7,
+        0,
+        -9.586976545961079e-8,
         0.2121584117412567,
-        -1.4029760686540271e-09,
-        0.0,
+        -1.4029760686540271e-9,
+        0,
         -2.9623651622012748e-12,
-        0.0,
+        0,
         2.3548496486114345e-10,
-        -1.3783574104309082e-07,
-        0.0,
-        -9.586976545961079e-08
+        -1.3783574104309082e-7,
+        0,
+        -9.586976545961079e-8
       ],
       "characterShadowTint": [
         0.9245283007621765,
         0.8895672559738159,
         0.876557469367981,
-        1.0
+        1
       ],
       "characterAdditionalRimLightColor": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "characterAdditionalRimLightDirection": [
-        1.0,
-        -1.0
+        1,
+        -1
       ],
       "backgroundShadowStrengthAdditive": 0.699999988079071,
       "backgroundPostExposure": 0.20000000298023224,
-      "backgroundContrast": -10.0,
-      "backgroundSaturation": -20.0,
+      "backgroundContrast": -10,
+      "backgroundSaturation": -20,
       "paraffin": {
         "enabled": true,
         "topColor": [
           0.7358490228652954,
           0.620535135269165,
           0.6004805564880371,
-          1.0
+          1
         ],
         "bottomColor": [
           0.22641509771347046,
           0.22641509771347046,
           0.22641509771347046,
-          1.0
+          1
         ],
         "opacity": 0.30000001192092896,
         "width": 1.5,
@@ -2021,7 +2021,7 @@
         1.0434086322784424,
         0.84295654296875,
         0.9972434043884277,
-        0.0
+        0
       ]
     },
     "groundNormal": {
@@ -2039,9 +2039,9 @@
         0
       ],
       "meanAbsoluteError": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ]
     }
   },
@@ -2054,6 +2054,15 @@
     "joinKey": [
       "sourceCab",
       "pathId"
+    ]
+  },
+  "entryValidation": {
+    "status": "load-tested",
+    "visibleMeshCount": 284,
+    "resourceFileCount": 34,
+    "evidence": [
+      "2026-09-24 shared loader: formal scene committed; 110 meshes observed in GPU draw probe.",
+      "2026-09-24 bundled current assets: 34 files source/artifact/HTTP byte-exact; no old archive dependency."
     ]
   }
 }

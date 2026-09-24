@@ -2115,6 +2115,22 @@ def particle_mesh_geometry(reader: Any) -> dict[str, Any]:
     }
 
 
+def build_native_visibility(game_objects, renderer_states, hierarchy, active_in_hierarchy):
+    """Keep GO activation separate from renderer draw enablement, even without Timeline."""
+    return {
+        "gameObjects": [
+            {
+                "gameObjectPathID": str(go_id),
+                "hierarchyPath": hierarchy(go_id),
+                "activeSelf": bool(state.get("active", True)),
+                "activeInHierarchy": active_in_hierarchy(go_id),
+            }
+            for go_id, state in sorted(game_objects.items(), key=lambda item: str(item[0]))
+        ],
+        "renderers": sorted(renderer_states, key=lambda state: state["rendererPathID"]),
+    }
+
+
 def build_scene_profile(
     manifest_path: Path,
     stage_id: str | None,
@@ -3940,6 +3956,20 @@ def build_scene_profile(
     result = {
         "schemaVersion": 1,
         "stageId": resolved_stage_id,
+        "nativeVisibility": build_native_visibility(
+            game_objects,
+            [
+                {
+                    "rendererPathID": str(reader.path_id),
+                    "gameObjectPathID": str(component_go[int(reader.path_id)]),
+                    "hierarchyPath": hierarchy(component_go[int(reader.path_id)]),
+                    "enabled": bool(getattr(renderer, "m_Enabled", True)),
+                }
+                for reader, renderer in renderer_components
+            ],
+            hierarchy,
+            active_in_hierarchy,
+        ),
         "bundle": manifest["scene"],
         "unityVersion": unity_version,
         "coordinateSpace": {

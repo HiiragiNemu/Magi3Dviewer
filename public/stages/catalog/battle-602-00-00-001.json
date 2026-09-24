@@ -41,5 +41,14 @@
       "1 volumetric light beam + 1 dust profile",
       "27 official Animator components retained in source records"
     ]
+  },
+  "entryValidation": {
+    "status": "load-tested",
+    "visibleMeshCount": 20,
+    "resourceFileCount": 15,
+    "evidence": [
+      "2026-09-24 shared loader: formal scene committed; 13 meshes observed in GPU draw probe.",
+      "2026-09-24 bundled current assets: 15 files source/artifact/HTTP byte-exact; no old archive dependency."
+    ]
   }
 }

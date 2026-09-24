@@ -643,5 +643,482 @@
       "simple_noise_tex.png": "b6c830aa7ed7b6db24fd99f472d4fda0a88b8aaf13bc19324d5998b1c5c201a8",
       "uv1-companion.json": "5dcc52186a84a7f1611cb49e88d3138b6840cad336eda45d0af264a2fe090f2c"
     }
+  },
+  "nativeVisibility": {
+    "gameObjects": [
+      {
+        "gameObjectPathID": "-8954847940618249582",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorseupper_ctrl/redhorseupper_geo02",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8753150889007244598",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/bgFarA_geo1",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8195928404013008441",
+        "hierarchyPath": "bg_3d_603_00_00_001/SoloRaidBgShaderParameterSetterPrefab",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7765415241295199844",
+        "hierarchyPath": "MagicCircle/Root",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7619418679866516046",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorselower_ctrl/darkhorselower_geo03",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7588434574970033852",
+        "hierarchyPath": "bg_3d_603_00_00_001/Light",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6138532207695425616",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/sky_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5874186491709385175",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/ground_grp/ground_geo1",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5138322572126614098",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/bgFarB_out_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4923278956028147952",
+        "hierarchyPath": "bg_3d_603_00_00_001/GlobalVolume",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4774004904463268401",
+        "hierarchyPath": "bg_3d_603_00_00_001",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4402504536009054117",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorselower_ctrl/darkhorselower_geo02",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3970943629850046907",
+        "hierarchyPath": "bg_3d_603_00_00_001/Light/VolumeLight",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3431942383171393703",
+        "hierarchyPath": "MagicCircle/Root/Quad",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2576660388032898688",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorseupper_ctrl/darkhorseupper_geo02",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2388421657334950979",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorseupper_ctrl",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1693461044729763201",
+        "hierarchyPath": "bg_3d_603_00_00_001/Global Volume_phase2",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-832820856541319650",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorselower_ctrl/darkhorselower_geo04",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-819780021228582074",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorselower_ctrl",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "474364095008374172",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorseupper_ctrl/redhorseupper_geo03",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "611572672007253027",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorselower_ctrl/redhorselower_geo04",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "814468128514842374",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/ground_grp/ground_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1463960986293406251",
+        "hierarchyPath": "MagicCircle",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1610425217408740295",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00_Eff_Snow Particle",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2075232841094222617",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorseupper_ctrl",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2680274071780545265",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorseupper_ctrl/redhorseupper_geo01",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3209771063116631539",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorselower_ctrl/redhorselower_geo02",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3211099207131691022",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4122712848658539256",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorseupper_ctrl/redhorseupper_geo04",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4170268470612039563",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/sky_grp/skydome_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4224238018399244886",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorseupper_ctrl/darkhorseupper_geo03",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4574652805615539714",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/bgFarB_in_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4641756112868195473",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/sky_grp/grd_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4660034336642964614",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorselower_ctrl/darkhorselower_geo01",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4768455504799271327",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/ground_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4836323560760054570",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/wall_grp",
+        "activeSelf": false,
+        "activeInHierarchy": false
+      },
+      {
+        "gameObjectPathID": "5032000982178690044",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorselower_ctrl/redhorselower_geo03",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5399749907974168206",
+        "hierarchyPath": "bg_3d_603_00_00_001/SoloRaidBgShaderParameterSetterPrefab/Phase2Volume",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5744078245692027002",
+        "hierarchyPath": "bg_3d_603_00_00_001/Light/Directional Light",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6420683840295068441",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6457855168359651401",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6480347378175457618",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorseupper_ctrl/darkhorseupper_geo01",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6822902757966098397",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorselower_ctrl",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7250891498841411770",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7264621632231337847",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/wall_grp/wall_geo",
+        "activeSelf": true,
+        "activeInHierarchy": false
+      },
+      {
+        "gameObjectPathID": "7322262641307442382",
+        "hierarchyPath": "bg_3d_603_00_00_001/SoloRaidBgShaderParameterSetterPrefab/Phase1Volume",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7525875146154305199",
+        "hierarchyPath": "bg_3d_603_00_00_001/Global Volume_phase1",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7686880882914350363",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00_Wind Particle Field",
+        "activeSelf": false,
+        "activeInHierarchy": false
+      },
+      {
+        "gameObjectPathID": "8199042074477070252",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorseupper_ctrl/darkhorseupper_geo04",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8534244985515103034",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorselower_ctrl/redhorselower_geo01",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8804428398004881345",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/bgFarA_geo2",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      }
+    ],
+    "renderers": [
+      {
+        "rendererPathID": "-8817608637107040652",
+        "gameObjectPathID": "8534244985515103034",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorselower_ctrl/redhorselower_geo01",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8587443638204011498",
+        "gameObjectPathID": "-5874186491709385175",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/ground_grp/ground_geo1",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7074971733108714375",
+        "gameObjectPathID": "8804428398004881345",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/bgFarA_geo2",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7030335565759957672",
+        "gameObjectPathID": "7264621632231337847",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/wall_grp/wall_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6636634361823670017",
+        "gameObjectPathID": "-832820856541319650",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorselower_ctrl/darkhorselower_geo04",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5054172022798924489",
+        "gameObjectPathID": "2680274071780545265",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorseupper_ctrl/redhorseupper_geo01",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4753218226082075417",
+        "gameObjectPathID": "8199042074477070252",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorseupper_ctrl/darkhorseupper_geo04",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4633852516985870154",
+        "gameObjectPathID": "4574652805615539714",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/bgFarB_in_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4575389999402473055",
+        "gameObjectPathID": "814468128514842374",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/ground_grp/ground_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3686581376877960744",
+        "gameObjectPathID": "-5138322572126614098",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/bgFarB_out_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1299852892522695628",
+        "gameObjectPathID": "4641756112868195473",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/sky_grp/grd_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-820645171178048646",
+        "gameObjectPathID": "4170268470612039563",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/sky_grp/skydome_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-90820886656051436",
+        "gameObjectPathID": "-8753150889007244598",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/bgFarA_geo1",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "320113730736941377",
+        "gameObjectPathID": "-3431942383171393703",
+        "hierarchyPath": "MagicCircle/Root/Quad",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "648646667997870944",
+        "gameObjectPathID": "3209771063116631539",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorselower_ctrl/redhorselower_geo02",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1436263375024142984",
+        "gameObjectPathID": "-7619418679866516046",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorselower_ctrl/darkhorselower_geo03",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2731687446008287060",
+        "gameObjectPathID": "6480347378175457618",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorseupper_ctrl/darkhorseupper_geo01",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3091868581244458260",
+        "gameObjectPathID": "4660034336642964614",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorselower_ctrl/darkhorselower_geo01",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4592274676396516863",
+        "gameObjectPathID": "5032000982178690044",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorselower_ctrl/redhorselower_geo03",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4604749137753695391",
+        "gameObjectPathID": "474364095008374172",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorseupper_ctrl/redhorseupper_geo03",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6092696863858323914",
+        "gameObjectPathID": "-8954847940618249582",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorseupper_ctrl/redhorseupper_geo02",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6486957870185185178",
+        "gameObjectPathID": "4122712848658539256",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorseupper_ctrl/redhorseupper_geo04",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6698880449731670891",
+        "gameObjectPathID": "611572672007253027",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarA_ctrl/redhorselower_ctrl/redhorselower_geo04",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7012686413880605381",
+        "gameObjectPathID": "4224238018399244886",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorseupper_ctrl/darkhorseupper_geo03",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8203006365972373113",
+        "gameObjectPathID": "-4402504536009054117",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorselower_ctrl/darkhorselower_geo02",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "9085007639062965751",
+        "gameObjectPathID": "-2576660388032898688",
+        "hierarchyPath": "bg_3d_603_00_00_001/bg3d603_00/far_grp/bgFarB_ctrl/darkhorseupper_ctrl/darkhorseupper_geo02",
+        "enabled": true
+      }
+    ]
+  },
+  "entryValidation": {
+    "status": "load-tested",
+    "visibleMeshCount": 24,
+    "resourceFileCount": 16,
+    "evidence": [
+      "2026-09-24 shared loader: formal scene committed; 23 meshes observed in GPU draw probe.",
+      "2026-09-24 bundled current assets: 16 files source/artifact/HTTP byte-exact; no old archive dependency."
+    ]
   }
 }

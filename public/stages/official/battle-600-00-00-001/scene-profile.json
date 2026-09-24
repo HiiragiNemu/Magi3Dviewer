@@ -1437,7 +1437,7 @@
     },
     "bloom": {
       "enabled": true,
-      "strength": 1.0,
+      "strength": 1,
       "radius": 0.699999988079071,
       "threshold": 0.800000011920929
     },
@@ -1457,18 +1457,18 @@
         "active": true,
         "enabled": true,
         "color": [
-          1.0,
+          1,
           0.814470112323761,
-          0.0,
-          1.0
+          0,
+          1
         ],
-        "intensity": 400.0,
+        "intensity": 400,
         "cullingMask": 64,
         "lightmapping": 1,
         "role": "background",
         "shadow": {
           "type": 0,
-          "strength": 1.0,
+          "strength": 1,
           "bias": 0.05000000074505806,
           "normalBias": 0.4000000059604645,
           "nearPlane": 0.20000000298023224
@@ -1482,19 +1482,19 @@
         "anchorNode": "BgLight01",
         "anchorPath": "bg_3d_600_00_00_001/Light/BgLight01",
         "position": [
-          0.0,
-          16.0,
-          0.0
+          0,
+          16,
+          0
         ],
         "castShadow": false,
         "target": [
-          0.0,
+          0,
           15.000000000000009,
-          -1.3435883843274954e-07
+          -1.3435883843274954e-7
         ],
-        "range": 30.0,
-        "outerAngleDegrees": 50.0,
-        "innerAngleDegrees": 30.0
+        "range": 30,
+        "outerAngleDegrees": 50,
+        "innerAngleDegrees": 30
       },
       {
         "name": "BgLight02",
@@ -1506,15 +1506,15 @@
           0.9529411792755127,
           0.7525724768638611,
           0.3921568691730499,
-          1.0
+          1
         ],
-        "intensity": 120.0,
+        "intensity": 120,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "shadow": {
           "type": 0,
-          "strength": 1.0,
+          "strength": 1,
           "bias": 0.05000000074505806,
           "normalBias": 0.4000000059604645,
           "nearPlane": 0.20000000298023224
@@ -1533,7 +1533,7 @@
           -25.950000762939453
         ],
         "castShadow": false,
-        "range": 30.0
+        "range": 30
       },
       {
         "name": "BgLight04",
@@ -1542,18 +1542,18 @@
         "active": true,
         "enabled": true,
         "color": [
-          1.0,
+          1,
           0.0156862735748291,
           0.261384516954422,
-          1.0
+          1
         ],
-        "intensity": 300.0,
+        "intensity": 300,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "shadow": {
           "type": 0,
-          "strength": 1.0,
+          "strength": 1,
           "bias": 0.05000000074505806,
           "normalBias": 0.4000000059604645,
           "nearPlane": 0.20000000298023224
@@ -1572,7 +1572,7 @@
           9.100000381469727
         ],
         "castShadow": false,
-        "range": 30.0
+        "range": 30
       },
       {
         "name": "BgLight05_01",
@@ -1581,18 +1581,18 @@
         "active": true,
         "enabled": true,
         "color": [
-          1.0,
+          1,
           0.16470588743686676,
           0.01568627543747425,
-          1.0
+          1
         ],
-        "intensity": 600.0,
+        "intensity": 600,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "shadow": {
           "type": 0,
-          "strength": 1.0,
+          "strength": 1,
           "bias": 0.05000000074505806,
           "normalBias": 0.4000000059604645,
           "nearPlane": 0.20000000298023224
@@ -1616,9 +1616,9 @@
           16.553593586509223,
           -27.546146074680745
         ],
-        "range": 50.0,
-        "outerAngleDegrees": 170.0,
-        "innerAngleDegrees": 70.0
+        "range": 50,
+        "outerAngleDegrees": 170,
+        "innerAngleDegrees": 70
       },
       {
         "name": "BgLight05",
@@ -1627,18 +1627,18 @@
         "active": true,
         "enabled": true,
         "color": [
-          1.0,
+          1,
           0.16470588743686676,
           0.01568627543747425,
-          1.0
+          1
         ],
-        "intensity": 600.0,
+        "intensity": 600,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "shadow": {
           "type": 0,
-          "strength": 1.0,
+          "strength": 1,
           "bias": 0.05000000074505806,
           "normalBias": 0.4000000059604645,
           "nearPlane": 0.20000000298023224
@@ -1662,9 +1662,9 @@
           20.19818112784737,
           29.211267770010824
         ],
-        "range": 50.0,
-        "outerAngleDegrees": 170.0,
-        "innerAngleDegrees": 70.0
+        "range": 50,
+        "outerAngleDegrees": 170,
+        "innerAngleDegrees": 70
       },
       {
         "name": "BgLight03",
@@ -1673,18 +1673,18 @@
         "active": true,
         "enabled": true,
         "color": [
-          1.0,
+          1,
           0.9506531357765198,
           0.7594339847564697,
-          1.0
+          1
         ],
-        "intensity": 400.0,
+        "intensity": 400,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "shadow": {
           "type": 0,
-          "strength": 1.0,
+          "strength": 1,
           "bias": 0.05000000074505806,
           "normalBias": 0.4000000059604645,
           "nearPlane": 0.20000000298023224
@@ -1703,7 +1703,7 @@
           9.329999923706055
         ],
         "castShadow": false,
-        "range": 500.0
+        "range": 500
       },
       {
         "name": "MainLight",
@@ -1712,20 +1712,20 @@
         "active": true,
         "enabled": true,
         "color": [
-          1.0,
-          1.0,
-          1.0,
-          1.0
+          1,
+          1,
+          1,
+          1
         ],
-        "intensity": 1.0,
+        "intensity": 1,
         "cullingMask": 2147483647,
         "lightmapping": 1,
         "role": "character-key",
         "shadow": {
           "type": 2,
-          "strength": 1.0,
-          "bias": 0.0,
-          "normalBias": 0.0,
+          "strength": 1,
+          "bias": 0,
+          "normalBias": 0,
           "nearPlane": 0.10000000149011612
         },
         "additionalLightData": {
@@ -1737,9 +1737,9 @@
         "anchorNode": "MainLight",
         "anchorPath": "bg_3d_600_00_00_001/Light/MainLight",
         "position": [
-          0.0,
-          0.0,
-          0.0
+          0,
+          0,
+          0
         ],
         "castShadow": true,
         "target": [
@@ -1751,8 +1751,8 @@
     ],
     "postProcessing": {
       "colorAdjustments": {
-        "contrast": 10.0,
-        "saturation": 15.0,
+        "contrast": 10,
+        "saturation": 15,
         "active": true
       },
       "vignette": {
@@ -1760,7 +1760,7 @@
           0.11320751905441284,
           0.08597363531589508,
           0.08597363531589508,
-          1.0
+          1
         ],
         "intensity": 0.4000000059604645,
         "smoothness": 0.30000001192092896,
@@ -1768,7 +1768,7 @@
       }
     },
     "reDriveVolume": {
-      "skyboxIntensity": 1.0,
+      "skyboxIntensity": 1,
       "overrides": {
         "skyboxIntensity": true,
         "shAmbient": true,
@@ -1786,65 +1786,4001 @@
       "shAmbient": [
         0.05081179365515709,
         -1.0546018919255218e-10,
-        0.0,
+        0,
         -3.5400259112972066e-11,
-        0.0,
+        0,
         1.844383951121742e-10,
-        -5.587935447692871e-09,
-        0.0,
-        -1.3396784126484818e-08,
+        -5.587935447692871e-9,
+        0,
+        -1.3396784126484818e-8,
         0.05081179365515709,
         -1.0546018919255218e-10,
-        0.0,
+        0,
         -3.5400259112972066e-11,
-        0.0,
+        0,
         1.844383951121742e-10,
-        -5.587935447692871e-09,
-        0.0,
-        -1.3396784126484818e-08,
+        -5.587935447692871e-9,
+        0,
+        -1.3396784126484818e-8,
         0.05081179365515709,
         -1.0546018919255218e-10,
-        0.0,
+        0,
         -3.5400259112972066e-11,
-        0.0,
+        0,
         1.844383951121742e-10,
-        -5.587935447692871e-09,
-        0.0,
-        -1.3396784126484818e-08
+        -5.587935447692871e-9,
+        0,
+        -1.3396784126484818e-8
       ],
       "characterShadowTint": [
         0.800000011920929,
         0.747826099395752,
         0.7200000286102295,
-        1.0
+        1
       ],
       "characterLightingOverrideColor": [
-        1.0,
+        1,
         0.7357867360115051,
         0.6084905862808228,
-        1.0
+        1
       ],
       "characterLightingOverrideRatio": 0.5,
       "characterAdditionalRimLightColor": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "characterAdditionalRimLightDirection": [
-        1.0,
-        -1.0
+        1,
+        -1
       ],
       "backgroundShadowStrengthAdditive": 0.25,
       "backgroundPostExposure": 0.20000000298023224,
-      "backgroundContrast": -5.0,
-      "backgroundSaturation": 5.0,
+      "backgroundContrast": -5,
+      "backgroundSaturation": 5,
       "backgroundBackgroundTint": [
-        1.0,
+        1,
         0.874509871006012,
         0.803921639919281,
-        1.0
+        1
       ]
     }
+  },
+  "nativeVisibility": {
+    "gameObjects": [
+      {
+        "gameObjectPathID": "-9152545095979569667",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/ground_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8945280528481697188",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle09_grp/circle09_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8923401071416118663",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8829558643420731525",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC02_grp/scissorsCanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8814455328455512193",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8795683230124704564",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8637306343339494334",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/lamp_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8612389260902129324",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandA02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8549902852366460721",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8494680227023059762",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/gazebo_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8061086039420901690",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle15_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8044056834662064107",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8039431322371152247",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7960564857407108332",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara22_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7936954997591211068",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7801442377715727699",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7661888994605751165",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle10_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7647704093945388934",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7630796542449787826",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7605959110557960643",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7592523648381504133",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairsCircle_grp/stairsCircle03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7534972568713323370",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara24_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7514011705821898939",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7510279981412259598",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/sky_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7408453294084415184",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA04_grp/scissorsAanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7390112702699069468",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7288601777230032282",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle03_grp/circle03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7267556954195052513",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC01_grp/scissorsCanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7231400251479737954",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara13_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7205127410705147350",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsB02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7092258949339209039",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7041043641001579892",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle17_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7017030564920755745",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6991328551369157052",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6960201040033971105",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA04_grp/scissorsAanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6628387930497703532",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6536681212773472477",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairsCircle_grp/stairsCircle02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6531444594430617737",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA05_grp/scissorsAanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6429177391313042940",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/napoleone_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6405460956057193461",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp/signboard03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6394744125214245337",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6338402176420694139",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC02_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6216743923461259202",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsC03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6185339050492887288",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6182374840500007002",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly18_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6166214158799724965",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC04_grp/scissorsCanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6162187329153530459",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/goddess_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6061709613146437899",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6015074508040593780",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA06_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5979602656505330420",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC01_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5973917562272089452",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsB01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5950648926247680986",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5936413416421867271",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandG03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5855934242396401301",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5827385592554727966",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB03_grp/scissorsBanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5723397172591383840",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle14_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5712642999588469845",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB04_grp/scissorsBanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5679996470545173599",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5570230738343486952",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly12_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5517818039477707151",
+        "hierarchyPath": "bg_3d_600_00_00_001/Light/BgLight02",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5492598118381816677",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5471992969240627237",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5464671540993179955",
+        "hierarchyPath": "bg_3d_600_00_00_001/Light/BgLight01",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5379669453798593167",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle16_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5348683593963898247",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA01_grp/scissorsAanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5326274172612048328",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerC01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5323605851737247133",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA01_grp/scissorsAanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5303819131208004155",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairsCircle_grp/stairsCircle01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5298305510448540382",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle09_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5133777683966078762",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara17_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5126791139235336562",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC08_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5047830961612293543",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4971054918331495052",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB09_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4944800679413562529",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle05_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4934576044126997375",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4925064482477516005",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC04_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4838353585721775747",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4818713254805501432",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA02_grp/scissorsAanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4734071847453609523",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4714489764761324273",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB05_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4660013464697444478",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsA01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4654151169739001081",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/pillar_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4573022607518324780",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4548476643241745211",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4545366254731603993",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/statue_grp/statue01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4488864362351802627",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageD_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4442975815611827933",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceB02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4437410172417043325",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle06_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4427620438533062751",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4299524965848060671",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4298409251844472581",
+        "hierarchyPath": "bg_3d_600_00_00_001/Light/MainLight",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4192759212940592347",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4168118275767932786",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4137593621830230669",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/tower_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4065038929268190965",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsC01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4034575921298731905",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara21_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3933604823860620431",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandA01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3911489278050716183",
+        "hierarchyPath": "bg_3d_600_00_00_001/Light",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3906506882180878946",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3890842744180341534",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerB02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3877942269181953885",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3873211786451786320",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3867336313530458128",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3806884716798363551",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3804551369783958270",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/tree_grp/tree01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3800846185469598582",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB04_grp/scissorsBanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3797121085923537338",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3784885681839151348",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerC02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3781080193699322075",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle03_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3689430323175832247",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp/signboard04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3635870973370935254",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle02_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3610526028453494543",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3430673191094022357",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle10_grp/circle10_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3407208105899012000",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3385626116854282906",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3339805277221709382",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3299127163432630971",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA06_grp/scissorsAanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3251291928289484915",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3204232819512893833",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3165235716551199027",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3123657547914731415",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsA02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3096078795981991301",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB03_grp/scissorsBanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3072797387868902471",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp/signboard05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3057261271773134650",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC09_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2963780701076853756",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/ground_grp/groundB_grp/groundB02_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2942376670448089671",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC01_grp/scissorsCanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2850328576822349377",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsB03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2846834675060350597",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly21_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2830059128574668465",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandB01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2710828590321492431",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/tree_grp/tree03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2696395342648547069",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle02_grp/circle02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2688796601606353104",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB09_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2622824141206761237",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2596785713241811335",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB08_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2540592455650435025",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/palace_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2531012170483486365",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2440448726827505265",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/helmet_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2375924639192049981",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2343802061996062540",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2263331261604346081",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageH_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2233025943357829376",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandF01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2208233879629781807",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/helmet_grp/helmet02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2124408636408846636",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC02_grp/scissorsCanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2119286469486166756",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/ground_grp/groundA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2097716516109322389",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/buzzer_grp/buzzer02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2085125446935123211",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/plaid_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2080192491491540397",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB04_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2035838179178930697",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA01_grp/scissorsAanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2016425411774239108",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1959914336591484636",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle04_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1930757575698639031",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1894045718791987980",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1870363847092016468",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle01_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1815996887486454737",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB01_grp/scissorsBanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1811210002483806992",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly17_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1783044119316664355",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle06_grp/circle06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1756771987585095678",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/angels_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1722156055754390200",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle01_grp/circle01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1703576801725580402",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly19_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1690150623381982013",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1670378058021972620",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1648150578312512130",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsA03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1622726781143347638",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1527388843858927814",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA03_grp/scissorsAanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1525334737904871129",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1504553667908138164",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA02_grp/scissorsAanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1476810410173028989",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1474825580567711999",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB02_grp/scissorsBanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1438104186743819621",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB05_grp/scissorsBanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1359543429441320325",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandG02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1285532011750502598",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1226080008570606172",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB03_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1213330493314880130",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/caw_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1116573522772853484",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1090264000223983483",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC03_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1008016922609815237",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1007492252320682740",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/buzzer_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-954396770698959395",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandE02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-930803924989929421",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB01_grp/scissorsBanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-914934360627575349",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/tree_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-892426593190155237",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC01_grp/scissorsCanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-842621652157352134",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle07_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-774497368310672267",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-773563758791801734",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/eiffeltower_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-532598517607623854",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-486216242230441013",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA06_grp/scissorsAanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-470930360353756952",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-434771633461299061",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly14_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-400860283887992448",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara20_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-327973279542732090",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-302705376603579671",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerA01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-302654572791732620",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC03_grp/scissorsCanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-296564494307316032",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB03_grp/scissorsBanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-250762978581627176",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly10_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-239278209603559081",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara26_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-204640194998812520",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandG01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-147704285310797421",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/photographer_grp/photographer02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-16873326595654301",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4221142560427413",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA05_grp/scissorsAanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "46579221486038123",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "147469748968882302",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC03_grp/scissorsCanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "220755282468546401",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle13_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "298858384905068681",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA05_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "309064025258397300",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/photographer_grp/photographer01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "503153562825820603",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle08_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "546446735431354773",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandD01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "573086386904872159",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara15_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "635399034794550864",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara23_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "708839804570178810",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerA02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "743076357889797378",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/ground_grp/groundB_grp/groundB01_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "811340883673346084",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara14_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "817029216465206813",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle07_grp/circle07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "854692258663947040",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageG_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "855892207567142851",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle11_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "861578356573958546",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA02_grp/scissorsAanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "864377583821968623",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC02_grp/scissorsCanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1030499913138455012",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/statue_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1079042256190972803",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1182392905382812423",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1205036316992472854",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara18_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1269448829729100498",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB01_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1522394293066366325",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1648144602317042622",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle05_grp/circle05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1680405225184076233",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC04_grp/scissorsCanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1690230991435025630",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1733779375569338153",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageC_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1767065434907803391",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly15_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1869065360971594976",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1876217419539530698",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/flag_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1888820040729324138",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1941482141805930613",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1972427731361634108",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB04_grp/scissorsBanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1991880283519195286",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2108563060839538070",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2180343773410593155",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle19_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2217893268413712767",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2277864404521033221",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerB01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2351881696242324218",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2487945166524485554",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB02_grp/scissorsBanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2489461425888159024",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2570034183305417569",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle08_grp/circle08_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2578372922018088481",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/hole_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2669348478849941220",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA03_grp/scissorsAanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2764472811472754521",
+        "hierarchyPath": "bg_3d_600_00_00_001",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2873295682644064542",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/sky_grp/sky_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2930126010978832597",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2940678312357978473",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandA03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2989814853988919867",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsC02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2990971058359102127",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly09_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2991490469928958691",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp/signboard02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2998839173062465445",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3009606340638788182",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara12_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3012144737922327677",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/butterfly_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3051329626322029822",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3291285208151416045",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandC01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3311489938244272398",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB05_grp/scissorsBanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3455528035776163225",
+        "hierarchyPath": "bg_3d_600_00_00_001/Light/BgLight05_01",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3566619244944013045",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/helmet_grp/helmet03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3604050004081386983",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA03_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3638719423104100194",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3668067966897333284",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3668461010494203626",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3925512996972153716",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3938265625482783046",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/lamp_grp/lamp01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3987619292094225902",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC03_grp/scissorsCanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4023304103836353750",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara08_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4111403028122983011",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara19_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4122299394335696481",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandF02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4190295252491975943",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4250300262304001571",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC04_grp/scissorsCanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4292554616732541779",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4311930997152438623",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA02_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4336906266769508864",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4341088598172488011",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4455218399941299132",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara11_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4657714176791874530",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageJ_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4743368573121682123",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4747638767652464167",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4750625533712525197",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle12_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4795184223913473264",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/ribbon_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4841426752301402600",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4900072962777398668",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle04_grp/circle04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4966355740686982374",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4967187677297783851",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara16_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5171661269193684322",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandE01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5250311568091457877",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageE_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5278435951477749929",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageI_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5319197403521454623",
+        "hierarchyPath": "bg_3d_600_00_00_001/Light/BgLight03",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5337129919716121854",
+        "hierarchyPath": "bg_3d_600_00_00_001/Global Volume",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5401754553232897263",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5470167086658399225",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB05_grp/scissorsBanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5477743108571559013",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5573750868253431498",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageF_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5640569157323384284",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/helmet_grp/helmet01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5645461119575343905",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/lamp_grp/lamp02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5686540040915472568",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5789662665519587340",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA05_grp/scissorsAanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5890846196057609982",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5938541138199124384",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5955433498185429837",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA04_grp/scissorsAanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5967650336029293447",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly13_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5992222972012829358",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6015449506206620962",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6062082254861750104",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly08_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6068466695380658242",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/statue_grp/statue02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6096215302005330160",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/flag_grp/flag02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6115417368131783752",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6180654529971228183",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairsCircle_grp/stairsCircle04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6220766161672590450",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB08_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6337175812123984761",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6370427394636841713",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6420250577073143356",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6429958166338583638",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6533340350738846428",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA08_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6617784446281750412",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara10_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6627845813071715847",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/flag_grp/flag01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6710145837229646392",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly11_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6943823490956994989",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandB02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7080861600299414272",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7208811178068268695",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7267617951705770829",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7334989760255439901",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB01_grp/scissorsBanim",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7343542219830954139",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7364272284935202266",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB02_grp/scissorsBanim/scissorsR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7567497817726331535",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara09_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7598857942345965383",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7632044153364739982",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/umbrellaman_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7633366458892470885",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence03_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7641458379599237990",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA03_grp/scissorsAanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7655718999032900961",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle18_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7704197143382741610",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandC02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7733877652127429497",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA01_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7788942213406737912",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7834701123277264154",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/plant_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7838538673788181600",
+        "hierarchyPath": "bg_3d_600_00_00_001/Light/BgLight04",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7847420467222813580",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7874227865555742926",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7902826675902177262",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7943579990442871393",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8011509103796226305",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp/signboard01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8157004307624038038",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA06_grp/scissorsAanim/scissorsL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8160313747863775864",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly16_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8344358696283290731",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8364842979519534100",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/math_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8395580938565681978",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8419847755188901901",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/ground_grp/groundB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8420315283274839359",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8523933793834048557",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8545267714040637765",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8639056046301578899",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8640596976375691990",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8643965981898925471",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA06_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8685104643469069862",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA04_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8784672132153898518",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8824371378181875508",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/tree_grp/tree02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8846983980258806819",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairsCircle_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8867776707691518090",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/photographer_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8891442834332978293",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel05_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8897612765504904399",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8907215257028936714",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly07_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8936975990523476867",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly20_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8939326040267956517",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade08_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8948061951103001227",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara25_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8985402251493545647",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara04_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9033266986748128589",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceB01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9034021990970676112",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB02_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9076768922246511760",
+        "hierarchyPath": "bg_3d_600_00_00_001/Light/BgLight05",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9087380582240592493",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher02_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9087428329692273477",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/buzzer_grp/buzzer01_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9132570852442621319",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairs_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      }
+    ],
+    "renderers": [
+      {
+        "rendererPathID": "-9092062911700769212",
+        "gameObjectPathID": "-1648150578312512130",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsA03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8999297892496249578",
+        "gameObjectPathID": "-2596785713241811335",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB08_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8918027974262994713",
+        "gameObjectPathID": "-3610526028453494543",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8917563019469379213",
+        "gameObjectPathID": "-2696395342648547069",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle02_grp/circle02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8873816261859235283",
+        "gameObjectPathID": "4967187677297783851",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara16_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8763772669835171880",
+        "gameObjectPathID": "8948061951103001227",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara25_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8736824587625241604",
+        "gameObjectPathID": "5401754553232897263",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8736556422451050099",
+        "gameObjectPathID": "2108563060839538070",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8509246575653548641",
+        "gameObjectPathID": "6627845813071715847",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/flag_grp/flag01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8388651213267250308",
+        "gameObjectPathID": "-2233025943357829376",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandF01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8180750931325078793",
+        "gameObjectPathID": "1941482141805930613",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8056676275483545463",
+        "gameObjectPathID": "-3873211786451786320",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7833589806369346900",
+        "gameObjectPathID": "-1525334737904871129",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7812991169228310445",
+        "gameObjectPathID": "9087428329692273477",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/buzzer_grp/buzzer01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7771928677009697623",
+        "gameObjectPathID": "-147704285310797421",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/photographer_grp/photographer02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7629412029062452570",
+        "gameObjectPathID": "-7205127410705147350",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsB02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7583011261053475330",
+        "gameObjectPathID": "817029216465206813",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle07_grp/circle07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7503465529036809132",
+        "gameObjectPathID": "4750625533712525197",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle12_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7489737756525858698",
+        "gameObjectPathID": "5278435951477749929",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageI_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7464939463023835806",
+        "gameObjectPathID": "-6536681212773472477",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairsCircle_grp/stairsCircle02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7458302454838789620",
+        "gameObjectPathID": "4341088598172488011",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7427177800437683545",
+        "gameObjectPathID": "-4034575921298731905",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara21_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7373254217267286071",
+        "gameObjectPathID": "4900072962777398668",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle04_grp/circle04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7333266072280044904",
+        "gameObjectPathID": "-2208233879629781807",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/helmet_grp/helmet02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7331331416795680241",
+        "gameObjectPathID": "-7801442377715727699",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7232789258079810906",
+        "gameObjectPathID": "864377583821968623",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC02_grp/scissorsCanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7182412730087585854",
+        "gameObjectPathID": "-4427620438533062751",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7149321023552807212",
+        "gameObjectPathID": "4023304103836353750",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara08_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7134187516617321906",
+        "gameObjectPathID": "1733779375569338153",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageC_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7084232304468398332",
+        "gameObjectPathID": "1680405225184076233",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC04_grp/scissorsCanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6990188572176993090",
+        "gameObjectPathID": "8545267714040637765",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6957936278902504191",
+        "gameObjectPathID": "-3165235716551199027",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6942029706892545601",
+        "gameObjectPathID": "-434771633461299061",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly14_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6935060492513479724",
+        "gameObjectPathID": "-5973917562272089452",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsB01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6913508667991535189",
+        "gameObjectPathID": "4747638767652464167",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6909040542325806661",
+        "gameObjectPathID": "-4299524965848060671",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6876394990546367691",
+        "gameObjectPathID": "-3890842744180341534",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerB02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6744685049145965082",
+        "gameObjectPathID": "-1930757575698639031",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6700463414525878919",
+        "gameObjectPathID": "8643965981898925471",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6607858212284090999",
+        "gameObjectPathID": "-2085125446935123211",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/plaid_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6598851153440617414",
+        "gameObjectPathID": "-6628387930497703532",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6578390049562959627",
+        "gameObjectPathID": "-4221142560427413",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA05_grp/scissorsAanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6504022059772510680",
+        "gameObjectPathID": "-16873326595654301",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6446585371136344482",
+        "gameObjectPathID": "8011509103796226305",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp/signboard01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6422954674624357250",
+        "gameObjectPathID": "1972427731361634108",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB04_grp/scissorsBanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6325127358483533887",
+        "gameObjectPathID": "6220766161672590450",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB08_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6214239088596085863",
+        "gameObjectPathID": "-7605959110557960643",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6122846089495860495",
+        "gameObjectPathID": "5640569157323384284",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/helmet_grp/helmet01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6060693337425524700",
+        "gameObjectPathID": "309064025258397300",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/photographer_grp/photographer01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6050658175295961765",
+        "gameObjectPathID": "-1815996887486454737",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB01_grp/scissorsBanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6032249861486539657",
+        "gameObjectPathID": "-3867336313530458128",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5998479300563482900",
+        "gameObjectPathID": "3291285208151416045",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandC01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5908811288294840975",
+        "gameObjectPathID": "-1008016922609815237",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5865474946015027148",
+        "gameObjectPathID": "6062082254861750104",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly08_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5696119088016120214",
+        "gameObjectPathID": "1205036316992472854",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara18_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5692017079095184584",
+        "gameObjectPathID": "-302654572791732620",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC03_grp/scissorsCanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5628530818036660271",
+        "gameObjectPathID": "2277864404521033221",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerB01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5545138081571831176",
+        "gameObjectPathID": "-8923401071416118663",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5472097676123462438",
+        "gameObjectPathID": "3566619244944013045",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/helmet_grp/helmet03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5443041583410447620",
+        "gameObjectPathID": "-2375924639192049981",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5364876155004935145",
+        "gameObjectPathID": "2217893268413712767",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5338272651538883543",
+        "gameObjectPathID": "3012144737922327677",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/butterfly_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5290803193167470619",
+        "gameObjectPathID": "-486216242230441013",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA06_grp/scissorsAanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5223495996647319825",
+        "gameObjectPathID": "-4065038929268190965",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsC01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5083161156178332053",
+        "gameObjectPathID": "1991880283519195286",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5047307416010744460",
+        "gameObjectPathID": "7633366458892470885",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4930192703541757849",
+        "gameObjectPathID": "-8044056834662064107",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4882928349812320919",
+        "gameObjectPathID": "-1622726781143347638",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4880674886801201285",
+        "gameObjectPathID": "4122299394335696481",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandF02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4837393987893810079",
+        "gameObjectPathID": "-5570230738343486952",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly12_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4736539769714584329",
+        "gameObjectPathID": "1522394293066366325",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4584865676216620807",
+        "gameObjectPathID": "-532598517607623854",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4398081141529921400",
+        "gameObjectPathID": "7641458379599237990",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA03_grp/scissorsAanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4397814896575097417",
+        "gameObjectPathID": "7208811178068268695",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4331981109588334425",
+        "gameObjectPathID": "-8549902852366460721",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4138243135000798436",
+        "gameObjectPathID": "-250762978581627176",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly10_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4120137059346853413",
+        "gameObjectPathID": "708839804570178810",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerA02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4115042650038808407",
+        "gameObjectPathID": "-3407208105899012000",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4102809766387485204",
+        "gameObjectPathID": "5992222972012829358",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4086344846718852689",
+        "gameObjectPathID": "-3251291928289484915",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4035271509845626475",
+        "gameObjectPathID": "6420250577073143356",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4025333168612109534",
+        "gameObjectPathID": "-4442975815611827933",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceB02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4003505425447067533",
+        "gameObjectPathID": "2351881696242324218",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3990443199926484511",
+        "gameObjectPathID": "8160313747863775864",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly16_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3985385720870308276",
+        "gameObjectPathID": "8395580938565681978",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3982238636959477467",
+        "gameObjectPathID": "-3072797387868902471",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp/signboard05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3947821993896782824",
+        "gameObjectPathID": "7364272284935202266",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB02_grp/scissorsBanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3944367111761352679",
+        "gameObjectPathID": "-7630796542449787826",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3921430721654022759",
+        "gameObjectPathID": "8939326040267956517",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade08_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3802168616104332858",
+        "gameObjectPathID": "-2622824141206761237",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3775358639121752199",
+        "gameObjectPathID": "5686540040915472568",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3767476843585484283",
+        "gameObjectPathID": "2570034183305417569",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle08_grp/circle08_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3754240430111099489",
+        "gameObjectPathID": "-6429177391313042940",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/napoleone_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3738273784746386948",
+        "gameObjectPathID": "-4192759212940592347",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3530937510021923495",
+        "gameObjectPathID": "2930126010978832597",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3433440897164420147",
+        "gameObjectPathID": "-1690150623381982013",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3375993322689967128",
+        "gameObjectPathID": "-239278209603559081",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara26_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3354801749261907907",
+        "gameObjectPathID": "-4660013464697444478",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsA01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3339842595264763551",
+        "gameObjectPathID": "2991490469928958691",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp/signboard02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3222415296568440352",
+        "gameObjectPathID": "-5133777683966078762",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara17_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3148517496786832561",
+        "gameObjectPathID": "-5303819131208004155",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairsCircle_grp/stairsCircle01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3045677288213907386",
+        "gameObjectPathID": "-3385626116854282906",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3003560548981997239",
+        "gameObjectPathID": "6533340350738846428",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA08_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2955962551514436834",
+        "gameObjectPathID": "7655718999032900961",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle18_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2921567294082740670",
+        "gameObjectPathID": "8824371378181875508",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/tree_grp/tree02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2915916774785872368",
+        "gameObjectPathID": "-6185339050492887288",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2842547125983696599",
+        "gameObjectPathID": "-6531444594430617737",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA05_grp/scissorsAanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2835926718834780616",
+        "gameObjectPathID": "-5348683593963898247",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA01_grp/scissorsAanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2768886185421325598",
+        "gameObjectPathID": "2578372922018088481",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/hole_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2685188649256197686",
+        "gameObjectPathID": "-3123657547914731415",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsA02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2498809737679586020",
+        "gameObjectPathID": "46579221486038123",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2363615387671573112",
+        "gameObjectPathID": "-3933604823860620431",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandA01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1717115653249000724",
+        "gameObjectPathID": "-8612389260902129324",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandA02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1649451032166914102",
+        "gameObjectPathID": "635399034794550864",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara23_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1593016615794461276",
+        "gameObjectPathID": "-930803924989929421",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB01_grp/scissorsBanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1492271528329263224",
+        "gameObjectPathID": "-1722156055754390200",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle01_grp/circle01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1345528658685636823",
+        "gameObjectPathID": "-774497368310672267",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1220568815194154327",
+        "gameObjectPathID": "7704197143382741610",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandC02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1185786497954237404",
+        "gameObjectPathID": "3668067966897333284",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1169495609915711007",
+        "gameObjectPathID": "-5950648926247680986",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1093688664861116111",
+        "gameObjectPathID": "-3784885681839151348",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerC02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1069098839206442403",
+        "gameObjectPathID": "6180654529971228183",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairsCircle_grp/stairsCircle04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1003428582856592383",
+        "gameObjectPathID": "-3096078795981991301",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB03_grp/scissorsBanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-961530959915199721",
+        "gameObjectPathID": "3938265625482783046",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/lamp_grp/lamp01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-919668095502561241",
+        "gameObjectPathID": "2990971058359102127",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly09_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-796469451461413568",
+        "gameObjectPathID": "6068466695380658242",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/statue_grp/statue02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-750415151262412420",
+        "gameObjectPathID": "9132570852442621319",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairs_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-643415316558567377",
+        "gameObjectPathID": "-5492598118381816677",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-613409179042889969",
+        "gameObjectPathID": "-3689430323175832247",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp/signboard04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-580635929418485855",
+        "gameObjectPathID": "1869065360971594976",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-524029364812418317",
+        "gameObjectPathID": "-2124408636408846636",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC02_grp/scissorsCanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-502537048284279307",
+        "gameObjectPathID": "-6061709613146437899",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-430477190507777017",
+        "gameObjectPathID": "4657714176791874530",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageJ_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-303430264455345091",
+        "gameObjectPathID": "546446735431354773",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandD01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-297088988048149907",
+        "gameObjectPathID": "1888820040729324138",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-67878254220593798",
+        "gameObjectPathID": "-6991328551369157052",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "38995248914933931",
+        "gameObjectPathID": "-3806884716798363551",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "419536253236136061",
+        "gameObjectPathID": "7267617951705770829",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "576004378631166079",
+        "gameObjectPathID": "-8945280528481697188",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle09_grp/circle09_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "617452153636252472",
+        "gameObjectPathID": "-6162187329153530459",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/goddess_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "892460598856965374",
+        "gameObjectPathID": "-7288601777230032282",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle03_grp/circle03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "993363328702539853",
+        "gameObjectPathID": "2873295682644064542",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/sky_grp/sky_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1007020623336107570",
+        "gameObjectPathID": "-2710828590321492431",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/tree_grp/tree03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1017615176943589550",
+        "gameObjectPathID": "-1783044119316664355",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle06_grp/circle06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1090591856622217844",
+        "gameObjectPathID": "-7408453294084415184",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA04_grp/scissorsAanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1154361181929039782",
+        "gameObjectPathID": "-1811210002483806992",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly17_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1170499056984345076",
+        "gameObjectPathID": "6943823490956994989",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandB02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1297568221479040110",
+        "gameObjectPathID": "8364842979519534100",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/math_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1454584075924212308",
+        "gameObjectPathID": "3009606340638788182",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara12_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1510062041006403114",
+        "gameObjectPathID": "9033266986748128589",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceB01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1526785670062160633",
+        "gameObjectPathID": "-4734071847453609523",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1543083836061822645",
+        "gameObjectPathID": "-6960201040033971105",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA04_grp/scissorsAanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1584699622911125459",
+        "gameObjectPathID": "-1703576801725580402",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly19_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1639857624339609784",
+        "gameObjectPathID": "220755282468546401",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle13_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1683863081794365561",
+        "gameObjectPathID": "-954396770698959395",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandE02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1720276106751762130",
+        "gameObjectPathID": "-3204232819512893833",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1763202451068535631",
+        "gameObjectPathID": "-3339805277221709382",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1776118826580931653",
+        "gameObjectPathID": "-7267556954195052513",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC01_grp/scissorsCanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1796681440816770883",
+        "gameObjectPathID": "-327973279542732090",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1803184393899468416",
+        "gameObjectPathID": "-5855934242396401301",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1841983252155468947",
+        "gameObjectPathID": "-892426593190155237",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC01_grp/scissorsCanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1851938397162414408",
+        "gameObjectPathID": "-7960564857407108332",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara22_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1980840219939134146",
+        "gameObjectPathID": "-7017030564920755745",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2026899717813484402",
+        "gameObjectPathID": "7834701123277264154",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/plant_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2047035464120274207",
+        "gameObjectPathID": "-2846834675060350597",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly21_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2085882720822122332",
+        "gameObjectPathID": "-8061086039420901690",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle15_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2103014265545337298",
+        "gameObjectPathID": "-2540592455650435025",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/palace_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2384754998810144237",
+        "gameObjectPathID": "8891442834332978293",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2395381314276072223",
+        "gameObjectPathID": "2180343773410593155",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle19_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2408052563437122279",
+        "gameObjectPathID": "8936975990523476867",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly20_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2471273504973658014",
+        "gameObjectPathID": "-7390112702699069468",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/shovel_grp/shovel04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2499587369837220753",
+        "gameObjectPathID": "4190295252491975943",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2500622393761762495",
+        "gameObjectPathID": "-2531012170483486365",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/guardfence_grp/guardfence05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2505308568447128547",
+        "gameObjectPathID": "4111403028122983011",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara19_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2514629170772683090",
+        "gameObjectPathID": "-7041043641001579892",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle17_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2535505529678729396",
+        "gameObjectPathID": "1648144602317042622",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle05_grp/circle05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2553334371213471811",
+        "gameObjectPathID": "-5936413416421867271",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandG03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2590141174935177086",
+        "gameObjectPathID": "-3057261271773134650",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC09_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2651803626656191238",
+        "gameObjectPathID": "573086386904872159",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara15_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2672193408831650456",
+        "gameObjectPathID": "5250311568091457877",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageE_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2693779682788408067",
+        "gameObjectPathID": "6115417368131783752",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2714292252458170847",
+        "gameObjectPathID": "-7592523648381504133",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/stairsCircle_grp/stairsCircle03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3113968329818063242",
+        "gameObjectPathID": "8897612765504904399",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3151029089504007356",
+        "gameObjectPathID": "-1756771987585095678",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/angels_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3155410538502063588",
+        "gameObjectPathID": "5573750868253431498",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageF_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3158739029577142545",
+        "gameObjectPathID": "-8494680227023059762",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/gazebo_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3183090510546377971",
+        "gameObjectPathID": "854692258663947040",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageG_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3260512687337397604",
+        "gameObjectPathID": "-4137593621830230669",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/tower_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3297718272113404265",
+        "gameObjectPathID": "-5712642999588469845",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB04_grp/scissorsBanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3393903807183114851",
+        "gameObjectPathID": "6370427394636841713",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3434365442311842266",
+        "gameObjectPathID": "8157004307624038038",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA06_grp/scissorsAanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3565303372561701147",
+        "gameObjectPathID": "-7936954997591211068",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3580340824649130434",
+        "gameObjectPathID": "1767065434907803391",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly15_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3634159691653628920",
+        "gameObjectPathID": "6096215302005330160",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/flag_grp/flag02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3639805579054023097",
+        "gameObjectPathID": "6617784446281750412",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara10_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3769946691752785886",
+        "gameObjectPathID": "5171661269193684322",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandE01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3775431494411447739",
+        "gameObjectPathID": "-5379669453798593167",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle16_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3819421514176095747",
+        "gameObjectPathID": "4795184223913473264",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/ribbon_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3862254644569289211",
+        "gameObjectPathID": "-2097716516109322389",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/buzzer_grp/buzzer02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3936453798530112573",
+        "gameObjectPathID": "7567497817726331535",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara09_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3964284694663566819",
+        "gameObjectPathID": "-7092258949339209039",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3991326609020224496",
+        "gameObjectPathID": "-1213330493314880130",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/caw_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4032022025345055793",
+        "gameObjectPathID": "-302705376603579671",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerA01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4035737824667320085",
+        "gameObjectPathID": "-6182374840500007002",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly18_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4041114552272246483",
+        "gameObjectPathID": "-1285532011750502598",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4073475485808099889",
+        "gameObjectPathID": "-1476810410173028989",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4108405558973873277",
+        "gameObjectPathID": "-1359543429441320325",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandG02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4141821822520185789",
+        "gameObjectPathID": "-6216743923461259202",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsC03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4147934884053688956",
+        "gameObjectPathID": "2487945166524485554",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB02_grp/scissorsBanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4175781991571418949",
+        "gameObjectPathID": "-5323605851737247133",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA01_grp/scissorsAanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4376105128732978955",
+        "gameObjectPathID": "-2688796601606353104",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB09_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4407592894527056374",
+        "gameObjectPathID": "-296564494307316032",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB03_grp/scissorsBanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4497229616283579899",
+        "gameObjectPathID": "6015449506206620962",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4517602913359903546",
+        "gameObjectPathID": "-4545366254731603993",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/statue_grp/statue01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4519423487386559284",
+        "gameObjectPathID": "-8795683230124704564",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneB07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4660111673812826238",
+        "gameObjectPathID": "4455218399941299132",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara11_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4888291977667596653",
+        "gameObjectPathID": "6337175812123984761",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signA05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4953697819227476109",
+        "gameObjectPathID": "-5126791139235336562",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC08_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5005890295380293189",
+        "gameObjectPathID": "8985402251493545647",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5127876622866006679",
+        "gameObjectPathID": "3987619292094225902",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC03_grp/scissorsCanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5191330285759286762",
+        "gameObjectPathID": "7343542219830954139",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5278508363659860960",
+        "gameObjectPathID": "743076357889797378",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/ground_grp/groundB_grp/groundB01_grp",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5347843457561643018",
+        "gameObjectPathID": "-1116573522772853484",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5368652759207242177",
+        "gameObjectPathID": "-2850328576822349377",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsB03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5400365601954568061",
+        "gameObjectPathID": "3051329626322029822",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5474461450889575966",
+        "gameObjectPathID": "2989814853988919867",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/organs_grp/organsC02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5495561447402573231",
+        "gameObjectPathID": "1690230991435025630",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5521981756770413662",
+        "gameObjectPathID": "-2263331261604346081",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageH_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5540250761053202211",
+        "gameObjectPathID": "-7534972568713323370",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara24_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5632852452865870769",
+        "gameObjectPathID": "-5326274172612048328",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/trafficOfficer_grp/trafficOfficerC01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5683107480630972082",
+        "gameObjectPathID": "8420315283274839359",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5734972576573098984",
+        "gameObjectPathID": "2998839173062465445",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5781860921151717555",
+        "gameObjectPathID": "811340883673346084",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara14_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5828439743555544182",
+        "gameObjectPathID": "-7514011705821898939",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain04_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5847737802429217085",
+        "gameObjectPathID": "-1894045718791987980",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5866152428313225774",
+        "gameObjectPathID": "2489461425888159024",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6262579910867258700",
+        "gameObjectPathID": "-2963780701076853756",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/ground_grp/groundB_grp/groundB02_grp",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6313686188255641776",
+        "gameObjectPathID": "8907215257028936714",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6336336599482326879",
+        "gameObjectPathID": "-3804551369783958270",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/tree_grp/tree01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6349604010917365102",
+        "gameObjectPathID": "-5679996470545173599",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6371364680526989091",
+        "gameObjectPathID": "5938541138199124384",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6444739280797261142",
+        "gameObjectPathID": "-4818713254805501432",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA02_grp/scissorsAanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6464679496022514854",
+        "gameObjectPathID": "7632044153364739982",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/umbrellaman_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6480592370067626376",
+        "gameObjectPathID": "9087380582240592493",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/back_grp/fireExtinguisher_gep/fireExtinguisher02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6566476860094001842",
+        "gameObjectPathID": "5967650336029293447",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly13_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6567915626245023944",
+        "gameObjectPathID": "855892207567142851",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle11_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6690807815650421424",
+        "gameObjectPathID": "-400860283887992448",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara20_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6737874346271211319",
+        "gameObjectPathID": "-2830059128574668465",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandB01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6769681132683110942",
+        "gameObjectPathID": "6710145837229646392",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly11_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6779369927449050712",
+        "gameObjectPathID": "4250300262304001571",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsC04_grp/scissorsCanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6797629504945935741",
+        "gameObjectPathID": "-5723397172591383840",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle14_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6804511451304151229",
+        "gameObjectPathID": "-8814455328455512193",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6840359155992718801",
+        "gameObjectPathID": "-3877942269181953885",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6873733384554416019",
+        "gameObjectPathID": "2940678312357978473",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandA03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6885053350588049822",
+        "gameObjectPathID": "4966355740686982374",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6931183506456277172",
+        "gameObjectPathID": "6429958166338583638",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7122158295910971250",
+        "gameObjectPathID": "-8039431322371152247",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7403632859247217173",
+        "gameObjectPathID": "-4934576044126997375",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signC06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7487041093503745508",
+        "gameObjectPathID": "-7231400251479737954",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara13_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7497941078193431992",
+        "gameObjectPathID": "-773563758791801734",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/eiffeltower_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7516566634319707685",
+        "gameObjectPathID": "-2343802061996062540",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/pipe_grp/pipe03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7540610098078534862",
+        "gameObjectPathID": "-1504553667908138164",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA02_grp/scissorsAanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7635397192680030757",
+        "gameObjectPathID": "1182392905382812423",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7635928935808090776",
+        "gameObjectPathID": "-4573022607518324780",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/chain_grp/chain02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7741373115842978860",
+        "gameObjectPathID": "5890846196057609982",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7749321895592548553",
+        "gameObjectPathID": "5470167086658399225",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB05_grp/scissorsBanim/scissorsL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7804959488589192602",
+        "gameObjectPathID": "-1670378058021972620",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7942790597820424027",
+        "gameObjectPathID": "3638719423104100194",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/barricade_grp/barricade02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7944923338530967801",
+        "gameObjectPathID": "-4971054918331495052",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB09_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7968481181322898154",
+        "gameObjectPathID": "-6405460956057193461",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/signboard_grp/signboard03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8121808234029985865",
+        "gameObjectPathID": "-4488864362351802627",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/collage_grp/collageD_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8265123065658826943",
+        "gameObjectPathID": "4292554616732541779",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/fence_grp/fenceA03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8302418557821847146",
+        "gameObjectPathID": "-1527388843858927814",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsA03_grp/scissorsAanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8395020292891420527",
+        "gameObjectPathID": "-4654151169739001081",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/pillar_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8420472515114966775",
+        "gameObjectPathID": "-7647704093945388934",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneC05_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8561735587699586520",
+        "gameObjectPathID": "-4168118275767932786",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/ibara_grp/ibara02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8575537939069793031",
+        "gameObjectPathID": "-2119286469486166756",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/ground_grp/groundA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8699098687853928297",
+        "gameObjectPathID": "-1438104186743819621",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/scissorsAll_grp/scissorsB05_grp/scissorsBanim/scissorsR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8739571632371394309",
+        "gameObjectPathID": "-5471992969240627237",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/butterfly_grp/butterfly03_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8782279518187169824",
+        "gameObjectPathID": "-204640194998812520",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sand_grp/sandG01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8788129182785391469",
+        "gameObjectPathID": "3925512996972153716",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/sign_grp/signB01_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "9026342378661039110",
+        "gameObjectPathID": "7598857942345965383",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/arrowboard_grp/arrowboard06_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "9143816759616787852",
+        "gameObjectPathID": "5645461119575343905",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/bigObjects_grp/lamp_grp/lamp02_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "9173011651416215937",
+        "gameObjectPathID": "-2016425411774239108",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/far_grp/cone_grp/coneA07_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "9175484552064426993",
+        "gameObjectPathID": "-3430673191094022357",
+        "hierarchyPath": "bg_3d_600_00_00_001/bg3d600A_00/anim_grp/circle_grp/circle10_grp/circle10_geo",
+        "enabled": true
+      }
+    ]
   }
 }

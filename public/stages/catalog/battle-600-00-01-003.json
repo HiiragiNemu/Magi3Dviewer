@@ -92,18 +92,18 @@
       "materialPattern": "^mt_bg3d600A_01_03_anthonyAlphaA(?:\\.\\d+)?$",
       "shading": "unlit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_anthonyAlpha_col.png",
-      "smoothness": 0.0,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -113,7 +113,7 @@
         "columns": 6,
         "rows": 3,
         "offset": 0,
-        "framesPerSecond": 8.0
+        "framesPerSecond": 8
       },
       "textures": {
         "base": {
@@ -130,12 +130,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -144,7 +144,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -155,18 +155,18 @@
       "materialPattern": "^mt_bg3d600A_01_03_anthonyAlphaB(?:\\.\\d+)?$",
       "shading": "unlit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_anthonyAlpha_col.png",
-      "smoothness": 0.0,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -176,7 +176,7 @@
         "columns": 6,
         "rows": 3,
         "offset": 3,
-        "framesPerSecond": 8.0
+        "framesPerSecond": 8
       },
       "textures": {
         "base": {
@@ -193,12 +193,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -207,7 +207,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -218,19 +218,19 @@
       "materialPattern": "^mt_bg3d600A_01_03_ground(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_groundB_col.png",
       "smoothness": 0.699999988079071,
       "metallic": 0.16599999368190765,
-      "normalScale": 2.0,
+      "normalScale": 2,
       "normalPacking": "unity-dxt5nm-ag",
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 0.0,
+      "unlitness": 0,
       "castShadow": false,
       "receiveShadow": true,
       "side": "front",
@@ -255,12 +255,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -269,7 +269,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 11,
           "evidence": "exact-unity-texture2d"
         },
@@ -287,12 +287,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -301,7 +301,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 11,
           "evidence": "exact-unity-texture2d"
         },
@@ -319,12 +319,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -333,7 +333,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 11,
           "evidence": "exact-unity-texture2d"
         },
@@ -351,12 +351,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -365,7 +365,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -376,19 +376,19 @@
       "materialPattern": "^mt_bg3d600A_01_03_propAAlpha(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_propAlpha_col.png",
-      "smoothness": 0.0,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
       "normalPacking": "unity-dxt5nm-ag",
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 0.0,
+      "unlitness": 0,
       "castShadow": true,
       "receiveShadow": true,
       "side": "front",
@@ -410,12 +410,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -424,7 +424,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         },
@@ -442,12 +442,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -456,7 +456,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -467,18 +467,18 @@
       "materialPattern": "^mt_bg3d600A_01_03_propBAlpha(?:\\.\\d+)?$",
       "shading": "unlit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_propAlpha_col.png",
-      "smoothness": 0.0,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": false,
       "side": "front",
@@ -499,12 +499,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -513,7 +513,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -524,19 +524,19 @@
       "materialPattern": "^mt_bg3d600A_01_03_rockAlpha(?:\\.\\d+)?$",
       "shading": "lit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_03_rockAlpha_col.png",
       "smoothness": 0.8500000238418579,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "metallic": 0,
+      "normalScale": 1,
       "normalPacking": "unity-dxt5nm-ag",
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 0.0,
+      "unlitness": 0,
       "castShadow": false,
       "receiveShadow": true,
       "side": "front",
@@ -561,12 +561,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -575,7 +575,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 11,
           "evidence": "exact-unity-texture2d"
         },
@@ -593,12 +593,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -607,7 +607,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 11,
           "evidence": "exact-unity-texture2d"
         },
@@ -625,12 +625,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -639,7 +639,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 11,
           "evidence": "exact-unity-texture2d"
         }
@@ -650,18 +650,18 @@
       "materialPattern": "^mt_bg3d600A_01_03_sky(?:\\.\\d+)?$",
       "shading": "unlit",
       "color": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "baseMapUrl": "./stages/official/battle-600-00-01-003/bg3d600A_01_01_sky_col.png",
-      "smoothness": 0.0,
-      "metallic": 0.0,
-      "normalScale": 1.0,
+      "smoothness": 0,
+      "metallic": 0,
+      "normalScale": 1,
       "transparent": false,
       "depthWrite": true,
-      "unlitness": 1.0,
+      "unlitness": 1,
       "castShadow": false,
       "receiveShadow": true,
       "side": "front",
@@ -680,12 +680,12 @@
           },
           "transform": {
             "scale": [
-              1.0,
-              1.0
+              1,
+              1
             ],
             "offset": [
-              0.0,
-              0.0
+              0,
+              0
             ]
           },
           "wrap": {
@@ -694,7 +694,7 @@
           },
           "filter": "bilinear",
           "anisotropy": 1,
-          "mipBias": 0.0,
+          "mipBias": 0,
           "mipCount": 1,
           "evidence": "exact-unity-texture2d"
         }
@@ -709,10 +709,10 @@
       0.15600000321865082,
       0.15600000321865082,
       0.15600000321865082,
-      1.0
+      1
     ],
     "environmentTextureUrl": "./stages/official/battle-600-00-01-003/ReflectionProbe-0-equirectangular.png",
-    "environmentIntensity": 1.0,
+    "environmentIntensity": 1,
     "lightmap": {
       "textureUrl": "./stages/official/battle-600-00-01-003/Lightmap-0_comp_light.png",
       "bindingsUrl": "./stages/official/battle-600-00-01-003/lightmap-bindings.json",
@@ -725,10 +725,10 @@
         0.15600000321865082,
         0.15600000321865082,
         0.15600000321865082,
-        1.0
+        1
       ],
-      "near": 0.0,
-      "far": 95.0,
+      "near": 0,
+      "far": 95,
       "affectsCharacters": false
     },
     "lights": [
@@ -737,9 +737,9 @@
         "type": "directional",
         "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/MainLight",
         "position": [
-          0.0,
-          0.0,
-          0.0
+          0,
+          0,
+          0
         ],
         "target": [
           -0.4131758861264719,
@@ -747,21 +747,21 @@
           -0.49240397769948363
         ],
         "color": [
-          1.0,
+          1,
           0.9764705896377563,
           0.9372549057006836,
-          1.0
+          1
         ],
-        "intensity": 1.0,
+        "intensity": 1,
         "cullingMask": 2147483647,
         "lightmapping": 1,
         "role": "character-key",
         "castShadow": true,
         "shadow": {
           "type": 2,
-          "strength": 1.0,
-          "bias": 0.0,
-          "normalBias": 0.0,
+          "strength": 1,
+          "bias": 0,
+          "normalBias": 0,
           "nearPlane": 0.10000000149011612
         }
       },
@@ -770,29 +770,29 @@
         "type": "spot",
         "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/FillLight01",
         "position": [
-          0.0,
-          25.0,
-          0.0
+          0,
+          25,
+          0
         ],
         "target": [
-          0.0,
+          0,
           24.000000000000007,
-          -1.3435883843274954e-07
+          -1.3435883843274954e-7
         ],
         "color": [
-          1.0,
+          1,
           0.9952656626701355,
           0.9490196108818054,
-          1.0
+          1
         ],
-        "intensity": 600.0,
+        "intensity": 600,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "castShadow": false,
-        "range": 150.0,
-        "outerAngleDegrees": 179.0,
-        "innerAngleDegrees": 179.0
+        "range": 150,
+        "outerAngleDegrees": 179,
+        "innerAngleDegrees": 179
       },
       {
         "name": "BgLight03",
@@ -809,17 +809,17 @@
           11.600000381469727
         ],
         "color": [
-          1.0,
+          1,
           0.9545234441757202,
           0.7783018946647644,
-          1.0
+          1
         ],
-        "intensity": 50.0,
+        "intensity": 50,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "castShadow": false,
-        "range": 30.0
+        "range": 30
       },
       {
         "name": "BgLight01",
@@ -836,17 +836,17 @@
           -16.639999389648438
         ],
         "color": [
-          1.0,
+          1,
           0.7885473966598511,
           0.7519999742507935,
-          1.0
+          1
         ],
-        "intensity": 400.0,
+        "intensity": 400,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "castShadow": false,
-        "range": 20.0
+        "range": 20
       },
       {
         "name": "BgLight01_01",
@@ -863,49 +863,49 @@
           18.38537588682102
         ],
         "color": [
-          1.0,
+          1,
           0.7576826214790344,
           0.36320751905441284,
-          1.0
+          1
         ],
-        "intensity": 500.0,
+        "intensity": 500,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "castShadow": false,
-        "range": 8.0
+        "range": 8
       },
       {
         "name": "BgCenterLight",
         "type": "spot",
         "anchorPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgCenterLight",
         "position": [
-          0.0,
+          0,
           10.199999809265137,
-          0.0
+          0
         ],
         "target": [
-          0.0,
+          0,
           9.199999809265146,
-          -1.3435883843274954e-07
+          -1.3435883843274954e-7
         ],
         "color": [
-          1.0,
+          1,
           0.949999988079071,
           0.9809523820877075,
-          1.0
+          1
         ],
-        "intensity": 500.0,
+        "intensity": 500,
         "cullingMask": 64,
         "lightmapping": 1,
         "role": "background",
         "castShadow": true,
-        "range": 40.0,
+        "range": 40,
         "outerAngleDegrees": 117.34782409667969,
-        "innerAngleDegrees": 26.0,
+        "innerAngleDegrees": 26,
         "shadow": {
           "type": 1,
-          "strength": 1.0,
+          "strength": 1,
           "bias": 0.05000000074505806,
           "normalBias": 0.4000000059604645,
           "nearPlane": 0.20000000298023224
@@ -926,17 +926,17 @@
           -23.719999313354492
         ],
         "color": [
-          1.0,
+          1,
           0.9074745774269104,
           0.7405660152435303,
-          1.0
+          1
         ],
-        "intensity": 120.0,
+        "intensity": 120,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "castShadow": false,
-        "range": 15.0
+        "range": 15
       },
       {
         "name": "BgLight04",
@@ -953,17 +953,17 @@
           13.369999885559082
         ],
         "color": [
-          1.0,
+          1,
           0.7885473966598511,
           0.7519999742507935,
-          1.0
+          1
         ],
-        "intensity": 300.0,
+        "intensity": 300,
         "cullingMask": 64,
         "lightmapping": 2,
         "role": "background",
         "castShadow": false,
-        "range": 15.0
+        "range": 15
       }
     ],
     "renderer": {
@@ -972,15 +972,15 @@
     },
     "bloom": {
       "enabled": true,
-      "strength": 1.0,
+      "strength": 1,
       "radius": 0.699999988079071,
       "threshold": 0.800000011920929
     },
     "postProcessing": {
       "colorAdjustments": {
         "active": true,
-        "contrast": 10.0,
-        "saturation": 15.0,
+        "contrast": 10,
+        "saturation": 15,
         "sourceValues": {
           "postExposure": 0.20000000298023224
         },
@@ -996,7 +996,7 @@
           0.10196078568696976,
           0.04313725605607033,
           0.05696747079491615,
-          1.0
+          1
         ],
         "center": [
           0.5,
@@ -1008,76 +1008,76 @@
       }
     },
     "reDriveVolume": {
-      "skyboxIntensity": 1.0,
+      "skyboxIntensity": 1,
       "shAmbient": [
         0.05081179365515709,
         -1.0546018919255218e-10,
-        0.0,
+        0,
         -3.5400259112972066e-11,
-        0.0,
+        0,
         1.844383951121742e-10,
-        -5.587935447692871e-09,
-        0.0,
-        -1.3396784126484818e-08,
+        -5.587935447692871e-9,
+        0,
+        -1.3396784126484818e-8,
         0.05081179365515709,
         -1.0546018919255218e-10,
-        0.0,
+        0,
         -3.5400259112972066e-11,
-        0.0,
+        0,
         1.844383951121742e-10,
-        -5.587935447692871e-09,
-        0.0,
-        -1.3396784126484818e-08,
+        -5.587935447692871e-9,
+        0,
+        -1.3396784126484818e-8,
         0.05081179365515709,
         -1.0546018919255218e-10,
-        0.0,
+        0,
         -3.5400259112972066e-11,
-        0.0,
+        0,
         1.844383951121742e-10,
-        -5.587935447692871e-09,
-        0.0,
-        -1.3396784126484818e-08
+        -5.587935447692871e-9,
+        0,
+        -1.3396784126484818e-8
       ],
       "characterShadowTint": [
         0.6745098233222961,
         0.6745098233222961,
         0.800000011920929,
-        1.0
+        1
       ],
       "characterLightingOverrideColor": [
         0.8773584961891174,
         0.8508463501930237,
         0.7076807022094727,
-        1.0
+        1
       ],
       "characterLightingOverrideRatio": 0.25,
       "characterAdditionalRimLightColor": [
-        1.0,
-        1.0,
-        1.0,
-        1.0
+        1,
+        1,
+        1,
+        1
       ],
       "characterAdditionalRimLightDirection": [
-        1.0,
-        -1.0
+        1,
+        -1
       ],
       "backgroundShadowStrengthAdditive": 0.30000001192092896,
       "backgroundPostExposure": 0.20000000298023224,
-      "backgroundContrast": 2.0,
-      "backgroundSaturation": 0.0,
+      "backgroundContrast": 2,
+      "backgroundSaturation": 0,
       "paraffin": {
         "enabled": true,
         "topColor": [
           0.40440553426742554,
           0.40244239568710327,
           0.4259999990463257,
-          1.0
+          1
         ],
         "bottomColor": [
           0.501960813999176,
           0.3262745440006256,
           0.3262745440006256,
-          1.0
+          1
         ],
         "opacity": 0.30000001192092896,
         "width": 1.399999976158142,
@@ -1278,6 +1278,2781 @@
     "joinKey": [
       "sourceCab",
       "pathId"
+    ]
+  },
+  "nativeVisibility": {
+    "gameObjects": [
+      {
+        "gameObjectPathID": "-9202147916982587698",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/backgroundobjectA_grp/backgroundobjectA_loc/backgroundobjectA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-9002474007824448067",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeF_grp/treeFB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8982042443137253869",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8905487768985771741",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8895197245192841697",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleE_loc/circleE_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8887622972246772005",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8860389779897886907",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignK_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8833894874949092051",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8833768437759639477",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCM_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8803384918076511756",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8745086580687235362",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8689041356188023621",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeM_grp/treeMB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8642632600458950624",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeN_grp/treeNB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8501727890106900296",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeP_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8489038762854433383",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8463134035508575221",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8382011710989937189",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8339132639742605912",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBC_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8237836556471698150",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainA_grp/chainAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-8064045971377870075",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBG_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7715749687031953029",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleCD_loc",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7594521676966304745",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7575607676453597067",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorF_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7461220289354349725",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeL_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7261166558412071566",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCQ_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7116494780225242461",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCF_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7108110270515295032",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCE_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-7057670055253547853",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeB_grp/treeBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6750087027365897850",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6644066512426724997",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainE_grp/chainEB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6638281693886801094",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6502139562446471660",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6467856466059892094",
+        "hierarchyPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgLight03",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6429660114776845726",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6402661957430185507",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainD_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6386441421450184104",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeO_grp/treeOB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6365937685673042158",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6243941289334519321",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeQ_grp/treeQB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6202967174181787696",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6150233967279605083",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6110176244599054419",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeN_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6061620569125438291",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-6015538528858051941",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5917441079329075563",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockC_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5901471648769229720",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeB_grp/treeBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5661385154450030669",
+        "hierarchyPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgLight01_01",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5612302623418291024",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeL_grp/treeLB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5604758866353087402",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockE_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5539944944496711962",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5487705454632544843",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5440027312027050526",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyF_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5406549225660847702",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5393145893841339341",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignC_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5388949606035571295",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeD_grp/treeDB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5329091907487547425",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5292599880472506918",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5256396168559061874",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5163575648392754660",
+        "hierarchyPath": "bg_3d_600_00_01_003/Light",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5146524057948429569",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5103047801938497973",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeF_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5081535914519961185",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5056701755266520353",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/sky_grp/sky_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5052948668795244301",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeC_grp/treeCA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-5008827352539971206",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeK_grp/treeKB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4982701338844848186",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainE_grp/chainEA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4754166969385527738",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeP_grp/treePB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4747574027533200388",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeD_grp/treeDA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4722089621931401920",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainE_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4692038185606797351",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCP_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4564604312399603920",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4484627012425647766",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainF_grp/chainFB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4308296301023458383",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockM_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4275316330478693301",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeH_grp/treeHB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4236122822465211030",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeG_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4212690151105330846",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainG_grp/chainGA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4163492244627064032",
+        "hierarchyPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/FillLight01",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4030129374030115540",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeO_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3772721558461979684",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeK_grp/treeKA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3673337079176696507",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBE_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3559108383106364465",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3533643277337073803",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3492703074826960741",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockP_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3459545497332412295",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeE_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3367899889382144601",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignF_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3293476816067526011",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeH_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3128221806973718150",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockQ_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3123209571021113101",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3092672813343253535",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCG_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-3016986441880897105",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeG_grp/treeGA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2994930934571400804",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2966240728503020403",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2823042901894935959",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2723444335496317538",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2719858706247419466",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2523563222539391015",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2497702122993982240",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainF_grp/chainFA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2382107541723203612",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2337036786947057600",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2111579686243173674",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1985786900420656461",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1922212025479135635",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1903676385162713497",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1810991095171506651",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignE_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1784558479277470742",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockN_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1782730354418312327",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1757928861042059320",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1718491942508578007",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1700779327205977024",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeD_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1493821630612348168",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleCD_loc/circleC_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1123037689043415980",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowD_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1065100803562954028",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1064455697710869143",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignG_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1045048446431057514",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyD_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1017846825892979059",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-917227360031629838",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeJ_grp/treeJA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-890381716792274800",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-874625125820019287",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-753072287416749285",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowD_grp/windowDB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-702149963437127668",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-693653870712934993",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-677773861624563432",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyH_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-414491528594364811",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-411549178792898054",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignH_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-309713621539208033",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/backgroundobjectA_grp/backgroundobjectA_loc",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-210228536377278937",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-191315230143626538",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/backgroundobjectA_grp/backgroundobjectB_loc/backgroundobjectB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-121887473301199253",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-110183808081847799",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleE_loc",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-102841950427897533",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "41585174861077450",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "173281363720878370",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeI_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "197622530291556061",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "309748640005213809",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "324701771368547143",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/ground_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "411805825713281536",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainB_grp/chainBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "466886035674947607",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignJ_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "518951267059482854",
+        "hierarchyPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/MainLight",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "559837840606538275",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "579550005992458573",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleF_loc/circleF_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "658933818093107157",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBD_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "721211945090081225",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "821450936675863763",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/backgroundobjectA_grp/backgroundobjectB_loc",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "912222118196551250",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "925527552708837675",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeH_grp/treeHA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "976355777380911973",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeC_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "999112092628279404",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCR_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1038342901975049012",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleF_loc",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1081091188789255597",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeM_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1215288457996726127",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockD_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1360357352346043180",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeN_grp/treeNA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1375597946600162482",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1412546580607322998",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp/windowAE_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1450596685826770873",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1511598223008008215",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeQ_grp/treeQA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1540024416333279433",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1632936198265305102",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/sky_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1746438747023311513",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1814202329958543508",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1814803176800642978",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBH_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1898531696842625082",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleA_loc/circleA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "1965468752072445604",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2003675896247016888",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2009522896183205309",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainB_grp/chainBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2033070082462724981",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2059916851196213738",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2239445831963911268",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainC_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2243498521987597924",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2368493325984366613",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainD_grp/chainDA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2384195531253835303",
+        "hierarchyPath": "bg_3d_600_00_01_003/Global Volume",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2437434006384319528",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCH_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2662305227604814562",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCJ_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2846719775034979186",
+        "hierarchyPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgLight02",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2926017574444335036",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeQ_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2972084536013746376",
+        "hierarchyPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgCenterLight",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "2982675216116922620",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp/windowAC_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3183436662148981809",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleA_loc",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3206647475527656422",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3229487055768123578",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3293140527716524691",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3327803055250668531",
+        "hierarchyPath": "bg_3d_600_00_01_003",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3375782424551800473",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/ground_grp/ground_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3386721989937117483",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3431412900709316555",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3454109791027882008",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignI_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3543241811110556471",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyI_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3620396342103479828",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorC_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3629209218949686617",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainF_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3696228849528773853",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeI_grp/treeIA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3726638494466601424",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeA_grp/treeAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3801565390430114082",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3844002671735117407",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCD_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3852917003488458199",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCO_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3941696111987978913",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3989782044774170886",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "3996648151540510319",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockO_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4075210768611865989",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4138203617238909096",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4141757329376562342",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainC_grp/chainCB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4211963210901427699",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4267638755437668467",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4386205030419483919",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4401656081392155357",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorE_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4405564712790558714",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleB_loc",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4461573966502976118",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyJ_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4529026240342311610",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeC_grp/treeCB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4535066374922300938",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeF_grp/treeFA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4626690581121508345",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4663976138300014254",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockH_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4713783884486860279",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleB_loc/circleB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4895890357181605760",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4980347574283822554",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeK_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4990481012200229281",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp/windowAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5023285541869631445",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5096696384113372986",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainD_grp/chainDB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5320531261985881504",
+        "hierarchyPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5360967270379472465",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp/windowAD_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5428011450026884013",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeO_grp/treeOA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5607151817167363276",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5766873714475112968",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCI_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5774207430676708990",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowD_grp/windowDC_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5798979622381912536",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5820986018129821474",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5861548514800261447",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5915624289698873249",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6107483915007977643",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeL_grp/treeLA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6283844511800970163",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeA_grp/treeAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6473924933235737174",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/backgroundobjectA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6510808638531661179",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeM_grp/treeMA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6540390953753902568",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6584492476426880696",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6596690227537591733",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6732356279301837422",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockK_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6769585008473073763",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6799700707011267880",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowD_grp/windowDD_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6804640073618669966",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleCD_loc/circleD_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6886371292366901850",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockL_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6886752766229031170",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6943896954366212493",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6992903670642029845",
+        "hierarchyPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgLight01",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7096070742784765242",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeJ_grp/treeJB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7121874487780413436",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeI_grp/treeIB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7125094418969310104",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignD_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7299842409705864677",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCC_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7316261686698931205",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainC_grp/chainCA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7368650480704094799",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainG_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7402882782751544791",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7518874132973771345",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyE_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7530224682118316270",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)/ibaraB_grp/ibaraBA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7565772012483207770",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)/ibaraA_grp/ibaraAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7815464631526592602",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockF_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7818109901626343699",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7877074983937388344",
+        "hierarchyPath": "bg_3d_600_00_01_003/Light/bg3d600A_01_03_Light/BgLight04",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "7977324171228441553",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8061529214013031469",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainA_grp/chainAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8121325114237521714",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockI_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8163610428926416584",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)/ibaraB_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8194647042088359016",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowD_grp/windowDA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8209926439774810537",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)/ibaraA_grp/ibaraAA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8235731065781044704",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBF_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8250502040516986326",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCK_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8265342057038851079",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainG_grp/chainGB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8269677595693328637",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)/ibaraA_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8273389288521520111",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCN_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8283645079782804909",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)/ibaraB_grp/ibaraBB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8332174511353372534",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeP_grp/treePA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8489433711828489520",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyG_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8601227350323558413",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyC_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8740055960104404509",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockEdge_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8777719820123550462",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp/windowAB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8806469448758846493",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockJ_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8856041102039557635",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeG_grp/treeGB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8880832050948450278",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeE_grp/treeEA_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8914778747059204271",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockG_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9099807741148671546",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeE_grp/treeEB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9099968142329332956",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9144024258919477683",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockB_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9160898482602298891",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeJ_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "9208840846739733358",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorD_geo",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      }
+    ],
+    "renderers": [
+      {
+        "rendererPathID": "-9158320826954158432",
+        "gameObjectPathID": "-5052948668795244301",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeC_grp/treeCA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-9154001595304887134",
+        "gameObjectPathID": "-2719858706247419466",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-9041254861676455364",
+        "gameObjectPathID": "2982675216116922620",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp/windowAC_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-9008579877560290058",
+        "gameObjectPathID": "-6061620569125438291",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8719360232035516725",
+        "gameObjectPathID": "5096696384113372986",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainD_grp/chainDB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8655870470820262967",
+        "gameObjectPathID": "3431412900709316555",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8611060307720920068",
+        "gameObjectPathID": "-6644066512426724997",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainE_grp/chainEB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8501950319181760691",
+        "gameObjectPathID": "8489433711828489520",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyG_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8494795759481705154",
+        "gameObjectPathID": "3996648151540510319",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockO_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-8153029899626884925",
+        "gameObjectPathID": "-8339132639742605912",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBC_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7904935107866072220",
+        "gameObjectPathID": "-5487705454632544843",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7783652741024258399",
+        "gameObjectPathID": "6510808638531661179",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeM_grp/treeMA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7754534678873852085",
+        "gameObjectPathID": "5774207430676708990",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowD_grp/windowDC_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7427346768461248479",
+        "gameObjectPathID": "-4484627012425647766",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainF_grp/chainFB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7278495296739068611",
+        "gameObjectPathID": "-7116494780225242461",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCF_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7205968136471243755",
+        "gameObjectPathID": "-6502139562446471660",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7189277546169190508",
+        "gameObjectPathID": "8332174511353372534",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeP_grp/treePA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-7154040058937610226",
+        "gameObjectPathID": "-6386441421450184104",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeO_grp/treeOB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6951974871826837622",
+        "gameObjectPathID": "-2497702122993982240",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainF_grp/chainFA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6885031187711750330",
+        "gameObjectPathID": "-8860389779897886907",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignK_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6875328551525621602",
+        "gameObjectPathID": "-5901471648769229720",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeB_grp/treeBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6867047055103211617",
+        "gameObjectPathID": "4663976138300014254",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockH_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6715624039575644976",
+        "gameObjectPathID": "-7057670055253547853",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeB_grp/treeBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6691183637625698218",
+        "gameObjectPathID": "-917227360031629838",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeJ_grp/treeJA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6531601338138486022",
+        "gameObjectPathID": "-2337036786947057600",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6493500383733895663",
+        "gameObjectPathID": "8601227350323558413",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyC_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6307771297055717227",
+        "gameObjectPathID": "4401656081392155357",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorE_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6145681865362918807",
+        "gameObjectPathID": "466886035674947607",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignJ_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6131130668231524393",
+        "gameObjectPathID": "-8463134035508575221",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6094217217585661198",
+        "gameObjectPathID": "3620396342103479828",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorC_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-6030728231617763844",
+        "gameObjectPathID": "1215288457996726127",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockD_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5745461760999212694",
+        "gameObjectPathID": "4713783884486860279",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleB_loc/circleB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5562230419156548244",
+        "gameObjectPathID": "7530224682118316270",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5422247684245948448",
+        "gameObjectPathID": "-8833768437759639477",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCM_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5395801516386415574",
+        "gameObjectPathID": "-4692038185606797351",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCP_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-5181557510409800284",
+        "gameObjectPathID": "197622530291556061",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4920907154795880048",
+        "gameObjectPathID": "-8895197245192841697",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleE_loc/circleE_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4905460309360709824",
+        "gameObjectPathID": "-5612302623418291024",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeL_grp/treeLB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4836364430221059990",
+        "gameObjectPathID": "-1903676385162713497",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4584617817880426916",
+        "gameObjectPathID": "8273389288521520111",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCN_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4503968236338330535",
+        "gameObjectPathID": "8265342057038851079",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainG_grp/chainGB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4348370632325913328",
+        "gameObjectPathID": "1898531696842625082",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleA_loc/circleA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4335337028319299508",
+        "gameObjectPathID": "-5440027312027050526",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyF_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4286153573121111266",
+        "gameObjectPathID": "8880832050948450278",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeE_grp/treeEA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4203118025971208662",
+        "gameObjectPathID": "-7261166558412071566",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCQ_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4069269913043337329",
+        "gameObjectPathID": "7125094418969310104",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignD_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-4052494093439053979",
+        "gameObjectPathID": "-2723444335496317538",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3981104043183413558",
+        "gameObjectPathID": "1412546580607322998",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp/windowAE_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3878182127754793819",
+        "gameObjectPathID": "-8982042443137253869",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3876114905577792035",
+        "gameObjectPathID": "-191315230143626538",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/backgroundobjectA_grp/backgroundobjectB_loc/backgroundobjectB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3762104958570379971",
+        "gameObjectPathID": "-3673337079176696507",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBE_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3544400026311488884",
+        "gameObjectPathID": "-8905487768985771741",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3512885857285859315",
+        "gameObjectPathID": "4138203617238909096",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3491428545183777043",
+        "gameObjectPathID": "-4747574027533200388",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeD_grp/treeDA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3476555925273825596",
+        "gameObjectPathID": "8121325114237521714",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockI_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3352143318088397937",
+        "gameObjectPathID": "-5388949606035571295",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeD_grp/treeDB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3323795117633624978",
+        "gameObjectPathID": "4461573966502976118",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyJ_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3303214871877652377",
+        "gameObjectPathID": "3852917003488458199",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCO_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3254204241975331852",
+        "gameObjectPathID": "-1810991095171506651",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignE_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3185591698913762477",
+        "gameObjectPathID": "1360357352346043180",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeN_grp/treeNA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-3147615011237735719",
+        "gameObjectPathID": "8856041102039557635",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeG_grp/treeGB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2950947402997335061",
+        "gameObjectPathID": "-411549178792898054",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignH_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2652357346431255027",
+        "gameObjectPathID": "-5056701755266520353",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/sky_grp/sky_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2629335920851102797",
+        "gameObjectPathID": "7518874132973771345",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyE_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2610044947136470965",
+        "gameObjectPathID": "-3367899889382144601",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignF_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2601577781967507370",
+        "gameObjectPathID": "5820986018129821474",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2601435936629514181",
+        "gameObjectPathID": "2368493325984366613",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainD_grp/chainDA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2417423515346671282",
+        "gameObjectPathID": "41585174861077450",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2348620960153449544",
+        "gameObjectPathID": "7316261686698931205",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainC_grp/chainCA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2335495912789083227",
+        "gameObjectPathID": "309748640005213809",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2177830221748448234",
+        "gameObjectPathID": "4141757329376562342",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainC_grp/chainCB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2175453201925877293",
+        "gameObjectPathID": "6107483915007977643",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeL_grp/treeLA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2112955661701957831",
+        "gameObjectPathID": "-890381716792274800",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-2060943650426538350",
+        "gameObjectPathID": "2662305227604814562",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCJ_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1836366663661101776",
+        "gameObjectPathID": "8194647042088359016",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowD_grp/windowDA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1539633993485018881",
+        "gameObjectPathID": "-5393145893841339341",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignC_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1528512621898770974",
+        "gameObjectPathID": "-8642632600458950624",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeN_grp/treeNB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1304531375052099861",
+        "gameObjectPathID": "-1065100803562954028",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1209777886867125307",
+        "gameObjectPathID": "1814202329958543508",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1199901281839318047",
+        "gameObjectPathID": "6804640073618669966",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleCD_loc/circleD_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1163179921711890983",
+        "gameObjectPathID": "-5604758866353087402",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockE_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1157251652021781353",
+        "gameObjectPathID": "559837840606538275",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1060882814947566920",
+        "gameObjectPathID": "-3533643277337073803",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-1039189343199354143",
+        "gameObjectPathID": "-8489038762854433383",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-766508494061470505",
+        "gameObjectPathID": "-1782730354418312327",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-733776756347249038",
+        "gameObjectPathID": "-677773861624563432",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyH_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-732233641297968355",
+        "gameObjectPathID": "-1784558479277470742",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockN_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-710391067032987772",
+        "gameObjectPathID": "-2523563222539391015",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-687971646900692459",
+        "gameObjectPathID": "-1017846825892979059",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-594732638025740714",
+        "gameObjectPathID": "5428011450026884013",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeO_grp/treeOA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-511340153166241057",
+        "gameObjectPathID": "-8689041356188023621",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeM_grp/treeMB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-326106369315868667",
+        "gameObjectPathID": "-1045048446431057514",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyD_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-95409745549712233",
+        "gameObjectPathID": "-2823042901894935959",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "-72142771249229183",
+        "gameObjectPathID": "3386721989937117483",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "76844115166199496",
+        "gameObjectPathID": "2009522896183205309",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainB_grp/chainBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "159629738639069297",
+        "gameObjectPathID": "7977324171228441553",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "211748300203234203",
+        "gameObjectPathID": "7121874487780413436",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeI_grp/treeIB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "444751229297176298",
+        "gameObjectPathID": "7299842409705864677",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCC_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "547483617647831046",
+        "gameObjectPathID": "1814803176800642978",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBH_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "581746107777084986",
+        "gameObjectPathID": "-6638281693886801094",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "685551188272004945",
+        "gameObjectPathID": "-8382011710989937189",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "857356926365543246",
+        "gameObjectPathID": "8209926439774810537",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (3)/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "961557807197896323",
+        "gameObjectPathID": "-4982701338844848186",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainE_grp/chainEA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "976511834238364134",
+        "gameObjectPathID": "5360967270379472465",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp/windowAD_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1054608007240635496",
+        "gameObjectPathID": "-5008827352539971206",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeK_grp/treeKB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1127342735229198998",
+        "gameObjectPathID": "-6202967174181787696",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1240969845935745635",
+        "gameObjectPathID": "658933818093107157",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBD_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1347546593139816848",
+        "gameObjectPathID": "-753072287416749285",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowD_grp/windowDB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1511722537294895548",
+        "gameObjectPathID": "9144024258919477683",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1634261388527806388",
+        "gameObjectPathID": "-4754166969385527738",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeP_grp/treePB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1705507715377332430",
+        "gameObjectPathID": "-5917441079329075563",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockC_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1734827413996075960",
+        "gameObjectPathID": "-7575607676453597067",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorF_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1887098664795835769",
+        "gameObjectPathID": "9099807741148671546",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeE_grp/treeEB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "1974692937195143468",
+        "gameObjectPathID": "4990481012200229281",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp/windowAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2009234318335685715",
+        "gameObjectPathID": "-6243941289334519321",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeQ_grp/treeQB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2101650172643283055",
+        "gameObjectPathID": "-693653870712934993",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2362897768798828090",
+        "gameObjectPathID": "6886752766229031170",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2451452568165695222",
+        "gameObjectPathID": "-3128221806973718150",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockQ_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2768671546026296638",
+        "gameObjectPathID": "8235731065781044704",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBF_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "2933447808448114888",
+        "gameObjectPathID": "-4275316330478693301",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeH_grp/treeHB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3020975910297086660",
+        "gameObjectPathID": "721211945090081225",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3062935466374791391",
+        "gameObjectPathID": "3375782424551800473",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/ground_grp/ground_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3100473372316637772",
+        "gameObjectPathID": "3726638494466601424",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeA_grp/treeAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3246235851122745671",
+        "gameObjectPathID": "-1718491942508578007",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3249046612294639135",
+        "gameObjectPathID": "-702149963437127668",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (9)/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3289868004926913737",
+        "gameObjectPathID": "-3092672813343253535",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCG_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3292766760455736143",
+        "gameObjectPathID": "3696228849528773853",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeI_grp/treeIA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3324280120168533648",
+        "gameObjectPathID": "-102841950427897533",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3364400707867578327",
+        "gameObjectPathID": "999112092628279404",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCR_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3461686815197020799",
+        "gameObjectPathID": "-5292599880472506918",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3550799671105980323",
+        "gameObjectPathID": "6283844511800970163",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeA_grp/treeAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3577919700634236661",
+        "gameObjectPathID": "5607151817167363276",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (1)/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3599209304900711259",
+        "gameObjectPathID": "-3492703074826960741",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockP_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3622084451737633887",
+        "gameObjectPathID": "2437434006384319528",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCH_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3626546191828165937",
+        "gameObjectPathID": "7815464631526592602",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockF_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3701830445525789510",
+        "gameObjectPathID": "2059916851196213738",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (6)/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3784797494991529690",
+        "gameObjectPathID": "411805825713281536",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainB_grp/chainBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "3901227839720735678",
+        "gameObjectPathID": "5023285541869631445",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4348255820106529204",
+        "gameObjectPathID": "6799700707011267880",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowD_grp/windowDD_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4387970552113822859",
+        "gameObjectPathID": "4386205030419483919",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4624864319089978185",
+        "gameObjectPathID": "3454109791027882008",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignI_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4747482635798699256",
+        "gameObjectPathID": "4535066374922300938",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeF_grp/treeFA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4843353742843791020",
+        "gameObjectPathID": "8806469448758846493",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockJ_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4848860515589325563",
+        "gameObjectPathID": "8914778747059204271",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockG_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "4976662009344881785",
+        "gameObjectPathID": "-3016986441880897105",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeG_grp/treeGA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5048458831348600127",
+        "gameObjectPathID": "-7108110270515295032",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCE_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5107654833600067171",
+        "gameObjectPathID": "3941696111987978913",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (4)/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5123287810347038601",
+        "gameObjectPathID": "3229487055768123578",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5283544465006966125",
+        "gameObjectPathID": "-1064455697710869143",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignG_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5689512242978433242",
+        "gameObjectPathID": "6540390953753902568",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/butterflysign_grp/butterflySignA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5756118949568666065",
+        "gameObjectPathID": "8061529214013031469",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainA_grp/chainAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "5907786663260746533",
+        "gameObjectPathID": "3543241811110556471",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/anthony_grp/anthonyI_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6046727194040677647",
+        "gameObjectPathID": "3206647475527656422",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (5)/ibaraA_grp/ibaraAA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6337028796418948067",
+        "gameObjectPathID": "-4212690151105330846",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainG_grp/chainGA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6392306099122146945",
+        "gameObjectPathID": "6886371292366901850",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockL_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6834694139505654386",
+        "gameObjectPathID": "579550005992458573",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleF_loc/circleF_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "6938618557005077576",
+        "gameObjectPathID": "2033070082462724981",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7016468251578251700",
+        "gameObjectPathID": "-8064045971377870075",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowB_grp/windowBG_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7072944342546609978",
+        "gameObjectPathID": "-8237836556471698150",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/chain_grp/chainA_grp/chainAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7431774274746186927",
+        "gameObjectPathID": "3844002671735117407",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCD_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7463224460825663335",
+        "gameObjectPathID": "9208840846739733358",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorD_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7634760929244970931",
+        "gameObjectPathID": "7565772012483207770",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (7)/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7640971681408771495",
+        "gameObjectPathID": "925527552708837675",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeH_grp/treeHA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7737906881221912267",
+        "gameObjectPathID": "-9002474007824448067",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeF_grp/treeFB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7800626792032033628",
+        "gameObjectPathID": "8250502040516986326",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCK_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7854051396221634154",
+        "gameObjectPathID": "-9202147916982587698",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/backgroundobjectA_grp/backgroundobjectA_loc/backgroundobjectA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7859653832805976547",
+        "gameObjectPathID": "-4308296301023458383",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockM_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7945303411606900219",
+        "gameObjectPathID": "5798979622381912536",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7979284403085944721",
+        "gameObjectPathID": "912222118196551250",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara/ibaraA_grp/ibaraAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8019366020720252237",
+        "gameObjectPathID": "6584492476426880696",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (2)/ibaraB_grp/ibaraBA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8153070547257132751",
+        "gameObjectPathID": "6732356279301837422",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockK_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8291484505821083956",
+        "gameObjectPathID": "5766873714475112968",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowC_grp/windowCI_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8301786653593464256",
+        "gameObjectPathID": "7096070742784765242",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeJ_grp/treeJB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8330214154326297549",
+        "gameObjectPathID": "1511598223008008215",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeQ_grp/treeQA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8378314164826115726",
+        "gameObjectPathID": "8740055960104404509",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/rock_grp/rockEdge_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8400499738866799862",
+        "gameObjectPathID": "4529026240342311610",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeC_grp/treeCB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8484863281599566087",
+        "gameObjectPathID": "8283645079782804909",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (8)/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8547804407329821519",
+        "gameObjectPathID": "-3772721558461979684",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/tree_grp/treeK_grp/treeKA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8629067201952732519",
+        "gameObjectPathID": "8777719820123550462",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/far_grp/window_grp/windowA_grp/windowAB_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8694174123276254335",
+        "gameObjectPathID": "-1493821630612348168",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/anim_grp/circle_grp/circleCD_loc/circleC_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8864664278227818785",
+        "gameObjectPathID": "3293140527716524691",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03/mid_grp/door_grp/doorA_geo",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8930961758450234474",
+        "gameObjectPathID": "1746438747023311513",
+        "hierarchyPath": "bg_3d_600_00_01_003/bg3d600A_01_03_props/bg3d600A_01_03_ibara (10)/ibaraB_grp/ibaraBB_geo",
+        "enabled": true
+      }
+    ]
+  },
+  "entryValidation": {
+    "status": "load-tested",
+    "visibleMeshCount": 182,
+    "resourceFileCount": 20,
+    "evidence": [
+      "2026-09-24 shared loader: formal scene committed; 76 meshes observed in GPU draw probe.",
+      "2026-09-24 bundled current assets: 20 files source/artifact/HTTP byte-exact; no old archive dependency."
     ]
   }
 }

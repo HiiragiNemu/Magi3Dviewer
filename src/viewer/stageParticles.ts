@@ -1392,8 +1392,17 @@ function particleMaterial(
         depthTest: zTest !== 0,
         depthFunc: unityDepthFunction(zTest),
         blending: THREE.CustomBlending,
-        blendSrc: unityBlendFactor(float('_SrcBlend', 5)) as THREE.BlendingSrcFactor,
-        blendDst: unityBlendFactor(float('_DstBlend', 10)) as THREE.BlendingDstFactor,
+        // Older scene profiles retain the native blend equation in the
+        // normalized binding but omit serializedFloats. Do not silently turn
+        // their additive glow or multiply particles into alpha-over cards.
+        // Explicit native factors still take precedence when present.
+        blendSrc: unityBlendFactor(float(
+            '_SrcBlend', binding.blending === 'multiply' ? 2 : 5,
+        )) as THREE.BlendingSrcFactor,
+        blendDst: unityBlendFactor(float(
+            '_DstBlend', binding.blending === 'additive' ? 1
+                : binding.blending === 'multiply' ? 0 : 10,
+        )) as THREE.BlendingDstFactor,
         blendEquation: THREE.AddEquation,
     })
     material.name = `${renderMode === 'trail' ? 'StageParticleTrail' : 'StageParticle'}:${

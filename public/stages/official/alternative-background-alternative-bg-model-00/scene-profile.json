@@ -1,0 +1,4810 @@
+{
+  "nativeVisibility": {
+    "gameObjects": [
+      {
+        "gameObjectPathID": "-8523162194787913356",
+        "hierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4561686369395346953",
+        "hierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase/skyBase_grp",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-4136830923344124813",
+        "hierarchyPath": "alternative_bg_model_00/Reflection Probe",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-2171232018764189055",
+        "hierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase/skyBase_grp/skyBase_gass",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-1864450962916229293",
+        "hierarchyPath": "alternative_bg_model_00",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "-546639533033546639",
+        "hierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase_StarAdd",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "679851207949123698",
+        "hierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase_StarAdd/skyBase_StarAdd_01",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "681567619068730036",
+        "hierarchyPath": "alternative_bg_model_00/Global Volume",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "4736384428481556102",
+        "hierarchyPath": "alternative_bg_model_00/Light",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "5473754916156416484",
+        "hierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase/skyBase_grp/skyBase",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "6544559836241776011",
+        "hierarchyPath": "alternative_bg_model_00/Light/Directional Light",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      },
+      {
+        "gameObjectPathID": "8231985943465630787",
+        "hierarchyPath": "alternative_bg_model_00/base_bg",
+        "activeSelf": true,
+        "activeInHierarchy": true
+      }
+    ],
+    "renderers": [
+      {
+        "rendererPathID": "-7608147422527140882",
+        "gameObjectPathID": "5473754916156416484",
+        "hierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase/skyBase_grp/skyBase",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "7870082511928709575",
+        "gameObjectPathID": "-2171232018764189055",
+        "hierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase/skyBase_grp/skyBase_gass",
+        "enabled": true
+      },
+      {
+        "rendererPathID": "8069127919375599341",
+        "gameObjectPathID": "679851207949123698",
+        "hierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase_StarAdd/skyBase_StarAdd_01",
+        "enabled": true
+      }
+    ]
+  },
+  "schemaVersion": 1,
+  "stageId": "alternative-background-alternative-bg-model-00",
+  "bundle": "alternative_bg_model_00",
+  "unityVersion": "2022.3.62f2",
+  "coordinateSpace": {
+    "source": "unity-world",
+    "viewer": "assetstudio-fbx-reflect-x"
+  },
+  "renderProfile": {
+    "id": "alternative_bg_model_00",
+    "source": "ReDriveVolume",
+    "lights": [
+      {
+        "name": "Directional Light",
+        "type": "directional",
+        "activeSelf": true,
+        "active": true,
+        "enabled": true,
+        "anchorPath": "alternative_bg_model_00/Light/Directional Light",
+        "anchorNode": "Directional Light",
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "intensity": 1.0,
+        "cullingMask": 64,
+        "lightmapping": 1,
+        "role": "background",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "castShadow": false,
+        "additionalLightData": {
+          "renderingLayers": 1,
+          "lightLayerMask": 1,
+          "shadowResolutionTier": 2,
+          "softShadowQuality": 0
+        },
+        "target": [
+          0.4623827148249022,
+          -0.6946582519929669,
+          0.5510464027368557
+        ]
+      }
+    ],
+    "renderer": {
+      "toneMapping": "aces",
+      "exposure": 1
+    },
+    "stageLayer": 6,
+    "backgroundColor": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "fog": {
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "near": 5.0,
+      "far": 500.0,
+      "affectsCharacters": false
+    },
+    "reDriveVolume": {
+      "overrides": {
+        "skyboxMaterial": true,
+        "skyboxIntensity": true,
+        "reflectionProbe": true,
+        "fogColor": true,
+        "fogRange": true,
+        "shAmbient": true,
+        "characterTint": false,
+        "characterShadowTint": false,
+        "backgroundTint": false,
+        "characterLightingOverrideColor": true,
+        "characterLightingOverrideRatio": true,
+        "characterLightingOverrideDirection": false,
+        "characterAdditionalRimLightColor": true,
+        "characterAdditionalRimLightDirection": true,
+        "characterFaceAwayTint": false,
+        "characterCancelPerspective": false,
+        "backgroundShadowStrengthAdditive": false,
+        "backgroundPostExposure": true,
+        "backgroundContrast": true,
+        "backgroundSaturation": false,
+        "backgroundBackgroundTint": false,
+        "useFixedLightDirection": false,
+        "paraffin": true,
+        "screenTexture": false,
+        "lightScreen": false
+      },
+      "skyboxIntensity": 1.0,
+      "characterLightingOverrideColor": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "characterLightingOverrideRatio": 0.4000000059604645,
+      "characterAdditionalRimLightColor": [
+        2.0,
+        2.0,
+        2.0,
+        1.0
+      ],
+      "characterAdditionalRimLightDirection": [
+        -1.0,
+        -1.0
+      ],
+      "backgroundPostExposure": -0.6000000238418579,
+      "backgroundContrast": -5.0,
+      "shAmbient": [
+        0.08227992057800293,
+        0.0678575411438942,
+        -0.06201048940420151,
+        0.04538838565349579,
+        0.022834081202745438,
+        -0.03604213520884514,
+        0.0007390221580862999,
+        -0.08571045100688934,
+        0.010968834161758423,
+        0.11912678182125092,
+        0.09824565798044205,
+        -0.08978109061717987,
+        0.06571507453918457,
+        0.033060625195503235,
+        -0.05218329280614853,
+        0.001070123165845871,
+        -0.12409410625696182,
+        0.015880752354860306,
+        0.3461613357067108,
+        0.2854858338832855,
+        -0.26088541746139526,
+        0.19095280766487122,
+        0.09606632590293884,
+        -0.15163418650627136,
+        0.003109332174062729,
+        -0.3605937361717224,
+        0.046145953238010406
+      ],
+      "characterLightingOverrideDirectionEnabled": false,
+      "paraffin": {
+        "enabled": true,
+        "runtimeVerified": true,
+        "operatorVerified": true,
+        "activationSource": "serialized-effective-global-volume",
+        "operatorSource": "globalgamemanagers.assets:MaterialPathID4:ShaderPathID62:D3D11-fragment-69-89-93",
+        "topColor": [
+          0.7688679099082947,
+          0.8737083673477173,
+          1.0,
+          1.0
+        ],
+        "bottomColor": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "opacity": 0.10000000149011612,
+        "width": 1.0399999618530273,
+        "topBlendMode": 0,
+        "bottomBlendMode": 0,
+        "useFixedLightDirection": false
+      }
+    },
+    "bloom": {
+      "enabled": true,
+      "strength": 1.0,
+      "radius": 0.75,
+      "threshold": 0.8999999761581421,
+      "clamp": 65472.0,
+      "maxIterations": 6,
+      "tint": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "postProcessing": {
+      "chromaticAberration": {
+        "active": true,
+        "intensity": 0.05000000074505806,
+        "operator": "urp-2022.3-fast-3-sample",
+        "amountScale": 0.05
+      },
+      "colorAdjustments": {
+        "active": true,
+        "contrast": 10.0,
+        "saturation": 15.0
+      },
+      "vignette": {
+        "active": true,
+        "color": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "center": [
+          0.5,
+          0.5
+        ],
+        "intensity": 0.30000001192092896,
+        "smoothness": 0.30000001192092896,
+        "rounded": false
+      }
+    },
+    "environmentTextureUrl": "./stages/official/alternative-background-alternative-bg-model-00/ReflectionProbe-1-rgba16f.dds",
+    "environmentEncoding": "unity-rgba16f",
+    "environmentIntensity": 1.0,
+    "reflectionProbes": [
+      {
+        "id": "1417373218026456561",
+        "name": "Reflection Probe",
+        "textureUrl": "./stages/official/alternative-background-alternative-bg-model-00/ReflectionProbe-bake02-rgba16f.dds",
+        "encoding": "unity-rgba16f",
+        "position": [
+          0.0,
+          -0.6740000247955322,
+          0.0
+        ],
+        "boxMin": [
+          -500.0,
+          -500.67400002479553,
+          -500.0
+        ],
+        "boxMax": [
+          500.0,
+          499.32599997520447,
+          500.0
+        ],
+        "importance": 1,
+        "intensity": 1.5,
+        "blendDistance": 1.0,
+        "boxProjection": false
+      }
+    ],
+    "reflectionProbeBindings": [
+      {
+        "rendererHierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase/skyBase_grp/skyBase",
+        "reflectionProbeUsage": 1,
+        "reflectionProbeUsageName": "blend-probes",
+        "probeAnchorHierarchyPath": null,
+        "probeAnchorPosition": null
+      },
+      {
+        "rendererHierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase/skyBase_grp/skyBase_gass",
+        "reflectionProbeUsage": 1,
+        "reflectionProbeUsageName": "blend-probes",
+        "probeAnchorHierarchyPath": null,
+        "probeAnchorPosition": null
+      },
+      {
+        "rendererHierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase_StarAdd/skyBase_StarAdd_01",
+        "reflectionProbeUsage": 1,
+        "reflectionProbeUsageName": "blend-probes",
+        "probeAnchorHierarchyPath": null,
+        "probeAnchorPosition": null
+      }
+    ]
+  },
+  "materialBindings": [
+    {
+      "materialName": "mt_alternative_bg_skyStar",
+      "materialPattern": "^mt_alternative_bg_skyStar(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Effect/Particle/Common",
+      "renderQueue": 2900,
+      "validKeywords": [
+        "IS_MASK_TEX"
+      ],
+      "invalidKeywords": [
+        "KEY1",
+        "_CULLING_OFF",
+        "_ISMASK_ON",
+        "_RAMPALPHA_ON",
+        "_SURFACE_TYPE_TRANSPARENT"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER",
+        "DepthOnly"
+      ],
+      "shading": "unlit",
+      "textures": {},
+      "serializedTextures": {
+        "_WaveTex": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/alternative_bg_skyStar.png",
+          "sourceProperty": "_WaveTex",
+          "sourceTexturePathId": "-8078728616342554956",
+          "sourceTextureCab": "CAB-5726667de002ce6510aab260a8fcd13d",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              3.0,
+              3.0
+            ],
+            "offset": [
+              0.0,
+              -1.399999976158142
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        }
+      },
+      "serializedFloats": {
+        "_1stOpacity": 0.30000001192092896,
+        "_2ndOpacity": 0.30000001192092896,
+        "_Additive_to_Multiply": 0.0,
+        "_Alpha": 1.0,
+        "_AlphaClip": 0.0,
+        "_AlphaIsGrayScale": 0.0,
+        "_AlphaIsGrayScale2": 0.0,
+        "_AlphaIsRChannel": 0.0,
+        "_AlphaSmoothMax": 1.0,
+        "_AlphaSmoothMin": 0.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.5,
+        "_Blend": 2.0,
+        "_BlendModePreserveSpecular": 0.0,
+        "_BlendPow": 1.0,
+        "_BlendTexScale": 1.0,
+        "_Blightness": 5.0,
+        "_BumpScale": 1.0,
+        "_CastShadows": 0.0,
+        "_ClearCoatMask": 0.0,
+        "_ClearCoatSmoothness": 0.0,
+        "_ColorMask": 14.0,
+        "_Cull": 1.0,
+        "_Culling": 0.0,
+        "_Cutoff": 0.5,
+        "_DetailAlbedoMapScale": 1.0,
+        "_DetailNormalMapScale": 1.0,
+        "_DissolveBrightness": 1.0,
+        "_DissolveCenterPos": 0.699999988079071,
+        "_DissolveProgress": 1.0,
+        "_DissolveRange": 0.0010000000474974513,
+        "_DissolveScrollType": 0.0,
+        "_DissolveScrollX": 0.0,
+        "_DissolveScrollY": 0.0,
+        "_DissolveSmoothMax": 1.0,
+        "_DissolveSmoothMin": 0.0,
+        "_DissolveTexBlightnessOffset": 0.0,
+        "_DissolveTexSmoothRange": 0.0010000000474974513,
+        "_DropFrame_FlowMap": 0.0,
+        "_DropFrame_HueShift": 0.0,
+        "_DropFrame_MultiScroll": 0.0,
+        "_DstBlend": 1.0,
+        "_DstBlendAlpha": 0.0,
+        "_EnvironmentReflections": 1.0,
+        "_FadeNoiseTexTilling": 2.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FlowMapPow": 1.0,
+        "_FlowSpeed": 0.15000000596046448,
+        "_FogInfluence": 0.0,
+        "_GlossMapScale": 0.0,
+        "_Glossiness": 0.0,
+        "_GlossyReflections": 0.0,
+        "_HueShiftValue": 0.19599999487400055,
+        "_HueShiftValue_MultiUV": 0.04699999839067459,
+        "_InvertDirection": 0.0,
+        "_IsColorWhite": 0.0,
+        "_IsCommonParticle": 0.0,
+        "_IsCustomData1w": 0.0,
+        "_IsDissolve": 0.0,
+        "_IsDissolveColor": 0.0,
+        "_IsDissolveTex": 0.0,
+        "_IsDitherClipping": 1.0,
+        "_IsGlobalBackgroundTintColor": 0.0,
+        "_IsMask": 1.0,
+        "_IsMaskTex": 1.0,
+        "_IsMaskTwoBlend": 0.0,
+        "_IsRampTex": 0.0,
+        "_IsSSMapping": 0.0,
+        "_IsSecondMap": 0.0,
+        "_IsSecondMask": 0.0,
+        "_IsSecondWave": 0.0,
+        "_IsSecondWaveTex": 0.0,
+        "_IsSoftParticle": 0.0,
+        "_IsTex2AlphaMask": 0.0,
+        "_IsTex2BlendMultiply": 0.0,
+        "_IsWave": 0.0,
+        "_MainTexScrollX": 0.0,
+        "_MainTexScrollY": 0.0,
+        "_Mask1ScrollType": 0.0,
+        "_Mask2ScrollType": 0.0,
+        "_MaskScrollX": 0.0,
+        "_MaskScrollY": 0.0,
+        "_MaskTwoScrollBlend": 0.5,
+        "_MaskTwoScrollScaleX": 2.0,
+        "_MaskTwoScrollScaleY": 2.0,
+        "_MaskTwoScrollX": 1.0,
+        "_MaskTwoScrollY": 1.0,
+        "_Metallic": 0.0,
+        "_MultipliedAlpha": 0.0,
+        "_NoiseIntensity": 1.0,
+        "_NoiseScaling": 1.0,
+        "_NormalStrength": 1.0,
+        "_OcclusionStrength": 1.0,
+        "_Parallax": 0.004999999888241291,
+        "_ParticleInAlpha": 1.0,
+        "_ParticleInRadius": 0.10000000149011612,
+        "_ParticleOutAlpha": 0.30000001192092896,
+        "_QueueControl": 0.0,
+        "_QueueOffset": 0.0,
+        "_Ramp": 0.0,
+        "_RampAlpha": 1.0,
+        "_RampCenterPos": 0.5,
+        "_RampCentor": 0.0,
+        "_RampSmoothMax": 1.0,
+        "_RampSmoothMin": 0.0,
+        "_ReceiveShadows": 0.0,
+        "_ReflectionValue": 0.5,
+        "_ScrollSpeed": 0.05000000074505806,
+        "_SecondBlend": 1.0,
+        "_SecondBlightness": 1.0,
+        "_SecondMaskScrollX": 0.0,
+        "_SecondMaskScrollY": 0.0,
+        "_SecondTexScrollX": 0.0,
+        "_SecondTexScrollY": 0.0,
+        "_SecondWaveTexBlightnessOffset": 0.0,
+        "_SecondWaveTexSmoothMax": 1.0,
+        "_SecondWaveTexSmoothMin": 0.0,
+        "_Smoothness": 0.0,
+        "_SmoothnessTextureChannel": 0.0,
+        "_SpecularHighlights": 1.0,
+        "_SrcBlend": 5.0,
+        "_SrcBlendAlpha": 1.0,
+        "_Stencil": 0.0,
+        "_StencilComp": 8.0,
+        "_StencilOp": 0.0,
+        "_Surface": 1.0,
+        "_SurfaceFadeFar": 1.0,
+        "_SurfaceFadeNear": 0.0,
+        "_Tex1ScrollType": 0.0,
+        "_Tex2ScrollType": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_FLOW_MAP": 0.0,
+        "_USE_HUE_SHIFT": 0.0,
+        "_USE_MULTI_UV_SCROLL": 0.0,
+        "_USE_NOISE": 0.0,
+        "_USE_PLANARREFLECTION": 1.0,
+        "_USE_UWASA_EFFECT": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseAlphaToSmoothness": 0.0,
+        "_UseFadeInOut": 1.0,
+        "_UseFlipbook": 0.0,
+        "_UseMeshUV": 0.0,
+        "_UseSmoothnessMask": 0.0,
+        "_UwasaEffectIntensity": 1.0,
+        "_UwasaHueShiftValue": 0.0,
+        "_UwasaTexTileSize": 1.0,
+        "_WaveRange": 0.05000000074505806,
+        "_WaveTexBlightnessOffset": 0.0,
+        "_WaveTexBlightnessOffsetSub": 0.0,
+        "_WaveTexScrollSpeedX": 0.0,
+        "_WaveTexScrollSpeedY": 0.0,
+        "_WaveTexSmoothMax": 0.25,
+        "_WaveTexSmoothMin": 0.0,
+        "_WorkflowMode": 1.0,
+        "_ZOffset": 0.0,
+        "_ZTest": 4.0,
+        "_ZWrite": 0.0,
+        "_ZWriteControl": 0.0,
+        "_frenelPower": 0.0010000000474974513
+      },
+      "serializedColors": {
+        "_1stColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_1stOffset": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_1stScrollSpeed": [
+          0.019999999552965164,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_1stTilling": [
+          6.0,
+          6.0,
+          0.0,
+          0.0
+        ],
+        "_2ndColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_2ndOffset": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_2ndScrollSpeed": [
+          -0.019999999552965164,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_2ndTilling": [
+          4.0,
+          4.0,
+          0.0,
+          0.0
+        ],
+        "_BaseColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_BottomFadeInRange": [
+          0.0,
+          0.10000000149011612,
+          0.0,
+          0.0
+        ],
+        "_Color": [
+          0.5707547068595886,
+          0.7681748867034912,
+          1.0,
+          1.0
+        ],
+        "_DissolveColorC": [
+          0.800000011920929,
+          0.800000011920929,
+          0.800000011920929,
+          1.0
+        ],
+        "_DissolveColorL": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_DissolveColorR": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "_DissolveWave": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_EmissionColor": [
+          2.0,
+          0.4433962106704712,
+          1.7936406135559082,
+          1.0
+        ],
+        "_FlipbookTileGrid": [
+          2.0,
+          2.0,
+          0.0,
+          0.0
+        ],
+        "_GlobalBackgroundTintColor": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_ParticleColor": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "_RampColorC": [
+          1.0,
+          0.5,
+          0.0,
+          1.0
+        ],
+        "_RampColorL": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "_RampColorR": [
+          1.0,
+          1.0,
+          0.800000011920929,
+          1.0
+        ],
+        "_ShadowColor": [
+          0.20754718780517578,
+          0.20754718780517578,
+          0.20754718780517578,
+          0.0
+        ],
+        "_SpecColor": [
+          0.19999995827674866,
+          0.19999995827674866,
+          0.19999995827674866,
+          1.0
+        ],
+        "_TopFadeOutRange": [
+          0.0,
+          0.30000001192092896,
+          0.0,
+          0.0
+        ]
+      },
+      "unlitness": 1.0,
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1.0,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 0.0,
+      "transparent": true,
+      "depthWrite": false,
+      "alphaToCoverage": false,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "back",
+      "color": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionColor": [
+        2.0,
+        0.4433962106704712,
+        1.7936406135559082,
+        1.0
+      ],
+      "blending": "additive"
+    },
+    {
+      "materialName": "mt_alternative_bg_skyBase",
+      "materialPattern": "^mt_alternative_bg_skyBase(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUberShader",
+      "renderQueue": 1999,
+      "validKeywords": [],
+      "invalidKeywords": [
+        "_NOISE",
+        "_RECEIVESHADOWS_ON",
+        "_USEFADEINOUT_ON",
+        "_USEVATTIME_ON",
+        "_USE_MULTI_UV_SCROLL",
+        "_USE_NOISE"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER"
+      ],
+      "shading": "unlit",
+      "textures": {},
+      "serializedTextures": {
+        "_ComplexNoiseTexture": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/cloud_noise_tex.png",
+          "sourceProperty": "_ComplexNoiseTexture",
+          "sourceTexturePathId": "6159205007759442036",
+          "sourceTextureCab": "CAB-9a63551070f0645e4abb58eef7968ef4",
+          "serializedColorSpace": "linear",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        },
+        "_FadeNoiseTex": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/cloud_noise_tex.png",
+          "sourceProperty": "_FadeNoiseTex",
+          "sourceTexturePathId": "6159205007759442036",
+          "sourceTextureCab": "CAB-9a63551070f0645e4abb58eef7968ef4",
+          "serializedColorSpace": "linear",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        },
+        "_NoiseTex": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/cloud_noise_tex.png",
+          "sourceProperty": "_NoiseTex",
+          "sourceTexturePathId": "6159205007759442036",
+          "sourceTextureCab": "CAB-9a63551070f0645e4abb58eef7968ef4",
+          "serializedColorSpace": "linear",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        },
+        "_ScrollTexture": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/eff_cmn_noise_06.png",
+          "sourceProperty": "_ScrollTexture",
+          "sourceTexturePathId": "-6805565567719759648",
+          "sourceTextureCab": "CAB-5726667de002ce6510aab260a8fcd13d",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        }
+      },
+      "serializedFloats": {
+        "_1stOpacity": 1.0,
+        "_2ndOpacity": 0.6740000247955322,
+        "_Additive_to_Multiply": 0.4000000059604645,
+        "_AlphaClip": 0.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.5,
+        "_ApplyOpacityToRGB": 0.0,
+        "_BaseSetting": 1.0,
+        "_Blend": 1.0,
+        "_Blend2ndNormalStrength": 1.0,
+        "_Blend2ndPow": 1.0,
+        "_Blend2ndTexScale": 1.0,
+        "_Blend2ndTexScaleToggle": 0.0,
+        "_BlendModePreserveSpecular": 1.0,
+        "_BlendNormalStrength": 1.0,
+        "_BlendPow": 1.0,
+        "_BlendTexScale": 1.0,
+        "_BlendTexScaleToggle": 0.0,
+        "_BumpScale": 1.0,
+        "_CastShadows": 0.0,
+        "_ClearCoatMask": 0.0,
+        "_ClearCoatSmoothness": 0.0,
+        "_Cull": 1.0,
+        "_Cutoff": 0.5,
+        "_DetailAlbedoMapScale": 1.0,
+        "_DetailNormalMapScale": 1.0,
+        "_DropFrame_FlowMap": 0.0,
+        "_DropFrame_HueShift": 0.0,
+        "_DropFrame_MultiScroll": 0.0,
+        "_DstBlend": 0.0,
+        "_DstBlendAlpha": 0.0,
+        "_EnvironmentReflections": 1.0,
+        "_FadeNoiseTexTilling": 0.019999999552965164,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FlowMapPow": 1.0,
+        "_FlowSpeed": 0.15000000596046448,
+        "_FogInfluence": 0.0,
+        "_GlossMapScale": 0.0,
+        "_Glossiness": 0.0,
+        "_GlossyReflections": 0.0,
+        "_HueShiftValue": 0.10000000149011612,
+        "_HueShiftValue_MultiUV": 0.0,
+        "_IgnoreScaleFadeRange": 0.0,
+        "_InvertDirection": 0.0,
+        "_IsDitherClipping": 0.0,
+        "_IsSSMapping": 0.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_NoiseIntensity": 1.0,
+        "_NoiseScaling": 0.013000000268220901,
+        "_NormalMap": 1.0,
+        "_NormalStrength": 1.0,
+        "_OcclusionStrength": 1.0,
+        "_Parallax": 0.004999999888241291,
+        "_QueueControl": 0.0,
+        "_QueueOffset": -1.0,
+        "_ReceiveShadows": 1.0,
+        "_ReflectionValue": 0.5,
+        "_RenderingOptions": 1.0,
+        "_ScrollSpeed": 0.05000000074505806,
+        "_ShouldBgGlobalDitherFade": 0.0,
+        "_ShouldSkipGachaDissolve": 0.0,
+        "_Smoothness": 0.0,
+        "_SmoothnessTextureChannel": 0.0,
+        "_SoloRaid": 0.0,
+        "_SoloRaidContrast1": 0.0,
+        "_SoloRaidContrast2": 0.0,
+        "_SoloRaidHue1": 0.0,
+        "_SoloRaidHue2": 0.0,
+        "_SoloRaidInvert1": 0.0,
+        "_SoloRaidInvert2": 0.0,
+        "_SoloRaidSaturation1": 0.0,
+        "_SoloRaidSaturation2": 0.0,
+        "_SoloRaidValue1": 0.0,
+        "_SoloRaidValue2": 0.0,
+        "_SpecularHighlights": 1.0,
+        "_SrcBlend": 1.0,
+        "_SrcBlendAlpha": 1.0,
+        "_Surface": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_FLOW_MAP": 0.0,
+        "_USE_HUE_SHIFT": 0.0,
+        "_USE_MULTI_UV_SCROLL": 0.0,
+        "_USE_NOISE": 0.0,
+        "_USE_PLANARREFLECTION": 1.0,
+        "_USE_UWASA_EFFECT": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseAlphaToSmoothness": 0.0,
+        "_UseFadeInOut": 1.0,
+        "_UseFlipbook": 0.0,
+        "_UseMatCap": 0.0,
+        "_UseMeshUV": 0.0,
+        "_UseSmoothnessMask": 0.0,
+        "_UseSmoothnessMaskMatcap": 0.0,
+        "_UseVAT": 0.0,
+        "_UseVATTime": 1.0,
+        "_UseVColGreen": 0.0,
+        "_UseVColNormal": 0.0,
+        "_UwasaEffectIntensity": 1.0,
+        "_UwasaHueShiftValue": 0.0,
+        "_UwasaTexTileSize": 1.0,
+        "_WorkflowMode": 1.0,
+        "_ZTest": 4.0,
+        "_ZWrite": 1.0,
+        "_ZWriteControl": 0.0,
+        "_exaggeration": 0.0,
+        "_frame": 0.0,
+        "_frames": 0.0,
+        "_frenelPower": 0.0010000000474974513,
+        "_resolutionY": 0.0,
+        "_speed": 1.0
+      },
+      "serializedColors": {
+        "_1stColor": [
+          0.11797761917114258,
+          0.08089885860681534,
+          0.6000000238418579,
+          1.0
+        ],
+        "_1stOffset": [
+          -0.03999999910593033,
+          -0.20000000298023224,
+          0.0,
+          0.0
+        ],
+        "_1stScrollSpeed": [
+          0.05000000074505806,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_1stTilling": [
+          2.0,
+          6.0,
+          0.0,
+          0.0
+        ],
+        "_2ndColor": [
+          0.1833999752998352,
+          0.451036274433136,
+          0.699999988079071,
+          1.0
+        ],
+        "_2ndOffset": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_2ndScrollSpeed": [
+          -0.019999999552965164,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_2ndTilling": [
+          4.0,
+          6.0,
+          0.0,
+          0.0
+        ],
+        "_BaseColor": [
+          0.016999999061226845,
+          0.016999999061226845,
+          0.05000000074505806,
+          1.0
+        ],
+        "_Blend2ndTexScroll": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_Blend2ndTexTillingOffset": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "_BlendTexScroll": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_BlendTexTillingOffset": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "_BottomFadeInRange": [
+          -0.75,
+          0.5,
+          0.0,
+          0.0
+        ],
+        "_Color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_EmissionColor": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "_FlipbookTileGrid": [
+          2.0,
+          2.0,
+          0.0,
+          0.0
+        ],
+        "_ShadowColor": [
+          0.20754718780517578,
+          0.20754718780517578,
+          0.20754718780517578,
+          0.0
+        ],
+        "_SoloRaidColor1": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_SoloRaidColor2": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_SpecColor": [
+          0.19999995827674866,
+          0.19999995827674866,
+          0.19999995827674866,
+          1.0
+        ],
+        "_TopFadeOutRange": [
+          -0.05999999865889549,
+          0.5600000023841858,
+          0.0,
+          0.0
+        ],
+        "_UV_Scroll": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_maxValues": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_minValues": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "unlitness": 1.0,
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1.0,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 0.0,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": false,
+      "castShadow": false,
+      "receiveShadow": true,
+      "side": "back",
+      "color": [
+        0.016999999061226845,
+        0.016999999061226845,
+        0.05000000074505806,
+        1.0
+      ],
+      "emissionColor": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "materialName": "mt_alternative_bg_skyGrad",
+      "materialPattern": "^mt_alternative_bg_skyGrad(?:\\.\\d+)?$",
+      "sourceShader": "Creative/Bg/BgUberShader",
+      "renderQueue": 2990,
+      "validKeywords": [
+        "_MULTI_UV_SCROLL",
+        "_RECEIVE_SHADOWS_OFF",
+        "_SURFACE_TYPE_TRANSPARENT"
+      ],
+      "invalidKeywords": [
+        "_ISDITHERCLIPPING_ON",
+        "_USEVATTIME_ON",
+        "_USE_MULTI_UV_SCROLL"
+      ],
+      "disabledShaderPasses": [
+        "SHADOWCASTER",
+        "DepthOnly"
+      ],
+      "shading": "unlit",
+      "textures": {
+        "base": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/CommonGradation.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "1726707485767080301",
+          "sourceTextureCab": "CAB-5726667de002ce6510aab260a8fcd13d",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "clamp",
+            "v": "clamp"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        }
+      },
+      "serializedTextures": {
+        "_BaseMap": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/CommonGradation.png",
+          "sourceProperty": "_BaseMap",
+          "sourceTexturePathId": "1726707485767080301",
+          "sourceTextureCab": "CAB-5726667de002ce6510aab260a8fcd13d",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "clamp",
+            "v": "clamp"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        },
+        "_ComplexNoiseTexture": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/cloud_noise_tex.png",
+          "sourceProperty": "_ComplexNoiseTexture",
+          "sourceTexturePathId": "6159205007759442036",
+          "sourceTextureCab": "CAB-9a63551070f0645e4abb58eef7968ef4",
+          "serializedColorSpace": "linear",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        },
+        "_FadeNoiseTex": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/cloud_noise_tex.png",
+          "sourceProperty": "_FadeNoiseTex",
+          "sourceTexturePathId": "6159205007759442036",
+          "sourceTextureCab": "CAB-9a63551070f0645e4abb58eef7968ef4",
+          "serializedColorSpace": "linear",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        },
+        "_NoiseTex": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/cloud_noise_tex.png",
+          "sourceProperty": "_NoiseTex",
+          "sourceTexturePathId": "6159205007759442036",
+          "sourceTextureCab": "CAB-9a63551070f0645e4abb58eef7968ef4",
+          "serializedColorSpace": "linear",
+          "colorSpace": "linear",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        },
+        "_ScrollTexture": {
+          "url": "./stages/official/alternative-background-alternative-bg-model-00/eff_dead_noise_01.png",
+          "sourceProperty": "_ScrollTexture",
+          "sourceTexturePathId": "2454532838492221306",
+          "sourceTextureCab": "CAB-5726667de002ce6510aab260a8fcd13d",
+          "serializedColorSpace": "srgb",
+          "colorSpace": "srgb",
+          "coordinates": {
+            "kind": "mesh-uv",
+            "channel": 0
+          },
+          "transform": {
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ]
+          },
+          "wrap": {
+            "u": "repeat",
+            "v": "repeat"
+          },
+          "filter": "bilinear",
+          "anisotropy": 1,
+          "mipBias": 0.0,
+          "mipCount": 1,
+          "evidence": "exact-unity-texture2d"
+        }
+      },
+      "serializedFloats": {
+        "_1stOpacity": 1.0,
+        "_2ndOpacity": 1.0,
+        "_Additive_to_Multiply": 0.0,
+        "_Alpha": 1.0,
+        "_AlphaClip": 0.0,
+        "_AlphaIsGrayScale": 0.0,
+        "_AlphaIsGrayScale2": 0.0,
+        "_AlphaIsRChannel": 0.0,
+        "_AlphaSmoothMax": 1.0,
+        "_AlphaSmoothMin": 0.0,
+        "_AlphaToMask": 0.0,
+        "_Alpha_Clip": 0.5,
+        "_ApplyOpacityToRGB": 0.0,
+        "_BaseSetting": 1.0,
+        "_Blend": 2.0,
+        "_Blend2ndNormalStrength": 1.0,
+        "_Blend2ndPow": 1.0,
+        "_Blend2ndTexScale": 1.0,
+        "_Blend2ndTexScaleToggle": 0.0,
+        "_BlendModePreserveSpecular": 0.0,
+        "_BlendNormalStrength": 1.0,
+        "_BlendPow": 1.0,
+        "_BlendTexScale": 1.0,
+        "_BlendTexScaleToggle": 0.0,
+        "_Blightness": 1.0,
+        "_BumpScale": 1.0,
+        "_CastShadows": 0.0,
+        "_ClearCoatMask": 0.0,
+        "_ClearCoatSmoothness": 0.0,
+        "_Cull": 1.0,
+        "_Culling": 0.0,
+        "_Cutoff": 0.5,
+        "_DetailAlbedoMapScale": 1.0,
+        "_DetailNormalMapScale": 1.0,
+        "_DissolveBrightness": 1.0,
+        "_DissolveCenterPos": 0.699999988079071,
+        "_DissolveProgress": 1.0,
+        "_DissolveRange": 0.0010000000474974513,
+        "_DissolveScrollType": 0.0,
+        "_DissolveScrollX": 0.0,
+        "_DissolveScrollY": 0.0,
+        "_DissolveSmoothMax": 1.0,
+        "_DissolveSmoothMin": 0.0,
+        "_DissolveTexBlightnessOffset": 0.0,
+        "_DissolveTexSmoothRange": 0.0010000000474974513,
+        "_DropFrame_FlowMap": 0.0,
+        "_DropFrame_HueShift": 0.0,
+        "_DropFrame_MultiScroll": 0.0,
+        "_DstBlend": 1.0,
+        "_DstBlendAlpha": 0.0,
+        "_EnvironmentReflections": 1.0,
+        "_FadeNoiseTexTilling": 2.0,
+        "_FlipbookFrameRate": 8.0,
+        "_FlipbookOffset": 0.0,
+        "_FlowMapPow": 1.0,
+        "_FlowSpeed": 0.15000000596046448,
+        "_FogInfluence": 0.0,
+        "_GlossMapScale": 0.0,
+        "_Glossiness": 0.0,
+        "_GlossyReflections": 0.0,
+        "_HueShiftValue": 0.19599999487400055,
+        "_HueShiftValue_MultiUV": 0.0,
+        "_IgnoreScaleFadeRange": 0.0,
+        "_InvertDirection": 0.0,
+        "_IsColorWhite": 0.0,
+        "_IsCommonParticle": 0.0,
+        "_IsCustomData1w": 0.0,
+        "_IsDissolve": 0.0,
+        "_IsDissolveColor": 0.0,
+        "_IsDissolveTex": 0.0,
+        "_IsDitherClipping": 1.0,
+        "_IsMask": 1.0,
+        "_IsMaskTex": 0.0,
+        "_IsMaskTwoBlend": 0.0,
+        "_IsRampTex": 0.0,
+        "_IsSSMapping": 0.0,
+        "_IsSecondMap": 0.0,
+        "_IsSecondMask": 0.0,
+        "_IsSecondWave": 0.0,
+        "_IsSecondWaveTex": 0.0,
+        "_IsSoftParticle": 0.0,
+        "_IsTex2AlphaMask": 0.0,
+        "_IsTex2BlendMultiply": 0.0,
+        "_IsWave": 0.0,
+        "_MainTexScrollX": 0.0,
+        "_MainTexScrollY": 0.0,
+        "_Mask1ScrollType": 0.0,
+        "_Mask2ScrollType": 0.0,
+        "_MaskScrollX": 0.0,
+        "_MaskScrollY": 0.0,
+        "_MaskTwoScrollBlend": 0.5,
+        "_MaskTwoScrollScaleX": 2.0,
+        "_MaskTwoScrollScaleY": 2.0,
+        "_MaskTwoScrollX": 1.0,
+        "_MaskTwoScrollY": 1.0,
+        "_MatCapIntensity": 1.0,
+        "_Metallic": 0.0,
+        "_MultipliedAlpha": 0.0,
+        "_NoiseIntensity": 1.0,
+        "_NoiseScaling": 0.003000000026077032,
+        "_NormalMap": 1.0,
+        "_NormalStrength": 1.0,
+        "_OcclusionStrength": 1.0,
+        "_Parallax": 0.004999999888241291,
+        "_ParticleInAlpha": 1.0,
+        "_ParticleInRadius": 0.10000000149011612,
+        "_ParticleOutAlpha": 0.30000001192092896,
+        "_QueueControl": 0.0,
+        "_QueueOffset": -10.0,
+        "_Ramp": 0.0,
+        "_RampAlpha": 1.0,
+        "_RampCenterPos": 0.5,
+        "_RampCentor": 0.0,
+        "_RampSmoothMax": 1.0,
+        "_RampSmoothMin": 0.0,
+        "_ReceiveShadows": 0.0,
+        "_ReflectionValue": 0.5,
+        "_RenderingOptions": 1.0,
+        "_ScrollSpeed": 0.05000000074505806,
+        "_SecondBlend": 1.0,
+        "_SecondBlightness": 1.0,
+        "_SecondMaskScrollX": 0.0,
+        "_SecondMaskScrollY": 0.0,
+        "_SecondWaveTexBlightnessOffset": 0.0,
+        "_SecondWaveTexSmoothMax": 1.0,
+        "_SecondWaveTexSmoothMin": 0.0,
+        "_ShouldBgGlobalDitherFade": 0.0,
+        "_ShouldSkipGachaDissolve": 0.0,
+        "_Smoothness": 0.0,
+        "_SmoothnessTextureChannel": 0.0,
+        "_SoloRaid": 0.0,
+        "_SoloRaidContrast1": 0.0,
+        "_SoloRaidContrast2": 0.0,
+        "_SoloRaidHue1": 0.0,
+        "_SoloRaidHue2": 0.0,
+        "_SoloRaidInvert1": 0.0,
+        "_SoloRaidInvert2": 0.0,
+        "_SoloRaidSaturation1": 0.0,
+        "_SoloRaidSaturation2": 0.0,
+        "_SoloRaidValue1": 0.0,
+        "_SoloRaidValue2": 0.0,
+        "_SpecularHighlights": 1.0,
+        "_SrcBlend": 5.0,
+        "_SrcBlendAlpha": 1.0,
+        "_Stencil": 0.0,
+        "_StencilComp": 8.0,
+        "_StencilOp": 0.0,
+        "_Surface": 1.0,
+        "_SurfaceFadeFar": 1.0,
+        "_SurfaceFadeNear": 0.0,
+        "_Tex1ScrollType": 0.0,
+        "_Tex2ScrollType": 0.0,
+        "_USE_BILLBOARD": 0.0,
+        "_USE_FLOW_MAP": 0.0,
+        "_USE_HUE_SHIFT": 0.0,
+        "_USE_MULTI_UV_SCROLL": 1.0,
+        "_USE_NOISE": 0.0,
+        "_USE_PLANARREFLECTION": 1.0,
+        "_USE_UWASA_EFFECT": 0.0,
+        "_USE_VERTEX_COLOR_BLEND": 0.0,
+        "_Unlitness": 1.0,
+        "_UseAlphaToSmoothness": 0.0,
+        "_UseFadeInOut": 0.0,
+        "_UseFlipbook": 0.0,
+        "_UseMatCap": 0.0,
+        "_UseMeshUV": 0.0,
+        "_UseSmoothnessMask": 0.0,
+        "_UseSmoothnessMaskMatcap": 0.0,
+        "_UseVAT": 0.0,
+        "_UseVATTime": 1.0,
+        "_UseVColGreen": 0.0,
+        "_UseVColNormal": 0.0,
+        "_UwasaEffectIntensity": 1.0,
+        "_UwasaHueShiftValue": 0.0,
+        "_UwasaTexTileSize": 1.0,
+        "_WaveRange": 0.05000000074505806,
+        "_WaveTexBlightnessOffset": 0.0,
+        "_WaveTexBlightnessOffsetSub": 0.0,
+        "_WaveTexScrollSpeedX": 0.0,
+        "_WaveTexScrollSpeedY": 0.0,
+        "_WaveTexSmoothMax": 0.25,
+        "_WaveTexSmoothMin": 0.0,
+        "_WorkflowMode": 1.0,
+        "_ZOffset": 0.0,
+        "_ZTest": 4.0,
+        "_ZWrite": 0.0,
+        "_ZWriteControl": 0.0,
+        "_exaggeration": 0.0,
+        "_frame": 0.0,
+        "_frames": 0.0,
+        "_frenelPower": 0.0010000000474974513,
+        "_resolutionY": 0.0,
+        "_speed": 1.0
+      },
+      "serializedColors": {
+        "_1stColor": [
+          0.0,
+          0.698113203048706,
+          0.4626201093196869,
+          1.0
+        ],
+        "_1stOffset": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_1stScrollSpeed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_1stTilling": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "_2ndColor": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "_2ndOffset": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_2ndScrollSpeed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_2ndTilling": [
+          4.0,
+          4.0,
+          0.0,
+          0.0
+        ],
+        "_BaseColor": [
+          0.18765044212341309,
+          0.4541143774986267,
+          0.6229999661445618,
+          1.0
+        ],
+        "_Blend2ndTexScroll": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_Blend2ndTexTillingOffset": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "_BlendTexScroll": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_BlendTexTillingOffset": [
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "_BottomFadeInRange": [
+          0.0,
+          0.10000000149011612,
+          0.0,
+          0.0
+        ],
+        "_Color": [
+          0.10715557634830475,
+          0.4085552990436554,
+          0.5283018946647644,
+          1.0
+        ],
+        "_DissolveColorC": [
+          0.800000011920929,
+          0.800000011920929,
+          0.800000011920929,
+          1.0
+        ],
+        "_DissolveColorL": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_DissolveColorR": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "_DissolveWave": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_EmissionColor": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "_FlipbookTileGrid": [
+          2.0,
+          2.0,
+          0.0,
+          0.0
+        ],
+        "_ParticleColor": [
+          1.0,
+          1.0,
+          1.0,
+          0.0
+        ],
+        "_RampColorC": [
+          1.0,
+          0.5,
+          0.0,
+          1.0
+        ],
+        "_RampColorL": [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "_RampColorR": [
+          1.0,
+          1.0,
+          0.800000011920929,
+          1.0
+        ],
+        "_ShadowColor": [
+          0.20754718780517578,
+          0.20754718780517578,
+          0.20754718780517578,
+          0.0
+        ],
+        "_SoloRaidColor1": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_SoloRaidColor2": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "_SpecColor": [
+          0.19999995827674866,
+          0.19999995827674866,
+          0.19999995827674866,
+          1.0
+        ],
+        "_TopFadeOutRange": [
+          0.0,
+          0.30000001192092896,
+          0.0,
+          0.0
+        ],
+        "_UV_Scroll": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_maxValues": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "_minValues": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "unlitness": 1.0,
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1.0,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 0.0,
+      "transparent": true,
+      "depthWrite": false,
+      "alphaToCoverage": false,
+      "castShadow": false,
+      "receiveShadow": false,
+      "side": "back",
+      "color": [
+        0.18765044212341309,
+        0.4541143774986267,
+        0.6229999661445618,
+        1.0
+      ],
+      "emissionColor": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "blending": "additive"
+    },
+    {
+      "materialName": "SkyBox_alternative_bg",
+      "materialPattern": "^SkyBox_alternative_bg(?:\\.\\d+)?$",
+      "sourceShader": "Skybox/Cubemap",
+      "renderQueue": -1,
+      "validKeywords": [],
+      "invalidKeywords": [
+        "_SUNDISK_HIGH_QUALITY"
+      ],
+      "disabledShaderPasses": [],
+      "shading": "lit",
+      "textures": {},
+      "serializedTextures": {},
+      "serializedFloats": {
+        "_Exposure": 1.0,
+        "_Rotation": 327.0
+      },
+      "serializedColors": {
+        "_Tint": [
+          0.25,
+          0.30084753036499023,
+          0.5,
+          1.0
+        ]
+      },
+      "unlitness": 0.0,
+      "smoothness": 0.0,
+      "metallic": 0.0,
+      "normalScale": 1.0,
+      "vertexColorBlend": false,
+      "metallicFromSmoothnessMap": false,
+      "smoothnessFromBaseAlpha": false,
+      "smoothnessChannel": "a",
+      "matCapIntensity": 1.0,
+      "useMatCap": false,
+      "useSmoothnessMaskMatCap": false,
+      "fogInfluence": 1.0,
+      "transparent": false,
+      "depthWrite": true,
+      "alphaToCoverage": false,
+      "castShadow": true,
+      "receiveShadow": true,
+      "side": "front"
+    }
+  ],
+  "sourceRecords": {
+    "stageCab": "CAB-5726667de002ce6510aab260a8fcd13d",
+    "closureManifest": "authority:official-scene-closures.v2#AssetBundles/alternative_story/3d/background/alternative_bg_model_00",
+    "closureMode": "staged-copy",
+    "closureFileCount": 4,
+    "closureBytes": 4256694,
+    "objectTypeCounts": {
+      "Animator": 1,
+      "AssetBundle": 1,
+      "Cubemap": 3,
+      "GameObject": 12,
+      "Light": 1,
+      "Material": 4,
+      "Mesh": 3,
+      "MeshFilter": 3,
+      "MeshRenderer": 3,
+      "MonoBehaviour": 11,
+      "MonoScript": 11,
+      "ReflectionProbe": 1,
+      "Shader": 1,
+      "Texture2D": 4,
+      "Transform": 12
+    },
+    "lights": [
+      {
+        "pathID": "-3124754180289886151",
+        "name": "Directional Light",
+        "hierarchyPath": "alternative_bg_model_00/Light/Directional Light",
+        "activeSelf": true,
+        "active": true,
+        "enabled": true,
+        "type": "directional",
+        "color": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "intensity": 1.0,
+        "range": 10.0,
+        "outerAngleDegrees": 30.0,
+        "innerAngleDegrees": 21.802080154418945,
+        "cullingMask": 64,
+        "lightmapping": 1,
+        "worldPosition": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "worldForward": [
+          0.4623827148249022,
+          -0.6946582519929669,
+          0.5510464027368557
+        ],
+        "target": [
+          0.4623827148249022,
+          -0.6946582519929669,
+          0.5510464027368557
+        ],
+        "shadow": {
+          "type": 0,
+          "strength": 1.0,
+          "bias": 0.05000000074505806,
+          "normalBias": 0.4000000059604645,
+          "nearPlane": 0.20000000298023224
+        },
+        "additionalLightData": {
+          "renderingLayers": 1,
+          "lightLayerMask": 1,
+          "shadowResolutionTier": 2,
+          "softShadowQuality": 0
+        },
+        "role": "background"
+      }
+    ],
+    "materials": [
+      {
+        "pathID": "-6797200875551192176",
+        "name": "mt_alternative_bg_skyStar",
+        "customRenderQueue": 2900,
+        "shader": {
+          "fileID": 1,
+          "pathID": "571225764471716680",
+          "resolved": true,
+          "type": "Shader",
+          "name": "Creative/Effect/Particle/Common",
+          "cab": "CAB-f2e9366668ef89a41c565dd5c95a30c3"
+        },
+        "validKeywords": [
+          "IS_MASK_TEX"
+        ],
+        "invalidKeywords": [
+          "KEY1",
+          "_CULLING_OFF",
+          "_ISMASK_ON",
+          "_RAMPALPHA_ON",
+          "_SURFACE_TYPE_TRANSPARENT"
+        ],
+        "legacyShaderKeywords": null,
+        "textures": {
+          "_DissolveRamp": {
+            "property": "_DissolveRamp",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_DissolveTex": {
+            "property": "_DissolveTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_MainTex": {
+            "property": "_MainTex",
+            "scale": [
+              3.0,
+              3.0
+            ],
+            "offset": [
+              0.0,
+              -1.399999976158142
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_RampTex": {
+            "property": "_RampTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_SecondTex": {
+            "property": "_SecondTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_SecondWaveTex": {
+            "property": "_SecondWaveTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_WaveTex": {
+            "property": "_WaveTex",
+            "scale": [
+              3.0,
+              3.0
+            ],
+            "offset": [
+              0.0,
+              -1.399999976158142
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "-8078728616342554956",
+              "resolved": true,
+              "type": "Texture2D",
+              "name": "alternative_bg_skyStar",
+              "cab": "CAB-5726667de002ce6510aab260a8fcd13d"
+            }
+          }
+        },
+        "floats": {
+          "_1stOpacity": 0.30000001192092896,
+          "_2ndOpacity": 0.30000001192092896,
+          "_Additive_to_Multiply": 0.0,
+          "_Alpha": 1.0,
+          "_AlphaClip": 0.0,
+          "_AlphaIsGrayScale": 0.0,
+          "_AlphaIsGrayScale2": 0.0,
+          "_AlphaIsRChannel": 0.0,
+          "_AlphaSmoothMax": 1.0,
+          "_AlphaSmoothMin": 0.0,
+          "_AlphaToMask": 0.0,
+          "_Alpha_Clip": 0.5,
+          "_Blend": 2.0,
+          "_BlendModePreserveSpecular": 0.0,
+          "_BlendPow": 1.0,
+          "_BlendTexScale": 1.0,
+          "_Blightness": 5.0,
+          "_BumpScale": 1.0,
+          "_CastShadows": 0.0,
+          "_ClearCoatMask": 0.0,
+          "_ClearCoatSmoothness": 0.0,
+          "_ColorMask": 14.0,
+          "_Cull": 1.0,
+          "_Culling": 0.0,
+          "_Cutoff": 0.5,
+          "_DetailAlbedoMapScale": 1.0,
+          "_DetailNormalMapScale": 1.0,
+          "_DissolveBrightness": 1.0,
+          "_DissolveCenterPos": 0.699999988079071,
+          "_DissolveProgress": 1.0,
+          "_DissolveRange": 0.0010000000474974513,
+          "_DissolveScrollType": 0.0,
+          "_DissolveScrollX": 0.0,
+          "_DissolveScrollY": 0.0,
+          "_DissolveSmoothMax": 1.0,
+          "_DissolveSmoothMin": 0.0,
+          "_DissolveTexBlightnessOffset": 0.0,
+          "_DissolveTexSmoothRange": 0.0010000000474974513,
+          "_DropFrame_FlowMap": 0.0,
+          "_DropFrame_HueShift": 0.0,
+          "_DropFrame_MultiScroll": 0.0,
+          "_DstBlend": 1.0,
+          "_DstBlendAlpha": 0.0,
+          "_EnvironmentReflections": 1.0,
+          "_FadeNoiseTexTilling": 2.0,
+          "_FlipbookFrameRate": 8.0,
+          "_FlipbookOffset": 0.0,
+          "_FlowMapPow": 1.0,
+          "_FlowSpeed": 0.15000000596046448,
+          "_FogInfluence": 0.0,
+          "_GlossMapScale": 0.0,
+          "_Glossiness": 0.0,
+          "_GlossyReflections": 0.0,
+          "_HueShiftValue": 0.19599999487400055,
+          "_HueShiftValue_MultiUV": 0.04699999839067459,
+          "_InvertDirection": 0.0,
+          "_IsColorWhite": 0.0,
+          "_IsCommonParticle": 0.0,
+          "_IsCustomData1w": 0.0,
+          "_IsDissolve": 0.0,
+          "_IsDissolveColor": 0.0,
+          "_IsDissolveTex": 0.0,
+          "_IsDitherClipping": 1.0,
+          "_IsGlobalBackgroundTintColor": 0.0,
+          "_IsMask": 1.0,
+          "_IsMaskTex": 1.0,
+          "_IsMaskTwoBlend": 0.0,
+          "_IsRampTex": 0.0,
+          "_IsSSMapping": 0.0,
+          "_IsSecondMap": 0.0,
+          "_IsSecondMask": 0.0,
+          "_IsSecondWave": 0.0,
+          "_IsSecondWaveTex": 0.0,
+          "_IsSoftParticle": 0.0,
+          "_IsTex2AlphaMask": 0.0,
+          "_IsTex2BlendMultiply": 0.0,
+          "_IsWave": 0.0,
+          "_MainTexScrollX": 0.0,
+          "_MainTexScrollY": 0.0,
+          "_Mask1ScrollType": 0.0,
+          "_Mask2ScrollType": 0.0,
+          "_MaskScrollX": 0.0,
+          "_MaskScrollY": 0.0,
+          "_MaskTwoScrollBlend": 0.5,
+          "_MaskTwoScrollScaleX": 2.0,
+          "_MaskTwoScrollScaleY": 2.0,
+          "_MaskTwoScrollX": 1.0,
+          "_MaskTwoScrollY": 1.0,
+          "_Metallic": 0.0,
+          "_MultipliedAlpha": 0.0,
+          "_NoiseIntensity": 1.0,
+          "_NoiseScaling": 1.0,
+          "_NormalStrength": 1.0,
+          "_OcclusionStrength": 1.0,
+          "_Parallax": 0.004999999888241291,
+          "_ParticleInAlpha": 1.0,
+          "_ParticleInRadius": 0.10000000149011612,
+          "_ParticleOutAlpha": 0.30000001192092896,
+          "_QueueControl": 0.0,
+          "_QueueOffset": 0.0,
+          "_Ramp": 0.0,
+          "_RampAlpha": 1.0,
+          "_RampCenterPos": 0.5,
+          "_RampCentor": 0.0,
+          "_RampSmoothMax": 1.0,
+          "_RampSmoothMin": 0.0,
+          "_ReceiveShadows": 0.0,
+          "_ReflectionValue": 0.5,
+          "_ScrollSpeed": 0.05000000074505806,
+          "_SecondBlend": 1.0,
+          "_SecondBlightness": 1.0,
+          "_SecondMaskScrollX": 0.0,
+          "_SecondMaskScrollY": 0.0,
+          "_SecondTexScrollX": 0.0,
+          "_SecondTexScrollY": 0.0,
+          "_SecondWaveTexBlightnessOffset": 0.0,
+          "_SecondWaveTexSmoothMax": 1.0,
+          "_SecondWaveTexSmoothMin": 0.0,
+          "_Smoothness": 0.0,
+          "_SmoothnessTextureChannel": 0.0,
+          "_SpecularHighlights": 1.0,
+          "_SrcBlend": 5.0,
+          "_SrcBlendAlpha": 1.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_Surface": 1.0,
+          "_SurfaceFadeFar": 1.0,
+          "_SurfaceFadeNear": 0.0,
+          "_Tex1ScrollType": 0.0,
+          "_Tex2ScrollType": 0.0,
+          "_USE_BILLBOARD": 0.0,
+          "_USE_FLOW_MAP": 0.0,
+          "_USE_HUE_SHIFT": 0.0,
+          "_USE_MULTI_UV_SCROLL": 0.0,
+          "_USE_NOISE": 0.0,
+          "_USE_PLANARREFLECTION": 1.0,
+          "_USE_UWASA_EFFECT": 0.0,
+          "_USE_VERTEX_COLOR_BLEND": 0.0,
+          "_Unlitness": 1.0,
+          "_UseAlphaToSmoothness": 0.0,
+          "_UseFadeInOut": 1.0,
+          "_UseFlipbook": 0.0,
+          "_UseMeshUV": 0.0,
+          "_UseSmoothnessMask": 0.0,
+          "_UwasaEffectIntensity": 1.0,
+          "_UwasaHueShiftValue": 0.0,
+          "_UwasaTexTileSize": 1.0,
+          "_WaveRange": 0.05000000074505806,
+          "_WaveTexBlightnessOffset": 0.0,
+          "_WaveTexBlightnessOffsetSub": 0.0,
+          "_WaveTexScrollSpeedX": 0.0,
+          "_WaveTexScrollSpeedY": 0.0,
+          "_WaveTexSmoothMax": 0.25,
+          "_WaveTexSmoothMin": 0.0,
+          "_WorkflowMode": 1.0,
+          "_ZOffset": 0.0,
+          "_ZTest": 4.0,
+          "_ZWrite": 0.0,
+          "_ZWriteControl": 0.0,
+          "_frenelPower": 0.0010000000474974513
+        },
+        "colors": {
+          "_1stColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_1stOffset": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_1stScrollSpeed": [
+            0.019999999552965164,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_1stTilling": [
+            6.0,
+            6.0,
+            0.0,
+            0.0
+          ],
+          "_2ndColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_2ndOffset": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_2ndScrollSpeed": [
+            -0.019999999552965164,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_2ndTilling": [
+            4.0,
+            4.0,
+            0.0,
+            0.0
+          ],
+          "_BaseColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_BottomFadeInRange": [
+            0.0,
+            0.10000000149011612,
+            0.0,
+            0.0
+          ],
+          "_Color": [
+            0.5707547068595886,
+            0.7681748867034912,
+            1.0,
+            1.0
+          ],
+          "_DissolveColorC": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ],
+          "_DissolveColorL": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_DissolveColorR": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_DissolveWave": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_EmissionColor": [
+            2.0,
+            0.4433962106704712,
+            1.7936406135559082,
+            1.0
+          ],
+          "_FlipbookTileGrid": [
+            2.0,
+            2.0,
+            0.0,
+            0.0
+          ],
+          "_GlobalBackgroundTintColor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_ParticleColor": [
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "_RampColorC": [
+            1.0,
+            0.5,
+            0.0,
+            1.0
+          ],
+          "_RampColorL": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_RampColorR": [
+            1.0,
+            1.0,
+            0.800000011920929,
+            1.0
+          ],
+          "_ShadowColor": [
+            0.20754718780517578,
+            0.20754718780517578,
+            0.20754718780517578,
+            0.0
+          ],
+          "_SpecColor": [
+            0.19999995827674866,
+            0.19999995827674866,
+            0.19999995827674866,
+            1.0
+          ],
+          "_TopFadeOutRange": [
+            0.0,
+            0.30000001192092896,
+            0.0,
+            0.0
+          ]
+        },
+        "disabledShaderPasses": [
+          "SHADOWCASTER",
+          "DepthOnly"
+        ]
+      },
+      {
+        "pathID": "-6092845996543315547",
+        "name": "mt_alternative_bg_skyBase",
+        "customRenderQueue": 1999,
+        "shader": {
+          "fileID": 2,
+          "pathID": "7496099449604649442",
+          "resolved": true,
+          "type": "Shader",
+          "name": "Creative/Bg/BgUberShader",
+          "cab": "CAB-ec2e80ff75c4cc36a05f983c0d29e1b6"
+        },
+        "validKeywords": [],
+        "invalidKeywords": [
+          "_NOISE",
+          "_RECEIVESHADOWS_ON",
+          "_USEFADEINOUT_ON",
+          "_USEVATTIME_ON",
+          "_USE_MULTI_UV_SCROLL",
+          "_USE_NOISE"
+        ],
+        "legacyShaderKeywords": null,
+        "textures": {
+          "_BaseMap": {
+            "property": "_BaseMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_Blend2ndBumpMap": {
+            "property": "_Blend2ndBumpMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_Blend2ndTex": {
+            "property": "_Blend2ndTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_BlendBumpMap": {
+            "property": "_BlendBumpMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_BlendTex": {
+            "property": "_BlendTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_BumpMap": {
+            "property": "_BumpMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_ComplexNoiseTexture": {
+            "property": "_ComplexNoiseTexture",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 3,
+              "pathID": "6159205007759442036",
+              "resolved": true,
+              "type": "Texture2D",
+              "name": "cloud_noise_tex",
+              "cab": "CAB-9a63551070f0645e4abb58eef7968ef4"
+            }
+          },
+          "_EmissionMap": {
+            "property": "_EmissionMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_FadeNoiseTex": {
+            "property": "_FadeNoiseTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 3,
+              "pathID": "6159205007759442036",
+              "resolved": true,
+              "type": "Texture2D",
+              "name": "cloud_noise_tex",
+              "cab": "CAB-9a63551070f0645e4abb58eef7968ef4"
+            }
+          },
+          "_FlowMap": {
+            "property": "_FlowMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_MatCapTex": {
+            "property": "_MatCapTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_MetallicGlossMap": {
+            "property": "_MetallicGlossMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_NoiseTex": {
+            "property": "_NoiseTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 3,
+              "pathID": "6159205007759442036",
+              "resolved": true,
+              "type": "Texture2D",
+              "name": "cloud_noise_tex",
+              "cab": "CAB-9a63551070f0645e4abb58eef7968ef4"
+            }
+          },
+          "_ScrollTexture": {
+            "property": "_ScrollTexture",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "-6805565567719759648",
+              "resolved": true,
+              "type": "Texture2D",
+              "name": "eff_cmn_noise_06",
+              "cab": "CAB-5726667de002ce6510aab260a8fcd13d"
+            }
+          },
+          "_SoloRaidMask": {
+            "property": "_SoloRaidMask",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_UwasaHibiTex": {
+            "property": "_UwasaHibiTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_openVAT_main": {
+            "property": "_openVAT_main",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "unity_Lightmaps": {
+            "property": "unity_Lightmaps",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "unity_LightmapsInd": {
+            "property": "unity_LightmapsInd",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "unity_ShadowMasks": {
+            "property": "unity_ShadowMasks",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          }
+        },
+        "floats": {
+          "_1stOpacity": 1.0,
+          "_2ndOpacity": 0.6740000247955322,
+          "_Additive_to_Multiply": 0.4000000059604645,
+          "_AlphaClip": 0.0,
+          "_AlphaToMask": 0.0,
+          "_Alpha_Clip": 0.5,
+          "_ApplyOpacityToRGB": 0.0,
+          "_BaseSetting": 1.0,
+          "_Blend": 1.0,
+          "_Blend2ndNormalStrength": 1.0,
+          "_Blend2ndPow": 1.0,
+          "_Blend2ndTexScale": 1.0,
+          "_Blend2ndTexScaleToggle": 0.0,
+          "_BlendModePreserveSpecular": 1.0,
+          "_BlendNormalStrength": 1.0,
+          "_BlendPow": 1.0,
+          "_BlendTexScale": 1.0,
+          "_BlendTexScaleToggle": 0.0,
+          "_BumpScale": 1.0,
+          "_CastShadows": 0.0,
+          "_ClearCoatMask": 0.0,
+          "_ClearCoatSmoothness": 0.0,
+          "_Cull": 1.0,
+          "_Cutoff": 0.5,
+          "_DetailAlbedoMapScale": 1.0,
+          "_DetailNormalMapScale": 1.0,
+          "_DropFrame_FlowMap": 0.0,
+          "_DropFrame_HueShift": 0.0,
+          "_DropFrame_MultiScroll": 0.0,
+          "_DstBlend": 0.0,
+          "_DstBlendAlpha": 0.0,
+          "_EnvironmentReflections": 1.0,
+          "_FadeNoiseTexTilling": 0.019999999552965164,
+          "_FlipbookFrameRate": 8.0,
+          "_FlipbookOffset": 0.0,
+          "_FlowMapPow": 1.0,
+          "_FlowSpeed": 0.15000000596046448,
+          "_FogInfluence": 0.0,
+          "_GlossMapScale": 0.0,
+          "_Glossiness": 0.0,
+          "_GlossyReflections": 0.0,
+          "_HueShiftValue": 0.10000000149011612,
+          "_HueShiftValue_MultiUV": 0.0,
+          "_IgnoreScaleFadeRange": 0.0,
+          "_InvertDirection": 0.0,
+          "_IsDitherClipping": 0.0,
+          "_IsSSMapping": 0.0,
+          "_MatCapIntensity": 1.0,
+          "_Metallic": 0.0,
+          "_NoiseIntensity": 1.0,
+          "_NoiseScaling": 0.013000000268220901,
+          "_NormalMap": 1.0,
+          "_NormalStrength": 1.0,
+          "_OcclusionStrength": 1.0,
+          "_Parallax": 0.004999999888241291,
+          "_QueueControl": 0.0,
+          "_QueueOffset": -1.0,
+          "_ReceiveShadows": 1.0,
+          "_ReflectionValue": 0.5,
+          "_RenderingOptions": 1.0,
+          "_ScrollSpeed": 0.05000000074505806,
+          "_ShouldBgGlobalDitherFade": 0.0,
+          "_ShouldSkipGachaDissolve": 0.0,
+          "_Smoothness": 0.0,
+          "_SmoothnessTextureChannel": 0.0,
+          "_SoloRaid": 0.0,
+          "_SoloRaidContrast1": 0.0,
+          "_SoloRaidContrast2": 0.0,
+          "_SoloRaidHue1": 0.0,
+          "_SoloRaidHue2": 0.0,
+          "_SoloRaidInvert1": 0.0,
+          "_SoloRaidInvert2": 0.0,
+          "_SoloRaidSaturation1": 0.0,
+          "_SoloRaidSaturation2": 0.0,
+          "_SoloRaidValue1": 0.0,
+          "_SoloRaidValue2": 0.0,
+          "_SpecularHighlights": 1.0,
+          "_SrcBlend": 1.0,
+          "_SrcBlendAlpha": 1.0,
+          "_Surface": 0.0,
+          "_USE_BILLBOARD": 0.0,
+          "_USE_FLOW_MAP": 0.0,
+          "_USE_HUE_SHIFT": 0.0,
+          "_USE_MULTI_UV_SCROLL": 0.0,
+          "_USE_NOISE": 0.0,
+          "_USE_PLANARREFLECTION": 1.0,
+          "_USE_UWASA_EFFECT": 0.0,
+          "_USE_VERTEX_COLOR_BLEND": 0.0,
+          "_Unlitness": 1.0,
+          "_UseAlphaToSmoothness": 0.0,
+          "_UseFadeInOut": 1.0,
+          "_UseFlipbook": 0.0,
+          "_UseMatCap": 0.0,
+          "_UseMeshUV": 0.0,
+          "_UseSmoothnessMask": 0.0,
+          "_UseSmoothnessMaskMatcap": 0.0,
+          "_UseVAT": 0.0,
+          "_UseVATTime": 1.0,
+          "_UseVColGreen": 0.0,
+          "_UseVColNormal": 0.0,
+          "_UwasaEffectIntensity": 1.0,
+          "_UwasaHueShiftValue": 0.0,
+          "_UwasaTexTileSize": 1.0,
+          "_WorkflowMode": 1.0,
+          "_ZTest": 4.0,
+          "_ZWrite": 1.0,
+          "_ZWriteControl": 0.0,
+          "_exaggeration": 0.0,
+          "_frame": 0.0,
+          "_frames": 0.0,
+          "_frenelPower": 0.0010000000474974513,
+          "_resolutionY": 0.0,
+          "_speed": 1.0
+        },
+        "colors": {
+          "_1stColor": [
+            0.11797761917114258,
+            0.08089885860681534,
+            0.6000000238418579,
+            1.0
+          ],
+          "_1stOffset": [
+            -0.03999999910593033,
+            -0.20000000298023224,
+            0.0,
+            0.0
+          ],
+          "_1stScrollSpeed": [
+            0.05000000074505806,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_1stTilling": [
+            2.0,
+            6.0,
+            0.0,
+            0.0
+          ],
+          "_2ndColor": [
+            0.1833999752998352,
+            0.451036274433136,
+            0.699999988079071,
+            1.0
+          ],
+          "_2ndOffset": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_2ndScrollSpeed": [
+            -0.019999999552965164,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_2ndTilling": [
+            4.0,
+            6.0,
+            0.0,
+            0.0
+          ],
+          "_BaseColor": [
+            0.016999999061226845,
+            0.016999999061226845,
+            0.05000000074505806,
+            1.0
+          ],
+          "_Blend2ndTexScroll": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_Blend2ndTexTillingOffset": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "_BlendTexScroll": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_BlendTexTillingOffset": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "_BottomFadeInRange": [
+            -0.75,
+            0.5,
+            0.0,
+            0.0
+          ],
+          "_Color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_EmissionColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_FlipbookTileGrid": [
+            2.0,
+            2.0,
+            0.0,
+            0.0
+          ],
+          "_ShadowColor": [
+            0.20754718780517578,
+            0.20754718780517578,
+            0.20754718780517578,
+            0.0
+          ],
+          "_SoloRaidColor1": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_SoloRaidColor2": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_SpecColor": [
+            0.19999995827674866,
+            0.19999995827674866,
+            0.19999995827674866,
+            1.0
+          ],
+          "_TopFadeOutRange": [
+            -0.05999999865889549,
+            0.5600000023841858,
+            0.0,
+            0.0
+          ],
+          "_UV_Scroll": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_maxValues": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_minValues": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "disabledShaderPasses": [
+          "SHADOWCASTER"
+        ]
+      },
+      {
+        "pathID": "4198253278432942960",
+        "name": "mt_alternative_bg_skyGrad",
+        "customRenderQueue": 2990,
+        "shader": {
+          "fileID": 2,
+          "pathID": "7496099449604649442",
+          "resolved": true,
+          "type": "Shader",
+          "name": "Creative/Bg/BgUberShader",
+          "cab": "CAB-ec2e80ff75c4cc36a05f983c0d29e1b6"
+        },
+        "validKeywords": [
+          "_MULTI_UV_SCROLL",
+          "_RECEIVE_SHADOWS_OFF",
+          "_SURFACE_TYPE_TRANSPARENT"
+        ],
+        "invalidKeywords": [
+          "_ISDITHERCLIPPING_ON",
+          "_USEVATTIME_ON",
+          "_USE_MULTI_UV_SCROLL"
+        ],
+        "legacyShaderKeywords": null,
+        "textures": {
+          "_BaseMap": {
+            "property": "_BaseMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "1726707485767080301",
+              "resolved": true,
+              "type": "Texture2D",
+              "name": "CommonGradation",
+              "cab": "CAB-5726667de002ce6510aab260a8fcd13d"
+            }
+          },
+          "_Blend2ndBumpMap": {
+            "property": "_Blend2ndBumpMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_Blend2ndTex": {
+            "property": "_Blend2ndTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_BlendBumpMap": {
+            "property": "_BlendBumpMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_BlendTex": {
+            "property": "_BlendTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_BumpMap": {
+            "property": "_BumpMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_ComplexNoiseTexture": {
+            "property": "_ComplexNoiseTexture",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 3,
+              "pathID": "6159205007759442036",
+              "resolved": true,
+              "type": "Texture2D",
+              "name": "cloud_noise_tex",
+              "cab": "CAB-9a63551070f0645e4abb58eef7968ef4"
+            }
+          },
+          "_EmissionMap": {
+            "property": "_EmissionMap",
+            "scale": [
+              2.0,
+              2.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_FadeNoiseTex": {
+            "property": "_FadeNoiseTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 3,
+              "pathID": "6159205007759442036",
+              "resolved": true,
+              "type": "Texture2D",
+              "name": "cloud_noise_tex",
+              "cab": "CAB-9a63551070f0645e4abb58eef7968ef4"
+            }
+          },
+          "_FlowMap": {
+            "property": "_FlowMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_MatCapTex": {
+            "property": "_MatCapTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_MetallicGlossMap": {
+            "property": "_MetallicGlossMap",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_NoiseTex": {
+            "property": "_NoiseTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 3,
+              "pathID": "6159205007759442036",
+              "resolved": true,
+              "type": "Texture2D",
+              "name": "cloud_noise_tex",
+              "cab": "CAB-9a63551070f0645e4abb58eef7968ef4"
+            }
+          },
+          "_ScrollTexture": {
+            "property": "_ScrollTexture",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "2454532838492221306",
+              "resolved": true,
+              "type": "Texture2D",
+              "name": "eff_dead_noise_01",
+              "cab": "CAB-5726667de002ce6510aab260a8fcd13d"
+            }
+          },
+          "_SoloRaidMask": {
+            "property": "_SoloRaidMask",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_UwasaHibiTex": {
+            "property": "_UwasaHibiTex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "_openVAT_main": {
+            "property": "_openVAT_main",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "unity_Lightmaps": {
+            "property": "unity_Lightmaps",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "unity_LightmapsInd": {
+            "property": "unity_LightmapsInd",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          },
+          "unity_ShadowMasks": {
+            "property": "unity_ShadowMasks",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "0",
+              "null": true
+            }
+          }
+        },
+        "floats": {
+          "_1stOpacity": 1.0,
+          "_2ndOpacity": 1.0,
+          "_Additive_to_Multiply": 0.0,
+          "_Alpha": 1.0,
+          "_AlphaClip": 0.0,
+          "_AlphaIsGrayScale": 0.0,
+          "_AlphaIsGrayScale2": 0.0,
+          "_AlphaIsRChannel": 0.0,
+          "_AlphaSmoothMax": 1.0,
+          "_AlphaSmoothMin": 0.0,
+          "_AlphaToMask": 0.0,
+          "_Alpha_Clip": 0.5,
+          "_ApplyOpacityToRGB": 0.0,
+          "_BaseSetting": 1.0,
+          "_Blend": 2.0,
+          "_Blend2ndNormalStrength": 1.0,
+          "_Blend2ndPow": 1.0,
+          "_Blend2ndTexScale": 1.0,
+          "_Blend2ndTexScaleToggle": 0.0,
+          "_BlendModePreserveSpecular": 0.0,
+          "_BlendNormalStrength": 1.0,
+          "_BlendPow": 1.0,
+          "_BlendTexScale": 1.0,
+          "_BlendTexScaleToggle": 0.0,
+          "_Blightness": 1.0,
+          "_BumpScale": 1.0,
+          "_CastShadows": 0.0,
+          "_ClearCoatMask": 0.0,
+          "_ClearCoatSmoothness": 0.0,
+          "_Cull": 1.0,
+          "_Culling": 0.0,
+          "_Cutoff": 0.5,
+          "_DetailAlbedoMapScale": 1.0,
+          "_DetailNormalMapScale": 1.0,
+          "_DissolveBrightness": 1.0,
+          "_DissolveCenterPos": 0.699999988079071,
+          "_DissolveProgress": 1.0,
+          "_DissolveRange": 0.0010000000474974513,
+          "_DissolveScrollType": 0.0,
+          "_DissolveScrollX": 0.0,
+          "_DissolveScrollY": 0.0,
+          "_DissolveSmoothMax": 1.0,
+          "_DissolveSmoothMin": 0.0,
+          "_DissolveTexBlightnessOffset": 0.0,
+          "_DissolveTexSmoothRange": 0.0010000000474974513,
+          "_DropFrame_FlowMap": 0.0,
+          "_DropFrame_HueShift": 0.0,
+          "_DropFrame_MultiScroll": 0.0,
+          "_DstBlend": 1.0,
+          "_DstBlendAlpha": 0.0,
+          "_EnvironmentReflections": 1.0,
+          "_FadeNoiseTexTilling": 2.0,
+          "_FlipbookFrameRate": 8.0,
+          "_FlipbookOffset": 0.0,
+          "_FlowMapPow": 1.0,
+          "_FlowSpeed": 0.15000000596046448,
+          "_FogInfluence": 0.0,
+          "_GlossMapScale": 0.0,
+          "_Glossiness": 0.0,
+          "_GlossyReflections": 0.0,
+          "_HueShiftValue": 0.19599999487400055,
+          "_HueShiftValue_MultiUV": 0.0,
+          "_IgnoreScaleFadeRange": 0.0,
+          "_InvertDirection": 0.0,
+          "_IsColorWhite": 0.0,
+          "_IsCommonParticle": 0.0,
+          "_IsCustomData1w": 0.0,
+          "_IsDissolve": 0.0,
+          "_IsDissolveColor": 0.0,
+          "_IsDissolveTex": 0.0,
+          "_IsDitherClipping": 1.0,
+          "_IsMask": 1.0,
+          "_IsMaskTex": 0.0,
+          "_IsMaskTwoBlend": 0.0,
+          "_IsRampTex": 0.0,
+          "_IsSSMapping": 0.0,
+          "_IsSecondMap": 0.0,
+          "_IsSecondMask": 0.0,
+          "_IsSecondWave": 0.0,
+          "_IsSecondWaveTex": 0.0,
+          "_IsSoftParticle": 0.0,
+          "_IsTex2AlphaMask": 0.0,
+          "_IsTex2BlendMultiply": 0.0,
+          "_IsWave": 0.0,
+          "_MainTexScrollX": 0.0,
+          "_MainTexScrollY": 0.0,
+          "_Mask1ScrollType": 0.0,
+          "_Mask2ScrollType": 0.0,
+          "_MaskScrollX": 0.0,
+          "_MaskScrollY": 0.0,
+          "_MaskTwoScrollBlend": 0.5,
+          "_MaskTwoScrollScaleX": 2.0,
+          "_MaskTwoScrollScaleY": 2.0,
+          "_MaskTwoScrollX": 1.0,
+          "_MaskTwoScrollY": 1.0,
+          "_MatCapIntensity": 1.0,
+          "_Metallic": 0.0,
+          "_MultipliedAlpha": 0.0,
+          "_NoiseIntensity": 1.0,
+          "_NoiseScaling": 0.003000000026077032,
+          "_NormalMap": 1.0,
+          "_NormalStrength": 1.0,
+          "_OcclusionStrength": 1.0,
+          "_Parallax": 0.004999999888241291,
+          "_ParticleInAlpha": 1.0,
+          "_ParticleInRadius": 0.10000000149011612,
+          "_ParticleOutAlpha": 0.30000001192092896,
+          "_QueueControl": 0.0,
+          "_QueueOffset": -10.0,
+          "_Ramp": 0.0,
+          "_RampAlpha": 1.0,
+          "_RampCenterPos": 0.5,
+          "_RampCentor": 0.0,
+          "_RampSmoothMax": 1.0,
+          "_RampSmoothMin": 0.0,
+          "_ReceiveShadows": 0.0,
+          "_ReflectionValue": 0.5,
+          "_RenderingOptions": 1.0,
+          "_ScrollSpeed": 0.05000000074505806,
+          "_SecondBlend": 1.0,
+          "_SecondBlightness": 1.0,
+          "_SecondMaskScrollX": 0.0,
+          "_SecondMaskScrollY": 0.0,
+          "_SecondWaveTexBlightnessOffset": 0.0,
+          "_SecondWaveTexSmoothMax": 1.0,
+          "_SecondWaveTexSmoothMin": 0.0,
+          "_ShouldBgGlobalDitherFade": 0.0,
+          "_ShouldSkipGachaDissolve": 0.0,
+          "_Smoothness": 0.0,
+          "_SmoothnessTextureChannel": 0.0,
+          "_SoloRaid": 0.0,
+          "_SoloRaidContrast1": 0.0,
+          "_SoloRaidContrast2": 0.0,
+          "_SoloRaidHue1": 0.0,
+          "_SoloRaidHue2": 0.0,
+          "_SoloRaidInvert1": 0.0,
+          "_SoloRaidInvert2": 0.0,
+          "_SoloRaidSaturation1": 0.0,
+          "_SoloRaidSaturation2": 0.0,
+          "_SoloRaidValue1": 0.0,
+          "_SoloRaidValue2": 0.0,
+          "_SpecularHighlights": 1.0,
+          "_SrcBlend": 5.0,
+          "_SrcBlendAlpha": 1.0,
+          "_Stencil": 0.0,
+          "_StencilComp": 8.0,
+          "_StencilOp": 0.0,
+          "_Surface": 1.0,
+          "_SurfaceFadeFar": 1.0,
+          "_SurfaceFadeNear": 0.0,
+          "_Tex1ScrollType": 0.0,
+          "_Tex2ScrollType": 0.0,
+          "_USE_BILLBOARD": 0.0,
+          "_USE_FLOW_MAP": 0.0,
+          "_USE_HUE_SHIFT": 0.0,
+          "_USE_MULTI_UV_SCROLL": 1.0,
+          "_USE_NOISE": 0.0,
+          "_USE_PLANARREFLECTION": 1.0,
+          "_USE_UWASA_EFFECT": 0.0,
+          "_USE_VERTEX_COLOR_BLEND": 0.0,
+          "_Unlitness": 1.0,
+          "_UseAlphaToSmoothness": 0.0,
+          "_UseFadeInOut": 0.0,
+          "_UseFlipbook": 0.0,
+          "_UseMatCap": 0.0,
+          "_UseMeshUV": 0.0,
+          "_UseSmoothnessMask": 0.0,
+          "_UseSmoothnessMaskMatcap": 0.0,
+          "_UseVAT": 0.0,
+          "_UseVATTime": 1.0,
+          "_UseVColGreen": 0.0,
+          "_UseVColNormal": 0.0,
+          "_UwasaEffectIntensity": 1.0,
+          "_UwasaHueShiftValue": 0.0,
+          "_UwasaTexTileSize": 1.0,
+          "_WaveRange": 0.05000000074505806,
+          "_WaveTexBlightnessOffset": 0.0,
+          "_WaveTexBlightnessOffsetSub": 0.0,
+          "_WaveTexScrollSpeedX": 0.0,
+          "_WaveTexScrollSpeedY": 0.0,
+          "_WaveTexSmoothMax": 0.25,
+          "_WaveTexSmoothMin": 0.0,
+          "_WorkflowMode": 1.0,
+          "_ZOffset": 0.0,
+          "_ZTest": 4.0,
+          "_ZWrite": 0.0,
+          "_ZWriteControl": 0.0,
+          "_exaggeration": 0.0,
+          "_frame": 0.0,
+          "_frames": 0.0,
+          "_frenelPower": 0.0010000000474974513,
+          "_resolutionY": 0.0,
+          "_speed": 1.0
+        },
+        "colors": {
+          "_1stColor": [
+            0.0,
+            0.698113203048706,
+            0.4626201093196869,
+            1.0
+          ],
+          "_1stOffset": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_1stScrollSpeed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_1stTilling": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "_2ndColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_2ndOffset": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_2ndScrollSpeed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_2ndTilling": [
+            4.0,
+            4.0,
+            0.0,
+            0.0
+          ],
+          "_BaseColor": [
+            0.18765044212341309,
+            0.4541143774986267,
+            0.6229999661445618,
+            1.0
+          ],
+          "_Blend2ndTexScroll": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_Blend2ndTexTillingOffset": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "_BlendTexScroll": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_BlendTexTillingOffset": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "_BottomFadeInRange": [
+            0.0,
+            0.10000000149011612,
+            0.0,
+            0.0
+          ],
+          "_Color": [
+            0.10715557634830475,
+            0.4085552990436554,
+            0.5283018946647644,
+            1.0
+          ],
+          "_DissolveColorC": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929,
+            1.0
+          ],
+          "_DissolveColorL": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_DissolveColorR": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_DissolveWave": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_EmissionColor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_FlipbookTileGrid": [
+            2.0,
+            2.0,
+            0.0,
+            0.0
+          ],
+          "_ParticleColor": [
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "_RampColorC": [
+            1.0,
+            0.5,
+            0.0,
+            1.0
+          ],
+          "_RampColorL": [
+            1.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "_RampColorR": [
+            1.0,
+            1.0,
+            0.800000011920929,
+            1.0
+          ],
+          "_ShadowColor": [
+            0.20754718780517578,
+            0.20754718780517578,
+            0.20754718780517578,
+            0.0
+          ],
+          "_SoloRaidColor1": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_SoloRaidColor2": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "_SpecColor": [
+            0.19999995827674866,
+            0.19999995827674866,
+            0.19999995827674866,
+            1.0
+          ],
+          "_TopFadeOutRange": [
+            0.0,
+            0.30000001192092896,
+            0.0,
+            0.0
+          ],
+          "_UV_Scroll": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_maxValues": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "_minValues": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "disabledShaderPasses": [
+          "SHADOWCASTER",
+          "DepthOnly"
+        ]
+      },
+      {
+        "pathID": "7681222790990874636",
+        "name": "SkyBox_alternative_bg",
+        "customRenderQueue": -1,
+        "shader": {
+          "fileID": 0,
+          "pathID": "6560481260228239820",
+          "resolved": true,
+          "type": "Shader",
+          "name": "Skybox/Cubemap",
+          "cab": "CAB-5726667de002ce6510aab260a8fcd13d"
+        },
+        "validKeywords": [],
+        "invalidKeywords": [
+          "_SUNDISK_HIGH_QUALITY"
+        ],
+        "legacyShaderKeywords": null,
+        "textures": {
+          "_Tex": {
+            "property": "_Tex",
+            "scale": [
+              1.0,
+              1.0
+            ],
+            "offset": [
+              0.0,
+              0.0
+            ],
+            "pointer": {
+              "fileID": 0,
+              "pathID": "1359488205596089876",
+              "resolved": true,
+              "type": "Cubemap",
+              "name": "alternative_bg_HDRI",
+              "cab": "CAB-5726667de002ce6510aab260a8fcd13d"
+            }
+          }
+        },
+        "floats": {
+          "_Exposure": 1.0,
+          "_Rotation": 327.0
+        },
+        "colors": {
+          "_Tint": [
+            0.25,
+            0.30084753036499023,
+            0.5,
+            1.0
+          ]
+        },
+        "disabledShaderPasses": []
+      }
+    ],
+    "serializedComponentClips": [],
+    "animators": [
+      {
+        "pathID": "3529321118587599562",
+        "gameObjectPathID": "681567619068730036",
+        "hierarchyPath": "alternative_bg_model_00/Global Volume",
+        "controllerPathID": "0",
+        "controllerName": null,
+        "clipNames": [],
+        "clips": []
+      }
+    ],
+    "animatorRandomizers": [],
+    "playableDirectors": [],
+    "activationGameObjectStates": [],
+    "activationDirectors": [],
+    "particlePresets": [],
+    "particleSystems": [],
+    "particleMeshes": [],
+    "particleMeshFailures": [],
+    "rotators": [],
+    "volumetricLightBeamConfig": null,
+    "volumetricLightBeams": [],
+    "volumetricDustParticles": [],
+    "volumeStack": [
+      {
+        "pathID": 5855616287001497418,
+        "hierarchyPath": "alternative_bg_model_00/Global Volume",
+        "enabled": true,
+        "activeInHierarchy": true,
+        "isGlobal": true,
+        "priority": 0.0,
+        "weight": 1.0,
+        "blendDistance": 0.0,
+        "profilePathID": -4390698076789860781,
+        "componentPathIDs": [
+          "2405012509955894443",
+          "5252014561355630812",
+          "7033948565412961672",
+          "309995308834428392",
+          "-5234995920257281111",
+          "1309757300668972247"
+        ]
+      }
+    ],
+    "volumeComponents": {
+      "Bloom": [
+        {
+          "pathID": "7033948565412961672",
+          "fields": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -6123209036660115946
+            },
+            "m_Name": "Bloom",
+            "active": 1,
+            "skipIterations": {
+              "m_OverrideState": 0,
+              "m_Value": 3
+            },
+            "threshold": {
+              "m_OverrideState": 1,
+              "m_Value": 0.8999999761581421
+            },
+            "intensity": {
+              "m_OverrideState": 1,
+              "m_Value": 1.0
+            },
+            "scatter": {
+              "m_OverrideState": 1,
+              "m_Value": 0.75
+            },
+            "clamp": {
+              "m_OverrideState": 0,
+              "m_Value": 1.0
+            },
+            "tint": {
+              "m_OverrideState": 1,
+              "m_Value": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "highQualityFiltering": {
+              "m_OverrideState": 0,
+              "m_Value": 1
+            },
+            "downscale": {
+              "m_OverrideState": 0,
+              "m_Value": 0
+            },
+            "maxIterations": {
+              "m_OverrideState": 0,
+              "m_Value": 6
+            },
+            "dirtTexture": {
+              "m_OverrideState": 0,
+              "m_Value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "dimension": 1
+            },
+            "dirtIntensity": {
+              "m_OverrideState": 0,
+              "m_Value": 5.0
+            }
+          }
+        }
+      ],
+      "ChromaticAberration": [
+        {
+          "pathID": "1309757300668972247",
+          "fields": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 618058967802940832
+            },
+            "m_Name": "ChromaticAberration",
+            "active": 1,
+            "intensity": {
+              "m_OverrideState": 1,
+              "m_Value": 0.05000000074505806
+            }
+          }
+        }
+      ],
+      "ColorAdjustments": [
+        {
+          "pathID": "5252014561355630812",
+          "fields": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 611471210327989785
+            },
+            "m_Name": "ColorAdjustments",
+            "active": 1,
+            "postExposure": {
+              "m_OverrideState": 0,
+              "m_Value": 0.0
+            },
+            "contrast": {
+              "m_OverrideState": 1,
+              "m_Value": 10.0
+            },
+            "colorFilter": {
+              "m_OverrideState": 0,
+              "m_Value": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "hueShift": {
+              "m_OverrideState": 0,
+              "m_Value": -34.0
+            },
+            "saturation": {
+              "m_OverrideState": 1,
+              "m_Value": 15.0
+            }
+          }
+        }
+      ],
+      "ReDriveVolume": [
+        {
+          "pathID": "-5234995920257281111",
+          "fields": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -5596282057173054488
+            },
+            "m_Name": "ReDriveToonPostProcessVolume",
+            "active": 1,
+            "_skyboxMaterial": {
+              "m_OverrideState": 1,
+              "m_Value": {
+                "m_FileID": 0,
+                "m_PathID": 7681222790990874636
+              }
+            },
+            "_skyboxIntensity": {
+              "m_OverrideState": 1,
+              "m_Value": 1.0
+            },
+            "_reflectionProbe": {
+              "m_OverrideState": 1,
+              "m_Value": {
+                "m_FileID": 0,
+                "m_PathID": -5579589005328497246
+              }
+            },
+            "_fogColor": {
+              "m_OverrideState": 1,
+              "m_Value": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "_fogRange": {
+              "m_OverrideState": 1,
+              "m_Value": [
+                5.0,
+                500.0
+              ]
+            },
+            "SH2": {
+              "m_OverrideState": 1,
+              "m_Value": {
+                "sh[ 0]": 0.08227992057800293,
+                "sh[ 1]": 0.0678575411438942,
+                "sh[ 2]": -0.06201048940420151,
+                "sh[ 3]": 0.04538838565349579,
+                "sh[ 4]": 0.022834081202745438,
+                "sh[ 5]": -0.03604213520884514,
+                "sh[ 6]": 0.0007390221580862999,
+                "sh[ 7]": -0.08571045100688934,
+                "sh[ 8]": 0.010968834161758423,
+                "sh[ 9]": 0.11912678182125092,
+                "sh[10]": 0.09824565798044205,
+                "sh[11]": -0.08978109061717987,
+                "sh[12]": 0.06571507453918457,
+                "sh[13]": 0.033060625195503235,
+                "sh[14]": -0.05218329280614853,
+                "sh[15]": 0.001070123165845871,
+                "sh[16]": -0.12409410625696182,
+                "sh[17]": 0.015880752354860306,
+                "sh[18]": 0.3461613357067108,
+                "sh[19]": 0.2854858338832855,
+                "sh[20]": -0.26088541746139526,
+                "sh[21]": 0.19095280766487122,
+                "sh[22]": 0.09606632590293884,
+                "sh[23]": -0.15163418650627136,
+                "sh[24]": 0.003109332174062729,
+                "sh[25]": -0.3605937361717224,
+                "sh[26]": 0.046145953238010406
+              }
+            },
+            "_globalCharacterTintColor": {
+              "m_OverrideState": 0,
+              "m_Value": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "_globalCharacterShadowTintColor": {
+              "m_OverrideState": 0,
+              "m_Value": [
+                0.6886792182922363,
+                0.6886792182922363,
+                0.6886792182922363,
+                1.0
+              ]
+            },
+            "_globalBackgroundTintColor": {
+              "m_OverrideState": 0,
+              "m_Value": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "_globalCharacterLightingOverrideColor": {
+              "m_OverrideState": 1,
+              "m_Value": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "_globalCharacterLightingOverrideRatio": {
+              "m_OverrideState": 1,
+              "m_Value": 0.4000000059604645
+            },
+            "_globalCharacterLightingOverrideDirection": {
+              "m_OverrideState": 0,
+              "m_Value": [
+                130.0,
+                40.0,
+                0.0
+              ]
+            },
+            "_globalCharacterAdditionalRimLightColor": {
+              "m_OverrideState": 1,
+              "m_Value": [
+                2.0,
+                2.0,
+                2.0,
+                1.0
+              ]
+            },
+            "_globalCharacterAdditionalRimLightDirection": {
+              "m_OverrideState": 1,
+              "m_Value": [
+                -1.0,
+                -1.0
+              ]
+            },
+            "_globalCharacterFaceAwayTintColor": {
+              "m_OverrideState": 0,
+              "m_Value": [
+                1.0,
+                0.8843417167663574,
+                0.6367924213409424,
+                1.0
+              ]
+            },
+            "_globalCharacterCancelPerspective": {
+              "m_OverrideState": 0,
+              "m_Value": 1.0
+            },
+            "_bgShadowStrengthAdditive": {
+              "m_OverrideState": 0,
+              "m_Value": 0.0
+            },
+            "_bgPostExposure": {
+              "m_OverrideState": 1,
+              "m_Value": -0.6000000238418579
+            },
+            "_bgContrast": {
+              "m_OverrideState": 1,
+              "m_Value": -5.0
+            },
+            "_bgSaturation": {
+              "m_OverrideState": 0,
+              "m_Value": -10.0
+            },
+            "_bgBackgroundTintColor": {
+              "m_OverrideState": 0,
+              "m_Value": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "_useFixedLightDir": {
+              "m_OverrideState": 0,
+              "m_Value": 1
+            },
+            "_tintTopColor": {
+              "m_OverrideState": 1,
+              "m_Value": [
+                0.7688679099082947,
+                0.8737083673477173,
+                1.0,
+                1.0
+              ]
+            },
+            "_tintBottomColor": {
+              "m_OverrideState": 1,
+              "m_Value": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "_opacity": {
+              "m_OverrideState": 1,
+              "m_Value": 0.10000000149011612
+            },
+            "_paraWidth": {
+              "m_OverrideState": 1,
+              "m_Value": 1.0399999618530273
+            },
+            "_topBlendMode": {
+              "m_OverrideState": 1,
+              "m_Value": 0
+            },
+            "_bottomBlendMode": {
+              "m_OverrideState": 1,
+              "m_Value": 0
+            },
+            "_screenTexture": {
+              "m_OverrideState": 0,
+              "m_Value": {
+                "m_FileID": 0,
+                "m_PathID": 0
+              },
+              "dimension": 1
+            },
+            "_lightScreenIntensity": {
+              "m_OverrideState": 0,
+              "m_Value": 0.0
+            },
+            "_lightScreenTopColor": {
+              "m_OverrideState": 0,
+              "m_Value": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "_lightScreenBottomColor": {
+              "m_OverrideState": 0,
+              "m_Value": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "_lightScreenPow": {
+              "m_OverrideState": 0,
+              "m_Value": 1.0
+            },
+            "_lightScreenRoundness": {
+              "m_OverrideState": 0,
+              "m_Value": 0.0
+            }
+          }
+        }
+      ],
+      "Tonemapping": [
+        {
+          "pathID": "2405012509955894443",
+          "fields": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -4476214662336307861
+            },
+            "m_Name": "Tonemapping",
+            "active": 1,
+            "mode": {
+              "m_OverrideState": 1,
+              "m_Value": 2
+            },
+            "neutralHDRRangeReductionMode": {
+              "m_OverrideState": 0,
+              "m_Value": 2
+            },
+            "acesPreset": {
+              "m_OverrideState": 0,
+              "m_Value": 3
+            },
+            "hueShiftAmount": {
+              "m_OverrideState": 0,
+              "m_Value": 0.0
+            },
+            "detectPaperWhite": {
+              "m_OverrideState": 0,
+              "m_Value": 0
+            },
+            "paperWhite": {
+              "m_OverrideState": 0,
+              "m_Value": 300.0
+            },
+            "detectBrightnessLimits": {
+              "m_OverrideState": 0,
+              "m_Value": 1
+            },
+            "minNits": {
+              "m_OverrideState": 0,
+              "m_Value": 0.004999999888241291
+            },
+            "maxNits": {
+              "m_OverrideState": 0,
+              "m_Value": 1000.0
+            }
+          }
+        }
+      ],
+      "Vignette": [
+        {
+          "pathID": "309995308834428392",
+          "fields": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -4175427079884003143
+            },
+            "m_Name": "Vignette",
+            "active": 1,
+            "color": {
+              "m_OverrideState": 1,
+              "m_Value": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "center": {
+              "m_OverrideState": 1,
+              "m_Value": [
+                0.5,
+                0.5
+              ]
+            },
+            "intensity": {
+              "m_OverrideState": 1,
+              "m_Value": 0.30000001192092896
+            },
+            "smoothness": {
+              "m_OverrideState": 1,
+              "m_Value": 0.30000001192092896
+            },
+            "rounded": {
+              "m_OverrideState": 0,
+              "m_Value": 0
+            }
+          }
+        }
+      ],
+      "Volume": [
+        {
+          "pathID": "5855616287001497418",
+          "fields": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 681567619068730036
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -196958613234338728
+            },
+            "m_Name": "",
+            "m_IsGlobal": 1,
+            "priority": 0.0,
+            "blendDistance": 0.0,
+            "weight": 1.0,
+            "sharedProfile": {
+              "m_FileID": 0,
+              "m_PathID": -4390698076789860781
+            }
+          }
+        }
+      ],
+      "VolumeProfile": [
+        {
+          "pathID": "-4390698076789860781",
+          "fields": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 0
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": 4554676352285796699
+            },
+            "m_Name": "GlobalVolume_alternative_bg",
+            "components": [
+              {
+                "m_FileID": 0,
+                "m_PathID": 2405012509955894443
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": 5252014561355630812
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": 7033948565412961672
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": 309995308834428392
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": -5234995920257281111
+              },
+              {
+                "m_FileID": 0,
+                "m_PathID": 1309757300668972247
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "unsupportedVolumeComponents": {
+      "GlobalVolumeController": [
+        {
+          "pathID": "-6338249787218333773",
+          "fields": {
+            "m_GameObject": {
+              "m_FileID": 0,
+              "m_PathID": 681567619068730036
+            },
+            "m_Enabled": 1,
+            "m_Script": {
+              "m_FileID": 0,
+              "m_PathID": -2399166112289969600
+            },
+            "m_Name": "",
+            "volume": {
+              "m_FileID": 0,
+              "m_PathID": 5855616287001497418
+            },
+            "animator": {
+              "m_FileID": 0,
+              "m_PathID": 3529321118587599562
+            },
+            "bloomThreshold": 0.8999999761581421,
+            "bloomIntensity": 1.0,
+            "bloomScatter": 0.75,
+            "bloomTint": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "vignetteIntensity": 0.30000001192092896,
+            "lensIntensity": 0.0,
+            "kawaseBlurOffset": 0.0,
+            "fogColor": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "cancelPerspective": 1.0,
+            "vignetteBlendColor": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "vignetteBlendIntensity": 0.0,
+            "vignetteBlendSmoothness": 0.0,
+            "vignetteBlendIsEyeBlink": 0,
+            "noiseIntensity": 0.0,
+            "noiseVignette": 1.0,
+            "waveIntensity": 0.0,
+            "waveSizeRcp": 0.0,
+            "waveScale": 0.0,
+            "waveSpeed": 0.0,
+            "spiralBlurIntensity": 0.0,
+            "fillColor": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "lineNoise": 0.0,
+            "noiseSpeed": 0.0,
+            "noiseTillingOffset": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "lineNoiseInversion": 0.0,
+            "noiseMaskAmount": 0.0,
+            "noiseMaskTilling": 0.0,
+            "chromaticOffsetX": 0.0,
+            "chromaticOffsetY": 0.0,
+            "offsetX": 0.0,
+            "offsetY": 0.0,
+            "scanLineIntensity": 0.0,
+            "rollInOutProgress": 0.0,
+            "rollInOutByLeft": 0,
+            "rollInOutIsIn": 0,
+            "darkenProgress": 0.0,
+            "sepiaProgress": 0.0,
+            "grayscaleProgress": 0.0,
+            "radialBlurFocusPow": 0.0,
+            "radialBlurBlurCount": 0,
+            "radialBlurTexBlurCount": 0,
+            "radialBlurNear": 0.0,
+            "radialBlurFar": 0.0
+          }
+        }
+      ]
+    },
+    "prefabLightmapData": [
+      {
+        "pathID": "-1581313788953694987",
+        "hierarchyPath": "alternative_bg_model_00",
+        "rendererInfo": [],
+        "lightmaps": [],
+        "directionalLightmaps": [],
+        "shadowMasks": [],
+        "lightInfo": [
+          {
+            "light": {
+              "m_FileID": 0,
+              "m_PathID": -3124754180289886151
+            },
+            "lightmapBaketype": 1,
+            "mixedLightingMode": 0
+          }
+        ]
+      }
+    ],
+    "lightmapAutomation": {
+      "bindingRendererCount": 0,
+      "bindingFailures": [],
+      "colorTextureUrls": [],
+      "directionalTextureUrls": [],
+      "shadowMaskTextureUrls": [],
+      "textureFailures": [],
+      "nullTexturePointers": [],
+      "uv1CompanionUrl": "./stages/official/alternative-background-alternative-bg-model-00/uv1-companion.json",
+      "generatedUv1NodeCount": 3,
+      "uv1Failures": [],
+      "uv1BlockingFailures": []
+    },
+    "reflectionProbes": [
+      {
+        "pathID": "1417373218026456561",
+        "name": "Reflection Probe",
+        "hierarchyPath": "alternative_bg_model_00/Reflection Probe",
+        "enabled": true,
+        "activeInHierarchy": true,
+        "mode": 2,
+        "resolution": 256,
+        "position": [
+          0.0,
+          -0.6740000247955322,
+          0.0
+        ],
+        "boxSize": [
+          1000.0,
+          1000.0,
+          1000.0
+        ],
+        "boxOffset": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "boxMin": [
+          -500.0,
+          -500.67400002479553,
+          -500.0
+        ],
+        "boxMax": [
+          500.0,
+          499.32599997520447,
+          500.0
+        ],
+        "importance": 1,
+        "intensityMultiplier": 1.5,
+        "blendDistance": 1.0,
+        "boxProjection": false,
+        "hdr": true,
+        "cullingMask": 64,
+        "bakedTexture": {
+          "fileID": 0,
+          "pathID": "0",
+          "null": true
+        },
+        "customBakedTexture": {
+          "fileID": 0,
+          "pathID": "6904526878103231013",
+          "resolved": true,
+          "type": "Cubemap",
+          "name": "ReflectionProbe-bake02",
+          "cab": "CAB-5726667de002ce6510aab260a8fcd13d"
+        },
+        "effectiveTexture": {
+          "fileID": 0,
+          "pathID": "6904526878103231013",
+          "resolved": true,
+          "type": "Cubemap",
+          "name": "ReflectionProbe-bake02",
+          "cab": "CAB-5726667de002ce6510aab260a8fcd13d"
+        },
+        "textureUrl": "./stages/official/alternative-background-alternative-bg-model-00/ReflectionProbe-bake02-rgba16f.dds",
+        "textureEncoding": "unity-rgba16f",
+        "textureExport": {
+          "pathID": "6904526878103231013",
+          "name": "ReflectionProbe-bake02",
+          "width": 256,
+          "height": 256,
+          "mipCount": 9,
+          "encoding": "R16G16B16A16_FLOAT",
+          "container": "DDS_DX10",
+          "dataOffset": 148,
+          "sourcePayloadByteCount": 4194288,
+          "faceChainByteCount": 699048,
+          "mipByteCounts": [
+            524288,
+            131072,
+            32768,
+            8192,
+            2048,
+            512,
+            128,
+            32,
+            8
+          ],
+          "faceOrder": [
+            "+X",
+            "-X",
+            "+Y",
+            "-Y",
+            "+Z",
+            "-Z"
+          ],
+          "serializedColorSpace": 0,
+          "wrote": true
+        },
+        "textureExportError": null
+      }
+    ],
+    "rendererReflectionProbeBindings": [
+      {
+        "rendererPathID": "-7608147422527140882",
+        "rendererType": "MeshRenderer",
+        "rendererHierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase/skyBase_grp/skyBase",
+        "reflectionProbeUsage": 1,
+        "reflectionProbeUsageName": "blend-probes",
+        "probeAnchor": {
+          "fileID": 0,
+          "pathID": "0",
+          "null": true
+        },
+        "probeAnchorHierarchyPath": null,
+        "probeAnchorPosition": null
+      },
+      {
+        "rendererPathID": "7870082511928709575",
+        "rendererType": "MeshRenderer",
+        "rendererHierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase/skyBase_grp/skyBase_gass",
+        "reflectionProbeUsage": 1,
+        "reflectionProbeUsageName": "blend-probes",
+        "probeAnchor": {
+          "fileID": 0,
+          "pathID": "0",
+          "null": true
+        },
+        "probeAnchorHierarchyPath": null,
+        "probeAnchorPosition": null
+      },
+      {
+        "rendererPathID": "8069127919375599341",
+        "rendererType": "MeshRenderer",
+        "rendererHierarchyPath": "alternative_bg_model_00/base_bg/alternative_bg_skyBase_StarAdd/skyBase_StarAdd_01",
+        "reflectionProbeUsage": 1,
+        "reflectionProbeUsageName": "blend-probes",
+        "probeAnchor": {
+          "fileID": 0,
+          "pathID": "0",
+          "null": true
+        },
+        "probeAnchorHierarchyPath": null,
+        "probeAnchorPosition": null
+      }
+    ],
+    "rendererReflectionProbeFailures": [],
+    "reDriveReflectionProbe": {
+      "componentPathID": "-5234995920257281111",
+      "pointer": {
+        "fileID": 0,
+        "pathID": "-5579589005328497246",
+        "resolved": true,
+        "type": "Cubemap",
+        "name": "ReflectionProbe-1",
+        "cab": "CAB-5726667de002ce6510aab260a8fcd13d"
+      },
+      "environmentTextureUrl": "./stages/official/alternative-background-alternative-bg-model-00/ReflectionProbe-1-rgba16f.dds",
+      "environmentEncoding": "unity-rgba16f",
+      "export": {
+        "pathID": "-5579589005328497246",
+        "name": "ReflectionProbe-1",
+        "width": 64,
+        "height": 64,
+        "mipCount": 7,
+        "encoding": "R16G16B16A16_FLOAT",
+        "container": "DDS_DX10",
+        "dataOffset": 148,
+        "sourcePayloadByteCount": 262128,
+        "faceChainByteCount": 43688,
+        "mipByteCounts": [
+          32768,
+          8192,
+          2048,
+          512,
+          128,
+          32,
+          8
+        ],
+        "faceOrder": [
+          "+X",
+          "-X",
+          "+Y",
+          "-Y",
+          "+Z",
+          "-Z"
+        ],
+        "serializedColorSpace": 0,
+        "wrote": true
+      },
+      "exportError": null
+    },
+    "filmGrainTexture": {
+      "componentPathID": null,
+      "texture": null
+    },
+    "unsupportedTonemappingMode": null,
+    "nonFiniteNumbers": [],
+    "authorityLogicalPath": "AssetBundles/alternative_story/3d/background/alternative_bg_model_00"
+  }
+}

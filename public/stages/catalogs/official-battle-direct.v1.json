@@ -5723,7 +5723,16 @@
       "sceneProfileUrl": "./stages/official/battle-600-00-00-001/scene-profile.json",
       "evidence": [
         "TW Android exact groundA/B diffuse PPtr mapped to18 existing carrier renderers; no lighting/runtime recovery claim."
-      ]
+      ],
+      "entryValidation": {
+        "status": "load-tested",
+        "visibleMeshCount": 285,
+        "resourceFileCount": 22,
+        "evidence": [
+          "2026-09-24 shared loader: formal scene committed; 103 meshes observed in GPU draw probe.",
+          "2026-09-24 bundled current assets: 22 files source/artifact/HTTP byte-exact; no old archive dependency."
+        ]
+      }
     },
     {
       "id": "battle-600-00-01-001",

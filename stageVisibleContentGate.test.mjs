@@ -9,7 +9,7 @@ import ts from 'typescript'
 import * as THREE from 'three'
 import { enableRigidStageCulling } from './src/viewer/stageRigidCulling.ts'
 import { loadStageTransformModules } from './tests/helpers/loadStageTransformModules.mjs'
-const { batching: { batchStaticStageMeshes, hasStageRuntimeMeshWriters } } = loadStageTransformModules()
+const { batching: { batchStaticStageMeshes, hasStageRuntimeMeshWriters }, visibility: { applyStageNativeVisibility } } = loadStageTransformModules()
 
 const root = path.dirname(fileURLToPath(import.meta.url))
 const read = relative => fs.readFileSync(path.join(root, relative), 'utf8')
@@ -112,7 +112,7 @@ function stageLoadHarness(failure) {
         return value
     }
     const context = {
-        THREE, AbortController, Error, enableRigidStageCulling, batchStaticStageMeshes, hasStageRuntimeMeshWriters,
+        THREE, AbortController, Error, enableRigidStageCulling, batchStaticStageMeshes, hasStageRuntimeMeshWriters, applyStageNativeVisibility,
         console: { error: (...args) => events.push(['error', ...args]),
             warn() {}, log() {} },
         definitions: ['candidate', 'newer'].map(id => ({ id, name: id,

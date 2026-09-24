@@ -1,0 +1,4757 @@
+{
+  "schemaVersion": 1,
+  "scene": "bg_3d_600_10_01_002",
+  "encoding": "unity-bc6h-linear",
+  "renderers": [
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/anim_grp/anthonyHandover_grp/anthonyHandoverA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03369140625,
+        0.03369140625,
+        0.6348318457603455,
+        0.7039911150932312
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/anim_grp/anthonyHandover_grp/anthonyHandoverB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03369140625,
+        0.03369140625,
+        0.6348318457603455,
+        0.6727411150932312
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/anim_grp/anthonyHandover_grp/anthonyHandoverC_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03369140625,
+        0.03369140625,
+        0.5365356206893921,
+        0.8926209807395935
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/anim_grp/anthonyHandover_grp/anthonyHandoverD_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03369140625,
+        0.03369140625,
+        0.5365356206893921,
+        0.9238709807395935
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/anim_grp/anthonyHandover_grp/anthonyHandoverE_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03369140625,
+        0.03369140625,
+        0.5733084082603455,
+        0.9579472541809082
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/far_grp/steelframe_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.6406244039535522,
+        0.6406244039535522,
+        -0.1245114803314209,
+        0.39349979162216187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/ground_grp/fogColoredPlane_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.3156692385673523,
+        0.3156692385673523,
+        -0.06378764659166336,
+        0.2750793993473053
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/ground_grp/ground_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.6702619791030884,
+        0.6702619791030884,
+        -0.06489785760641098,
+        -0.06489785760641098
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/mid_grp/wall_grp/wallAL_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.16465480625629425,
+        0.16465480625629425,
+        0.5755335688591003,
+        0.6052263379096985
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/mid_grp/wall_grp/wallAR_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.16465480625629425,
+        0.16465480625629425,
+        -0.00030171353137120605,
+        0.9403746128082275
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/mid_grp/wall_grp/wallBL_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11580876260995865,
+        0.11580876260995865,
+        0.6764686703681946,
+        0.46357789635658264
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/mid_grp/wall_grp/wallBR_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11580876260995865,
+        0.11580876260995865,
+        0.21748431026935577,
+        0.9652809500694275
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/mid_grp/wall_grp/wallDL_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07861393690109253,
+        0.07861393690109253,
+        0.8011734485626221,
+        0.46361929178237915
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02/mid_grp/wall_grp/wallDR_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07861392945051193,
+        0.07861392945051193,
+        0.6371109485626221,
+        0.6459622383117676
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10305531322956085,
+        0.10305531322956085,
+        0.7332764267921448,
+        0.21443645656108856
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07655537873506546,
+        0.07655537873506546,
+        0.451081246137619,
+        0.816932201385498
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.05103691667318344,
+        0.05103691667318344,
+        0.16400207579135895,
+        0.8214119672775269
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02944437600672245,
+        0.02944437600672245,
+        0.6373238563537598,
+        0.7377331256866455
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12366637587547302,
+        0.12366637587547302,
+        0.21762703359127045,
+        0.8404237031936646
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10109235346317291,
+        0.10109235346317291,
+        0.3423171639442444,
+        0.8404504060745239
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0392591692507267,
+        0.0392591692507267,
+        0.1757347732782364,
+        0.777730405330658
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12366637587547302,
+        0.12366637587547302,
+        0.45102548599243164,
+        0.5024233460426331
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09324052184820175,
+        0.09324052184820175,
+        0.451061487197876,
+        0.6274593472480774
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09324052184820175,
+        0.09324052184820175,
+        0.451061487197876,
+        0.7221859097480774
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06085171177983284,
+        0.06085171177983284,
+        0.9260125756263733,
+        0.402271568775177
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.04024064540863037,
+        0.04024064540863037,
+        0.17573361098766327,
+        0.7357370853424072
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02551845833659172,
+        0.02551845833659172,
+        0.9716494679450989,
+        0.2636416554450989
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_building_grp/buiding_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12366637587547302,
+        0.12366637587547302,
+        0.801274836063385,
+        0.3387206494808197
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_buildingGreen_grp/buidingGreen_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12366637587547302,
+        0.12366637587547302,
+        0.6766114234924316,
+        0.3387206494808197
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_buildingGreen_grp/buidingGreen_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06183318793773651,
+        0.06183318793773651,
+        0.9260114431381226,
+        0.3387938439846039
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_buildingGreen_grp/buidingGreen_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1374070942401886,
+        0.1374070942401886,
+        0.859212338924408,
+        -0.00016266858438029885
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_buildingGreen_grp/buidingGreen_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12366637587547302,
+        0.12366637587547302,
+        0.8592286109924316,
+        0.13852547109127045
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_buildingGreen_grp/buidingGreen_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.05594431236386299,
+        0.05594431236386299,
+        0.5757690668106079,
+        0.703221321105957
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_museum_grp/museum_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.039460718631744385,
+        0.039460718631744385,
+        0.8812977075576782,
+        0.4636654257774353
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_museum_grp/museum_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06017759442329407,
+        0.06017759442329407,
+        0.5755277872085571,
+        0.6459025144577026
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_museum_grp/museum_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.037487681955099106,
+        0.037487681955099106,
+        0.5271521806716919,
+        0.9590664505958557
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_museum_grp/museum_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02959553711116314,
+        0.02959553711116314,
+        0.7573246955871582,
+        0.6460587978363037
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_museum_grp/museum_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01479776855558157,
+        0.01479776855558157,
+        0.8212134838104248,
+        0.318975031375885
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_museum_grp/museum_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.037487681955099106,
+        0.037487681955099106,
+        0.5288969278335571,
+        0.851275622844696
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_museum_grp/museum_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.04636634141206741,
+        0.04636634141206741,
+        0.1657787263393402,
+        0.9404394030570984
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_museum_grp/museum_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017757322639226913,
+        0.017757322639226913,
+        0.8016670942306519,
+        0.31895992159843445
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_museum_grp/museum_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017757322639226913,
+        0.017757322639226913,
+        0.8375194072723389,
+        0.21446771919727325
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_museum_grp/museum_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.05327196791768074,
+        0.05327196791768074,
+        0.5755630731582642,
+        0.7606325149536133
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.29466474056243896,
+        0.29466474056243896,
+        0.5631159543991089,
+        -0.00036058627301827073
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13117964565753937,
+        0.13117964565753937,
+        0.8569247722625732,
+        0.5024092197418213
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13999022543430328,
+        0.13999022543430328,
+        0.5756639838218689,
+        0.5023984313011169
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08614782989025116,
+        0.08614782989025116,
+        0.4510664641857147,
+        0.8950424194335938
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1625061333179474,
+        0.1625061333179474,
+        -0.00019886154041159898,
+        0.8212735652923584
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.23201176524162292,
+        0.23201176524162292,
+        0.21748952567577362,
+        0.3385831117630005
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.22711700201034546,
+        0.22711700201034546,
+        0.21749551594257355,
+        0.6744704842567444
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.16837984323501587,
+        0.16837984323501587,
+        0.5632705092430115,
+        0.21435239911079407
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.045031819492578506,
+        0.045031819492578506,
+        0.529033362865448,
+        0.8169677257537842
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.22418014705181122,
+        0.22418014705181122,
+        0.45089754462242126,
+        0.3385927081108093
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.17425355315208435,
+        0.17425355315208435,
+        -0.00021323705732356757,
+        0.6935792565345764
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.22809594869613647,
+        0.22809594869613647,
+        0.21749430894851685,
+        0.5079412460327148
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13803231716156006,
+        0.13803231716156006,
+        0.7172679305076599,
+        0.502400815486908
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_condominium_grp/condominium_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.2075379490852356,
+        0.2075379490852356,
+        -0.00025396773708052933,
+        0.5418434739112854
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.37424591183662415,
+        0.9916584491729736
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.8595975041389465,
+        0.4925076365470886
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5598756074905396,
+        0.6426621079444885
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012444545514881611,
+        0.012444545514881611,
+        0.5452592372894287,
+        0.6881951689720154
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0062222727574408054,
+        0.0062222727574408054,
+        0.20879168808460236,
+        0.5867803692817688
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.9549640417098999,
+        0.49177876114845276
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5598756074905396,
+        0.6271522641181946
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5452271699905396,
+        0.6504170298576355
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5598756074905396,
+        0.6504170298576355
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.42112091183662415,
+        0.9892212152481079
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.42112091183662415,
+        0.965956449508667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005185227375477552,
+        0.005185227375477552,
+        0.2088238000869751,
+        0.6288374662399292
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011407500132918358,
+        0.011407500132918358,
+        0.9880657196044922,
+        0.4019903540611267
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.43576934933662415,
+        0.950446605682373
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.43576934933662415,
+        0.95820152759552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.42112091183662415,
+        0.9814662933349609
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.9842609167098999,
+        0.49177876114845276
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.43576934933662415,
+        0.9892212152481079
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsA_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.8010037541389465,
+        0.4925076365470886
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.16564999520778656,
+        0.9921975135803223
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01125405728816986,
+        0.01125405728816986,
+        0.9881508946418762,
+        0.4089377820491791
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.2054530680179596
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005115480627864599,
+        0.005115480627864599,
+        0.20886249840259552,
+        0.6330607533454895
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.18225155770778656,
+        0.9921975135803223
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.34207120537757874,
+        0.9914161562919617
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013300249353051186,
+        0.013300249353051186,
+        0.705737829208374,
+        0.495023250579834
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.22783534228801727
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.04943905398249626,
+        0.9809926748275757
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.22037458419799805
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.14904843270778656,
+        0.9809926748275757
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        -0.0003656322951428592,
+        0.9884534478187561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.18225155770778656,
+        0.9847367405891418
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012277153320610523,
+        0.012277153320610523,
+        0.5600005984306335,
+        0.6815617084503174
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005115480627864599,
+        0.005115480627864599,
+        0.20886249840259552,
+        0.6368497610092163
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006138576660305262,
+        0.006138576660305262,
+        0.20883812010288239,
+        0.5914576649665833
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014323345385491848,
+        0.014323345385491848,
+        0.9859868884086609,
+        0.30812177062034607
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.08264218270778656,
+        0.9809926748275757
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.25021761655807495
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007161672692745924,
+        0.007161672692745924,
+        0.20881374180316925,
+        0.5729615688323975
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (20)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.11584530770778656,
+        0.9884534478187561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (21)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007161672692745924,
+        0.007161672692745924,
+        0.20881374180316925,
+        0.5774849057197571
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (22)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.21291382610797882
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (23)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.09924374520778656,
+        0.9884534478187561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (24)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006138576660305262,
+        0.006138576660305262,
+        0.20883812010288239,
+        0.5956138372421265
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (25)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.18322812020778656,
+        0.9265755414962769
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsB_geo (26)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014323345385491848,
+        0.014323345385491848,
+        0.35869714617729187,
+        0.9839797616004944
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7405332922935486
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7714585661888123
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.777643620967865
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7281631827354431
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.8567671179771423,
+        0.5988529324531555
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.8023838400840759
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010269894264638424,
+        0.010269894264638424,
+        0.9818201065063477,
+        0.6162222623825073
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7143003344535828
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.8704389929771423,
+        0.5988529324531555
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7405332922935486
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00821591541171074,
+        0.00821591541171074,
+        0.9919753670692444,
+        0.2975071966648102
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009242905303835869,
+        0.009242905303835869,
+        0.8705185055732727,
+        0.6412538886070251
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.540697455406189,
+        0.9952327609062195
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsC_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00410795770585537,
+        0.00410795770585537,
+        0.2088783085346222,
+        0.6861017942428589
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017357131466269493,
+        0.017357131466269493,
+        0.16366751492023468,
+        0.932999849319458
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.9409648180007935,
+        0.31655481457710266
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.9712382555007935,
+        0.29057419300079346
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.29266971349716187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015315116383135319,
+        0.015315116383135319,
+        0.9836899042129517,
+        0.2576955258846283
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018378138542175293,
+        0.018378138542175293,
+        0.9820036888122559,
+        0.3230317234992981
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.2725585997104645
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.28596600890159607
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014294108375906944,
+        0.014294108375906944,
+        0.0328778475522995,
+        0.9959545731544495
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.2658548951148987
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018378138542175293,
+        0.018378138542175293,
+        0.9820036888122559,
+        0.3294854164123535
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015315116383135319,
+        0.015315116383135319,
+        0.1832452416419983,
+        0.9340534210205078
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018378138542175293,
+        0.018378138542175293,
+        0.16364428400993347,
+        0.926522970199585
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.9409648180007935,
+        0.32996222376823425
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009189069271087646,
+        0.009189069271087646,
+        0.9714705944061279,
+        0.3042139410972595
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01225209329277277,
+        0.01225209329277277,
+        0.11593212932348251,
+        0.9960010051727295
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016336124390363693,
+        0.016336124390363693,
+        0.8372383713722229,
+        0.3329616189002991
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8794413805007935,
+        0.32996222376823425
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01225209329277277,
+        0.01225209329277277,
+        0.13253368437290192,
+        0.9960010051727295
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsD_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.30607712268829346
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.7884066700935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9880997538566589,
+        0.4570402503013611
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.7415316700935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5356916785240173
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5624446272850037
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0031275369692593813,
+        0.0031275369692593813,
+        0.20888859033584595,
+        0.6894758343696594
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9563754200935364,
+        0.5988518595695496
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.989073634147644,
+        0.37198910117149353
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5758211016654968
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008340098895132542,
+        0.008340098895132542,
+        0.9919320940971375,
+        0.29076021909713745
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.989073634147644,
+        0.3586125671863556
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.989073634147644,
+        0.3786773681640625
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.7532504200935364,
+        0.6350294947624207
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5223152041435242
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8470004200935364,
+        0.6350294947624207
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.508938729763031
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.7766879200935364,
+        0.6350294947624207
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006255073938518763,
+        0.006255073938518763,
+        0.2087928205728531,
+        0.5819873213768005
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5825093388557434
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraR_grp/ibaraPertsE_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007297586649656296,
+        0.007297586649656296,
+        0.20876088738441467,
+        0.5418739914894104
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010370454983785748,
+        0.0010370454983785748,
+        0.7861006855964661,
+        0.3366197943687439
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.8303006291389465,
+        0.4925076365470886
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009333409368991852,
+        0.009333409368991852,
+        0.6233978271484375,
+        0.840070903301239
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5598756074905396,
+        0.6659268736839294
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.43576934933662415,
+        0.965956449508667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5452271699905396,
+        0.6271522641181946
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0072593181394040585,
+        0.0072593181394040585,
+        0.20875957608222961,
+        0.5627530217170715
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.38889434933662415,
+        0.9916584491729736
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004148181993514299,
+        0.004148181993514299,
+        0.20885591208934784,
+        0.6786028146743774
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005185227375477552,
+        0.005185227375477552,
+        0.2088238000869751,
+        0.620468258857727
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5452271699905396,
+        0.6581719517707825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010370454983785748,
+        0.0010370454983785748,
+        0.9976407885551453,
+        -3.211450166418217e-05
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.9256671667098999,
+        0.49177876114845276
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010370454750955105,
+        0.010370454750955105,
+        0.8821547627449036,
+        0.6347553730010986
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010370454750955105,
+        0.010370454750955105,
+        0.8704360127449036,
+        0.6347553730010986
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5598756074905396,
+        0.6736817955970764
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009333409368991852,
+        0.009333409368991852,
+        0.6233978271484375,
+        0.8520104289054871
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0020740909967571497,
+        0.0020740909967571497,
+        0.8551239967346191,
+        0.3361148536205292
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.9403156042098999,
+        0.49177876114845276
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009333409368991852,
+        0.009333409368991852,
+        0.6233978271484375,
+        0.846040666103363
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (20)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010370454983785748,
+        0.0010370454983785748,
+        0.7890303730964661,
+        0.3366197943687439
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsA_geo (21)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.37424591183662415,
+        0.9839035272598267
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010230961255729198,
+        0.010230961255729198,
+        0.893950879573822,
+        0.6404576301574707
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.02349509298801422
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.16068851947784424
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013300249353051186,
+        0.013300249353051186,
+        0.749683141708374,
+        0.495023250579834
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01125405728816986,
+        0.01125405728816986,
+        0.9881508946418762,
+        0.4209218919277191
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.1756100356578827
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.03973719850182533
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.01623593084514141,
+        0.9809926748275757
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.11584530770778656,
+        0.9809926748275757
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.13244687020778656,
+        0.9884534478187561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.02117479220032692
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0020461922977119684,
+        0.0020461922977119684,
+        0.7411621809005737,
+        0.33660316467285156
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013300249353051186,
+        0.013300249353051186,
+        0.676440954208374,
+        0.495023250579834
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.04943905398249626,
+        0.9884534478187561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013300249353051186,
+        0.013300249353051186,
+        0.778980016708374,
+        0.495023250579834
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.01623593084514141,
+        0.9884534478187561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.025815393775701523
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009207865223288536,
+        0.009207865223288536,
+        0.6195611953735352,
+        0.8714198470115662
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.19885312020778656,
+        0.9921975135803223
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.1457670032978058
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (20)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010230961255729198,
+        0.010230961255729198,
+        0.905669629573822,
+        0.6396664977073669
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (21)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.13244687020778656,
+        0.9809926748275757
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (22)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.011893588118255138
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsB_geo (23)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012277153320610523,
+        0.012277153320610523,
+        0.5590240359306335,
+        0.6882880926132202
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7900137305259705
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7343482375144958
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7019302248954773
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006161936558783054,
+        0.006161936558783054,
+        0.2088252753019333,
+        0.6078953742980957
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.527025580406189,
+        0.9952327609062195
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7467183470726013
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7590884566307068
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010269894264638424,
+        0.0010269894264638424,
+        0.9976463913917542,
+        0.04437565803527832
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5287703275680542,
+        0.8874419331550598
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003080968279391527,
+        0.003080968279391527,
+        0.18058452010154724,
+        0.8187129497528076
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7714585661888123
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.8023838400840759
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011296884156763554,
+        0.011296884156763554,
+        0.9881273508071899,
+        0.44454720616340637
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010269894264638424,
+        0.010269894264638424,
+        0.9613122940063477,
+        0.6360644102096558
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.8085688948631287
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010269894264638424,
+        0.010269894264638424,
+        0.9818201065063477,
+        0.6107425689697266
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005134947132319212,
+        0.005134947132319212,
+        0.20885179936885834,
+        0.6406280994415283
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsC_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7652735114097595
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8999491930007935,
+        0.32996222376823425
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.2792623043060303
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.32618823647499084
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.31278082728385925
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.2591511905193329
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01327310036867857,
+        0.01327310036867857,
+        0.0661042109131813,
+        0.9959778189659119
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.7739726305007935,
+        0.3295067846775055
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014294108375906944,
+        0.014294108375906944,
+        0.0494794100522995,
+        0.9959545731544495
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018378138542175293,
+        0.018378138542175293,
+        0.9820036888122559,
+        0.3165780305862427
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8794413805007935,
+        0.31655481457710266
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008168062195181847,
+        0.008168062195181847,
+        0.9822360277175903,
+        0.30423715710639954
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008168062195181847,
+        0.008168062195181847,
+        0.23028287291526794,
+        0.9968573451042175
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011231085285544395,
+        0.011231085285544395,
+        0.21751786768436432,
+        0.9967876076698303
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.9204570055007935,
+        0.31655481457710266
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsD_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.7329570055007935,
+        0.3295067846775055
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.5561130046844482,
+        0.8874408602714539
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7626633644104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.989073634147644,
+        0.3385477662086487
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8235629200935364,
+        0.6350294947624207
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8977816700935364,
+        0.5988518595695496
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8118441700935364,
+        0.6350294947624207
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9095004200935364,
+        0.5988518595695496
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5490681529045105
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7509446144104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5423799157142639
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004170049447566271,
+        0.004170049447566271,
+        0.20885667204856873,
+        0.663323700428009
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7773118019104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004170049447566271,
+        0.004170049447566271,
+        0.20885667204856873,
+        0.6556293368339539
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005212561693042517,
+        0.005212561693042517,
+        0.7947622537612915,
+        0.33410927653312683
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.989073634147644,
+        0.3519243001937866
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.58919757604599
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5691328644752502
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7714524269104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8352816700935364,
+        0.6350294947624207
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8470004200935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraL_grp/ibaraPertsE_geo (20)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007297586649656296,
+        0.007297586649656296,
+        0.20876088738441467,
+        0.5471417307853699
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010370454983785748,
+        0.0010370454983785748,
+        0.9976407885551453,
+        0.0071661327965557575
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.40354278683662415,
+        0.9916584491729736
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009333409368991852,
+        0.009333409368991852,
+        0.9817962646484375,
+        0.633617639541626
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5598756074905396,
+        0.6349071860313416
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5452271699905396,
+        0.6659268736839294
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.43576934933662415,
+        0.9814662933349609
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0072593181394040585,
+        0.0072593181394040585,
+        0.20875957608222961,
+        0.5678302049636841
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.8449490666389465,
+        0.4925076365470886
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004148181993514299,
+        0.004148181993514299,
+        0.20885591208934784,
+        0.6748645305633545
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005185227375477552,
+        0.005185227375477552,
+        0.2088238000869751,
+        0.616283655166626
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.40354278683662415,
+        0.9839035272598267
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010370454983785748,
+        0.0010370454983785748,
+        0.9976407885551453,
+        0.00236730114556849
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5452271699905396,
+        0.6426621079444885
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010370454750955105,
+        0.010370454750955105,
+        0.8587172627449036,
+        0.6350275874137878
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010370454750955105,
+        0.010370454750955105,
+        0.8821547627449036,
+        0.6283393502235413
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.8156521916389465,
+        0.4925076365470886
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009333409368991852,
+        0.009333409368991852,
+        0.6194915771484375,
+        0.8653804659843445
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0020740909967571497,
+        0.0020740909967571497,
+        0.8339201211929321,
+        0.3344947099685669
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.43576934933662415,
+        0.9426916837692261
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009333409368991852,
+        0.009333409368991852,
+        0.9817962646484375,
+        0.63958740234375
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (20)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010370454983785748,
+        0.0010370454983785748,
+        0.7802413105964661,
+        0.3366197943687439
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsA_geo (21)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.42112091183662415,
+        0.9426916837692261
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010230961255729198,
+        0.010230961255729198,
+        0.5544437170028687,
+        0.9953071475028992
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.028135694563388824
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        -0.0003656322951428592,
+        0.9809926748275757
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013300249353051186,
+        0.013300249353051186,
+        0.691089391708374,
+        0.495023250579834
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01125405728816986,
+        0.01125405728816986,
+        0.9881508946418762,
+        0.4149298369884491
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.09924374520778656,
+        0.9809926748275757
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.03741689771413803
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.16814927756786346
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.06604062020778656,
+        0.9809926748275757
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.03283749148249626,
+        0.9884534478187561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.016534190624952316
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0020461922977119684,
+        0.0020461922977119684,
+        0.7372559309005737,
+        0.33660316467285156
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013300249353051186,
+        0.013300249353051186,
+        0.5453277826309204,
+        0.6815373301506042
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.06604062020778656,
+        0.9884534478187561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013300249353051186,
+        0.013300249353051186,
+        0.764331579208374,
+        0.495023250579834
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.14904843270778656,
+        0.9884534478187561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.03509659692645073
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009207865223288536,
+        0.009207865223288536,
+        0.6195611953735352,
+        0.8819352984428406
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.08264218270778656,
+        0.9884534478187561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.2352961003780365
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (20)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010230961255729198,
+        0.010230961255729198,
+        0.893950879573822,
+        0.6348327398300171
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (21)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.153227761387825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (22)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.018854491412639618
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsB_geo (23)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012277153320610523,
+        0.012277153320610523,
+        0.5590240359306335,
+        0.6955966949462891
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7019302248954773
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7219781279563904
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7900137305259705
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006161936558783054,
+        0.006161936558783054,
+        0.2088252753019333,
+        0.599757194519043
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.8841108679771423,
+        0.5988529324531555
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7343482375144958
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7467183470726013
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010269894264638424,
+        0.0010269894264638424,
+        0.9976463913917542,
+        0.046681441366672516
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7838286757469177
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003080968279391527,
+        0.003080968279391527,
+        0.17570170760154724,
+        0.8187129497528076
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.8085688948631287
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.752903401851654
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011296884156763554,
+        0.011296884156763554,
+        0.9881273508071899,
+        0.4328824579715729
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010269894264638424,
+        0.010269894264638424,
+        0.9378747940063477,
+        0.6360644102096558
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7143003344535828
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010269894264638424,
+        0.010269894264638424,
+        0.9495935440063477,
+        0.6360644102096558
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005134947132319212,
+        0.005134947132319212,
+        0.20885179936885834,
+        0.6443445086479187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsC_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.777643620967865
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.9614726305007935,
+        0.31655481457710266
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8589335680007935,
+        0.32325851917266846
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.23233634233474731
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8589335680007935,
+        0.31655481457710266
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.7534648180007935,
+        0.3295067846775055
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01327310036867857,
+        0.01327310036867857,
+        0.0827057734131813,
+        0.9959778189659119
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8999491930007935,
+        0.31655481457710266
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014294108375906944,
+        0.014294108375906944,
+        -0.00032527660368941724,
+        0.9959545731544495
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018378138542175293,
+        0.018378138542175293,
+        0.9614958763122559,
+        0.3297354280948639
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.9204570055007935,
+        0.32325851917266846
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008168062195181847,
+        0.008168062195181847,
+        0.25957974791526794,
+        0.9968573451042175
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008168062195181847,
+        0.008168062195181847,
+        0.26934537291526794,
+        0.9968573451042175
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011231085285544395,
+        0.011231085285544395,
+        0.14915849268436432,
+        0.9960242509841919
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.9409648180007935,
+        0.32325851917266846
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsD_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8589335680007935,
+        0.32996222376823425
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8001254200935364,
+        0.6350294947624207
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7538743019104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.989073634147644,
+        0.36530083417892456
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.7649691700935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8587191700935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.989073634147644,
+        0.34523603320121765
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9446566700935364,
+        0.5988518595695496
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8352816700935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7480149269104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8001254200935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004170049447566271,
+        0.004170049447566271,
+        0.20885667204856873,
+        0.6710180640220642
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7450852394104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004170049447566271,
+        0.004170049447566271,
+        0.20885667204856873,
+        0.6671708822250366
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005212561693042517,
+        0.005212561693042517,
+        0.2088247388601303,
+        0.6119639277458191
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.989073634147644,
+        0.39205390214920044
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.7415316700935364,
+        0.6350294947624207
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.7532504200935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7568039894104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9212191700935364,
+        0.5988518595695496
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.7884066700935364,
+        0.6350294947624207
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddR_grp/ibaraPertsE_geo (20)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007297586649656296,
+        0.007297586649656296,
+        0.9919640421867371,
+        0.30227023363113403
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010370454983785748,
+        0.0010370454983785748,
+        0.7919600605964661,
+        0.3366197943687439
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.43576934933662415,
+        0.973711371421814
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009333409368991852,
+        0.009333409368991852,
+        0.6233978271484375,
+        0.8579801917076111
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.42112091183662415,
+        0.95820152759552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.42112091183662415,
+        0.973711371421814
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.42112091183662415,
+        0.950446605682373
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0072593181394040585,
+        0.0072593181394040585,
+        0.20875957608222961,
+        0.557675838470459
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5598756074905396,
+        0.6581719517707825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004148181993514299,
+        0.004148181993514299,
+        0.20885591208934784,
+        0.6823410987854004
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005185227375477552,
+        0.005185227375477552,
+        0.2088238000869751,
+        0.6246528625488281
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.9696124792098999,
+        0.49177876114845276
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010370454983785748,
+        0.0010370454983785748,
+        0.9976407885551453,
+        0.004766717087477446
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5452271699905396,
+        0.6736817955970764
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010370454750955105,
+        0.010370454750955105,
+        0.8938735127449036,
+        0.6283393502235413
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010370454750955105,
+        0.010370454750955105,
+        0.8704360127449036,
+        0.6283393502235413
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.5452271699905396,
+        0.6349071860313416
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009333409368991852,
+        0.009333409368991852,
+        0.9817962646484375,
+        0.6216781139373779
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0020740909967571497,
+        0.0020740909967571497,
+        0.8551239967346191,
+        0.3332691490650177
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.38889434933662415,
+        0.9839035272598267
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009333409368991852,
+        0.009333409368991852,
+        0.9817962646484375,
+        0.627647876739502
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (20)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010370454983785748,
+        0.0010370454983785748,
+        0.7831709980964661,
+        0.3366197943687439
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsA_geo (21)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013481590896844864,
+        0.013481590896844864,
+        0.35862091183662415,
+        0.9909971356391907
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010230961255729198,
+        0.010230961255729198,
+        0.905669629573822,
+        0.6284167170524597
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.042057499289512634
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.16564999520778656,
+        0.9847367405891418
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013300249353051186,
+        0.013300249353051186,
+        0.720386266708374,
+        0.495023250579834
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01125405728816986,
+        0.01125405728816986,
+        0.9881508946418762,
+        0.42691394686698914
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.34207120537757874,
+        0.9839553833007812
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.009573287330567837
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.19982968270778656,
+        0.9265755414962769
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.13830624520778656
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.19885312020778656,
+        0.9847367405891418
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.03277629613876343
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0020461922977119684,
+        0.0020461922977119684,
+        0.7333496809005737,
+        0.33660316467285156
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013300249353051186,
+        0.013300249353051186,
+        0.19987842440605164,
+        0.9340850710868835
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.03283749148249626,
+        0.9809926748275757
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013300249353051186,
+        0.013300249353051186,
+        0.735034704208374,
+        0.495023250579834
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.24275685846805573
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.01421388890594244
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009207865223288536,
+        0.009207865223288536,
+        0.6195611953735352,
+        0.8766775727272034
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.19799230992794037
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.19053155183792114
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (20)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010230961255729198,
+        0.010230961255729198,
+        0.905669629573822,
+        0.6340416073799133
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (21)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01534644141793251,
+        0.01534644141793251,
+        0.9836727976799011,
+        0.18307079374790192
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (22)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010230961488559842,
+        0.0010230961488559842,
+        0.9976485371589661,
+        0.030455995351076126
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsB_geo (23)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012277153320610523,
+        0.012277153320610523,
+        0.5453521609306335,
+        0.6955966949462891
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5424422025680542,
+        0.8874419331550598
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7590884566307068
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7838286757469177
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006161936558783054,
+        0.006161936558783054,
+        0.2088252753019333,
+        0.6038262844085693
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.70811527967453
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.752903401851654
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7219781279563904
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010269894264638424,
+        0.0010269894264638424,
+        0.9976463913917542,
+        0.04898722469806671
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.7961987853050232
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003080968279391527,
+        0.003080968279391527,
+        0.18546733260154724,
+        0.8187129497528076
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7961987853050232
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7652735114097595
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011296884156763554,
+        0.011296884156763554,
+        0.9881273508071899,
+        0.4387148320674896
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010269894264638424,
+        0.010269894264638424,
+        0.9261560440063477,
+        0.6360644102096558
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5453264713287354,
+        0.70811527967453
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010269894264638424,
+        0.010269894264638424,
+        0.9818201065063477,
+        0.6052628755569458
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005134947132319212,
+        0.005134947132319212,
+        0.20885179936885834,
+        0.6480609178543091
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsC_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012323873117566109,
+        0.012323873117566109,
+        0.5589983463287354,
+        0.7281631827354431
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.9712382555007935,
+        0.29727789759635925
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.2524474859237671
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8794413805007935,
+        0.32325851917266846
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.2390400469303131
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.2457437515258789
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01327310036867857,
+        0.01327310036867857,
+        0.0993073359131813,
+        0.9959778189659119
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.31948453187942505
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014294108375906944,
+        0.014294108375906944,
+        0.0162762850522995,
+        0.9959545731544495
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018378138542175293,
+        0.018378138542175293,
+        0.9614958763122559,
+        0.32328173518180847
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8371686935424805,
+        0.29937341809272766
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008168062195181847,
+        0.008168062195181847,
+        0.24004849791526794,
+        0.9968573451042175
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008168062195181847,
+        0.008168062195181847,
+        0.24981412291526794,
+        0.9968573451042175
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011231085285544395,
+        0.011231085285544395,
+        0.8210334777832031,
+        0.3343033492565155
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.8999491930007935,
+        0.32325851917266846
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsD_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019399147480726242,
+        0.019399147480726242,
+        0.9204570055007935,
+        0.32996222376823425
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5156269669532776
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (1)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7685227394104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (2)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.7766879200935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (3)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5290034413337708
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (4)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.7649691700935364,
+        0.6350294947624207
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (5)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9880997538566589,
+        0.4503519833087921
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (6)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5958858132362366
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (7)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9329379200935364,
+        0.5988518595695496
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (8)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7743821144104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (9)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9680941700935364,
+        0.5988518595695496
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (10)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004170049447566271,
+        0.004170049447566271,
+        0.20885667204856873,
+        0.6594765186309814
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (11)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7597336769104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (12)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004170049447566271,
+        0.004170049447566271,
+        0.20885667204856873,
+        0.6517821550369263
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (13)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005212561693042517,
+        0.005212561693042517,
+        0.7947622537612915,
+        0.32978859543800354
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (14)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5022504925727844
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (15)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.989073634147644,
+        0.38536563515663147
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (16)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8118441700935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (17)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010425123618915677,
+        0.0010425123618915677,
+        0.7655930519104004,
+        0.3366200029850006
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (18)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.8235629200935364,
+        0.6283412575721741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (19)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010425123386085033,
+        0.010425123386085033,
+        0.9895785450935364,
+        0.5557563900947571
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_01_02_props/bg3d600B_01_02_ibaraAddL_grp /ibaraPertsE_geo (20)",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007297586649656296,
+        0.007297586649656296,
+        0.20876088738441467,
+        0.5524094700813293
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02_wall/wallCL_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.04280215501785278,
+        0.04280215501785278,
+        0.575422465801239,
+        0.865256667137146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02_wall/wallCR_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.04280215501785278,
+        0.04280215501785278,
+        0.575422465801239,
+        0.8891043066978455
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02_wall/wallEL_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.038848377764225006,
+        0.038848377764225006,
+        0.5754464268684387,
+        0.9129759073257446
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/bg3d600B_10_01_02_wall/wallER_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.038848377764225006,
+        0.038848377764225006,
+        0.5754464268684387,
+        0.936530590057373
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_a/snow_a_32",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12695761024951935,
+        0.12695761024951935,
+        0.7082855701446533,
+        0.299386590719223
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_a/snow_a_34",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.2389790415763855,
+        0.2389790415763855,
+        0.8121037483215332,
+        0.26119178533554077
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_a/snow_a_37",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.3491334617137909,
+        0.3491334617137909,
+        0.6727905869483948,
+        0.5480339527130127
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_a/snow_a_38",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.3491334617137909,
+        0.3491334617137909,
+        0.6727905869483948,
+        0.5364677309989929
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_a/snow_a_44",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12695761024951935,
+        0.12695761024951935,
+        0.7082855701446533,
+        0.2939378023147583
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_b/snow_b_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.05029667541384697,
+        0.05029667541384697,
+        0.5755733251571655,
+        0.8113945126533508
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_b/snow_b_05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.05424151197075844,
+        0.05424151197075844,
+        0.926138699054718,
+        0.6052455306053162
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_b/snow_b_06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0749519094824791,
+        0.0749519094824791,
+        0.4507814943790436,
+        0.958867609500885
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_b/snow_b_15",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.038462162017822266,
+        0.038462162017822266,
+        0.7172365188598633,
+        0.6460096836090088
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_c/snow_c_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.05183732882142067,
+        0.05183732882142067,
+        0.16379129886627197,
+        0.8739355802536011
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_d/bg3d600B_10_01_02_snow_d/snow_outline",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.046563513576984406,
+        0.046563513576984406,
+        0.5754291415214539,
+        0.8399537801742554
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_d/bg3d600B_10_01_02_snow_d/snow_d",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06615380942821503,
+        0.06615380942821503,
+        0.925625741481781,
+        0.46438467502593994
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_d/bg3d600B_10_01_02_snow_d_01/snow_outline",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07826633751392365,
+        0.07826633751392365,
+        0.3417541980743408,
+        0.9424265027046204
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_600_10_01_002/snow_groud/snow_d/bg3d600B_10_01_02_snow_d_01/snow_d",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11157283931970596,
+        0.11157283931970596,
+        0.8586009740829468,
+        0.26289787888526917
+      ]
+    }
+  ]
+}

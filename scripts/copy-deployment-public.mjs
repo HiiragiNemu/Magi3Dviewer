@@ -80,6 +80,36 @@ export const requiredDirectoryClosures = [
     source: 'public/stages/official/battle-621-00-00-001',
     output: 'stages/official/battle-621-00-00-001',
   },
+  // Keep the restored native visibility/material profiles and their actual
+  // carriers together. Old remote archives predate these serialized states.
+  ...[
+    'battle-601-00-01-001',
+    'battle-608-00-00-001',
+    'battle-616-00-01-001',
+    'battle-602-00-00-001',
+    'battle-601-00-01-002',
+    'battle-600-00-01-003',
+    'battle-603-00-00-001',
+  ].map(id => ({
+    source: `public/stages/official/${id}`,
+    output: `stages/official/${id}`,
+  })),
+  // Initial native states verified on 18 more real carriers; keep release bytes current.
+  ...[
+    "alternative-background-alternative-bg-model-00",
+    "alternative-background-alternative-bg-model-01",
+    "alternative-stage-model-alternative-stage-model-01-released",
+    "alternative-stage-model-alternative-stage-model-1-released",
+    "alternative-stage-model-alternative-stage-model-1-unreleased",
+    "battle-600-10-00-001",
+    "battle-600-10-01-001",
+    "battle-600-10-01-002",
+    "battle-600-10-01-003",
+    "battle-601-00-00-001",
+    "battle-601-00-01-003",
+    "battle-601-14-00-001",
+    "battle-601-15-00-001"
+  ].map(id => ({ source: `public/stages/official/${id}`, output: `stages/official/${id}` })),
   {
     source: 'public/enemies/models/enemy_654001_battle_unit',
     output: 'enemies/models/enemy_654001_battle_unit',

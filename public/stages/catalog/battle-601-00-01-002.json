@@ -39,5 +39,14 @@
       "8 runtime lights",
       "1 BC6H ReDrive reflection environment"
     ]
+  },
+  "entryValidation": {
+    "status": "load-tested",
+    "visibleMeshCount": 13,
+    "resourceFileCount": 19,
+    "evidence": [
+      "2026-09-24 shared loader: formal scene committed; 8 meshes observed in GPU draw probe.",
+      "2026-09-24 bundled current assets: 19 files source/artifact/HTTP byte-exact; no old archive dependency."
+    ]
   }
 }

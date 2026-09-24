@@ -174,6 +174,7 @@ export function batchStaticStageMeshes(root: THREE.Object3D, options: {
         }
         if (mesh.isSkinnedMesh || mesh.isInstancedMesh || mesh.isBatchedMesh || mesh.children.length
             || mesh.customDepthMaterial || mesh.customDistanceMaterial || !mesh.visible
+            || mesh.layers.mask === 0
             || mesh.userData.stageDynamicVertexPosition || !mesh.frustumCulled
             || mesh.onBeforeRender !== THREE.Object3D.prototype.onBeforeRender) return
         for (let parent = mesh.parent; parent; parent = parent.parent) {

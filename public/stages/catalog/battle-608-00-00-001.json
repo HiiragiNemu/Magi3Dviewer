@@ -378,27 +378,27 @@
         -8.087256e-11,
         0,
         7.228495e-11,
-        2.4680048e-08,
+        2.4680048e-8,
         0,
-        -1.0990876e-08,
+        -1.0990876e-8,
         0.060730126,
         2.2054808e-10,
         0,
         -8.087256e-11,
         0,
         7.228495e-11,
-        2.4680048e-08,
+        2.4680048e-8,
         0,
-        -1.0990876e-08,
+        -1.0990876e-8,
         0.060730126,
         2.2054808e-10,
         0,
         -8.087256e-11,
         0,
         7.228495e-11,
-        2.4680048e-08,
+        2.4680048e-8,
         0,
-        -1.0990876e-08
+        -1.0990876e-8
       ],
       "characterShadowTint": [
         0.85,
@@ -554,5 +554,14 @@
       "Current JP bg3d608_00_blue_ChairCD: renderQueue 3000, _ALPHATEST_ON, _AlphaClip=1, _Alpha_Clip=0.8999999761581421, _Surface=1, _SrcBlend=5, _DstBlend=10 and _ZWrite=0."
     ]
   },
-  "sceneProfileUrl": "./stages/official/battle-608-00-00-001/scene-profile.json"
+  "sceneProfileUrl": "./stages/official/battle-608-00-00-001/scene-profile.json",
+  "entryValidation": {
+    "status": "load-tested",
+    "visibleMeshCount": 59,
+    "resourceFileCount": 23,
+    "evidence": [
+      "2026-09-24 shared loader: formal scene committed; 55 meshes observed in GPU draw probe.",
+      "2026-09-24 bundled current assets: 23 files source/artifact/HTTP byte-exact; no old archive dependency."
+    ]
+  }
 }
