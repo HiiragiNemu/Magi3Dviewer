@@ -1,0 +1,4255 @@
+{
+  "schemaVersion": 1,
+  "scene": "bg_3d_652_01_12_001_002",
+  "encoding": "unity-bc6h-linear",
+  "renderers": [
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo8",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018437271937727928,
+        0.018437271937727928,
+        0.21938075125217438,
+        0.6314901113510132
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo16",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012207821011543274,
+        0.012207821011543274,
+        0.3864201605319977,
+        0.6315373182296753
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo17",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014170720241963863,
+        0.014170720241963863,
+        0.3707793354988098,
+        0.6315215229988098
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo17_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022268274798989296,
+        0.022268274798989296,
+        0.22971592843532562,
+        0.9813433289527893
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01709011383354664,
+        0.01709011383354664,
+        0.555533230304718,
+        0.39612168073654175
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_21",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01709011383354664,
+        0.01709011383354664,
+        0.31194180250167847,
+        0.981537938117981
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01709011383354664,
+        0.01709011383354664,
+        0.574087917804718,
+        0.39612168073654175
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008042406290769577,
+        0.008042406290769577,
+        0.6113558411598206,
+        0.4060458540916443
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-5888725806454531785",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo18_04",
+            "position": [
+              5.409999847412109,
+              0.06800079345703125,
+              22.59600067138672
+            ],
+            "rotation": [
+              -0.029479555785655975,
+              0.5403942465782166,
+              -0.15758003294467926,
+              0.8259984850883484
+            ],
+            "scale": [
+              0.501948893070221,
+              0.501948893070221,
+              0.501948893070221
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010053008794784546,
+        0.010053008794784546,
+        0.9841758608818054,
+        0.06872546672821045
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_16",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010053008794784546,
+        0.010053008794784546,
+        0.9841758608818054,
+        0.07960197329521179
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007037105970084667,
+        0.007037105970084667,
+        0.8494630455970764,
+        0.13457909226417542
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009047707542777061,
+        0.009047707542777061,
+        0.4175514876842499,
+        0.7984923720359802
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "1607459181604537524",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo18_08",
+            "position": [
+              13.970000267028809,
+              0.06800079345703125,
+              10.430000305175781
+            ],
+            "rotation": [
+              0.03845089301466942,
+              0.1496482938528061,
+              -0.15563426911830902,
+              0.9756561517715454
+            ],
+            "scale": [
+              0.5082156658172607,
+              0.5082156658172607,
+              0.5082156658172607
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_22",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009047707542777061,
+        0.009047707542777061,
+        0.4175514876842499,
+        0.7885081768035889
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_17",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009047707542777061,
+        0.009047707542777061,
+        0.4175514876842499,
+        0.7685397863388062
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011058309115469456,
+        0.011058309115469456,
+        0.9841582179069519,
+        0.012149598449468613
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007037105970084667,
+        0.007037105970084667,
+        0.8670411705970764,
+        0.13457909226417542
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "6881170467425987063",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo18_08",
+            "position": [
+              12.071999549865723,
+              0.06514299660921097,
+              13.67199993133545
+            ],
+            "rotation": [
+              -0.014615245163440704,
+              0.46078816056251526,
+              -0.1596461832523346,
+              0.8729110956192017
+            ],
+            "scale": [
+              0.41315045952796936,
+              0.41315045952796936,
+              0.41315045952796936
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007037105970084667,
+        0.007037105970084667,
+        0.8758302330970764,
+        0.13457909226417542
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_14",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01206361036747694,
+        0.01206361036747694,
+        0.39094817638397217,
+        0.8085260391235352
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_18",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01206361036747694,
+        0.01206361036747694,
+        0.40462005138397217,
+        0.8085260391235352
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0040212031453847885,
+        0.0040212031453847885,
+        0.42265626788139343,
+        0.4710191786289215
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009047707542777061,
+        0.009047707542777061,
+        0.4175514876842499,
+        0.7785239815711975
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_15",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011058309115469456,
+        0.011058309115469456,
+        0.9841582179069519,
+        0.035687290132045746
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011058309115469456,
+        0.011058309115469456,
+        0.9841582179069519,
+        0.02391844429075718
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-4132798892170897396",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo18_05",
+            "position": [
+              30.016393661499023,
+              0.1899999976158142,
+              -8.587693214416504
+            ],
+            "rotation": [
+              -0.10598358511924744,
+              0.8870304226875305,
+              -0.12028306722640991,
+              0.43298569321632385
+            ],
+            "scale": [
+              0.6174608469009399,
+              0.6174608469009399,
+              0.6174608469009399
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007037105970084667,
+        0.007037105970084667,
+        0.8582521080970764,
+        0.13457909226417542
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_19",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015079512260854244,
+        0.015079512260854244,
+        0.2741498351097107,
+        0.6315717101097107
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01709011383354664,
+        0.01709011383354664,
+        0.18427087366580963,
+        0.9771633148193359
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "302287510379288311",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo18_03",
+            "position": [
+              -4.230335712432861,
+              0.6200027465820312,
+              28.25629425048828
+            ],
+            "rotation": [
+              -0.0,
+              -0.7279492616653442,
+              0.0,
+              0.6856310963630676
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021111316978931427,
+        0.021111316978931427,
+        0.9042154550552368,
+        0.5112856030464172
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo19",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007441203109920025,
+        0.007441203109920025,
+        0.6654282212257385,
+        0.40489697456359863
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo20",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015305429697036743,
+        0.015305429697036743,
+        0.33755719661712646,
+        0.6315025091171265
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo20_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015305429697036743,
+        0.015305429697036743,
+        0.35415875911712646,
+        0.6315025091171265
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo21",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011344975791871548,
+        0.011344975791871548,
+        0.9840347170829773,
+        0.05796894058585167
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo21_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016501782462000847,
+        0.016501782462000847,
+        0.25637441873550415,
+        0.6313744187355042
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo22",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006346763111650944,
+        0.006346763111650944,
+        0.9313188791275024,
+        0.1344195008277893
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo23",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0056667933240532875,
+        0.0056667933240532875,
+        0.19558070600032806,
+        0.9290433526039124
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo24",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.024269312620162964,
+        0.024269312620162964,
+        0.9448822736740112,
+        0.6483863592147827
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo24_06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.024269312620162964,
+        0.024269312620162964,
+        0.9194916486740112,
+        0.6483863592147827
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo24_05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012134656310081482,
+        0.012134656310081482,
+        0.9841942191123962,
+        -0.00015776391956023872
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo24_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.024269312620162964,
+        0.024269312620162964,
+        0.6069916486740112,
+        0.9785575270652771
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo24_04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008089770562946796,
+        0.008089770562946796,
+        0.6210349798202515,
+        0.39631596207618713
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo24_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.024269312620162964,
+        0.024269312620162964,
+        0.8677454590797424,
+        0.3925357758998871
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo24_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.024269312620162964,
+        0.024269312620162964,
+        0.9702728986740112,
+        0.6483863592147827
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo25",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02231878973543644,
+        0.02231878973543644,
+        0.5036622285842896,
+        0.8987870812416077
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.6393101811408997,
+        0.4049324095249176
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.19350861012935638,
+        0.9039427638053894
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-2653354338195713039",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo31_04",
+            "position": [
+              -7.255000114440918,
+              0.14100000262260437,
+              17.562999725341797
+            ],
+            "rotation": [
+              0.268030047416687,
+              -0.2561170160770416,
+              0.25923845171928406,
+              0.8918293118476868
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.19350861012935638,
+        0.8687865138053894
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.6306279897689819,
+        0.4049324095249176
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012438862584531307,
+        0.012438862584531307,
+        0.4134030044078827,
+        0.6313596963882446
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "7818497351110809062",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo31_07",
+            "position": [
+              7.409999847412109,
+              0.5442699790000916,
+              28.989999771118164
+            ],
+            "rotation": [
+              0.34228426218032837,
+              0.4792516231536865,
+              -0.30165183544158936,
+              0.7497770190238953
+            ],
+            "scale": [
+              1.5656696557998657,
+              1.5656696557998657,
+              1.5656696557998657
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0041462876833975315,
+        0.0041462876833975315,
+        0.4225679636001587,
+        0.4480699896812439
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-3091850636777279909",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo31_08",
+            "position": [
+              -3.2829999923706055,
+              0.05999999865889549,
+              22.43000030517578
+            ],
+            "rotation": [
+              0.14087754487991333,
+              0.923086941242218,
+              -0.3452519178390503,
+              -0.09415517002344131
+            ],
+            "scale": [
+              0.5669000148773193,
+              0.5669000148773193,
+              0.5669000148773193
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.19350861012935638,
+        0.8599974513053894
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-4880384493261435200",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo31_06",
+            "position": [
+              -3.6731553077697754,
+              0.21900177001953125,
+              28.90536117553711
+            ],
+            "rotation": [
+              0.11459311097860336,
+              -0.6454997658729553,
+              0.3548426926136017,
+              0.6665472388267517
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.19350861012935638,
+        0.8951537013053894
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008292575366795063,
+        0.008292575366795063,
+        0.6111792325973511,
+        0.3961036503314972
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009329146705567837,
+        0.009329146705567837,
+        0.4173528254032135,
+        0.7390443086624146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011402290314435959,
+        0.011402290314435959,
+        0.34891408681869507,
+        0.9814008474349976
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012438862584531307,
+        0.012438862584531307,
+        0.39991438388824463,
+        0.6313596963882446
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.6479923725128174,
+        0.4049324095249176
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "3465746550560880440",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo31_03",
+            "position": [
+              16.889999389648438,
+              0.21899999678134918,
+              17.34000015258789
+            ],
+            "rotation": [
+              0.36626946926116943,
+              0.2745577096939087,
+              0.06993728131055832,
+              0.8863258957862854
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.6208623647689819,
+        0.4050233066082001
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo32",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007346724160015583,
+        0.007346724160015583,
+        0.6566711068153381,
+        0.39613986015319824
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo33",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0056807491928339005,
+        0.0056807491928339005,
+        0.1955794394016266,
+        0.9222320914268494
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo33_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0056807491928339005,
+        0.0056807491928339005,
+        0.1955794394016266,
+        0.9154220819473267
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_16",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012438862584531307,
+        0.012438862584531307,
+        0.37719470262527466,
+        0.8082611560821533
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01709011383354664,
+        0.01709011383354664,
+        0.33049649000167847,
+        0.981537938117981
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "5538561538495277502",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo18_03",
+            "position": [
+              26.12651824951172,
+              0.6023512482643127,
+              -9.09000015258789
+            ],
+            "rotation": [
+              -0.07686630636453629,
+              0.6467942595481873,
+              -0.06576928496360779,
+              0.7559253573417664
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.19350861012935638,
+        0.8512083888053894
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "4561860603430881624",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo31_04",
+            "position": [
+              26.18970489501953,
+              0.21900177001953125,
+              -10.512999534606934
+            ],
+            "rotation": [
+              0.25845062732696533,
+              0.8925772905349731,
+              -0.26879069209098816,
+              0.2534968852996826
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01709011383354664,
+        0.01709011383354664,
+        0.592642605304718,
+        0.39612168073654175
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "5708812899947471387",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo18_04",
+            "position": [
+              34.279998779296875,
+              0.5419998168945312,
+              7.400000095367432
+            ],
+            "rotation": [
+              -0.040405742824077606,
+              0.3464100658893585,
+              -0.10858159512281418,
+              0.9309014678001404
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_20",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01709011383354664,
+        0.01709011383354664,
+        0.29338711500167847,
+        0.981537938117981
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.19350861012935638,
+        0.8775755763053894
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "3547909523809298851",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo31_03",
+            "position": [
+              35.816551208496094,
+              0.21900177001953125,
+              6.101755619049072
+            ],
+            "rotation": [
+              -0.03275148198008537,
+              0.777648389339447,
+              -0.3714466392993927,
+              -0.5061796307563782
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_14",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.6393101811408997,
+        0.3961433470249176
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.6306279897689819,
+        0.3961433470249176
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-3917651627656438625",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo31_07",
+            "position": [
+              -2.8325576782226562,
+              0.57635498046875,
+              55.17235565185547
+            ],
+            "rotation": [
+              -0.0,
+              -0.2943173348903656,
+              0.0,
+              0.9557077884674072
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo25_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02637675032019615,
+        0.02637675032019615,
+        0.49947911500930786,
+        0.6275377869606018
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo18_05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01709011383354664,
+        0.01709011383354664,
+        0.27483242750167847,
+        0.981537938117981
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "7016835559840632614",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo18_05",
+            "position": [
+              -4.1699981689453125,
+              0.6200027465820312,
+              47.27634048461914
+            ],
+            "rotation": [
+              -0.0,
+              -0.3479313552379608,
+              0.0,
+              0.9375200271606445
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.6479923725128174,
+        0.3961433470249176
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "1458736466916006859",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo31_08",
+            "position": [
+              -2.9987335205078125,
+              0.21900177001953125,
+              47.39155197143555
+            ],
+            "rotation": [
+              0.36771532893180847,
+              0.5658222436904907,
+              -0.06188826262950897,
+              0.73539137840271
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_Rubble/bg3d652B_12_Rubble/rock_geo31_06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007256003096699715,
+        0.007256003096699715,
+        0.19350861012935638,
+        0.8863646388053894
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-4909404463394638920",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_Rubble",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "rock_geo31_06",
+            "position": [
+              16.889999389648438,
+              0.21900177001953125,
+              17.34000015258789
+            ],
+            "rotation": [
+              0.36626946926116943,
+              0.2745577096939087,
+              0.06993728131055832,
+              0.8863258957862854
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildA_grp/buildA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.20154930651187897,
+        0.20154930651187897,
+        0.21966807544231415,
+        0.42865246534347534
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildA_grp1/buildA_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.20168723165988922,
+        0.20168723165988922,
+        -5.8526395150693133e-05,
+        0.6483026742935181
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildB_grp/buildB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09384243935346603,
+        0.09384243935346603,
+        0.4285852015018463,
+        0.5321048498153687
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildB_grp1/buildB_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09384243935346603,
+        0.09384243935346603,
+        0.8972994089126587,
+        0.27722206711769104
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildB_grp2/buildB_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09384243935346603,
+        0.09384243935346603,
+        0.8781597018241882,
+        0.41589394211769104
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildC_grp/buildC_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1742459535598755,
+        0.1742459535598755,
+        0.20280721783638,
+        0.6483021974563599
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildC_grp/buildCwall_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09982255101203918,
+        0.09982255101203918,
+        0.7595441341400146,
+        0.6397053003311157
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildD_grp/buildD_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13328763842582703,
+        0.13328763842582703,
+        0.4285848140716553,
+        0.14251931011676788
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildD_grp/buildDwall_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08410976827144623,
+        0.08410976827144623,
+        0.7840022444725037,
+        0.5321005582809448
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildD_grp1/buildD_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13328763842582703,
+        0.13328763842582703,
+        0.5633504390716553,
+        0.14251931011676788
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildD_grp1/buildDwall_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08410976827144623,
+        0.08410976827144623,
+        0.6121272444725037,
+        0.5321005582809448
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildD_grp2/buildD_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13328763842582703,
+        0.13328763842582703,
+        0.8495275378227234,
+        -5.8816076489165425e-05
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildD_grp2/buildDwall_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08410976827144623,
+        0.08410976827144623,
+        0.6980647444725037,
+        0.5321005582809448
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildD_grp3/buildD_geo_3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13916796445846558,
+        0.13916796445846558,
+        0.570228099822998,
+        -6.141090125311166e-05
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildD_grp3/buildDwall_geo_3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0860665887594223,
+        0.0860665887594223,
+        0.5242347121238708,
+        0.532098650932312
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildE_grp/buildE_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08213190734386444,
+        0.08213190734386444,
+        0.4285850524902344,
+        0.8150222301483154
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildE_grp/buildEwall_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07381512969732285,
+        0.07381512969732285,
+        0.36198145151138306,
+        0.8230293989181519
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildE_grp1/buildE_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.14079755544662476,
+        0.14079755544662476,
+        0.42854321002960205,
+        -0.00010044616647064686
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildE_grp1/buildEwall_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12696203589439392,
+        0.12696203589439392,
+        0.6746470928192139,
+        0.2771695852279663
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildF_grp/buildF_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11507328599691391,
+        0.11507328599691391,
+        0.5445855259895325,
+        0.4158932566642761
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildF_grp/buildFwall_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08642859011888504,
+        0.08642859011888504,
+        0.5242357850074768,
+        0.6855151653289795
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildF_grp1/buildF_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11507328599691391,
+        0.11507328599691391,
+        0.4285845160484314,
+        0.4158932566642761
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildF_grp1/buildFwall_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08642859011888504,
+        0.08642859011888504,
+        0.5242357850074768,
+        0.7734057903289795
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildF_grp2/buildF_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11802388727664948,
+        0.11802388727664948,
+        0.5557720065116882,
+        0.27721986174583435
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildF_grp2/buildFwall_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09035716205835342,
+        0.09035716205835342,
+        0.42857715487480164,
+        0.8989987373352051
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildF_grp4/buildF_geo_3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1101556271314621,
+        0.1101556271314621,
+        0.6605890393257141,
+        0.4158957898616791
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildF_grp4/buildFwall_geo_3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08544644713401794,
+        0.08544644713401794,
+        0.5242365002632141,
+        0.8612971305847168
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildG_grp/buildG_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1319914609193802,
+        0.1319914609193802,
+        0.6981164216995239,
+        0.14251965284347534
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildG_grp/buildGwall_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1064678207039833,
+        0.1064678207039833,
+        0.42857038974761963,
+        0.6277931928634644
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildH_grp/buildH_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.15742868185043335,
+        0.15742868185043335,
+        0.20280782878398895,
+        0.823035478591919
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildJ_grp/buildJ_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.14813953638076782,
+        0.14813953638076782,
+        -5.9578262153081596e-05,
+        0.8514266014099121
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildJ_grp1/buildJ_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11653643846511841,
+        0.11653643846511841,
+        0.7801235318183899,
+        0.27723363041877747
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildK_grp/buildK_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13219675421714783,
+        0.13219675421714783,
+        0.831648588180542,
+        0.1425190269947052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildK_grp1/buildK_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06462700664997101,
+        0.06462700664997101,
+        0.6072736382484436,
+        0.6727571487426758
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/build_grp/buildK_grp2/buildK_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0645274892449379,
+        0.0645274892449379,
+        0.3620125353336334,
+        0.8982557654380798
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ground_grp/ground_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.21782445907592773,
+        0.21782445907592773,
+        -2.9179573175497353e-05,
+        0.42868176102638245
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.42723920941352844,
+        0.42723920941352844,
+        -0.000293170684017241,
+        -0.000293170684017241
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13705936074256897,
+        0.13705936074256897,
+        0.7107378840446472,
+        -0.00017659776494838297
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0604136623442173,
+        0.0604136623442173,
+        0.14823612570762634,
+        0.9157379865646362
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1377924680709839,
+        0.1377924680709839,
+        0.4284595549106598,
+        0.2770964205265045
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0550057627260685,
+        0.0550057627260685,
+        0.8629873991012573,
+        0.6076797246932983
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo8",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06348679959774017,
+        0.06348679959774017,
+        0.14822380244731903,
+        0.8512725234031677
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo9",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07455991953611374,
+        0.07455991953611374,
+        0.607116162776947,
+        0.607667863368988
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09314580261707306,
+        0.09314580261707306,
+        0.4284525513648987,
+        0.7341206669807434
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08174040913581848,
+        0.08174040913581848,
+        0.5241162180900574,
+        0.6076757311820984
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07340779900550842,
+        0.07340779900550842,
+        0.869825541973114,
+        0.5319863557815552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo14",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07455991953611374,
+        0.07455991953611374,
+        0.683288037776947,
+        0.607667863368988
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo15",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10602560639381409,
+        0.10602560639381409,
+        0.7715945839881897,
+        0.4157741069793701
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo17",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06386832892894745,
+        0.06386832892894745,
+        0.524098813533783,
+        0.9480735063552856
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo18",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03558015078306198,
+        0.03558015078306198,
+        0.7040888667106628,
+        0.6725825071334839
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo19",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.04140906408429146,
+        0.04140906408429146,
+        0.6071050763130188,
+        0.8422735333442688
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo20",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.020208919420838356,
+        0.020208919420838356,
+        0.8867393136024475,
+        0.6726157665252686
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo21",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10308857262134552,
+        0.10308857262134552,
+        0.8970801830291748,
+        0.37270596623420715
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo22",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023717181757092476,
+        0.023717181757092476,
+        0.6461914777755737,
+        0.8032417893409729
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo26",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.034600935876369476,
+        0.034600935876369476,
+        0.9653123021125793,
+        0.17852649092674255
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo27",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029129918664693832,
+        0.029129918664693832,
+        0.671894371509552,
+        0.8990302681922913
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo29",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03447619080543518,
+        0.03447619080543518,
+        0.9653132557868958,
+        0.14239466190338135
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo30",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02183431014418602,
+        0.02183431014418602,
+        0.8183770775794983,
+        0.6726129055023193
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo31",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.046313609927892685,
+        0.046313609927892685,
+        0.37745848298072815,
+        0.6950237154960632
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo32",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03220955654978752,
+        0.03220955654978752,
+        0.6071289777755737,
+        0.9137972593307495
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo33",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029301097616553307,
+        0.029301097616553307,
+        0.973685622215271,
+        0.41576409339904785
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo34",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.024759242311120033,
+        0.024759242311120033,
+        0.768575131893158,
+        0.672615647315979
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo35",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.053148433566093445,
+        0.053148433566093445,
+        0.6070955395698547,
+        0.7389853000640869
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo36",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03329677879810333,
+        0.03329677879810333,
+        0.6718755960464478,
+        0.833581805229187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo37",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03464541211724281,
+        0.03464541211724281,
+        0.14820842444896698,
+        0.9772337079048157
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo38",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06195525452494621,
+        0.06195525452494621,
+        0.9195871353149414,
+        0.6076388359069824
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo39",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06102550029754639,
+        0.06102550029754639,
+        0.36180272698402405,
+        0.9644522070884705
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo40",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02477075345814228,
+        0.02477075345814228,
+        0.6452175378799438,
+        0.8757139444351196
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo41",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.027850398793816566,
+        0.027850398793816566,
+        0.6718920469284058,
+        0.929301381111145
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo42",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10220622271299362,
+        0.10220622271299362,
+        0.7593261003494263,
+        0.6075340509414673
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo43",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025888795033097267,
+        0.025888795033097267,
+        0.7412309646606445,
+        0.6726152300834656
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo44",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019889751449227333,
+        0.019889751449227333,
+        0.9268691539764404,
+        0.5114783644676208
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo45",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02697128802537918,
+        0.02697128802537918,
+        0.9736904501914978,
+        0.44604235887527466
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo46",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02481897547841072,
+        0.02481897547841072,
+        0.8780184388160706,
+        0.511455774307251
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rock_geo47",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06207675486803055,
+        0.06207675486803055,
+        0.6070266962051392,
+        0.7768967151641846
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rocknear_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.05601600185036659,
+        0.05601600185036659,
+        0.9440463781356812,
+        0.5319884419441223
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rocknear_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03832673653960228,
+        0.03832673653960228,
+        0.37755128741264343,
+        0.7285395860671997
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rocknear_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.045205894857645035,
+        0.045205894857645035,
+        0.3775297999382019,
+        0.6482200622558594
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rocknear_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03636126220226288,
+        0.03636126220226288,
+        0.607193648815155,
+        0.8757759928703308
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rocknear_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03832673653960228,
+        0.03832673653960228,
+        0.37755128741264343,
+        0.7685786485671997
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rocknear_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029482105746865273,
+        0.029482105746865273,
+        0.6719784736633301,
+        0.8678643703460693
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/rock_grp/rocknear_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029482105746865273,
+        0.029482105746865273,
+        0.640418291091919,
+        0.9138834476470947
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/buildingBreak_grp/buildingBreakA_grp/buildingBreakA_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.032274242490530014,
+        0.032274242490530014,
+        0.9654673933982849,
+        0.21125760674476624
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/buildingBreak_grp/buildingBreakA_grp/buildingBreakA_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.030318232253193855,
+        0.030318232253193855,
+        0.6720413565635681,
+        0.8015525341033936
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/buildingBreak_grp/buildingBreakA_grp/buildingBreakA_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.030318232253193855,
+        0.030318232253193855,
+        0.6720413565635681,
+        0.7693575024604797
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/buildingBreak_grp/buildingBreakA_grp/buildingBreakA_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02250511571764946,
+        0.02250511571764946,
+        0.49977847933769226,
+        0.6551809310913086
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/buildingBreak_grp/buildingBreakB_grp/buildingBreakB_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03031834028661251,
+        0.03031834028661251,
+        0.6072784066200256,
+        0.9466211795806885
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/buildingBreak_grp/buildingBreakB_grp/buildingBreakB_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03031751699745655,
+        0.03031751699745655,
+        0.6720417141914368,
+        0.7371599078178406
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/buildingBreak_grp/buildingBreakB_grp/buildingBreakB_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.030316894873976707,
+        0.030316894873976707,
+        0.6720417141914368,
+        0.6727619171142578
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/buildingBreak_grp/buildingBreakB_grp/buildingBreakB_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03031751699745655,
+        0.03031751699745655,
+        0.6720417141914368,
+        0.7049620151519775
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/buildingBreak_grp/buildingBreakB_grp/buildingBreakB_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.030316894873976707,
+        0.030316894873976707,
+        0.6395049691200256,
+        0.9466211795806885
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/buildingBreak_grp/buildingBreakB_grp/buildingBreakB_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03715311363339424,
+        0.03715311363339424,
+        0.607278048992157,
+        0.8033908605575562
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.027410922572016716,
+        0.027410922572016716,
+        0.7801357507705688,
+        0.3928166627883911
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02447950467467308,
+        0.02447950467467308,
+        0.6395013332366943,
+        0.9788176417350769
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013731575571000576,
+        0.013731575571000576,
+        0.2909860610961914,
+        0.6318063735961914
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019587058573961258,
+        0.019587058573961258,
+        0.9297036528587341,
+        0.6727620363235474
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.027410775423049927,
+        0.027410775423049927,
+        0.8094326257705688,
+        0.3928166627883911
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019590862095355988,
+        0.019590862095355988,
+        0.908218502998352,
+        0.6727612614631653
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018612682819366455,
+        0.018612682819366455,
+        0.9485020041465759,
+        0.5116268396377563
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo8",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.020562797784805298,
+        0.020562797784805298,
+        0.8644243478775024,
+        0.6727617383003235
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo9",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.020562797784805298,
+        0.020562797784805298,
+        0.8419634103775024,
+        0.6727617383003235
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02545786462724209,
+        0.02545786462724209,
+        0.2028314769268036,
+        0.9818025827407837
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013731575571000576,
+        0.013731575571000576,
+        0.3066110610961914,
+        0.6318063735961914
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.027410680428147316,
+        0.027410680428147316,
+        0.8387295603752136,
+        0.3928166925907135
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/sand_grp/sand_geo13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013731575571000576,
+        0.013731575571000576,
+        0.3222360610961914,
+        0.6318063735961914
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/steel_grp/steel_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005916752386838198,
+        0.005916752386838198,
+        0.9237616062164307,
+        0.13467474281787872
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/steel_grp/steel_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005916752852499485,
+        0.005916752852499485,
+        0.9003241062164307,
+        0.13467474281787872
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/steel_grp/steel_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00590907409787178,
+        0.00590907409787178,
+        0.8925197720527649,
+        0.13467499613761902
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/steel_grp/steel_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005916752852499485,
+        0.005916752852499485,
+        0.9081366062164307,
+        0.13467474281787872
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/steel_grp/steel_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005916752852499485,
+        0.005916752852499485,
+        0.9159491062164307,
+        0.13467474281787872
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/steel_grp/steel_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00590907409787178,
+        0.00590907409787178,
+        0.88471519947052,
+        0.13467499613761902
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/steel_grp/steel_geo7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0039489129558205605,
+        0.0039489129558205605,
+        0.4226994514465332,
+        0.44235554337501526
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneA_grp/stoneA_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.030317936092615128,
+        0.030317936092615128,
+        0.9654673933982849,
+        0.24541668593883514
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneA_grp/stoneA_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025433987379074097,
+        0.025433987379074097,
+        0.9738450646400452,
+        0.474517285823822
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneA_grp/stoneA_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025435717776417732,
+        0.025435717776417732,
+        0.704268217086792,
+        0.699442982673645
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneA_grp/stoneA_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02543400228023529,
+        0.02543400228023529,
+        0.9738450646400452,
+        0.501861035823822
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneA_grp/stoneA_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.026411741971969604,
+        0.026411741971969604,
+        0.6720417737960815,
+        0.9587479829788208
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneB_grp/stoneB_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02152791991829872,
+        0.02152791991829872,
+        0.49977874755859375,
+        0.6795952320098877
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneB_grp/stoneB_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021527942270040512,
+        0.021527942270040512,
+        0.7950883507728577,
+        0.6727616786956787
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneB_grp/stoneB_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021527940407395363,
+        0.021527940407395363,
+        0.49977874755859375,
+        0.7030326724052429
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneB_grp/stoneB_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019573770463466644,
+        0.019573770463466644,
+        0.6502476334571838,
+        0.8424473404884338
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneC_grp/stoneC_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007888957858085632,
+        0.007888957858085632,
+        0.9843228459358215,
+        0.10039111971855164
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneC_grp/stoneC_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00788281112909317,
+        0.00788281112909317,
+        0.9843229055404663,
+        0.11012051999568939
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneC_grp/stoneC_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00797023344784975,
+        0.00797023344784975,
+        0.9843225479125977,
+        0.09062519669532776
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneC_grp/stoneC_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00788617879152298,
+        0.00788617879152298,
+        0.9843228459358215,
+        0.11984981596469879
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneC_grp/stoneC_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008931216783821583,
+        0.008931216783821583,
+        0.41768303513526917,
+        0.7286322712898254
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneC_grp/stoneC_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008891367353498936,
+        0.008891367353498936,
+        0.4176826775074005,
+        0.7501162886619568
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/ruins_grp/stoneC_grp/stoneC_geo7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00788617879152298,
+        0.00788617879152298,
+        0.9843228459358215,
+        0.12954005599021912
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/polySurface1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003967610653489828,
+        0.003967610653489828,
+        0.42268699407577515,
+        0.45404839515686035
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/polySurface2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004939403850585222,
+        0.004939403850585222,
+        0.42268916964530945,
+        0.4286733865737915
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/polySurface3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004939403850585222,
+        0.004939403850585222,
+        0.42268916964530945,
+        0.4355093240737915
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/polySurface4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008890926837921143,
+        0.008890926837921143,
+        0.4184357225894928,
+        0.8086698055267334
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo8_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0069064730778336525,
+        0.0069064730778336525,
+        0.6655765175819397,
+        0.3963841497898102
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo8",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0069064730778336525,
+        0.0069064730778336525,
+        0.6569153666496277,
+        0.4051732122898102
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo9",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0070275189355015755,
+        0.0070275189355015755,
+        0.4176710247993469,
+        0.7608468532562256
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo17_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004046750720590353,
+        0.004046750720590353,
+        0.4226539731025696,
+        0.486760675907135
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo16",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002053628908470273,
+        0.002053628908470273,
+        0.4226866066455841,
+        0.5374442934989929
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo17",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004046750720590353,
+        0.004046750720590353,
+        0.4226539731025696,
+        0.47653937339782715
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo25",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006070125848054886,
+        0.006070125848054886,
+        0.18446119129657745,
+        0.9944764971733093
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo26",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010225248988717794,
+        0.0010225248988717794,
+        0.4227014183998108,
+        0.5866352319717407
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo27",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001044341130182147,
+        0.001044341130182147,
+        0.4256264567375183,
+        0.586630642414093
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo28",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5779697299003601
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo29",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5721941590309143
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo30",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.5721941590309143
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo31",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004046750720590353,
+        0.004046750720590353,
+        0.4226539731025696,
+        0.5072033405303955
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo32",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5664185881614685
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo33",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004128261934965849,
+        0.004128261934965849,
+        0.4226143956184387,
+        0.46540623903274536
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo33_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004128261934965849,
+        0.004128261934965849,
+        0.4226143956184387,
+        0.4598351716995239
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo34",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.551979660987854
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo35",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5750819444656372
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo36",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5577552318572998
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo37",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004046750720590353,
+        0.004046750720590353,
+        0.4226539731025696,
+        0.5123140215873718
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo37_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.011128564365208149,
+        0.011128564365208149,
+        0.9841519594192505,
+        0.04744984582066536
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo38",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5548674464225769
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo39",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5837453007698059
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo40",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.5750819444656372
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo42",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5693063735961914
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo44",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.5606430172920227
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo45",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0020390674471855164,
+        0.0020390674471855164,
+        0.42267173528671265,
+        0.5452419519424438
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo46",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.5779697299003601
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo47",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.5577552318572998
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo48",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.5693063735961914
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo50",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.5635308027267456
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo51",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004046750720590353,
+        0.004046750720590353,
+        0.4226539731025696,
+        0.5020926594734192
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo52",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002053628908470273,
+        0.002053628908470273,
+        0.4226866066455841,
+        0.5413505434989929
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo53",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0030804432462900877,
+        0.0030804432462900877,
+        0.4226665794849396,
+        0.5276586413383484
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo54",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0200786255300045,
+        0.0200786255300045,
+        0.2535361349582672,
+        0.9817260503768921
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo55",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015786223113536835,
+        0.015786223113536835,
+        0.2391732633113861,
+        0.6317514181137085
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo56",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004046750720590353,
+        0.004046750720590353,
+        0.4226539731025696,
+        0.5225353837013245
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo57",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.580857515335083
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo58",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004046750720590353,
+        0.004046750720590353,
+        0.4226539731025696,
+        0.5174247026443481
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo59",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5635308027267456
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo59_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5606430172920227
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo59_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.551979660987854
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo59_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4226992428302765,
+        0.5490918755531311
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo59_04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.5490918755531311
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo60",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004046750720590353,
+        0.004046750720590353,
+        0.4226539731025696,
+        0.4816500246524811
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo62",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004046750720590353,
+        0.004046750720590353,
+        0.4226539731025696,
+        0.49187132716178894
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo63",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.5664185881614685
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo64",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.5548674464225769
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo66",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195337235927582,
+        0.0010195337235927582,
+        0.4256289303302765,
+        0.580857515335083
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo67",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004046750720590353,
+        0.004046750720590353,
+        0.4226539731025696,
+        0.49698197841644287
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo68",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0030804432462900877,
+        0.0030804432462900877,
+        0.4226665794849396,
+        0.5325414538383484
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo70",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010320654837414622,
+        0.0010320654837414622,
+        0.42562833428382874,
+        0.5837447047233582
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo25_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005058438051491976,
+        0.005058438051491976,
+        0.19600576162338257,
+        0.9480770230293274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo25_02__lm_n5984661963090414391",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005058438051491976,
+        0.005058438051491976,
+        0.19600576162338257,
+        0.9421769976615906
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-5984661963090414391",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_01_02",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_stoneC",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "stoneC_geo25_02__lm_n5984661963090414391",
+            "position": [
+              13.578999519348145,
+              -0.058017730712890625,
+              17.279260635375977
+            ],
+            "rotation": [
+              -0.48276999592781067,
+              0.011511948890984058,
+              -0.8756686449050903,
+              0.002264816779643297
+            ],
+            "scale": [
+              0.5231273174285889,
+              0.3292929530143738,
+              0.5231273174285889
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo25_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005058438051491976,
+        0.005058438051491976,
+        0.19600576162338257,
+        0.9362769722938538
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_652_01_12_001_002/bg3d652B_12_01_02_Model/bg3d652B_12_01_02/bg3d652B_12_stoneC/stoneC_geo25_02__lm_n2089336640747030992",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005058438051491976,
+        0.005058438051491976,
+        0.19600576162338257,
+        0.9421769976615906
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-2089336640747030992",
+        "transformChain": [
+          {
+            "name": "bg_3d_652_01_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_01_02",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d652B_12_stoneC",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "stoneC_geo25_02__lm_n2089336640747030992",
+            "position": [
+              13.578999519348145,
+              -0.058017730712890625,
+              17.279260635375977
+            ],
+            "rotation": [
+              -0.48276999592781067,
+              0.011511948890984058,
+              -0.8756686449050903,
+              0.002264816779643297
+            ],
+            "scale": [
+              0.5231273174285889,
+              0.3292929530143738,
+              0.5231273174285889
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

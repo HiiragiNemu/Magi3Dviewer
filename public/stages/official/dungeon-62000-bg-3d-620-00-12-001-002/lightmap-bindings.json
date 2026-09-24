@@ -1,0 +1,4019 @@
+{
+  "schemaVersion": 1,
+  "scene": "bg_3d_620_00_12_001_002",
+  "encoding": "unity-bc6h-linear",
+  "renderers": [
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/fence_geo_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.032678935676813126,
+        0.032678935676813126,
+        0.7633704543113708,
+        0.2078823745250702
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/fence_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.032678935676813126,
+        0.032678935676813126,
+        0.9655188918113708,
+        0.17546425759792328
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/door_grp/door_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0648920014500618,
+        0.0648920014500618,
+        0.17548871040344238,
+        0.7760621309280396
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/door_grp/group21/door_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03273523226380348,
+        0.03273523226380348,
+        0.20478038489818573,
+        0.6189186573028564
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/door_grp/group21/door_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.032734520733356476,
+        0.032734520733356476,
+        0.9566922783851624,
+        0.22885353863239288
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/door_grp/group21/door_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.032724298536777496,
+        0.032724298536777496,
+        0.9225538969039917,
+        0.22885362803936005
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/door_grp/group21/door_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03173625096678734,
+        0.03173625096678734,
+        0.20478947460651398,
+        0.6529838442802429
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/door_grp/horse_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.04536483809351921,
+        0.04536483809351921,
+        0.7165017127990723,
+        0.2078886181116104
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/door_grp/horse_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.04536519572138786,
+        0.04536519572138786,
+        -0.00029519389499910176,
+        0.9518088698387146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L01/body_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0052304258570075035,
+        0.0052304258570075035,
+        0.9919707775115967,
+        0.034688156098127365
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L01/body_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005207980517297983,
+        0.005207980517297983,
+        0.9919717311859131,
+        0.027871446684002876
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L01/body_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0041953944601118565,
+        0.0041953944601118565,
+        0.3776931166648865,
+        0.2612344026565552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L01/body_geo4/body_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0025266066659241915,
+        0.0025266066659241915,
+        0.5406585335731506,
+        0.1888933628797531
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L01/body_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002507692202925682,
+        0.002507692202925682,
+        0.5238816738128662,
+        0.2462562620639801
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L01/body_geo7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005206791218370199,
+        0.005206791218370199,
+        0.9851357936859131,
+        0.06171606853604317
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L02/body_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005221264902502298,
+        0.005221264902502298,
+        0.9919711351394653,
+        0.04149990901350975
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L02/body_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005218826700001955,
+        0.005218826700001955,
+        0.9919712543487549,
+        0.014221868477761745
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L02/body_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004195407964289188,
+        0.004195407964289188,
+        0.3718792796134949,
+        0.2612344026565552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L02/body_geo4/body_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0025085904635488987,
+        0.0025085904635488987,
+        0.6558466553688049,
+        0.26131874322891235
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L02/body_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0025231819599866867,
+        0.0025231819599866867,
+        0.5201202630996704,
+        0.24625471234321594
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_L/Gate_L02/body_geo7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005218836944550276,
+        0.005218836944550276,
+        0.9851353168487549,
+        0.021048957481980324
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005208420567214489,
+        0.005208420567214489,
+        0.9851357340812683,
+        0.027871428057551384
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005207275506108999,
+        0.005207275506108999,
+        0.9851357936859131,
+        0.04831056296825409
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.004199388436973095,
+        0.004199388436973095,
+        0.36016035079956055,
+        0.26123422384262085
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo4/body_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002551325596868992,
+        0.002551325596868992,
+        0.5444470643997192,
+        0.18889088928699493
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0025415036361664534,
+        0.0025415036361664534,
+        0.5368554592132568,
+        0.18889187276363373
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005232848692685366,
+        0.005232848692685366,
+        0.9851347208023071,
+        0.03468805551528931
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo23",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005207289941608906,
+        0.005207289941608906,
+        0.9919717311859131,
+        0.04831056296825409
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo24",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0025513144209980965,
+        0.0025513144209980965,
+        0.5482238531112671,
+        0.18889088928699493
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo25",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0041993591003119946,
+        0.0041993591003119946,
+        0.36601972579956055,
+        0.26123422384262085
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo25/body_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0025032723788172007,
+        0.0025032723788172007,
+        0.5163514614105225,
+        0.24625669419765472
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo26",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00522663863375783,
+        0.00522663863375783,
+        0.985135018825531,
+        0.04149968922138214
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/Gate_Add/Gate_R/body_geo27",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.005210311152040958,
+        0.005210311152040958,
+        0.9919716119766235,
+        0.021049311384558678
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/body_geo/body_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1751522719860077,
+        0.1751522719860077,
+        0.8086884021759033,
+        -0.0008819082868285477
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/body_geo/body_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.033023566007614136,
+        0.033023566007614136,
+        0.5283604264259338,
+        0.19234763085842133
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/body_geo/body_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019077688455581665,
+        0.019077688455581665,
+        0.9648668766021729,
+        0.2089894413948059
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/body_geo/body_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10484795272350311,
+        0.10484795272350311,
+        0.250090628862381,
+        0.27474501729011536
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/body_geo/body_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018362076953053474,
+        0.018362076953053474,
+        0.7151342034339905,
+        0.253391295671463
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/body_geo/body_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0787089616060257,
+        0.0787089616060257,
+        0.2500647306442261,
+        0.7003394365310669
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/ring_grp/ringA_grp/ballA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0064181974157691,
+        0.0064181974157691,
+        0.9843343496322632,
+        0.05429629608988762
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/ring_grp/ringA_grp/ballB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0065307519398629665,
+        0.0065307519398629665,
+        0.9911524653434753,
+        0.06089676916599274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/ring_grp/ringA_grp/ring_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02718530409038067,
+        0.02718530409038067,
+        0.857486367225647,
+        0.23844365775585175
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/ring_grp/ringB_grp/balB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007717764005064964,
+        0.007717764005064964,
+        0.9841284155845642,
+        0.006241737399250269
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/ring_grp/ringB_grp/ballA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007717767730355263,
+        0.007717767730355263,
+        0.9919409155845642,
+        0.006241736002266407
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp/ring_grp/ringB_grp/ring_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02103109285235405,
+        0.02103109285235405,
+        0.7847077250480652,
+        0.241455540060997
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/body_geo/body_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.17515476047992706,
+        0.17515476047992706,
+        -0.0008819219656288624,
+        0.7754727602005005
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/body_geo/body_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.03322788327932358,
+        0.03322788327932358,
+        0.20413587987422943,
+        0.6855323910713196
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/body_geo/body_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01906277798116207,
+        0.01906277798116207,
+        0.8847895264625549,
+        0.2384030967950821
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/body_geo/body_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10485897958278656,
+        0.10485897958278656,
+        0.2500905394554138,
+        0.37981411814689636
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/body_geo/body_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018277868628501892,
+        0.018277868628501892,
+        0.5276418328285217,
+        0.2527380585670471
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/body_geo/body_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0786990150809288,
+        0.0786990150809288,
+        0.25006482005119324,
+        0.6212379932403564
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/ring_grp/ringA_grp/ballA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007723032496869564,
+        0.007723032496869564,
+        0.9919400811195374,
+        -0.0012240031501278281
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/ring_grp/ringA_grp/ballB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006418203469365835,
+        0.006418203469365835,
+        0.9911702871322632,
+        0.05429629236459732
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/ring_grp/ringA_grp/ring_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.028273215517401695,
+        0.028273215517401695,
+        0.5283482670783997,
+        0.22553862631320953
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/ring_grp/ringB_grp/balB_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0064828405156731606,
+        0.0064828405156731606,
+        0.9843240976333618,
+        0.013410666957497597
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/ring_grp/ringB_grp/ballA_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007701723836362362,
+        0.007701723836362362,
+        0.5524902939796448,
+        0.18350735306739807
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/carousel_grp1/ring_grp/ringB_grp/ring_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02227330580353737,
+        0.02227330580353737,
+        0.7627129554748535,
+        0.2414020448923111
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp/chair_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010504849487915635,
+        0.0010504849487915635,
+        0.6714680194854736,
+        0.2615244388580322
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp/grass_grp_1/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010965353576466441,
+        0.0010965353576466441,
+        0.8070062398910522,
+        0.25670892000198364
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp/grass_grp_1/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010189531603828073,
+        0.0010189531603828073,
+        0.41403207182884216,
+        0.26450076699256897
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp/grass_grp_2/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010965350084006786,
+        0.0010965350084006786,
+        0.7963893413543701,
+        0.26376843452453613
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp/grass_grp_2/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010191526962444186,
+        0.0010191526962444186,
+        0.40036243200302124,
+        0.2547648251056671
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1/chair_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001050485298037529,
+        0.001050485298037529,
+        0.6743766069412231,
+        0.2644541263580322
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-3232366391784331932",
+        "transformChain": [
+          {
+            "name": "bg_3d_620_00_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_02",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "near_grp",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "chair_grp1",
+            "position": [
+              30.170000076293945,
+              0.0,
+              45.18000030517578
+            ],
+            "rotation": [
+              -0.0,
+              -0.9833722710609436,
+              0.0,
+              -0.18160134553909302
+            ],
+            "scale": [
+              1.5999999046325684,
+              1.5999999046325684,
+              1.5999999046325684
+            ]
+          },
+          {
+            "name": "chair_geo",
+            "position": [
+              4.313359909247083e-07,
+              0.3728092908859253,
+              -3.1538334610559104e-08
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1/grass_grp_1/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010965350084006786,
+        0.0010965350084006786,
+        0.7855362892150879,
+        0.26376843452453613
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-4351426826851989550",
+        "transformChain": [
+          {
+            "name": "bg_3d_620_00_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_02",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "near_grp",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "chair_grp1",
+            "position": [
+              30.170000076293945,
+              0.0,
+              45.18000030517578
+            ],
+            "rotation": [
+              -0.0,
+              -0.9833722710609436,
+              0.0,
+              -0.18160134553909302
+            ],
+            "scale": [
+              1.5999999046325684,
+              1.5999999046325684,
+              1.5999999046325684
+            ]
+          },
+          {
+            "name": "grass_grp_1",
+            "position": [
+              0.0,
+              -0.012555131688714027,
+              1.6881639957427979
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "flowerpot_geo",
+            "position": [
+              -0.0019247838063165545,
+              0.2658621668815613,
+              -0.014166210778057575
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1/grass_grp_1/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010188688756898046,
+        0.0010188688756898046,
+        0.5575889945030212,
+        0.23231840133666992
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "736433800653733765",
+        "transformChain": [
+          {
+            "name": "bg_3d_620_00_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_02",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "near_grp",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "chair_grp1",
+            "position": [
+              30.170000076293945,
+              0.0,
+              45.18000030517578
+            ],
+            "rotation": [
+              -0.0,
+              -0.9833722710609436,
+              0.0,
+              -0.18160134553909302
+            ],
+            "scale": [
+              1.5999999046325684,
+              1.5999999046325684,
+              1.5999999046325684
+            ]
+          },
+          {
+            "name": "grass_grp_1",
+            "position": [
+              0.0,
+              -0.012555131688714027,
+              1.6881639957427979
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "grass_geo",
+            "position": [
+              -0.008389760740101337,
+              0.3608787953853607,
+              -0.008635971695184708
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1/grass_grp_2/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001096534775570035,
+        0.001096534775570035,
+        0.7936760783195496,
+        0.26376843452453613
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-8935193702662459875",
+        "transformChain": [
+          {
+            "name": "bg_3d_620_00_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_02",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "near_grp",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "chair_grp1",
+            "position": [
+              30.170000076293945,
+              0.0,
+              45.18000030517578
+            ],
+            "rotation": [
+              -0.0,
+              -0.9833722710609436,
+              0.0,
+              -0.18160134553909302
+            ],
+            "scale": [
+              1.5999999046325684,
+              1.5999999046325684,
+              1.5999999046325684
+            ]
+          },
+          {
+            "name": "grass_grp_2",
+            "position": [
+              0.0,
+              -0.012555131688714027,
+              -1.62278413772583
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "flowerpot_geo",
+            "position": [
+              -0.0019247838063165545,
+              0.2658621668815613,
+              -0.014166210778057575
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1/grass_grp_2/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010188689921051264,
+        0.0010188689921051264,
+        0.42184457182884216,
+        0.26450076699256897
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-7422389671351048108",
+        "transformChain": [
+          {
+            "name": "bg_3d_620_00_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_02",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "near_grp",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "chair_grp1",
+            "position": [
+              30.170000076293945,
+              0.0,
+              45.18000030517578
+            ],
+            "rotation": [
+              -0.0,
+              -0.9833722710609436,
+              0.0,
+              -0.18160134553909302
+            ],
+            "scale": [
+              1.5999999046325684,
+              1.5999999046325684,
+              1.5999999046325684
+            ]
+          },
+          {
+            "name": "grass_grp_2",
+            "position": [
+              0.0,
+              -0.012555131688714027,
+              -1.62278413772583
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "grass_geo",
+            "position": [
+              -0.008389760740101337,
+              0.3608787953853607,
+              -0.008635971695184708
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1_01/chair_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001050485298037529,
+        0.001050485298037529,
+        0.6743766069412231,
+        0.2615244388580322
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1_01/grass_grp_1/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010965350084006786,
+        0.0010965350084006786,
+        0.8070062398910522,
+        0.25963860750198364
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1_01/grass_grp_1/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010188688756898046,
+        0.0010188688756898046,
+        0.5575889945030212,
+        0.22645902633666992
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1_01/grass_grp_2/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001096534775570035,
+        0.001096534775570035,
+        0.8018158674240112,
+        0.26376843452453613
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1_01/grass_grp_2/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010188689921051264,
+        0.0010188689921051264,
+        0.5575889945030212,
+        0.22938871383666992
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp_01/chair_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010504849487915635,
+        0.0010504849487915635,
+        0.6685594320297241,
+        0.2644541263580322
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp_01/grass_grp_1/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010965353576466441,
+        0.0010965353576466441,
+        0.8070062398910522,
+        0.25084954500198364
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp_01/grass_grp_1/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010189531603828073,
+        0.0010189531603828073,
+        0.41403207182884216,
+        0.2615712881088257
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp_01/grass_grp_2/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010965350084006786,
+        0.0010965350084006786,
+        0.790962815284729,
+        0.26376843452453613
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp_01/grass_grp_2/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010191526962444186,
+        0.0010191526962444186,
+        0.40622150897979736,
+        0.2547648251056671
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp_02/chair_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010504849487915635,
+        0.0010504849487915635,
+        0.6685594320297241,
+        0.2615244388580322
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp_02/grass_grp_1/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010965353576466441,
+        0.0010965353576466441,
+        0.8070062398910522,
+        0.25377923250198364
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp_02/grass_grp_1/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010189531603828073,
+        0.0010189531603828073,
+        0.42184457182884216,
+        0.2615712881088257
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp_02/grass_grp_2/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010965350084006786,
+        0.0010965350084006786,
+        0.7991026043891907,
+        0.26376843452453613
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp_02/grass_grp_2/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010191526962444186,
+        0.0010191526962444186,
+        0.4032919704914093,
+        0.2547648251056671
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1/chair_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001050485298037529,
+        0.001050485298037529,
+        0.6714680194854736,
+        0.2644541263580322
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "6184472634467071953",
+        "transformChain": [
+          {
+            "name": "bg_3d_620_00_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_02",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "near_grp",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "chair_grp1",
+            "position": [
+              -10.37250804901123,
+              0.0,
+              3.4375414848327637
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.600000023841858,
+              1.600000023841858,
+              1.600000023841858
+            ]
+          },
+          {
+            "name": "chair_geo",
+            "position": [
+              4.313359909247083e-07,
+              0.3728092908859253,
+              -3.1538334610559104e-08
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1/grass_grp_1/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010965350084006786,
+        0.0010965350084006786,
+        0.7882495522499084,
+        0.26376843452453613
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-7622068128134727431",
+        "transformChain": [
+          {
+            "name": "bg_3d_620_00_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_02",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "near_grp",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "chair_grp1",
+            "position": [
+              -10.37250804901123,
+              0.0,
+              3.4375414848327637
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.600000023841858,
+              1.600000023841858,
+              1.600000023841858
+            ]
+          },
+          {
+            "name": "grass_grp_1",
+            "position": [
+              0.0,
+              -0.012555131688714027,
+              1.6881639957427979
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "flowerpot_geo",
+            "position": [
+              -0.0019247838063165545,
+              0.2658621668815613,
+              -0.014166210778057575
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1/grass_grp_1/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010188688756898046,
+        0.0010188688756898046,
+        0.5234093070030212,
+        0.25497567653656006
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "5555809026453001965",
+        "transformChain": [
+          {
+            "name": "bg_3d_620_00_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_02",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "near_grp",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "chair_grp1",
+            "position": [
+              -10.37250804901123,
+              0.0,
+              3.4375414848327637
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.600000023841858,
+              1.600000023841858,
+              1.600000023841858
+            ]
+          },
+          {
+            "name": "grass_grp_1",
+            "position": [
+              0.0,
+              -0.012555131688714027,
+              1.6881639957427979
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "grass_geo",
+            "position": [
+              -0.008389760740101337,
+              0.3608787953853607,
+              -0.008635971695184708
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1/grass_grp_2/flowerpot_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001096534775570035,
+        0.001096534775570035,
+        0.8045291304588318,
+        0.26376843452453613
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "5512245817547142412",
+        "transformChain": [
+          {
+            "name": "bg_3d_620_00_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_02",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "near_grp",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "chair_grp1",
+            "position": [
+              -10.37250804901123,
+              0.0,
+              3.4375414848327637
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.600000023841858,
+              1.600000023841858,
+              1.600000023841858
+            ]
+          },
+          {
+            "name": "grass_grp_2",
+            "position": [
+              0.0,
+              -0.012555131688714027,
+              -1.62278413772583
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "flowerpot_geo",
+            "position": [
+              -0.0019247838063165545,
+              0.2658621668815613,
+              -0.014166210778057575
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/chair_grp1/grass_grp_2/grass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010188689921051264,
+        0.0010188689921051264,
+        0.5263386964797974,
+        0.25497567653656006
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-423427408082289035",
+        "transformChain": [
+          {
+            "name": "bg_3d_620_00_12_001_002",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_01_02_Model",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "bg3d620_12_02",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "near_grp",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "chair_grp1",
+            "position": [
+              -10.37250804901123,
+              0.0,
+              3.4375414848327637
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.600000023841858,
+              1.600000023841858,
+              1.600000023841858
+            ]
+          },
+          {
+            "name": "grass_grp_2",
+            "position": [
+              0.0,
+              -0.012555131688714027,
+              -1.62278413772583
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "grass_geo",
+            "position": [
+              -0.008389760740101337,
+              0.3608787953853607,
+              -0.008635971695184708
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_1/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010279680136591196,
+        0.0010279680136591196,
+        0.719647228717804,
+        0.26255306601524353
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_1/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011340501951053739,
+        0.0011340501951053739,
+        0.7606383562088013,
+        0.257820725440979
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_2/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001027988619171083,
+        0.001027988619171083,
+        0.7167626619338989,
+        0.26255306601524353
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_2/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001134048798121512,
+        0.001134048798121512,
+        0.7606383562088013,
+        0.2606911361217499
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_3/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010280797723680735,
+        0.0010280797723680735,
+        0.7225316166877747,
+        0.26255306601524353
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_3/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011414013570174575,
+        0.0011414013570174575,
+        0.677225649356842,
+        0.2614648938179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_4/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010456015588715672,
+        0.0010456015588715672,
+        0.6772953271865845,
+        0.26446428894996643
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_4/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011325360974296927,
+        0.0011325360974296927,
+        0.7694275975227356,
+        0.2647182047367096
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_5/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010305801406502724,
+        0.0010305801406502724,
+        0.6977456212043762,
+        0.26446476578712463
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_5/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011325315572321415,
+        0.0011325315572321415,
+        0.8069794774055481,
+        0.24518698453903198
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_6/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001028493163175881,
+        0.001028493163175881,
+        0.7343407869338989,
+        0.26248466968536377
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_6/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011340498458594084,
+        0.0011340498458594084,
+        0.7577086687088013,
+        0.2606911361217499
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_7/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010319083230569959,
+        0.0010319083230569959,
+        0.6977455615997314,
+        0.26153504848480225
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_7/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011352149304002523,
+        0.0011352149304002523,
+        0.8055601716041565,
+        0.22585424780845642
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_8/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010288541670888662,
+        0.0010288541670888662,
+        0.5575829744338989,
+        0.23524203896522522
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_8/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011352170258760452,
+        0.0011352170258760452,
+        0.8055601716041565,
+        0.22300972044467926
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_9/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010278875706717372,
+        0.0010278875706717372,
+        0.7311805486679077,
+        0.26255306601524353
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_9/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011331172427162528,
+        0.0011331172427162528,
+        0.8055603504180908,
+        0.21841171383857727
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_10/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010278886184096336,
+        0.0010278886184096336,
+        0.7121862769126892,
+        0.2615351676940918
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_10/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001150223077274859,
+        0.001150223077274859,
+        0.8036056160926819,
+        0.23793816566467285
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_21/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010278886184096336,
+        0.0010278886184096336,
+        0.7121862769126892,
+        0.2644648551940918
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_21/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001150223077274859,
+        0.001150223077274859,
+        0.8065353035926819,
+        0.23793816566467285
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_11/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001045977813191712,
+        0.001045977813191712,
+        0.7064138650894165,
+        0.26446425914764404
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_11/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011325350496917963,
+        0.0011325350496917963,
+        0.7782166600227356,
+        0.2647182047367096
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_23/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001045977813191712,
+        0.001045977813191712,
+        0.7093000411987305,
+        0.26153457164764404
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_23/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011325350496917963,
+        0.0011325350496917963,
+        0.7811463475227356,
+        0.2647182047367096
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_24/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010454688454046845,
+        0.0010454688454046845,
+        0.7035260796546936,
+        0.26153460144996643
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_24/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00113253528252244,
+        0.00113253528252244,
+        0.7723572850227356,
+        0.2647182047367096
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_12/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001029331237077713,
+        0.001029331237077713,
+        0.5517183542251587,
+        0.26474595069885254
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_12/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011325351661071181,
+        0.0011325351661071181,
+        0.5438385605812073,
+        0.26475241780281067
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_13/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010537176858633757,
+        0.0010537176858633757,
+        0.6831315755844116,
+        0.26446399092674255
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_13/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011494318023324013,
+        0.0011494318023324013,
+        0.8055588603019714,
+        0.2333175539970398
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_14/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010451063280925155,
+        0.0010451063280925155,
+        0.7093001008033752,
+        0.26446428894996643
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_14/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011494322679936886,
+        0.0011494322679936886,
+        0.8055588603019714,
+        0.2304733246564865
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_15/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010552759049460292,
+        0.0010552759049460292,
+        0.6831315159797668,
+        0.26153427362442017
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_15/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011478269007056952,
+        0.0011478269007056952,
+        0.797746479511261,
+        0.23793838918209076
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_16/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010454688454046845,
+        0.0010454688454046845,
+        0.7035260796546936,
+        0.26446428894996643
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_16/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00113253528252244,
+        0.00113253528252244,
+        0.7752869725227356,
+        0.2647182047367096
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_17/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010476064635440707,
+        0.0010476064635440707,
+        0.7006360292434692,
+        0.26153451204299927
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_17/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011539948172867298,
+        0.0011539948172867298,
+        0.8069775104522705,
+        0.2480086386203766
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_18/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010490044951438904,
+        0.0010490044951438904,
+        0.7006359696388245,
+        0.2644641697406769
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_18/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011326392414048314,
+        0.0011326392414048314,
+        0.7577087879180908,
+        0.25495028495788574
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_19/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010461816564202309,
+        0.0010461816564202309,
+        0.7064138650894165,
+        0.26153457164764404
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_19/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00113213702570647,
+        0.00113213702570647,
+        0.8069794774055481,
+        0.24225732684135437
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_20/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010398849844932556,
+        0.0010398849844932556,
+        0.725415050983429,
+        0.2625526785850525
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_20/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011342015350237489,
+        0.0011342015350237489,
+        0.7420836687088013,
+        0.2624150514602661
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_22/flag_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010398849844932556,
+        0.0010398849844932556,
+        0.7282975912094116,
+        0.2625526785850525
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/flag_grp/flag_grp_22/light_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011342015350237489,
+        0.0011342015350237489,
+        0.7371518015861511,
+        0.2624150514602661
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group6/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0029854585882276297,
+        0.0029854585882276297,
+        0.6366314888000488,
+        0.2615329921245575
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group6/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566053679212928,
+        0.0010566053679212928,
+        0.5956623554229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group7/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0029854585882276297,
+        0.0029854585882276297,
+        0.6512035727500916,
+        0.2615329921245575
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group7/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566053679212928,
+        0.0010566053679212928,
+        0.5839436054229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group8/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0029858772177249193,
+        0.0029858772177249193,
+        0.5468385815620422,
+        0.2618216276168823
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group8/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566050186753273,
+        0.0010566050186753273,
+        0.6161701679229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group9/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002984283957630396,
+        0.002984283957630396,
+        0.3934272229671478,
+        0.2613890767097473
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group9/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001056605949997902,
+        0.001056605949997902,
+        0.5810139179229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group10/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002984268357977271,
+        0.002984268357977271,
+        0.416955828666687,
+        0.26156312227249146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group10/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566042037680745,
+        0.0010566042037680745,
+        0.5985920429229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group10_02/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002984268357977271,
+        0.002984268357977271,
+        0.409143328666687,
+        0.26156312227249146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group10_02/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566042037680745,
+        0.0010566042037680745,
+        0.6132404804229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group10_03/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002984268357977271,
+        0.002984268357977271,
+        0.523401141166687,
+        0.25008469820022583
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group10_03/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566042037680745,
+        0.0010566042037680745,
+        0.5927326679229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group10_01/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002984268357977271,
+        0.002984268357977271,
+        0.523401141166687,
+        0.25754961371421814
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group10_01/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566042037680745,
+        0.0010566042037680745,
+        0.5898029804229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group11/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002987897489219904,
+        0.002987897489219904,
+        0.5234010815620422,
+        0.26243236660957336
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group11/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00105660455301404,
+        0.00105660455301404,
+        0.5868732929229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group12/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002985619241371751,
+        0.002985619241371751,
+        0.5390230417251587,
+        0.2618900239467621
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group12/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566053679212928,
+        0.0010566053679212928,
+        0.5780842304229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group13/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002985968952998519,
+        0.002985968952998519,
+        0.5341401696205139,
+        0.2618900239467621
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group13/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566056007519364,
+        0.0010566056007519364,
+        0.5692951679229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group14/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00298929400742054,
+        0.00298929400742054,
+        0.38854435086250305,
+        0.26138901710510254
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group14/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566053679212928,
+        0.0010566053679212928,
+        0.5722248554229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group14_01/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00298929400742054,
+        0.00298929400742054,
+        0.38366153836250305,
+        0.26138901710510254
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group14_01/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566053679212928,
+        0.0010566053679212928,
+        0.5751545429229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group15/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002987127983942628,
+        0.002987127983942628,
+        0.5292604565620422,
+        0.2618899941444397
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group15/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001056605949997902,
+        0.001056605949997902,
+        0.5605061054229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group16/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002984258346259594,
+        0.002984258346259594,
+        0.554651141166687,
+        0.2543567419052124
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group16/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566035052761436,
+        0.0010566035052761436,
+        0.6190998554229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group17/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0029857757035642862,
+        0.0029857757035642862,
+        0.6220338940620422,
+        0.2615329921245575
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group17/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566051350906491,
+        0.0010566051350906491,
+        0.5634357929229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group17_01/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0029857757035642862,
+        0.0029857757035642862,
+        0.5546510815620422,
+        0.2592270076274872
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group17_01/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566051350906491,
+        0.0010566051350906491,
+        0.5663654804229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group22/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0029854585882276297,
+        0.0029854585882276297,
+        0.6414888501167297,
+        0.2615329921245575
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group22/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566053679212928,
+        0.0010566053679212928,
+        0.6073811054229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group23/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0029854585882276297,
+        0.0029854585882276297,
+        0.6463462114334106,
+        0.2615329921245575
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group23/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566053679212928,
+        0.0010566053679212928,
+        0.6103107929229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group23_01/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0029854585882276297,
+        0.0029854585882276297,
+        0.626916766166687,
+        0.2615329921245575
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group23_01/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566053679212928,
+        0.0010566053679212928,
+        0.6015217304229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group23_02/fountain_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0029854585882276297,
+        0.0029854585882276297,
+        0.6317741274833679,
+        0.2615329921245575
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/fountain_grp/group23_02/water_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010566053679212928,
+        0.0010566053679212928,
+        0.6044514179229736,
+        0.2649407982826233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/designBlue_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08247808367013931,
+        0.08247808367013931,
+        0.25077059864997864,
+        0.48556312918663025
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/designBlue_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.04780416563153267,
+        0.04780416563153267,
+        0.8093070387840271,
+        0.22888796031475067
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/designBlue_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.2036208212375641,
+        0.2036208212375641,
+        -0.00023436325136572123,
+        0.6189820170402527
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/designBlue_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.2904655933380127,
+        0.2904655933380127,
+        0.26828962564468384,
+        -0.00026506147696636617
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/designWhite_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.24759021401405334,
+        0.24759021401405334,
+        0.5603224039077759,
+        -0.00022445578360930085
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/designWhite_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.24954503774642944,
+        0.24954503774642944,
+        -0.00023960636463016272,
+        0.26696765422821045
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/designWhite_geo_3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.22312931716442108,
+        0.22312931716442108,
+        -0.00023703763145022094,
+        0.45111173391342163
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/designWhite_geo_4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.26701173186302185,
+        0.26701173186302185,
+        -0.00020540045807138085,
+        -0.00020540045807138085
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/green_road_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.3023645579814911,
+        0.3023645579814911,
+        0.24956966936588287,
+        0.2658003866672516
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/green_road_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.2824620008468628,
+        0.2824620008468628,
+        0.267225980758667,
+        0.1746768355369568
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/green_road_geo_3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.14020629227161407,
+        0.14020629227161407,
+        0.2675777077674866,
+        0.2456926852464676
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1550038903951645,
+        0.1550038903951645,
+        0.5601917505264282,
+        0.20782868564128876
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1550038903951645,
+        0.1550038903951645,
+        0.5123401880264282,
+        0.2752758264541626
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_geo_3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1550038903951645,
+        0.1550038903951645,
+        0.3560901880264282,
+        0.2752758264541626
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_geo_4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1550038903951645,
+        0.1550038903951645,
+        0.2681995630264282,
+        0.1929289698600769
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_geo_5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.1550038903951645,
+        0.1550038903951645,
+        0.8092151880264282,
+        0.17541056871414185
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_geo_6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10311450809240341,
+        0.10311450809240341,
+        0.42451533675193787,
+        0.19299475848674774
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_geo_7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.10311450809240341,
+        0.10311450809240341,
+        0.25068721175193787,
+        0.5686376690864563
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_side_geo_3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02460983581840992,
+        0.02460983581840992,
+        0.5289044380187988,
+        0.18433555960655212
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_side_geo_4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.09029319882392883,
+        0.09029319882392883,
+        0.4248046875,
+        0.2501210570335388
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_side_geo_5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0912756696343422,
+        0.0912756696343422,
+        0.2685546875,
+        0.2614254355430603
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_side_geo_6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08930328488349915,
+        0.08930328488349915,
+        0.4248046875,
+        0.2537301480770111
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_side_geo_7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0912756696343422,
+        0.0912756696343422,
+        0.4248046875,
+        0.24650681018829346
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_side_geo_8",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.060777392238378525,
+        0.060777392238378525,
+        0.560546875,
+        0.26156938076019287
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_side_geo_11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.13104510307312012,
+        0.13104510307312012,
+        0.2685546875,
+        0.2547930181026459
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/main_road_side_geo_12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.131044402718544,
+        0.131044402718544,
+        0.2685546875,
+        0.25810959935188293
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/yellow_road_geo_1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.26601189374923706,
+        0.26601189374923706,
+        0.2672349810600281,
+        0.18340827524662018
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/yellow_road_geo_2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.06644692271947861,
+        0.06644692271947861,
+        0.8578037023544312,
+        0.2285565286874771
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/ground_grp/yellow_road_geo_3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08138419687747955,
+        0.08138419687747955,
+        0.42404499650001526,
+        0.2565644681453705
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_01_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195248760282993,
+        0.0010195248760282993,
+        0.7499775886535645,
+        0.2624964416027069
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_02_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195248760282993,
+        0.0010195248760282993,
+        0.8007588386535645,
+        0.23802103102207184
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_02_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195248760282993,
+        0.0010195248760282993,
+        0.7607197761535645,
+        0.26364096999168396
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_02_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195247596129775,
+        0.0010195247596129775,
+        0.7577900886535645,
+        0.26364096999168396
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_02_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195247596129775,
+        0.0010195247596129775,
+        0.7577900886535645,
+        0.2579021155834198
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_02_geo4_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195247596129775,
+        0.0010195247596129775,
+        0.7607197761535645,
+        0.255031555891037
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_03_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195248760282993,
+        0.0010195248760282993,
+        0.7450947761535645,
+        0.2624964714050293
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_03_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195248760282993,
+        0.0010195248760282993,
+        0.8056416511535645,
+        0.2156262993812561
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_03_geo1_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195248760282993,
+        0.0010195248760282993,
+        0.8056416511535645,
+        0.2110287994146347
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_03_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195248760282993,
+        0.0010195248760282993,
+        0.7529072761535645,
+        0.2624964416027069
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_03_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195248760282993,
+        0.0010195248760282993,
+        0.7636494636535645,
+        0.26479944586753845
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_03_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195248760282993,
+        0.0010195248760282993,
+        0.8056416511535645,
+        0.2081613838672638
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleBody_grp/poleBody_03_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010195248760282993,
+        0.0010195248760282993,
+        0.7665791511535645,
+        0.26479944586753845
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_01_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010324274189770222,
+        0.0010324274189770222,
+        0.5546558499336243,
+        0.26410090923309326
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_01_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010281517170369625,
+        0.0010281517170369625,
+        0.6597961783409119,
+        0.2644709050655365
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_01_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010439770994707942,
+        0.0010439770994707942,
+        0.5517182350158691,
+        0.2618236243724823
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_01_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010543963871896267,
+        0.0010543963871896267,
+        0.5575689673423767,
+        0.24987222254276276
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_01_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010416682343930006,
+        0.0010416682343930006,
+        0.5575798749923706,
+        0.24402610957622528
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_01_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010531599400565028,
+        0.0010531599400565028,
+        0.6656320095062256,
+        0.2644420862197876
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_01_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010348987998440862,
+        0.0010348987998440862,
+        0.6597897410392761,
+        0.26153478026390076
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_01_geo7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001028553699143231,
+        0.001028553699143231,
+        0.6627167463302612,
+        0.26154112815856934
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_01_geo8",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010324274189770222,
+        0.0010324274189770222,
+        0.5575855374336243,
+        0.26410090923309326
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_01_geo9",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010249516926705837,
+        0.0010249516926705837,
+        0.5439119338989258,
+        0.26189613342285156
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleFlag_grp/poleFlag_02_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001050782622769475,
+        0.001050782622769475,
+        0.557568371295929,
+        0.2410864382982254
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011261238250881433,
+        0.0011261238250881433,
+        0.6801486015319824,
+        0.26148107647895813
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011261234758421779,
+        0.0011261234758421779,
+        0.5126069784164429,
+        0.2647007703781128
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011177380802109838,
+        0.0011177380802109838,
+        0.6918328404426575,
+        0.2643730938434601
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011261228937655687,
+        0.0011261228937655687,
+        0.6801486015319824,
+        0.26437947154045105
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011261244071647525,
+        0.0011261244071647525,
+        0.5067476034164429,
+        0.2647007703781128
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011177380802109838,
+        0.0011177380802109838,
+        0.6947625279426575,
+        0.26148173213005066
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011177393607795238,
+        0.0011177393607795238,
+        0.6889031529426575,
+        0.26148173213005066
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo8",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011177397100254893,
+        0.0011177397100254893,
+        0.6889031529426575,
+        0.2643730938434601
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo8_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011177397100254893,
+        0.0011177397100254893,
+        0.6918328404426575,
+        0.26148173213005066
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo9",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011177356354892254,
+        0.0011177356354892254,
+        0.6947625279426575,
+        0.2643730938434601
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011261238250881433,
+        0.0011261238250881433,
+        0.5096772909164429,
+        0.2647007703781128
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011177420383319259,
+        0.0011177420383319259,
+        0.6859734654426575,
+        0.26148173213005066
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/pole_grp/poleLight_grp/poleLight_01_geo11_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011177420383319259,
+        0.0011177420383319259,
+        0.6859734654426575,
+        0.2643730938434601
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo1",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048122420907021,
+        0.006048122420907021,
+        0.797804594039917,
+        0.23053158819675446
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo1_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048122420907021,
+        0.006048122420907021,
+        0.797804594039917,
+        0.22306668758392334
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo2",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048125680536032,
+        0.006048125680536032,
+        0.416945219039917,
+        0.2540875971317291
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo2_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048125680536032,
+        0.006048125680536032,
+        0.515578031539917,
+        0.2575390040874481
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo2_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048125680536032,
+        0.006048125680536032,
+        0.550734281539917,
+        0.17595860362052917
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo2_04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048125680536032,
+        0.006048125680536032,
+        0.409132719039917,
+        0.2466227114200592
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo2_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048125680536032,
+        0.006048125680536032,
+        0.416945219039917,
+        0.2466227114200592
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo3",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048125214874744,
+        0.006048125214874744,
+        0.734328031539917,
+        0.2550069987773895
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo3_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048125214874744,
+        0.006048125214874744,
+        0.742140531539917,
+        0.2550069987773895
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo3_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048125214874744,
+        0.006048125214874744,
+        0.749953031539917,
+        0.2550069987773895
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo3_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048125214874744,
+        0.006048125214874744,
+        0.546828031539917,
+        0.2543461322784424
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo4",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006049595307558775,
+        0.006049595307558775,
+        0.506788969039917,
+        0.2572771906852722
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo4_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006049595307558775,
+        0.006049595307558775,
+        0.515578031539917,
+        0.2500740885734558
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo4_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006049595307558775,
+        0.006049595307558775,
+        0.409132719039917,
+        0.2540875971317291
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo4_03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006049595307558775,
+        0.006049595307558775,
+        0.400343656539917,
+        0.2580626308917999
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo5",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048124749213457,
+        0.006048124749213457,
+        0.797804594039917,
+        0.20813685655593872
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo6",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.006048125214874744,
+        0.006048125214874744,
+        0.797804594039917,
+        0.21560177206993103
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/tree_grp/tree_geo7",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0060481238178908825,
+        0.0060481238178908825,
+        0.985304594039917,
+        -4.695652751252055e-05
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/trolley_grp/balloon_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010497071780264378,
+        0.0010497071780264378,
+        0.5575687289237976,
+        0.23815710842609406
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/trolley_grp/glass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010685112792998552,
+        0.0010685112792998552,
+        0.665627658367157,
+        0.2615223526954651
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/trolley_grp/trolley_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.002016661921516061,
+        0.002016661921516061,
+        0.5292544960975647,
+        0.18910343945026398
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/trolley_grp1/balloon_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0010492027504369617,
+        0.0010492027504369617,
+        0.5575687885284424,
+        0.24694468080997467
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/trolley_grp1/glass_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.001070090918801725,
+        0.001070090918801725,
+        0.6626979112625122,
+        0.2644402086734772
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_620_00_12_001_002/bg3d620_12_01_02_Model/bg3d620_12_02/near_grp/trolley_grp1/trolley_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0020167725160717964,
+        0.0020167725160717964,
+        0.5331607460975647,
+        0.18910343945026398
+      ]
+    }
+  ]
+}

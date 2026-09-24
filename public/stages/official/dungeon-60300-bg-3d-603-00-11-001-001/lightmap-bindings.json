@@ -1,0 +1,1117 @@
+{
+  "schemaVersion": 1,
+  "scene": "bg_3d_603_00_11_001_001",
+  "encoding": "unity-bc6h-linear",
+  "renderers": [
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/bg3d603_11_01_01/Floor_00",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.5915142893791199,
+        0.5915142893791199,
+        -0.00034738524118438363,
+        -0.00034738524118438363
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01/TV_grp_01/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.043849702924489975,
+        0.043849702924489975,
+        0.31966432929039,
+        0.432647168636322
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-8448726086785718955",
+        "transformChain": [
+          {
+            "name": "bg_3d_603_00_11_001_001",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_00",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              -12.0,
+              0.0,
+              10.0
+            ],
+            "rotation": [
+              -0.0,
+              0.7071068286895752,
+              0.0,
+              0.7071068286895752
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "Bubble_01",
+            "position": [
+              8.159448623657227,
+              1.7765203714370728,
+              0.5940979719161987
+            ],
+            "rotation": [
+              0.0,
+              -0.7071068286895752,
+              -0.0,
+              0.7071068286895752
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01/TV_grp_01/Bubble_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.059498805552721024,
+        0.059498805552721024,
+        0.31956472992897034,
+        0.3421340882778168
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-5641707193502724689",
+        "transformChain": [
+          {
+            "name": "bg_3d_603_00_11_001_001",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_00",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              -12.0,
+              0.0,
+              10.0
+            ],
+            "rotation": [
+              -0.0,
+              0.7071068286895752,
+              0.0,
+              0.7071068286895752
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "Bubble_02",
+            "position": [
+              8.018542289733887,
+              0.03902271017432213,
+              -4.15019416809082
+            ],
+            "rotation": [
+              -8.626609036544892e-17,
+              -0.7660444378852844,
+              -8.626609036544892e-17,
+              0.6427876949310303
+            ],
+            "scale": [
+              1.000000238418579,
+              1.0,
+              1.000000238418579
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01/TV_grp_01/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11615315824747086,
+        0.11615315824747086,
+        0.23959752917289734,
+        0.152868390083313
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "3321806855050363882",
+        "transformChain": [
+          {
+            "name": "bg_3d_603_00_11_001_001",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_00",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              -12.0,
+              0.0,
+              10.0
+            ],
+            "rotation": [
+              -0.0,
+              0.7071068286895752,
+              0.0,
+              0.7071068286895752
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_mesh",
+            "position": [
+              7.525243759155273,
+              2.1465818881988525,
+              0.3753588795661926
+            ],
+            "rotation": [
+              0.0,
+              -0.7071068286895752,
+              -0.0,
+              0.7071068286895752
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_01/TV_grp_01/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.043849702924489975,
+        0.043849702924489975,
+        0.31966432929039,
+        0.477514386177063
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_01/TV_grp_01/Bubble_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.059498805552721024,
+        0.059498805552721024,
+        0.680892825126648,
+        0.2699560225009918
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_01/TV_grp_01/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11615315824747086,
+        0.11615315824747086,
+        0.1204918771982193,
+        0.391149640083313
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_02/TV_grp_01/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.043849702924489975,
+        0.043849702924489975,
+        0.31966432929039,
+        0.38777995109558105
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_02/TV_grp_01/Bubble_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.059498805552721024,
+        0.059498805552721024,
+        0.800033450126648,
+        0.2699560225009918
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_02/TV_grp_01/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11615315824747086,
+        0.11615315824747086,
+        0.1204918771982193,
+        0.625524640083313
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_02 1_02/TV_grp_02/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07119962573051453,
+        0.07119962573051453,
+        0.46419650316238403,
+        0.2700565457344055
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_02 1_02/TV_grp_02/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11807043850421906,
+        0.11807043850421906,
+        -0.0005868822918273509,
+        0.6372430920600891
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_02 1/TV_grp_02/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07119962573051453,
+        0.07119962573051453,
+        0.31966525316238403,
+        0.2700565457344055
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_02 1/TV_grp_02/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11807043850421906,
+        0.11807043850421906,
+        -0.0005868822918273509,
+        0.7563837170600891
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_02 1_01/TV_grp_02/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07119962573051453,
+        0.07119962573051453,
+        0.536462128162384,
+        0.2700565457344055
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_02 1_01/TV_grp_02/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11807043850421906,
+        0.11807043850421906,
+        0.12049154937267303,
+        0.2720086872577667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_03 1_01/TV_grp_03/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07900635153055191,
+        0.07900635153055191,
+        0.23959824442863464,
+        0.2700566351413727
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_03 1_01/TV_grp_03/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11612851917743683,
+        0.11612851917743683,
+        0.5909092426300049,
+        0.15286776423454285
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_03 1/TV_grp_03/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07900635153055191,
+        0.07900635153055191,
+        0.23959824442863464,
+        0.4302128851413727
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_03 1/TV_grp_03/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11612851917743683,
+        0.11612851917743683,
+        0.4738283157348633,
+        0.15286776423454285
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_04 1/TV_grp_04/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07608252018690109,
+        0.07608252018690109,
+        0.23959410190582275,
+        0.8217112421989441
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_04 1/TV_grp_04/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12003063410520554,
+        0.12003063410520554,
+        0.8421875834465027,
+        -0.0005858676740899682
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_04 1_01/TV_grp_04/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07608252018690109,
+        0.07608252018690109,
+        0.23959410190582275,
+        0.7445958256721497
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_04 1_01/TV_grp_04/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12003063410520554,
+        0.12003063410520554,
+        -0.0005858676740899682,
+        0.5161503553390503
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_05 1_01/TV_grp_05/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08486320823431015,
+        0.08486320823431015,
+        0.8250722885131836,
+        0.1528690755367279
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_05 1_01/TV_grp_05/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12394913285970688,
+        0.12394913285970688,
+        0.5921841263771057,
+        -0.0005893071065656841
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_05 1/TV_grp_05/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.08486320823431015,
+        0.08486320823431015,
+        0.9110097885131836,
+        0.1528690755367279
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_05 1/TV_grp_05/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12394913285970688,
+        0.12394913285970688,
+        0.7171841263771057,
+        -0.0005893071065656841
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_03/TV_grp_01/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.043849702924489975,
+        0.043849702924489975,
+        0.31966432929039,
+        0.5672488212585449
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_03/TV_grp_01/Bubble_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.059498805552721024,
+        0.059498805552721024,
+        0.859603762626648,
+        0.2699560225009918
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_03/TV_grp_01/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11615315824747086,
+        0.11615315824747086,
+        0.1204918771982193,
+        0.859899640083313
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_04/TV_grp_01/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.043849702924489975,
+        0.043849702924489975,
+        0.31966432929039,
+        0.522381603717804
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_04/TV_grp_01/Bubble_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.059498805552721024,
+        0.059498805552721024,
+        0.919174075126648,
+        0.2699560225009918
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01 1_04/TV_grp_01/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11615315824747086,
+        0.11615315824747086,
+        0.1204918771982193,
+        0.508337140083313
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_02 1_04/TV_grp_02/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07119962573051453,
+        0.07119962573051453,
+        0.39193087816238403,
+        0.2700565457344055
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_02 1_04/TV_grp_02/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11807043850421906,
+        0.11807043850421906,
+        0.12049154937267303,
+        0.15286806225776672
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_02 1_03/TV_grp_02/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07119962573051453,
+        0.07119962573051453,
+        0.608727753162384,
+        0.2700565457344055
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_02 1_03/TV_grp_02/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11807043850421906,
+        0.11807043850421906,
+        -0.0005868822918273509,
+        0.8755243420600891
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_03 1_02/TV_grp_03/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07900635153055191,
+        0.07900635153055191,
+        0.23959824442863464,
+        0.5102909803390503
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_03 1_02/TV_grp_03/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11612851917743683,
+        0.11612851917743683,
+        0.7079901099205017,
+        0.15286776423454285
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_03 1_03/TV_grp_03/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07900635153055191,
+        0.07900635153055191,
+        0.23959824442863464,
+        0.3501347601413727
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_03 1_03/TV_grp_03/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11612851917743683,
+        0.11612851917743683,
+        0.35674741864204407,
+        0.15286776423454285
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_04 1_02/TV_grp_04/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07608252018690109,
+        0.07608252018690109,
+        0.23959410190582275,
+        0.8988266587257385
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_04 1_02/TV_grp_04/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12003063410520554,
+        0.12003063410520554,
+        -0.0005858676740899682,
+        0.1528690755367279
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_04 1_03/TV_grp_04/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07608252018690109,
+        0.07608252018690109,
+        0.23959410190582275,
+        0.6674804091453552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_04 1_03/TV_grp_04/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12003063410520554,
+        0.12003063410520554,
+        -0.0005858676740899682,
+        0.3950566053390503
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_04 1_04/TV_grp_04/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.07608252018690109,
+        0.07608252018690109,
+        0.23959410190582275,
+        0.5903649926185608
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_04 1_04/TV_grp_04/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.12003063410520554,
+        0.12003063410520554,
+        -0.0005858676740899682,
+        0.2739628553390503
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01/TV_grp_01/Bubble_01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.043849702924489975,
+        0.043849702924489975,
+        0.31966432929039,
+        0.6121160387992859
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-1938974372575435830",
+        "transformChain": [
+          {
+            "name": "bg_3d_603_00_11_001_001",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_00",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              11.869999885559082,
+              0.0,
+              10.360000610351562
+            ],
+            "rotation": [
+              -0.0,
+              -0.7071068286895752,
+              0.0,
+              0.7071068286895752
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "Bubble_01",
+            "position": [
+              8.159448623657227,
+              1.7765203714370728,
+              0.5940979719161987
+            ],
+            "rotation": [
+              0.0,
+              -0.7071068286895752,
+              -0.0,
+              0.7071068286895752
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01/TV_grp_01/Bubble_02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.059498805552721024,
+        0.059498805552721024,
+        0.740463137626648,
+        0.2699560225009918
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-6258225310115448713",
+        "transformChain": [
+          {
+            "name": "bg_3d_603_00_11_001_001",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_00",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              11.869999885559082,
+              0.0,
+              10.360000610351562
+            ],
+            "rotation": [
+              -0.0,
+              -0.7071068286895752,
+              0.0,
+              0.7071068286895752
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "Bubble_02",
+            "position": [
+              8.018542289733887,
+              0.03902271017432213,
+              -4.15019416809082
+            ],
+            "rotation": [
+              -8.626609036544892e-17,
+              -0.7660444378852844,
+              -8.626609036544892e-17,
+              0.6427876949310303
+            ],
+            "scale": [
+              1.000000238418579,
+              1.0,
+              1.000000238418579
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_603_00_11_001_001/TV_grp_00/TV_grp_01/TV_grp_01/TV_mesh",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.11615315824747086,
+        0.11615315824747086,
+        0.1204918771982193,
+        0.742712140083313
+      ],
+      "rendererIdentity": {
+        "rendererPathID": "-7688920173033718771",
+        "transformChain": [
+          {
+            "name": "bg_3d_603_00_11_001_001",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_00",
+            "position": [
+              -0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              -0.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              11.869999885559082,
+              0.0,
+              10.360000610351562
+            ],
+            "rotation": [
+              -0.0,
+              -0.7071068286895752,
+              0.0,
+              0.7071068286895752
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_grp_01",
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              -0.0,
+              -0.0,
+              1.0
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "name": "TV_mesh",
+            "position": [
+              7.525243759155273,
+              2.1465818881988525,
+              0.3753588795661926
+            ],
+            "rotation": [
+              0.0,
+              -0.7071068286895752,
+              -0.0,
+              0.7071068286895752
+            ],
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

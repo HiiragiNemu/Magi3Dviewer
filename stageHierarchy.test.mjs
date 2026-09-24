@@ -116,3 +116,35 @@ test('a renderer PathID suffix disambiguates duplicate raw sibling paths', () =>
     duplicates[1],
   )
 })
+
+
+test('native edge whitespace is identity, not formatting to trim', () => {
+  const root = new THREE.Group(); root.name = 'StageRoot'
+  const names = ['Smoke', 'Smoke_', '_Smoke', '_']
+  const objects = names.map(name => { const object = new THREE.Group(); object.name = name; root.add(object); return object })
+  for (const [path, object] of [['StageRoot/Smoke', objects[0]], ['StageRoot/Smoke ', objects[1]], ['StageRoot/ Smoke', objects[2]], ['StageRoot/ ', objects[3]]]) {
+    assert.equal(api.resolveStageHierarchyPath(root, path), object, JSON.stringify(path))
+  }
+})
+
+test('raw trailing whitespace name wins over its sanitized sibling', () => {
+  const root = new THREE.Group(); root.name = 'StageRoot'
+  const raw = new THREE.Group(); raw.name = 'VolumeLight '; root.add(raw)
+  const sanitized = new THREE.Group(); sanitized.name = 'VolumeLight_'; root.add(sanitized)
+  const trimmed = new THREE.Group(); trimmed.name = 'VolumeLight'; root.add(trimmed)
+  assert.equal(api.resolveStageHierarchyPath(root, 'StageRoot/VolumeLight '), raw)
+})
+
+test('space-bearing intermediate segments preserve exact direct-child chains', () => {
+  const root = new THREE.Group(); root.name = 'Stage:renamed'
+  const group = new THREE.Group(); group.name = 'Section_'; root.add(group)
+  const leaf = new THREE.Group(); leaf.name = '_Effect_'; group.add(leaf)
+  assert.equal(api.resolveStageHierarchyPath(root, 'NativeRoot/Section / Effect '), leaf)
+  const duplicate = leaf.clone(); group.add(duplicate)
+  assert.equal(api.resolveStageHierarchyPath(root, 'NativeRoot/Section / Effect '), undefined)
+})
+
+test('empty separators stay compatible without erasing meaningful spaces', () => {
+  const { wrapper, lightA } = makeTree()
+  assert.equal(api.resolveStageHierarchyPath(wrapper, '/StageRoot//SectorA/MainLight/'), lightA)
+})

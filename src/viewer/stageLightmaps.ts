@@ -22,6 +22,17 @@ export interface StageLightmapBinding {
     rendererHierarchyPath: string
     lightmapScaleOffset: StageLightmapScaleOffset
     lightmapIndex?: number
+    /** Exact native renderer identity, exported before any animation is run. */
+    rendererIdentity?: {
+        rendererPathID: string
+        /** Root-to-renderer local transforms, already converted to Viewer space. */
+        transformChain: Array<{
+            name: string
+            position: readonly [number, number, number]
+            rotation: readonly [number, number, number, number]
+            scale: readonly [number, number, number]
+        }>
+    }
 }
 
 export interface StageLightmapMatch {
@@ -36,15 +47,24 @@ export interface StageLightmapMatchResult {
     ambiguousBindingPaths: string[]
 }
 
+export interface StageLightmapRootTransform {
+    position: readonly number[]
+    rotation: readonly number[]
+    scale: readonly number[]
+}
+
 export interface ApplyStageLightmapsOptions {
     intensity?: number
     strict?: boolean
     directionalLightmaps?: readonly THREE.Texture[]
     encoding?: StageLightmapEncoding
+    /** Serialized carrier root before Viewer placement overrides its transform. */
+    nativeRootTransform?: StageLightmapRootTransform
 }
 
 export interface StageLightmapApplication extends StageLightmapMatchResult {
     matchedRendererCount: number
+    skippedUnlitMaterialPaths: string[]
     missingSecondUvPaths: string[]
     unsupportedMaterialPaths: string[]
     missingLightmapPaths: string[]
@@ -236,6 +256,7 @@ export function getStageHierarchyPath(
 export function matchStageLightmapBindings(
     root: THREE.Object3D,
     bindings: readonly StageLightmapBinding[],
+    options: { nativeRootTransform?: StageLightmapRootTransform } = {},
 ): StageLightmapMatchResult {
     const meshes: Array<{ mesh: THREE.Mesh, path: string }> = []
     root.traverse(object => {
@@ -252,6 +273,22 @@ export function matchStageLightmapBindings(
     const ambiguousBindingPaths: string[] = []
     const claimedMeshes = new Set<THREE.Mesh>()
 
+    // A serialized renderer ID is not an FBX Model ID. Resolve its complete
+    // native transform ancestry instead, requiring uniqueness in both directions.
+    // Precompute without claimedMeshes so binding order cannot hide collisions.
+    const identityCandidates = new Map<StageLightmapBinding, typeof meshes>()
+    const identityOwners = new Map<THREE.Mesh, number>()
+    for (const binding of bindings) {
+        if (!binding.rendererIdentity) continue
+        const candidates = meshes.filter(candidate =>
+            matchesNativeRendererIdentity(root, candidate.mesh, binding, options.nativeRootTransform),
+        )
+        identityCandidates.set(binding, candidates)
+        for (const { mesh } of candidates) {
+            identityOwners.set(mesh, (identityOwners.get(mesh) ?? 0) + 1)
+        }
+    }
+
     const orderedBindings = [...bindings].sort((left, right) =>
         pathDepth(right.rendererHierarchyPath)
         - pathDepth(left.rendererHierarchyPath),
@@ -262,8 +299,26 @@ export function matchStageLightmapBindings(
         let bestScore = -1
         let candidates: Array<{ mesh: THREE.Mesh, path: string }> = []
 
+        if (binding.rendererIdentity) {
+            candidates = identityCandidates.get(binding) ?? []
+            if (candidates.length === 0) {
+                unmatchedBindingPaths.push(binding.rendererHierarchyPath)
+            } else if (candidates.length !== 1
+                || identityOwners.get(candidates[0].mesh) !== 1
+                || claimedMeshes.has(candidates[0].mesh)) {
+                ambiguousBindingPaths.push(binding.rendererHierarchyPath)
+            } else {
+                const candidate = candidates[0]
+                claimedMeshes.add(candidate.mesh)
+                matches.push({ binding, mesh: candidate.mesh,
+                    rendererHierarchyPath: candidate.path })
+            }
+            continue
+        }
+
         for (const candidate of meshes) {
             if (claimedMeshes.has(candidate.mesh)) continue
+            if (identityOwners.has(candidate.mesh)) continue
             const score = hierarchySuffixScore(candidate.path, bindingPath)
             if (score > bestScore) {
                 bestScore = score
@@ -295,6 +350,66 @@ export function matchStageLightmapBindings(
     }
 }
 
+function matchesNativeRendererIdentity(
+    root: THREE.Object3D,
+    mesh: THREE.Mesh,
+    binding: StageLightmapBinding,
+    nativeRootTransform?: StageLightmapRootTransform,
+) {
+    const identity = binding.rendererIdentity!
+    if (!/^-?\d+$/.test(identity.rendererPathID)
+        || !Array.isArray(identity.transformChain)
+        || identity.transformChain.length === 0) return false
+    const chain: THREE.Object3D[] = []
+    for (let object: THREE.Object3D | null = mesh; object; object = object.parent) {
+        chain.unshift(object)
+        if (object === root) break
+    }
+    const native = identity.transformChain
+    if (chain[0] !== root || chain.length !== native.length) return false
+    // Full ancestry is mandatory; a leaf-name suffix is not native identity.
+    const nativePath = normalizeHierarchyPath(native.map(node => node.name).join('/'))
+    const bindingPath = normalizeHierarchyPath(binding.rendererHierarchyPath)
+    if (bindingPath !== nativePath && !bindingPath.endsWith('/' + nativePath)) return false
+    const difference = (left: readonly number[], right: readonly number[]) =>
+        left.length !== right.length
+            || left.some(value => !Number.isFinite(value))
+            || right.some(value => !Number.isFinite(value))
+            ? Infinity
+            : Math.max(...left.map((value, index) => Math.abs(value - right[index])))
+    return chain.every((object, index) => {
+        const node = native[index]
+        if (!node || !Array.isArray(node.position) || !Array.isArray(node.rotation)
+            || !Array.isArray(node.scale)) return false
+        const original = object.userData.originalName ?? object.name
+        // The stage loader deliberately replaces the carrier root's display name.
+        if (!(object === root && object.name.startsWith('Stage:'))
+            && original !== node.name) return false
+        const saved = object === root ? nativeRootTransform : undefined
+        const quaternion = saved?.rotation ?? object.quaternion.toArray()
+        const position = saved?.position ?? object.position.toArray()
+        const scale = saved?.scale ?? object.scale.toArray()
+        const valid = (values: readonly number[], size: number) =>
+            values.length === size && values.every(Number.isFinite)
+        if (!valid(node.position, 3) || !valid(node.rotation, 4) || !valid(node.scale, 3)
+            || !valid(position, 3) || !valid(quaternion, 4) || !valid(scale, 3)) return false
+        if (difference(node.position, position) <= 1e-6
+            && difference(node.scale, scale) <= 1e-6
+            && Math.min(difference(node.rotation, quaternion),
+                difference(node.rotation, quaternion.map(value => -value))) <= 1e-6) return true
+        // FBX decomposes mirrored TRS with a negative X scale and compensating
+        // rotation. Native negative Y/Z scales can therefore have different
+        // components but the exact same local transform. Compare the composed
+        // matrices at the same tolerance; never alter the object's pose or use
+        // raw FBX properties to accept genuinely different inherited scaling.
+        const compose = (p: readonly number[], q: readonly number[], s: readonly number[]) =>
+            new THREE.Matrix4().compose(new THREE.Vector3(...p),
+                new THREE.Quaternion(...q), new THREE.Vector3(...s)).elements
+        return difference(compose(node.position, node.rotation, node.scale),
+            compose(position, quaternion, scale)) <= 1e-6
+    })
+}
+
 /**
  * Clones each matched renderer's material, installs per-renderer lightmap ST,
  * Unity linear RGBM decoding and optional directional-lightmap evaluation, then
@@ -306,24 +421,33 @@ export function applyStageLightmaps(
     bindings: readonly StageLightmapBinding[],
     options: ApplyStageLightmapsOptions = {},
 ): StageLightmapApplication {
-    const result = matchStageLightmapBindings(root, bindings)
+    const result = matchStageLightmapBindings(root, bindings, options)
     const missingSecondUvPaths: string[] = []
     const unsupportedMaterialPaths: string[] = []
     const missingLightmapPaths: string[] = []
     const missingDirectionalLightmapPaths: string[] = []
     const applicableMatches: StageLightmapMatch[] = []
+    const skippedUnlitMaterialPaths: string[] = []
     const lightmaps = Array.isArray(lightmap) ? lightmap : [lightmap]
     const directionalLightmaps = options.directionalLightmaps ?? []
     const encoding = options.encoding ?? 'unity-rgbm-linear'
 
     for (const match of result.matches) {
+        const sourceMaterials = Array.isArray(match.mesh.material)
+            ? match.mesh.material
+            : [match.mesh.material]
+        const materials = sourceMaterials.filter((material, slot) => {
+            if (!isNativeUnlitMaterial(material)) return true
+            skippedUnlitMaterialPaths.push(`${match.rendererHierarchyPath}[${slot}]`)
+            return false
+        })
+        // Native BgUnlit consumes no baked irradiance, even when its renderer
+        // retains serialized lightmap indices shared with lit material slots.
+        if (materials.length === 0) continue
         if (!match.mesh.geometry.getAttribute('uv1')) {
             missingSecondUvPaths.push(match.rendererHierarchyPath)
             continue
         }
-        const materials = Array.isArray(match.mesh.material)
-            ? match.mesh.material
-            : [match.mesh.material]
         if (materials.some(material => !isLightMappedMaterial(material))) {
             unsupportedMaterialPaths.push(match.rendererHierarchyPath)
             continue
@@ -376,25 +500,22 @@ export function applyStageLightmaps(
         const rendererDirectionalLightmap = directionalLightmaps[
             match.binding.lightmapIndex ?? 0
         ]
-        const installed = Array.isArray(original)
-            ? original.map(material => installUnityLightmapMaterial(
+        const installSlot = (material: THREE.Material) => {
+            if (isNativeUnlitMaterial(material)) return material
+            const installed = installUnityLightmapMaterial(
                 material as LightMappedMaterial,
                 rendererLightmap,
                 match.binding.lightmapScaleOffset,
                 intensity,
                 rendererDirectionalLightmap,
                 encoding,
-            ))
-            : installUnityLightmapMaterial(
-                original as LightMappedMaterial,
-                rendererLightmap,
-                match.binding.lightmapScaleOffset,
-                intensity,
-                rendererDirectionalLightmap,
-                encoding,
             )
-        const installedMaterials = Array.isArray(installed) ? installed : [installed]
-        installedMaterials.forEach(material => clones.add(material))
+            clones.add(installed)
+            return installed
+        }
+        const installed = Array.isArray(original)
+            ? original.map(installSlot)
+            : installSlot(original)
         match.mesh.material = installed
         installations.push({ mesh: match.mesh, original, installed })
     }
@@ -403,6 +524,7 @@ export function applyStageLightmaps(
     return {
         ...result,
         matchedRendererCount: installations.length,
+        skippedUnlitMaterialPaths,
         missingSecondUvPaths,
         unsupportedMaterialPaths,
         missingLightmapPaths,
@@ -526,6 +648,13 @@ uniform sampler2D uStageLightmapDirection;`,
 
 function isMesh(object: THREE.Object3D): object is THREE.Mesh {
     return 'isMesh' in object && object.isMesh === true
+}
+
+function isNativeUnlitMaterial(material: THREE.Material) {
+    // Exact native shader evidence: BgUnlit has no LIGHTMAP_ON variant or
+    // lightmap sampler. Do not infer this from Three's material class/name.
+    return material.userData.stageUnityMaterialState?.sourceShader
+        === 'Creative/Bg/BgUnlit'
 }
 
 function isLightMappedMaterial(

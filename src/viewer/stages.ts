@@ -1209,6 +1209,11 @@ export async function loadStageById(id: string) {
             assertCurrentStageLoad(loadEpoch, loadController.signal)
             loadCheckpoint = 'profile-textures-loaded'
             const object = candidateObject!
+            const nativeLightmapRootTransform = object.userData.stageSerializedRootTransform ?? {
+                position: object.position.toArray(),
+                rotation: object.quaternion.toArray(),
+                scale: object.scale.toArray(),
+            }
             object.name = `Stage:${definition.id}`
             prepareStageObject(object, definition.renderProfile?.stageLayer)
             object.userData.stageNativeVisibility =
@@ -1250,6 +1255,7 @@ export async function loadStageById(id: string) {
                         : matchStageLightmapBindings(
                             object,
                             profileTextures.lightmapBindings,
+                            { nativeRootTransform: nativeLightmapRootTransform },
                         ).matches.map(match => match.rendererHierarchyPath)
                 const uv1Debug = applyStageUv1Companion(
                     object,
@@ -1272,6 +1278,7 @@ export async function loadStageById(id: string) {
                         intensity: profileTextures.lightmapIntensity ?? 1,
                         directionalLightmaps: profileTextures.directionalLightmaps,
                         encoding: profileTextures.lightmapEncoding,
+                        nativeRootTransform: nativeLightmapRootTransform,
                     },
                 )
                 const {
@@ -2158,6 +2165,13 @@ async function loadExternalStageAsset(
             return new FBXLoader(manager).parse(arrayBuffer, resourcePath)
         })()
 
+    // Keep the decoded carrier's native root, before asset placement (including
+    // default zero/identity placement) changes the transform used by identity.
+    object.userData.stageSerializedRootTransform = {
+        position: object.position.toArray(),
+        rotation: object.quaternion.toArray(),
+        scale: object.scale.toArray(),
+    }
     if (definition.id) object.name = definition.id
     const [x, y, z] = definition.position ?? [0, 0, 0]
     const [rx, ry, rz] = definition.rotation ?? [0, 0, 0]

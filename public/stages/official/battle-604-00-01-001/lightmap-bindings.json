@@ -1,0 +1,4277 @@
+{
+  "schemaVersion": 1,
+  "scene": "bg_3d_604_00_01_001",
+  "encoding": "unity-bc6h-linear",
+  "renderers": [
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/ground_geo",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.7609413862228394,
+        0.7609413862228394,
+        -0.0005864865961484611,
+        -0.0005864865961484611
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.9669349789619446,
+        0.23054103553295135
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.7784233689308167,
+        0.25397852063179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.8125291466712952,
+        0.25397852063179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.8636878132820129,
+        0.25397852063179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.7954762578010559,
+        0.25397852063179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.9839878678321838,
+        0.23054103553295135
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.9148464798927307,
+        0.25397852063179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.8977935910224915,
+        0.25397852063179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.7613704800605774,
+        0.25397852063179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.8466349244117737,
+        0.25397852063179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.8807407021522522,
+        0.25397852063179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_flower_grp/boxA_flower_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022186174988746643,
+        0.022186174988746643,
+        0.8295820355415344,
+        0.25397852063179016
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_pinkdot_grp/boxA_pinkdot_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.8540382981300354,
+        0.34007957577705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_pinkdot_grp/boxA_pinkdot_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9352567791938782,
+        0.31957176327705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_pinkdot_grp/boxA_pinkdot_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.8891945481300354,
+        0.34007957577705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_pinkdot_grp/boxA_pinkdot_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9595070481300354,
+        0.34007957577705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_pinkdot_grp/boxA_pinkdot_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.7965845465660095,
+        0.36156395077705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_pinkdot_grp/boxA_pinkdot_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9528349041938782,
+        0.31957176327705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxA_pinkdot_grp/boxA_pinkdot_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9067726731300354,
+        0.34007957577705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxB_yellow_grp/boxB_yellow_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.020107880234718323,
+        0.020107880234718323,
+        0.7772814035415649,
+        0.3400070071220398
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxB_yellow_grp/boxB_yellow_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.020107880234718323,
+        0.020107880234718323,
+        0.8232920169830322,
+        0.3400070071220398
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxB_yellow_grp/boxB_yellow_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.020107880234718323,
+        0.020107880234718323,
+        0.7926182746887207,
+        0.3400070071220398
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxB_yellow_grp/boxB_yellow_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.020107880234718323,
+        0.020107880234718323,
+        0.838628888130188,
+        0.3400070071220398
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxB_yellow_grp/boxB_yellow_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.020107880234718323,
+        0.020107880234718323,
+        0.8079551458358765,
+        0.3400070071220398
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.914088785648346,
+        0.15345147252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.8882321715354919,
+        0.10779755562543869
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.8074185252189636,
+        0.15345147252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.9309002757072449,
+        0.10779755562543869
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.9095662236213684,
+        0.10779755562543869
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.8214182257652283,
+        0.20423272252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.9735683798789978,
+        0.10779755562543869
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.871420681476593,
+        0.15345147252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.8927547335624695,
+        0.15345147252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.8427522778511047,
+        0.20423272252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.8668981194496155,
+        0.10779755562543869
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.9780909419059753,
+        0.15345147252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.8287525773048401,
+        0.15345147252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo14",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.8000841736793518,
+        0.20423272252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo15",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.8500866293907166,
+        0.15345147252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo16",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.9522343277931213,
+        0.10779755562543869
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo17",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.9567568898200989,
+        0.15345147252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_blue_grp/boxC_blue_geo18",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02003823220729828,
+        0.02003823220729828,
+        0.9354228377342224,
+        0.15345147252082825
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.8641420006752014,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.898402750492096,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.8127508759498596,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.7613597512245178,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.9035903811454773,
+        0.2041630893945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.9207207560539246,
+        0.2041630893945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.9549815058708191,
+        0.2041630893945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.7784901261329651,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.8812723755836487,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.9326635003089905,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.8298812508583069,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.9497938752174377,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.9378511309623718,
+        0.2041630893945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo14",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.8470116257667542,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo15",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.9721118807792664,
+        0.2041630893945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo16",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.7956205010414124,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_deepgreen_grp/boxC_deepgreen_geo17",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.022128773853182793,
+        0.022128773853182793,
+        0.9155331254005432,
+        0.2305302768945694
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.9739648103713989,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.9546374082565308,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.7613633871078491,
+        0.20416676998138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.7806907892227173,
+        0.20416676998138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.8773277997970581,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.9159826040267944,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.8966552019119263,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.8580003976821899,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.8000181913375854,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.8193455934524536,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.9801133871078491,
+        -0.000355336262146011
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.7613633871078491,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.7806907892227173,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo14",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.9801133871078491,
+        0.026738690212368965
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo15",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.8386729955673218,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_green_grp/boxC_green_geo16",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025069069117307663,
+        0.025069069117307663,
+        0.9353100061416626,
+        0.17779958248138428
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.02002265304327011,
+        0.02002265304327011,
+        0.761391282081604,
+        0.3400425314903259
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021023785695433617,
+        0.021023785695433617,
+        0.8777447938919067,
+        0.2970574200153351
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021023785695433617,
+        0.021023785695433617,
+        0.9109933376312256,
+        0.2970574200153351
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021023785695433617,
+        0.021023785695433617,
+        0.8611205220222473,
+        0.2970574200153351
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021023785695433617,
+        0.021023785695433617,
+        0.7613748908042908,
+        0.2970574200153351
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021023785695433617,
+        0.021023785695433617,
+        0.811247706413269,
+        0.2970574200153351
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021023785695433617,
+        0.021023785695433617,
+        0.7946234345436096,
+        0.2970574200153351
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021023785695433617,
+        0.021023785695433617,
+        0.8444962501525879,
+        0.2970574200153351
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021023785695433617,
+        0.021023785695433617,
+        0.7779991626739502,
+        0.2970574200153351
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021023785695433617,
+        0.021023785695433617,
+        0.8943690657615662,
+        0.2970574200153351
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_pink_grp/boxC_pink_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.021023785695433617,
+        0.021023785695433617,
+        0.8278719782829285,
+        0.2970574200153351
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.7790064215660095,
+        0.36156395077705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9704130291938782,
+        0.31957176327705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9419289231300354,
+        0.34007957577705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.8825224041938782,
+        0.31957176327705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.8317407965660095,
+        0.36156395077705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.8493189215660095,
+        0.36156395077705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.7614282965660095,
+        0.36156395077705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.8716164231300354,
+        0.34007957577705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9243507981300354,
+        0.34007957577705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9770851731300354,
+        0.34007957577705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9020532965660095,
+        0.36156395077705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9001005291938782,
+        0.31957176327705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.8668970465660095,
+        0.36156395077705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo14",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.8141626715660095,
+        0.36156395077705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo15",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.8844751715660095,
+        0.36156395077705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo16",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9176786541938782,
+        0.31957176327705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/boxC_purple_grp/boxC_purple_geo17",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01608860306441784,
+        0.01608860306441784,
+        0.9196314215660095,
+        0.36156395077705383
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_a_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.028349867090582848,
+        0.028349867090582848,
+        0.7614107131958008,
+        0.08082948625087738
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_a_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.028349867090582848,
+        0.028349867090582848,
+        0.8200044631958008,
+        0.05388004705309868
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_a_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.028349867090582848,
+        0.028349867090582848,
+        0.8785982131958008,
+        0.05388004705309868
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_a_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.028349867090582848,
+        0.028349867090582848,
+        0.9664888381958008,
+        0.05388004705309868
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_a_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.028349867090582848,
+        0.028349867090582848,
+        0.8493013381958008,
+        0.05388004705309868
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_a_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.028349867090582848,
+        0.028349867090582848,
+        0.9078950881958008,
+        0.05388004705309868
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_a_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.028349867090582848,
+        0.028349867090582848,
+        0.9371919631958008,
+        0.05388004705309868
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_a_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.028349867090582848,
+        0.028349867090582848,
+        0.7614107131958008,
+        0.05388004705309868
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_a_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.028349867090582848,
+        0.028349867090582848,
+        0.7907075881958008,
+        0.05388004705309868
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_b_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016271833330392838,
+        0.016271833330392838,
+        0.9435775279998779,
+        0.37909331917762756
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_b_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016271833330392838,
+        0.016271833330392838,
+        0.9259994029998779,
+        0.37909331917762756
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_b_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016271833330392838,
+        0.016271833330392838,
+        0.9611556529998779,
+        0.37909331917762756
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_b_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016271833330392838,
+        0.016271833330392838,
+        0.9084212779998779,
+        0.37909331917762756
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_c_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010302099399268627,
+        0.010302099399268627,
+        0.8837800621986389,
+        0.49697747826576233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_c_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010302099399268627,
+        0.010302099399268627,
+        0.9164878129959106,
+        0.49697747826576233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_c_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010302099399268627,
+        0.010302099399268627,
+        0.9164878129959106,
+        0.49697747826576233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_c_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010302099399268627,
+        0.010302099399268627,
+        0.8946826457977295,
+        0.49697747826576233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_c_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010302099399268627,
+        0.010302099399268627,
+        0.9055852293968201,
+        0.49697747826576233
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_d_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010353813879191875,
+        0.010353813879191875,
+        0.8603410124778748,
+        0.49697595834732056
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_d_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010353813879191875,
+        0.010353813879191875,
+        0.8486222624778748,
+        0.49697595834732056
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/bridgeA_grp/bridgeA_d_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010353813879191875,
+        0.010353813879191875,
+        0.8369035124778748,
+        0.49697595834732056
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/car_grp/carA_a_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012141679413616657,
+        0.012141679413616657,
+        0.7614369988441467,
+        0.5089413523674011
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/car_grp/carA_a_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019072692841291428,
+        0.019072692841291428,
+        0.8831464648246765,
+        0.204227015376091
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/car_grp/carA_b_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.024849316105246544,
+        0.024849316105246544,
+        0.7907272577285767,
+        0.08084914833307266
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/car_grp/carA_b_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012151786126196384,
+        0.012151786126196384,
+        0.7751086354255676,
+        0.508941113948822
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/car_grp/carA_c_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025299735367298126,
+        0.025299735367298126,
+        0.8167956471443176,
+        0.08055034279823303
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/car_grp/carA_c_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025299735367298126,
+        0.025299735367298126,
+        0.8431216478347778,
+        0.08055034279823303
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonB_grp/crayonB_redb_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007173826918005943,
+        0.007173826918005943,
+        0.9928374290466309,
+        0.41585713624954224
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonB_grp/crayonB_redb_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007173826918005943,
+        0.007173826918005943,
+        0.9928374290466309,
+        0.4233764708042145
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonB_grp/crayonB_redb_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008369465358555317,
+        0.008369465358555317,
+        0.7816640138626099,
+        0.5317546725273132
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonB_grp/crayonB_redb_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007173826918005943,
+        0.007173826918005943,
+        0.99331134557724,
+        0.38656026124954224
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonB_grp/crayonB_redb_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007173826918005943,
+        0.007173826918005943,
+        0.9918307662010193,
+        0.40804463624954224
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonC_grp/crayonC_green_grp/crayonC_green_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01531040295958519,
+        0.01531040295958519,
+        0.8277757167816162,
+        0.4656575322151184
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonC_grp/crayonC_green_grp/crayonC_green_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01531040295958519,
+        0.01531040295958519,
+        0.8111741542816162,
+        0.4656575322151184
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonC_grp/crayonC_green_grp/crayonC_green_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01531040295958519,
+        0.01531040295958519,
+        0.7945725917816162,
+        0.4656575322151184
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonC_grp/crayonC_pink_grp/crayonC_pink_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015309367328882217,
+        0.015309367328882217,
+        0.8609789609909058,
+        0.46565765142440796
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonC_grp/crayonC_pink_grp/crayonC_pink_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015309367328882217,
+        0.015309367328882217,
+        0.8443773984909058,
+        0.46565765142440796
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/crayonC_grp/crayonC_pink_grp/crayonC_pink_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015309367328882217,
+        0.015309367328882217,
+        0.8775805234909058,
+        0.46565765142440796
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_blue_grp/cuboidA_blue_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029990334063768387,
+        0.029990334063768387,
+        0.8864006996154785,
+        -0.00031806493643671274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_blue_grp/cuboidA_blue_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029990334063768387,
+        0.029990334063768387,
+        0.7926506996154785,
+        -0.00031806493643671274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_blue_grp/cuboidA_blue_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029990334063768387,
+        0.029990334063768387,
+        0.8551506996154785,
+        -0.00031806493643671274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_blue_grp/cuboidA_blue_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029990334063768387,
+        0.029990334063768387,
+        0.7614006996154785,
+        0.026775961741805077
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_blue_grp/cuboidA_blue_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029990334063768387,
+        0.029990334063768387,
+        0.9489006996154785,
+        -0.00031806493643671274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_blue_grp/cuboidA_blue_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029990334063768387,
+        0.029990334063768387,
+        0.8239006996154785,
+        -0.00031806493643671274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_blue_grp/cuboidA_blue_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029990334063768387,
+        0.029990334063768387,
+        0.9176506996154785,
+        -0.00031806493643671274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_blue_grp/cuboidA_blue_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029990334063768387,
+        0.029990334063768387,
+        0.7926506996154785,
+        0.026775961741805077
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_blue_grp/cuboidA_blue_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029990334063768387,
+        0.029990334063768387,
+        0.7614006996154785,
+        -0.00031806493643671274
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_red_grp/cuboidA_red_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029815373942255974,
+        0.029815373942255974,
+        0.9489025473594666,
+        0.02677781693637371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_red_grp/cuboidA_red_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029815373942255974,
+        0.029815373942255974,
+        0.8864025473594666,
+        0.02677781693637371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_red_grp/cuboidA_red_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029815373942255974,
+        0.029815373942255974,
+        0.9176525473594666,
+        0.02677781693637371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_red_grp/cuboidA_red_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029815373942255974,
+        0.029815373942255974,
+        0.8551525473594666,
+        0.02677781693637371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidA_red_grp/cuboidA_red_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.029815373942255974,
+        0.029815373942255974,
+        0.8239025473594666,
+        0.02677781693637371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_blue_grp/cuboidB_blue_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013330857269465923,
+        0.013330857269465923,
+        0.8741328716278076,
+        0.4803506135940552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_blue_grp/cuboidB_blue_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013330857269465923,
+        0.013330857269465923,
+        0.8301875591278076,
+        0.4803506135940552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_blue_grp/cuboidB_blue_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013330857269465923,
+        0.013330857269465923,
+        0.8594844341278076,
+        0.4803506135940552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_blue_grp/cuboidB_blue_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013330857269465923,
+        0.013330857269465923,
+        0.8448359966278076,
+        0.4803506135940552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_green_grp/cuboidB_green_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017277846112847328,
+        0.017277846112847328,
+        0.9804112911224365,
+        0.27746522426605225
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_green_grp/cuboidB_green_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017277846112847328,
+        0.017277846112847328,
+        0.8642040491104126,
+        0.3195631206035614
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_green_grp/cuboidB_green_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017277846112847328,
+        0.017277846112847328,
+        0.9437918663024902,
+        0.27746522426605225
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_green_grp/cuboidB_green_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017277846112847328,
+        0.017277846112847328,
+        0.9254821538925171,
+        0.27746522426605225
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_green_grp/cuboidB_green_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017277846112847328,
+        0.017277846112847328,
+        0.9621015787124634,
+        0.27746522426605225
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_green_grp/cuboidB_green_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010250680148601532,
+        0.010250680148601532,
+        0.9900949001312256,
+        0.44912081956863403
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_green_grp/cuboidB_green_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010250680148601532,
+        0.010250680148601532,
+        0.8139409422874451,
+        0.4969952404499054
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_green_grp/cuboidB_green_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010250680148601532,
+        0.010250680148601532,
+        0.9893168807029724,
+        0.217909574508667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_green_grp/cuboidB_green_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010250680148601532,
+        0.010250680148601532,
+        0.8254318833351135,
+        0.4969952404499054
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_green_grp/cuboidB_green_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010250680148601532,
+        0.010250680148601532,
+        0.8024500012397766,
+        0.4969952404499054
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightblue_grp/cuboidB_lightblue_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01942376419901848,
+        0.01942376419901848,
+        0.761393666267395,
+        0.31953713297843933
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightblue_grp/cuboidB_lightblue_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01942376419901848,
+        0.01942376419901848,
+        0.8299165964126587,
+        0.31953713297843933
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightblue_grp/cuboidB_lightblue_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01942376419901848,
+        0.01942376419901848,
+        0.9618978500366211,
+        0.29707619547843933
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightblue_grp/cuboidB_lightblue_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01942376419901848,
+        0.01942376419901848,
+        0.9276363849639893,
+        0.29707619547843933
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightblue_grp/cuboidB_lightblue_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01942376419901848,
+        0.01942376419901848,
+        0.979028582572937,
+        0.29707619547843933
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightblue_grp/cuboidB_lightblue_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01942376419901848,
+        0.01942376419901848,
+        0.7956551313400269,
+        0.31953713297843933
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightblue_grp/cuboidB_lightblue_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01942376419901848,
+        0.01942376419901848,
+        0.8470473289489746,
+        0.31953713297843933
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightblue_grp/cuboidB_lightblue_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01942376419901848,
+        0.01942376419901848,
+        0.8127858638763428,
+        0.31953713297843933
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightblue_grp/cuboidB_lightblue_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01942376419901848,
+        0.01942376419901848,
+        0.9447671175003052,
+        0.29707619547843933
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightblue_grp/cuboidB_lightblue_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01942376419901848,
+        0.01942376419901848,
+        0.7785243988037109,
+        0.31953713297843933
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightgreen_grp/cuboidB_lightgreen_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019478872418403625,
+        0.019478872418403625,
+        0.8229157328605652,
+        0.27743780612945557
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightgreen_grp/cuboidB_lightgreen_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019478872418403625,
+        0.019478872418403625,
+        0.8024079203605652,
+        0.27743780612945557
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightgreen_grp/cuboidB_lightgreen_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019478872418403625,
+        0.019478872418403625,
+        0.8639313578605652,
+        0.27743780612945557
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightgreen_grp/cuboidB_lightgreen_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019478872418403625,
+        0.019478872418403625,
+        0.8844391703605652,
+        0.27743780612945557
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightgreen_grp/cuboidB_lightgreen_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019478872418403625,
+        0.019478872418403625,
+        0.8434235453605652,
+        0.27743780612945557
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidB_lightgreen_grp/cuboidB_lightgreen_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.019478872418403625,
+        0.019478872418403625,
+        0.9049469828605652,
+        0.27743780612945557
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_orangedot_grp/cuboidC_orangedot_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015483269467949867,
+        0.015483269467949867,
+        0.8026602268218994,
+        0.4803417921066284
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_orangedot_grp/cuboidC_orangedot_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015483269467949867,
+        0.015483269467949867,
+        0.8164194822311401,
+        0.4803417921066284
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_orangedot_grp/cuboidC_orangedot_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015483269467949867,
+        0.015483269467949867,
+        0.7889009714126587,
+        0.4803417921066284
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_orangedot_grp/cuboidC_orangedot_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01754770427942276,
+        0.01754770427942276,
+        0.8930249214172363,
+        0.37903034687042236
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_orangedot_grp/cuboidC_orangedot_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015483269467949867,
+        0.015483269467949867,
+        0.7613824605941772,
+        0.4803417921066284
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_orangedot_grp/cuboidC_orangedot_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015483269467949867,
+        0.015483269467949867,
+        0.775141716003418,
+        0.4803417921066284
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_pinkdot_grp/cuboidC_pinkdot_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015142969787120819,
+        0.015142969787120819,
+        0.8417410850524902,
+        0.4491063952445984
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_pinkdot_grp/cuboidC_pinkdot_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015142969787120819,
+        0.015142969787120819,
+        0.8096126317977905,
+        0.4491063952445984
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_pinkdot_grp/cuboidC_pinkdot_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015142969787120819,
+        0.015142969787120819,
+        0.8578053116798401,
+        0.4491063952445984
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_pinkdot_grp/cuboidC_pinkdot_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015142969787120819,
+        0.015142969787120819,
+        0.7935484051704407,
+        0.4491063952445984
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_pinkdot_grp/cuboidC_pinkdot_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015142969787120819,
+        0.015142969787120819,
+        0.8256768584251404,
+        0.4491063952445984
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_pinkdot_grp/cuboidC_pinkdot_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015142969787120819,
+        0.015142969787120819,
+        0.761419951915741,
+        0.4491063952445984
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cuboidC_pinkdot_grp/cuboidC_pinkdot_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015142969787120819,
+        0.015142969787120819,
+        0.7774841785430908,
+        0.4491063952445984
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_a_grp/cyliA_a_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00643174396827817,
+        0.00643174396827817,
+        0.9933537840843201,
+        0.1855635643005371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_a_grp/cyliA_a_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00643174396827817,
+        0.00643174396827817,
+        0.9934772849082947,
+        0.25403299927711487
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_a_grp/cyliA_a_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00643174396827817,
+        0.00643174396827817,
+        0.9933537840843201,
+        0.17786113917827606
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_a_grp/cyliA_a_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00643174396827817,
+        0.00643174396827817,
+        0.9933537840843201,
+        0.19326598942279816
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_b_grp/cyliA_b_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0063768420368433,
+        0.0063768420368433,
+        0.9934643507003784,
+        0.26172253489494324
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_b_grp/cyliA_b_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0063768420368433,
+        0.0063768420368433,
+        0.9934643507003784,
+        0.26953503489494324
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_b_grp/cyliA_b_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0063768420368433,
+        0.0063768420368433,
+        0.9936683773994446,
+        0.3791047930717468
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_c_grp/cyliA_c_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008318224921822548,
+        0.008318224921822548,
+        0.9225624799728394,
+        0.5226171016693115
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_c_grp/cyliA_c_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008318224921822548,
+        0.008318224921822548,
+        0.8834999799728394,
+        0.5226171016693115
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_c_grp/cyliA_c_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008318224921822548,
+        0.008318224921822548,
+        0.8737343549728394,
+        0.5226171016693115
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_c_grp/cyliA_c_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008318224921822548,
+        0.008318224921822548,
+        0.8932656049728394,
+        0.5226171016693115
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_c_grp/cyliA_c_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008318224921822548,
+        0.008318224921822548,
+        0.9030312299728394,
+        0.5226171016693115
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_c_grp/cyliA_c_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008318224921822548,
+        0.008318224921822548,
+        0.9127968549728394,
+        0.5226171016693115
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_d_grp/cyliA_d_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010464767925441265,
+        0.010464767925441265,
+        0.8720197081565857,
+        0.4969359338283539
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_d_grp/cyliA_d_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013604198582470417,
+        0.013604198582470417,
+        0.9233812689781189,
+        0.4655599594116211
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_d_grp/cyliA_d_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013604198582470417,
+        0.013604198582470417,
+        0.8940843939781189,
+        0.4655599594116211
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_d_grp/cyliA_d_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013604198582470417,
+        0.013604198582470417,
+        0.9380297064781189,
+        0.4655599594116211
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_d_grp/cyliA_d_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009418291039764881,
+        0.009418291039764881,
+        0.9859769344329834,
+        0.4969702959060669
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_d_grp/cyliA_d_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009418291039764881,
+        0.009418291039764881,
+        0.7614094018936157,
+        0.6866326332092285
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_d_grp/cyliA_d_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013604198582470417,
+        0.013604198582470417,
+        0.9087328314781189,
+        0.4655599594116211
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_e_grp/cyliA_e_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007320492994040251,
+        0.007320492994040251,
+        0.7736431956291199,
+        0.5322651863098145
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_e_grp/cyliA_e_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007320492994040251,
+        0.007320492994040251,
+        0.9848032593727112,
+        0.5226156115531921
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_e_grp/cyliA_e_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008366278372704983,
+        0.008366278372704983,
+        0.7928421497344971,
+        0.5225778818130493
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_e_grp/cyliA_e_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008366278372704983,
+        0.008366278372704983,
+        0.783371090888977,
+        0.5225778818130493
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_e_grp/cyliA_e_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008366278372704983,
+        0.008366278372704983,
+        0.8212553262710571,
+        0.5225778818130493
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_e_grp/cyliA_e_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008366278372704983,
+        0.008366278372704983,
+        0.8117842674255371,
+        0.5225778818130493
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_e_grp/cyliA_e_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008366278372704983,
+        0.008366278372704983,
+        0.8023132085800171,
+        0.5225778818130493
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliA_grp/cyliA_e_grp/cyliA_e_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007320492994040251,
+        0.007320492994040251,
+        0.97627192735672,
+        0.5226156115531921
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.8074038624763489,
+        0.1290227770805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.853393018245697,
+        0.1290227770805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.7844092845916748,
+        0.1534368395805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.830398440361023,
+        0.1290227770805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.9223767518997192,
+        0.1290227770805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.8993821740150452,
+        0.1290227770805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.7614147067070007,
+        0.1290227770805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.8763875961303711,
+        0.1290227770805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025091588497161865,
+        0.025091588497161865,
+        0.7613874077796936,
+        0.10775560140609741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.9453713297843933,
+        0.1290227770805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.7844092845916748,
+        0.1290227770805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.9683659076690674,
+        0.1290227770805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_a_geo13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023022906854748726,
+        0.023022906854748726,
+        0.7614147067070007,
+        0.1534368395805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_b_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025091588497161865,
+        0.025091588497161865,
+        0.896070659160614,
+        0.08080615848302841
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_b_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025091588497161865,
+        0.025091588497161865,
+        0.869703471660614,
+        0.08080615848302841
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_b_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025091588497161865,
+        0.025091588497161865,
+        0.7877545952796936,
+        0.10775560140609741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_b_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025091588497161865,
+        0.025091588497161865,
+        0.8141217827796936,
+        0.10775560140609741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_b_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025091588497161865,
+        0.025091588497161865,
+        0.922437846660614,
+        0.08080615848302841
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_b_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025091588497161865,
+        0.025091588497161865,
+        0.8404889702796936,
+        0.10775560140609741
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_b_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025091588497161865,
+        0.025091588497161865,
+        0.948805034160614,
+        0.08080615848302841
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/cyliB_grp/cyliB_b_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.025091588497161865,
+        0.025091588497161865,
+        0.975172221660614,
+        0.08080615848302841
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_a_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.7771897315979004,
+        0.4162026643753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_a_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.8087681531906128,
+        0.4162026643753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_a_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.9605978727340698,
+        0.3976479768753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_a_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.7929789423942566,
+        0.4162026643753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_a_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.8403465747833252,
+        0.4162026643753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_a_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.897441029548645,
+        0.3976479768753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_a_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.9448086619377136,
+        0.3976479768753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_a_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.8658626079559326,
+        0.3976479768753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_b_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01731208711862564,
+        0.01731208711862564,
+        0.7613756060600281,
+        0.3976230323314667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_b_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01731208711862564,
+        0.01731208711862564,
+        0.7762987613677979,
+        0.3976230323314667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_b_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01731208711862564,
+        0.01731208711862564,
+        0.7912219166755676,
+        0.3976230323314667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_b_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01731208711862564,
+        0.01731208711862564,
+        0.8210682272911072,
+        0.3976230323314667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_b_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01731208711862564,
+        0.01731208711862564,
+        0.835991382598877,
+        0.3976230323314667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_c_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01731208711862564,
+        0.01731208711862564,
+        0.8509145379066467,
+        0.3976230323314667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_c_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01731208711862564,
+        0.01731208711862564,
+        0.8061450719833374,
+        0.3976230323314667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_c_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01731208711862564,
+        0.01731208711862564,
+        0.978708803653717,
+        0.3790683448314667
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_d_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.8719249963760376,
+        0.4162026643753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_d_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.824557363986969,
+        0.4162026643753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_d_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.9290194511413574,
+        0.3976479768753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_d_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.7614005208015442,
+        0.4162026643753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_d_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.8816518187522888,
+        0.3976479768753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_d_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.976387083530426,
+        0.3976479768753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_d_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.8561357855796814,
+        0.4162026643753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_d_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016174597665667534,
+        0.016174597665667534,
+        0.9132302403450012,
+        0.3976479768753052
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_e_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314744293689728,
+        0.012314744293689728,
+        0.9892840385437012,
+        0.20420487225055695
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_e_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314744293689728,
+        0.012314744293689728,
+        0.9649960994720459,
+        0.5089058876037598
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_e_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314744293689728,
+        0.012314744293689728,
+        0.9771844148635864,
+        0.5089058876037598
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_e_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314744293689728,
+        0.012314744293689728,
+        0.9889405965805054,
+        0.43378177285194397
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_e_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314744293689728,
+        0.012314744293689728,
+        0.987964391708374,
+        0.3195449709892273
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_e_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314744293689728,
+        0.012314744293689728,
+        0.989372730255127,
+        0.5089058876037598
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_e_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314744293689728,
+        0.012314744293689728,
+        0.9528077840805054,
+        0.5089058876037598
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_e_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314744293689728,
+        0.012314744293689728,
+        0.7614015340805054,
+        0.5225622653961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.5909216403961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.6045935153961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.5499060153961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.6319372653961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.5635778903961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0174458809196949,
+        0.0174458809196949,
+        0.7612693309783936,
+        0.37896206974983215
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.5362341403961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.6729528903961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.6592810153961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.5772497653961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.6182653903961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaA_grp/deltaA_f_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012314739637076855,
+        0.012314739637076855,
+        0.7614015340805054,
+        0.6456091403961182
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_a_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009412500075995922,
+        0.009412500075995922,
+        0.9921745657920837,
+        0.3976462483406067
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_a_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009412500075995922,
+        0.009412500075995922,
+        0.7613987922668457,
+        0.7353286147117615
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_a_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009412500075995922,
+        0.009412500075995922,
+        0.9918675422668457,
+        0.36153444647789
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_a_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.023008333519101143,
+        0.023008333519101143,
+        0.8635936379432678,
+        0.20374003052711487
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_a_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009412500075995922,
+        0.009412500075995922,
+        0.9913445711135864,
+        0.12900684773921967
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_a_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009412500075995922,
+        0.009412500075995922,
+        0.7613987922668457,
+        0.7245864272117615
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_a_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009412500075995922,
+        0.009412500075995922,
+        0.9913445711135864,
+        0.13974903523921967
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_b_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014360545203089714,
+        0.014360545203089714,
+        0.8887698650360107,
+        0.4803391993045807
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_b_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014360545203089714,
+        0.014360545203089714,
+        0.9668948650360107,
+        0.4803391993045807
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_b_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014360545203089714,
+        0.014360545203089714,
+        0.9043948650360107,
+        0.4803391993045807
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_b_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014360545203089714,
+        0.014360545203089714,
+        0.9825198650360107,
+        0.4803391993045807
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_b_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014360545203089714,
+        0.014360545203089714,
+        0.7613798379898071,
+        0.4969407618045807
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_b_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014360545203089714,
+        0.014360545203089714,
+        0.9512698650360107,
+        0.4803391993045807
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_b_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017437804490327835,
+        0.017437804490327835,
+        0.9370884895324707,
+        0.4336874783039093
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_b_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014360545203089714,
+        0.014360545203089714,
+        0.9200198650360107,
+        0.4803391993045807
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_b_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.014360545203089714,
+        0.014360545203089714,
+        0.9356448650360107,
+        0.4803391993045807
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018804384395480156,
+        0.018804384395480156,
+        0.7950454950332642,
+        0.37870723009109497
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010568168945610523,
+        0.010568168945610523,
+        0.9741717576980591,
+        0.4968838393688202
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010568168945610523,
+        0.010568168945610523,
+        0.9390155076980591,
+        0.4968838393688202
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010568168945610523,
+        0.010568168945610523,
+        0.9624530076980591,
+        0.4968838393688202
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010568168945610523,
+        0.010568168945610523,
+        0.9507342576980591,
+        0.4968838393688202
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018804382532835007,
+        0.018804382532835007,
+        0.8341079950332642,
+        0.37870723009109497
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018804382532835007,
+        0.018804382532835007,
+        0.8145767450332642,
+        0.37870723009109497
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018804382532835007,
+        0.018804382532835007,
+        0.8731704950332642,
+        0.37870723009109497
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009402192197740078,
+        0.009402192197740078,
+        0.8521602153778076,
+        0.5225273370742798
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009402192197740078,
+        0.009402192197740078,
+        0.8414180278778076,
+        0.5225273370742798
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010446880012750626,
+        0.010446880012750626,
+        0.7613275051116943,
+        0.7057876586914062
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009402192197740078,
+        0.009402192197740078,
+        0.8306758403778076,
+        0.5225273370742798
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010446880012750626,
+        0.010446880012750626,
+        0.7613275051116943,
+        0.696707010269165
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo14",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.018804382532835007,
+        0.018804382532835007,
+        0.8536392450332642,
+        0.37870723009109497
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo15",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.010568168945610523,
+        0.010568168945610523,
+        0.9272967576980591,
+        0.4968838393688202
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/deltaB_grp/deltaB_c_geo16",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.009402191266417503,
+        0.009402191266417503,
+        0.8629024028778076,
+        0.5225273370742798
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleA_grp/semicircleA_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01611466333270073,
+        0.01611466333270073,
+        0.8317054510116577,
+        0.4337732195854187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleA_grp/semicircleA_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01611466333270073,
+        0.01611466333270073,
+        0.7789710760116577,
+        0.4337732195854187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleA_grp/semicircleA_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01611466333270073,
+        0.01611466333270073,
+        0.7613929510116577,
+        0.4337732195854187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleA_grp/semicircleA_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01611466333270073,
+        0.01611466333270073,
+        0.8668617010116577,
+        0.4337732195854187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleA_grp/semicircleA_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01611466333270073,
+        0.01611466333270073,
+        0.9195960760116577,
+        0.4337732195854187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleA_grp/semicircleA_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01611466333270073,
+        0.01611466333270073,
+        0.8844398260116577,
+        0.4337732195854187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleA_grp/semicircleA_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01611466333270073,
+        0.01611466333270073,
+        0.8492835760116577,
+        0.4337732195854187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleA_grp/semicircleA_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01611466333270073,
+        0.01611466333270073,
+        0.8141273260116577,
+        0.4337732195854187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleA_grp/semicircleA_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01611466333270073,
+        0.01611466333270073,
+        0.7965492010116577,
+        0.4337732195854187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleA_grp/semicircleA_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01611466333270073,
+        0.01611466333270073,
+        0.9020179510116577,
+        0.4337732195854187
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleB_grp/semicircleB_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015281095169484615,
+        0.015281095169484615,
+        0.9568672180175781,
+        0.44909629225730896
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleB_grp/semicircleB_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015281095169484615,
+        0.015281095169484615,
+        0.9723473191261292,
+        0.43379005789756775
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleB_grp/semicircleB_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015281095169484615,
+        0.015281095169484615,
+        0.7614098191261292,
+        0.46569785475730896
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleB_grp/semicircleB_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015281095169484615,
+        0.015281095169484615,
+        0.9557457566261292,
+        0.43379005789756775
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleB_grp/semicircleB_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015281095169484615,
+        0.015281095169484615,
+        0.9734687805175781,
+        0.44909629225730896
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/semicircleB_grp/semicircleB_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.015281095169484615,
+        0.015281095169484615,
+        0.7780113816261292,
+        0.46569785475730896
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_a_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01901501603424549,
+        0.01901501603424549,
+        0.9729687571525574,
+        0.2540322542190552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_a_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01901501603424549,
+        0.01901501603424549,
+        0.9319531321525574,
+        0.2540322542190552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_a_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01901501603424549,
+        0.01901501603424549,
+        0.7614242434501648,
+        0.2774697542190552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_a_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01901501603424549,
+        0.01901501603424549,
+        0.9524609446525574,
+        0.2540322542190552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_a_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01901501603424549,
+        0.01901501603424549,
+        0.7819320559501648,
+        0.2774697542190552
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_b_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007295327726751566,
+        0.007295327726751566,
+        0.9323079586029053,
+        0.5225969552993774
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_b_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007295327726751566,
+        0.007295327726751566,
+        0.9498860836029053,
+        0.5225969552993774
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_b_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007295327726751566,
+        0.007295327726751566,
+        0.9586751461029053,
+        0.5225969552993774
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_b_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007295327726751566,
+        0.007295327726751566,
+        0.9410970211029053,
+        0.5225969552993774
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_b_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.007295327726751566,
+        0.007295327726751566,
+        0.9674642086029053,
+        0.5225969552993774
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_c_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013359763659536839,
+        0.013359763659536839,
+        0.9674601554870605,
+        0.46569347381591797
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_c_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013359763659536839,
+        0.013359763659536839,
+        0.9528117179870605,
+        0.46569347381591797
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeA_grp/TcubeA_c_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017470460385084152,
+        0.017470460385084152,
+        0.937090277671814,
+        0.3614446520805359
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012199378572404385,
+        0.012199378572404385,
+        0.9391568303108215,
+        0.5089268088340759
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016265837475657463,
+        0.016265837475657463,
+        0.9742143750190735,
+        0.361459344625473
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01524922251701355,
+        0.01524922251701355,
+        0.9402042627334595,
+        0.4490348994731903
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016265837475657463,
+        0.016265837475657463,
+        0.7777766585350037,
+        0.3790164589881897
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01524922251701355,
+        0.01524922251701355,
+        0.9236027002334595,
+        0.4490348994731903
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01524922251701355,
+        0.01524922251701355,
+        0.8903995752334595,
+        0.4490348994731903
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01524922251701355,
+        0.01524922251701355,
+        0.8737980127334595,
+        0.4490348994731903
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01524922251701355,
+        0.01524922251701355,
+        0.9070011377334595,
+        0.4490348994731903
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012199378572404385,
+        0.012199378572404385,
+        0.9254849553108215,
+        0.5089268088340759
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012199378572404385,
+        0.012199378572404385,
+        0.8844693303108215,
+        0.5089268088340759
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012199378572404385,
+        0.012199378572404385,
+        0.8981412053108215,
+        0.5089268088340759
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeB_grp/TcubeB_a_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012199378572404385,
+        0.012199378572404385,
+        0.9118130803108215,
+        0.5089268088340759
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.017366809770464897,
+        0.017366809770464897,
+        0.955718457698822,
+        0.36151811480522156
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.00919419340789318,
+        0.00919419340789318,
+        0.7615407109260559,
+        0.715081512928009
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016345232725143433,
+        0.016345232725143433,
+        0.9228722453117371,
+        0.41620439291000366
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016345232725143433,
+        0.016345232725143433,
+        0.8877159953117371,
+        0.41620439291000366
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016345232725143433,
+        0.016345232725143433,
+        0.9756066203117371,
+        0.41620439291000366
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016345232725143433,
+        0.016345232725143433,
+        0.9052941203117371,
+        0.41620439291000366
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01123734749853611,
+        0.01123734749853611,
+        0.7898215055465698,
+        0.497062087059021
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016345232725143433,
+        0.016345232725143433,
+        0.9580284953117371,
+        0.41620439291000366
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.013280501589179039,
+        0.013280501589179039,
+        0.982164740562439,
+        0.4657496511936188
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.016345232725143433,
+        0.016345232725143433,
+        0.9404503703117371,
+        0.41620439291000366
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeC_grp/TcubeC_a_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.01123734749853611,
+        0.01123734749853611,
+        0.7771261930465698,
+        0.497062087059021
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeD_grp/TcubeD_a_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012295398861169815,
+        0.012295398861169815,
+        0.8024430871009827,
+        0.5089318156242371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeD_grp/TcubeD_a_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012295398861169815,
+        0.012295398861169815,
+        0.8161149621009827,
+        0.5089318156242371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeD_grp/TcubeD_a_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012295398861169815,
+        0.012295398861169815,
+        0.8571305871009827,
+        0.5089318156242371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeD_grp/TcubeD_a_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008196932263672352,
+        0.008196932263672352,
+        0.7737128734588623,
+        0.5226852893829346
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeD_grp/TcubeD_a_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.008196932263672352,
+        0.008196932263672352,
+        0.7615245580673218,
+        0.7461965680122375
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeD_grp/TcubeD_a_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012295398861169815,
+        0.012295398861169815,
+        0.8708024621009827,
+        0.5089318156242371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeD_grp/TcubeD_a_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012295398861169815,
+        0.012295398861169815,
+        0.7887712121009827,
+        0.5089318156242371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeD_grp/TcubeD_a_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012295398861169815,
+        0.012295398861169815,
+        0.8434587121009827,
+        0.5089318156242371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_far_grp/TcubeD_grp/TcubeD_a_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.012295398861169815,
+        0.012295398861169815,
+        0.8297868371009827,
+        0.5089318156242371
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9729427695274353,
+        0.10517677664756775
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9889452457427979,
+        0.10227297246456146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9918749332427979,
+        0.10227297246456146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9830858707427979,
+        0.10227297246456146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9801561832427979,
+        0.10227297246456146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo06",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9959893822669983,
+        0.07824073731899261
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo07",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9948046207427979,
+        0.10517677664756775
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo08",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9889452457427979,
+        0.10517677664756775
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo09",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9729427695274353,
+        0.10227297246456146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo10",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9948046207427979,
+        0.10227297246456146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo11",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9830858707427979,
+        0.10517677664756775
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo12",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9860155582427979,
+        0.10517677664756775
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo13",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9918749332427979,
+        0.10517677664756775
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo14",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9801561832427979,
+        0.10517677664756775
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo15",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9977343082427979,
+        0.10227297246456146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_ballA_grp/near_ballA_geo16",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0011349539272487164,
+        0.0011349539272487164,
+        0.9860155582427979,
+        0.10227297246456146
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_bg_grp/near_crayon_bg_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.9957677125930786,
+        0.07318766415119171
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_bg_grp/near_crayon_bg_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.9957677125930786,
+        0.058693427592515945
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_bg_grp/near_crayon_bg_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.879474401473999,
+        0.10205131024122238
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_bg_grp/near_crayon_bg_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.889240026473999,
+        0.10205131024122238
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_bg_grp/near_crayon_bg_geo05",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.900958776473999,
+        0.10205131024122238
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_green_grp/near_crayon_green_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0034319639671593904,
+        0.0034319639671593904,
+        0.9584620594978333,
+        0.10206324607133865
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_green_grp/near_crayon_green_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0034319639671593904,
+        0.0034319639671593904,
+        0.9632190465927124,
+        0.10206324607133865
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_orange_grp/near_crayon_orange_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0034319639671593904,
+        0.0034319639671593904,
+        0.9751894474029541,
+        0.10206324607133865
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_orange_grp/near_crayon_orange_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0034319639671593904,
+        0.0034319639671593904,
+        0.9679760336875916,
+        0.10206324607133865
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_orange_grp/near_crayon_orange_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0034319639671593904,
+        0.0034319639671593904,
+        0.9537050724029541,
+        0.10206324607133865
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_pink_grp/near_crayon_pink_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.896075963973999,
+        0.10205131024122238
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_pink_grp/near_crayon_pink_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.9957677125930786,
+        0.06835625320672989
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_pink_grp/near_crayon_pink_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.884357213973999,
+        0.10205131024122238
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_purple_grp/near_crayon_purple_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.874591588973999,
+        0.10205131024122238
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_purple_grp/near_crayon_purple_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.922443151473999,
+        0.10205131024122238
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_purple_grp/near_crayon_purple_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.905841588973999,
+        0.10205131024122238
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_purple_grp/near_crayon_purple_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.9957677125930786,
+        0.06352484226226807
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_red_grp/near_crayon_red_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0035592294298112392,
+        0.0035592294298112392,
+        0.9322090744972229,
+        0.10205160081386566
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_red_grp/near_crayon_red_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0035592294298112392,
+        0.0035592294298112392,
+        0.9273262619972229,
+        0.10205160081386566
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_redb_grp/near_crayon_redb_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0035592294298112392,
+        0.0035592294298112392,
+        0.9488106369972229,
+        0.10205160081386566
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_redb_grp/near_crayon_redb_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0035592294298112392,
+        0.0035592294298112392,
+        0.9370918869972229,
+        0.10205160081386566
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_redb_grp/near_crayon_redb_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.0035592294298112392,
+        0.0035592294298112392,
+        0.9419746994972229,
+        0.10205160081386566
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_yellow_grp/near_crayon_yellow_geo01",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.9957677125930786,
+        0.05386201664805412
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_yellow_grp/near_crayon_yellow_geo02",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.915607213973999,
+        0.10205131024122238
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_yellow_grp/near_crayon_yellow_geo03",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.910724401473999,
+        0.10205131024122238
+      ]
+    },
+    {
+      "rendererHierarchyPath": "bg_3d_604_00_01_001/bg3d604_01_01/prop_grp/toy_near_grp/near_crayon_grp/near_crayon_yellow_grp/near_crayon_yellow_geo04",
+      "lightmapIndex": 0,
+      "lightmapScaleOffset": [
+        0.003562359372153878,
+        0.003562359372153878,
+        0.869708776473999,
+        0.10205131024122238
+      ]
+    }
+  ]
+}

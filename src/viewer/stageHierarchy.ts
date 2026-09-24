@@ -4,7 +4,6 @@ function pathSegments(value: string) {
     return value
         .replaceAll('\\', '/')
         .split('/')
-        .map(segment => segment.trim())
         .filter(Boolean)
 }
 

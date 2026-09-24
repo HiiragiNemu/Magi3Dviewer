@@ -110,6 +110,51 @@ export const requiredDirectoryClosures = [
     "battle-601-14-00-001",
     "battle-601-15-00-001"
   ].map(id => ({ source: `public/stages/official/${id}`, output: `stages/official/${id}` })),
+  // Additional native initial-state repairs; ship current carriers and companions.
+  ...[
+  "battle-602-00-01-001",
+  "battle-602-11-00-001",
+  "battle-602-11-01-001",
+  "battle-602-14-00-001",
+  "battle-602-15-00-001",
+  "battle-603-00-01-003",
+  "battle-604-00-00-001",
+  "battle-604-00-01-001",
+  "battle-604-00-01-002",
+  "battle-605-00-01-001",
+  "battle-606-00-00-001",
+  "battle-606-00-01-001"
+].map(id => ({ source: `public/stages/official/${id}`, output: `stages/official/${id}` })),
+  // Verified native per-instance lightmap identities and their complete carriers.
+  ...[
+    "battle-602-00-01-003",
+    "battle-602-11-01-003",
+    "battle-610-00-01-002",
+    "battle-618-00-00-001",
+    "dungeon-60001-bg-3d-600-01-14-001-001",
+    "dungeon-60100-bg-3d-601-00-14-001-001",
+    "dungeon-60300-bg-3d-603-00-11-001-001",
+    "dungeon-60300-bg-3d-603-00-13-001-003",
+    "dungeon-61000-bg-3d-610-00-12-001-001",
+    "dungeon-61000-bg-3d-610-00-12-001-002",
+    "dungeon-61000-bg-3d-610-00-12-001-003",
+    "dungeon-61800-bg-3d-618-00-14-001-001",
+    "dungeon-62000-bg-3d-620-00-12-001-002",
+    "dungeon-62101-bg-3d-621-00-12-001-001",
+    "dungeon-62101-bg-3d-621-00-12-001-002",
+    "dungeon-62101-bg-3d-621-00-12-001-003",
+    "dungeon-63700-bg-3d-637-00-11-001-001",
+    "dungeon-63700-bg-3d-654a-00-11-001-001"
+].map(id => ({ source: `public/stages/official/${id}`, output: `stages/official/${id}` })),
+  // Native mirrored-transform and coincident-instance recovery closures.
+  ...[
+    "battle-602-11-01-002",
+    "dungeon-60600-bg-3d-606-00-11-001-001",
+    "dungeon-60600-bg-3d-606-00-11-001-002",
+    "dungeon-65000-bg-3d-652-01-12-001-001",
+    "dungeon-65000-bg-3d-652-01-12-001-002",
+    "dungeon-65000-bg-3d-652-01-12-001-003"
+].map(id => ({ source: `public/stages/official/${id}`, output: `stages/official/${id}` })),
   {
     source: 'public/enemies/models/enemy_654001_battle_unit',
     output: 'enemies/models/enemy_654001_battle_unit',
@@ -467,6 +512,31 @@ async function deploymentFilePreflight() {
   return { files, bytes, largestFile }
 }
 
+// Only transport whitespace is removed. Keep every string byte, numeric token,
+// property and source file intact; oversized compact payloads still fail closed.
+export async function compactOversizedDeploymentJson(root = outputRoot, limit = cloudflareMaxFileBytes) {
+  const transformed = []
+  async function visit(directory, prefix = '') {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name), relative = prefix + entry.name
+      if (entry.isDirectory()) await visit(file, relative + '/')
+      else if (entry.isFile() && entry.name.endsWith('.json') && (await stat(file)).size > limit) {
+        const original = await readFile(file)
+        const compact = minifyJsonWhitespaceOutsideStrings(original)
+        JSON.parse(compact.toString('utf8'))
+        if (compact.length > limit) throw new Error(`Compact JSON still exceeds file limit: ${relative} (${compact.length}B > ${limit}B)`)
+        await writeFile(file, compact)
+        transformed.push({ relative, sourceBytes: original.length, outputBytes: compact.length,
+          sourceSha256: createHash('sha256').update(original).digest('hex'),
+          outputSha256: createHash('sha256').update(compact).digest('hex'),
+          transform: 'remove-sp-tab-lf-cr-outside-json-strings' })
+      }
+    }
+  }
+  await visit(root)
+  return transformed
+}
+
 export function finalizeDeploymentSummary(
   baseResult,
   deploymentBytesBeforeSummary,
@@ -625,6 +695,8 @@ export async function runDeploymentPublicCopy() {
   }
 
   const removedSourceMaps = await removeOutputSourceMaps()
+  const oversizedJsonTransport = await compactOversizedDeploymentJson()
+  copiedBytes += oversizedJsonTransport.reduce((delta, row) => delta + row.outputBytes - row.sourceBytes, 0)
 
   for (const relative of requiredOutputFiles) await requireFile(relative)
   for (const { authority, browserCarrier, bytes } of actionRuntimeCarriers) {
@@ -666,6 +738,7 @@ export async function runDeploymentPublicCopy() {
       transform: 'remove-sp-tab-lf-cr-outside-json-strings',
       sourceUnchanged: true,
     },
+    oversizedJsonTransport,
     copiedFiles,
     copiedBytes,
     deploymentFiles: deployment.files,
