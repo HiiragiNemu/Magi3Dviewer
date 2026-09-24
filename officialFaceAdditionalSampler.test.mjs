@@ -313,3 +313,46 @@ test('FaceAdditional runtime consumer stays UV1/profile-driven and exposes debug
     /(?:characterId|faceProfile\.characterId)\s*(?:===|==)\s*(?:100102|108301|101901|100107|100805)/,
   )
 })
+
+
+test('100601 face_a uses its serialized FaceGradient without replacing ordinary control or adjacent routes', () => {
+  const ast = ts.createSourceFile(loaderPath, loaderSource, ts.ScriptTarget.Latest, true)
+  const calls = []
+  const visit = node => {
+    if (ts.isCallExpression(node) && node.expression.getText(ast) === 'createFaceMaterial'
+      && node.arguments[0]?.getText(ast).includes('...sharedMaterialOptions')) calls.push(node.arguments[0])
+    ts.forEachChild(node, visit)
+  }
+  visit(ast)
+  assert.equal(calls.length, 1)
+  const parameters = ['characterId', 'meshMaterialNames', 'ctrlMap', 'sharedMaterialOptions',
+    'shadowMap', 'faceAdditionalMaps', 'texturePathUrl', 'faceProfile', 'faceReference', 'ObjFindByKey']
+  const compiled = ts.transpileModule(
+    `const resolve = (${parameters.join(',')}) => (${calls[0].getText(ast)})`,
+    { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None }, reportDiagnostics: true },
+  )
+  assert.deepEqual(compiled.diagnostics ?? [], [])
+  const resolve = Function(`${compiled.outputText}; return resolve`)()
+  const control = '/magia-exedra-character-three/models/chara_100601_battle_unit/chara_100601_face_a_ctrl.png'
+  const shared = Object.freeze({ colorMap: 'native-face-a-color', shadowMap: 'native-face-a-shadow', ctrlMap: control })
+  const additional = [null], profile = { characterId: 100601 }, reference = {}, nose = 'native-nose-gradient'
+  const invoke = (id, names, ctrl) => resolve(id, names, ctrl, shared, shared.shadowMap, additional,
+    { face_ctrl_nose: nose }, profile, reference, (values, predicate) => Object.entries(values).find(([key]) => predicate(key))?.[1])
+  const selected = invoke(100601, ['mt_chara_100601_face_a'], control)
+  assert.equal(selected.ctrlMap, 'face_ctrl_base')
+  assert.equal(selected.colorMap, shared.colorMap)
+  assert.equal(selected.shadowMap, shared.shadowMap)
+  assert.equal(shared.ctrlMap, control)
+  assert.equal(selected.faceAdditionalMaps, additional)
+  assert.equal(selected.faceProfile, profile)
+  assert.equal(selected.faceReference, reference)
+  assert.equal(selected.noseGradientMap, nose)
+  assert.deepEqual(pngDimensions(control.slice(1)), [1024, 1024])
+  for (const [id, names, ctrl] of [
+    [100202, ['mt_chara_100202_face'], 'chara_100202_face_ctrl'],
+    [100301, ['mt_chara_100301_face_a'], 'other_ctrl'],
+    [100301, ['mt_chara_100601_face_a'], control],
+    [100601, ['mt_chara_100601_face'], undefined],
+    [100601, ['mt_chara_100601_face_a_other'], control],
+  ]) assert.equal(invoke(id, names, ctrl).ctrlMap, ctrl)
+})

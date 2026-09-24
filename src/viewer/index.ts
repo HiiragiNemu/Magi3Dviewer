@@ -1,3 +1,4 @@
+import { ObjectMovementSelection, pickMovementTarget, type MovementTarget } from './objectMovementSelection'
 import { setupWeaponPanel } from './weaponPanel'
 import { setupFloatingPanelDrag } from './floatingPanelInteraction'
 import { getNonBattleExpressionRuntime } from '../../magia-exedra-character-three/nonBattleExpressionRuntime.ts'
@@ -123,10 +124,28 @@ const characterRotateRightBtn = document.getElementById('character-rotate-right'
 const characterTransformResetBtn = document.getElementById('character-transform-reset') as HTMLButtonElement
 
 const officialDefaultFaceState = '__official_default_face_state__'
-const characterTransformDefaults = new WeakMap<THREE.Object3D, {
-    position: THREE.Vector3
-    quaternion: THREE.Quaternion
-}>()
+const movementSelection = new ObjectMovementSelection(object => !!performanceExternalLeases.get(object)?.channels.root)
+let weaponPanelController: ReturnType<typeof setupWeaponPanel> | undefined
+function selectMovementTarget(target: MovementTarget) {
+    if (movementSelection.current?.object !== target.object) closeObjectTransform()
+    movementSelection.select(target)
+    updateMovementTargetLabel()
+}
+function updateMovementTargetLabel() {
+    for (const id of ['character-move-up', 'character-move-down', 'character-move-left', 'character-move-right', 'character-tilt-left', 'character-tilt-right', 'character-rotate-left', 'character-rotate-right', 'character-transform-reset', 'object-move-forward', 'object-move-backward']) {
+        const button = document.getElementById(id) as HTMLButtonElement | null
+        if (button) button.disabled = !movementSelection.current
+    }
+    const output = document.getElementById('movement-target')
+    if (output) output.textContent = movementSelection.current
+        ? translateUiText('Selected object') + ': ' + movementSelection.current.label
+        : translateUiText('Click an object to move it')
+}
+function forgetMovementTarget(object?: THREE.Object3D) {
+    if (!object) return
+    movementSelection.forget(object)
+    updateMovementTargetLabel()
+}
 const characterMoveStep = 0.05
 const characterRotateStep = THREE.MathUtils.degToRad(5)
 
@@ -591,24 +610,28 @@ console.log(Object.keys(characterSelectDict).join('\n'))
 const stats = new Stats()
 
 export function setupViewer() {
-    const weaponPanel = setupWeaponPanel({
+    const weaponPanel = weaponPanelController = setupWeaponPanel({
         files: characters.files,
         characters: primaryCharacterCatalog.filter(entry => /^\d{6}$/.test(entry.id)),
         scene: scene.scene,
         initialPosition: () => (scene.characterSelected?.character?.object.getWorldPosition(new THREE.Vector3())
             ?? scene.controls.target.clone()).add(new THREE.Vector3(1, 1, 0)),
+        currentCharacterId: () => String(scene.characterSelected?.character?.userData.characterId ?? ''),
+        select: (object, label, refresh) => selectMovementTarget({ object, label, changed: refresh }),
         transform: (object, mode, refresh) => {
             if (!singleCharacterTransformActive || singleCharacterTransformControls?.object !== object) activateObjectTransform(object, refresh)
             setTransformMode(mode)
         },
-        detach: object => { if (singleCharacterTransformControls?.object === object) clearSingleCharacterTransform() },
+        detach: object => { if (singleCharacterTransformControls?.object === object) clearSingleCharacterTransform(); forgetMovementTarget(object) },
         closeTransform: closeObjectTransform,
     })
     window.addEventListener('pagehide', () => weaponPanel.dispose(), { once: true })
     setupMenuCollapseToggle()
     setupDockControls()
     enemyPanelController = setupEnemyPanel({
+        onInstanceSelected: instance => selectMovementTarget({ object: instance.object, label: `${instance.entry.enemyMstId} · ${instance.instanceId}`, changed: () => enemyPanelController?.refreshInstances() }),
         onInstanceWillRemove: instance => {
+            forgetMovementTarget(instance.object)
             if (singleCharacterTransformControls?.object === instance.object) {
                 clearSingleCharacterTransform()
             }
@@ -1207,11 +1230,11 @@ function setupDockControls() {
         positionControlsWrapper.setAttribute('aria-hidden', String(!open))
         positionControlsToggle.setAttribute('aria-expanded', String(open))
         captureControlsToggle.setAttribute('aria-expanded', String(open))
-        const label = translateUiText(open ? 'Hide character movement' : 'Character movement')
+        const label = translateUiText(open ? 'Hide movement and rotation' : 'Move and rotate')
         positionControlsToggle.textContent = label
         positionControlsToggle.title = label
         positionControlsToggle.setAttribute('aria-label', label)
-        const captureLabel = translateUiText(open ? 'Hide character movement' : 'Take a photo')
+        const captureLabel = translateUiText(open ? 'Hide movement and rotation' : 'Take a photo')
         captureControlsToggle.title = captureLabel
         captureControlsToggle.setAttribute('aria-label', captureLabel)
     }
@@ -2221,74 +2244,12 @@ function resetExpressionParameters() {
 }
 
 function rememberCharacterTransform(object: THREE.Object3D, replace = false) {
-    if (!replace && characterTransformDefaults.has(object)) return
-    characterTransformDefaults.set(object, {
-        position: object.position.clone(),
-        quaternion: object.quaternion.clone(),
-    })
+    movementSelection.remember(object, replace)
 }
-
-function updateSelectedCharacterTransformUi() {
-    const character = scene.characterSelected?.character
-    if (character) updateCharacterController(character)
-}
-
-function moveSelectedCharacter(horizontal: number, vertical: number) {
-    const object = scene.characterSelected?.character?.object
-    if (!object || performanceExternalLeases.get(object)?.channels.root) return
-    rememberCharacterTransform(object)
-
-    scene.camera.updateMatrixWorld()
-    const cameraRight = new THREE.Vector3().setFromMatrixColumn(scene.camera.matrixWorld, 0)
-    cameraRight.y = 0
-    if (cameraRight.lengthSq() < 1e-6) cameraRight.set(1, 0, 0)
-    cameraRight.normalize()
-    if (object.parent) {
-        const parentWorldRotation = object.parent.getWorldQuaternion(new THREE.Quaternion()).invert()
-        cameraRight.applyQuaternion(parentWorldRotation)
-    }
-
-    object.position.addScaledVector(cameraRight, horizontal)
-    object.position.y += vertical
-    updateSelectedCharacterTransformUi()
-}
-
-function rotateSelectedCharacter(delta: number) {
-    const object = scene.characterSelected?.character?.object
-    if (!object || performanceExternalLeases.get(object)?.channels.root) return
-    rememberCharacterTransform(object)
-    object.rotateY(delta)
-    updateSelectedCharacterTransformUi()
-}
-
-function tiltSelectedCharacter(delta: number) {
-    const object = scene.characterSelected?.character?.object
-    if (!object || performanceExternalLeases.get(object)?.channels.root) return
-    rememberCharacterTransform(object)
-
-    scene.camera.updateMatrixWorld()
-    const cameraForward = scene.camera.getWorldDirection(new THREE.Vector3()).normalize()
-    if (object.parent) {
-        const parentWorldRotation = object.parent.getWorldQuaternion(new THREE.Quaternion()).invert()
-        cameraForward.applyQuaternion(parentWorldRotation).normalize()
-    }
-    object.quaternion.premultiply(
-        new THREE.Quaternion().setFromAxisAngle(cameraForward, delta),
-    )
-    updateSelectedCharacterTransformUi()
-}
-
-function resetSelectedCharacterTransform() {
-    const object = scene.characterSelected?.character?.object
-    if (!object || performanceExternalLeases.get(object)?.channels.root) return
-    const initial = characterTransformDefaults.get(object)
-    if (!initial) return
-    if (!teleportViewerCharacter(object, initial.position, initial.quaternion)) {
-        object.position.copy(initial.position)
-        object.quaternion.copy(initial.quaternion)
-    }
-    updateSelectedCharacterTransformUi()
-}
+function moveSelectedCharacter(horizontal: number, vertical: number) { movementSelection.move(scene.camera, horizontal, vertical) }
+function rotateSelectedCharacter(delta: number) { movementSelection.rotate(delta) }
+function tiltSelectedCharacter(delta: number) { movementSelection.tilt(scene.camera, delta) }
+function resetSelectedCharacterTransform() { movementSelection.reset(teleportViewerCharacter) }
 
 function bindContinuousTransformButton(button: HTMLButtonElement, action: () => void) {
     let repeatDelay: number | undefined
@@ -2325,6 +2286,10 @@ function setupCharacterMovementControls() {
     bindContinuousTransformButton(characterRotateLeftBtn, () => rotateSelectedCharacter(-characterRotateStep))
     bindContinuousTransformButton(characterRotateRightBtn, () => rotateSelectedCharacter(characterRotateStep))
     characterTransformResetBtn.onclick = resetSelectedCharacterTransform
+    bindContinuousTransformButton(document.getElementById('object-move-forward') as HTMLButtonElement, () => movementSelection.move(scene.camera, 0, 0, characterMoveStep))
+    bindContinuousTransformButton(document.getElementById('object-move-backward') as HTMLButtonElement, () => movementSelection.move(scene.camera, 0, 0, -characterMoveStep))
+    document.addEventListener('magius:localechange', updateMovementTargetLabel)
+    updateMovementTargetLabel()
 }
 
 type CharacterSearchEntry = PrimaryCharacterCatalogEntry
@@ -2570,34 +2535,43 @@ function setupViewerInputHandler() {
     let mouseMoveX = 0
     let mouseMoveY = 0
 
-    function mouseClickHandler(e: PointerEvent | MouseEvent) {
+    function pickObject(e: MouseEvent) {
+        const targets: { object: THREE.Object3D; select(): void; refresh(): void }[] = []
+        for (const character of scene.characters) {
+            if (!character.character) continue
+            const actor = character.character
+            targets.push({ object: actor.object, select: () => {
+                if (character !== scene.characterSelected) selectCharacter(character)
+                else selectMovementTarget({ object: actor.object, label: String(actor.userData.characterId), changed: () => updateCharacterController(actor) })
+            }, refresh: () => updateCharacterController(actor) })
+        }
+        for (const enemy of enemyPanelController?.enemyResources.getInstances() ?? []) {
+            targets.push({ object: enemy.object, select: () => { enemyPanelController?.selectInstance(enemy.instanceId) }, refresh: () => enemyPanelController?.refreshInstances() })
+        }
+        for (const weapon of weaponPanelController?.getInstances() ?? []) {
+            targets.push({ object: weapon.object, select: () => { weaponPanelController?.selectObject(weapon.object) }, refresh: () => weaponPanelController?.refreshTransform() })
+        }
+        const rect = scene.renderer.domElement.getBoundingClientRect()
+        const raycaster = new THREE.Raycaster()
+        raycaster.setFromCamera(new THREE.Vector2((e.clientX - rect.left) / rect.width * 2 - 1, -(e.clientY - rect.top) / rect.height * 2 + 1), scene.camera)
+        return pickMovementTarget(raycaster, targets)
+    }
+    function mouseClickHandler(e: MouseEvent) {
         if (directPoseEditingEnabled || performanceGizmoActive) return
         if (Math.abs(mouseMoveX) > 3 || Math.abs(mouseMoveY) > 3) return
         if (singleCharacterTransformControls?.dragging || scene.transformControls.dragging
             || singleCharacterTransformControls?.axis || scene.transformControls.axis) return
-        if (!scene.getIntersectedCharacter(e.offsetX, e.offsetY)
-            && !enemyPanelController?.getIntersectedEnemy(e.clientX, e.clientY)) closeObjectTransform()
-        selectCharacterByMouse(e)
+        const target = pickObject(e)
+        if (target) target.select()
+        else { closeObjectTransform(); selectCharacterByMouse(e) }
     }
-
     function mouseDoubleClickHandler(e: MouseEvent) {
         if (directPoseEditingEnabled || performanceGizmoActive) return
-        if (scene.characters.length === 1) {
-            const character = scene.getIntersectedCharacter(e.offsetX, e.offsetY)
-            if (character?.character?.object) {
-                if (character !== scene.characterSelected) selectCharacter(character)
-                activateSingleCharacterTransform(character)
-                e.preventDefault()
-                e.stopPropagation()
-                return
-            }
-        }
-        const enemy = enemyPanelController?.getIntersectedEnemy(e.clientX, e.clientY)
-        if (!enemy) return
-        enemyPanelController?.selectInstance(enemy.instanceId)
-        activateObjectTransform(enemy.object, () => enemyPanelController?.refreshInstances())
-        e.preventDefault()
-        e.stopPropagation()
+        const target = pickObject(e)
+        if (!target) return
+        target.select()
+        activateObjectTransform(target.object, target.refresh)
+        e.preventDefault(); e.stopPropagation()
     }
 
     function mouseDownHandler(_e: MouseEvent) {
@@ -2706,6 +2680,7 @@ async function changeCharacter(id: number | string) {
 function removeSelectedCharacter() {
     if (scene.characterSelected) {
         const removedCharacter = scene.characterSelected
+        if (removedCharacter.character) forgetMovementTarget(removedCharacter.character.object)
         voicePanelController?.setCharacter(null, null)
         disposeCharacterActionPlayback()
         detachViewerLocomotion(removedCharacter)
@@ -2822,6 +2797,7 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
     if (performanceExternalLeases.get(character.object)?.channels.root) scene.transformControls.detach()
     syncVoiceCharacter()
     rememberCharacterTransform(character.object)
+    selectMovementTarget({ object: character.object, label: String(character.userData.characterId), changed: () => updateCharacterController(character) })
 
     characterSelector.value = character.userData.characterId.toString()
     syncCharacterUiCapabilityGates(character.userData.characterId)
@@ -2883,7 +2859,8 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
 }
 
 export function deselectCharacter() {
-    clearSingleCharacterTransform()
+    forgetMovementTarget(scene.characterSelected?.character?.object)
+    if (!movementSelection.current) clearSingleCharacterTransform()
     setDirectPoseEditing(false)
     disposeCharacterActionPlayback()
     scene.characterSelected = undefined
@@ -3042,14 +3019,6 @@ function closeObjectTransform() {
     scene.transformControls.enabled = false
     scene.transformControlsHelper.visible = false
     updateTransformModeButtons()
-}
-
-function activateSingleCharacterTransform(sceneCharacter: SceneCharacter) {
-    const object = sceneCharacter.character?.object
-    if (!object || scene.characters.length !== 1 || !singleCharacterTransformControls || !singleCharacterTransformControlsHelper) return
-    activateObjectTransform(object, () => {
-        if (sceneCharacter.character) updateCharacterController(sceneCharacter.character)
-    })
 }
 
 function activateObjectTransform(object: THREE.Object3D, onObjectChange?: () => void) {

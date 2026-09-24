@@ -665,7 +665,11 @@ body.theme-light .model-part-controls button {
 .floating-panel-resize-handle.resize-se { right: 0; bottom: 0; }
 
 /* Independent props share the existing movable/resizable dialog shell. */
-.weapon-panel-content { display: grid; gap: 8px; padding: 14px; }
+.weapon-panel-content { display: flex; flex-direction: column; gap: 6px; padding: 12px; }
+.weapon-panel-content > * { flex: 0 0 auto; }
+.weapon-panel-content label { font-size: 12px; }
+.weapon-panel-content select { height: auto; min-height: 34px; }
+.weapon-placement-help { margin: 8px 0 0; font-size: 12px; white-space: normal; }
 .weapon-panel-content select, .weapon-panel-content input, .weapon-panel-content button { min-width: 0; max-width: 100%; color: inherit; background: #242431; border: 1px solid #656570; border-radius: 5px; padding: 6px; font: inherit; }
 .weapon-panel-content select, .weapon-panel-content input { width: 100%; box-sizing: border-box; }
 .weapon-panel-content button:disabled { opacity: .45; }

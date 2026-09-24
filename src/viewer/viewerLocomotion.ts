@@ -2675,11 +2675,32 @@ class ViewerTpsPoseTransition {
             && snapshot.root === this.character.object
             ? snapshot.outputs.map(output => [output.object, output.channels] as const)
             : [])
+        // PropertyMixer skips a constant channel when its two evaluated buffers
+        // agree. Our previous rendered blend may still differ (for example an
+        // SP hand at 1.8x). Read the incoming evaluated scale, not our own output.
+        // Do not flush setters: that would bypass other channel owners.
+        const mixer = this.character.animation?.mixer as unknown as ViewerPerformanceMixer | undefined
+        const evaluatedScales = new Map<THREE.Object3D, THREE.Vector3>()
+        if (mixer?.getRoot() === this.character.object && Array.isArray(mixer._bindings)
+            && Number.isSafeInteger(mixer._nActiveBindings) && [0, 1].includes(mixer._accuIndex)) {
+            for (const entry of mixer._bindings.slice(0, mixer._nActiveBindings)) {
+                const target = entry.binding, bone = target.targetObject
+                if (!bone || target.parsedPath.propertyName !== 'scale' || target.resolvedProperty !== bone.scale) continue
+                const offset = (mixer._accuIndex + 1) * entry.valueSize
+                const component = target.propertyIndex === undefined ? undefined : ['x', 'y', 'z'].indexOf(String(target.propertyIndex))
+                const indices = component === undefined && entry.valueSize === 3 ? [0, 1, 2]
+                    : component !== undefined && component >= 0 && entry.valueSize === 1 ? [component] : []
+                if (!indices.length || indices.some((_, i) => !Number.isFinite(entry.buffer[offset + i]))) continue
+                const scale = evaluatedScales.get(bone) ?? bone.scale.clone()
+                indices.forEach((index, i) => scale.setComponent(index, entry.buffer[offset + i]))
+                evaluatedScales.set(bone, scale)
+            }
+        }
         for (const node of this.nodes) {
             if (viewerPerformanceClaims.get(this.character.object)?.leasedBones.has(node.bone)) continue
             const targetPosition = node.bone.position.clone()
             const targetQuaternion = node.bone.quaternion.clone()
-            const targetScale = node.bone.scale.clone()
+            const targetScale = evaluatedScales.get(node.bone) ?? node.bone.scale
             const channels = nativeChannels.get(node.bone)
             if (!channels?.includes('position')) {
                 node.bone.position.lerpVectors(node.position, targetPosition, blend)
@@ -9211,10 +9232,21 @@ async function ensureCharacterActionCatalog(): Promise<readonly CharacterActionR
 
 function collectNativeDungeonExternalAttachments(
     character: ViewerCharacter,
+    previousAttachments: readonly NativeDungeonExternalAttachmentState[] = [],
+    excludedRoots: readonly THREE.Object3D[] = [],
 ): NativeDungeonExternalAttachmentState[] {
     const attachments: NativeDungeonExternalAttachmentState[] = []
+    // Async native clip attachment can recollect after TPS temporarily hid the
+    // sibling rigs. Keep the first snapshot for the exact same object, rather
+    // than turning that temporary hidden state into its restoration baseline.
+    const previousByObject = new Map(previousAttachments.map(attachment => [attachment.object, attachment]))
     character.object.traverse(object => {
         if (!/^chara_\d+_weapon_[a-z0-9_]*model$/i.test(object.name)) return
+        for (let ancestor: THREE.Object3D | null = object; ancestor; ancestor = ancestor.parent) {
+            if (excludedRoots.includes(ancestor)) return
+        }
+        const previous = previousByObject.get(object)
+        if (previous) { attachments.push(previous); return }
         attachments.push({
             object,
             visible: object.visible,
@@ -9900,7 +9932,8 @@ function ensureNativeDungeonActions(binding: ViewerLocomotionBinding): Promise<v
                 native.embeddedEntries = new Map(embeddedEntries.map(entry => [entry.id, entry]))
                 native.modelKey = modelKey
                 native.loaded = undefined
-                native.externalAttachments = collectNativeDungeonExternalAttachments(binding.character)
+                native.externalAttachments = collectNativeDungeonExternalAttachments(binding.character, native.externalAttachments,
+                    [...(binding.combatJumpActions.specialWeapons?.values() ?? [])].map(weapon => weapon.object))
                 native.baselineAnimation = binding.character.animation.current
                     ?? binding.character.animation.default
                 native.status = 'attached'
@@ -9934,7 +9967,8 @@ function ensureNativeDungeonActions(binding: ViewerLocomotionBinding): Promise<v
             )
             if (native.status === 'disposed' || binding.character.disposed) return
             native.loaded = loaded
-            native.externalAttachments = collectNativeDungeonExternalAttachments(binding.character)
+            native.externalAttachments = collectNativeDungeonExternalAttachments(binding.character, native.externalAttachments,
+                    [...(binding.combatJumpActions.specialWeapons?.values() ?? [])].map(weapon => weapon.object))
             native.baselineAnimation = binding.character.animation.current
                 ?? binding.character.animation.default
             native.status = 'attached'
@@ -10272,7 +10306,7 @@ export function attachViewerLocomotion(sceneCharacter: SceneCharacter): ViewerLo
         safety.allowCharacterSpecificSecondaryPhysics || safety.allowSecondaryFallback
     ))
     secondaryPhysics?.reset()
-    if (characterSpecificMotion.profile.status === 'attached') {
+    if (enabled && characterSpecificMotion.profile.status === 'attached') {
         setNativeDungeonExternalAttachmentsHidden(binding, true)
     }
     if (scene.characterSelected === sceneCharacter) configureActionSelectors(binding)
@@ -12254,12 +12288,11 @@ export function setViewerLocomotionEnabled(value: boolean): void {
                 deactivateNativeDungeonPresentation(binding, true)
             }
         } else if (binding.characterSpecificMotion.status === 'attached') {
-            // Parameterized target-rig locomotion is body-only. Its source idle
-            // family may also contain an identity sibling weapon Animator, so
-            // keep the unrelated sibling hidden both before and during TPS.
-            // It is restored only when this binding is detached; a verified
-            // combat timeline owns its own body+weapon presentation.
-            setNativeDungeonExternalAttachmentsHidden(binding, true)
+            // TPS is body-only; ordinary Home resumes its authored props on
+            // exit. An explicit combat timeline retains its own presentation.
+            if (!characterActionPlaybackBlocksLocomotion(binding)) {
+                setNativeDungeonExternalAttachmentsHidden(binding, enabled)
+            }
         }
         binding.proceduralLocomotion?.setActive(enabled && binding.safety.allowProceduralBones)
         binding.postAnimationWalkClearance?.setActive(
@@ -12297,7 +12330,13 @@ function updateLocomotionModeLabel(): void {
     modeToggle.setAttribute('aria-label', label)
 }
 
+function updateLocomotionHudLabel(): void {
+    hudToggle.title = translateUiText(hudToggle.getAttribute('aria-expanded') === 'true' ? 'Hide TPS actions' : 'Show TPS actions')
+}
+
 function installInputHandlers(): void {
+    document.addEventListener('magius:localechange', updateLocomotionHudLabel)
+    updateLocomotionHudLabel()
     // Locale changes update presentation only, never re-enter camera/input setup.
     document.addEventListener('magius:localechange', updateLocomotionModeLabel)
     updateLocomotionModeLabel()
@@ -12306,7 +12345,7 @@ function installInputHandlers(): void {
         const expanded = hud.classList.toggle('is-collapsed') === false
         hudToggle.setAttribute('aria-expanded', String(expanded))
         hudToggle.textContent = expanded ? '−' : '＋'
-        hudToggle.title = expanded ? 'Hide TPS actions' : 'Show TPS actions'
+        updateLocomotionHudLabel()
     })
     modeToggle.addEventListener('click', () => setViewerLocomotionEnabled(!enabled))
     const releasePhysicalTpsInput = (): void => {

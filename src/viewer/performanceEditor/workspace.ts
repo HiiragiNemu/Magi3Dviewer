@@ -23,17 +23,17 @@ export function mountPerformanceWorkspace({ workspace, panel, toggle, onExit, on
         el.id = `performance-workspace-${area}`; el.hidden = true; nodes.push(el); workspace.append(el); return el
     }
     const header = region('header', 'header', 'Performance workspace')
-    const heading = document.createElement('strong'); heading.textContent = '演出 / Performance'
+    const heading = document.createElement('strong'); heading.textContent = "Performance"
     const button = (text: string, action: () => void) => { const el = document.createElement('button'); el.type = 'button'; el.textContent = text; listen(el, 'click', action); return el }
     const close = button('Return to Viewer', () => setOpen(false))
-    const frameActor = button('框选当前角色', () => onFrameActor?.()); frameActor.disabled = !onFrameActor; frameActor.setAttribute('aria-label', 'Frame selected actor')
-    const dockToggle = button('收起工具', () => {
+    const frameActor = button("Frame selected actor", () => onFrameActor?.()); frameActor.disabled = !onFrameActor; frameActor.setAttribute('aria-label', 'Frame selected actor')
+    const dockToggle = button("Collapse tools", () => {
         const collapsed = workspace.getAttribute('data-performance-dock') !== 'collapsed'
         workspace.setAttribute('data-performance-dock', collapsed ? 'collapsed' : 'open')
-        dockToggle.textContent = collapsed ? '展开工具' : '收起工具'; dockToggle.setAttribute('aria-expanded', String(!collapsed))
+        dockToggle.textContent = collapsed ? "Expand tools" : "Collapse tools"; dockToggle.setAttribute('aria-expanded', String(!collapsed))
     }); dockToggle.setAttribute('aria-controls', 'performance-workspace-resources'); dockToggle.setAttribute('aria-expanded', 'true')
     const help = document.createElement('details'), summary = document.createElement('summary'), hint = document.createElement('small')
-    summary.textContent = '操作提示'; hint.textContent = '空心圈是关节；重叠处选择精确节点。关节模式旋转，IK 模式移动目标；取景后可自由缩放/旋转。'
+    summary.textContent = "Usage tips"; hint.textContent = "Hollow circles mark joints. Choose an exact joint where circles overlap. Joint mode rotates; IK mode moves the target. After framing, zoom and orbit freely."
     help.append(summary, hint); header.append(heading, dockToggle, frameActor, close, help)
     const library = region('aside', 'resources', 'Performance task tools')
     const timeline = region('section', 'timeline', 'Audio and action timeline')
@@ -61,14 +61,14 @@ export function mountPerformanceWorkspace({ workspace, panel, toggle, onExit, on
         }))
         parent.append(nav, ...pages); state.select(0); tabsets.push(state); return pages
     }
-    const pages = tabs(library, 'performance-task', ['演员', '资源', '姿态 / IK', '关键帧', '音频', '项目'])
+    const pages = tabs(library, 'performance-task', ["Actors", "Resources", "Pose / IK", "Keyframes", "Audio", "Project"])
     pages[2].id = 'performance-workspace-properties'
     // Keep aria-controls joined after the semantic properties ID is installed.
     document.getElementById('performance-task-tab-2')?.setAttribute('aria-controls', pages[2].id)
     pages[1].className += ' performance-task-subpages'
-    const assetPages = tabs(pages[1], 'performance-assets', ['角色', '场景', '动作'])
+    const assetPages = tabs(pages[1], 'performance-assets', ["Characters", "Scenes", "Actions"])
     pages[4].className += ' performance-task-subpages performance-audio-workspace'
-    const audioPages = tabs(pages[4], 'performance-audio-task', ['声源', '片段设置', '已有音轨'])
+    const audioPages = tabs(pages[4], 'performance-audio-task', ["Audio sources", "Clip settings", "Existing tracks"])
     const audioCommon = element('div', 'performance-audio-common'); pages[4].append(audioCommon)
     const moves: { node: HTMLElement; marker: Comment }[] = []
     const move = (node: HTMLElement, target: HTMLElement) => {
@@ -97,7 +97,7 @@ export function mountPerformanceWorkspace({ workspace, panel, toggle, onExit, on
                 for (const node of audio.common) move(node, audioCommon)
                 move(panel.status, header)
                 workspace.setAttribute('data-performance-mode', 'editing'); workspace.setAttribute('data-performance-dock', 'open'); app.setAttribute('data-performance-mode', 'editing')
-                dockToggle.textContent = '收起工具'; dockToggle.setAttribute('aria-expanded', 'true')
+                dockToggle.textContent = "Collapse tools"; dockToggle.setAttribute('aria-expanded', 'true')
                 for (const node of nodes) node.hidden = false
                 for (const state of tabsets) state.select(state.selected)
                 toggle.setAttribute('aria-expanded', 'true'); open = true; onOpenChange?.(true); close.focus()

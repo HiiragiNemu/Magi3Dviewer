@@ -323,11 +323,7 @@ test('controls keep a compact wrapping toolbar and an independent viewer movemen
     assert.match(viewerRuntime, /setDirectPoseTransformMode\('translate'\)/)
     assert.match(viewerRuntime, /setDirectPoseTransformMode\('rotate'\)/)
     assert.match(viewerRuntime, /addEventListener\('dblclick', mouseDoubleClickHandler\)/)
-    assert.match(viewerRuntime, /function mouseDoubleClickHandler\(e: MouseEvent\) \{\s*if \(directPoseEditingEnabled \|\| performanceGizmoActive\) return\s*if \(scene\.characters\.length === 1\)/)
     assert.match(viewerRuntime, /scene\.getIntersectedCharacter\(e\.offsetX, e\.offsetY\)/)
-    assert.match(viewerRuntime, /activateSingleCharacterTransform\(character\)/)
-    assert.match(viewerRuntime, /enemyPanelController\?\.getIntersectedEnemy\(e\.clientX, e\.clientY\)/)
-    assert.match(viewerRuntime, /activateObjectTransform\(enemy\.object, \(\) => enemyPanelController\?\.refreshInstances\(\)\)/)
     assert.match(viewerRuntime, /singleCharacterTransformControls = new TransformControls\(scene\.camera, scene\.renderer\.domElement\)/)
     assert.match(viewerRuntime, /singleCharacterTransformControls\.attach\(object\)/)
     assert.match(viewerRuntime, /singleCharacterTransformControlsHelper\.visible = true/)
@@ -350,7 +346,7 @@ test('controls keep a compact wrapping toolbar and an independent viewer movemen
     assert.match(viewerRuntime, /renderSettingsToggle\.setAttribute\('aria-label', label\)/)
     assert.match(viewerRuntime, /positionControlsToggle\.setAttribute\('aria-label', label\)/)
     assert.match(viewerRuntime, /setPointerCapture/)
-    assert.match(viewerRuntime, /cameraForward[\s\S]*?setFromAxisAngle\(cameraForward, delta\)/)
+    assert.match(await read('./src/viewer/objectMovementSelection.ts'), /setFromAxisAngle\(axis, delta\)/)
     assert.match(menu, /\.main-toolbar-toggle/)
     assert.match(menu, /\.menu-ui-collapsed #menu-controls/)
     assert.match(menu, /\.main-toolbar-toggle\.controls-collapsed/)
@@ -627,7 +623,7 @@ test('TPS blank Viewer clicks preserve the selected character without changing o
 test('actual Viewer click and double-click handlers yield before hit-testing to either pose or performance gizmo', async () => {
     const runtime = await read('./src/viewer/index.ts')
     const parsed = ts.createSourceFile('viewer.ts', runtime, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
-    const wanted = new Set(['mouseClickHandler', 'mouseDoubleClickHandler', 'activateSingleCharacterTransform', 'activateObjectTransform'])
+    const wanted = new Set(['mouseClickHandler', 'mouseDoubleClickHandler', 'activateObjectTransform'])
     const declarations = new Map()
     const visit = node => {
         if (ts.isFunctionDeclaration(node) && wanted.has(node.name?.text)) declarations.set(node.name.text, node.getText(parsed))
@@ -644,12 +640,16 @@ test('actual Viewer click and double-click handlers yield before hit-testing to 
         const panel = { getIntersectedEnemy: () => { calls.push('enemy-hit-test'); return hitEnemy ? enemy : undefined },
             selectInstance: id => calls.push(id), refreshInstances() {} }
         const handlers = new Function('scene', 'directPoseEditingEnabled', 'performanceGizmoActive', 'mouseMoveX', 'mouseMoveY',
-            'selectCharacterByMouse', 'selectCharacter', 'enemyPanelController', 'performanceExternalLeases',
+            'selectCharacterByMouse', 'selectCharacter', 'enemyPanelController', 'performanceExternalLeases', 'pickObject',
             'singleCharacterTransformControls', 'singleCharacterTransformControlsHelper', 'setTransformMode', 'updateCharacterController', 'closeObjectTransform',
             'let singleCharacterTransformActive=false,singleCharacterTransformOrbitWasEnabled,singleObjectTransformOnChange;\n'
                 + executable + '\nreturn {click:mouseClickHandler,double:mouseDoubleClickHandler}')(
             scene, direct, performance, 0, 0, () => calls.push('ordinary-select'), () => calls.push('character-select'), panel,
-            new Map(leasedRoot ? [[object, { channels: { root: true } }]] : []), controls, { visible: false }, mode => calls.push(mode), () => calls.push('controller-update'), () => calls.push('close-transform'))
+            new Map(leasedRoot ? [[object, { channels: { root: true } }]] : []), () => {
+                calls.push('combined-hit-test')
+                if (hitEnemy) return { object: enemy.object, select: () => calls.push('exact-enemy'), refresh() {} }
+                if (hitCharacter) return { object, select: () => calls.push('character-select'), refresh() {} }
+            }, controls, { visible: false }, mode => calls.push(mode), () => calls.push('controller-update'), () => calls.push('close-transform'))
         const event = { offsetX: 5, offsetY: 6, clientX: 7, clientY: 8, preventDefault: () => calls.push('prevent'), stopPropagation: () => calls.push('stop') }
         return { handlers, event, calls, controls, sceneControls: scene.transformControls }
     }
@@ -665,18 +665,18 @@ test('actual Viewer click and double-click handlers yield before hit-testing to 
         }
     }
     const empty = create({ hitCharacter: false }); empty.handlers.click(empty.event)
-    assert.deepEqual(empty.calls, ['character-hit-test', 'enemy-hit-test', 'close-transform', 'ordinary-select'])
+    assert.deepEqual(empty.calls, ['combined-hit-test', 'close-transform', 'ordinary-select'])
     const enemyClick = create({ hitCharacter: false, hitEnemy: true }); enemyClick.handlers.click(enemyClick.event)
-    assert.deepEqual(enemyClick.calls, ['character-hit-test', 'enemy-hit-test', 'ordinary-select'])
-    const ordinary = create(); ordinary.handlers.click(ordinary.event); assert.deepEqual(ordinary.calls, ['character-hit-test', 'ordinary-select'])
+    assert.deepEqual(enemyClick.calls, ['combined-hit-test', 'exact-enemy'])
+    const ordinary = create(); ordinary.handlers.click(ordinary.event); assert.deepEqual(ordinary.calls, ['combined-hit-test', 'character-select'])
     ordinary.calls.length = 0; ordinary.handlers.double(ordinary.event)
-    assert.deepEqual(ordinary.calls, ['character-hit-test', 'character-select', 'scene-transform-detach', 'character-attach', 'translate', 'prevent', 'stop'])
+    assert.deepEqual(ordinary.calls, ['combined-hit-test', 'character-select', 'scene-transform-detach', 'character-attach', 'translate', 'prevent', 'stop'])
     const multiple = create({ characterCount: 2 }); multiple.handlers.double(multiple.event)
-    assert.deepEqual(multiple.calls, ['enemy-hit-test'], 'multiple characters must not acquire the sole-character gizmo')
+    assert.deepEqual(multiple.calls, ['combined-hit-test', 'character-select', 'scene-transform-detach', 'character-attach', 'translate', 'prevent', 'stop'], 'the selected actor is movable even with multiple actors')
     const enemy = create({ characterCount: 2, hitEnemy: true }); enemy.handlers.double(enemy.event)
-    assert.deepEqual(enemy.calls, ['enemy-hit-test', 'exact-enemy', 'scene-transform-detach', 'enemy-attach', 'translate', 'prevent', 'stop'])
+    assert.deepEqual(enemy.calls, ['combined-hit-test', 'exact-enemy', 'scene-transform-detach', 'enemy-attach', 'translate', 'prevent', 'stop'])
     const leased = create({ leasedRoot: true }); leased.handlers.double(leased.event)
-    assert.deepEqual(leased.calls, ['character-hit-test', 'character-select', 'prevent', 'stop'])
+    assert.deepEqual(leased.calls, ['combined-hit-test', 'character-select', 'prevent', 'stop'])
     assert.equal(leased.controls.enabled, false, 'root placement lease prevents an ordinary transform writer')
 })
 
@@ -728,4 +728,61 @@ test('TPS locale updates both states without re-running camera or input transiti
     }
     assert.match(source, /document\.addEventListener\('magius:localechange', updateLocomotionModeLabel\)/)
     assert.doesNotMatch(fn.getText(sourceFile), /setViewerLocomotionEnabled|syncCamera|handoff|pressed\./)
+})
+
+test('performance buttons, tabs and fields use translated canonical keys', async () => {
+    const zh = readStaticStringMap(await read('./src/viewer/localization/zhCN.ts'), 'zhCnUiText')
+    const ja = readStaticStringMap(await read('./src/viewer/localization/jaJP.ts'), 'jaJpUiText')
+    let count = 0
+    for (const rel of ['workspace.ts', 'panel.ts', 'audioTrackPanel.ts']) {
+        const source = ts.createSourceFile(rel, await read('./src/viewer/performanceEditor/' + rel), ts.ScriptTarget.Latest, true)
+        const labels = new Set()
+        const collect = node => {
+            if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && ['button', 'addSelect', 'addNumber', 'section', 'field', 'number'].includes(node.expression.text)) {
+                const arg = node.arguments[0]
+                if (arg && ts.isStringLiteralLike(arg)) labels.add(arg.text)
+            }
+            if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === 'tabs') {
+                for (const arg of node.arguments) if (ts.isArrayLiteralExpression(arg)) for (const item of arg.elements) if (ts.isStringLiteralLike(item)) labels.add(item.text)
+            }
+            ts.forEachChild(node, collect)
+        }
+        collect(source)
+        for (const label of labels) {
+            assert.doesNotMatch(label, /[\u3400-\u9fff\u3040-\u30ff]/u, `${rel}: canonical ${label}`)
+            assert.ok(zh.has(label), `${rel}: Chinese ${label}`)
+            assert.ok(ja.has(label), `${rel}: Japanese ${label}`)
+            count++
+        }
+    }
+    assert.ok(count >= 55, `expected actual control coverage, got ${count}`)
+})
+
+test('dynamic action and expression buttons own their localized attributes', async () => {
+    const html = await read('./index.html'), viewer = await read('./src/viewer/index.ts')
+    for (const id of ['action-panel-toggle', 'expression-panel-toggle']) {
+        const tag = html.match(new RegExp(`<button id="${id}"[^>]*>`))?.[0]
+        assert.ok(tag?.includes('data-i18n-ignore="true"'), `${id} must not cache a translated aria label as canonical`)
+    }
+    for (const name of ['actionPanelToggle', 'expressionPanelToggle']) {
+        assert.ok(viewer.includes(`${name}.setAttribute('aria-label', label)`))
+    }
+    const workspace = await read('./src/viewer/performanceEditor/workspace.ts')
+    assert.match(workspace, /heading\.textContent = ["']Performance["']/)
+    assert.doesNotMatch(workspace, /演出 \/ Performance/)
+})
+
+test('TPS action keys and weapon axes retain identifiers with localized labels', async () => {
+    const zh = readStaticStringMap(await read('./src/viewer/localization/zhCN.ts'), 'zhCnUiText')
+    const ja = readStaticStringMap(await read('./src/viewer/localization/jaJP.ts'), 'jaJpUiText')
+    for (const key of ['Q', 'R', 'E', 'F', 'T', 'X']) {
+        assert.equal(zh.get(key + ' action'), key + ' 键动作')
+        assert.equal(ja.get(key + ' action'), key + ' キーのアクション')
+    }
+    for (const axis of ['X', 'Y', 'Z']) for (const label of ['Position ', 'Rotation (degrees) ', 'Scale ']) {
+        assert.ok(zh.has(label + axis), label + axis); assert.ok(ja.has(label + axis), label + axis)
+    }
+    const source = await read('./src/viewer/enemyPanel.ts')
+    assert.ok(source.includes("elements.toolbarCatalog.setAttribute('aria-label', chooseEnemy)"))
+    assert.ok(source.includes("elements.catalog.setAttribute('aria-label', translateUiText('Enemy list'))"))
 })

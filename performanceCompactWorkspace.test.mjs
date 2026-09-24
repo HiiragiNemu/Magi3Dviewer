@@ -27,7 +27,7 @@ test('C3 all original audio/control nodes retain exact identity and order after 
  }finally{f.dispose()}
 })
 test('C4 explicit dock collapse retains transport and can be reversed without destroying controls',()=>{
- const f=fixture();try{f.layout.setOpen(true);const dock=f.button('收起工具');dock.dispatch('click');assert.equal(f.workspace.getAttribute('data-performance-dock'),'collapsed');assert.equal(dock.getAttribute('aria-expanded'),'false');assert.equal(f.button('Play').parentElement.parentElement.id,'performance-workspace-timeline');dock.dispatch('click');assert.equal(f.workspace.getAttribute('data-performance-dock'),'open');assert.equal(dock.getAttribute('aria-expanded'),'true')
+ const f=fixture();try{f.layout.setOpen(true);const dock=f.button("Collapse tools");dock.dispatch('click');assert.equal(f.workspace.getAttribute('data-performance-dock'),'collapsed');assert.equal(dock.getAttribute('aria-expanded'),'false');assert.equal(f.button('Play').parentElement.parentElement.id,'performance-workspace-timeline');dock.dispatch('click');assert.equal(f.workspace.getAttribute('data-performance-dock'),'open');assert.equal(dock.getAttribute('aria-expanded'),'true')
  }finally{f.dispose()}
 })
 

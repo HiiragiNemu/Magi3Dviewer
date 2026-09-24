@@ -21,22 +21,22 @@ export function mountAudioTrackPanel(container: HTMLElement, runtime: Performanc
         const wrap = document.createElement('label'); wrap.className = 'performance-audio-field'; wrap.textContent = label
         element.setAttribute('aria-label', label); wrap.append(element); parent.append(wrap); return element
     }
-    const search = field('搜索声源 / Search audio', document.createElement('input')); search.type = 'search'; search.placeholder = '角色 ID、原文、译文或 stableKey'
-    const sources = field('声源 / Audio source', document.createElement('select')); sources.size = 5
+    const search = field("Search audio", document.createElement('input')); search.type = 'search'; search.placeholder = "Character ID, original text, translation or stable key"
+    const sources = field("Audio source", document.createElement('select')); sources.size = 5
     const sourceInfo = output('performance-audio-source-info')
-    const trackSelect = field('编辑音轨 / Audio track', document.createElement('select'))
-    const targets = field('音轨目标 / Audio target', document.createElement('select'))
+    const trackSelect = field("Audio track", document.createElement('select'))
+    const targets = field("Audio target", document.createElement('select'))
     const targetBindings = new Map<string, { actorKey: string; generation: number }>()
     const targetToken = (track: { actorKey?: string; generation?: number }) => track.actorKey === undefined ? 'background' : JSON.stringify([track.actorKey, track.generation])
-    const bindingLabel = (track: { actorKey?: string; generation?: number }) => track.actorKey === undefined ? '背景 / Background（不驱动角色口型）' : `${track.actorKey} · generation ${track.generation}`
+    const bindingLabel = (track: { actorKey?: string; generation?: number }) => track.actorKey === undefined ? "Background (no character lip sync)" : `${track.actorKey} · generation ${track.generation}`
     const numbers = document.createElement('div'); numbers.className = 'performance-audio-numbers'; root.append(numbers)
     const number = (label: string, initial: string, min: string, max?: string) => {
         const input = field(label, document.createElement('input'), numbers); input.type = 'number'; input.step = '0.01'; input.min = min; input.value = initial; if (max !== undefined) input.max = max; return input
     }
-    const start = number('开始秒 / Start', '0', '0'), offset = number('媒体偏移秒 / Offset', '0', '0')
-    const duration = number('播放时长秒 / Duration', '', '0.01'); duration.placeholder = '留空：播放声源剩余时长'
-    const volume = number('音量 / Volume', '1', '0', '1')
-    const lipSync = field('启用口型 / Lip sync', document.createElement('input')); lipSync.type = 'checkbox'
+    const start = number("Start (seconds)", '0', '0'), offset = number("Media offset (seconds)", '0', '0')
+    const duration = number("Duration (seconds)", '', '0.01'); duration.placeholder = "Leave blank to play the remaining source duration"
+    const volume = number("Volume", '1', '0', '1')
+    const lipSync = field("Enable lip sync", document.createElement('input')); lipSync.type = 'checkbox'
     const actions = document.createElement('div'); actions.className = 'performance-audio-actions'; root.append(actions)
     const button = (label: string, callback: () => void) => { const el = document.createElement('button'); el.type = 'button'; el.textContent = label; on(el, 'click', callback); actions.append(el); return el }
     const notice = output('performance-audio-authoring-status', true)
@@ -68,7 +68,7 @@ export function mountAudioTrackPanel(container: HTMLElement, runtime: Performanc
     const refreshSources = () => {
         const query = normalize(search.value).trim()
         const matches = (entries ?? []).filter(row => !query || normalize(`${entryLabel(row)} ${row.audio.sourceStableKey}`).includes(query))
-        sources.replaceChildren(); option(sources, '', '选择声源 / Choose source')
+        sources.replaceChildren(); option(sources, '', "Choose audio source")
         for (const row of matches) option(sources, row.stableKey, `${isVoiceRuntimeReady(row) ? '' : '[缺媒体] '}${entryLabel(row)}`)
         sources.value = matches.some(row => row.stableKey === sourceKey) ? sourceKey : ''
         sources.disabled = !audio || entries === undefined
@@ -77,7 +77,7 @@ export function mountAudioTrackPanel(container: HTMLElement, runtime: Performanc
         refreshSourceInfo()
     }
     const refreshTargets = (value = targets.value || 'background') => {
-        targets.replaceChildren(); targetBindings.clear(); option(targets, 'background', '背景 / Background（不绑定角色）')
+        targets.replaceChildren(); targetBindings.clear(); option(targets, 'background', "Background (not bound to a character)")
         for (const actor of runtime.actors.values()) {
             if (!actor.current) continue
             const binding = { actorKey: actor.key, generation: actor.descriptor.generation }, token = targetToken(binding)
@@ -108,7 +108,7 @@ export function mountAudioTrackPanel(container: HTMLElement, runtime: Performanc
     }
     const renderRows = () => {
         for (const cleanup of rowCleanups.splice(0)) cleanup()
-        rows.replaceChildren(); rowViews.clear(); trackSelect.replaceChildren(); option(trackSelect, '', '新音轨 / New track')
+        rows.replaceChildren(); rowViews.clear(); trackSelect.replaceChildren(); option(trackSelect, '', "New track")
         for (const track of currentTracks()) {
             option(trackSelect, track.id, `${track.id} · ${bindingLabel(track)}`)
             const row = document.createElement('section'); row.className = 'performance-audio-track'; row.setAttribute('data-track-id', track.id)
@@ -116,7 +116,7 @@ export function mountAudioTrackPanel(container: HTMLElement, runtime: Performanc
             on(select, 'click', () => { const current = currentTracks().find(value => value.id === track.id); if (current) loadTrack(current) }, rowCleanups)
             const binding = document.createElement('div'); binding.textContent = bindingLabel(track); binding.setAttribute('data-testid', 'audio-track-binding')
             const state = document.createElement('output'), error = document.createElement('output'); error.className = 'performance-audio-error'; error.setAttribute('data-testid', 'audio-track-error')
-            const details = document.createElement('details'), summary = document.createElement('summary'); summary.textContent = '声源与编排 / Source & timing'
+            const details = document.createElement('details'), summary = document.createElement('summary'); summary.textContent = "Source and timing"
             const identity = document.createElement('div'); identity.textContent = `${track.sourceStableKey}\nstart ${track.startTime}s · offset ${track.offsetSeconds ?? 0}s · duration ${track.durationSeconds ?? 'auto'} · volume ${track.volume ?? 1}`; details.append(summary, identity)
             const level = document.createElement('meter'); level.min = 0; level.max = 1; level.value = 0; level.setAttribute('aria-label', `Audio RMS ${track.id}`)
             const meterText = document.createElement('span'); meterText.className = 'performance-audio-level-text'
@@ -154,10 +154,10 @@ export function mountAudioTrackPanel(container: HTMLElement, runtime: Performanc
             loadTrack(replacement); renderRows(); notice.textContent = kind === 'remove' ? `已删除 ${id}` : `已${kind === 'add' ? '添加' : '保存'} ${id}；请在时间轴按 Play 播放。`
         } catch (error) { notice.textContent = error instanceof Error ? error.message : String(error); refreshActions() }
     }
-    const newTrack = button('新建音轨 / New track', () => loadTrack())
-    const add = button('添加音轨 / Add track', () => commit('add'))
-    const save = button('保存音轨 / Save track', () => commit('save'))
-    const remove = button('删除音轨 / Delete track', () => commit('remove'))
+    const newTrack = button("New track", () => loadTrack())
+    const add = button("Add track", () => commit('add'))
+    const save = button("Save track", () => commit('save'))
+    const remove = button("Delete track", () => commit('remove'))
     newTrack.setAttribute('data-testid', 'performance-audio-new')
     on(search, 'input', refreshSources)
     on(sources, 'change', () => { if (sources.value) { sourceKey = sources.value; dirty = true }; refreshSourceInfo() })

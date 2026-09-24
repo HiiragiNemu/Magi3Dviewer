@@ -56,7 +56,7 @@
                     <input id="animation-slider" class="target-true" type="range" min="0" max="1" step="0.01" value="0" aria-label="Animation timeline">
                     <output id="animation-progress-value" class="target-true" aria-live="off">0%</output>
                     <output id="animation-action-status" class="target-true" data-i18n-ignore="true" aria-live="polite" hidden></output>
-                    <button id="action-panel-toggle" class="target-true" type="button" title="Show action parameters" aria-controls="action-parameter-panel" aria-expanded="false">Action panel</button>
+                    <button id="action-panel-toggle" data-i18n-ignore="true" class="target-true" type="button" title="Show action parameters" aria-controls="action-parameter-panel" aria-expanded="false">Action panel</button>
                     <span class="target-false">&lt;No target selected&gt;</span>
                 </div>
 
@@ -67,7 +67,7 @@
                         <input id="expression-auto-blink" type="checkbox">
                         <span>Auto blink</span>
                     </label>
-                    <button id="expression-panel-toggle" class="target-true" type="button" title="Show expression parameters" aria-controls="expression-parameter-panel" aria-expanded="false">Expression panel</button>
+                    <button id="expression-panel-toggle" data-i18n-ignore="true" class="target-true" type="button" title="Show expression parameters" aria-controls="expression-parameter-panel" aria-expanded="false">Expression panel</button>
                     <span class="target-false">&lt;No target selected&gt;</span>
                 </div>
 
@@ -119,7 +119,7 @@
                 </div>
 
                 <button id="render-settings-toggle" data-i18n-ignore="true" type="button" title="Show rendering controls" aria-controls="advanced-controls-dock" aria-expanded="false">Rendering controls</button>
-                <button id="position-controls-toggle" class="target-true" data-i18n-ignore="true" type="button" title="Show character movement" aria-controls="position-controls-wrapper" aria-expanded="false">Character movement</button>
+                <button id="position-controls-toggle" data-i18n-ignore="true" type="button" title="Move and rotate" aria-controls="position-controls-wrapper" aria-expanded="false">Move and rotate</button>
                 <button id="locomotion-mode-toggle" class="target-true" data-i18n-ignore="true" type="button" title="Enable TPS character control" aria-controls="locomotion-hud" aria-pressed="false">TPS Move: Off</button>
                 <button id="character-list-panel-toggle" data-i18n-ignore="true" type="button" title="Show character list" aria-label="Show character list" aria-controls="character-list-panel" aria-expanded="false">Characters</button>
                 <button id="stage-list-panel-toggle" data-i18n-ignore="true" type="button" title="Show scene list" aria-label="Show scene list" aria-controls="stage-list-panel" aria-expanded="false">Scenes</button>
@@ -164,7 +164,8 @@
                 <video id="camera-bg" disablePictureInPicture></video>
                 <output id="voice-subtitle-overlay" data-i18n-ignore="true" aria-live="polite" hidden></output>
                 <div id="position-controls-wrapper" aria-hidden="true">
-                    <div id="position-controls" class="target-true">
+                    <div id="position-controls">
+                        <output id="movement-target" data-i18n-ignore="true" aria-live="polite"></output>
                         <div id="recording-spec-controls" aria-label="Recording format">
                             <label>
                                 <span id="recording-quality-label">Quality</span>
@@ -193,21 +194,24 @@
                             </label>
                             <output id="recording-size-output" aria-live="polite">1920 × 1080</output>
                         </div>
-                        <button id="character-tilt-left" type="button" title="Tilt character left">↺</button>
-                        <button id="character-move-up" type="button" title="Move character up">↑</button>
-                        <button id="character-tilt-right" type="button" title="Tilt character right">↻</button>
-                        <button id="character-move-left" type="button" title="Move character left">←</button>
-                        <button id="character-transform-reset" type="button" title="Reset character transform">Reset</button>
-                        <button id="character-move-right" type="button" title="Move character right">→</button>
+                        <button id="character-tilt-left" type="button" title="Tilt selected object left">↺</button>
+                        <button id="character-move-up" type="button" title="Move selected object up">↑</button>
+                        <button id="character-tilt-right" type="button" title="Tilt selected object right">↻</button>
+                        <button id="character-move-left" type="button" title="Move selected object left">←</button>
+                        <button id="character-transform-reset" type="button" title="Reset selected object transform">Reset</button>
+                        <button id="character-move-right" type="button" title="Move selected object right">→</button>
                         <button id="capture-character" type="button" title="Capture character">Char Only</button>
-                        <button id="character-move-down" type="button" title="Move character down">↓</button>
+                        <button id="character-move-down" type="button" title="Move selected object down">↓</button>
                         <button id="capture-with-background" type="button" title="Capture with background">With BG</button>
                         <button id="record-character" type="button" title="Record character">Rec Char</button>
                         <button id="record-with-background" type="button" title="Record with background">Rec/BG</button>
                         <button id="record-mp4-with-background" type="button" title="Record MP4 with background">MP4/BG</button>
-                        <button id="character-rotate-left" type="button" title="Turn character left">Y−</button>
+                        <button id="object-move-forward" type="button" title="Move selected object forward">Forward</button>
+                        <span></span>
+                        <button id="object-move-backward" type="button" title="Move selected object backward">Backward</button>
+                        <button id="character-rotate-left" type="button" title="Turn selected object left">Y−</button>
                         <button id="viewer-vr-toggle" data-i18n-ignore="true" type="button" title="Enter VR" aria-pressed="false">VR</button>
-                        <button id="character-rotate-right" type="button" title="Turn character right">Y+</button>
+                        <button id="character-rotate-right" type="button" title="Turn selected object right">Y+</button>
                     </div>
                 </div>
                 <div id="locomotion-hud" class="is-collapsed" aria-hidden="true">
@@ -215,7 +219,7 @@
                         <strong>TPS</strong>
                         <output id="locomotion-state-output">idle</output>
                         <output id="locomotion-clip-output">clip: —</output>
-                        <button id="locomotion-hud-toggle" type="button" aria-controls="locomotion-hud-details" aria-expanded="false" title="Show TPS actions">＋</button>
+                        <button id="locomotion-hud-toggle" data-i18n-ignore="true" type="button" aria-controls="locomotion-hud-details" aria-expanded="false" title="Show TPS actions">＋</button>
                     </div>
                     <div id="locomotion-hud-details">
                         <div class="locomotion-help">WASD / ↑↓←→ move · Shift run · Space jump · click view for mouse look · Esc release</div>
@@ -484,17 +488,14 @@
             <div class="floating-panel-scroll weapon-panel-content">
                 <label for="weapon-search">Search characters by name or ID</label><input id="weapon-search" type="search" autocomplete="off">
                 <label for="weapon-character">Character weapon source</label><select id="weapon-character" data-i18n-ignore="true"></select>
-                <button id="weapon-load" type="button">Load weapons</button>
                 <label for="weapon-choice">Weapon model</label><select id="weapon-choice" data-i18n-ignore="true" disabled></select>
                 <button id="weapon-add" type="button" disabled>Add weapon</button>
                 <output id="weapon-status" data-i18n-ignore="true" aria-live="polite"></output>
-                <label for="weapon-instances">Placed weapons</label><select id="weapon-instances" data-i18n-ignore="true" size="3" disabled></select>
+                <label for="weapon-instances">Placed weapons</label><select id="weapon-instances" data-i18n-ignore="true" disabled></select>
                 <div class="weapon-buttons"><button id="weapon-remove" type="button" disabled>Remove weapon</button><button id="weapon-clear" type="button" disabled>Clear weapons</button></div>
                 <fieldset id="weapon-transform-fields" disabled><legend>Weapon placement</legend>
                     <div class="weapon-buttons"><button type="button" data-transform="translate">Move</button><button type="button" data-transform="rotate">Rotate</button><button type="button" data-transform="scale">Scale</button><button id="weapon-axis-close" type="button">Hide axes</button></div>
-                <div class="weapon-transform-row"><span>Position</span><label>X <input type="number" data-channel="position" data-axis="x" aria-label="Position X" step="0.05" value="0"></label><label>Y <input type="number" data-channel="position" data-axis="y" aria-label="Position Y" step="0.05" value="0"></label><label>Z <input type="number" data-channel="position" data-axis="z" aria-label="Position Z" step="0.05" value="0"></label></div>
-                <div class="weapon-transform-row"><span>Rotation (degrees)</span><label>X <input type="number" data-channel="rotation" data-axis="x" aria-label="Rotation (degrees) X" step="1" value="0"></label><label>Y <input type="number" data-channel="rotation" data-axis="y" aria-label="Rotation (degrees) Y" step="1" value="0"></label><label>Z <input type="number" data-channel="rotation" data-axis="z" aria-label="Rotation (degrees) Z" step="1" value="0"></label></div>
-                <div class="weapon-transform-row"><span>Scale</span><label>X <input type="number" data-channel="scale" data-axis="x" aria-label="Scale X" step="0.05" min="0.001" value="1"></label><label>Y <input type="number" data-channel="scale" data-axis="y" aria-label="Scale Y" step="0.05" min="0.001" value="1"></label><label>Z <input type="number" data-channel="scale" data-axis="z" aria-label="Scale Z" step="0.05" min="0.001" value="1"></label></div>
+                    <p class="weapon-placement-help">Use Move and rotate or drag the axes to place the selected object.</p>
                 </fieldset>
             </div>
         </section>

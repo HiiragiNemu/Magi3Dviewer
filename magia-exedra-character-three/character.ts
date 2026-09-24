@@ -135,6 +135,7 @@ export class ChatacterAnimation {
     private _current?: string
     private _clamped = false
     private _queuedHomeLoop?: string
+    private _pendingHomeLoop?: { name: string; repetitions?: number }
     private _queuedHomeGateAction?: THREE.AnimationAction
     private _activeActions: THREE.AnimationAction[] = []
     private _preparedFamilies = new Map<string, THREE.AnimationClip[]>()
@@ -167,6 +168,7 @@ export class ChatacterAnimation {
         if (repetitions !== undefined && (!Number.isSafeInteger(repetitions) || repetitions < 0)) {
             throw new RangeError('Animation repetitions must be a non-negative safe integer')
         }
+        this._pendingHomeLoop = undefined
         const queuedHomeLoop = getHomeLoopAfterStart(
             name,
             this._character.userData.homeAnimationRuntime,
@@ -255,7 +257,7 @@ export class ChatacterAnimation {
         this._clamped = false
         // Evaluate the requested local action time immediately without calling
         // mixer.setTime(), which would rewind and invalidate scheduled fades.
-        this.mixer.update(0)
+        this.updateMixer(0)
 
         console.log('Playing animation family:', this._current, animations.map(x => x.name))
     }
@@ -271,6 +273,7 @@ export class ChatacterAnimation {
 
     clear() {
         this.clearRepetitionLimit()
+        this._pendingHomeLoop = undefined
         this.mixer.stopAllAction()
         this._activeActions = []
         this._current = undefined
@@ -312,8 +315,32 @@ export class ChatacterAnimation {
                     || configuredHelpers.has(getAnimationFamilyName(clip.name))
                 )
             ))
+            // A Home companion is the action for its prop, not an extra layer
+            // underneath that prop's Hide action. A helper can hide an ancestor
+            // joint while the companion keys descendants (e.g. cup and saucer),
+            // so exact track-name deduplication alone does not protect the prop.
+            const authoredBranches = new Set<THREE.Object3D>()
+            const root = this._character.object
+            const trackTarget = (track: THREE.KeyframeTrack) => {
+                const binding = THREE.PropertyBinding.parseTrackName(track.name)
+                return THREE.PropertyBinding.findNode(root, binding.nodeName) as THREE.Object3D | null
+            }
+            for (const clip of clips) for (const track of clip.tracks) {
+                for (let node = trackTarget(track); node && node !== root; node = node.parent) authoredBranches.add(node)
+            }
             for (const helper of weaponHelpers) {
-                if (!clips.includes(helper)) clips.push(helper)
+                if (clips.includes(helper)) continue
+                const tracks = helper.tracks.filter(track => {
+                    const target = trackTarget(track)
+                    return !target || !authoredBranches.has(target)
+                })
+                if (tracks.length === 0) continue
+                if (tracks.length === helper.tracks.length) clips.push(helper)
+                else {
+                    const scopedHelper = helper.clone()
+                    scopedHelper.tracks = tracks
+                    clips.push(scopedHelper)
+                }
             }
         }
         return clips
@@ -375,11 +402,23 @@ export class ChatacterAnimation {
         return prepared
     }
 
+    private flushPendingHomeLoop(): void {
+        const pending = this._pendingHomeLoop
+        if (!pending) return
+        this._pendingHomeLoop = undefined
+        this.play(pending.name, true, { repetitions: pending.repetitions })
+    }
+
+    private updateMixer(delta: number): void {
+        this.mixer.update(delta)
+        this.flushPendingHomeLoop()
+    }
+
     animationLoop = () => {
         if (this.paused) return
         const delta = getClockDelta()
         if (this._repetitions === undefined || this._queuedHomeLoop || !(this.duration > 0)) {
-            this.mixer.update(delta)
+            this.updateMixer(delta)
             return
         }
         // A family repeats together, even when a weapon/helper clip is shorter.
@@ -389,7 +428,7 @@ export class ChatacterAnimation {
         const duration = this.duration
         while (remaining > 0) {
             const step = Math.min(remaining, Math.max(0, duration - this._repeatLocalTime))
-            this.mixer.update(step / this.mixer.timeScale)
+            this.updateMixer(step / this.mixer.timeScale)
             this._repeatLocalTime += step
             remaining = Math.max(0, remaining - step)
             if (this._repeatLocalTime < duration - 1e-9) break
@@ -416,7 +455,10 @@ export class ChatacterAnimation {
             this._queuedHomeGateAction = undefined
             const repetitions = this._queuedRepetitions
             this._queuedRepetitions = undefined
-            this.play(loop, true, { repetitions })
+            // AnimationMixer is still iterating the finishing actions. Starting
+            // another family here re-enters update(0), corrupting constant prop
+            // scale accumulators. Commit the handoff after that update returns.
+            this._pendingHomeLoop = { name: loop, repetitions }
             return
         }
         if (this._finishGateAction && event.action !== this._finishGateAction) return
@@ -468,7 +510,11 @@ export class ChatacterAnimation {
         }
     }
     set time(value) {
-        if (this._repetitions === undefined) { this.mixer.setTime(value); return }
+        if (this._repetitions === undefined) {
+            this.mixer.setTime(value)
+            this.flushPendingHomeLoop()
+            return
+        }
         if (!Number.isFinite(value)) return
         if (this._clamped && this._repetitions > 0) this._repeatCompleted = Math.min(this._repeatCompleted, this._repetitions - 1)
         this._repeatLocalTime = THREE.MathUtils.clamp(value, 0, this.duration)
@@ -478,7 +524,7 @@ export class ChatacterAnimation {
             action.clampWhenFinished = this._repetitions !== 0
         }
         this._clamped = false
-        this.mixer.update(0)
+        this.updateMixer(0)
     }
 }
 

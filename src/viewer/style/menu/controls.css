@@ -419,3 +419,5 @@ body.theme-light #locomotion-hud-toggle {
         gap: 5px;
     }
 }
+
+#movement-target { grid-column: 1 / -1; font-size: 11px; overflow-wrap: anywhere; text-align: center; }

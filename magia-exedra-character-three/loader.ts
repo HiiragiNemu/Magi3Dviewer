@@ -1198,6 +1198,11 @@ export async function loadCharacter(
               )
               const result = await createFaceMaterial({
                   ...sharedMaterialOptions,
+                  // 100601 face_a: serialized _FaceShadowGradientMap is shared BC6H
+                  // face_ctrl_base; its face_a_ctrl is a separate BC7 _ControlMap.
+                  ctrlMap: characterId === 100601 && meshMaterialNames.includes('mt_chara_100601_face_a')
+                      ? 'face_ctrl_base'
+                      : ctrlMap,
                   shadowMap: shadowMap!,
                            faceAdditionalMaps,
                            noseGradientMap: ObjFindByKey(

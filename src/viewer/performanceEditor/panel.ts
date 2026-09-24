@@ -99,12 +99,12 @@ export function mountPerformancePanel(container: HTMLElement, runtime: Performan
         setOptions(keys, doc.tracks.flatMap(track => track.keys.map(key => ({ value: JSON.stringify([track.id, key.id]),
             label: `${key.time.toFixed(2)}s · ${track.actorKey.slice(0, 8)} · ${track.channel} · ${key.id}` }))))
     }
-    const jointCandidates = document.createElement('div'); jointCandidates.setAttribute('aria-label', '重叠关节'); jointCandidates.hidden = true; manipulationSection.append(jointCandidates)
+    const jointCandidates = document.createElement('div'); jointCandidates.setAttribute('aria-label', "Overlapping joints"); jointCandidates.hidden = true; manipulationSection.append(jointCandidates)
     const clearJointCandidates = () => { jointCandidates.replaceChildren(); jointCandidates.hidden = true }
     actors.addEventListener('change', () => { poseControlError = undefined; runtime.endDrag(); clearJointCandidates(); refreshCapabilities(); refreshStatus() })
     bones.addEventListener('change', () => { runtime.endDrag(); clearJointCandidates(); notifySelection() })
     mode.addEventListener('change', () => { runtime.endDrag(); clearJointCandidates(); notifySelection() })
-    const viewportHint = document.createElement('p'); viewportHint.textContent = '直接拖动画布关节：关节模式旋转，IK 模式移动目标；重叠节点先选具体关节。Mesh 不参与关节拖拽。'; viewportHint.setAttribute('data-testid', 'performance-viewport-gizmo-hint'); manipulationSection.append(viewportHint)
+    const viewportHint = document.createElement('p'); viewportHint.textContent = "Drag joints in the viewport: joint mode rotates, IK mode moves the target. Select an exact joint where nodes overlap. Meshes are not joint drag targets."; viewportHint.setAttribute('data-testid', 'performance-viewport-gizmo-hint'); manipulationSection.append(viewportHint)
     button('Drag selected', () => {
         const result = runtime.beginDrag(actors.value, mode.value as DragMode, bones.value)
         if (result.status === 'unavailable') throw new Error(result.reason)
@@ -123,8 +123,8 @@ export function mountPerformancePanel(container: HTMLElement, runtime: Performan
             throw error
         }
     }
-    poseControls.push(button('撤销姿态', () => applyPoseOperation('undoPose'), manipulationSection),
-        button('恢复官方姿态', () => applyPoseOperation('resetPose'), manipulationSection))
+    poseControls.push(button("Undo pose", () => applyPoseOperation('undoPose'), manipulationSection),
+        button("Restore official pose", () => applyPoseOperation('resetPose'), manipulationSection))
     const reportJointError = (reason: string) => { poseControlError = reason; refreshStatus() }
     const selectJointFromCanvas = (identity: JointNodeIdentity) => {
         const actor = runtime.actors.get(actors.value)
@@ -168,7 +168,7 @@ export function mountPerformancePanel(container: HTMLElement, runtime: Performan
     scrubber.addEventListener('input', () => report(() => runtime.seek(Number(scrubber.value))))
     const chart = document.createElement('div'); chart.className = 'performance-timeline-chart'; chart.setAttribute('data-testid', 'performance-timeline-chart')
     const ruler = document.createElement('div'); ruler.className = 'performance-timeline-row performance-timeline-ruler'; ruler.setAttribute('role', 'group'); ruler.setAttribute('aria-label', 'Timeline ruler'); ruler.setAttribute('data-testid', 'performance-timeline-ruler')
-    const rulerLabel = document.createElement('span'); rulerLabel.className = 'performance-timeline-track-label'; rulerLabel.textContent = '轨道 / 秒'
+    const rulerLabel = document.createElement('span'); rulerLabel.className = 'performance-timeline-track-label'; rulerLabel.textContent = "Tracks / seconds"
     const rulerScale = document.createElement('div'); rulerScale.className = 'performance-timeline-rail performance-timeline-scale'
     const cursor = document.createElement('div'); cursor.className = 'performance-timeline-cursor'; cursor.setAttribute('aria-label', 'Timeline cursor'); cursor.setAttribute('data-testid', 'performance-timeline-cursor')
     ruler.append(rulerLabel, rulerScale)

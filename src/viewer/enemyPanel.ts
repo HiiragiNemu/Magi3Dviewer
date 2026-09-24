@@ -48,6 +48,7 @@ export interface EnemyPanelController {
 }
 
 export interface EnemyPanelOptions {
+    onInstanceSelected?(instance: EnemyInstance): void
     onInstanceWillRemove?(instance: EnemyInstance): void
 }
 
@@ -352,6 +353,10 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
     }
 
     const renderCatalog = () => {
+        const chooseEnemy = translateUiText('Choose enemy')
+        elements.toolbarCatalog.title = chooseEnemy
+        elements.toolbarCatalog.setAttribute('aria-label', chooseEnemy)
+        elements.catalog.setAttribute('aria-label', translateUiText('Enemy list'))
         const previous = selectedEnemyMstId
         const query = elements.search.value.trim().toLocaleLowerCase()
         const visibleEntries = entries.filter(entry => matchesSearch(entry, query))
@@ -448,6 +453,7 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
         selectedInstanceId = instance.instanceId
         renderInstances()
         setStatus({ key: 'Selected enemy', detail: instance.instanceId })
+        options.onInstanceSelected?.(instance)
         return instance
     }
 
@@ -562,7 +568,8 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
                     abortController.signal,
                 ))
             }
-            selectedInstanceId = added.at(-1)?.instanceId
+            const latest = added.at(-1)
+            if (latest) selectInstance(latest.instanceId)
             setStatus({
                 key: added.length === 1 ? 'Enemy added' : 'Enemies added',
                 detail: String(added.length),

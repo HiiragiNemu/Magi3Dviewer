@@ -24,7 +24,7 @@ class Context{
  createAnalyser(){return{fftSize:256,frequencyBinCount:128,element:null,connect(){},disconnect(){},getFloatTimeDomainData(pcm){for(let i=0;i<pcm.length;i++)pcm[i]=(this.element?.amplitude??0)*Math.sin(i*Math.PI/8)}}}
  createGain(){return{connect(){},disconnect(){}}}async resume(){}async close(){++this.closed}
 }
-const labels={source:'声源 / Audio source',search:'搜索声源 / Search audio',target:'音轨目标 / Audio target',track:'编辑音轨 / Audio track',start:'开始秒 / Start',offset:'媒体偏移秒 / Offset',duration:'播放时长秒 / Duration',volume:'音量 / Volume',lip:'启用口型 / Lip sync'}
+const labels={source:"Audio source",search:"Search audio",target:"Audio target",track:"Audio track",start:"Start (seconds)",offset:"Media offset (seconds)",duration:"Duration (seconds)",volume:"Volume",lip:"Enable lip sync"}
 function fixture(voices=catalog){
  const dom=new JSDOM('<!doctype html><html><body><aside id="panel"></aside></body></html>',{url:'https://fixture.invalid/'})
  const document=dom.window.document,container=document.getElementById('panel'),actorListeners=new Set(),frameListeners=new Set(),media=[],ctx=new Context()
@@ -67,71 +67,71 @@ test('C3 search includes raw/translated text, character ID and stable key; missi
  const f=fixture();try{
   for(const [query,count] of [['原文「声 2」',1],['译文测试 1',1],['100101',3],[stable(2),1]]){f.input('search',query);assert.equal(f.find(labels.source).options.length-1,count)}
   f.input('search','');f.sourceSelect(stable(3));assert.match(f.container.querySelector('[data-testid="performance-audio-source-info"]').textContent,/EXACT_FIXTURE_MEDIA_MISSING/)
-  assert.equal(f.click('添加音轨 / Add track').disabled,true);assert.equal(f.tracks().length,0)
-  f.sourceSelect(stable(1));f.input('search','nothing-matches');assert.equal(f.find(labels.source).options.length,1);f.click('添加音轨 / Add track');assert.equal(f.tracks()[0].sourceStableKey,stable(1))
+  assert.equal(f.click("Add track").disabled,true);assert.equal(f.tracks().length,0)
+  f.sourceSelect(stable(1));f.input('search','nothing-matches');assert.equal(f.find(labels.source).options.length,1);f.click("Add track");assert.equal(f.tracks()[0].sourceStableKey,stable(1))
  }finally{f.dispose()}
 })
 test('C4 add same source to two exact actor instances, edit one, delete one and round-trip without pose loss',async()=>{
  const f=fixture();try{
   const poseTrack={id:'preserved-pose',actorKey:f.descriptors[0].object.uuid,channel:'root-position',keys:[{id:'k0',time:0,value:[1,2,3]}]}
   f.editor.runtime.setDocument({schema:'performance-editor-v1',duration:10,loop:true,tracks:[poseTrack],audioTracks:[]})
-  f.sourceSelect();f.choose(0);f.input('lip',true);f.input('start',.3);f.input('offset',.2);f.input('duration',2);f.input('volume',.65);f.click('添加音轨 / Add track')
+  f.sourceSelect();f.choose(0);f.input('lip',true);f.input('start',.3);f.input('offset',.2);f.input('duration',2);f.input('volume',.65);f.click("Add track")
   const first=structuredClone(f.tracks()[0]);assert.equal(first.actorKey,f.descriptors[0].object.uuid);assert.equal(first.generation,1)
-  f.choose(1);f.click('添加音轨 / Add track');assert.equal(f.tracks().length,2);assert.notEqual(f.tracks()[1].id,first.id);assert.equal(f.tracks()[1].generation,2)
-  f.input('volume',.25);f.click('保存音轨 / Save track');assert.deepEqual(f.tracks()[0],first);assert.equal(f.tracks()[1].volume,.25)
+  f.choose(1);f.click("Add track");assert.equal(f.tracks().length,2);assert.notEqual(f.tracks()[1].id,first.id);assert.equal(f.tracks()[1].generation,2)
+  f.input('volume',.25);f.click("Save track");assert.deepEqual(f.tracks()[0],first);assert.equal(f.tracks()[1].volume,.25)
   assert.deepEqual(f.editor.runtime.timeline.value.tracks,[poseTrack]);assert.equal(f.editor.runtime.timeline.value.loop,true)
   const saved=f.editor.runtime.timeline.serialize();f.editor.runtime.importProject(saved);assert.equal(f.tracks()[1].actorKey,f.descriptors[1].object.uuid)
   assert.match(f.find(labels.target).selectedOptions[0].textContent,new RegExp(f.descriptors[1].object.uuid))
-  f.click('删除音轨 / Delete track');assert.deepEqual(f.tracks(),[first]);assert.deepEqual(f.editor.runtime.timeline.value.tracks,[poseTrack]);await next();assert.equal(f.editor.runtime.playing,false)
+  f.click("Delete track");assert.deepEqual(f.tracks(),[first]);assert.deepEqual(f.editor.runtime.timeline.value.tracks,[poseTrack]);await next();assert.equal(f.editor.runtime.playing,false)
  }finally{f.dispose()}
 })
 test('C5 stale UUID/generation stays explicit on actor replacement or imported documents; never falls back',async()=>{
  const f=fixture();try{
-  f.sourceSelect();f.choose();f.click('添加音轨 / Add track');const original=structuredClone(f.tracks()[0])
+  f.sourceSelect();f.choose();f.click("Add track");const original=structuredClone(f.tracks()[0])
   f.descriptors[0].generation=9;f.refreshActors();await next()
-  assert.match(f.find(labels.target).selectedOptions[0].textContent,/Stale/);assert.equal(f.click('保存音轨 / Save track').disabled,true);assert.deepEqual(f.tracks()[0],original)
+  assert.match(f.find(labels.target).selectedOptions[0].textContent,/Stale/);assert.equal(f.click("Save track").disabled,true);assert.deepEqual(f.tracks()[0],original)
   assert.match(f.container.querySelector('[data-track-id="audio-1"]').textContent,/AUDIO_ACTOR_STALE/)
   f.editor.runtime.importProject(f.editor.runtime.timeline.serialize());assert.equal(f.tracks()[0].generation,1)
-  f.choose();f.click('保存音轨 / Save track');assert.equal(f.tracks()[0].generation,9)
-  f.input('target','background','change');f.click('保存音轨 / Save track');assert.equal(f.tracks()[0].actorKey,undefined);assert.equal(f.tracks()[0].generation,undefined)
+  f.choose();f.click("Save track");assert.equal(f.tracks()[0].generation,9)
+  f.input('target','background','change');f.click("Save track");assert.equal(f.tracks()[0].actorKey,undefined);assert.equal(f.tracks()[0].generation,undefined)
  }finally{f.dispose()}
 })
 test('C6 invalid numeric edits and stale external document edits preserve the complete document',()=>{
  const f=fixture();try{
-  f.sourceSelect();f.click('添加音轨 / Add track');const saved=f.editor.runtime.timeline.serialize()
+  f.sourceSelect();f.click("Add track");const saved=f.editor.runtime.timeline.serialize()
   for(const [field,value]of [['start',-1],['start',11],['offset',-1],['duration',0],['volume',2],['volume','']]){
-   f.input('track','audio-1','change');f.input(field,value);f.click('保存音轨 / Save track');assert.equal(f.editor.runtime.timeline.serialize(),saved)
+   f.input('track','audio-1','change');f.input(field,value);f.click("Save track");assert.equal(f.editor.runtime.timeline.serialize(),saved)
   }
   f.input('track','audio-1','change');f.input('volume',.8)
   const external=f.editor.runtime.timeline.value;external.audioTracks[0].volume=.3;f.editor.runtime.setDocument(external)
-  assert.match(f.notice(),/外部更新/);assert.equal(f.find(labels.volume).value,'0.8');assert.equal(f.click('保存音轨 / Save track').disabled,true)
-  f.input('track','audio-1','change');assert.equal(f.find(labels.volume).value,'0.3');f.click('保存音轨 / Save track');assert.equal(f.tracks()[0].volume,.3)
+  assert.match(f.notice(),/外部更新/);assert.equal(f.find(labels.volume).value,'0.8');assert.equal(f.click("Save track").disabled,true)
+  f.input('track','audio-1','change');assert.equal(f.find(labels.volume).value,'0.3');f.click("Save track");assert.equal(f.tracks()[0].volume,.3)
  }finally{f.dispose()}
 })
 test('C7 per-row media/time/error/binding/PCM meter reflects the real bridge; backgrounds have no mouth target',async()=>{
  const f=fixture();try{
-  f.sourceSelect();f.choose();f.input('lip',true);f.click('添加音轨 / Add track');await next()
+  f.sourceSelect();f.choose();f.input('lip',true);f.click("Add track");await next()
   f.editor.runtime.advanceAudioOnlyFrame(0);f.editor.runtime.play();await next()
   for(let i=1;i<=20;i++){for(const m of f.media)m.currentTime+=.016;f.editor.runtime.advanceAudioOnlyFrame(i*16);f.editor.audio.flushMouthOutput()}
   const state=f.editor.audio.snapshot[0],row=f.container.querySelector('[data-track-id="audio-1"]')
   assert.equal(state.status,'playing');assert.ok(state.rawRms>0&&state.mouthOpen>0);assert.equal(row.querySelector('meter').value,state.rawRms);assert.ok(row.textContent.includes(state.currentTime.toFixed(3)+'s'));assert.ok(row.textContent.includes(state.mouthOpen.toFixed(4)));assert.ok(row.textContent.includes(state.actorKey))
   f.media[0].dispatch('error');assert.match(row.textContent,/AUDIO_MEDIA_ERROR/)
-  f.click('新建音轨 / New track');f.click('添加音轨 / Add track');await next();assert.equal(f.editor.audio.snapshot[1].lipSyncStatus,'background');assert.equal(f.editor.audio.snapshot[1].actorKey,null)
+  f.click("New track");f.click("Add track");await next();assert.equal(f.editor.audio.snapshot[1].lipSyncStatus,'background');assert.equal(f.editor.audio.snapshot[1].actorKey,null)
   f.editor.runtime.pause();assert.equal(f.editor.audio.snapshot[1].mouthOpen,0)
  }finally{f.dispose()}
 })
 test('C8 clean external reimport updates editor, while selected removed tracks are not silently overwritten',()=>{
  const f=fixture();try{
-  f.sourceSelect();f.click('添加音轨 / Add track');const changed=f.editor.runtime.timeline.value;changed.audioTracks[0].startTime=2;f.editor.runtime.importProject(JSON.stringify(changed));assert.equal(f.find(labels.start).value,'2')
-  const empty=f.editor.runtime.timeline.value;empty.audioTracks=[];f.editor.runtime.setDocument(empty);assert.match(f.find(labels.track).selectedOptions[0].textContent,/Stale/);assert.equal(f.click('保存音轨 / Save track').disabled,true)
-  f.click('新建音轨 / New track');f.click('添加音轨 / Add track');assert.equal(f.tracks().length,1)
+  f.sourceSelect();f.click("Add track");const changed=f.editor.runtime.timeline.value;changed.audioTracks[0].startTime=2;f.editor.runtime.importProject(JSON.stringify(changed));assert.equal(f.find(labels.start).value,'2')
+  const empty=f.editor.runtime.timeline.value;empty.audioTracks=[];f.editor.runtime.setDocument(empty);assert.match(f.find(labels.track).selectedOptions[0].textContent,/Stale/);assert.equal(f.click("Save track").disabled,true)
+  f.click("New track");f.click("Add track");assert.equal(f.tracks().length,1)
  }finally{f.dispose()}
 })
 test('C9 teardown removes UI handlers/catalog subscription without owning runtime transport; native input text is literal',()=>{
  const f=fixture();const sourceInfo=f.container.querySelector('[data-testid="performance-audio-source-info"]')
  const malicious=structuredClone(catalog.manifest);malicious.entries[0].subtitles.ja='<img src=x onerror=alert(1)>'
  f.editor.audio.setCatalog(new VoiceCatalog(malicious));f.sourceSelect();assert.equal(sourceInfo.querySelector('img'),null);assert.ok(sourceInfo.textContent.includes('<img'))
- const button=f.click('添加音轨 / Add track'),count=f.tracks().length;f.editor.panel.dispose();button.click();assert.equal(f.tracks().length,count)
+ const button=f.click("Add track"),count=f.tracks().length;f.editor.panel.dispose();button.click();assert.equal(f.tracks().length,count)
  f.editor.audio.setCatalog(actualCatalog);assert.equal(f.container.children.length,0);f.dispose()
 })
 test('C10 parent chartDuration/timeline bytes and audio-only CSS append remain intact',()=>{
@@ -153,7 +153,7 @@ test('C11 real DOM workspace open/close preserves authoring controls, catalog ar
   const sourceControl=f.find(labels.source),targetControl=f.find(labels.target),editorRoot=f.editor.panel.element,originalParent=sourceControl.parentElement
   layout=mountPerformanceWorkspace({workspace,panel:f.editor.panel,toggle,onExit(){f.editor.runtime.stop()}})
   layout.setOpen(true);assert.equal(sourceControl.closest('[role=tabpanel]').id,'performance-audio-task-page-0');assert.equal(targetControl.closest('[role=tabpanel]').id,'performance-audio-task-page-1')
-  f.editor.audio.setCatalog(catalog);await next();assert.equal(sourceControl.disabled,false);f.sourceSelect();f.choose(1);f.click('添加音轨 / Add track');await next()
+  f.editor.audio.setCatalog(catalog);await next();assert.equal(sourceControl.disabled,false);f.sourceSelect();f.choose(1);f.click("Add track");await next()
   const stored=f.tracks()[0],plays=f.media.reduce((n,m)=>n+m.plays,0)
   for(let i=0;i<3;i++){layout.setOpen(false);layout.setOpen(true);assert.equal(f.find(labels.source),sourceControl);assert.equal(f.find(labels.target),targetControl);assert.equal(sourceControl.parentElement,originalParent);assert.equal(f.tracks()[0].actorKey,stored.actorKey);assert.equal(viewer.firstElementChild,canvas)}
   assert.equal(f.media.reduce((n,m)=>n+m.plays,0),plays);layout.dispose();layout=undefined;assert.equal(editorRoot.parentElement,f.container)

@@ -109,7 +109,7 @@ const poseButton = (f, label) => {
     assert.ok(element, label)
     return element
 }
-const poseLabels = ['撤销姿态', '恢复官方姿态']
+const poseLabels = ["Undo pose", "Restore official pose"]
 const jointIdentity = f => { const actor = f.editor.runtime.actors.get(f.byLabel('Performance actor').value), [boneKey, bone] = [...actor.bones][0]
     return { actorKey: actor.key, generation: actor.descriptor.generation, boneKey, boneUuid: bone.uuid, label: `${bone.name} · ${boneKey} · ${bone.uuid}` } }
 
@@ -146,7 +146,7 @@ test('overlap choices expose distinct exact identities and disappear on actor sw
         const release = f.editor.panel.subscribePoseSelection(() => notifications.push(f.editor.panel.getPoseSelection()))
         const a = jointIdentity(f), b = { ...a, boneUuid: 'second-helper', label: 'same name · different hierarchy · second-helper' }
         f.editor.panel.showJointCandidates([a, b], row => chosen.push(row))
-        const chooser = f.byLabel('重叠关节')
+        const chooser = f.byLabel("Overlapping joints")
         assert.equal(chooser.children.length, 2); assert.equal(chooser.children[1].attributes['data-joint-uuid'], b.boneUuid)
         chooser.children[1].dispatch('click'); assert.deepEqual(chosen, [b])
         f.byLabel('Performance actor').value = f.descriptors[1].object.uuid; f.byLabel('Performance actor').dispatch('change')
@@ -165,13 +165,13 @@ test('pose controls sit beside drag controls in Properties and use the selected 
             assert.equal(control.disabled, false)
         }
         const children = f.editor.panel.regions.properties.children
-        assert.equal(children[children.findIndex(node => node.textContent === 'End drag') + 1], poseButton(f, '撤销姿态'))
+        assert.equal(children[children.findIndex(node => node.textContent === 'End drag') + 1], poseButton(f, "Undo pose"))
         f.editor.runtime.undoPose = key => { calls.push(['undo', key]); return { status: 'ready', value: undefined } }
         f.editor.runtime.resetPose = key => { calls.push(['reset', key]); return { status: 'ready', value: undefined } }
-        f.click('撤销姿态')
+        f.click("Undo pose")
         f.byLabel('Performance actor').value = f.descriptors[1].object.uuid
         f.byLabel('Performance actor').dispatch('change')
-        f.click('恢复官方姿态')
+        f.click("Restore official pose")
         assert.deepEqual(calls, [['undo', f.descriptors[0].object.uuid], ['reset', f.descriptors[1].object.uuid]])
     } finally { f.editor.dispose() }
 })
@@ -179,7 +179,7 @@ test('pose controls sit beside drag controls in Properties and use the selected 
 test('pose controls report each non-ready reason instead of claiming success', () => {
     const f = fixture()
     try {
-        for (const [label, operation, reason] of [['撤销姿态', 'undoPose', 'Pose undo history empty'], ['恢复官方姿态', 'resetPose', 'Current pose lease absent']]) {
+        for (const [label, operation, reason] of [["Undo pose", 'undoPose', 'Pose undo history empty'], ["Restore official pose", 'resetPose', 'Current pose lease absent']]) {
             f.editor.runtime[operation] = () => ({ status: 'unavailable', reason })
             f.click(label)
             assert.equal(f.editor.panel.status.textContent, reason)
@@ -223,16 +223,16 @@ test('pose controls follow actor removal and same-label replacement without targ
         f.editor.runtime.resetPose = key => { calls.push(['reset', key]); return { status: 'ready', value: undefined } }
         const removed = f.descriptors.shift()
         removed.isCurrent = () => false; f.callbacks.actors()
-        f.click('撤销姿态')
+        f.click("Undo pose")
         assert.deepEqual(calls, [['undo', f.descriptors[0].object.uuid]])
         const second = f.descriptors.pop(); second.isCurrent = () => false; f.callbacks.actors()
         for (const label of poseLabels) assert.equal(poseButton(f, label).disabled, true)
         const object = new Group(); object.add(new Bone())
         f.descriptors.push({ object, generation: 2, label: 'Same resource', actions: [], isCurrent: () => true }); f.callbacks.actors()
-        f.click('恢复官方姿态')
+        f.click("Restore official pose")
         assert.deepEqual(calls.at(-1), ['reset', object.uuid])
         assert.ok(calls.every(([, key]) => key !== removed.object.uuid))
-        assert.equal(poseButton(f, '恢复官方姿态').disabled, false)
+        assert.equal(poseButton(f, "Restore official pose").disabled, false)
     } finally { f.editor.dispose() }
 })
 
@@ -248,16 +248,16 @@ test('pose controls operate released ACTION APIs and remain usable after editor 
             f.callbacks.drag.object.rotation.y = angle; f.callbacks.drag.onChange(); f.frame()
             assert.ok(Math.abs(bone.rotation.y - angle) < 1e-7)
         }
-        edit(0.4); f.click('撤销姿态'); f.frame(); assert.ok(Math.abs(bone.rotation.y) < 1e-7)
-        edit(0.6); f.click('恢复官方姿态'); f.frame(); assert.ok(Math.abs(bone.rotation.y) < 1e-7)
+        edit(0.4); f.click("Undo pose"); f.frame(); assert.ok(Math.abs(bone.rotation.y) < 1e-7)
+        edit(0.6); f.click("Restore official pose"); f.frame(); assert.ok(Math.abs(bone.rotation.y) < 1e-7)
         f.click('Stop / hand back')
         assert.equal(f.editor.runtime.playing, false)
         assert.equal(f.callbacks.drag, undefined)
-        f.click('撤销姿态'); assert.equal(f.editor.panel.status.textContent, 'Current pose lease absent')
-        edit(0.3); f.click('撤销姿态'); f.frame(); assert.ok(Math.abs(bone.rotation.y) < 1e-7)
+        f.click("Undo pose"); assert.equal(f.editor.panel.status.textContent, 'Current pose lease absent')
+        edit(0.3); f.click("Undo pose"); f.frame(); assert.ok(Math.abs(bone.rotation.y) < 1e-7)
         assert.equal(f.editor.runtime.time, 2)
         assert.equal(f.editor.runtime.exportProject(), documentBefore)
-        assert.equal(poseButton(f, '撤销姿态').disabled, false)
+        assert.equal(poseButton(f, "Undo pose").disabled, false)
     } finally { f.editor.dispose() }
 })
 
