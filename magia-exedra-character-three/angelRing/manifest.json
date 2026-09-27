@@ -1,6 +1,6 @@
 {
   "schema": "angelring.product-curves.v1",
-  "denominator": 95,
+  "denominator": 97,
   "success": 88,
   "notApplicable": 7,
   "rows": [
@@ -35,6 +35,17 @@
       "inputSha256": "911e4f895b8bf73ebfdfe30be25f839671dd360cd2a7a089953b1f06b792d3e0"
     },
     {
+      "directory": "chara_100108_battle_unit",
+      "characterId": 100108,
+      "status": "success",
+      "reason": null,
+      "eligibleProjectedCommon": true,
+      "inputSha256": "3bfc414692dd6b030c1f35eb30a6883e6f879e776b411b3f231b21b0fa202ee9",
+      "curveSha256": "988f730e8de93eaa39832e1394b717dc40988ad0ad1e6375be223cffeb90564b",
+      "file": "curves/100108.json",
+      "jsonSha256": "e76a8762711b629b2edbb0c56626471ca7b69107fd775ed64edf12eb4f499045"
+    },
+    {
       "characterId": 100201,
       "status": "success",
       "curveSha256": "eae141a3658edf32da9fb0342b9945355eab314f10ef3d4acf4628980a49777c",
@@ -63,6 +74,17 @@
       "status": "success",
       "curveSha256": "a8bfcf5d56447e5ca0d001a1ab750a3241709f5b74dcd09a6c0e3b6d83f8f4b0",
       "inputSha256": "0302c9ecec68d65beca221a39855da07c346078d91f4fddf1a4d5ad0dc6012fd"
+    },
+    {
+      "directory": "chara_100208_battle_unit",
+      "characterId": 100208,
+      "status": "success",
+      "reason": null,
+      "eligibleProjectedCommon": true,
+      "inputSha256": "9700689670d1ffe79be68e8db62bd5c899e76ebe9c0e9f2f9326972640bed82e",
+      "curveSha256": "e2bef4f6e83e52df76ab837ad4b535f0551d8e98d32262312f094d761781a693",
+      "file": "curves/100208.json",
+      "jsonSha256": "54f8d17f0be5d5a00ea54be145e6742b0521c9d8b0bed81a241a1cc25999e6f2"
     },
     {
       "characterId": 100301,
@@ -443,10 +465,15 @@
       "inputSha256": "9ea81c4afe0e8026d4890ce25c64e625e29c90fd62e77f082ffd8c2693afc56b"
     },
     {
+      "directory": "chara_110702_battle_unit",
       "characterId": 110702,
       "status": "success",
+      "reason": null,
+      "eligibleProjectedCommon": true,
+      "inputSha256": "ef90e813e1ac67f35f3f114c4e3a4f7d3ed81d22fb4feb6a809ee7760d50ea77",
       "curveSha256": "4818a7886daeb7b32915a0befa42de555a5e11f67983582a5120cf6523c12f81",
-      "inputSha256": "fe8dcc2d0038ba93ea5f9fb41169e3fb39d328fae99dd313e70b446af5da8a6a"
+      "file": "curves/110702.json",
+      "jsonSha256": "acd5c154f84a8e93fefb2355c4fc4f0e218d599b65c9118a69b553acc86a5d9d"
     },
     {
       "characterId": 111401,
@@ -574,5 +601,13 @@
       "curveSha256": null,
       "inputSha256": "94e73c83c71c0f35b320b33b00818f38964604799970d45a5faffc4b73b2cc32"
     }
-  ]
+  ],
+  "statusCounts": {
+    "success": 90,
+    "failed": 0,
+    "not_applicable": 7,
+    "pending": 0
+  },
+  "eligibleProjectedCommon": 3,
+  "latestNativeModelCurveSource": "C:\\Users\\proje\\Documents\\Codex\\2026-09-12\\codex-threads-01a06bac-2bc0-7011-8471\\outputs\\latest-model-release-20260928\\integration\\curve-generation\\manifest.json"
 }

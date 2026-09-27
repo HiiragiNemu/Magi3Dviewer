@@ -14,11 +14,18 @@
 
 #perf-stat-js {
     pointer-events: initial;
-    transform: scale(0.72);
-    transform-origin: right bottom;
-    width: 36px;
-    height: 24px;
+    width: 46.4px;
+    height: 27.84px;
     overflow: hidden;
+}
+
+/* Scale the complete 80 x 48 stats canvas, not a clipped 40 px viewport.
+   The outer box reserves exactly the final painted size in the toolbar. */
+#perf-stat-js > div {
+    width: 80px;
+    height: 48px;
+    transform: scale(0.58);
+    transform-origin: left top;
 }
 
 #perf-time {

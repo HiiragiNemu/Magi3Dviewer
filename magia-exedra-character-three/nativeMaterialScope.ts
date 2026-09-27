@@ -155,6 +155,12 @@ export function createNativeMaterialScope(input: unknown, expected: NativeModelB
     return Object.freeze({ data, materialForSlot, profileValue, floatValue, colorValue, textureForProperty });
 }
 export type NativeMaterialScope = ReturnType<typeof createNativeMaterialScope>;
+/** Shared material consumer for native character packets and scoped Home props. */
+export interface NativeMaterialConsumerInput {
+    scope: Pick<NativeMaterialScope, 'materialForSlot' | 'floatValue' | 'colorValue' | 'textureForProperty'> & { data?: NativeMaterialPacket };
+    packet: { characterId: number; meshes: NativeMeshBinding[] };
+    textureUrls: Record<string, string>;
+}
 export interface NativeSlotResources {
     key: string;
     textures: Readonly<Record<string, THREE.Texture | null>>;
@@ -177,6 +183,10 @@ export function applyNativeSlotShaderBindings(shader: THREE.WebGLProgramParamete
     for (const [sampler, property] of Object.entries(NativeSamplerProperties)) {
         const binding = resources.bindings[property];
         if (!binding || !resources.textures[property]) continue;
+        // An identity ST needs no GLSL wrapper. Retain the existing sample
+        // contract used by accepted material extensions (including V4).
+        if (binding.scale.x === 1 && binding.scale.y === 1
+            && binding.offset.x === 0 && binding.offset.y === 0) continue;
         const pattern = new RegExp(`texture2D\\(\\s*${sampler}\\s*,`, 'g');
         if (!pattern.test(shader.fragmentShader)) continue;
         const functionName = `rdNativeSample_${sampler}`, st = `rdNativeST_${sampler}`;
@@ -203,7 +213,7 @@ export const NativeInactiveUniforms: Readonly<Record<string, string>> = {
     'gem.fresnelThreshold': 'uGemFresnelThreshold', 'gem.fresnelFeather': 'uGemFresnelFeather',
     'gem.fresnelMaskByMetallic': 'uGemFresnelMaskByMetallic',
 };
-export function nativeSlotShaderProfile(scope: NativeMaterialScope, meshKey: string, index: number): OfficialMaterialProfile {
+export function nativeSlotShaderProfile(scope: Pick<NativeMaterialScope, 'materialForSlot'>, meshKey: string, index: number): OfficialMaterialProfile {
     const entry = scope.materialForSlot(meshKey, index);
     const profile = structuredClone(entry.profile);
     for (const blank of entry.typedBlanks) {

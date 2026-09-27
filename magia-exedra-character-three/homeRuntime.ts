@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import type { HomeNativeTransitionDescriptor } from './homeNativeTransition'
 import { parseHomeExpressionSchema2, type HomeExpressionSchema2 } from './homeExpressionSchema2.ts'
 
 export interface HomeAnimationRuntime {
@@ -10,6 +11,8 @@ export interface HomeAnimationRuntime {
         wait01: { loopFamily: string; sourceClipPathId?: string }
         wait02: { loopFamily: string; sourceClipPathId?: string }
         unique01: {
+            /** Optional native intermediate state; activation requires an explicit settled checkpoint. */
+            nativeTransition?: HomeNativeTransitionDescriptor
             startFamily: string
             startSourceClipPathId?: string
             loopFamily: string

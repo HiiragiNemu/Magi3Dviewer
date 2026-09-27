@@ -1,5 +1,5 @@
 import { getLoadingTask, startLoadingTask, yieldLoadingFrame } from './loadingProgress.ts'
-import { resolveNativeAngelRingReference } from './nativeCharacterController';
+import { resolveNativeAngelRingReference, resolveNativeFaceDirectionReference } from './nativeCharacterController';
 import * as THREE from 'three';
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
@@ -38,6 +38,8 @@ import {
 } from './utils';
 import MagiaExedraCharacter3D, { type ObjectUserData } from './character';
 import { registerParsedBoneLocals } from './authoredBoneLocals';
+import { attachHomeIndependentProps, type HomeIndependentPropDocument } from './homeIndependentProps';
+import { getHomePropMaterialInput } from './homeIndependentPropMaterials';
 import {
     bindCharacterTextureLoadContext,
     registerCharacterTextureLoadContext,
@@ -81,7 +83,7 @@ import { installOfficialFaceMeshSwitcher } from './faceMeshSwitcher';
 import {
     createNativeMaterialScope, nativeSlotShaderProfile, applyNativeSlotShaderBindings,
     type NativeMaterialPacket, type NativeModelBindingContract, type NativeMaterialScope,
-    type NativeSlotResources, type NativeTextureBinding,
+    type NativeSlotResources, type NativeTextureBinding, type NativeMaterialConsumerInput,
 } from './nativeMaterialScope';
 import { prepareNativeMaterialChannels } from './nativeMaterialChannels';
 import { ApplyOfficialCharacterSurfaceSampling } from './texture';
@@ -513,7 +515,7 @@ export async function loadNativeCharacterMaterialInput(files: Record<string, str
     return { scope, packet, expected, channels, bakedNormalBuffer, cornerIndices: Object.fromEntries(corners), textureUrls };
 }
 
-export function createNativeSlotResourceLoader(input: NativeCharacterMaterialInput, signal?: AbortSignal, registerTexture: (texture: THREE.Texture) => void = () => undefined) {
+export function createNativeSlotResourceLoader(input: NativeMaterialConsumerInput, signal?: AbortSignal, registerTexture: (texture: THREE.Texture) => void = () => undefined) {
     const cache = new Map<string, Promise<THREE.Texture>>();
     return async (meshKey: string, index: number): Promise<NativeSlotResources> => {
         const scope = input.scope, entry = scope.materialForSlot(meshKey, index);
@@ -563,17 +565,19 @@ export function createNativeSlotResourceLoader(input: NativeCharacterMaterialInp
 /** Real constructors, one material per native slot. No material/texture name
  * inference, shared global profile install, or cross-character preset. */
 export async function createNativeMeshMaterials(
-    mesh: THREE.Mesh, input: NativeCharacterMaterialInput,
+    mesh: THREE.Mesh, input: NativeMaterialConsumerInput,
     resourceLoader: ReturnType<typeof createNativeSlotResourceLoader>,
     references: { root?: THREE.Object3D; perspective?: ReturnType<typeof createCharacterPerspectiveReference>; perspectiveReferences?: Map<string, CharacterPerspectiveReference>; angelRing?: ReturnType<typeof createAngelRingReference>; face?: ReturnType<typeof createFaceDirectionReference> } = {},
 ) {
     const meshKey = mesh.geometry.userData.nativeMaterialChannelKey as string;
     const binding = input.packet.meshes.find(row => row.key === meshKey);
     if (!binding) throw new Error('Native material construction requires exact channel binding');
-    const controllerBinding = references.root
+    const controllerBinding = references.root && input.scope.data
         ? resolveNativeAngelRingReference(references.root, input.scope.data, binding)
         : undefined;
     const angelRingReference = references.angelRing ?? controllerBinding?.reference;
+    const faceReference = references.face
+        ?? (input.scope.data ? resolveNativeFaceDirectionReference(input.scope.data, controllerBinding) : undefined);
     const controllerKey = controllerBinding?.diagnostic.controllerKey;
     let perspectiveReference = references.perspective
         ?? (controllerKey ? references.perspectiveReferences?.get(controllerKey) : undefined);
@@ -597,9 +601,11 @@ export async function createNativeMeshMaterials(
         if (profile.face.isFace) {
             if (profile.face.useGradientMap && (!resources.textures._FaceShadowGradientMap || !resources.textures._NoseShadowGradientMap)) throw new Error('BLANK required face gradient PPtr');
             const number = (name: string) => input.scope.floatValue(meshKey, slot.index, name);
-            result = await createFaceMaterial({ ...options, shadowMap: resources.bindings._ShadowTex?.key ?? '', faceAdditionalMaps: [resources.bindings._FaceAdditionalMap?.key ?? null], faceReference: references.face,
+            const face = await createFaceMaterial({ ...options, shadowMap: resources.bindings._ShadowTex?.key ?? '', faceAdditionalMaps: [resources.bindings._FaceAdditionalMap?.key ?? null], faceReference,
                 faceProfile: { characterId: input.packet.characterId, source: 'official-export', useFaceGradientMap: profile.face.useGradientMap, faceShadowGradientMapYOffset: number('_FaceShadowGradientMapYOffset'), noseShadowGradientMapYOffset: number('_NoseShadowGradientMapYOffset'), cheekValue: number('_CheekValue'), shadowOffset: profile.shadow.offset, shadowFeather: profile.shadow.feather, faceAreaCameraDepthTextureZWriteOffset: profile.face.cameraDepthTextureZWriteOffset, faceOutlineAdjust: profile.outline.faceOutlineAdjust } });
-            if (!references.face) unresolved.push('dynamic controller/head face-direction binding BLANK; serialized material directions retained');
+            result = face;
+            if (face.updateFaceDirectionReference) installAngelRingDrawReferenceUpdate(mesh, face.updateFaceDirectionReference);
+            if (!faceReference) unresolved.push('dynamic controller/head face-direction binding BLANK; serialized material directions retained');
         } else if (profile.angelRing.isHair) {
             const hair = await createHairMaterial({ ...options, angelRingReference });
             result = hair;
@@ -860,7 +866,11 @@ export async function loadCharacter(
                             throw new Error('Home animation character ID does not match the model')
                         }
                         attachHomeAnimationRuntime(modelObject, animationRuntime)
-                        homeAnimationRuntime = animationRuntime
+                        const propUrl = ObjFindByKey(files, path => path.endsWith('home-props.json.gz'))
+                        homeAnimationRuntime = propUrl
+                            ? attachHomeIndependentProps(modelObject, animationRuntime,
+                                await fetchJsonRuntime<HomeIndependentPropDocument>(propUrl, signal))
+                            : animationRuntime
                     }
                     if (expressionRuntime) {
                         if (expressionRuntime.characterId !== characterId) {
@@ -995,6 +1005,7 @@ export async function loadCharacter(
             // Per loaded actor: identical controller owners share one moving
             // face anchor; another actor never shares these mutable vectors.
             const nativePerspectiveReferences = new Map<string, CharacterPerspectiveReference>();
+            const homePropResourceLoaders = new Map<NativeMaterialConsumerInput, ReturnType<typeof createNativeSlotResourceLoader>>();
 
             const textureResults = await Promise.allSettled(meshes.map(async mesh => {
                 try {
@@ -1003,8 +1014,17 @@ export async function loadCharacter(
                     mesh.userData.characterPerspectiveReference =
                         characterPerspectiveReference
 
-                    if (nativeInput && nativeResourceLoader) {
-                        const exact = await createNativeMeshMaterials(mesh, nativeInput, nativeResourceLoader, { root: modelObject, perspectiveReferences: nativePerspectiveReferences });
+                    const homePropInput = getHomePropMaterialInput(mesh, files);
+                    let homePropLoader = homePropInput ? homePropResourceLoaders.get(homePropInput) : undefined;
+                    if (homePropInput && !homePropLoader) {
+                        homePropLoader = createNativeSlotResourceLoader(homePropInput, signal, texture => transactionTextures.add(texture));
+                        homePropResourceLoaders.set(homePropInput, homePropLoader);
+                    }
+                    const materialInput = homePropInput ?? nativeInput;
+                    const materialResourceLoader = homePropLoader ?? nativeResourceLoader;
+                    if (materialInput && materialResourceLoader) {
+                        const exact = await createNativeMeshMaterials(mesh, materialInput, materialResourceLoader,
+                            homePropInput ? {} : { root: modelObject, perspectiveReferences: nativePerspectiveReferences });
                         if (exact.perspectiveReference && !userData.animationLoops.includes(exact.perspectiveReference.update)) {
                             userData.animationLoops.push(exact.perspectiveReference.update);
                         }
@@ -1306,7 +1326,12 @@ export async function loadCharacter(
                             alphaTex = result.alphaTex
                             outlineShadowTex = result.shadowTex
                             if (result.updateAngelRingReference) {
-                                installAngelRingDrawReferenceUpdate(mesh, result.updateAngelRingReference)
+                                installAngelRingDrawReferenceUpdate(mesh, () => {
+                                    // A seek/late pose edit can occur after animationLoop.
+                                    // Both consumers must observe this draw's same Head pose.
+                                    characterPerspectiveReference?.update()
+                                    result.updateAngelRingReference?.()
+                                })
                             }
                         } else {
                             const result = await createGeneralMaterial({

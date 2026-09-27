@@ -69,6 +69,7 @@ const general = compile(read(`${moduleDir}/shaders/general.ts`), 'general.ts', {
 const hair = compile(read(`${moduleDir}/shaders/hair.ts`), 'hair.ts', { three: THREE, '.': {...userdata,...general}, '../texture': texture, './RDToon_AngelRingMap.png': 'unused-legacy-common-map' });
 const observedReferences = [];
 const deps = { THREE, ...native, ...controller, ...general, ...profile,
+  resolveNativeFaceDirectionReference: controller.resolveNativeFaceDirectionReference,
   createHairMaterial: async options => { observedReferences.push(options.angelRingReference); return hair.createHairMaterial(options); },
   createFaceMaterial() { throw Error('hair fixture unexpectedly invoked face constructor'); },
   injectOfficialGemShader() { throw Error('hair fixture unexpectedly invoked gem pass'); },
@@ -126,7 +127,7 @@ function constructViaProductionCall(mesh,input,resourceLoader,root,cache=new Map
     ts.forEachChild(node,visit);
   }
   visit(loaderAst);assert.ok(call);
-  return Function('createNativeMeshMaterials','mesh','nativeInput','nativeResourceLoader','modelObject','nativePerspectiveReferences',`return ${call.getText(loaderAst)}`)(exports.createNativeMeshMaterials,mesh,input,resourceLoader,root,cache);
+  return Function('createNativeMeshMaterials','mesh','materialInput','materialResourceLoader','modelObject','nativePerspectiveReferences','homePropInput',`return ${call.getText(loaderAst)}`)(exports.createNativeMeshMaterials,mesh,input,resourceLoader,root,cache,undefined);
 }
 async function withNativeHair(check, p=packet) {
   const scope=native.createNativeMaterialScope(p,expected);
@@ -206,7 +207,14 @@ test('actual native two-slot factory receives one shared source reference and ex
       assert.deepEqual(slot.unresolved,[]); const s=shader(slot.result.material);
       assert.equal(s.uniforms.tAngelRingMap.value,slot.resources.textures._AngelRingMap);
       assert.equal(s.uniforms.tAngelRingMap.value.userData.nativeTextureKey,slot.resources.bindings._AngelRingMap.key);
+      const binding=slot.resources.bindings._AngelRingMap;
+      assert.deepEqual([binding.scale.x,binding.scale.y,binding.offset.x,binding.offset.y],[1,1,0,0]);
+      assert.match(s.fragmentShader,/texture2D\(\s*tAngelRingMap\s*,\s*rdAngelMapUv\s*\)/);
+      assert.doesNotMatch(s.fragmentShader,/vec4 rdNativeSample_tAngelRingMap\(/);
+      const nonIdentity={...slot.resources,bindings:{...slot.resources.bindings,_AngelRingMap:{...binding,scale:{x:2,y:3},offset:{x:.125,y:-.25}}}};
+      native.applyNativeSlotShaderBindings(s,nonIdentity);
       assert.match(s.fragmentShader,/rdNativeSample_tAngelRingMap\(\s*rdAngelMapUv\s*\)/);
+      assert.deepEqual(s.uniforms.rdNativeST_tAngelRingMap.value.toArray(),[2,3,.125,-.25]);
       assert.equal(slot.result.material.name,meshBinding.slots[slot.index].materialName);
       assert.equal(slot.result.material.userData.nativeMaterialKey,`${meshBinding.key}:slot:${slot.index}`);
       assert.equal(slot.result.material.userData.nativeControllerReference.status,'BOUND');
@@ -319,7 +327,7 @@ test('production outline call and actual CameraDepth wrapper bind the native for
 });
 test('source early-return native path registers a frame update once per shared controller',()=>{
   let nativeBranch;
-  const visit=node=>{if(ts.isIfStatement(node)&&node.expression.getText(loaderAst)==='nativeInput && nativeResourceLoader')nativeBranch=node.thenStatement;ts.forEachChild(node,visit);};visit(loaderAst);assert.ok(nativeBranch);
+  const visit=node=>{if(ts.isIfStatement(node)&&node.expression.getText(loaderAst)==='materialInput && materialResourceLoader')nativeBranch=node.thenStatement;ts.forEachChild(node,visit);};visit(loaderAst);assert.ok(nativeBranch);
   const statement=nativeBranch.statements.find(node=>ts.isIfStatement(node)&&node.expression.getText(loaderAst).includes('animationLoops.includes'));assert.ok(statement,'frame update registration required');
   let count=0;const exact={perspectiveReference:{update:()=>count++}},userData={animationLoops:[]};
   const register=Function('exact','userData',statement.getText(loaderAst));register(exact,userData);register(exact,userData);

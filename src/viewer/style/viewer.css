@@ -488,23 +488,9 @@ body.theme-light .character-search-result[aria-selected="true"] {
     margin: 0;
 }
 
-#toolbar-tools #perf-stat {
+#app #menu #toolbar-tools > #perf-stat {
     flex: 0 0 auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 40px;
-    height: 26px;
     padding: 0;
-    overflow: visible;
-}
-
-#toolbar-tools #perf-stat-js {
-    width: 40px;
-    height: 26px;
-    overflow: hidden;
-    transform: scale(0.58);
-    transform-origin: left center;
 }
 
 #app #menu #toolbar-tools > #menu-icons > * {

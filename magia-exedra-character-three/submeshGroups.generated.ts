@@ -745,6 +745,21 @@ export const officialCharacterSubmeshIndexCounts: Readonly<
         "weapon_mesh": [6],
     },
     // 110702: Android JP target 13; parser fallback 2022.3.62f2, not a Steam bundle.
+    100208: {
+        "Acc_Mesh": [972],
+        "Body_Mesh": [30408, 720, 1044, 186, 2754],
+        "Face_Mesh": [1449, 132, 6450],
+        "Hair_Mesh": [4266, 6588],
+    },
+    100108: {
+        "Acc_Mesh": [4500],
+        "Body_Mesh": [1683, 37278, 10050, 1731, 240],
+        "Eye_Bright_Mesh": [192],
+        "Face_Mesh": [7128, 1056, 192],
+        "Hair_Mesh": [3141, 8865],
+        "weapon_a_mesh": [2994, 168],
+        "weapon_b_mesh": [4077, 48, 168],
+    },
     110702: {
         "Acc_Mesh": [1962, 810, 1116],
         "Body_Mesh": [39507, 849, 2160, 174, 36, 984, 1434, 270],

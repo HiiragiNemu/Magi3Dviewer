@@ -47,8 +47,8 @@ test('wheel target has no delayed dolly and preserves exact camera target', () =
   assert.ok(Math.abs(scene.camera.position.distanceTo(scene.controls.target)-1.8)<1e-12);
   const first=api.state(); api.step(1/12); assert.deepEqual(api.state(),first);
 });
-test('pitch stays bounded; yaw crosses +/- pi without an alternate long rotation', () => {
+test('both camera angles remain unwrapped across multiple full turns', () => {
   const {api}=fixture(); for(let i=0;i<1000;i++){api.input(40,40);api.step(1/60)}
   assert.ok(Math.abs(api.state().yaw+72)<1e-8);
-  assert.ok(Math.abs(api.state().pitch-THREE.MathUtils.degToRad(55))<1e-8);
+  assert.ok(Math.abs(api.state().pitch-(THREE.MathUtils.degToRad(18)+60))<1e-8);
 });

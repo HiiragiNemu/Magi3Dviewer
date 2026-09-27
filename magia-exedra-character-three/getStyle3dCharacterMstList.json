@@ -943,16 +943,36 @@
         "isExistVoice": true,
         "isDefault": true
       },
-{
-      "style3dCharacterMstId": 101002,
-      "type": 1,
-      "name": "ウワサの鶴乃/魔法少女",
-      "resourceName": "chara_101002_battle_unit",
-      "homeMotionResourceName": "chara_10100201_home",
-      "sortOrder": 101002,
-      "isExistVoice": true,
-      "isDefault": true
-},
+      {
+        "style3dCharacterMstId": 101002,
+        "type": 1,
+        "name": "ウワサの鶴乃/魔法少女",
+        "resourceName": "chara_101002_battle_unit",
+        "homeMotionResourceName": "chara_10100201_home",
+        "sortOrder": 101002,
+        "isExistVoice": true,
+        "isDefault": true
+      },
+      {
+        "style3dCharacterMstId": 100207,
+        "type": 1,
+        "name": "暁美ほむら/ワルプルギスの廻天",
+        "resourceName": "chara_100208_battle_unit",
+        "homeMotionResourceName": "chara_10020801_home",
+        "sortOrder": 100207,
+        "isExistVoice": false,
+        "isDefault": true
+      },
+      {
+        "style3dCharacterMstId": 100105,
+        "type": 1,
+        "name": "鹿目まどか/ワルプルギスの廻天",
+        "resourceName": "chara_100108_battle_unit",
+        "homeMotionResourceName": "chara_10010801_home",
+        "sortOrder": 100105,
+        "isExistVoice": false,
+        "isDefault": true
+      },
       {
         "style3dCharacterMstId": 110702,
         "type": 1,

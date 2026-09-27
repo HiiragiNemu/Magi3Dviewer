@@ -1,0 +1,833 @@
+{
+  "characterId": 110702,
+  "styleId": 0,
+  "sourceCommit": "bundle-sha256:a114878c9f891504e41239fb2e8ee581053cad25f3c0b57c4a549be65a070d93",
+  "serializedPlatform": 13,
+  "serializedFormat": 22,
+  "unityVersion": null,
+  "versionStatus": "SANITIZED; explicit parser fallback 2022.3.62f2, not claimed serialized release",
+  "meshBindings": [
+    {
+      "key": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:842398482115326512:renderer:-6631530871981858009",
+      "sourceCab": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348",
+      "meshPathId": "842398482115326512",
+      "rendererPathId": "-6631530871981858009",
+      "path": "chara_110702_battle_unit/VisualRoot/chara_110702_weapon_a_model/chara_110702_weapon_a/weapon_a_mesh_gp/weapon_a_mesh_bear",
+      "name": "weapon_a_mesh_bear",
+      "sourceVertexCount": 1625,
+      "expandedVertexCount": 7236,
+      "slots": [
+        {
+          "index": 0,
+          "start": 0,
+          "count": 7236,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:5669775306067803435",
+          "materialName": "mt_chara_110702_weapon_a_Fresnel",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        }
+      ],
+      "channels": [
+        {
+          "semantic": "COLOR0",
+          "sourceChannelIndex": 3,
+          "serialized": {
+            "stream": 1,
+            "offset": 0,
+            "format": 2,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeColor",
+          "data": {
+            "offset": 86832,
+            "byteLength": 115776,
+            "count": 7236,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TANGENT0",
+          "sourceChannelIndex": 2,
+          "serialized": {
+            "stream": 0,
+            "offset": 24,
+            "format": 0,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeTangentUnity",
+          "data": {
+            "offset": 202608,
+            "byteLength": 115776,
+            "count": 7236,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TEXCOORD0",
+          "sourceChannelIndex": 4,
+          "serialized": {
+            "stream": 1,
+            "offset": 4,
+            "format": 1,
+            "dimension": 2
+          },
+          "componentCount": 2,
+          "attribute": "reDriveTexcoord0",
+          "data": {
+            "offset": 318384,
+            "byteLength": 57888,
+            "count": 7236,
+            "itemSize": 2
+          }
+        },
+        {
+          "semantic": "TEXCOORD3",
+          "sourceChannelIndex": 7,
+          "serialized": {
+            "stream": 1,
+            "offset": 8,
+            "format": 1,
+            "dimension": 52
+          },
+          "componentCount": 4,
+          "attribute": "reDriveTexcoord3",
+          "data": {
+            "offset": 376272,
+            "byteLength": 115776,
+            "count": 7236,
+            "itemSize": 4
+          }
+        }
+      ],
+      "fbxUvAliases": [
+        {
+          "attribute": "uv",
+          "sourceSemantic": "TEXCOORD0",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        },
+        {
+          "attribute": "uv1",
+          "sourceSemantic": "TEXCOORD3",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        }
+      ]
+    },
+    {
+      "key": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-8023605067087452920:renderer:-6392854918984820201",
+      "sourceCab": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348",
+      "meshPathId": "-8023605067087452920",
+      "rendererPathId": "-6392854918984820201",
+      "path": "chara_110702_battle_unit/VisualRoot/chara_110702_model/chara_110702/chara/Body_Mesh",
+      "name": "Body_Mesh",
+      "sourceVertexCount": 12026,
+      "expandedVertexCount": 45414,
+      "slots": [
+        {
+          "index": 0,
+          "start": 0,
+          "count": 39507,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:2193757379654597715",
+          "materialName": "mt_chara_110702_body",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 1,
+          "start": 39507,
+          "count": 849,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:8859476019532568917",
+          "materialName": "mt_chara_110702_body_Aniso",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 2,
+          "start": 40356,
+          "count": 2160,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-6642051081650837569",
+          "materialName": "mt_chara_110702_body_matcap",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 3,
+          "start": 42516,
+          "count": 174,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-4221591355648170740",
+          "materialName": "mt_chara_110702_body_metal",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 4,
+          "start": 42690,
+          "count": 36,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-650715240861674793",
+          "materialName": "mt_chara_110702_body_SJ",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 5,
+          "start": 42726,
+          "count": 984,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:6978780455583716885",
+          "materialName": "mt_chara_110702_body_shoes",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 6,
+          "start": 43710,
+          "count": 1434,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-3355852556980571245",
+          "materialName": "mt_chara_110702_body_Fresnel",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 7,
+          "start": 45144,
+          "count": 270,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-222432772638733083",
+          "materialName": "mt_chara_110702_body_zipper",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        }
+      ],
+      "channels": [
+        {
+          "semantic": "COLOR0",
+          "sourceChannelIndex": 3,
+          "serialized": {
+            "stream": 1,
+            "offset": 0,
+            "format": 2,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeColor",
+          "data": {
+            "offset": 1123848,
+            "byteLength": 726624,
+            "count": 45414,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TANGENT0",
+          "sourceChannelIndex": 2,
+          "serialized": {
+            "stream": 0,
+            "offset": 24,
+            "format": 0,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeTangentUnity",
+          "data": {
+            "offset": 1850472,
+            "byteLength": 726624,
+            "count": 45414,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TEXCOORD0",
+          "sourceChannelIndex": 4,
+          "serialized": {
+            "stream": 1,
+            "offset": 4,
+            "format": 1,
+            "dimension": 2
+          },
+          "componentCount": 2,
+          "attribute": "reDriveTexcoord0",
+          "data": {
+            "offset": 2577096,
+            "byteLength": 363312,
+            "count": 45414,
+            "itemSize": 2
+          }
+        },
+        {
+          "semantic": "TEXCOORD3",
+          "sourceChannelIndex": 7,
+          "serialized": {
+            "stream": 1,
+            "offset": 8,
+            "format": 1,
+            "dimension": 52
+          },
+          "componentCount": 4,
+          "attribute": "reDriveTexcoord3",
+          "data": {
+            "offset": 2940408,
+            "byteLength": 726624,
+            "count": 45414,
+            "itemSize": 4
+          }
+        }
+      ],
+      "fbxUvAliases": [
+        {
+          "attribute": "uv",
+          "sourceSemantic": "TEXCOORD0",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        },
+        {
+          "attribute": "uv1",
+          "sourceSemantic": "TEXCOORD3",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        }
+      ]
+    },
+    {
+      "key": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-7121385292691421940:renderer:-4125940440388239391",
+      "sourceCab": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348",
+      "meshPathId": "-7121385292691421940",
+      "rendererPathId": "-4125940440388239391",
+      "path": "chara_110702_battle_unit/VisualRoot/chara_110702_model/chara_110702/chara/Acc_Mesh",
+      "name": "Acc_Mesh",
+      "sourceVertexCount": 1179,
+      "expandedVertexCount": 3888,
+      "slots": [
+        {
+          "index": 0,
+          "start": 0,
+          "count": 1962,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-7893964863792736504",
+          "materialName": "mt_chara_110702_acc_Aniso",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 1,
+          "start": 1962,
+          "count": 810,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:6226084964086091089",
+          "materialName": "mt_chara_110702_acc",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 2,
+          "start": 2772,
+          "count": 1116,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:3298363915247934550",
+          "materialName": "mt_chara_110702_acc_thin",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        }
+      ],
+      "channels": [
+        {
+          "semantic": "COLOR0",
+          "sourceChannelIndex": 3,
+          "serialized": {
+            "stream": 1,
+            "offset": 0,
+            "format": 2,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeColor",
+          "data": {
+            "offset": 4258656,
+            "byteLength": 62208,
+            "count": 3888,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TANGENT0",
+          "sourceChannelIndex": 2,
+          "serialized": {
+            "stream": 0,
+            "offset": 24,
+            "format": 0,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeTangentUnity",
+          "data": {
+            "offset": 4320864,
+            "byteLength": 62208,
+            "count": 3888,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TEXCOORD0",
+          "sourceChannelIndex": 4,
+          "serialized": {
+            "stream": 1,
+            "offset": 4,
+            "format": 0,
+            "dimension": 2
+          },
+          "componentCount": 2,
+          "attribute": "reDriveTexcoord0",
+          "data": {
+            "offset": 4383072,
+            "byteLength": 31104,
+            "count": 3888,
+            "itemSize": 2
+          }
+        },
+        {
+          "semantic": "TEXCOORD3",
+          "sourceChannelIndex": 7,
+          "serialized": {
+            "stream": 1,
+            "offset": 12,
+            "format": 0,
+            "dimension": 3
+          },
+          "componentCount": 3,
+          "attribute": "reDriveTexcoord3",
+          "data": {
+            "offset": 4414176,
+            "byteLength": 46656,
+            "count": 3888,
+            "itemSize": 3
+          }
+        }
+      ],
+      "fbxUvAliases": [
+        {
+          "attribute": "uv",
+          "sourceSemantic": "TEXCOORD0",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        },
+        {
+          "attribute": "uv1",
+          "sourceSemantic": "TEXCOORD3",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        }
+      ]
+    },
+    {
+      "key": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-5325863275519219716:renderer:-2185032976705974157",
+      "sourceCab": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348",
+      "meshPathId": "-5325863275519219716",
+      "rendererPathId": "-2185032976705974157",
+      "path": "chara_110702_battle_unit/VisualRoot/chara_110702_model/chara_110702/chara/Face_Mesh",
+      "name": "Face_Mesh",
+      "sourceVertexCount": 2447,
+      "expandedVertexCount": 9204,
+      "slots": [
+        {
+          "index": 0,
+          "start": 0,
+          "count": 2184,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-6131242794824379897",
+          "materialName": "mt_chara_110702_eyebrow_mask",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 1,
+          "start": 2184,
+          "count": 144,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-2269370801441587110",
+          "materialName": "mt_chara_110702_eye_mask",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 2,
+          "start": 2328,
+          "count": 6876,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:4534323259593360487",
+          "materialName": "mt_chara_110702_face",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        }
+      ],
+      "channels": [
+        {
+          "semantic": "COLOR0",
+          "sourceChannelIndex": 3,
+          "serialized": {
+            "stream": 1,
+            "offset": 0,
+            "format": 2,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeColor",
+          "data": {
+            "offset": 4617936,
+            "byteLength": 147264,
+            "count": 9204,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TANGENT0",
+          "sourceChannelIndex": 2,
+          "serialized": {
+            "stream": 0,
+            "offset": 24,
+            "format": 0,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeTangentUnity",
+          "data": {
+            "offset": 4765200,
+            "byteLength": 147264,
+            "count": 9204,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TEXCOORD0",
+          "sourceChannelIndex": 4,
+          "serialized": {
+            "stream": 1,
+            "offset": 4,
+            "format": 0,
+            "dimension": 2
+          },
+          "componentCount": 2,
+          "attribute": "reDriveTexcoord0",
+          "data": {
+            "offset": 4912464,
+            "byteLength": 73632,
+            "count": 9204,
+            "itemSize": 2
+          }
+        },
+        {
+          "semantic": "TEXCOORD1",
+          "sourceChannelIndex": 5,
+          "serialized": {
+            "stream": 1,
+            "offset": 12,
+            "format": 0,
+            "dimension": 2
+          },
+          "componentCount": 2,
+          "attribute": "reDriveTexcoord1",
+          "data": {
+            "offset": 4986096,
+            "byteLength": 73632,
+            "count": 9204,
+            "itemSize": 2
+          }
+        },
+        {
+          "semantic": "TEXCOORD3",
+          "sourceChannelIndex": 7,
+          "serialized": {
+            "stream": 1,
+            "offset": 20,
+            "format": 0,
+            "dimension": 3
+          },
+          "componentCount": 3,
+          "attribute": "reDriveTexcoord3",
+          "data": {
+            "offset": 5059728,
+            "byteLength": 110448,
+            "count": 9204,
+            "itemSize": 3
+          }
+        }
+      ],
+      "fbxUvAliases": [
+        {
+          "attribute": "uv",
+          "sourceSemantic": "TEXCOORD0",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        },
+        {
+          "attribute": "uv1",
+          "sourceSemantic": "TEXCOORD3",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        }
+      ]
+    },
+    {
+      "key": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-4858080053857396961:renderer:1973576095755957533",
+      "sourceCab": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348",
+      "meshPathId": "-4858080053857396961",
+      "rendererPathId": "1973576095755957533",
+      "path": "chara_110702_battle_unit/VisualRoot/chara_110702_weapon_a_model/chara_110702_weapon_a/weapon_a_mesh_gp/weapon_a_mesh_ballon",
+      "name": "weapon_a_mesh_ballon",
+      "sourceVertexCount": 2203,
+      "expandedVertexCount": 7512,
+      "slots": [
+        {
+          "index": 0,
+          "start": 0,
+          "count": 2952,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:3886246892880002178",
+          "materialName": "mt_chara_110702_weapon_a_matcap",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 1,
+          "start": 2952,
+          "count": 3432,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:1444896648038130477",
+          "materialName": "mt_chara_110702_weapon_a",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 2,
+          "start": 6384,
+          "count": 888,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-5233359020187298155",
+          "materialName": "mt_chara_110702_weapon_a_alpha",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 3,
+          "start": 7272,
+          "count": 240,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:-1160935153848755280",
+          "materialName": "mt_chara_110702_weapon_a_Aniso",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        }
+      ],
+      "channels": [
+        {
+          "semantic": "COLOR0",
+          "sourceChannelIndex": 3,
+          "serialized": {
+            "stream": 1,
+            "offset": 0,
+            "format": 2,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeColor",
+          "data": {
+            "offset": 5370768,
+            "byteLength": 120192,
+            "count": 7512,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TANGENT0",
+          "sourceChannelIndex": 2,
+          "serialized": {
+            "stream": 0,
+            "offset": 24,
+            "format": 0,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeTangentUnity",
+          "data": {
+            "offset": 5490960,
+            "byteLength": 120192,
+            "count": 7512,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TEXCOORD0",
+          "sourceChannelIndex": 4,
+          "serialized": {
+            "stream": 1,
+            "offset": 4,
+            "format": 1,
+            "dimension": 2
+          },
+          "componentCount": 2,
+          "attribute": "reDriveTexcoord0",
+          "data": {
+            "offset": 5611152,
+            "byteLength": 60096,
+            "count": 7512,
+            "itemSize": 2
+          }
+        },
+        {
+          "semantic": "TEXCOORD3",
+          "sourceChannelIndex": 7,
+          "serialized": {
+            "stream": 1,
+            "offset": 8,
+            "format": 1,
+            "dimension": 52
+          },
+          "componentCount": 4,
+          "attribute": "reDriveTexcoord3",
+          "data": {
+            "offset": 5671248,
+            "byteLength": 120192,
+            "count": 7512,
+            "itemSize": 4
+          }
+        }
+      ],
+      "fbxUvAliases": [
+        {
+          "attribute": "uv",
+          "sourceSemantic": "TEXCOORD0",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        },
+        {
+          "attribute": "uv1",
+          "sourceSemantic": "TEXCOORD3",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        }
+      ]
+    },
+    {
+      "key": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:6785560442836609706:renderer:7074672496467926594",
+      "sourceCab": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348",
+      "meshPathId": "6785560442836609706",
+      "rendererPathId": "7074672496467926594",
+      "path": "chara_110702_battle_unit/VisualRoot/chara_110702_model/chara_110702/chara/Hair_Mesh",
+      "name": "Hair_Mesh",
+      "sourceVertexCount": 4099,
+      "expandedVertexCount": 16743,
+      "slots": [
+        {
+          "index": 0,
+          "start": 0,
+          "count": 4386,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:8590413758901008718",
+          "materialName": "mt_chara_110702_hair_out",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        },
+        {
+          "index": 1,
+          "start": 4386,
+          "count": 12357,
+          "materialKey": "CAB-d17ab5e43e3c4a8a9e87712d9d75f348:6896444441048525914",
+          "materialName": "mt_chara_110702_hair",
+          "shaderKey": "CAB-d4292dd62db4a15308122929284b3327:7704691985981102055"
+        }
+      ],
+      "channels": [
+        {
+          "semantic": "COLOR0",
+          "sourceChannelIndex": 3,
+          "serialized": {
+            "stream": 1,
+            "offset": 0,
+            "format": 2,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeColor",
+          "data": {
+            "offset": 6082500,
+            "byteLength": 267888,
+            "count": 16743,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TANGENT0",
+          "sourceChannelIndex": 2,
+          "serialized": {
+            "stream": 0,
+            "offset": 24,
+            "format": 0,
+            "dimension": 4
+          },
+          "componentCount": 4,
+          "attribute": "reDriveNativeTangentUnity",
+          "data": {
+            "offset": 6350388,
+            "byteLength": 267888,
+            "count": 16743,
+            "itemSize": 4
+          }
+        },
+        {
+          "semantic": "TEXCOORD0",
+          "sourceChannelIndex": 4,
+          "serialized": {
+            "stream": 1,
+            "offset": 4,
+            "format": 1,
+            "dimension": 2
+          },
+          "componentCount": 2,
+          "attribute": "reDriveTexcoord0",
+          "data": {
+            "offset": 6618276,
+            "byteLength": 133944,
+            "count": 16743,
+            "itemSize": 2
+          }
+        },
+        {
+          "semantic": "TEXCOORD3",
+          "sourceChannelIndex": 7,
+          "serialized": {
+            "stream": 1,
+            "offset": 8,
+            "format": 1,
+            "dimension": 52
+          },
+          "componentCount": 4,
+          "attribute": "reDriveTexcoord3",
+          "data": {
+            "offset": 6752220,
+            "byteLength": 267888,
+            "count": 16743,
+            "itemSize": 4
+          }
+        }
+      ],
+      "fbxUvAliases": [
+        {
+          "attribute": "uv",
+          "sourceSemantic": "TEXCOORD0",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        },
+        {
+          "attribute": "uv1",
+          "sourceSemantic": "TEXCOORD3",
+          "components": [
+            0,
+            1
+          ],
+          "vTransform": "identity"
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import type * as THREE from 'three';
 import type MagiaExedraCharacter3D from '../character';
 import type { MagiaExedraScene3D } from '../scene';
-import { createCharacterRingController } from './controller.mjs';
+import { createCharacterRingController } from './headSurface';
 import type { CharacterRingController, CharacterRingCurve } from './controller.mjs';
 import manifest from './manifest.json';
 

@@ -715,9 +715,11 @@ export async function createFaceMaterial(options: FaceMaterialCreationOptions): 
         runtimeUserData.shader = shader;
         runtimeUserData.shaderUniforms = uniforms;
         if (native) {
-            shader.uniforms.uFaceForwardWS.value.copy(native.faceDirections.forward);
-            shader.uniforms.uFaceUpWS.value.copy(native.faceDirections.up);
-            shader.uniforms.uFaceRightWS.value.copy(native.faceDirections.right);
+            if (!options.faceReference) {
+                shader.uniforms.uFaceForwardWS.value.copy(native.faceDirections.forward);
+                shader.uniforms.uFaceUpWS.value.copy(native.faceDirections.up);
+                shader.uniforms.uFaceRightWS.value.copy(native.faceDirections.right);
+            }
             shader.vertexShader = shader.vertexShader.replace('attribute vec2 uv1;', 'attribute vec2 reDriveTexcoord1;').replace(/vFaceUv2 = uv1/g, 'vFaceUv2 = reDriveTexcoord1');
             applyNativeSlotShaderBindings(shader, native);
             Object.assign(runtimeUserData, { nativeMaterialKey: native.key, nativeTextureSampling: native.sampling, nativeUnknowns: native.unknowns });

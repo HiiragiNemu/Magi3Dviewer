@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { unityDirectionToThreeFbx, type AngelRingReference, type ReDriveAxis } from './renderProfile';
 import type { NativeMaterialPacket, NativeMeshBinding } from './nativeMaterialScope';
+import type { FaceDirectionReference } from './faceProfile';
 
 type SerializedPPtr = { m_FileID: number; m_PathID: string };
 interface ControllerRecord {
@@ -11,7 +12,7 @@ interface ControllerRecord {
         reDriveToonRenderers: SerializedPPtr[];
         characterMaterialController: SerializedPPtr;
         headBoneTransform: SerializedPPtr;
-        headOffset: number; faceForwardDirection: number; faceUpDirection: number;
+        headOffset: number; faceForwardDirection: number; faceUpDirection: number; faceRightDirection: number;
         CharacterCancelPerspective: number;
     };
     [key: string]: unknown;
@@ -96,5 +97,25 @@ export function resolveNativeAngelRingReference(
             controllerKey: `${controller.cab}:${controller.pathId}`,
             headTransformKey: `${controller.cab}:${pointer.m_PathID}`, headPath,
         },
+    };
+}
+
+/** Reuse the exact resolved renderer owner and Head. Do not infer a right
+ * axis from a model ID, a bone-name search, or an unrelated profile. */
+export function resolveNativeFaceDirectionReference(
+    packet: NativeMaterialPacket, binding: NativeAngelRingBinding | undefined,
+): FaceDirectionReference | undefined {
+    const reference = binding?.reference, key = binding?.diagnostic.controllerKey;
+    if (!reference || !key) return undefined;
+    const owners = packet.controllerBindings?.controllers.filter(row =>
+        `${row.cab}:${row.pathId}` === key) ?? [];
+    if (owners.length !== 1) return undefined;
+    const axis = owners[0].tree.faceRightDirection;
+    if (!Number.isInteger(axis) || axis < 0 || axis >= directionAxes.length) return undefined;
+    return {
+        headBone: reference.headBone,
+        localForward: reference.localForward.clone(),
+        localUp: reference.localUp.clone(),
+        localRight: unityDirectionToThreeFbx(directionAxes[axis]),
     };
 }

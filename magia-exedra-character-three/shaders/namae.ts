@@ -10,7 +10,7 @@ import {
     ApplyOfficialCharacterSurfaceSampling,
     loadTexture,
 } from '../texture'
-import { MaterialUserData, type MaterialCreationResult } from '.'
+import { MaterialUserData, diffuseColorManipulationEndFlag, type MaterialCreationResult } from '.'
 import OfficialSharedCosmicNoise from '../models/chara_113401_model/cloud_noise_tex.png'
 
 const NAMAE_SHADER = 'Creative/Character/NamaeShader'
@@ -419,6 +419,13 @@ async function createOfficialProjectedCosmicMaterial(
 ): Promise<OfficialCustomCharacterMaterialResult> {
     const { profile, baseMaterial } = options
     const cosmic = resolveOfficialCosmicProfile(options)
+    // DoppelIroha pass3/blob19 is not main_base's optional late Cosmic branch:
+    // instructions 168-244 overlay the toon colour before scene-light multiply
+    // (297) and subsequent highlights. Its shader has no CosmicOverlay switch.
+    const doppelIroha = profile.name === DOPPEL_IROHA_SHADER
+    const cosmicCompositeAnchor = doppelIroha
+        ? diffuseColorManipulationEndFlag
+        : OFFICIAL_COSMIC_COMPOSITE
     if (!baseMaterial) {
         throw new Error(
             `Official shader ${profile.name} requires its ordinary ReDrive base material`,
@@ -518,7 +525,8 @@ async function createOfficialProjectedCosmicMaterial(
         getShadowTexture: cosmic.getShadowTexture,
         getShadowTint: cosmic.getShadowTint,
         applyAmbientLighting: cosmic.applyAmbientLighting,
-        overlay: cosmic.overlay,
+        overlay: doppelIroha || cosmic.overlay,
+        compositeStage: doppelIroha ? 'toon-before-scene-light' : 'late-after-highlights',
         shadowTintColor: cosmic.shadowTintColor,
         fillColor: profile.fillColor,
     }
@@ -567,7 +575,7 @@ async function createOfficialProjectedCosmicMaterial(
             value: cosmic.applyAmbientLighting ? 1 : 0,
         }
         shader.uniforms.uOfficialCosmicOverlay = {
-            value: cosmic.overlay ? 1 : 0,
+            value: doppelIroha || cosmic.overlay ? 1 : 0,
         }
         shader.uniforms.uOfficialCosmicShadowTintColor = {
             value: new THREE.Color(...cosmic.shadowTintColor),
@@ -661,12 +669,11 @@ async function createOfficialProjectedCosmicMaterial(
             ${officialCosmicFunctions}
             ${shader.fragmentShader}
         `.replace(
-            OFFICIAL_COSMIC_COMPOSITE,
+            cosmicCompositeAnchor,
             /* glsl */`
-            // JP 2022.3.62f2 main_base blob 90 / DoppelIroha blob 19.
-            // The projected branch runs after MatCap, scene light, Aniso,
-            // SpecularGradient and Fresnel; it is not an AngelRing substitute.
-            vec3 officialCosmicOriginal = outgoingLight;
+            // Keep each compiled shader's own composition order. This is
+            // independent of the ordinary hair/AngelRing material slots.
+            vec3 officialCosmicOriginal = ${doppelIroha ? 'diffuseColor.rgb' : 'outgoingLight'};
             vec2 officialCosmicViewport = max(
                 uOfficialCosmicViewport,
                 vec2(1.0)
@@ -763,11 +770,10 @@ async function createOfficialProjectedCosmicMaterial(
             );
             vec3 officialCosmicAddColor =
                 officialCosmicBase + officialCosmicMap;
-            vec3 officialCosmicColor = mix(
-                officialCosmicAddColor,
-                officialCosmicOverlayColor,
-                uOfficialCosmicOverlay
-            );
+            vec3 officialCosmicColor = ${doppelIroha
+                ? 'officialCosmicOverlayColor'
+                : `mix(officialCosmicAddColor, officialCosmicOverlayColor, uOfficialCosmicOverlay)`};
+            ${doppelIroha ? '' : /* glsl */`
             if (uOfficialCosmicIsScreenBaseMap < 0.5) {
                 vec3 officialCosmicShadowTint =
                     uOfficialCosmicShadowTintColor;
@@ -786,6 +792,7 @@ async function createOfficialProjectedCosmicMaterial(
                 rdToonSceneLightColor,
                 uOfficialCosmicApplyAmbientLighting
             );
+            `}
             float officialCosmicMask = 1.0;
             #ifdef HAS_CTRL
                 officialCosmicMask = mix(
@@ -794,13 +801,13 @@ async function createOfficialProjectedCosmicMaterial(
                     uOfficialCosmicMaskByControlAlpha
                 );
             #endif
-            outgoingLight = mix(
+            ${doppelIroha ? 'diffuseColor.rgb' : 'outgoingLight'} = mix(
                 officialCosmicOriginal,
                 officialCosmicColor,
                 officialCosmicMask
             );
 
-            ${OFFICIAL_COSMIC_COMPOSITE}
+            ${cosmicCompositeAnchor}
             `,
         )
     }

@@ -1,7 +1,7 @@
 {
   "schema": "magius-character-controller-runtime-profiles-v1",
   "unityVersion": "2022.3.62f2",
-  "profileCount": 97,
+  "profileCount": 99,
   "profiles": [
     {
       "characterId": 100101,
@@ -64,6 +64,18 @@
       "hairUvAngelRing": false
     },
     {
+      "characterId": 100108,
+      "headOffset": 0.20000000298023224,
+      "faceForwardAxis": "-x",
+      "faceUpAxis": "y",
+      "faceRightAxis": "z",
+      "headBoneName": "Head",
+      "characterCancelPerspective": 1.0,
+      "additionalLightInfluenceByLuminance": 0.0,
+      "angelRingEnabled": true,
+      "hairUvAngelRing": false
+    },
+    {
       "characterId": 100201,
       "headOffset": 0.20000000298023224,
       "faceForwardAxis": "-x",
@@ -113,6 +125,18 @@
     },
     {
       "characterId": 100207,
+      "headOffset": 0.20000000298023224,
+      "faceForwardAxis": "-x",
+      "faceUpAxis": "y",
+      "faceRightAxis": "z",
+      "headBoneName": "Head",
+      "characterCancelPerspective": 1.0,
+      "additionalLightInfluenceByLuminance": 0.0,
+      "angelRingEnabled": true,
+      "hairUvAngelRing": false
+    },
+    {
+      "characterId": 100208,
       "headOffset": 0.20000000298023224,
       "faceForwardAxis": "-x",
       "faceUpAxis": "y",
@@ -904,6 +928,18 @@
       "hairUvAngelRing": false
     },
     {
+      "characterId": 110702,
+      "headOffset": 0.20000000298023224,
+      "faceForwardAxis": "-x",
+      "faceUpAxis": "y",
+      "faceRightAxis": "z",
+      "headBoneName": "Head",
+      "characterCancelPerspective": 1.0,
+      "additionalLightInfluenceByLuminance": 0.0,
+      "angelRingEnabled": true,
+      "hairUvAngelRing": false
+    },
+    {
       "characterId": 111401,
       "headOffset": 0.20000000298023224,
       "faceForwardAxis": "-x",
@@ -1146,18 +1182,6 @@
     {
       "characterId": 115201,
       "headOffset": 0.2150000035762787,
-      "faceForwardAxis": "-x",
-      "faceUpAxis": "y",
-      "faceRightAxis": "z",
-      "headBoneName": "Head",
-      "characterCancelPerspective": 1.0,
-      "additionalLightInfluenceByLuminance": 0.0,
-      "angelRingEnabled": true,
-      "hairUvAngelRing": false
-    },
-    {
-      "characterId": 110702,
-      "headOffset": 0.20000000298023224,
       "faceForwardAxis": "-x",
       "faceUpAxis": "y",
       "faceRightAxis": "z",

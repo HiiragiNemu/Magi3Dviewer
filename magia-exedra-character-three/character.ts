@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { HomeNativeTransitionPlayback, type SettledHomeTransitionCheckpoint } from './homeNativeTransition';
 import { disposeObject } from './utils';
 import { addAnimationLoop, getClockDelta, removeAnimationLoop } from './renderer';
 import { createAnimationPoseChannels, type AnimationPoseChannelRequest } from './animationPoseChannels';
@@ -63,6 +64,8 @@ export interface ChatacterAnimationPlayOptions {
     repetitions?: number
     transitionSeconds?: number
     localTimeSeconds?: number
+    /** Explicit settled native state 16; AnyState entry arbitration is not inferred. */
+    nativeHomeTransition?: SettledHomeTransitionCheckpoint
 }
 
 export default class MagiaExedraCharacter3D {
@@ -129,6 +132,7 @@ export default class MagiaExedraCharacter3D {
 
 export class ChatacterAnimation {
     private _character: MagiaExedraCharacter3D
+    private _nativeHomeTransition?: HomeNativeTransitionPlayback
     mixer: THREE.AnimationMixer
     private poseChannels: ReturnType<typeof createAnimationPoseChannels>
     private _default?: string | null = null
@@ -168,6 +172,31 @@ export class ChatacterAnimation {
         if (repetitions !== undefined && (!Number.isSafeInteger(repetitions) || repetitions < 0)) {
             throw new RangeError('Animation repetitions must be a non-negative safe integer')
         }
+        if (options.nativeHomeTransition) {
+            const unique = this._character.userData.homeAnimationRuntime?.actions?.unique01
+            const descriptor = unique?.nativeTransition
+            if (!descriptor || getAnimationFamilyName(name) !== getAnimationFamilyName(unique!.startFamily)) {
+                throw new Error('Native Home transition checkpoint requires its declared Start action')
+            }
+            const playback = new HomeNativeTransitionPlayback(this.mixer, descriptor,
+                options.nativeHomeTransition, family => this.getPreparedAnimationClipsByName(family), repetitions)
+            this._nativeHomeTransition?.dispose()
+            this.mixer.stopAllAction()
+            this._nativeHomeTransition = playback
+            this._pendingHomeLoop = undefined
+            this._queuedHomeLoop = undefined
+            this._queuedHomeGateAction = undefined
+            this._queuedRepetitions = undefined
+            this._finishGateAction = undefined
+            this._activeActions = []
+            this._repetitions = repetitions
+            this.paused = false
+            this._clamped = false
+            playback.seekElapsed(0)
+            return
+        }
+        this._nativeHomeTransition?.dispose()
+        this._nativeHomeTransition = undefined
         this._pendingHomeLoop = undefined
         const queuedHomeLoop = getHomeLoopAfterStart(
             name,
@@ -272,6 +301,8 @@ export class ChatacterAnimation {
     }
 
     clear() {
+        this._nativeHomeTransition?.dispose()
+        this._nativeHomeTransition = undefined
         this.clearRepetitionLimit()
         this._pendingHomeLoop = undefined
         this.mixer.stopAllAction()
@@ -417,6 +448,11 @@ export class ChatacterAnimation {
     animationLoop = () => {
         if (this.paused) return
         const delta = getClockDelta()
+        if (this._nativeHomeTransition) {
+            this._nativeHomeTransition.advance(Math.max(0, delta * this.mixer.timeScale))
+            if (this._nativeHomeTransition.completed) this.paused = true
+            return
+        }
         if (this._repetitions === undefined || this._queuedHomeLoop || !(this.duration > 0)) {
             this.updateMixer(delta)
             return
@@ -446,6 +482,7 @@ export class ChatacterAnimation {
     }
 
     onFinishHandler = (event: { action: THREE.AnimationAction }) => {
+        if (this._nativeHomeTransition) return
         if (
             this._queuedHomeLoop
             && event.action === this._queuedHomeGateAction
@@ -479,15 +516,27 @@ export class ChatacterAnimation {
         return this._default
     }
 
+    get nativeHomeTransitionState() { return this._nativeHomeTransition?.snapshot }
+
+    /** Explicit whole-sequence seek, including the partial Start and blend. */
+    seekNativeHomeTransitionElapsed(seconds: number): void {
+        if (!this._nativeHomeTransition) throw new Error('Native Home transition is not active')
+        this._nativeHomeTransition.seekElapsed(seconds)
+        if (this._nativeHomeTransition.completed) this.paused = true
+    }
+
     get current(): string | undefined {
+        if (this._nativeHomeTransition) return this._nativeHomeTransition.current
         return this._current
     }
 
     get clamped(): boolean {
+        if (this._nativeHomeTransition) return this._nativeHomeTransition.completed
         return this._clamped
     }
 
     get duration(): number {
+        if (this._nativeHomeTransition) return this._nativeHomeTransition.duration
         if (this.current) {
             const clips = this.getPreparedAnimationClipsByName(this.current)
             return clips.length > 0 ? Math.max(...clips.map(x => x.duration)) : 0
@@ -497,6 +546,7 @@ export class ChatacterAnimation {
     }
 
     get time(): number {
+        if (this._nativeHomeTransition) return this._nativeHomeTransition.time
         if (this.current) {
             if (this.clamped) {
                 return this.duration
@@ -510,6 +560,10 @@ export class ChatacterAnimation {
         }
     }
     set time(value) {
+        if (this._nativeHomeTransition) {
+            this._nativeHomeTransition.seekLocal(value)
+            return
+        }
         if (this._repetitions === undefined) {
             this.mixer.setTime(value)
             this.flushPendingHomeLoop()

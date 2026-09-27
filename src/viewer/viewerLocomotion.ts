@@ -1,3 +1,4 @@
+import { ThirdPersonCamera } from './ThirdPersonCamera'
 import { translateUiText } from './localization/zhCN'
 import * as THREE from 'three'
 import { specialWeaponDefinitions, loadSpecialWeapon, type LoadedSpecialWeapon } from './specialWeapons'
@@ -1408,101 +1409,12 @@ let installed = false
 let enabled = false
 let jumpQueued = false
 let virtualInput: VirtualInput | undefined
-let cameraYawUnwrapped = 0
-let cameraPitch = THREE.MathUtils.degToRad(18)
-let cameraYawTargetUnwrapped = cameraYawUnwrapped
-let cameraPitchTarget = cameraPitch
-let cameraDistance = 7.5
-let cameraDistanceTarget = cameraDistance
-const cameraTarget = new THREE.Vector3()
-interface ViewerOrbitControlsLease {
-    controlsEnabled: boolean
-}
-let orbitControlsLease: ViewerOrbitControlsLease | undefined
-let orbitCameraSessionActive = false
-let orbitControlsCanvasRebindCount = 0
-interface TpsCameraInputTrace {
-    source: 'pointer-lock' | 'drag-fallback' | 'free-look-fallback'
-    dxCssPixels: number
-    dyCssPixels: number
-    yawBefore: number
-    yawAfter: number
-    pitchBefore: number
-    pitchAfter: number
-    preCollisionAzimuth: number
-    postCollisionAzimuth: number
-}
-const cameraInputTrace: TpsCameraInputTrace[] = []
-interface TpsCameraWheelTrace {
-    accepted: boolean
-    reason: 'pointer-lock' | 'viewer-surface' | 'outside-viewer' | 'interactive-control'
-    targetTag: string
-    targetId: string
-    deltaY: number
-    distanceBefore: number
-    distanceAfter: number
-}
-const cameraWheelTrace: TpsCameraWheelTrace[] = []
-let cameraDragPointerId: number | undefined
-let cameraDragLastX = 0
-let cameraDragLastY = 0
-let cameraDragTravelCssPixels = 0
-let cameraFreeLookFallbackActive = false
-const TPS_CAMERA_POINTER = Object.freeze({
-    yawRadiansPerCssPixel: 0.0018,
-    pitchRadiansPerCssPixel: 0.0015,
-    maxCssPixelsPerEvent: 42,
-    minPitchRadians: THREE.MathUtils.degToRad(-18),
-    maxPitchRadians: THREE.MathUtils.degToRad(55),
-    wheelMetersPerDelta: 0.0035,
-    maxWheelDeltaPerEvent: 120,
-    maxDistanceMeters: 10,
-    clickCaptureMaxTravelCssPixels: 6,
+const tpsCamera = new ThirdPersonCamera({
+    scene: () => scene,
+    actor: () => selectedBinding()?.character.object,
+    released: () => setViewerLocomotionEnabled(false),
+    status: text => { feedbackOutput.value = text; feedbackOutput.textContent = text },
 })
-
-function boundedTpsPointerDelta(rawCssPixels: number): number {
-    // PointerEvent.movementX/Y are already expressed in CSS pixels. Dividing
-    // them by devicePixelRatio made a DPR=3 display require three times as much
-    // physical mouse travel, which is why the corrected non-spinning camera
-    // still felt almost immovable.
-    return THREE.MathUtils.clamp(
-        rawCssPixels,
-        -TPS_CAMERA_POINTER.maxCssPixelsPerEvent,
-        TPS_CAMERA_POINTER.maxCssPixelsPerEvent,
-    )
-}
-
-function applyTpsCameraPointerDelta(
-    rawDx: number,
-    rawDy: number,
-    source: TpsCameraInputTrace['source'],
-): void {
-    const dx = boundedTpsPointerDelta(rawDx)
-    const dy = boundedTpsPointerDelta(rawDy)
-    const yawBefore = cameraYawTargetUnwrapped
-    const pitchBefore = cameraPitchTarget
-    const requestedYaw = cameraYawTargetUnwrapped - dx * TPS_CAMERA_POINTER.yawRadiansPerCssPixel
-    cameraYawTargetUnwrapped = requestedYaw
-    cameraPitchTarget = THREE.MathUtils.clamp(
-        cameraPitchTarget + dy * TPS_CAMERA_POINTER.pitchRadiansPerCssPixel,
-        TPS_CAMERA_POINTER.minPitchRadians,
-        TPS_CAMERA_POINTER.maxPitchRadians,
-    )
-    cameraInputTrace.push({
-        source,
-        dxCssPixels: dx,
-        dyCssPixels: dy,
-        yawBefore,
-        yawAfter: cameraYawTargetUnwrapped,
-        pitchBefore,
-        pitchAfter: cameraPitchTarget,
-        preCollisionAzimuth: cameraYawTargetUnwrapped,
-        postCollisionAzimuth: cameraYawTargetUnwrapped,
-    })
-    if (cameraInputTrace.length > 60) {
-        cameraInputTrace.splice(0, cameraInputTrace.length - 60)
-    }
-}
 
 function objectIsWorldVisible(object: THREE.Object3D): boolean {
     for (let current: THREE.Object3D | null = object; current; current = current.parent) {
@@ -3310,10 +3222,10 @@ class ViewerCameraHeadTracking {
             bodyRight.y = 0
             bodyRight.normalize()
             this.bodyYaw = Math.atan2(bodyForward.x, bodyForward.z)
-            this.cameraYawRelative = this.signedAngle(cameraYawUnwrapped - this.bodyYaw)
+            this.cameraYawRelative = this.signedAngle(tpsCamera.yaw - this.bodyYaw)
             if (!this.cameraReferenceValid) {
                 this.referenceCameraYawRelative = this.cameraYawRelative
-                this.referenceCameraPitch = cameraPitch
+                this.referenceCameraPitch = tpsCamera.pitch
                 this.cameraReferenceValid = true
             }
             const headPosition = head.getWorldPosition(new THREE.Vector3())
@@ -11651,17 +11563,17 @@ function movementAxes(): { moveX: number; moveZ: number; run: boolean; jumpPress
 
 function cameraRelativeInput(binding: ViewerLocomotionBinding, input: ReturnType<typeof movementAxes>) {
     // Movement is reconstructed from the independent yaw accumulator. Never
-    // project the camera forward vector near the pitch clamp: that projection
-    // becomes ill-conditioned and previously caused a sudden sideways turn.
+    // project the camera forward vector near a vertical view: that projection
+    // degenerates at the poles and reverses after crossing them.
     const forward = new THREE.Vector3(
-        -Math.sin(cameraYawUnwrapped),
+        -Math.sin(tpsCamera.yaw),
         0,
-        -Math.cos(cameraYawUnwrapped),
+        -Math.cos(tpsCamera.yaw),
     )
     const right = new THREE.Vector3(
-        Math.cos(cameraYawUnwrapped),
+        Math.cos(tpsCamera.yaw),
         0,
-        -Math.sin(cameraYawUnwrapped),
+        -Math.sin(tpsCamera.yaw),
     )
     const direction = new THREE.Vector3()
         .addScaledVector(right, input.moveX)
@@ -11679,35 +11591,7 @@ function cameraRelativeInput(binding: ViewerLocomotionBinding, input: ReturnType
     }
 }
 
-function updateTpsCamera(binding: ViewerLocomotionBinding, _deltaSeconds: number): void {
-    // OrbitControls has its own camera writer. Keep it suspended for the whole
-    // TPS frame even when another editor releases its controls lease mid-frame.
-    scene.controls.enabled = false
-    // Pointer deltas already define a linear angular displacement. Consume
-    // them once, without queuing angular or positional catch-up after release.
-    cameraYawUnwrapped = cameraYawTargetUnwrapped
-    cameraPitch = THREE.MathUtils.clamp(
-        cameraPitchTarget,
-        TPS_CAMERA_POINTER.minPitchRadians,
-        TPS_CAMERA_POINTER.maxPitchRadians,
-    )
-    cameraDistance = cameraDistanceTarget
-    binding.character.object.getWorldPosition(cameraTarget)
-    cameraTarget.y += 1.05
-    const horizontal = Math.cos(cameraPitch) * cameraDistance
-    const desired = new THREE.Vector3(
-        cameraTarget.x + Math.sin(cameraYawUnwrapped) * horizontal,
-        cameraTarget.y + Math.sin(cameraPitch) * cameraDistance,
-        cameraTarget.z + Math.cos(cameraYawUnwrapped) * horizontal,
-    )
-    scene.camera.position.copy(desired)
-    scene.camera.up.set(0, 1, 0)
-    // Orientation is owned by yaw/pitch, not by the camera-to-target length.
-    // At zero dolly distance lookAt(cameraTarget) loses its direction and snaps
-    // to an unrelated heading. The same angular frame remains valid at zero.
-    scene.camera.quaternion.setFromEuler(new THREE.Euler(-cameraPitch, cameraYawUnwrapped, 0, 'YXZ'))
-    scene.controls.target.copy(cameraTarget)
-}
+
 
 function objectHierarchyPath(object: THREE.Object3D): string {
     const parts: string[] = []
@@ -11749,32 +11633,7 @@ function writeDebugState(binding?: ViewerLocomotionBinding): void {
         pointerLocked: document.pointerLockElement === scene.renderer.domElement,
         physicalPressedCodes: [...pressed].sort(),
         jumpQueued,
-        camera: {
-            yawUnwrapped: cameraYawUnwrapped,
-            yawTargetUnwrapped: cameraYawTargetUnwrapped,
-            pitch: cameraPitch,
-            pitchTarget: cameraPitchTarget,
-            distance: cameraDistance,
-            distanceTarget: cameraDistanceTarget,
-            rollPolicy: 'world-up-lookAt-zero-roll',
-            collisionAzimuthPolicy: 'preserve-unwrapped-yaw',
-            dragPointerId: cameraDragPointerId ?? null,
-            freeLookFallbackActive: cameraFreeLookFallbackActive,
-            inputTrace: cameraInputTrace,
-            wheelTrace: cameraWheelTrace,
-            orbit: {
-                controlsEnabled: scene.controls.enabled,
-                currentCanvas: scene.controls.domElement === scene.renderer.domElement,
-                sessionActive: orbitCameraSessionActive,
-                cameraPosition: scene.camera.position.toArray(),
-                cameraUp: scene.camera.up.toArray(),
-                cameraZoom: scene.camera.zoom,
-                target: scene.controls.target.toArray(),
-                handoffPolicy: 'preserve-final-tps-view',
-                leaseControlsEnabled: orbitControlsLease?.controlsEnabled ?? null,
-                canvasRebindCount: orbitControlsCanvasRebindCount,
-            },
-        },
+        camera: tpsCamera.diagnostics(),
         characterId: binding.character.userData.characterId,
         state: snapshot.state,
         grounded: snapshot.grounded,
@@ -12087,120 +11946,20 @@ function updateFrame(): void {
         synchronizeActiveCombatJumpDonorPlayback(binding, characterActionDeltaSeconds)
         synchronizeTargetRigGaitPlayback(binding, Math.hypot(input.moveX, input.moveZ) > 1e-4)
     }
-    if (enabled) {
-        ensureOrbitControlsCurrentCanvas()
-        scene.controls.enabled = false
-        if (selected) updateTpsCamera(selected, deltaSeconds)
-    } else {
-        ensureOrbitControlsCurrentCanvas()
-    }
+    if (enabled && selected) tpsCamera.update()
     if (frameNowMs >= nextHudUpdateMs) {
         nextHudUpdateMs = frameNowMs + 100
         updateHud(selected)
     }
 }
 
-function syncCameraRigFromCurrentView(): void {
-    const binding = selectedBinding()
-    if (!binding) return
-    binding.character.object.getWorldPosition(cameraTarget)
-    cameraTarget.y += 1.05
-    const offset = scene.camera.position.clone().sub(cameraTarget)
-    // TPS has no authored near-distance gate.  Zero is the geometric limit;
-    // near-plane/culling policy remains independent from wheel navigation.
-    cameraDistance = Math.min(offset.length(), TPS_CAMERA_POINTER.maxDistanceMeters)
-    const coincident = offset.length() <= Number.EPSILON * Math.max(1, cameraTarget.length()) * 16
-    if (coincident) {
-        // A coincident pivot has no positional heading. Recover the visible
-        // camera frame rather than deriving asin(0/0) or inventing pitch zero.
-        const forward = scene.camera.getWorldDirection(new THREE.Vector3())
-        cameraPitch = THREE.MathUtils.clamp(
-            Math.asin(THREE.MathUtils.clamp(-forward.y, -1, 1)),
-            TPS_CAMERA_POINTER.minPitchRadians,
-            TPS_CAMERA_POINTER.maxPitchRadians,
-        )
-        if (Math.hypot(forward.x, forward.z) > 1e-4) {
-            cameraYawUnwrapped = Math.atan2(-forward.x, -forward.z)
-        }
-    } else {
-        cameraPitch = THREE.MathUtils.clamp(
-            Math.asin(THREE.MathUtils.clamp(offset.y / cameraDistance, -1, 1)),
-            TPS_CAMERA_POINTER.minPitchRadians,
-            TPS_CAMERA_POINTER.maxPitchRadians,
-        )
-        // Preserve the current azimuth at a nearly vertical activation view.
-        if (Math.hypot(offset.x, offset.z) > 1e-4) {
-            cameraYawUnwrapped = Math.atan2(offset.x, offset.z)
-        }
-    }
-    cameraYawTargetUnwrapped = cameraYawUnwrapped
-    cameraPitchTarget = cameraPitch
-    cameraDistanceTarget = cameraDistance
-}
 
-function ensureOrbitControlsCurrentCanvas(): void {
-    const canvas = scene.renderer.domElement
-    if (scene.controls.domElement === canvas) return
-    scene.controls.connect(canvas)
-    orbitControlsCanvasRebindCount += 1
-}
 
-function captureOrbitControlsLease(): void {
-    if (orbitCameraSessionActive) return
-    ensureOrbitControlsCurrentCanvas()
-    orbitControlsLease = {
-        controlsEnabled: scene.controls.enabled,
-    }
-    orbitCameraSessionActive = true
-}
 
-function handoffFinalTpsCameraToOrbitControls(): void {
-    ensureOrbitControlsCurrentCanvas()
-    const lease = orbitControlsLease
-    if (!lease) {
-        orbitCameraSessionActive = false
-        return
-    }
 
-    const finalPosition = scene.camera.position.clone()
-    const finalQuaternion = scene.camera.quaternion.clone()
-    const finalUp = scene.camera.up.clone()
-    const finalZoom = scene.camera.zoom
-    // Orbit also calls lookAt(target). At zero TPS dolly distance, retain the
-    // visible direction by placing its focus on the near plane, without moving
-    // the camera or limiting subsequent zoom input.
-    const finalTargetDistance = Math.max(scene.camera.position.distanceTo(scene.controls.target), scene.camera.near)
-    const finalTarget = new THREE.Vector3(0, 0, -1)
-        .applyQuaternion(finalQuaternion)
-        .multiplyScalar(finalTargetDistance)
-        .add(finalPosition)
-    const dampingEnabled = scene.controls.enableDamping
 
-    // OrbitControls keeps private gesture, pan, dolly, and damping deltas. Run
-    // one undamped update to consume them, then restore the exact final TPS
-    // view and run a second clean update so its spherical state starts there.
-    // This is a handoff, not a return to the camera that existed before TPS.
-    scene.controls.enableDamping = false
-    scene.controls.update()
-    scene.camera.position.copy(finalPosition)
-    scene.camera.quaternion.copy(finalQuaternion)
-    scene.camera.up.copy(finalUp)
-    scene.camera.zoom = finalZoom
-    scene.camera.updateProjectionMatrix()
-    scene.controls.target.copy(finalTarget)
-    scene.controls.update()
-    scene.camera.position.copy(finalPosition)
-    scene.camera.quaternion.copy(finalQuaternion)
-    scene.camera.up.copy(finalUp)
-    scene.camera.zoom = finalZoom
-    scene.camera.updateProjectionMatrix()
-    scene.controls.target.copy(finalTarget)
-    scene.controls.enableDamping = dampingEnabled
-    scene.controls.saveState()
-    scene.controls.enabled = lease.controlsEnabled
-    orbitControlsLease = undefined
-    orbitCameraSessionActive = false
-}
+
+
 
 function isViewerTpsLocomotionFamily(binding: ViewerLocomotionBinding, name: string | undefined): boolean {
     if (!name) return false
@@ -12257,12 +12016,12 @@ export function setViewerLocomotionEnabled(value: boolean): void {
         return
     }
     const wasEnabled = enabled
-    if (!wasEnabled && value) captureOrbitControlsLease()
+
     enabled = value
     pressed.clear()
     jumpQueued = false
     virtualInput = undefined
-    cameraDragPointerId = undefined
+
     document.body.classList.toggle('locomotion-mode-enabled', enabled)
     for (const binding of bindings) {
         if (!wasEnabled && value && !isViewerTpsLocomotionFamily(binding, binding.character.animation.current)) {
@@ -12307,17 +12066,10 @@ export function setViewerLocomotionEnabled(value: boolean): void {
     updateLocomotionModeLabel()
     hud.setAttribute('aria-hidden', String(!enabled))
     if (enabled) {
-        ensureOrbitControlsCurrentCanvas()
-        scene.controls.enabled = false
-        if (!wasEnabled) syncCameraRigFromCurrentView()
+        if (!wasEnabled) tpsCamera.start()
         feedbackOutput.value = 'Click the Viewer to capture the mouse.'
     } else {
-        cameraDragPointerId = undefined
-        cameraFreeLookFallbackActive = false
-        document.body.classList.remove('locomotion-free-look-fallback')
-        if (document.pointerLockElement === scene.renderer.domElement) document.exitPointerLock()
-        if (wasEnabled) handoffFinalTpsCameraToOrbitControls()
-        else ensureOrbitControlsCurrentCanvas()
+        tpsCamera.stop()
     }
     feedbackOutput.textContent = feedbackOutput.value
     updateHud(selectedBinding())
@@ -12352,236 +12104,13 @@ function installInputHandlers(): void {
         pressed.clear()
         jumpQueued = false
     }
-    const setFreeLookFallbackActive = (active: boolean): void => {
-        cameraFreeLookFallbackActive = active
-        document.body.classList.toggle('locomotion-free-look-fallback', active)
-        if (!enabled) return
-        feedbackOutput.value = active
-            ? 'Mouse look active (browser fallback) · Esc releases pointer'
-            : 'Click the Viewer to capture the mouse.'
-        feedbackOutput.textContent = feedbackOutput.value
-    }
-    const releaseAllPhysicalTpsInput = (): void => {
-        releasePhysicalTpsInput()
-        cameraDragPointerId = undefined
-        setFreeLookFallbackActive(false)
-    }
-    const requestTpsPointerLock = (canvas: HTMLCanvasElement): void => {
-        if (!enabled || document.pointerLockElement === canvas) return
-        if (!canvas.isConnected || canvas.ownerDocument !== document) return
-        const reportUnavailable = () => {
-            feedbackOutput.value = 'Mouse capture is unavailable; drag the Viewer to look around.'
-            feedbackOutput.textContent = feedbackOutput.value
-        }
-        try {
-            const request = canvas.requestPointerLock() as Promise<void> | void
-            if (request && typeof request.catch === 'function') void request.catch(reportUnavailable)
-        } catch {
-            reportUnavailable()
-        }
-    }
-    const isInteractiveTpsControlTarget = (target: EventTarget | null): boolean => (
-        target instanceof Element
-        && !!target.closest([
-            'button',
-            'input',
-            'select',
-            'textarea',
-            '[contenteditable="true"]',
-            '[role="button"]',
-            '[role="combobox"]',
-            '[role="listbox"]',
-            '[role="slider"]',
-        ].join(','))
-    )
-    const isInsideCurrentViewer = (
-        clientX: number,
-        clientY: number,
-        canvas: HTMLCanvasElement,
-    ): boolean => {
-        const rect = canvas.getBoundingClientRect()
-        return clientX >= rect.left
-            && clientX <= rect.right
-            && clientY >= rect.top
-            && clientY <= rect.bottom
-    }
-    let tpsPointerLockOwned = false
-    document.addEventListener('pointerlockchange', () => {
-        const wasTpsPointerLocked = tpsPointerLockOwned
-        const locked = document.pointerLockElement === scene.renderer.domElement
-        tpsPointerLockOwned = locked
-        if (locked) {
-            cameraDragPointerId = undefined
-            setFreeLookFallbackActive(false)
-        } else {
-            releasePhysicalTpsInput()
-            setFreeLookFallbackActive(false)
-        }
-        document.body.classList.toggle('locomotion-pointer-locked', locked)
-        if (enabled) {
-            feedbackOutput.value = locked
-                ? 'Mouse look active · Esc releases pointer'
-                : 'Click the Viewer to capture the mouse.'
-            feedbackOutput.textContent = feedbackOutput.value
-        }
-        if (wasTpsPointerLocked && !locked && enabled) {
-            setViewerLocomotionEnabled(false)
-        }
-    })
-    // The Viewer replaces its renderer canvas during model/stage initialization.
-    // Delegate against the current canvas on every event so TPS look survives
-    // that replacement and HUD overlays do not swallow the visible viewport.
-    document.addEventListener('pointerdown', event => {
-        const canvas = scene.renderer.domElement
-        const interactiveTarget = isInteractiveTpsControlTarget(event.target)
-        const insideViewer = isInsideCurrentViewer(event.clientX, event.clientY, canvas)
-        if (enabled && (interactiveTarget || !insideViewer)) {
-            setFreeLookFallbackActive(false)
-            return
-        }
-        if (
-            !enabled
-            || document.pointerLockElement === canvas
-            || event.button !== 0
-        ) return
-        setFreeLookFallbackActive(false)
-        cameraDragPointerId = event.pointerId
-        cameraDragLastX = event.clientX
-        cameraDragLastY = event.clientY
-        cameraDragTravelCssPixels = 0
-        // Request on pointerdown while the browser still considers this a direct
-        // user activation. preventDefault below intentionally keeps the drag
-        // fallback stable, but may suppress the compatibility click event.
-        requestTpsPointerLock(canvas)
-        event.preventDefault()
-    }, { capture: true })
-    document.addEventListener('pointermove', event => {
-        if (!enabled || document.pointerLockElement === scene.renderer.domElement) return
-        const dx = event.clientX - cameraDragLastX
-        const dy = event.clientY - cameraDragLastY
-        if (cameraDragPointerId === event.pointerId) {
-            cameraDragTravelCssPixels += Math.hypot(dx, dy)
-            applyTpsCameraPointerDelta(dx, dy, 'drag-fallback')
-        } else if (cameraFreeLookFallbackActive) {
-            const canvas = scene.renderer.domElement
-            if (
-                isInteractiveTpsControlTarget(event.target)
-                || !isInsideCurrentViewer(event.clientX, event.clientY, canvas)
-            ) {
-                cameraDragLastX = event.clientX
-                cameraDragLastY = event.clientY
-                return
-            }
-            applyTpsCameraPointerDelta(dx, dy, 'free-look-fallback')
-        } else {
-            return
-        }
-        cameraDragLastX = event.clientX
-        cameraDragLastY = event.clientY
-        event.preventDefault()
-    }, { capture: true })
-    const endCameraDrag = (event: PointerEvent, armClickFallback: boolean) => {
-        if (cameraDragPointerId !== event.pointerId) return
-        cameraDragPointerId = undefined
-        if (
-            armClickFallback
-            && enabled
-            && document.pointerLockElement !== scene.renderer.domElement
-            && cameraDragTravelCssPixels <= TPS_CAMERA_POINTER.clickCaptureMaxTravelCssPixels
-            && !isInteractiveTpsControlTarget(event.target)
-            && isInsideCurrentViewer(event.clientX, event.clientY, scene.renderer.domElement)
-        ) {
-            cameraDragLastX = event.clientX
-            cameraDragLastY = event.clientY
-            setFreeLookFallbackActive(true)
-        }
-    }
-    document.addEventListener('pointerup', event => endCameraDrag(event, true), { capture: true })
-    document.addEventListener('pointercancel', event => endCameraDrag(event, false), { capture: true })
-    document.addEventListener('mousemove', event => {
-        if (!enabled || document.pointerLockElement !== scene.renderer.domElement) return
-        applyTpsCameraPointerDelta(event.movementX, event.movementY, 'pointer-lock')
-    })
-    const applyTpsCameraWheelDelta = (event: WheelEvent): void => {
-        if (!enabled) return
-        event.preventDefault()
-        const deltaModeScale = event.deltaMode === WheelEvent.DOM_DELTA_LINE
-            ? 16
-            : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
-                ? Math.max(1, scene.renderer.domElement.clientHeight)
-                : 1
-        const wheelDelta = THREE.MathUtils.clamp(
-            event.deltaY * deltaModeScale,
-            -TPS_CAMERA_POINTER.maxWheelDeltaPerEvent,
-            TPS_CAMERA_POINTER.maxWheelDeltaPerEvent,
-        )
-        cameraDistanceTarget = Math.min(
-            Math.max(0, cameraDistanceTarget + wheelDelta * TPS_CAMERA_POINTER.wheelMetersPerDelta),
-            TPS_CAMERA_POINTER.maxDistanceMeters,
-        )
-    }
-    const pushCameraWheelTrace = (trace: TpsCameraWheelTrace): void => {
-        cameraWheelTrace.push(trace)
-        if (cameraWheelTrace.length > 12) cameraWheelTrace.shift()
-    }
-    // The Viewer may replace its renderer canvas after this module is installed.
-    // Delegate against the current canvas rectangle rather than requiring the
-    // canvas itself to be event.target. FPS/HUD/transparent overlays sit above
-    // the renderer in the real Viewer and previously swallowed ordinary wheel
-    // input even though the pointer was visibly over the 3D viewport.
-    document.addEventListener('wheel', event => {
-        if (!enabled) return
-        const canvas = scene.renderer.domElement
-        const pointerLocked = document.pointerLockElement === canvas
-        const target = event.target instanceof Element ? event.target : undefined
-        const targetTag = target?.tagName ?? String(event.target?.constructor?.name ?? 'unknown')
-        const targetId = target?.id ?? ''
-        const distanceBefore = cameraDistanceTarget
-        if (!pointerLocked && isInteractiveTpsControlTarget(event.target)) {
-            pushCameraWheelTrace({
-                accepted: false,
-                reason: 'interactive-control',
-                targetTag,
-                targetId,
-                deltaY: event.deltaY,
-                distanceBefore,
-                distanceAfter: distanceBefore,
-            })
-            return
-        }
-        const rect = canvas.getBoundingClientRect()
-        const insideViewer = event.clientX >= rect.left
-            && event.clientX <= rect.right
-            && event.clientY >= rect.top
-            && event.clientY <= rect.bottom
-        if (!pointerLocked && !insideViewer) {
-            pushCameraWheelTrace({
-                accepted: false,
-                reason: 'outside-viewer',
-                targetTag,
-                targetId,
-                deltaY: event.deltaY,
-                distanceBefore,
-                distanceAfter: distanceBefore,
-            })
-            return
-        }
-        applyTpsCameraWheelDelta(event)
-        pushCameraWheelTrace({
-            accepted: true,
-            reason: pointerLocked ? 'pointer-lock' : 'viewer-surface',
-            targetTag,
-            targetId,
-            deltaY: event.deltaY,
-            distanceBefore,
-            distanceAfter: cameraDistanceTarget,
-        })
-    }, { passive: false, capture: true })
+    tpsCamera.install()
+    const releaseAllPhysicalTpsInput = releasePhysicalTpsInput
     document.addEventListener('keydown', event => {
         if (enabled && event.code === 'Escape' && !event.repeat) {
             event.preventDefault()
             releasePhysicalTpsInput()
-            setFreeLookFallbackActive(false)
+
             setViewerLocomotionEnabled(false)
             return
         }
