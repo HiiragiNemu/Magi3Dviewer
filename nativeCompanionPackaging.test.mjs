@@ -11,3 +11,37 @@ test('bundler includes model-local binding contracts as asset URLs',()=>{assert.
 test('sealed 101002 contract matches native packet mesh slot and identity',()=>{const expected=JSON.parse(read(model+'model-binding-contract.json'));const packet=JSON.parse(read(model+'runtime-material-channel.json'));const result=scope.createNativeMaterialScope(packet,expected);assert.equal(result.data.characterId,101002);assert.equal(result.data.meshes.length,expected.meshBindings.length);assert.ok(expected.meshBindings.length>0)});
 test('actual native input loader resolves every companion and channel from packaged siblings',async()=>{const result=await loader()(files());assert.equal(result.packet.characterId,101002);assert.ok(result.channels.byteLength>0);assert.equal(Object.keys(result.cornerIndices).length,result.packet.meshes.length);assert.equal(Object.keys(result.textureUrls).length,Object.keys(result.packet.textures).length);assert.ok(result.bakedNormalBuffer.byteLength>0)});
 test('missing contract stays a precise error instead of bypassing native identity',async()=>{const f=files();delete f[model+'model-binding-contract.json'];await assert.rejects(()=>loader()(f),/Exact native companion missing: model-binding-contract.json/)});
+
+// Match the shipping glob, not an unfiltered directory listing: the latter
+// admitted files during tests which Vite never exposed to the browser.
+for (const id of [100108, 100208, 110702, 101002]) {
+    test(`production asset glob admits all native companions for ${id}`, async () => {
+        const source = read('src/viewer/character.ts');
+        const match = /import\.meta\.glob\((\[[\s\S]*?\]),\s*\{/.exec(source);
+        assert.ok(match);
+        const patterns = vm.runInNewContext(match[1]);
+        const matches = require('picomatch')(Array.from(patterns));
+        const directory = `${base}models/chara_${id}_battle_unit/`;
+        const packaged = Object.fromEntries(fs.readdirSync(path.join(root, directory))
+            .map(name => [`../../node_modules/${directory}${name}`, new URL('file:///' + actual(directory + name).replaceAll('\\', '/')).href])
+            .filter(([key]) => matches(key)));
+        const result = await loader()(packaged);
+        assert.equal(result.packet.characterId, id);
+        assert.equal(Object.keys(result.cornerIndices).length, result.packet.meshes.length);
+        assert.equal(Object.keys(result.textureUrls).length, Object.keys(result.packet.textures).length);
+        assert.ok(result.channels.byteLength > 0);
+        assert.ok(result.bakedNormalBuffer.byteLength > 0);
+    });
+}
+
+test('new character labels have distinct Chinese Japanese and English projections', () => {
+    const names = compile(read('src/viewer/localization/characterNames.ts'));
+    for (const id of [100108, 100208, 110702]) {
+        const name = names.characterTrilingualNames[id];
+        assert.ok(name);
+        assert.doesNotMatch(name.zh, /[\u3040-\u30ff]/);
+        assert.match(name.ja, /[\u3040-\u30ff]/);
+        assert.match(name.romaji, /[A-Za-z]/);
+        assert.equal(names.formatCharacterTrilingualName(id, 'fallback').split(' / ').length, 3);
+    }
+});

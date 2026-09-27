@@ -82,6 +82,7 @@ class PhysicsEnabledCharacterManager extends MagiaExedraCharacterThree {
 export const characters = new PhysicsEnabledCharacterManager(import.meta.glob([
     '../../node_modules/magia-exedra-character-three/models/**/*.fbx*',
     '../../node_modules/magia-exedra-character-three/models/**/redrive-baked-normals.bin*',
+    '../../node_modules/magia-exedra-character-three/models/**/redrive-baked-normal.bin*',
     '../../node_modules/magia-exedra-character-three/models/**/runtime-material-channel.json*',
     '../../node_modules/magia-exedra-character-three/models/**/model-binding-contract.json*',
     '../../node_modules/magia-exedra-character-three/models/**/native-extra-channels.bin*',
