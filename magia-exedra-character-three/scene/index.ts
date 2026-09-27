@@ -157,8 +157,11 @@ export class MagiaExedraScene3D {
         return false
     }
 
+    // Selecting an actor owns animation/TPS input, not the edit overlay.
+    characterTransformEditing = false
+
     get characterSelectionVisible() {
-        return this.effects.outlinePass.selectedObjects.length > 0 && this.characters.length > 1
+        return this.characterTransformEditing && this.effects.outlinePass.selectedObjects.length > 0
     }
 
     animateLoopCallback: () => any = () => { }
@@ -1011,10 +1014,14 @@ export class MagiaExedraScene3D {
     }
     set characterSelected(value) {
         this._characterSelected = value
+        this.characterTransformEditing = false
+        this.effects.outlinePass.enabled = false
+        this.transformControls.detach()
+        this.transformControls.enabled = false
+        this.transformControlsHelper.visible = false
         let obj = value?.character?.object
         if (obj) {
             this.effects.outlinePass.selectedObjects = [obj]
-            this.transformControls.attach(obj)
             console.log('Set scene selected character (with object):', value)
         } else {
             this.effects.outlinePass.selectedObjects = []

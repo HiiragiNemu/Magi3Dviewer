@@ -2988,13 +2988,18 @@ function setupSingleCharacterTransformControls() {
     singleCharacterTransformControlsHelper.visible = false
     scene.scene.add(singleCharacterTransformControlsHelper)
 
+    let tpsOwnedAtDragStart = false
     singleCharacterTransformControls.addEventListener('dragging-changed', event => {
         const dragging = Boolean(event.value)
+        const tpsOwnsCamera = document.body.classList.contains('locomotion-mode-enabled')
         if (dragging) {
+            tpsOwnedAtDragStart = tpsOwnsCamera
             singleCharacterTransformOrbitWasEnabled = scene.controls.enabled
             scene.controls.enabled = false
         } else if (!directPoseEditingEnabled) {
-            scene.controls.enabled = singleCharacterTransformOrbitWasEnabled
+            if (tpsOwnsCamera) scene.controls.enabled = false
+            else if (!tpsOwnedAtDragStart) scene.controls.enabled = singleCharacterTransformOrbitWasEnabled
+            // If TPS ended during the drag, retain the camera owner's restored state.
         }
     })
     singleCharacterTransformControls.addEventListener('objectChange', () => {
@@ -3003,13 +3008,16 @@ function setupSingleCharacterTransformControls() {
 }
 
 function clearSingleCharacterTransform() {
-    const wasActive = singleCharacterTransformActive
+    scene.characterTransformEditing = false
+    scene.effects.outlinePass.enabled = false
+    const wasDragging = singleCharacterTransformControls?.dragging === true
     singleCharacterTransformControls?.detach()
     if (singleCharacterTransformControls) singleCharacterTransformControls.enabled = false
     if (singleCharacterTransformControlsHelper) singleCharacterTransformControlsHelper.visible = false
     singleCharacterTransformActive = false
     singleObjectTransformOnChange = undefined
-    if (wasActive && !directPoseEditingEnabled) scene.controls.enabled = singleCharacterTransformOrbitWasEnabled
+    // Only an actual drag leases Orbit input; opening/closing edit UI does not.
+    if (wasDragging && singleCharacterTransformControls) singleCharacterTransformControls.dragging = false
     updateTransformModeButtons()
 }
 
@@ -3029,8 +3037,8 @@ function activateObjectTransform(object: THREE.Object3D, onObjectChange?: () => 
         return
     }
     scene.transformControls.detach()
-    if (!singleCharacterTransformActive) singleCharacterTransformOrbitWasEnabled = scene.controls.enabled
     singleCharacterTransformActive = true
+    scene.characterTransformEditing = scene.characterSelected?.character?.object === object
     singleObjectTransformOnChange = onObjectChange
     singleCharacterTransformControls.attach(object)
     singleCharacterTransformControls.enabled = true
