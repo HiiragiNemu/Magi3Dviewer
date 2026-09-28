@@ -17,6 +17,8 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: magius3dviewer
+          filter: blob:none
+          sparse-checkout: scripts
       - name: Make only the excluded offline texture census advisory
         run: |
           python3 - <<'PY'
@@ -35,7 +37,7 @@ jobs:
       - name: Check syntax and review exact change
         run: |
           node --check scripts/copy-deployment-public.mjs
-          git diff --check
+          git -c core.whitespace=cr-at-eol diff --check
           git diff -- scripts/copy-deployment-public.mjs
       - name: Commit only this compatibility correction to the current branch
         run: |
