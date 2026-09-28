@@ -36,6 +36,23 @@ const pageMetadata: Record<UiLocale, {
  * to the DOM.
  */
 export const zhCnUiText: Readonly<Record<string, string>> = {
+    "Redo pose": "重做姿态",
+    "Reset selected part": "重置当前部位",
+    "Move whole character": "移动整个角色",
+    "Keep hand / foot orientation": "保持手掌／脚掌朝向",
+    "Elbow / knee bend direction": "肘部／膝盖弯曲方向",
+    "Choose a hand or foot, then drag the arrows or the body part. Shift: fine adjustment. Alt: depth. W / E: move / rotate. Ctrl+Z: undo.": "先选择手或脚，再拖动坐标箭头或对应部位。Shift 精细调整；Alt 前后移动；W／E 切换移动／旋转；Ctrl+Z 撤销。超出肢体长度时自动限位，不会拉长骨骼。",
+    "Left hand": "左手",
+    "Right hand": "右手",
+    "Left foot": "左脚",
+    "Right foot": "右脚",
+    "Left elbow": "左肘",
+    "Right elbow": "右肘",
+    "Left knee": "左膝",
+    "Right knee": "右膝",
+    "Head": "头部",
+    "Chest": "胸部",
+    "Joint translation is unavailable; use Root placement or IK target": "此部位不能直接平移；请旋转该关节，或选择手脚使用 IK",
     "Move and rotate": "移动旋转",
     "Hide movement and rotation": "收起移动旋转",
     "Selected object": "当前对象",

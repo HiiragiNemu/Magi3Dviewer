@@ -1,3 +1,4 @@
+import { SelectionHighlight } from '../../src/viewer/selectionHighlight'
 import { attachCharacterAngelRing } from '../angelRing/runtime'
 import { startLoadingTask } from '../loadingProgress.ts'
 import * as THREE from 'three';
@@ -141,7 +142,6 @@ export class MagiaExedraScene3D {
         if (this.composerEnabled == 'Auto') {
             if (
                 this.backgroundSceneEnabled
-                || this.characterSelectionVisible
                 || this.effects.bloomPass.enabled
                 || this.effects.urpBloomPass.enabled
                 || this.effects.backgroundColorAdjustPass.enabled
@@ -159,6 +159,7 @@ export class MagiaExedraScene3D {
 
     // Selecting an actor owns animation/TPS input, not the edit overlay.
     characterTransformEditing = false
+    readonly selectionHighlight = new SelectionHighlight()
 
     get characterSelectionVisible() {
         return this.characterTransformEditing && this.effects.outlinePass.selectedObjects.length > 0
@@ -329,7 +330,8 @@ export class MagiaExedraScene3D {
             this.selfShadow.render()
             this.cameraDepth.render()
 
-            this.effects.outlinePass.enabled = this.characterSelectionVisible
+            // Highlight in existing outline draws, never redraw the full stage.
+            this.effects.outlinePass.enabled = false
             // Dismissed edit handles stay dismissed while actor selection remains intact.
             const transformVisible = this.characterSelectionVisible && Boolean(this.transformControls.object)
             this.transformControls.enabled = transformVisible
@@ -690,6 +692,8 @@ export class MagiaExedraScene3D {
     }
 
     renderCurrentFrame() {
+        this.selectionHighlight.select(!this.foregroundCaptureActive && this.characterSelectionVisible
+            ? this.characterSelected?.character?.object : undefined)
         this.effects.syncBackgroundSceneState()
         this.effects.syncParaffinLightDirection()
         if (this.foregroundCaptureActive) {
@@ -746,6 +750,7 @@ export class MagiaExedraScene3D {
         const previousRenderTarget = renderer.getRenderTarget()
 
         try {
+            this.selectionHighlight.clear()
             renderer.xr.enabled = false
             renderer.autoClear = true
             renderer.setRenderTarget(null)
@@ -1013,6 +1018,7 @@ export class MagiaExedraScene3D {
         return this._characterSelected
     }
     set characterSelected(value) {
+        this.selectionHighlight.clear()
         this._characterSelected = value
         this.characterTransformEditing = false
         this.effects.outlinePass.enabled = false

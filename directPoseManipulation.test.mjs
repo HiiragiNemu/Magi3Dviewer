@@ -18,10 +18,15 @@ fs.writeFileSync(moduleFile, ts.transpileModule(fs.readFileSync(path.join(root, 
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
 }).outputText)
 const { DirectPoseTarget, directPoseTranslationJoints } = await import(pathToFileURL(moduleFile))
+const toolsModule = path.join(cache, 'directPoseTools.mjs')
+fs.writeFileSync(toolsModule, ts.transpileModule(fs.readFileSync(path.join(root, 'src/viewer/directPoseTools.ts'), 'utf8'), {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
+}).outputText)
+const { DirectPoseHistory, findDirectPoseParts } = await import(pathToFileURL(toolsModule))
 const source = fs.readFileSync(path.join(root, 'src/viewer/index.ts'), 'utf8')
 const ast = ts.createSourceFile('viewer.ts', source, ts.ScriptTarget.Latest, true)
 assert.equal(ast.parseDiagnostics.length, 0, 'production viewer syntax')
-const names = ['getPoseEntries', 'poseQuaternionMatches', 'applyPoseEntry', 'restoreManualPoseOverrides', 'applyManualPoseOverrides', 'resetActionParameters', 'getPoseEntryBase', 'getPoseEntryPositionBase', 'syncPoseEntryControls', 'setDirectPoseTransformMode', 'updateDirectPoseUi', 'updateDirectPoseTarget', 'requestDirectPoseFeedback', 'selectDirectPoseBone', 'clearDirectPoseSelection', 'setDirectPoseEditing', 'beginDirectPoseTransaction', 'syncDirectPoseOffsetsFromBone', 'directPoseScreenTranslationDelta', 'finishDirectPoseDrag', 'setupDirectPoseEditing', 'pauseSelectedAnimation']
+const names = ['getPoseEntries', 'poseQuaternionMatches', 'applyPoseEntry', 'restoreManualPoseOverrides', 'applyManualPoseOverrides', 'resetActionParameters', 'getPoseEntryBase', 'getPoseEntryPositionBase', 'syncPoseEntryControls', 'setDirectPoseTransformMode', 'updateDirectPoseUi', 'updateDirectPoseTarget', 'requestDirectPoseFeedback', 'selectDirectPoseBone', 'clearDirectPoseSelection', 'setDirectPoseEditing', 'beginDirectPoseTransaction', 'syncDirectPoseOffsetsFromBone', 'directPoseScreenTranslationDelta', 'finishDirectPoseDrag', 'setupDirectPoseEditing', 'pauseSelectedAnimation', 'captureDirectPose', 'getDirectPoseHistory', 'commitDirectPoseHistory', 'restoreDirectPose', 'undoDirectPose']
 const functions = ast.statements.filter(node => ts.isFunctionDeclaration(node) && names.includes(node.name?.text))
 assert.equal(functions.length, names.length, 'exercise real production functions, not copies of the algorithms')
 const js = ts.transpileModule(functions.map(node => node.getText(ast)).join('\n'), {
@@ -70,7 +75,7 @@ function fixture({ scaled = false, orthographic = false } = {}) {
     const meshEntry = { object: mesh, defaultVisible: true, path: 'mesh', label: 'mesh' }
     let weighted, partUiCalls = 0, catalogState, pauses = 0, objectCloses = 0, selectedPart
     const deps = {
-        THREE: T, TransformControls, DirectPoseTarget, scene, document, window,
+        THREE: T, TransformControls, DirectPoseTarget, DirectPoseHistory, scene, document, window,
         requestAnimationFrame: fn => feedback.push(fn),
         actionDirectEditToggle: toggle, actionDirectTranslate: translate, actionDirectRotate: rotate, actionDirectEditTarget: output, actionChannelList: element(),
         translateUiText: text => text, translateBoneChannelLabel: text => text, isPerformanceBoneLeased: bone => leases.has(bone),
@@ -88,11 +93,12 @@ function fixture({ scaled = false, orthographic = false } = {}) {
         let directPoseControls, directPoseControlsHelper, directPoseSelection, selectedModelPart, directPosePointerDrag, directPoseGizmoPointerId;
         let directPoseFeedbackPending=false, directPoseEditingEnabled=false, directPoseTransformMode='rotate', directPoseGizmoDragging=false;
         let directPoseOrbitControlsWasEnabled=true, directPoseOutlineSelection=[], performanceGizmoActive=false, directPoseTarget, directPoseInputRoot, directPoseFinishing=false;
-        const directPoseDragBases = new Map();
+        const directPoseDragBases = new Map(), directPoseHistories = new WeakMap();
+        let directPoseToolsUi, directPoseKeepOrientation = false, directPoseBendEditing = false;
         ${js}
         setupDirectPoseEditing();
         return { entries:getPoseEntries, apply:applyPoseEntry, restore:restoreManualPoseOverrides, frame:applyManualPoseOverrides,
-            reset:resetActionParameters, mode:setDirectPoseTransformMode, edit:setDirectPoseEditing, select:selectDirectPoseBone, finish:finishDirectPoseDrag,
+            reset:resetActionParameters, undo:undoDirectPose, mode:setDirectPoseTransformMode, edit:setDirectPoseEditing, select:selectDirectPoseBone, finish:finishDirectPoseDrag,
             get selection(){return directPoseSelection}, get drag(){return directPosePointerDrag}, get controls(){return directPoseControls}, get target(){return directPoseTarget} };
     `)(...Object.values(deps))
     const event = (x = 600, y = 400, extra = {}) => ({ pointerId: 1, pointerType: 'mouse', button: 0, buttons: 1, clientX: x, clientY: y, shiftKey: false, altKey: false, preventDefault() {}, stopPropagation() {}, stopImmediatePropagation() {}, ...extra })
@@ -282,4 +288,41 @@ test('the real renderer invokes restoration before native animation and honors p
     renderer.setAnimationLoop(() => order.push('manual-and-render')); tick(0); assert.deepEqual(order, ['restore', 'native', 'manual-and-render'])
     api.setRenderPaused(true); tick(1); assert.equal(order.length, 3)
     api.setRenderPaused(false); api.removeBeforeAnimationLoop(before); order.length = 0; tick(2); assert.deepEqual(order, ['native', 'manual-and-render'])
+})
+
+
+test('undo/redo restore a completed gesture without resizing joints', () => {
+    const f=fixture();f.choose();const before=f.hand.quaternion.clone()
+    f.startBody();f.direct('pointermove',f.event(655,425));f.render();f.direct('pointerup',f.event())
+    const after=f.hand.quaternion.clone();assert.ok(!sameRotation(before,after))
+    f.api.undo();assert.ok(sameRotation(f.hand.quaternion,before))
+    f.api.undo(true);assert.ok(sameRotation(f.hand.quaternion,after));f.noStretch();f.cleanup()
+})
+test('history is bounded and identical clicks do not consume an undo slot',()=>{
+    const h=new DirectPoseHistory(),p=new Map([['a',[0,0,0]]]);h.begin(p);h.finish(p);assert.equal(h.canUndo,false)
+    for(let i=0;i<55;i++){h.begin(p);p.set('a',[i+1,0,0]);h.finish(p)}
+    let count=0,current=p;while(h.canUndo){current=h.undo(current);count++}assert.equal(count,40);assert.equal(current.get('a')[0],15)
+    assert.equal(h.redo(current).get('a')[0],16)
+})
+test('hand orientation lock preserves wrist world rotation and all bone lengths',()=>{
+    const f=fixture();f.choose();const t=f.api.target;t.preserveEndOrientation=true
+    const q=f.hand.getWorldQuaternion(new T.Quaternion());assert.ok(t.begin('translate'))
+    t.handle.position.add(new T.Vector3(-.25,.2,.2));t.queue();t.flush()
+    assert.ok(sameRotation(q,f.hand.getWorldQuaternion(new T.Quaternion())));f.noStretch();f.cleanup()
+})
+test('bend adjustment rotates the elbow around a fixed reachable hand target',()=>{
+    const f=fixture();f.lower.rotation.z=.55;f.choose();const t=f.api.target;t.begin('translate')
+    const target=t.handle.position.clone();t.queue();t.flush();const first=f.lower.getWorldPosition(new T.Vector3())
+    t.bendAngle=Math.PI/2;t.queue();t.flush();const second=f.lower.getWorldPosition(new T.Vector3())
+    assert.ok(first.distanceTo(second)>.1);assert.ok(f.hand.getWorldPosition(new T.Vector3()).distanceTo(target)<1e-6)
+    f.noStretch();f.cleanup()
+})
+test('body part picker uses actual left/right identities, not helper bones',()=>{
+    const a=new T.Group(),decoy=new T.Bone(),hand=new T.Bone(),foot=new T.Bone();decoy.name='Hand_R_Twist';hand.name='Hand_R';foot.name='Foot_L';a.add(decoy,hand,foot)
+    const parts=findDirectPoseParts(a);assert.equal(parts.find(p=>p.id==='right-hand').bone,hand);assert.equal(parts.find(p=>p.id==='left-foot').bone,foot);assert.ok(!parts.some(p=>p.bone===decoy))
+})
+test('anatomical IK stops before reverse folding and does not move the root',()=>{
+    const f=fixture();f.choose();const t=f.api.target;t.begin('translate');t.handle.position.copy(f.upper.getWorldPosition(new T.Vector3()));t.queue();t.flush()
+    const a=f.upper.getWorldPosition(new T.Vector3()),b=f.lower.getWorldPosition(new T.Vector3()),c=f.hand.getWorldPosition(new T.Vector3())
+    const angle=b.clone().sub(a).angleTo(c.clone().sub(b))*180/Math.PI;assert.ok(angle<=160.001);f.noStretch();f.cleanup()
 })

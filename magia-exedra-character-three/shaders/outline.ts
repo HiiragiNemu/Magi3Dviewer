@@ -34,6 +34,8 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
             THREE.UniformsLib.lights,
             {
                 uThickness: { value: thickness },
+                uSelectionWeight: { value: 0 },
+                uSelectionColor: { value: new THREE.Color('#ffe36a') },
                 uColor: { value: new THREE.Color(color) },
                 uShadowColor: {
                     value: new THREE.Color(options?.shadowColor ?? '#ffffff'),
@@ -63,6 +65,7 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
         ]),
         vertexShader: /*glsl*/`
             uniform float uThickness;
+            uniform float uSelectionWeight;
             uniform float uCurrentCameraFOV;
             uniform float uCameraNear;
             uniform float uCameraFar;
@@ -110,6 +113,7 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
                 ) * 0.003 * (uThickness * 0.01);
                 mvPosition.xyz +=
                     outlineNormalVS * outlineScale * outlineVertexWidth;
+                mvPosition.xyz += outlineNormalVS * outlineScale * outlineVertexWidth * uSelectionWeight * 0.35;
 
                 gl_Position = projectionMatrix * mvPosition;
                 vec3 rdCancelWorldPosition =
@@ -167,6 +171,8 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
         `,
         fragmentShader: /*glsl*/`
             uniform vec3 uColor;
+            uniform float uSelectionWeight;
+            uniform vec3 uSelectionColor;
             uniform vec3 uShadowColor;
             uniform float uOutlineTexBlend;
             uniform vec3 uEmissionColor;
@@ -228,6 +234,9 @@ export function createOutlineMaterial(options?: OutlineMaterialCreationOptions) 
                         uGlobalCharacterTint,
                     alpha
                 );
+                // Selection changes uniforms on the existing outline draw only.
+                // Zero weight is exactly the authored appearance.
+                gl_FragColor.rgb = mix(gl_FragColor.rgb, uSelectionColor, uSelectionWeight);
                 #include <tonemapping_fragment>
                 #include <colorspace_fragment>
             }

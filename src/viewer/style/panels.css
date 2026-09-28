@@ -714,3 +714,19 @@ body.theme-light .other-tools-footer { border-top-color: rgba(0,0,0,.12); }
     .other-tools-card-title { font-size: 13px; }
 }
 @media (prefers-reduced-motion: reduce) { .other-tools-card { transition: none; } }
+
+/* Body-part targets remain finger-sized without expensive animation effects. */
+.direct-pose-tools { display:grid;gap:.65rem;margin-block:.7rem; }
+.direct-pose-parts { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem; }
+.direct-pose-parts button,.direct-pose-actions button { min-height:36px;padding:.4rem .65rem;border-radius:6px;font:inherit;cursor:pointer; }
+.direct-pose-parts button[aria-pressed="true"] { outline:2px solid currentColor;outline-offset:-2px;font-weight:700; }
+.direct-pose-actions { display:flex;flex-wrap:wrap;gap:.4rem; }
+.direct-pose-actions button { flex:1 1 7rem; }
+.direct-pose-tools>label { display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;font-size:.9em; }
+.direct-pose-tools input[type="range"] { min-width:8rem;flex:1 1 8rem; }
+.direct-pose-tools input[type="checkbox"] { width:18px;height:18px; }
+.direct-pose-hint { margin:0;font-size:.85em;line-height:1.6;opacity:.85; }
+button.pose-bone-select { font:inherit;color:inherit;text-align:start;border:0;background:transparent;cursor:pointer;padding:.25rem; }
+button.pose-bone-select:hover,button.pose-bone-select:focus-visible { text-decoration:underline; }
+.direct-pose-tools button:disabled { cursor:default;opacity:.5; }
+@media (pointer:coarse) { .direct-pose-tools button { min-height:44px; } }
