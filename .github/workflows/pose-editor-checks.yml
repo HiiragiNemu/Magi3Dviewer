@@ -1,0 +1,64 @@
+name: Pose editor regression checks
+
+on:
+  push:
+    branches: [magius3dviewer]
+    paths:
+      - 'src/viewer/index.ts'
+      - 'src/viewer/directPose*.ts'
+      - 'directPose*.test.mjs'
+      - '.github/workflows/pose-editor-checks.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pose-editor-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            src
+            magia-exedra-character-three
+            patches
+            scripts
+          sparse-checkout-cone-mode: true
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Pose and selection regressions
+        run: node --test directPoseManipulation.test.mjs viewerSelectionEditing.test.mjs
+      - name: Typecheck production source
+        run: npx tsc --noEmit
+      - name: Export bounded repair and verification inputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pose-editor-verification-inputs
+          retention-days: 3
+          if-no-files-found: error
+          path: |
+            src/viewer/index.ts
+            src/viewer/directPose*.ts
+            src/viewer/scene.ts
+            magia-exedra-character-three/scene.ts
+            directPose*.test.mjs
+            viewerSelectionEditing.test.mjs
+            package.json
+            tsconfig.json
+            node_modules/three/build/
+            node_modules/three/src/
+            node_modules/three/examples/jsm/controls/TransformControls.js
+            node_modules/three/package.json
+            node_modules/typescript/lib/
+            node_modules/typescript/package.json
