@@ -1,0 +1,141 @@
+--- a/src/viewer/directPoseTarget.ts
++++ b/src/viewer/directPoseTarget.ts
+@@ -15,6 +15,25 @@
+     while (owner && owner !== actor) owner = owner.parent
+     if (!owner) return []
+     const joints: Bone[] = []
++    const semantic = /hand|wrist/i.test(bone.name)
++        ? [/forearm|lowerarm|elbow/i, /upperarm|(?:^|[_. :/-])arm(?:$|[_. :/-])/i]
++        : /foot|ankle/i.test(bone.name) ? [/calf|shin|lowerleg|knee/i, /thigh|upperleg|upleg/i] : undefined
++    if (semantic) {
++        let node = bone.parent
++        for (const pattern of semantic) {
++            while (isBone(node) && node !== actor && !isAnchor(node)) {
++                if (blocked(node)) return []
++                const candidate = node
++                node = node.parent
++                if (pattern.test(candidate.name) && !/twist|roll|assist/i.test(candidate.name)) {
++                    joints.unshift(candidate)
++                    break
++                }
++            }
++        }
++        if (joints.length === 2) return joints
++        joints.length = 0
++    }
+     let parent = bone.parent
+     while (isBone(parent) && parent !== actor && isBone(parent.parent) && joints.length < 2) {
+         if (isAnchor(parent)) break
+@@ -32,6 +51,11 @@
+     readonly handle = new Object3D()
+     readonly joints: Bone[]
+     private readonly rotationBones: readonly Bone[]
++    preserveEndOrientation = false
++    bendAngle = 0
++    private readonly bendReference = new Vector3()
++    private readonly preferredBend = new Vector3()
++    private readonly orientationBones: readonly Bone[]
+     private mode: DirectPoseMode = 'rotate'
+     private active = false
+     private dirty = false
+@@ -56,9 +80,17 @@
+     /** Counts actual solves, not input events, for regression evidence. */
+     solves = 0
+ 
+-    constructor(readonly actor: Object3D, readonly bone: Bone, private readonly blocked: (bone: Bone) => boolean = () => false) {
++    readonly actor: Object3D
++    readonly bone: Bone
++    private readonly blocked: (bone: Bone) => boolean
++
++    constructor(actor: Object3D, bone: Bone, blocked: (bone: Bone) => boolean = () => false) {
++        this.actor = actor
++        this.bone = bone
++        this.blocked = blocked
+         this.rotationBones = [bone]
+         this.joints = directPoseTranslationJoints(actor, bone, blocked)
++        this.orientationBones = [...this.joints, bone]
+         this.handle.name = 'MagiusDirectPoseInput'
+         this.sync()
+     }
+@@ -66,7 +98,7 @@
+     get canTranslate() { return this.joints.length > 0 }
+     get pending() { return this.dirty }
+     get dragging() { return this.active }
+-    get editedBones(): readonly Bone[] { return this.mode === 'translate' ? this.joints : this.rotationBones }
++    get editedBones(): readonly Bone[] { return this.mode === 'translate' ? (this.preserveEndOrientation ? this.orientationBones : this.joints) : this.rotationBones }
+ 
+     sync() {
+         if (this.active) return
+@@ -87,6 +119,7 @@
+         this.startWorld.copy(this.handle.quaternion).normalize()
+         this.desiredPosition.copy(this.handle.position)
+         this.desiredQuaternion.copy(this.handle.quaternion)
++        if (this.joints.length === 2) this.rememberBend()
+         this.active = true
+         this.dirty = false
+         return true
+@@ -122,6 +155,10 @@
+                 if (this.tip.distanceToSquared(this.desiredPosition) < 1e-10) break
+             }
+         }
++        if (this.mode === 'translate' && this.preserveEndOrientation && this.bone.parent) {
++            this.bone.parent.getWorldQuaternion(this.rotation)
++            this.bone.quaternion.copy(this.rotation.invert()).multiply(this.startWorld).normalize()
++        }
+         this.bone.updateWorldMatrix(true, false)
+         return this.editedBones
+     }
+@@ -145,6 +182,23 @@
+         this.rotation.setFromUnitVectors(this.from.normalize(), this.to.normalize())
+         joint.quaternion.premultiply(this.rotation).normalize()
+         joint.updateWorldMatrix(false, false)
++    }
++
++    private rememberBend(): void {
++        const [upper, lower] = this.joints
++        upper.parent!.updateWorldMatrix(true, false)
++        this.inverse.copy(upper.parent!.matrixWorld).invert()
++        upper.getWorldPosition(this.origin).applyMatrix4(this.inverse)
++        lower.getWorldPosition(this.middle).applyMatrix4(this.inverse)
++        this.bone.getWorldPosition(this.tip).applyMatrix4(this.inverse)
++        this.axis.copy(this.tip).sub(this.origin).normalize()
++        this.bendReference.copy(this.middle).sub(this.origin)
++        this.bendReference.addScaledVector(this.axis, -this.bendReference.dot(this.axis))
++        this.actor.updateWorldMatrix(true, false)
++        this.preferredBend.set(0, 0, /foot|ankle|leg|calf|knee/i.test(this.bone.name) ? 1 : -1)
++            .transformDirection(this.actor.matrixWorld).transformDirection(this.inverse)
++        if (this.bendReference.lengthSq() < 1e-10) this.bendReference.copy(this.preferredBend)
++        this.bendReference.normalize()
+     }
+ 
+     private solveTwoBone(): void {
+@@ -168,15 +222,23 @@
+         if (requestedDistance < 1e-10) this.axis.copy(this.tip).sub(this.origin)
+         if (this.axis.lengthSq() < 1e-16) this.axis.set(0, 1, 0)
+         this.axis.normalize()
+-        this.pole.copy(this.middle).sub(this.origin)
++        this.pole.copy(this.bendReference)
+         this.pole.addScaledVector(this.axis, -this.pole.dot(this.axis))
+         if (this.pole.lengthSq() < 1e-12) {
+-            this.pole.set(0, Math.abs(this.axis.y) < 0.8 ? -1 : 0, Math.abs(this.axis.y) < 0.8 ? 0 : 1)
+-            this.pole.addScaledVector(this.axis, -this.pole.dot(this.axis))
+-        }
+-        this.pole.normalize()
++            this.pole.copy(this.preferredBend).addScaledVector(this.axis, -this.preferredBend.dot(this.axis))
++            if (this.pole.lengthSq() < 1e-12) {
++                this.pole.set(Math.abs(this.axis.x) < 0.8 ? 1 : 0, Math.abs(this.axis.x) < 0.8 ? 0 : 1, 0)
++                this.pole.addScaledVector(this.axis, -this.pole.dot(this.axis))
++            }
++        }
++        this.pole.normalize().applyAxisAngle(this.axis, this.bendAngle)
+         const epsilon = (a + b) * 1e-8
+-        const distance = Math.max(Math.abs(a - b) + epsilon, Math.min(a + b - epsilon, requestedDistance))
++        const anatomical = /hand|wrist|foot|ankle/i.test(this.bone.name)
++        const maximumBend = /foot|ankle/i.test(this.bone.name) ? 155 : 160
++        const minimumReach = anatomical
++            ? Math.sqrt(a * a + b * b + 2 * a * b * Math.cos(maximumBend * Math.PI / 180))
++            : Math.abs(a - b)
++        const distance = Math.max(minimumReach + epsilon, Math.min(a + b - epsilon, requestedDistance))
+         const along = (a * a - b * b + distance * distance) / (2 * distance)
+         const height = Math.sqrt(Math.max(0, a * a - along * along))
+         this.elbow.copy(this.origin).addScaledVector(this.axis, along).addScaledVector(this.pole, height)

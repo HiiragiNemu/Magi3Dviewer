@@ -1,0 +1,37 @@
+name: Apply tested pose corrections
+on:
+  push:
+    branches: [magius3dviewer]
+    paths: ['.github/workflows/apply-pose-corrections.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: apply-pose-corrections
+  cancel-in-progress: false
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: magius3dviewer
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - name: Apply the hash-checked source changes
+        run: python3 scripts/site-apply-pose.py
+      - run: npm ci
+      - name: Verify pose, selection and IK
+        run: node --test directPoseManipulation.test.mjs viewerSelectionEditing.test.mjs performanceChainIK.test.mjs
+      - name: Verify the complete production typecheck
+        run: npx tsc --noEmit --pretty false
+      - name: Commit only verified source and tests to the existing branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/viewer/index.ts src/viewer/directPoseTarget.ts src/viewer/localization/jaJP.ts src/viewer/localization/zhCN.ts src/viewer/style/panels.css magia-exedra-character-three/scene/index.ts magia-exedra-character-three/shaders/outline.ts directPoseManipulation.test.mjs viewerSelectionEditing.test.mjs
+          git commit -m 'fix: tested bounded posing and lightweight selection'
+          git push origin HEAD:magius3dviewer

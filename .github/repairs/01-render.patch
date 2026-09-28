@@ -1,0 +1,104 @@
+--- a/magia-exedra-character-three/scene/index.ts
++++ b/magia-exedra-character-three/scene/index.ts
+@@ -1,3 +1,4 @@
++import { SelectionHighlight } from '../../src/viewer/selectionHighlight'
+ import { attachCharacterAngelRing } from '../angelRing/runtime'
+ import { startLoadingTask } from '../loadingProgress.ts'
+ import * as THREE from 'three';
+@@ -141,7 +142,6 @@
+         if (this.composerEnabled == 'Auto') {
+             if (
+                 this.backgroundSceneEnabled
+-                || this.characterSelectionVisible
+                 || this.effects.bloomPass.enabled
+                 || this.effects.urpBloomPass.enabled
+                 || this.effects.backgroundColorAdjustPass.enabled
+@@ -159,6 +159,7 @@
+ 
+     // Selecting an actor owns animation/TPS input, not the edit overlay.
+     characterTransformEditing = false
++    readonly selectionHighlight = new SelectionHighlight()
+ 
+     get characterSelectionVisible() {
+         return this.characterTransformEditing && this.effects.outlinePass.selectedObjects.length > 0
+@@ -329,7 +330,8 @@
+             this.selfShadow.render()
+             this.cameraDepth.render()
+ 
+-            this.effects.outlinePass.enabled = this.characterSelectionVisible
++            // Highlight in existing outline draws, never redraw the full stage.
++            this.effects.outlinePass.enabled = false
+             // Dismissed edit handles stay dismissed while actor selection remains intact.
+             const transformVisible = this.characterSelectionVisible && Boolean(this.transformControls.object)
+             this.transformControls.enabled = transformVisible
+@@ -690,6 +692,8 @@
+     }
+ 
+     renderCurrentFrame() {
++        this.selectionHighlight.select(!this.foregroundCaptureActive && this.characterSelectionVisible
++            ? this.characterSelected?.character?.object : undefined)
+         this.effects.syncBackgroundSceneState()
+         this.effects.syncParaffinLightDirection()
+         if (this.foregroundCaptureActive) {
+@@ -746,6 +750,7 @@
+         const previousRenderTarget = renderer.getRenderTarget()
+ 
+         try {
++            this.selectionHighlight.clear()
+             renderer.xr.enabled = false
+             renderer.autoClear = true
+             renderer.setRenderTarget(null)
+@@ -1013,6 +1018,7 @@
+         return this._characterSelected
+     }
+     set characterSelected(value) {
++        this.selectionHighlight.clear()
+         this._characterSelected = value
+         this.characterTransformEditing = false
+         this.effects.outlinePass.enabled = false
+--- a/magia-exedra-character-three/shaders/outline.ts
++++ b/magia-exedra-character-three/shaders/outline.ts
+@@ -34,6 +34,8 @@
+             THREE.UniformsLib.lights,
+             {
+                 uThickness: { value: thickness },
++                uSelectionWeight: { value: 0 },
++                uSelectionColor: { value: new THREE.Color('#ffe36a') },
+                 uColor: { value: new THREE.Color(color) },
+                 uShadowColor: {
+                     value: new THREE.Color(options?.shadowColor ?? '#ffffff'),
+@@ -63,6 +65,7 @@
+         ]),
+         vertexShader: /*glsl*/`
+             uniform float uThickness;
++            uniform float uSelectionWeight;
+             uniform float uCurrentCameraFOV;
+             uniform float uCameraNear;
+             uniform float uCameraFar;
+@@ -110,6 +113,7 @@
+                 ) * 0.003 * (uThickness * 0.01);
+                 mvPosition.xyz +=
+                     outlineNormalVS * outlineScale * outlineVertexWidth;
++                mvPosition.xyz += outlineNormalVS * outlineScale * outlineVertexWidth * uSelectionWeight * 0.35;
+ 
+                 gl_Position = projectionMatrix * mvPosition;
+                 vec3 rdCancelWorldPosition =
+@@ -167,6 +171,8 @@
+         `,
+         fragmentShader: /*glsl*/`
+             uniform vec3 uColor;
++            uniform float uSelectionWeight;
++            uniform vec3 uSelectionColor;
+             uniform vec3 uShadowColor;
+             uniform float uOutlineTexBlend;
+             uniform vec3 uEmissionColor;
+@@ -228,6 +234,9 @@
+                         uGlobalCharacterTint,
+                     alpha
+                 );
++                // Selection changes uniforms on the existing outline draw only.
++                // Zero weight is exactly the authored appearance.
++                gl_FragColor.rgb = mix(gl_FragColor.rgb, uSelectionColor, uSelectionWeight);
+                 #include <tonemapping_fragment>
+                 #include <colorspace_fragment>
+             }
