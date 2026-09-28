@@ -1,0 +1,79 @@
+name: Current website delivery
+on:
+  push:
+    branches: [magius3dviewer]
+    paths:
+      - '.github/workflows/site-delivery.yml'
+      - 'scripts/site-*.mjs'
+      - 'scripts/repair-pose-build.mjs'
+      - 'src/viewer/directPose*.ts'
+      - 'src/viewer/selectionHighlight.ts'
+      - 'magia-exedra-character-three/shaders/outline.ts'
+      - 'magia-exedra-character-three/scene/index.ts'
+      - 'package-lock.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: current-website-delivery
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Inspect existing delivery configuration without disclosing credentials
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID }}
+        run: |
+          mkdir -p /tmp/site-evidence
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const result={revision:process.env.GITHUB_SHA,cloudflareTokenConfigured:!!process.env.CF_TOKEN,cloudflareAccountConfigured:!!process.env.CF_ACCOUNT};
+          for(const url of ['https://magius3dviewer.pages.dev/','https://hiiraginemu.github.io/Magi3Dviewer/']) {
+            try { const r=await fetch(url); const html=await r.text(); result[url]={status:r.status,bytes:html.length,scripts:[...html.matchAll(/(?:src|href)=["']([^"']+\.(?:m?js|css)(?:\?[^"']*)?)["']/g)].map(x=>x[1])}; if(r.ok)fs.writeFileSync('/tmp/site-evidence/'+(url.includes('pages.dev')?'cloudflare':'github-pages')+'.html',html); } catch(e) {result[url]={error:String(e)}}
+          }
+          console.log(JSON.stringify(result,null,2));fs.writeFileSync('/tmp/site-evidence/delivery.json',JSON.stringify(result,null,2));
+          NODE
+          npm audit --json > /tmp/site-evidence/npm-audit.json || true
+      - name: Pose regressions
+        run: node --test directPoseManipulation.test.mjs viewerSelectionEditing.test.mjs
+      - name: Full production typecheck
+        id: types
+        run: npx tsc --noEmit --pretty false 2>&1 | tee /tmp/site-evidence/types.log
+      - name: Source deployment gates and packaging
+        id: build
+        if: success()
+        run: npm run build:deploy 2>&1 | tee /tmp/site-evidence/build.log
+      - name: Export reproducible inputs and build reports
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import pathlib,subprocess,tarfile
+          files=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          with tarfile.open('/tmp/site-evidence/source-and-dependencies.tgz','w:gz') as t:
+            for name in files:
+              p=pathlib.Path(name)
+              if p.is_file() and p.suffix in ('.ts','.js','.mjs','.cjs','.json','.html','.css','.yml','.yaml','.md'):
+                t.add(p,arcname=name)
+            t.add('node_modules',arcname='node_modules')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: current-site-validation
+          path: /tmp/site-evidence/
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        if: steps.build.outcome == 'success'
+        with:
+          name: current-website-build
+          path: dist-deploy/
+          retention-days: 3
