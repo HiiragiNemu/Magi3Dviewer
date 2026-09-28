@@ -3,6 +3,7 @@ import * as THREE from 'three';
 export let renderer: THREE.WebGLRenderer | undefined
 let animationLoop: XRFrameRequestCallback = () => undefined
 let animationLoops: Array<() => any> = []
+let beforeAnimationLoops: Array<() => void> = []
 let cameraRenderLoops: Array<(camera: THREE.Camera) => any> = []
 
 let renderPaused = false
@@ -62,6 +63,9 @@ export function createRenderer(parameters?: THREE.WebGLRendererParameters) {
     renderer.setAnimationLoop((...args) => {
         clockDelta = clock.getDelta()
         if (renderPaused || pageVisibilityPaused || pageFocusPaused) return
+        // Restore the previous manual overlay before any animation/physics
+        // writer can read that overlay back as its new base pose.
+        beforeAnimationLoops.forEach(callback => callback())
         // Unity updates the AnimationMixer and ReDrive material controller
         // before drawing. Rendering first left Head-driven face/AngelRing
         // uniforms one frame behind the visible pose.
@@ -73,6 +77,14 @@ export function createRenderer(parameters?: THREE.WebGLRendererParameters) {
     }
 
     return renderer
+}
+
+export function addBeforeAnimationLoop(callback: () => void) {
+    if (!beforeAnimationLoops.includes(callback)) beforeAnimationLoops.push(callback)
+}
+
+export function removeBeforeAnimationLoop(callback: () => void) {
+    beforeAnimationLoops = beforeAnimationLoops.filter(value => value !== callback)
 }
 
 export function addAnimationLoop(callback: () => any) {
