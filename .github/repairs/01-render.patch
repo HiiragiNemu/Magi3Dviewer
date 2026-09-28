@@ -1,3 +1,4 @@
+diff --git a/magia-exedra-character-three/scene/index.ts b/magia-exedra-character-three/scene/index.ts
 --- a/magia-exedra-character-three/scene/index.ts
 +++ b/magia-exedra-character-three/scene/index.ts
 @@ -1,3 +1,4 @@
@@ -56,6 +57,7 @@
          this._characterSelected = value
          this.characterTransformEditing = false
          this.effects.outlinePass.enabled = false
+diff --git a/magia-exedra-character-three/shaders/outline.ts b/magia-exedra-character-three/shaders/outline.ts
 --- a/magia-exedra-character-three/shaders/outline.ts
 +++ b/magia-exedra-character-three/shaders/outline.ts
 @@ -34,6 +34,8 @@
