@@ -35,6 +35,7 @@ jobs:
           set -euo pipefail
           npx tsc --noEmit --pretty false 2>&1 | tee /tmp/site-evidence/types.log
       - name: Build current client and package runtime resources
+        id: package
         env:
           MAGIUS_DEPLOY_LIGHTWEIGHT: '1'
           MAGIUS_DEPLOY_OUT_DIR: dist-deploy
@@ -48,6 +49,7 @@ jobs:
       - name: Install isolated browser driver
         run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
       - name: Verify real pointer interaction, skinning and multi-character rendering
+        id: browser
         run: |
           set -euo pipefail
           node scripts/site-smoke-pose.mjs 2>&1 | tee /tmp/site-evidence/browser.log
@@ -57,11 +59,19 @@ jobs:
           name: site-delivery-evidence
           path: /tmp/site-evidence/
           retention-days: 7
+      - name: Preserve a failed browser candidate without publishing it
+        if: failure() && steps.package.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-debug-candidate
+          path: dist-deploy/
+          compression-level: 1
+          retention-days: 1
       - uses: actions/upload-artifact@v4
         with:
           name: verified-website
           path: dist-deploy/
-          retention-days: 7
+          retention-days: 3
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist-deploy/
