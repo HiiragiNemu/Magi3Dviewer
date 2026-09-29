@@ -12,8 +12,9 @@ permissions:
 concurrency:
   group: current-website-delivery
   cancel-in-progress: true
-# One-time recovery of the exact package that passed real pointer, stage,
-# texture and resource-integrity checks. Never rebuild or change its revision.
+# Reuse only the package that passed real pointer, stage, texture and resource
+# integrity checks. The report is not application source. Any actual application
+# or resource change must go through the normal complete build workflow.
 env:
   SOURCE_SHA: 31a4b3ed0949f31e265919ba125d553d6225506b
   SOURCE_RUN: '36542133898'
@@ -39,8 +40,8 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
-          # An optional, repository-scoped administration token may enable a
-          # new site. Its value is never printed or sent outside GitHub.
+          # Optional repository-scoped administration token for first-time site
+          # enablement. Never print its value or send it outside GitHub.
           token: ${{ secrets.PAGES_ADMIN_TOKEN || github.token }}
       - uses: actions/setup-node@v6
         with:
@@ -69,7 +70,7 @@ jobs:
           for(const [id,name,digest,sha] of [[process.env.SOURCE_ARTIFACT,'verified-website',process.env.SOURCE_DIGEST,process.env.SOURCE_SHA],[process.env.CANDIDATE_ARTIFACT,'github-pages',process.env.CANDIDATE_DIGEST,process.env.CANDIDATE_SHA]]){
             const a=await get('/actions/artifacts/'+id);assert.equal(a.name,name);assert.equal(a.expired,false,'Validated artifact expired; use a fresh build');assert.equal(a.digest,digest);assert.equal(a.workflow_run.head_sha,sha);artifacts.push({id:a.id,name:a.name,digest:a.digest});
           }
-          const allowed=new Set(['.github/workflows/site-delivery.yml','.github/workflows/site-publish-verified.yml','scripts/site-smoke-stage-delivery.mjs','siteStageDelivery.test.mjs']);
+          const allowed=new Set(['.github/workflows/site-delivery.yml','.github/workflows/site-publish-verified.yml','scripts/site-smoke-stage-delivery.mjs','siteStageDelivery.test.mjs','docs/reports/2026-09-29-pose-delivery-resume.md']);
           const branch=await get('/branches/magius3dviewer'),comparisons=[];
           for(const head of new Set([process.env.GITHUB_SHA,branch.commit.sha])){
             const c=await get('/compare/'+process.env.SOURCE_SHA+'...'+head);
