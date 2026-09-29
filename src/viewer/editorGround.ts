@@ -141,10 +141,13 @@ export class EditorGroundGuard {
             const dy = targetGround + 0.0201 - controls.target.y
             controls.target.y += dy; camera.position.y += dy; changed = true
         }
-        if (camera.position.y < ground + clearance) { camera.position.y = ground + clearance + 1e-4; changed = true }
+        const minimumY = ground + clearance
+        if (camera.position.y < minimumY - 1e-7) { camera.position.y = minimumY + 1e-4; changed = true }
         if (controls.enabled) {
             const radius = camera.position.distanceTo(controls.target)
-            controls.maxPolarAngle = Math.acos(Math.max(-0.9999, Math.min(0.9999, (ground + clearance - controls.target.y) / Math.max(radius, clearance))))
+            // Orbit and the collision correction must share the same contact
+            // margin, otherwise each frame can undo the other's correction.
+            controls.maxPolarAngle = Math.acos(Math.max(-0.9999, Math.min(0.9999, (minimumY + 1e-4 - controls.target.y) / Math.max(radius, clearance))))
             if (changed) camera.lookAt(controls.target)
         }
         if (changed) camera.updateMatrixWorld()

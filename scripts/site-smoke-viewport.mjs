@@ -102,12 +102,6 @@ try{
  assert.ok((await card()).h<65,'Collapsed tools must leave the viewport free')
  assert.equal(await page.$eval('.ve-joints',e=>e.hidden),false)
  await page.screenshot({path:path.join(evidence,'viewport-mobile-collapsed.png'),fullPage:true})
- const dockBefore=await card(),cameraBeforeDock=await camera()
- const handle=await page.$eval('#viewport-editor-dock .ve-drag-handle',e=>{const r=e.getBoundingClientRect();return{x:r.left+40,y:r.top+12}})
- await page.mouse.move(handle.x,handle.y);await page.mouse.down();await page.mouse.move(handle.x+12,handle.y-170,{steps:8});await page.mouse.up();await frames(3)
- const dockAfter=await card();assert.ok(dockAfter.y<dockBefore.y-100,'The viewport tool must be draggable')
- const cameraAfterDock=await camera();assert.ok(cameraBeforeDock.p.every((v,i)=>Math.abs(v-cameraAfterDock.p[i])<1e-4),'Dragging the toolbar moved the camera')
- record({test:'collapsed-tool-keeps-editing-and-drags',before:dockBefore,after:dockAfter})
  await click('#viewport-editor-close');assert.equal((await inspect()).editing,false)
  assert.equal(await page.evaluate(()=>window.scene.controls.enabled),true)
  await page.waitForSelector('#viewport-editor-launch',{visible:true})
@@ -117,6 +111,18 @@ try{
  await page.goto(base+'?diagnostic=pose-editor&runtimeDelivery=release',{waitUntil:'domcontentloaded',timeout:90000})
  await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData?.characterId===100107&&window.magiusJointLimitInspection,{timeout:180000})
  await click('#viewport-editor-launch');await click('#viewport-pose');await click('#viewport-focus')
+ // Isolate toolbar input on a fresh page, before any camera gesture has
+ // started Orbit damping. Previous floor-test inertia is not toolbar input.
+ await click('#viewport-editor-collapse')
+ const dockBefore=await card(),cameraBeforeDock=await camera()
+ const handle=await page.$eval('#viewport-editor-dock .ve-drag-handle',e=>{const r=e.getBoundingClientRect();return{x:r.left+40,y:r.top+12}})
+ await page.mouse.move(handle.x,handle.y);await page.mouse.down();await page.mouse.move(handle.x+12,handle.y-150,{steps:8});await page.mouse.up();await frames(3)
+ const dockAfter=await card();assert.ok(dockAfter.y<dockBefore.y-100,'The viewport tool must be draggable')
+ const cameraAfterDock=await camera()
+ record({test:'collapsed-tool-keeps-editing-and-drags',before:dockBefore,after:dockAfter,cameraBefore:cameraBeforeDock,cameraAfter:cameraAfterDock})
+ assert.ok(cameraBeforeDock.p.every((v,i)=>Math.abs(v-cameraAfterDock.p[i])<1e-4),'Dragging the toolbar moved the camera')
+ assert.equal((await inspect()).editing,true)
+ await click('#viewport-editor-collapse')
  const stableNames=/^(Root|Hip|Spine|Waist|Chest|Head|Neck|Arm_[LR]|Forearm_[LR]|Hand_[LR]|UpLeg_[LR]|Leg_[LR]|Foot_[LR])$/
  const stress=[]
  for(const [joint,dx,dy] of [['right-hand',-170,-150],['left-hand',180,80],['right-foot',30,220],['left-foot',-50,210],['right-elbow',55,30],['left-knee',-45,30]]){
