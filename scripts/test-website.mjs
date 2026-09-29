@@ -9,6 +9,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const tests = [
   'deploymentTarget.test.mjs',
   'enemyLoadFailureLifecycle.test.mjs',
+  'viewerTpsCameraContinuity.test.mjs',
+  'viewerTpsCameraResponse.test.mjs',
+  'viewerTpsExit.test.mjs',
   'viewportEditing.test.mjs',
   'directPoseManipulation.test.mjs',
   'viewerSelectionEditing.test.mjs',

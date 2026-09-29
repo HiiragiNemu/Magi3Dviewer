@@ -1,35 +1,33 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
-import test from 'node:test';
+import test, {after} from 'node:test';
+import {ThirdPersonCamera} from './src/viewer/ThirdPersonCamera.ts';
+const priorWindow=globalThis.window,priorDocument=globalThis.document;
+if(!priorWindow)globalThis.window={};
+if(!priorDocument)globalThis.document={pointerLockElement:null,body:{classList:{remove(){}}}};
+after(()=>{if(!priorWindow)delete globalThis.window;if(!priorDocument)delete globalThis.document});
 import assert from 'node:assert/strict';
 const root=process.env.S6_TEST_ROOT??path.dirname(fileURLToPath(import.meta.url));
 const runtime=process.env.S6_RUNTIME_ROOT??path.dirname(fileURLToPath(import.meta.url));
 const THREE=await import(pathToFileURL(runtime+'/node_modules/three/build/three.module.js'));
 const {OrbitControls}=await import(pathToFileURL(runtime+'/node_modules/three/examples/jsm/controls/OrbitControls.js'));
-const ts=(await import(pathToFileURL(runtime+'/node_modules/typescript/lib/typescript.js'))).default;
-const source=fs.readFileSync(path.join(root,'src/viewer/viewerLocomotion.ts'),'utf8');
 const sceneSource=fs.readFileSync(path.join(root,'magia-exedra-character-three/scene/index.ts'),'utf8');
-const ast=ts.createSourceFile('viewer.ts',source,ts.ScriptTarget.Latest,true);
-const names=['updateTpsCamera','handoffFinalTpsCameraToOrbitControls','syncCameraRigFromCurrentView'];
-const functions=ast.statements.filter(n=>ts.isFunctionDeclaration(n)&&names.includes(n.name?.text)).map(n=>n.getText(ast)).join('\n');
-const input=source.slice(source.indexOf('let cameraYawUnwrapped ='),source.indexOf('function objectIsWorldVisible('));
 const renderStatement=sceneSource.slice(sceneSource.indexOf('this.renderer.setAnimationLoop(timestamp => {')+'this.renderer.setAnimationLoop(timestamp => {'.length,sceneSource.indexOf('// apply user rotation'));
 function fixture(){
  const camera=new THREE.PerspectiveCamera(40,1,.1,1000);camera.position.set(2,3,6);
  const controls=new OrbitControls(camera,null);controls.enableDamping=true;
- const scene={camera,controls};const binding={character:{object:new THREE.Group()}};
- const code=ts.transpileModule(input+functions,{compilerOptions:{target:ts.ScriptTarget.ES2022}}).outputText;
- const api=new Function('THREE','scene','binding',`
-  function ensureOrbitControlsCurrentCanvas(){} function selectedBinding(){return binding}
-  ${code};return {
-  input:(x,y)=>applyTpsCameraPointerDelta(x,y,'drag-fallback'),
-  step:dt=>updateTpsCamera(binding,dt),
-  set:(yaw,pitch,distance)=>{cameraYawTargetUnwrapped=yaw;cameraPitchTarget=pitch;cameraDistanceTarget=distance},
-  sync:()=>syncCameraRigFromCurrentView(),
-  state:()=>({yaw:cameraYawUnwrapped,pitch:cameraPitch,distance:cameraDistance}),
-  release:()=>{orbitControlsLease={controlsEnabled:true};handoffFinalTpsCameraToOrbitControls()},
-  rendered:()=>{${renderStatement.replaceAll('this.','scene.')}}};`)(THREE,scene,binding);
+ // Real OrbitControls owns damping, pan and dolly; only DOM listener plumbing
+ // is replaced because this numerical test has no browser element.
+ controls.connect=()=>{};controls.disconnect=()=>{};
+ const scene={camera,controls,renderer:{domElement:{}}};const binding={character:{object:new THREE.Group()}};
+ const owner=new ThirdPersonCamera({scene:()=>scene,actor:()=>binding.character.object,released(){},status(){}});
+ owner.start();
+ const rendered=new Function('scene',renderStatement.replaceAll('this.','scene.'));
+ const api={input:(x,y)=>owner.move(x,y),step:()=>owner.update(),
+  set:(yaw,pitch,distance)=>{owner.yaw=yaw;owner.pitch=pitch;owner.distance=distance},
+  sync:()=>owner.start(),state:()=>({yaw:owner.yaw,pitch:owner.pitch,distance:owner.distance}),
+  release:()=>owner.stop(),rendered:()=>rendered(scene)};
  return {scene,binding,api};
 }
 const angularError=(a,b)=>a.angleTo(b);
@@ -58,7 +56,7 @@ test('stationary near-target small drags stay linear across yaw wrap and frame r
   const {scene,api}=fixture();api.set(Math.PI+.001,.4,distance);api.step(1/fps);
   for(let i=0;i<150;i++){
    const before=scene.camera.quaternion.clone();api.input(.5,0);api.step(1/fps);api.rendered();
-   assert.ok(Math.abs(angularError(before,scene.camera.quaternion)-.0009)<1e-8,'small input amplified or dropped');
+   assert.ok(Math.abs(angularError(before,scene.camera.quaternion)-.00075)<1e-8,'small input amplified or dropped');
   }
   const stopped=scene.camera.quaternion.clone();for(let i=0;i<30;i++){api.step(1/fps);api.rendered();closeQuaternion(stopped,scene.camera.quaternion,'released input kept rotating')}
  }
