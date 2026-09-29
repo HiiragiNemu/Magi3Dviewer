@@ -39,12 +39,43 @@ jobs:
         env:
           MAGIUS_DEPLOY_LIGHTWEIGHT: '1'
           MAGIUS_DEPLOY_OUT_DIR: dist-deploy
+          # A GitHub Pages total-size limit must not prevent independently
+          # deploying the same fully checked payload to Cloudflare Pages.
+          # The GitHub-specific limit is enforced in the deploy job below.
+          MAGIUS_DEPLOY_TARGET: cloudflare
         run: |
           set -euo pipefail
           node scripts/build-deployment.mjs 2>&1 | tee /tmp/site-evidence/build.log
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
           fs.writeFileSync('dist-deploy/site-version.json', JSON.stringify({revision:process.env.GITHUB_SHA,builtAt:new Date().toISOString(),poseEditor:'bounded-ik-v2',selection:'existing-outline-uniforms'})+'\n');
+          NODE
+      - name: Record exact payload inventory even when packaging fails
+        if: always()
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          const files=[];
+          function walk(dir, rel='') {
+            if(!fs.existsSync(dir)) return;
+            for(const entry of fs.readdirSync(dir,{withFileTypes:true})) {
+              const name=path.posix.join(rel,entry.name), full=path.join(dir,entry.name);
+              if(entry.isDirectory()) walk(full,name);
+              else if(entry.isFile()) files.push({path:name,bytes:fs.statSync(full).size});
+            }
+          }
+          walk('dist-deploy');
+          const groups={};
+          for(const file of files) {
+            const group=file.path.split('/').slice(0,2).join('/');
+            groups[group]=(groups[group]||0)+file.bytes;
+          }
+          const report={revision:process.env.GITHUB_SHA,files:files.length,bytes:files.reduce((s,f)=>s+f.bytes,0),groups:Object.entries(groups).sort((a,b)=>b[1]-a[1]),largest:files.sort((a,b)=>b.bytes-a.bytes).slice(0,80)};
+          fs.mkdirSync('/tmp/site-evidence',{recursive:true});
+          fs.writeFileSync('/tmp/site-evidence/payload-inventory.json',JSON.stringify(report,null,2)+'\n');
+          if(fs.existsSync('dist-deploy/deployment-public-summary.json')) fs.copyFileSync('dist-deploy/deployment-public-summary.json','/tmp/site-evidence/deployment-public-summary.json');
+          console.log(JSON.stringify({revision:report.revision,files:report.files,bytes:report.bytes,largestGroups:report.groups.slice(0,12)},null,2));
           NODE
       - name: Install isolated browser driver
         run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
@@ -72,9 +103,6 @@ jobs:
           name: verified-website
           path: dist-deploy/
           retention-days: 3
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist-deploy/
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -87,6 +115,27 @@ jobs:
       name: github-pages
       url: ${{ steps.pages.outputs.page_url }}
     steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: verified-website
+          path: dist-deploy
+      - name: Validate actual GitHub Pages payload before upload
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          let bytes=0,files=0;
+          function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,e.name);if(e.isDirectory())walk(p);else if(e.isFile()){bytes+=fs.statSync(p).size;files++;}}}
+          walk('dist-deploy');
+          console.log(JSON.stringify({bytes,files,revision:process.env.GITHUB_SHA}));
+          if(bytes>1_000_000_000 || files>20_000) {
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`GitHub Pages was not replaced: the verified payload contains ${bytes} bytes and ${files} files. Cloudflare delivery is independent; no runtime resources were deleted to satisfy a size check.\n`);
+            throw new Error('GitHub Pages payload exceeds its supported size/file limit; existing site left unchanged');
+          }
+          NODE
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist-deploy/
       - uses: actions/configure-pages@v5
       - uses: actions/deploy-pages@v4
         id: pages
@@ -123,23 +172,20 @@ jobs:
           import fs from 'node:fs';
           if(!process.env.CF_TOKEN || !process.env.CF_ACCOUNT) {
             fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Cloudflare was not published: this repository/environment does not provide the configured Pages API token and account ID. The existing Cloudflare website was left unchanged.\n');
-            fs.appendFileSync(process.env.GITHUB_OUTPUT,'configured=false\n');
-          } else {
-            const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/pages/projects/magius3dviewer`,{headers:{Authorization:`Bearer ${process.env.CF_TOKEN}`}});
-            const data=await r.json();
-            if(!r.ok || !data.success || !data.result?.production_branch)throw new Error('Cannot resolve the existing Cloudflare production project');
-            fs.appendFileSync(process.env.GITHUB_OUTPUT,`configured=true\nbranch=${data.result.production_branch}\n`);
+            throw new Error('Cloudflare deployment credentials are not configured; no publication occurred');
           }
+          const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/pages/projects/magius3dviewer`,{headers:{Authorization:`Bearer ${process.env.CF_TOKEN}`}});
+          const data=await r.json();
+          if(!r.ok || !data.success || !data.result?.production_branch)throw new Error('Cannot resolve the existing Cloudflare production project');
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,`branch=${data.result.production_branch}\n`);
           NODE
       - name: Publish verified assets to the existing Cloudflare project
-        if: steps.project.outputs.configured == 'true'
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist-deploy --project-name=magius3dviewer --branch=${{ steps.project.outputs.branch }}
       - name: Verify Cloudflare published revision
-        if: steps.project.outputs.configured == 'true'
         env:
           EXPECTED_SHA: ${{ github.sha }}
         run: |
