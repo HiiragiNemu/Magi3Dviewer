@@ -10,57 +10,54 @@ permissions:
 concurrency:
   group: current-website-delivery
   cancel-in-progress: true
+# Freshly compile the current Cloudflare package. Reuse the expensive pointer
+# verification only while the application, rendering and resource source is
+# unchanged from its successful run; otherwise use site-delivery.yml.
 env:
-  SOURCE_SHA: 31a4b3ed0949f31e265919ba125d553d6225506b
-  SOURCE_RUN: '36542133898'
-  SOURCE_ARTIFACT: '11022012925'
-  SOURCE_DIGEST: sha256:e335f8cebbf85caa07ec91d05e8c96d7433a13b30dfd1d0c17d5a1b838af5583
+  POSE_SOURCE: 31a4b3ed0949f31e265919ba125d553d6225506b
+  POSE_RUN: '36542133898'
 jobs:
-  access:
+  configuration:
     runs-on: ubuntu-latest
+    environment: magius3dviewer-live
     timeout-minutes: 5
-    strategy:
-      fail-fast: false
-      matrix:
-        scope: [magius3dviewer-live, github-pages]
-    # github-pages is an EXISTING credential environment name only. This
-    # workflow has no GitHub Pages permission, action or publishing target.
-    environment: ${{ matrix.scope }}
+    outputs:
+      branch: ${{ steps.project.outputs.branch }}
     steps:
-      - name: Check only named Cloudflare configuration and the existing project
+      - name: Verify authorization for the existing Cloudflare production project
+        id: project
         env:
-          SCOPE: ${{ matrix.scope }}
           CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
           CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID || vars.CF_ACCOUNT_ID }}
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
-          const report={scope:process.env.SCOPE,tokenPresent:!!process.env.CF_TOKEN,accountPresent:!!process.env.CF_ACCOUNT,configured:false};
-          if(report.tokenPresent&&report.accountPresent&&/^[a-f0-9]{32}$/i.test(process.env.CF_ACCOUNT)){
-            try{
-              const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/pages/projects/magius3dviewer`,{headers:{Authorization:`Bearer ${process.env.CF_TOKEN}`},redirect:'error',signal:AbortSignal.timeout(30000)});
-              report.httpStatus=r.status;
-              const data=await r.json();
-              if(r.ok&&data.success&&data.result?.name==='magius3dviewer'&&/^[A-Za-z0-9_./-]+$/.test(data.result.production_branch||'')){
-                report.configured=true;report.productionBranch=data.result.production_branch;
-              }else report.reason='existing-project-access-rejected';
-            }catch{report.reason='existing-project-access-unavailable';}
-          }else report.reason='missing-or-invalid-cloudflare-configuration';
-          fs.mkdirSync('/tmp/cf-access',{recursive:true});
-          fs.writeFileSync(`/tmp/cf-access/${report.scope}.json`,JSON.stringify(report,null,2)+'\n');
-          console.log(JSON.stringify(report,null,2));
-          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Cloudflare access (${report.scope}): ${report.configured?'verified':report.reason}. Credential VALUES were not logged.\n`);
+          import assert from 'node:assert/strict';
+          const report={tokenPresent:!!process.env.CF_TOKEN,accountPresent:!!process.env.CF_ACCOUNT,configured:false};
+          try{
+            assert.ok(report.tokenPresent&&report.accountPresent,'CLOUDFLARE_AUTHORIZATION_MISSING: configure CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID; no GitHub Pages fallback will be used');
+            assert.match(process.env.CF_ACCOUNT,/^[a-f0-9]{32}$/i,'Invalid Cloudflare account identifier');
+            const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/pages/projects/magius3dviewer`,{headers:{Authorization:`Bearer ${process.env.CF_TOKEN}`},redirect:'error',signal:AbortSignal.timeout(30000)});
+            report.httpStatus=r.status;assert.equal(r.status,200,'Existing Cloudflare project access rejected');
+            const data=await r.json();assert.ok(data.success&&data.result?.name==='magius3dviewer');
+            assert.match(data.result.production_branch,/^[A-Za-z0-9_./-]+$/);
+            report.configured=true;report.productionBranch=data.result.production_branch;
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,`branch=${report.productionBranch}\n`);
+          }finally{
+            fs.mkdirSync('/tmp/cf-access',{recursive:true});fs.writeFileSync('/tmp/cf-access/access.json',JSON.stringify(report,null,2)+'\n');
+            console.log(JSON.stringify(report,null,2));
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Cloudflare authorization: ${report.configured?'verified':'NOT AVAILABLE; no website was replaced'}.\n`);
+          }
           NODE
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: cloudflare-access-${{ matrix.scope }}
+          name: cloudflare-access
           path: /tmp/cf-access/
           retention-days: 7
-  audit:
+  build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    outputs:
-      gateway_ready: ${{ steps.live.outputs.gateway_ready }}
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v6
@@ -68,200 +65,139 @@ jobs:
           node-version: 22
           cache: npm
       - run: mkdir -p /tmp/site-evidence
-      - run: npm ci
-      - name: Recheck current source regressions, private gateway and type safety
-        run: |
-          set -euo pipefail
-          npm run test:website 2>&1 | tee /tmp/site-evidence/functional-tests.log
-          npx tsc --noEmit --pretty false 2>&1 | tee /tmp/site-evidence/types.log
-          node --check scripts/site-smoke-cloudflare.mjs
-          node --check scripts/build-deployment.mjs
-      - name: Read actual production and authenticated-release gateway health
-        id: live
-        if: always()
-        run: |
-          node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          import {createHash} from 'node:crypto';
-          const site='https://magius3dviewer.pages.dev/';
-          const gateway='https://magius3dviewer-runtime-products.crynetsystemscell.workers.dev';
-          const report={checkedAt:new Date().toISOString(),site,gateway};
-          try{
-            const r=await fetch(site,{signal:AbortSignal.timeout(60000)}),bytes=Buffer.from(await r.arrayBuffer());
-            report.homepage={status:r.status,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')};
-          }catch{report.homepage={error:'network-unavailable'};}
-          try{
-            const r=await fetch(site+'site-version.json?check='+Date.now(),{signal:AbortSignal.timeout(60000)});
-            report.version={status:r.status};
-            if(r.ok&&r.headers.get('content-type')?.includes('json')){const v=await r.json();report.version.revision=v.revision;}
-          }catch{report.version={error:'network-unavailable'};}
-          try{
-            const r=await fetch(site+'catalogs/runtime-product-delivery.v1.json?check='+Date.now(),{signal:AbortSignal.timeout(60000)});
-            report.catalog={status:r.status};
-            if(r.ok&&r.headers.get('content-type')?.includes('json')){
-              const c=await r.json();report.catalog={status:r.status,deliveryGateway:c.deliveryGateway,bundledStageBaseUrl:c.bundledStageBaseUrl??null,bundledStageRoots:c.bundledStageRoots?.length??0,entries:c.entries?.length??0};
-            }
-          }catch{report.catalog={error:'network-unavailable'};}
-          let ready=false;
-          try{
-            const r=await fetch(gateway+'/healthz?check='+Date.now(),{signal:AbortSignal.timeout(60000),cache:'no-store'});
-            report.gatewayHealth={httpStatus:r.status};
-            if(r.headers.get('content-type')?.includes('json')){
-              const h=await r.json();
-              report.gatewayHealth.status=h.status;report.gatewayHealth.reason=h.reason;
-              if(r.status===200&&h.status==='ready'&&h.repository==='HiiragiNemu/Magi3Dviewer'&&h.probe?.releaseTag==='runtime-products-v1-a'&&/^[A-Za-z0-9._-]+\.zip$/.test(h.probe.assetName)){
-                const p=await fetch(gateway+'/'+h.probe.releaseTag+'/'+h.probe.assetName,{headers:{Range:'bytes=0-0'},signal:AbortSignal.timeout(60000)});
-                const range=p.headers.get('content-range'),cors=p.headers.get('access-control-allow-origin');
-                ready=p.status===206&&range===`bytes 0-0/${h.probe.assetBytes}`&&cors==='*';
-                report.gatewayRange={status:p.status,contentRange:range,cors,passed:ready};
-                await p.body?.cancel();
-              }
-            }
-          }catch{report.gatewayHealth={error:'network-unavailable'};}
-          report.privateGatewayReady=ready;
-          fs.mkdirSync('/tmp/site-evidence',{recursive:true});
-          fs.writeFileSync('/tmp/site-evidence/cloudflare-before-publication.json',JSON.stringify(report,null,2)+'\n');
-          console.log(JSON.stringify(report,null,2));
-          fs.appendFileSync(process.env.GITHUB_OUTPUT,`gateway_ready=${ready}\n`);
-          NODE
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: cloudflare-source-and-live-audit
-          path: /tmp/site-evidence/
-          retention-days: 14
-  resolve:
-    needs: access
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      scope: ${{ steps.target.outputs.scope }}
-      branch: ${{ steps.target.outputs.branch }}
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: cloudflare-access-*
-          merge-multiple: true
-          path: access
-      - name: Require an authenticated existing Cloudflare target; never substitute GitHub Pages
-        id: target
-        run: |
-          node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          const reports=fs.readdirSync('access').filter(f=>f.endsWith('.json')).map(f=>JSON.parse(fs.readFileSync('access/'+f,'utf8')));
-          const target=reports.find(r=>r.configured&&r.scope==='magius3dviewer-live')||reports.find(r=>r.configured);
-          if(!target){fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'NOT DEPLOYED: neither existing environment supplied usable Cloudflare project authorization. No full artifact was downloaded and no website was replaced. Configure CLOUDFLARE_API_TOKEN (Pages Edit) and CLOUDFLARE_ACCOUNT_ID in magius3dviewer-live or repository secrets.\n');throw new Error('CLOUDFLARE_AUTHORIZATION_MISSING: source access is not Cloudflare publishing authorization');}
-          fs.appendFileSync(process.env.GITHUB_OUTPUT,`scope=${target.scope}\nbranch=${target.productionBranch}\n`);
-          NODE
-  publish:
-    needs: [resolve, audit]
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    environment:
-      name: ${{ needs.resolve.outputs.scope }}
-      url: https://magius3dviewer.pages.dev/
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            /scripts/site-smoke-cloudflare.mjs
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 22
-      - name: Prove unchanged application source and full tested artifact identity
+      - name: Prove application and resources still match the successful real-pointer test
         env:
           GH_TOKEN: ${{ github.token }}
-          GATEWAY_READY: ${{ needs.audit.outputs.gateway_ready }}
         run: |
           node --input-type=module <<'NODE'
           import assert from 'node:assert/strict';
           import fs from 'node:fs';
-          assert.equal(process.env.GATEWAY_READY,'true','The private-release gateway is not ready');
           const api='https://api.github.com/repos/HiiragiNemu/Magi3Dviewer';
           async function get(route){const r=await fetch(api+route,{headers:{Authorization:`Bearer ${process.env.GH_TOKEN}`,Accept:'application/vnd.github+json'},signal:AbortSignal.timeout(60000)});assert.equal(r.status,200,'GitHub provenance read failed');return r.json();}
-          const run=await get('/actions/runs/'+process.env.SOURCE_RUN);assert.equal(run.head_sha,process.env.SOURCE_SHA);assert.equal(run.head_branch,'magius3dviewer');
-          const jobs=await get('/actions/runs/'+process.env.SOURCE_RUN+'/jobs?per_page=100');assert.ok(jobs.total_count<100);
+          const run=await get('/actions/runs/'+process.env.POSE_RUN);assert.equal(run.head_sha,process.env.POSE_SOURCE);assert.equal(run.head_branch,'magius3dviewer');assert.equal(run.path,'.github/workflows/site-delivery.yml');
+          const jobs=await get('/actions/runs/'+process.env.POSE_RUN+'/jobs?per_page=100');assert.ok(jobs.total_count<100);
           const build=jobs.jobs.find(j=>j.name==='build');assert.equal(build?.conclusion,'success');
-          for(const name of ['Pose, selection, IK and current scene delivery regressions','Complete production typecheck','Build current client and complete runtime resources','Verify real pointer interaction, skinning and multi-character rendering'])assert.equal(build.steps.find(s=>s.name===name)?.conclusion,'success',name);
-          const artifact=await get('/actions/artifacts/'+process.env.SOURCE_ARTIFACT);
-          assert.equal(artifact.name,'verified-website');assert.equal(artifact.expired,false);assert.equal(artifact.digest,process.env.SOURCE_DIGEST);assert.equal(artifact.workflow_run.head_sha,process.env.SOURCE_SHA);
+          assert.equal(build.steps.find(s=>s.name==='Verify real pointer interaction, skinning and multi-character rendering')?.conclusion,'success');
           const allowed=new Set(['.github/workflows/site-delivery.yml','.github/workflows/site-publish-verified.yml','scripts/site-smoke-stage-delivery.mjs','siteStageDelivery.test.mjs','scripts/site-smoke-cloudflare.mjs','scripts/test-website.mjs','scripts/build-deployment.mjs','package.json','docs/reports/2026-09-29-pose-delivery-resume.md','docs/reports/2026-09-29-cloudflare-delivery.md']);
           const head=(await get('/branches/magius3dviewer')).commit.sha;
           const comparisons=[];
           for(const ref of new Set([process.env.GITHUB_SHA,head])){
-            const c=await get('/compare/'+process.env.SOURCE_SHA+'...'+ref);assert.ok(['ahead','identical'].includes(c.status));assert.equal(c.merge_base_commit.sha,process.env.SOURCE_SHA);assert.ok(c.total_commits<100&&c.files.length<300);
-            assert.ok(c.files.every(f=>allowed.has(f.filename)),'Application or resources changed: use a fresh tested build, not this artifact');
-            const old=await get('/contents/package.json?ref='+process.env.SOURCE_SHA),current=await get('/contents/package.json?ref='+ref);
-            const oldPackage=JSON.parse(Buffer.from(old.content,'base64')),newPackage=JSON.parse(Buffer.from(current.content,'base64'));
-            delete oldPackage.scripts;delete newPackage.scripts;assert.deepEqual(newPackage,oldPackage,'Only package scripts may differ during recovery');
+            const c=await get('/compare/'+process.env.POSE_SOURCE+'...'+ref);assert.ok(['ahead','identical'].includes(c.status));assert.equal(c.merge_base_commit.sha,process.env.POSE_SOURCE);assert.ok(c.total_commits<100&&c.files.length<300);
+            assert.ok(c.files.every(f=>allowed.has(f.filename)),'Application or resources changed: run the full fresh pointer verification in site-delivery.yml');
+            const old=await get('/contents/package.json?ref='+process.env.POSE_SOURCE),current=await get('/contents/package.json?ref='+ref);
+            const a=JSON.parse(Buffer.from(old.content,'base64')),b=JSON.parse(Buffer.from(current.content,'base64'));
+            delete a.scripts;delete b.scripts;assert.deepEqual(b,a,'Dependency or application metadata changed');
             comparisons.push({head:ref,changed:c.files.map(f=>f.filename)});
           }
-          fs.mkdirSync('/tmp/site-evidence',{recursive:true});
-          fs.writeFileSync('/tmp/site-evidence/cloudflare-provenance.json',JSON.stringify({sourceRevision:process.env.SOURCE_SHA,sourceRun:run.id,artifactId:artifact.id,digest:artifact.digest,recoveryRevision:process.env.GITHUB_SHA,comparisons},null,2)+'\n');
+          fs.writeFileSync('/tmp/site-evidence/pose-verification-provenance.json',JSON.stringify({applicationRevision:process.env.GITHUB_SHA,poseSource:process.env.POSE_SOURCE,poseRun:run.id,buildJob:build.id,comparisons},null,2)+'\n');
           NODE
       - uses: actions/download-artifact@v4
         with:
-          name: verified-website
-          path: dist-deploy
-          run-id: 36542133898
-          github-token: ${{ github.token }}
-      - uses: actions/download-artifact@v4
-        with:
           name: site-delivery-evidence
-          path: /tmp/site-evidence/original-build
+          path: /tmp/site-evidence/original-pose
           run-id: 36542133898
           github-token: ${{ github.token }}
-      - name: Verify complete same-origin stages and Cloudflare file limits
+      - run: npm ci
+      - name: Run the complete Cloudflare build entrypoint with current regressions and typecheck
+        run: |
+          set -euo pipefail
+          npm run build:deploy 2>&1 | tee /tmp/site-evidence/cloudflare-build.log
+      - name: Verify full stage closures and Cloudflare file limits
         run: |
           node --input-type=module <<'NODE'
           import assert from 'node:assert/strict';
           import fs from 'node:fs';
           import path from 'node:path';
-          const root='dist-deploy';
-          const v=JSON.parse(fs.readFileSync(root+'/site-version.json','utf8'));assert.equal(v.revision,process.env.SOURCE_SHA);
-          const c=JSON.parse(fs.readFileSync(root+'/catalogs/runtime-product-delivery.v1.json','utf8'));
-          assert.equal(c.bundledStageBaseUrl,undefined,'Do not use the GitHub Pages/raw-source candidate');
-          assert.equal(c.deliveryGateway.replace(/\/$/,''),'https://magius3dviewer-runtime-products.crynetsystemscell.workers.dev');
-          for(const stage of c.bundledStageRoots){assert.match(stage,/^\/stages\/official\/[A-Za-z0-9_-]+\/$/);assert.ok(fs.statSync(path.join(root,stage.slice(1))).isDirectory());}
+          const root='dist-deploy',version=JSON.parse(fs.readFileSync(root+'/site-version.json','utf8'));
+          assert.equal(version.revision,process.env.GITHUB_SHA);assert.equal(version.deploymentTarget,'cloudflare');
+          const catalog=JSON.parse(fs.readFileSync(root+'/catalogs/runtime-product-delivery.v1.json','utf8'));
+          assert.equal(catalog.bundledStageBaseUrl,undefined,'Public GitHub raw stage fallback is not permitted');
+          assert.equal(catalog.deliveryGateway.replace(/\/$/,''),'https://magius3dviewer-runtime-products.crynetsystemscell.workers.dev');
+          for(const stage of catalog.bundledStageRoots){assert.match(stage,/^\/stages\/official\/[A-Za-z0-9_-]+\/$/);assert.ok(fs.statSync(path.join(root,stage.slice(1))).isDirectory());}
           const files=[];function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,e.name);if(e.isDirectory())walk(file);else{assert.ok(e.isFile());const bytes=fs.statSync(file).size;assert.ok(bytes<=25*1024**2,'Cloudflare file too large: '+file);files.push({path:path.relative(root,file),bytes});}}}walk(root);
           assert.ok(files.length<=20000);assert.equal(files.filter(f=>f.path.startsWith('stages/official/')).length,1549);
-          const pose=JSON.parse(fs.readFileSync('/tmp/site-evidence/original-build/pose-browser.json','utf8'));assert.equal(pose.passed,true);
-          fs.writeFileSync('/tmp/site-evidence/cloudflare-full-payload.json',JSON.stringify({sourceRevision:v.revision,files:files.length,bytes:files.reduce((s,f)=>s+f.bytes,0),stageDirectories:c.bundledStageRoots.length,stageFiles:1549,publicSourceFallback:false},null,2)+'\n');
+          const pose=JSON.parse(fs.readFileSync('/tmp/site-evidence/original-pose/pose-browser.json','utf8'));assert.equal(pose.passed,true);
+          fs.writeFileSync('/tmp/site-evidence/cloudflare-full-payload.json',JSON.stringify({revision:version.revision,files:files.length,bytes:files.reduce((s,f)=>s+f.bytes,0),stageDirectories:catalog.bundledStageRoots.length,stageFiles:1549,publicSourceFallback:false},null,2)+'\n');
           NODE
-      - name: Verify full candidate with direct GitHub source access blocked
+      - name: Install isolated browser driver
+        run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+      - name: Render the fresh full candidate with source-repository network requests blocked
+        run: node scripts/site-smoke-cloudflare.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cloudflare-build-evidence
+          path: /tmp/site-evidence/
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verified-cloudflare-website
+          path: dist-deploy/
+          compression-level: 1
+          retention-days: 3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-delivery-tools
+          path: scripts/site-smoke-cloudflare.mjs
+          retention-days: 3
+  publish:
+    needs: [configuration, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: magius3dviewer-live
+      url: https://magius3dviewer.pages.dev/
+    steps:
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: verified-cloudflare-website
+          path: dist-deploy
+      - uses: actions/download-artifact@v4
+        with:
+          name: cloudflare-delivery-tools
+          path: scripts
+      - name: Verify private-release gateway before replacing the production site
         run: |
-          printf '{"private":true,"type":"module"}\n' > package.json
-          npm install --no-save --ignore-scripts puppeteer-core@24.16.0
-          node scripts/site-smoke-cloudflare.mjs
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          const gateway='https://magius3dviewer-runtime-products.crynetsystemscell.workers.dev';
+          const r=await fetch(gateway+'/healthz?check='+Date.now(),{signal:AbortSignal.timeout(60000)});assert.equal(r.status,200);
+          const h=await r.json();assert.equal(h.status,'ready');assert.equal(h.repository,'HiiragiNemu/Magi3Dviewer');
+          assert.equal(h.probe.releaseTag,'runtime-products-v1-a');assert.match(h.probe.assetName,/^[A-Za-z0-9._-]+\.zip$/);
+          const p=await fetch(gateway+'/'+h.probe.releaseTag+'/'+h.probe.assetName,{headers:{Range:'bytes=0-0'},signal:AbortSignal.timeout(60000)});
+          assert.equal(p.status,206);assert.equal(p.headers.get('content-range'),`bytes 0-0/${h.probe.assetBytes}`);assert.equal(p.headers.get('access-control-allow-origin'),'*');await p.body?.cancel();
+          NODE
       - name: Overwrite the existing Cloudflare production website
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID || vars.CF_ACCOUNT_ID }}
-          command: pages deploy dist-deploy --project-name=magius3dviewer --branch=${{ needs.resolve.outputs.branch }} --commit-hash=31a4b3ed0949f31e265919ba125d553d6225506b
-      - name: Verify public revision, complete stage routing and every JavaScript file
+          command: pages deploy dist-deploy --project-name=magius3dviewer --branch=${{ needs.configuration.outputs.branch }} --commit-hash=${{ github.sha }}
+      - name: Verify actual public source revision, HTML, catalog and every JavaScript file
         run: |
           node --input-type=module <<'NODE'
           import assert from 'node:assert/strict';
           import fs from 'node:fs';
           import {createHash} from 'node:crypto';
-          const site='https://magius3dviewer.pages.dev/';
-          const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+          const site='https://magius3dviewer.pages.dev/',hash=bytes=>createHash('sha256').update(bytes).digest('hex');
           let ready=false;
-          for(let i=0;i<18;i++){try{const r=await fetch(site+'site-version.json?check='+Date.now(),{signal:AbortSignal.timeout(30000)});if(r.ok&&(await r.json()).revision===process.env.SOURCE_SHA){ready=true;break;}}catch{}await new Promise(resolve=>setTimeout(resolve,5000));}
-          assert.ok(ready,'Cloudflare production revision is not the tested source');
-          const files=['index.html','catalogs/runtime-product-delivery.v1.json',...fs.readdirSync('dist-deploy/assets').filter(f=>f.endsWith('.js')).map(f=>'assets/'+f)];
-          const verified=[];
+          for(let i=0;i<18;i++){try{const r=await fetch(site+'site-version.json?check='+Date.now(),{signal:AbortSignal.timeout(30000)});if(r.ok&&(await r.json()).revision===process.env.GITHUB_SHA){ready=true;break;}}catch{}await new Promise(resolve=>setTimeout(resolve,5000));}
+          assert.ok(ready,'Cloudflare production has not reached the tested revision');
+          const files=['index.html','catalogs/runtime-product-delivery.v1.json',...fs.readdirSync('dist-deploy/assets').filter(f=>f.endsWith('.js')).map(f=>'assets/'+f)],verified=[];
           for(const file of files){const r=await fetch(new URL(file,site),{cache:'no-store',signal:AbortSignal.timeout(60000)});assert.equal(r.status,200,file);const bytes=Buffer.from(await r.arrayBuffer());assert.equal(hash(bytes),hash(fs.readFileSync('dist-deploy/'+file)),file);verified.push({path:file,bytes:bytes.length,sha256:hash(bytes)});}
-          const proof={passed:true,site,applicationRevision:process.env.SOURCE_SHA,recoveryRevision:process.env.GITHUB_SHA,verifiedAt:new Date().toISOString(),verified};
-          fs.writeFileSync('/tmp/site-evidence/cloudflare-public-release.json',JSON.stringify(proof,null,2)+'\n');
-          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Cloudflare production published and byte-verified: ${site}\nApplication source: ${process.env.SOURCE_SHA}\nNo GitHub Pages or public source-repository scene dependency.\n`);
+          fs.mkdirSync('/tmp/site-evidence',{recursive:true});fs.writeFileSync('/tmp/site-evidence/cloudflare-public-release.json',JSON.stringify({passed:true,site,revision:process.env.GITHUB_SHA,verifiedAt:new Date().toISOString(),verified},null,2)+'\n');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Published and byte-verified Cloudflare production: ${site}\nSource: ${process.env.GITHUB_SHA}\n`);
           NODE
-      - name: Verify actual production browser rendering without public repository access
+      - name: Verify actual production browser without direct source-repository access
         env:
           MAGIUS_SITE_URL: https://magius3dviewer.pages.dev/
-        run: node scripts/site-smoke-cloudflare.mjs
+        run: |
+          printf '{"private":true,"type":"module"}\n' > package.json
+          npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+          node scripts/site-smoke-cloudflare.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
