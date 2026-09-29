@@ -9,7 +9,10 @@ const output = path.resolve(process.env.MAGIUS_DEPLOY_OUT_DIR || 'dist-deploy')
 const evidence = process.env.MAGIUS_EVIDENCE_DIR || '/tmp/site-evidence'
 const catalog = JSON.parse(fs.readFileSync(path.join(output, 'catalogs/runtime-product-delivery.v1.json'), 'utf8'))
 const base = catalog.bundledStageBaseUrl
-assert.match(base, /^https:\/\/[a-f0-9]{8}\.magius3dviewer\.pages\.dev\/$/)
+assert.ok(typeof base === 'string' && (
+  /^https:\/\/[a-f0-9]{8}\.magius3dviewer\.pages\.dev\/$/.test(base)
+  || /^https:\/\/raw\.githubusercontent\.com\/HiiragiNemu\/Magi3Dviewer\/[a-f0-9]{40}\/public\/$/.test(base)
+), 'The stage route must be an immutable current deployment or public source commit')
 assert.ok(!fs.existsSync(path.join(output, 'stages/official')), 'Smoke must exercise the actual slim artifact, not locally available stage copies')
 const root = '/stages/official/battle-616-00-01-001/'
 assert.ok(catalog.bundledStageRoots.includes(root), 'Reviewed current stage must be delegated')
@@ -39,7 +42,17 @@ page.on('pageerror', error => errors.push(String(error)))
 page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
 page.on('response', response => { if (response.url().includes('/stages/official/')) responses.push({ url: response.url(), status: response.status() }) })
 page.on('requestfailed', request => failedRequests.push({ url: request.url(), error: request.failure()?.errorText }))
-const meshCount = () => page.evaluate(() => { let count = 0; window.scene.scene.traverse(node => { if (node.isMesh) count++ }); return count })
+// Locate the real Three.Scene by its public type flag, without assuming an
+// implementation-specific property name on the viewer's scene wrapper.
+const countSceneMeshes = () => {
+  const viewer = window.scene
+  const scene = viewer?.isScene ? viewer : Object.values(viewer ?? {}).find(value => value?.isScene && typeof value.traverse === 'function')
+  if (!scene) throw new Error('The viewer does not expose its real Three.Scene')
+  let count = 0
+  scene.traverse(node => { if (node.isMesh) count++ })
+  return count
+}
+const meshCount = () => page.evaluate(countSceneMeshes)
 let result
 try {
   await page.goto('http://127.0.0.1:4176/Magi3Dviewer/?diagnostic=pose-editor&runtimeDelivery=release', { waitUntil: 'domcontentloaded', timeout: 60000 })
@@ -54,7 +67,13 @@ try {
   })
   assert.ok(choice, 'The actual scene selector exposes the current stage')
   await page.select(choice.selector, choice.value)
-  await page.waitForFunction(previous => { let count = 0; window.scene.scene.traverse(node => { if (node.isMesh) count++ }); return count > previous }, { timeout: 240000 }, before)
+  await page.waitForFunction(previous => {
+    const viewer = window.scene
+    const scene = viewer?.isScene ? viewer : Object.values(viewer ?? {}).find(value => value?.isScene && typeof value.traverse === 'function')
+    if (!scene) return false
+    let count = 0; scene.traverse(node => { if (node.isMesh) count++ })
+    return count > previous
+  }, { timeout: 240000 }, before)
   await page.waitForNetworkIdle({ idleTime: 2000, timeout: 180000 })
   const loaded = responses.filter(response => response.url().startsWith(base + root.slice(1)))
   assert.ok(loaded.some(response => /\.(fbxdata|fbx)(?:\?|$)/i.test(response.url)), 'Actual current scene geometry was fetched from the pinned deployment')
