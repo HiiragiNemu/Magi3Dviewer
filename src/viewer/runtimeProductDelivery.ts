@@ -37,8 +37,10 @@ export interface RuntimeProductDeliveryDocument {
         unpackedBytes: number
         packedBytes: number
     }
-    /** Complete stage directories emitted by this exact deployment; prefer their current bytes over historical ZIPs. */
+    /** Complete current stage closures; never substitute historical ZIPs. */
     bundledStageRoots?: string[]
+    /** GitHub Pages may use the byte-verified, immutable full Cloudflare build. */
+    bundledStageBaseUrl?: string
     entries: RuntimeProductDeliveryEntry[]
 }
 
@@ -121,6 +123,15 @@ function isDeliveryActive(documentValue: RuntimeProductDeliveryDocument) {
     return forced || documentValue.activation.hosts.includes(location.hostname)
 }
 
+/** Restrict this route to a fixed deployment, not a mutable production/branch alias. */
+function bundledStageAssetUrl(catalog: RuntimeProductDeliveryDocument, path: string) {
+    if (!catalog.bundledStageBaseUrl) return undefined
+    const root = rootForRuntimePath(path)
+    if (!root || !catalog.bundledStageRoots?.includes(root)) return undefined
+    const relative = path.replace(/^\/+/, '').split('/').map(encodeURIComponent).join('/')
+    return new URL(relative, catalog.bundledStageBaseUrl).href
+}
+
 function assertDocument(value: unknown): RuntimeProductDeliveryDocument {
     if (!value || typeof value !== 'object') {
         throw new Error('Runtime product delivery catalog is not an object')
@@ -137,6 +148,12 @@ function assertDocument(value: unknown): RuntimeProductDeliveryDocument {
     }
     if (documentValue.bundledStageRoots != undefined && !Array.isArray(documentValue.bundledStageRoots)) {
         throw new Error('Bundled stage roots must be an array')
+    }
+    if (documentValue.bundledStageBaseUrl !== undefined
+        && (typeof documentValue.bundledStageBaseUrl !== 'string'
+            || !/^https:\/\/[a-f0-9]{8}\.magius3dviewer\.pages\.dev\/$/.test(documentValue.bundledStageBaseUrl)
+            || !documentValue.bundledStageRoots?.length)) {
+        throw new Error('Bundled stage base must name an immutable Magius Pages deployment with explicit stage roots')
     }
     const roots = new Set<string>()
     for (const entry of documentValue.entries) {
@@ -385,7 +402,9 @@ export async function resolveRuntimeAssetUrl(
     const path = runtimeAssetPath(localUrl)
     signal?.throwIfAborted()
     const root = rootForRuntimePath(path)
-    if (root && document.bundledStageRoots?.includes(root)) return localUrl
+    if (root && document.bundledStageRoots?.includes(root)) {
+        return bundledStageAssetUrl(document, path) ?? localUrl
+    }
     const archive = await requireArchiveForPath(path, signal)
     if (!archive) {
         if (path.startsWith('/voice/Cv/')) throw new Error(`Voice release archive missing: ${path}`)
@@ -466,9 +485,20 @@ const reviewedRuntimeTextureAliases = new Map([
 
 export function resolveCachedRuntimeAssetUrl(reference: string) {
     const localUrl = resolvePageAssetUrl(reference)
+    const catalog = documentValue
+    const origin = new URL(localUrl).origin
+    const sameOrigin = origin === new URL(pageBaseUrl()).origin
+    const pinnedOrigin = !!catalog?.bundledStageBaseUrl
+        && origin === new URL(catalog.bundledStageBaseUrl).origin
+    if (!sameOrigin && !pinnedOrigin) return localUrl
     const path = runtimeAssetPath(localUrl)
-    const alias = new URL(localUrl).origin === new URL(pageBaseUrl()).origin
-        ? reviewedRuntimeTextureAliases.get(path) : undefined
+    const alias = reviewedRuntimeTextureAliases.get(path)
+    // FBX parsing resolves texture URLs synchronously. Use the same immutable
+    // source as its profile/carrier, including the two reviewed PNG aliases.
+    if (catalog && (isDeliveryActive(catalog) || pinnedOrigin)) {
+        const pinned = bundledStageAssetUrl(catalog, alias ?? path)
+        if (pinned) return pinned
+    }
     if (alias) return blobUrlByRuntimePath.get(alias) ?? resolvePageAssetUrl(alias)
     return blobUrlByRuntimePath.get(path) ?? localUrl
 }
