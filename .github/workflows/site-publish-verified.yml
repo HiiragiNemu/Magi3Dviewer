@@ -13,6 +13,7 @@ concurrency:
 # Freshly compile the current Cloudflare package. Reuse the expensive pointer
 # verification only while the application, rendering and resource source is
 # unchanged from its successful run; otherwise use site-delivery.yml.
+# Consumed-profile diagnostics are covered by siteStageDelivery.test.mjs.
 env:
   POSE_SOURCE: 31a4b3ed0949f31e265919ba125d553d6225506b
   POSE_RUN: '36542133898'
@@ -57,7 +58,7 @@ jobs:
           retention-days: 7
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v6
