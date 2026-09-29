@@ -42,6 +42,13 @@ export function clampEditorPosition(x: number, y: number, width: number, height:
     return { x: Math.max(8, Math.min(x, viewportWidth - width - 8)), y: Math.max(8, Math.min(y, viewportHeight - height - 8)) }
 }
 
+export function placeEditorBesideJoints(minX: number, maxX: number, width: number, viewportWidth: number) {
+    const gap = 90
+    if (maxX + gap + width <= viewportWidth - 8) return maxX + gap
+    if (minX - width - gap >= 8) return minX - width - gap
+    return viewportWidth - maxX >= minX ? Math.max(8, viewportWidth - width - 8) : 8
+}
+
 /** Persistent viewport tool. Only nodes and controls accept pointer events;
  * closing the separate parameter panel never dismisses this editor. */
 export function createViewportPoseEditor(options: Options) {
@@ -145,7 +152,7 @@ export function createViewportPoseEditor(options: Options) {
     }
     const refresh = () => {
         const state = options.state()
-        if (state.actor !== actor) { actor = state.actor; customPosition = false; buildNodes() }
+        if (state.actor !== actor) { actor = state.actor; customPosition = false; activeBefore = false; buildNodes() }
         const text = words[options.locale() as keyof typeof words] ?? words.en
         dock.hidden = !state.active; launch.hidden = state.active || !(state.object || state.actor); launch.textContent = '✥ ' + text.launch
         nodes.hidden = !(state.pose && showJoints)
@@ -182,11 +189,15 @@ export function createViewportPoseEditor(options: Options) {
             for (let i=0;i<parts.length;i++) { const node = nodes.children[i] as HTMLButtonElement; node.setAttribute('aria-pressed',String(parts[i].bone === state.selected)); node.querySelector('span')!.textContent = options.translate(parts[i].label) }
         }
         if (state.active && !activeBefore && !customPosition) {
-            const anchor = state.object ?? actor
+            const anchor = state.pose ? actor : state.object ?? actor
             if (anchor) {
                 anchor.getWorldPosition(point); point.y += 0.8; point.project(options.camera)
                 const sx=rect.left+(point.x+1)*rect.width/2
-                x = sx + 115 + width < window.innerWidth ? sx + 115 : sx - width - 115
+                const projected = parts.map(part => {
+                    part.bone.getWorldPosition(point).project(options.camera)
+                    return Math.abs(point.z) <= 1 ? rect.left + (point.x + 1) * rect.width / 2 : NaN
+                }).filter(Number.isFinite)
+                x = placeEditorBesideJoints(projected.length ? Math.min(...projected) : sx, projected.length ? Math.max(...projected) : sx, width, window.innerWidth)
                 y = rect.top + Math.max(40, rect.height * 0.2)
             }
             position()
@@ -206,5 +217,5 @@ export function createViewportPoseEditor(options: Options) {
     }
     const blur=()=>{stopDock();stopNodes()}
     window.addEventListener('blur',blur); document.addEventListener('magius:localechange',refresh); refresh()
-    return { update, refresh, dispose() {stopNodes();observer.disconnect();viewportObserver.disconnect();window.removeEventListener('resize',resize);window.removeEventListener('blur',blur);document.removeEventListener('magius:localechange',refresh);root.remove()} }
+    return { update, refresh, reposition() {customPosition=false;activeBefore=false;refresh()}, dispose() {stopNodes();observer.disconnect();viewportObserver.disconnect();window.removeEventListener('resize',resize);window.removeEventListener('blur',blur);document.removeEventListener('magius:localechange',refresh);root.remove()} }
 }

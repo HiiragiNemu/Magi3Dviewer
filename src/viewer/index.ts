@@ -2286,6 +2286,7 @@ function setupViewportEditor() {
             editorGround.constrainCamera(scene.camera, scene.controls)
             scene.camera.lookAt(center); scene.camera.updateMatrixWorld()
             scene.controls.update()
+            viewportEditor?.reposition()
         },
         select: selectViewportPosePart,
         begin: (part, event) => { selectViewportPosePart(part); return startDirectPosePointerDrag(event) },
