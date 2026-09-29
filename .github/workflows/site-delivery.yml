@@ -14,9 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
+      configured: ${{ steps.project.outputs.configured }}
       branch: ${{ steps.project.outputs.branch }}
     steps:
-      - name: Verify existing Cloudflare deployment access without printing credentials
+      - name: Check optional Cloudflare configuration without printing credentials
         id: project
         env:
           CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
@@ -25,13 +26,15 @@ jobs:
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
           if(!process.env.CF_TOKEN || !process.env.CF_ACCOUNT) {
-            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Cloudflare was not published: repository-level Pages API token/account ID are not configured. GitHub Pages can independently deliver the same verified source. No credential values were logged and no existing Cloudflare deployment was changed.\n');
-            throw new Error('Cloudflare deployment credentials are not configured');
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Cloudflare: NOT DEPLOYED (optional target is not configured). GitHub Pages independently delivers the verified source. The existing Cloudflare website was left unchanged.\n');
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,'configured=false\n');
+            console.log('Cloudflare: NOT DEPLOYED; optional target has no complete configuration.');
+            process.exit(0);
           }
           const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/pages/projects/magius3dviewer`,{headers:{Authorization:`Bearer ${process.env.CF_TOKEN}`}});
           const data=await r.json();
           if(!r.ok || !data.success || !/^[A-Za-z0-9_./-]+$/.test(data.result?.production_branch || ''))throw new Error('Cannot resolve the existing Cloudflare project; HTTP '+r.status);
-          fs.appendFileSync(process.env.GITHUB_OUTPUT,`branch=${data.result.production_branch}\n`);
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,`configured=true\nbranch=${data.result.production_branch}\n`);
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Existing Cloudflare project access verified.\n');
           NODE
   build:
@@ -137,7 +140,7 @@ jobs:
           retention-days: 3
   cloudflare:
     needs: [build, configuration]
-    if: github.ref == 'refs/heads/magius3dviewer'
+    if: github.ref == 'refs/heads/magius3dviewer' && needs.configuration.outputs.configured == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
