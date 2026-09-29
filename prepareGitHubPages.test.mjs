@@ -3,7 +3,7 @@ import fs from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
-import { prepareGitHubPages } from './scripts/prepare-github-pages.mjs'
+import { prepareGitHubPages, compactJsonTokens, assertSourceJsonTransport } from './scripts/prepare-github-pages.mjs'
 
 const revision = 'a'.repeat(40)
 const base = 'https://1234abcd.magius3dviewer.pages.dev/'
@@ -89,4 +89,31 @@ test('mutable aliases and source directory names are rejected before remote acce
   await assert.rejects(f.run({ base: 'https://magius3dviewer.pages.dev/' }), /immutable/)
   await assert.rejects(f.run({ output: path.join(path.dirname(f.output), 'public') }), /disposable/)
   assert.equal(f.requests.length, 0)
+})
+
+const tokenSource = String.raw`{
+  "float": 0.0, "negativeZero": -0.0, "exponent": 1e-05,
+  "integer": 9007199254740993, "escaped": "\u0061",
+  "10": 10, "2": 2, "duplicate": 1, "duplicate": 2,
+  "text": "with spaces and \"quotes\" and \\slashes"
+}`
+const tokenCompact = String.raw`{"float":0.0,"negativeZero":-0.0,"exponent":1e-05,"integer":9007199254740993,"escaped":"\u0061","10":10,"2":2,"duplicate":1,"duplicate":2,"text":"with spaces and \"quotes\" and \\slashes"}`
+test('byte transport preserves numeric tokens, escapes, key order and duplicate keys', () => {
+  assert.equal(compactJsonTokens(Buffer.from(tokenSource)).toString(), tokenCompact)
+  assert.notEqual(JSON.stringify(JSON.parse(tokenSource)), tokenCompact, 'reproduces the previous false rejection')
+  assert.doesNotThrow(() => assertSourceJsonTransport(Buffer.from(tokenSource), Buffer.from(tokenCompact), 'fixture'))
+})
+for (const [label, changed] of [
+  ['float', tokenCompact.replace('0.0', '0.1')],
+  ['negative zero', tokenCompact.replace('-0.0', '0.0')],
+  ['large integer', tokenCompact.replace('9007199254740993', '9007199254740992')],
+  ['string space', tokenCompact.replace('with spaces', 'withspaces')],
+  ['escape', tokenCompact.replace('\\u0061', 'a')],
+  ['duplicate key', tokenCompact.replace('"duplicate":1,', '')],
+  ['reordered keys', tokenCompact.replace('"10":10,"2":2', '"2":2,"10":10')],
+]) test('rejects token changes: ' + label, () => {
+  assert.throws(() => assertSourceJsonTransport(Buffer.from(tokenSource), Buffer.from(changed), 'fixture'), /tokens differ/)
+})
+test('invalid JSON remains rejected', () => {
+  assert.throws(() => assertSourceJsonTransport(Buffer.from('{"bad":NaN}'), Buffer.from('{"bad":NaN}'), 'fixture'))
 })
