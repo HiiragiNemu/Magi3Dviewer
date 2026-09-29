@@ -2,6 +2,8 @@ name: Deploy tested website
 on:
   push:
     branches: [magius3dviewer]
+    paths-ignore:
+      - '.github/workflows/site-publish-verified.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -57,7 +59,7 @@ jobs:
       - name: Pose, selection, IK and current scene delivery regressions
         run: |
           set -euo pipefail
-          node --test directPoseManipulation.test.mjs viewerSelectionEditing.test.mjs performanceChainIK.test.mjs bundledStageDelivery.test.mjs prepareGitHubPages.test.mjs immutableSourceDelivery.test.mjs runtimeProductDelivery.test.mjs 2>&1 | tee /tmp/site-evidence/functional-tests.log
+          node --test directPoseManipulation.test.mjs viewerSelectionEditing.test.mjs performanceChainIK.test.mjs bundledStageDelivery.test.mjs prepareGitHubPages.test.mjs immutableSourceDelivery.test.mjs runtimeProductDelivery.test.mjs siteStageDelivery.test.mjs 2>&1 | tee /tmp/site-evidence/functional-tests.log
       - name: Complete production typecheck
         run: |
           set -euo pipefail
