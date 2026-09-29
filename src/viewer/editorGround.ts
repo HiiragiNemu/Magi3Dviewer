@@ -20,6 +20,8 @@ export function liftWorld(object: Object3D, distance: number): void {
 export class EditorGroundGuard {
     private stage?: Object3D
     private stageId = ''
+    private stageTransform = ''
+    private surfaceRevision = 0
     private proxies: Mesh[] = []
     private sources = new Map<Mesh, Mesh>()
     private readonly material = new MeshBasicMaterial({ side: DoubleSide })
@@ -45,7 +47,18 @@ export class EditorGroundGuard {
         const root = this.readStage()
         const active = root?.children.find(child => child.visible)
         const id = String(root?.userData.stageDefinition?.id ?? 'none')
-        if (active === this.stage && id === this.stageId) return
+        active?.updateWorldMatrix(true, false)
+        const transform = active?.matrixWorld.elements.join(',') ?? ''
+        if (active === this.stage && id === this.stageId) {
+            if (transform !== this.stageTransform) {
+                this.stageTransform = transform
+                this.surfaceRevision++
+                this.cameraSignature = ''
+            }
+            return
+        }
+        this.stageTransform = transform
+        this.surfaceRevision++
         this.stage = active; this.stageId = id; this.proxies = []; this.sources.clear(); this.cameraSignature = ''
         const spawn = root?.userData.stageDefinition?.spawnPoints?.find((p: { role?: string }) => p.role === 'ally')
         this.referenceY = Number.isFinite(spawn?.position?.[1]) ? spawn.position[1] : 0
@@ -116,7 +129,7 @@ export class EditorGroundGuard {
         this.refresh()
         if (!object.parent) return false
         object.updateWorldMatrix(true, false)
-        const key = this.stageId + ':' + object.matrixWorld.elements.join(',')
+        const key = this.surfaceRevision + ':' + object.matrixWorld.elements.join(',')
         if (!force && this.signatures.get(object) === key) return false
         if (!this.hulls.has(object)) this.capture(object)
         const points = this.hulls.get(object)!.map(p => p.clone().applyMatrix4(object.matrixWorld))
@@ -126,12 +139,12 @@ export class EditorGroundGuard {
         for (const p of points) if (p.y < bottom + 0.3) lift = Math.max(lift, this.sample(p.x, p.z, root.y).height - p.y)
         if (lift > 1e-5) liftWorld(object, lift + 1e-4)
         object.updateWorldMatrix(true, false)
-        this.signatures.set(object, this.stageId + ':' + object.matrixWorld.elements.join(','))
+        this.signatures.set(object, this.surfaceRevision + ':' + object.matrixWorld.elements.join(','))
         return lift > 1e-5
     }
     constrainCamera(camera: Camera, controls: { target: Vector3; enabled: boolean; maxPolarAngle: number }): boolean {
         this.refresh()
-        const key = this.stageId + ':' + camera.position.toArray().join(',') + ':' + controls.target.toArray().join(',')
+        const key = this.surfaceRevision + ':' + camera.position.toArray().join(',') + ':' + controls.target.toArray().join(',')
         if (key === this.cameraSignature) return false
         const targetGround = this.sample(controls.target.x, controls.target.z, controls.target.y).height
         const ground = this.sample(camera.position.x, camera.position.z, controls.target.y).height
@@ -151,7 +164,7 @@ export class EditorGroundGuard {
             if (changed) camera.lookAt(controls.target)
         }
         if (changed) camera.updateMatrixWorld()
-        this.cameraSignature = this.stageId + ':' + camera.position.toArray().join(',') + ':' + controls.target.toArray().join(',')
+        this.cameraSignature = this.surfaceRevision + ':' + camera.position.toArray().join(',') + ':' + controls.target.toArray().join(',')
         return changed
     }
     dispose() { this.proxies.length = 0; this.sources.clear(); this.material.dispose() }

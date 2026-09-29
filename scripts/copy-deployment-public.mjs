@@ -11,7 +11,12 @@ const outputRoot = path.resolve(
   process.env.MAGIUS_DEPLOY_OUT_DIR || 'dist-deploy',
 )
 const cloudflareMaxFileBytes = 25 * 1024 ** 2
-const cloudflareTarget = process.env.MAGIUS_DEPLOY_TARGET === 'cloudflare'
+export function resolveDeploymentTarget(value) {
+  if (value === undefined || value === '' || value === 'cloudflare') return 'cloudflare'
+  if (value === 'github-pages') return 'github-pages'
+  throw new Error(`Unsupported deployment target: ${value}`)
+}
+const cloudflareTarget = resolveDeploymentTarget(process.env.MAGIUS_DEPLOY_TARGET) === 'cloudflare'
 export const githubPagesOneGiBBytes = 1024 ** 3
 export const githubPagesPublishedSiteLimitBytes = 1_000_000_000
 export const githubPagesFileLimit = 20_000

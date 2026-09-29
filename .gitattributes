@@ -1,3 +1,6 @@
+# Resource manifests and evidence hash the committed JSON bytes. Do not let
+# platform autocrlf conversion silently change sizes or signed source records.
+*.json -text
 public/stages/official/battle-603-00-00-001/lightmap-bindings.json text eol=lf
 # Unified-diff context lines intentionally begin with the diff marker followed
 # by source indentation and blank context carries one marker space.

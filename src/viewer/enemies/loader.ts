@@ -509,17 +509,21 @@ export class FbxEnemyModelLoader implements EnemyModelLoader {
         }
 
         const canonicalUrl = absoluteUrl(runtimeUrl)
-        const materialProfilePromise = fetchMaterialProfileProduct(entry, signal)
         let payload: Blob
+        let materialProfile: EnemyMaterialProfileProduct
         try {
-            const payloadUrl = await resolveRuntimeAssetUrl(canonicalUrl, signal)
-            payload = await fetchAndTryDecompressGzip(
-                payloadUrl,
-                undefined,
-                undefined,
-                signal,
-            )
+            // Observe both tasks immediately. A failed model request must not
+            // leave the independently started material request unhandled.
+            // The same applies when materials reject before a slow model.
+            ;[payload, materialProfile] = await Promise.all([
+                (async () => {
+                    const payloadUrl = await resolveRuntimeAssetUrl(canonicalUrl, signal)
+                    return fetchAndTryDecompressGzip(payloadUrl, undefined, undefined, signal)
+                })(),
+                fetchMaterialProfileProduct(entry, signal),
+            ])
         } catch (error) {
+            if (error instanceof EnemyResourceError) throw error
             throw new EnemyResourceError(
                 'MODEL_HTTP_ERROR',
                 `Enemy model request failed for ${entry.enemyMstId}`,
@@ -527,6 +531,7 @@ export class FbxEnemyModelLoader implements EnemyModelLoader {
             )
         }
 
+        let parsedObject: THREE.Group | undefined
         try {
             const manager = new THREE.LoadingManager()
             manager.setURLModifier(resolveCachedRuntimeAssetUrl)
@@ -536,7 +541,7 @@ export class FbxEnemyModelLoader implements EnemyModelLoader {
             getLoadingTask(signal)?.phase('decoding', canonicalUrl)
             await yieldLoadingFrame(signal)
             const object = loader.parse(bytes, new URL('.', canonicalUrl).href)
-            const materialProfile = await materialProfilePromise
+            parsedObject = object
             const runtimeTextures = await loadEnemyMaterialRuntimeTextures(
                 materialProfile,
                 manager,
@@ -551,8 +556,10 @@ export class FbxEnemyModelLoader implements EnemyModelLoader {
             object.userData.enemyMstId = entry.enemyMstId
             object.userData.enemyUniqueId = entry.enemyUniqueId
             object.userData.modelPrefabName = entry.modelPrefabName
+            signal?.throwIfAborted()
             return object
         } catch (error) {
+            if (parsedObject) disposeObject(parsedObject)
             if (error instanceof EnemyResourceError) throw error
             throw new EnemyResourceError(
                 'MODEL_PARSE_ERROR',

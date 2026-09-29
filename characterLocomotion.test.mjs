@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import test from 'node:test'
 import ts from 'typescript'
+import { readParsedBoneLocal } from './magia-exedra-character-three/authoredBoneLocals.ts'
 import { stripTypeScriptTypes } from 'node:module'
 import * as THREE from 'three'
 import { gunzipSync } from 'node:zlib'
@@ -3650,12 +3651,13 @@ function performanceHostFixture(actionAdapter, frameDelta = 1 / 60) {
     const byObject = new WeakMap(), bindings = new Set(), physics = new WeakMap(), events = []
     const runtime = new Function('THREE', 'bindingByObject', 'bindings', 'getViewerCharacterPhysicsAttachment', 'getClockDelta',
         'interruptViewerCharacterAction', 'playViewerPerformanceAction', 'sampleViewerPerformanceAction',
+        'readParsedBoneLocal',
         stripTypeScriptTypes(source.slice(start, end), { mode: 'strip' }).replace(/^export /gm, '')
             + '\nreturn {create:createViewerPerformanceHost,nextFrame(){viewerPerformanceFrameId++},claims:viewerPerformanceClaims,timelineObserve:typeof observeViewerPerformanceTimelineMixer==="function"?observeViewerPerformanceTimelineMixer:undefined,timelinePublish:typeof publishViewerPerformanceTimelineProducer==="function"?publishViewerPerformanceTimelineProducer:undefined}',
     )(THREE, byObject, bindings, object => physics.get(object), () => frameDelta,
         binding => events.push(['release-action', binding.character.object.uuid]),
         (binding, beat, emit) => { events.push(['play', binding.character.object.uuid, beat.occurrenceId, emit]); actionAdapter?.play(binding, beat, emit) },
-        (binding, name, time, loop) => { events.push(['sample', binding.character.object.uuid, name, time]); actionAdapter?.sample(binding, name, time, loop) })
+        (binding, name, time, loop) => { events.push(['sample', binding.character.object.uuid, name, time]); actionAdapter?.sample(binding, name, time, loop) }, readParsedBoneLocal)
     const nativeReady = (object, outputObjects = new Set()) => ({ status: 'ready', root: object, runtime: {
         getWritableChannelSnapshot: () => ({ status: 'ready', root: object, outputObjects,
             outputs: [...outputObjects].map(object => ({ object, ownerStableKey: 'exact-fixture', channels: ['position','quaternion'] })) }),

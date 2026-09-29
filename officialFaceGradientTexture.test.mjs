@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from 'node:fs'
 import test from 'node:test'
 import * as THREE from 'three'
 import ts from 'typescript'
+import { actualLoadingProgress, textureAssetUrlImports } from './textureTestImports.mjs'
 
 const containerPath = 'magia-exedra-character-three/officialTextureContainer.ts'
 const registryPath = 'magia-exedra-character-three/officialFaceTexturePayload.ts'
@@ -64,6 +65,8 @@ function containerModule() {
 
 function textureModule() {
   return loadTypeScriptModule(textureSource, texturePath, {
+    './loadingProgress.ts': actualLoadingProgress,
+    ...textureAssetUrlImports,
     three: THREE,
     './materialProfile': { getOfficialTextureSamplerProfile: () => undefined },
     './officialTextureContainer': {
@@ -297,23 +300,26 @@ test('production fallbacks preserve serialized face-control identity before Vite
     faceSource,
     /const OFFICIAL_FACE_CTRL_NOSE_TEXTURE = 'face_ctrl_nose'/,
   )
-  assert.match(
-    faceSource,
-    /const faceGradientSource = options\.ctrlMap \|\| OFFICIAL_FACE_CTRL_BASE_TEXTURE/,
-  )
-  assert.match(
-    faceSource,
-    /const noseGradientSource = options\.noseGradientMap \|\| OFFICIAL_FACE_CTRL_NOSE_TEXTURE/,
-  )
+  const faceDeclaration = faceSource.match(/^\s*const faceGradientSource = (.+)$/m)?.[1]
+  const noseDeclaration = faceSource.match(/^\s*const noseGradientSource = (.+)$/m)?.[1]
+  assert.ok(faceDeclaration && noseDeclaration)
+  const resolve = Function('native', 'options', 'OFFICIAL_FACE_CTRL_BASE_TEXTURE', 'OFFICIAL_FACE_CTRL_NOSE_TEXTURE',
+    `return [${faceDeclaration}, ${noseDeclaration}]`)
+  // Legacy models keep the exact authored fallback. Native models must retain
+  // their PPtr identities (including null), rather than guessing legacy URLs.
+  assert.deepEqual(resolve(undefined, {}, 'face_ctrl_base', 'face_ctrl_nose'), ['face_ctrl_base', 'face_ctrl_nose'])
+  assert.deepEqual(resolve(undefined, {ctrlMap:'authored-face',noseGradientMap:'authored-nose'}, 'base', 'nose'), ['authored-face','authored-nose'])
+  assert.deepEqual(resolve({bindings:{_FaceShadowGradientMap:{key:'native:face'},_NoseShadowGradientMap:{key:'native:nose'}}}, {ctrlMap:'wrong',noseGradientMap:'wrong'}, 'base', 'nose'), ['native:face','native:nose'])
+  assert.deepEqual(resolve({bindings:{}}, {ctrlMap:'wrong',noseGradientMap:'wrong'}, 'base', 'nose'), ['native:null','native:null'])
   assert.match(faceSource, /loadTexture\(faceGradientSource\)/)
   assert.match(faceSource, /loadTexture\(noseGradientSource\)/)
   assert.match(
     faceSource,
-    /ApplyOfficialFaceGradientSampling\(\s*ctrlTex,\s*faceGradientSource/,
+    /ApplyOfficialFaceGradientSampling\(\s*ctrlTex!?\s*,\s*faceGradientSource/,
   )
   assert.match(
     faceSource,
-    /ApplyOfficialFaceGradientSampling\(\s*noseGradientTex,\s*noseGradientSource/,
+    /ApplyOfficialFaceGradientSampling\(\s*noseGradientTex!?\s*,\s*noseGradientSource/,
   )
   assert.doesNotMatch(faceSource, /import FaceCtrl(?:Base|Nose)/)
   assert.doesNotMatch(faceSource, /data:image\/png/)

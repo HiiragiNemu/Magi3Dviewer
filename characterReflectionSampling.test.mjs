@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import test from 'node:test'
 import * as THREE from 'three'
 import ts from 'typescript'
+import { actualLoadingProgress, textureAssetUrlImports } from './textureTestImports.mjs'
 
 function loadTypeScriptCommonJs(path, requireMap = {}) {
   const compiled = ts.transpileModule(readFileSync(path, 'utf8'), {
@@ -38,6 +39,8 @@ test('official metallic gradient uses its serialized one-level bilinear sampler'
   const texture = loadTypeScriptCommonJs(
     'magia-exedra-character-three/texture.ts',
     {
+      './loadingProgress.ts': actualLoadingProgress,
+      ...textureAssetUrlImports,
       three: THREE,
       './materialProfile': {
         getOfficialTextureSamplerProfile: () => undefined,
