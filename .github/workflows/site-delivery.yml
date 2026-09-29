@@ -13,22 +13,9 @@ jobs:
     if: github.ref == 'refs/heads/magius3dviewer'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    permissions:
-      contents: read
-      checks: read
     outputs:
       branch: ${{ steps.project.outputs.branch }}
     steps:
-      - name: Record the legacy pre-run deployment rejection
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          node --input-type=module <<'NODE'
-          const r=await fetch('https://api.github.com/repos/HiiragiNemu/Magi3Dviewer/check-runs/109272072474/annotations',{headers:{Authorization:`Bearer ${process.env.GH_TOKEN}`,Accept:'application/vnd.github+json'}});
-          if(r.ok){const a=await r.json();console.log(JSON.stringify(a.map(x=>({title:x.title,message:x.message})),null,2));}
-          else console.log('Legacy check annotations unavailable: HTTP '+r.status);
-          NODE
       - name: Verify existing Cloudflare deployment access without printing credentials
         id: project
         env:
@@ -38,7 +25,7 @@ jobs:
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
           if(!process.env.CF_TOKEN || !process.env.CF_ACCOUNT) {
-            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Cloudflare access check failed: repository-level Pages API token/account ID not configured. No credential values were logged and no existing deployment was changed.\n');
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Cloudflare was not published: repository-level Pages API token/account ID are not configured. GitHub Pages can independently deliver the same verified source. No credential values were logged and no existing Cloudflare deployment was changed.\n');
             throw new Error('Cloudflare deployment credentials are not configured');
           }
           const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/pages/projects/magius3dviewer`,{headers:{Authorization:`Bearer ${process.env.CF_TOKEN}`}});
@@ -67,7 +54,7 @@ jobs:
       - name: Pose, selection, IK and current scene delivery regressions
         run: |
           set -euo pipefail
-          node --test directPoseManipulation.test.mjs viewerSelectionEditing.test.mjs performanceChainIK.test.mjs bundledStageDelivery.test.mjs prepareGitHubPages.test.mjs runtimeProductDelivery.test.mjs 2>&1 | tee /tmp/site-evidence/functional-tests.log
+          node --test directPoseManipulation.test.mjs viewerSelectionEditing.test.mjs performanceChainIK.test.mjs bundledStageDelivery.test.mjs prepareGitHubPages.test.mjs immutableSourceDelivery.test.mjs runtimeProductDelivery.test.mjs 2>&1 | tee /tmp/site-evidence/functional-tests.log
       - name: Complete production typecheck
         run: |
           set -euo pipefail
@@ -200,7 +187,9 @@ jobs:
           NODE
   deploy:
     needs: [build, cloudflare]
-    if: github.ref == 'refs/heads/magius3dviewer'
+    # A missing Cloudflare account must not block independently verified Pages.
+    # A failed browser/build still blocks publication; it is never ignored.
+    if: always() && github.ref == 'refs/heads/magius3dviewer' && needs.build.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 35
     permissions:
@@ -210,6 +199,8 @@ jobs:
     environment:
       name: magius3dviewer-live
       url: ${{ steps.pages.outputs.page_url }}
+    env:
+      MAGIUS_STAGE_DEPLOYMENT_URL: ${{ needs.cloudflare.outputs.base_url || format('https://raw.githubusercontent.com/HiiragiNemu/Magi3Dviewer/{0}/public/', github.sha) }}
     steps:
       - uses: actions/setup-node@v6
         with:
@@ -223,8 +214,6 @@ jobs:
           name: site-delivery-tools
           path: scripts
       - name: Verify every current remote scene byte before preparing the smaller Pages artifact
-        env:
-          MAGIUS_STAGE_DEPLOYMENT_URL: ${{ needs.cloudflare.outputs.base_url }}
         run: |
           set -euo pipefail
           mkdir -p /tmp/site-evidence
@@ -253,9 +242,9 @@ jobs:
         env:
           SITE_URL: ${{ steps.pages.outputs.page_url }}
           EXPECTED_SHA: ${{ github.sha }}
-          EXPECTED_STAGE_BASE: ${{ needs.cloudflare.outputs.base_url }}
         run: |
           node --input-type=module <<'NODE'
+          import fs from 'node:fs';
           let verified=false;
           for(let i=0;i<18;i++){
             try{
@@ -263,9 +252,10 @@ jobs:
               const r=await fetch(new URL('site-version.json'+query,process.env.SITE_URL));
               const c=await fetch(new URL('catalogs/runtime-product-delivery.v1.json'+query,process.env.SITE_URL));
               const v=await r.json(),catalog=await c.json();
-              if(r.ok&&c.ok&&v.revision===process.env.EXPECTED_SHA&&catalog.bundledStageBaseUrl===process.env.EXPECTED_STAGE_BASE){console.log('Verified published revision and current scenes',v);verified=true;break;}
+              if(r.ok&&c.ok&&v.revision===process.env.EXPECTED_SHA&&catalog.bundledStageBaseUrl===process.env.MAGIUS_STAGE_DEPLOYMENT_URL){console.log('Verified published revision and current scenes',v);verified=true;break;}
             }catch{}
             await new Promise(resolve=>setTimeout(resolve,5000));
           }
           if(!verified)throw new Error('GitHub Pages does not serve the tested revision and its pinned scene catalog');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`GitHub Pages published and revision verified: ${process.env.SITE_URL}\nSource: ${process.env.EXPECTED_SHA}\nCurrent scene source: ${process.env.MAGIUS_STAGE_DEPLOYMENT_URL}\n`);
           NODE
