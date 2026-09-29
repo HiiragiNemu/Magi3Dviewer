@@ -39,7 +39,7 @@ export interface RuntimeProductDeliveryDocument {
     }
     /** Complete current stage closures; never substitute historical ZIPs. */
     bundledStageRoots?: string[]
-    /** GitHub Pages may use the byte-verified, immutable full Cloudflare build. */
+    /** Byte-verified immutable deployment or the exact public source commit. */
     bundledStageBaseUrl?: string
     entries: RuntimeProductDeliveryEntry[]
 }
@@ -90,6 +90,14 @@ export function runtimeAssetPath(reference: string) {
     const url = new URL(resolvePageAssetUrl(reference))
     const pageDirectory = decodePathname(new URL('.', pageBaseUrl()).pathname)
     let pathname = decodePathname(url.pathname).replaceAll('\\', '/')
+    const pinned = documentValue?.bundledStageBaseUrl
+    if (pinned) {
+        const source = new URL(pinned)
+        const sourceDirectory = decodePathname(source.pathname)
+        if (url.origin === source.origin && pathname.startsWith(sourceDirectory)) {
+            return `/${pathname.slice(sourceDirectory.length).replace(/^\/+/, '')}`
+        }
+    }
     if (pageDirectory !== '/' && pathname.startsWith(pageDirectory)) {
         pathname = `/${pathname.slice(pageDirectory.length)}`
     }
@@ -123,7 +131,14 @@ function isDeliveryActive(documentValue: RuntimeProductDeliveryDocument) {
     return forced || documentValue.activation.hosts.includes(location.hostname)
 }
 
-/** Restrict this route to a fixed deployment, not a mutable production/branch alias. */
+/** Restrict this route to a fixed deployment/source commit, never a branch alias. */
+export function isImmutableBundledStageBase(value: unknown): value is string {
+    return typeof value === 'string' && (
+        /^https:\/\/[a-f0-9]{8}\.magius3dviewer\.pages\.dev\/$/.test(value)
+        || /^https:\/\/raw\.githubusercontent\.com\/HiiragiNemu\/Magi3Dviewer\/[a-f0-9]{40}\/public\/$/.test(value)
+    )
+}
+
 function bundledStageAssetUrl(catalog: RuntimeProductDeliveryDocument, path: string) {
     if (!catalog.bundledStageBaseUrl) return undefined
     const root = rootForRuntimePath(path)
@@ -150,10 +165,9 @@ function assertDocument(value: unknown): RuntimeProductDeliveryDocument {
         throw new Error('Bundled stage roots must be an array')
     }
     if (documentValue.bundledStageBaseUrl !== undefined
-        && (typeof documentValue.bundledStageBaseUrl !== 'string'
-            || !/^https:\/\/[a-f0-9]{8}\.magius3dviewer\.pages\.dev\/$/.test(documentValue.bundledStageBaseUrl)
+        && (!isImmutableBundledStageBase(documentValue.bundledStageBaseUrl)
             || !documentValue.bundledStageRoots?.length)) {
-        throw new Error('Bundled stage base must name an immutable Magius Pages deployment with explicit stage roots')
+        throw new Error('Bundled stage base must name an immutable Magius deployment or source commit with explicit stage roots')
     }
     const roots = new Set<string>()
     for (const entry of documentValue.entries) {
