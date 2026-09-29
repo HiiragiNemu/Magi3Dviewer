@@ -34,30 +34,62 @@ const server = http.createServer((request, response) => {
 })
 await new Promise(resolve => server.listen(4176, '127.0.0.1', resolve))
 const chrome = process.env.CHROME_BIN || execFileSync('bash', ['-lc', 'command -v google-chrome-stable || command -v google-chrome || command -v chromium'], { encoding: 'utf8' }).trim()
-const browser = await puppeteer.launch({ executablePath: chrome, headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'] })
+const browser = await puppeteer.launch({ executablePath: chrome, headless: true, protocolTimeout: 300000, args: ['--no-sandbox', '--disable-dev-shm-usage', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'] })
 const page = await browser.newPage()
 await page.setViewport({ width: 1280, height: 900, deviceScaleFactor: 1 })
-const errors = [], responses = [], failedRequests = []
+const errors = [], responses = [], failedRequests = [], completed = new Set(), milestones = []
 page.on('pageerror', error => errors.push(String(error)))
 page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
 page.on('response', response => { if (response.url().includes('/stages/official/')) responses.push({ url: response.url(), status: response.status() }) })
 page.on('requestfailed', request => failedRequests.push({ url: request.url(), error: request.failure()?.errorText }))
-// Locate the real Three.Scene by its public type flag, without assuming an
-// implementation-specific property name on the viewer's scene wrapper.
-const countSceneMeshes = () => {
+page.on('requestfinished', request => completed.add(request.url()))
+const milestone = label => { milestones.push({ label, at: new Date().toISOString() }); console.log(label) }
+// Stages live in backgroundScene, NOT the foreground character scene. A
+// foreground-only census never changes when a perfectly valid stage loads.
+function readStageState() {
   const viewer = window.scene
-  const scene = viewer?.isScene ? viewer : Object.values(viewer ?? {}).find(value => value?.isScene && typeof value.traverse === 'function')
-  if (!scene) throw new Error('The viewer does not expose its real Three.Scene')
-  let count = 0
-  scene.traverse(node => { if (node.isMesh) count++ })
-  return count
+  const background = viewer?.backgroundScene
+  if (!background?.isScene) throw new Error('Missing real background scene')
+  let backgroundMeshes = 0, foregroundMeshes = 0
+  const textures = new Set()
+  background.traverse(node => {
+    if (!node.isMesh) return
+    backgroundMeshes++
+    for (const material of (Array.isArray(node.material) ? node.material : [node.material])) {
+      if (!material) continue
+      const values = [...Object.values(material), ...Object.values(material.uniforms ?? {}).map(uniform => uniform?.value)]
+      for (const value of values) if (value?.isTexture) textures.add(value)
+    }
+  })
+  viewer.scene?.traverse(node => { if (node.isMesh) foregroundMeshes++ })
+  const imageReady = image => Array.isArray(image) ? image.length > 0 && image.every(imageReady)
+    : !!image && (image.width > 0 && image.height > 0 || image.image?.width > 0 && image.image?.height > 0)
+  return { enabled: viewer.backgroundSceneEnabled, backgroundMeshes, foregroundMeshes,
+    textures: textures.size, readyTextures: [...textures].filter(texture => imageReady(texture.image)).length,
+    pixelRatio: viewer.renderer.getPixelRatio(), antialiasing: viewer.effects.effectiveAntiAliasing }
 }
-const meshCount = () => page.evaluate(countSceneMeshes)
+const stageState = () => page.evaluate(readStageState)
+async function waitForBackground(before) {
+  const deadline = Date.now() + 240000
+  let current
+  do {
+    current = await stageState()
+    if (current.enabled && current.backgroundMeshes > before.backgroundMeshes && current.readyTextures > 0) return current
+    await new Promise(resolve => setTimeout(resolve, 500))
+  } while (Date.now() < deadline)
+  throw new Error('Current stage did not become renderable: ' + JSON.stringify({before,current}))
+}
+function unresolvedStageFailures(failures, completedUrls) {
+  return failures.filter(request => request.url.includes('/stages/official/')
+    && !(request.error === 'net::ERR_ABORTED' && completedUrls.has(request.url)))
+}
 let result
 try {
   await page.goto('http://127.0.0.1:4176/Magi3Dviewer/?diagnostic=pose-editor&runtimeDelivery=release', { waitUntil: 'domcontentloaded', timeout: 60000 })
   await page.waitForFunction(() => window.scene?.characterSelected?.character?.userData?.characterId === 100107, { timeout: 180000 })
-  const before = await meshCount()
+  await page.waitForNetworkIdle({ idleTime: 1000, timeout: 90000 })
+  const before = await stageState()
+  milestone('Initial character and stage census ready: ' + JSON.stringify(before))
   await page.waitForFunction(() => [...document.querySelectorAll('select')].some(select => [...select.options].some(option => option.value.includes('battle-616-00-01-001'))), { timeout: 60000 })
   const choice = await page.evaluate(() => {
     for (const select of document.querySelectorAll('select')) {
@@ -67,24 +99,25 @@ try {
   })
   assert.ok(choice, 'The actual scene selector exposes the current stage')
   await page.select(choice.selector, choice.value)
-  await page.waitForFunction(previous => {
-    const viewer = window.scene
-    const scene = viewer?.isScene ? viewer : Object.values(viewer ?? {}).find(value => value?.isScene && typeof value.traverse === 'function')
-    if (!scene) return false
-    let count = 0; scene.traverse(node => { if (node.isMesh) count++ })
-    return count > previous
-  }, { timeout: 240000 }, before)
+  milestone('Selected actual scene option: ' + JSON.stringify(choice))
+  await waitForBackground(before)
+  milestone('Background geometry and material textures ready')
   await page.waitForNetworkIdle({ idleTime: 2000, timeout: 180000 })
-  const loaded = responses.filter(response => response.url().startsWith(base + root.slice(1)))
+  const loaded = responses.filter(response => response.url.startsWith(base + root.slice(1)) && completed.has(response.url))
   assert.ok(loaded.some(response => /\.(fbxdata|fbx)(?:\?|$)/i.test(response.url)), 'Actual current scene geometry was fetched from the pinned deployment')
   assert.ok(loaded.some(response => /\.(png|webp|jpg)(?:\?|$)/i.test(response.url)), 'Actual scene textures were fetched from the same pinned deployment')
   assert.ok(responses.every(response => response.status === 200 || response.status === 304), 'A stage resource failed: ' + JSON.stringify(responses.filter(response => response.status >= 400)))
-  assert.ok(!failedRequests.some(request => request.url.includes('/stages/official/')), 'A scene request failed, including CORS')
+  assert.deepEqual(unresolvedStageFailures(failedRequests, completed), [], 'A scene request failed without a completed replacement, including CORS')
   assert.ok(!errors.some(error => /ReferenceError|TypeError|SyntaxError|VALIDATE_STATUS|Error compiling|GL_INVALID|CORS policy/i.test(error)), errors.join('\n'))
-  result = { passed: true, base, choice, meshCount: { before, after: await meshCount() }, responses, errors, failedRequests }
+  const after = await stageState()
+  assert.ok(after.backgroundMeshes > before.backgroundMeshes && after.readyTextures > 0)
+  assert.equal(after.pixelRatio, before.pixelRatio, 'Render scale remains unchanged')
+  assert.equal(after.antialiasing, before.antialiasing, 'AA remains unchanged')
+  result = { passed: true, base, choice, sceneState: { before, after }, responses, completed: [...completed].filter(url => url.includes('/stages/official/')), errors, failedRequests, milestones }
   await page.screenshot({ path: path.join(evidence, 'github-pages-delegated-stage.png'), fullPage: true })
 } catch (error) {
-  result = { passed: false, base, error: String(error), responses, errors, failedRequests,
+  result = { passed: false, base, error: String(error), responses, errors, failedRequests, milestones,
+    sceneState: await stageState().catch(() => null),
     controls: await page.$$eval('select', elements => elements.map(select => ({ id: select.id, options: [...select.options].slice(0, 4).map(option => ({ value: option.value, text: option.text })) }))).catch(() => []) }
   await page.screenshot({ path: path.join(evidence, 'github-pages-stage-failure.png'), fullPage: true }).catch(() => {})
   throw error
