@@ -10,12 +10,25 @@ concurrency:
   cancel-in-progress: true
 jobs:
   configuration:
+    if: github.ref == 'refs/heads/magius3dviewer'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    environment: github-pages
+    permissions:
+      contents: read
+      checks: read
     outputs:
       branch: ${{ steps.project.outputs.branch }}
     steps:
+      - name: Record the legacy pre-run deployment rejection
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node --input-type=module <<'NODE'
+          const r=await fetch('https://api.github.com/repos/HiiragiNemu/Magi3Dviewer/check-runs/109272072474/annotations',{headers:{Authorization:`Bearer ${process.env.GH_TOKEN}`,Accept:'application/vnd.github+json'}});
+          if(r.ok){const a=await r.json();console.log(JSON.stringify(a.map(x=>({title:x.title,message:x.message})),null,2));}
+          else console.log('Legacy check annotations unavailable: HTTP '+r.status);
+          NODE
       - name: Verify existing Cloudflare deployment access without printing credentials
         id: project
         env:
@@ -25,7 +38,7 @@ jobs:
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
           if(!process.env.CF_TOKEN || !process.env.CF_ACCOUNT) {
-            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Cloudflare access check failed: the repository/github-pages environment does not supply the configured Pages API token and account ID. No credential values were logged and no existing deployment was changed.\n');
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Cloudflare access check failed: repository-level Pages API token/account ID not configured. No credential values were logged and no existing deployment was changed.\n');
             throw new Error('Cloudflare deployment credentials are not configured');
           }
           const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/pages/projects/magius3dviewer`,{headers:{Authorization:`Bearer ${process.env.CF_TOKEN}`}});
@@ -137,9 +150,9 @@ jobs:
           retention-days: 3
   cloudflare:
     needs: [build, configuration]
+    if: github.ref == 'refs/heads/magius3dviewer'
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    environment: github-pages
     outputs:
       base_url: ${{ steps.revision.outputs.base_url }}
     steps:
@@ -187,6 +200,7 @@ jobs:
           NODE
   deploy:
     needs: [build, cloudflare]
+    if: github.ref == 'refs/heads/magius3dviewer'
     runs-on: ubuntu-latest
     timeout-minutes: 35
     permissions:
@@ -194,7 +208,7 @@ jobs:
       pages: write
       id-token: write
     environment:
-      name: github-pages
+      name: magius3dviewer-live
       url: ${{ steps.pages.outputs.page_url }}
     steps:
       - uses: actions/setup-node@v6
