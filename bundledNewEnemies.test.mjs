@@ -2,6 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import os from 'node:os'
 import {fileURLToPath} from 'node:url'
 import {createHash} from 'node:crypto'
 import {collectBundledEnemyTextures,bundledEnemyModelNames,requiredDirectoryClosures,assertEnemyTextureArchiveClosure} from './scripts/copy-deployment-public.mjs'
@@ -19,8 +20,9 @@ test('all historical 493 remote model archives retain their exact separate closu
  assert.equal(result.modelProducts,493);assert.equal(result.globalUniqueTextureAuthorities,1969);assert.equal(result.sharedTextureAuthorityBytes,564810901)
  assert.equal(result.packedBytes,3202610710)
 })
-test('manifest identity conflicts remain rejected before any deployment copy',async()=>{
- const temp=await fs.mkdtemp(path.join(root,'node_modules/.cache/enemy-closure-negative-'))
+test('manifest identity conflicts remain rejected before any deployment copy',async t=>{
+ const temp=await fs.mkdtemp(path.join(os.tmpdir(),'magius-enemy-closure-negative-'))
+ t.after(()=>fs.rm(temp,{recursive:true,force:true}))
  await fs.mkdir(path.join(temp,'public/enemies/models/enemy_605025_battle_unit'),{recursive:true})
  await fs.writeFile(path.join(temp,'public/enemies/texture-runtime-products.v1.json'),JSON.stringify({entries:[]}))
  await fs.writeFile(path.join(temp,'public/enemies/models/enemy_605025_battle_unit/material-profile.v1.json'),JSON.stringify({profiles:[{textures:{_MainTex:{stableKey:'wrong',runtimeUrl:'/enemies/textures/legacy.png'}}}]}))

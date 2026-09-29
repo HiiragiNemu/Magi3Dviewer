@@ -318,7 +318,8 @@ test('controls keep a compact wrapping toolbar and an independent viewer movemen
     assert.match(viewerRuntime, /raycaster\.intersectObject\(object, true\)/)
     assert.match(viewerRuntime, /getAttribute\('skinIndex'\)/)
     assert.match(viewerRuntime, /getAttribute\('skinWeight'\)/)
-    assert.match(viewerRuntime, /selectDirectPoseBone\(weighted\.object, weighted\.bone, weighted\.part\)/)
+    assert.match(viewerRuntime, /selectDirectPoseBone\(weighted\.object, weighted\.bone\)/)
+    assert.doesNotMatch(viewerRuntime, /selectDirectPoseBone\(weighted\.object, weighted\.bone, weighted\.part\)/, 'picking a limb must not also select the welded Body_Mesh for hiding')
     assert.match(viewerRuntime, /directPoseControls\.mode = directPoseTransformMode/)
     assert.match(viewerRuntime, /setDirectPoseTransformMode\('translate'\)/)
     assert.match(viewerRuntime, /setDirectPoseTransformMode\('rotate'\)/)
@@ -335,7 +336,8 @@ test('controls keep a compact wrapping toolbar and an independent viewer movemen
     assert.match(viewerRuntime, /rebuildModelPartVisibilityControls\(\)/)
     assert.match(viewerRuntime, /entry\.object\.visible = visible/)
     assert.match(viewerRuntime, /function showAllModelParts\(\)/)
-    assert.match(viewerRuntime, /event\.altKey[\s\S]*entry\.offsets\.y/)
+    assert.match(viewerRuntime, /drag\.altKey = event\.altKey/)
+    assert.match(viewerRuntime, /directPoseScreenTranslationDelta\(drag, dx, dy, drag\.altKey, drag\.shiftKey\)/)
     assert.match(viewerRuntime, /translateBoneChannelLabel/)
     assert.match(viewerRuntime, /translateMorphChannelLabel/)
     assert.match(viewerRuntime, /setupCharacterMovementControls/)
@@ -642,6 +644,7 @@ test('actual Viewer click and double-click handlers yield before hit-testing to 
         const handlers = new Function('scene', 'directPoseEditingEnabled', 'performanceGizmoActive', 'mouseMoveX', 'mouseMoveY',
             'selectCharacterByMouse', 'selectCharacter', 'enemyPanelController', 'performanceExternalLeases', 'pickObject',
             'singleCharacterTransformControls', 'singleCharacterTransformControlsHelper', 'setTransformMode', 'updateCharacterController', 'closeObjectTransform',
+            'editorGround',
             'let singleCharacterTransformActive=false,singleCharacterTransformOrbitWasEnabled,singleObjectTransformOnChange;\n'
                 + executable + '\nreturn {click:mouseClickHandler,double:mouseDoubleClickHandler}')(
             scene, direct, performance, 0, 0, () => calls.push('ordinary-select'), () => calls.push('character-select'), panel,
@@ -649,7 +652,8 @@ test('actual Viewer click and double-click handlers yield before hit-testing to 
                 calls.push('combined-hit-test')
                 if (hitEnemy) return { object: enemy.object, select: () => calls.push('exact-enemy'), refresh() {} }
                 if (hitCharacter) return { object, select: () => calls.push('character-select'), refresh() {} }
-            }, controls, { visible: false }, mode => calls.push(mode), () => calls.push('controller-update'), () => calls.push('close-transform'))
+            }, controls, { visible: false }, mode => calls.push(mode), () => calls.push('controller-update'), () => calls.push('close-transform'),
+            {capture(){calls.push('ground-capture')},constrainObject(){calls.push('ground-constrain')}})
         const event = { offsetX: 5, offsetY: 6, clientX: 7, clientY: 8, preventDefault: () => calls.push('prevent'), stopPropagation: () => calls.push('stop') }
         return { handlers, event, calls, controls, sceneControls: scene.transformControls }
     }
@@ -670,11 +674,11 @@ test('actual Viewer click and double-click handlers yield before hit-testing to 
     assert.deepEqual(enemyClick.calls, ['combined-hit-test', 'exact-enemy'])
     const ordinary = create(); ordinary.handlers.click(ordinary.event); assert.deepEqual(ordinary.calls, ['combined-hit-test', 'character-select'])
     ordinary.calls.length = 0; ordinary.handlers.double(ordinary.event)
-    assert.deepEqual(ordinary.calls, ['combined-hit-test', 'character-select', 'scene-transform-detach', 'character-attach', 'translate', 'prevent', 'stop'])
+    assert.deepEqual(ordinary.calls, ['combined-hit-test', 'character-select', 'scene-transform-detach', 'ground-capture', 'ground-constrain', 'character-attach', 'translate', 'prevent', 'stop'])
     const multiple = create({ characterCount: 2 }); multiple.handlers.double(multiple.event)
-    assert.deepEqual(multiple.calls, ['combined-hit-test', 'character-select', 'scene-transform-detach', 'character-attach', 'translate', 'prevent', 'stop'], 'the selected actor is movable even with multiple actors')
+    assert.deepEqual(multiple.calls, ['combined-hit-test', 'character-select', 'scene-transform-detach', 'ground-capture', 'ground-constrain', 'character-attach', 'translate', 'prevent', 'stop'], 'the selected actor is movable even with multiple actors')
     const enemy = create({ characterCount: 2, hitEnemy: true }); enemy.handlers.double(enemy.event)
-    assert.deepEqual(enemy.calls, ['combined-hit-test', 'exact-enemy', 'scene-transform-detach', 'enemy-attach', 'translate', 'prevent', 'stop'])
+    assert.deepEqual(enemy.calls, ['combined-hit-test', 'exact-enemy', 'scene-transform-detach', 'ground-capture', 'ground-constrain', 'enemy-attach', 'translate', 'prevent', 'stop'])
     const leased = create({ leasedRoot: true }); leased.handlers.double(leased.event)
     assert.deepEqual(leased.calls, ['combined-hit-test', 'character-select', 'prevent', 'stop'])
     assert.equal(leased.controls.enabled, false, 'root placement lease prevents an ordinary transform writer')

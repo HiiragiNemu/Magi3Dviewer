@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto'
 import assert from 'node:assert/strict'
-import { readFileSync, readdirSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
 import { test } from 'node:test'
 import { gunzipSync } from 'node:zlib'
 import * as THREE from 'three'
@@ -358,7 +358,7 @@ test('real duplicate-name Weapon meshes bind only exact-count official normals',
 
 test('all shipped Viewer models carry bounded official baked-normal companions', () => {
   const expectedByCharacter = new Map()
-  for (const character of submeshSource.matchAll(
+  for (const character of submeshSource.replace(/\r\n/g, '\n').matchAll(
     /^    (\d+): \{\n(?<body>.*?)^    \},$/gms,
   )) {
     const meshes = new Map()
@@ -387,10 +387,20 @@ test('all shipped Viewer models carry bounded official baked-normal companions',
   let vertexCount = 0
   const keysByCharacter = new Map()
   const totalsByCharacter = new Map()
+  const migratedNative = new Map()
   for (const directory of modelDirectories) {
     const characterId = Number(directory.name.match(/chara_(\d+)_battle_unit/)[1])
+    const packetPath = new URL(`${directory.name}/runtime-material-channel.json`, modelRoot)
+    const packet = existsSync(packetPath) ? JSON.parse(readFileSync(packetPath, 'utf8')) : undefined
+    const companionName = packet?.bakedNormalFile ?? 'redrive-baked-normals.bin.gz'
+    assert.match(companionName, /^redrive-baked-normals?\.bin\.gz$/)
+    const native = companionName === 'redrive-baked-normal.bin.gz' ? packet : undefined
+    if (native) assert.equal(native.characterId, characterId)
+    const nativeChannels = native ? readFileSync(new URL(`${directory.name}/${native.channelFile}`, modelRoot)) : undefined
+    const expectedNative = new Map(native?.meshes.map(mesh => [mesh.name, mesh]) ?? [])
+    if (native) assert.equal(expectedNative.size, native.meshes.length, 'Native companion names must be unambiguous')
     const compressedPayload = readFileSync(new URL(
-      `${directory.name}/redrive-baked-normals.bin.gz`,
+      `${directory.name}/${companionName}`,
       modelRoot,
     ))
     compressedBytes += compressedPayload.length
@@ -410,7 +420,19 @@ test('all shipped Viewer models carry bounded official baked-normal companions',
       const count = payload.readUInt32LE(offset)
       offset += 4
       const meshName = key.split('\0', 1)[0]
-      assert.equal(count, expectedByCharacter.get(characterId).get(meshName))
+      if (native) {
+        const expected = expectedNative.get(meshName)
+        assert.ok(expected, `Unregistered native normal mesh: ${characterId}/${meshName}`)
+        assert.equal(count, expected.expandedVertexCount)
+        assert.equal(expected.bakedNormal.count, count)
+        assert.equal(expected.bakedNormal.byteLength, count * 12)
+        assert.ok(payload.subarray(offset, offset + count * 12).equals(nativeChannels.subarray(
+          expected.bakedNormal.offset, expected.bakedNormal.offset + expected.bakedNormal.byteLength,
+        )), `Baked normals differ from model-local native channels: ${characterId}/${meshName}`)
+      } else {
+        assert.ok(expectedByCharacter.has(characterId), `Missing legacy mesh authority: ${characterId}`)
+        assert.equal(count, expectedByCharacter.get(characterId).get(meshName))
+      }
       keys.push(key)
       vertexCount += count
       characterVertices += count
@@ -425,19 +447,21 @@ test('all shipped Viewer models carry bounded official baked-normal companions',
       compressedBytes: compressedPayload.length, recordCount: meshRecords, vertexCount: characterVertices,
       sha256: createHash('sha256').update(compressedPayload).digest('hex'),
     })
+    if (native) {
+      assert.equal(meshRecords, expectedNative.size)
+      migratedNative.set(characterId, totalsByCharacter.get(characterId))
+    }
   }
 
-  const ashley = totalsByCharacter.get(110702)
-  assert.deepEqual(ashley, {
-    compressedBytes: 345_235, recordCount: 6, vertexCount: 89_997,
-    sha256: '7146ad4f80f160d720192293620303584f8595dc6210325bc65430e23d7e4c7f',
-  })
-  assert.equal(compressedBytes - ashley.compressedBytes, 25_639_438)
-  assert.equal(recordCount - ashley.recordCount, 527)
-  assert.equal(vertexCount - ashley.vertexCount, 6_886_551)
-  assert.equal(compressedBytes, 25_984_673)
-  assert.equal(recordCount, 533)
-  assert.equal(vertexCount, 6_976_548)
+  // New model-local native packets use their declared singular filename and
+  // exact channel bytes, not an obsolete compressed legacy-file digest.
+  assert.deepEqual([...migratedNative.keys()].sort((a,b)=>a-b), [100108,100208,110702])
+  const migrated = [...migratedNative.values()]
+  assert.equal(compressedBytes - migrated.reduce((n,r)=>n+r.compressedBytes,0), 25_639_438)
+  assert.equal(recordCount - migrated.reduce((n,r)=>n+r.recordCount,0), 527)
+  assert.equal(vertexCount - migrated.reduce((n,r)=>n+r.vertexCount,0), 6_886_551)
+  assert.equal(migratedNative.get(110702).recordCount, 6)
+  assert.equal(migratedNative.get(110702).vertexCount, 89_997)
   assert.equal(
     keysByCharacter.get(100403).filter(key => key.startsWith('Weapon_Mesh\0')).length,
     2,
