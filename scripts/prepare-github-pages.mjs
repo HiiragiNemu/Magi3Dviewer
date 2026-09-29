@@ -9,6 +9,41 @@ const immutableCloudflareBase = /^https:\/\/[a-f0-9]{8}\.magius3dviewer\.pages\.
 const immutableSourceBase = /^https:\/\/raw\.githubusercontent\.com\/HiiragiNemu\/Magi3Dviewer\/[a-f0-9]{40}\/public\/$/
 const stageRootPattern = /^\/stages\/official\/[A-Za-z0-9_-]+\/$/
 
+/** Remove JSON whitespace outside strings without normalizing any token.
+ * JSON.parse/stringify is NOT equivalent: it rewrites float literals, negative
+ * zero, large integers, escapes and duplicate/integer-key object properties. */
+export function compactJsonTokens(source) {
+  const output = Buffer.allocUnsafe(source.length)
+  let offset = 0, inString = false, escaped = false
+  for (const byte of source) {
+    if (inString) {
+      output[offset++] = byte
+      if (escaped) escaped = false
+      else if (byte === 0x5c) escaped = true
+      else if (byte === 0x22) inString = false
+    } else if (byte === 0x22) {
+      inString = true
+      output[offset++] = byte
+    } else if (byte !== 0x20 && byte !== 0x09 && byte !== 0x0a && byte !== 0x0d) {
+      output[offset++] = byte
+    }
+  }
+  if (inString) throw new Error('Unterminated JSON string')
+  return output.subarray(0, offset)
+}
+
+export function assertSourceJsonTransport(source, staged, name) {
+  // Parse only to validate syntax, never to produce the comparison bytes.
+  JSON.parse(source.toString('utf8'))
+  JSON.parse(staged.toString('utf8'))
+  const originalTokens = compactJsonTokens(source)
+  const stagedTokens = compactJsonTokens(staged)
+  if (!originalTokens.equals(stagedTokens)) {
+    const hash = bytes => createHash('sha256').update(bytes).digest('hex')
+    throw new Error(`Source JSON tokens differ from current carrier: ${name}; source=${hash(originalTokens)} staged=${hash(stagedTokens)}`)
+  }
+}
+
 async function inventory(directory, prefix = '') {
   const files = []
   for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
@@ -82,8 +117,8 @@ export async function prepareGitHubPages({ output, base, expectedRevision, evide
         // 25 MiB per-file limit. Public source delivery can retain the original
         // whitespace. Permit only that exact existing transform, not altered
         // values, ordering, textures, meshes or a historical scene substitute.
-        const staged = await fs.readFile(path.join(output, file.path), 'utf8')
-        assert.equal(JSON.stringify(JSON.parse(data.toString('utf8'))), staged.trim(), 'Source JSON is not the exact pre-compaction current carrier: ' + file.path)
+        const staged = await fs.readFile(path.join(output, file.path))
+        assertSourceJsonTransport(data, staged, file.path)
         equivalence = 'existing-whitespace-only-json-compaction'
       }
     } else {
@@ -99,9 +134,15 @@ export async function prepareGitHubPages({ output, base, expectedRevision, evide
     await fs.writeFile(path.join(evidenceDirectory, 'github-pages-scene-delivery.json'), JSON.stringify({ revision: expectedRevision, base, ...result, verified }, null, 2) + '\n')
   }
   try {
+    let failure
     await Promise.all(Array.from({ length: Math.min(8, delegated.length) }, async () => {
-      while (next < delegated.length) { const file = delegated[next++]; await verify(file) }
+      while (!failure && next < delegated.length) {
+        const file = delegated[next++]
+        try { await verify(file) } catch (error) { failure ??= error }
+      }
     }))
+    // Drain in-flight reads before writing evidence or allowing fixture cleanup.
+    if (failure) throw failure
   } catch (error) {
     await writeEvidence({ passed: false, error: String(error), localStageFilesRemoved: false })
     throw error
