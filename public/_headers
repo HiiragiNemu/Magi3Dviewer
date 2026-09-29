@@ -1,0 +1,13 @@
+# Public runtime assets may be consumed by the companion GitHub Pages site.
+# No credentials, cookies or private API routes are exposed by these headers.
+/stages/official/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+  X-Content-Type-Options: nosniff
+
+/site-version.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-store
+
+/catalogs/runtime-product-delivery.v1.json
+  Cache-Control: no-cache
