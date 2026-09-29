@@ -25,6 +25,6 @@ await run(process.execPath, ['scripts/site-prepare-carriers.mjs'])
 await run(process.execPath, [viteEntry, 'build'])
 await run(process.execPath, ['scripts/copy-deployment-public.mjs'])
 await fs.writeFile(path.resolve(repoRoot, environment.MAGIUS_DEPLOY_OUT_DIR, 'site-version.json'), JSON.stringify({
-  revision, builtAt:new Date().toISOString(), poseEditor:'bounded-ik-v2', selection:'existing-outline-uniforms',
+  revision, builtAt:new Date().toISOString(), poseEditor:'bind-limited-ik-v3', viewportEditor:'persistent-v1', groundGuard:'scene-floor-v1', selection:'existing-outline-uniforms',
   deploymentTarget:environment.MAGIUS_DEPLOY_TARGET, stageDelivery:'cloudflare-same-origin',
 }) + '\n')

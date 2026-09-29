@@ -1,5 +1,7 @@
 import { Bone, Matrix4, Object3D, Quaternion, Vector3 } from 'three'
 
+import { registerPoseJointLimits, clampPoseJoint, alignPoseHinge, constrainBendPole } from './poseJointLimits'
+
 export type DirectPoseMode = 'translate' | 'rotate'
 const isBone = (object: Object3D | null): object is Bone => !!object && (object as Bone).isBone === true
 const isAnchor = (bone: Bone) => /root|pelvis|spine|chest|waist|center|(?:^|[_:.\-])(hips?)(?:$|[_:.\-])/i.test(bone.name)
@@ -17,7 +19,7 @@ export function directPoseTranslationJoints(actor: Object3D, bone: Bone, blocked
     const joints: Bone[] = []
     const semantic = /hand|wrist/i.test(bone.name)
         ? [/forearm|lowerarm|elbow/i, /upperarm|(?:^|[_. :/-])arm(?:$|[_. :/-])/i]
-        : /foot|ankle/i.test(bone.name) ? [/calf|shin|lowerleg|knee/i, /thigh|upperleg|upleg/i] : undefined
+        : /foot|ankle/i.test(bone.name) ? [/calf|shin|lowerleg|knee|(?:^|[_. :/\-])leg(?:$|[_. :/\-])/i, /thigh|upperleg|upleg/i] : undefined
     if (semantic) {
         let node = bone.parent
         for (const pattern of semantic) {
@@ -34,6 +36,7 @@ export function directPoseTranslationJoints(actor: Object3D, bone: Bone, blocked
         if (joints.length === 2) return joints
         joints.length = 0
     }
+    if (/forearm|lowerarm|elbow|calf|shin|lowerleg|knee|(?:^|[_. :/\-])leg(?:$|[_. :/\-])/i.test(bone.name)) return []
     let parent = bone.parent
     while (isBone(parent) && parent !== actor && isBone(parent.parent) && joints.length < 2) {
         if (isAnchor(parent)) break
@@ -51,6 +54,8 @@ export class DirectPoseTarget {
     readonly handle = new Object3D()
     readonly joints: Bone[]
     private readonly rotationBones: readonly Bone[]
+    limited = false
+    projectPosition?: (point: Vector3, bone: Bone) => boolean
     preserveEndOrientation = false
     bendAngle = 0
     private readonly bendReference = new Vector3()
@@ -85,6 +90,7 @@ export class DirectPoseTarget {
     private readonly blocked: (bone: Bone) => boolean
 
     constructor(actor: Object3D, bone: Bone, blocked: (bone: Bone) => boolean = () => false) {
+        registerPoseJointLimits(actor)
         this.actor = actor
         this.bone = bone
         this.blocked = blocked
@@ -140,6 +146,7 @@ export class DirectPoseTarget {
         while (owner && owner !== this.actor) owner = owner.parent
         if (!owner) return []
         ++this.solves
+        this.limited = this.mode === 'translate' && (this.projectPosition?.(this.desiredPosition, this.bone) ?? false)
         for (const [joint, start] of this.starts) joint.quaternion.copy(start)
         if (this.mode === 'rotate') {
             this.rotation.copy(this.startWorld).invert().multiply(this.desiredQuaternion)
@@ -159,7 +166,33 @@ export class DirectPoseTarget {
             this.bone.parent.getWorldQuaternion(this.rotation)
             this.bone.quaternion.copy(this.rotation.invert()).multiply(this.startWorld).normalize()
         }
+        for (const joint of this.editedBones) this.limited = clampPoseJoint(joint) || this.limited
         this.bone.updateWorldMatrix(true, false)
+        if (this.projectPosition && !this.contactSafe()) {
+            this.limited = true
+            const candidates = new Map(this.editedBones.map(joint => [joint, joint.quaternion.clone()]))
+            const applyFraction = (fraction: number) => {
+                for (const [joint, candidate] of candidates) {
+                    joint.quaternion.copy(this.starts.get(joint)!).slerp(candidate, fraction).normalize()
+                    clampPoseJoint(joint)
+                }
+                this.bone.updateWorldMatrix(true, false)
+            }
+            applyFraction(0)
+            if (this.contactSafe()) {
+                let low = 0, high = 1
+                for (let i = 0; i < 8; i++) {
+                    const middle = (low + high) / 2
+                    applyFraction(middle)
+                    if (this.contactSafe()) low = middle; else high = middle
+                }
+                applyFraction(low)
+            }
+        }
+        // Render the constrained endpoint, not an unreachable input proxy.
+        this.bone.getWorldPosition(this.handle.position)
+        this.bone.getWorldQuaternion(this.handle.quaternion)
+        this.handle.updateMatrixWorld()
         return this.editedBones
     }
 
@@ -168,6 +201,14 @@ export class DirectPoseTarget {
         this.dirty = false
         this.starts.clear()
         this.sync()
+    }
+
+    private contactSafe(): boolean {
+        if (!this.projectPosition) return true
+        this.bone.getWorldPosition(this.tip)
+        this.goal.copy(this.tip)
+        this.projectPosition(this.goal, this.bone)
+        return this.goal.distanceToSquared(this.tip) < 1e-8
     }
 
     private aim(joint: Bone, worldTarget: Vector3): void {
@@ -231,14 +272,16 @@ export class DirectPoseTarget {
                 this.pole.addScaledVector(this.axis, -this.pole.dot(this.axis))
             }
         }
-        this.pole.normalize().applyAxisAngle(this.axis, this.bendAngle)
+        this.pole.normalize().applyAxisAngle(this.axis, Math.max(-65 * Math.PI / 180, Math.min(65 * Math.PI / 180, this.bendAngle)))
+        constrainBendPole(this.pole, this.axis, this.preferredBend)
         const epsilon = (a + b) * 1e-8
         const anatomical = /hand|wrist|foot|ankle/i.test(this.bone.name)
-        const maximumBend = /foot|ankle/i.test(this.bone.name) ? 155 : 160
+        const maximumBend = /foot|ankle/i.test(this.bone.name) ? 145 : 150
         const minimumReach = anatomical
             ? Math.sqrt(a * a + b * b + 2 * a * b * Math.cos(maximumBend * Math.PI / 180))
             : Math.abs(a - b)
         const distance = Math.max(minimumReach + epsilon, Math.min(a + b - epsilon, requestedDistance))
+        this.limited = this.limited || Math.abs(distance - requestedDistance) > 1e-5
         const along = (a * a - b * b + distance * distance) / (2 * distance)
         const height = Math.sqrt(Math.max(0, a * a - along * along))
         this.elbow.copy(this.origin).addScaledVector(this.axis, along).addScaledVector(this.pole, height)
@@ -248,6 +291,9 @@ export class DirectPoseTarget {
         this.rotation.setFromUnitVectors(this.from, this.to)
         upper.quaternion.premultiply(this.rotation).normalize()
         upper.updateWorldMatrix(false, false)
+        alignPoseHinge(upper, lower, this.target)
+        this.limited = clampPoseJoint(upper) || this.limited
         this.aim(lower, this.target)
+        this.limited = clampPoseJoint(lower) || this.limited
     }
 }

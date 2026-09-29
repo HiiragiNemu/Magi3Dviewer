@@ -49,11 +49,11 @@ export function findDirectPoseParts(actor: Object3D): PosePart[] {
     const parts: PosePart[] = []
     for (const [part, pattern] of [
         ['hand', /hand|wrist/i], ['foot', /foot|ankle/i],
-        ['elbow', /forearm|lowerarm|elbow/i], ['knee', /calf|shin|lowerleg|knee/i],
+        ['elbow', /forearm|lowerarm|elbow/i], ['knee', /calf|shin|lowerleg|knee|(?:^|[_. :/\-])leg(?:$|[_. :/\-])/i],
     ] as const) {
         for (const s of ['left', 'right'] as const) {
             const bone = bones.find(b => pattern.test(b.name) && side(b.name, s))
-            if (bone) parts.push({ id: `${s}-${part}`, label: `${s === 'left' ? 'Left' : 'Right'} ${part}`, bone, mode: 'translate' })
+            if (bone) parts.push({ id: `${s}-${part}`, label: `${s === 'left' ? 'Left' : 'Right'} ${part}`, bone, mode: part === 'elbow' || part === 'knee' ? 'rotate' : 'translate' })
         }
     }
     for (const [id, label, pattern] of [['head', 'Head', /head/i], ['chest', 'Chest', /chest|spine0?2/i]] as const) {
@@ -107,7 +107,7 @@ export function createDirectPoseTools(parent: HTMLElement, options: PoseToolsOpt
     const bend = document.createElement('label')
     const bendLabel = document.createElement('span')
     const bendInput = document.createElement('input')
-    bendInput.type = 'range'; bendInput.min = '-180'; bendInput.max = '180'; bendInput.step = '1'; bendInput.value = '0'
+    bendInput.type = 'range'; bendInput.min = '-65'; bendInput.max = '65'; bendInput.step = '1'; bendInput.value = '0'
     bendInput.id = 'pose-bend-direction'
     bendInput.oninput = () => options.bend(bendInput.valueAsNumber)
     bendInput.onchange = () => { options.bendEnd(); bendInput.value = '0' }

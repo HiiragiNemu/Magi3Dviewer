@@ -1,5 +1,10 @@
+import './style/viewport-editor.css'
+import { createViewportPoseEditor } from './viewportPoseEditor'
+import { EditorGroundGuard } from './editorGround'
+import { createPoseContactGuard } from './poseContactGuard'
+import { registerPoseJointLimits, clampPoseJoint, poseJointLimitSnapshot } from './poseJointLimits'
 import { installPoseDiagnostics } from './poseDiagnostics'
-import { createDirectPoseTools, DirectPoseHistory, type PoseSnapshot } from './directPoseTools'
+import { createDirectPoseTools, DirectPoseHistory, findDirectPoseParts, type PosePart, type PoseSnapshot } from './directPoseTools'
 import { DirectPoseTarget } from './directPoseTarget'
 import { addBeforeAnimationLoop, removeBeforeAnimationLoop } from '../../magia-exedra-character-three/renderer'
 import { ObjectMovementSelection, pickMovementTarget, type MovementTarget } from './objectMovementSelection'
@@ -27,7 +32,7 @@ import {
 } from './characterPhysicsActionOptionsUi'
 import { setupEnemyPanel, type EnemyPanelController } from './enemyPanel'
 import { formatCharacterTrilingualName } from './localization/characterNames'
-import { translateBoneChannelLabel, translateMorphChannelLabel, translateUiText } from './localization/zhCN'
+import { translateBoneChannelLabel, translateMorphChannelLabel, translateUiText, getUiLocale } from './localization/zhCN'
 import { setupRuntimeSelectionPanels } from './runtimeSelectionPanels'
 import { setupVoicePanel, type VoicePanelController, type VoicePanelWorkspaceCharacter } from './voicePanel'
 import { createViewerVoiceWorkspaceRuntime } from './voiceWorkspaceRuntime'
@@ -128,7 +133,8 @@ const characterRotateRightBtn = document.getElementById('character-rotate-right'
 const characterTransformResetBtn = document.getElementById('character-transform-reset') as HTMLButtonElement
 
 const officialDefaultFaceState = '__official_default_face_state__'
-const movementSelection = new ObjectMovementSelection(object => !!performanceExternalLeases.get(object)?.channels.root)
+const editorGround = new EditorGroundGuard(() => scene.backgroundScene.getObjectByName('Magius3DviewerStageRoot'))
+const movementSelection = new ObjectMovementSelection(object => !!performanceExternalLeases.get(object)?.channels.root, object => { editorGround.constrainObject(object) })
 let weaponPanelController: ReturnType<typeof setupWeaponPanel> | undefined
 function selectMovementTarget(target: MovementTarget) {
     if (movementSelection.current?.object !== target.object) closeObjectTransform()
@@ -246,6 +252,7 @@ let directPoseTarget: DirectPoseTarget | undefined
 let directPoseInputRoot: THREE.Group | undefined
 const directPoseDragBases = new Map<THREE.Bone, THREE.Quaternion>()
 let directPoseFinishing = false
+let viewportEditor: ReturnType<typeof createViewportPoseEditor> | undefined
 let directPoseToolsUi: ReturnType<typeof createDirectPoseTools> | undefined
 const directPoseHistories = new WeakMap<THREE.Object3D, DirectPoseHistory>()
 let directPoseKeepOrientation = false
@@ -676,6 +683,7 @@ export function setupViewer() {
     setupParameterControls()
     setupDirectPoseEditing()
     setupDirectPoseTools()
+    setupViewportEditor()
     recordPoseDiagnosticFrame = installPoseDiagnostics(scene, () => directPoseControls, () => ({
         mode: directPoseTransformMode, editing: directPoseEditingEnabled,
         solves: directPoseTarget?.solves ?? 0, pending: directPoseTarget?.pending ?? false,
@@ -723,6 +731,8 @@ export function setupViewer() {
         removeBeforeAnimationLoop(restoreManualPoseOverrides)
         finishDirectPoseDrag()
         directPoseToolsUi?.dispose()
+        viewportEditor?.dispose()
+        editorGround.dispose()
         directPoseControls?.dispose()
         directPoseControlsHelper?.removeFromParent()
         directPoseInputRoot?.removeFromParent()
@@ -1505,6 +1515,7 @@ function getCommonMorphPriority(name: string) {
 }
 
 function getPoseEntries(object: THREE.Object3D) {
+    registerPoseJointLimits(object)
     const existing = manualPoseByCharacter.get(object) ?? new Map<string, ManualPoseEntry>()
     const next = new Map<string, ManualPoseEntry>()
     object.traverse(child => {
@@ -1524,7 +1535,7 @@ function getModelPartEntries(object: THREE.Object3D) {
     const next = new Map<string, ModelPartEntry>()
     let unnamedIndex = 0
     object.traverse(child => {
-        if (!(child instanceof THREE.Mesh)) return
+        if (!(child instanceof THREE.Mesh) || /:official-outline:|SelectionOutline/i.test(child.name)) return
         const previous = existing.get(child.uuid)
         const path = getObjectPath(child, object)
         const label = child.name || `${translateUiText('Model part')} ${++unnamedIndex}`
@@ -1568,7 +1579,10 @@ function updateModelPartVisibilityUi(scrollSelected = false) {
     const selectedRow = selectedModelPart
         ? actionModelPartList.querySelector<HTMLElement>(`[data-model-part-uuid="${selectedModelPart.object.uuid}"]`)
         : null
-    if (scrollSelected && selectedRow) selectedRow.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+    if (scrollSelected && selectedRow) {
+        const y = selectedRow.offsetTop - actionModelPartList.offsetTop
+        if (y < actionModelPartList.scrollTop || y + selectedRow.offsetHeight > actionModelPartList.scrollTop + actionModelPartList.clientHeight) actionModelPartList.scrollTop = y
+    }
 
     const selectedText = selectedModelPart
         ? `${translateUiText('Selected model part')}: ${selectedModelPart.label}`
@@ -1792,6 +1806,10 @@ function applyPoseEntry(entry: ManualPoseEntry) {
         THREE.MathUtils.degToRad(entry.offsets.y),
         THREE.MathUtils.degToRad(entry.offsets.z), 'XYZ'))
     entry.bone.quaternion.multiply(rotation).normalize()
+    if (clampPoseJoint(entry.bone)) {
+        const limited = new THREE.Euler().setFromQuaternion(entry.lastBase.clone().invert().multiply(entry.bone.quaternion).normalize(), 'XYZ')
+        entry.offsets.set(THREE.MathUtils.radToDeg(limited.x), THREE.MathUtils.radToDeg(limited.y), THREE.MathUtils.radToDeg(limited.z))
+    }
     entry.lastApplied ??= new THREE.Quaternion()
     entry.lastApplied.copy(entry.bone.quaternion)
 }
@@ -1905,7 +1923,7 @@ function setDirectPoseTransformMode(mode: DirectPoseTransformMode) {
     updateDirectPoseUi()
 }
 
-function updateDirectPoseUi(scrollSelected = false) {
+function updateDirectPoseUi(_scrollSelected = false) {
     const object = scene.characterSelected?.character?.object
     actionDirectEditToggle.disabled = !object
     actionDirectTranslate.disabled = !object || Boolean(directPoseTarget && !directPoseTarget.canTranslate)
@@ -1932,11 +1950,12 @@ function updateDirectPoseUi(scrollSelected = false) {
             .find(row => row.dataset.boneUuid === directPoseSelection?.entry.bone.uuid)
         : undefined
     selectedRow?.classList.add('direct-selected')
-    if (scrollSelected && selectedRow) selectedRow.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    // Bone picks deliberately preserve every panel scroll position.
 
     updateDirectPoseTarget()
-    updateModelPartVisibilityUi(scrollSelected)
+    updateModelPartVisibilityUi()
     directPoseToolsUi?.refresh()
+    viewportEditor?.refresh()
 }
 
 function updateDirectPoseTarget() {
@@ -1972,7 +1991,7 @@ function requestDirectPoseFeedback() {
     })
 }
 
-function selectDirectPoseBone(object: THREE.Object3D, bone: THREE.Bone, part?: THREE.Mesh) {
+function selectDirectPoseBone(object: THREE.Object3D, bone: THREE.Bone, _part?: THREE.Mesh) {
     if (isPerformanceBoneLeased(bone)) return
     finishDirectPoseDrag()
     const entries = manualPoseByCharacter.get(object)?.has(bone.uuid)
@@ -1981,19 +2000,21 @@ function selectDirectPoseBone(object: THREE.Object3D, bone: THREE.Bone, part?: T
     if (!entry || !directPoseControls || !directPoseControlsHelper) return
     directPoseTarget?.handle.removeFromParent()
     directPoseTarget = new DirectPoseTarget(object, bone, isPerformanceBoneLeased)
+    directPoseTarget.projectPosition = createPoseContactGuard(object, editorGround)
     directPoseTarget.preserveEndOrientation = directPoseKeepOrientation
     directPoseInputRoot?.add(directPoseTarget.handle)
     directPoseSelection = {
         object, entry, base: getPoseEntryBase(entry), basePosition: getPoseEntryPositionBase(entry),
     }
-    if (part) selectModelPart(getModelPartEntries(object).get(part.uuid))
+    // Joint selection is not whole-mesh visibility selection.
+    selectModelPart(undefined)
     directPoseControls.attach(directPoseTarget.handle)
     directPoseControls.mode = directPoseTransformMode
     directPoseControls.space = directPoseTransformMode === 'translate' ? 'world' : 'local'
     directPoseControls.enabled = directPoseEditingEnabled
         && (directPoseTransformMode === 'rotate' || directPoseTarget.canTranslate)
     directPoseControlsHelper.visible = directPoseControls.enabled
-    updateDirectPoseUi(true)
+    updateDirectPoseUi()
 }
 
 function clearDirectPoseSelection() {
@@ -2021,11 +2042,13 @@ function setDirectPoseEditing(enabled: boolean) {
     directPoseEditingEnabled = enabled
     document.body.classList.toggle('direct-pose-editing', enabled)
     if (enabled) {
+        if (document.body.classList.contains('locomotion-mode-enabled')) setViewerLocomotionEnabled(false)
         closeObjectTransform()
         directPoseOrbitControlsWasEnabled = scene.controls.enabled
         directPoseOutlineSelection = [...scene.effects.outlinePass.selectedObjects]
         scene.effects.outlinePass.selectedObjects = []
-        scene.controls.enabled = false
+        // Only an actual pointer drag leases Orbit input.
+        scene.controls.enabled = true
         if (directPoseControls) directPoseControls.enabled = true
         // Pause the official action transport too, not only the legacy mixer.
         pauseSelectedAnimation()
@@ -2049,6 +2072,7 @@ function beginDirectPoseTransaction(): boolean {
         directPoseDragBases.set(bone, getPoseEntryBase(entry))
     }
     getDirectPoseHistory(directPoseSelection.object).begin(captureDirectPose(directPoseSelection.object))
+    scene.controls.enabled = false
     return true
 }
 
@@ -2196,6 +2220,95 @@ function setupDirectPoseTools() {
     window.addEventListener('pagehide', () => document.removeEventListener('keydown', shortcuts), { once: true })
 }
 
+function resetViewportPosePart() {
+    finishDirectPoseDrag()
+    const object = directPoseSelection?.object
+    if (!object) return
+    const snapshot = captureDirectPose(object)
+    getDirectPoseHistory(object).begin(snapshot)
+    for (const bone of directPoseTarget?.editedBones ?? []) snapshot.delete(bone.uuid)
+    restoreDirectPose(snapshot); commitDirectPoseHistory()
+}
+
+function selectViewportPosePart(part: PosePart) {
+    const object = scene.characterSelected?.character?.object
+    if (!object) return
+    const sameJoint = directPoseEditingEnabled && directPoseSelection?.entry.bone === part.bone
+    setDirectPoseEditing(true)
+    selectDirectPoseBone(object, part.bone)
+    if (!sameJoint) setDirectPoseTransformMode(part.mode)
+}
+
+function setupViewportEditor() {
+    if (new URL(location.href).searchParams.get('diagnostic') === 'pose-editor') {
+        Object.assign(window, { magiusGroundInspection: () => {
+            const object = scene.characterSelected?.character?.object
+            return object ? editorGround.inspect(object) : null
+        }, magiusJointLimitInspection: () => {
+            const snapshots: ReturnType<typeof poseJointLimitSnapshot>[] = []
+            scene.characterSelected?.character?.object.traverse(node => {
+                if (node instanceof THREE.Bone) {
+                    const snapshot = poseJointLimitSnapshot(node)
+                    if (snapshot) snapshots.push(snapshot)
+                }
+            })
+            return snapshots
+        } })
+    }
+    viewportEditor = createViewportPoseEditor({
+        camera: scene.camera, canvas: scene.renderer.domElement, translate: translateUiText, locale: getUiLocale,
+        state: () => ({ actor: directPoseEditingEnabled || !movementSelection.current || movementSelection.current.object === scene.characterSelected?.character?.object ? scene.characterSelected?.character?.object : undefined, object: movementSelection.current?.object,
+            active: directPoseEditingEnabled || singleCharacterTransformActive || Boolean(scene.transformControls.object && scene.characterSelectionVisible),
+            pose: directPoseEditingEnabled, mode: directPoseEditingEnabled ? directPoseTransformMode : (singleCharacterTransformActive ? singleCharacterTransformControls?.mode : scene.transformControls.mode) === 'rotate' ? 'rotate' : 'translate',
+            selected: directPoseSelection?.entry.bone, history: directPoseSelection && directPoseHistories.get(directPoseSelection.object),
+            limited: directPoseTarget?.limited ?? false, canTranslate: !directPoseTarget || directPoseTarget.canTranslate }),
+        place: mode => {
+            const target = movementSelection.current
+            const object = target?.object ?? scene.characterSelected?.character?.object
+            if (!object) return
+            setDirectPoseEditing(false)
+            if (!singleCharacterTransformActive || singleCharacterTransformControls?.object !== object) activateObjectTransform(object, target?.changed)
+            setTransformMode(mode)
+        },
+        pose: () => { setDirectPoseEditing(true); setDirectPoseTransformMode('translate') },
+        mode: setDirectPoseTransformMode,
+        close: () => { setDirectPoseEditing(false); closeObjectTransform() },
+        parameters: () => { if (!actionPanel.classList.contains('is-open')) actionPanelToggle.click() },
+        focus: () => {
+            finishDirectPoseDrag()
+            const object = directPoseEditingEnabled ? scene.characterSelected?.character?.object : movementSelection.current?.object ?? scene.characterSelected?.character?.object
+            if (!object) return
+            const bounds = editorGround.visualBounds(object), center = bounds.getCenter(new THREE.Vector3()), size = bounds.getSize(new THREE.Vector3())
+            const direction = scene.camera.position.clone().sub(scene.controls.target).normalize()
+            const distance = Math.max(size.y, size.x / scene.camera.aspect, size.z / scene.camera.aspect, 0.3) / (2 * Math.tan(THREE.MathUtils.degToRad(scene.camera.fov) / 2) * 0.68)
+            scene.controls.target.copy(center)
+            scene.camera.position.copy(center).addScaledVector(direction, distance)
+            editorGround.constrainCamera(scene.camera, scene.controls)
+            scene.camera.lookAt(center); scene.camera.updateMatrixWorld()
+            scene.controls.update()
+        },
+        select: selectViewportPosePart,
+        begin: (part, event) => { selectViewportPosePart(part); return startDirectPosePointerDrag(event) },
+        move: updateDirectPosePointerDrag, end: finishDirectPoseDrag,
+        undo: () => undoDirectPose(), redo: () => undoDirectPose(true), reset: resetViewportPosePart,
+        nudge: (axis, amount) => {
+            finishDirectPoseDrag()
+            const selection = directPoseSelection
+            if (!selection || isPerformanceBoneLeased(selection.entry.bone)) return
+            getDirectPoseHistory(selection.object).begin(captureDirectPose(selection.object))
+            selection.entry.offsets[axis] += amount
+            applyPoseEntry(selection.entry); syncPoseEntryControls(selection.entry)
+            directPoseTarget?.sync(); commitDirectPoseHistory(); updateDirectPoseUi()
+        },
+    })
+    scene.addBeforeRenderCallback(() => {
+        const object = movementSelection.current?.object
+        if (object && !performanceExternalLeases.get(object)?.channels.root && !document.body.classList.contains('locomotion-mode-enabled')) editorGround.constrainObject(object)
+        editorGround.constrainCamera(scene.camera, scene.controls)
+        viewportEditor?.update()
+    })
+}
+
 function getBufferAttributeComponent(
     attribute: THREE.BufferAttribute | THREE.InterleavedBufferAttribute,
     index: number,
@@ -2222,6 +2335,9 @@ function getWeightedBoneAtPointer(event: PointerEvent) {
     for (const intersection of raycaster.intersectObject(object, true)) {
         if (!(intersection.object instanceof THREE.SkinnedMesh) || !intersection.face) continue
         const mesh = intersection.object
+        let visible = true
+        for (let owner: THREE.Object3D | null = mesh; owner; owner = owner.parent) visible &&= owner.visible
+        if (!visible || /:official-outline:/i.test(mesh.name)) continue
         const skinIndex = mesh.geometry.getAttribute('skinIndex')
         const skinWeight = mesh.geometry.getAttribute('skinWeight')
         if (!skinIndex || !skinWeight) continue
@@ -2235,7 +2351,9 @@ function getWeightedBoneAtPointer(event: PointerEvent) {
             }
         }
         const dominant = [...scores].sort((a, b) => b[1] - a[1])[0]?.[0]
-        const bone = dominant == undefined ? undefined : mesh.skeleton.bones[dominant]
+        let bone = dominant == undefined ? undefined : mesh.skeleton.bones[dominant]
+        const mainParts = findDirectPoseParts(object)
+        while (bone && !mainParts.some(part => part.bone === bone)) bone = bone.parent instanceof THREE.Bone ? bone.parent : undefined
         if (bone && entries.has(bone.uuid)) return { object, bone, part: mesh }
     }
     return undefined
@@ -2278,8 +2396,29 @@ function finishDirectPoseDrag(event?: PointerEvent) {
         commitDirectPoseHistory()
         const canvas = scene.renderer.domElement
         if (pointerId !== undefined && canvas.hasPointerCapture(pointerId)) canvas.releasePointerCapture(pointerId)
-        scene.controls.enabled = directPoseEditingEnabled ? false : directPoseOrbitControlsWasEnabled
+        scene.controls.enabled = directPoseOrbitControlsWasEnabled
     } finally { directPoseFinishing = false }
+}
+
+function startDirectPosePointerDrag(event: PointerEvent): boolean {
+    if (!directPoseSelection || !directPoseTarget || !beginDirectPoseTransaction()) return false
+    const rect = scene.renderer.domElement.getBoundingClientRect()
+    directPosePointerDrag = {
+        pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
+        lastX: event.clientX, lastY: event.clientY, altKey: event.altKey, shiftKey: event.shiftKey, dirty: false,
+        startHandleQuaternion: directPoseTarget.handle.quaternion.clone(), startWorldPosition: directPoseTarget.handle.position.clone(),
+        viewportWidth: rect.width, viewportHeight: rect.height, selection: directPoseSelection,
+    }
+    return true
+}
+
+function updateDirectPosePointerDrag(event: PointerEvent) {
+    const drag = directPosePointerDrag
+    if (!drag || drag.pointerId !== event.pointerId) return
+    if (isPerformanceBoneLeased(drag.selection.entry.bone)) { finishDirectPoseDrag(event); return }
+    drag.lastX = event.clientX; drag.lastY = event.clientY
+    drag.altKey = event.altKey; drag.shiftKey = event.shiftKey; drag.dirty = true
+    event.preventDefault(); event.stopPropagation()
 }
 
 function setupDirectPoseEditing() {
@@ -2307,47 +2446,32 @@ function setupDirectPoseEditing() {
             directPoseTarget?.end()
             commitDirectPoseHistory()
         }
-        scene.controls.enabled = directPoseEditingEnabled ? false : !event.value && directPoseOrbitControlsWasEnabled
+        scene.controls.enabled = !event.value && directPoseOrbitControlsWasEnabled
     })
     directPoseControls.addEventListener('objectChange', () => {
         if (directPoseGizmoDragging) directPoseTarget?.queue()
     })
     canvas.addEventListener('pointerdown', event => {
+        if (!directPoseEditingEnabled || event.button !== 0 || event.ctrlKey || event.metaKey) return
         const owner = directPosePointerDrag?.pointerId ?? directPoseGizmoPointerId
-        if (owner !== undefined && owner !== event.pointerId) event.stopImmediatePropagation()
-    }, { capture: true })
-    canvas.addEventListener('pointerdown', event => {
-        if (!directPoseEditingEnabled || event.button !== 0) return
-        if (directPosePointerDrag || directPoseGizmoPointerId !== undefined) return
-        if (directPoseControls?.dragging) {
-            directPoseGizmoPointerId = event.pointerId
-            return
-        }
-        if (directPoseControls?.axis) return
-        const weighted = getWeightedBoneAtPointer(event)
-        if (!weighted || isPerformanceBoneLeased(weighted.bone)) return
-        selectDirectPoseBone(weighted.object, weighted.bone, weighted.part)
-        if (directPoseSelection?.entry.bone !== weighted.bone || !directPoseTarget || !beginDirectPoseTransaction()) return
+        if (owner !== undefined) { event.stopImmediatePropagation(); return }
         const rect = canvas.getBoundingClientRect()
-        directPosePointerDrag = {
-            pointerId: event.pointerId, startX: event.clientX, startY: event.clientY,
-            lastX: event.clientX, lastY: event.clientY, altKey: event.altKey, shiftKey: event.shiftKey, dirty: false,
-            startHandleQuaternion: directPoseTarget.handle.quaternion.clone(),
-            startWorldPosition: directPoseTarget.handle.position.clone(),
-            viewportWidth: rect.width, viewportHeight: rect.height, selection: directPoseSelection,
+        directPoseControls?.pointerHover({ x: (event.clientX - rect.left) / rect.width * 2 - 1, y: -(event.clientY - rect.top) / rect.height * 2 + 1, button: 0 } as unknown as PointerEvent)
+        if (directPoseControls?.axis && directPoseControls.enabled) {
+            directPoseGizmoPointerId = event.pointerId
+            scene.controls.enabled = false
+            return // TransformControls receives its normal event, not Orbit.
         }
+        const weighted = getWeightedBoneAtPointer(event)
+        if (!weighted || isPerformanceBoneLeased(weighted.bone)) return // Empty space stays Orbit.
+        const changedJoint = directPoseSelection?.entry.bone !== weighted.bone
+        selectDirectPoseBone(weighted.object, weighted.bone)
+        if (changedJoint && directPoseTransformMode === 'translate' && !directPoseTarget?.canTranslate) setDirectPoseTransformMode('rotate')
+        if (!startDirectPosePointerDrag(event)) return
         canvas.setPointerCapture(event.pointerId)
-        event.preventDefault(); event.stopPropagation()
-    })
-    canvas.addEventListener('pointermove', event => {
-        const drag = directPosePointerDrag
-        if (!drag || drag.pointerId !== event.pointerId) return
-        if (isPerformanceBoneLeased(drag.selection.entry.bone)) { finishDirectPoseDrag(event); return }
-        // O(1) input: no IK, mesh traversal, layout read or panel rebuild here.
-        drag.lastX = event.clientX; drag.lastY = event.clientY
-        drag.altKey = event.altKey; drag.shiftKey = event.shiftKey; drag.dirty = true
-        event.preventDefault(); event.stopPropagation()
-    })
+        event.preventDefault(); event.stopImmediatePropagation()
+    }, { capture: true })
+    canvas.addEventListener('pointermove', updateDirectPosePointerDrag)
     const stopPointerDrag = (event: PointerEvent) => finishDirectPoseDrag(event)
     canvas.addEventListener('pointerup', stopPointerDrag)
     canvas.addEventListener('pointercancel', stopPointerDrag)
@@ -3286,7 +3410,11 @@ function setupSingleCharacterTransformControls() {
             // If TPS ended during the drag, retain the camera owner's restored state.
         }
     })
-    singleCharacterTransformControls.addEventListener('objectChange', () => { objectTransformUiPending = true })
+    singleCharacterTransformControls.addEventListener('objectChange', () => {
+        const object = singleCharacterTransformControls?.object
+        if (object) editorGround.constrainObject(object)
+        objectTransformUiPending = true
+    })
 }
 
 function clearSingleCharacterTransform() {
@@ -3318,10 +3446,13 @@ function activateObjectTransform(object: THREE.Object3D, onObjectChange?: () => 
         closeObjectTransform()
         return
     }
+    if (directPoseEditingEnabled) setDirectPoseEditing(false)
     scene.transformControls.detach()
     singleCharacterTransformActive = true
     scene.characterTransformEditing = scene.characterSelected?.character?.object === object
     singleObjectTransformOnChange = onObjectChange
+    editorGround.capture(object)
+    editorGround.constrainObject(object, true)
     singleCharacterTransformControls.attach(object)
     singleCharacterTransformControls.enabled = true
     singleCharacterTransformControlsHelper.visible = true
@@ -3333,13 +3464,10 @@ function setTransformMode(mode: TransformControlsMode) {
         ? singleCharacterTransformControls
         : scene.transformControls
     if (performanceGizmoActive || (controls.object && performanceExternalLeases.get(controls.object)?.channels.root)) return
-    if (mode == 'rotate' && !controls.object?.userData.magiusIndependentWeapon) {
-        controls.showX = false
-        controls.showZ = false
-    } else {
-        controls.showX = true
-        controls.showZ = true
-    }
+    // Ground-contact correction now permits all three rotation rings without
+    // letting a tilted whole actor or prop cut through the ground.
+    controls.showX = true
+    controls.showZ = true
     controls.showY = true
     controls.mode = mode
 
@@ -3361,6 +3489,7 @@ function updateTransformModeButtons() {
             transformTranslateBtn.style.removeProperty('display')
         }
     }
+    viewportEditor?.refresh()
 }
 
 Object.assign(window, { changeCharacter })

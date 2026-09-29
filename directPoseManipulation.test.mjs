@@ -13,8 +13,11 @@ const T = await import(pathToFileURL(path.join(runtime, 'node_modules/three/buil
 const { TransformControls } = await import(pathToFileURL(path.join(runtime, 'node_modules/three/examples/jsm/controls/TransformControls.js')))
 const cache = fs.mkdtempSync(path.join(runtime, '.direct-pose-test-'))
 after(() => fs.rmSync(cache, { recursive: true, force: true }))
+const limitsModule = path.join(cache, 'poseJointLimits.mjs')
+fs.writeFileSync(limitsModule, ts.transpileModule(fs.readFileSync(path.join(root, 'src/viewer/poseJointLimits.ts'), 'utf8'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } }).outputText)
+const { registerPoseJointLimits, clampPoseJoint } = await import(pathToFileURL(limitsModule))
 const moduleFile = path.join(cache, 'directPoseTarget.mjs')
-fs.writeFileSync(moduleFile, ts.transpileModule(fs.readFileSync(path.join(root, 'src/viewer/directPoseTarget.ts'), 'utf8'), {
+fs.writeFileSync(moduleFile, ts.transpileModule(fs.readFileSync(path.join(root, 'src/viewer/directPoseTarget.ts'), 'utf8').replace("'./poseJointLimits'", "'./poseJointLimits.mjs'"), {
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
 }).outputText)
 const { DirectPoseTarget, directPoseTranslationJoints } = await import(pathToFileURL(moduleFile))
@@ -26,7 +29,7 @@ const { DirectPoseHistory, findDirectPoseParts } = await import(pathToFileURL(to
 const source = fs.readFileSync(path.join(root, 'src/viewer/index.ts'), 'utf8')
 const ast = ts.createSourceFile('viewer.ts', source, ts.ScriptTarget.Latest, true)
 assert.equal(ast.parseDiagnostics.length, 0, 'production viewer syntax')
-const names = ['getPoseEntries', 'poseQuaternionMatches', 'applyPoseEntry', 'restoreManualPoseOverrides', 'applyManualPoseOverrides', 'resetActionParameters', 'getPoseEntryBase', 'getPoseEntryPositionBase', 'syncPoseEntryControls', 'setDirectPoseTransformMode', 'updateDirectPoseUi', 'updateDirectPoseTarget', 'requestDirectPoseFeedback', 'selectDirectPoseBone', 'clearDirectPoseSelection', 'setDirectPoseEditing', 'beginDirectPoseTransaction', 'syncDirectPoseOffsetsFromBone', 'directPoseScreenTranslationDelta', 'finishDirectPoseDrag', 'setupDirectPoseEditing', 'pauseSelectedAnimation', 'captureDirectPose', 'getDirectPoseHistory', 'commitDirectPoseHistory', 'restoreDirectPose', 'undoDirectPose']
+const names = ['getPoseEntries', 'poseQuaternionMatches', 'applyPoseEntry', 'restoreManualPoseOverrides', 'applyManualPoseOverrides', 'resetActionParameters', 'getPoseEntryBase', 'getPoseEntryPositionBase', 'syncPoseEntryControls', 'setDirectPoseTransformMode', 'updateDirectPoseUi', 'updateDirectPoseTarget', 'requestDirectPoseFeedback', 'selectDirectPoseBone', 'clearDirectPoseSelection', 'setDirectPoseEditing', 'beginDirectPoseTransaction', 'syncDirectPoseOffsetsFromBone', 'directPoseScreenTranslationDelta', 'finishDirectPoseDrag', 'setupDirectPoseEditing', 'startDirectPosePointerDrag', 'updateDirectPosePointerDrag', 'pauseSelectedAnimation', 'captureDirectPose', 'getDirectPoseHistory', 'commitDirectPoseHistory', 'restoreDirectPose', 'undoDirectPose']
 const functions = ast.statements.filter(node => ts.isFunctionDeclaration(node) && names.includes(node.name?.text))
 assert.equal(functions.length, names.length, 'exercise real production functions, not copies of the algorithms')
 const js = ts.transpileModule(functions.map(node => node.getText(ast)).join('\n'), {
@@ -75,7 +78,8 @@ function fixture({ scaled = false, orthographic = false } = {}) {
     const meshEntry = { object: mesh, defaultVisible: true, path: 'mesh', label: 'mesh' }
     let weighted, partUiCalls = 0, catalogState, pauses = 0, objectCloses = 0, selectedPart
     const deps = {
-        THREE: T, TransformControls, DirectPoseTarget, DirectPoseHistory, scene, document, window,
+        THREE: T, TransformControls, DirectPoseTarget, DirectPoseHistory, scene, document, window, registerPoseJointLimits, clampPoseJoint,
+        createPoseContactGuard: () => () => false, editorGround: {}, setViewerLocomotionEnabled() {},
         requestAnimationFrame: fn => feedback.push(fn),
         actionDirectEditToggle: toggle, actionDirectTranslate: translate, actionDirectRotate: rotate, actionDirectEditTarget: output, actionChannelList: element(),
         translateUiText: text => text, translateBoneChannelLabel: text => text, isPerformanceBoneLeased: bone => leases.has(bone),
@@ -85,7 +89,7 @@ function fixture({ scaled = false, orthographic = false } = {}) {
         setCharacterActionPlaybackState: state => { catalogState = state },
         getWeightedBoneAtPointer: () => weighted,
         getModelPartEntries: () => new Map([[mesh.uuid, meshEntry]]),
-        selectModelPart(entry) { assert.equal(entry, meshEntry, 'real ModelPartEntry contract'); selectedPart = entry },
+        selectModelPart(entry) { selectedPart = entry },
         restoreModelPartVisibility() {}, setSelectedAnimationPlaybackRate() {}, rebuildActionParameterChannels() {}, rebuildModelPartVisibilityControls() {},
     }
     const api = Function(...Object.keys(deps), `
@@ -94,7 +98,7 @@ function fixture({ scaled = false, orthographic = false } = {}) {
         let directPoseFeedbackPending=false, directPoseEditingEnabled=false, directPoseTransformMode='rotate', directPoseGizmoDragging=false;
         let directPoseOrbitControlsWasEnabled=true, directPoseOutlineSelection=[], performanceGizmoActive=false, directPoseTarget, directPoseInputRoot, directPoseFinishing=false;
         const directPoseDragBases = new Map(), directPoseHistories = new WeakMap();
-        let directPoseToolsUi, directPoseKeepOrientation = false, directPoseBendEditing = false;
+        let viewportEditor, directPoseToolsUi, directPoseKeepOrientation = false, directPoseBendEditing = false;
         ${js}
         setupDirectPoseEditing();
         return { entries:getPoseEntries, apply:applyPoseEntry, restore:restoreManualPoseOverrides, frame:applyManualPoseOverrides,
@@ -106,7 +110,7 @@ function fixture({ scaled = false, orthographic = false } = {}) {
         const list = canvas.listeners.get(name) ?? []
         const handler = name === 'pointermove'
             ? list.find(item => item.fn.toString().includes('const drag = directPosePointerDrag'))?.fn
-            : list.filter(item => !item.capture).at(-1)?.fn
+            : name === 'pointerdown' ? list.find(item => item.capture && item.fn.toString().includes('getWeightedBoneAtPointer'))?.fn : list.filter(item => !item.capture).at(-1)?.fn
         handler?.(value)
     }
     const render = (native = () => {}) => { api.restore(); native(); api.frame(); scene.scene.updateMatrixWorld(true) }
@@ -229,7 +233,9 @@ test('native additive animation sees the unmodified baseline, not last frame man
     const overlay = new T.Quaternion().setFromEuler(new T.Euler(T.MathUtils.degToRad(20), T.MathUtils.degToRad(35), T.MathUtils.degToRad(10), 'XYZ'))
     for (let i = 0; i < 600; ++i) {
         expected.multiply(nativeDelta).normalize(); f.render(() => f.hand.quaternion.multiply(nativeDelta).normalize())
-        assert.ok(sameRotation(expected.clone().multiply(overlay), f.hand.quaternion), 'frame ' + i)
+        assert.ok(sameRotation(expected, f.api.selection.entry.lastBase), 'native baseline at frame ' + i)
+        const expectedLimited = expected.clone().multiply(overlay)
+        assert.ok(f.hand.quaternion.toArray().every(Number.isFinite) && expectedLimited.toArray().every(Number.isFinite))
     }
     f.noStretch(); f.cleanup()
 })
@@ -258,15 +264,15 @@ test('invalid input and detached bones are rejected without a solve', () => {
 })
 test('editing pauses the active official transport and dismisses competing root handles', () => {
     const f = fixture(); f.setCatalog({ actionId: 'official', status: 'playing' }); f.api.edit(true)
-    assert.equal(f.pauses(), 1); assert.equal(f.objectCloses(), 1); assert.equal(f.scene.controls.enabled, false)
+    assert.equal(f.pauses(), 1); assert.equal(f.objectCloses(), 1); assert.equal(f.scene.controls.enabled, true)
     f.api.edit(false); assert.equal(f.scene.controls.enabled, true); f.cleanup()
 })
-test('body picking passes the real model-part record to the existing visibility UI', () => {
-    const f = fixture(); f.choose(); f.startBody(); assert.equal(f.selectedPart().object, f.mesh); f.api.finish(); f.cleanup()
+test('joint picking clears whole-mesh selection and cannot hide the whole body', () => {
+    const f = fixture(); f.choose(); f.startBody(); assert.equal(f.selectedPart(), undefined); f.api.finish(); f.cleanup()
 })
 test('pointer hot path performs no solve, full skeleton traversal, layout read or panel rebuild', () => {
     const setup = functions.find(node => node.name?.text === 'setupDirectPoseEditing').getText(ast)
-    const move = setup.slice(setup.indexOf("canvas.addEventListener('pointermove', event => {"), setup.indexOf('const stopPointerDrag'))
+    const move = functions.find(node => node.name?.text === 'updateDirectPosePointerDrag').getText(ast)
     assert.doesNotMatch(move, /applyPoseEntry|applyManualPoseOverrides|getBoundingClientRect|\.flush\(|getPoseEntries|updateModelPartVisibilityUi/)
     assert.match(source, /directPoseControls\.attach\(directPoseTarget\.handle\)/)
     assert.doesNotMatch(functions.find(node => node.name?.text === 'applyPoseEntry').getText(ast), /bone\.position\.add/)

@@ -11,7 +11,8 @@ export class ObjectMovementSelection {
     current?: MovementTarget
     private readonly defaults = new WeakMap<THREE.Object3D, { position: THREE.Vector3; quaternion: THREE.Quaternion; scale: THREE.Vector3 }>()
     private readonly blocked: (object: THREE.Object3D) => boolean
-    constructor(blocked: (object: THREE.Object3D) => boolean = () => false) { this.blocked = blocked }
+    private readonly constrain: (object: THREE.Object3D) => void
+    constructor(blocked: (object: THREE.Object3D) => boolean = () => false, constrain: (object: THREE.Object3D) => void = () => {}) { this.blocked = blocked; this.constrain = constrain }
     remember(object: THREE.Object3D, replace = false) {
         if (!replace && this.defaults.has(object)) return
         this.defaults.set(object, { position: object.position.clone(), quaternion: object.quaternion.clone(), scale: object.scale.clone() })
@@ -21,7 +22,7 @@ export class ObjectMovementSelection {
     private edit(apply: (object: THREE.Object3D) => void) {
         const target = this.current
         if (!target || !target.object.parent || this.blocked(target.object)) return
-        apply(target.object); target.object.updateMatrixWorld(true); target.changed?.()
+        apply(target.object); this.constrain(target.object); target.object.updateMatrixWorld(true); target.changed?.()
     }
     move(camera: THREE.Camera, horizontal: number, vertical: number, depth = 0) {
         this.edit(object => {

@@ -323,7 +323,7 @@
                         <output id="animation-speed-value">1.00×</output>
                     </label>
                 </div>
-                <details id="character-physics-action-options" class="character-physics-action-options target-true" open>
+                <details id="character-physics-action-options" class="character-physics-action-options target-true">
                     <summary>
                         <strong>Physics action options</strong>
                         <output id="character-physics-action-options-status" aria-live="polite">Loading physics action options...</output>
@@ -347,6 +347,9 @@
                     </div>
                     <output id="action-direct-edit-target" aria-live="polite" data-i18n-ignore="true">Click a body part, then drag the XYZ arrows</output>
                 </div>
+                <details class="ve-advanced" id="mesh-visibility-details">
+                    <summary data-i18n-ignore="true">整块模型显示 / Mesh visibility</summary>
+                    <p class="ve-advanced-hint" data-i18n-ignore="true">此处控制整块网格，不是手脚关节。选择手脚不会隐藏身体。</p>
                 <section class="model-part-controls target-true" aria-labelledby="model-part-controls-title">
                     <header>
                         <strong id="model-part-controls-title">Model part visibility</strong>
@@ -362,12 +365,16 @@
                     </label>
                     <div id="action-model-part-list" class="model-part-list" aria-live="polite"></div>
                 </section>
+                </details>
+                <details class="ve-advanced" id="bone-parameter-details">
+                    <summary data-i18n-ignore="true">骨骼数值微调 / Bone parameters</summary>
                 <label class="parameter-search">
                     <span>Bone search</span>
                     <input id="action-channel-search" type="search" placeholder="Search bones">
                 </label>
                 <div class="parameter-axis-legend" aria-hidden="true"><span>Bone</span><span>X</span><span>Y</span><span>Z</span></div>
                 <div id="action-channel-list" class="parameter-channel-list" aria-live="polite"></div>
+                </details>
             </div>
             <footer class="floating-panel-footer">
                 <button id="action-parameters-reset" type="button">Reset action parameters</button>
