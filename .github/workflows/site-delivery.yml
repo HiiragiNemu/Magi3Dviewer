@@ -1,9 +1,10 @@
-name: Deploy tested website
+name: Deploy tested website to Cloudflare
 on:
   push:
     branches: [magius3dviewer]
     paths-ignore:
       - '.github/workflows/site-publish-verified.yml'
+      - 'docs/reports/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -14,32 +15,36 @@ jobs:
   configuration:
     if: github.ref == 'refs/heads/magius3dviewer'
     runs-on: ubuntu-latest
+    environment: magius3dviewer-live
     timeout-minutes: 5
     outputs:
-      configured: ${{ steps.project.outputs.configured }}
       branch: ${{ steps.project.outputs.branch }}
     steps:
-      - name: Check optional Cloudflare configuration without printing credentials
+      - name: Verify access to the existing Cloudflare production project
         id: project
         env:
           CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
-          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID || vars.CF_ACCOUNT_ID }}
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
-          if(!process.env.CF_TOKEN || !process.env.CF_ACCOUNT) {
-            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Cloudflare: NOT DEPLOYED (optional target is not configured). GitHub Pages independently delivers the verified source. The existing Cloudflare website was left unchanged.\n');
-            fs.appendFileSync(process.env.GITHUB_OUTPUT,'configured=false\n');
-            console.log('Cloudflare: NOT DEPLOYED; optional target has no complete configuration.');
-            process.exit(0);
-          }
-          const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/pages/projects/magius3dviewer`,{headers:{Authorization:`Bearer ${process.env.CF_TOKEN}`}});
+          import assert from 'node:assert/strict';
+          assert.ok(process.env.CF_TOKEN && process.env.CF_ACCOUNT,'Cloudflare deployment credentials are missing. This workflow will not publish to GitHub Pages or use public GitHub raw resources.');
+          assert.match(process.env.CF_ACCOUNT,/^[a-f0-9]{32}$/i,'Invalid Cloudflare account identifier');
+          const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/pages/projects/magius3dviewer`,{headers:{Authorization:`Bearer ${process.env.CF_TOKEN}`},redirect:'error',signal:AbortSignal.timeout(30000)});
+          assert.equal(r.status,200,'Cannot access existing Cloudflare project');
           const data=await r.json();
-          if(!r.ok || !data.success || !/^[A-Za-z0-9_./-]+$/.test(data.result?.production_branch || ''))throw new Error('Cannot resolve the existing Cloudflare project; HTTP '+r.status);
-          fs.appendFileSync(process.env.GITHUB_OUTPUT,`configured=true\nbranch=${data.result.production_branch}\n`);
-          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,'Existing Cloudflare project access verified.\n');
+          assert.ok(data.success && data.result?.name==='magius3dviewer');
+          const branch=data.result.production_branch;
+          assert.match(branch,/^[A-Za-z0-9_./-]+$/);
+          const h=await fetch('https://magius3dviewer-runtime-products.crynetsystemscell.workers.dev/healthz',{signal:AbortSignal.timeout(60000)});
+          assert.equal(h.status,200,'Private-release gateway is not ready; fix its server-side credential before publishing');
+          assert.equal((await h.json()).status,'ready');
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,`branch=${branch}\n`);
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Target: existing Cloudflare project magius3dviewer; production branch ${branch}. No GitHub Pages deployment.\n`);
           NODE
   build:
+    needs: configuration
     runs-on: ubuntu-latest
     timeout-minutes: 45
     defaults:
@@ -56,77 +61,40 @@ jobs:
       - name: Dependency security report (advisory)
         continue-on-error: true
         run: npm audit --json > /tmp/site-evidence/npm-audit.json
-      - name: Pose, selection, IK and current scene delivery regressions
+      - name: Pose, selection, IK, resource transport and private gateway regressions
         run: |
           set -euo pipefail
-          node --test directPoseManipulation.test.mjs viewerSelectionEditing.test.mjs performanceChainIK.test.mjs bundledStageDelivery.test.mjs prepareGitHubPages.test.mjs immutableSourceDelivery.test.mjs runtimeProductDelivery.test.mjs siteStageDelivery.test.mjs 2>&1 | tee /tmp/site-evidence/functional-tests.log
+          npm run test:website 2>&1 | tee /tmp/site-evidence/functional-tests.log
       - name: Complete production typecheck
         run: |
           set -euo pipefail
           npx tsc --noEmit --pretty false 2>&1 | tee /tmp/site-evidence/types.log
-      - name: Build current client and complete runtime resources
-        id: package
+      - name: Build current client with complete Cloudflare stage closures
         env:
-          MAGIUS_DEPLOY_LIGHTWEIGHT: '1'
-          MAGIUS_DEPLOY_OUT_DIR: dist-deploy
           MAGIUS_DEPLOY_TARGET: cloudflare
         run: |
           set -euo pipefail
           node scripts/build-deployment.mjs 2>&1 | tee /tmp/site-evidence/build.log
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
-          fs.writeFileSync('dist-deploy/site-version.json',JSON.stringify({revision:process.env.GITHUB_SHA,builtAt:new Date().toISOString(),poseEditor:'bounded-ik-v2',selection:'existing-outline-uniforms',stageDelivery:'immutable-current-closures'})+'\n');
+          fs.writeFileSync('dist-deploy/site-version.json',JSON.stringify({revision:process.env.GITHUB_SHA,builtAt:new Date().toISOString(),poseEditor:'bounded-ik-v2',selection:'existing-outline-uniforms',stageDelivery:'cloudflare-same-origin'})+'\n');
           NODE
-      - name: Record exact payload inventory even when packaging fails
-        if: always()
-        run: |
-          node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          import path from 'node:path';
-          const files=[];
-          function walk(dir,rel=''){
-            if(!fs.existsSync(dir))return;
-            for(const e of fs.readdirSync(dir,{withFileTypes:true})){
-              const name=path.posix.join(rel,e.name),full=path.join(dir,e.name);
-              if(e.isDirectory())walk(full,name);else if(e.isFile())files.push({path:name,bytes:fs.statSync(full).size});
-            }
-          }
-          walk('dist-deploy');
-          const groups={};
-          for(const f of files){const group=f.path.split('/').slice(0,2).join('/');groups[group]=(groups[group]||0)+f.bytes;}
-          const report={revision:process.env.GITHUB_SHA,files:files.length,bytes:files.reduce((s,f)=>s+f.bytes,0),groups:Object.entries(groups).sort((a,b)=>b[1]-a[1]),largest:files.sort((a,b)=>b.bytes-a.bytes).slice(0,80)};
-          fs.mkdirSync('/tmp/site-evidence',{recursive:true});
-          fs.writeFileSync('/tmp/site-evidence/payload-inventory.json',JSON.stringify(report,null,2)+'\n');
-          if(fs.existsSync('dist-deploy/deployment-public-summary.json'))fs.copyFileSync('dist-deploy/deployment-public-summary.json','/tmp/site-evidence/deployment-public-summary.json');
-          console.log(JSON.stringify({files:report.files,bytes:report.bytes,groups:report.groups.slice(0,12)},null,2));
-          NODE
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: site-build-evidence
-          path: /tmp/site-evidence/
-          retention-days: 7
       - name: Install isolated browser driver
         run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
       - name: Verify real pointer interaction, skinning and multi-character rendering
-        id: browser
         run: |
           set -euo pipefail
           node scripts/site-smoke-pose.mjs 2>&1 | tee /tmp/site-evidence/browser.log
+      - name: Verify full stage delivery with direct repository requests blocked
+        run: |
+          set -euo pipefail
+          node scripts/site-smoke-cloudflare.mjs 2>&1 | tee /tmp/site-evidence/cloudflare-browser.log
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: site-delivery-evidence
           path: /tmp/site-evidence/
-          retention-days: 7
-      - name: Preserve failed browser candidate without publishing it
-        if: failure() && steps.package.outcome == 'success'
-        uses: actions/upload-artifact@v4
-        with:
-          name: browser-debug-candidate
-          path: dist-deploy/
-          compression-level: 1
-          retention-days: 1
+          retention-days: 14
       - uses: actions/upload-artifact@v4
         with:
           name: verified-website
@@ -135,77 +103,16 @@ jobs:
           retention-days: 3
       - uses: actions/upload-artifact@v4
         with:
-          name: site-delivery-tools
-          path: |
-            scripts/prepare-github-pages.mjs
-            scripts/site-smoke-stage-delivery.mjs
+          name: cloudflare-delivery-tools
+          path: scripts/site-smoke-cloudflare.mjs
           retention-days: 3
   cloudflare:
     needs: [build, configuration]
-    if: github.ref == 'refs/heads/magius3dviewer' && needs.configuration.outputs.configured == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
-    outputs:
-      base_url: ${{ steps.revision.outputs.base_url }}
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: verified-website
-          path: dist-deploy
-      - name: Publish full verified assets to the existing Cloudflare project
-        id: publish
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist-deploy --project-name=magius3dviewer --branch=${{ needs.configuration.outputs.branch }} --commit-hash=${{ github.sha }}
-      - name: Verify immutable and production Cloudflare revisions
-        id: revision
-        env:
-          EXPECTED_SHA: ${{ github.sha }}
-          DEPLOYMENT_URL: ${{ steps.publish.outputs.deployment-url }}
-          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
-          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          const pattern=/^https:\/\/[a-f0-9]{8}\.magius3dviewer\.pages\.dev\/$/;
-          let base=(process.env.DEPLOYMENT_URL||'').trim().replace(/\/$/,'')+'/';
-          if(!pattern.test(base)){
-            const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT}/pages/projects/magius3dviewer/deployments`,{headers:{Authorization:`Bearer ${process.env.CF_TOKEN}`}});
-            const data=await r.json();
-            const entry=data.result?.find(d=>d.deployment_trigger?.metadata?.commit_hash===process.env.EXPECTED_SHA && d.latest_stage?.status==='success');
-            base=(entry?.url||'').replace(/\/$/,'')+'/';
-          }
-          if(!pattern.test(base))throw new Error('Cloudflare did not return an immutable deployment URL for this revision');
-          for(const site of [base,'https://magius3dviewer.pages.dev/']){
-            let passed=false;
-            for(let i=0;i<18;i++){
-              try{const r=await fetch(site+'site-version.json?revision='+process.env.EXPECTED_SHA,{cache:'no-store'});const v=await r.json();if(r.ok&&v.revision===process.env.EXPECTED_SHA){passed=true;break}}catch{}
-              await new Promise(resolve=>setTimeout(resolve,5000));
-            }
-            if(!passed)throw new Error('Published Cloudflare revision does not match tested source: '+site);
-          }
-          fs.appendFileSync(process.env.GITHUB_OUTPUT,`base_url=${base}\n`);
-          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Cloudflare full build verified: ${base} (source ${process.env.EXPECTED_SHA}).\n`);
-          console.log(JSON.stringify({verified:true,revision:process.env.EXPECTED_SHA,base}));
-          NODE
-  deploy:
-    needs: [build, cloudflare]
-    # A missing Cloudflare account must not block independently verified Pages.
-    # A failed browser/build still blocks publication; it is never ignored.
-    if: always() && github.ref == 'refs/heads/magius3dviewer' && needs.build.result == 'success'
-    runs-on: ubuntu-latest
-    timeout-minutes: 35
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     environment:
       name: magius3dviewer-live
-      url: ${{ steps.pages.outputs.page_url }}
-    env:
-      MAGIUS_STAGE_DEPLOYMENT_URL: ${{ needs.cloudflare.outputs.base_url || format('https://raw.githubusercontent.com/HiiragiNemu/Magi3Dviewer/{0}/public/', github.sha) }}
+      url: https://magius3dviewer.pages.dev/
+    timeout-minutes: 30
     steps:
       - uses: actions/setup-node@v6
         with:
@@ -216,51 +123,51 @@ jobs:
           path: dist-deploy
       - uses: actions/download-artifact@v4
         with:
-          name: site-delivery-tools
+          name: cloudflare-delivery-tools
           path: scripts
-      - name: Verify every current remote scene byte before preparing the smaller Pages artifact
-        run: |
-          set -euo pipefail
-          mkdir -p /tmp/site-evidence
-          node scripts/prepare-github-pages.mjs 2>&1 | tee /tmp/site-evidence/github-pages-pack.log
-      - name: Install isolated browser driver
-        run: |
-          printf '{"private":true,"type":"module"}\n' > package.json
-          npm install --no-save --ignore-scripts puppeteer-core@24.16.0
-      - name: Verify actual subdirectory scene geometry and cross-origin textures
-        run: |
-          set -euo pipefail
-          node scripts/site-smoke-stage-delivery.mjs 2>&1 | tee /tmp/site-evidence/github-pages-browser.log
-      - uses: actions/upload-artifact@v4
-        if: always()
+      - name: Publish full verified website to the existing Cloudflare production branch
+        uses: cloudflare/wrangler-action@v4
         with:
-          name: github-pages-delivery-evidence
-          path: /tmp/site-evidence/
-          retention-days: 7
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist-deploy/
-      - uses: actions/configure-pages@v5
-      - uses: actions/deploy-pages@v4
-        id: pages
-      - name: Verify the published GitHub Pages revision and pinned scene route
-        env:
-          SITE_URL: ${{ steps.pages.outputs.page_url }}
-          EXPECTED_SHA: ${{ github.sha }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID || vars.CF_ACCOUNT_ID }}
+          command: pages deploy dist-deploy --project-name=magius3dviewer --branch=${{ needs.configuration.outputs.branch }} --commit-hash=${{ github.sha }}
+      - name: Verify actual production version and current scene route
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
+          import assert from 'node:assert/strict';
+          import {createHash} from 'node:crypto';
+          const site='https://magius3dviewer.pages.dev/';
+          const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
           let verified=false;
           for(let i=0;i<18;i++){
             try{
-              const query='?revision='+process.env.EXPECTED_SHA;
-              const r=await fetch(new URL('site-version.json'+query,process.env.SITE_URL));
-              const c=await fetch(new URL('catalogs/runtime-product-delivery.v1.json'+query,process.env.SITE_URL));
+              const q='?revision='+process.env.GITHUB_SHA;
+              const r=await fetch(site+'site-version.json'+q,{signal:AbortSignal.timeout(30000)});
+              const c=await fetch(site+'catalogs/runtime-product-delivery.v1.json'+q,{signal:AbortSignal.timeout(30000)});
               const v=await r.json(),catalog=await c.json();
-              if(r.ok&&c.ok&&v.revision===process.env.EXPECTED_SHA&&catalog.bundledStageBaseUrl===process.env.MAGIUS_STAGE_DEPLOYMENT_URL){console.log('Verified published revision and current scenes',v);verified=true;break;}
-            }catch{}
-            await new Promise(resolve=>setTimeout(resolve,5000));
+              assert.equal(r.status,200);assert.equal(c.status,200);
+              assert.equal(v.revision,process.env.GITHUB_SHA);assert.equal(catalog.bundledStageBaseUrl,undefined);
+              const index=await fetch(site+'index.html'+q,{signal:AbortSignal.timeout(30000)});
+              assert.equal(index.status,200);
+              assert.equal(hash(Buffer.from(await index.arrayBuffer())),hash(fs.readFileSync('dist-deploy/index.html')));
+              verified=true;break;
+            }catch{await new Promise(resolve=>setTimeout(resolve,5000));}
           }
-          if(!verified)throw new Error('GitHub Pages does not serve the tested revision and its pinned scene catalog');
-          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`GitHub Pages published and revision verified: ${process.env.SITE_URL}\nSource: ${process.env.EXPECTED_SHA}\nCurrent scene source: ${process.env.MAGIUS_STAGE_DEPLOYMENT_URL}\n`);
+          assert.ok(verified,'Cloudflare production did not serve the tested revision');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Published Cloudflare production: ${site}\nApplication revision: ${process.env.GITHUB_SHA}\nCurrent scenes are same-origin; private Release products use the existing server-side gateway.\n`);
           NODE
+      - name: Verify real browser against the public Cloudflare site
+        env:
+          MAGIUS_SITE_URL: https://magius3dviewer.pages.dev/
+        run: |
+          printf '{"private":true,"type":"module"}\n' > package.json
+          npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+          mkdir -p /tmp/site-evidence
+          node scripts/site-smoke-cloudflare.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cloudflare-publication-evidence
+          path: /tmp/site-evidence/
+          retention-days: 14
