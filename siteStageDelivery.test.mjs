@@ -2,13 +2,14 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import test from 'node:test'
 const source = fs.readFileSync(new URL('./scripts/site-smoke-stage-delivery.mjs', import.meta.url), 'utf8')
-function extracted(name, end) {
-  const start = source.indexOf('function ' + name + '(')
-  assert.ok(start >= 0)
-  const stop = source.indexOf(end, start)
-  assert.ok(stop > start)
-  return source.slice(start, stop)
+function extractFunction(text, name, end) {
+  const start = text.indexOf('function ' + name + '(')
+  assert.ok(start >= 0, 'Missing diagnostic function: ' + name)
+  const stop = text.indexOf(end, start)
+  assert.ok(stop > start, 'Missing diagnostic boundary: ' + name)
+  return text.slice(start, stop)
 }
+function extracted(name, end) { return extractFunction(source, name, end) }
 const read = viewer => Function('window', extracted('readStageState', '\nconst stageState =') + '\nreturn readStageState()')({scene: viewer})
 const failures = Function(extracted('unresolvedStageFailures', '\nlet result') + '\nreturn unresolvedStageFailures')()
 const mesh = texture => ({isMesh:true, material:{map:texture, uniforms:{same:{value:texture}}}})
@@ -60,4 +61,67 @@ test('recorded network response URLs are strings and require completed transfers
   assert.match(source,/responses\.filter\(response => response\.url\.startsWith\(base \+ root\.slice\(1\)\) && completed\.has\(response\.url\)\)/)
   assert.match(source,/protocolTimeout: 300000/)
   assert.match(source,/await waitForBackground\(before\)/)
+})
+
+const cloudflare = fs.readFileSync(new URL('./scripts/site-smoke-cloudflare.mjs', import.meta.url), 'utf8')
+const authored = Function(extractFunction(cloudflare, 'authoredProfileView', '\nfunction classifyStageTransferFailures') + '\nreturn authoredProfileView')()
+const classify = Function(extractFunction(cloudflare, 'classifyStageTransferFailures', '\nfunction canonicalJson') + '\nreturn classifyStageTransferFailures')()
+const canonical = Function(extractFunction(cloudflare, 'canonicalJson', '\nfunction sceneState') + '\nreturn canonicalJson')()
+const profileUrl = 'https://magius3dviewer.pages.dev/stages/official/battle-616-00-01-001/scene-profile.json'
+const abortedProfile = {url:profileUrl,method:'GET',error:'net::ERR_ABORTED'}
+const proof = () => ({url:profileUrl,profileMatches:true,drawn:true,stageCorrect:true,httpStatus:200})
+
+test('Cloudflare profile comparison removes only build-owned animation additions and leaves inputs intact', () => {
+  const expected={schemaVersion:1,stageId:'fixture',runtime:{loop:false},sourceRecords:{stageCab:'native'}}
+  const consumed={...structuredClone(expected),runtime:{loop:false,autoplay:true,transformAnimations:{tracks:[]}}}
+  const saved=structuredClone(consumed)
+  assert.deepEqual(authored(consumed,expected),expected)
+  assert.deepEqual(consumed,saved)
+  const withoutRuntime={schemaVersion:1}
+  assert.deepEqual(authored({...withoutRuntime,runtime:{autoplay:true,transformAnimations:{}}},withoutRuntime),withoutRuntime)
+})
+test('authored animation fields and unrelated extra fields cannot be concealed by profile comparison', () => {
+  const expected={schemaVersion:1,runtime:{autoplay:false,transformAnimations:{duration:1}}}
+  const changed=structuredClone(expected);changed.runtime.autoplay=true
+  assert.notDeepEqual(authored(changed,expected),expected)
+  const extra={schemaVersion:1,runtime:{autoplay:true,transformAnimations:{},unexpected:'changed'}}
+  assert.notDeepEqual(authored(extra,{schemaVersion:1}),{schemaVersion:1})
+})
+for(const [field,value] of [['schemaVersion',2],['stageId','wrong-stage'],['renderProfile',{exposure:99}],['materialBindings',[]]]) {
+  test('profile comparison detects altered authored '+field, () => {
+    const expected={schemaVersion:1,stageId:'fixture',renderProfile:{exposure:1},materialBindings:[{materialName:'floor'}]}
+    const changed={...structuredClone(expected),[field]:value}
+    assert.notDeepEqual(authored(changed,expected),expected)
+  })
+}
+test('only a fully proven consumed and drawn profile resolves a lone CDP cancellation', () => {
+  assert.deepEqual(classify([abortedProfile],new Set(),proof()),[])
+  assert.deepEqual(classify([abortedProfile],new Set(),undefined),[abortedProfile])
+  assert.deepEqual(classify([abortedProfile],new Set([profileUrl]),undefined),[])
+})
+for(const [field,value] of [['profileMatches',false],['drawn',false],['stageCorrect',false],['httpStatus',404],['url',profileUrl+'?another=1']]) {
+  test('unproven profile cancellation stays an error when '+field+' is invalid', () => {
+    assert.deepEqual(classify([abortedProfile],new Set(),{...proof(),[field]:value}),[abortedProfile])
+  })
+}
+test('profile proof cannot hide a missing texture, CORS failure or a failed profile transfer', () => {
+  const texture={url:profileUrl.replace('scene-profile.json','texture.png'),error:'net::ERR_ABORTED'}
+  assert.deepEqual(classify([texture],new Set(),proof()),[texture])
+  for(const error of ['net::ERR_FAILED','net::ERR_CONNECTION_RESET','net::ERR_BLOCKED_BY_RESPONSE']) {
+    const failed={...abortedProfile,error}
+    assert.deepEqual(classify([failed],new Set([profileUrl]),proof()),[failed])
+  }
+})
+test('canonical profile evidence ignores object ordering but preserves array ordering and values', () => {
+  assert.equal(canonical({b:2,a:[1,3]}),canonical({a:[1,3],b:2}))
+  assert.notEqual(canonical({a:[1,3]}),canonical({a:[3,1]}))
+  assert.notEqual(canonical({a:1}),canonical({a:'1'}))
+})
+test('Cloudflare acceptance requires actual draw submission, exact consumed JSON and all material textures', () => {
+  assert.match(cloudflare,/after\.accepted && after\.drawnMeshes > 0 && after\.drawProbeComplete/)
+  assert.match(cloudflare,/assert\.equal\(after\.readyTextures, after\.textures/)
+  assert.match(cloudflare,/assert\.deepEqual\(authoredView,expectedProfile/)
+  assert.match(cloudflare,/userData\.sceneProfilePackage/)
+  assert.match(cloudflare,/assert\.deepEqual\(rejectedRepositoryRequests, \[\]/)
+  assert.match(cloudflare,/assert\.equal\(catalog\.bundledStageBaseUrl, undefined/)
 })
