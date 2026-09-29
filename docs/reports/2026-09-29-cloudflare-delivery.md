@@ -1,106 +1,96 @@
-# Magi3Dviewer：Cloudflare 专用部署续接报告
+# Magi3Dviewer：Cloudflare 正式发布完成报告
 
-## 目标与当前状态
+更新于 2026-09-29T17:46:06.822Z（UTC）；本机日期为 2026-09-30。
 
-目标是覆盖既有 https://magius3dviewer.pages.dev/，不是创建 GitHub Pages 网站。后续源码仓库计划重新私有化，因此正式包不能依赖公开的 GitHub raw 源码资源地址。本次续接未调用 AgentDock，也未修改仓库可见性、Cloudflare 生产站点或 DNS。
+## 交付结论
 
-**最新 Cloudflare 候选包已通过功能回归、完整构建、资源限制和真实浏览器验证。生产覆盖尚未执行：工作流未取得 Cloudflare 发布凭证。不能将候选包通过验收写成已上线。**
+**已通过用户 Windows 本机现有 Wrangler 登录，覆盖原 Cloudflare 生产网站，并完成正式域名的版本、文件字节和实际浏览器验证。** 不再停留在候选包、测试通过或 artifact 上传阶段。此前本报告中“未部署、需要 GitHub Secrets”的状态已经被本节取代；此次没有启用或使用 GitHub Pages。
 
-本报告替代旧报告中要求启用 GitHub Pages 的操作方向。最终作业状态为：`build=success`、`configuration=failure`、`publish=skipped`。
+- 正式网站：https://magius3dviewer.pages.dev/
+- Cloudflare 项目：magius3dviewer；生产分支：main（这是 Cloudflare 的分支设置，不是改写 GitHub main）。
+- 新生产部署：f6ce0802-db8a-44b2-a6a3-684a42209252
+- 固定部署地址：https://f6ce0802.magius3dviewer.pages.dev
+- 实际已构建、已上线源码：`a0257233a83dc66657f7d70c3a0b747149fd0a16`。
+- 上一部署：92ad3eca-4fbe-46ca-a1e4-b53add45d33c；上一源码：`e9223312a931dc6cdd260c2f215d39e5945b80da`。
+- 构建时间：2026-09-29T17:33:36.805Z；线上字节验证时间：2026-09-29T17:42:33.402Z。
 
-## 本轮提交与验收身份
+## 本地副本与同步结果
 
-- 工作分支：`HiiragiNemu/Magi3Dviewer:magius3dviewer`。
-- 浏览器诊断修订：`ae2bf8bbcf8ca537ea5e1383cd0b94590de5cf6c`。
-- 新增诊断回归测试：`3eed85f56bbe49955b5f57aacb040464ede2b83b`。
-- 本次实际构建源码：`08497f422683903818829aca49efd54ee8966a8b`。
-- 验收/发布工作流：`.github/workflows/site-publish-verified.yml`。
-- 本次 run：`36565613731`。
-- build job：`109396660358`；发布授权 job：`109396660472`。
+新的正式发布工作区：
 
-运行记录：
-https://github.com/HiiragiNemu/Magi3Dviewer/actions/runs/36565613731
+`D:\magia\MyProducts\Magius3Dviewer-Cloudflare`
 
-## 实际通过的检查
+它从 GitHub 的 magius3dviewer 分支完整克隆，再在此基础上提交本轮诊断修正。没有把旧研究副本强行 reset 成远端，也没有覆盖未提交研究工作。
 
-`npm run build:deploy` 在 GitHub 云端执行，179 项测试全部通过，失败、取消、跳过均为 0；TypeScript 检查与完整 Cloudflare 构建通过。此次新增 15 项诊断回归，专门验证测试程序不会把真正的资源缺失、内容改变、错误场景、未绘制场景或跨域失败误判为成功。
+调查发现：原 Magi3Dviewer 停在 01ab4cfe，存在 5 项已跟踪变更，其中 3 个文件尚有合并冲突；Magius3Dviewer-JP 停在 78295f52，有 211 项已跟踪变更及其他未跟踪研究文件；关联的 scene-consumer-transfer 工作树为 4826e8aa，虽干净但仍旧于当前远端版本。其余 baseline/incomplete/StageP0 副本也未被选为正式发布源码。
 
-新的浏览器测试主动阻断对该源码仓库的直接 GitHub/raw/API 网络访问。测试目标为 `battle-616-00-01-001`，没有触发任何被阻断的源码仓库请求。
+原文件夹均保留。JP 的已跟踪工作区差异导出为 83,185,639 字节补丁；旧 main 的暂存差异及三个冲突文件另行保留。未跟踪研究文件仍留在原工作区，不宣称已把这些文件全部重新打包备份或合入正式版。
 
-| 实际浏览器指标 | 结果 |
+工作记录、差异备份及验收证据目录：
+
+`D:\magia\MyProducts\.codex-delivery\Magius3Dviewer-Cloudflare-20260930`
+
+## 本轮新增修正
+
+提交 `a0257233a83dc66657f7d70c3a0b747149fd0a16` 只修改 scripts/site-smoke-cloudflare.mjs 与 siteStageDelivery.test.mjs，没有修改应用渲染/姿态算法或降低资源质量。
+
+Windows Chrome 在模型已经完整被应用消费并正常绘制时，会出现 CDP requestfailed/ERR_ABORTED 记录。原测试仅依赖 requestfinished，因而把已加载的 FBX 误报为“不是本站提供”。修正后观察应用原有 fetch 的响应克隆，不另发请求，读取实际字节并计算 SHA-256；仅当 HTTP 200、长度与摘要一致、场景身份正确且已实际绘制时，才能解释这类取消记录。非取消网络错误、错误场景、不同字节、未绘制、纹理缺失仍判失败。
+
+新增 8 项针对该逻辑的反例/正例测试；诊断文件共 29 项测试。最终完整构建入口共 **187 项测试通过，失败 0**，包含这些诊断测试，不能把 29 与 187 相加当作独立总数。TypeScript 检查及完整 Cloudflare 打包同样通过。
+
+本次没有复用下载未完成的旧 artifact；发布产物是从本机最新已提交源码重新构建。构建器生成的未跟踪 gzip 中间产物没有提交到仓库。
+
+## 正式域名：文件和资源验证
+
+实际页面、资源目录及全部构建 JavaScript/CSS 共 **33 个文件**逐一与本机发布文件比较 SHA-256，全部一致。线上 site-version.json 精确返回上述源码提交，不是工作流提交或手工改写的版本标记。
+
+完整网站共 4704 个文件、2,961,805,713 字节，保留 67 个当前场景目录及 1549 个场景文件。每个文件均通过 Cloudflare 单文件限制检查；发布目录没有 bundledStageBaseUrl，当前场景由 Cloudflare 同源提供，不依赖公开 GitHub raw 源码地址。
+
+四组 Release 网关标签均实际执行 Range bytes=0-0 探针，均为 HTTP 206、正确总长度及 CORS *：
+
+- runtime-products-v1-a：bytes 0-0/7927
+- runtime-products-v1-b：bytes 0-0/2164
+- runtime-products-enemy-models-v2：bytes 0-0/1309889
+- runtime-products-voice-v1：bytes 0-0/1415795
+
+最初 Node 校验直接联网时发现本机 workers.dev DNS 返回异常地址。两个独立 HTTPS DNS 查询一致给出另一组地址；沿用用户已经启用的 Windows 网络代理后，网关与四组探针正常。只为该验证进程启用已有代理，没有改系统 DNS、代理配置或远端域名。
+
+## 正式域名：场景实测
+
+测试运行在 https://magius3dviewer.pages.dev/，不是仅测本地或固定预览 URL。场景为 battle-616-00-01-001：
+
+| 指标 | 实际结果 |
 | --- | --- |
-| 正确场景标识 | battle-616-00-01-001 |
 | 背景网格 | 12 → 294 |
-| 观察到实际提交绘制的网格 | 102 |
-| 已就绪材质贴图 | 25 / 25 |
+| 当前视角实际绘制网格 | 105 |
+| 已就绪材质贴图 | 25/25 |
 | 场景加载错误 | null |
-| 浏览器执行错误 | 空数组 |
-| 像素比 | 保持 1 |
-| 抗锯齿 | 保持 SMAA |
-| 直接源码仓库请求 | 0 |
+| 浏览器执行错误 | 0 |
+| 直接 GitHub 源码仓库请求 | 0（测试主动阻断此类请求） |
+| 像素比与抗锯齿 | 保持 1 / SMAA |
 
-应用已消费的场景 JSON 与打包目录里的当前作者数据进行了完整对象比较，只剔除加载器明确添加、且原始文件没有声明的动画默认字段，不丢弃作者字段。两侧规范化内容 SHA-256 一致：
+实际收到的 FBX 长度 1419834 字节，SHA-256：
+
+`c90c3c7c9b506fcf2a5ecf319da304a6c9c2e77a4818c37c69ce44dd8dd43b5e`
+
+应用实际消费的作者场景 JSON 也与本机资源一致（只排除加载器明确补入、原文件未声明的动画默认值），规范化摘要：
 
 `3eaf421f0dcee9d13131f02d469e5b962d22ad8b0c9f9adc537e658768b9ae21`
 
-旧测试曾将 `net::ERR_ABORTED` 遥测直接等同于场景资源失败。现在保留原始记录，要求完整消费内容、正确场景及实际绘制证据，或同 URL 已完成传输，才能区分误报；其他错误仍然失败。本次记录中的场景取消项是反射探针的 HEAD 请求，实际贴图已经就绪。不能据此声称所有网络请求从未取消。
+## 正式域名：真实指针操作
 
-## 姿态编辑验证的边界
+本轮在正式网站重新执行整个姿态浏览器测试，不仅引用旧 CI 的通过记录。真实鼠标操作验证三轴手部 IK、三轴旋转、松手后连续 40 帧稳定、骨骼局部偏移和缩放不被改变；并执行撤销/重做按钮操作、关闭高亮、多角色选择、切换角色后再次 IK、430×932 手机视口控件尺寸及正式域名重新加载检查。
 
-手部移动 IK 的 X/Y/Z、旋转 X/Y/Z、松手后连续 40 帧稳定、骨骼局部位置和缩放不变、多角色高亮隔离等实测，来自先前成功 run `36542133898`，应用源码基线为 `31a4b3ed0949f31e265919ba125d553d6225506b`。
+最终 pose-browser.json：passed=true，errors=[]，missing=[]。
 
-本次工作流实际比较了该基线与新提交，确认应用、渲染器、资源和依赖没有改变，才复用这部分昂贵的真实指针验证。Cloudflare 候选包本身则是从新提交重新编译并重新进行场景浏览器验收的，不是旧包改版本号。
+三角色检查：未选中两名角色的高亮材质数均为 0，选中角色为 15；普通/选中状态渲染调用中位数为 14/14。没有额外全屏 OutlinePass，没有降低像素比或抗锯齿。
 
-这些结果覆盖本次已知故障与相应回归，不能推导为所有角色、全部场景、所有设备永远没有缺陷。测试使用 Chrome 软件渲染环境，不是用户实际 GPU 的性能测量；生产网站尚未替换，所以线上验收仍待执行。
+浏览器验收使用 Chrome ANGLE SwiftShader 软件渲染；其中时间数据不是用户显卡基准。上述结果证明本轮已知故障在这些回归路径内通过，不能扩大成所有角色、全部场景、所有硬件永远无缺陷。
 
-## 完整 Cloudflare 发布包
+## 私有化与后续发布边界
 
-- 总文件数：4,704。
-- 总大小：2,957,845,480 字节。
-- 当前完整场景目录：67。
-- 同站点提供的场景文件：1,549。
-- 所有文件通过 Cloudflare 单文件大小检查。
-- 正式目录没有设置 `bundledStageBaseUrl`，不使用 GitHub raw 场景回退地址。
-- 其余 Release 产品仍使用已有服务端资源网关，未把凭证放入浏览器。
+没有修改 GitHub 仓库可见性、默认分支、用户本机网络设置或 Cloudflare DNS。现有本机 OAuth 仅由发布客户端在本机使用，未输出凭证值或写入仓库。GitHub Actions 的 Cloudflare Secrets 未因本次本机发布而自动配置；以后从本机继续发布不依赖它们。
 
-完整已验证网站 artifact：`verified-cloudflare-website`，ID `11031822207`，已成功上传；ZIP 大小 2,481,039,473 字节，摘要为 `sha256:a6141d6dcdf8ba118ffc98632d9184a09e4e91f220eb40b534436111a77223c4`。到期时间为 **2026-10-02 12:08:10 UTC**。
+当前公开仓库下四组资源网关探针及源仓库直连阻断测试均通过。计划私有化时仍须确认服务端 GITHUB_RELEASE_TOKEN 对私有仓库有读取授权，并在真正私有化后再次执行网关/实际产品验证；本轮没有把模拟阻断当作已经完成真实私有化验收。
 
-验证证据 artifact：`cloudflare-build-evidence`，ID `11031474249`。
-ZIP SHA-256：`17b67b44cc5a57c448ec62c932cc40e809d04dbf4a3f451727ebf29ad1be4869`。
-
-## 尚未完成的生产覆盖
-
-本次发布授权作业实际返回：
-
-```json
-{"tokenPresent":false,"accountPresent":false,"configured":false}
-```
-
-错误为 `CLOUDFLARE_AUTHORIZATION_MISSING`。它发生在发出 Cloudflare 项目管理请求之前，不能描述成 Cloudflare 拒绝了一个有效 Token。源码写入权限正常；缺少的是另一服务的发布授权。
-
-在仓库 **Settings → Secrets and variables → Actions → New repository secret** 中配置以下两项即可让既有工作流取得授权：
-
-| Secret 名称 | 内容 |
-| --- | --- |
-| CLOUDFLARE_API_TOKEN | 对该项目所属 Cloudflare 账户具备 Account → Cloudflare Pages → Edit 权限的 API Token；账户范围限制为项目所属账户 |
-| CLOUDFLARE_ACCOUNT_ID | 该项目所属 Cloudflare 账户 ID，不是 Zone ID |
-
-配置页面：
-https://github.com/HiiragiNemu/Magi3Dviewer/settings/secrets/actions
-
-Token 只存入 GitHub Secrets，不要发送到聊天或提交到源码。
-
-然后重跑 run `36565613731` 的失败作业。工作流会读取既有 `magius3dviewer` 项目的真实生产分支，以 Wrangler 覆盖原站，而不是新建网站。已成功的构建可在产物未过期时复用；产物过期则需要重新构建，不得移除身份校验冒充新包。
-
-正式完成仍要求：Cloudflare 发布成功、线上 `site-version.json` 与测试提交一致、线上 HTML/catalog/JavaScript 字节校验通过，以及实际生产域名浏览器测试通过。
-
-## 仓库私有化
-
-当前候选包已证明测试路径无需公开源码仓库直连。此前 `2026-09-29T11:26:31Z` 的现网资源网关探针返回 `ready`，实际 Range 请求为 206 且 CORS 正常。
-
-但是仓库仍公开时的成功读取不能单独证明 Token 私有化后的授权范围。重新私有化前仍须确认 Worker 内已有 `GITHUB_RELEASE_TOKEN` 能读取该私有仓库；私有化之后应再次验证网关与实际 Release 产品。此次没有擅自修改仓库可见性，也不把模拟阻断公开源码称为已经完成真正私有化的生产验收。
-
-参考官方说明：
-https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/
-https://developers.cloudflare.com/pages/get-started/git-integration/
-https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/
+本报告提交属于文档更新，晚于实际应用构建；正式网站应继续标识真正构建的 `a0257233a83dc66657f7d70c3a0b747149fd0a16`，不应仅为报告提交而虚改线上版本。
