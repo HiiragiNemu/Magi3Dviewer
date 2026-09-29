@@ -49,9 +49,12 @@ const rotationDistance = (a,b) => {
   const norm=Math.sqrt(a.reduce((sum,n)=>sum+n*n,0)*b.reduce((sum,n)=>sum+n*n,0))
   return 2*Math.acos(Math.min(1,dot/norm))
 }
+// The shipped skeleton calls its upper arms Arm_R / Arm_L, not UpperArm.
+// A fully extended forearm can keep its local angle while its upper arm turns.
+const limbBone = /hand|wrist|upperarm|forearm|(?:^|[_. :/-])arm(?:$|[_. :/-])|thigh|calf|foot|ankle/i
 function unchangedLengths(before, after) {
   const map=new Map(after.bones.map(b=>[b.uuid,b]))
-  for(const b of before.bones.filter(b=>/hand|wrist|upperarm|forearm|thigh|calf|foot|ankle/i.test(b.name) && !/twist|cloth|weapon/i.test(b.name))) {
+  for(const b of before.bones.filter(b=>limbBone.test(b.name) && !/twist|cloth|weapon/i.test(b.name))) {
     const current=map.get(b.uuid);assert.ok(current, 'joint remains present: '+b.name)
     assert.ok(Math.hypot(...b.position.map((v,i)=>v-current.position[i]))<1e-5,'local bone offset changed: '+b.name)
     assert.ok(Math.hypot(...b.scale.map((v,i)=>v-current.scale[i]))<1e-6,'bone scale changed: '+b.name)
@@ -59,7 +62,7 @@ function unchangedLengths(before, after) {
 }
 function editedRotations(before, after) {
   const map=new Map(before.bones.map(b=>[b.uuid,b]))
-  return after.bones.filter(b=>map.has(b.uuid) && /hand|wrist|upperarm|forearm|thigh|calf|foot|ankle/i.test(b.name)
+  return after.bones.filter(b=>map.has(b.uuid) && limbBone.test(b.name)
     && rotationDistance(map.get(b.uuid).quaternion,b.quaternion)>1e-4)
 }
 async function click(selector) {
@@ -81,10 +84,8 @@ async function selectHand() {
   return inspect()
 }
 async function orbitToObliqueView() {
-  // A front-on camera makes the world Z translation axis degenerate on the
-  // screen. TransformControls intentionally hides that end-on picker. Test
-  // every axis from a usable view, reached through real pointer input, not by
-  // assigning a gizmo axis or changing the production camera/pose directly.
+  // End-on Z translation is hidden by TransformControls. Reach a usable view
+  // with actual pointer input, without setting a camera or gizmo axis directly.
   const before=await page.evaluate(()=>window.scene.camera.position.toArray())
   await page.mouse.move(1220,350)
   await page.mouse.down()
@@ -122,6 +123,7 @@ async function dragAxis(axis, rotate=false) {
   await frameWait(5)
   await page.mouse.up();await frameWait(4)
   const after=await inspect(),changed=editedRotations(before,after)
+  fs.writeFileSync(path.join(evidence,'last-gesture.json'),JSON.stringify({axis,rotate,point,end,before,after},null,2))
   assert.equal(after.dragging,false,'pointerup ends control transaction')
   assert.ok(changed.length>0,'actual '+axis+' gesture changed the visible skeletal pose')
   unchangedLengths(before,after)
