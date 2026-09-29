@@ -1,0 +1,46 @@
+name: Viewport editor regression
+on:
+  workflow_dispatch:
+  push:
+    branches: [magius3dviewer]
+    paths:
+      - '.github/workflows/viewport-editor-checks.yml'
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /src/viewer/index.ts
+            /src/viewer/directPoseTarget.ts
+            /src/viewer/directPoseTools.ts
+            /src/viewer/objectMovementSelection.ts
+            /src/viewer/poseDiagnostics.ts
+            /src/viewer/controls.ts
+            /src/viewer/scene.ts
+            /src/viewer/style/
+            /src/viewer/stages.ts
+            /src/viewer/viewerLocomotion.ts
+            /magia-exedra-character-three/scene/index.ts
+            /magia-exedra-character-three/renderer.ts
+            /index.html
+            /*.test.mjs
+            /scripts/test-website.mjs
+            /scripts/site-smoke-pose.mjs
+            /scripts/site-smoke-cloudflare.mjs
+            /package.json
+            /package-lock.json
+            /tsconfig.json
+      - name: Archive exact versioned editor sources without private configuration
+        run: |
+          git archive --format=zip --output=editor-source.zip HEAD src/viewer/index.ts src/viewer/directPoseTarget.ts src/viewer/directPoseTools.ts src/viewer/objectMovementSelection.ts src/viewer/poseDiagnostics.ts src/viewer/controls.ts src/viewer/scene.ts src/viewer/style src/viewer/stages.ts src/viewer/viewerLocomotion.ts magia-exedra-character-three/scene/index.ts magia-exedra-character-three/renderer.ts index.html directPoseManipulation.test.mjs viewerSelectionEditing.test.mjs objectMovementSelection.test.mjs scripts/site-smoke-pose.mjs scripts/site-smoke-cloudflare.mjs scripts/test-website.mjs package.json tsconfig.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: editor-source
+          path: editor-source.zip
+          retention-days: 3
