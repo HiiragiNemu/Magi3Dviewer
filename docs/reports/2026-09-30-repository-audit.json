@@ -1,0 +1,1525 @@
+{
+  "schema": "magius.repository-audit-wave.v1",
+  "recordedAt": "2026-09-29T22:36:04.042Z",
+  "testRevision": "6c91bf6204a97e16b0e63195c47b8971b64fbd7a",
+  "applicationRevision": "9e05e4f3d33ad80ac5b65f8c690c8ab28f68c638",
+  "deployment": {
+    "project": "magius3dviewer",
+    "productionUrl": "https://magius3dviewer.pages.dev/",
+    "deploymentPrefix": "1d5de7de",
+    "byteVerifiedAt": "2026-09-29T22:17:02.477Z",
+    "verifiedWebFiles": 33,
+    "releaseRangeProbeCount": 4
+  },
+  "baseline": {
+    "selected": 195,
+    "completed": 195,
+    "passed": 128,
+    "failed": 67,
+    "timedOut": 0,
+    "totalAssertions": 1540,
+    "failedAssertions": 185,
+    "skippedAssertions": 3
+  },
+  "current": {
+    "selected": 198,
+    "completed": 198,
+    "passed": 149,
+    "failed": 49,
+    "timedOut": 0,
+    "totalAssertions": 1647,
+    "failedAssertions": 102,
+    "skippedAssertions": 3
+  },
+  "assertionCounts": {
+    "tests": 1647,
+    "pass": 1542,
+    "fail": 102,
+    "skipped": 3,
+    "cancelled": 0
+  },
+  "scope": {
+    "nodeTestFiles": [
+      "actionRuntimeDeployment.test.mjs",
+      "actionRuntimeTransport.test.mjs",
+      "additionalDirectionalLightExperiment.test.mjs",
+      "allCharacterCombatJumpResourceLayer.test.mjs",
+      "angelRingHeadLock.test.mjs",
+      "aq113501Resource.test.mjs",
+      "aq113501ShaderConsumer.test.mjs",
+      "archiveRobustness.test.mjs",
+      "bundledNewEnemies.test.mjs",
+      "bundledStageDelivery.test.mjs",
+      "cameraDepthRim.test.mjs",
+      "character101002CatalogIntegration.test.mjs",
+      "characterActionRestBasisTransfer.test.mjs",
+      "characterAnimationTransition.test.mjs",
+      "characterFbxVertexChannels.test.mjs",
+      "characterLoadLifecycle.test.mjs",
+      "characterLocomotion.test.mjs",
+      "characterPhysics.test.mjs",
+      "characterPhysicsActionOptionsUi.test.mjs",
+      "characterReflectionSampling.test.mjs",
+      "characterSelectionAbortHandling.test.mjs",
+      "characterSurfaceParity.test.mjs",
+      "characterTimeline.test.mjs",
+      "combatVfx.test.mjs",
+      "combatVfxBloomCarrierParity.test.mjs",
+      "combatVfxFacingTarget.test.mjs",
+      "combatVfxNativeIdentity.test.mjs",
+      "combatVfxPPtrSprite.test.mjs",
+      "combatVfxProceduralMaterialGate.test.mjs",
+      "combatVfxTargetVisibility.test.mjs",
+      "combatVfxUiPanel.test.mjs",
+      "defaultFxaaPerformancePath.test.mjs",
+      "deploymentPublicCopy.test.mjs",
+      "deploymentTarget.test.mjs",
+      "diagnosticCamera.test.mjs",
+      "directPoseManipulation.test.mjs",
+      "doppelIrohaHair.test.mjs",
+      "enemyAnimationInteraction.test.mjs",
+      "enemyAnimationRuntime.test.mjs",
+      "enemyControlRuntimeRegression.test.mjs",
+      "enemyIdleSelection.test.mjs",
+      "enemyLoadFailureLifecycle.test.mjs",
+      "enemyPlayableSelectionParity.test.mjs",
+      "enemyResourceLayer.test.mjs",
+      "enemyTextureArchiveLocalization.test.mjs",
+      "enemyTextureRuntimeProducts.test.mjs",
+      "enemyUiPanel.test.mjs",
+      "enemyVfxResourceLayer.test.mjs",
+      "exactReDriveFormulaParity.test.mjs",
+      "exactSelfShadowReceiver.test.mjs",
+      "faceDirectionCoordinateParity.test.mjs",
+      "faceGradientProducerParity.test.mjs",
+      "g22NativeJumpIntegration.test.mjs",
+      "homeActionPropContinuation.test.mjs",
+      "homeActionPropVisibility.test.mjs",
+      "homeAnimationIntegrityGate.test.mjs",
+      "homeCharacterRuntime.test.mjs",
+      "homeExpressionSchema2.test.mjs",
+      "homeMorphChannelYield.test.mjs",
+      "homeRuntimeCorpusAudit.test.mjs",
+      "immutableSourceDelivery.test.mjs",
+      "loadingProgressRuntime.test.mjs",
+      "loadingProgressUi.test.mjs",
+      "localVoiceDelivery.test.mjs",
+      "localizedCharacterCatalog.test.mjs",
+      "materialProfileUniforms.test.mjs",
+      "nativeCharacterController.test.mjs",
+      "nativeCompanionPackaging.test.mjs",
+      "nativeDungeonActionResourceLayer.test.mjs",
+      "nativeMaterialScope.test.mjs",
+      "nativeSelfShadow.test.mjs",
+      "nonBattleCharacterRuntime.test.mjs",
+      "objectMovementSelection.test.mjs",
+      "officialAkumaWeapon.test.mjs",
+      "officialAngelRingSampler.test.mjs",
+      "officialCharacterSurfaceSampler.test.mjs",
+      "officialCharacterTextureSampling.test.mjs",
+      "officialCosmicNullBase.test.mjs",
+      "officialFaceAdditionalSampler.test.mjs",
+      "officialFaceEyePass.test.mjs",
+      "officialFaceGradientTexture.test.mjs",
+      "officialFaceHairStencilRuntime.test.mjs",
+      "officialFaceMeshSwitcherRuntime.test.mjs",
+      "officialFresnelMatCapPerGroup.test.mjs",
+      "officialGemCullParity.test.mjs",
+      "officialHairHighlightParity.test.mjs",
+      "officialHomeAnimationExpressionEvidence.test.mjs",
+      "officialMaterialFresnelAniso.test.mjs",
+      "officialNamaeShader.test.mjs",
+      "officialOutline.test.mjs",
+      "officialReDriveCosmicAlphaWing.test.mjs",
+      "officialResourceCatalog.test.mjs",
+      "officialSceneProducts.test.mjs",
+      "officialToonShadowSelector.test.mjs",
+      "parameterizedGaitFrame.test.mjs",
+      "performanceAudioLane.test.mjs",
+      "performanceAudioTimelineBridge.test.mjs",
+      "performanceAudioTrackPanel.test.mjs",
+      "performanceBuiltMultiactorFraming.test.mjs",
+      "performanceChainIK.test.mjs",
+      "performanceCompactWorkspace.test.mjs",
+      "performanceEditorBrowserE2E.test.mjs",
+      "performanceEditorGlobalDock.test.mjs",
+      "performanceEditorPanel.test.mjs",
+      "performanceEditorPose.test.mjs",
+      "performanceEditorRuntime.test.mjs",
+      "performanceEditorTimeline.test.mjs",
+      "performanceJointNodes.test.mjs",
+      "performanceViewportReadability.test.mjs",
+      "performanceWorkspaceLayout.test.mjs",
+      "prepareGitHubPages.test.mjs",
+      "reDriveBackgroundRuntime.test.mjs",
+      "reDriveCharacterLightingDirection.test.mjs",
+      "reDriveSkyboxIntensity.test.mjs",
+      "releaseWorkflowContract.test.mjs",
+      "resourceProductPreview.test.mjs",
+      "runtimeProductDelivery.test.mjs",
+      "runtimeProductGateway.test.mjs",
+      "runtimeSelectionThumbnailPanels.test.mjs",
+      "sceneCatalogStatus.test.mjs",
+      "sceneGemSpecularFix.test.mjs",
+      "sceneProfileRuntime.test.mjs",
+      "sceneRestorationDelivery.test.mjs",
+      "sceneVisualProducts.test.mjs",
+      "siteStageDelivery.test.mjs",
+      "sourceAuthorityFixturePaths.test.mjs",
+      "stage600001Integration.test.mjs",
+      "stage600003Integration.test.mjs",
+      "stage600Part2NativeCarrier.test.mjs",
+      "stage600Uv1Companion.test.mjs",
+      "stage601Integration.test.mjs",
+      "stage603Integration.test.mjs",
+      "stage608Flipbook.test.mjs",
+      "stage608RenderState.test.mjs",
+      "stage608Uv1Lightmap.test.mjs",
+      "stageAlphaCutoutFixes.test.mjs",
+      "stageBundleCatalog.test.mjs",
+      "stageBundleMultiManifest.test.mjs",
+      "stageBundleProvenance.test.mjs",
+      "stageCatalog.test.mjs",
+      "stageCharacterShadowBridge.test.mjs",
+      "stageEntryValidation.test.mjs",
+      "stageEnvironment.test.mjs",
+      "stageEnvironmentPayload.test.mjs",
+      "stageFidelity.test.mjs",
+      "stageGeneratedCorpus.test.mjs",
+      "stageGlobalCommit.test.mjs",
+      "stageHierarchy.test.mjs",
+      "stageIntroUv1Companion.test.mjs",
+      "stageLargeProfileDelivery.test.mjs",
+      "stageLighting.test.mjs",
+      "stageLightmaps.test.mjs",
+      "stageMainLightCascades.test.mjs",
+      "stageMainLightCoordinateParity.test.mjs",
+      "stageMaterialBindings.test.mjs",
+      "stageNativeInstanceRecovery.test.mjs",
+      "stageNativeVisibility.test.mjs",
+      "stageNativeVisibilityBatch3.test.mjs",
+      "stageNativeVisibilityCorpus.test.mjs",
+      "stageParticleBlendState.test.mjs",
+      "stageParticleDissolveConvention.test.mjs",
+      "stageParticleOfficialAlphaMaskParity.test.mjs",
+      "stageParticleProceduralCommonRampParity.test.mjs",
+      "stageParticleShapeForce.test.mjs",
+      "stageReflectionProbes.test.mjs",
+      "stageRigidCulling.test.mjs",
+      "stageRuntime.test.mjs",
+      "stageRuntimeStaticBatching.test.mjs",
+      "stageSceneLocalization.test.mjs",
+      "stageStaticBatching.test.mjs",
+      "stageTextureBindingJoin.test.mjs",
+      "stageTextureBindingsIntegration.test.mjs",
+      "stageTextureSamplingExtractor.test.mjs",
+      "stageTransformAnimations.test.mjs",
+      "stageUv1ActiveCarrier.test.mjs",
+      "stageVisibleContentGate.test.mjs",
+      "stageVolumePostProcessing.test.mjs",
+      "stageVolumetricLightBeams.test.mjs",
+      "steamSceneClosureIndex.test.mjs",
+      "submeshGroups.test.mjs",
+      "twGlesRuntimeEvidence.test.mjs",
+      "uiCharacterCatalog.test.mjs",
+      "uiLocalization.test.mjs",
+      "unityLighting.test.mjs",
+      "viewerLocomotionCombatVfxCueIntegration.test.mjs",
+      "viewerPoseScaleHandoff.test.mjs",
+      "viewerSelectionEditing.test.mjs",
+      "viewerTpsCameraContinuity.test.mjs",
+      "viewerTpsCameraResponse.test.mjs",
+      "viewerTpsExit.test.mjs",
+      "viewportEditing.test.mjs",
+      "viteCompressedAssetProxy.test.mjs",
+      "voiceLipsyncRuntime.test.mjs",
+      "voicePanelDomEfficiency.test.mjs",
+      "voicePoseChannelLease.test.mjs",
+      "voiceUiPanel.test.mjs",
+      "voiceUploadWorkspace.test.mjs",
+      "weaponPanelInteraction.test.mjs"
+    ],
+    "notExecutedByNodeRunner": [
+      "tools/magius/test_scene_asset_tools.py"
+    ],
+    "python": {
+      "command": "python tools/magius/test_scene_asset_tools.py",
+      "tests": 30,
+      "passed": 30
+    },
+    "limitations": [
+      "This is an observed test inventory, not proof of correctness of every repository behavior.",
+      "The three existing skipped assertions remain visible; none was added to suppress failures.",
+      "Some tests require external extracted research data, and some assertions target obsolete interfaces; unresolved cases have not all been classified as harmless.",
+      "No claim of complete model self-collision or universal human-anatomy realism.",
+      "Real private-repository access must still be verified when repository visibility actually changes."
+    ]
+  },
+  "deploymentGate": {
+    "tests": 269,
+    "pass": 269,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "dependencyAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "browser": {
+    "viewport": {
+      "passed": true,
+      "errors": [],
+      "missing": [],
+      "caseNames": [
+        "initial-position",
+        "selected-position",
+        "whole-object-context-menu",
+        "panel-closed-visible-joint-drag",
+        "no-jump-no-mesh-hide-compact-panel",
+        "orbit-and-pan-while-editing",
+        "whole-object-floor-contact",
+        "camera-floor",
+        "responsive-card",
+        "responsive-card",
+        "explicit-close-and-reentry",
+        "collapsed-tool-keeps-editing-and-drags",
+        "extreme-limb-edits-lengths-hinges-floor",
+        "wrist-mode-fine-undo-redo-stable",
+        "second-character-editor-rebind"
+      ]
+    },
+    "stage": {
+      "passed": true,
+      "errors": [],
+      "sceneState": {
+        "before": {
+          "meshes": 12,
+          "textures": 0,
+          "readyTextures": 0,
+          "enabled": true,
+          "pixelRatio": 1,
+          "antialiasing": "SMAA",
+          "stageId": "sky-reference",
+          "loadFailure": null,
+          "accepted": true,
+          "drawnMeshes": 0,
+          "drawProbeComplete": false
+        },
+        "after": {
+          "meshes": 294,
+          "textures": 25,
+          "readyTextures": 25,
+          "enabled": true,
+          "pixelRatio": 1,
+          "antialiasing": "SMAA",
+          "stageId": "battle-616-00-01-001",
+          "loadFailure": null,
+          "accepted": true,
+          "drawnMeshes": 105,
+          "drawProbeComplete": true
+        }
+      }
+    },
+    "renderer": "Chrome ANGLE SwiftShader software rendering; not a hardware FPS benchmark"
+  },
+  "remainingFailureFiles": 49,
+  "remaining": [
+    {
+      "file": "angelRingHeadLock.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "draw-time AngelRing reference follows final head pose and preserves the existing draw hook",
+          "diagnostic": "The input did not match the regular expression /installAngelRingDrawReferenceUpdate/(mesh, result/.updateAngelRingReference/)/. Input:\n    \n    \"import { getLoadingTask, startLoadingTask, yieldLoadingFrame } from './loadingProgress.ts'/r/n\" +\n      \"import { resolveNativeAngelRingReference, resolveNativeFaceDirectionReference } from './nativeCharacterController';/r/n\" +"
+        }
+      ]
+    },
+    {
+      "file": "cameraDepthRim.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 19,
+        "suites": 0,
+        "pass": 17,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "official depth path joins opaque stage and character roots without a depth clear",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(backgroundPrepare > 0 && foregroundPrepare > backgroundPrepare)"
+        },
+        {
+          "name": "nested Viewer helper roots and prepare/render failures restore exact state",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(detachIndex < backgroundPrepare)"
+        }
+      ]
+    },
+    {
+      "file": "characterLoadLifecycle.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 3,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "scene transaction is idempotent and only the latest generation can bind",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(start >= 0 && end > start)"
+        },
+        {
+          "name": "failed replacement restores the retained character and clears progress",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(start >= 0 && end > start)"
+        },
+        {
+          "name": "remove aborts the current generation, disposes retained state, and clears overlay",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(start >= 0 && end > start)"
+        }
+      ]
+    },
+    {
+      "file": "characterLocomotion.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 106,
+        "suites": 0,
+        "pass": 79,
+        "fail": 27,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "V38 preserves accepted target-axis gait, accepts wheel input across the Viewer surface, and rejects cinematic jump donors",
+          "diagnostic": "The input did not match the regular expression /document/.addEventListener/('wheel', event =>/. Input:\n    \n    \"import { ThirdPersonCamera } from './ThirdPersonCamera'/n\" +\n      \"import { translateUiText } from './localization/zhCN'/n\" +"
+        },
+        {
+          "name": "V44 keeps 101901 walking forearms strongly pre-bent without a gait-phase refold",
+          "diagnostic": "The input did not match the regular expression /Math/.max/(0, cameraDistanceTarget /+ wheelDelta /* TPS_CAMERA_POINTER/.wheelMetersPerDelta/)/. Input:\n    \n    \"import { ThirdPersonCamera } from './ThirdPersonCamera'/n\" +\n      \"import { translateUiText } from './localization/zhCN'/n\" +"
+        },
+        {
+          "name": "normalized donor reference preserves ten full 60fps cycles, morphology weights, and controlled root",
+          "diagnostic": "The input was expected to not match the regular expression /setNativeDungeonExternalAttachmentsHidden/(binding, enabled/)/. Input:\n    \n    \"import { ThirdPersonCamera } from './ThirdPersonCamera'/n\" +\n      \"import { translateUiText } from './localization/zhCN'/n\" +"
+        },
+        {
+          "name": "Viewer consumes all exact native Dungeon action products without cross-character or weapon fallback",
+          "diagnostic": "'missing Viewer consumer contract: playViewerCharacterAction(actionId)'"
+        },
+        {
+          "name": "TPS mouse look keeps unwrapped yaw independent from pitch, accepts wheel input to zero distance, and records bounded input",
+          "diagnostic": "'missing bounded TPS camera contract: const TPS_CAMERA_POINTER = Object.freeze({'"
+        },
+        {
+          "name": "TPS exit hands the final TPS view to OrbitControls without restoring the pre-entry camera",
+          "diagnostic": "'missing TPS/OrbitControls handoff contract: interface ViewerOrbitControlsLease {'"
+        },
+        {
+          "name": "camera look tracking is post-mixer, rig-axis aware, bounded, and yields to authored head clips",
+          "diagnostic": "\"missing continuous head tracking contract: ? 'head-and-eyes' : 'head-only'\""
+        },
+        {
+          "name": "TPS entry bridges the last rendered mixer pose without a bind or rest-pose write",
+          "diagnostic": "The input did not match the regular expression /const tpsPoseTransition = new ViewerTpsPoseTransition/(character/)/. Input:\n    \n    'export function attachViewerLocomotion(sceneCharacter: SceneCharacter): ViewerLocomotionBinding | undefined {/n' +\n      '    const character = sceneCharacter.character/n' +"
+        },
+        {
+          "name": "Escape or owned pointer-lock loss exits TPS exactly once through the final-view handoff path",
+          "diagnostic": "The input did not match the regular expression /setFreeLookFallbackActive/(false/)/. Input:\n    \n    \"if (enabled && event.code === 'Escape' && !event.repeat) {/n\" +\n      '            event.preventDefault()/n' +"
+        },
+        {
+          "name": "universal gaze uses rig capabilities rather than acceptance sample IDs",
+          "diagnostic": "Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'head-only'"
+        },
+        {
+          "name": "universal gaze explicitly classifies head-only, lone-eye and missing-chain rigs",
+          "diagnostic": "'tpsCamera is not defined'"
+        },
+        {
+          "name": "universal gaze exit preserves current pose then reaches the newly evaluated authored target",
+          "diagnostic": "'tpsCamera is not defined'"
+        },
+        {
+          "name": "universal gaze interrupted return recaptures the current blended pose",
+          "diagnostic": "'tpsCamera is not defined'"
+        },
+        {
+          "name": "universal gaze authored-action interruption and selection loss blend without stale base writes",
+          "diagnostic": "'tpsCamera is not defined'"
+        },
+        {
+          "name": "universal gaze blend duration is configurable Viewer policy rather than claimed native timing",
+          "diagnostic": "'tpsCamera is not defined'"
+        },
+        {
+          "name": "performance host channel split ordinary native action bones do not own gaze and exact manual bones still do",
+          "diagnostic": "'getViewerCharacterPhysicsAttachment is not defined'"
+        },
+        {
+          "name": "performance host independent timeline direct Home seek and paused phases use actual retained evaluator not displayed output",
+          "diagnostic": "'seekViewerCharacterActionMixer is not defined'"
+        },
+        {
+          "name": "performance host independent timeline direct loop requires actual mixer evaluation and does not add an update",
+          "diagnostic": "'synchronizeViewerCharacterActionClipRepetition is not defined'"
+        },
+        {
+          "name": "performance host independent timeline unregistered phase replacement or extra mixer action fails closed",
+          "diagnostic": "'seekViewerCharacterActionMixer is not defined'"
+        },
+        {
+          "name": "performance host independent timeline fake displayed setter without actual mixer evaluation never certifies body input",
+          "diagnostic": "'seekViewerCharacterActionMixer is not defined'"
+        },
+        {
+          "name": "performance host independent timeline actual MODEL FK and native consumer hold return and regrab all three producers",
+          "diagnostic": "'seekViewerCharacterActionMixer is not defined'"
+        },
+        {
+          "name": "performance host independent timeline observer retains mixer receiver result and restores only its own wrapper on dispose",
+          "diagnostic": "'synchronizeViewerCharacterActionClipRepetition is not defined'"
+        },
+        {
+          "name": "performance host evaluator actual MODEL detached FK consumer commits real native hold and single fresh moving return",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    \n      ["
+        },
+        {
+          "name": "performance host evaluator actual MODEL mixed action samples before manual native commit with cue once-only and no live callback edit",
+          "diagnostic": "Expected values to be strictly equal:\n    + actual - expected\n    \n    + 'POSE_ROTATION_ONLY: joint translation/scale tracks are unsupported; use root placement or an IK target'"
+        },
+        {
+          "name": "performance host channel split real native-ready action evaluates before one native writer and retains displayed output",
+          "diagnostic": "'emitStartedViewerCharacterActionCue is not defined'"
+        },
+        {
+          "name": "G08 body transition captures evaluated pose once across nested stop/play and recaptures an interrupted blend",
+          "diagnostic": "'getViewerCharacterPhysicsAttachment is not defined'"
+        },
+        {
+          "name": "performance exact action adapter uses retained actor routes and isolates event emission from sampling",
+          "diagnostic": "'emitStartedViewerCharacterActionCue is not defined'"
+        }
+      ]
+    },
+    {
+      "file": "combatVfxFacingTarget.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "combatVfxFacingTarget.test.mjs",
+          "diagnostic": "Error: ENOENT: no such file or directory, open '<workspace>/public/vfx/character/chara_100201_normalattack_00/product.vfxdata'"
+        }
+      ]
+    },
+    {
+      "file": "combatVfxNativeIdentity.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "combatVfxNativeIdentity.test.mjs",
+          "diagnostic": "Error: ENOENT: no such file or directory, open '<workspace>/public/vfx/character/chara_100201_normalattack_00/product.vfxdata'"
+        }
+      ]
+    },
+    {
+      "file": "combatVfxPPtrSprite.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 4,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "three bounded clips decode exact PPtr sprite curves and targets",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/artifacts/verification/20260901-combat-vfx-pptr-sprite-closure/decoder-stage/enemy_650002_wholeskill.profile.json'\""
+        },
+        {
+          "name": "deterministic research and public products close every Sprite dependency",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260826-all-enemy-character-skill-vfx-products-v2/products/enemy/enemy_650002_wholeskill/product.json'\""
+        }
+      ]
+    },
+    {
+      "file": "deploymentPublicCopy.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 6,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "copy script reports the exact allowlisted closure and preflight",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    1306922519 !== 0"
+        },
+        {
+          "name": "each released stage and enemy closure is copied byte-exact with no expansion",
+          "diagnostic": "<workspace>/public/stages/official/battle-602-00-01-001/scene-profile.json != <workspace>/artifacts/verification/20260905-s6-enemy-texture-archive-localization/isolated-output/stages/official/battle-602-00-01-001/scene-profile.json\n    \n    false !== true"
+        },
+        {
+          "name": "heavy roots contain only the exact released closure",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    \n      ["
+        }
+      ]
+    },
+    {
+      "file": "doppelIrohaHair.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "runtime clones the ordinary ReDrive carrier and injects official cosmic branch",
+          "diagnostic": "The input did not match the regular expression /officialCosmicProjection3/. Input:\n    \n    '/n' +\n      '            uniform sampler2D tOfficialCosmic;/n' +"
+        }
+      ]
+    },
+    {
+      "file": "enemyControlRuntimeRegression.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 8,
+        "suites": 0,
+        "pass": 6,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "600001 actual exported bone tracks move and deterministic scrub changes skinned vertices",
+          "diagnostic": "'Enemy material profile request failed for 600001'"
+        },
+        {
+          "name": "closing handles detaches both controls, preserves actor selection and hides the close button",
+          "diagnostic": "'viewportEditor is not defined'"
+        }
+      ]
+    },
+    {
+      "file": "enemyIdleSelection.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "600003 chooses animated Wait_L instead of empty Wait",
+          "diagnostic": "'Enemy model request failed for 600003'"
+        }
+      ]
+    },
+    {
+      "file": "enemyPlayableSelectionParity.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "enemyPlayableSelectionParity.test.mjs",
+          "diagnostic": "AssertionError [ERR_ASSERTION]: ../../../magia-exedra-character-three/loadingProgress.ts"
+        }
+      ]
+    },
+    {
+      "file": "enemyResourceLayer.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 5,
+        "suites": 0,
+        "pass": 3,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "every manifest model and thumbnail points to a real local runtime artifact",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/enemies/models/enemy_600001_battle_unit/material-profile.v1.json'\""
+        },
+        {
+          "name": "actual loader parses all four 2-4 enemy FBX runtimes",
+          "diagnostic": "'Enemy material profile request failed for 600002'"
+        }
+      ]
+    },
+    {
+      "file": "enemyTextureArchiveLocalization.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 7,
+        "suites": 0,
+        "pass": 6,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "enemy-only generation localizes texture URLs, preserves workspace bytes, and is deterministic",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    \n      ["
+        }
+      ]
+    },
+    {
+      "file": "enemyTextureRuntimeProducts.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "enemy texture runtime manifest publishes every exact stable key",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    495 !== 493"
+        },
+        {
+          "name": "all 493 material products consume the shared texture catalog fail-closed",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    495 !== 493"
+        },
+        {
+          "name": "enemy 600012 publishes body, thorn and Mercury inputs by stable key",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/enemies/textures/cab-deca81954fbd67b2aacb2928a61012c3__pathid-p5394078111709246722.png'\""
+        }
+      ]
+    },
+    {
+      "file": "enemyUiPanel.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 4,
+        "suites": 0,
+        "pass": 2,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "enemy panel is independent from the character selector and uses the resource manager contract",
+          "diagnostic": "The input did not match the regular expression /selectedInstanceId = added/.at/(-1/)/?/.instanceId/. Input:\n    \n    'import {/r/n' +\n      '    addAnimationLoop,/r/n' +"
+        },
+        {
+          "name": "enemy instances support deterministic spacing, selection, removal and canvas XYZ translation",
+          "diagnostic": "The input did not match the regular expression /enemyPanelController/?/.getIntersectedEnemy/(e/.clientX, e/.clientY/)/. Input:\n    \n    \"import './style/viewport-editor.css'/r/n\" +\n      \"import { createViewportPoseEditor } from './viewportPoseEditor'/r/n\" +"
+        }
+      ]
+    },
+    {
+      "file": "enemyVfxResourceLayer.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 4,
+        "suites": 0,
+        "pass": 3,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "all catalog products and declared textures reopen through public URLs",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/vfx/character/chara_100101_normalattack_00/textures/eff_cmn_fire_02__p8245018178376842889.png'\""
+        }
+      ]
+    },
+    {
+      "file": "exactReDriveFormulaParity.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "exactReDriveFormulaParity.test.mjs",
+          "diagnostic": "AssertionError [ERR_ASSERTION]: missing unique hard-spec replacement target"
+        }
+      ]
+    },
+    {
+      "file": "homeCharacterRuntime.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 14,
+        "suites": 0,
+        "pass": 13,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "Home runtimes cover every Viewer character with an available local JP bundle",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    94 !== 92"
+        }
+      ]
+    },
+    {
+      "file": "nonBattleCharacterRuntime.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 10,
+        "suites": 0,
+        "pass": 5,
+        "fail": 5,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "113501 neutral presentation binds four official cloth teams and one plane collider",
+          "diagnostic": "'Module \"file:///<workspace>/magia-exedra-character-three/nonbattle-expressions.generated.json\" needs an import attribute of \"type: json\"'"
+        },
+        {
+          "name": "113601 neutral presentation restores Eye_R2, the wing helper and its native sphere collider",
+          "diagnostic": "'Module \"file:///<workspace>/magia-exedra-character-three/nonbattle-expressions.generated.json\" needs an import attribute of \"type: json\"'"
+        },
+        {
+          "name": "113601 wrapper installs and advances the exact wing-drop product before callbacks",
+          "diagnostic": "'Module \"file:///<workspace>/magia-exedra-character-three/nonbattle-expressions.generated.json\" needs an import attribute of \"type: json\"'"
+        },
+        {
+          "name": "113401 neutral presentation keeps the official nested rig intact",
+          "diagnostic": "'Module \"file:///<workspace>/magia-exedra-character-three/nonbattle-expressions.generated.json\" needs an import attribute of \"type: json\"'"
+        },
+        {
+          "name": "nonbattle wrapper exposes callbacks only after neutralization and supports abort/retry",
+          "diagnostic": "'Module \"file:///<workspace>/magia-exedra-character-three/nonbattle-expressions.generated.json\" needs an import attribute of \"type: json\"'"
+        }
+      ]
+    },
+    {
+      "file": "officialCharacterSurfaceSampler.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 8,
+        "suites": 0,
+        "pass": 7,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "108301 hair source pixels are the fresh current Steam exports",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/artifacts/verification/20260824-108301-hair-cheek-shadow-visual-fail/iteration-17-official-hair-texture-contract/evidence/steam-chara_108301_hair_ctrl.png'\""
+        }
+      ]
+    },
+    {
+      "file": "officialFaceAdditionalSampler.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "officialFaceAdditionalSampler.test.mjs",
+          "diagnostic": "Error: ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260828-fresh-tw-default-faceadditional-authority/fresh-tw-default-faceadditional-pixels-clean-error-queue.json'"
+        }
+      ]
+    },
+    {
+      "file": "officialFaceEyePass.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "officialFaceEyePass.test.mjs",
+          "diagnostic": "Error: ENOENT: no such file or directory, open '<workspace>/artifacts/verification/20260824-108301-hair-cheek-shadow-visual-fail/iteration-14-official-face-gradient-mouth-nose/official-evidence/steam/four-character-controller-dither-face-gradient.literal.json'"
+        }
+      ]
+    },
+    {
+      "file": "officialFaceHairStencilRuntime.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "officialFaceHairStencilRuntime.test.mjs",
+          "diagnostic": "Error: ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260828-eye-eyebrow-draw-attachment-authority/fresh-tw-eye-eyebrow-ubo-frame.json'"
+        }
+      ]
+    },
+    {
+      "file": "officialReDriveCosmicAlphaWing.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 7,
+        "suites": 0,
+        "pass": 5,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "projected Cosmic uses the serialized character reference without requiring AngelRing",
+          "diagnostic": "The input did not match the regular expression /localForward = unityDirectionToThreeFbx/(profile/.faceForwardAxis/)/. Input:\n    \n    'export function createCharacterPerspectiveReference(/r/n' +\n      '    root: THREE.Object3D,/r/n' +"
+        },
+        {
+          "name": "projected Cosmic follows main_base additive/overlay/shadow/ambient order",
+          "diagnostic": "The input did not match the regular expression /officialCosmicOriginal = outgoingLight/. Input:\n    \n    \"import * as THREE from 'three'/r/n\" +\n      'import type {/r/n' +"
+        }
+      ]
+    },
+    {
+      "file": "officialSceneProducts.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 1,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "official scene shards close the exact 581-key authority partition",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    136 !== 132"
+        },
+        {
+          "name": "every official scene model reopens through a browser-safe Viewer URL",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/stages/official/battle-603-00-01-001/bg_3d_603_00_01_001.fbxdata'\""
+        }
+      ]
+    },
+    {
+      "file": "officialToonShadowSelector.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 5,
+        "suites": 0,
+        "pass": 4,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "fresh Steam corpus preserves every serialized shadow offset-map scalar",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    98 !== 97"
+        }
+      ]
+    },
+    {
+      "file": "performanceAudioTrackPanel.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "performanceAudioTrackPanel.test.mjs",
+          "diagnostic": "  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);"
+        }
+      ]
+    },
+    {
+      "file": "performanceBuiltMultiactorFraming.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "performanceBuiltMultiactorFraming.test.mjs",
+          "diagnostic": "    throw new ERR_MODULE_NOT_FOUND("
+        }
+      ]
+    },
+    {
+      "file": "performanceEditorBrowserE2E.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 1,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "browser contract exposes semantic timeline lanes, scrubber and UUID-scoped actors",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    2 !== 11"
+        },
+        {
+          "name": "browser contract drives independent keyframes, playback and pointer drag without cross-actor writes",
+          "diagnostic": "'The \"string\" argument must be of type string. Received type undefined (undefined)'"
+        }
+      ]
+    },
+    {
+      "file": "performanceEditorPanel.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 13,
+        "suites": 0,
+        "pass": 12,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "pose controls operate released ACTION APIs and remain usable after editor hand-back",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    0 !== 2"
+        }
+      ]
+    },
+    {
+      "file": "performanceEditorRuntime.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 28,
+        "suites": 0,
+        "pass": 27,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "stale generation/old frame/zero leased actors cannot advance global timeline",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    0 !== 0.2"
+        }
+      ]
+    },
+    {
+      "file": "performanceViewportReadability.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 7,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "dense nodes use sparse hollow glyphs while every UUID remains an exact overlap candidate",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    24 !== 80"
+        },
+        {
+          "name": "workspace button frames the currently selected actor only on request and exit restores the original view",
+          "diagnostic": "\"Cannot destructure property 'transport' of 'panel.workspaceControls' as it is undefined.\""
+        }
+      ]
+    },
+    {
+      "file": "resourceProductPreview.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "stage geometry and serialized runtime companions reopen literally",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/stages/official/battle-612-00-00-002/Lightmap-0_comp_light-bc6h.dds'\""
+        }
+      ]
+    },
+    {
+      "file": "runtimeSelectionThumbnailPanels.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 2,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "runtime selection thumbnail product covers every viewer character with official gamedata sources",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    ... Skipped lines"
+        }
+      ]
+    },
+    {
+      "file": "sceneVisualProducts.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 4,
+        "suites": 0,
+        "pass": 3,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "every visual product reference exists and stable keys remain unique",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/stages/official/alternative-stage-model-alternative-stage-model-00-released/scene-product.json'\""
+        }
+      ]
+    },
+    {
+      "file": "stage600003Integration.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 7,
+        "suites": 0,
+        "pass": 6,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "600-003 runtime package reopens with exact hashes and byte total",
+          "diagnostic": "hash drift: asset-provenance.json\n    + actual - expected\n    \n    + 'ca173b283dacd120f9be04a49d0855a420715d8f956765ac0202a8c480c98afa'"
+        }
+      ]
+    },
+    {
+      "file": "stage601Integration.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "601 package reopens every product with exact hashes and byte total",
+          "diagnostic": "hash drift: uv1-companion.json\n    + actual - expected\n    \n    + '17f629c901a9ec73a4d0cbe9152561efa22b735c081829280234b7b04ae45398'"
+        }
+      ]
+    },
+    {
+      "file": "stage603Integration.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 5,
+        "suites": 0,
+        "pass": 4,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "603 runtime package reopens with exact hashes and byte total",
+          "diagnostic": "hash drift: uv1-companion.json\n    + actual - expected\n    \n    + '99270822f63024203d717a61f80753122a132c4333f27cd596ae304b26485f82'"
+        }
+      ]
+    },
+    {
+      "file": "stageEnvironmentPayload.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 1,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "generated environment manifest covers every serialized profile binding",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    ... Skipped lines"
+        },
+        {
+          "name": "every environment payload records target bytes and an explicit source comparison",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/stages/official/battle-603-00-01-001/ReflectionProbe-1-bc6h.dds'\""
+        }
+      ]
+    },
+    {
+      "file": "stageGeneratedCorpus.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 8,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "authored-name projector defaults to check and restores a byte-exact corpus",
+          "diagnostic": "PROJECTION_ERROR=source projection must use LF newlines"
+        }
+      ]
+    },
+    {
+      "file": "stageGlobalCommit.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 8,
+        "suites": 0,
+        "pass": 0,
+        "fail": 8,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "global csm-bias failure retains exact old scene and live resources",
+          "diagnostic": "fixture old load must succeed: {\"requestedStageId\":\"old\",\"checkpoint\":\"profile-textures-loaded\",\"message\":\"ReferenceError: applyStageNativeVisibility is not defined\"}\n    \n    'none' !== 'old'"
+        },
+        {
+          "name": "global volume-center failure retains exact old scene and live resources",
+          "diagnostic": "fixture old load must succeed: {\"requestedStageId\":\"old\",\"checkpoint\":\"profile-textures-loaded\",\"message\":\"ReferenceError: applyStageNativeVisibility is not defined\"}\n    \n    'none' !== 'old'"
+        },
+        {
+          "name": "global redrive-direction failure retains exact old scene and live resources",
+          "diagnostic": "fixture old load must succeed: {\"requestedStageId\":\"old\",\"checkpoint\":\"profile-textures-loaded\",\"message\":\"ReferenceError: applyStageNativeVisibility is not defined\"}\n    \n    'none' !== 'old'"
+        },
+        {
+          "name": "global character-uniform failure retains exact old scene and live resources",
+          "diagnostic": "fixture old load must succeed: {\"requestedStageId\":\"old\",\"checkpoint\":\"profile-textures-loaded\",\"message\":\"ReferenceError: applyStageNativeVisibility is not defined\"}\n    \n    'none' !== 'old'"
+        },
+        {
+          "name": "global runtime-director failure retains exact old scene and live resources",
+          "diagnostic": "fixture old load must succeed: {\"requestedStageId\":\"old\",\"checkpoint\":\"profile-textures-loaded\",\"message\":\"ReferenceError: applyStageNativeVisibility is not defined\"}\n    \n    'none' !== 'old'"
+        },
+        {
+          "name": "global vlb-constructor failure retains exact old scene and live resources",
+          "diagnostic": "fixture old load must succeed: {\"requestedStageId\":\"old\",\"checkpoint\":\"profile-textures-loaded\",\"message\":\"ReferenceError: applyStageNativeVisibility is not defined\"}\n    \n    'none' !== 'old'"
+        },
+        {
+          "name": "global none-reset failure retains exact old scene and live resources",
+          "diagnostic": "fixture old load must succeed: {\"requestedStageId\":\"old\",\"checkpoint\":\"profile-textures-loaded\",\"message\":\"ReferenceError: applyStageNativeVisibility is not defined\"}\n    \n    'none' !== 'old'"
+        },
+        {
+          "name": "successful global commit retires old resources after all consumers and none clears",
+          "diagnostic": "{\"requestedStageId\":\"old\",\"checkpoint\":\"profile-textures-loaded\",\"message\":\"ReferenceError: applyStageNativeVisibility is not defined\"}\n    \n    'none' !== 'old'"
+        }
+      ]
+    },
+    {
+      "file": "stageMainLightCascades.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 12,
+        "suites": 0,
+        "pass": 11,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "injects the exact URP LOW four half-texel comparison taps",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(match)"
+        }
+      ]
+    },
+    {
+      "file": "stageMaterialBindings.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "stageMaterialBindings.test.mjs",
+          "diagnostic": "AssertionError [ERR_ASSERTION]: global background tint must execute after material fog like the official shader"
+        }
+      ]
+    },
+    {
+      "file": "stageParticleShapeForce.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "stageParticleShapeForce.test.mjs",
+          "diagnostic": "Error: ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260827-particle-shape-force-authority/representative-fixtures.v1.json'"
+        }
+      ]
+    },
+    {
+      "file": "stageUv1ActiveCarrier.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "606 applies all 26 active FBX carriers while 120 dependency records stay diagnostic",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/stages/official/battle-606-00-01-002/bg_3d_606_00_01_002.fbxdata'\""
+        }
+      ]
+    },
+    {
+      "file": "stageVolumePostProcessing.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 8,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "serialized ChromaticAberration uses the exact URP 14 fast three-sample operator",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(chroma >= 0 && vignette > chroma)"
+        }
+      ]
+    },
+    {
+      "file": "voicePanelDomEfficiency.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "voicePanelDomEfficiency.test.mjs",
+          "diagnostic": "  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);"
+        }
+      ]
+    },
+    {
+      "file": "voiceUiPanel.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 10,
+        "suites": 0,
+        "pass": 9,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "unresolved; requires individual investigation, not an allowlist",
+      "cases": [
+        {
+          "name": "voice panel exposes compact typed multitrack UI for every loaded character and multiple backgrounds",
+          "diagnostic": "The input did not match the regular expression /id=\"voice-multitrack-section\"[^>]*open/. Input:\n    \n    '<!doctype html>/n' +\n      '<html lang=\"en\">/n' +"
+        }
+      ]
+    }
+  ]
+}
