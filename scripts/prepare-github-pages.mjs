@@ -5,7 +5,8 @@ import { createHash } from 'node:crypto'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const immutableBase = /^https:\/\/[a-f0-9]{8}\.magius3dviewer\.pages\.dev\/$/
+const immutableCloudflareBase = /^https:\/\/[a-f0-9]{8}\.magius3dviewer\.pages\.dev\/$/
+const immutableSourceBase = /^https:\/\/raw\.githubusercontent\.com\/HiiragiNemu\/Magi3Dviewer\/[a-f0-9]{40}\/public\/$/
 const stageRootPattern = /^\/stages\/official\/[A-Za-z0-9_-]+\/$/
 
 async function inventory(directory, prefix = '') {
@@ -30,7 +31,8 @@ async function digest(stream) {
 export async function prepareGitHubPages({ output, base, expectedRevision, evidenceDirectory, fetchResource = fetch }) {
   output = path.resolve(output)
   assert.match(path.basename(output), /^dist-/, 'Only a disposable dist-* build artifact may be repackaged')
-  assert.match(base, immutableBase, 'An immutable Cloudflare deployment URL is required; production aliases are not safe')
+  const sourceRoute = typeof base === 'string' && immutableSourceBase.test(base)
+  assert.ok(typeof base === 'string' && (immutableCloudflareBase.test(base) || sourceRoute), 'An immutable deployment or source-commit URL is required; branch aliases are not safe')
   assert.match(expectedRevision, /^[a-f0-9]{40}$/, 'Expected source revision must be explicit')
   const localVersion = JSON.parse(await fs.readFile(path.join(output, 'site-version.json'), 'utf8'))
   assert.equal(localVersion.revision, expectedRevision, 'The full artifact belongs to another source revision')
@@ -42,9 +44,13 @@ export async function prepareGitHubPages({ output, base, expectedRevision, evide
     assert.match(root, stageRootPattern)
     assert.ok(catalog.entries.some(entry => entry.kind === 'stage' && entry.rootPath === root), 'Stage identity absent: ' + root)
   }
-  const versionResponse = await fetchResource(new URL('site-version.json', base).href, { cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(90000) })
-  assert.equal(versionResponse.status, 200, 'Immutable deployment must be publicly accessible')
-  assert.equal((await versionResponse.json()).revision, expectedRevision, 'Refusing a stale or mismatched scene deployment')
+  if (sourceRoute) {
+    assert.equal(base, `https://raw.githubusercontent.com/HiiragiNemu/Magi3Dviewer/${expectedRevision}/public/`, 'Refusing a stale or mismatched source commit')
+  } else {
+    const versionResponse = await fetchResource(new URL('site-version.json', base).href, { cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(90000) })
+    assert.equal(versionResponse.status, 200, 'Immutable deployment must be publicly accessible')
+    assert.equal((await versionResponse.json()).revision, expectedRevision, 'Refusing a stale or mismatched scene deployment')
+  }
 
   const before = await inventory(output)
   const delegated = before.filter(file => file.path.startsWith('stages/official/'))
@@ -67,9 +73,24 @@ export async function prepareGitHubPages({ output, base, expectedRevision, evide
     }
     assert.equal(response.status, 200, 'Scene resource not accessible: ' + file.path)
     assert.ok(['*', 'https://hiiraginemu.github.io'].includes(response.headers.get('access-control-allow-origin')), 'Scene resource is not CORS-enabled: ' + file.path)
-    const actual = await digest(response.body)
-    assert.deepEqual(actual, expected, 'Scene resource differs from the tested current artifact: ' + file.path)
-    verified.push({ ...file, sha256: actual.sha256 })
+    let actual, equivalence = 'exact-bytes'
+    if (sourceRoute && file.path.endsWith('.json')) {
+      const data = Buffer.from(await response.arrayBuffer())
+      actual = { bytes: data.length, sha256: createHash('sha256').update(data).digest('hex') }
+      if (actual.sha256 !== expected.sha256 || actual.bytes !== expected.bytes) {
+        // copy-deployment-public.mjs compacts oversized JSON for Cloudflare's
+        // 25 MiB per-file limit. Public source delivery can retain the original
+        // whitespace. Permit only that exact existing transform, not altered
+        // values, ordering, textures, meshes or a historical scene substitute.
+        const staged = await fs.readFile(path.join(output, file.path), 'utf8')
+        assert.equal(JSON.stringify(JSON.parse(data.toString('utf8'))), staged.trim(), 'Source JSON is not the exact pre-compaction current carrier: ' + file.path)
+        equivalence = 'existing-whitespace-only-json-compaction'
+      }
+    } else {
+      actual = await digest(response.body)
+      assert.deepEqual(actual, expected, 'Scene resource differs from the tested current artifact: ' + file.path)
+    }
+    verified.push({ ...file, sha256: expected.sha256, sourceBytes: actual.bytes, sourceSha256: actual.sha256, equivalence })
     if (verified.length % 40 === 0 || verified.length === delegated.length) console.log(`Verified current scene bytes: ${verified.length}/${delegated.length}`)
   }
   const writeEvidence = async result => {
@@ -86,9 +107,8 @@ export async function prepareGitHubPages({ output, base, expectedRevision, evide
     throw error
   }
   verified.sort((a, b) => a.path.localeCompare(b.path))
-  // Do not touch source files, the full Cloudflare artifact, old Release packs,
-  // character assets, geometry, texture resolution, render scale or shaders.
-  // Only now is it safe to delegate these exact staged bytes to their fixed URL.
+  // Only verified copies in the disposable website artifact are removed.
+  // Repository source, geometry, texture resolution, AA and shaders stay intact.
   await fs.writeFile(catalogPath, JSON.stringify({ ...catalog, bundledStageBaseUrl: base }, null, 2) + '\n')
   await fs.rm(path.join(output, 'stages/official'), { recursive: true })
   const summaryPath = path.join(output, 'deployment-public-summary.json')
@@ -98,8 +118,9 @@ export async function prepareGitHubPages({ output, base, expectedRevision, evide
   const summary = {
     schema: 'magius.github-pages-delivery.v1', deploymentTarget: 'github-pages', revision: expectedRevision,
     fullArtifactBytes: fullBytes, fullArtifactFiles: before.length,
-    delegatedStageDelivery: { baseUrl: base, stageRoots: catalog.bundledStageRoots, files: verified.length, bytes: delegatedBytes,
-      verification: 'Every file fetched with CORS and matched by exact size and SHA-256 before removal from this artifact',
+    delegatedStageDelivery: { baseUrl: base, source: sourceRoute ? 'exact-public-repository-commit' : 'immutable-cloudflare-deployment',
+      stageRoots: catalog.bundledStageRoots, files: verified.length, bytes: delegatedBytes,
+      verification: 'Every file fetched with CORS; exact size/SHA-256, or the already-used oversized-JSON whitespace compaction only',
       inventorySha256: createHash('sha256').update(JSON.stringify(verified)).digest('hex') },
     deploymentFilesIncludingSummary: remaining.length + 1, deploymentBytesIncludingSummary: remainingBytes,
     githubPagesPublishedSiteLimitBytes: 1000000000, githubPagesFileLimit: 20000,
