@@ -22,7 +22,7 @@ assert.ok(fs.statSync(path.join(output, root)).isDirectory(), 'Full current stag
 const expectedProfile = JSON.parse(fs.readFileSync(path.join(output, root, 'scene-profile.json'), 'utf8'))
 fs.mkdirSync(evidence, {recursive: true})
 const types = {'.html':'text/html', '.js':'text/javascript', '.json':'application/json', '.css':'text/css', '.png':'image/png', '.webp':'image/webp', '.jpg':'image/jpeg', '.woff2':'font/woff2'}
-let server, browser, page, before, after, profileProof
+let server, browser, page, before, after, profileProof, geometryProofs = []
 const errors = [], rejectedRepositoryRequests = [], responses = [], failures = [], finished = new Set()
 let result = {passed: false, site}
 
@@ -38,11 +38,13 @@ function authoredProfileView(profile, expected) {
   }
   return value
 }
-function classifyStageTransferFailures(failures, completed, proof) {
+function classifyStageTransferFailures(failures, completed, proof, geometryProofs = []) {
   return failures.filter(request => {
     if (!request.url.includes('/stages/official/')) return false
     if (request.error !== 'net::ERR_ABORTED') return true
     if (completed.has(request.url)) return false
+    if (geometryProofs.some(item => item.url === request.url && item.httpStatus === 200
+      && item.bytesMatch === true && item.stageCorrect === true && item.drawn === true)) return false
     // A CDP cancellation alone cannot contradict the exact authored JSON
     // already parsed and committed by the application. No retry/prefetch by
     // this verifier is used to manufacture this evidence.
@@ -97,6 +99,30 @@ try {
   browser = await puppeteer.launch({executablePath:chrome,headless:true,protocolTimeout:300000,args:['--no-sandbox','--disable-dev-shm-usage','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-gpu-sandbox']})
   page = await browser.newPage()
   await page.setViewport({width:1280,height:900,deviceScaleFactor:1})
+  // Observe the body of the application's actual geometry fetch. A cloned
+  // response adds no network request and cannot turn another stage into this
+  // stage. This is stronger evidence than Chrome's requestfinished event,
+  // which can report ERR_ABORTED after a stream was completely consumed.
+  await page.evaluateOnNewDocument(() => {
+    const originalFetch = globalThis.fetch.bind(globalThis)
+    const records = [], pending = []
+    globalThis.__magiusGeometryTransfers = { records, pending }
+    globalThis.fetch = async (...args) => {
+      const response = await originalFetch(...args)
+      const input = args[0]
+      const url = new URL(typeof input === 'string' || input instanceof URL ? input : input.url, location.href)
+      const method = (args[1]?.method || (input instanceof Request ? input.method : 'GET')).toUpperCase()
+      if (method === 'GET' && url.pathname.includes('/stages/official/') && /\.(fbxdata|fbx)(?:$)/i.test(url.pathname)) {
+        const copy = response.clone(), record = { url: url.href, httpStatus: response.status }
+        records.push(record)
+        pending.push(copy.arrayBuffer().then(async buffer => {
+          record.bytes = buffer.byteLength
+          record.sha256 = [...new Uint8Array(await crypto.subtle.digest('SHA-256', buffer))].map(b => b.toString(16).padStart(2, '0')).join('')
+        }).catch(error => { record.error = error.name }))
+      }
+      return response
+    }
+  })
   await page.setRequestInterception(true)
   page.on('request', request => {
     const url = new URL(request.url())
@@ -135,20 +161,36 @@ try {
   profileProof = {url:profileUrl,stageCorrect:after.stageId===stageId,drawn:after.accepted&&after.drawnMeshes>0&&after.loadFailure===null,
     httpStatus:responses.find(response=>response.url===profileUrl&&response.status===200)?.status,
     profileMatches:true,expectedAuthoredSha256:hash(expectedProfile),consumedAuthoredSha256:hash(authoredView)}
-  const loaded = responses.filter(response => response.url.startsWith(site + root) && finished.has(response.url))
+  const transfers = await page.evaluate(async () => {
+    await Promise.all(globalThis.__magiusGeometryTransfers.pending)
+    return globalThis.__magiusGeometryTransfers.records
+  })
+  geometryProofs = transfers.filter(item => !item.error && item.url.startsWith(site + root)).map(item => {
+    const relative = decodeURIComponent(new URL(item.url).pathname).replace(/^\/+/, '')
+    const file = path.resolve(output, relative)
+    assert.ok(file.startsWith(output + path.sep), 'Geometry path escaped the delivery directory')
+    const expected = fs.readFileSync(file)
+    assert.equal(item.httpStatus, 200)
+    assert.equal(item.bytes, expected.length, 'Consumed geometry byte length differs from current carrier')
+    assert.equal(item.sha256, createHash('sha256').update(expected).digest('hex'), 'Consumed geometry bytes differ from current carrier')
+    return { ...item, bytesMatch: true, stageCorrect: after.stageId === stageId, drawn: after.accepted && after.drawnMeshes > 0 && after.loadFailure === null }
+  })
+  assert.ok(geometryProofs.length > 0, 'No exact application geometry response was verified')
+  const loaded = responses.filter(response => response.url.startsWith(site + root)
+    && (finished.has(response.url) || geometryProofs.some(item => item.url === response.url && item.bytesMatch)))
   assert.ok(loaded.some(response => /\.(fbxdata|fbx)(?:\?|$)/i.test(response.url)), 'Current geometry was not served by this website')
   assert.ok(loaded.some(response => /\.(png|webp|jpg)(?:\?|$)/i.test(response.url)), 'Current textures were not served by this website')
   assert.deepEqual(rejectedRepositoryRequests, [], 'The browser still depends on the public source repository')
   assert.deepEqual(responses.filter(response => ![200,304].includes(response.status)), [])
-  assert.deepEqual(classifyStageTransferFailures(failures,finished,profileProof), [])
+  assert.deepEqual(classifyStageTransferFailures(failures,finished,profileProof,geometryProofs), [])
   assert.ok(!errors.some(error => /ReferenceError|TypeError|SyntaxError|VALIDATE_STATUS|Error compiling|GL_INVALID|CORS policy/i.test(error)), errors.join('\n'))
   assert.equal(after.pixelRatio,before.pixelRatio)
   assert.equal(after.antialiasing,before.antialiasing)
   await page.screenshot({path:path.join(evidence,remote?'cloudflare-live-stage.png':'cloudflare-candidate-stage.png'),fullPage:true})
-  result = {passed:true,site,publicSourceRequestsBlocked:true,sceneState:{before,after},profileProof,responses,errors,failures,rejectedRepositoryRequests}
+  result = {passed:true,site,publicSourceRequestsBlocked:true,sceneState:{before,after},profileProof,geometryProofs,responses,errors,failures,rejectedRepositoryRequests}
 } catch (error) {
   after = await page?.evaluate(sceneState).catch(()=>after)
-  result = {...result,error:String(error),sceneState:{before,after},profileProof,responses,errors,failures,rejectedRepositoryRequests,
+  result = {...result,error:String(error),sceneState:{before,after},profileProof,geometryProofs,responses,errors,failures,rejectedRepositoryRequests,
     finishedStageRequests:[...finished].filter(url=>url.includes('/stages/official/'))}
   await page?.screenshot({path:path.join(evidence,'cloudflare-stage-failure.png'),fullPage:true}).catch(()=>{})
   throw error

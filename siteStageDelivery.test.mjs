@@ -125,3 +125,33 @@ test('Cloudflare acceptance requires actual draw submission, exact consumed JSON
   assert.match(cloudflare,/assert\.deepEqual\(rejectedRepositoryRequests, \[\]/)
   assert.match(cloudflare,/assert\.equal\(catalog\.bundledStageBaseUrl, undefined/)
 })
+
+test('an exact consumed geometry response plus actual draw evidence resolves a false CDP cancellation', () => {
+  const url=profileUrl.replace('scene-profile.json','scene.fbxdata')
+  const request={url,error:'net::ERR_ABORTED'}
+  const proof={url,httpStatus:200,bytesMatch:true,stageCorrect:true,drawn:true}
+  assert.deepEqual(classify([request],new Set(),undefined,[proof]),[])
+  assert.deepEqual(classify([request],new Set(),undefined,[]),[request])
+})
+for(const [field,value] of [['bytesMatch',false],['drawn',false],['stageCorrect',false],['httpStatus',404],['url',profileUrl]]) {
+  test('geometry cancellation remains a failure without verified '+field, () => {
+    const url=profileUrl.replace('scene-profile.json','scene.fbxdata')
+    const request={url,error:'net::ERR_ABORTED'}
+    const proof={url,httpStatus:200,bytesMatch:true,stageCorrect:true,drawn:true,[field]:value}
+    assert.deepEqual(classify([request],new Set(),undefined,[proof]),[request])
+  })
+}
+test('exact geometry bytes cannot hide a non-cancellation network error', () => {
+  const url=profileUrl.replace('scene-profile.json','scene.fbxdata')
+  const request={url,error:'net::ERR_FAILED'}
+  const proof={url,httpStatus:200,bytesMatch:true,stageCorrect:true,drawn:true}
+  assert.deepEqual(classify([request],new Set([url]),undefined,[proof]),[request])
+})
+test('geometry observation clones the actual application response and compares both size and SHA-256', () => {
+  assert.match(cloudflare,/const response = await originalFetch\(\.\.\.args\)/)
+  assert.match(cloudflare,/const copy = response\.clone\(\)/)
+  assert.match(cloudflare,/crypto\.subtle\.digest\('SHA-256', buffer\)/)
+  assert.match(cloudflare,/assert\.equal\(item\.bytes, expected\.length/)
+  assert.match(cloudflare,/assert\.equal\(item\.sha256, createHash\('sha256'\)\.update\(expected\)\.digest\('hex'\)/)
+  assert.match(cloudflare,/assert\.ok\(geometryProofs\.length > 0/)
+})
