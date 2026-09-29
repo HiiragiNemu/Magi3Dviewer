@@ -39,6 +39,11 @@ const inspect = () => page.evaluate(() => window.magiusPoseInspection())
 const frameWait = (count=16) => page.evaluate(n => new Promise(resolve => {
   let left=n; const tick=()=> --left<=0 ? resolve() : requestAnimationFrame(tick); requestAnimationFrame(tick)
 }), count)
+function observe(result) {
+  observations.push(result)
+  fs.writeFileSync(path.join(evidence,'pose-progress.json'),JSON.stringify({observations,errors,missing},null,2))
+  console.log(JSON.stringify(result))
+}
 const rotationDistance = (a,b) => {
   const dot=Math.abs(a.reduce((sum,n,i)=>sum+n*b[i],0))
   const norm=Math.sqrt(a.reduce((sum,n)=>sum+n*n,0)*b.reduce((sum,n)=>sum+n*n,0))
@@ -75,6 +80,21 @@ async function selectHand() {
   await sleep(250)
   return inspect()
 }
+async function orbitToObliqueView() {
+  // A front-on camera makes the world Z translation axis degenerate on the
+  // screen. TransformControls intentionally hides that end-on picker. Test
+  // every axis from a usable view, reached through real pointer input, not by
+  // assigning a gizmo axis or changing the production camera/pose directly.
+  const before=await page.evaluate(()=>window.scene.camera.position.toArray())
+  await page.mouse.move(1220,350)
+  await page.mouse.down()
+  await page.mouse.move(1070,415,{steps:10})
+  await page.mouse.up()
+  await frameWait(8)
+  const after=await page.evaluate(()=>window.scene.camera.position.toArray())
+  assert.ok(Math.hypot(...after.map((v,i)=>v-before[i]))>1e-5,'background pointer drag orbits the camera')
+  observe({test:'pointer-oblique-camera',before,after})
+}
 async function hitAxis(axis) {
   const state=await inspect()
   const points=state.rings.filter(r=>r.axis===axis).flatMap(r=>r.points)
@@ -108,12 +128,13 @@ async function dragAxis(axis, rotate=false) {
   await frameWait(40)
   const idle=await inspect(),map=new Map(idle.bones.map(b=>[b.uuid,b]))
   for(const bone of changed) assert.ok(rotationDistance(bone.quaternion,map.get(bone.uuid).quaternion)<1e-4,'idle pose drift: '+bone.name)
-  observations.push({test:(rotate?'rotate-':'ik-')+axis,changed:changed.map(b=>b.name),solves:after.solves,stableFrames:40})
+  observe({test:(rotate?'rotate-':'ik-')+axis,changed:changed.map(b=>b.name),solves:after.solves,stableFrames:40})
 }
 function median(values) { return values.slice().sort((a,b)=>a-b)[Math.floor(values.length/2)] ?? 0 }
 try {
   await page.goto('http://127.0.0.1:4175/?diagnostic=pose-editor&runtimeDelivery=release', {waitUntil:'domcontentloaded',timeout:60000})
   await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData?.characterId===100107 && typeof window.magiusPoseInspection==='function',{timeout:180000})
+  await orbitToObliqueView()
   await selectHand()
   for(const axis of ['X','Y','Z']) await dragAxis(axis)
   await openAction();await click('#pose-undo');await click('#pose-redo')
@@ -141,7 +162,7 @@ try {
     });return {selected:entry===window.scene.characterSelected,materials:mats.size}
   }))
   assert.ok(highlights.every(x=>x.selected||x.materials===0),'highlight does not leak to another character')
-  observations.push({test:'three-actor-highlight',renderCalls:counts,highlight:highlights,
+  observe({test:'three-actor-highlight',renderCalls:counts,highlight:highlights,
     softwareRendererFrameMs:{ordinary:median(ordinary.map(f=>f.milliseconds)),selected:median(selected.frames.slice(-25).map(f=>f.milliseconds))}})
   await page.screenshot({path:path.join(evidence,'three-actors-selected.png'),fullPage:true})
   await click('#transform-close');await frameWait(20);assert.equal((await inspect()).outlines,0)
@@ -155,7 +176,7 @@ try {
   await page.setViewport({width:1280,height:900,deviceScaleFactor:1})
   await page.goto('http://127.0.0.1:4175/Magi3Dviewer/?diagnostic=pose-editor&runtimeDelivery=release',{waitUntil:'domcontentloaded',timeout:60000})
   await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData?.characterId===100107,{timeout:180000})
-  observations.push({test:'github-pages-subdirectory',loaded:true})
+  observe({test:'github-pages-subdirectory',loaded:true})
   assert.equal(errors.filter(e=>/ReferenceError|TypeError|SyntaxError|VALIDATE_STATUS|Error compiling|GL_INVALID/i.test(e)).length,0,'browser execution/shader errors: '+errors.join('\n'))
   fs.writeFileSync(path.join(evidence,'pose-browser.json'),JSON.stringify({passed:true,renderer:'Chrome headless ANGLE SwiftShader; timing is not a user GPU benchmark',observations,errors,missing},null,2))
   console.log(JSON.stringify({passed:true,observations},null,2))
