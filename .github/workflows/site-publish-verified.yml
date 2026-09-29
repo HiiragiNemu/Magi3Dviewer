@@ -1,0 +1,172 @@
+name: Publish verified pose website
+on:
+  push:
+    branches: [magius3dviewer]
+    paths: ['.github/workflows/site-publish-verified.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+concurrency:
+  group: current-website-delivery
+  cancel-in-progress: true
+# One-time recovery of an already compiled and browser-tested artifact.
+# Normal future source builds remain in site-delivery.yml. This workflow must
+# refuse reuse once application/resource source changes or the artifact expires.
+env:
+  SOURCE_SHA: 31a4b3ed0949f31e265919ba125d553d6225506b
+  SOURCE_RUN: '36542133898'
+  SOURCE_ARTIFACT: '11022012925'
+  SOURCE_DIGEST: sha256:e335f8cebbf85caa07ec91d05e8c96d7433a13b30dfd1d0c17d5a1b838af5583
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/magius3dviewer'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment:
+      name: magius3dviewer-live
+      url: ${{ steps.pages.outputs.page_url }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Verify tested artifact provenance and unchanged application source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          import path from 'node:path';
+          const api='https://api.github.com/repos/HiiragiNemu/Magi3Dviewer';
+          async function get(route){const r=await fetch(api+route,{headers:{Authorization:`Bearer ${process.env.GH_TOKEN}`,Accept:'application/vnd.github+json'}});if(!r.ok)throw new Error('GitHub metadata HTTP '+r.status+' '+route);return r.json();}
+          const run=await get('/actions/runs/'+process.env.SOURCE_RUN);
+          assert.equal(run.head_sha,process.env.SOURCE_SHA);
+          assert.equal(run.head_branch,'magius3dviewer');
+          assert.equal(run.path,'.github/workflows/site-delivery.yml');
+          const jobs=await get('/actions/runs/'+process.env.SOURCE_RUN+'/jobs?per_page=100');
+          assert.ok(jobs.total_count<100);
+          const build=jobs.jobs.find(j=>j.name==='build');
+          assert.equal(build?.conclusion,'success','Only a fully successful production/browser build may be reused');
+          for(const name of ['Pose, selection, IK and current scene delivery regressions','Complete production typecheck','Build current client and complete runtime resources','Verify real pointer interaction, skinning and multi-character rendering'])assert.equal(build.steps.find(s=>s.name===name)?.conclusion,'success',name);
+          const artifact=await get('/actions/artifacts/'+process.env.SOURCE_ARTIFACT);
+          assert.equal(artifact.name,'verified-website');
+          assert.equal(artifact.expired,false,'Expired recovery artifact: use the normal fresh build workflow');
+          assert.equal(artifact.digest,process.env.SOURCE_DIGEST);
+          assert.equal(artifact.workflow_run.head_sha,process.env.SOURCE_SHA);
+          const allowed=new Set(['.github/workflows/site-delivery.yml','.github/workflows/site-publish-verified.yml','scripts/site-smoke-stage-delivery.mjs','siteStageDelivery.test.mjs']);
+          const branch=await get('/branches/magius3dviewer');
+          const comparisons=[];
+          for(const head of new Set([process.env.GITHUB_SHA,branch.commit.sha])){
+            const comparison=await get('/compare/'+process.env.SOURCE_SHA+'...'+head);
+            assert.ok(['ahead','identical'].includes(comparison.status));
+            assert.equal(comparison.merge_base_commit.sha,process.env.SOURCE_SHA);
+            assert.ok(comparison.total_commits<100 && Array.isArray(comparison.files) && comparison.files.length<300,'Comparison is too large for recovery; use a fresh build');
+            const changed=comparison.files.map(f=>f.filename);
+            assert.ok(changed.every(file=>allowed.has(file)),'Application/resources changed; refusing to publish a stale artifact: '+changed.join(', '));
+            comparisons.push({head,changed});
+          }
+          for(const file of ['scripts/prepare-github-pages.mjs','scripts/site-smoke-stage-delivery.mjs','prepareGitHubPages.test.mjs','siteStageDelivery.test.mjs']){
+            const r=await fetch('https://raw.githubusercontent.com/HiiragiNemu/Magi3Dviewer/'+process.env.GITHUB_SHA+'/'+file);
+            assert.equal(r.status,200,'Cannot load committed delivery tool '+file);
+            fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,await r.text());
+          }
+          fs.mkdirSync('/tmp/site-evidence',{recursive:true});
+          const proof={sourceRevision:process.env.SOURCE_SHA,sourceRun:run.id,buildJob:build.id,artifactId:artifact.id,digest:artifact.digest,recoveryRevision:process.env.GITHUB_SHA,comparisons};
+          fs.writeFileSync('/tmp/site-evidence/recovery-provenance.json',JSON.stringify(proof,null,2)+'\n');
+          console.log(JSON.stringify(proof,null,2));
+          NODE
+      - name: Check corrected scene diagnostics and transport regressions
+        run: |
+          set -euo pipefail
+          node --test prepareGitHubPages.test.mjs siteStageDelivery.test.mjs 2>&1 | tee /tmp/site-evidence/recovery-tests.log
+      - uses: actions/download-artifact@v4
+        with:
+          name: verified-website
+          path: dist-deploy
+          run-id: 36542133898
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-delivery-evidence
+          path: /tmp/site-evidence/original-build
+          run-id: 36542133898
+          github-token: ${{ github.token }}
+      - name: Reverify every immutable current scene resource and prepare Pages
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE' 2>&1 | tee /tmp/site-evidence/github-pages-pack.log
+          import {prepareGitHubPages} from './scripts/prepare-github-pages.mjs';
+          await prepareGitHubPages({output:'dist-deploy',base:`https://raw.githubusercontent.com/HiiragiNemu/Magi3Dviewer/${process.env.SOURCE_SHA}/public/`,expectedRevision:process.env.SOURCE_SHA,evidenceDirectory:'/tmp/site-evidence'});
+          NODE
+      - name: Install isolated browser test driver
+        run: |
+          printf '{"private":true,"type":"module"}\n' > package.json
+          npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+      - name: Verify the real background geometry and cross-origin material textures
+        run: |
+          set -euo pipefail
+          node scripts/site-smoke-stage-delivery.mjs 2>&1 | tee /tmp/site-evidence/github-pages-browser.log
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist-deploy/
+      - uses: actions/configure-pages@v5
+      - uses: actions/deploy-pages@v4
+        id: pages
+      - name: Verify public revision, scene source, HTML and entry JavaScript bytes
+        env:
+          SITE_URL: ${{ steps.pages.outputs.page_url }}
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import {createHash} from 'node:crypto';
+          const site=new URL(process.env.SITE_URL);
+          const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+          const expectedBase=`https://raw.githubusercontent.com/HiiragiNemu/Magi3Dviewer/${process.env.SOURCE_SHA}/public/`;
+          let proof,lastError;
+          async function bytes(url){const r=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(60000)});assert.equal(r.status,200,String(url));return Buffer.from(await r.arrayBuffer());}
+          for(let attempt=0;attempt<18;attempt++){
+            try{
+              const query='?verified='+process.env.SOURCE_SHA;
+              const version=JSON.parse((await bytes(new URL('site-version.json'+query,site))).toString());
+              const catalog=JSON.parse((await bytes(new URL('catalogs/runtime-product-delivery.v1.json'+query,site))).toString());
+              assert.equal(version.revision,process.env.SOURCE_SHA);
+              assert.equal(catalog.bundledStageBaseUrl,expectedBase);
+              const local=fs.readFileSync('dist-deploy/index.html');
+              const online=await bytes(new URL('index.html'+query,site));
+              assert.equal(hash(online),hash(local),'Public HTML differs from the tested artifact');
+              const entries=[];
+              for(const match of local.toString().matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/g)){
+                const url=new URL(match[1],site);
+                assert.equal(url.origin,site.origin);
+                assert.ok(url.pathname.startsWith(site.pathname));
+                const relative=decodeURIComponent(url.pathname.slice(site.pathname.length));
+                const file=path.resolve('dist-deploy',relative);
+                assert.ok(file.startsWith(path.resolve('dist-deploy')+path.sep));
+                const actual=await bytes(url),expected=fs.readFileSync(file);
+                assert.equal(hash(actual),hash(expected),'Public entry differs from the tested artifact');
+                entries.push({url:url.href,bytes:actual.length,sha256:hash(actual)});
+              }
+              assert.ok(entries.length>0,'No tested client entry found');
+              proof={passed:true,site:site.href,verifiedAt:new Date().toISOString(),version,stageBase:catalog.bundledStageBaseUrl,indexSha256:hash(online),entries,recoveryRevision:process.env.GITHUB_SHA};
+              break;
+            }catch(error){lastError=String(error);console.log('Waiting for a consistent public release:',lastError);await new Promise(resolve=>setTimeout(resolve,5000));}
+          }
+          fs.writeFileSync('/tmp/site-evidence/public-release-verification.json',JSON.stringify(proof??{passed:false,lastError},null,2)+'\n');
+          if(!proof)throw new Error('Public release verification failed: '+lastError);
+          console.log(JSON.stringify(proof,null,2));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Published verified pose website: ${site.href}\nApplication source: ${process.env.SOURCE_SHA}\nCloudflare: not deployed; its existing website was left unchanged.\n`);
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verified-publication-evidence
+          path: /tmp/site-evidence/
+          retention-days: 14
