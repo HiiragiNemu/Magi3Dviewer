@@ -7,7 +7,7 @@ import ts from 'typescript'
 import * as T from 'three'
 const temp=fs.mkdtempSync(path.resolve('.viewport-tests-'))
 after(()=>fs.rmSync(temp,{recursive:true,force:true}))
-const modules=['poseJointLimits','editorGround','directPoseTools','directPoseTarget','poseContactGuard','viewportPoseEditor','objectMovementSelection']
+const modules=['viewportBranchLayout','poseJointLimits','editorGround','directPoseTools','directPoseTarget','poseContactGuard','viewportPoseEditor','objectMovementSelection']
 for(const name of modules){let source=fs.readFileSync(`src/viewer/${name}.ts`,'utf8');for(const dep of modules)source=source.replaceAll(`'./${dep}'`,`'./${dep}.mjs'`);fs.writeFileSync(path.join(temp,name+'.mjs'),ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}}).outputText)}
 const {registerPoseJointLimits,clampPoseJoint,poseJointLimitSnapshot,constrainBendPole}=await import(pathToFileURL(path.join(temp,'poseJointLimits.mjs')))
 const {EditorGroundGuard,liftWorld}=await import(pathToFileURL(path.join(temp,'editorGround.mjs')))

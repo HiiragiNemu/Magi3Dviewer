@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { TpsViewTouch } from './TpsViewTouch.ts'
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 interface CameraHost {
@@ -26,6 +27,7 @@ export class ThirdPersonCamera {
     private orientation = new THREE.Euler(0, 0, 0, 'YXZ')
     private orbit?: { controls: OrbitControls; enabled: boolean; up: THREE.Vector3 }
     private listeners?: AbortController
+    private touchView?: TpsViewTouch
     private drag?: { id: number; x: number; y: number }
     private locked = false
     private lockPending = false
@@ -107,6 +109,7 @@ export class ThirdPersonCamera {
         if (!this.active) return
         this.update()
         this.active = false
+        this.touchView?.reset()
         this.drag = undefined
         this.lockGeneration++
         const { camera, controls, renderer } = this.hooks.scene()
@@ -170,6 +173,13 @@ export class ThirdPersonCamera {
         if (this.listeners) return
         this.listeners = new AbortController()
         const signal = this.listeners.signal
+        this.touchView = new TpsViewTouch({
+            active: () => this.active,
+            canvas: () => this.hooks.scene().renderer.domElement,
+            isControl: target => this.isControl(target),
+            rotate: (dx,dy) => this.move(dx*2,dy*2,0,'touch'),
+            pinch: ratio => { if(Number.isFinite(ratio)&&ratio>0)this.distance=Math.min(20,Math.max(.12,this.distance*ratio)) },
+        })
         // Never subscribe to mousemove alongside Pointer Events. Raw and normal
         // pointer streams overlap; exactly ONE of them owns locked movement.
         this.stream = window.isSecureContext && 'onpointerrawupdate' in window ? 'pointerrawupdate' : 'pointermove'
@@ -181,12 +191,14 @@ export class ThirdPersonCamera {
             this.move(event.movementX, event.movementY, event.timeStamp, this.stream, event.isTrusted)
         }) as EventListener, { signal })
         document.addEventListener('pointermove', event => {
+            if (event.pointerType === 'touch') return
             if (!this.active || document.pointerLockElement === this.hooks.scene().renderer.domElement || this.drag?.id !== event.pointerId) return
             if (event.cancelable) event.preventDefault()
             this.move(event.clientX - this.drag.x, event.clientY - this.drag.y, event.timeStamp, 'drag', event.isTrusted)
             this.drag.x = event.clientX; this.drag.y = event.clientY
         }, { signal })
         document.addEventListener('pointerdown', event => {
+            if (event.pointerType === 'touch') return
             if (!this.active || event.button !== 0 || this.isControl(event.target) || !this.inside(event.clientX, event.clientY)) return
             if (document.pointerLockElement !== this.hooks.scene().renderer.domElement) {
                 if (this.drag && this.drag.id !== event.pointerId) return

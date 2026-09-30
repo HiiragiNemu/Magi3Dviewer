@@ -29,7 +29,6 @@
         <div id="menu">
             <div id="menu-controls">
                 <div data-performance-resource="characters">
-                    <img src="src/icons/accessibility_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Model">
                     <select id="character-selector" class="target-true" title="Choose model"></select>
                     <button id="character-add-cross-btn" class="target-true" title="Remove selected model">❌</button>
                     <span class="target-false">&lt;No target selected&gt;</span>
@@ -47,7 +46,6 @@
                 </div>
 
                 <div id="character-animation-controls" class="animation-controls" data-performance-resource="actions" hidden>
-                    <img src="src/icons/emoji_people_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Animation">
                     <select id="animation-selector" class="target-true" title="Choose animation"></select>
                     <input id="animation-repetitions" class="target-true" type="number" min="0" max="9007199254740991" step="1" placeholder="Default" aria-label="Total plays" title="Total plays: blank uses default, 0 repeats forever">
                     <button id="animation-apply" class="target-true" type="button" title="Play selected animation">Play</button>
@@ -61,7 +59,6 @@
                 </div>
 
                 <div>
-                    <img src="src/icons/emoji_people_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Expression">
                     <select id="expression-selector" class="target-true" title="Choose expression"></select>
                     <label id="expression-auto-blink-control" class="target-true" title="Enable automatic blink for the selected expression">
                         <input id="expression-auto-blink" type="checkbox">
@@ -123,8 +120,8 @@
                 <button id="locomotion-mode-toggle" class="target-true" data-i18n-ignore="true" type="button" title="Enable TPS character control" aria-controls="locomotion-hud" aria-pressed="false">TPS Move: Off</button>
                 <button id="character-list-panel-toggle" data-i18n-ignore="true" type="button" title="Show character list" aria-label="Show character list" aria-controls="character-list-panel" aria-expanded="false">Characters</button>
                 <button id="stage-list-panel-toggle" data-i18n-ignore="true" type="button" title="Show scene list" aria-label="Show scene list" aria-controls="stage-list-panel" aria-expanded="false">Scenes</button>
+                <button id="voice-panel-toggle" data-i18n-ignore="true" type="button" title="Show voice and subtitles" aria-label="Show voice and subtitles" aria-controls="voice-panel" aria-expanded="false">Voice / Subtitles</button>
                 <div id="enemy-toolbar-control">
-                    <img src="src/icons/accessibility_24dp_000000_FILL0_wght400_GRAD0_opsz24.svg" alt="Enemy">
                     <select id="enemy-toolbar-select" data-i18n-ignore="true" title="Choose enemy" aria-label="Choose enemy" disabled>
                         <option value="">Loading enemy list...</option>
                     </select>
@@ -134,7 +131,7 @@
                 <button id="weapon-panel-toggle" type="button" aria-controls="weapon-panel" aria-expanded="false">Weapons</button>
                 <button id="enemy-panel-toggle" data-i18n-ignore="true" type="button" title="Show enemies" aria-label="Show enemies" aria-controls="enemy-panel" aria-expanded="false">Enemies</button>
                 <button id="combat-vfx-panel-toggle" data-i18n-ignore="true" type="button" title="Show combat effects" aria-label="Show combat effects" aria-controls="combat-vfx-panel" aria-expanded="false">Combat effects</button>
-                <button id="voice-panel-toggle" data-i18n-ignore="true" type="button" title="Show voice and subtitles" aria-label="Show voice and subtitles" aria-controls="voice-panel" aria-expanded="false">Voice / Subtitles</button>
+
 
                 <button id="menu-collapse-toggle" class="main-toolbar-toggle" data-i18n-ignore="true" type="button" title="Collapse controls" aria-label="Collapse controls" aria-controls="menu-controls" aria-expanded="true"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4.5 18 12 5.5 19.5 18Z"></path></svg></span></button>
             </div>

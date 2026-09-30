@@ -74,3 +74,7 @@ body.locomotion-mode-enabled canvas { touch-action: none; }
     #tps-touch-exit { height: 30px; }
     body.tps-touch-visible #locomotion-hud { bottom: calc(max(10px, env(safe-area-inset-bottom, 0px)) + clamp(88px, 26vh, 112px) + 10px); }
 }
+
+/* Keyboard bindings are desktop-only, not a phone modal. */
+body.tps-touch-visible #locomotion-hud{display:none!important;pointer-events:none!important;}
+@media(any-pointer:coarse){body.locomotion-mode-enabled #locomotion-hud{display:none!important;}}

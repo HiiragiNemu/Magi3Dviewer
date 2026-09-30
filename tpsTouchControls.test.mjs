@@ -24,10 +24,17 @@ function fixture(t,{touch=true}={}) {
  const controls=new TpsTouchControls({canvas:()=>canvas,exit:()=>{exits++;controls.setEnabled(false)}})
  const stick=w.document.querySelector('#tps-touch-stick')
  stick.getBoundingClientRect=()=>({left:20,top:750,right:156,bottom:886,width:136,height:136})
+ const nativeTouches=new Map()
  const send=(selector,type,id,x=88,y=818)=>{
   const target=typeof selector==='string'?w.document.querySelector(selector):selector
   const e=new w.PointerEvent(type,{bubbles:true,cancelable:true,pointerId:id,pointerType:'touch',isPrimary:id===1,button:0,buttons:type==='pointerup'?0:1,clientX:x,clientY:y})
-  target.dispatchEvent(e);return e
+  target.dispatchEvent(e)
+  const touch={identifier:id,clientX:x,clientY:y,target}
+  if(type==='pointerdown'||type==='pointermove')nativeTouches.set(id,touch)
+  else nativeTouches.delete(id)
+  const touchType={pointerdown:'touchstart',pointermove:'touchmove',pointerup:'touchend',pointercancel:'touchcancel'}[type]
+  if(touchType)target.dispatchEvent(new w.TouchEvent(touchType,{bubbles:true,cancelable:true,touches:[...nativeTouches.values()],targetTouches:[...nativeTouches.values()].filter(t=>t.target===target),changedTouches:[touch]}))
+  return e
  }
  const cleanup=[]
  t.after(()=>{for(const dispose of cleanup)dispose();controls.dispose();dom.window.close();for(const [k,d] of saved){if(d)Object.defineProperty(globalThis,k,d);else delete globalThis[k]}})

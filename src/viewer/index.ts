@@ -1317,7 +1317,13 @@ function setupDockControls() {
         setAdvancedControlsOpen(!document.body.classList.contains('advanced-controls-open'))
     }
     positionControlsToggle.onclick = () => {
-        setPositionControlsOpen(!document.body.classList.contains('position-controls-open'))
+        setPositionControlsOpen(false)
+        const target=movementSelection.current
+        const object=target?.object??scene.characterSelected?.character?.object
+        if(!object)return
+        setDirectPoseEditing(false)
+        activateObjectTransform(object,target?.changed)
+        setTransformMode('translate')
     }
     captureControlsToggle.onclick = () => {
         setPositionControlsOpen(!document.body.classList.contains('position-controls-open'))
@@ -2281,11 +2287,20 @@ function setupViewportEditor() {
             if (!object) return
             const bounds = editorGround.visualBounds(object), center = bounds.getCenter(new THREE.Vector3()), size = bounds.getSize(new THREE.Vector3())
             const direction = scene.camera.position.clone().sub(scene.controls.target).normalize()
-            const distance = Math.max(size.y, size.x / scene.camera.aspect, size.z / scene.camera.aspect, 0.3) / (2 * Math.tan(THREE.MathUtils.degToRad(scene.camera.fov) / 2) * 0.68)
-            scene.controls.target.copy(center)
-            scene.camera.position.copy(center).addScaledVector(direction, distance)
+            const canvasRect=scene.renderer.domElement.getBoundingClientRect()
+            const top=Math.max(canvasRect.top,document.getElementById('menu')?.getBoundingClientRect().bottom??canvasRect.top)
+            const visibleHeight=Math.max(120,canvasRect.bottom-top)
+            const sideSpace=Math.min(104,Math.max(76,canvasRect.width*.215))+25
+            const widthFraction=Math.max(.25,(canvasRect.width-sideSpace*2)/canvasRect.width)
+            const heightFraction=visibleHeight/canvasRect.height
+            const tangent=Math.tan(THREE.MathUtils.degToRad(scene.camera.fov)/2)
+            const distance=Math.max(size.y/heightFraction,size.x/(scene.camera.aspect*widthFraction),size.z/scene.camera.aspect,.3)/(2*tangent*.74)
+            const screenUp=new THREE.Vector3(0,1,0).applyQuaternion(scene.camera.quaternion)
+            const offset=(top-canvasRect.top)/canvasRect.height*tangent*distance
+            scene.controls.target.copy(center).addScaledVector(screenUp,offset)
+            scene.camera.position.copy(scene.controls.target).addScaledVector(direction,distance)
             editorGround.constrainCamera(scene.camera, scene.controls)
-            scene.camera.lookAt(center); scene.camera.updateMatrixWorld()
+            scene.camera.lookAt(scene.controls.target); scene.camera.updateMatrixWorld()
             scene.controls.update()
             viewportEditor?.reposition()
         },

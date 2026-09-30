@@ -30,7 +30,7 @@ try{
  const frames=n=>page.evaluate(n=>new Promise(resolve=>{let i=0;const tick=()=>++i>=n?resolve():requestAnimationFrame(tick);requestAnimationFrame(tick)}),n)
  const inspect=()=>page.evaluate(()=>window.magiusPoseInspection())
  const click=async selector=>{await page.waitForSelector(selector,{visible:true,timeout:20000});await page.click(selector);await frames(3)}
- const card=()=>page.$eval('#viewport-editor-dock',el=>{const r=el.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,overflow:el.scrollWidth-el.clientWidth}})
+ const card=()=>page.$eval('#viewport-editor-dock .ve-branch-right',el=>{const r=el.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,overflow:el.scrollWidth-el.clientWidth}})
  record({test:'initial-position',ground:await page.evaluate(()=>window.magiusGroundInspection?.()),actor:await page.evaluate(()=>window.scene.characterSelected.character.object.position.toArray())})
  await click('#viewport-editor-launch');assert.equal(await page.$eval('#action-parameter-panel',e=>e.classList.contains('is-open')),false)
  assert.equal(await page.$eval('#viewport-move',e=>e.getAttribute('aria-pressed')),'true')
@@ -115,7 +115,7 @@ try{
  // started Orbit damping. Previous floor-test inertia is not toolbar input.
  await click('#viewport-editor-collapse')
  const dockBefore=await card(),cameraBeforeDock=await camera()
- const handle=await page.$eval('#viewport-editor-dock .ve-drag-handle',e=>{const r=e.getBoundingClientRect();return{x:r.left+40,y:r.top+12}})
+ const handle=await page.$eval('#viewport-editor-dock .ve-branch-grip',e=>{const r=e.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}})
  await page.mouse.move(handle.x,handle.y);await page.mouse.down();await page.mouse.move(handle.x+12,handle.y-150,{steps:8});await page.mouse.up();await frames(3)
  const dockAfter=await card();assert.ok(dockAfter.y<dockBefore.y-100,'The viewport tool must be draggable')
  const cameraAfterDock=await camera()
