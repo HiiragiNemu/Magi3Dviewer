@@ -1,0 +1,1479 @@
+{
+  "schema": "magius.entry-and-landing-delivery.v1",
+  "recordedAt": "2026-09-30T10:34:22.197Z",
+  "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+  "deployment": "f37a0d33",
+  "site": "https://magius3dviewer.pages.dev/",
+  "entry": {
+    "before": {
+      "rows": [
+        {
+          "url": "https://magius3dviewer.pages.dev/",
+          "noCache": false,
+          "status": 200,
+          "headers": {
+            "cache-control": "public, max-age=0, must-revalidate",
+            "etag": null,
+            "age": null,
+            "cf-cache-status": null,
+            "cf-ray": "a43256f35e0a62d0-NRT",
+            "last-modified": null,
+            "vary": null,
+            "location": null
+          },
+          "hash": "9b893f7f2df985bdaddc496ce4535cbb6c28eb138bb79f3a3762da27ee15f943",
+          "bytes": 62463,
+          "scripts": [
+            "./assets/polyfills-C81vJE_w.js",
+            "./assets/main-Cupbm7I8.js",
+            "./assets/modulepreload-polyfill-B5Qt9EMX.js",
+            "./assets/three-core-qrF7swDT.js",
+            "./assets/viewer-localization-bgcdZ3O9.js",
+            "./assets/three-libs-BE0iLUPD.js",
+            "./assets/three-controls-bdRHdhe5.js",
+            "./assets/lz-string-UNqkxtPb.js",
+            "./assets/three-loaders-DlnDWCPO.js",
+            "./assets/three-postprocessing-B0tAZW6M.js",
+            "./assets/fflate-DWcM8ZDX.js",
+            "./assets/vendor-BNguDoK7.js",
+            "./assets/viewer-runtime-Bo4Evmkk.js",
+            "./assets/viewer-runtime-BFh3pqLg.css",
+            "./assets/main-BCS5LpNF.css",
+            "./assets/polyfills-legacy-CXKHYqks.js",
+            "./assets/main-legacy-B-32wZwa.js"
+          ],
+          "decorativePeople": 0
+        },
+        {
+          "url": "https://magius3dviewer.pages.dev/",
+          "noCache": true,
+          "status": 200,
+          "headers": {
+            "cache-control": "public, max-age=0, must-revalidate",
+            "etag": null,
+            "age": null,
+            "cf-cache-status": null,
+            "cf-ray": "a43256f48a4b62d0-NRT",
+            "last-modified": null,
+            "vary": null,
+            "location": null
+          },
+          "hash": "9b893f7f2df985bdaddc496ce4535cbb6c28eb138bb79f3a3762da27ee15f943",
+          "bytes": 62463,
+          "scripts": [
+            "./assets/polyfills-C81vJE_w.js",
+            "./assets/main-Cupbm7I8.js",
+            "./assets/modulepreload-polyfill-B5Qt9EMX.js",
+            "./assets/three-core-qrF7swDT.js",
+            "./assets/viewer-localization-bgcdZ3O9.js",
+            "./assets/three-libs-BE0iLUPD.js",
+            "./assets/three-controls-bdRHdhe5.js",
+            "./assets/lz-string-UNqkxtPb.js",
+            "./assets/three-loaders-DlnDWCPO.js",
+            "./assets/three-postprocessing-B0tAZW6M.js",
+            "./assets/fflate-DWcM8ZDX.js",
+            "./assets/vendor-BNguDoK7.js",
+            "./assets/viewer-runtime-Bo4Evmkk.js",
+            "./assets/viewer-runtime-BFh3pqLg.css",
+            "./assets/main-BCS5LpNF.css",
+            "./assets/polyfills-legacy-CXKHYqks.js",
+            "./assets/main-legacy-B-32wZwa.js"
+          ],
+          "decorativePeople": 0
+        },
+        {
+          "url": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+          "noCache": false,
+          "status": 200,
+          "headers": {
+            "cache-control": "public, max-age=0, must-revalidate",
+            "etag": null,
+            "age": null,
+            "cf-cache-status": null,
+            "cf-ray": "a43256f59e3062d0-NRT",
+            "last-modified": null,
+            "vary": null,
+            "location": null
+          },
+          "hash": "9b893f7f2df985bdaddc496ce4535cbb6c28eb138bb79f3a3762da27ee15f943",
+          "bytes": 62463,
+          "scripts": [
+            "./assets/polyfills-C81vJE_w.js",
+            "./assets/main-Cupbm7I8.js",
+            "./assets/modulepreload-polyfill-B5Qt9EMX.js",
+            "./assets/three-core-qrF7swDT.js",
+            "./assets/viewer-localization-bgcdZ3O9.js",
+            "./assets/three-libs-BE0iLUPD.js",
+            "./assets/three-controls-bdRHdhe5.js",
+            "./assets/lz-string-UNqkxtPb.js",
+            "./assets/three-loaders-DlnDWCPO.js",
+            "./assets/three-postprocessing-B0tAZW6M.js",
+            "./assets/fflate-DWcM8ZDX.js",
+            "./assets/vendor-BNguDoK7.js",
+            "./assets/viewer-runtime-Bo4Evmkk.js",
+            "./assets/viewer-runtime-BFh3pqLg.css",
+            "./assets/main-BCS5LpNF.css",
+            "./assets/polyfills-legacy-CXKHYqks.js",
+            "./assets/main-legacy-B-32wZwa.js"
+          ],
+          "decorativePeople": 0
+        },
+        {
+          "url": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+          "noCache": true,
+          "status": 200,
+          "headers": {
+            "cache-control": "public, max-age=0, must-revalidate",
+            "etag": null,
+            "age": null,
+            "cf-cache-status": null,
+            "cf-ray": "a43256f6999762d0-NRT",
+            "last-modified": null,
+            "vary": null,
+            "location": null
+          },
+          "hash": "9b893f7f2df985bdaddc496ce4535cbb6c28eb138bb79f3a3762da27ee15f943",
+          "bytes": 62463,
+          "scripts": [
+            "./assets/polyfills-C81vJE_w.js",
+            "./assets/main-Cupbm7I8.js",
+            "./assets/modulepreload-polyfill-B5Qt9EMX.js",
+            "./assets/three-core-qrF7swDT.js",
+            "./assets/viewer-localization-bgcdZ3O9.js",
+            "./assets/three-libs-BE0iLUPD.js",
+            "./assets/three-controls-bdRHdhe5.js",
+            "./assets/lz-string-UNqkxtPb.js",
+            "./assets/three-loaders-DlnDWCPO.js",
+            "./assets/three-postprocessing-B0tAZW6M.js",
+            "./assets/fflate-DWcM8ZDX.js",
+            "./assets/vendor-BNguDoK7.js",
+            "./assets/viewer-runtime-Bo4Evmkk.js",
+            "./assets/viewer-runtime-BFh3pqLg.css",
+            "./assets/main-BCS5LpNF.css",
+            "./assets/polyfills-legacy-CXKHYqks.js",
+            "./assets/main-legacy-B-32wZwa.js"
+          ],
+          "decorativePeople": 0
+        }
+      ],
+      "allSameHtml": true,
+      "conclusion": "Fresh network reads at NRT returned identical current documents before this change. User screenshots are old, but the stale layer on the user device is not remotely established."
+    },
+    "after": {
+      "passed": true,
+      "verifiedAt": "2026-09-30T10:33:47.296Z",
+      "version": {
+        "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+        "jumpStyle": "expressive",
+        "entryPolicy": "single-production-no-store-v1",
+        "landing": "continuous-grounded-gait-v1",
+        "builtAt": "2026-09-30T10:20:36.860Z",
+        "poseEditor": "bind-limited-ik-v3",
+        "viewportEditor": "persistent-v1",
+        "groundGuard": "scene-floor-v1",
+        "selection": "existing-outline-uniforms",
+        "deploymentTarget": "cloudflare",
+        "stageDelivery": "cloudflare-same-origin"
+      },
+      "rows": [
+        {
+          "url": "https://magius3dviewer.pages.dev/",
+          "status": 200,
+          "sha256": "cc00588d8ae85d88eb0efdb3f72b7152d70b6b161d8da750e5dc449aab6c07c6",
+          "cache": "no-store, max-age=0",
+          "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+          "ray": "a432923a2cd7dfdd-NRT"
+        },
+        {
+          "url": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+          "status": 200,
+          "sha256": "cc00588d8ae85d88eb0efdb3f72b7152d70b6b161d8da750e5dc449aab6c07c6",
+          "cache": "no-store, max-age=0",
+          "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+          "ray": "a432923b5de9dfdd-NRT"
+        }
+      ],
+      "attempts": []
+    },
+    "policy": "no-store HTML only; content-hashed model/application assets retain normal caching",
+    "canonical": "runtimeDelivery=release is redundant only at the main production host; client history removes it, retaining other options/hash",
+    "coldWarmBrowser": {
+      "test": "exact-entry-cold-and-warm-coherence",
+      "production": true,
+      "entries": [
+        {
+          "requested": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+          "actual": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+          "hash": "cc00588d8ae85d88eb0efdb3f72b7152d70b6b161d8da750e5dc449aab6c07c6",
+          "status": 200,
+          "headers": {
+            "cacheControl": "no-store, max-age=0",
+            "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+            "cf-ray": "a4328b6b8ab5b662-NRT"
+          },
+          "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+          "icons": 0,
+          "voiceAfterScene": true,
+          "jumpControls": 0,
+          "jumpStyle": "expressive",
+          "canonical": "https://magius3dviewer.pages.dev/"
+        },
+        {
+          "requested": "https://magius3dviewer.pages.dev/",
+          "actual": "https://magius3dviewer.pages.dev/",
+          "hash": "cc00588d8ae85d88eb0efdb3f72b7152d70b6b161d8da750e5dc449aab6c07c6",
+          "status": 200,
+          "headers": {
+            "cacheControl": "no-store, max-age=0",
+            "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+            "cf-ray": "a4328b961cc3b662-NRT"
+          },
+          "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+          "icons": 0,
+          "voiceAfterScene": true,
+          "jumpControls": 0,
+          "jumpStyle": "expressive",
+          "canonical": "https://magius3dviewer.pages.dev/"
+        },
+        {
+          "requested": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+          "actual": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+          "hash": "cc00588d8ae85d88eb0efdb3f72b7152d70b6b161d8da750e5dc449aab6c07c6",
+          "status": 200,
+          "headers": {
+            "cacheControl": "no-store, max-age=0",
+            "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+            "cf-ray": "a4328bc64e58b662-NRT"
+          },
+          "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+          "icons": 0,
+          "voiceAfterScene": true,
+          "jumpControls": 0,
+          "jumpStyle": "expressive",
+          "canonical": "https://magius3dviewer.pages.dev/"
+        },
+        {
+          "requested": "https://magius3dviewer.pages.dev/",
+          "actual": "https://magius3dviewer.pages.dev/",
+          "hash": "cc00588d8ae85d88eb0efdb3f72b7152d70b6b161d8da750e5dc449aab6c07c6",
+          "status": 200,
+          "headers": {
+            "cacheControl": "no-store, max-age=0",
+            "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+            "cf-ray": "a4328bf45dd6b662-NRT"
+          },
+          "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+          "icons": 0,
+          "voiceAfterScene": true,
+          "jumpControls": 0,
+          "jumpStyle": "expressive",
+          "canonical": "https://magius3dviewer.pages.dev/"
+        }
+      ]
+    }
+  },
+  "rollback": {
+    "userUI": false,
+    "persistentBrowserPreference": false,
+    "publicRuntimeSetter": false,
+    "defaultDeployedStyle": "expressive",
+    "buildFlag": "MAGIUS_JUMP_STYLE=classic",
+    "baselineSource": "56a820858d258acfbee794063019db9f3edad28d",
+    "baselineDeployment": "65101cc8",
+    "lastPublishedBeforeThisFix": "e5dfbba291925d71afbe15f308d63c4b949d8ff5",
+    "lastDeploymentBeforeThisFix": "6ddf69dd",
+    "note": "Original jump tracks retained and verified. Full rollback uses a prepared source/deployment; pose-only rollback is selected at build time, not a user control. The classic build configuration is unit-validated; this deployment remains expressive."
+  },
+  "landing": {
+    "policy": "Continuing input preserves collision-resolved horizontal velocity and resumes a phase-matched grounded gait through a 0.16s blend. Releasing input retains zero-motion landing. Explicit donor action phases retain their own lifecycle.",
+    "moves": [
+      {
+        "test": "continuous-moving-landing",
+        "id": 100107,
+        "mode": "walk",
+        "beforeSpeed": 0.8403519420478904,
+        "preContactSpeed": 0.8403519420478904,
+        "contactSpeed": 0.8403519420478904,
+        "minimumAfterSpeed": 0.8403519420478904,
+        "contactState": "walk",
+        "gaitMatch": {
+          "phase": 0.0625,
+          "score": 0.29962093729312145,
+          "zeroPhaseScore": 0.3567175364455709,
+          "tracks": 6,
+          "family": "Magius100107TargetRigMorphologyWalkV45_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 18.45140000000597
+        },
+        "maxContactStepDegrees": 24.862852679382836,
+        "maxStepAt60Hz": 2.3665384235782936,
+        "afterActions": [
+          {
+            "name": "Magius100107TargetRigMorphologyWalkV45_L",
+            "time": 0.559177268340245,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 100107,
+        "mode": "run",
+        "beforeSpeed": 3.05775267662061,
+        "preContactSpeed": 3.05775267662061,
+        "contactSpeed": 3.05775267662061,
+        "minimumAfterSpeed": 3.05775267662061,
+        "contactState": "run",
+        "gaitMatch": {
+          "phase": 0.125,
+          "score": 1.0361437617371634,
+          "zeroPhaseScore": 1.902373537015672,
+          "tracks": 6,
+          "family": "Magius100107TargetRigMorphologyRunV45_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 34.325056309509726
+        },
+        "maxContactStepDegrees": 63.10117258467406,
+        "maxStepAt60Hz": 7.555217023865345,
+        "afterActions": [
+          {
+            "name": "Magius100107TargetRigMorphologyRunV45_L",
+            "time": 0.3394832979707779,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 100201,
+        "mode": "walk",
+        "beforeSpeed": 1.55,
+        "preContactSpeed": 1.55,
+        "contactSpeed": 1.55,
+        "minimumAfterSpeed": 1.55,
+        "contactState": "walk",
+        "gaitMatch": {
+          "phase": 0.03125,
+          "score": 1.517703228189637,
+          "zeroPhaseScore": 1.5716343455528319,
+          "tracks": 6,
+          "family": "OfficialDungeon_100201_Walk_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 14.359239999996124
+        },
+        "maxContactStepDegrees": 29.834303531966672,
+        "maxStepAt60Hz": 3.6191745558995234,
+        "afterActions": [
+          {
+            "name": "OfficialDungeon_100201_Walk_L",
+            "time": 1.1667583872258667,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 100201,
+        "mode": "run",
+        "beforeSpeed": 3.65,
+        "preContactSpeed": 3.65,
+        "contactSpeed": 3.65,
+        "minimumAfterSpeed": 3.65,
+        "contactState": "run",
+        "gaitMatch": {
+          "phase": 0.15625,
+          "score": 1.268281879693124,
+          "zeroPhaseScore": 2.2633109604538464,
+          "tracks": 6,
+          "family": "OfficialDungeon_100201_Run_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 26.641744287557305
+        },
+        "maxContactStepDegrees": 59.22411029770018,
+        "maxStepAt60Hz": 7.385473288153193,
+        "afterActions": [
+          {
+            "name": "OfficialDungeon_100201_Run_L",
+            "time": 0.2561141779601573,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 102001,
+        "mode": "walk",
+        "beforeSpeed": 0.9037586914444644,
+        "preContactSpeed": 0.9037586914444644,
+        "contactSpeed": 0.9037586914444644,
+        "minimumAfterSpeed": 0.9037586914444644,
+        "contactState": "walk",
+        "gaitMatch": {
+          "phase": 0.03125,
+          "score": 0.5345785538039878,
+          "zeroPhaseScore": 0.5556210948841283,
+          "tracks": 6,
+          "family": "Magius102001TargetRigMorphologyWalkV45_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 13.74679999999702
+        },
+        "maxContactStepDegrees": 26.80339106846128,
+        "maxStepAt60Hz": 3.078726288716092,
+        "afterActions": [
+          {
+            "name": "Magius102001TargetRigMorphologyWalkV45_L",
+            "time": 1.3207442300444396,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 102001,
+        "mode": "run",
+        "beforeSpeed": 3.2641461661238633,
+        "preContactSpeed": 3.2641461661238633,
+        "contactSpeed": 3.2641461661238633,
+        "minimumAfterSpeed": 3.2641461661238633,
+        "contactState": "run",
+        "gaitMatch": {
+          "phase": 0.15625,
+          "score": 0.4426667805435953,
+          "zeroPhaseScore": 1.6453111976402293,
+          "tracks": 6,
+          "family": "Magius102001TargetRigMorphologyRunV45_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 27.531131624546763
+        },
+        "maxContactStepDegrees": 74.19173495149738,
+        "maxStepAt60Hz": 8.254532148751014,
+        "afterActions": [
+          {
+            "name": "Magius102001TargetRigMorphologyRunV45_L",
+            "time": 0.5375041424444009,
+            "weight": 1
+          }
+        ]
+      }
+    ],
+    "unitCounterexample": "8 moving cases failed before the change; 4 released-input cases passed. All 12 now pass.",
+    "scope": "3 representative models, walk/run each; virtual controller input with real render/mixer frames, not direct root-position writes."
+  },
+  "verification": {
+    "gate": {
+      "tests": 353,
+      "pass": 353,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "byteFiles": 33,
+    "releaseRangeProbes": 4,
+    "verifiedAt": "2026-09-30T10:27:45.485Z",
+    "browsers": {
+      "entry": {
+        "passed": true,
+        "errors": []
+      },
+      "mobile": {
+        "passed": true,
+        "errors": [],
+        "missing": []
+      },
+      "motion": {
+        "passed": true,
+        "errors": [],
+        "originalTrackChecks": 27
+      },
+      "viewport": {
+        "passed": true,
+        "errors": [],
+        "missing": []
+      },
+      "stage": {
+        "passed": true,
+        "errors": []
+      }
+    },
+    "security": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    }
+  },
+  "audit": {
+    "baseline": {
+      "selected": 202,
+      "completed": 202,
+      "passed": 161,
+      "failed": 41,
+      "timedOut": 0,
+      "totalAssertions": 1702,
+      "failedAssertions": 55,
+      "skippedAssertions": 3
+    },
+    "current": {
+      "selected": 204,
+      "completed": 204,
+      "passed": 163,
+      "failed": 41,
+      "timedOut": 0,
+      "totalAssertions": 1722,
+      "failedAssertions": 55,
+      "skippedAssertions": 3
+    },
+    "revision": "86de9ec255c83d7be1cd876bd358e4f16a6d87c7",
+    "newFailureFiles": []
+  },
+  "limitations": [
+    "Exact stale cache/page layer on the user phone is not determined. Already-open old JavaScript cannot be changed by a server deployment; a fresh navigation is needed.",
+    "Browser tests emulate touch devices in Chrome; no direct inspection of user Android/iPhone.",
+    "Per-render-frame angular changes are also recorded normalized by actual mixer time; software-rendered 150ms intervals are not claimed to be 60FPS.",
+    "No claim that every character, animation, scene and hardware is defect-free.",
+    "The repository-wide failures remain explicit and unresolved."
+  ],
+  "remaining": [
+    {
+      "file": "angelRingHeadLock.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "draw-time AngelRing reference follows final head pose and preserves the existing draw hook",
+          "diagnostic": "The input did not match the regular expression /installAngelRingDrawReferenceUpdate/(mesh, result/.updateAngelRingReference/)/. Input:\n    \n    \"import { getLoadingTask, startLoadingTask, yieldLoadingFrame } from './loadingProgress.ts'/r/n\" +\n      \"import { resolveNativeAngelRingReference, resolveNativeFaceDirectionReference } from './nativeCharacterController';/r/n\" +"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "cameraDepthRim.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 19,
+        "suites": 0,
+        "pass": 17,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "official depth path joins opaque stage and character roots without a depth clear",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(backgroundPrepare > 0 && foregroundPrepare > backgroundPrepare)"
+        },
+        {
+          "name": "nested Viewer helper roots and prepare/render failures restore exact state",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(detachIndex < backgroundPrepare)"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "combatVfxFacingTarget.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "combatVfxFacingTarget.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/public/vfx/character/chara_100201_normalattack_00/product.vfxdata'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "combatVfxNativeIdentity.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "combatVfxNativeIdentity.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/public/vfx/character/chara_100201_normalattack_00/product.vfxdata'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "combatVfxPPtrSprite.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 4,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "three bounded clips decode exact PPtr sprite curves and targets",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/artifacts/verification/20260901-combat-vfx-pptr-sprite-closure/decoder-stage/enemy_650002_wholeskill.profile.json'\""
+        },
+        {
+          "name": "deterministic research and public products close every Sprite dependency",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260826-all-enemy-character-skill-vfx-products-v2/products/enemy/enemy_650002_wholeskill/product.json'\""
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "deploymentPublicCopy.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 6,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "copy script reports the exact allowlisted closure and preflight",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    1306922939 !== 0"
+        },
+        {
+          "name": "each released stage and enemy closure is copied byte-exact with no expansion",
+          "diagnostic": "<workspace>/public/stages/official/battle-602-00-01-001/scene-profile.json != <workspace>/artifacts/verification/20260905-s6-enemy-texture-archive-localization/isolated-output/stages/official/battle-602-00-01-001/scene-profile.json\n    \n    false !== true"
+        },
+        {
+          "name": "heavy roots contain only the exact released closure",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    \n      ["
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "doppelIrohaHair.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "runtime clones the ordinary ReDrive carrier and injects official cosmic branch",
+          "diagnostic": "The input did not match the regular expression /officialCosmicProjection3/. Input:\n    \n    '/n' +\n      '            uniform sampler2D tOfficialCosmic;/n' +"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "enemyControlRuntimeRegression.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 8,
+        "suites": 0,
+        "pass": 6,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "600001 actual exported bone tracks move and deterministic scrub changes skinned vertices",
+          "diagnostic": "'Enemy material profile request failed for 600001'"
+        },
+        {
+          "name": "closing handles detaches both controls, preserves actor selection and hides the close button",
+          "diagnostic": "'viewportEditor is not defined'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "enemyIdleSelection.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "600003 chooses animated Wait_L instead of empty Wait",
+          "diagnostic": "'Enemy model request failed for 600003'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "enemyPlayableSelectionParity.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "enemyPlayableSelectionParity.test.mjs",
+          "diagnostic": "# AssertionError [ERR_ASSERTION]: ../../../magia-exedra-character-three/loadingProgress.ts"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "enemyResourceLayer.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 5,
+        "suites": 0,
+        "pass": 3,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "every manifest model and thumbnail points to a real local runtime artifact",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/enemies/models/enemy_600001_battle_unit/material-profile.v1.json'\""
+        },
+        {
+          "name": "actual loader parses all four 2-4 enemy FBX runtimes",
+          "diagnostic": "'Enemy material profile request failed for 600002'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "enemyTextureArchiveLocalization.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 7,
+        "suites": 0,
+        "pass": 6,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "enemy-only generation localizes texture URLs, preserves workspace bytes, and is deterministic",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    \n      ["
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "enemyTextureRuntimeProducts.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "enemy texture runtime manifest publishes every exact stable key",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    495 !== 493"
+        },
+        {
+          "name": "all 493 material products consume the shared texture catalog fail-closed",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    495 !== 493"
+        },
+        {
+          "name": "enemy 600012 publishes body, thorn and Mercury inputs by stable key",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/enemies/textures/cab-deca81954fbd67b2aacb2928a61012c3__pathid-p5394078111709246722.png'\""
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "enemyUiPanel.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 4,
+        "suites": 0,
+        "pass": 2,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "enemy panel is independent from the character selector and uses the resource manager contract",
+          "diagnostic": "The input did not match the regular expression /selectedInstanceId = added/.at/(-1/)/?/.instanceId/. Input:\n    \n    'import {/r/n' +\n      '    addAnimationLoop,/r/n' +"
+        },
+        {
+          "name": "enemy instances support deterministic spacing, selection, removal and canvas XYZ translation",
+          "diagnostic": "The input did not match the regular expression /enemyPanelController/?/.getIntersectedEnemy/(e/.clientX, e/.clientY/)/. Input:\n    \n    \"import { normalizeViewerEntry } from './entryCoherence'/r/n\" +\n      \"import './style/viewport-editor.css'/r/n\" +"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "enemyVfxResourceLayer.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 4,
+        "suites": 0,
+        "pass": 3,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "all catalog products and declared textures reopen through public URLs",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/vfx/character/chara_100101_normalattack_00/textures/eff_cmn_fire_02__p8245018178376842889.png'\""
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "exactReDriveFormulaParity.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "exactReDriveFormulaParity.test.mjs",
+          "diagnostic": "# AssertionError [ERR_ASSERTION]: missing unique hard-spec replacement target"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "officialCharacterSurfaceSampler.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 8,
+        "suites": 0,
+        "pass": 7,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "108301 hair source pixels are the fresh current Steam exports",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/artifacts/verification/20260824-108301-hair-cheek-shadow-visual-fail/iteration-17-official-hair-texture-contract/evidence/steam-chara_108301_hair_ctrl.png'\""
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "officialFaceAdditionalSampler.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "officialFaceAdditionalSampler.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260828-fresh-tw-default-faceadditional-authority/fresh-tw-default-faceadditional-pixels-clean-error-queue.json'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "officialFaceEyePass.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "officialFaceEyePass.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/artifacts/verification/20260824-108301-hair-cheek-shadow-visual-fail/iteration-14-official-face-gradient-mouth-nose/official-evidence/steam/four-character-controller-dither-face-gradient.literal.json'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "officialFaceHairStencilRuntime.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "officialFaceHairStencilRuntime.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260828-eye-eyebrow-draw-attachment-authority/fresh-tw-eye-eyebrow-ubo-frame.json'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "officialReDriveCosmicAlphaWing.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 7,
+        "suites": 0,
+        "pass": 5,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "projected Cosmic uses the serialized character reference without requiring AngelRing",
+          "diagnostic": "The input did not match the regular expression /localForward = unityDirectionToThreeFbx/(profile/.faceForwardAxis/)/. Input:\n    \n    'export function createCharacterPerspectiveReference(/r/n' +\n      '    root: THREE.Object3D,/r/n' +"
+        },
+        {
+          "name": "projected Cosmic follows main_base additive/overlay/shadow/ambient order",
+          "diagnostic": "The input did not match the regular expression /officialCosmicOriginal = outgoingLight/. Input:\n    \n    \"import * as THREE from 'three'/r/n\" +\n      'import type {/r/n' +"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "officialSceneProducts.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 1,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "official scene shards close the exact 581-key authority partition",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    136 !== 132"
+        },
+        {
+          "name": "every official scene model reopens through a browser-safe Viewer URL",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/stages/official/battle-603-00-01-001/bg_3d_603_00_01_001.fbxdata'\""
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "performanceBuiltMultiactorFraming.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "performanceBuiltMultiactorFraming.test.mjs",
+          "diagnostic": "#     throw new ERR_MODULE_NOT_FOUND("
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "performanceEditorBrowserE2E.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 1,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "browser contract exposes semantic timeline lanes, scrubber and UUID-scoped actors",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    2 !== 11"
+        },
+        {
+          "name": "browser contract drives independent keyframes, playback and pointer drag without cross-actor writes",
+          "diagnostic": "'The \"string\" argument must be of type string. Received type undefined (undefined)'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "performanceEditorPanel.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 13,
+        "suites": 0,
+        "pass": 12,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "pose controls operate released ACTION APIs and remain usable after editor hand-back",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    0 !== 2"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "performanceEditorRuntime.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 28,
+        "suites": 0,
+        "pass": 27,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "stale generation/old frame/zero leased actors cannot advance global timeline",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    0 !== 0.2"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "performanceViewportReadability.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 7,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "dense nodes use sparse hollow glyphs while every UUID remains an exact overlap candidate",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    24 !== 80"
+        },
+        {
+          "name": "workspace button frames the currently selected actor only on request and exit restores the original view",
+          "diagnostic": "\"Cannot destructure property 'transport' of 'panel.workspaceControls' as it is undefined.\""
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "resourceProductPreview.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "stage geometry and serialized runtime companions reopen literally",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/stages/official/battle-612-00-00-002/Lightmap-0_comp_light-bc6h.dds'\""
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "runtimeSelectionThumbnailPanels.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 2,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "runtime selection thumbnail product covers every viewer character with official gamedata sources",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    ... Skipped lines"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "sceneVisualProducts.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 4,
+        "suites": 0,
+        "pass": 3,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "every visual product reference exists and stable keys remain unique",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/stages/official/alternative-stage-model-alternative-stage-model-00-released/scene-product.json'\""
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "stage600003Integration.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 7,
+        "suites": 0,
+        "pass": 6,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "600-003 runtime package reopens with exact hashes and byte total",
+          "diagnostic": "hash drift: asset-provenance.json\n    + actual - expected\n    \n    + 'ca173b283dacd120f9be04a49d0855a420715d8f956765ac0202a8c480c98afa'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "stage601Integration.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "601 package reopens every product with exact hashes and byte total",
+          "diagnostic": "hash drift: uv1-companion.json\n    + actual - expected\n    \n    + '17f629c901a9ec73a4d0cbe9152561efa22b735c081829280234b7b04ae45398'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "stage603Integration.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 5,
+        "suites": 0,
+        "pass": 4,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "603 runtime package reopens with exact hashes and byte total",
+          "diagnostic": "hash drift: uv1-companion.json\n    + actual - expected\n    \n    + '99270822f63024203d717a61f80753122a132c4333f27cd596ae304b26485f82'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "stageEnvironmentPayload.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 1,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "generated environment manifest covers every serialized profile binding",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    ... Skipped lines"
+        },
+        {
+          "name": "every environment payload records target bytes and an explicit source comparison",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/stages/official/battle-603-00-01-001/ReflectionProbe-1-bc6h.dds'\""
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "stageGeneratedCorpus.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 8,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "authored-name projector defaults to check and restores a byte-exact corpus",
+          "diagnostic": "PROJECTION_ERROR=source projection must use LF newlines"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "stageMainLightCascades.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 12,
+        "suites": 0,
+        "pass": 11,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "injects the exact URP LOW four half-texel comparison taps",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(match)"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "stageMaterialBindings.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "stageMaterialBindings.test.mjs",
+          "diagnostic": "# AssertionError [ERR_ASSERTION]: global background tint must execute after material fog like the official shader"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "stageParticleShapeForce.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "stageParticleShapeForce.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260827-particle-shape-force-authority/representative-fixtures.v1.json'"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "stageUv1ActiveCarrier.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "606 applies all 26 active FBX carriers while 120 dependency records stay diagnostic",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/stages/official/battle-606-00-01-002/bg_3d_606_00_01_002.fbxdata'\""
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "stageVolumePostProcessing.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 8,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "serialized ChromaticAberration uses the exact URP 14 fast three-sample operator",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(chroma >= 0 && vignette > chroma)"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    },
+    {
+      "file": "voiceUiPanel.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 10,
+        "suites": 0,
+        "pass": 9,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "cases": [
+        {
+          "name": "voice panel exposes compact typed multitrack UI for every loaded character and multiple backgrounds",
+          "diagnostic": "The input did not match the regular expression /id=\"voice-multitrack-section\"[^>]*open/. Input:\n    \n    '<!doctype html>/n' +\n      '<html lang=\"en\">/n' +"
+        }
+      ],
+      "disposition": "Unresolved, not an allowlist."
+    }
+  ],
+  "publicationAttempts": [
+    {
+      "step": "local-payload",
+      "exitCode": 0,
+      "at": "2026-09-30T10:25:45.094745+00:00"
+    },
+    {
+      "step": "cloudflare-publish",
+      "exitCode": 0,
+      "at": "2026-09-30T10:26:12.533340+00:00"
+    },
+    {
+      "step": "exact-entry-verification",
+      "exitCode": 0,
+      "at": "2026-09-30T10:26:13.517226+00:00"
+    },
+    {
+      "step": "public-byte-verification",
+      "exitCode": 1,
+      "at": "2026-09-30T10:26:14.937295+00:00"
+    },
+    {
+      "step": "public-byte-verification-retry-1",
+      "exitCode": 0,
+      "at": "2026-09-30T10:27:45.485Z"
+    },
+    {
+      "step": "live-mobile",
+      "exitCode": 0,
+      "at": "2026-09-30T10:31:29.128843+00:00"
+    },
+    {
+      "step": "live-entry-landing",
+      "exitCode": 0,
+      "at": "2026-09-30T10:31:40.812869+00:00"
+    },
+    {
+      "step": "live-motion",
+      "exitCode": 0,
+      "at": "2026-09-30T10:32:40.136416+00:00"
+    },
+    {
+      "step": "live-stage",
+      "exitCode": 0,
+      "at": "2026-09-30T10:33:03.852184+00:00"
+    },
+    {
+      "step": "live-viewport",
+      "exitCode": 0,
+      "at": "2026-09-30T10:33:46.629845+00:00"
+    },
+    {
+      "step": "exact-entry-recheck",
+      "exitCode": 0,
+      "at": "2026-09-30T10:33:47.305110+00:00"
+    }
+  ],
+  "initialReadinessFailure": {
+    "error": "public-byte-verification failed",
+    "log": "public-byte-verification.log",
+    "detail": "Immediately after publishing, one new hashed JS URL returned bytes whose SHA-256 matched the pre-deployment HTML. The assertion failed and blocked browser acceptance; the complete 33-file comparison was rerun successfully before final browser verification.",
+    "retryLog": "public-byte-verification-retry-1.log"
+  }
+}
