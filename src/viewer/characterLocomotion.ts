@@ -2561,7 +2561,7 @@ export class CharacterLocomotionController {
             if (!wasGrounded) this.landingRemainingSeconds = this.config.landingDurationSeconds
             // A moving landing is the next stride, not a compulsory idle beat.
             // Keep the collision-resolved speed and blend into a matched gait.
-            if (this.hasMovementIntent()) this.landingRemainingSeconds = 0
+            if (this.hasMovementIntent() && !this.jumpLocomotionAnimationOverride) this.landingRemainingSeconds = 0
             if (this.landingRemainingSeconds > 0) {
                 next = 'land'
                 this.landingRemainingSeconds = Math.max(0, this.landingRemainingSeconds - deltaSeconds)
