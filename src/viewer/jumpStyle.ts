@@ -1,7 +1,6 @@
 export type JumpStyle = 'classic' | 'expressive'
 export type JumpPhase = 'takeoff' | 'airborne' | 'land'
 export type JumpMode = 'standing' | 'walking' | 'running'
-export const JUMP_STYLE_KEY = 'magius.jump-style.v1'
 export function isJumpStyle(value: unknown): value is JumpStyle { return value === 'classic' || value === 'expressive' }
 const smooth = (x:number) => {const t=Math.min(1,Math.max(0,x));return t*t*(3-2*t)}
 const wrap = (x:number) => ((x%1)+1)%1
@@ -22,7 +21,9 @@ export function expressiveJumpArmSample(ratio:number,phase:JumpPhase,mode:JumpMo
     return {left:wrap(sample),right:wrap(sample+separation),strength:1}
 }
 export function expressiveJumpName(classic:string) { return classic.replace(/_(SE|L)$/,'_ExpressiveV1_$1') }
-export function readJumpStyle(storage?:Pick<Storage,'getItem'>):JumpStyle {
-    try {const value=storage?.getItem(JUMP_STYLE_KEY);if(isJumpStyle(value))return value}catch{}
-    return 'expressive'
+/** Deployment-only rollback. No URL switch, saved preference, or user UI. */
+export function resolveBuildJumpStyle(value: unknown): JumpStyle {
+    if (value === undefined || value === '') return 'expressive'
+    if (!isJumpStyle(value)) throw new TypeError('Invalid deployment jump style')
+    return value
 }

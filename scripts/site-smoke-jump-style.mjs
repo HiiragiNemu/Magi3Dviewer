@@ -8,6 +8,7 @@ const out=path.resolve(process.env.MAGIUS_EVIDENCE_DIR||'artifacts/jump-style')
 fs.mkdirSync(out,{recursive:true})
 const remote=process.env.MAGIUS_SITE_URL,dev=process.env.MAGIUS_VIEWPORT_DEV==='1'
 assert.ok(!(remote&&dev));if(remote)assert.match(remote,/^https:\/\/(?:[a-f0-9]{8}\.)?magius3dviewer\.pages\.dev\/$/)
+const expectedStyle=process.env.MAGIUS_EXPECTED_JUMP_STYLE||'expressive'
 const base=remote||(dev?'https://127.0.0.1:4181/':'http://127.0.0.1:4184/')
 const output=path.resolve(process.env.MAGIUS_DEPLOY_OUT_DIR||'dist-deploy')
 const baseline=JSON.parse(fs.readFileSync(new URL('../testdata/classic-jump-baseline-20260930.json',import.meta.url),'utf8'))
@@ -20,11 +21,12 @@ try{
  const chrome=process.env.CHROME_BIN||(process.platform==='win32'?'C:/Program Files/Google/Chrome/Application/chrome.exe':execFileSync('bash',['-lc','command -v google-chrome-stable || command -v google-chrome || command -v chromium'],{encoding:'utf8'}).trim())
  browser=await puppeteer.launch({executablePath:chrome,headless:true,acceptInsecureCerts:dev,protocolTimeout:300000,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']})
  page=await browser.newPage();await page.setViewport({width:900,height:760,deviceScaleFactor:1});page.on('pageerror',e=>errors.push(String(e)))
+ await page.evaluateOnNewDocument(()=>{try{localStorage.setItem('magius.jump-style.v1','classic')}catch{}})
  await page.goto(base+'?diagnostic=pose-editor&runtimeDelivery=release',{waitUntil:'domcontentloaded',timeout:90000})
- await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData?.characterId===100107&&window.magiusViewerLocomotion?.setJumpStyle,{timeout:180000})
+ await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData?.characterId===100107&&window.magiusViewerLocomotion?.jumpStyle,{timeout:180000})
  const frames=n=>page.evaluate(n=>new Promise(r=>{let i=0;const f=()=>++i>=n?r():requestAnimationFrame(f);requestAnimationFrame(f)}),n)
  for(const original of baseline.rows){
-  if(original.id!==100107){await page.reload({waitUntil:'domcontentloaded',timeout:90000});await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData?.characterId===100107&&window.magiusViewerLocomotion?.setJumpStyle,{timeout:180000})}
+  if(original.id!==100107){await page.reload({waitUntil:'domcontentloaded',timeout:90000});await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData?.characterId===100107&&window.magiusViewerLocomotion?.jumpStyle,{timeout:180000})}
   await page.select('#character-selector',String(original.id));await page.waitForFunction(id=>window.scene?.characterSelected?.character?.userData?.characterId===id&&window.scene.characterSelected.character.object.animations.some(c=>c.name.includes('_ExpressiveV1_')),{timeout:180000},original.id)
   const proofs=await page.evaluate(async()=>{
    const c=window.scene.characterSelected.character,map=new Map();c.object.traverse(n=>map.set(n.uuid,n.name))
@@ -61,26 +63,24 @@ try{
    }
    await page.evaluate(()=>window.__jumpSampleDispose?.())
   }
-  // Switch with the actual accessible control, then compare controller state
-  // within one event turn: no advance may manufacture apparent stability.
+  // Rollback is a deployment concern. Stale saved preferences must not
+  // select an old pose or create extra controls in the current product.
+  assert.equal(await page.evaluate(()=>window.magiusViewerLocomotion.jumpStyle),expectedStyle)
+  assert.equal(await page.$('#jump-style-control'),null);assert.equal(await page.$('#jump-style-select'),null)
   await page.evaluate(()=>{window.magiusViewerLocomotion.setEnabled(true);window.scene.characterSelected.character.animation.paused=false})
-  await page.evaluate(()=>window.magiusViewerLocomotion.characterActions.ready())
-  await frames(12)
-  await page.waitForSelector('#jump-style-select',{visible:true})
-  await page.select('#jump-style-select','classic')
+  await page.evaluate(()=>window.magiusViewerLocomotion.characterActions.ready());await frames(12)
   await page.evaluate(()=>window.magiusViewerLocomotion.setVirtualInput({moveZ:1,run:true,jumpPressed:true}))
   await page.waitForFunction(()=>window.magiusViewerLocomotion.capabilityManifest().find(x=>x.characterId===window.scene.characterSelected.character.userData.characterId)?.grounded===false,{timeout:30000})
-  const switched=await page.evaluate(()=>{const api=window.magiusViewerLocomotion,get=()=>{const s=api.capabilityManifest().find(x=>x.characterId===window.scene.characterSelected.character.userData.characterId);return{p:s.position,v:s.velocity,state:s.state,grounded:s.grounded,clip:s.currentClip}},before=get();api.setJumpStyle('expressive');const refined=get();api.setJumpStyle('classic');const original=get();return{before,refined,original}})
-  assert.ok(switched.refined.clip.includes('_ExpressiveV1_'));assert.ok(!switched.original.clip.includes('_ExpressiveV1_'))
-  for(const next of [switched.refined,switched.original]){assert.deepEqual(next.p,switched.before.p);assert.deepEqual(next.v,switched.before.v);assert.equal(next.state,switched.before.state);assert.equal(next.grounded,switched.before.grounded)}
+  const current=await page.evaluate(()=>window.magiusViewerLocomotion.capabilityManifest().find(x=>x.characterId===window.scene.characterSelected.character.userData.characterId))
+  assert.equal(current.currentClip.includes('_ExpressiveV1_'),expectedStyle==='expressive')
   await page.evaluate(()=>window.magiusViewerLocomotion.setVirtualInput({moveZ:0,run:false}))
   await page.waitForFunction(()=>{const s=window.magiusViewerLocomotion.capabilityManifest().find(x=>x.characterId===window.scene.characterSelected.character.userData.characterId);return s.grounded&&s.state==='idle'},{timeout:45000})
   await page.evaluate(()=>{window.magiusViewerLocomotion.clearVirtualInput();window.magiusViewerLocomotion.setEnabled(false)})
-  record({test:'instant-midair-revert-preserves-physics',id:original.id,...switched})
+  record({test:'deployed-motion-has-no-user-rollback-ui',id:original.id,style:expectedStyle,clip:current.currentClip})
  }
- await page.reload({waitUntil:'domcontentloaded',timeout:90000});await page.waitForFunction(()=>window.magiusViewerLocomotion?.jumpStyle==='classic'&&window.scene?.characterSelected?.character,{timeout:180000})
- assert.equal(await page.evaluate(()=>window.magiusViewerLocomotion.jumpStyle),'classic');record({test:'original-preference-persists-after-reload',passed:true})
- await page.evaluate(()=>window.magiusViewerLocomotion.setJumpStyle('expressive'))
+ await page.reload({waitUntil:'domcontentloaded',timeout:90000});await page.waitForFunction(()=>window.magiusViewerLocomotion?.jumpStyle&&window.scene?.characterSelected?.character,{timeout:180000})
+ assert.equal(await page.evaluate(()=>window.magiusViewerLocomotion.jumpStyle),expectedStyle)
+ assert.equal(await page.$('#jump-style-control'),null);record({test:'saved-style-preference-does-not-override-deployment',passed:true})
  assert.deepEqual(errors,[]);result={passed:true,site:base,observations,errors}
 }catch(error){result={passed:false,site:base,error:String(error),observations,errors,inspection:await page?.evaluate(()=>window.magiusViewerLocomotion?.capabilityManifest()).catch(()=>undefined)};await page?.screenshot({path:path.join(out,'jump-style-failure.png')}).catch(()=>{});throw error}
 finally{fs.writeFileSync(path.join(out,'jump-style-browser.json'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({passed:result?.passed,error:result?.error}));if(browser)await browser.close();if(server){server.closeAllConnections();await new Promise(resolve=>server.close(resolve))}}

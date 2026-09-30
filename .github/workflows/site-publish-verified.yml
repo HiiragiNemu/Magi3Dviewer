@@ -139,7 +139,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: cloudflare-delivery-tools
-          path: scripts/site-smoke-cloudflare.mjs
+          path: |
+            scripts/site-smoke-cloudflare.mjs
+            scripts/site-smoke-entry-landing.mjs
           retention-days: 3
   publish:
     needs: [configuration, build]
@@ -199,6 +201,7 @@ jobs:
           printf '{"private":true,"type":"module"}\n' > package.json
           npm install --no-save --ignore-scripts puppeteer-core@25.12.0
           node scripts/site-smoke-cloudflare.mjs
+          MAGIUS_EVIDENCE_DIR=/tmp/site-evidence/entry-landing node scripts/site-smoke-entry-landing.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

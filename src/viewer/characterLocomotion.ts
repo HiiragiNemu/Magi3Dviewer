@@ -581,6 +581,8 @@ export interface CharacterAnimationPlayOptions {
     fadeSeconds: number
     /** Physical contact/recovery must not retain the long airborne cross-fade. */
     contactTransition?: boolean
+    /** Continue a requested gait at touchdown with a pose-matched starting phase. */
+    resumeGroundedGait?: boolean
 }
 
 /** Structural adapter for the current character package or another mixer. */
@@ -2454,7 +2456,8 @@ export class CharacterLocomotionController {
         this.transform.position.copy(nextPosition)
         this._grounded = grounded
         if (grounded && this.velocity.y < 0) this.velocity.y = 0
-        if (grounded && !wasGrounded && !this.activeAction && this.rootMotionMode === 'controlled') {
+        if (grounded && !wasGrounded && !this.hasMovementIntent()
+            && !this.activeAction && this.rootMotionMode === 'controlled') {
             this.stopHorizontalMotion()
         }
         this.updateFacing(dt, rootMotionDelta?.rotation)
@@ -2474,7 +2477,7 @@ export class CharacterLocomotionController {
     private updateHorizontalVelocity(deltaSeconds: number, movementScale: number): void {
         // Do not translate a frozen landing pose across the floor. A new jump
         // may still interrupt recovery, and explicit actions retain root motion.
-        if (this._grounded && this.landingRemainingSeconds > 0 && !this.jumpQueued
+        if (this._grounded && this.landingRemainingSeconds > 0 && !this.hasMovementIntent() && !this.jumpQueued
             && !this.activeAction && this.rootMotionMode === 'controlled') {
             this.stopHorizontalMotion()
             return
@@ -2493,6 +2496,11 @@ export class CharacterLocomotionController {
         moveTowardsVector(horizontal, target, acceleration * deltaSeconds)
         this.velocity.x = horizontal.x
         this.velocity.z = horizontal.z
+    }
+
+    private hasMovementIntent(): boolean {
+        return Math.hypot(this.input.moveX, this.input.moveZ) > 0.001
+            && (this.activeAction?.definition.movementScale ?? 1) > 0
     }
 
     private classifyJumpMode(): JumpLocomotionMode {
@@ -2551,6 +2559,9 @@ export class CharacterLocomotionController {
             this.landingRemainingSeconds = 0
         } else {
             if (!wasGrounded) this.landingRemainingSeconds = this.config.landingDurationSeconds
+            // A moving landing is the next stride, not a compulsory idle beat.
+            // Keep the collision-resolved speed and blend into a matched gait.
+            if (this.hasMovementIntent()) this.landingRemainingSeconds = 0
             if (this.landingRemainingSeconds > 0) {
                 next = 'land'
                 this.landingRemainingSeconds = Math.max(0, this.landingRemainingSeconds - deltaSeconds)
@@ -2596,12 +2607,16 @@ export class CharacterLocomotionController {
             }
             : resolveAnimationCandidates(loadedClips, this._state).selected
         if (!selected || selected.clip.name === this.lastLocomotionAnimation) return
+        const contact = this._grounded && (this._state === 'land'
+            || previous === 'land' || previous === 'fall' || previous === 'jump')
+        const resumeGait = contact && (this._state === 'walk' || this._state === 'run')
         this.animation.play(selected.clip.name, {
             loop: selected.loop,
             speed: 1,
             weight: 1,
-            fadeSeconds: this._state === 'land' ? 0.06 : 0.1,
-            contactTransition: this._grounded && (this._state === 'land' || previous === 'land'),
+            fadeSeconds: resumeGait ? 0.16 : this._state === 'land' ? 0.06 : 0.1,
+            contactTransition: contact,
+            resumeGroundedGait: resumeGait,
         })
         this.lastLocomotionAnimation = selected.clip.name
     }

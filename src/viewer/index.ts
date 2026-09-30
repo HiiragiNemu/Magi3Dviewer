@@ -1,6 +1,6 @@
+import { normalizeViewerEntry } from './entryCoherence'
 import './style/viewport-editor.css'
 import './style/tps-touch.css'
-import './style/jump-style.css'
 import { createViewportPoseEditor } from './viewportPoseEditor'
 import { EditorGroundGuard } from './editorGround'
 import { createPoseContactGuard } from './poseContactGuard'
@@ -3513,3 +3513,5 @@ function updateTransformModeButtons() {
 }
 
 Object.assign(window, { changeCharacter })
+
+normalizeViewerEntry()

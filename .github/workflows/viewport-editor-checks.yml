@@ -24,8 +24,10 @@ jobs:
         run: node scripts/site-smoke-viewport.mjs
       - name: Verify portrait and landscape multi-touch TPS and grounded jump recovery
         run: node scripts/site-smoke-mobile-tps.mjs
-      - name: Verify additive jump styles, original motion hashes and instant rollback
+      - name: Verify deployment-only jump style and unchanged original motion tracks
         run: node scripts/site-smoke-jump-style.mjs
+      - name: Verify entry identity, no rollback UI and continuous moving contact
+        run: node scripts/site-smoke-entry-landing.mjs
       - name: Verify current scene resources without public source-repository access
         run: node scripts/site-smoke-cloudflare.mjs
       - uses: actions/upload-artifact@v4

@@ -1,7 +1,8 @@
-import { expressiveJumpArmSample, expressiveJumpName, readJumpStyle, isJumpStyle, JUMP_STYLE_KEY, type JumpStyle } from './jumpStyle'
+import { expressiveJumpArmSample, expressiveJumpName, resolveBuildJumpStyle, type JumpStyle } from './jumpStyle'
 import { ThirdPersonCamera } from './ThirdPersonCamera'
+import { matchLandingGaitPhase } from './landingGaitPhase'
 import { TpsTouchControls } from './TpsTouchControls'
-import { translateUiText, getUiLocale } from './localization/zhCN'
+import { translateUiText } from './localization/zhCN'
 import * as THREE from 'three'
 import { specialWeaponDefinitions, loadSpecialWeapon, type LoadedSpecialWeapon } from './specialWeapons'
 import { createNativeDungeonFixedTransitionPolicy, nativeDungeonFixedTransitionSeconds, type NativeDungeonFixedTransitionPolicy } from './characterActions/nativeDungeonFixedTransitions'
@@ -1410,8 +1411,7 @@ document.body.appendChild(debugState)
 
 let installed = false
 let enabled = false
-let viewerJumpStyle: JumpStyle = (()=>{try{return readJumpStyle(localStorage)}catch{return 'expressive'}})()
-let jumpStyleSelect: HTMLSelectElement | undefined
+const viewerJumpStyle: JumpStyle = resolveBuildJumpStyle(import.meta.env.VITE_MAGIUS_JUMP_STYLE)
 let jumpQueued = false
 let touchControls: TpsTouchControls | undefined
 let virtualInput: VirtualInput | undefined
@@ -7720,9 +7720,11 @@ function createAnimationPort(
         clips: readonly THREE.AnimationClip[],
         options: { loop: boolean; weight: number },
         fadeSeconds: number,
+        startPhase?: number,
     ): THREE.AnimationAction[] => clips.map(clip => {
         const action = character.animation.mixer.clipAction(clip)
         action.reset()
+        if (startPhase !== undefined && options.loop) action.time = startPhase * clip.duration
         action.enabled = true
         action.setEffectiveWeight(options.weight)
         action.setEffectiveTimeScale(1)
@@ -7768,8 +7770,13 @@ function createAnimationPort(
                 )
                 : requestedFadeSeconds
             const fadeSeconds = options.contactTransition
-                ? Math.min(Math.max(0, options.fadeSeconds), 0.1)
+                ? Math.min(Math.max(0, options.fadeSeconds), options.resumeGroundedGait ? 0.18 : 0.1)
                 : regularFadeSeconds
+            const contactPhase = options.resumeGroundedGait && options.loop
+                ? matchLandingGaitPhase(character.object, clips) : undefined
+            if (contactPhase) character.object.userData.magiusLandingGait = {
+                ...contactPhase, family, fadeSeconds, mixerTime: character.animation.mixer.time,
+            }
             const previous = [...(runtime._activeActions ?? [])]
             bindingByObject.get(character.object)?.tpsPoseTransition?.begin(fadeSeconds)
 
@@ -7849,6 +7856,7 @@ function createAnimationPort(
                 clips,
                 { loop: options.loop, weight: options.weight },
                 fadeSeconds,
+                contactPhase?.phase,
             )
             stopAfterFade(previous, fadeSeconds)
             runtime._activeActions = nextActions
@@ -12191,54 +12199,16 @@ function applyViewerJumpStyle(binding: ViewerLocomotionBinding): void {
     if(!variants)return
     binding.controller.setJumpLocomotionAnimations(variants[viewerJumpStyle])
 }
-export function setViewerJumpStyle(value: JumpStyle): JumpStyle {
-    if(!isJumpStyle(value))throw new TypeError('Unknown jump style')
-    viewerJumpStyle=value
-    for(const binding of bindings)applyViewerJumpStyle(binding)
-    try { localStorage.setItem(JUMP_STYLE_KEY,value) } catch {}
-    if(jumpStyleSelect)jumpStyleSelect.value=value
-    return value
-}
-function installJumpStyleSwitch(): void {
-    if(jumpStyleSelect)return
-    const label=document.createElement('label');label.id='jump-style-control';label.dataset.i18nIgnore='true'
-    const text=document.createElement('span');text.textContent='跳跃'
-    const select=document.createElement('select');select.id='jump-style-select';select.setAttribute('aria-label','跳跃动作版本，选择原版可立即回退')
-    select.innerHTML='<option value="expressive">优化动作</option><option value="classic">原版动作</option>'
-    select.value=viewerJumpStyle;select.onchange=()=>setViewerJumpStyle(select.value as JumpStyle)
-    label.append(text,select);document.body.append(label);jumpStyleSelect=select
-    let lastPresentation = ''
-    const update=()=>{
-        const profile=selectedBinding()?.characterSpecificMotion
-        const menu=document.getElementById('menu')?.getBoundingClientRect()
-        const locale=getUiLocale()
-        const top=Math.round(Math.max(8,menu?.bottom??0)+10)
-        const hidden=!enabled||!profile?.jumpAnimationVariants
-        const key=[hidden,top,locale].join(':')
-        if(key===lastPresentation)return
-        lastPresentation=key
-        label.hidden=hidden
-        label.style.top=`${top}px`
-        text.textContent=locale.startsWith('ja')?'ジャンプ':locale==='en'?'Jump':'跳跃'
-        select.options[0].textContent=locale.startsWith('ja')?'改良版':locale==='en'?'Refined':'优化动作'
-        select.options[1].textContent=locale.startsWith('ja')?'元に戻す':locale==='en'?'Original / revert':'原版动作 · 回退'
-    }
-    window.addEventListener('resize',update);document.addEventListener('magius:localechange',update)
-    addAnimationLoop(update);update()
-}
-
 export function setupViewerLocomotion(): void {
     if (installed) return
     installed = true
     installInputHandlers()
-    installJumpStyleSwitch()
     addAnimationLoop(updateFrame)
     void ensureCharacterActionCatalog().catch(() => undefined)
     setViewerLocomotionEnabled(false)
 }
 
 const publicApi = {
-    setJumpStyle: setViewerJumpStyle,
     get jumpStyle() { return viewerJumpStyle },
     setEnabled: setViewerLocomotionEnabled,
     get enabled() { return enabled },

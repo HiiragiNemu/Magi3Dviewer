@@ -1,4 +1,4 @@
-# Public runtime assets may be consumed by the companion GitHub Pages site.
+# Static delivery for the single Cloudflare production site.
 # No credentials, cookies or private API routes are exposed by these headers.
 /stages/official/*
   Access-Control-Allow-Origin: *
@@ -11,3 +11,15 @@
 
 /catalogs/runtime-product-delivery.v1.json
   Cache-Control: no-cache
+
+# The HTML document must not strand an old build under a bookmarked query URL.
+# Hashed JavaScript/CSS and large model assets keep their own caching policy.
+/
+  Cache-Control: no-store, max-age=0
+  Cloudflare-CDN-Cache-Control: no-store
+  X-Magius-Revision: __MAGIUS_BUILD_REVISION__
+
+/index.html
+  Cache-Control: no-store, max-age=0
+  Cloudflare-CDN-Cache-Control: no-store
+  X-Magius-Revision: __MAGIUS_BUILD_REVISION__

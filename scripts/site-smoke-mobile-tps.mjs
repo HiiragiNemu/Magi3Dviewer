@@ -136,7 +136,7 @@ try{
   for(let i=0;i<150;i++){
    await frames(1);const s=await snap();rows.push(s)
    if(!s.grounded)flew=true
-   if(flew&&s.grounded&&!contact)contact=s
+   if(flew&&s.grounded&&!contact){contact=s;assert.equal(s.state,'run','held run inserted a stationary landing');assert.ok(Math.hypot(s.v[0],s.v[2])>=Math.hypot(before.v[0],before.v[2])*.9,'contact erased running momentum')}
    if(contact&&s.state==='land'){
     assert.ok(Math.hypot(s.v[0],s.v[2])<1e-7,'held direction glides while landing: '+id)
     if(prior?.state==='land')assert.ok(Math.hypot(...s.p.map((x,i)=>x-prior.p[i]))<1e-7)

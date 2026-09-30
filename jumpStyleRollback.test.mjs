@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import * as T from 'three'
-import {expressiveJumpArmSample,expressiveJumpName,readJumpStyle,isJumpStyle} from './src/viewer/jumpStyle.ts'
+import {expressiveJumpArmSample,expressiveJumpName,resolveBuildJumpStyle,isJumpStyle} from './src/viewer/jumpStyle.ts'
 import {CharacterLocomotionController,FlatGroundCollisionWorld} from './src/viewer/characterLocomotion.ts'
 const modes=['standing','walking','running'],phases=['takeoff','airborne','land']
 const circular=(a,b)=>Math.abs(((a-b+1.5)%1)-.5)
@@ -19,11 +19,12 @@ test('new names cannot replace any original jump family',()=>{
  const old='Magius100107StandingJumpLandV45TargetRigMorphology_SE'
  assert.equal(expressiveJumpName(old),'Magius100107StandingJumpLandV45TargetRigMorphology_ExpressiveV1_SE');assert.notEqual(expressiveJumpName(old),old)
 })
-test('rollback preference survives reload and blocked storage cannot break the viewer',()=>{
- assert.equal(readJumpStyle({getItem:()=> 'classic'}),'classic');assert.equal(readJumpStyle({getItem:()=> 'expressive'}),'expressive')
- assert.equal(readJumpStyle({getItem(){throw Error('private browsing')}}),'expressive')
- for(const value of ['',0,'delete',null,{}])assert.equal(isJumpStyle(value),false)
+test('rollback is selected by a validated deployment option, not browser storage',()=>{
+ assert.equal(resolveBuildJumpStyle('classic'),'classic');assert.equal(resolveBuildJumpStyle('expressive'),'expressive');assert.equal(resolveBuildJumpStyle(undefined),'expressive')
+ for(const value of [0,'delete',null,{}])assert.throws(()=>resolveBuildJumpStyle(value))
+ assert.equal(isJumpStyle('classic'),true)
 })
+
 function fixture(){const root=new T.Group(),world=new FlatGroundCollisionWorld(0),plays=[];const map=(prefix)=>Object.fromEntries(modes.map(mode=>[mode,{jump:prefix+'Jump',fall:prefix+'Fall',land:prefix+'Land'}]));const c=new CharacterLocomotionController({characterId:'style-fixture',transform:root,collisionWorld:world,groundQuery:world,initiallyGrounded:true,animation:{listClips:()=>['old','new','donor'].flatMap(p=>['Jump','Fall','Land'].map(n=>({name:p+n,duration:.5}))),play:(name)=>plays.push(name)},jumpLocomotionAnimations:map('old')});return{root,c,plays,map}}
 test('midair old/new/old switching preserves motion, collision state and phase',()=>{
  const {c,plays,map}=fixture();c.setInput({moveX:0,moveZ:1,run:true,jumpPressed:true});c.advance(1/30)

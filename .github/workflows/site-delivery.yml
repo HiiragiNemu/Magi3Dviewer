@@ -107,6 +107,7 @@ jobs:
           path: |
             scripts/site-smoke-cloudflare.mjs
             scripts/site-smoke-viewport.mjs
+            scripts/site-smoke-entry-landing.mjs
           retention-days: 3
   cloudflare:
     needs: [build, configuration]
@@ -168,6 +169,7 @@ jobs:
           mkdir -p /tmp/site-evidence
           node scripts/site-smoke-cloudflare.mjs
           MAGIUS_EVIDENCE_DIR=/tmp/site-evidence/viewport node scripts/site-smoke-viewport.mjs
+          MAGIUS_EVIDENCE_DIR=/tmp/site-evidence/entry-landing node scripts/site-smoke-entry-landing.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:

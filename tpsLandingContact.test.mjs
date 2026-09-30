@@ -19,7 +19,7 @@ for(const fps of [12,30,60,144])for(const moving of [true,false])test(`landing a
  for(let i=0;i<fps*4;i++){
   const old=root.position.clone(),state=controller.advance(1/fps)
   if(!state.grounded){airborne=true;if(!moving)controller.setInput({moveX:0,moveZ:0,run:false})}
-  if(airborne&&state.grounded&&!contact){contact=root.position.clone();assert.ok(!['jump','fall'].includes(state.state));assert.equal(state.velocity.y,0);assert.equal(plays.at(-1).contactTransition,true)}
+  if(airborne&&state.grounded&&!contact){contact=root.position.clone();assert.ok(!['jump','fall'].includes(state.state));assert.equal(state.velocity.y,0);assert.equal(plays.at(-1).contactTransition,true);if(moving){assert.equal(state.state,'run');assert.equal(plays.at(-1).resumeGroundedGait,true);assert.ok(Math.hypot(state.velocity.x,state.velocity.z)>.1)}}
   if(contact&&state.state==='land'){
    landFrames++
    assert.ok(Math.hypot(state.velocity.x,state.velocity.z)<1e-9,'landing pose still carries airborne horizontal speed')
@@ -28,7 +28,7 @@ for(const fps of [12,30,60,144])for(const moving of [true,false])test(`landing a
   if(contact&&previous==='land'&&state.state!=='land')assert.equal(plays.at(-1).contactTransition,true,'grounded handoff must not reuse the long airborne blend')
   previous=state.state
  }
- assert.ok(airborne&&contact&&landFrames>0)
+ assert.ok(airborne&&contact);assert.ok(moving?landFrames===0:landFrames>0)
  assert.ok(groundTravel<1e-9,'grounded recovery translated without a walking/running animation')
  assert.equal(controller.snapshot().state,moving?'run':'idle')
  if(!moving)assert.ok(root.position.distanceTo(contact)<1e-9,'releasing midair left post-contact drift')
