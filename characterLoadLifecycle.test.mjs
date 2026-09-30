@@ -66,14 +66,16 @@ test('all character asset stages carry AbortSignal and exact stage plus URL erro
   assert.match(viewerCharacter, /character\.dispose\(\)[\s\S]*characterAssetLoadError\('physics-attach'/)
 })
 
-function compileSceneTransactionHarness() {
+async function compileSceneTransactionHarness(attach = async () => {}) {
   const source = read('magia-exedra-character-three/scene/index.ts')
-  const start = source.indexOf('    switchCharacter(')
-  const end = source.indexOf('\n}\n\nexport function deg2pos', start)
-  assert.ok(start >= 0 && end > start)
-  const members = source.slice(start, end)
+  const parsed = ts.createSourceFile('scene.ts', source, ts.ScriptTarget.Latest, true)
+  const sceneClass = parsed.statements.find(node => ts.isClassDeclaration(node)
+    && node.members.some(member => member.name?.getText(parsed) === 'switchCharacter'))
+  assert.ok(sceneClass, 'Production scene class containing the transaction is required')
+  const start = sceneClass.members.findIndex(member => member.name?.getText(parsed) === 'switchCharacter')
+  const members = sceneClass.members.slice(start).map(member => member.getText(parsed)).join('\n')
   const output = ts.transpileModule(
-    `${read('magia-exedra-character-three/loadingProgress.ts')}\nexport class SceneTransactionHarness {\n${members}\n}`,
+    `${read('magia-exedra-character-three/loadingProgress.ts')}\nexport const attachment = {run: async () => {}};\nconst attachCharacterAngelRing = (...args) => attachment.run(...args);\nexport class SceneTransactionHarness {\n${members}\n}`,
     {
       compilerOptions: {
         target: ts.ScriptTarget.ES2022,
@@ -81,7 +83,9 @@ function compileSceneTransactionHarness() {
       },
     },
   ).outputText
-  return import(`data:text/javascript;base64,${Buffer.from(output).toString('base64')}`)
+  const runtime = await import(`data:text/javascript;base64,${Buffer.from(output).toString('base64')}`)
+  runtime.attachment.run = attach
+  return runtime
 }
 
 function deferred() {
@@ -240,6 +244,67 @@ test('remove aborts the current generation, disposes retained state, and clears 
   assert.equal(slot.loading, false)
   assert.equal(scene.characters.includes(slot), false)
   assert.equal(progress.at(-1), '')
+})
+
+function slotWithOld(scene) {
+  const old = fakeCharacter(100107)
+  const slot = {character:old,loading:false,removed:false,loadGeneration:0}
+  scene.characters.push(slot)
+  return {old,slot}
+}
+
+for (const remove of [false,true]) test(`attachment rejection after ${remove?'removal':'supersession'} disposes the stale candidate exactly once`, async () => {
+  const entered = deferred(), attachmentGate = deferred()
+  const {SceneTransactionHarness} = await compileSceneTransactionHarness(async () => {entered.resolve();await attachmentGate.promise})
+  const manager=fakeManager(), scene=fakeScene(SceneTransactionHarness,manager)
+  const {old,slot}=slotWithOld(scene), candidate=fakeCharacter(101901)
+  const first=scene.switchCharacter(slot,101901)
+  const rejected=assert.rejects(first,/attachment failed/)
+  manager.calls[0].gate.resolve(candidate);await entered.promise
+  let replacement
+  if(remove)scene.removeCharacter(slot)
+  else replacement=scene.switchCharacter(slot,100301)
+  attachmentGate.reject(new Error('attachment failed'))
+  await rejected
+  assert.equal(candidate.disposeCount,1,'An uncommitted model leaked because a newer generation owned the slot')
+  if(!remove){
+    manager.calls[1].gate.reject(new Error('replacement failed'))
+    await assert.rejects(replacement,/replacement failed/)
+    assert.equal(slot.character,old);assert.equal(old.disposed,false)
+  }else assert.equal(old.disposeCount,1)
+})
+
+test('failed scene registration restores the old model and removes the candidate',async()=>{
+  const {SceneTransactionHarness}=await compileSceneTransactionHarness()
+  const manager=fakeManager(),scene=fakeScene(SceneTransactionHarness,manager)
+  const {old,slot}=slotWithOld(scene),candidate=fakeCharacter(101901)
+  scene.stageCharacterShadows.add=object=>{if(object===candidate.object)throw Error('shadow registration failed');scene.shadowOps.push(['add',object.id])}
+  const pending=scene.switchCharacter(slot,101901)
+  manager.calls[0].gate.resolve(candidate)
+  await assert.rejects(pending,/shadow registration failed/)
+  assert.equal(old.disposed,false,'The old model must not be destroyed before registration succeeds')
+  assert.equal(slot.character,old);assert.equal(candidate.disposeCount,1)
+  assert.ok(scene.sceneOps.some(([op,id])=>op==='remove'&&id===candidate.object.id))
+  assert.deepEqual(scene.sceneOps.at(-1),['add',old.object.id])
+})
+
+test('progress observer throwing on cleanup cannot strand a retained model',async()=>{
+  const {SceneTransactionHarness}=await compileSceneTransactionHarness()
+  const manager=fakeManager(),scene=fakeScene(SceneTransactionHarness,manager),{old,slot}=slotWithOld(scene)
+  const pending=scene.switchCharacter(slot,101901,{loadProgressCallback:p=>{if(p==='')throw Error('observer cleanup failed')}})
+  manager.calls[0].gate.reject(new Error('original load failure'))
+  await assert.rejects(pending,/original load failure/)
+  assert.equal(slot.character,old);assert.equal(old.disposed,false);assert.equal(slot.loading,false)
+})
+
+test('throwing progress observer cannot interrupt remove and leak a retained model',async()=>{
+  const {SceneTransactionHarness}=await compileSceneTransactionHarness()
+  const manager=fakeManager(),scene=fakeScene(SceneTransactionHarness,manager),{old,slot}=slotWithOld(scene)
+  const pending=scene.switchCharacter(slot,101901,{loadProgressCallback:p=>{if(p==='')throw Error('observer cleanup failed')}})
+  const rejected=assert.rejects(pending,error=>error.name==='AbortError')
+  assert.doesNotThrow(()=>scene.removeCharacter(slot))
+  await rejected
+  assert.equal(old.disposeCount,1);assert.equal(scene.characters.includes(slot),false);assert.equal(slot.loading,false)
 })
 
 test('gzip transport is abortable and preserves gzip-magic decoding', async () => {

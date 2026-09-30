@@ -76,7 +76,7 @@ jobs:
           set -euo pipefail
           node scripts/build-deployment.mjs 2>&1 | tee /tmp/site-evidence/build.log
       - name: Install isolated browser driver
-        run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+        run: npm install --no-save --ignore-scripts puppeteer-core@25.12.0
       - name: Verify real pointer interaction, skinning and multi-character rendering
         run: |
           set -euo pipefail
@@ -164,7 +164,7 @@ jobs:
           MAGIUS_SITE_URL: https://magius3dviewer.pages.dev/
         run: |
           printf '{"private":true,"type":"module"}\n' > package.json
-          npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+          npm install --no-save --ignore-scripts puppeteer-core@25.12.0
           mkdir -p /tmp/site-evidence
           node scripts/site-smoke-cloudflare.mjs
           MAGIUS_EVIDENCE_DIR=/tmp/site-evidence/viewport node scripts/site-smoke-viewport.mjs

@@ -103,6 +103,8 @@ function fixture() {
             'unityDiffuseRadianceToThree', 'UNITY_TO_THREE_DIFFUSE_IRRADIANCE']))
     Object.assign(context, evaluate(read('src/viewer/stageHierarchy.ts'), context,
         ['resolveStageHierarchyPath', 'resolveStageAnchor']))
+    Object.assign(context, evaluate(selected('src/viewer/stageNativeVisibility.ts'), context,
+        ['applyStageNativeVisibility']))
     Object.assign(context, evaluate(selected('src/viewer/stageMainLightCascades.ts'), context,
         ['StageMainLightCascadeController', 'resolveOfficialMainShadowDistance',
             'resolveOfficialUrpDirectionalShadowPlan', 'resolveOfficialUrpDirectionalCascadeBias',

@@ -1,4 +1,5 @@
 import { ThirdPersonCamera } from './ThirdPersonCamera'
+import { TpsTouchControls } from './TpsTouchControls'
 import { translateUiText } from './localization/zhCN'
 import * as THREE from 'three'
 import { specialWeaponDefinitions, loadSpecialWeapon, type LoadedSpecialWeapon } from './specialWeapons'
@@ -1408,6 +1409,7 @@ document.body.appendChild(debugState)
 let installed = false
 let enabled = false
 let jumpQueued = false
+let touchControls: TpsTouchControls | undefined
 let virtualInput: VirtualInput | undefined
 const tpsCamera = new ThirdPersonCamera({
     scene: () => scene,
@@ -7736,7 +7738,7 @@ function createAnimationPort(
                     Math.max(0, options.fadeSeconds),
                 )
                 : Math.max(0, options.fadeSeconds)
-            const fadeSeconds = targetRigLocomotionTransitions
+            const regularFadeSeconds = targetRigLocomotionTransitions
                 ? targetRigLocomotionFadeSeconds(
                     targetRigLocomotionTransitions,
                     runtime._current,
@@ -7744,6 +7746,9 @@ function createAnimationPort(
                     requestedFadeSeconds,
                 )
                 : requestedFadeSeconds
+            const fadeSeconds = options.contactTransition
+                ? Math.min(Math.max(0, options.fadeSeconds), 0.1)
+                : regularFadeSeconds
             const previous = [...(runtime._activeActions ?? [])]
             bindingByObject.get(character.object)?.tpsPoseTransition?.begin(fadeSeconds)
 
@@ -9325,8 +9330,9 @@ function createViewerLocomotionController(
                 ?? (gaitCalibration ? 0.22 : 0.14),
             terminalFallSpeed: 16,
             turnSpeedRadians: Math.PI * 4.5,
-            landingDurationSeconds: jumpTiming?.landSeconds
-                ?? (gaitCalibration ? 0.36 : 0.28),
+            // Source clips include full recovery; contact is a short controller
+            // phase, not permission to glide forward in the landing pose.
+            landingDurationSeconds: Math.min(jumpTiming?.landSeconds ?? 0.14, 0.18),
             groundSnapDistance: 0.16,
             maximumSlopeRadians: THREE.MathUtils.degToRad(46),
             colliderRadius: 0.25,
@@ -11547,15 +11553,16 @@ function movementAxes(): { moveX: number; moveZ: number; run: boolean; jumpPress
         virtualInput.jumpPressed = false
         return value
     }
+    const touch = touchControls?.consume()
     const moveX = Number(pressed.has('KeyD') || pressed.has('ArrowRight'))
         - Number(pressed.has('KeyA') || pressed.has('ArrowLeft'))
     const moveZ = Number(pressed.has('KeyW') || pressed.has('ArrowUp'))
         - Number(pressed.has('KeyS') || pressed.has('ArrowDown'))
     const value = {
-        moveX,
-        moveZ,
-        run: pressed.has('ShiftLeft') || pressed.has('ShiftRight'),
-        jumpPressed: jumpQueued,
+        moveX: Math.max(-1, Math.min(1, moveX + (touch?.moveX ?? 0))),
+        moveZ: Math.max(-1, Math.min(1, moveZ + (touch?.moveZ ?? 0))),
+        run: pressed.has('ShiftLeft') || pressed.has('ShiftRight') || !!touch?.run,
+        jumpPressed: jumpQueued || !!touch?.jumpPressed,
     }
     jumpQueued = false
     return value
@@ -12023,6 +12030,7 @@ export function setViewerLocomotionEnabled(value: boolean): void {
     virtualInput = undefined
 
     document.body.classList.toggle('locomotion-mode-enabled', enabled)
+    touchControls?.setEnabled(enabled)
     for (const binding of bindings) {
         if (!wasEnabled && value && !isViewerTpsLocomotionFamily(binding, binding.character.animation.current)) {
             binding.tpsBaselineAnimation = binding.character.animation.current
@@ -12067,7 +12075,9 @@ export function setViewerLocomotionEnabled(value: boolean): void {
     hud.setAttribute('aria-hidden', String(!enabled))
     if (enabled) {
         if (!wasEnabled) tpsCamera.start()
-        feedbackOutput.value = 'Click the Viewer to capture the mouse.'
+        feedbackOutput.value = touchControls && !touchControls.element.hidden
+            ? '左侧摇杆移动／转向；右侧跑步、跳跃；空白处拖动视角。'
+            : 'Click the Viewer to capture the mouse.'
     } else {
         tpsCamera.stop()
     }
@@ -12103,8 +12113,10 @@ function installInputHandlers(): void {
     const releasePhysicalTpsInput = (): void => {
         pressed.clear()
         jumpQueued = false
+        touchControls?.reset()
     }
     tpsCamera.install()
+    touchControls ??= new TpsTouchControls({ canvas: () => scene.renderer.domElement, exit: () => setViewerLocomotionEnabled(false) })
     const releaseAllPhysicalTpsInput = releasePhysicalTpsInput
     document.addEventListener('keydown', event => {
         if (enabled && event.code === 'Escape' && !event.repeat) {

@@ -579,6 +579,8 @@ export interface CharacterAnimationPlayOptions {
     speed: number
     weight: number
     fadeSeconds: number
+    /** Physical contact/recovery must not retain the long airborne cross-fade. */
+    contactTransition?: boolean
 }
 
 /** Structural adapter for the current character package or another mixer. */
@@ -2441,6 +2443,9 @@ export class CharacterLocomotionController {
         this.transform.position.copy(nextPosition)
         this._grounded = grounded
         if (grounded && this.velocity.y < 0) this.velocity.y = 0
+        if (grounded && !wasGrounded && !this.activeAction && this.rootMotionMode === 'controlled') {
+            this.stopHorizontalMotion()
+        }
         this.updateFacing(dt, rootMotionDelta?.rotation)
         this.contacts = contacts
         this.updateState(wasGrounded, dt)
@@ -2456,6 +2461,13 @@ export class CharacterLocomotionController {
     }
 
     private updateHorizontalVelocity(deltaSeconds: number, movementScale: number): void {
+        // Do not translate a frozen landing pose across the floor. A new jump
+        // may still interrupt recovery, and explicit actions retain root motion.
+        if (this._grounded && this.landingRemainingSeconds > 0 && !this.jumpQueued
+            && !this.activeAction && this.rootMotionMode === 'controlled') {
+            this.stopHorizontalMotion()
+            return
+        }
         const direction = new Vector3(this.input.moveX, 0, this.input.moveZ)
         const magnitude = Math.min(1, direction.length())
         if (magnitude > 0) direction.normalize()
@@ -2546,10 +2558,10 @@ export class CharacterLocomotionController {
         const previous = this._state
         this._state = next
         this.onStateChange?.(next, previous)
-        this.syncLocomotionAnimation()
+        this.syncLocomotionAnimation(previous)
     }
 
-    private syncLocomotionAnimation(): void {
+    private syncLocomotionAnimation(previous?: LocomotionState): void {
         if (!this.animation || this.activeAction) return
         const loadedClips = this.animation.listClips()
         const jumpState = this._state === 'jump' || this._state === 'fall' || this._state === 'land'
@@ -2577,7 +2589,8 @@ export class CharacterLocomotionController {
             loop: selected.loop,
             speed: 1,
             weight: 1,
-            fadeSeconds: 0.1,
+            fadeSeconds: this._state === 'land' ? 0.06 : 0.1,
+            contactTransition: this._grounded && (this._state === 'land' || previous === 'land'),
         })
         this.lastLocomotionAnimation = selected.clip.name
     }

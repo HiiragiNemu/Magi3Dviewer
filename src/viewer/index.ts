@@ -1,4 +1,5 @@
 import './style/viewport-editor.css'
+import './style/tps-touch.css'
 import { createViewportPoseEditor } from './viewportPoseEditor'
 import { EditorGroundGuard } from './editorGround'
 import { createPoseContactGuard } from './poseContactGuard'

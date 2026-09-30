@@ -121,7 +121,7 @@ jobs:
           fs.writeFileSync('/tmp/site-evidence/cloudflare-full-payload.json',JSON.stringify({revision:version.revision,files:files.length,bytes:files.reduce((s,f)=>s+f.bytes,0),stageDirectories:catalog.bundledStageRoots.length,stageFiles:1549,publicSourceFallback:false},null,2)+'\n');
           NODE
       - name: Install isolated browser driver
-        run: npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+        run: npm install --no-save --ignore-scripts puppeteer-core@25.12.0
       - name: Render the fresh full candidate with source-repository network requests blocked
         run: node scripts/site-smoke-cloudflare.mjs
       - uses: actions/upload-artifact@v4
@@ -197,7 +197,7 @@ jobs:
           MAGIUS_SITE_URL: https://magius3dviewer.pages.dev/
         run: |
           printf '{"private":true,"type":"module"}\n' > package.json
-          npm install --no-save --ignore-scripts puppeteer-core@24.16.0
+          npm install --no-save --ignore-scripts puppeteer-core@25.12.0
           node scripts/site-smoke-cloudflare.mjs
       - uses: actions/upload-artifact@v4
         if: always()

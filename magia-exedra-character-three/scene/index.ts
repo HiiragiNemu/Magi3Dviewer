@@ -1127,6 +1127,15 @@ export class MagiaExedraScene3D {
 
         const transaction = (async (): Promise<SceneCharacter> => {
             let loadedCharacter: MagiaExedraCharacter3D | undefined
+            let registrationStarted = false
+            let committed = false
+            const assertCurrent = () => {
+                if (controller.signal.aborted || target.removed || target.loadGeneration !== generation) {
+                    throw (controller.signal.reason instanceof Error
+                        ? controller.signal.reason
+                        : new DOMException('Stale character transaction', 'AbortError'))
+                }
+            }
             try {
                 loadedCharacter = await this.characterManager.loadCharacterById(
                     id,
@@ -1137,29 +1146,26 @@ export class MagiaExedraScene3D {
                         `Character ${targetKey} resolved before loadFinish`,
                     )
                 }
+                assertCurrent()
                 await attachCharacterAngelRing(this, loadedCharacter, controller.signal)
-                if (
-                    controller.signal.aborted
-                    || target.removed
-                    || target.loadGeneration !== generation
-                ) {
-                    loadedCharacter.dispose()
-                    throw (
-                        controller.signal.reason instanceof Error
-                            ? controller.signal.reason
-                            : new DOMException('Stale character transaction', 'AbortError')
-                    )
-                }
+                assertCurrent()
 
                 loadingTask.phase('assembling')
-                target.retainedCharacter?.dispose()
-                target.retainedCharacter = undefined
-                target.character = loadedCharacter
+                // Register the replacement before retiring the retained model.
+                // A scene/shadow registration failure must still be reversible.
+                registrationStarted = true
                 this.scene.add(loadedCharacter.object)
                 this.stageCharacterShadows.add(loadedCharacter.object)
+                assertCurrent()
+                target.character = loadedCharacter
                 if (this.characterSelected === target) {
                     this.characterSelected = target
                 }
+                committed = true
+                const retained = target.retainedCharacter
+                target.retainedCharacter = undefined
+                try { retained?.dispose() }
+                catch (disposeError) { console.error('Retained character cleanup failed:', disposeError) }
                 try {
                     callbacks?.loadFinishCallback?.(loadedCharacter)
                 } catch (callbackError) {
@@ -1169,20 +1175,24 @@ export class MagiaExedraScene3D {
                 return target
             } catch (error) {
                 loadingTask.fail(error)
+                // This transaction owns its candidate even after another load
+                // takes over the slot, or the user removes the slot entirely.
+                if (loadedCharacter && !committed) {
+                    if (registrationStarted) {
+                        this.stageCharacterShadows.remove(loadedCharacter.object)
+                        this.scene.remove(loadedCharacter.object)
+                    }
+                    if (target.character === loadedCharacter) target.character = undefined
+                    if (!loadedCharacter.disposed) loadedCharacter.dispose()
+                }
                 if (
                     target.loadGeneration === generation
                     && !target.removed
                 ) {
                     if (lastProgress !== '') {
-                        callbacks?.loadProgressCallback?.('')
                         lastProgress = ''
-                    }
-                    if (
-                        loadedCharacter
-                        && !loadedCharacter.disposed
-                        && target.character !== loadedCharacter
-                    ) {
-                        loadedCharacter.dispose()
+                        try { callbacks?.loadProgressCallback?.('') }
+                        catch (callbackError) { console.error('Character progress cleanup failed:', callbackError) }
                     }
                     const retained = target.retainedCharacter
                     if (retained && !retained.disposed) {
@@ -1236,7 +1246,8 @@ export class MagiaExedraScene3D {
         sceneCharacter.loadController?.abort(
             new DOMException('Character was removed', 'AbortError'),
         )
-        sceneCharacter.activeProgressCallback?.('')
+        try { sceneCharacter.activeProgressCallback?.('') }
+        catch (callbackError) { console.error('Character progress cleanup failed:', callbackError) }
         sceneCharacter.activeProgressCallback = undefined
         sceneCharacter.loadController = undefined
         sceneCharacter.loadPromise = undefined

@@ -599,17 +599,13 @@ test('V38 preserves accepted target-axis gait, accepts wheel input across the Vi
     assert.match(source, /applyNativeHandFingerPose\('run', ratio\),[\s\S]{0,40}'run'/)
     assert.doesNotMatch(source, /delta\.slerpQuaternions\(new THREE\.Quaternion\(\), delta/)
     assert.match(source, /const weightedDelta = handStrength < 1[\s\S]{0,100}new THREE\.Quaternion\(\)\.slerp\(delta, handStrength\)/)
-    assert.match(source, /document\.addEventListener\('wheel', event =>/)
-    assert.match(source, /const isInteractiveTpsControlTarget = \(target: EventTarget \| null\)/)
-    assert.match(source, /const rect = canvas\.getBoundingClientRect\(\)/)
-    assert.match(source, /event\.clientX >= rect\.left[\s\S]{0,160}event\.clientY <= rect\.bottom/)
-    assert.match(source, /reason: pointerLocked \? 'pointer-lock' : 'viewer-surface'/)
-    assert.match(source, /wheelTrace: cameraWheelTrace/)
-    assert.doesNotMatch(source, /scene\.renderer\.domElement\.addEventListener\('wheel'/)
-    assert.match(source, /const applyTpsCameraWheelDelta = \(event: WheelEvent\): void =>/)
-    assert.match(source, /document\.pointerLockElement !== scene\.renderer\.domElement/)
-    assert.match(source, /\{ passive: false, capture: true \}/)
-    assert.doesNotMatch(source, /event\.composedPath\(\)/)
+    const camera = fs.readFileSync('src/viewer/ThirdPersonCamera.ts','utf8')
+    assert.match(source, /tpsCamera\.install\(\)/)
+    assert.match(camera, /document\.addEventListener\('wheel', event =>/)
+    assert.match(camera, /this\.isControl\(event\.target\)/)
+    assert.match(camera, /this\.inside\(event\.clientX, event\.clientY\)/)
+    assert.match(camera, /passive: false, capture: true, signal/)
+    assert.doesNotMatch(camera, /addEventListener\('mousemove'/)
 
     assert.match(source, /function controllerFreeJumpDonorRejectionReason\(/)
     assert.match(source, /donor\.grade !== 'A'/)
@@ -711,7 +707,7 @@ test('V44 keeps 101901 walking forearms strongly pre-bent without a gait-phase r
     assert.match(source, /const targetRigLocomotionTransitions = characterSpecificMotion\.profile\.status === 'attached'[\s\S]{0,360}characterSpecificMotion\.jumpAnimations/)
 
     // Keep the two user-accepted controls byte-visible in the same regression.
-    assert.match(source, /Math\.max\(0, cameraDistanceTarget \+ wheelDelta \* TPS_CAMERA_POINTER\.wheelMetersPerDelta\)/)
+    assert.match(fs.readFileSync('src/viewer/ThirdPersonCamera.ts','utf8'), /Math\.max\(0, this\.distance \+ delta \* 0\.0035\)/)
     assert.match(source, /hasDirectionalInput[\s\S]{0,120}THREE\.MathUtils\.clamp\(speedRatio, 1, 1\.1\)/)
 })
 
@@ -1067,7 +1063,7 @@ test('normalized donor reference preserves ten full 60fps cycles, morphology wei
     assert.match(source, /const targetRigMorphologyCharacterIds = new Set\(\[102001, 102101\]\)/)
     assert.match(source, /const supportedTargetRigProfile = characterId === 101901[\s\S]{0,120}targetRigMorphologyCharacterIds\.has\(characterId\)/)
     assert.match(source, /if \(!supportedTargetRigProfile\)/)
-    assert.doesNotMatch(source, /setNativeDungeonExternalAttachmentsHidden\(binding, enabled\)/)
+    assert.match(source, /if \(!characterActionPlaybackBlocksLocomotion\(binding\)\) \{\s*setNativeDungeonExternalAttachmentsHidden\(binding, enabled\)/)
     assert.match(source, /if \(characterSpecificMotion\.profile\.status === 'attached'\)[\s\S]{0,100}setNativeDungeonExternalAttachmentsHidden\(binding, true\)/)
 })
 
@@ -2160,7 +2156,7 @@ test('Viewer consumes all exact native Dungeon action products without cross-cha
         "allowSecondaryFallback: false",
         "emitViewerEvent('magius:character-action-catalog-change'",
         "emitViewerEvent('magius:character-action-playback-state'",
-        'playViewerCharacterAction(actionId)',
+        'playViewerCharacterAction(actionId, options)',
         'pauseViewerCharacterAction()',
         'seekViewerCharacterAction(timeSeconds)',
         'stepViewerCharacterAction(deltaSeconds)',
@@ -2504,158 +2500,53 @@ test('101901 real target rig derives wide reachable Mami/Madoka-reference gait c
     }
 })
 
-test('TPS mouse look keeps unwrapped yaw independent from pitch, accepts wheel input to zero distance, and records bounded input', () => {
-    const source = fs.readFileSync(
-        new URL('./src/viewer/viewerLocomotion.ts', import.meta.url),
-        'utf8',
-    )
-    for (const required of [
-        'const TPS_CAMERA_POINTER = Object.freeze({',
-        'yawRadiansPerCssPixel: 0.0018',
-        'pitchRadiansPerCssPixel: 0.0015',
-        'maxCssPixelsPerEvent: 42',
-        'minPitchRadians: THREE.MathUtils.degToRad(-18)',
-        'maxPitchRadians: THREE.MathUtils.degToRad(55)',
-        'responsePerSecond: 11',
-        'maxYawTargetLeadRadians: THREE.MathUtils.degToRad(45)',
-        'maxPitchTargetLeadRadians: THREE.MathUtils.degToRad(20)',
-        'wheelMetersPerDelta: 0.0035',
-        'maxWheelDeltaPerEvent: 120',
-        'maxDistanceMeters: 10',
-        'clickCaptureMaxTravelCssPixels: 6',
-        'rawCssPixels,',
-        'let cameraYawUnwrapped = 0',
-        'let cameraYawTargetUnwrapped = cameraYawUnwrapped',
-        'cameraYawUnwrapped = dampUnwrappedCameraYaw(',
-        'return current + (target - current) * blend',
-        'cameraDistance = THREE.MathUtils.damp(',
-        'const requestedYaw = cameraYawTargetUnwrapped - dx',
-        'const requestedPitch = cameraPitchTarget + dy',
-        "source: 'pointer-lock' | 'drag-fallback' | 'free-look-fallback'",
-        "applyTpsCameraPointerDelta(event.movementX, event.movementY, 'pointer-lock')",
-        "'drag-fallback'",
-        "'free-look-fallback'",
-        'cameraDistanceTarget + wheelDelta * TPS_CAMERA_POINTER.wheelMetersPerDelta',
-        'Math.max(0, cameraDistanceTarget + wheelDelta * TPS_CAMERA_POINTER.wheelMetersPerDelta)',
-        'event.deltaMode === WheelEvent.DOM_DELTA_LINE',
-        "collisionAzimuthPolicy: 'preserve-unwrapped-yaw'",
-        'preCollisionAzimuth: cameraYawTargetUnwrapped',
-        'postCollisionAzimuth: cameraYawTargetUnwrapped',
-        'dragPointerId: cameraDragPointerId ?? null',
-        'freeLookFallbackActive: cameraFreeLookFallbackActive',
-        'physicalPressedCodes: [...pressed].sort()',
-        'jumpQueued,',
-        'scene.camera.up.set(0, 1, 0)',
-    ]) {
-        assert.ok(source.includes(required), `missing bounded TPS camera contract: ${required}`)
+test('TPS mouse input uses the current single-stream camera owner and yaw-relative movement', () => {
+    const source=fs.readFileSync('src/viewer/viewerLocomotion.ts','utf8'),camera=fs.readFileSync('src/viewer/ThirdPersonCamera.ts','utf8')
+    const tree=ts.createSourceFile('viewer.ts',source,ts.ScriptTarget.Latest,true)
+    const node=tree.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='cameraRelativeInput')
+    assert.ok(node)
+    const code=stripTypeScriptTypes(node.getText(tree),{mode:'strip'})
+    const owner={yaw:0,pitch:0}
+    const transform=Function('THREE','tpsCamera',code+';return cameraRelativeInput')(THREE,owner)
+    const binding={character:{object:new THREE.Group()}}
+    for(const yaw of [-8,-Math.PI,0,.7,Math.PI,8])for(const pitch of [-10,0,10]){
+        owner.yaw=yaw;owner.pitch=pitch
+        const value=transform(binding,{moveX:0,moveZ:1,run:true,jumpPressed:false})
+        assert.ok(Math.abs(value.moveX+Math.sin(yaw))<1e-12)
+        assert.ok(Math.abs(value.moveZ+Math.cos(yaw))<1e-12)
+        assert.equal(value.run,true);assert.equal(value.jumpPressed,false)
     }
-    const inputStart = source.indexOf('function cameraRelativeInput')
-    const inputEnd = source.indexOf('function updateTpsCamera')
-    const inputSource = source.slice(inputStart, inputEnd)
-    assert.match(inputSource, /-Math\.sin\(cameraYawUnwrapped\)/)
-    assert.match(inputSource, /-Math\.cos\(cameraYawUnwrapped\)/)
-    assert.doesNotMatch(inputSource, /scene\.camera\.getWorldDirection/)
-    assert.match(source, /if \(Math\.hypot\(offset\.x, offset\.z\) > 1e-4\)/)
-    assert.doesNotMatch(source, /minDistanceMeters/)
-    assert.match(source, /cameraDistance = Math\.min\(offset\.length\(\), TPS_CAMERA_POINTER\.maxDistanceMeters\)/)
-    assert.doesNotMatch(source, /cameraYaw -= event\.movementX \* 0\.0024/)
-    assert.doesNotMatch(source, /cameraPitch \+ event\.movementY \* 0\.0019/)
-    assert.match(source, /addEventListener\('pointermove'[\s\S]*?applyTpsCameraPointerDelta\(/)
-    assert.match(source, /const requestTpsPointerLock = \(canvas: HTMLCanvasElement\): void =>/)
-    assert.match(source, /const request = canvas\.requestPointerLock\(\) as Promise<void> \| void/)
-    assert.match(source, /if \(request && typeof request\.catch === 'function'\)/)
-    assert.doesNotMatch(source, /requestPointerLock\(\)\.catch/)
-    assert.match(source, /document\.addEventListener\('pointerdown'[\s\S]*?const canvas = scene\.renderer\.domElement[\s\S]*?requestTpsPointerLock\(canvas\)[\s\S]*?event\.preventDefault\(\)[\s\S]*?\{ capture: true \}\)/)
-    assert.match(source, /const isInsideCurrentViewer = \([\s\S]*?canvas\.getBoundingClientRect\(\)/)
-    assert.match(source, /document\.addEventListener\('pointermove'[\s\S]*?'drag-fallback'[\s\S]*?\{ capture: true \}\)/)
-    assert.match(source, /document\.addEventListener\('pointerup', event => endCameraDrag\(event, true\), \{ capture: true \}\)/)
-    assert.match(source, /document\.addEventListener\('pointercancel', event => endCameraDrag\(event, false\), \{ capture: true \}\)/)
-    assert.match(source, /cameraDragTravelCssPixels <= TPS_CAMERA_POINTER\.clickCaptureMaxTravelCssPixels/)
-    assert.match(source, /cameraFreeLookFallbackActive[\s\S]*?applyTpsCameraPointerDelta\(dx, dy, 'free-look-fallback'\)/)
-    assert.match(
-        source,
-        /if \(enabled && event\.code === 'Escape' && !event\.repeat\)[\s\S]*?setFreeLookFallbackActive\(false\)[\s\S]*?setViewerLocomotionEnabled\(false\)/,
-    )
-    assert.doesNotMatch(source, /scene\.renderer\.domElement\.addEventListener\('pointer(?:down|move|up|cancel)'/)
-    assert.match(source, /const releasePhysicalTpsInput = \(\): void => \{[\s\S]*?pressed\.clear\(\)[\s\S]*?jumpQueued = false/)
-    assert.match(source, /else \{[\s\S]*?releasePhysicalTpsInput\(\)[\s\S]*?setFreeLookFallbackActive\(false\)/)
-    assert.match(source, /addEventListener\('keydown'[\s\S]*?\}, \{ capture: true \}\)/)
-    assert.match(source, /addEventListener\('keyup',[\s\S]*?\{ capture: true \}\)/)
-    assert.match(source, /window\.addEventListener\('blur', releaseAllPhysicalTpsInput\)/)
-    assert.match(source, /addEventListener\('visibilitychange'[\s\S]*?document\.hidden[\s\S]*?releaseAllPhysicalTpsInput\(\)/)
-
-    assert.doesNotMatch(source, /rawCssPixels\s*\/\s*deviceScale/)
-    const usefulYawFor60CssPixelsDegrees = 60 * 0.0018 * 180 / Math.PI
-    const maximumYawPerEventDegrees = 42 * 0.0018 * 180 / Math.PI
-    const maximumPitchPerEventDegrees = 42 * 0.0015 * 180 / Math.PI
-    assert.ok(usefulYawFor60CssPixelsDegrees > 6 && usefulYawFor60CssPixelsDegrees < 7)
-    assert.ok(maximumYawPerEventDegrees > 4 && maximumYawPerEventDegrees < 5)
-    assert.ok(maximumPitchPerEventDegrees > 3 && maximumPitchPerEventDegrees < 4)
+    assert.match(source,/tpsCamera\.install\(\)/)
+    assert.match(camera,/this\.yaw -= dx \* this\.gain/)
+    assert.match(camera,/this\.pitch \+= dy \* this\.gain/)
+    assert.match(camera,/this\.move\(event\.movementX, event\.movementY/)
+    assert.match(camera,/this\.drag\?\.id !== event\.pointerId/)
+    assert.match(camera,/Number\.isFinite\(dx\)/)
+    assert.match(camera,/unadjustedMovement: true/)
+    assert.doesNotMatch(camera,/addEventListener\('mousemove'|getCoalescedEvents\(/)
+    assert.match(source,/window\.addEventListener\('blur', releaseAllPhysicalTpsInput\)/)
+    assert.match(source,/document\.hidden[\s\S]*releaseAllPhysicalTpsInput\(\)/)
 })
 
-test('TPS exit hands the final TPS view to OrbitControls without restoring the pre-entry camera', () => {
-    const source = fs.readFileSync('src/viewer/viewerLocomotion.ts', 'utf8')
-    for (const required of [
-        'interface ViewerOrbitControlsLease {',
-        'let orbitCameraSessionActive = false',
-        'function ensureOrbitControlsCurrentCanvas(): void {',
-        'if (scene.controls.domElement === canvas) return',
-        'scene.controls.connect(canvas)',
-        'function captureOrbitControlsLease(): void {',
-        'controlsEnabled: scene.controls.enabled',
-        'function handoffFinalTpsCameraToOrbitControls(): void {',
-        'const finalPosition = scene.camera.position.clone()',
-        'const finalQuaternion = scene.camera.quaternion.clone()',
-        'const finalUp = scene.camera.up.clone()',
-        'const finalZoom = scene.camera.zoom',
-        'const finalTargetDistance = scene.camera.position.distanceTo(scene.controls.target)',
-        '.applyQuaternion(finalQuaternion)',
-        'const dampingEnabled = scene.controls.enableDamping',
-        'scene.controls.enableDamping = false',
-        'scene.camera.position.copy(finalPosition)',
-        'scene.camera.quaternion.copy(finalQuaternion)',
-        'scene.camera.up.copy(finalUp)',
-        'scene.camera.zoom = finalZoom',
-        'scene.controls.target.copy(finalTarget)',
-        'scene.controls.enableDamping = dampingEnabled',
-        'scene.controls.saveState()',
-        'scene.controls.enabled = lease.controlsEnabled',
-        'const wasEnabled = enabled',
-        'if (!wasEnabled && value) captureOrbitControlsLease()',
-        'if (wasEnabled) handoffFinalTpsCameraToOrbitControls()',
-        "handoffPolicy: 'preserve-final-tps-view'",
-        'leaseControlsEnabled: orbitControlsLease?.controlsEnabled ?? null',
-        'cameraPosition: scene.camera.position.toArray()',
-        'cameraUp: scene.camera.up.toArray()',
-        'cameraZoom: scene.camera.zoom',
-        'target: scene.controls.target.toArray()',
-        'currentCanvas: scene.controls.domElement === scene.renderer.domElement',
-    ]) {
-        assert.ok(source.includes(required), `missing TPS/OrbitControls handoff contract: ${required}`)
-    }
-
-    const frameStart = source.indexOf('function updateFrame')
-    const syncStart = source.indexOf('function syncCameraRigFromCurrentView', frameStart)
-    const frameSource = source.slice(frameStart, syncStart)
-    assert.match(frameSource, /if \(enabled\) \{[\s\S]*?ensureOrbitControlsCurrentCanvas\(\)[\s\S]*?scene\.controls\.enabled = false[\s\S]*?updateTpsCamera/)
-    assert.match(frameSource, /else \{[\s\S]*?ensureOrbitControlsCurrentCanvas\(\)/)
-
-    const setStart = source.indexOf('export function setViewerLocomotionEnabled')
-    const setEnd = source.indexOf('function installInputHandlers', setStart)
-    const setSource = source.slice(setStart, setEnd)
-    assert.ok(setSource.indexOf('captureOrbitControlsLease()') < setSource.indexOf('enabled = value'))
-    assert.match(setSource, /if \(enabled\) \{[\s\S]*?scene\.controls\.enabled = false/)
-    assert.match(setSource, /if \(wasEnabled\) handoffFinalTpsCameraToOrbitControls\(\)/)
-    assert.doesNotMatch(setSource, /scene\.controls\.enabled = !enabled/)
-    assert.doesNotMatch(source, /ViewerOrbitCameraBaseline|captureOrbitCameraBaseline|restoreOrbitCameraBaseline/)
-    assert.doesNotMatch(source, /baselinePosition|baselineUp|baselineZoom|baselineTarget/)
+test('TPS exit wiring delegates the final view to the current camera owner', () => {
+    const source=fs.readFileSync('src/viewer/viewerLocomotion.ts','utf8'),camera=fs.readFileSync('src/viewer/ThirdPersonCamera.ts','utf8')
+    assert.match(source,/if \(enabled && selected\) tpsCamera\.update\(\)/)
+    assert.match(source,/if \(!wasEnabled\) tpsCamera\.start\(\)/)
+    assert.match(source,/else \{\s*tpsCamera\.stop\(\)/)
+    assert.match(camera,/controls\.enableDamping = false[\s\S]*camera\.position\.copy\(position\)[\s\S]*camera\.quaternion\.copy\(quaternion\)/)
+    assert.match(camera,/controls\.connect\(renderer\.domElement\)/)
+    assert.match(camera,/controls\.enabled = this\.orbit\?\.enabled \?\? true/)
+    assert.doesNotMatch(source,/restoreOrbitCameraBaseline|captureOrbitCameraBaseline/)
+    // Real zero-distance, residual Orbit damping, and 12/30/60/144 FPS cases
+    // execute in viewerTpsCameraContinuity/Response, part of the website gate.
 })
 
 test('camera look tracking is post-mixer, rig-axis aware, bounded, and yields to authored head clips', () => {
     const source = fs.readFileSync('src/viewer/viewerLocomotion.ts', 'utf8')
     for (const required of [
         'get eligible(): boolean',
-        "? 'head-and-eyes' : 'head-only'",
+        "eyePoseAuthority: 'authored-animation-and-expression'",
+        'proceduralEyeRotation: false',
         "getCharacterReDriveProfile(this.characterId)",
         'unityDirectionToThreeFbx(profile.faceForwardAxis)',
         'unityDirectionToThreeFbx(profile.faceUpAxis)',
@@ -2663,8 +2554,8 @@ test('camera look tracking is post-mixer, rig-axis aware, bounded, and yields to
         "chest: 'Root/Hip/Spine/Waist/Chest'",
         "neck: 'Root/Hip/Spine/Waist/Chest/Neck'",
         "head: 'Root/Hip/Spine/Waist/Chest/Neck/Head'",
-        "eyeL: 'Root/Hip/Spine/Waist/Chest/Neck/Head/Eye_L'",
-        "eyeR: 'Root/Hip/Spine/Waist/Chest/Neck/Head/Eye_R'",
+        "'Root/Hip/Spine/Waist/Chest/Neck/Head/Eye_L'",
+        "'Root/Hip/Spine/Waist/Chest/Neck/Head/Eye_R'",
         'characterActionPlaybackBlocksLocomotion(binding)',
         "authoredHeadClipPattern.test(binding.character.animation.current ?? '')",
         'Fece)(?:Up|Down)',
@@ -2673,7 +2564,7 @@ test('camera look tracking is post-mixer, rig-axis aware, bounded, and yields to
         'THREE.MathUtils.degToRad(-24)',
         'THREE.MathUtils.degToRad(28)',
         'THREE.MathUtils.degToRad(120)',
-        'this.cameraYawRelative = this.signedAngle(cameraYawUnwrapped - this.bodyYaw)',
+        'this.cameraYawRelative = this.signedAngle(tpsCamera.yaw - this.bodyYaw)',
         "private gazeSemantic: 'look-at-camera' | 'look-with-camera' | 'side-transition'",
         'const headToCamera = scene.camera.position.clone().sub(headPosition).normalize()',
         'const cameraForward = scene.camera.getWorldDirection(new THREE.Vector3()).normalize()',
@@ -3337,7 +3228,7 @@ test('TPS entry bridges the last rendered mixer pose without a bind or rest-pose
     const attachStart = source.indexOf('export function attachViewerLocomotion')
     const attachEnd = source.indexOf('export function detachViewerLocomotion', attachStart)
     const attach = source.slice(attachStart, attachEnd)
-    assert.match(attach, /const tpsPoseTransition = new ViewerTpsPoseTransition\(character\)/)
+    assert.match(attach, /const tpsPoseTransition = new ViewerTpsPoseTransition\(character, cameraHeadTracking\)/)
     assert.match(attach, /if \(enabled\) tpsPoseTransition\?\.begin\(\)/)
     const transitionLoopIndex = attach.indexOf('animationLoops.push(tpsPoseTransition.update)')
     const proceduralLoopIndex = attach.indexOf('animationLoops.push(proceduralLocomotion.update)')
@@ -3345,37 +3236,20 @@ test('TPS entry bridges the last rendered mixer pose without a bind or rest-pose
     assert.ok(proceduralLoopIndex > transitionLoopIndex)
 })
 
-test('Escape or owned pointer-lock loss exits TPS exactly once through the final-view handoff path', () => {
-    const source = fs.readFileSync('src/viewer/viewerLocomotion.ts', 'utf8')
-    const handlersStart = source.indexOf('function installInputHandlers')
-    const handlers = source.slice(handlersStart)
-    const escapeStart = handlers.indexOf("if (enabled && event.code === 'Escape' && !event.repeat)")
-    const escapeEnd = handlers.indexOf('\n        }', escapeStart)
-    assert.ok(escapeStart >= 0 && escapeEnd > escapeStart)
-    const escape = handlers.slice(escapeStart, escapeEnd)
-    assert.equal((escape.match(/setViewerLocomotionEnabled\(false\)/g) ?? []).length, 1)
-    assert.match(escape, /releasePhysicalTpsInput\(\)/)
-    assert.match(escape, /setFreeLookFallbackActive\(false\)/)
-
-    const pointerLockStart = handlers.indexOf('let tpsPointerLockOwned = false')
-    const pointerLockEnd = handlers.indexOf("document.addEventListener('pointerdown'", pointerLockStart)
-    const pointerLock = handlers.slice(pointerLockStart, pointerLockEnd)
-    assert.ok(pointerLockStart >= 0 && pointerLockEnd > pointerLockStart)
-    assert.match(pointerLock, /const wasTpsPointerLocked = tpsPointerLockOwned/)
-    assert.match(pointerLock, /tpsPointerLockOwned = locked/)
-    assert.match(
-        pointerLock,
-        /if \(wasTpsPointerLocked && !locked && enabled\) \{\s*setViewerLocomotionEnabled\(false\)/,
-    )
-    assert.equal((pointerLock.match(/setViewerLocomotionEnabled\(false\)/g) ?? []).length, 1)
-
-    const enableStart = source.indexOf('export function setViewerLocomotionEnabled')
-    const enableEnd = source.indexOf('function installInputHandlers', enableStart)
-    const enable = source.slice(enableStart, enableEnd)
-    assert.match(enable, /if \(document\.pointerLockElement === scene\.renderer\.domElement\) document\.exitPointerLock\(\)/)
-    assert.doesNotMatch(enable, /binding\.cameraHeadTracking\?\.reset\(\)/)
-    assert.ok(enable.indexOf('binding.cameraHeadTracking?.setActive(enabled)') < enable.indexOf('deactivateNativeDungeonPresentation(binding, true)'))
-    assert.match(enable, /if \(wasEnabled\) handoffFinalTpsCameraToOrbitControls\(\)/)
+test('Escape and owned pointer-lock loss exit the current TPS owner without resetting the pose',()=>{
+    const source=fs.readFileSync('src/viewer/viewerLocomotion.ts','utf8'),camera=fs.readFileSync('src/viewer/ThirdPersonCamera.ts','utf8')
+    const at=source.indexOf("if (enabled && event.code === 'Escape' && !event.repeat)"),end=source.indexOf('return',at)
+    assert.ok(at>=0&&end>at)
+    const escape=source.slice(at,end)
+    assert.equal((escape.match(/setViewerLocomotionEnabled\(false\)/g)||[]).length,1)
+    assert.match(escape,/releasePhysicalTpsInput\(\)/)
+    assert.match(camera,/if \(wasLocked && !this\.locked && this\.active\) this\.hooks\.released\(\)/)
+    assert.match(camera,/if \(document\.pointerLockElement === renderer\.domElement\) document\.exitPointerLock\(\)/)
+    assert.match(source,/released: \(\) => setViewerLocomotionEnabled\(false\)/)
+    const start=source.indexOf('export function setViewerLocomotionEnabled'),finish=source.indexOf('function installInputHandlers',start),body=source.slice(start,finish)
+    assert.doesNotMatch(body,/binding\.cameraHeadTracking\?\.reset\(\)/)
+    assert.ok(body.indexOf('binding.cameraHeadTracking?.setActive(enabled)')<body.indexOf('deactivateNativeDungeonPresentation(binding, true)'))
+    assert.match(body,/tpsCamera\.stop\(\)/)
 })
 
 function universalGazeFixture({ characterId = 800001, eyes = 'pair', missing = undefined, policy = undefined } = {}) {
@@ -3415,13 +3289,13 @@ function universalGazeFixture({ characterId = 800001, eyes = 'pair', missing = u
     const Tracker = new Function(
         'THREE', 'getCharacterReDriveProfile', 'unityDirectionToThreeFbx', 'findBodyRigRoot',
         'indexRigObjects', 'getClockDelta', 'objectHierarchyPath',
-        'characterActionPlaybackBlocksLocomotion', 'scene', 'cameraYawUnwrapped', 'cameraPitch', 'viewerPerformanceClaims',
+        'characterActionPlaybackBlocksLocomotion', 'scene', 'tpsCamera', 'viewerPerformanceClaims',
         `${code}\nreturn ViewerCameraHeadTracking`,
     )(
         THREE,
         () => ({ faceForwardAxis: [0, 0, 1], faceUpAxis: [0, 1, 0], faceRightAxis: [1, 0, 0] }),
         axis => new THREE.Vector3(...axis), () => object, () => rig, () => 1 / 60,
-        bone => bone.name, state => state.blocked, scene, 0, 0, new WeakMap(),
+        bone => bone.name, state => state.blocked, scene, {yaw:0,pitch:0}, new WeakMap(),
     )
     const tracker = new Tracker(character, policy)
     tracker.setStateProvider(() => binding)
@@ -3439,12 +3313,17 @@ test('universal gaze uses rig capabilities rather than acceptance sample IDs', (
     for (const characterId of [800001, 800002, 100102, 100301, 101901]) {
         const f = universalGazeFixture({ characterId })
         assert.equal(f.tracker.eligible, true)
-        assert.equal(f.tracker.diagnostics.capability, 'head-and-eyes')
+        assert.equal(f.tracker.diagnostics.capability, 'head-only')
+        assert.equal(f.tracker.diagnostics.proceduralEyeRotation, false)
+        assert.equal(f.tracker.diagnostics.eyePoseAuthority, 'authored-animation-and-expression')
         f.tracker.setActive(true)
         for (let i = 0; i < 60; i++) f.evaluate()
         assert.equal(f.tracker.diagnostics.active, true)
         assert.equal(f.tracker.diagnostics.applied, true)
         assert.equal(f.tracker.diagnostics.eyeBoneCount, 2)
+        for (const [name,bone] of f.rig) if (/Eye_[LR]$/.test(name)) {
+            assert.ok(bone.quaternion.angleTo(new THREE.Quaternion())<1e-7, 'Gaze must not overwrite authored eye poses')
+        }
         assert.ok(f.head.quaternion.angleTo(new THREE.Quaternion()) > 0.01)
     }
 })
@@ -3455,7 +3334,7 @@ test('universal gaze explicitly classifies head-only, lone-eye and missing-chain
         f.tracker.setActive(true)
         for (let i = 0; i < 30; i++) f.evaluate()
         assert.equal(f.tracker.diagnostics.capability, 'head-only')
-        assert.equal(f.tracker.diagnostics.eyeBoneCount, 0)
+        assert.equal(f.tracker.diagnostics.eyeBoneCount, eyes === 'single' ? 1 : 0)
         assert.equal(f.tracker.diagnostics.applied, true)
     }
     for (const missing of ['Chest', 'Neck', 'Head']) {
@@ -3960,8 +3839,8 @@ test('performance host channel split ordinary native action bones do not own gaz
     assert.equal(owned.has(a.bone),false);assert.equal(owned.has(manual),true)
     const source=fs.readFileSync('src/viewer/viewerLocomotion.ts','utf8')
     const start=source.indexOf('interface ViewerTpsPoseTransitionNode'),end=source.indexOf('class ViewerProceduralLocomotion',start)
-    const Transition=new Function('THREE','getClockDelta','viewerPerformanceClaims',
-        stripTypeScriptTypes(source.slice(start,end),{mode:'strip'})+'\nreturn ViewerTpsPoseTransition')(THREE,()=>1/60,f.runtime.claims)
+    const Transition=new Function('THREE','getClockDelta','viewerPerformanceClaims','getViewerCharacterPhysicsAttachment',
+        stripTypeScriptTypes(source.slice(start,end),{mode:'strip'})+'\nreturn ViewerTpsPoseTransition')(THREE,()=>1/60,f.runtime.claims, object=>f.physics.get(object))
     const transition=new Transition(a.character)
     a.bone.position.y=2;manual.position.y=3;transition.begin()
     a.bone.position.y=0;manual.position.y=0;transition.update()
@@ -4157,9 +4036,9 @@ async function performanceIndependentTimelineFixture(kind, nativeEnabled=false) 
     a.character.animation={mixer,paused:false,get current(){return current},get time(){return mixer._actions[0]?.time??0},set time(value){mixer.setTime(value)}}
     Object.assign(a.binding,{directHomeActions:{entries:[]},combatJumpActions:{entries:[]},characterActionPlayback:{status:'playing',timeSeconds:0},snapshot:{state:'idle',grounded:true},animationPort:port})
     const source=fs.readFileSync('src/viewer/viewerLocomotion.ts','utf8')
-    const names=['directHomePhaseAtTime','seekActiveDirectHomePlayback','applyCombatSkeletonPose','synchronizeViewerCharacterActionState','synchronizeActiveCombatJumpDonorPlayback']
+    const names=['directHomePhaseAtTime','seekActiveDirectHomePlayback','applyCombatSkeletonPose','synchronizeViewerCharacterActionState','synchronizeActiveCombatJumpDonorPlayback','seekViewerCharacterActionMixer','synchronizeViewerCharacterActionClipRepetition','advanceViewerCharacterActionTimelineRepetition']
     const functions=names.map(name=>{const start=source.indexOf(`function ${name}(`),next=source.indexOf('\nfunction ',start+1);assert.ok(start>=0&&next>start);return source.slice(start,next)}).join('\n')
-    const deps={THREE,observeViewerPerformanceTimelineMixer:f.runtime.timelineObserve,publishViewerPerformanceTimelineProducer:f.runtime.timelinePublish,
+    const deps={THREE,viewerCharacterActionRepetitions:new WeakMap(),observeViewerPerformanceTimelineMixer:f.runtime.timelineObserve,publishViewerPerformanceTimelineProducer:f.runtime.timelinePublish,
         combatSkeletonPhaseCrossfadeSeconds:0.1,applyCombatSkeletonAttachmentPose:()=>events.push(['attachment']),
         characterActionPlaybackBlocksLocomotion:b=>!b.combatJumpActions.activeJumpDonorPlayback&&['playing','paused'].includes(b.characterActionPlayback.status),
         releaseViewerCharacterActionPhysicsPhase:()=>{},emitCharacterActionPlaybackState:()=>{},familyEquals:(x,y)=>x===y,
@@ -4595,7 +4474,7 @@ test('performance host channel split real native-ready action evaluates before o
 test('G08 body transition captures evaluated pose once across nested stop/play and recaptures an interrupted blend', () => {
     const source = fs.readFileSync('src/viewer/viewerLocomotion.ts', 'utf8')
     const start = source.indexOf('interface ViewerTpsPoseTransitionNode'), end = source.indexOf('class ViewerProceduralLocomotion', start)
-    const Transition = new Function('THREE', 'getClockDelta', 'viewerPerformanceClaims', stripTypeScriptTypes(source.slice(start, end), { mode: 'strip' }) + '\nreturn ViewerTpsPoseTransition')(THREE, () => 1 / 60, new WeakMap())
+    const Transition = new Function('THREE', 'getClockDelta', 'viewerPerformanceClaims', 'getViewerCharacterPhysicsAttachment', stripTypeScriptTypes(source.slice(start, end), { mode: 'strip' }) + '\nreturn ViewerTpsPoseTransition')(THREE, () => 1 / 60, new WeakMap(), () => undefined)
     const object = new THREE.Group(), bone = new THREE.Bone(); bone.name = 'Head'; object.add(bone)
     const transition = new Transition({ object })
     const quaternion = value => new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), value)

@@ -75,6 +75,7 @@ export class ThirdPersonCamera {
     }
 
     zoom(delta: number): void {
+        if (!Number.isFinite(delta)) return
         this.distance = Math.min(10, Math.max(0, this.distance + delta * 0.0035))
     }
 
@@ -131,7 +132,7 @@ export class ThirdPersonCamera {
     }
 
     private isControl(target: EventTarget | null): boolean {
-        return target instanceof Element && !!target.closest('button,input,select,textarea,[contenteditable="true"],[role="button"],[role="slider"],[role="listbox"],[role="combobox"]')
+        return target instanceof Element && !!target.closest('[data-tps-touch],button,input,select,textarea,[contenteditable="true"],[role="button"],[role="slider"],[role="listbox"],[role="combobox"]')
     }
 
     private inside(x: number, y: number): boolean {
@@ -181,18 +182,25 @@ export class ThirdPersonCamera {
         }) as EventListener, { signal })
         document.addEventListener('pointermove', event => {
             if (!this.active || document.pointerLockElement === this.hooks.scene().renderer.domElement || this.drag?.id !== event.pointerId) return
+            if (event.cancelable) event.preventDefault()
             this.move(event.clientX - this.drag.x, event.clientY - this.drag.y, event.timeStamp, 'drag', event.isTrusted)
             this.drag.x = event.clientX; this.drag.y = event.clientY
         }, { signal })
         document.addEventListener('pointerdown', event => {
             if (!this.active || event.button !== 0 || this.isControl(event.target) || !this.inside(event.clientX, event.clientY)) return
             if (document.pointerLockElement !== this.hooks.scene().renderer.domElement) {
+                if (this.drag && this.drag.id !== event.pointerId) return
                 this.drag = { id: event.pointerId, x: event.clientX, y: event.clientY }
-                void this.capture()
+                // Touch look is an independent finger, not a mouse-lock request.
+                // A joystick/jump finger must neither steal nor release it.
+                if (!event.pointerType || event.pointerType === 'mouse') void this.capture()
+                else this.hooks.scene().renderer.domElement.setPointerCapture(event.pointerId)
             }
             event.preventDefault()
         }, { capture: true, signal })
-        for (const name of ['pointerup', 'pointercancel']) document.addEventListener(name, () => { this.drag = undefined }, { signal })
+        for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) document.addEventListener(name, event => {
+            if (this.drag?.id === (event as PointerEvent).pointerId) this.drag = undefined
+        }, { signal })
         document.addEventListener('pointerlockchange', () => {
             const wasLocked = this.locked
             this.locked = document.pointerLockElement === this.hooks.scene().renderer.domElement
@@ -210,6 +218,8 @@ export class ThirdPersonCamera {
             this.zoom(Math.max(-120, Math.min(120, event.deltaY * unit)))
         }, { passive: false, capture: true, signal })
         window.addEventListener('blur', () => { this.drag = undefined; if (this.active) this.hooks.released() }, { signal })
+        document.addEventListener('visibilitychange', () => { if (document.hidden) this.drag = undefined }, { signal })
+        window.addEventListener('resize', () => { this.drag = undefined }, { signal })
     }
 
     diagnostics(): Record<string, unknown> {

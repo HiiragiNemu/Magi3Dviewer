@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import type MagiaExedraCharacter3D from './character.ts'
 import type { NonBattleCharacterProfile } from './nonBattleCharacterLoader.ts'
-import nativeProduct from './nonbattle-expressions.generated.json'
+import nativeProduct from './nonbattle-expressions.generated.json' with { type: 'json' }
 
 type Curve = {
     storage: 'constant'; value: number
