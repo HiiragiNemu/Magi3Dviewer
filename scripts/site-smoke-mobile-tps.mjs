@@ -151,6 +151,12 @@ try{
   fs.writeFileSync(path.join(out,'held-jump-'+id+'.json'),JSON.stringify(rows,null,2)+'\n')
   record({test:'held-run-jump-contact-and-resume',id,before,contact,resumed,after})
  }
+ await tap('#locomotion-mode-toggle');assert.equal((await snap()).enabled,true)
+ await tap('#position-controls-toggle');assert.equal((await snap()).enabled,false,'object editing and TPS must not compete for camera touches')
+ assert.equal(await page.$eval('#tps-touch-controls',e=>e.hidden),true)
+ assert.equal(await page.$eval('#viewport-editor-dock',e=>e.hidden),false)
+ await tap('#viewport-editor-close')
+ record({test:'whole-object-editing-releases-tps-camera-and-touch-pad',passed:true})
  assert.deepEqual(errors,[])
  assert.deepEqual(missing.filter(r=>new URL(r.url).origin===new URL(base).origin),[])
  result={passed:true,base,observations,errors,missing,renderer:'Chrome touch-device emulation and real CDP multi-touch, ANGLE SwiftShader; not a physical-phone performance benchmark'}

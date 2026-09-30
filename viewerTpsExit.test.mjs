@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {expressiveJumpName} from './src/viewer/jumpStyle.ts';
 import {createRequire} from 'node:module';
 import {pathToFileURL,fileURLToPath} from 'node:url';
 const B=path.dirname(fileURLToPath(import.meta.url));
@@ -34,7 +35,7 @@ function fixture(native=false){
 function createViewer(bs){ // retain the actual closure, not a copied enabled getter
  const document={body:fakeElement(),pointerLockElement:null,exitPointerLock(){}},claims=new Map(),scene={renderer:{domElement:{}},controls:{enabled:true}};
  const translations=[];
- const deps={touchControls:{setEnabled(){},reset(){},element:{hidden:true}},tpsCamera:{start(){},stop(){}},translateUiText:text=>{translations.push(text);return `translated:${text}`},normalizeAnimationFamilyName,bindings:new Set(bs),selectedBinding:()=>bs[0],getViewerCharacterControlAuthority:()=>({tps:true}),pressed:new Set(),feedbackOutput:fakeElement(),document,viewerPerformanceClaims:claims,characterActionPlaybackBlocksLocomotion:b=>b.blocked,targetRigLocomotionTransitionSeconds:{recovery:.3},captureOrbitControlsLease(){},setNativeDungeonExternalAttachmentsHidden(){},activateNativeDungeonController(){},modeToggle:fakeElement(),hud:fakeElement(),scene,ensureOrbitControlsCurrentCanvas(){},syncCameraRigFromCurrentView(){},handoffFinalTpsCameraToOrbitControls(){},updateHud(){}};
+ const deps={expressiveJumpName,touchControls:{setEnabled(){},reset(){},element:{hidden:true}},tpsCamera:{start(){},stop(){}},translateUiText:text=>{translations.push(text);return `translated:${text}`},normalizeAnimationFamilyName,bindings:new Set(bs),selectedBinding:()=>bs[0],getViewerCharacterControlAuthority:()=>({tps:true}),pressed:new Set(),feedbackOutput:fakeElement(),document,viewerPerformanceClaims:claims,characterActionPlaybackBlocksLocomotion:b=>b.blocked,targetRigLocomotionTransitionSeconds:{recovery:.3},captureOrbitControlsLease(){},setNativeDungeonExternalAttachmentsHidden(){},activateNativeDungeonController(){},modeToggle:fakeElement(),hud:fakeElement(),scene,ensureOrbitControlsCurrentCanvas(){},syncCameraRigFromCurrentView(){},handoffFinalTpsCameraToOrbitControls(){},updateHud(){}};
  return {api:new Function(...Object.keys(deps),`let enabled=false,jumpQueued=false,virtualInput,cameraDragPointerId,cameraFreeLookFallbackActive=false;${js};return {set:setViewerLocomotionEnabled,get enabled(){return enabled}}`)(...Object.values(deps)),claims,modeToggle:deps.modeToggle,translations};
 }
 for(const native of [false,true])for(const run of [false,true])test(`${native?'native':'generated'} ${run?'run':'walk'} exit restores selected Home and releases motion without root teleport`,()=>{

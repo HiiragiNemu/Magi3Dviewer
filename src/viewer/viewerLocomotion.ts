@@ -1,6 +1,7 @@
+import { expressiveJumpArmSample, expressiveJumpName, readJumpStyle, isJumpStyle, JUMP_STYLE_KEY, type JumpStyle } from './jumpStyle'
 import { ThirdPersonCamera } from './ThirdPersonCamera'
 import { TpsTouchControls } from './TpsTouchControls'
-import { translateUiText } from './localization/zhCN'
+import { translateUiText, getUiLocale } from './localization/zhCN'
 import * as THREE from 'three'
 import { specialWeaponDefinitions, loadSpecialWeapon, type LoadedSpecialWeapon } from './specialWeapons'
 import { createNativeDungeonFixedTransitionPolicy, nativeDungeonFixedTransitionSeconds, type NativeDungeonFixedTransitionPolicy } from './characterActions/nativeDungeonFixedTransitions'
@@ -440,6 +441,7 @@ interface CharacterSpecificMotionProfile {
     }
     /** Generated standing/walking/running jump channels, when attached. */
     jumpAnimations?: JumpLocomotionAnimationMap
+    jumpAnimationVariants?: Record<JumpStyle, JumpLocomotionAnimationMap>
     missingRequiredRigPaths: string[]
     reason?: string
 }
@@ -1408,6 +1410,8 @@ document.body.appendChild(debugState)
 
 let installed = false
 let enabled = false
+let viewerJumpStyle: JumpStyle = (()=>{try{return readJumpStyle(localStorage)}catch{return 'expressive'}})()
+let jumpStyleSelect: HTMLSelectElement | undefined
 let jumpQueued = false
 let touchControls: TpsTouchControls | undefined
 let virtualInput: VirtualInput | undefined
@@ -7022,6 +7026,7 @@ function attachParameterizedHumanoidMotionProfile(
         return worldUp.clone().multiplyScalar(-legLengthMeters * 0.18 * crouch)
             .addScaledVector(targetRigForward, legLengthMeters * 0.025 * crouch)
     }
+    let sampledJumpStyle: JumpStyle = 'classic'
     const applyJumpNaturalUpperBodyPose = (
         ratio: number,
         phase: 'takeoff' | 'airborne' | 'land',
@@ -7034,15 +7039,16 @@ function attachParameterizedHumanoidMotionProfile(
         // Use the same verified nine-family shoulder/elbow/wrist curves as
         // locomotion. Jump no longer synthesizes a symmetric IK target on top of
         // those curves; that overwrite produced the reversed billboard arms.
+        const refined = sampledJumpStyle === 'expressive' ? expressiveJumpArmSample(ratio,phase,mode) : undefined
         const sidePhases = {
-            L: wrapReferencePhase(0.735 + synchronousDrift),
-            R: wrapReferencePhase(0.245 + synchronousDrift),
+            L: refined?.left ?? wrapReferencePhase(0.735 + synchronousDrift),
+            R: refined?.right ?? wrapReferencePhase(0.245 + synchronousDrift),
         }
         // Every generated sample keeps a human arm direction. Fading this value
         // to zero after restoring the inverse-bind rest bakes a literal T-pose at
         // takeoff/landing endpoints; the animation mixer already owns the
         // locomotion-to-jump crossfade, so a second pose-space fade is incorrect.
-        const modeStrength = mode === 'running' ? 1 : mode === 'walking' ? 0.98 : 0.96
+        const modeStrength = refined?.strength ?? (mode === 'running' ? 1 : mode === 'walking' ? 0.98 : 0.96)
         for (const segment of referenceSegments.filter(candidate => (
             /^(?:shoulder|upperArm|forearm)[LR]$/.test(candidate.directionRole)
         ))) {
@@ -7273,6 +7279,7 @@ function attachParameterizedHumanoidMotionProfile(
             land: `Magius${characterId}RunJumpLandV37${jumpProfileTag}_SE`,
         },
     }
+    const expressiveJumpNames = Object.fromEntries(Object.entries(jumpNames).map(([mode,states])=>[mode,Object.fromEntries(Object.entries(states).map(([state,name])=>[state,expressiveJumpName(name)]))])) as typeof jumpNames
     const jumpClipSpecifications = [
         { state: 'jump', phase: 'takeoff', duration: 0.44 },
         { state: 'fall', phase: 'airborne', duration: 0.64 },
@@ -7322,6 +7329,16 @@ function attachParameterizedHumanoidMotionProfile(
                 }))
             )),
         ]
+        // Preserve every original clip and its name. Refined tracks are an
+        // additive alternative product, never destructive replacement assets.
+        sampledJumpStyle = 'expressive'
+        generated.push(...(['standing','walking','running'] as const).flatMap(mode=>jumpClipSpecifications.map(specification=>({
+            state:specification.state,
+            clip:makeClip(expressiveJumpNames[mode][specification.state],specification.duration,makeFrameTimes(specification.duration),
+                (role,ratio)=>jumpRotations(role,ratio,specification.phase),ratio=>jumpHipOffset(ratio,specification.phase),
+                undefined,ratio=>applyJumpLegPose(ratio,specification.phase,mode),undefined,
+                ratio=>applyJumpNaturalUpperBodyPose(ratio,specification.phase,mode)),
+        }))))
     } finally {
         restorePreSamplePose()
     }
@@ -7497,6 +7514,7 @@ function attachParameterizedHumanoidMotionProfile(
     // activation path cannot recover the generated standing/walking/running
     // jump clips.
     profile.jumpAnimations = jumpNames
+    profile.jumpAnimationVariants = { classic: jumpNames, expressive: expressiveJumpNames }
     return {
         profile,
         animations: {
@@ -7626,7 +7644,10 @@ function createTargetRigLocomotionTransitionPolicy(
         value: string | readonly string[] | undefined,
     ): void => {
         const names = typeof value === 'string' ? [value] : value ?? []
-        for (const name of names) stateByFamily.set(normalizeAnimationFamilyName(name), state)
+        for (const name of names) {
+            stateByFamily.set(normalizeAnimationFamilyName(name), state)
+            stateByFamily.set(normalizeAnimationFamilyName(expressiveJumpName(name)), state)
+        }
     }
     for (const state of ['idle', 'walk', 'run', 'jump', 'fall', 'land'] as const) {
         register(state, locomotionAnimations[state])
@@ -9412,6 +9433,7 @@ function activateCharacterSpecificMotionVariant(
         exactJump,
         variant.jumpAnimations,
     )
+    applyViewerJumpStyle(binding)
     binding.snapshot = binding.controller.snapshot()
     binding.animationPlaybackRate = 1
     setNativeDungeonExternalAttachmentsHidden(binding, true)
@@ -9471,6 +9493,7 @@ function activateNativeDungeonController(binding: ViewerLocomotionBinding): void
         exactJump,
         jumpAnimations,
     )
+    applyViewerJumpStyle(binding)
     binding.snapshot = binding.controller.snapshot()
     binding.animationPlaybackRate = 1
     native.active = true
@@ -9992,7 +10015,7 @@ export function attachViewerLocomotion(sceneCharacter: SceneCharacter): ViewerLo
             'native-dungeon-jump-overlay',
         )
         const jumpNames = jumpProfile.jumpAnimations
-            ? new Set(Object.values(jumpProfile.jumpAnimations).flatMap(mode => Object.values(mode)))
+            ? new Set(Object.values(jumpProfile.profile.jumpAnimationVariants ?? {classic:jumpProfile.jumpAnimations}).flatMap(map=>Object.values(map).flatMap(mode=>Object.values(mode))).flat())
             : new Set<string>()
         const generatedJumpClips = character.object.animations.filter(clip => jumpNames.has(clip.name))
         character.object.animations = [...nativeAnimations, ...generatedJumpClips]
@@ -10208,6 +10231,7 @@ export function attachViewerLocomotion(sceneCharacter: SceneCharacter): ViewerLo
     secondaryPhysics?.setStateProvider(() => binding.snapshot)
     bindingByObject.set(character.object, binding)
     bindings.add(binding)
+    applyViewerJumpStyle(binding)
     if (tpsPoseTransition) character.userData.animationLoops.push(tpsPoseTransition.update)
     if (proceduralLocomotion) character.userData.animationLoops.push(proceduralLocomotion.update)
     if (cameraHeadTracking) character.userData.animationLoops.push(cameraHeadTracking.update)
@@ -12162,16 +12186,60 @@ function installInputHandlers(): void {
     }
 }
 
+function applyViewerJumpStyle(binding: ViewerLocomotionBinding): void {
+    const variants=binding.characterSpecificMotion.jumpAnimationVariants
+    if(!variants)return
+    binding.controller.setJumpLocomotionAnimations(variants[viewerJumpStyle])
+}
+export function setViewerJumpStyle(value: JumpStyle): JumpStyle {
+    if(!isJumpStyle(value))throw new TypeError('Unknown jump style')
+    viewerJumpStyle=value
+    for(const binding of bindings)applyViewerJumpStyle(binding)
+    try { localStorage.setItem(JUMP_STYLE_KEY,value) } catch {}
+    if(jumpStyleSelect)jumpStyleSelect.value=value
+    return value
+}
+function installJumpStyleSwitch(): void {
+    if(jumpStyleSelect)return
+    const label=document.createElement('label');label.id='jump-style-control';label.dataset.i18nIgnore='true'
+    const text=document.createElement('span');text.textContent='跳跃'
+    const select=document.createElement('select');select.id='jump-style-select';select.setAttribute('aria-label','跳跃动作版本，选择原版可立即回退')
+    select.innerHTML='<option value="expressive">优化动作</option><option value="classic">原版动作</option>'
+    select.value=viewerJumpStyle;select.onchange=()=>setViewerJumpStyle(select.value as JumpStyle)
+    label.append(text,select);document.body.append(label);jumpStyleSelect=select
+    let lastPresentation = ''
+    const update=()=>{
+        const profile=selectedBinding()?.characterSpecificMotion
+        const menu=document.getElementById('menu')?.getBoundingClientRect()
+        const locale=getUiLocale()
+        const top=Math.round(Math.max(8,menu?.bottom??0)+10)
+        const hidden=!enabled||!profile?.jumpAnimationVariants
+        const key=[hidden,top,locale].join(':')
+        if(key===lastPresentation)return
+        lastPresentation=key
+        label.hidden=hidden
+        label.style.top=`${top}px`
+        text.textContent=locale.startsWith('ja')?'ジャンプ':locale==='en'?'Jump':'跳跃'
+        select.options[0].textContent=locale.startsWith('ja')?'改良版':locale==='en'?'Refined':'优化动作'
+        select.options[1].textContent=locale.startsWith('ja')?'元に戻す':locale==='en'?'Original / revert':'原版动作 · 回退'
+    }
+    window.addEventListener('resize',update);document.addEventListener('magius:localechange',update)
+    addAnimationLoop(update);update()
+}
+
 export function setupViewerLocomotion(): void {
     if (installed) return
     installed = true
     installInputHandlers()
+    installJumpStyleSwitch()
     addAnimationLoop(updateFrame)
     void ensureCharacterActionCatalog().catch(() => undefined)
     setViewerLocomotionEnabled(false)
 }
 
 const publicApi = {
+    setJumpStyle: setViewerJumpStyle,
+    get jumpStyle() { return viewerJumpStyle },
     setEnabled: setViewerLocomotionEnabled,
     get enabled() { return enabled },
     setVirtualInput(input: Partial<VirtualInput>) {

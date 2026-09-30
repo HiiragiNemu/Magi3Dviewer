@@ -1,5 +1,6 @@
 import './style/viewport-editor.css'
 import './style/tps-touch.css'
+import './style/jump-style.css'
 import { createViewportPoseEditor } from './viewportPoseEditor'
 import { EditorGroundGuard } from './editorGround'
 import { createPoseContactGuard } from './poseContactGuard'
@@ -1318,6 +1319,7 @@ function setupDockControls() {
     }
     positionControlsToggle.onclick = () => {
         setPositionControlsOpen(false)
+        if(document.body.classList.contains('locomotion-mode-enabled'))setViewerLocomotionEnabled(false)
         const target=movementSelection.current
         const object=target?.object??scene.characterSelected?.character?.object
         if(!object)return
@@ -2270,6 +2272,7 @@ function setupViewportEditor() {
             selected: directPoseSelection?.entry.bone, history: directPoseSelection && directPoseHistories.get(directPoseSelection.object),
             limited: directPoseTarget?.limited ?? false, canTranslate: !directPoseTarget || directPoseTarget.canTranslate }),
         place: mode => {
+            if(document.body.classList.contains('locomotion-mode-enabled'))setViewerLocomotionEnabled(false)
             const target = movementSelection.current
             const object = target?.object ?? scene.characterSelected?.character?.object
             if (!object) return

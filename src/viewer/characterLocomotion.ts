@@ -1851,7 +1851,7 @@ export class CharacterLocomotionController {
     private readonly onEffectCue?: CharacterLocomotionControllerOptions['onEffectCue']
     private readonly onPhysicsIssue?: CharacterLocomotionControllerOptions['onPhysicsIssue']
     private readonly locomotionAnimations: Readonly<Partial<Record<LocomotionState, readonly string[]>>>
-    private readonly jumpLocomotionAnimations: Readonly<Partial<Record<
+    private jumpLocomotionAnimations: Readonly<Partial<Record<
         JumpLocomotionMode,
         Readonly<Partial<Record<JumpLocomotionState, readonly string[]>>>
     >>>
@@ -2048,6 +2048,17 @@ export class CharacterLocomotionController {
             this._state = next
             this.onStateChange?.(next, previous)
         }
+    }
+
+    /** Replace base locomotion jump poses without changing action overrides,
+     * position, velocity, grounded state or the current physical jump phase. */
+    setJumpLocomotionAnimations(animations: JumpLocomotionAnimationMap): void {
+        this.jumpLocomotionAnimations = Object.freeze(Object.fromEntries(Object.entries(animations).map(([mode,states])=>[
+            mode,Object.freeze(Object.fromEntries(Object.entries(states??{}).map(([state,names])=>[state,Object.freeze((typeof names==='string'?[names]:names).filter(Boolean))]))),
+        ])))
+        if(this.jumpLocomotionAnimationOverride)return
+        this.lastLocomotionAnimation=undefined
+        if(this._state==='jump'||this._state==='fall'||this._state==='land')this.syncLocomotionAnimation()
     }
 
     setJumpLocomotionAnimationOverride(animations?: JumpLocomotionAnimationMap): void {
