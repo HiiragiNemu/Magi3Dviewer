@@ -64,3 +64,8 @@ body.theme-light #viewport-editor .ve-close {color:#ab2843;}
 #action-parameter-panel .ve-advanced-hint { margin:0;padding:4px 9px;opacity:.7;font-size:11px;white-space:normal; }
 
 @media(max-width:640px){#action-parameter-panel{max-height:65dvh;}}
+
+/* Generous touch hitboxes, tiny visible points: do not cover faces and hands. */
+#viewport-editor .ve-joint-node,#viewport-editor .ve-joint-node[aria-pressed=true]{background:transparent;border:0;box-shadow:none;}
+#viewport-editor .ve-joint-node::before{width:10px;height:10px;box-sizing:border-box;border:2px solid #e0fff3;background:#227c6d;box-shadow:0 1px 4px #0008;}
+#viewport-editor .ve-joint-node[aria-pressed=true]::before{background:#d2a318;border-color:#fff6bd;box-shadow:0 0 0 3px #e5c34b55;}

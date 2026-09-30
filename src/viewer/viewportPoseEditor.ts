@@ -126,8 +126,8 @@ export function createViewportPoseEditor(options: Options) {
         dock.hidden=!state.active;launch.hidden=state.active||!(state.object||state.actor);launch.textContent='✥ '+text.launch
         nodes.hidden=!(state.pose&&showJoints);left.hidden=folded||!state.pose;fine.hidden=!(showFine&&state.pose&&state.selected)
         dock.classList.toggle('is-collapsed',folded)
-        for(const [id,b] of controls){b.hidden=folded;if(id==='object')b.hidden=folded||!state.pose;if(id==='reset')b.hidden=folded||!state.selected}
-        close.hidden=false
+        for(const [id,b] of controls){b.hidden=folded;if(id==='object')b.hidden=folded||!state.pose;if(id==='reset'||id==='fine')b.hidden=folded||!state.selected}
+        close.hidden=false;selection.hidden=!state.selected
         const key=[options.locale(),state.active,state.pose,state.mode,state.canTranslate,state.selected?.uuid,state.history?.canUndo,state.history?.canRedo,state.limited,showJoints,showFine,folded].join('|')
         if(key!==lastKey){lastKey=key
             for(const [id,b] of controls)b.textContent=text[id as keyof typeof text]||id
