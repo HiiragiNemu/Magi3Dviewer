@@ -95,4 +95,4 @@ Python 场景工具本轮再次运行，30 项通过。当前发布锁文件 npm
 
 ## 证据位置
 
-`D:\magia\MyProducts\.codex-delivery\BranchUI-20260930`：`phase1-progress.json`、`phase2-progress.json` 记录顺序；`production/` 为第一阶段生产证据；`jump-production/` 为第二阶段生产证据；`final-audit/` 为当前提交完整审计。源码、测试与报告均保留在同一 magius3dviewer 分支。
+`D:\magia\MyProducts\.codex-delivery\BranchUI-20260930`：`phase1-progress.json`、`phase2-progress.json` 记录顺序；`production/` 为第一阶段生产证据；`jump-production/` 为第二阶段生产证据；`final-audit-verified/` 为当前提交完整审计。源码、测试与报告均保留在同一 magius3dviewer 分支。
