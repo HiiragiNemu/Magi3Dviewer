@@ -1,0 +1,3406 @@
+{
+  "schema": "magius.two-stage-branch-ui-jump.v1",
+  "recordedAt": "2026-09-30T07:02:36.923Z",
+  "first": {
+    "revision": "56a820858d258acfbee794063019db9f3edad28d",
+    "deployment": "65101cc8",
+    "allSteps": [
+      {
+        "step": "ui-build",
+        "exitCode": 0,
+        "at": "2026-09-30T06:12:45.190725+00:00"
+      },
+      {
+        "step": "ui-candidate-viewport",
+        "exitCode": 0,
+        "at": "2026-09-30T06:15:06.905356+00:00"
+      },
+      {
+        "step": "ui-candidate-mobile",
+        "exitCode": 0,
+        "at": "2026-09-30T06:15:06.943345+00:00"
+      },
+      {
+        "step": "ui-local-payload",
+        "exitCode": 0,
+        "at": "2026-09-30T06:15:07.067015+00:00"
+      },
+      {
+        "step": "ui-publish",
+        "exitCode": 0,
+        "at": "2026-09-30T06:15:36.083356+00:00"
+      },
+      {
+        "step": "ui-public-bytes",
+        "exitCode": 0,
+        "at": "2026-09-30T06:16:02.752644+00:00"
+      },
+      {
+        "step": "ui-live-viewport",
+        "exitCode": 0,
+        "at": "2026-09-30T06:17:57.827942+00:00"
+      },
+      {
+        "step": "ui-live-mobile",
+        "exitCode": 0,
+        "at": "2026-09-30T06:17:57.907885+00:00"
+      }
+    ],
+    "jumpSourceUnchanged": true,
+    "publicVerifiedAt": "2026-09-30T06:16:02.709Z",
+    "verifiedWebFiles": 33,
+    "gatewayProbes": 4,
+    "gate": {
+      "tests": 325,
+      "pass": 325,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "second": {
+    "revision": "e5dfbba291925d71afbe15f308d63c4b949d8ff5",
+    "motionCommit": "8e24c0a039cb34be85648603d0a13957d601f54e",
+    "deployment": "6ddf69dd",
+    "allSteps": [
+      {
+        "step": "jump-build",
+        "exitCode": 0,
+        "at": "2026-09-30T06:52:59.070864+00:00"
+      },
+      {
+        "step": "jump-candidate-mobile",
+        "exitCode": 0,
+        "at": "2026-09-30T06:54:28.789805+00:00"
+      },
+      {
+        "step": "jump-candidate-viewport",
+        "exitCode": 0,
+        "at": "2026-09-30T06:55:10.658613+00:00"
+      },
+      {
+        "step": "jump-candidate-stage",
+        "exitCode": 0,
+        "at": "2026-09-30T06:55:30.619012+00:00"
+      },
+      {
+        "step": "jump-candidate-motion",
+        "exitCode": 0,
+        "at": "2026-09-30T06:55:31.524533+00:00"
+      },
+      {
+        "step": "jump-local-payload",
+        "exitCode": 0,
+        "at": "2026-09-30T06:55:31.650409+00:00"
+      },
+      {
+        "step": "jump-publish",
+        "exitCode": 0,
+        "at": "2026-09-30T06:56:06.005570+00:00"
+      },
+      {
+        "step": "jump-live-motion",
+        "exitCode": 0,
+        "at": "2026-09-30T07:00:26.020534+00:00"
+      },
+      {
+        "step": "jump-live-mobile",
+        "exitCode": 0,
+        "at": "2026-09-30T07:00:26.063937+00:00"
+      },
+      {
+        "step": "jump-live-viewport",
+        "exitCode": 0,
+        "at": "2026-09-30T07:00:26.109029+00:00"
+      },
+      {
+        "step": "jump-live-stage",
+        "exitCode": 0,
+        "at": "2026-09-30T07:00:47.407831+00:00"
+      },
+      {
+        "step": "jump-public-bytes",
+        "exitCode": 0,
+        "at": "2026-09-30T07:01:00.999624+00:00"
+      }
+    ],
+    "publicVerifiedAt": "2026-09-30T07:01:00.980Z",
+    "verifiedWebFiles": 33,
+    "gatewayProbes": 4,
+    "gate": {
+      "tests": 333,
+      "pass": 333,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "menu": {
+    "kind": "actor-side expanding branch chips; transparent empty regions",
+    "proofs": [
+      {
+        "test": "actor-surrounding-branch-menu",
+        "width": 430,
+        "height": 932,
+        "body": {
+          "x": 168.35412030419772,
+          "y": 407.55281066417194,
+          "width": 96.32376126869983,
+          "height": 315.5046979700835
+        },
+        "boxes": [
+          {
+            "id": "viewport-joints",
+            "x": 56,
+            "y": 496,
+            "w": 92.4375,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-parameters",
+            "x": 56,
+            "y": 540,
+            "w": 92.4375,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-focus",
+            "x": 305,
+            "y": 437,
+            "w": 32,
+            "h": 30,
+            "hit": true
+          },
+          {
+            "id": "viewport-editor-collapse",
+            "x": 341,
+            "y": 437,
+            "w": 32,
+            "h": 30,
+            "hit": true
+          },
+          {
+            "id": "viewport-pose",
+            "x": 285,
+            "y": 473,
+            "w": 92.4375,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-object",
+            "x": 285,
+            "y": 517,
+            "w": 92.4375,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-move",
+            "x": 285,
+            "y": 561,
+            "w": 92.4375,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-rotate",
+            "x": 285,
+            "y": 605,
+            "w": 92.4375,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-editor-close",
+            "x": 285,
+            "y": 649,
+            "w": 92.4375,
+            "h": 38,
+            "hit": true
+          }
+        ],
+        "overlap": 0,
+        "footprint": 0.06614526150314402,
+        "background": "rgba(0, 0, 0, 0)",
+        "pointer": "none",
+        "joints": [
+          {
+            "id": "left-hand",
+            "hit": true
+          },
+          {
+            "id": "right-hand",
+            "hit": true
+          },
+          {
+            "id": "left-foot",
+            "hit": true
+          },
+          {
+            "id": "right-foot",
+            "hit": true
+          },
+          {
+            "id": "left-elbow",
+            "hit": true
+          },
+          {
+            "id": "right-elbow",
+            "hit": true
+          },
+          {
+            "id": "left-knee",
+            "hit": true
+          },
+          {
+            "id": "right-knee",
+            "hit": true
+          },
+          {
+            "id": "head",
+            "hit": true
+          },
+          {
+            "id": "chest",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "test": "actor-surrounding-branch-menu",
+        "width": 932,
+        "height": 430,
+        "body": {
+          "x": 435.5135040001847,
+          "y": 164.8137656902398,
+          "width": 62.831270358659864,
+          "height": 205.451383531114
+        },
+        "boxes": [
+          {
+            "id": "viewport-joints",
+            "x": 312,
+            "y": 212,
+            "w": 104,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-parameters",
+            "x": 312,
+            "y": 257,
+            "w": 104,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-focus",
+            "x": 538,
+            "y": 152,
+            "w": 32,
+            "h": 30,
+            "hit": true
+          },
+          {
+            "id": "viewport-editor-collapse",
+            "x": 574,
+            "y": 152,
+            "w": 32,
+            "h": 30,
+            "hit": true
+          },
+          {
+            "id": "viewport-pose",
+            "x": 518,
+            "y": 189,
+            "w": 104,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-object",
+            "x": 518,
+            "y": 234,
+            "w": 104,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-move",
+            "x": 518,
+            "y": 279,
+            "w": 104,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-rotate",
+            "x": 518,
+            "y": 324,
+            "w": 104,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-editor-close",
+            "x": 518,
+            "y": 369,
+            "w": 104,
+            "h": 38,
+            "hit": true
+          }
+        ],
+        "overlap": 0,
+        "footprint": 0.07381974248927038,
+        "background": "rgba(0, 0, 0, 0)",
+        "pointer": "none",
+        "joints": [
+          {
+            "id": "left-hand",
+            "hit": true
+          },
+          {
+            "id": "right-hand",
+            "hit": true
+          },
+          {
+            "id": "left-foot",
+            "hit": true
+          },
+          {
+            "id": "right-foot",
+            "hit": true
+          },
+          {
+            "id": "left-elbow",
+            "hit": true
+          },
+          {
+            "id": "right-elbow",
+            "hit": true
+          },
+          {
+            "id": "left-knee",
+            "hit": true
+          },
+          {
+            "id": "right-knee",
+            "hit": true
+          },
+          {
+            "id": "head",
+            "hit": true
+          },
+          {
+            "id": "chest",
+            "hit": true
+          }
+        ]
+      },
+      {
+        "test": "actor-surrounding-branch-menu",
+        "width": 360,
+        "height": 740,
+        "body": {
+          "x": 142.99118738766953,
+          "y": 355.6344056222894,
+          "width": 76.52300875074638,
+          "height": 250.33020889150635
+        },
+        "boxes": [
+          {
+            "id": "viewport-joints",
+            "x": 46,
+            "y": 420,
+            "w": 77.390625,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-parameters",
+            "x": 46,
+            "y": 464,
+            "w": 77.390625,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-focus",
+            "x": 257.5,
+            "y": 361,
+            "w": 27.953125,
+            "h": 30,
+            "hit": true
+          },
+          {
+            "id": "viewport-editor-collapse",
+            "x": 289.453125,
+            "y": 361,
+            "w": 27.9375,
+            "h": 30,
+            "hit": true
+          },
+          {
+            "id": "viewport-pose",
+            "x": 240,
+            "y": 397,
+            "w": 77.390625,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-object",
+            "x": 240,
+            "y": 441,
+            "w": 77.390625,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-move",
+            "x": 240,
+            "y": 485,
+            "w": 77.390625,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-rotate",
+            "x": 240,
+            "y": 529,
+            "w": 77.390625,
+            "h": 38,
+            "hit": true
+          },
+          {
+            "id": "viewport-editor-close",
+            "x": 240,
+            "y": 573,
+            "w": 77.390625,
+            "h": 38,
+            "hit": true
+          }
+        ],
+        "overlap": 0,
+        "footprint": 0.08356841216216217,
+        "background": "rgba(0, 0, 0, 0)",
+        "pointer": "none",
+        "joints": [
+          {
+            "id": "left-hand",
+            "hit": true
+          },
+          {
+            "id": "right-hand",
+            "hit": true
+          },
+          {
+            "id": "left-foot",
+            "hit": true
+          },
+          {
+            "id": "right-foot",
+            "hit": true
+          },
+          {
+            "id": "left-elbow",
+            "hit": true
+          },
+          {
+            "id": "right-elbow",
+            "hit": true
+          },
+          {
+            "id": "left-knee",
+            "hit": true
+          },
+          {
+            "id": "right-knee",
+            "hit": true
+          },
+          {
+            "id": "head",
+            "hit": true
+          },
+          {
+            "id": "chest",
+            "hit": true
+          }
+        ]
+      }
+    ],
+    "toolbar": {
+      "test": "toolbar-cleanup",
+      "voiceAfterScene": true,
+      "decorativePeople": 0
+    },
+    "touch": {
+      "test": "native-touch-look-pinch-and-resume",
+      "v0": {
+        "q": [
+          -0.039904394895017556,
+          0,
+          0,
+          0.9992035024298416
+        ],
+        "p": [
+          -0.013336003578897887,
+          1.7681145666419789,
+          5.3254283617517055
+        ],
+        "distance": 5.360948184867588,
+        "pageScale": 1
+      },
+      "v1": {
+        "q": [
+          -0.06976179711164751,
+          -0.0523476845177551,
+          -0.00366586297900809,
+          0.9961824998653621
+        ],
+        "p": [
+          -0.5697178297883528,
+          2.087785438071553,
+          5.2609401470783625
+        ],
+        "distance": 5.360948184867588,
+        "pageScale": 1
+      },
+      "v2": {
+        "q": [
+          -0.06976179711164751,
+          -0.0523476845177551,
+          -0.00366586297900809,
+          0.9961824998653621
+        ],
+        "p": [
+          -0.3985234217239052,
+          1.8578836300472772,
+          3.6365134260189236
+        ],
+        "distance": 3.7114256664467917,
+        "pageScale": 1
+      },
+      "v3": {
+        "q": [
+          -0.06976179711164751,
+          -0.0523476845177551,
+          -0.00366586297900809,
+          0.9961824998653621
+        ],
+        "p": [
+          -0.6142283758851093,
+          2.1475599081578647,
+          5.683291094553816
+        ],
+        "distance": 5.789824039656995,
+        "pageScale": 1
+      },
+      "v4": {
+        "q": [
+          -0.06969896317396473,
+          -0.06728397266529511,
+          -0.00471183829326087,
+          0.9952852456129089
+        ],
+        "p": [
+          -0.7849844716591574,
+          2.1475599081578647,
+          5.6627014377005915
+        ],
+        "distance": 5.789824039656995,
+        "pageScale": 1
+      }
+    }
+  },
+  "motion": {
+    "oldBehavior": "Standing/walking/running had different leg paths; arms reused near-static donor phases .735/.245 with strength .96/.98/1.",
+    "newBehavior": "Existing donor arm curves sampled through continuous mode-specific phase paths; bilateral standing lift versus lead/trail moving jumps; no new root or scale channel.",
+    "rollback": {
+      "ui": "TPS → 跳跃 → 原版动作 · 回退",
+      "preferenceKey": "magius.jump-style.v1",
+      "default": "expressive",
+      "persistence": true,
+      "uiBaseline": "56a820858d258acfbee794063019db9f3edad28d",
+      "uiBaselineDeployment": "65101cc8",
+      "keepsLandingFix": true
+    },
+    "originalClipsVerified": 27,
+    "maximumAdjacentArmQuaternionDegrees": 24.620732793420764,
+    "checks": [
+      {
+        "test": "pose-comparison-sample",
+        "mode": "Standing",
+        "style": "classic",
+        "clip": "Magius100107StandingJumpAirborneV45TargetRigMorphology_L",
+        "time": 0.16,
+        "kind": "paused authored-curve sample, not a physical landing benchmark"
+      },
+      {
+        "test": "pose-comparison-sample",
+        "mode": "Standing",
+        "style": "expressive",
+        "clip": "Magius100107StandingJumpAirborneV45TargetRigMorphology_ExpressiveV1_L",
+        "time": 0.16,
+        "kind": "paused authored-curve sample, not a physical landing benchmark"
+      },
+      {
+        "test": "pose-comparison-sample",
+        "mode": "Run",
+        "style": "classic",
+        "clip": "Magius100107RunJumpAirborneV45TargetRigMorphology_L",
+        "time": 0.16,
+        "kind": "paused authored-curve sample, not a physical landing benchmark"
+      },
+      {
+        "test": "pose-comparison-sample",
+        "mode": "Run",
+        "style": "expressive",
+        "clip": "Magius100107RunJumpAirborneV45TargetRigMorphology_ExpressiveV1_L",
+        "time": 0.16,
+        "kind": "paused authored-curve sample, not a physical landing benchmark"
+      },
+      {
+        "test": "instant-midair-revert-preserves-physics",
+        "id": 100107,
+        "before": {
+          "p": [
+            -0.048981720101580625,
+            0.1376666666666667,
+            -0.1306179202708817
+          ],
+          "v": [
+            -0.3581459104201593,
+            4.040000000000001,
+            -0.9550557611204255
+          ],
+          "state": "jump",
+          "grounded": false,
+          "clip": "Magius100107RunJumpTakeoffV45TargetRigMorphology_SE"
+        },
+        "refined": {
+          "p": [
+            -0.048981720101580625,
+            0.1376666666666667,
+            -0.1306179202708817
+          ],
+          "v": [
+            -0.3581459104201593,
+            4.040000000000001,
+            -0.9550557611204255
+          ],
+          "state": "jump",
+          "grounded": false,
+          "clip": "Magius100107RunJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE"
+        },
+        "original": {
+          "p": [
+            -0.048981720101580625,
+            0.1376666666666667,
+            -0.1306179202708817
+          ],
+          "v": [
+            -0.3581459104201593,
+            4.040000000000001,
+            -0.9550557611204255
+          ],
+          "state": "jump",
+          "grounded": false,
+          "clip": "Magius100107RunJumpTakeoffV45TargetRigMorphology_SE"
+        }
+      },
+      {
+        "test": "instant-midair-revert-preserves-physics",
+        "id": 100201,
+        "before": {
+          "p": [
+            0,
+            0.08663541450171414,
+            -0.15
+          ],
+          "v": [
+            0,
+            5.15,
+            -1.7999999999999998
+          ],
+          "state": "jump",
+          "grounded": false,
+          "clip": "Magius100201RunJumpTakeoffV45TargetRigMorphology_SE"
+        },
+        "refined": {
+          "p": [
+            0,
+            0.08663541450171414,
+            -0.15
+          ],
+          "v": [
+            0,
+            5.15,
+            -1.7999999999999998
+          ],
+          "state": "jump",
+          "grounded": false,
+          "clip": "Magius100201RunJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE"
+        },
+        "original": {
+          "p": [
+            0,
+            0.08663541450171414,
+            -0.15
+          ],
+          "v": [
+            0,
+            5.15,
+            -1.7999999999999998
+          ],
+          "state": "jump",
+          "grounded": false,
+          "clip": "Magius100201RunJumpTakeoffV45TargetRigMorphology_SE"
+        }
+      },
+      {
+        "test": "instant-midair-revert-preserves-physics",
+        "id": 102001,
+        "before": {
+          "p": [
+            0,
+            0.1385010938646562,
+            -0.13950000000000004
+          ],
+          "v": [
+            0,
+            4.040000000000001,
+            -1.0200000000000005
+          ],
+          "state": "jump",
+          "grounded": false,
+          "clip": "Magius102001RunJumpTakeoffV45TargetRigMorphology_SE"
+        },
+        "refined": {
+          "p": [
+            0,
+            0.1385010938646562,
+            -0.13950000000000004
+          ],
+          "v": [
+            0,
+            4.040000000000001,
+            -1.0200000000000005
+          ],
+          "state": "jump",
+          "grounded": false,
+          "clip": "Magius102001RunJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE"
+        },
+        "original": {
+          "p": [
+            0,
+            0.1385010938646562,
+            -0.13950000000000004
+          ],
+          "v": [
+            0,
+            4.040000000000001,
+            -1.0200000000000005
+          ],
+          "state": "jump",
+          "grounded": false,
+          "clip": "Magius102001RunJumpTakeoffV45TargetRigMorphology_SE"
+        }
+      },
+      {
+        "test": "original-preference-persists-after-reload",
+        "passed": true
+      }
+    ],
+    "proofRows": [
+      {
+        "test": "unchanged-classic-tracks-and-arm-only-alternatives",
+        "id": 100107,
+        "baselineRevision": "56a820858d258acfbee794063019db9f3edad28d",
+        "clips": [
+          {
+            "name": "Magius100107StandingJumpTakeoffV45TargetRigMorphology_SE",
+            "duration": 0.44,
+            "tracks": 525,
+            "sha256": "5a3f5f8bccf94e5a79ad92a2ae97b1f69145482cb47235f61e698f0169a7d1b2",
+            "refinedSha256": "109ff15269409a4f9368e9ba9f722a893d12a18b6303472bc354a530794d3b3b",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Hand_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 18.431338179501896
+          },
+          {
+            "name": "Magius100107StandingJumpAirborneV45TargetRigMorphology_L",
+            "duration": 0.64,
+            "tracks": 525,
+            "sha256": "74bafdd9e925aa2fd206ea5757b9d2fbb1d1280484c13060780e261d87ff2038",
+            "refinedSha256": "05bda6e6b4e086b0e69f5df8eff040c4846aa6d291ddf16e7829e18273991fa3",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Hand_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 0.3192209223674076
+          },
+          {
+            "name": "Magius100107StandingJumpLandV45TargetRigMorphology_SE",
+            "duration": 0.42,
+            "tracks": 525,
+            "sha256": "2ea95a375fd835ec292d7e195ec5acf516564cd16a64706509358aeb7c1dd3ce",
+            "refinedSha256": "8fc5cd9e586785984cb23263766c1339ee9111e6033b5cd6ac56c49cb05f61dc",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Hand_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 3.5175043473154646
+          },
+          {
+            "name": "Magius100107WalkJumpTakeoffV45TargetRigMorphology_SE",
+            "duration": 0.44,
+            "tracks": 525,
+            "sha256": "7491e70eec5ef004dd8a51a56e6c370aaba8a87f18b7adc28e345048122db7c5",
+            "refinedSha256": "62dd79566280168ee2428b6e2f7dcbe37d13332447f171a11b0b712abf77d03e",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Hand_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 5.712983455148245
+          },
+          {
+            "name": "Magius100107WalkJumpAirborneV45TargetRigMorphology_L",
+            "duration": 0.64,
+            "tracks": 525,
+            "sha256": "ed28c01db80700e05666c04813f00dbf5945d28382ca3607642601cd72a931ec",
+            "refinedSha256": "a801ebe502f0dc21c3651b2e9f93e908e1fbecd3f9c5789a52ec21eacce9b540",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Hand_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 1.480291394546646
+          },
+          {
+            "name": "Magius100107WalkJumpLandV45TargetRigMorphology_SE",
+            "duration": 0.42,
+            "tracks": 525,
+            "sha256": "88b42cce3f38f66367d5864d1439c789621d514d6373e5873da68992f60804c9",
+            "refinedSha256": "17fd18114a47da5fd8d21be72b45ee5bf0382f855561b6bb35b0015469ba36ff",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Hand_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 5.676830205676835
+          },
+          {
+            "name": "Magius100107RunJumpTakeoffV45TargetRigMorphology_SE",
+            "duration": 0.44,
+            "tracks": 525,
+            "sha256": "ad0a0f7682901c1822b17a2a0a10194dd7d191346c8fa70c3a572114390dd90d",
+            "refinedSha256": "43a2a8e19c70966b9c52bf21464b8552563d509bdc36f4528705358787de1da3",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Hand_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 4.672023566852564
+          },
+          {
+            "name": "Magius100107RunJumpAirborneV45TargetRigMorphology_L",
+            "duration": 0.64,
+            "tracks": 525,
+            "sha256": "9fc1e40f6c34856fa3499ab21f421531ab364ef53400aaf7b254bf5a273f0843",
+            "refinedSha256": "144c5a517c5a6ca1b50519aa550927b3052c912cafd7b8a29fbf689f22ac6540",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Hand_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 0.6763859664029104
+          },
+          {
+            "name": "Magius100107RunJumpLandV45TargetRigMorphology_SE",
+            "duration": 0.42,
+            "tracks": 525,
+            "sha256": "f70d043d0ec073b417dfe0b5f9c5a4a415c77fbb3af59215d32f6b43ddfe060e",
+            "refinedSha256": "6e203c16808f1eba8c5dacb30960cf29f251718b517b141a7a60a713f5dcf376",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Hand_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 4.351721022856855
+          }
+        ]
+      },
+      {
+        "test": "unchanged-classic-tracks-and-arm-only-alternatives",
+        "id": 100201,
+        "baselineRevision": "56a820858d258acfbee794063019db9f3edad28d",
+        "clips": [
+          {
+            "name": "Magius100201StandingJumpTakeoffV45TargetRigMorphology_SE",
+            "duration": 0.44,
+            "tracks": 438,
+            "sha256": "30ccfb1925f8fe68acbc5affbd8174ea57d8f221714b6625249672ffc3715c01",
+            "refinedSha256": "99a985a73c376c0d52e5bbf32330421404de2c15e87a82c78fdf367ad6b05a38",
+            "changed": [
+              "Hand_R.quaternion",
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion",
+              "Pinkyfinger1_R.quaternion"
+            ],
+            "maxArmStep": 14.301131301801792
+          },
+          {
+            "name": "Magius100201StandingJumpAirborneV45TargetRigMorphology_L",
+            "duration": 0.64,
+            "tracks": 438,
+            "sha256": "443759c3d906676dbc22e1ff0bc3de5c642bd64c3dc9db3c2c6a0dd0b7bc9526",
+            "refinedSha256": "75054c441fe48324f54053f67fc40bd0d72ac66f55125cfa60851bd096595ef1",
+            "changed": [
+              "Hand_R.quaternion",
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion",
+              "Pinkyfinger1_R.quaternion"
+            ],
+            "maxArmStep": 0.47566995953551405
+          },
+          {
+            "name": "Magius100201StandingJumpLandV45TargetRigMorphology_SE",
+            "duration": 0.42,
+            "tracks": 438,
+            "sha256": "bbe85d77b293031620acd17f30f6d9a04cfe1c62cc65cb7a0af585c2513c7cc8",
+            "refinedSha256": "33c126356dac656c8a6476fa3b8f64034776d91a1258d461c02a6a7554c802cc",
+            "changed": [
+              "Hand_R.quaternion",
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion",
+              "Pinkyfinger1_R.quaternion"
+            ],
+            "maxArmStep": 3.611230576933875
+          },
+          {
+            "name": "Magius100201WalkJumpTakeoffV45TargetRigMorphology_SE",
+            "duration": 0.44,
+            "tracks": 438,
+            "sha256": "e49000e068032b3d78fcbcafcc04681ea3a052eac37c5a47e42d664a2730bde1",
+            "refinedSha256": "30b44c7650fdf1dc49cbb8dab372eb92de099855bd8ce18a9fb6b548d2cc30b5",
+            "changed": [
+              "Hand_R.quaternion",
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion",
+              "Pinkyfinger1_R.quaternion"
+            ],
+            "maxArmStep": 6.294845953638452
+          },
+          {
+            "name": "Magius100201WalkJumpAirborneV45TargetRigMorphology_L",
+            "duration": 0.64,
+            "tracks": 438,
+            "sha256": "4085dd35d78f5c280624d5bc79afec86292ec956fc985167a6b47ef63f187403",
+            "refinedSha256": "6adc19af9f0bcbeafd711b7230e00084aa6df14eae80dd357d4d2e1a716a03b8",
+            "changed": [
+              "Hand_R.quaternion",
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion",
+              "Pinkyfinger1_R.quaternion"
+            ],
+            "maxArmStep": 1.118770470413405
+          },
+          {
+            "name": "Magius100201WalkJumpLandV45TargetRigMorphology_SE",
+            "duration": 0.42,
+            "tracks": 438,
+            "sha256": "330148868df767312d880854b5e501a004508a32b8d232318fe7b93e2ff523fb",
+            "refinedSha256": "dcd0a9cab66a4189385df232fce5cf12c0257d784bae36a89bde70ba75fe39a6",
+            "changed": [
+              "Hand_R.quaternion",
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion",
+              "Pinkyfinger1_R.quaternion"
+            ],
+            "maxArmStep": 5.899694677466862
+          },
+          {
+            "name": "Magius100201RunJumpTakeoffV45TargetRigMorphology_SE",
+            "duration": 0.44,
+            "tracks": 438,
+            "sha256": "fc3663fc9330d5cb522b36e4b5b9431fc4d077fe053c644812ebb1c93a430d34",
+            "refinedSha256": "3b18a7252834d007329812f74b190d685a5d83d2abe5cc676858c329193816b0",
+            "changed": [
+              "Hand_R.quaternion",
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion",
+              "Pinkyfinger1_R.quaternion"
+            ],
+            "maxArmStep": 5.059368292274545
+          },
+          {
+            "name": "Magius100201RunJumpAirborneV45TargetRigMorphology_L",
+            "duration": 0.64,
+            "tracks": 438,
+            "sha256": "99b097e0aa3e7d8e6474986669c2ca176381139976ca9261fc8f72b69ea9b71b",
+            "refinedSha256": "a9defd418f7a88dc6a535d574eeed8956bc27297a4b0fff2b6ee349839183a9c",
+            "changed": [
+              "Hand_R.quaternion",
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion",
+              "Pinkyfinger1_R.quaternion"
+            ],
+            "maxArmStep": 0.5663160536726922
+          },
+          {
+            "name": "Magius100201RunJumpLandV45TargetRigMorphology_SE",
+            "duration": 0.42,
+            "tracks": 438,
+            "sha256": "293109ff046eeea658e59f9fd37419d6984b97ec7127bcaf4647dbf0684cba0c",
+            "refinedSha256": "88a03d75cdaff301e6547ca11473a8b7f673f11892817208847bf6e4ab2dc9c4",
+            "changed": [
+              "Hand_R.quaternion",
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Hand_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion",
+              "Pinkyfinger1_R.quaternion"
+            ],
+            "maxArmStep": 3.4912937072362196
+          }
+        ]
+      },
+      {
+        "test": "unchanged-classic-tracks-and-arm-only-alternatives",
+        "id": 102001,
+        "baselineRevision": "56a820858d258acfbee794063019db9f3edad28d",
+        "clips": [
+          {
+            "name": "Magius102001StandingJumpTakeoffV45TargetRigMorphology_SE",
+            "duration": 0.44,
+            "tracks": 561,
+            "sha256": "4a95f27ab74c4a6ee5ea1a7e5477df2c29bf1c45b1580814be50d17ba82f46b3",
+            "refinedSha256": "49808f7510228de50af9f064dba7408594545fde3a4ef04bc29acaebdb0d7307",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Hand_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Hand_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 24.620732793420764
+          },
+          {
+            "name": "Magius102001StandingJumpAirborneV45TargetRigMorphology_L",
+            "duration": 0.64,
+            "tracks": 561,
+            "sha256": "4321392ace91d4cc881d2866c3363a78581d5a8fb28aab1f7deb4f8ef6c6e572",
+            "refinedSha256": "585b4856e284895393f612d8136be0055ff8c77e4fa5fe72a1ac66f88a33f762",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Hand_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Hand_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 0.3784975205773938
+          },
+          {
+            "name": "Magius102001StandingJumpLandV45TargetRigMorphology_SE",
+            "duration": 0.42,
+            "tracks": 561,
+            "sha256": "ebc52de8100cb530b122f547bded36598340494cacffc7b5fda652740b67b4ce",
+            "refinedSha256": "eb0e62c499c2a324c70b5a7c1c0d7c94b45afefebbf95c033facda5ae11bba08",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Hand_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Hand_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 3.379017256341852
+          },
+          {
+            "name": "Magius102001WalkJumpTakeoffV45TargetRigMorphology_SE",
+            "duration": 0.44,
+            "tracks": 561,
+            "sha256": "b896230e0d63ee76dbe4a3f4b981db9cc072b02579aa9a2c16adf0f6cf51c991",
+            "refinedSha256": "0745035ba3113e15daa58d2931860ed5e301daba64e5c49b966e98dff9755883",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Hand_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Hand_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 7.7988304635947285
+          },
+          {
+            "name": "Magius102001WalkJumpAirborneV45TargetRigMorphology_L",
+            "duration": 0.64,
+            "tracks": 561,
+            "sha256": "9ea5e9ed0e294038a88769b013129efbdf177b6e3d14d23016a0c74d1f91db8b",
+            "refinedSha256": "534beafbc2c4e3e9e89a4f9ac11e687c922c180e6a5bb709be02fae871655ad0",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Hand_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Hand_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 1.8659371146227106
+          },
+          {
+            "name": "Magius102001WalkJumpLandV45TargetRigMorphology_SE",
+            "duration": 0.42,
+            "tracks": 561,
+            "sha256": "dba92d0bb6731a5e26690a09fd94005e4526d00018386679568e19b11c717667",
+            "refinedSha256": "73a344fbd0b0d0527b20a6b106711d67fdcd861333419c84775b77f8b497ef13",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Hand_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Hand_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 8.716291207917156
+          },
+          {
+            "name": "Magius102001RunJumpTakeoffV45TargetRigMorphology_SE",
+            "duration": 0.44,
+            "tracks": 561,
+            "sha256": "c55d142677b8b93d2616012c8a6b99729352329cc42097544892f8a2141ec46c",
+            "refinedSha256": "8323617b3fd50d2ac7f7a4a57740b4d2c1696b2fa32c1e81b1e1a10a326f7d94",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Hand_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Hand_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 6.546779271866198
+          },
+          {
+            "name": "Magius102001RunJumpAirborneV45TargetRigMorphology_L",
+            "duration": 0.64,
+            "tracks": 561,
+            "sha256": "8b269990e58daab855ac0320189559d59ca90c3dcaceb19694322ac679c80402",
+            "refinedSha256": "7a3be0979dfeaf33ea31146bd380c9fb22f4ee0821aa4b845ae6f81c3027e2c0",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Hand_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Hand_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 0.8747419174606221
+          },
+          {
+            "name": "Magius102001RunJumpLandV45TargetRigMorphology_SE",
+            "duration": 0.42,
+            "tracks": 561,
+            "sha256": "9305da6e19af8ee9b8b060e7ada2d5b75eeaffe246469b5090b169cf925d95e9",
+            "refinedSha256": "5df1c3e6a15b079db0bd7b2c8e0dea4ed07b3274214729b5bb30e3295a66e899",
+            "changed": [
+              "Shoulder_L.quaternion",
+              "Arm_L.quaternion",
+              "Forearm_L.quaternion",
+              "Thumb1_L.quaternion",
+              "Thumb2_L.quaternion",
+              "Indexfinger1_L.quaternion",
+              "Indexfinger2_L.quaternion",
+              "Middlefinger1_L.quaternion",
+              "Middlefinger2_L.quaternion",
+              "Ringfinger1_L.quaternion",
+              "Ringfinger2_L.quaternion",
+              "Pinkyfinger1_L.quaternion",
+              "Shoulder_R.quaternion",
+              "Arm_R.quaternion",
+              "Forearm_R.quaternion",
+              "Thumb1_R.quaternion",
+              "Thumb2_R.quaternion",
+              "Indexfinger1_R.quaternion",
+              "Indexfinger2_R.quaternion",
+              "Middlefinger1_R.quaternion",
+              "Middlefinger2_R.quaternion",
+              "Ringfinger1_R.quaternion",
+              "Ringfinger2_R.quaternion",
+              "Pinkyfinger1_R.quaternion",
+              "Hand_L.quaternion",
+              "Thumb3_L.quaternion",
+              "Indexfinger3_L.quaternion",
+              "Middlefinger3_L.quaternion",
+              "Ringfinger3_L.quaternion",
+              "Pinkyfinger2_L.quaternion",
+              "Pinkyfinger3_L.quaternion",
+              "Hand_R.quaternion",
+              "Thumb3_R.quaternion",
+              "Indexfinger3_R.quaternion",
+              "Middlefinger3_R.quaternion",
+              "Ringfinger3_R.quaternion",
+              "Pinkyfinger2_R.quaternion",
+              "Pinkyfinger3_R.quaternion",
+              "MetaIndexfinger_L.quaternion",
+              "MetaMiddlefinger_L.quaternion",
+              "MetaRingfinger_L.quaternion",
+              "MetaPinkyfinger_L.quaternion",
+              "MetaIndexfinger_R.quaternion",
+              "MetaMiddlefinger_R.quaternion",
+              "MetaRingfinger_R.quaternion",
+              "MetaPinkyfinger_R.quaternion"
+            ],
+            "maxArmStep": 6.1568529287241445
+          }
+        ]
+      }
+    ]
+  },
+  "browsers": {
+    "uiMobile": {
+      "passed": true,
+      "errors": []
+    },
+    "mobile": {
+      "passed": true,
+      "errors": [],
+      "missing": []
+    },
+    "desktop": {
+      "passed": true,
+      "errors": [],
+      "missing": []
+    },
+    "motion": {
+      "passed": true,
+      "errors": []
+    },
+    "stage": {
+      "passed": true,
+      "errors": [],
+      "sceneState": {
+        "before": {
+          "meshes": 12,
+          "textures": 0,
+          "readyTextures": 0,
+          "enabled": true,
+          "pixelRatio": 1,
+          "antialiasing": "SMAA",
+          "stageId": "sky-reference",
+          "loadFailure": null,
+          "accepted": true,
+          "drawnMeshes": 3,
+          "drawProbeComplete": true
+        },
+        "after": {
+          "meshes": 294,
+          "textures": 25,
+          "readyTextures": 25,
+          "enabled": true,
+          "pixelRatio": 1,
+          "antialiasing": "SMAA",
+          "stageId": "battle-616-00-01-001",
+          "loadFailure": null,
+          "accepted": true,
+          "drawnMeshes": 105,
+          "drawProbeComplete": true
+        }
+      }
+    }
+  },
+  "repositoryAudit": {
+    "revision": "e5dfbba291925d71afbe15f308d63c4b949d8ff5",
+    "baseline": {
+      "selected": 200,
+      "completed": 200,
+      "passed": 156,
+      "failed": 44,
+      "timedOut": 0,
+      "totalAssertions": 1686,
+      "failedAssertions": 64,
+      "skippedAssertions": 3
+    },
+    "current": {
+      "selected": 202,
+      "completed": 202,
+      "passed": 161,
+      "failed": 41,
+      "timedOut": 0,
+      "totalAssertions": 1702,
+      "failedAssertions": 55,
+      "skippedAssertions": 3
+    },
+    "assertions": {
+      "tests": 1702,
+      "pass": 1644,
+      "fail": 55,
+      "skipped": 3,
+      "cancelled": 0
+    },
+    "clearedFiles": [
+      "characterLocomotion.test.mjs",
+      "homeCharacterRuntime.test.mjs",
+      "officialToonShadowSelector.test.mjs"
+    ],
+    "remainingFiles": 41
+  },
+  "security": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "limitations": [
+    "Chrome real browser touch events with mobile viewport emulation, not physical Android/iPhone performance testing.",
+    "Motion checksum and active rollback checks cover three representative models, not every character.",
+    "Comparison PNGs are fixed-time authored-curve samples, distinct from live controller movement tests.",
+    "Refined jump is a reversible alternative, not a claim of anatomically perfect full-body/self-collision simulation.",
+    "All remaining repository failures and original skipped assertions remain explicit.",
+    "Current publish-branch npm audit does not certify unchanged historical/default branches.",
+    "No visibility or DNS changes; future private-repository authorization still needs real revalidation."
+  ],
+  "remaining": [
+    {
+      "file": "angelRingHeadLock.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "draw-time AngelRing reference follows final head pose and preserves the existing draw hook",
+          "diagnostic": "The input did not match the regular expression /installAngelRingDrawReferenceUpdate/(mesh, result/.updateAngelRingReference/)/. Input:\n    \n    \"import { getLoadingTask, startLoadingTask, yieldLoadingFrame } from './loadingProgress.ts'/r/n\" +\n      \"import { resolveNativeAngelRingReference, resolveNativeFaceDirectionReference } from './nativeCharacterController';/r/n\" +"
+        }
+      ]
+    },
+    {
+      "file": "cameraDepthRim.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 19,
+        "suites": 0,
+        "pass": 17,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "official depth path joins opaque stage and character roots without a depth clear",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(backgroundPrepare > 0 && foregroundPrepare > backgroundPrepare)"
+        },
+        {
+          "name": "nested Viewer helper roots and prepare/render failures restore exact state",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(detachIndex < backgroundPrepare)"
+        }
+      ]
+    },
+    {
+      "file": "combatVfxFacingTarget.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "combatVfxFacingTarget.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/public/vfx/character/chara_100201_normalattack_00/product.vfxdata'"
+        }
+      ]
+    },
+    {
+      "file": "combatVfxNativeIdentity.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "combatVfxNativeIdentity.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/public/vfx/character/chara_100201_normalattack_00/product.vfxdata'"
+        }
+      ]
+    },
+    {
+      "file": "combatVfxPPtrSprite.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 4,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "three bounded clips decode exact PPtr sprite curves and targets",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/artifacts/verification/20260901-combat-vfx-pptr-sprite-closure/decoder-stage/enemy_650002_wholeskill.profile.json'\""
+        },
+        {
+          "name": "deterministic research and public products close every Sprite dependency",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260826-all-enemy-character-skill-vfx-products-v2/products/enemy/enemy_650002_wholeskill/product.json'\""
+        }
+      ]
+    },
+    {
+      "file": "deploymentPublicCopy.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 6,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "copy script reports the exact allowlisted closure and preflight",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    1306922519 !== 0"
+        },
+        {
+          "name": "each released stage and enemy closure is copied byte-exact with no expansion",
+          "diagnostic": "<workspace>/public/stages/official/battle-602-00-01-001/scene-profile.json != <workspace>/artifacts/verification/20260905-s6-enemy-texture-archive-localization/isolated-output/stages/official/battle-602-00-01-001/scene-profile.json\n    \n    false !== true"
+        },
+        {
+          "name": "heavy roots contain only the exact released closure",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    \n      ["
+        }
+      ]
+    },
+    {
+      "file": "doppelIrohaHair.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "runtime clones the ordinary ReDrive carrier and injects official cosmic branch",
+          "diagnostic": "The input did not match the regular expression /officialCosmicProjection3/. Input:\n    \n    '/n' +\n      '            uniform sampler2D tOfficialCosmic;/n' +"
+        }
+      ]
+    },
+    {
+      "file": "enemyControlRuntimeRegression.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 8,
+        "suites": 0,
+        "pass": 6,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "600001 actual exported bone tracks move and deterministic scrub changes skinned vertices",
+          "diagnostic": "'Enemy material profile request failed for 600001'"
+        },
+        {
+          "name": "closing handles detaches both controls, preserves actor selection and hides the close button",
+          "diagnostic": "'viewportEditor is not defined'"
+        }
+      ]
+    },
+    {
+      "file": "enemyIdleSelection.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "600003 chooses animated Wait_L instead of empty Wait",
+          "diagnostic": "'Enemy model request failed for 600003'"
+        }
+      ]
+    },
+    {
+      "file": "enemyPlayableSelectionParity.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "enemyPlayableSelectionParity.test.mjs",
+          "diagnostic": "# AssertionError [ERR_ASSERTION]: ../../../magia-exedra-character-three/loadingProgress.ts"
+        }
+      ]
+    },
+    {
+      "file": "enemyResourceLayer.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 5,
+        "suites": 0,
+        "pass": 3,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "every manifest model and thumbnail points to a real local runtime artifact",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/enemies/models/enemy_600001_battle_unit/material-profile.v1.json'\""
+        },
+        {
+          "name": "actual loader parses all four 2-4 enemy FBX runtimes",
+          "diagnostic": "'Enemy material profile request failed for 600002'"
+        }
+      ]
+    },
+    {
+      "file": "enemyTextureArchiveLocalization.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 7,
+        "suites": 0,
+        "pass": 6,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "enemy-only generation localizes texture URLs, preserves workspace bytes, and is deterministic",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    \n      ["
+        }
+      ]
+    },
+    {
+      "file": "enemyTextureRuntimeProducts.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 0,
+        "fail": 3,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "enemy texture runtime manifest publishes every exact stable key",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    495 !== 493"
+        },
+        {
+          "name": "all 493 material products consume the shared texture catalog fail-closed",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    495 !== 493"
+        },
+        {
+          "name": "enemy 600012 publishes body, thorn and Mercury inputs by stable key",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/enemies/textures/cab-deca81954fbd67b2aacb2928a61012c3__pathid-p5394078111709246722.png'\""
+        }
+      ]
+    },
+    {
+      "file": "enemyUiPanel.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 4,
+        "suites": 0,
+        "pass": 2,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "enemy panel is independent from the character selector and uses the resource manager contract",
+          "diagnostic": "The input did not match the regular expression /selectedInstanceId = added/.at/(-1/)/?/.instanceId/. Input:\n    \n    'import {/r/n' +\n      '    addAnimationLoop,/r/n' +"
+        },
+        {
+          "name": "enemy instances support deterministic spacing, selection, removal and canvas XYZ translation",
+          "diagnostic": "The input did not match the regular expression /enemyPanelController/?/.getIntersectedEnemy/(e/.clientX, e/.clientY/)/. Input:\n    \n    \"import './style/viewport-editor.css'/r/n\" +\n      \"import './style/tps-touch.css'/r/n\" +"
+        }
+      ]
+    },
+    {
+      "file": "enemyVfxResourceLayer.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 4,
+        "suites": 0,
+        "pass": 3,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "all catalog products and declared textures reopen through public URLs",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/vfx/character/chara_100101_normalattack_00/textures/eff_cmn_fire_02__p8245018178376842889.png'\""
+        }
+      ]
+    },
+    {
+      "file": "exactReDriveFormulaParity.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "exactReDriveFormulaParity.test.mjs",
+          "diagnostic": "# AssertionError [ERR_ASSERTION]: missing unique hard-spec replacement target"
+        }
+      ]
+    },
+    {
+      "file": "officialCharacterSurfaceSampler.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 8,
+        "suites": 0,
+        "pass": 7,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "108301 hair source pixels are the fresh current Steam exports",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/artifacts/verification/20260824-108301-hair-cheek-shadow-visual-fail/iteration-17-official-hair-texture-contract/evidence/steam-chara_108301_hair_ctrl.png'\""
+        }
+      ]
+    },
+    {
+      "file": "officialFaceAdditionalSampler.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "officialFaceAdditionalSampler.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260828-fresh-tw-default-faceadditional-authority/fresh-tw-default-faceadditional-pixels-clean-error-queue.json'"
+        }
+      ]
+    },
+    {
+      "file": "officialFaceEyePass.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "officialFaceEyePass.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/artifacts/verification/20260824-108301-hair-cheek-shadow-visual-fail/iteration-14-official-face-gradient-mouth-nose/official-evidence/steam/four-character-controller-dither-face-gradient.literal.json'"
+        }
+      ]
+    },
+    {
+      "file": "officialFaceHairStencilRuntime.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "officialFaceHairStencilRuntime.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260828-eye-eyebrow-draw-attachment-authority/fresh-tw-eye-eyebrow-ubo-frame.json'"
+        }
+      ]
+    },
+    {
+      "file": "officialReDriveCosmicAlphaWing.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 7,
+        "suites": 0,
+        "pass": 5,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "projected Cosmic uses the serialized character reference without requiring AngelRing",
+          "diagnostic": "The input did not match the regular expression /localForward = unityDirectionToThreeFbx/(profile/.faceForwardAxis/)/. Input:\n    \n    'export function createCharacterPerspectiveReference(/r/n' +\n      '    root: THREE.Object3D,/r/n' +"
+        },
+        {
+          "name": "projected Cosmic follows main_base additive/overlay/shadow/ambient order",
+          "diagnostic": "The input did not match the regular expression /officialCosmicOriginal = outgoingLight/. Input:\n    \n    \"import * as THREE from 'three'/r/n\" +\n      'import type {/r/n' +"
+        }
+      ]
+    },
+    {
+      "file": "officialSceneProducts.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 1,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "official scene shards close the exact 581-key authority partition",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    136 !== 132"
+        },
+        {
+          "name": "every official scene model reopens through a browser-safe Viewer URL",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/stages/official/battle-603-00-01-001/bg_3d_603_00_01_001.fbxdata'\""
+        }
+      ]
+    },
+    {
+      "file": "performanceBuiltMultiactorFraming.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "performanceBuiltMultiactorFraming.test.mjs",
+          "diagnostic": "#     throw new ERR_MODULE_NOT_FOUND("
+        }
+      ]
+    },
+    {
+      "file": "performanceEditorBrowserE2E.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 1,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "browser contract exposes semantic timeline lanes, scrubber and UUID-scoped actors",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    2 !== 11"
+        },
+        {
+          "name": "browser contract drives independent keyframes, playback and pointer drag without cross-actor writes",
+          "diagnostic": "'The \"string\" argument must be of type string. Received type undefined (undefined)'"
+        }
+      ]
+    },
+    {
+      "file": "performanceEditorPanel.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 13,
+        "suites": 0,
+        "pass": 12,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "pose controls operate released ACTION APIs and remain usable after editor hand-back",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    0 !== 2"
+        }
+      ]
+    },
+    {
+      "file": "performanceEditorRuntime.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 28,
+        "suites": 0,
+        "pass": 27,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "stale generation/old frame/zero leased actors cannot advance global timeline",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    0 !== 0.2"
+        }
+      ]
+    },
+    {
+      "file": "performanceViewportReadability.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 7,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "dense nodes use sparse hollow glyphs while every UUID remains an exact overlap candidate",
+          "diagnostic": "Expected values to be strictly equal:\n    \n    24 !== 80"
+        },
+        {
+          "name": "workspace button frames the currently selected actor only on request and exit restores the original view",
+          "diagnostic": "\"Cannot destructure property 'transport' of 'panel.workspaceControls' as it is undefined.\""
+        }
+      ]
+    },
+    {
+      "file": "resourceProductPreview.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "stage geometry and serialized runtime companions reopen literally",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/stages/official/battle-612-00-00-002/Lightmap-0_comp_light-bc6h.dds'\""
+        }
+      ]
+    },
+    {
+      "file": "runtimeSelectionThumbnailPanels.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 2,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "runtime selection thumbnail product covers every viewer character with official gamedata sources",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    ... Skipped lines"
+        }
+      ]
+    },
+    {
+      "file": "sceneVisualProducts.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 4,
+        "suites": 0,
+        "pass": 3,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "every visual product reference exists and stable keys remain unique",
+          "diagnostic": "\"ENOENT: no such file or directory, stat '<workspace>/public/stages/official/alternative-stage-model-alternative-stage-model-00-released/scene-product.json'\""
+        }
+      ]
+    },
+    {
+      "file": "stage600003Integration.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 7,
+        "suites": 0,
+        "pass": 6,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "600-003 runtime package reopens with exact hashes and byte total",
+          "diagnostic": "hash drift: asset-provenance.json\n    + actual - expected\n    \n    + 'ca173b283dacd120f9be04a49d0855a420715d8f956765ac0202a8c480c98afa'"
+        }
+      ]
+    },
+    {
+      "file": "stage601Integration.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "601 package reopens every product with exact hashes and byte total",
+          "diagnostic": "hash drift: uv1-companion.json\n    + actual - expected\n    \n    + '17f629c901a9ec73a4d0cbe9152561efa22b735c081829280234b7b04ae45398'"
+        }
+      ]
+    },
+    {
+      "file": "stage603Integration.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 5,
+        "suites": 0,
+        "pass": 4,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "603 runtime package reopens with exact hashes and byte total",
+          "diagnostic": "hash drift: uv1-companion.json\n    + actual - expected\n    \n    + '99270822f63024203d717a61f80753122a132c4333f27cd596ae304b26485f82'"
+        }
+      ]
+    },
+    {
+      "file": "stageEnvironmentPayload.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 3,
+        "suites": 0,
+        "pass": 1,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "generated environment manifest covers every serialized profile binding",
+          "diagnostic": "Expected values to be strictly deep-equal:\n    + actual - expected\n    ... Skipped lines"
+        },
+        {
+          "name": "every environment payload records target bytes and an explicit source comparison",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/stages/official/battle-603-00-01-001/ReflectionProbe-1-bc6h.dds'\""
+        }
+      ]
+    },
+    {
+      "file": "stageGeneratedCorpus.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 8,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "authored-name projector defaults to check and restores a byte-exact corpus",
+          "diagnostic": "PROJECTION_ERROR=source projection must use LF newlines"
+        }
+      ]
+    },
+    {
+      "file": "stageMainLightCascades.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 12,
+        "suites": 0,
+        "pass": 11,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "injects the exact URP LOW four half-texel comparison taps",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(match)"
+        }
+      ]
+    },
+    {
+      "file": "stageMaterialBindings.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "stageMaterialBindings.test.mjs",
+          "diagnostic": "# AssertionError [ERR_ASSERTION]: global background tint must execute after material fog like the official shader"
+        }
+      ]
+    },
+    {
+      "file": "stageParticleShapeForce.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 1,
+        "suites": 0,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "stageParticleShapeForce.test.mjs",
+          "diagnostic": "# Error: ENOENT: no such file or directory, open '<workspace>/artifacts/research/20260827-particle-shape-force-authority/representative-fixtures.v1.json'"
+        }
+      ]
+    },
+    {
+      "file": "stageUv1ActiveCarrier.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 6,
+        "suites": 0,
+        "pass": 5,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "606 applies all 26 active FBX carriers while 120 dependency records stay diagnostic",
+          "diagnostic": "\"ENOENT: no such file or directory, open '<workspace>/public/stages/official/battle-606-00-01-002/bg_3d_606_00_01_002.fbxdata'\""
+        }
+      ]
+    },
+    {
+      "file": "stageVolumePostProcessing.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 9,
+        "suites": 0,
+        "pass": 8,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "serialized ChromaticAberration uses the exact URP 14 fast three-sample operator",
+          "diagnostic": "The expression evaluated to a falsy value:\n    \n      assert.ok(chroma >= 0 && vignette > chroma)"
+        }
+      ]
+    },
+    {
+      "file": "voiceUiPanel.test.mjs",
+      "status": "failed",
+      "counts": {
+        "tests": 10,
+        "suites": 0,
+        "pass": 9,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "disposition": "Unresolved; never used as a test-exclusion list.",
+      "cases": [
+        {
+          "name": "voice panel exposes compact typed multitrack UI for every loaded character and multiple backgrounds",
+          "diagnostic": "The input did not match the regular expression /id=\"voice-multitrack-section\"[^>]*open/. Input:\n    \n    '<!doctype html>/n' +\n      '<html lang=\"en\">/n' +"
+        }
+      ]
+    }
+  ],
+  "priorSecondStageAttempt": {
+    "revision": "6a6c243d23a2c27acdb4ad81b41916b491136643",
+    "passed": false,
+    "error": "jump-live-mobile failed; see log",
+    "steps": [
+      {
+        "step": "jump-build",
+        "exitCode": 0,
+        "at": "2026-09-30T06:43:25.325735+00:00"
+      },
+      {
+        "step": "jump-candidate-mobile",
+        "exitCode": 0,
+        "at": "2026-09-30T06:44:58.257276+00:00"
+      },
+      {
+        "step": "jump-candidate-viewport",
+        "exitCode": 0,
+        "at": "2026-09-30T06:45:47.116341+00:00"
+      },
+      {
+        "step": "jump-candidate-motion",
+        "exitCode": 0,
+        "at": "2026-09-30T06:46:01.033388+00:00"
+      },
+      {
+        "step": "jump-candidate-stage",
+        "exitCode": 0,
+        "at": "2026-09-30T06:46:05.588568+00:00"
+      },
+      {
+        "step": "jump-local-payload",
+        "exitCode": 0,
+        "at": "2026-09-30T06:46:05.723492+00:00"
+      },
+      {
+        "step": "jump-publish",
+        "exitCode": 0,
+        "at": "2026-09-30T06:46:41.156464+00:00"
+      },
+      {
+        "step": "jump-live-motion",
+        "exitCode": 0,
+        "at": "2026-09-30T06:48:07.943867+00:00"
+      },
+      {
+        "step": "jump-live-mobile",
+        "exitCode": 1,
+        "at": "2026-09-30T06:48:26.202503+00:00"
+      },
+      {
+        "step": "jump-public-bytes",
+        "exitCode": 1,
+        "at": "2026-09-30T06:48:26.361181+00:00"
+      },
+      {
+        "step": "jump-live-stage",
+        "exitCode": 0,
+        "at": "2026-09-30T06:48:38.456737+00:00"
+      },
+      {
+        "step": "jump-live-viewport",
+        "exitCode": 0,
+        "at": "2026-09-30T06:49:09.323100+00:00"
+      }
+    ],
+    "retainedEvidence": "phase2-first-attempt/",
+    "note": "The initial attempt was not accepted. A failed phone mode-handoff check and strict source-HEAD mismatch are retained; final acceptance is based on a fresh build and full repeat, not deleting either assertion."
+  }
+}
