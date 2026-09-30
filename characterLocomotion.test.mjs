@@ -4,6 +4,17 @@ import test from 'node:test'
 import ts from 'typescript'
 import { readParsedBoneLocal } from './magia-exedra-character-three/authoredBoneLocals.ts'
 import { stripTypeScriptTypes } from 'node:module'
+import {expressiveJumpName,expressiveJumpArmSample} from './src/viewer/jumpStyle.ts'
+import {nativeCombatActionCue} from './src/viewer/combatNativeActionCue.ts'
+// These dynamic excerpts run production functions, with their actual pure
+// dependencies exposed to Function's global realm instead of permissive stubs.
+Object.assign(globalThis,{expressiveJumpName,expressiveJumpArmSample,nativeCombatActionCue})
+function compilePerformanceActionTestSource(source,start,end){
+ const ast=ts.createSourceFile('viewer.ts',source,ts.ScriptTarget.Latest,true)
+ const cue=ast.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='emitStartedViewerCharacterActionCue')
+ assert.ok(cue,'The current cue consumer must be part of action excerpts')
+ return stripTypeScriptTypes(source.slice(start,end)+'\n'+cue.getText(ast),{mode:'strip'})
+}
 import * as THREE from 'three'
 import { gunzipSync } from 'node:zlib'
 import { Quaternion, Ray, Triangle, Vector3 } from 'three'
@@ -701,7 +712,7 @@ test('V44 keeps 101901 walking forearms strongly pre-bent without a gait-phase r
     assert.match(source, /run: \{[\s\S]{0,120}Forearm_L: 7,[\s\S]{0,60}Forearm_R: 7/)
     assert.match(source, /const targetRigLocomotionTransitionSeconds = \{[\s\S]{0,220}groundedGait: 0\.28,[\s\S]{0,80}takeoff: 0\.20,[\s\S]{0,80}airborne: 0\.16,[\s\S]{0,80}landing: 0\.22,[\s\S]{0,80}recovery: 0\.30/)
     assert.match(source, /function targetRigMinimumLocomotionTransitionSeconds\(/)
-    assert.match(source, /function createTargetRigLocomotionTransitionPolicy\([\s\S]{0,800}for \(const family of Object\.values\(jumpAnimations \?\? \{\}\)\)/)
+    const policyAst=ts.createSourceFile('viewer.ts',source,ts.ScriptTarget.Latest,true);const policyFunction=policyAst.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='createTargetRigLocomotionTransitionPolicy');assert.ok(policyFunction);assert.match(policyFunction.getText(policyAst),/for \(const family of Object\.values\(jumpAnimations \?\? \{\}\)\)/)
     assert.match(source, /function targetRigLocomotionFadeSeconds\([\s\S]{0,1300}return Math\.max\(requestedFadeSeconds, minimumFadeSeconds\)/)
     assert.match(source, /createAnimationPort\([\s\S]{0,180}createTargetRigLocomotionTransitionPolicy\(locomotionAnimations, variant\.jumpAnimations\)/)
     assert.match(source, /const targetRigLocomotionTransitions = characterSpecificMotion\.profile\.status === 'attached'[\s\S]{0,360}characterSpecificMotion\.jumpAnimations/)
@@ -1064,7 +1075,7 @@ test('normalized donor reference preserves ten full 60fps cycles, morphology wei
     assert.match(source, /const supportedTargetRigProfile = characterId === 101901[\s\S]{0,120}targetRigMorphologyCharacterIds\.has\(characterId\)/)
     assert.match(source, /if \(!supportedTargetRigProfile\)/)
     assert.match(source, /if \(!characterActionPlaybackBlocksLocomotion\(binding\)\) \{\s*setNativeDungeonExternalAttachmentsHidden\(binding, enabled\)/)
-    assert.match(source, /if \(characterSpecificMotion\.profile\.status === 'attached'\)[\s\S]{0,100}setNativeDungeonExternalAttachmentsHidden\(binding, true\)/)
+    assert.match(source, /if \(enabled && characterSpecificMotion\.profile\.status === 'attached'\)[\s\S]{0,100}setNativeDungeonExternalAttachmentsHidden\(binding, true\)/)
 })
 
 test('101901 Space jump has standing, walking and running target-rig poses with separated feet and controller-owned travel', () => {
@@ -1105,15 +1116,15 @@ test('101901 Space jump has standing, walking and running target-rig poses with 
     assert.match(jumpUpperBody, /blendNaturalUpperBodyVector\(/)
     assert.doesNotMatch(jumpUpperBody, /solveTwoBoneArm\(/)
     assert.match(source, /jumpTakeoffDelaySeconds: jumpTiming\?\.takeoffSeconds/)
-    assert.match(source, /landingDurationSeconds: jumpTiming\?\.landSeconds/)
+    assert.match(source, /landingDurationSeconds: Math\.min\(jumpTiming\?\.landSeconds \?\? 0\.14, 0\.18\)/)
     assert.match(source, /\{ state: 'jump', phase: 'takeoff', duration: 0\.44 \}/)
     assert.match(source, /\{ state: 'fall', phase: 'airborne', duration: 0\.64 \}/)
     assert.match(source, /\{ state: 'land', phase: 'land', duration: 0\.42 \}/)
     assert.match(source, /phase === 'airborne'[\s\S]{0,220}return new THREE\.Vector3\(\)/)
     assert.match(source, /const applyJumpNaturalUpperBodyPose = \(/)
-    assert.match(source, /L: wrapReferencePhase\(0\.735 \+ synchronousDrift\)/)
-    assert.match(source, /R: wrapReferencePhase\(0\.245 \+ synchronousDrift\)/)
-    assert.match(source, /const modeStrength = mode === 'running' \? 1 : mode === 'walking' \? 0\.98 : 0\.96/)
+    assert.match(source, /L: refined\?\.left \?\? wrapReferencePhase\(0\.735 \+ synchronousDrift\)/)
+    assert.match(source, /R: refined\?\.right \?\? wrapReferencePhase\(0\.245 \+ synchronousDrift\)/)
+    assert.match(source, /const modeStrength = refined\?\.strength \?\? \(mode === 'running' \? 1 : mode === 'walking' \? 0\.98 : 0\.96\)/)
     assert.doesNotMatch(jumpUpperBody, /const strength = phase === 'takeoff'/)
     assert.doesNotMatch(jumpUpperBody, /modeStrength = strength/)
     assert.match(source, /currentDirection\.lerp\(donorDirection, modeStrength\)/)
@@ -1127,7 +1138,7 @@ test('101901 Space jump has standing, walking and running target-rig poses with 
     assert.match(source, /gravity: gaitCalibration \? 10\.8 : 15/)
     assert.match(source, /jumpSpeed: gaitCalibration \? 4\.4 : 5\.4/)
     assert.match(source, /gaitCalibration \? 0\.22 : 0\.14/)
-    assert.match(source, /gaitCalibration \? 0\.36 : 0\.28/)
+    assert.match(source, /landingDurationSeconds: Math\.min\(jumpTiming\?\.landSeconds \?\? 0\.14, 0\.18\)/)
     assert.match(source, /'same-character-exact-rig',[\s\S]{0,100}'verified-retarget',[\s\S]{0,100}'corpus-parameterized'/)
     assert.match(source, /attachmentPolicy: 'body-only-exclude-external-weapons'/)
     assert.doesNotMatch(source, /function attachPreferredCombatJumpLocomotion\(/)
@@ -4154,17 +4165,17 @@ test('performance host independent timeline actual MODEL FK and native consumer 
         const editor=new PerformanceEditorRuntime({actorSource:{list:()=>[f.a.descriptor],subscribe:()=>()=>{}},channelHost:f.host.channelHost,framePort:f.host.framePort,transitionSeconds:0.05,
             transformHost:{acquire:r=>{request=r;return {status:'ready',value:()=>{}}}}})
         const drag=editor.beginDrag(f.a.descriptor.object.uuid,'joint',f.key);assert.equal(drag.status,'ready',drag.reason)
-        const from=f.bone.position.toArray();request.object.position.set(0.75,0.35,0.1);request.onChange();assert.deepEqual(f.bone.position.toArray(),from)
+        const from=f.bone.quaternion.clone(),heldQ=new THREE.Quaternion().setFromEuler(new THREE.Euler(.3,.2,.1));request.object.quaternion.copy(heldQ);request.onChange();assert.ok(f.bone.quaternion.angleTo(from)<1e-7)
         const copy=f.bone.position.copy,fromArray=f.bone.position.fromArray
         f.bone.position.copy=function(v){nativeWrites++;return copy.call(this,v)}
         f.bone.position.fromArray=function(...args){manualWrites++;return fromArray.apply(this,args)}
         const held=[]
-        for(let i=0;i<5;i++){f.step();const writes=nativeWrites;f.a.body();assert.equal(editor.lastError,null);f.native.runtime.updateAfterAnimation(1/60);f.host.flushFinalPoseBeforeCamera();held.push(nativeWrites-writes);assert.deepEqual(f.bone.position.toArray(),[0.75,0.35,0.1])}
+        for(let i=0;i<5;i++){f.step();const writes=nativeWrites;f.a.body();assert.equal(editor.lastError,null);f.native.runtime.updateAfterAnimation(1/60);f.host.flushFinalPoseBeforeCamera();held.push(nativeWrites-writes);assert.ok(f.bone.quaternion.angleTo(heldQ)<1e-7)}
         assert.ok(held.every(x=>x===0));assert.equal(manualWrites,5)
         const heldManualCommits=manualWrites
         editor.stop();const returning=[]
-        for(let i=0;i<5;i++){f.step();f.a.body();const writes=nativeWrites;f.native.runtime.updateAfterAnimation(1/60);f.host.flushFinalPoseBeforeCamera();returning.push({position:f.bone.position.toArray(),writes:nativeWrites-writes})}
-        assert.deepEqual(returning[0].position,[0.75,0.35,0.1]);assert.notDeepEqual(returning[3].position,returning[0].position)
+        for(let i=0;i<5;i++){f.step();f.a.body();const writes=nativeWrites;f.native.runtime.updateAfterAnimation(1/60);f.host.flushFinalPoseBeforeCamera();returning.push({position:f.bone.position.toArray(),rotation:f.bone.quaternion.toArray(),writes:nativeWrites-writes})}
+        assert.ok(new THREE.Quaternion(...returning[0].rotation).angleTo(heldQ)<1e-7);assert.notDeepEqual(returning[3].position,returning[0].position)
         const again=editor.beginDrag(f.a.descriptor.object.uuid,'joint',f.key);assert.equal(again.status,'ready',again.reason)
         assert.ok(returning.slice(0,4).every(x=>x.writes===1));results.push({kind,heldNativeWrites:held,heldManualCommits,returnEvaluatorInputWrites:manualWrites-heldManualCommits,returning})
         editor.dispose();f.dispose()
@@ -4300,7 +4311,7 @@ test('performance host evaluator actual MODEL detached FK consumer commits real 
     const key=[...editor.actors.get(native.root.uuid).bones].find(([,node])=>node===bone)[0]
     const before=bone.position.toArray(),drag=editor.beginDrag(native.root.uuid,'joint',key)
     assert.equal(drag.status,'ready',drag.reason);assert.notEqual(request.object,bone)
-    request.object.position.set(0.7,0.4,0.2);request.onChange()
+    const heldQ=new THREE.Quaternion().setFromEuler(new THREE.Euler(.3,.2,.1));request.object.quaternion.copy(heldQ);request.onChange()
     assert.deepEqual(bone.position.toArray(),before,'gizmo callback has not touched real native output')
     const originalCopy=bone.position.copy;bone.position.copy=function(value){selectedWrites++;return originalCopy.call(this,value)}
     const originalFrom=bone.position.fromArray;bone.position.fromArray=function(...args){manualWrites++;return originalFrom.apply(this,args)}
@@ -4311,7 +4322,7 @@ test('performance host evaluator actual MODEL detached FK consumer commits real 
         const start=selectedWrites,manual=manualWrites;step();assert.equal(editor.lastError,null)
         held.push({nativeWrites:selectedWrites-start,manualCommits:manualWrites-manual,state:nativeLease.state})
         assert.equal(selectedWrites-start,0);assert.equal(manualWrites-manual,1)
-        assert.deepEqual(bone.position.toArray(),[0.7,0.4,0.2]);assert.equal(nativeLease.state,'held')
+        assert.ok(bone.quaternion.angleTo(heldQ)<1e-7);assert.equal(nativeLease.state,'held')
     }
     assert.ok(unselectedWrites>0,'unselected real native output continued')
     // A second actor keeps its ordinary root track while native A returns.
@@ -4348,14 +4359,14 @@ test('performance host evaluator native return waits for genuine next source and
     host.dispose();native.runtime.dispose()
 })
 
-test('performance host evaluator actual MODEL mixed action samples before manual native commit with cue once-only and no live callback edit',async()=>{
+test('performance host evaluator actual MODEL mixed action samples before manual native commit without a fake combat cue for Walk_L and no live callback edit',async()=>{
     const {PerformanceEditorRuntime}=await import('./src/viewer/performanceEditor/runtime.ts')
     const fixture=await performanceNativeRuntimeFixture(),native=fixture.create(true),order=[]
     const source=fs.readFileSync('src/viewer/viewerLocomotion.ts','utf8'),start=source.indexOf('function playViewerPerformanceAction('),end=source.indexOf('function pauseViewerCharacterAction(',start)
     const [play,sample]=new Function('combatSkeletonSourceActionId','exactCombatSkeletonPreviewEntry','nativeDungeonActionDescriptor','interruptViewerCharacterAction',
         'startDirectHomePlayback','startCombatSkeletonPlayback','stopActiveCombatSkeletonPlayback','stopActiveDirectHomePlayback','pauseViewerCharacterAction',
         'actionSlots','emitCatalogActionEffectCue','seekViewerCharacterAction',
-        stripTypeScriptTypes(source.slice(start,end),{mode:'strip'})+'\nreturn [playViewerPerformanceAction,sampleViewerPerformanceAction]'
+        compilePerformanceActionTestSource(source,start,end)+'\nreturn [playViewerPerformanceAction,sampleViewerPerformanceAction]'
     )(()=>undefined,()=>undefined,()=>undefined,()=>{},()=>{throw Error('unexpected direct')},()=>{throw Error('unexpected skeleton')},()=>{},()=>{},()=>{},
         [{code:'KeyE'}],()=>order.push('cue'),(time,binding)=>{order.push('sample');binding.character.animation.time=time})
     const f=performanceHostFixture({play,sample}),a=f.actor(1,native.root)
@@ -4379,10 +4390,10 @@ test('performance host evaluator actual MODEL mixed action samples before manual
     }
     editor.setDocument({schema:'performance-editor-v1',duration:1,loop:false,tracks:[
         {id:'action',actorKey:native.root.uuid,channel:'action',keys:[{id:'e',time:0,value:{name:'Walk_L',loop:true}}]},
-        {id:'manual',actorKey:native.root.uuid,channel:'bone-position',property:key,keys:[{id:'m',time:0,value:[0.8,0.4,0]}]},
+        {id:'manual',actorKey:native.root.uuid,channel:'bone-rotation',property:key,keys:[{id:'m',time:0,value:[0,0,Math.sin(.2),Math.cos(.2)]}]},
     ]});editor.play();assert.equal(editor.lastError,null)
-    for(let i=0;i<3;i++){f.runtime.nextFrame();a.body();assert.equal(editor.lastError,null);assert.deepEqual(bone.position.toArray(),[0.8,0.4,0]);order.push('native');native.runtime.updateAfterAnimation(1/60);host.flushFinalPoseBeforeCamera()}
-    assert.equal(plays,1);assert.equal(order.filter(x=>x==='cue').length,1);assert.equal(order.filter(x=>x==='manual').length,3)
+    for(let i=0;i<3;i++){f.runtime.nextFrame();a.body();assert.equal(editor.lastError,null);assert.ok(bone.quaternion.angleTo(new THREE.Quaternion(0,0,Math.sin(.2),Math.cos(.2)))<1e-7);order.push('native');native.runtime.updateAfterAnimation(1/60);host.flushFinalPoseBeforeCamera()}
+    assert.equal(plays,1);assert.equal(order.filter(x=>x==='cue').length,0,'A generic Walk_L is not an admitted native combat identity');assert.equal(order.filter(x=>x==='manual').length,3)
     assert.ok(evaluated[0]<evaluated[1]&&evaluated[1]<evaluated[2]);assert.ok(evaluated.every(x=>x<0.1))
     assert.equal(order.indexOf('sample')<order.indexOf('manual'),true);assert.equal(order.indexOf('manual')<order.indexOf('native'),true)
     editor.dispose();host.dispose();native.runtime.dispose();mixer.stopAllAction()
@@ -4416,7 +4427,7 @@ test('performance host channel split real native-ready action evaluates before o
     const [play,sample]=new Function('combatSkeletonSourceActionId','exactCombatSkeletonPreviewEntry','nativeDungeonActionDescriptor','interruptViewerCharacterAction',
         'startDirectHomePlayback','startCombatSkeletonPlayback','stopActiveCombatSkeletonPlayback','stopActiveDirectHomePlayback','pauseViewerCharacterAction',
         'actionSlots','emitCatalogActionEffectCue','seekViewerCharacterAction',
-        stripTypeScriptTypes(source.slice(start,end),{mode:'strip'})+'\nreturn [playViewerPerformanceAction,sampleViewerPerformanceAction]',
+        compilePerformanceActionTestSource(source,start,end)+'\nreturn [playViewerPerformanceAction,sampleViewerPerformanceAction]',
     )(()=>undefined,()=>undefined,()=>undefined,()=>{},()=>{throw Error('unexpected direct')},()=>{throw Error('unexpected skeleton')},()=>{},()=>{},()=>{},[],()=>{throw Error('unexpected cue')},
         (time,binding)=>{order.push('sample');binding.character.animation.time=time})
     const f=performanceHostFixture({play,sample}),a=f.actor(1,native.root),b=f.actor(1,second.root)
@@ -4498,18 +4509,19 @@ test('performance exact action adapter uses retained actor routes and isolates e
     const [play, sample] = new Function('combatSkeletonSourceActionId','exactCombatSkeletonPreviewEntry','nativeDungeonActionDescriptor','interruptViewerCharacterAction',
         'startDirectHomePlayback','startCombatSkeletonPlayback','stopActiveCombatSkeletonPlayback','stopActiveDirectHomePlayback','pauseViewerCharacterAction',
         'actionSlots','emitCatalogActionEffectCue','seekViewerCharacterAction',
-        stripTypeScriptTypes(source.slice(start,end),{mode:'strip'})+'\nreturn [playViewerPerformanceAction,sampleViewerPerformanceAction]',
+        compilePerformanceActionTestSource(source,start,end)+'\nreturn [playViewerPerformanceAction,sampleViewerPerformanceAction]',
     )(()=>undefined,()=>undefined,()=>undefined,()=>calls.push('interrupt'),()=>{throw Error('unexpected direct')},()=>{throw Error('unexpected skeleton')},()=>{},()=>{},()=>calls.push('pause'),
         [{code:'KeyE'}],()=>calls.push('cue'),(time,binding)=>calls.push(['seek',binding.character.userData.characterId,time]))
     const binding={character:{userData:{characterId:800001},animations:['Walk_L'],animation:{play:(...args)=>calls.push(['play',...args]),duration:2}},
         tpsPoseTransition:{begin:()=>calls.push('capture')},directHomeActions:{entries:[]},combatJumpActions:{entries:[]},nativeDungeonActions:{},catalogActionIds:new Map([['KeyE','Walk_L']])}
+    binding.sceneCharacter={character:binding.character};
     const beat={name:'Walk_L',keyId:'k',occurrenceId:'e:0:k',loop:true,localTimeSeconds:0,transitionSeconds:0.2}
     play(binding,beat,true); sample(binding,'Walk_L',0.5,true)
-    assert.equal(calls.filter(call=>call==='cue').length,1)
+    assert.equal(calls.filter(call=>call==='cue').length,0,'Generic locomotion must not emit a fake combat cue')
     assert.equal(calls.filter(call=>Array.isArray(call)&&call[0]==='play').length,1)
     assert.ok(calls.indexOf('capture') < calls.indexOf('interrupt'))
     play(binding,beat,false); sample(binding,'Walk_L',0.8,true)
-    assert.equal(calls.filter(call=>call==='cue').length,1)
+    assert.equal(calls.filter(call=>call==='cue').length,0,'Generic locomotion must not emit a fake combat cue')
     assert.throws(()=>sample(binding,'wrong',0,true),/own/)
     assert.throws(()=>play(binding,{...beat,name:'not-present'},true),/unavailable/)
 })

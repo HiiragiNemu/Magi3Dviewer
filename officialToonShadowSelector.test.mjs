@@ -29,8 +29,11 @@ const officialHair = read(
 const byName = name => profiles.materials[name]
 
 test('fresh Steam corpus preserves every serialized shadow offset-map scalar', () => {
-  assert.equal(profiles.bundleCount, 97)
-  assert.equal(profiles.materialCount, 1538)
+  assert.equal(profiles.bundleCount, 98)
+  const added = Object.keys(profiles.materials).filter(name => /^mt_chara_110702_/.test(name))
+  assert.equal(added.length, 21, 'The published 110702 family is additive, not a missing historical material')
+  assert.equal(Object.keys(profiles.materials).filter(name => !added.includes(name)).length, 1538)
+  assert.equal(profiles.materialCount, 1559)
   for (const [name, profile] of Object.entries(profiles.materials)) {
     assert.equal(
       Number.isFinite(profile.shadow?.offsetMapOffset),
