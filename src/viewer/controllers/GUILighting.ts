@@ -7,7 +7,7 @@ import { CameraEnvironmentOptions } from '../camera/environment';
 import { isCameraEnabled } from '../camera';
 import { setBackgroundColor } from './background';
 
-const lightingFolder = gui.addFolder('Lighting').close()
+const lightingFolder = gui.addFolder('Lighting').open()
 const guiLightingOptions = {
     Reset() {
         lightingFolder.reset()

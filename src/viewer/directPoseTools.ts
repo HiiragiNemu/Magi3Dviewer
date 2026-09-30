@@ -1,6 +1,6 @@
 import { Bone, Object3D } from 'three'
 
-export type PoseSnapshot = Map<string, [number, number, number]>
+export type PoseSnapshot = Map<string, number[]>
 const copy = (value: PoseSnapshot): PoseSnapshot => new Map([...value].map(([key, v]) => [key, [...v]]))
 const same = (a: PoseSnapshot, b: PoseSnapshot) => a.size === b.size && [...a].every(([key, v]) => {
     const other = b.get(key)
@@ -37,7 +37,7 @@ export class DirectPoseHistory {
     get canRedo() { return this.future.length > 0 }
 }
 
-export interface PosePart { id: string; label: string; bone: Bone; mode: 'rotate' | 'translate' }
+export interface PosePart { id: string; label: string; bone: Object3D; mode: 'rotate' | 'translate' }
 const excluded = /twist|roll|assist|finger|thumb|index|middle|pinky|hair|cloth|skirt|weapon|dummy|nub|end/i
 const side = (name: string, s: 'left' | 'right') => s === 'left'
     ? /(?:^|[_. :/\-])(?:l|left)(?:$|[_. :/\-])|^left|left$/i.test(name)
@@ -66,7 +66,7 @@ export function findDirectPoseParts(actor: Object3D): PosePart[] {
 interface PoseToolsOptions {
     translate(text: string): string
     actor(): Object3D | undefined
-    selected(): Bone | undefined
+    selected(): Object3D | undefined
     history(): DirectPoseHistory | undefined
     select(part: PosePart): void
     undo(): void
@@ -116,7 +116,7 @@ export function createDirectPoseTools(parent: HTMLElement, options: PoseToolsOpt
     hint.className = 'direct-pose-hint'
     root.append(partsRow, actions, keep, bend, hint)
     parent.append(root)
-    let actor: Object3D | undefined, selected: Bone | undefined
+    let actor: Object3D | undefined, selected: Object3D | undefined
     let parts: PosePart[] = []
     const refresh = () => {
         const current = options.actor(), bone = options.selected()

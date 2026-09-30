@@ -1,3 +1,4 @@
+import { onPermanentPageExit } from './pageLifecycle'
 import { Bone, BufferAttribute, Mesh, Object3D, Vector3 } from 'three'
 import type { MagiaExedraScene3D } from '../../magia-exedra-character-three/scene'
 import type { TransformControls } from 'three/addons/controls/TransformControls.js'
@@ -37,7 +38,7 @@ export function installPoseDiagnostics(scene: MagiaExedraScene3D, control: () =>
             antialiasing: scene.effects.effectiveAntiAliasing, frames: frames.slice(), bones, rings }
     }
     Object.defineProperty(window, 'magiusPoseInspection', { configurable: true, value: snapshot })
-    window.addEventListener('pagehide', () => { scene.renderer.render = render; Reflect.deleteProperty(window, 'magiusPoseInspection') }, { once: true })
+    onPermanentPageExit(() => { scene.renderer.render = render; Reflect.deleteProperty(window, 'magiusPoseInspection') })
     return () => {
         const now = performance.now()
         if (previous && now - previous < 1000) {

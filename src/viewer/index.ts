@@ -1,3 +1,10 @@
+import { installContextRecovery } from './pageLifecycle'
+import { readWorkspaceSession, writeWorkspaceSession, type WorkspaceSession } from './sessionWorkspace'
+import { readLocal } from './poseWorkspace'
+import { onPermanentPageExit } from './pageLifecycle'
+import { setupCompactWorkspace, setupOrientationToggle } from './compactWorkspace'
+import { createPoseWorkspacePanel } from './poseWorkspacePanel'
+import { groupedPoseParts, structuralNodes, captureModelLocal, writeLocal, PlacementHistory, StructurePoseTarget, makeSavedPose, savePoseLibrary, resolveSavedPose, type PoseNodeGroup, type LocalTransform } from './poseWorkspace'
 import { normalizeViewerEntry } from './entryCoherence'
 import './style/viewport-editor.css'
 import './style/tps-touch.css'
@@ -6,7 +13,7 @@ import { EditorGroundGuard } from './editorGround'
 import { createPoseContactGuard } from './poseContactGuard'
 import { registerPoseJointLimits, clampPoseJoint, poseJointLimitSnapshot } from './poseJointLimits'
 import { installPoseDiagnostics } from './poseDiagnostics'
-import { createDirectPoseTools, DirectPoseHistory, findDirectPoseParts, type PosePart, type PoseSnapshot } from './directPoseTools'
+import { createDirectPoseTools, DirectPoseHistory, type PosePart, type PoseSnapshot } from './directPoseTools'
 import { DirectPoseTarget } from './directPoseTarget'
 import { addBeforeAnimationLoop, removeBeforeAnimationLoop } from '../../magia-exedra-character-three/renderer'
 import { ObjectMovementSelection, pickMovementTarget, type MovementTarget } from './objectMovementSelection'
@@ -140,6 +147,7 @@ const movementSelection = new ObjectMovementSelection(object => !!performanceExt
 let weaponPanelController: ReturnType<typeof setupWeaponPanel> | undefined
 function selectMovementTarget(target: MovementTarget) {
     if (movementSelection.current?.object !== target.object) closeObjectTransform()
+    placementHistory(target.object)
     movementSelection.select(target)
     updateMovementTargetLabel()
 }
@@ -187,13 +195,17 @@ let characterPhysicsActionOptionsUi: CharacterPhysicsActionOptionsUiController |
 type PoseAxis = 'x' | 'y' | 'z'
 
 interface ManualPoseEntry {
-    bone: THREE.Bone
+    bone: THREE.Object3D
     offsets: THREE.Vector3
     positionOffsets: THREE.Vector3
     lastBase?: THREE.Quaternion
     lastApplied?: THREE.Quaternion
     lastBasePosition?: THREE.Vector3
     lastAppliedPosition?: THREE.Vector3
+    scaleFactors?: THREE.Vector3
+    lastBaseScale?: THREE.Vector3
+    lastAppliedScale?: THREE.Vector3
+    unrestricted?: boolean
 }
 
 interface ManualMorphEntry {
@@ -250,13 +262,20 @@ let selectedModelPart: ModelPartEntry | undefined
 let directPosePointerDrag: DirectPosePointerDrag | undefined
 let directPoseGizmoPointerId: number | undefined
 let directPoseFeedbackPending = false
-let directPoseTarget: DirectPoseTarget | undefined
+let directPoseTarget: DirectPoseTarget | StructurePoseTarget | undefined
 let directPoseInputRoot: THREE.Group | undefined
-const directPoseDragBases = new Map<THREE.Bone, THREE.Quaternion>()
+const directPoseDragBases = new Map<THREE.Object3D, THREE.Quaternion>()
 let directPoseFinishing = false
 let viewportEditor: ReturnType<typeof createViewportPoseEditor> | undefined
 let directPoseToolsUi: ReturnType<typeof createDirectPoseTools> | undefined
 const directPoseHistories = new WeakMap<THREE.Object3D, DirectPoseHistory>()
+let poseNodeGroup: PoseNodeGroup = 'primary'
+let poseAllowStretch = false
+const poseOrigins = new WeakMap<THREE.Object3D, Map<string,LocalTransform>>()
+const poseFrozenBases = new WeakMap<THREE.Object3D, Map<string,LocalTransform>>()
+const placementHistories = new WeakMap<THREE.Object3D,PlacementHistory>()
+const poseDragTransforms = new Map<THREE.Object3D,LocalTransform>()
+let poseStructurePanel: ReturnType<typeof installPoseWorkspacePanel> | undefined
 let directPoseKeepOrientation = false
 let directPoseBendEditing = false
 let performanceGizmoFlush: (() => void) | undefined
@@ -629,7 +648,7 @@ expressionMouthCorner.oninput = () => {
     expression.setMouthCornerWeight(parseFloat(expressionMouthCorner.value))
     syncExpressionControls()
 }
-fullscreenBtn.onclick = () => document.documentElement.requestFullscreen().then(() => (screen.orientation as any).lock('landscape').catch(() => undefined))
+setupOrientationToggle(fullscreenBtn)
 
 const transformCloseBtn = document.getElementById('transform-close') as HTMLButtonElement
 transformCloseBtn.onclick = closeObjectTransform
@@ -669,7 +688,7 @@ export function setupViewer() {
         detach: object => { if (singleCharacterTransformControls?.object === object) clearSingleCharacterTransform(); forgetMovementTarget(object) },
         closeTransform: closeObjectTransform,
     })
-    window.addEventListener('pagehide', () => weaponPanel.dispose(), { once: true })
+    onPermanentPageExit(() => weaponPanel.dispose())
     setupMenuCollapseToggle()
     setupDockControls()
     enemyPanelController = setupEnemyPanel({
@@ -686,7 +705,8 @@ export function setupViewer() {
     setupDirectPoseEditing()
     setupDirectPoseTools()
     setupViewportEditor()
-    recordPoseDiagnosticFrame = installPoseDiagnostics(scene, () => directPoseControls, () => ({
+    poseStructurePanel=installPoseWorkspacePanel()
+    recordPoseDiagnosticFrame = installPoseDiagnostics(scene, () => directPoseEditingEnabled?directPoseControls:singleCharacterTransformActive?singleCharacterTransformControls:scene.transformControls, () => ({
         mode: directPoseTransformMode, editing: directPoseEditingEnabled,
         solves: directPoseTarget?.solves ?? 0, pending: directPoseTarget?.pending ?? false,
     }))
@@ -729,7 +749,7 @@ export function setupViewer() {
     addBeforeAnimationLoop(restoreManualPoseOverrides)
     scene.animateLoopCallback = animateLoop
 
-    window.addEventListener('pagehide', () => {
+    onPermanentPageExit(() => {
         removeBeforeAnimationLoop(restoreManualPoseOverrides)
         finishDirectPoseDrag()
         directPoseToolsUi?.dispose()
@@ -742,17 +762,19 @@ export function setupViewer() {
         characterPhysicsActionOptionsUi?.dispose()
         characterPhysicsActionOptionsUi = undefined
         void voicePanelController?.dispose()
-    }, { once: true })
+    })
 
     scene.transformControls.addEventListener('objectChange', () => { objectTransformUiPending = true })
 
-    tryChangeCharacterByHash()
+    setupSessionWorkspace()
+    void tryChangeCharacterByHash()
 
     stats.dom.style.removeProperty('top')
     stats.dom.style.removeProperty('left')
     stats.dom.style.removeProperty('position')
     stats.dom.style.removeProperty('z-index')
     perfStatJsContainer.appendChild(stats.dom)
+    setupCompactWorkspace(perfStatJsContainer.closest('#perf-stat') as HTMLElement)
 }
 
 function characterActionsApi(): CharacterActionsApi {
@@ -1197,7 +1219,7 @@ function setupCharacterActionConsumer() {
     characterActionCatalogUnsubscribe = api.subscribeCatalog(applyCharacterActionCatalog)
     characterActionStateUnsubscribe = api.subscribeState(setCharacterActionPlaybackState)
 
-    window.addEventListener('pagehide', () => {
+    onPermanentPageExit(() => {
         characterActionRefreshToken++
         characterActionOperationToken++
         characterActionPendingId = undefined
@@ -1206,7 +1228,7 @@ function setupCharacterActionConsumer() {
         characterActionStateUnsubscribe?.()
         characterActionCatalogUnsubscribe = undefined
         characterActionStateUnsubscribe = undefined
-    }, { once: true })
+    })
 }
 
 function setupMenuCollapseToggle() {
@@ -1527,8 +1549,9 @@ function getPoseEntries(object: THREE.Object3D) {
     registerPoseJointLimits(object)
     const existing = manualPoseByCharacter.get(object) ?? new Map<string, ManualPoseEntry>()
     const next = new Map<string, ManualPoseEntry>()
+    const candidates = new Set(structuralNodes(object))
     object.traverse(child => {
-        if (!(child instanceof THREE.Bone)) return
+        if (!candidates.has(child)) return
         next.set(child.uuid, existing.get(child.uuid) ?? {
             bone: child,
             offsets: new THREE.Vector3(),
@@ -1791,36 +1814,24 @@ function poseQuaternionMatches(a: THREE.Quaternion, b: THREE.Quaternion) {
 }
 
 function applyPoseEntry(entry: ManualPoseEntry) {
-    if (entry.offsets.lengthSq() < 1e-12 && !entry.lastApplied && !entry.lastAppliedPosition) return
-    if (isPerformanceBoneLeased(entry.bone)) return
-    if (entry.lastApplied && entry.lastBase && poseQuaternionMatches(entry.bone.quaternion, entry.lastApplied)) {
-        entry.bone.quaternion.copy(entry.lastBase)
+    const changed=entry.offsets.lengthSq()>1e-12||entry.positionOffsets.lengthSq()>1e-12||!!entry.scaleFactors
+    if(!changed&&!entry.lastApplied&&!entry.lastAppliedPosition&&!entry.lastAppliedScale)return
+    if(isPerformanceBoneLeased(entry.bone))return
+    if(entry.lastApplied&&entry.lastBase&&poseQuaternionMatches(entry.bone.quaternion,entry.lastApplied))entry.bone.quaternion.copy(entry.lastBase)
+    if(entry.lastAppliedPosition&&entry.lastBasePosition&&entry.bone.position.distanceToSquared(entry.lastAppliedPosition)<1e-10)entry.bone.position.copy(entry.lastBasePosition)
+    if(entry.lastAppliedScale&&entry.lastBaseScale&&entry.bone.scale.distanceToSquared(entry.lastAppliedScale)<1e-10)entry.bone.scale.copy(entry.lastBaseScale)
+    entry.lastBase=entry.bone.quaternion.clone();entry.lastBasePosition=entry.bone.position.clone();entry.lastBaseScale=entry.bone.scale.clone()
+    if(entry.offsets.lengthSq()>1e-12){
+        const rotation=new THREE.Quaternion().setFromEuler(new THREE.Euler(...entry.offsets.toArray().map(THREE.MathUtils.degToRad) as [number,number,number],'XYZ'))
+        entry.bone.quaternion.multiply(rotation).normalize()
+        if(!entry.unrestricted&&entry.bone instanceof THREE.Bone&&clampPoseJoint(entry.bone)){
+            const limited=new THREE.Euler().setFromQuaternion(entry.lastBase.clone().invert().multiply(entry.bone.quaternion).normalize(),'XYZ')
+            entry.offsets.set(THREE.MathUtils.radToDeg(limited.x),THREE.MathUtils.radToDeg(limited.y),THREE.MathUtils.radToDeg(limited.z))
+        }
     }
-    // Retire the old joint-position overlay. Direct dragging must never resize
-    // skeletal offsets; translation now rotates an adjacent IK chain instead.
-    if (entry.lastAppliedPosition && entry.lastBasePosition
-        && entry.bone.position.distanceToSquared(entry.lastAppliedPosition) < 1e-10) {
-        entry.bone.position.copy(entry.lastBasePosition)
-    }
-    entry.positionOffsets.set(0, 0, 0)
-    entry.lastAppliedPosition = entry.lastBasePosition = undefined
-    if (entry.offsets.lengthSq() < 1e-12) {
-        entry.lastBase = entry.lastApplied = undefined
-        return
-    }
-    entry.lastBase ??= new THREE.Quaternion()
-    entry.lastBase.copy(entry.bone.quaternion)
-    const rotation = new THREE.Quaternion().setFromEuler(new THREE.Euler(
-        THREE.MathUtils.degToRad(entry.offsets.x),
-        THREE.MathUtils.degToRad(entry.offsets.y),
-        THREE.MathUtils.degToRad(entry.offsets.z), 'XYZ'))
-    entry.bone.quaternion.multiply(rotation).normalize()
-    if (clampPoseJoint(entry.bone)) {
-        const limited = new THREE.Euler().setFromQuaternion(entry.lastBase.clone().invert().multiply(entry.bone.quaternion).normalize(), 'XYZ')
-        entry.offsets.set(THREE.MathUtils.radToDeg(limited.x), THREE.MathUtils.radToDeg(limited.y), THREE.MathUtils.radToDeg(limited.z))
-    }
-    entry.lastApplied ??= new THREE.Quaternion()
-    entry.lastApplied.copy(entry.bone.quaternion)
+    entry.bone.position.add(entry.positionOffsets)
+    if(entry.scaleFactors)entry.bone.scale.multiply(entry.scaleFactors)
+    entry.lastApplied=entry.bone.quaternion.clone();entry.lastAppliedPosition=entry.bone.position.clone();entry.lastAppliedScale=entry.bone.scale.clone()
 }
 
 function restoreManualPoseOverrides() {
@@ -1829,14 +1840,29 @@ function restoreManualPoseOverrides() {
     for (const actor of scene.characters) {
         if (!actor.character?.object) continue
         manualPoseByCharacter.get(actor.character.object)?.forEach(entry => {
-            if (!entry.lastApplied || !entry.lastBase || isPerformanceBoneLeased(entry.bone)) return
-            if (poseQuaternionMatches(entry.bone.quaternion, entry.lastApplied)) entry.bone.quaternion.copy(entry.lastBase)
+            if (isPerformanceBoneLeased(entry.bone)) return
+            if (entry.lastApplied && entry.lastBase && poseQuaternionMatches(entry.bone.quaternion, entry.lastApplied)) entry.bone.quaternion.copy(entry.lastBase)
+            if (entry.lastAppliedPosition && entry.lastBasePosition && entry.bone.position.distanceToSquared(entry.lastAppliedPosition)<1e-10) entry.bone.position.copy(entry.lastBasePosition)
+            if (entry.lastAppliedScale && entry.lastBaseScale && entry.bone.scale.distanceToSquared(entry.lastAppliedScale)<1e-10) entry.bone.scale.copy(entry.lastBaseScale)
             entry.lastApplied = undefined
+            entry.lastAppliedPosition = entry.lastAppliedScale = undefined
         })
     }
 }
 
 function applyManualPoseOverrides() {
+    // Snapshot editing must not let continuing spring simulation change the
+    // reference beneath a saved pose. Resuming playback releases the snapshot.
+    for(const actor of scene.characters){
+        const object=actor.character?.object;if(!object)continue
+        const frozen=poseFrozenBases.get(object);if(!frozen)continue
+        if(!actor.character!.animation.paused||(scene.characterSelected===actor&&document.body.classList.contains('locomotion-mode-enabled'))){poseFrozenBases.delete(object);continue}
+        manualPoseByCharacter.get(object)?.forEach(entry=>{
+            const base=frozen.get(entry.bone.uuid);if(!base||isPerformanceBoneLeased(entry.bone))return
+            writeLocal(entry.bone,base);entry.lastApplied=undefined;entry.lastAppliedPosition=entry.lastAppliedScale=undefined
+            applyPoseEntry(entry)
+        })
+    }
     syncDirectPoseOffsetsFromBone()
     for (const actor of scene.characters) {
         const object = actor.character?.object
@@ -1847,39 +1873,18 @@ function applyManualPoseOverrides() {
 }
 
 function resetActionParameters() {
-    finishDirectPoseDrag()
-    const object = scene.characterSelected?.character?.object
-    if (!object) return
-    const entries = manualPoseByCharacter.get(object)
-    entries?.forEach(entry => {
-        if (isPerformanceBoneLeased(entry.bone)) return
-        if (
-            entry.lastApplied
-            && entry.lastBase
-            && poseQuaternionMatches(entry.bone.quaternion, entry.lastApplied)
-        ) entry.bone.quaternion.copy(entry.lastBase)
-        if (
-            entry.lastAppliedPosition
-            && entry.lastBasePosition
-            && entry.bone.position.distanceToSquared(entry.lastAppliedPosition) < 1e-10
-        ) entry.bone.position.copy(entry.lastBasePosition)
-        entry.offsets.set(0, 0, 0)
-        entry.positionOffsets.set(0, 0, 0)
-        entry.lastBase = undefined
-        entry.lastApplied = undefined
-        entry.lastBasePosition = undefined
-        entry.lastAppliedPosition = undefined
+    finishDirectPoseDrag();const object=scene.characterSelected?.character?.object;if(!object)return
+    ensurePoseOrigin(object)
+    const history=getDirectPoseHistory(object);history.begin(captureDirectPose(object))
+    getPoseEntries(object).forEach(entry=>{
+        if(isPerformanceBoneLeased(entry.bone))return
+        const initial=poseOrigins.get(object)?.get(entry.bone.uuid)
+        if(initial)writeLocal(entry.bone,initial)
+        entry.offsets.set(0,0,0);entry.positionOffsets.set(0,0,0);entry.scaleFactors=undefined
+        entry.lastApplied=entry.lastBase=undefined;entry.lastAppliedPosition=entry.lastBasePosition=undefined;entry.lastAppliedScale=entry.lastBaseScale=undefined;entry.unrestricted=false
     })
-    if (directPoseSelection?.object === object) {
-        directPoseSelection.base.copy(directPoseSelection.entry.bone.quaternion)
-        directPoseSelection.basePosition.copy(directPoseSelection.entry.bone.position)
-    }
-    directPoseTarget?.sync()
-    restoreModelPartVisibility(object)
-    setSelectedAnimationPlaybackRate(1, true)
-    setDirectPoseTransformMode('rotate')
-    rebuildActionParameterChannels()
-    rebuildModelPartVisibilityControls()
+    restoreModelPartVisibility(object);history.finish(captureDirectPose(object));directPoseTarget?.sync()
+    rebuildActionParameterChannels();rebuildModelPartVisibilityControls();updateDirectPoseUi()
 }
 
 function getPoseEntryBase(entry: ManualPoseEntry) {
@@ -1965,6 +1970,7 @@ function updateDirectPoseUi(_scrollSelected = false) {
     updateModelPartVisibilityUi()
     directPoseToolsUi?.refresh()
     viewportEditor?.refresh()
+    poseStructurePanel?.refresh()
 }
 
 function updateDirectPoseTarget() {
@@ -2000,7 +2006,7 @@ function requestDirectPoseFeedback() {
     })
 }
 
-function selectDirectPoseBone(object: THREE.Object3D, bone: THREE.Bone, _part?: THREE.Mesh) {
+function selectDirectPoseBone(object: THREE.Object3D, bone: THREE.Object3D, _part?: THREE.Mesh) {
     if (isPerformanceBoneLeased(bone)) return
     finishDirectPoseDrag()
     const entries = manualPoseByCharacter.get(object)?.has(bone.uuid)
@@ -2008,8 +2014,11 @@ function selectDirectPoseBone(object: THREE.Object3D, bone: THREE.Bone, _part?: 
     const entry = entries.get(bone.uuid)
     if (!entry || !directPoseControls || !directPoseControlsHelper) return
     directPoseTarget?.handle.removeFromParent()
-    directPoseTarget = new DirectPoseTarget(object, bone, isPerformanceBoneLeased)
-    directPoseTarget.projectPosition = createPoseContactGuard(object, editorGround)
+    directPoseTarget = poseNodeGroup==='free'||poseAllowStretch||!(bone instanceof THREE.Bone)
+        ? new StructurePoseTarget(object,bone,poseAllowStretch,isPerformanceBoneLeased)
+        : new DirectPoseTarget(object,bone,isPerformanceBoneLeased)
+    if(directPoseTarget instanceof DirectPoseTarget)directPoseTarget.projectPosition = createPoseContactGuard(object, editorGround)
+    entry.unrestricted = poseNodeGroup==='free'
     directPoseTarget.preserveEndOrientation = directPoseKeepOrientation
     directPoseInputRoot?.add(directPoseTarget.handle)
     directPoseSelection = {
@@ -2061,6 +2070,8 @@ function setDirectPoseEditing(enabled: boolean) {
         if (directPoseControls) directPoseControls.enabled = true
         // Pause the official action transport too, not only the legacy mixer.
         pauseSelectedAnimation()
+        if(object)ensurePoseOrigin(object)
+        if(object)freezePoseForEditing(object)
     } else {
         clearDirectPoseSelection()
         if (directPoseControls) directPoseControls.enabled = false
@@ -2074,11 +2085,12 @@ function setDirectPoseEditing(enabled: boolean) {
 function beginDirectPoseTransaction(): boolean {
     if (!directPoseSelection || !directPoseTarget?.begin(directPoseTransformMode)) return false
     const entries = manualPoseByCharacter.get(directPoseSelection.object)
-    directPoseDragBases.clear()
+    directPoseDragBases.clear(); poseDragTransforms.clear()
     for (const bone of directPoseTarget.editedBones) {
         const entry = entries?.get(bone.uuid)
         if (!entry) { directPoseTarget.end(); return false }
         directPoseDragBases.set(bone, getPoseEntryBase(entry))
+        poseDragTransforms.set(bone,{p:getPoseEntryPositionBase(entry).toArray(),q:getPoseEntryBase(entry).toArray(),s:(entry.lastBaseScale??bone.scale).toArray()})
     }
     getDirectPoseHistory(directPoseSelection.object).begin(captureDirectPose(directPoseSelection.object))
     scene.controls.enabled = false
@@ -2119,7 +2131,12 @@ function syncDirectPoseOffsetsFromBone() {
         const delta = base.clone().normalize().invert().multiply(bone.quaternion).normalize()
         const angles = new THREE.Euler().setFromQuaternion(delta, 'XYZ')
         entry.offsets.set(THREE.MathUtils.radToDeg(angles.x), THREE.MathUtils.radToDeg(angles.y), THREE.MathUtils.radToDeg(angles.z))
-        entry.positionOffsets.set(0, 0, 0)
+        const local=poseDragTransforms.get(bone)
+        if(directPoseTarget instanceof StructurePoseTarget&&local&&directPoseTarget.canTranslate){
+            entry.positionOffsets.copy(bone.position).sub(new THREE.Vector3().fromArray(local.p))
+            entry.lastBasePosition=new THREE.Vector3().fromArray(local.p);entry.lastAppliedPosition=bone.position.clone()
+        }
+        entry.unrestricted=poseNodeGroup==='free'
         entry.lastBase = base.clone()
         entry.lastApplied = bone.quaternion.clone()
     }
@@ -2127,11 +2144,16 @@ function syncDirectPoseOffsetsFromBone() {
 }
 
 function captureDirectPose(object: THREE.Object3D): PoseSnapshot {
-    const snapshot: PoseSnapshot = new Map()
-    manualPoseByCharacter.get(object)?.forEach(entry => {
-        if (entry.offsets.lengthSq() > 1e-12) snapshot.set(entry.bone.uuid, [entry.offsets.x, entry.offsets.y, entry.offsets.z])
-    })
-    return snapshot
+    const snapshot:PoseSnapshot=new Map()
+    getPoseEntries(object).forEach(entry=>{
+        snapshot.set(entry.bone.uuid,entry.offsets.toArray())
+        snapshot.set(entry.bone.uuid+'/p',entry.positionOffsets.toArray())
+        snapshot.set(entry.bone.uuid+'/s',(entry.scaleFactors??new THREE.Vector3(1,1,1)).toArray())
+        snapshot.set(entry.bone.uuid+'/q',entry.bone.quaternion.toArray())
+        snapshot.set(entry.bone.uuid+'/bp',getPoseEntryPositionBase(entry).toArray())
+        snapshot.set(entry.bone.uuid+'/bs',(entry.lastBaseScale??entry.bone.scale).toArray())
+        if(entry.unrestricted)snapshot.set(entry.bone.uuid+'/free',[1])
+    });return snapshot
 }
 
 function getDirectPoseHistory(object: THREE.Object3D) {
@@ -2147,17 +2169,20 @@ function commitDirectPoseHistory() {
 }
 
 function restoreDirectPose(snapshot: PoseSnapshot) {
-    const object = scene.characterSelected?.character?.object
-    if (!object) return
-    manualPoseByCharacter.get(object)?.forEach(entry => {
-        if (isPerformanceBoneLeased(entry.bone)) return
-        entry.offsets.fromArray(snapshot.get(entry.bone.uuid) ?? [0, 0, 0])
-        applyPoseEntry(entry)
-        syncPoseEntryControls(entry)
-    })
-    directPoseTarget?.sync()
-    updateDirectPoseTarget()
-    directPoseToolsUi?.refresh()
+    const object=scene.characterSelected?.character?.object;if(!object)return
+    getPoseEntries(object).forEach(entry=>{
+        if(isPerformanceBoneLeased(entry.bone))return
+        entry.offsets.fromArray(snapshot.get(entry.bone.uuid)??[0,0,0])
+        entry.positionOffsets.fromArray(snapshot.get(entry.bone.uuid+'/p')??[0,0,0])
+        entry.scaleFactors=new THREE.Vector3().fromArray(snapshot.get(entry.bone.uuid+'/s')??[1,1,1])
+        entry.unrestricted=!!snapshot.get(entry.bone.uuid+'/free')
+        const q=snapshot.get(entry.bone.uuid+'/q')
+        if(q){const rotation=new THREE.Quaternion().setFromEuler(new THREE.Euler(...entry.offsets.toArray().map(THREE.MathUtils.degToRad) as [number,number,number]));entry.lastBase=new THREE.Quaternion().fromArray(q).multiply(rotation.invert());entry.bone.quaternion.copy(entry.lastBase);entry.lastApplied=undefined}
+        entry.lastBasePosition=new THREE.Vector3().fromArray(snapshot.get(entry.bone.uuid+'/bp')??entry.bone.position.toArray())
+        entry.lastBaseScale=new THREE.Vector3().fromArray(snapshot.get(entry.bone.uuid+'/bs')??entry.bone.scale.toArray())
+        entry.bone.position.copy(entry.lastBasePosition);entry.bone.scale.copy(entry.lastBaseScale);entry.lastAppliedPosition=entry.lastAppliedScale=undefined
+        applyPoseEntry(entry);syncPoseEntryControls(entry)
+    });directPoseTarget?.sync();updateDirectPoseUi()
 }
 
 function undoDirectPose(redo = false) {
@@ -2183,15 +2208,7 @@ function setupDirectPoseTools() {
             setDirectPoseTransformMode(part.mode)
         },
         undo: () => undoDirectPose(), redo: () => undoDirectPose(true),
-        resetPart: () => {
-            finishDirectPoseDrag()
-            const object = directPoseSelection?.object
-            if (!object) return
-            const snapshot = captureDirectPose(object)
-            getDirectPoseHistory(object).begin(snapshot)
-            for (const bone of directPoseTarget?.editedBones ?? []) snapshot.delete(bone.uuid)
-            restoreDirectPose(snapshot); commitDirectPoseHistory()
-        },
+        resetPart: resetViewportPosePart,
         placeActor: () => {
             const character = scene.characterSelected?.character
             if (!character) return
@@ -2226,17 +2243,14 @@ function setupDirectPoseTools() {
         }
     }
     document.addEventListener('keydown', shortcuts)
-    window.addEventListener('pagehide', () => document.removeEventListener('keydown', shortcuts), { once: true })
+    onPermanentPageExit(() => document.removeEventListener('keydown', shortcuts))
 }
 
 function resetViewportPosePart() {
-    finishDirectPoseDrag()
-    const object = directPoseSelection?.object
-    if (!object) return
-    const snapshot = captureDirectPose(object)
-    getDirectPoseHistory(object).begin(snapshot)
-    for (const bone of directPoseTarget?.editedBones ?? []) snapshot.delete(bone.uuid)
-    restoreDirectPose(snapshot); commitDirectPoseHistory()
+    finishDirectPoseDrag();const object=directPoseSelection?.object;if(!object)return
+    const history=getDirectPoseHistory(object);history.begin(captureDirectPose(object))
+    for(const node of directPoseTarget?.editedBones??[]){const entry=manualPoseByCharacter.get(object)?.get(node.uuid),initial=poseOrigins.get(object)?.get(node.uuid);if(!entry||!initial||isPerformanceBoneLeased(node))continue;writeLocal(node,initial);entry.offsets.set(0,0,0);entry.positionOffsets.set(0,0,0);entry.scaleFactors=undefined;entry.lastApplied=entry.lastBase=undefined;entry.lastAppliedPosition=entry.lastBasePosition=undefined;entry.lastAppliedScale=entry.lastBaseScale=undefined}
+    history.finish(captureDirectPose(object));directPoseTarget?.sync();updateDirectPoseUi()
 }
 
 function selectViewportPosePart(part: PosePart) {
@@ -2269,7 +2283,8 @@ function setupViewportEditor() {
         state: () => ({ actor: directPoseEditingEnabled || !movementSelection.current || movementSelection.current.object === scene.characterSelected?.character?.object ? scene.characterSelected?.character?.object : undefined, object: movementSelection.current?.object,
             active: directPoseEditingEnabled || singleCharacterTransformActive || Boolean(scene.transformControls.object && scene.characterSelectionVisible),
             pose: directPoseEditingEnabled, mode: directPoseEditingEnabled ? directPoseTransformMode : (singleCharacterTransformActive ? singleCharacterTransformControls?.mode : scene.transformControls.mode) === 'rotate' ? 'rotate' : 'translate',
-            selected: directPoseSelection?.entry.bone, history: directPoseSelection && directPoseHistories.get(directPoseSelection.object),
+            selected: directPoseSelection?.entry.bone, group:poseNodeGroup, stretch:poseAllowStretch,
+            history: directPoseEditingEnabled ? scene.characterSelected?.character?.object && directPoseHistories.get(scene.characterSelected.character.object) : movementSelection.current && placementHistory(movementSelection.current.object),
             limited: directPoseTarget?.limited ?? false, canTranslate: !directPoseTarget || directPoseTarget.canTranslate }),
         place: mode => {
             if(document.body.classList.contains('locomotion-mode-enabled'))setViewerLocomotionEnabled(false)
@@ -2282,6 +2297,10 @@ function setupViewportEditor() {
         },
         pose: () => { setDirectPoseEditing(true); setDirectPoseTransformMode('translate') },
         mode: setDirectPoseTransformMode,
+        group: setPoseNodeGroup,
+        fineHost: actionPanel.querySelector('.floating-panel-scroll') as HTMLElement,
+        resetAll: ()=>directPoseEditingEnabled?resetActionParameters():resetPlacement(),
+        save: ()=>{if(!actionPanel.classList.contains('is-open'))actionPanelToggle.click();const library=document.getElementById('pose-library') as HTMLDetailsElement|null;if(library){library.open=true;library.scrollIntoView({block:'nearest'})}},
         close: () => { setDirectPoseEditing(false); closeObjectTransform() },
         parameters: () => { if (!actionPanel.classList.contains('is-open')) actionPanelToggle.click() },
         focus: () => {
@@ -2310,7 +2329,7 @@ function setupViewportEditor() {
         select: selectViewportPosePart,
         begin: (part, event) => { selectViewportPosePart(part); return startDirectPosePointerDrag(event) },
         move: updateDirectPosePointerDrag, end: finishDirectPoseDrag,
-        undo: () => undoDirectPose(), redo: () => undoDirectPose(true), reset: resetViewportPosePart,
+        undo: () => directPoseEditingEnabled?undoDirectPose():undoPlacement(), redo: () => directPoseEditingEnabled?undoDirectPose(true):undoPlacement(true), reset: resetViewportPosePart,
         nudge: (axis, amount) => {
             finishDirectPoseDrag()
             const selection = directPoseSelection
@@ -2372,7 +2391,7 @@ function getWeightedBoneAtPointer(event: PointerEvent) {
         }
         const dominant = [...scores].sort((a, b) => b[1] - a[1])[0]?.[0]
         let bone = dominant == undefined ? undefined : mesh.skeleton.bones[dominant]
-        const mainParts = findDirectPoseParts(object)
+        const mainParts = groupedPoseParts(object,poseNodeGroup)
         while (bone && !mainParts.some(part => part.bone === bone)) bone = bone.parent instanceof THREE.Bone ? bone.parent : undefined
         if (bone && entries.has(bone.uuid)) return { object, bone, part: mesh }
     }
@@ -2665,16 +2684,18 @@ function rememberCharacterTransform(object: THREE.Object3D, replace = false) {
 function moveSelectedCharacter(horizontal: number, vertical: number) { movementSelection.move(scene.camera, horizontal, vertical) }
 function rotateSelectedCharacter(delta: number) { movementSelection.rotate(delta) }
 function tiltSelectedCharacter(delta: number) { movementSelection.tilt(scene.camera, delta) }
-function resetSelectedCharacterTransform() { movementSelection.reset(teleportViewerCharacter) }
+function resetSelectedCharacterTransform() { const object=movementSelection.current?.object;if(object)placementHistory(object).begin();movementSelection.reset(teleportViewerCharacter);if(object)placementHistory(object).finish() }
 
 function bindContinuousTransformButton(button: HTMLButtonElement, action: () => void) {
     let repeatDelay: number | undefined
     let repeatTimer: number | undefined
+    let editedObject:THREE.Object3D|undefined
     const stop = () => {
         if (repeatDelay !== undefined) window.clearTimeout(repeatDelay)
         if (repeatTimer !== undefined) window.clearInterval(repeatTimer)
         repeatDelay = undefined
         repeatTimer = undefined
+        if(editedObject){placementHistory(editedObject).finish();editedObject=undefined;viewportEditor?.refresh()}
     }
 
     button.addEventListener('pointerdown', event => {
@@ -2682,6 +2703,8 @@ function bindContinuousTransformButton(button: HTMLButtonElement, action: () => 
         event.preventDefault()
         button.setPointerCapture(event.pointerId)
         stop()
+        editedObject=movementSelection.current?.object
+        if(editedObject)placementHistory(editedObject).begin()
         action()
         repeatDelay = window.setTimeout(() => {
             repeatTimer = window.setInterval(action, 55)
@@ -2947,6 +2970,28 @@ function setupViewerInputHandler() {
     scene.renderer.domElement.addEventListener('dblclick', mouseDoubleClickHandler)
     scene.renderer.domElement.addEventListener('mousedown', mouseDownHandler)
     scene.renderer.domElement.addEventListener('mousemove', mouseMoveHandler)
+    document.addEventListener('magius:tps-select-at', event => {
+        if(!document.body.classList.contains('locomotion-mode-enabled')||performanceGizmoActive)return
+        const {x,y}=(event as CustomEvent<{x:number;y:number}>).detail
+        if(!Number.isFinite(x)||!Number.isFinite(y))return
+        const rect=scene.renderer.domElement.getBoundingClientRect()
+        const character=scene.getIntersectedCharacter(x-rect.left,y-rect.top)
+        if(character&&character!==scene.characterSelected)selectCharacter(character)
+    })
+    // Touch double-tap has no reliable native dblclick on every phone.
+    let touchDown:{id:number;x:number;y:number}|undefined
+    let lastTap:{at:number;object:THREE.Object3D}|undefined
+    scene.renderer.domElement.addEventListener('pointerdown',event=>{
+        if(event.pointerType==='touch'&&!document.body.classList.contains('locomotion-mode-enabled'))touchDown={id:event.pointerId,x:event.clientX,y:event.clientY}
+    })
+    scene.renderer.domElement.addEventListener('pointerup',event=>{
+        const down=touchDown;touchDown=undefined
+        if(!down||down.id!==event.pointerId||directPoseEditingEnabled||performanceGizmoActive||document.body.classList.contains('locomotion-mode-enabled')||Math.hypot(event.clientX-down.x,event.clientY-down.y)>7)return
+        const target=pickObject(event);if(!target){lastTap=undefined;return}
+        if(lastTap?.object===target.object&&performance.now()-lastTap.at<350){target.select();activateObjectTransform(target.object,target.refresh);lastTap=undefined}
+        else lastTap={at:performance.now(),object:target.object}
+    })
+    scene.renderer.domElement.addEventListener('pointercancel',()=>{touchDown=undefined;lastTap=undefined})
 
     let mouseMoveX = 0
     let mouseMoveY = 0
@@ -2985,6 +3030,7 @@ function setupViewerInputHandler() {
         if (directPoseEditingEnabled || performanceGizmoActive) return
         const target = pickObject(e)
         if (!target) return
+        if(document.body.classList.contains('locomotion-mode-enabled'))setViewerLocomotionEnabled(false)
         target.select()
         activateObjectTransform(target.object, target.refresh)
         e.preventDefault(); e.stopPropagation()
@@ -3035,7 +3081,7 @@ function animateLoop() {
         if (singleObjectTransformOnChange) singleObjectTransformOnChange()
         else if (scene.characterSelected?.character) updateCharacterController(scene.characterSelected.character)
     }
-    stats.update()
+    if(document.documentElement.dataset.performanceOverlay!=='false')stats.update()
     // A paused pose does not need a complete animation-panel rebuild per RAF.
     const now = performance.now()
     if (now >= nextDirectPoseAnimationUiAt) {
@@ -3067,6 +3113,8 @@ async function tryChangeCharacterByHash() {
         await presetImport(location.href)
         return
     } catch (e) { }
+
+    if(!location.hash&&await restoreSessionWorkspace())return
 
     let id = location.hash.replace('#', '')
     if (!characterIdList.includes(id)) id = '100107'
@@ -3421,10 +3469,12 @@ function setupSingleCharacterTransformControls() {
         const dragging = Boolean(event.value)
         const tpsOwnsCamera = document.body.classList.contains('locomotion-mode-enabled')
         if (dragging) {
+            if(singleCharacterTransformControls?.object)placementHistory(singleCharacterTransformControls.object).begin()
             tpsOwnedAtDragStart = tpsOwnsCamera
             singleCharacterTransformOrbitWasEnabled = scene.controls.enabled
             scene.controls.enabled = false
         } else if (!directPoseEditingEnabled) {
+            if(singleCharacterTransformControls?.object)placementHistory(singleCharacterTransformControls.object).finish()
             if (tpsOwnsCamera) scene.controls.enabled = false
             else if (!tpsOwnedAtDragStart) scene.controls.enabled = singleCharacterTransformOrbitWasEnabled
             // If TPS ended during the drag, retain the camera owner's restored state.
@@ -3471,6 +3521,7 @@ function activateObjectTransform(object: THREE.Object3D, onObjectChange?: () => 
     singleCharacterTransformActive = true
     scene.characterTransformEditing = scene.characterSelected?.character?.object === object
     singleObjectTransformOnChange = onObjectChange
+    placementHistory(object)
     editorGround.capture(object)
     editorGround.constrainObject(object, true)
     singleCharacterTransformControls.attach(object)
@@ -3515,3 +3566,128 @@ function updateTransformModeButtons() {
 Object.assign(window, { changeCharacter })
 
 normalizeViewerEntry()
+
+
+function ensurePoseOrigin(object:THREE.Object3D) {
+    if(poseOrigins.has(object))return
+    const baseline=captureModelLocal(object)
+    manualPoseByCharacter.get(object)?.forEach(entry=>{
+        baseline.set(entry.bone.uuid,{p:getPoseEntryPositionBase(entry).toArray(),q:getPoseEntryBase(entry).toArray(),s:(entry.lastBaseScale??entry.bone.scale).toArray()})
+    })
+    poseOrigins.set(object,baseline)
+}
+function freezePoseForEditing(object:THREE.Object3D){
+    if(!poseFrozenBases.has(object))poseFrozenBases.set(object,poseOrigins.get(object)??captureModelLocal(object))
+    const character=scene.characters.find(slot=>slot.character?.object===object)?.character
+    if(character)character.animation.paused=true
+}
+function placementHistory(object:THREE.Object3D) {
+    let history=placementHistories.get(object);if(!history){history=new PlacementHistory(object);placementHistories.set(object,history)}return history
+}
+function undoPlacement(redo=false) {
+    const target=movementSelection.current,object=target?.object??scene.characterSelected?.character?.object;if(!object)return
+    if(placementHistory(object).undo(redo)){editorGround.constrainObject(object,true);target?.changed?.();viewportEditor?.refresh()}
+}
+function resetPlacement(){const target=movementSelection.current,object=target?.object??scene.characterSelected?.character?.object;if(!object)return;placementHistory(object).reset();editorGround.constrainObject(object,true);target?.changed?.();viewportEditor?.refresh()}
+function setPoseNodeGroup(value:PoseNodeGroup){
+    if(!['primary','hands','more','free'].includes(value))return
+    finishDirectPoseDrag();poseNodeGroup=value;clearDirectPoseSelection();setDirectPoseEditing(true)
+    if(value!=='primary')setDirectPoseTransformMode('rotate')
+    poseStructurePanel?.refresh(true);updateDirectPoseUi()
+}
+function setPoseStretch(value:boolean){
+    finishDirectPoseDrag();const object=scene.characterSelected?.character?.object
+    if(object&&!value){
+        const history=getDirectPoseHistory(object);history.begin(captureDirectPose(object))
+        getPoseEntries(object).forEach(entry=>{if(isPerformanceBoneLeased(entry.bone))return;entry.positionOffsets.set(0,0,0);entry.scaleFactors=undefined;applyPoseEntry(entry)})
+        history.finish(captureDirectPose(object))
+    }
+    poseAllowStretch=value
+    const selected=directPoseSelection;if(selected)selectDirectPoseBone(selected.object,selected.entry.bone)
+    updateDirectPoseUi()
+}
+function applySavedModelPose(value:unknown) {
+    const object=scene.characterSelected?.character?.object;if(!object)throw Error('请先选择角色')
+    finishDirectPoseDrag();setDirectPoseEditing(true);ensurePoseOrigin(object)
+    const changes=resolveSavedPose(object,String(scene.characterSelected?.character?.userData.characterId),value,poseAllowStretch,poseOrigins.get(object))
+    if(changes.some(({node})=>isPerformanceBoneLeased(node)))throw Error('演出系统正在控制模型，未应用姿态')
+    const history=getDirectPoseHistory(object);history.begin(captureDirectPose(object));const entries=getPoseEntries(object)
+    for(const {node,transform}of changes){
+        const entry=entries.get(node.uuid);if(!entry)continue
+        const base=getPoseEntryBase(entry),p=getPoseEntryPositionBase(entry),scale=entry.lastBaseScale?.clone()??node.scale.clone()
+        const delta=base.clone().invert().multiply(new THREE.Quaternion().fromArray(transform.q)),angles=new THREE.Euler().setFromQuaternion(delta,'XYZ')
+        entry.offsets.set(THREE.MathUtils.radToDeg(angles.x),THREE.MathUtils.radToDeg(angles.y),THREE.MathUtils.radToDeg(angles.z))
+        entry.positionOffsets.fromArray(transform.p).sub(p);entry.scaleFactors=new THREE.Vector3().fromArray(transform.s).divide(scale)
+        entry.unrestricted=true;entry.lastBase=base;entry.lastBasePosition=p;entry.lastBaseScale=scale
+        writeLocal(node,transform);entry.lastApplied=node.quaternion.clone();entry.lastAppliedPosition=node.position.clone();entry.lastAppliedScale=node.scale.clone()
+    }
+    history.finish(captureDirectPose(object));directPoseTarget?.sync();rebuildActionParameterChannels();updateDirectPoseUi()
+}
+function installPoseWorkspacePanel() {
+    return createPoseWorkspacePanel(actionPanel.querySelector('.floating-panel-scroll') as HTMLElement,{
+        actor:()=>scene.characterSelected?.character?.object,model:()=>String(scene.characterSelected?.character?.userData.characterId??''),selected:()=>directPoseSelection?.entry.bone,
+        group:()=>poseNodeGroup,setGroup:setPoseNodeGroup,allowStretch:()=>poseAllowStretch,setStretch:setPoseStretch,select:selectViewportPosePart,
+        reset:resetActionParameters,undo:()=>undoDirectPose(),redo:()=>undoDirectPose(true),
+        make:name=>{const object=scene.characterSelected?.character?.object;if(!object)throw Error('请先选择角色');finishDirectPoseDrag();ensurePoseOrigin(object);return makeSavedPose(object,String(scene.characterSelected?.character?.userData.characterId),name,poseOrigins.get(object)!)},
+        save:pose=>savePoseLibrary(localStorage,pose),apply:applySavedModelPose,
+        scale:(axis,value)=>{
+            const selection=directPoseSelection;if(!selection||!poseAllowStretch)throw Error('请先选节点并明确开启允许拉伸')
+            if(!Number.isFinite(value)||value<.05||value>5)throw Error('缩放限于0.05至5')
+            finishDirectPoseDrag();const entry=selection.entry;if(isPerformanceBoneLeased(entry.bone))return
+            const history=getDirectPoseHistory(selection.object);history.begin(captureDirectPose(selection.object))
+            const base=entry.lastBaseScale??entry.bone.scale.clone();entry.scaleFactors??=new THREE.Vector3(1,1,1);entry.scaleFactors[axis]=value/base[axis]
+            applyPoseEntry(entry);history.finish(captureDirectPose(selection.object));directPoseTarget?.sync();updateDirectPoseUi()
+        }
+    })
+}
+
+let restoringWorkspace=false
+let sessionReady=false
+function snapshotSessionWorkspace() {
+    if(!sessionReady||restoringWorkspace)return
+    const live=scene.characters.filter(actor=>actor.character&&!actor.loading)
+    if(!live.length||live.length>8)return
+    try{
+        finishDirectPoseDrag()
+        const actors=live.map(actor=>{
+            const object=actor.character!.object,id=String(actor.character!.userData.characterId),entries=manualPoseByCharacter.get(object)
+            const modified=entries&&[...entries.values()].some(entry=>entry.offsets.lengthSq()>1e-12||entry.positionOffsets.lengthSq()>1e-12||entry.scaleFactors&&entry.scaleFactors.distanceToSquared(new THREE.Vector3(1,1,1))>1e-12)
+            return {id,placement:readLocal(object),pose:modified?makeSavedPose(object,id,'最近未完成编辑',poseOrigins.get(object)??captureModelLocal(object)):undefined}
+        })
+        const session:WorkspaceSession={schema:'magius.workspace-session.v1',savedAt:new Date().toISOString(),actors,selected:Math.max(0,live.indexOf(scene.characterSelected!)),camera:{p:scene.camera.position.toArray(),q:scene.camera.quaternion.toArray(),target:scene.controls.target.toArray()},allowStretch:poseAllowStretch,stage:(document.getElementById('stage-selector') as HTMLSelectElement).value}
+        writeWorkspaceSession(sessionStorage,session);document.documentElement.dataset.sessionSaved='true'
+    }catch(error){document.documentElement.dataset.sessionSaved='unavailable';console.warn('Workspace checkpoint unavailable:',(error as Error).name)}
+}
+function setupSessionWorkspace(){
+    installContextRecovery(scene.renderer.domElement)
+    let timer:ReturnType<typeof setTimeout>|undefined
+    const schedule=()=>{if(timer)clearTimeout(timer);timer=setTimeout(snapshotSessionWorkspace,600)}
+    document.addEventListener('pointerup',schedule,{passive:true})
+    document.addEventListener('change',schedule,{passive:true})
+    document.addEventListener('visibilitychange',()=>{if(document.hidden)snapshotSessionWorkspace()})
+    window.addEventListener('pagehide',()=>snapshotSessionWorkspace(),{capture:true})
+    const check=setInterval(()=>{if(scene.characters.some(a=>a.character&&!a.loading)){sessionReady=true;clearInterval(check)}},250)
+    document.documentElement.dataset.sessionResume='ready'
+}
+async function restoreSessionWorkspace():Promise<boolean>{
+    let saved:WorkspaceSession|undefined
+    try{saved=readWorkspaceSession(sessionStorage)}catch{document.documentElement.dataset.sessionResume='invalid';return false}
+    if(!saved||saved.actors.some(a=>!characterIdList.includes(a.id)))return false
+    restoringWorkspace=true
+    try{
+        const loaded:SceneCharacter[]=[]
+        poseAllowStretch=saved.allowStretch
+        for(const data of saved.actors){
+            const slot=await addOrChangeCharacter(data.id)
+            loaded.push(slot);writeLocal(slot.character!.object,data.placement);placementHistory(slot.character!.object)
+            selectCharacter(slot)
+            if(data.pose)applySavedModelPose(data.pose)
+        }
+        setDirectPoseEditing(false);closeObjectTransform();selectCharacter(loaded[saved.selected])
+        const stage=document.getElementById('stage-selector') as HTMLSelectElement
+        if(saved.stage&&[...stage.options].some(o=>o.value===saved.stage)&&stage.value!==saved.stage){stage.value=saved.stage;stage.dispatchEvent(new Event('change',{bubbles:true}))}
+        scene.camera.position.fromArray(saved.camera.p);scene.camera.quaternion.fromArray(saved.camera.q).normalize();scene.controls.target.fromArray(saved.camera.target);scene.controls.update()
+        document.documentElement.dataset.sessionResume='restored';return true
+    }catch(error){document.documentElement.dataset.sessionResume='partial';console.warn('Workspace restore interrupted:',(error as Error).name);return scene.characters.some(a=>!!a.character)}
+    finally{restoringWorkspace=false;sessionReady=true}
+}

@@ -1,0 +1,130 @@
+import assert from 'node:assert/strict'
+import fs from 'node:fs'
+import path from 'node:path'
+import http from 'node:http'
+import {execFileSync} from 'node:child_process'
+import puppeteer from 'puppeteer-core'
+const out=path.resolve(process.env.MAGIUS_EVIDENCE_DIR||'artifacts/node-workspace')
+fs.mkdirSync(out,{recursive:true})
+const dev=process.env.MAGIUS_VIEWPORT_DEV==='1',remote=process.env.MAGIUS_SITE_URL
+if(remote)assert.match(remote,/^https:\/\/(?:[a-f0-9]{8}\.)?magius3dviewer\.pages\.dev\/$/)
+const base=remote||(dev?'https://127.0.0.1:4181/':'http://127.0.0.1:4187/'),output=path.resolve('dist-deploy')
+const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.woff2':'font/woff2','.svg':'image/svg+xml'}
+let browser,page,server,result;const observations=[],errors=[],missing=[]
+const record=value=>{observations.push(value);fs.writeFileSync(path.join(out,'progress.json'),JSON.stringify({observations,errors,missing},null,2));console.log(JSON.stringify(value))}
+function locals(){const root=window.scene.characterSelected.character.object;const values=[];root.traverse(n=>{if(n.isBone||n.isMesh||n.type==='Group')values.push({uuid:n.uuid,name:n.name,type:n.type,p:n.position.toArray(),q:n.quaternion.toArray(),s:n.scale.toArray()})});return values}
+const closeEnough=(a,b)=>a.length===b.length&&a.every((x,i)=>Math.abs(x-b[i])<1e-5)
+const changed=(a,b,field='q')=>b.filter(n=>{const old=a.find(x=>x.uuid===n.uuid);return old&&!closeEnough(old[field],n[field])})
+try{
+ if(!remote&&!dev){server=http.createServer((req,res)=>{let rel;try{rel=decodeURIComponent(new URL(req.url,base).pathname).replace(/^\/+/, '')||'index.html'}catch{res.writeHead(400).end();return}const file=path.resolve(output,rel);if(!file.startsWith(output+path.sep)){res.writeHead(403).end();return}try{if(!fs.statSync(file).isFile())throw Error();res.setHeader('Content-Type',mime[path.extname(file)]||'application/octet-stream');res.setHeader('Cache-Control','no-store');fs.createReadStream(file).pipe(res)}catch{res.writeHead(404).end(rel)}});await new Promise(r=>server.listen(4187,'127.0.0.1',r))}
+ const chrome=process.env.CHROME_BIN||(process.platform==='win32'?'C:/Program Files/Google/Chrome/Application/chrome.exe':execFileSync('bash',['-lc','command -v google-chrome-stable || command -v google-chrome || command -v chromium'],{encoding:'utf8'}).trim())
+ browser=await puppeteer.launch({executablePath:chrome,headless:true,acceptInsecureCerts:dev,protocolTimeout:300000,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']})
+ page=await browser.newPage();await page.setViewport({width:430,height:932,hasTouch:true,isMobile:true,deviceScaleFactor:1})
+ page.on('pageerror',e=>errors.push(String(e)));page.on('response',r=>{if(r.status()>=400)missing.push({url:r.url(),status:r.status()})})
+ const frame=n=>page.evaluate(n=>new Promise(resolve=>{let i=0;const tick=()=>++i>=n?resolve():requestAnimationFrame(tick);requestAnimationFrame(tick)}),n)
+ const rect=selector=>page.$eval(selector,e=>{const r=e.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,cx:r.x+r.width/2,cy:r.y+r.height/2}})
+ const click=async selector=>{await page.waitForSelector(selector,{visible:true,timeout:30000});await page.$eval(selector,e=>e.scrollIntoView({block:'nearest',inline:'nearest'}));const r=await rect(selector);await page.touchscreen.tap(r.cx,r.cy);await frame(4)}
+ const panelOpen=async()=>{if(await page.$eval('#action-panel-toggle',e=>e.getAttribute('aria-expanded')!=='true'))await click('#action-panel-toggle')}
+ const panelClose=async()=>{if(await page.$eval('#action-panel-toggle',e=>e.getAttribute('aria-expanded')==='true'))await click('#action-panel-close')}
+ const details=async id=>{if(!await page.$eval(id,e=>e.open))await click(id+'>summary')}
+ await page.goto(base+'?diagnostic=pose-editor&runtimeDelivery=release',{waitUntil:'domcontentloaded',timeout:90000})
+ await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData?.characterId===100107&&window.magiusPoseInspection,{timeout:180000})
+ await frame(12)
+ assert.equal(await page.$('#viewport-editor-launch'),null,'persistent edit launch was not removed')
+ assert.equal(await page.$$('#theme-toggle').then(x=>x.length),1)
+ assert.equal(await page.$('#theme-set-light'),null);assert.equal(await page.$('#theme-set-dark'),null)
+ const light=await page.evaluate(()=>document.body.classList.contains('theme-light'));await click('#theme-toggle');assert.notEqual(await page.evaluate(()=>document.body.classList.contains('theme-light')),light);await click('#theme-toggle')
+ const order=await page.evaluate(()=>{const ids=[...document.querySelectorAll('#menu-controls button')].map(e=>e.id).filter(Boolean);return{action:ids.indexOf('action-panel-toggle'),weapons:ids.indexOf('weapon-panel-toggle'),enemies:ids.indexOf('enemy-panel-toggle'),scene:ids.indexOf('stage-list-panel-toggle'),voice:ids.indexOf('voice-panel-toggle')}})
+ assert.equal(order.weapons,order.action+1);assert.equal(order.enemies,order.action+2);assert.equal(order.voice,order.scene+1)
+ await click('#render-settings-toggle')
+ assert.equal(await page.$eval('#three-gui>.lil-gui',e=>e.classList.contains('closed')),false)
+ const expanded=await page.$$eval('#three-gui .lil-gui:not(.closed)',nodes=>nodes.map(e=>e.querySelector(':scope > .title')?.textContent))
+ assert.ok(expanded.length>=4,'camera, color and lighting not opened')
+ await click('#performance-overlay-toggle');assert.equal(await page.$eval('#perf-stat',e=>e.hidden),true);await click('#performance-overlay-toggle');assert.equal(await page.$eval('#perf-stat',e=>e.hidden),false)
+ await page.screenshot({path:path.join(out,'render-settings.png')});await click('#render-settings-close')
+ record({test:'compact-toolbar-theme-render-and-performance',order,expanded,menu:(await rect('#menu')).h})
+ await click('#position-controls-toggle');await click('#viewport-pose');await click('#viewport-focus');await frame(5)
+ const origin=await page.evaluate(locals)
+ const groups={}
+ for(const id of ['joints','hands','more','free']){await click('#viewport-'+id);const data=await page.$eval('.ve-joints',e=>({group:e.dataset.group,total:Number(e.dataset.total),names:[...e.children].map(n=>n.title)}));groups[id]=data;assert.ok(data.total>0,'missing real group '+id);assert.ok(data.names.length<=24);assert.equal(await page.$('#viewport-fine'),null)}
+ assert.ok(groups.hands.names.some(n=>/finger|thumb|index|middle|ring|pinky|little/i.test(n)))
+ assert.ok(groups.more.names.some(n=>/skirt|hair|cloth|ribbon|acc|dress/i.test(n)),'more nodes missing actual clothes/hair hierarchy')
+ assert.ok(groups.free.total>groups.more.total)
+ record({test:'actual-exclusive-node-groups',groups})
+ await click('#viewport-hands');await frame(4)
+ const hitNodes=await page.$$eval('.ve-joint-node:not([hidden])',nodes=>nodes.map(e=>{const r=e.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return{id:e.dataset.viewportJoint,hit:hit?.closest('[data-viewport-joint]')===e}}))
+ assert.ok(hitNodes.length>10);assert.ok(hitNodes.every(n=>n.hit),'individual finger handles overlap or are occluded')
+ await click('[data-viewport-joint="'+hitNodes[0].id+'"]');assert.ok((await page.$eval('#viewport-editor-selection',e=>e.textContent)).length>0)
+ await page.screenshot({path:path.join(out,'finger-node-handles.png')});record({test:'individually-hittable-finger-handles',count:hitNodes.length})
+ await click('#viewport-hands');await panelOpen();await details('#pose-structure')
+ const finger=await page.$eval('#pose-structure-select',e=>[...e.options].find(o=>/index|finger|thumb/i.test(o.textContent))?.value)
+ assert.ok(finger);await page.select('#pose-structure-select',finger);await frame(3)
+ assert.equal(await page.$eval('#pose-fine-panel',e=>e.open),false,'fine panel auto-opened on selection')
+ await details('#pose-fine-panel');await click('#viewport-editor-fine [data-nudge-axis="z"][data-nudge-sign="1"]')
+ const edited=await page.evaluate(locals);assert.ok(changed(origin,edited).some(x=>x.uuid===finger),'finger angle did not change')
+ assert.equal(changed(origin,edited,'p').length,0);assert.equal(changed(origin,edited,'s').length,0)
+ await panelClose();await click('#viewport-editor-close');await click('#position-controls-toggle');await click('#viewport-pose');await click('#viewport-reset-all')
+ const reset=await page.evaluate(locals);assert.ok(reset.filter(n=>n.isBone).every(n=>closeEnough(n.q,origin.find(o=>o.uuid===n.uuid).q)))
+ fs.writeFileSync(path.join(out,'reset-comparison.json'),JSON.stringify({origin,reset,differences:changed(origin,reset).map(n=>({name:n.name,before:origin.find(o=>o.uuid===n.uuid).q,after:n.q}))},null,2));assert.equal(changed(origin,reset).filter(n=>n.type==='Bone').length,0,'reset after re-enter did not restore initial pose')
+ await click('#viewport-undo');const undone=await page.evaluate(locals);assert.ok(changed(origin,undone).some(x=>x.uuid===finger),'reset cannot be undone')
+ await click('#viewport-redo');assert.equal(changed(origin,await page.evaluate(locals)).filter(n=>n.type==='Bone').length,0)
+ await click('#viewport-hands');await panelOpen();await details('#pose-structure');await page.select('#pose-structure-select',finger);await details('#pose-fine-panel');await click('#viewport-editor-fine [data-nudge-axis="z"][data-nudge-sign="1"]')
+ await details('#pose-library');await page.type('#pose-save-name','Acceptance fingers');await click('#pose-save')
+ const savedPose=await page.evaluate(()=>JSON.parse(localStorage.getItem('magius.saved-poses.v1')).find(p=>p.name==='Acceptance fingers'))
+ assert.ok(savedPose&&savedPose.nodes.length>50);const savedLocals=await page.evaluate(locals)
+ await click('#pose-reset-all');await click('#pose-load');const loaded=await page.evaluate(locals);assert.equal(changed(savedLocals,loaded).filter(n=>n.type==='Bone').length,0,'saved pose load changed its rotations')
+ await frame(40);assert.equal(changed(loaded,await page.evaluate(locals)).filter(n=>n.type==='Bone').length,0,'restored pose drifts when idle')
+ record({test:'finger-edit-reset-undo-redo-save-load',finger,nodeCount:savedPose.nodes.length})
+ await panelClose();await click('#viewport-free');await panelOpen();await details('#pose-structure')
+ const cloth=await page.$eval('#pose-structure-select',e=>[...e.options].find(o=>/skirt|ribbon|cloth|hair/i.test(o.textContent))?.value)
+ assert.ok(cloth);await page.select('#pose-structure-select',cloth);await frame(3);assert.equal(await page.$eval('#pose-allow-stretch',e=>e.checked),false)
+ assert.equal(await page.$eval('#pose-scale-x',e=>e.disabled),true)
+ await click('#pose-allow-stretch');await page.$eval('#pose-scale-x',e=>{e.value='1.2';e.dispatchEvent(new Event('change',{bubbles:true}))});await frame(3)
+ const scaled=(await page.evaluate(locals)).find(x=>x.uuid===cloth);assert.ok(Math.abs(scaled.s[0]-1.2)<1e-5,'explicit scale did not apply')
+ await click('#pose-allow-stretch');const restored=(await page.evaluate(locals)).find(x=>x.uuid===cloth);assert.ok(Math.abs(restored.s[0]-1)<1e-5,'disabling stretch left model stretched')
+ await click('#pose-reset-all');await panelClose();record({test:'free-structure-opt-in-stretch',cloth,scaled:scaled.s,restored:restored.s})
+ for(const [width,height]of [[430,932],[932,430],[360,740]]){
+  await page.setViewport({width,height,isMobile:true,hasTouch:true,deviceScaleFactor:1});await frame(8);await click('#viewport-joints');await click('#viewport-focus');await frame(4)
+  assert.equal(await page.evaluate(()=>Math.max(0,document.documentElement.scrollWidth-innerWidth)),0)
+  const menu=await rect('#menu');assert.ok(menu.h<height*.5,'toolbar consumes too much viewport')
+  await page.screenshot({path:path.join(out,`nodes-${width}x${height}.png`)})
+  record({test:'responsive-nodes-and-toolbar',width,height,menuHeight:menu.h})
+ }
+ await page.setViewport({width:932,height:540,isMobile:true,hasTouch:true,deviceScaleFactor:1});await click('#viewport-editor-close')
+ await page.select('#character-add-selector','100201');await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData.characterId===100201,{timeout:180000});await frame(12)
+ // The normal two-actor positions are generated by the product, not the test.
+ await click('#locomotion-mode-toggle');await frame(5)
+ const target=await page.evaluate(()=>{const slot=window.scene.characters.find(s=>s.character.userData.characterId===100107),r=window.scene.renderer.domElement.getBoundingClientRect();let node;slot.character.object.traverse(n=>{if(n.isBone&&/Chest$/.test(n.name))node=n});if(!node)node=slot.character.object;const p=node.getWorldPosition(window.scene.camera.position.clone()).project(window.scene.camera);return{x:r.left+(p.x+1)*r.width/2,y:r.top+(1-p.y)*r.height/2}})
+ await page.touchscreen.tap(target.x,target.y);await frame(8)
+ assert.equal(await page.evaluate(()=>window.scene.characterSelected.character.userData.characterId),100107,'TPS tap failed to select another actor')
+ assert.equal(await page.evaluate(()=>window.magiusViewerLocomotion.enabled),true)
+ const beforeMove=await page.evaluate(()=>window.scene.characters.map(s=>({id:s.character.userData.characterId,p:s.character.object.position.toArray()})))
+ const pad=await rect('#tps-touch-stick'),fingerMove=await page.touchscreen.touchStart(pad.cx,pad.cy)
+ await fingerMove.move(pad.cx,pad.cy-pad.w*.4);await frame(22);await fingerMove.end();await frame(20)
+ const afterMove=await page.evaluate(()=>window.scene.characters.map(s=>({id:s.character.userData.characterId,p:s.character.object.position.toArray()})))
+ assert.ok(!closeEnough(beforeMove.find(s=>s.id===100107).p,afterMove.find(s=>s.id===100107).p),'tapped actor did not receive movement')
+ assert.ok(closeEnough(beforeMove.find(s=>s.id===100201).p,afterMove.find(s=>s.id===100201).p),'previous actor remained under TPS control')
+ const perf=await rect('#perf-stat');assert.ok(perf.y+perf.h<=pad.y||perf.x>=pad.x+pad.w||perf.x+perf.w<=pad.x,'performance overlay covers the movement stick')
+ const beforePan=await page.evaluate(()=>({p:window.scene.camera.position.toArray(),target:window.scene.controls.target.toArray(),q:window.scene.camera.quaternion.toArray()}))
+ const one=await page.touchscreen.touchStart(420,300),two=await page.touchscreen.touchStart(530,300)
+ await one.move(450,318);await two.move(560,318);await frame(4);await one.end();await two.end();const afterPan=await page.evaluate(()=>({p:window.scene.camera.position.toArray(),target:window.scene.controls.target.toArray(),q:window.scene.camera.quaternion.toArray()}))
+ assert.ok(!closeEnough(beforePan.target,afterPan.target),'two-finger centroid did not pan TPS target');assert.ok(closeEnough(beforePan.q,afterPan.q),'two-finger pan unexpectedly rotated view')
+ await click('#tps-touch-exit');record({test:'TPS-existing-actor-selection-and-two-finger-pan',target,beforePan,afterPan})
+ await page.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true})));await page.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));await frame(5)
+ assert.equal(await page.evaluate(()=>window.scene.characters.length),2,'BFCache page parking destroyed models')
+ await click('#position-controls-toggle');await click('#viewport-pose');assert.ok(await page.$('[data-viewport-joint="left-hand"]'))
+ await page.evaluate(()=>document.dispatchEvent(new Event('change',{bubbles:true})));await new Promise(r=>setTimeout(r,900))
+ await page.reload({waitUntil:'domcontentloaded',timeout:90000});await page.waitForFunction(()=>document.documentElement.dataset.sessionResume==='restored',{timeout:180000});await frame(10)
+ assert.equal(await page.evaluate(()=>window.scene.characters.length),2,'reload checkpoint did not restore loaded actor list')
+ const persisted=await page.evaluate(()=>JSON.parse(localStorage.getItem('magius.saved-poses.v1')).some(p=>p.name==='Acceptance fingers'));assert.ok(persisted)
+ assert.equal(await page.$('#viewport-editor-launch'),null)
+ record({test:'BFCache-and-reload-session-pose-library',models:2,savedPosePersisted:persisted})
+ const graphics=await page.evaluate(()=>{const canvas=window.scene.renderer.domElement,gl=canvas.getContext('webgl2'),loss=gl?.getExtension('WEBGL_lose_context');if(!loss)return false;loss.loseContext();setTimeout(()=>loss.restoreContext(),120);return true})
+ assert.ok(graphics,'Chrome context-loss probe is unavailable');await page.waitForFunction(()=>window.magiusPageRecovery?.().restores>=1,{timeout:30000});await frame(8)
+ assert.equal(await page.evaluate(()=>window.scene.characters.length),2,'WebGL restore rebuilt or discarded actor objects')
+ record({test:'native-WebGL-context-recovery',state:await page.evaluate(()=>window.magiusPageRecovery())})
+ assert.deepEqual(errors,[])
+ assert.deepEqual(missing.filter(r=>new URL(r.url).origin===new URL(base).origin),[])
+ result={passed:true,base,observations,errors,missing,scope:'Real browser DOM and touch interactions; physical OS tab-discard behavior is not guaranteed.'}
+}catch(error){result={passed:false,base,error:String(error),observations,errors,missing};await page?.screenshot({path:path.join(out,'node-workspace-failure.png')}).catch(()=>{});throw error}
+finally{fs.writeFileSync(path.join(out,'node-workspace-browser.json'),JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({passed:result?.passed,error:result?.error}));if(browser)await browser.close();if(server){server.closeAllConnections();await new Promise(r=>server.close(r))}}

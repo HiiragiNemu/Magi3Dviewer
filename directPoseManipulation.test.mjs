@@ -26,10 +26,11 @@ fs.writeFileSync(toolsModule, ts.transpileModule(fs.readFileSync(path.join(root,
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
 }).outputText)
 const { DirectPoseHistory, findDirectPoseParts } = await import(pathToFileURL(toolsModule))
+const { StructurePoseTarget, structuralNodes, captureModelLocal, writeLocal } = await import(pathToFileURL(path.join(root,'src/viewer/poseWorkspace.ts')))
 const source = fs.readFileSync(path.join(root, 'src/viewer/index.ts'), 'utf8')
 const ast = ts.createSourceFile('viewer.ts', source, ts.ScriptTarget.Latest, true)
 assert.equal(ast.parseDiagnostics.length, 0, 'production viewer syntax')
-const names = ['getPoseEntries', 'poseQuaternionMatches', 'applyPoseEntry', 'restoreManualPoseOverrides', 'applyManualPoseOverrides', 'resetActionParameters', 'getPoseEntryBase', 'getPoseEntryPositionBase', 'syncPoseEntryControls', 'setDirectPoseTransformMode', 'updateDirectPoseUi', 'updateDirectPoseTarget', 'requestDirectPoseFeedback', 'selectDirectPoseBone', 'clearDirectPoseSelection', 'setDirectPoseEditing', 'beginDirectPoseTransaction', 'syncDirectPoseOffsetsFromBone', 'directPoseScreenTranslationDelta', 'finishDirectPoseDrag', 'setupDirectPoseEditing', 'startDirectPosePointerDrag', 'updateDirectPosePointerDrag', 'pauseSelectedAnimation', 'captureDirectPose', 'getDirectPoseHistory', 'commitDirectPoseHistory', 'restoreDirectPose', 'undoDirectPose']
+const names = ['ensurePoseOrigin', 'getPoseEntries', 'poseQuaternionMatches', 'applyPoseEntry', 'restoreManualPoseOverrides', 'applyManualPoseOverrides', 'resetActionParameters', 'getPoseEntryBase', 'getPoseEntryPositionBase', 'syncPoseEntryControls', 'setDirectPoseTransformMode', 'updateDirectPoseUi', 'updateDirectPoseTarget', 'requestDirectPoseFeedback', 'selectDirectPoseBone', 'clearDirectPoseSelection', 'setDirectPoseEditing', 'beginDirectPoseTransaction', 'syncDirectPoseOffsetsFromBone', 'directPoseScreenTranslationDelta', 'finishDirectPoseDrag', 'setupDirectPoseEditing', 'startDirectPosePointerDrag', 'updateDirectPosePointerDrag', 'pauseSelectedAnimation', 'captureDirectPose', 'getDirectPoseHistory', 'commitDirectPoseHistory', 'restoreDirectPose', 'undoDirectPose']
 const functions = ast.statements.filter(node => ts.isFunctionDeclaration(node) && names.includes(node.name?.text))
 assert.equal(functions.length, names.length, 'exercise real production functions, not copies of the algorithms')
 const js = ts.transpileModule(functions.map(node => node.getText(ast)).join('\n'), {
@@ -78,8 +79,9 @@ function fixture({ scaled = false, orthographic = false } = {}) {
     const meshEntry = { object: mesh, defaultVisible: true, path: 'mesh', label: 'mesh' }
     let weighted, partUiCalls = 0, catalogState, pauses = 0, objectCloses = 0, selectedPart
     const deps = {
-        THREE: T, TransformControls, DirectPoseTarget, DirectPoseHistory, scene, document, window, registerPoseJointLimits, clampPoseJoint,
+        THREE: T, TransformControls, DirectPoseTarget, DirectPoseHistory, StructurePoseTarget, structuralNodes, captureModelLocal, writeLocal, scene, document, window, registerPoseJointLimits, clampPoseJoint,
         createPoseContactGuard: () => () => false, editorGround: {}, setViewerLocomotionEnabled() {},
+        freezePoseForEditing() {}, // Isolate the active-animation overlay; snapshot freezing is covered by workspace tests.
         requestAnimationFrame: fn => feedback.push(fn),
         actionDirectEditToggle: toggle, actionDirectTranslate: translate, actionDirectRotate: rotate, actionDirectEditTarget: output, actionChannelList: element(),
         translateUiText: text => text, translateBoneChannelLabel: text => text, isPerformanceBoneLeased: bone => leases.has(bone),
@@ -93,7 +95,8 @@ function fixture({ scaled = false, orthographic = false } = {}) {
         restoreModelPartVisibility() {}, setSelectedAnimationPlaybackRate() {}, rebuildActionParameterChannels() {}, rebuildModelPartVisibilityControls() {},
     }
     const api = Function(...Object.keys(deps), `
-        const manualPoseByCharacter = new WeakMap();
+        const manualPoseByCharacter = new WeakMap(), poseOrigins = new WeakMap(), poseFrozenBases = new WeakMap(), poseDragTransforms = new Map();
+        let poseNodeGroup="primary", poseAllowStretch=false,poseStructurePanel;
         let directPoseControls, directPoseControlsHelper, directPoseSelection, selectedModelPart, directPosePointerDrag, directPoseGizmoPointerId;
         let directPoseFeedbackPending=false, directPoseEditingEnabled=false, directPoseTransformMode='rotate', directPoseGizmoDragging=false;
         let directPoseOrbitControlsWasEnabled=true, directPoseOutlineSelection=[], performanceGizmoActive=false, directPoseTarget, directPoseInputRoot, directPoseFinishing=false;
@@ -275,7 +278,13 @@ test('pointer hot path performs no solve, full skeleton traversal, layout read o
     const move = functions.find(node => node.name?.text === 'updateDirectPosePointerDrag').getText(ast)
     assert.doesNotMatch(move, /applyPoseEntry|applyManualPoseOverrides|getBoundingClientRect|\.flush\(|getPoseEntries|updateModelPartVisibilityUi/)
     assert.match(source, /directPoseControls\.attach\(directPoseTarget\.handle\)/)
-    assert.doesNotMatch(functions.find(node => node.name?.text === 'applyPoseEntry').getText(ast), /bone\.position\.add/)
+    // Explicit structure editing may now apply a stored translation. The normal
+    // path is still tested above against real skinned IK vertices and exact
+    // local offsets; only the opt-in structure target may produce translation.
+    assert.match(source, /poseAllowStretch\s*=\s*false/)
+    assert.match(source, /new StructurePoseTarget\(object,bone,poseAllowStretch/)
+    assert.match(source, /directPoseTarget instanceof StructurePoseTarget&&local&&directPoseTarget.canTranslate/)
+    assert.equal(new StructurePoseTarget(new T.Group(),new T.Bone(),false,()=>false).canTranslate,false)
     assert.match(source, /addBeforeAnimationLoop\(restoreManualPoseOverrides\)/)
     assert.match(source, /request\.mode === 'joint' \? 'rotate' : 'translate'/)
 })

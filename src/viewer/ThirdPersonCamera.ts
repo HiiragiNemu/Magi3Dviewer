@@ -81,6 +81,14 @@ export class ThirdPersonCamera {
         this.distance = Math.min(10, Math.max(0, this.distance + delta * 0.0035))
     }
 
+    pan(dx:number,dy:number):void {
+        if(!this.active||!Number.isFinite(dx)||!Number.isFinite(dy))return
+        const {camera,renderer}=this.hooks.scene()
+        const scale=2*Math.max(this.distance,.2)*Math.tan(THREE.MathUtils.degToRad(camera.fov)/2)/Math.max(1,renderer.domElement.clientHeight)
+        this.center.addScaledVector(new THREE.Vector3(1,0,0).applyQuaternion(camera.quaternion),-dx*scale)
+        this.center.addScaledVector(new THREE.Vector3(0,1,0).applyQuaternion(camera.quaternion),dy*scale)
+    }
+
     update(): void {
         if (!this.active) return
         const { camera, controls } = this.hooks.scene()
@@ -179,6 +187,8 @@ export class ThirdPersonCamera {
             isControl: target => this.isControl(target),
             rotate: (dx,dy) => this.move(dx*2,dy*2,0,'touch'),
             pinch: ratio => { if(Number.isFinite(ratio)&&ratio>0)this.distance=Math.min(20,Math.max(.12,this.distance*ratio)) },
+            pan:(dx,dy)=>this.pan(dx,dy),
+            tap:(x,y)=>document.dispatchEvent(new CustomEvent('magius:tps-select-at',{detail:{x,y}})),
         })
         // Never subscribe to mousemove alongside Pointer Events. Raw and normal
         // pointer streams overlap; exactly ONE of them owns locked movement.

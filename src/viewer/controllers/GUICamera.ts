@@ -3,7 +3,7 @@ import { CameraSettings, getCameraVideoResolution, isCameraEnabled, setCameraStr
 import { scene } from '../scene';
 import { updateGuiLightingDynamic } from './GUILighting';
 
-const guiCamera = gui.addFolder('Camera').close()
+const guiCamera = gui.addFolder('Camera').open()
 const guiCameraOptions = {
     CurrentResolution: '',
     Reset() {

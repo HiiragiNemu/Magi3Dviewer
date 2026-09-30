@@ -1,3 +1,4 @@
+import { onPermanentPageExit } from './pageLifecycle'
 import {
     addAnimationLoop,
     getClockDelta,
@@ -632,7 +633,7 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
     }
     document.addEventListener('keydown', handleEscape)
     document.addEventListener('magius:localechange', handleLocaleChange)
-    window.addEventListener('pagehide', dispose, { once: true })
+    onPermanentPageExit(dispose)
 
     setOpen(false)
     renderInstances()

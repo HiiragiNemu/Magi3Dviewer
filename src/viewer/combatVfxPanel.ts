@@ -1,3 +1,4 @@
+import { onPermanentPageExit } from './pageLifecycle'
 import {
     COMBAT_VFX_STATE_CHANGE_EVENT,
     getCombatVfxDebugState,
@@ -274,7 +275,7 @@ export function setupCombatVfxPanel(
     document.addEventListener('keydown', event => {
         if (event.key === 'Escape') setOpen(false)
     })
-    window.addEventListener('pagehide', dispose, { once: true })
+    onPermanentPageExit(dispose)
 
     setOpen(false)
     renderRuntimeState()

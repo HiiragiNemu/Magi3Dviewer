@@ -13,7 +13,7 @@ import { translateUiText } from '../localization/zhCN';
 
 export const threeGuiContainer = document.getElementById('three-gui')!
 
-export const gui = new GUI({ container: threeGuiContainer }).close()
+export const gui = new GUI({ container: threeGuiContainer }).open()
 
 export const guiOptions = {
     OutlineVisible: true,

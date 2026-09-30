@@ -1,0 +1,86 @@
+/* Wrapping operates on controls, not full-width character/enemy islands. */
+#menu-controls.compact-controls { display:flex; flex-wrap:wrap; gap:3px; align-content:flex-start; align-items:center; padding:3px; }
+#menu-controls.compact-controls > div,
+#menu-controls.compact-controls #toolbar-tools,
+#menu-controls.compact-controls #menu-icons,
+#menu-controls.compact-controls .animation-controls,
+#menu-controls.compact-controls .enemy-animation-controls,
+#menu-controls.compact-controls #enemy-toolbar-control { display:contents; }
+#menu-controls.compact-controls [hidden] { display:none !important; }
+#menu-controls.compact-controls > * > *,
+#menu-controls.compact-controls #menu-icons > * { margin:0; }
+#menu-controls.compact-controls button, #menu-controls.compact-controls select, #menu-controls.compact-controls input { flex:0 1 auto; min-height:30px; max-width:100%; font-size:12px; line-height:1.2; }
+#menu-controls.compact-controls button { padding:4px 7px; white-space:nowrap; }
+#menu-controls.compact-controls select { width:auto; max-width:min(220px,50vw); min-width:80px; }
+#menu-controls.compact-controls #animation-selector,
+#menu-controls.compact-controls #enemy-animation-select { max-width:min(220px,54vw); }
+#menu-controls.compact-controls input[type=range] { width:72px; min-width:48px; max-width:100px; margin:0 2px; }
+#menu-controls.compact-controls input[type=number] { width:48px; min-width:38px; }
+#menu-controls.compact-controls output { font-size:11px; min-width:0; width:auto; max-width:10em; }
+#menu-controls.compact-controls #animation-action-status { flex-basis:100%; }
+#menu-controls.compact-controls #character-search-box { width:112px; max-width:32vw; flex:0 1 112px; }
+#menu-controls.compact-controls #character-search-input { width:100%; min-width:0; box-sizing:border-box; }
+#menu-controls.compact-controls #character-add-cross-btn,
+#menu-controls.compact-controls .button-dropdown>button,
+#menu-controls.compact-controls #enemy-toolbar-add,
+#menu-controls.compact-controls #enemy-toolbar-remove { min-width:30px; width:30px; padding:3px; }
+#menu-controls.compact-controls img { width:22px; height:22px; }
+#menu-controls.compact-controls .button-dropdown { margin:0; flex:0 0 auto; }
+#menu-controls.compact-controls .target-false { font-size:10px; }
+#menu-controls.compact-controls .enemy-animation-controls[hidden] { display:none!important; }
+#perf-stat.performance-corner { position:fixed !important; left:max(8px,env(safe-area-inset-left,0px)) !important; bottom:max(8px,env(safe-area-inset-bottom,0px)) !important; top:auto !important; z-index:28; width:80px; height:48px; margin:0; opacity:.88; }
+#perf-stat.performance-corner[hidden] { display:none !important; }
+#perf-stat.performance-corner #perf-stat-js { transform:none; }
+body.tps-touch-visible #perf-stat.performance-corner { bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + clamp(96px,27vmin,136px) + 34px) !important; }
+body.locomotion-mode-enabled:not(.tps-touch-visible) #perf-stat.performance-corner { bottom:86px !important; }
+.render-performance-toggle { display:flex; align-items:center; gap:8px; font-size:13px; padding:8px; }
+#advanced-controls-dock { width:min(520px,calc(100vw - 20px)); height:auto!important; min-height:0; max-height:calc(100dvh - 32px); }
+#advanced-controls-dock .floating-panel-scroll { flex:0 1 auto; min-height:0; max-height:calc(100dvh - 96px); padding:8px; }
+#three-gui { min-height:0 !important; border:0 !important; padding:0 !important; }
+#three-gui>.lil-gui.root { width:100% !important; max-width:none!important; }
+#three-gui>.lil-gui.root>.title { display:none; }
+#three-gui .lil-gui { --font-size:12px; --input-font-size:12px; --widget-height:24px; --spacing:4px; }
+#pose-workspace { display:grid; gap:6px; margin:0 0 8px; font-size:12px; }
+#pose-workspace small { font-size:11px; opacity:.8; line-height:1.4; }
+#pose-workspace details, #pose-fine-panel { border:1px solid #87949b55; border-radius:7px; padding:6px; }
+#pose-workspace summary, #pose-fine-panel summary { cursor:pointer; font-weight:600; padding:4px; }
+.pose-stretch-policy { display:flex; align-items:center; gap:7px; }
+.pose-workspace-actions { display:flex; flex-wrap:wrap; gap:5px; }
+.pose-workspace-actions button { flex:1 1 88px; min-height:32px; padding:5px 8px; font:inherit; }
+#pose-workspace input:not([type=checkbox]), #pose-workspace select { width:100%; box-sizing:border-box; min-width:0; color:inherit; background:var(--field-bg,#8b929817); border:1px solid #9cabb75c; border-radius:5px; padding:5px; margin:4px 0; font:inherit; }
+#pose-workspace select option { background:#28343d; color:#f3f4f7; }
+body.theme-light #pose-workspace select option { background:#fff; color:#20242a; }
+.pose-scale-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; }
+#pose-workspace-status { min-height:0; white-space:normal; font-size:11px; }
+#pose-workspace button[aria-pressed=true] { border-color:#21bea0; background:#1d8c7955; }
+#pose-fine-panel #viewport-editor-fine { margin:5px 0; padding:4px; display:grid; gap:5px; border:0; background:none; color:inherit; }
+#pose-fine-panel .ve-fine-axis { display:flex; align-items:center; justify-content:space-between; gap:5px; }
+#pose-fine-panel .ve-fine-axis button { min-height:30px; flex:1; padding:4px 9px; }
+#viewport-editor .ve-branch { max-height:calc(var(--ve-available-height,100dvh) - 16px); overflow-y:auto; scrollbar-width:thin; overscroll-behavior:contain; }
+#viewport-editor .ve-node-lines { position:fixed; inset:0; width:100vw; height:100dvh; pointer-events:none; overflow:visible; }
+#viewport-editor .ve-node-lines line { stroke:#55bdaabb; stroke-width:1; }
+#viewport-editor .ve-node-pages { display:flex; gap:3px; align-items:center; font-size:10px; }
+#viewport-editor .ve-node-pages[hidden] { display:none; }
+#viewport-editor .ve-node-pages button { flex:1; min-height:26px; padding:2px; }
+#viewport-editor .ve-node-pages output { flex:1; text-align:center; }
+#viewport-editor .ve-branch>button { min-height:30px; padding:5px 7px; font-size:12px; }
+#viewport-editor-selection { max-height:32px; overflow:hidden; font-size:10px; overflow-wrap:anywhere; }
+#viewport-editor .ve-joints[data-group=hands] .ve-joint-node,
+#viewport-editor .ve-joints[data-group=more] .ve-joint-node,
+#viewport-editor .ve-joints[data-group=free] .ve-joint-node { width:24px; height:24px; }
+#viewport-editor .ve-joints[data-group=hands] .ve-joint-node::before,
+#viewport-editor .ve-joints[data-group=more] .ve-joint-node::before,
+#viewport-editor .ve-joints[data-group=free] .ve-joint-node::before { width:8px; height:8px; }
+@media(max-width:600px) {
+ #menu-controls.compact-controls { gap:3px; }
+ #menu-controls.compact-controls button,#menu-controls.compact-controls select,#menu-controls.compact-controls input { font-size:12px; min-height:31px; }
+ #menu-controls.compact-controls .character-search-label { display:none; }
+ #menu-controls.compact-controls #character-selector,#menu-controls.compact-controls #enemy-toolbar-select { max-width:158px; }
+ #menu-controls.compact-controls .button-dropdown>div { min-width:180px; }
+}
+@media(orientation:landscape) and (max-height:540px) {
+ #viewport-editor .ve-branch>button { min-height:27px; padding:4px; font-size:11px; }
+ body.tps-touch-visible #perf-stat.performance-corner { bottom:calc(max(10px,env(safe-area-inset-bottom,0px)) + clamp(88px,26vh,112px) + 12px) !important; }
+ #advanced-controls-dock { max-height:calc(100dvh - 16px); }
+ #menu-controls.compact-controls button,#menu-controls.compact-controls select,#menu-controls.compact-controls input { min-height:28px; }
+}

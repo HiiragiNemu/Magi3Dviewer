@@ -1,9 +1,7 @@
 import { guiOptions, guiBgColor } from "."
 
-export const themeLightBtn = document.getElementById('theme-set-light') as HTMLButtonElement
-export const themeDarkBtn = document.getElementById('theme-set-dark') as HTMLButtonElement
-themeLightBtn.onclick = () => setTheme('light')
-themeDarkBtn.onclick = () => setTheme('dark')
+export const themeToggleBtn = document.getElementById('theme-toggle') as HTMLButtonElement
+themeToggleBtn.onclick=()=>setTheme(getCurrentTheme()==='light'?'dark':'light')
 
 const themeStorageKey = 'magius3dviewer.theme'
 
@@ -29,11 +27,13 @@ export function setTheme(theme: Theme, persist = true) {
 
     guiBgColor._initialValueHexString = newColor
     if (shouldApplyNewColor) guiBgColor.reset()
-    if (persist) localStorage.setItem(themeStorageKey, theme)
+    themeToggleBtn.textContent=theme==='light'?'☾':'☀'
+    themeToggleBtn.title=theme==='light'?'切换夜间模式':'切换日间模式';themeToggleBtn.setAttribute('aria-label',themeToggleBtn.title);themeToggleBtn.setAttribute('aria-pressed',String(theme==='light'))
+    if (persist) try { localStorage.setItem(themeStorageKey, theme) } catch {}
 }
 
 export function restoreThemePreference() {
-    const stored = localStorage.getItem(themeStorageKey)
+    let stored:string|null=null;try{stored=localStorage.getItem(themeStorageKey)}catch{}
     setTheme(stored == 'light' || stored == 'dark' ? stored : 'dark', false)
 }
 
