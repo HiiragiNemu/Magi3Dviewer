@@ -120,16 +120,21 @@ test('real native activation keeps generated jump map after async attach', () =>
   const start = source.indexOf('function nativeDungeonActionForSemantic(')
   const end = source.indexOf('function deactivateNativeDungeonPresentation(', start)
   assert.ok(start >= 0 && end > start)
-  const code = ts.transpileModule(source.slice(start, end), { compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.None } }).outputText
+  const ast = ts.createSourceFile('viewer.ts', source, ts.ScriptTarget.Latest, true)
+  const applyStyle = ast.statements.find(node => ts.isFunctionDeclaration(node) && node.name?.text === 'applyViewerJumpStyle')
+  assert.ok(applyStyle, 'Native activation must apply the actual current style selection')
+  const code = ts.transpileModule(source.slice(start, end) + '\n' + applyStyle.getText(ast), { compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.None } }).outputText
   const calls = []
   const context = {
     ...fixedTransitions,
+    viewerJumpStyle: 'classic',
     calls,
     THREE: { MathUtils: { degToRad: value => value * Math.PI / 180 } },
     emitViewerEvent: () => {},
     emitViewerCombatEffectCue: () => {},
     CharacterLocomotionController: class {
       constructor(...args) { calls.push(args) }
+      setJumpLocomotionAnimations(value) { this.selectedJumpMap = value }
       snapshot() { return { state: 'idle' } }
     },
     familyEquals: (a, b) => a === b,
@@ -143,6 +148,9 @@ test('real native activation keeps generated jump map after async attach', () =>
     walking: { jump: 'GeneratedWalkingJump', fall: 'GeneratedWalkingFall', land: 'GeneratedWalkingLand' },
     running: { jump: 'GeneratedRunningJump', fall: 'GeneratedRunningFall', land: 'GeneratedRunningLand' },
   }
+  const refinedMap = Object.fromEntries(Object.entries(jumpMap).map(([mode, states]) => [mode,
+    Object.fromEntries(Object.entries(states).map(([state, name]) => [state, name + 'Refined'])),
+  ]))
   // Execute the actual attach helper's return tail so the profile passed to
   // native activation is produced by source, rather than stubbing a profile
   // that already carries jumpAnimations.  Before the profile-map fix this
@@ -159,7 +167,7 @@ test('real native activation keeps generated jump map after async attach', () =>
   const returnCode = source.slice(returnStart, returnEnd + '\n    }'.length)
   const tailContext = {}
   const tailProgram = ts.transpileModule(
-    `function executeAttachTail(profile, jumpNames, baselineClip, names, postAnimationWalkClearance) {\n${tail}${returnCode}\n}`,
+    `function executeAttachTail(profile, jumpNames, baselineClip, names, postAnimationWalkClearance, expressiveJumpNames) {\n${tail}${returnCode}\n}`,
     { compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.None } },
   ).outputText
   vm.runInNewContext(tailProgram, tailContext)
@@ -175,8 +183,11 @@ test('real native activation keeps generated jump map after async attach', () =>
     'NativeIdle',
     { walk: 'NativeWalk', run: 'NativeRun' },
     undefined,
+    refinedMap,
   )
   assert.deepEqual(generated.profile.jumpAnimations, jumpMap)
+  assert.equal(generated.profile.jumpAnimationVariants.classic, jumpMap)
+  assert.equal(generated.profile.jumpAnimationVariants.expressive, refinedMap)
   const binding = {
     nativeDungeonActions: {
       status: 'attached',
@@ -211,4 +222,10 @@ test('real native activation keeps generated jump map after async attach', () =>
   assert.equal(fixedTransitions.createNativeDungeonFixedTransitionPolicy(110702, binding.nativeDungeonActions.entries, fixedTransitions.normalizeAnimationFamilyName), undefined)
   assert.equal(calls.length, 1)
   assert.equal(calls[0][0].jumpLocomotionAnimations, jumpMap)
+  assert.equal(binding.controller.selectedJumpMap, jumpMap)
+  context.viewerJumpStyle = 'expressive'
+  context.applyViewerJumpStyle(binding)
+  assert.equal(binding.controller.selectedJumpMap, refinedMap)
+  assert.equal(calls.length, 1, 'Switching styles must not rebuild the physical controller')
+  assert.equal(binding.locomotionAnimations.run, 'NativeRun')
 })
