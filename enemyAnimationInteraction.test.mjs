@@ -99,7 +99,14 @@ function mount(instances) {
       return true
     }
   }
+  const window = { addEventListener() {}, removeEventListener() {} }
+  const lifecycle = { exports: {} }
+  const lifecycleCode = ts.transpileModule(readFileSync(resolve(
+    process.env.S6_TEST_ROOT ?? dirname(fileURLToPath(import.meta.url)), 'src/viewer/pageLifecycle.ts'), 'utf8'),
+    { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS } }).outputText
+  new Function('module', 'exports', 'window', lifecycleCode)(lifecycle, lifecycle.exports, window)
   const imports = {
+    './pageLifecycle': lifecycle.exports,
     'three': THREE,
     'magia-exedra-character-three/renderer': {
       addAnimationLoop(fn) { tick = fn }, removeAnimationLoop() {}, getClockDelta: () => 0.25,
@@ -115,7 +122,7 @@ function mount(instances) {
   const module = { exports: {} }
   new Function('require', 'module', 'exports', 'document', 'window', 'navigator', outputText)(
     name => { assert.ok(imports[name], `Unexpected panel import ${name}`); return imports[name] },
-    module, module.exports, document, { addEventListener() {}, removeEventListener() {} }, { language: 'en' },
+    module, module.exports, document, window, { language: 'en' },
   )
   const controller = module.exports.setupEnemyPanel()
   const control = label => created.find(e => e.tagName !== 'section' && e.attributes.get('aria-label') === label)

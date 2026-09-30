@@ -1128,9 +1128,15 @@ test('101901 Space jump has standing, walking and running target-rig poses with 
     assert.match(source, /\{ state: 'land', phase: 'land', duration: 0\.42 \}/)
     assert.match(source, /phase === 'airborne'[\s\S]{0,220}return new THREE\.Vector3\(\)/)
     assert.match(source, /const applyJumpNaturalUpperBodyPose = \(/)
-    assert.match(source, /L: refined\?\.left \?\? wrapReferencePhase\(0\.735 \+ synchronousDrift\)/)
-    assert.match(source, /R: refined\?\.right \?\? wrapReferencePhase\(0\.245 \+ synchronousDrift\)/)
-    assert.match(source, /const modeStrength = refined\?\.strength \?\? \(mode === 'running' \? 1 : mode === 'walking' \? 0\.98 : 0\.96\)/)
+    // Classic track construction remains a maintenance-side baseline. The
+    // shipped upper-body path has its own independent three-mode curves and
+    // returns before the old running finger/wrist sample can overwrite it.
+    assert.match(jumpUpperBody, /if \(sampledJumpStyle === 'expressive'\)[\s\S]*naturalJumpArmPose\(ratio, phase, mode\)/)
+    assert.match(jumpUpperBody, /applyNativeHandFingerPose\('walk', 0\.5, 0, pose\.fingerStrength\)/)
+    assert.match(jumpUpperBody, /angles\.upper \+ angles\.elbow \+ angles\.wrist[\s\S]*return[\s\S]*const synchronousDrift/)
+    assert.match(source, /L: wrapReferencePhase\(0\.735 \+ synchronousDrift\)/)
+    assert.match(source, /R: wrapReferencePhase\(0\.245 \+ synchronousDrift\)/)
+    assert.match(source, /const modeStrength = mode === 'running' \? 1 : mode === 'walking' \? 0\.98 : 0\.96/)
     assert.doesNotMatch(jumpUpperBody, /const strength = phase === 'takeoff'/)
     assert.doesNotMatch(jumpUpperBody, /modeStrength = strength/)
     assert.match(source, /currentDirection\.lerp\(donorDirection, modeStrength\)/)

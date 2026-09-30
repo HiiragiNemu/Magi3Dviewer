@@ -175,7 +175,15 @@ test('stale generation/old frame/zero leased actors cannot advance global timeli
     f.callbacks.body(0.5, { ...f.context(a, 10), generation: 999 }); assert.equal(f.runtime.time, 0)
     f.callbacks.body(0.2, f.context(a, 10)); assert.equal(f.runtime.time, 0.2)
     f.callbacks.body(0.5, f.context(a, 9)); assert.equal(f.runtime.time, 0.2)
-    f.runtime.stop(); f.callbacks.body(1, f.context(a, 11)); assert.equal(f.runtime.time, 0.2)
+    const displayed = a.object.position.clone()
+    f.runtime.stop()
+    assert.equal(f.runtime.time, 0, 'Stop rewinds the transport, unlike Pause')
+    assert.deepEqual(a.object.position.toArray(), displayed.toArray(), 'Hand-back retains the last displayed pose')
+    const releases = f.changes.filter(row => row[0] === 'release').length
+    f.callbacks.body(1, f.context(a, 11))
+    assert.equal(f.runtime.time, 0, 'A callback after lease release must not advance the rewound clock')
+    assert.deepEqual(a.object.position.toArray(), displayed.toArray(), 'An unleased actor must not receive another pose write')
+    assert.equal(f.changes.filter(row => row[0] === 'release').length, releases)
     f.runtime.dispose()
 })
 

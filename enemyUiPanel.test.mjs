@@ -40,7 +40,9 @@ test('enemy panel is independent from the character selector and uses the resour
     assert.match(panel, /row\.dataset\.instanceId = instance\.instanceId/)
     assert.match(panel, /entry\.thumbnail\.url/)
     assert.match(panel, /resolveEnemyDisplayName\(entry, currentEnemyLocale\(\)\)/)
-    assert.match(panel, /selectedInstanceId = added\.at\(-1\)\?\.instanceId/)
+    assert.match(panel, /const latest = added\.at\(-1\)/)
+    assert.match(panel, /if \(latest\) selectInstance\(latest\.instanceId\)/)
+    assert.match(panel, /function selectInstance\(instanceId: string\)[\s\S]*selectedInstanceId = instance\.instanceId/)
     assert.doesNotMatch(panel, /characterSelector|characterSelectDict|changeCharacter/)
 })
 
@@ -62,9 +64,12 @@ test('enemy instances support deterministic spacing, selection, removal and canv
     assert.match(panel, /translateUiText\('Remove'\)[\s\S]*translateUiText\('Selected enemy'\)/)
     assert.match(panel, /elements\.toolbarRemove\.onclick[\s\S]*removeInstance\(instance\)/)
     assert.match(panel, /options\.onInstanceWillRemove\?\.\(instance\)/)
-    assert.match(viewer, /enemyPanelController\?\.getIntersectedEnemy\(e\.clientX, e\.clientY\)/)
+    // Selection now sorts actors, enemies and weapons in one visible hit test;
+    // using the old enemy-only ray would select enemies through nearer actors.
+    assert.match(viewer, /for \(const enemy of enemyPanelController\?\.enemyResources\.getInstances\(\) \?\? \[\]\)/)
     assert.match(viewer, /enemyPanelController\?\.selectInstance\(enemy\.instanceId\)/)
-    assert.match(viewer, /activateObjectTransform\(enemy\.object, \(\) => enemyPanelController\?\.refreshInstances\(\)\)/)
+    assert.match(viewer, /return pickMovementTarget\(raycaster, targets\)/)
+    assert.match(viewer, /activateObjectTransform\(target\.object, target\.refresh\)/)
     assert.match(viewer, /singleCharacterTransformControls\.attach\(object\)[\s\S]*singleCharacterTransformControls\.enabled = true[\s\S]*singleCharacterTransformControlsHelper\.visible = true/)
     assert.match(style, /\.enemy-instance-row\.is-selected/)
 })
@@ -77,7 +82,10 @@ test('enemy manager update loop is registered once and removed by panel disposal
     assert.match(panel, /const tick = \(\) => \{\s*enemyResources\.update\(getClockDelta\(\)\)[\s\S]*renderAnimationProgress\(\)/)
     assert.equal((panel.match(/addAnimationLoop\(tick\)/g) ?? []).length, 1)
     assert.equal((panel.match(/removeAnimationLoop\(tick\)/g) ?? []).length, 1)
-    assert.match(panel, /window\.addEventListener\('pagehide', dispose, \{ once: true \}\)/)
+    assert.match(panel, /onPermanentPageExit\(dispose\)/)
+    assert.doesNotMatch(panel, /window\.addEventListener\('pagehide', dispose/, 'A BFCache hide must not dispose live enemy models')
+    const lifecycle = await read('./src/viewer/pageLifecycle.ts')
+    assert.match(lifecycle, /event\.persisted/)
 })
 
 test('enemy errors, localization, viewport sizing and manifest identity remain explicit', async () => {

@@ -123,7 +123,8 @@ test('voice panel exposes compact typed multitrack UI for every loaded character
         assert.match(html, new RegExp(`id="${id}"`), `missing multitrack UI control: ${id}`)
     }
     assert.match(html, /id="voice-background-track-file"[^>]*type="file"[^>]*accept="\.ogg,\.flac,\.wav,\.mp3"/)
-    assert.match(html, /id="voice-multitrack-section"[^>]*open/)
+    assert.match(html, /<details[^>]*id="voice-multitrack-section"/)
+    assert.doesNotMatch(html, /id="voice-multitrack-section"[^>]*\bopen\b/, 'Secondary multitrack controls start collapsed in the compact panel')
     assert.match(html, /id="voice-workspace-body"[^>]*role="listbox"[^>]*tabindex="0"/)
     assert.match(html, /id="voice-list" class="voice-list"/, 'official voice catalog must remain in the same panel')
 
@@ -159,7 +160,10 @@ test('voice panel exposes compact typed multitrack UI for every loaded character
 
     assert.match(viewer, /scene\.characters\.flatMap\(sceneCharacter => \{[\s\S]*actorKey: character\.object\.uuid[\s\S]*characterResourceId: String\(character\.userData\.characterId \?\? ''\)[\s\S]*target: character/)
     assert.match(viewer, /voicePanelController\?\.setWorkspaceCharacters\(workspaceCharacters\)[\s\S]*voicePanelController\?\.setCharacter\(/)
-    assert.match(locomotion, /'\[role="listbox"\]'/, 'workspace listbox must bypass the TPS camera wheel consumer')
+    const camera = await read('./src/viewer/ThirdPersonCamera.ts')
+    assert.match(locomotion, /tpsCamera\.install\(\)/, 'the current TPS owner must be installed')
+    assert.match(camera, /\[role="listbox"\]/, 'workspace listbox must bypass the TPS camera wheel consumer')
+    assert.match(camera, /this\.isControl\(event\.target\)/, 'the control filter must actually guard pointer and wheel listeners')
 
     assert.match(panel, /workspaceBody: requireElement<HTMLElement>\('voice-workspace-body'\)/)
     assert.match(panel, /elements\.workspaceBody\.setAttribute\('aria-label', translateUiText\('Multitrack audio'\)\)/)
@@ -283,7 +287,7 @@ test('single play, queue, transport, subtitle visibility, motion and expression 
     assert.match(viewer, /voicePanelController = setupVoicePanel\(\{[\s\S]*workspaceRuntime: createViewerVoiceWorkspaceRuntime\(\)[\s\S]*\}\)[\s\S]*syncVoiceCharacter\(\)/)
     assert.match(viewer, /voicePanelController\?\.setCharacter\(null, null\)[\s\S]*disposeCharacterActionPlayback\(\)/)
     assert.match(viewer, /voicePanelController\?\.update\(\)/)
-    assert.match(viewer, /pagehide[\s\S]*voicePanelController\?\.dispose\(\)/)
+    assert.match(viewer, /onPermanentPageExit\([\s\S]*voicePanelController\?\.dispose\(\)/)
 
     assert.match(panel, /voice\?\.setScenarioOptions\(options\)/)
     assert.match(panel, /useMotion: elements\.motionToggle\.checked/)
