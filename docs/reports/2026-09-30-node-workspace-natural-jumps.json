@@ -1,0 +1,2551 @@
+{
+  "schema": "magius.node-workspace-natural-jump-delivery.v1",
+  "recordedAt": "2026-09-30T16:52:20.138Z",
+  "sourceRevision": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+  "stages": [
+    {
+      "name": "node-workspace-before-jump-change",
+      "source": "a624191d642d86a8869b59b12542061eeb32acd5",
+      "deployment": "49bc9d24",
+      "verifiedAt": "2026-09-30T14:07:21.425Z"
+    },
+    {
+      "name": "independent-natural-jump-update",
+      "source": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+      "deployment": "0ff88142",
+      "verifiedAt": "2026-09-30T14:25:47.787Z"
+    }
+  ],
+  "production": {
+    "site": "https://magius3dviewer.pages.dev/",
+    "files": 33,
+    "releaseRangeProbes": 4,
+    "entryHash": [
+      {
+        "requested": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+        "actual": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+        "hash": "804ecf0932e25a642ff711d8d8a14da8115e1c00dea24106402b09c66ac4b252",
+        "status": 200,
+        "headers": {
+          "cacheControl": "no-store, max-age=0",
+          "revision": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+          "cf-ray": "a433e61e8ef4317f-NRT"
+        },
+        "revision": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+        "icons": 0,
+        "voiceAfterScene": true,
+        "jumpControls": 0,
+        "jumpStyle": "expressive",
+        "canonical": "https://magius3dviewer.pages.dev/"
+      },
+      {
+        "requested": "https://magius3dviewer.pages.dev/",
+        "actual": "https://magius3dviewer.pages.dev/",
+        "hash": "804ecf0932e25a642ff711d8d8a14da8115e1c00dea24106402b09c66ac4b252",
+        "status": 200,
+        "headers": {
+          "cacheControl": "no-store, max-age=0",
+          "revision": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+          "cf-ray": "a433e6506bdb317f-NRT"
+        },
+        "revision": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+        "icons": 0,
+        "voiceAfterScene": true,
+        "jumpControls": 0,
+        "jumpStyle": "expressive",
+        "canonical": "https://magius3dviewer.pages.dev/"
+      },
+      {
+        "requested": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+        "actual": "https://magius3dviewer.pages.dev/?runtimeDelivery=release",
+        "hash": "804ecf0932e25a642ff711d8d8a14da8115e1c00dea24106402b09c66ac4b252",
+        "status": 200,
+        "headers": {
+          "cacheControl": "no-store, max-age=0",
+          "revision": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+          "cf-ray": "a433e67f8deb317f-NRT"
+        },
+        "revision": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+        "icons": 0,
+        "voiceAfterScene": true,
+        "jumpControls": 0,
+        "jumpStyle": "expressive",
+        "canonical": "https://magius3dviewer.pages.dev/"
+      },
+      {
+        "requested": "https://magius3dviewer.pages.dev/",
+        "actual": "https://magius3dviewer.pages.dev/",
+        "hash": "804ecf0932e25a642ff711d8d8a14da8115e1c00dea24106402b09c66ac4b252",
+        "status": 200,
+        "headers": {
+          "cacheControl": "no-store, max-age=0",
+          "revision": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+          "cf-ray": "a433e6b07d8d317f-NRT"
+        },
+        "revision": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+        "icons": 0,
+        "voiceAfterScene": true,
+        "jumpControls": 0,
+        "jumpStyle": "expressive",
+        "canonical": "https://magius3dviewer.pages.dev/"
+      }
+    ]
+  },
+  "features": {
+    "groups": {
+      "joints": {
+        "group": "primary",
+        "total": 10,
+        "names": [
+          "左手",
+          "右手",
+          "左脚",
+          "右脚",
+          "左肘",
+          "右肘",
+          "左膝",
+          "右膝",
+          "头部",
+          "胸部"
+        ]
+      },
+      "hands": {
+        "group": "hands",
+        "total": 39,
+        "names": [
+          "MetaIndexfinger_L",
+          "Indexfinger1_L",
+          "Indexfinger2_L",
+          "Indexfinger3_L",
+          "MetaMiddlefinger_L",
+          "Middlefinger1_L",
+          "Middlefinger2_L",
+          "Middlefinger3_L",
+          "MetaPinkyfinger_L",
+          "Pinkyfinger1_L",
+          "Pinkyfinger2_L",
+          "Pinkyfinger3_L",
+          "MetaRingfinger_L",
+          "Ringfinger1_L",
+          "Ringfinger2_L",
+          "Ringfinger3_L",
+          "Thumb1_L",
+          "Thumb2_L",
+          "Thumb3_L",
+          "Meta Indexfinger 右",
+          "Indexfinger1 右",
+          "Indexfinger2 右",
+          "Indexfinger3 右",
+          "Meta Middlefinger 右"
+        ]
+      },
+      "more": {
+        "group": "more",
+        "total": 156,
+        "names": [
+          "chara_100101",
+          "根骨骼",
+          "髋部",
+          "Ribbon_S_L1",
+          "Ribbon_S_L2_01_Sp",
+          "Ribbon_S_L3_01_Sp",
+          "Ribbon_S_L4_01_Sp",
+          "Ribbon_S_L5_01_Sp",
+          "Ribbon_S_R1",
+          "Ribbon_S_R2_01_Sp",
+          "Ribbon_S_R3_01_Sp",
+          "Ribbon_S_R4_01_Sp",
+          "Ribbon_S_R5_01_Sp",
+          "Skirt_B_L1_01_Sp",
+          "Skirt_B_L1_02_Sp",
+          "Skirt_B_R1_01_Sp",
+          "Skirt_B_R1_02_Sp",
+          "Skirt_F_L1_01_Sp",
+          "Skirt_F_L1_02_Sp",
+          "Skirt_F_R1_01_Sp",
+          "Skirt_F_R1_02_Sp",
+          "Skirt_S_L1_01_Sp",
+          "Skirt_S_L1_02_Sp",
+          "Skirt_S_R1_01_Sp"
+        ]
+      },
+      "free": {
+        "group": "free",
+        "total": 319,
+        "names": [
+          "Visual 根骨骼",
+          "chara_100107_model",
+          "chara_100101",
+          "chara",
+          "Acc_Mesh",
+          "Body_Mesh",
+          "面部 Mesh",
+          "面部 Mesh mt chara 100101 眉毛 mask writer 向前",
+          "面部 Mesh mt chara 100101 眼睛 mask writer 向前",
+          "Hair_Mesh",
+          "Hair Mesh mt chara 100101 hair out 向前",
+          "根骨骼",
+          "髋部",
+          "Ribbon_S_L1",
+          "Ribbon_S_L2_01_Sp",
+          "Ribbon_S_L2_02_Sp_End",
+          "Ribbon_S_L3_01_Sp",
+          "Ribbon_S_L3_02_Sp_End",
+          "Ribbon_S_L4_01_Sp",
+          "Ribbon_S_L4_02_Sp_End",
+          "Ribbon_S_L5_01_Sp",
+          "Ribbon_S_L5_02_Sp_End",
+          "Ribbon_S_R1",
+          "Ribbon_S_R2_01_Sp"
+        ]
+      }
+    },
+    "nodeChecks": [
+      {
+        "test": "compact-toolbar-theme-render-and-performance",
+        "order": {
+          "action": 4,
+          "weapons": 5,
+          "enemies": 6,
+          "scene": 24,
+          "voice": 25
+        },
+        "expanded": [
+          "Controls",
+          "网格部件",
+          "色彩",
+          "光照",
+          "相机"
+        ],
+        "menu": 189
+      },
+      {
+        "test": "individually-hittable-finger-handles",
+        "count": 24
+      },
+      {
+        "test": "finger-edit-reset-undo-redo-save-load",
+        "finger": "a7ed5d7b-a63b-4847-b928-af57d58cd37c",
+        "nodeCount": 319
+      },
+      {
+        "test": "free-structure-opt-in-stretch",
+        "cloth": "a70fdafb-e219-4ad9-aa9c-2902a34bbf16",
+        "scaled": [
+          1.2,
+          1,
+          1
+        ],
+        "restored": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "test": "responsive-nodes-and-toolbar",
+        "width": 430,
+        "height": 932,
+        "menuHeight": 189
+      },
+      {
+        "test": "responsive-nodes-and-toolbar",
+        "width": 932,
+        "height": 430,
+        "menuHeight": 99
+      },
+      {
+        "test": "responsive-nodes-and-toolbar",
+        "width": 360,
+        "height": 740,
+        "menuHeight": 219
+      },
+      {
+        "test": "TPS-existing-actor-selection-and-two-finger-pan",
+        "target": {
+          "x": 474.5013726315904,
+          "y": 314.58040842223494
+        },
+        "beforePan": {
+          "p": [
+            -0.04164840083432744,
+            1.8007040395206335,
+            4.326425563144268
+          ],
+          "target": [
+            -0.04164840083432744,
+            1.3715003606794376,
+            -1.038620422370677
+          ],
+          "q": [
+            -0.039904394895017556,
+            0,
+            0,
+            0.9992035024298416
+          ]
+        },
+        "afterPan": {
+          "p": [
+            -0.29647191598137135,
+            1.9531112234579466,
+            4.314232988429284
+          ],
+          "target": [
+            -0.29647191598137135,
+            1.5239075446167507,
+            -1.0508129970856621
+          ],
+          "q": [
+            -0.039904394895017556,
+            0,
+            0,
+            0.9992035024298416
+          ]
+        }
+      },
+      {
+        "test": "BFCache-and-reload-session-pose-library",
+        "models": 2,
+        "savedPosePersisted": true
+      },
+      {
+        "test": "native-WebGL-context-recovery",
+        "state": {
+          "losses": 1,
+          "restores": 1,
+          "wasDiscarded": false,
+          "visibility": "visible"
+        }
+      }
+    ],
+    "savedPose": "Static poses, model/structure validated, localStorage library + JSON export/import; not animation-clip recording",
+    "stretch": "Off by default for normal and free editing; explicit Action-panel switch required",
+    "entry": "Double-click model, top Move/Rotate button, or Action panel; no persistent floating edit button"
+  },
+  "jump": {
+    "policy": "Own-rig rotation only; standing bilateral relaxed swing, lighter walking lead/trail arms, larger running lead/trail arms; no changes to existing leg paths, flight/root physics or UI rollback controls",
+    "standingSample": {
+      "id": 101501,
+      "phase": "Airborne",
+      "ratio": 0.45,
+      "before": [
+        {
+          "side": "L",
+          "elbowDegrees": 96.32345144068933,
+          "wristDegrees": 7.1933926532595445,
+          "upperDirection": [
+            0.2950224212633306,
+            -0.9335881988905947,
+            0.20340807713593168
+          ],
+          "forearmDirection": [
+            0.036386838154078914,
+            0.3346379741608866,
+            0.9416440008085044
+          ],
+          "palmDirection": [
+            -0.05665620227545004,
+            0.4123334899710771,
+            0.9092695792733829
+          ],
+          "hand": [
+            0.15525164156868304,
+            1.0226874739280045,
+            0.23221781202073097
+          ]
+        },
+        {
+          "side": "R",
+          "elbowDegrees": 96.54865807690459,
+          "wristDegrees": 7.137923377296595,
+          "upperDirection": [
+            -0.27942515447422384,
+            -0.9289705542976356,
+            0.24276592078584602
+          ],
+          "forearmDirection": [
+            0.09607198159020001,
+            0.3384865445455718,
+            0.9360539693388042
+          ],
+          "palmDirection": [
+            0.17693737612581056,
+            0.4209897909060655,
+            0.889640804416356
+          ],
+          "hand": [
+            -0.11742601261086158,
+            1.0227102824963559,
+            0.25137134549976814
+          ]
+        }
+      ],
+      "after": [
+        {
+          "side": "L",
+          "elbowDegrees": 21.835569492522534,
+          "wristDegrees": 2.9709710338878823,
+          "upperDirection": [
+            0.16401674646379438,
+            -0.9338831831290365,
+            0.3177431465007706
+          ],
+          "forearmDirection": [
+            0.1894854799457436,
+            -0.7418340040820282,
+            0.6432554417005399
+          ],
+          "palmDirection": [
+            0.1863870972490722,
+            -0.7751535576838761,
+            0.6036528903178501
+          ],
+          "hand": [
+            0.16054009556821572,
+            0.8129350759576659,
+            0.170354126395531
+          ]
+        },
+        {
+          "side": "R",
+          "elbowDegrees": 21.83558418080152,
+          "wristDegrees": 2.970972936642991,
+          "upperDirection": [
+            -0.11260238737872032,
+            -0.9338832677874729,
+            0.3393858342700885
+          ],
+          "forearmDirection": [
+            -0.08713480868373494,
+            -0.7418339466233959,
+            0.664898428899336
+          ],
+          "palmDirection": [
+            -0.0902334334206731,
+            -0.7751535289722857,
+            0.6252958771772996
+          ],
+          "hand": [
+            -0.12458437807969533,
+            0.8045432351513491,
+            0.19334658024829776
+          ]
+        }
+      ],
+      "note": "Paused sample of actual clip tracks, not a measurement of complete human biomechanics"
+    },
+    "sampledModels": [
+      101501,
+      100107,
+      101901
+    ],
+    "silhouette": [
+      {
+        "id": 101501,
+        "mode": "Standing",
+        "phase": "Takeoff",
+        "clip": "Magius101501StandingJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.8,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 22.313462037728552,
+            "wristDegrees": 2.9770186641741407,
+            "upperDirection": [
+              0.15491302476056662,
+              -0.8964740972077737,
+              0.41513389140738605
+            ],
+            "forearmDirection": [
+              0.17916788911067322,
+              -0.665434078790799,
+              0.7246353250397516
+            ],
+            "palmDirection": [
+              0.1763768251827386,
+              -0.7030556345207797,
+              0.6889150820725597
+            ],
+            "hand": [
+              0.15734126132159226,
+              0.836941130207508,
+              0.21892996885398133
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 22.314133102949263,
+            "wristDegrees": 2.977108591657698,
+            "upperDirection": [
+              -0.08844818470028734,
+              -0.8964756285363518,
+              0.4341755014548573
+            ],
+            "forearmDirection": [
+              -0.06426808550173375,
+              -0.6654272563564377,
+              0.7436909167684419
+            ],
+            "palmDirection": [
+              -0.06706627355737081,
+              -0.7030503478790976,
+              0.7079705666891863
+            ],
+            "hand": [
+              -0.11388575119976466,
+              0.8285316483536302,
+              0.240542912765703
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101501,
+        "mode": "Standing",
+        "phase": "Airborne",
+        "clip": "Magius101501StandingJumpAirborneV45TargetRigMorphology_ExpressiveV1_L",
+        "ratio": 0.45,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 21.835569492522534,
+            "wristDegrees": 2.9709710338878823,
+            "upperDirection": [
+              0.16401674646379438,
+              -0.9338831831290365,
+              0.3177431465007706
+            ],
+            "forearmDirection": [
+              0.1894854799457436,
+              -0.7418340040820282,
+              0.6432554417005399
+            ],
+            "palmDirection": [
+              0.1863870972490722,
+              -0.7751535576838761,
+              0.6036528903178501
+            ],
+            "hand": [
+              0.16054009556821572,
+              0.8129350759576659,
+              0.170354126395531
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 21.83558418080152,
+            "wristDegrees": 2.970972936642991,
+            "upperDirection": [
+              -0.11260238737872032,
+              -0.9338832677874729,
+              0.3393858342700885
+            ],
+            "forearmDirection": [
+              -0.08713480868373494,
+              -0.7418339466233959,
+              0.664898428899336
+            ],
+            "palmDirection": [
+              -0.0902334334206731,
+              -0.7751535289722857,
+              0.6252958771772996
+            ],
+            "hand": [
+              -0.12458437807969533,
+              0.8045432351513491,
+              0.19334658024829776
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101501,
+        "mode": "Standing",
+        "phase": "Land",
+        "clip": "Magius101501StandingJumpLandV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.12,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 23.34419773565561,
+            "wristDegrees": 2.9776202583639138,
+            "upperDirection": [
+              0.16560414020558514,
+              -0.815763038130812,
+              0.5541713943955935
+            ],
+            "forearmDirection": [
+              0.18733693680363114,
+              -0.5223264016154672,
+              0.8319134584104708
+            ],
+            "palmDirection": [
+              0.18511454819914386,
+              -0.5657815049826752,
+              0.8035072449359533
+            ],
+            "hand": [
+              0.16000991023645572,
+              0.7283594097535216,
+              0.2541360571089107
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 23.344209588045423,
+            "wristDegrees": 2.9776216878183748,
+            "upperDirection": [
+              -0.07739940687800033,
+              -0.8157630981331875,
+              0.5731840014681826
+            ],
+            "forearmDirection": [
+              -0.05567083870965342,
+              -0.5223263177363273,
+              0.8509265394364974
+            ],
+            "palmDirection": [
+              -0.057893452121932705,
+              -0.5657814461116748,
+              0.8225203361845757
+            ],
+            "hand": [
+              -0.11100107181945167,
+              0.720006409591446,
+              0.2763994531613826
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101501,
+        "mode": "Walk",
+        "phase": "Takeoff",
+        "clip": "Magius101501WalkJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.8,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 30.93231731892787,
+            "wristDegrees": 2.988438829785895,
+            "upperDirection": [
+              0.10295279049195011,
+              -0.9747951246383808,
+              0.19792722882707187
+            ],
+            "forearmDirection": [
+              0.13988883537265856,
+              -0.7291619218023256,
+              0.6698910400442898
+            ],
+            "palmDirection": [
+              0.136841020587469,
+              -0.7636847453298884,
+              0.6309200780090957
+            ],
+            "hand": [
+              0.138106159418828,
+              0.8070432704329784,
+              0.16041285352222792
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 34.35157685458388,
+            "wristDegrees": 2.988505678107176,
+            "upperDirection": [
+              -0.09860920086865262,
+              -0.9848548020460771,
+              -0.14260871078173382
+            ],
+            "forearmDirection": [
+              -0.053034745621834196,
+              -0.8966303057083128,
+              0.43959232322942693
+            ],
+            "palmDirection": [
+              -0.05674188156883689,
+              -0.9181208473972665,
+              0.39221737397845297
+            ],
+            "hand": [
+              -0.11386434865548578,
+              0.7629359713621707,
+              0.0534074807105169
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101501,
+        "mode": "Walk",
+        "phase": "Airborne",
+        "clip": "Magius101501WalkJumpAirborneV45TargetRigMorphology_ExpressiveV1_L",
+        "ratio": 0.45,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 28.96421367186403,
+            "wristDegrees": 2.9885800118891916,
+            "upperDirection": [
+              0.10450636153363115,
+              -0.9702576354101577,
+              0.2183541648956838
+            ],
+            "forearmDirection": [
+              0.1390669703497797,
+              -0.7382151335036532,
+              0.6600748400173398
+            ],
+            "palmDirection": [
+              0.13598188444521897,
+              -0.7722115259381911,
+              0.620643445394324
+            ],
+            "hand": [
+              0.13742362783734985,
+              0.8056928089845359,
+              0.1519518400447603
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 32.9478251751795,
+            "wristDegrees": 2.988582061393511,
+            "upperDirection": [
+              -0.10048680603733318,
+              -0.9808260034508693,
+              -0.16698129466203848
+            ],
+            "forearmDirection": [
+              -0.05652831304243584,
+              -0.9170020888960184,
+              0.39485658001977764
+            ],
+            "palmDirection": [
+              -0.06031341562741528,
+              -0.9361168401480803,
+              0.34647879226083667
+            ],
+            "hand": [
+              -0.11580976953675565,
+              0.7592291326216276,
+              0.0284438352689556
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101501,
+        "mode": "Walk",
+        "phase": "Land",
+        "clip": "Magius101501WalkJumpLandV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.12,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 31.557672819907584,
+            "wristDegrees": 2.9885796252832075,
+            "upperDirection": [
+              0.10904074360960571,
+              -0.954864737013518,
+              0.2763031853619666
+            ],
+            "forearmDirection": [
+              0.14485768261631837,
+              -0.6634345435120268,
+              0.734078237153247
+            ],
+            "palmDirection": [
+              0.14206996548190945,
+              -0.7014182919271357,
+              0.6984472096429252
+            ],
+            "hand": [
+              0.13912667919932714,
+              0.6696745154170372,
+              0.17371589023110579
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 35.50142306989053,
+            "wristDegrees": 2.9885824101569094,
+            "upperDirection": [
+              -0.10394878988545138,
+              -0.9718933909808688,
+              -0.21122946207633664
+            ],
+            "forearmDirection": [
+              -0.056578099792575276,
+              -0.9172723960278168,
+              0.39422109292787627
+            ],
+            "palmDirection": [
+              -0.06036423966587473,
+              -0.9363534181502835,
+              0.3458300664890792
+            ],
+            "hand": [
+              -0.1169968381502418,
+              0.6068246734544631,
+              0.013271851751452582
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101501,
+        "mode": "Run",
+        "phase": "Takeoff",
+        "clip": "Magius101501RunJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.8,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 67.94144536470908,
+            "wristDegrees": 2.9881833695069715,
+            "upperDirection": [
+              0.11776076079903808,
+              -0.9149088330783492,
+              0.3861013213798226
+            ],
+            "forearmDirection": [
+              0.16463623619611983,
+              0.02680680464956977,
+              0.9859900126044154
+            ],
+            "palmDirection": [
+              0.16464543512702665,
+              -0.02534090915286238,
+              0.986027240503597
+            ],
+            "hand": [
+              0.14629858988784858,
+              0.971352068067939,
+              0.26484278683050844
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 70.92639452635083,
+            "wristDegrees": 2.9882995797880185,
+            "upperDirection": [
+              -0.11316887226425117,
+              -0.9379803950304196,
+              -0.32769739835557943
+            ],
+            "forearmDirection": [
+              -0.02605800530863674,
+              -0.6193782793165643,
+              0.7846601350076267
+            ],
+            "palmDirection": [
+              -0.028674053196798985,
+              -0.659360045854457,
+              0.7512803262458531
+            ],
+            "hand": [
+              -0.11165756694804055,
+              0.8286518826022886,
+              0.0818866284611221
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101501,
+        "mode": "Run",
+        "phase": "Airborne",
+        "clip": "Magius101501RunJumpAirborneV45TargetRigMorphology_ExpressiveV1_L",
+        "ratio": 0.45,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 64.82487529160922,
+            "wristDegrees": 2.9885788176953803,
+            "upperDirection": [
+              0.11995193423497817,
+              -0.901529310020294,
+              0.4157600710116592
+            ],
+            "forearmDirection": [
+              0.16459514705382766,
+              0.004926719464098655,
+              0.9863489063215161
+            ],
+            "palmDirection": [
+              0.16450887702204284,
+              -0.0472161499952117,
+              0.9852448754297461
+            ],
+            "hand": [
+              0.14591184139461608,
+              0.969372683258674,
+              0.2604385335821731
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 67.8085899452235,
+            "wristDegrees": 2.9885790348620036,
+            "upperDirection": [
+              -0.11619382439636669,
+              -0.922645386076847,
+              -0.36772882226343384
+            ],
+            "forearmDirection": [
+              -0.031042405204078867,
+              -0.6926595117906202,
+              0.7205963986900886
+            ],
+            "palmDirection": [
+              -0.033946591246812596,
+              -0.7291816894877319,
+              0.6834776460562105
+            ],
+            "hand": [
+              -0.11415242457863461,
+              0.8168392026333681,
+              0.04962809095769011
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101501,
+        "mode": "Run",
+        "phase": "Land",
+        "clip": "Magius101501RunJumpLandV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.12,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 68.54205221593233,
+            "wristDegrees": 2.9885750993704896,
+            "upperDirection": [
+              0.12705713480682568,
+              -0.8527943454408066,
+              0.5065553167018055
+            ],
+            "forearmDirection": [
+              0.16342415935455418,
+              0.17237851467555249,
+              0.9713795302648226
+            ],
+            "palmDirection": [
+              0.1640231392358697,
+              0.1207920491207411,
+              0.9790330385969734
+            ],
+            "hand": [
+              0.1467855667914556,
+              0.8591905139793351,
+              0.2716013714950186
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 71.5250954660195,
+            "wristDegrees": 2.9885797835146377,
+            "upperDirection": [
+              -0.1224139088131307,
+              -0.8860040608890474,
+              -0.4472266081274772
+            ],
+            "forearmDirection": [
+              -0.032293635372923034,
+              -0.7088625249289876,
+              0.7046070123591597
+            ],
+            "palmDirection": [
+              -0.035262261670115376,
+              -0.7445231283789169,
+              0.6666647464886526
+            ],
+            "hand": [
+              -0.11618380830945782,
+              0.6673163785636026,
+              0.023665671572436528
+            ]
+          }
+        ]
+      },
+      {
+        "id": 100107,
+        "mode": "Standing",
+        "phase": "Takeoff",
+        "clip": "Magius100107StandingJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.8,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 22.313988857223098,
+            "wristDegrees": 2.977095571439014,
+            "upperDirection": [
+              0.14756061351943636,
+              -0.8964751439832164,
+              0.41780160549959483
+            ],
+            "forearmDirection": [
+              0.16635383742104284,
+              -0.6654285384628025,
+              0.7276889864320826
+            ],
+            "palmDirection": [
+              0.1641925996202997,
+              -0.7030513852078433,
+              0.6919245189955772
+            ],
+            "hand": [
+              0.18405286367892634,
+              0.8893080779800662,
+              0.21841703733305284
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 22.31358662627144,
+            "wristDegrees": 2.9770421963223743,
+            "upperDirection": [
+              -0.09610118708111197,
+              -0.8964742157598348,
+              0.43254889009150194
+            ],
+            "forearmDirection": [
+              -0.0773836545089696,
+              -0.665432622071026,
+              0.7424359874753617
+            ],
+            "palmDirection": [
+              -0.07955190569826483,
+              -0.7030545537645874,
+              0.7066723347709681
+            ],
+            "hand": [
+              -0.13930274980036286,
+              0.8943808575253143,
+              0.2343897730574388
+            ]
+          }
+        ]
+      },
+      {
+        "id": 100107,
+        "mode": "Standing",
+        "phase": "Airborne",
+        "clip": "Magius100107StandingJumpAirborneV45TargetRigMorphology_ExpressiveV1_L",
+        "ratio": 0.45,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 21.83557689799436,
+            "wristDegrees": 2.970973238126516,
+            "upperDirection": [
+              0.15838977165196444,
+              -0.9338832264392392,
+              0.32058508950273296
+            ],
+            "forearmDirection": [
+              0.17811648117271586,
+              -0.7418339591683698,
+              0.6464958593519614
+            ],
+            "palmDirection": [
+              0.1757166450563035,
+              -0.7751535461811012,
+              0.6068448240637967
+            ],
+            "hand": [
+              0.1880658441999636,
+              0.8648672152917016,
+              0.17049408495781437
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 21.835567543583437,
+            "wristDegrees": 2.9709721459608254,
+            "upperDirection": [
+              -0.11856788202631134,
+              -0.9338831889771958,
+              0.33734825729144946
+            ],
+            "forearmDirection": [
+              -0.09884237218927575,
+              -0.7418340240419081,
+              0.6632589737303118
+            ],
+            "palmDirection": [
+              -0.10124239469959577,
+              -0.775153592100035,
+              0.6236079587127669
+            ],
+            "hand": [
+              -0.14907294777518112,
+              0.869812209508658,
+              0.18712712533394457
+            ]
+          }
+        ]
+      },
+      {
+        "id": 100107,
+        "mode": "Standing",
+        "phase": "Land",
+        "clip": "Magius100107StandingJumpLandV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.12,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 23.344200169678064,
+            "wristDegrees": 2.9776203521075146,
+            "upperDirection": [
+              0.15580948803578934,
+              -0.8157630167546616,
+              0.5570045816089481
+            ],
+            "forearmDirection": [
+              0.17264276551099872,
+              -0.5223263432803328,
+              0.8350866222327539
+            ],
+            "palmDirection": [
+              0.17092146816065568,
+              -0.5657814501049853,
+              0.8066456486208216
+            ],
+            "hand": [
+              0.18604239554274915,
+              0.7799261452840088,
+              0.25261504304330673
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 23.34419345655634,
+            "wristDegrees": 2.9776207653058084,
+            "upperDirection": [
+              -0.08749177649247879,
+              -0.8157629909906912,
+              0.5717306460004673
+            ],
+            "forearmDirection": [
+              -0.0706627033714103,
+              -0.5223264053523964,
+              0.8498128668265078
+            ],
+            "palmDirection": [
+              -0.07238420517530791,
+              -0.5657815181268546,
+              0.8213719015082087
+            ],
+            "hand": [
+              -0.1371727515401552,
+              0.7846980554150691,
+              0.26818789235992935
+            ]
+          }
+        ]
+      },
+      {
+        "id": 100107,
+        "mode": "Walk",
+        "phase": "Takeoff",
+        "clip": "Magius100107WalkJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.8,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 30.93250917744789,
+            "wristDegrees": 2.9884605545640186,
+            "upperDirection": [
+              0.0994449705597941,
+              -0.9747953396034459,
+              0.19971165143216962
+            ],
+            "forearmDirection": [
+              0.12805502539202313,
+              -0.7291598842740539,
+              0.672255735295205
+            ],
+            "palmDirection": [
+              0.12569452786117918,
+              -0.763683089772587,
+              0.6332369414848994
+            ],
+            "hand": [
+              0.1661646712612877,
+              0.8599021322994638,
+              0.16185355468125417
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 34.35149989826908,
+            "wristDegrees": 2.988503760474809,
+            "upperDirection": [
+              -0.09608178844920573,
+              -0.9848546521390887,
+              -0.14432464823583116
+            ],
+            "forearmDirection": [
+              -0.060776313224413465,
+              -0.896630791587754,
+              0.4385880337259165
+            ],
+            "palmDirection": [
+              -0.06364778825967247,
+              -0.9181212585256722,
+              0.39115510183671076
+            ],
+            "hand": [
+              -0.13585292130398638,
+              0.8281488973903932,
+              0.05215146232165621
+            ]
+          }
+        ]
+      },
+      {
+        "id": 100107,
+        "mode": "Walk",
+        "phase": "Airborne",
+        "clip": "Magius100107WalkJumpAirborneV45TargetRigMorphology_ExpressiveV1_L",
+        "ratio": 0.45,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 28.96421221068844,
+            "wristDegrees": 2.988581447817917,
+            "upperDirection": [
+              0.10064108976859552,
+              -0.9702576168449295,
+              0.22016250362990397
+            ],
+            "forearmDirection": [
+              0.12740975769587237,
+              -0.7382151065852327,
+              0.6624237390471694
+            ],
+            "palmDirection": [
+              0.12502021440267622,
+              -0.7722115178289777,
+              0.622944072708759
+            ],
+            "hand": [
+              0.1656127912411391,
+              0.8581024048240992,
+              0.15304961384916382
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 32.947826580257775,
+            "wristDegrees": 2.988585586555313,
+            "upperDirection": [
+              -0.09752782035296452,
+              -0.980825988797964,
+              -0.16872671381762863
+            ],
+            "forearmDirection": [
+              -0.06348003808216761,
+              -0.9170020784516796,
+              0.39379877206561476
+            ],
+            "palmDirection": [
+              -0.06641177058737964,
+              -0.9361168507792622,
+              0.3453617211194162
+            ],
+            "hand": [
+              -0.13738839877440762,
+              0.8237676564573275,
+              0.026652241651989025
+            ]
+          }
+        ]
+      },
+      {
+        "id": 100107,
+        "mode": "Walk",
+        "phase": "Land",
+        "clip": "Magius100107WalkJumpLandV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.12,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 31.55767060879237,
+            "wristDegrees": 2.9885795158935693,
+            "upperDirection": [
+              0.10415324178397867,
+              -0.9548647283576638,
+              0.2781824091568931
+            ],
+            "forearmDirection": [
+              0.13189501866394754,
+              -0.6634345589930282,
+              0.7365176779856428
+            ],
+            "palmDirection": [
+              0.12973579317216524,
+              -0.7014183075245682,
+              0.7008430507890901
+            ],
+            "hand": [
+              0.16691452677071744,
+              0.7219067370690225,
+              0.17455296931880626
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 35.50142853443224,
+            "wristDegrees": 2.9885872124007977,
+            "upperDirection": [
+              -0.10020914443291716,
+              -0.9718933825262193,
+              -0.21302905992790475
+            ],
+            "forearmDirection": [
+              -0.0635185405050349,
+              -0.9172723727606187,
+              0.3931625480411566
+            ],
+            "palmDirection": [
+              -0.06645108265779298,
+              -0.9363534254782271,
+              0.3447122223084023
+            ],
+            "hand": [
+              -0.13831808634287834,
+              0.6704919424129381,
+              0.011291526282619271
+            ]
+          }
+        ]
+      },
+      {
+        "id": 100107,
+        "mode": "Run",
+        "phase": "Takeoff",
+        "clip": "Magius100107RunJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.8,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 67.94249999471563,
+            "wristDegrees": 2.9882486784597915,
+            "upperDirection": [
+              0.11092884278466296,
+              -0.914909333919747,
+              0.38811815539211814
+            ],
+            "forearmDirection": [
+              0.14722505047251377,
+              0.02682478646391749,
+              0.9887392049193413
+            ],
+            "palmDirection": [
+              0.14723320414451604,
+              -0.02532406616008786,
+              0.9887775661241809
+            ],
+            "hand": [
+              0.1725150176155733,
+              1.029133278925076,
+              0.26644854946500907
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 70.92615169878304,
+            "wristDegrees": 2.9883038818335765,
+            "upperDirection": [
+              -0.1073793914044834,
+              -0.9379800293891043,
+              -0.329640911855337
+            ],
+            "forearmDirection": [
+              -0.03988751433576086,
+              -0.6193811575184,
+              0.7840765064145727
+            ],
+            "palmDirection": [
+              -0.041914961350871804,
+              -0.6593628414438442,
+              0.7506555663805171
+            ],
+            "hand": [
+              -0.1338530608558349,
+              0.8953600392543826,
+              0.08554607074440405
+            ]
+          }
+        ]
+      },
+      {
+        "id": 100107,
+        "mode": "Run",
+        "phase": "Airborne",
+        "clip": "Magius100107RunJumpAirborneV45TargetRigMorphology_ExpressiveV1_L",
+        "ratio": 0.45,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 64.82487153458551,
+            "wristDegrees": 2.9885733488313098,
+            "upperDirection": [
+              0.11260451654591283,
+              -0.9015292268193931,
+              0.4178100956701365
+            ],
+            "forearmDirection": [
+              0.14718235842185912,
+              0.004926827219816961,
+              0.9890971032931628
+            ],
+            "palmDirection": [
+              0.14711556488147357,
+              -0.04721594701515619,
+              0.9879917332230402
+            ],
+            "hand": [
+              0.17218724661555623,
+              1.0264958840050047,
+              0.2616682678530568
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 67.80859683896982,
+            "wristDegrees": 2.9885876625692576,
+            "upperDirection": [
+              -0.10969364600503752,
+              -0.9226453729714789,
+              -0.36971992069733306
+            ],
+            "forearmDirection": [
+              -0.04374006676713304,
+              -0.6926594293397904,
+              0.7199373038715821
+            ],
+            "palmDirection": [
+              -0.04598951141004418,
+              -0.7291817124650535,
+              0.682773018686882
+            ],
+            "hand": [
+              -0.135806297007372,
+              0.8823373019090617,
+              0.05279280111408817
+            ]
+          }
+        ]
+      },
+      {
+        "id": 100107,
+        "mode": "Run",
+        "phase": "Land",
+        "clip": "Magius100107RunJumpLandV45TargetRigMorphology_ExpressiveV1_SE",
+        "ratio": 0.12,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 68.5420541803599,
+            "wristDegrees": 2.9885688368952668,
+            "upperDirection": [
+              0.118107859831886,
+              -0.8527942918871896,
+              0.5087164526242082
+            ],
+            "forearmDirection": [
+              0.14627537764366375,
+              0.17237865295031854,
+              0.9741093952437977
+            ],
+            "palmDirection": [
+              0.1467393481158671,
+              0.12079229698048949,
+              0.9817722672314123
+            ],
+            "hand": [
+              0.17278157895814325,
+              0.9164174887333139,
+              0.2714832750306815
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 71.52510139013702,
+            "wristDegrees": 2.9885883876973063,
+            "upperDirection": [
+              -0.11451129083699044,
+              -0.8860040110208607,
+              -0.4493150973713133
+            ],
+            "forearmDirection": [
+              -0.044709323058235564,
+              -0.7088625221134306,
+              0.7039282642248856
+            ],
+            "palmDirection": [
+              -0.047008691648952564,
+              -0.7445232231135591,
+              0.6659394515675214
+            ],
+            "hand": [
+              -0.137370513385088,
+              0.7314808835319432,
+              0.026950212054250272
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101901,
+        "mode": "Standing",
+        "phase": "Takeoff",
+        "clip": "Magius101901StandingJumpTakeoffV37SetA_ExpressiveV1_SE",
+        "ratio": 0.8,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 22.313880393359067,
+            "wristDegrees": 2.977075677339193,
+            "upperDirection": [
+              0.17940598094147553,
+              -0.8964749592602237,
+              0.40514952970700474
+            ],
+            "forearmDirection": [
+              0.22208920955083755,
+              -0.6654297126834225,
+              0.7126567760704602
+            ],
+            "palmDirection": [
+              0.21717092587101974,
+              -0.7030522394907835,
+              0.6771664031117595
+            ],
+            "hand": [
+              0.15696218214793156,
+              0.8398533611796898,
+              0.2356583397247881
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 22.313369813068306,
+            "wristDegrees": 2.9770068788812427,
+            "upperDirection": [
+              -0.06239359315347515,
+              -0.8964738320948837,
+              0.43868178432949856
+            ],
+            "forearmDirection": [
+              -0.019787580926119038,
+              -0.6654349551093188,
+              0.7461935219229333
+            ],
+            "palmDirection": [
+              -0.024712963471473767,
+              -0.7030563090533642,
+              0.7107046473301818
+            ],
+            "hand": [
+              -0.1028692052638119,
+              0.8458196565483206,
+              0.2710623993530593
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101901,
+        "mode": "Standing",
+        "phase": "Airborne",
+        "clip": "Magius101901StandingJumpAirborneV37SetA_ExpressiveV1_L",
+        "ratio": 0.45,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 21.83557803201251,
+            "wristDegrees": 2.9709715785697095,
+            "upperDirection": [
+              0.18268853977653285,
+              -0.9338832587145669,
+              0.30738730703622025
+            ],
+            "forearmDirection": [
+              0.22754026631699098,
+              -0.7418339972049974,
+              0.6307992927986275
+            ],
+            "palmDirection": [
+              0.2220837452940858,
+              -0.775153556009836,
+              0.591452259004442
+            ],
+            "hand": [
+              0.15746298468821687,
+              0.8191026019473872,
+              0.19438919830125442
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 21.83556624469184,
+            "wristDegrees": 2.9709713427707625,
+            "upperDirection": [
+              -0.09214562466590975,
+              -0.9338831965681724,
+              0.3455016049492996
+            ],
+            "forearmDirection": [
+              -0.04729517122377039,
+              -0.7418340527293291,
+              0.6689136005420231
+            ],
+            "palmDirection": [
+              -0.05275196611869027,
+              -0.7751536084694015,
+              0.6295666075543384
+            ],
+            "hand": [
+              -0.1146057078866664,
+              0.825044338803151,
+              0.23128186075548862
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101901,
+        "mode": "Standing",
+        "phase": "Land",
+        "clip": "Magius101901StandingJumpLandV37SetA_ExpressiveV1_SE",
+        "ratio": 0.12,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 23.34420212170307,
+            "wristDegrees": 2.9776208929082286,
+            "upperDirection": [
+              0.19838470906447278,
+              -0.8157630628194404,
+              0.5432993029158515
+            ],
+            "forearmDirection": [
+              0.23665589190209949,
+              -0.5223263693281996,
+              0.8192491395982318
+            ],
+            "palmDirection": [
+              0.23274199757582917,
+              -0.5657814853888735,
+              0.7910262153402835
+            ],
+            "hand": [
+              0.16179257893212426,
+              0.7226913056618336,
+              0.2710171100397604
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 23.344189899217774,
+            "wristDegrees": 2.9776186587009392,
+            "upperDirection": [
+              -0.04305086923976009,
+              -0.815762994220888,
+              0.5767818997831612
+            ],
+            "forearmDirection": [
+              -0.004784055887957511,
+              -0.5223264487159781,
+              0.8527321934705031
+            ],
+            "palmDirection": [
+              -0.008698147119231218,
+              -0.5657815279421515,
+              0.8245093115763681
+            ],
+            "hand": [
+              -0.09795555748407668,
+              0.7285900354081485,
+              0.3059341717893367
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101901,
+        "mode": "Walk",
+        "phase": "Takeoff",
+        "clip": "Magius101901WalkJumpTakeoffV37SetA_ExpressiveV1_SE",
+        "ratio": 0.8,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 30.93248501666518,
+            "wristDegrees": 2.988457184511763,
+            "upperDirection": [
+              0.11458002690607975,
+              -0.9747953358359585,
+              0.19143006730047193
+            ],
+            "forearmDirection": [
+              0.17961934442751204,
+              -0.7291601789798091,
+              0.6603501529473309
+            ],
+            "palmDirection": [
+              0.1742508393093706,
+              -0.7636833276309903,
+              0.6216304530011679
+            ],
+            "hand": [
+              0.1371124621329223,
+              0.8135739470375601,
+              0.18644352622163707
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 34.35143645998979,
+            "wristDegrees": 2.988495477113368,
+            "upperDirection": [
+              -0.10694756084112447,
+              -0.984854591813907,
+              -0.13646850264144017
+            ],
+            "forearmDirection": [
+              -0.026703906314871028,
+              -0.8966312565973044,
+              0.4419720478494827
+            ],
+            "palmDirection": [
+              -0.033232024669838954,
+              -0.9181216181069385,
+              0.39490293351789624
+            ],
+            "hand": [
+              -0.11239120898999941,
+              0.7866979241769726,
+              0.10837863485050944
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101901,
+        "mode": "Walk",
+        "phase": "Airborne",
+        "clip": "Magius101901WalkJumpAirborneV37SetA_ExpressiveV1_L",
+        "ratio": 0.45,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 28.964214293908125,
+            "wristDegrees": 2.9885811409615046,
+            "upperDirection": [
+              0.11735256741747409,
+              -0.9702576370261501,
+              0.2117274018944138
+            ],
+            "forearmDirection": [
+              0.1782159102720739,
+              -0.7382151186955556,
+              0.6505978234325741
+            ],
+            "palmDirection": [
+              0.172782811861573,
+              -0.7722115264886832,
+              0.6114208520186615
+            ],
+            "hand": [
+              0.136250826092435,
+              0.8130428417573903,
+              0.180354838023241
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 32.94782771958477,
+            "wristDegrees": 2.988583330087074,
+            "upperDirection": [
+              -0.1102740112028624,
+              -0.9808260056994368,
+              -0.16068599502420686
+            ],
+            "forearmDirection": [
+              -0.03286028899829478,
+              -0.9170020713917267,
+              0.3975266059903799
+            ],
+            "palmDirection": [
+              -0.039526069787017976,
+              -0.9361168350625892,
+              0.3494609576470495
+            ],
+            "hand": [
+              -0.11528900691100075,
+              0.7839538560384225,
+              0.08743057429764334
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101901,
+        "mode": "Walk",
+        "phase": "Land",
+        "clip": "Magius101901WalkJumpLandV37SetA_ExpressiveV1_SE",
+        "ratio": 0.12,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 31.55767203284621,
+            "wristDegrees": 2.9885804884063134,
+            "upperDirection": [
+              0.1253376735253484,
+              -0.9548647212985277,
+              0.26930249091818326
+            ],
+            "forearmDirection": [
+              0.18841327513495826,
+              -0.6634345167583531,
+              0.724123663283095
+            ],
+            "palmDirection": [
+              0.18350383645081972,
+              -0.7014182792305822,
+              0.6887225417895365
+            ],
+            "hand": [
+              0.13935399637393228,
+              0.6708524954039532,
+              0.20272949209700988
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 35.50142681078852,
+            "wristDegrees": 2.988583727863355,
+            "upperDirection": [
+              -0.1163708172167892,
+              -0.9718933945175618,
+              -0.2046486320340975
+            ],
+            "forearmDirection": [
+              -0.032947911936342965,
+              -0.9172723651248925,
+              0.3968952547930258
+            ],
+            "palmDirection": [
+              -0.039615523891256756,
+              -0.9363534011690773,
+              0.3488164537201803
+            ],
+            "hand": [
+              -0.11673005817349405,
+              0.6266409752011489,
+              0.07703969213776758
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101901,
+        "mode": "Run",
+        "phase": "Takeoff",
+        "clip": "Magius101901RunJumpTakeoffV37SetA_ExpressiveV1_SE",
+        "ratio": 0.8,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 67.94223724000055,
+            "wristDegrees": 2.9882271926149953,
+            "upperDirection": [
+              0.14058931700481916,
+              -0.9149092688800801,
+              0.3783856150297414
+            ],
+            "forearmDirection": [
+              0.22318830783979773,
+              0.026820231674044254,
+              0.9744063086908654
+            ],
+            "palmDirection": [
+              0.22319946870202334,
+              -0.025328246243591625,
+              0.9744436757008373
+            ],
+            "hand": [
+              0.14998443864709643,
+              0.9645091789513562,
+              0.2791306789105945
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 70.92575865744907,
+            "wristDegrees": 2.9882727430228218,
+            "upperDirection": [
+              -0.13253335995862212,
+              -0.937979611175314,
+              -0.3203578585230657
+            ],
+            "forearmDirection": [
+              0.02081726101364635,
+              -0.6193866856203829,
+              0.7848100249869944
+            ],
+            "palmDirection": [
+              0.01621329180138038,
+              -0.6593677172753938,
+              0.7516457560473551
+            ],
+            "hand": [
+              -0.10833316921604483,
+              0.8466600097548624,
+              0.13778411752224362
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101901,
+        "mode": "Run",
+        "phase": "Airborne",
+        "clip": "Magius101901RunJumpAirborneV37SetA_ExpressiveV1_L",
+        "ratio": 0.45,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 64.82488314734215,
+            "wristDegrees": 2.9885762329308885,
+            "upperDirection": [
+              0.14455298594730745,
+              -0.9015292767855514,
+              0.4078595313980513
+            ],
+            "forearmDirection": [
+              0.22317242369802917,
+              0.004926928474713405,
+              0.9747665334204659
+            ],
+            "palmDirection": [
+              0.22302034817404337,
+              -0.04721589628120336,
+              0.973669648001154
+            ],
+            "hand": [
+              0.1495998557769978,
+              0.9632388081476424,
+              0.2766104719918353
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 67.80859853926232,
+            "wristDegrees": 2.988582098704199,
+            "upperDirection": [
+              -0.1379347006560009,
+              -0.922645390752018,
+              -0.360138169705733
+            ],
+            "forearmDirection": [
+              0.012022200697210019,
+              -0.6926594157832452,
+              0.7211646139524661
+            ],
+            "palmDirection": [
+              0.006907740919801301,
+              -0.72918163551155,
+              0.6842853392760113
+            ],
+            "hand": [
+              -0.112102978404009,
+              0.8362206217770275,
+              0.11040493927175854
+            ]
+          }
+        ]
+      },
+      {
+        "id": 101901,
+        "mode": "Run",
+        "phase": "Land",
+        "clip": "Magius101901RunJumpLandV37SetA_ExpressiveV1_SE",
+        "ratio": 0.12,
+        "arms": [
+          {
+            "side": "L",
+            "elbowDegrees": 68.5420627054645,
+            "wristDegrees": 2.988572505999262,
+            "upperDirection": [
+              0.15706449006696024,
+              -0.8527943619745421,
+              0.4980687925823494
+            ],
+            "forearmDirection": [
+              0.22111011687897772,
+              0.17237867708648094,
+              0.959893696145401
+            ],
+            "palmDirection": [
+              0.22216475039691785,
+              0.12079225881983045,
+              0.9674978314654137
+            ],
+            "hand": [
+              0.1512723721053106,
+              0.8443608970932416,
+              0.2886687046676992
+            ]
+          },
+          {
+            "side": "R",
+            "elbowDegrees": 71.52510216000373,
+            "wristDegrees": 2.988580597386458,
+            "upperDirection": [
+              -0.1488886745098805,
+              -0.8860040306646938,
+              -0.43912301266115306
+            ],
+            "forearmDirection": [
+              0.00981879099819633,
+              -0.708862483522134,
+              0.7052783640507951
+            ],
+            "palmDirection": [
+              0.004590833798319992,
+              -0.7445230975377163,
+              0.6675809175507343
+            ],
+            "hand": [
+              -0.11483402587381529,
+              0.6810862918872462,
+              0.09071280143593734
+            ]
+          }
+        ]
+      }
+    ],
+    "movingContact": [
+      {
+        "test": "continuous-moving-landing",
+        "id": 100107,
+        "mode": "walk",
+        "beforeSpeed": 0.8403519420478904,
+        "preContactSpeed": 0.8403519420478904,
+        "contactSpeed": 0.8403519420478904,
+        "minimumAfterSpeed": 0.8403519420478904,
+        "contactState": "walk",
+        "gaitMatch": {
+          "phase": 0.03125,
+          "score": 1.3997160975337568,
+          "zeroPhaseScore": 1.4153012031392782,
+          "tracks": 6,
+          "family": "Magius100107TargetRigMorphologyWalkV45_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 21.418599999994047
+        },
+        "maxContactStepDegrees": 34.88517121950026,
+        "maxStepAt60Hz": 3.036133265404701,
+        "afterActions": [
+          {
+            "name": "Magius100107TargetRigMorphologyWalkV45_L",
+            "time": 0.9021446436391318,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 100107,
+        "mode": "run",
+        "beforeSpeed": 3.05775267662061,
+        "preContactSpeed": 3.05775267662061,
+        "contactSpeed": 3.05775267662061,
+        "minimumAfterSpeed": 3.05775267662061,
+        "contactState": "run",
+        "gaitMatch": {
+          "phase": 0.15625,
+          "score": 0.6488416789087668,
+          "zeroPhaseScore": 1.7530808312302462,
+          "tracks": 6,
+          "family": "Magius100107TargetRigMorphologyRunV45_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 38.4548340317294
+        },
+        "maxContactStepDegrees": 81.24753799467612,
+        "maxStepAt60Hz": 8.793023592497217,
+        "afterActions": [
+          {
+            "name": "Magius100107TargetRigMorphologyRunV45_L",
+            "time": 0.6472041316913697,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 100201,
+        "mode": "walk",
+        "beforeSpeed": 1.55,
+        "preContactSpeed": 1.55,
+        "contactSpeed": 1.55,
+        "minimumAfterSpeed": 1.55,
+        "contactState": "walk",
+        "gaitMatch": {
+          "phase": 0.28125,
+          "score": 0.7837482297762514,
+          "zeroPhaseScore": 0.9109104823812867,
+          "tracks": 6,
+          "family": "OfficialDungeon_100201_Walk_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 17.349170000003273
+        },
+        "maxContactStepDegrees": 30.648442522501547,
+        "maxStepAt60Hz": 3.5259707003760115,
+        "afterActions": [
+          {
+            "name": "OfficialDungeon_100201_Walk_L",
+            "time": 0.3708284289523961,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 100201,
+        "mode": "run",
+        "beforeSpeed": 3.65,
+        "preContactSpeed": 3.65,
+        "contactSpeed": 3.65,
+        "minimumAfterSpeed": 3.65,
+        "contactState": "run",
+        "gaitMatch": {
+          "phase": 0.15625,
+          "score": 1.0392521655167246,
+          "zeroPhaseScore": 2.188793912370862,
+          "tracks": 6,
+          "family": "OfficialDungeon_100201_Run_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 31.259865129572834
+        },
+        "maxContactStepDegrees": 71.69636407444094,
+        "maxStepAt60Hz": 8.49342100592943,
+        "afterActions": [
+          {
+            "name": "OfficialDungeon_100201_Run_L",
+            "time": 0.49690417796671427,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 102001,
+        "mode": "walk",
+        "beforeSpeed": 0.9037586914444644,
+        "preContactSpeed": 0.9037586914444644,
+        "contactSpeed": 0.9037586914444644,
+        "minimumAfterSpeed": 0.9037586914444644,
+        "contactState": "walk",
+        "gaitMatch": {
+          "phase": 0.03125,
+          "score": 0.44646416515869825,
+          "zeroPhaseScore": 0.4723062995891063,
+          "tracks": 6,
+          "family": "Magius102001TargetRigMorphologyWalkV45_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 15.074200000002978
+        },
+        "maxContactStepDegrees": 27.632580784681544,
+        "maxStepAt60Hz": 2.8032892579899538,
+        "afterActions": [
+          {
+            "name": "Magius102001TargetRigMorphologyWalkV45_L",
+            "time": 0.0400124675216853,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 102001,
+        "mode": "run",
+        "beforeSpeed": 3.2641461661238633,
+        "preContactSpeed": 3.2641461661238633,
+        "contactSpeed": 3.2641461661238633,
+        "minimumAfterSpeed": 3.2641461661238633,
+        "contactState": "run",
+        "gaitMatch": {
+          "phase": 0.1875,
+          "score": 0.3504311261662486,
+          "zeroPhaseScore": 1.8699329521470949,
+          "tracks": 6,
+          "family": "Magius102001TargetRigMorphologyRunV45_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 31.642082158468575
+        },
+        "maxContactStepDegrees": 86.96506343811696,
+        "maxStepAt60Hz": 8.061277664030113,
+        "afterActions": [
+          {
+            "name": "Magius102001TargetRigMorphologyRunV45_L",
+            "time": 0.19505830084557516,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 101501,
+        "mode": "walk",
+        "beforeSpeed": 0.8452205572587123,
+        "preContactSpeed": 0.8452205572587123,
+        "contactSpeed": 0.8452205572587123,
+        "minimumAfterSpeed": 0.8452205572587123,
+        "contactState": "walk",
+        "gaitMatch": {
+          "phase": 0.09375,
+          "score": 0.32434350309050985,
+          "zeroPhaseScore": 0.4861242074192599,
+          "tracks": 6,
+          "family": "Magius101501TargetRigMorphologyWalkV45_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 17.11059999999404
+        },
+        "maxContactStepDegrees": 31.713134046491568,
+        "maxStepAt60Hz": 3.0783473156611767,
+        "afterActions": [
+          {
+            "name": "Magius101501TargetRigMorphologyWalkV45_L",
+            "time": 0.5035244240851969,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "test": "continuous-moving-landing",
+        "id": 101501,
+        "mode": "run",
+        "beforeSpeed": 3.1434158745607808,
+        "preContactSpeed": 3.1434158745607808,
+        "contactSpeed": 3.1434158745607808,
+        "minimumAfterSpeed": 3.1434158745607808,
+        "contactState": "run",
+        "gaitMatch": {
+          "phase": 0.21875,
+          "score": 0.5796323230012095,
+          "zeroPhaseScore": 2.1852009543430793,
+          "tracks": 6,
+          "family": "Magius101501TargetRigMorphologyRunV45_L",
+          "fadeSeconds": 0.16,
+          "mixerTime": 32.598223958076275
+        },
+        "maxContactStepDegrees": 75.59964703698846,
+        "maxStepAt60Hz": 7.5313455899185024,
+        "afterActions": [
+          {
+            "name": "Magius101501TargetRigMorphologyRunV45_L",
+            "time": 0.10287912278840439,
+            "weight": 1
+          }
+        ]
+      }
+    ],
+    "originalClassicGroupsRetained": 27,
+    "classicChecks": [
+      {
+        "id": 100107,
+        "baseline": "56a820858d258acfbee794063019db9f3edad28d",
+        "clips": [
+          {
+            "name": "Magius100107StandingJumpTakeoffV45TargetRigMorphology_SE",
+            "sha256": "5a3f5f8bccf94e5a79ad92a2ae97b1f69145482cb47235f61e698f0169a7d1b2",
+            "maxArmStep": 6.467435396554015
+          },
+          {
+            "name": "Magius100107StandingJumpAirborneV45TargetRigMorphology_L",
+            "sha256": "74bafdd9e925aa2fd206ea5757b9d2fbb1d1280484c13060780e261d87ff2038",
+            "maxArmStep": 1.8712879735206285
+          },
+          {
+            "name": "Magius100107StandingJumpLandV45TargetRigMorphology_SE",
+            "sha256": "2ea95a375fd835ec292d7e195ec5acf516564cd16a64706509358aeb7c1dd3ce",
+            "maxArmStep": 2.885218892534806
+          },
+          {
+            "name": "Magius100107WalkJumpTakeoffV45TargetRigMorphology_SE",
+            "sha256": "7491e70eec5ef004dd8a51a56e6c370aaba8a87f18b7adc28e345048122db7c5",
+            "maxArmStep": 5.198920660264362
+          },
+          {
+            "name": "Magius100107WalkJumpAirborneV45TargetRigMorphology_L",
+            "sha256": "ed28c01db80700e05666c04813f00dbf5945d28382ca3607642601cd72a931ec",
+            "maxArmStep": 0.43952174158020374
+          },
+          {
+            "name": "Magius100107WalkJumpLandV45TargetRigMorphology_SE",
+            "sha256": "88b42cce3f38f66367d5864d1439c789621d514d6373e5873da68992f60804c9",
+            "maxArmStep": 1.1947887214264972
+          },
+          {
+            "name": "Magius100107RunJumpTakeoffV45TargetRigMorphology_SE",
+            "sha256": "ad0a0f7682901c1822b17a2a0a10194dd7d191346c8fa70c3a572114390dd90d",
+            "maxArmStep": 7.665542140981701
+          },
+          {
+            "name": "Magius100107RunJumpAirborneV45TargetRigMorphology_L",
+            "sha256": "9fc1e40f6c34856fa3499ab21f421531ab364ef53400aaf7b254bf5a273f0843",
+            "maxArmStep": 0.7705972036330492
+          },
+          {
+            "name": "Magius100107RunJumpLandV45TargetRigMorphology_SE",
+            "sha256": "f70d043d0ec073b417dfe0b5f9c5a4a415c77fbb3af59215d32f6b43ddfe060e",
+            "maxArmStep": 2.076771019769603
+          }
+        ]
+      },
+      {
+        "id": 100201,
+        "baseline": "56a820858d258acfbee794063019db9f3edad28d",
+        "clips": [
+          {
+            "name": "Magius100201StandingJumpTakeoffV45TargetRigMorphology_SE",
+            "sha256": "30ccfb1925f8fe68acbc5affbd8174ea57d8f221714b6625249672ffc3715c01",
+            "maxArmStep": 6.456558255252478
+          },
+          {
+            "name": "Magius100201StandingJumpAirborneV45TargetRigMorphology_L",
+            "sha256": "443759c3d906676dbc22e1ff0bc3de5c642bd64c3dc9db3c2c6a0dd0b7bc9526",
+            "maxArmStep": 1.8678963102815693
+          },
+          {
+            "name": "Magius100201StandingJumpLandV45TargetRigMorphology_SE",
+            "sha256": "bbe85d77b293031620acd17f30f6d9a04cfe1c62cc65cb7a0af585c2513c7cc8",
+            "maxArmStep": 2.879955638142447
+          },
+          {
+            "name": "Magius100201WalkJumpTakeoffV45TargetRigMorphology_SE",
+            "sha256": "e49000e068032b3d78fcbcafcc04681ea3a052eac37c5a47e42d664a2730bde1",
+            "maxArmStep": 5.190936005091088
+          },
+          {
+            "name": "Magius100201WalkJumpAirborneV45TargetRigMorphology_L",
+            "sha256": "4085dd35d78f5c280624d5bc79afec86292ec956fc985167a6b47ef63f187403",
+            "maxArmStep": 0.4443787020618948
+          },
+          {
+            "name": "Magius100201WalkJumpLandV45TargetRigMorphology_SE",
+            "sha256": "330148868df767312d880854b5e501a004508a32b8d232318fe7b93e2ff523fb",
+            "maxArmStep": 1.2088059787811452
+          },
+          {
+            "name": "Magius100201RunJumpTakeoffV45TargetRigMorphology_SE",
+            "sha256": "fc3663fc9330d5cb522b36e4b5b9431fc4d077fe053c644812ebb1c93a430d34",
+            "maxArmStep": 7.653534544742462
+          },
+          {
+            "name": "Magius100201RunJumpAirborneV45TargetRigMorphology_L",
+            "sha256": "99b097e0aa3e7d8e6474986669c2ca176381139976ca9261fc8f72b69ea9b71b",
+            "maxArmStep": 0.7856037780650147
+          },
+          {
+            "name": "Magius100201RunJumpLandV45TargetRigMorphology_SE",
+            "sha256": "293109ff046eeea658e59f9fd37419d6984b97ec7127bcaf4647dbf0684cba0c",
+            "maxArmStep": 2.108464597234174
+          }
+        ]
+      },
+      {
+        "id": 102001,
+        "baseline": "56a820858d258acfbee794063019db9f3edad28d",
+        "clips": [
+          {
+            "name": "Magius102001StandingJumpTakeoffV45TargetRigMorphology_SE",
+            "sha256": "4a95f27ab74c4a6ee5ea1a7e5477df2c29bf1c45b1580814be50d17ba82f46b3",
+            "maxArmStep": 6.455346256842932
+          },
+          {
+            "name": "Magius102001StandingJumpAirborneV45TargetRigMorphology_L",
+            "sha256": "4321392ace91d4cc881d2866c3363a78581d5a8fb28aab1f7deb4f8ef6c6e572",
+            "maxArmStep": 1.8571253349091625
+          },
+          {
+            "name": "Magius102001StandingJumpLandV45TargetRigMorphology_SE",
+            "sha256": "ebc52de8100cb530b122f547bded36598340494cacffc7b5fda652740b67b4ce",
+            "maxArmStep": 2.8717296038197215
+          },
+          {
+            "name": "Magius102001WalkJumpTakeoffV45TargetRigMorphology_SE",
+            "sha256": "b896230e0d63ee76dbe4a3f4b981db9cc072b02579aa9a2c16adf0f6cf51c991",
+            "maxArmStep": 5.134011150224214
+          },
+          {
+            "name": "Magius102001WalkJumpAirborneV45TargetRigMorphology_L",
+            "sha256": "9ea5e9ed0e294038a88769b013129efbdf177b6e3d14d23016a0c74d1f91db8b",
+            "maxArmStep": 0.4478286688156556
+          },
+          {
+            "name": "Magius102001WalkJumpLandV45TargetRigMorphology_SE",
+            "sha256": "dba92d0bb6731a5e26690a09fd94005e4526d00018386679568e19b11c717667",
+            "maxArmStep": 1.2188983099097594
+          },
+          {
+            "name": "Magius102001RunJumpTakeoffV45TargetRigMorphology_SE",
+            "sha256": "c55d142677b8b93d2616012c8a6b99729352329cc42097544892f8a2141ec46c",
+            "maxArmStep": 7.5697214609529295
+          },
+          {
+            "name": "Magius102001RunJumpAirborneV45TargetRigMorphology_L",
+            "sha256": "8b269990e58daab855ac0320189559d59ca90c3dcaceb19694322ac679c80402",
+            "maxArmStep": 0.7836841375340053
+          },
+          {
+            "name": "Magius102001RunJumpLandV45TargetRigMorphology_SE",
+            "sha256": "9305da6e19af8ee9b8b060e7ada2d5b75eeaffe246469b5090b169cf925d95e9",
+            "maxArmStep": 2.115415600861165
+          }
+        ]
+      }
+    ],
+    "rollback": "Maintenance-side build option MAGIUS_JUMP_STYLE=classic or revert only the motion commit before rebuilding; no player setting/button introduced"
+  },
+  "tests": {
+    "releaseGate": {
+      "tests": 382,
+      "pass": 382,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "liveBrowser": {
+      "nodes": {
+        "passed": true,
+        "errors": [],
+        "missing": [],
+        "tests": [
+          "compact-toolbar-theme-render-and-performance",
+          "actual-exclusive-node-groups",
+          "individually-hittable-finger-handles",
+          "finger-edit-reset-undo-redo-save-load",
+          "free-structure-opt-in-stretch",
+          "responsive-nodes-and-toolbar",
+          "responsive-nodes-and-toolbar",
+          "responsive-nodes-and-toolbar",
+          "TPS-existing-actor-selection-and-two-finger-pan",
+          "BFCache-and-reload-session-pose-library",
+          "native-WebGL-context-recovery"
+        ]
+      },
+      "mobile": {
+        "passed": true,
+        "errors": [],
+        "missing": [],
+        "tests": [
+          "actor-surrounding-branch-menu",
+          "actor-surrounding-branch-menu",
+          "actor-surrounding-branch-menu",
+          "toolbar-cleanup",
+          "responsive-touch-layout",
+          "responsive-touch-layout",
+          "responsive-touch-layout",
+          "native-touch-look-pinch-and-resume",
+          "touch-movement-checkpoint",
+          "real-multitouch-walk-run-jump-look-and-release",
+          "exit-clears-input-and-reentry-is-neutral",
+          "held-run-jump-contact-and-resume",
+          "held-run-jump-contact-and-resume",
+          "whole-object-editing-releases-tps-camera-and-touch-pad"
+        ]
+      },
+      "viewport": {
+        "passed": true,
+        "errors": [],
+        "missing": [],
+        "tests": [
+          "initial-position",
+          "selected-position",
+          "whole-object-context-menu",
+          "panel-closed-visible-joint-drag",
+          "no-jump-no-mesh-hide-compact-panel",
+          "orbit-and-pan-while-editing",
+          "whole-object-floor-contact",
+          "placement-undo-redo-reset-is-transactional",
+          "camera-floor",
+          "responsive-card",
+          "responsive-card",
+          "explicit-close-and-reentry",
+          "collapsed-tool-keeps-editing-and-drags",
+          "extreme-limb-edits-lengths-hinges-floor",
+          "wrist-mode-fine-undo-redo-stable",
+          "second-character-editor-rebind"
+        ]
+      },
+      "entry": {
+        "passed": true,
+        "errors": [],
+        "tests": [
+          "exact-entry-cold-and-warm-coherence",
+          "continuous-moving-landing",
+          "continuous-moving-landing",
+          "continuous-moving-landing",
+          "continuous-moving-landing",
+          "continuous-moving-landing",
+          "continuous-moving-landing",
+          "continuous-moving-landing",
+          "continuous-moving-landing"
+        ]
+      },
+      "stage": {
+        "passed": true,
+        "errors": []
+      },
+      "classic": {
+        "passed": true,
+        "errors": [],
+        "tests": [
+          "unchanged-classic-tracks-and-arm-only-alternatives",
+          "pose-comparison-sample",
+          "pose-comparison-sample",
+          "pose-comparison-sample",
+          "pose-comparison-sample",
+          "deployed-motion-has-no-user-rollback-ui",
+          "unchanged-classic-tracks-and-arm-only-alternatives",
+          "deployed-motion-has-no-user-rollback-ui",
+          "unchanged-classic-tracks-and-arm-only-alternatives",
+          "deployed-motion-has-no-user-rollback-ui",
+          "saved-style-preference-does-not-override-deployment"
+        ]
+      },
+      "silhouette": {
+        "passed": true,
+        "errors": []
+      }
+    },
+    "dependencyAudit": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    }
+  },
+  "limitations": [
+    "Three representative models sampled for arm geometry; four model paths tested for both walk/run landing; not every character individually certified.",
+    "Chrome real pointer/touch events, native WebGL loss and actual page reload tested; device emulation is not physical-phone hardware certification.",
+    "BFCache entry is exercised with lifecycle events; OS memory-pressure tab discard cannot be prevented by a web page.",
+    "Orientation toggle requests portrait/landscape and exits fullscreen on the second tap; actual lock support remains browser-dependent.",
+    "Free structural edits can intentionally deform a model when the user explicitly enables stretching.",
+    "Saved poses persist until site data is removed or storage is unavailable; JSON export is the durable backup.",
+    "Whole-repository audit is recorded separately after deployment; known failed files are not turned into an ignore list."
+  ]
+}
