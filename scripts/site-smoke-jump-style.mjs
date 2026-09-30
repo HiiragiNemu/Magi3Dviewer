@@ -21,7 +21,9 @@ try{
  const chrome=process.env.CHROME_BIN||(process.platform==='win32'?'C:/Program Files/Google/Chrome/Application/chrome.exe':execFileSync('bash',['-lc','command -v google-chrome-stable || command -v google-chrome || command -v chromium'],{encoding:'utf8'}).trim())
  browser=await puppeteer.launch({executablePath:chrome,headless:true,acceptInsecureCerts:dev,protocolTimeout:300000,args:['--no-sandbox','--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']})
  page=await browser.newPage();await page.setViewport({width:900,height:760,deviceScaleFactor:1});page.on('pageerror',e=>errors.push(String(e)))
- await page.evaluateOnNewDocument(()=>{try{localStorage.setItem('magius.jump-style.v1','classic')}catch{}})
+ // Each hash fixture begins with a fresh tab identity. Workspace restore is
+ // independently tested (including reload) in site-smoke-node-workspace.
+ await page.evaluateOnNewDocument(()=>{try{localStorage.setItem('magius.jump-style.v1','classic');sessionStorage.removeItem('magius.workspace-session.v1')}catch{}})
  await page.goto(base+'?diagnostic=pose-editor&runtimeDelivery=release',{waitUntil:'domcontentloaded',timeout:90000})
  await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData?.characterId===100107&&window.magiusViewerLocomotion?.jumpStyle,{timeout:180000})
  const frames=n=>page.evaluate(n=>new Promise(r=>{let i=0;const f=()=>++i>=n?r():requestAnimationFrame(f);requestAnimationFrame(f)}),n)

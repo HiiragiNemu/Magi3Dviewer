@@ -46,7 +46,8 @@ try{
  }
  const branchCheck=async(width,height)=>{
   await page.setViewport({width,height,isMobile:true,hasTouch:true,deviceScaleFactor:1});await frames(6)
-  if(await page.$eval('#viewport-editor-launch',e=>!e.hidden))await tap('#viewport-editor-launch')
+  assert.equal(await page.$('#viewport-editor-launch'),null,'persistent edit button must remain removed')
+  if(await page.$eval('#viewport-editor-dock',e=>e.hidden))await tap('#position-controls-toggle')
   await tap('#viewport-pose');await tap('#viewport-focus');await frames(6)
   const proof=await page.evaluate(()=>{
    const dock=document.querySelector('#viewport-editor-dock'),body=JSON.parse(dock.dataset.protectedRect),canvas=window.scene.renderer.domElement.getBoundingClientRect()

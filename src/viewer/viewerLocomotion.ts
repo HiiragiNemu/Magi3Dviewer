@@ -1,4 +1,5 @@
-import { expressiveJumpArmSample, expressiveJumpName, resolveBuildJumpStyle, type JumpStyle } from './jumpStyle'
+import { expressiveJumpName, resolveBuildJumpStyle, type JumpStyle } from './jumpStyle'
+import { naturalJumpArmPose, jumpArmDirection } from './jumpArmKinematics'
 import { ThirdPersonCamera } from './ThirdPersonCamera'
 import { matchLandingGaitPhase } from './landingGaitPhase'
 import { TpsTouchControls } from './TpsTouchControls'
@@ -7033,22 +7034,42 @@ function attachParameterizedHumanoidMotionProfile(
         mode: JumpLocomotionMode,
     ): void => {
         restoreNaturalUpperBodyTargetRest()
+        if (sampledJumpStyle === 'expressive') {
+            const pose = naturalJumpArmPose(ratio, phase, mode)
+            // Fingers keep a soft version of this model's authored hand rest;
+            // the running wrist curve is NOT reused as a standing jump pose.
+            applyNativeHandFingerPose('walk', 0.5, 0, pose.fingerStrength)
+            for (const side of ['L', 'R'] as const) {
+                const angles = side === 'L' ? pose.left : pose.right
+                const upper = rig.get(side === 'L' ? motionPaths.upperArmL : motionPaths.upperArmR)!
+                const elbow = rig.get(side === 'L' ? motionPaths.forearmL : motionPaths.forearmR)!
+                const hand = rig.get(side === 'L' ? motionPaths.handL : motionPaths.handR)!
+                const direction = (pitch: number) => referenceVectorToTargetWorld(new THREE.Vector3(...jumpArmDirection(pitch, angles.outward, side))).normalize()
+                alignSegmentDirection(upper, elbow, direction(angles.upper))
+                alignSegmentDirection(elbow, hand, direction(angles.upper + angles.elbow))
+                hand.quaternion.copy(skeletonRestLocal.get(hand)!.quaternion)
+                character.object.updateMatrixWorld(true)
+                const palm = hand.getObjectByName(`Middlefinger1_${side}`)
+                    ?? hand.getObjectByName(`MetaMiddlefinger_${side}`)
+                if (palm) alignSegmentDirection(hand, palm, direction(angles.upper + angles.elbow + angles.wrist))
+            }
+            return
+        }
         const synchronousDrift = phase === 'airborne'
             ? Math.sin(ratio * Math.PI * 2) * 0.010
             : 0
         // Use the same verified nine-family shoulder/elbow/wrist curves as
         // locomotion. Jump no longer synthesizes a symmetric IK target on top of
         // those curves; that overwrite produced the reversed billboard arms.
-        const refined = sampledJumpStyle === 'expressive' ? expressiveJumpArmSample(ratio,phase,mode) : undefined
         const sidePhases = {
-            L: refined?.left ?? wrapReferencePhase(0.735 + synchronousDrift),
-            R: refined?.right ?? wrapReferencePhase(0.245 + synchronousDrift),
+            L: wrapReferencePhase(0.735 + synchronousDrift),
+            R: wrapReferencePhase(0.245 + synchronousDrift),
         }
         // Every generated sample keeps a human arm direction. Fading this value
         // to zero after restoring the inverse-bind rest bakes a literal T-pose at
         // takeoff/landing endpoints; the animation mixer already owns the
         // locomotion-to-jump crossfade, so a second pose-space fade is incorrect.
-        const modeStrength = refined?.strength ?? (mode === 'running' ? 1 : mode === 'walking' ? 0.98 : 0.96)
+        const modeStrength = mode === 'running' ? 1 : mode === 'walking' ? 0.98 : 0.96
         for (const segment of referenceSegments.filter(candidate => (
             /^(?:shoulder|upperArm|forearm)[LR]$/.test(candidate.directionRole)
         ))) {

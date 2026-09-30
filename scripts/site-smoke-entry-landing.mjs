@@ -39,7 +39,7 @@ try{
  await page.screenshot({path:path.join(out,'phone-no-rollback-no-keyboard-hud.png')})
  await page.evaluate(()=>window.magiusViewerLocomotion.setEnabled(false))
  await page.setViewport({width:1000,height:760,isMobile:false,hasTouch:false,deviceScaleFactor:1})
- for(const id of (process.env.MAGIUS_ONLY_CHARACTER?[Number(process.env.MAGIUS_ONLY_CHARACTER)]:[100107,100201,102001])){
+ for(const id of (process.env.MAGIUS_ONLY_CHARACTER?[Number(process.env.MAGIUS_ONLY_CHARACTER)]:[100107,100201,102001,101501])){
   await page.select('#character-selector',String(id));await page.waitForFunction(id=>window.scene?.characterSelected?.character?.userData?.characterId===id,{timeout:180000},id)
   await page.evaluate(()=>{window.magiusViewerLocomotion.setEnabled(true);window.scene.characterSelected.character.animation.paused=false});await page.evaluate(()=>window.magiusViewerLocomotion.characterActions.ready());await frames(12)
   for(const run of [false,true]){

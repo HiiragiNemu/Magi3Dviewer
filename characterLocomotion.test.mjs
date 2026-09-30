@@ -5,10 +5,11 @@ import ts from 'typescript'
 import { readParsedBoneLocal } from './magia-exedra-character-three/authoredBoneLocals.ts'
 import { stripTypeScriptTypes } from 'node:module'
 import {expressiveJumpName,expressiveJumpArmSample} from './src/viewer/jumpStyle.ts'
+import {naturalJumpArmPose,jumpArmDirection} from './src/viewer/jumpArmKinematics.ts'
 import {nativeCombatActionCue} from './src/viewer/combatNativeActionCue.ts'
 // These dynamic excerpts run production functions, with their actual pure
 // dependencies exposed to Function's global realm instead of permissive stubs.
-Object.assign(globalThis,{expressiveJumpName,expressiveJumpArmSample,nativeCombatActionCue})
+Object.assign(globalThis,{expressiveJumpName,expressiveJumpArmSample,nativeCombatActionCue,naturalJumpArmPose,jumpArmDirection})
 function compilePerformanceActionTestSource(source,start,end){
  const ast=ts.createSourceFile('viewer.ts',source,ts.ScriptTarget.Latest,true)
  const cue=ast.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='emitStartedViewerCharacterActionCue')
