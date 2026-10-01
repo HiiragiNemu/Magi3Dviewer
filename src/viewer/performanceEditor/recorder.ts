@@ -84,7 +84,17 @@ export class PerformanceRecorder {
         for(const l of this.lanes){if(kinds.includes(l.kind)&&(actorKey==='camera'?l.kind==='camera':target&&l.target&&identity(l.target)===identity(target))){this.live.add(l.id);if(l.kind!=='camera'){const rig=this.rig(l);values.push({rig,values:rig.capture(true)})}}}
         this.restore();for(const row of values)row.rig.apply(row.values,true)
         if(cameraValue)applyRecordedCamera(this.host.camera().camera,this.host.camera().target,cameraValue)
-        if(target){this.host.select(target);if(values.length&&kinds.includes('motion'))this.host.syncRoot?.(target);if(values.length&&adoptForEditing)this.host.adoptPose?.(target,kinds)}
+        if(target){
+            this.host.select(target)
+            if(values.length&&kinds.includes('motion')){
+                this.host.syncRoot?.(target)
+                // Root synchronization resets native gaze/secondary producers.
+                // Reapply the captured displayed channels BEFORE adopting the
+                // manual editing baseline, rather than freezing those resets.
+                for(const row of values)row.rig.apply(row.values,true)
+            }
+            if(values.length&&adoptForEditing)this.host.adoptPose?.(target,kinds)
+        }
         this.host.releaseCamera();this.notify()
     }
     private newLane(kind:RecordedKind,target?:RecordedActor):{lane:RecordedLane;rig?:RecordedRig}{
