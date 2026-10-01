@@ -1964,14 +1964,14 @@ button img {
 
 /* Selected enemy playback is reachable without opening the resource panel. */
 #app #menu #enemy-toolbar-control { flex-wrap: wrap; }
-#app #menu .enemy-animation-controls {
-    display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px; max-width: 100%;
-}
+#app #menu .enemy-animation-controls { display: contents; }
 #app #menu .enemy-animation-controls[hidden] { display: none; }
 #app #menu .enemy-animation-controls select { width: clamp(120px, 14vw, 220px); min-width: 0; }
 #app #menu .enemy-animation-controls input[type="number"] { width: 52px; }
 #app #menu .enemy-animation-controls label { display: inline-flex; align-items: center; }
 #app #menu .enemy-animation-controls button { width: auto; }
+#app #menu #enemy-animation-progress { min-width: 3.2em; text-align: right; white-space: nowrap; }
+
 
 /* Playback/edit controls have no empty-state footprint. */
 #app #menu #character-animation-controls[hidden],

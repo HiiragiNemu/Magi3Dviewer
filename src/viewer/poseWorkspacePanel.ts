@@ -1,5 +1,5 @@
 import { Object3D } from 'three'
-import { groupedPoseParts, readPoseLibrary, deleteSavedPose, type PoseNodeGroup, type SavedPose, type PosePart } from './poseWorkspace'
+import { posePartLabel, groupedPoseParts, readPoseLibrary, deleteSavedPose, type PoseNodeGroup, type SavedPose, type PosePart } from './poseWorkspace'
 
 interface Hooks {
     actor():Object3D|undefined
@@ -24,14 +24,14 @@ export function createPoseWorkspacePanel(parent:HTMLElement,hooks:Hooks) {
     const policy=document.createElement('label');policy.className='pose-stretch-policy'
     const stretch=document.createElement('input');stretch.type='checkbox';stretch.id='pose-allow-stretch'
     policy.append(stretch,document.createTextNode('允许拉伸 / 结构位移（默认关闭）'))
-    const note=document.createElement('small');note.textContent='普通模式保长；自由编辑可旋转全部实际结构。开启拉伸后才允许结构平移和缩放。'
+    const note=document.createElement('small');note.textContent='普通模式保长；更多节点覆盖其余实际骨骼。开启拉伸后才允许结构平移和缩放。'
     const actions=document.createElement('div');actions.className='pose-workspace-actions'
     const button=(host:HTMLElement,id:string,label:string,action:()=>void)=>{const b=document.createElement('button');b.type='button';b.id=id;b.textContent=label;b.onclick=()=>{try{action();refresh(true)}catch(e){message.textContent=String((e as Error).message)}};host.append(b);return b}
     button(actions,'pose-reset-all','重置全部动作',hooks.reset)
     button(actions,'pose-workspace-undo','撤销动作',hooks.undo);button(actions,'pose-workspace-redo','重做动作',hooks.redo)
     const structure=document.createElement('details');structure.id='pose-structure';const summary=document.createElement('summary');summary.textContent='节点与服装结构';structure.append(summary)
     const categories=document.createElement('div');categories.className='pose-workspace-actions'
-    for(const [g,l]of [['primary','主要节点'],['hands','手部节点'],['more','更多节点'],['free','自由编辑']] as const)button(categories,'pose-group-'+g,l,()=>hooks.setGroup(g))
+    for(const [g,l]of [['primary','主要节点'],['hands','手部节点'],['more','更多节点']] as const)button(categories,'pose-group-'+g,l,()=>hooks.setGroup(g))
     const search=document.createElement('input');search.type='search';search.id='pose-structure-search';search.placeholder='搜索手指 / 服装 / 模型节点';search.setAttribute('aria-label',search.placeholder)
     const list=document.createElement('select');list.id='pose-structure-select';list.size=6;list.setAttribute('aria-label','实际可编辑结构节点')
     const scale=document.createElement('div');scale.id='pose-structure-scale';scale.className='pose-scale-grid'
@@ -53,9 +53,9 @@ export function createPoseWorkspacePanel(parent:HTMLElement,hooks:Hooks) {
     const message=document.createElement('output');message.id='pose-workspace-status';message.setAttribute('aria-live','polite')
     root.append(policy,note,actions,structure,library,message);parent.prepend(root)
     let key='',entries:PosePart[]=[]
-    const rebuild=()=>{const actor=hooks.actor();entries=actor?groupedPoseParts(actor,hooks.group()):[];const query=search.value.toLowerCase();list.replaceChildren();for(const part of entries.filter(p=>(p.label+' '+p.bone.type).toLowerCase().includes(query))){const option=document.createElement('option');option.value=part.bone.uuid;option.textContent=part.label+' · '+part.bone.type;list.append(option)}if(hooks.selected())list.value=hooks.selected()!.uuid;summary.textContent=`节点与服装结构 · ${entries.length} 个实际节点`}
+    const rebuild=()=>{const actor=hooks.actor();entries=actor?groupedPoseParts(actor,hooks.group()):[];const query=search.value.toLowerCase();list.replaceChildren();for(const part of entries.filter(p=>(posePartLabel(p,document.documentElement.lang)+' '+p.label+' '+p.bone.type).toLowerCase().includes(query))){const option=document.createElement('option');option.value=part.bone.uuid;option.textContent=posePartLabel(part,document.documentElement.lang);option.title=part.bone.name;list.append(option)}if(hooks.selected())list.value=hooks.selected()!.uuid;summary.textContent=`节点与服装结构 · ${entries.length} 个实际节点`}
     const refresh=(force=false)=>{
-        const actor=hooks.actor(),selected=hooks.selected(),next=(actor?.uuid??'')+'|'+hooks.group()
+        const actor=hooks.actor(),selected=hooks.selected(),next=(actor?.uuid??'')+'|'+hooks.group()+'|'+document.documentElement.lang
         if(force||next!==key){key=next;rebuild();const value=saved.value;saved.replaceChildren();try{readPoseLibrary(localStorage).filter(p=>p.model===hooks.model()).forEach((p,i)=>{const o=document.createElement('option');o.value=String(i);o.textContent=p.name;saved.append(o)});saved.value=value||'0'}catch(e){message.textContent='本机存储不可用：'+(e as Error).message}}
         if(selected&&document.activeElement!==list)list.value=selected.uuid
         stretch.checked=hooks.allowStretch()

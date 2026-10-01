@@ -316,7 +316,7 @@ test('controls keep a compact wrapping toolbar and an independent viewer movemen
     assert.match(viewerRuntime, /appendParameterSectionLabel\(actionChannelList, sectionLabel, section\)/)
     assert.match(viewerRuntime, /appendParameterSectionLabel\(expressionChannelList, sectionLabel, section\)/)
     assert.match(viewerRuntime, /new TransformControls\(scene\.camera, scene\.renderer\.domElement\)/)
-    assert.match(viewerRuntime, /raycaster\.intersectObject\(object, true\)/)
+    assert.match(viewerRuntime, /raycaster\.intersectObjects\(visiblePickMeshes\(object\), false\)/)
     assert.match(viewerRuntime, /getAttribute\('skinIndex'\)/)
     assert.match(viewerRuntime, /getAttribute\('skinWeight'\)/)
     assert.match(viewerRuntime, /selectDirectPoseBone\(weighted\.object, weighted\.bone\)/)

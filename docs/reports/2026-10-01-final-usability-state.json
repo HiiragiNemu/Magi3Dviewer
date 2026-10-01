@@ -1,0 +1,27 @@
+{
+  "status": "validated-local-pending-production-build-and-publication",
+  "baseRevision": "c9ae541b087a4cef797641ecc610703950df53f9",
+  "gitBranch": "magius3dviewer",
+  "cloudflareProject": "magius3dviewer",
+  "cloudflareProductionChannel": "main",
+  "tests": {
+    "passed": 395,
+    "failed": 0,
+    "skipped": 0,
+    "typecheck": "pass"
+  },
+  "renderedUi": "artifacts/final-ui/review.json",
+  "jumpFrames": "artifacts/final-jump/review.json",
+  "priorProduction": {
+    "revision": "4d31c77e3d5a589139a4d0674ac69992cb737361",
+    "deployment": "0ff88142-452c-4e19-9e2f-3037f14a90ae"
+  },
+  "portableBrowser": "artifacts/final-source-usability/review.json",
+  "portableBrowserPassed": true,
+  "responsiveWidths": [
+    360,
+    430,
+    932,
+    1366
+  ]
+}

@@ -183,7 +183,9 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
     animationSlider.step = '0.01'
     const animationProgress = document.createElement('output')
     animationProgress.id = 'enemy-animation-progress'
-    animationSection.append(animationSelect, animationRepetitions, animationApply, animationToggle, animationSlider, animationProgress)
+    const progressGroup=document.createElement('span');progressGroup.className='animation-progress-group'
+    progressGroup.append(animationSlider,animationProgress)
+    animationSection.append(animationSelect, animationRepetitions, animationApply, animationToggle, progressGroup)
     requireElement<HTMLElement>('enemy-toolbar-control').append(animationSection)
 
     const pendingAnimations = new WeakMap<EnemyInstance, string>()
@@ -220,7 +222,8 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
             ? instance.animationNames.map(name => {
                 const option = document.createElement('option')
                 option.value = name
-                option.textContent = name
+                option.textContent = translateUiText(name)
+                option.title = name
                 return option
             }) : [])
         animationSelect.value = instance ? pendingAnimations.get(instance) ?? instance.currentAnimationName ?? '' : ''

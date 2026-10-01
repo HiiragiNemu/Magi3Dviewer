@@ -13,7 +13,8 @@ const guiCameraOptions = {
 }
 
 guiCamera.add(guiOptions, 'FOV', 5, 60).onChange(value => { scene.camera.fov = value; scene.camera.updateProjectionMatrix() })
-guiCamera.add(guiOptions, 'CameraRotation', -90, 90).onChange(value => { scene.cameraRotation = value || undefined })
+const rollControl={get CameraRotation(){return scene.cameraRotation??0},set CameraRotation(value:number){scene.cameraRotation=value||undefined}}
+guiCamera.add(rollControl, 'CameraRotation', -180, 180).listen()
 
 const guiCameraResolution = guiCamera.add(CameraSettings, 'resolution', ['720x1280', '1080x1920', '1440x1920', '2160x3840', '640x480', '800x600', '1024x768', '1280x720', '1280x960', '1920x1080', '1920x1440', '3840x2160']).name('CameraResolution').onChange(async (value) => {
     await setCameraStreamDimensions(value)

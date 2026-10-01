@@ -26,11 +26,11 @@ fs.writeFileSync(toolsModule, ts.transpileModule(fs.readFileSync(path.join(root,
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
 }).outputText)
 const { DirectPoseHistory, findDirectPoseParts } = await import(pathToFileURL(toolsModule))
-const { StructurePoseTarget, structuralNodes, captureModelLocal, writeLocal } = await import(pathToFileURL(path.join(root,'src/viewer/poseWorkspace.ts')))
+const { StructurePoseTarget, groupedPoseParts, structuralNodes, captureModelLocal, writeLocal } = await import(pathToFileURL(path.join(root,'src/viewer/poseWorkspace.ts')))
 const source = fs.readFileSync(path.join(root, 'src/viewer/index.ts'), 'utf8')
 const ast = ts.createSourceFile('viewer.ts', source, ts.ScriptTarget.Latest, true)
 assert.equal(ast.parseDiagnostics.length, 0, 'production viewer syntax')
-const names = ['ensurePoseOrigin', 'getPoseEntries', 'poseQuaternionMatches', 'applyPoseEntry', 'restoreManualPoseOverrides', 'applyManualPoseOverrides', 'resetActionParameters', 'getPoseEntryBase', 'getPoseEntryPositionBase', 'syncPoseEntryControls', 'setDirectPoseTransformMode', 'updateDirectPoseUi', 'updateDirectPoseTarget', 'requestDirectPoseFeedback', 'selectDirectPoseBone', 'clearDirectPoseSelection', 'setDirectPoseEditing', 'beginDirectPoseTransaction', 'syncDirectPoseOffsetsFromBone', 'directPoseScreenTranslationDelta', 'finishDirectPoseDrag', 'setupDirectPoseEditing', 'startDirectPosePointerDrag', 'updateDirectPosePointerDrag', 'pauseSelectedAnimation', 'captureDirectPose', 'getDirectPoseHistory', 'commitDirectPoseHistory', 'restoreDirectPose', 'undoDirectPose']
+const names = ['getPoseActor','getPoseActors','getPoseModel','pausePoseActor','ensurePoseOrigin', 'getPoseEntries', 'poseQuaternionMatches', 'applyPoseEntry', 'restoreManualPoseOverrides', 'applyManualPoseOverrides', 'resetActionParameters', 'getPoseEntryBase', 'getPoseEntryPositionBase', 'syncPoseEntryControls', 'setDirectPoseTransformMode', 'updateDirectPoseUi', 'updateDirectPoseTarget', 'requestDirectPoseFeedback', 'selectDirectPoseBone', 'clearDirectPoseSelection', 'setDirectPoseEditing', 'beginDirectPoseTransaction', 'syncDirectPoseOffsetsFromBone', 'directPoseScreenTranslationDelta', 'finishDirectPoseDrag', 'setupDirectPoseEditing', 'startDirectPosePointerDrag', 'updateDirectPosePointerDrag', 'pauseSelectedAnimation', 'captureDirectPose', 'getDirectPoseHistory', 'commitDirectPoseHistory', 'restoreDirectPose', 'undoDirectPose']
 const functions = ast.statements.filter(node => ts.isFunctionDeclaration(node) && names.includes(node.name?.text))
 assert.equal(functions.length, names.length, 'exercise real production functions, not copies of the algorithms')
 const js = ts.transpileModule(functions.map(node => node.getText(ast)).join('\n'), {
@@ -74,12 +74,13 @@ function fixture({ scaled = false, orthographic = false } = {}) {
     const camera = orthographic ? new T.OrthographicCamera(-2, 2, 1.5, -1.5, .01, 100) : new T.PerspectiveCamera(40, 1.5, .01, 100)
     camera.position.set(2, 2.5, 5); camera.lookAt(.5, 1, 0); camera.updateMatrixWorld(true); camera.updateProjectionMatrix()
     const scene = { camera, scene: new T.Scene(), controls: { enabled: true }, renderer: { domElement: canvas }, effects: { outlinePass: { selectedObjects: [actor] } }, characterSelected: { character: { object: actor, animation: { paused: false } } }, characters: [{ character: { object: actor } }, { character: { object: otherActor } }] }
+    scene.characters=[scene.characterSelected,{character:{object:otherActor,animation:{paused:false}}}]
     scene.scene.add(actor, otherActor)
     const leases = new Set(), translate = element(), rotate = element(), toggle = element(), output = element(), feedback = []
     const meshEntry = { object: mesh, defaultVisible: true, path: 'mesh', label: 'mesh' }
     let weighted, partUiCalls = 0, catalogState, pauses = 0, objectCloses = 0, selectedPart
     const deps = {
-        THREE: T, TransformControls, DirectPoseTarget, DirectPoseHistory, StructurePoseTarget, structuralNodes, captureModelLocal, writeLocal, scene, document, window, registerPoseJointLimits, clampPoseJoint,
+        THREE: T, TransformControls, DirectPoseTarget, DirectPoseHistory, StructurePoseTarget, groupedPoseParts, movementSelection:{}, enemyPanelController:undefined, structuralNodes, captureModelLocal, writeLocal, scene, document, window, registerPoseJointLimits, clampPoseJoint,
         createPoseContactGuard: () => () => false, editorGround: {}, setViewerLocomotionEnabled() {},
         freezePoseForEditing() {}, // Isolate the active-animation overlay; snapshot freezing is covered by workspace tests.
         requestAnimationFrame: fn => feedback.push(fn),
@@ -95,6 +96,7 @@ function fixture({ scaled = false, orthographic = false } = {}) {
         restoreModelPartVisibility() {}, setSelectedAnimationPlaybackRate() {}, rebuildActionParameterChannels() {}, rebuildModelPartVisibilityControls() {},
     }
     const api = Function(...Object.keys(deps), `
+        const poseActorCapabilities = new WeakMap();
         const manualPoseByCharacter = new WeakMap(), poseOrigins = new WeakMap(), poseFrozenBases = new WeakMap(), poseDragTransforms = new Map();
         let poseNodeGroup="primary", poseAllowStretch=false,poseStructurePanel;
         let directPoseControls, directPoseControlsHelper, directPoseSelection, selectedModelPart, directPosePointerDrag, directPoseGizmoPointerId;

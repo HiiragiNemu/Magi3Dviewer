@@ -51,8 +51,10 @@
                     <button id="animation-apply" class="target-true" type="button" title="Play selected animation">Play</button>
                     <button id="animation-play" class="target-true" style="display: none;" title="Play animation"><img src="src/icons/playback-play.svg"></button>
                     <button id="animation-pause" class="target-true" title="Pause animation"><img src="src/icons/playback-pause.svg"></button>
+                    <span class="animation-progress-group target-true">
                     <input id="animation-slider" class="target-true" type="range" min="0" max="1" step="0.01" value="0" aria-label="Animation timeline">
                     <output id="animation-progress-value" class="target-true" aria-live="off">0%</output>
+                    </span>
                     <output id="animation-action-status" class="target-true" data-i18n-ignore="true" aria-live="polite" hidden></output>
                     <button id="action-panel-toggle" data-i18n-ignore="true" class="target-true" type="button" title="Show action parameters" aria-controls="action-parameter-panel" aria-expanded="false">Action panel</button>
                     <span class="target-false">&lt;No target selected&gt;</span>
@@ -129,7 +131,7 @@
                 </div>
                 <button id="weapon-panel-toggle" type="button" aria-controls="weapon-panel" aria-expanded="false">Weapons</button>
                 <button id="enemy-panel-toggle" data-i18n-ignore="true" type="button" title="Show enemies" aria-label="Show enemies" aria-controls="enemy-panel" aria-expanded="false">Enemies</button>
-                <button id="combat-vfx-panel-toggle" data-i18n-ignore="true" type="button" title="Show combat effects" aria-label="Show combat effects" aria-controls="combat-vfx-panel" aria-expanded="false">Combat effects</button>
+                <button id="combat-vfx-panel-toggle" data-i18n-ignore="true" type="button" title="Show combat effects" aria-label="Show combat effects" aria-controls="combat-vfx-panel" aria-expanded="false" hidden>Combat effects</button>
 
 
                 <button id="menu-collapse-toggle" class="main-toolbar-toggle" data-i18n-ignore="true" type="button" title="Collapse controls" aria-label="Collapse controls" aria-controls="menu-controls" aria-expanded="true"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M4.5 18 12 5.5 19.5 18Z"></path></svg></span></button>

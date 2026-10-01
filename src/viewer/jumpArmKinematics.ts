@@ -28,11 +28,11 @@ export function naturalJumpArmPose(ratio:number,phase:JumpPhase,mode:JumpMode):J
         :running?{left:arm(-14,65),right:arm(16,68),fingerStrength:.55}
         :{left:arm(-10,27),right:arm(10,28),fingerStrength:.35}
     const lift:JumpArmPose=standing
-        ?{left:arm(36,24,7),right:arm(36,24,7),fingerStrength:.3}
+        ?{left:arm(16,40,12),right:arm(16,40,12),fingerStrength:.3}
         :running?{left:arm(32,69),right:arm(-28,72),fingerStrength:.55}
         :{left:arm(17,32),right:arm(-13,36),fingerStrength:.35}
     const airborne:JumpArmPose=standing
-        ?{left:arm(19,22,8),right:arm(19,22,8),fingerStrength:.3}
+        ?{left:arm(-6,26,12),right:arm(-6,26,12),fingerStrength:.3}
         :running?{left:arm(25,65),right:arm(-22,68),fingerStrength:.55}
         :{left:arm(13,29),right:arm(-10,33),fingerStrength:.35}
     let from=start,to=back,weight=0
@@ -40,8 +40,8 @@ export function naturalJumpArmPose(ratio:number,phase:JumpPhase,mode:JumpMode):J
         if(t<.28)weight=smooth(t/.28)
         else{from=back;to=lift;weight=smooth((t-.28)/.72)}
     }else if(phase==='airborne'){
-        from=lift;to=airborne;weight=Math.sin(Math.PI*t)**2
-    }else{from=lift;to=start;weight=smooth(t)}
+        from=lift;to=airborne;weight=standing?smooth(t):Math.sin(Math.PI*t)**2
+    }else{from=standing?airborne:lift;to=start;weight=smooth(t)}
     return{left:blend(from.left,to.left,weight),right:blend(from.right,to.right,weight),fingerStrength:from.fingerStrength}
 }
 /** Reference +X = left, +Y = up, +Z = forward. */

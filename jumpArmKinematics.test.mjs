@@ -5,7 +5,7 @@ const modes=['standing','walking','running'],phases=['takeoff','airborne','land'
 const close=(a,b)=>Math.abs(a-b)<1e-9
 for(const mode of modes)test(mode+' preserves phase boundaries and finite moderate rotations',()=>{
  const take=naturalJumpArmPose(1,'takeoff',mode),air=naturalJumpArmPose(0,'airborne',mode),end=naturalJumpArmPose(1,'airborne',mode),land=naturalJumpArmPose(0,'land',mode)
- for(const side of ['left','right'])for(const key of ['upper','elbow','wrist','outward']){assert.ok(close(take[side][key],air[side][key]));assert.ok(close(air[side][key],end[side][key]));assert.ok(close(end[side][key],land[side][key]))}
+ for(const side of ['left','right'])for(const key of ['upper','elbow','wrist','outward']){assert.ok(close(take[side][key],air[side][key]));if(mode!=='standing')assert.ok(close(air[side][key],end[side][key]));assert.ok(close(end[side][key],land[side][key]))}
  for(const phase of phases){let previous;for(let i=0;i<=120;i++){
   const pose=naturalJumpArmPose(i/120,phase,mode)
   for(const side of ['left','right']){
@@ -18,11 +18,11 @@ for(const mode of modes)test(mode+' preserves phase boundaries and finite modera
 })
 test('standing swing is bilateral with relaxed elbows, not two running forearms held horizontally',()=>{
  for(const phase of phases)for(let i=0;i<=30;i++){
-  const p=naturalJumpArmPose(i/30,phase,'standing');assert.deepEqual(p.left,p.right);assert.ok(p.left.elbow<30)
+  const p=naturalJumpArmPose(i/30,phase,'standing');assert.deepEqual(p.left,p.right);assert.ok(p.left.elbow>=10&&p.left.elbow<=45)
   const fore=jumpArmDirection(p.left.upper+p.left.elbow,p.left.outward,'L');assert.ok(fore[1]<-.45,'standing forearm remains propped horizontally')
  }
  const prep=naturalJumpArmPose(.28,'takeoff','standing'),lift=naturalJumpArmPose(1,'takeoff','standing')
- assert.ok(prep.left.upper<-10&&lift.left.upper>25,'missing backswing-to-lift movement')
+ assert.ok(prep.left.upper<-10&&lift.left.upper>0&&lift.left.upper<25&&lift.left.elbow>=30,'missing backswing-to-lift movement')
 })
 test('walking and running have independently scaled lead/trail arms',()=>{
  const walk=naturalJumpArmPose(.5,'airborne','walking'),run=naturalJumpArmPose(.5,'airborne','running')
@@ -46,3 +46,5 @@ test('wrist directions follow forearms within 3 degrees instead of a drooping pa
   }
  }
 })
+
+test('standing flight relaxes down instead of returning to the forward takeoff pose before landing',()=>{const end=naturalJumpArmPose(1,'airborne','standing'),land=naturalJumpArmPose(0,'land','standing'),start=naturalJumpArmPose(0,'takeoff','standing');assert.ok(end.left.upper<=0);assert.deepEqual(end,land);assert.deepEqual(naturalJumpArmPose(1,'land','standing'),start);for(const phase of phases)for(let i=0;i<=120;i++){const p=naturalJumpArmPose(i/120,phase,'standing');assert.ok(p.left.upper<25,'upper arms must not remain extended forward');assert.ok(p.left.elbow>=10,'never lock straight elbows')}})

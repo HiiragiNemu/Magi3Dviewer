@@ -64,18 +64,28 @@ export class ObjectMovementSelection {
 }
 
 /** Raycast all kinds together, so a weapon in front of a character wins the same click. */
-export function pickMovementTarget<T extends { object: THREE.Object3D }>(raycaster: THREE.Raycaster, targets: readonly T[]): T | undefined {
-    const roots = new Map(targets.map(target => [target.object, target]))
-    for (const hit of raycaster.intersectObjects([...roots.keys()], true)) {
-        let object: THREE.Object3D | null = hit.object
-        let target: T | undefined
-        let visible = true
-        while (object) {
-            visible &&= object.visible
-            target ??= roots.get(object)
-            object = object.parent
-        }
-        if (target && visible) return target
+/** Recompute animated bounds at the user hit-test, not on every render frame.
+ * Three caches SkinnedMesh bounds; the cached rest/previous pose can reject an
+ * otherwise visible upper body before triangle skinning is tested. */
+export function visiblePickMeshes(object:THREE.Object3D):THREE.Mesh[] {
+    object.updateWorldMatrix(true,true)
+    const meshes:THREE.Mesh[]=[]
+    object.traverse(node=>{
+        if(!(node instanceof THREE.Mesh)||/:official-outline:|:stencil-mask|:mask-writer:|SelectionOutline/.test(node.name))return
+        for(let p:THREE.Object3D|null=node;p;p=p.parent)if(!p.visible)return
+        const materials=Array.isArray(node.material)?node.material:[node.material]
+        if(!materials.some(m=>m.visible&&m.colorWrite))return
+        if(node instanceof THREE.SkinnedMesh){node.skeleton.update();node.computeBoundingSphere();if(node.boundingBox)node.computeBoundingBox()}
+        meshes.push(node)
+    })
+    return meshes
+}
+export function pickMovementTarget<T extends {object:THREE.Object3D}>(raycaster:THREE.Raycaster,targets:readonly T[]):T|undefined {
+    const owners=new Map<THREE.Object3D,T>(),meshes:THREE.Mesh[]=[]
+    for(const target of targets)for(const mesh of visiblePickMeshes(target.object)){owners.set(mesh,target);meshes.push(mesh)}
+    for(const hit of raycaster.intersectObjects(meshes,false)){
+        const mesh=hit.object as THREE.Mesh,material=Array.isArray(mesh.material)?mesh.material[hit.face?.materialIndex??0]:mesh.material
+        if(material?.visible&&material.colorWrite)return owners.get(mesh)
     }
     return undefined
 }

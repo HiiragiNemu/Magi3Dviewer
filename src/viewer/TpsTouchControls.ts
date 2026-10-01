@@ -32,7 +32,7 @@ export class TpsTouchControls {
     private readonly coarse: MediaQueryList
     private resize?: ResizeObserver
     private enabled = false
-    private touchObserved = false
+    private lastInput: 'touch'|'mouse'|'keyboard'|undefined
     private joystick?: { id: number; x: number; y: number; radius: number }
     private jumpPointer?: number
     private runLatched = false
@@ -113,8 +113,10 @@ export class TpsTouchControls {
         window.addEventListener('blur', () => this.reset(), options)
         document.addEventListener('visibilitychange', () => { if (document.hidden) this.reset() }, options)
         document.addEventListener('pointerdown', event => {
-            if (event.pointerType === 'touch' && !this.touchObserved) { this.touchObserved = true; this.layout() }
+            const input=event.pointerType==='touch'?'touch':'mouse'
+            if(this.lastInput!==input){this.lastInput=input;this.reset();this.layout()}
         }, { capture: true, signal: this.abort.signal })
+        document.addEventListener('keydown',event=>{if(!/^(?:[wasd]|Arrow\w+| |Shift)$/i.test(event.key))return;if(this.lastInput!=='keyboard'){this.lastInput='keyboard';this.reset();this.layout()}},options)
         this.coarse.addEventListener('change', layout, options)
         if (typeof ResizeObserver !== 'undefined') {
             this.resize = new ResizeObserver(() => this.layout())
@@ -157,7 +159,8 @@ export class TpsTouchControls {
         this.reset(); this.layout()
     }
     private layout() {
-        const available = this.coarse.matches || navigator.maxTouchPoints > 0 || this.touchObserved
+        const available=this.lastInput ? this.lastInput==='touch'
+            : this.coarse.matches && navigator.maxTouchPoints>0 && matchMedia('(hover: none)').matches
         const visible = this.enabled && available
         this.element.hidden = !visible
         document.body.classList.toggle('tps-touch-visible', visible)

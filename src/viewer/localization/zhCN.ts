@@ -36,6 +36,17 @@ const pageMetadata: Record<UiLocale, {
  * to the DOM.
  */
 export const zhCnUiText: Readonly<Record<string, string>> = {
+    "Neck": "颈部",
+    "Waist": "腰部",
+    "Spine": "脊柱",
+    "Pelvis": "骨盆",
+    "Left shoulder": "左肩",
+    "Right shoulder": "右肩",
+    "Left upper arm": "左上臂",
+    "Right upper arm": "右上臂",
+    "Left thigh": "左大腿",
+    "Right thigh": "右大腿",
+
     "Redo pose": "重做姿态",
     "Reset selected part": "重置当前部位",
     "Move whole character": "移动整个角色",
@@ -842,6 +853,10 @@ const officialExpressionLabels: Readonly<Record<string, string>> = {
  * depend on a translation.
  */
 const officialAnimationBaseLabels: Readonly<Record<string, string>> = {
+    Idle: "待机",
+    Stun: "眩晕",
+    Break: "破防",
+
     Abnormality: '异常状态',
     CommonWait: '通用待机',
     Damage: '受伤',
@@ -868,6 +883,7 @@ const officialAnimationBaseLabels: Readonly<Record<string, string>> = {
 }
 
 const officialAnimationSuffixLabels: Readonly<Record<string, string>> = {
+    E: "结束",
     L: '循环',
     S: '起始',
     SE: '单次',
@@ -883,11 +899,16 @@ const boneSemanticLabels: ReadonlyArray<readonly [RegExp, string]> = [
     [/(?:head)/i, '头部'],
     [/(?:clavicle|shoulder)/i, '肩部'],
     [/(?:forearm|lowerarm)/i, '前臂'],
-    [/(?:upperarm)/i, '上臂'],
+    [/(?:upperarm|(?:^|[_ .:/-])arm(?:$|[_ .:/-]))/i, '上臂'],
     [/(?:elbow)/i, '手肘'],
     [/(?:hand|wrist)/i, '手部'],
-    [/(?:thigh|upperleg)/i, '大腿'],
-    [/(?:calf|shin|lowerleg)/i, '小腿'],
+    [/(?:thigh|upperleg|upleg)/i, '大腿'],
+    [/(?:calf|shin|lowerleg|(?:^|[_ .:/-])leg(?:$|[_ .:/-]))/i, '小腿'],
+    [/(?:thumb)/i, '拇指'],
+    [/(?:indexfinger)/i, '食指'],
+    [/(?:middlefinger)/i, '中指'],
+    [/(?:ringfinger)/i, '无名指'],
+    [/(?:pinkyfinger|littlefinger)/i, '小指'],
     [/(?:knee)/i, '膝盖'],
     [/(?:foot|ankle)/i, '脚部'],
     [/(?:toe)/i, '脚趾'],
@@ -899,7 +920,8 @@ const technicalTokenLabels: Readonly<Record<string, string>> = {
     waist: '腰部', spine: '脊柱', chest: '胸部', bust: '胸部', neck: '颈部', head: '头部',
     clavicle: '锁骨', shoulder: '肩部', upperarm: '上臂', arm: '手臂', forearm: '前臂',
     lowerarm: '前臂', elbow: '手肘', hand: '手部', wrist: '手腕', finger: '手指', thumb: '拇指',
-    thigh: '大腿', upperleg: '大腿', leg: '腿部', lowerleg: '小腿', calf: '小腿', shin: '小腿',
+    indexfinger: '食指', middlefinger: '中指', ringfinger: '无名指', pinkyfinger: '小指', littlefinger: '小指',
+    thigh: '大腿', upperleg: '大腿', upleg: '大腿', leg: '腿部', lowerleg: '小腿', calf: '小腿', shin: '小腿',
     knee: '膝盖', foot: '脚部', ankle: '脚踝', toe: '脚趾', twist: '扭转', roll: '滚转',
     eye: '眼睛', eyes: '眼睛', eyelid: '眼睑', brow: '眉毛', eyebrow: '眉毛', eyebrows: '眉毛',
     blink: '眨眼', open: '张开', opened: '张开', close: '闭合', closed: '闭合',
@@ -968,15 +990,16 @@ function translateOfficialRuntimeOption(text: string): string | undefined {
     }
     if (special[canonical]) return special[canonical]
 
-    const match = canonical.match(/^(.+?)_(SE|S|L)$/)
+    const match = canonical.match(/^(.+?)_(SE|S|L|E)(?:_(\d+))?$/)
     const base = match?.[1] ?? canonical
     const suffix = match?.[2]
+    const variant=match?.[3] ? ' '+match[3] : ''
     const baseLabel = officialAnimationBaseLabels[base]
-    if (baseLabel) return suffix ? `${baseLabel}（${officialAnimationSuffixLabels[suffix]}）` : baseLabel
+    if (baseLabel) return suffix ? `${baseLabel}${variant}（${officialAnimationSuffixLabels[suffix]}）` : baseLabel
 
     const technical = translateTechnicalTokens(base)
     if (!technical) return undefined
-    return suffix ? `${technical}（${officialAnimationSuffixLabels[suffix]}）` : technical
+    return suffix ? `${technical}${variant}（${officialAnimationSuffixLabels[suffix]}）` : technical
 }
 
 let currentLocale: UiLocale = detectInitialLocale()

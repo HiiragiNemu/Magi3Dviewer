@@ -84,3 +84,49 @@ body.theme-light #pose-workspace select option { background:#fff; color:#20242a;
  #advanced-controls-dock { max-height:calc(100dvh - 16px); }
  #menu-controls.compact-controls button,#menu-controls.compact-controls select,#menu-controls.compact-controls input { min-height:28px; }
 }
+
+/* Detail nodes are a named, ordered chain, not an automatic radial scatter. */
+#viewport-node-panel { position:fixed; left:50%; transform:translateX(-50%); width:min(460px,calc(100vw - 16px)); z-index:34; box-sizing:border-box; padding:8px; border:1px solid #8daaa288; border-radius:12px; background:rgba(28,49,56,.93); color:#edf6f5; pointer-events:auto; }
+#viewport-node-panel[hidden] { display:none!important; }
+#viewport-node-panel .ve-node-chooser { display:grid;grid-template-columns:1fr 1.5fr;gap:6px; }
+#viewport-node-panel select { min-width:0;width:100%;min-height:34px;color:inherit;background:#243f46;border:1px solid #92aba077;border-radius:6px;font:inherit;font-size:12px; }
+#viewport-node-panel .ve-joints { position:static; display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:5px;margin-top:6px;pointer-events:auto; }
+#viewport-editor #viewport-node-panel .ve-joint-node { position:relative;inset:auto;display:flex;align-items:center;justify-content:center;width:auto;height:auto;min-height:34px;padding:6px;font:inherit;font-size:12px;transform:none!important;border-radius:6px;background:#405c63;border:1px solid #7bb5a588; }
+#viewport-editor #viewport-node-panel .ve-joint-node::before { display:none; }
+#viewport-editor #viewport-node-panel .ve-joint-label { position:static;display:block;opacity:1;visibility:visible;transform:none;white-space:normal;background:transparent;padding:0;color:inherit;pointer-events:none; }
+#viewport-editor #viewport-node-panel .ve-joint-node[aria-pressed=true] { background:#147b68;border-color:#66e8bb; }
+.ve-node-hint { display:block;font-size:10px;line-height:1.5;opacity:.78;margin-top:5px; }
+#viewport-editor .ve-node-lines circle { fill:#54c8b0;stroke:#e7f7f3;stroke-width:1; }
+@media(orientation:landscape) and (max-height:540px) { #viewport-node-panel { left:50%;width:min(480px,56vw);padding:5px; } #viewport-node-panel .ve-node-hint {display:none;} #viewport-node-panel .ve-node-chooser select,#viewport-editor #viewport-node-panel .ve-joint-node {min-height:28px;font-size:11px;} }
+
+/* Both animation transports share atomic slider+percentage and selector widths. */
+#app #menu #menu-controls.compact-controls > div,
+#app #menu #menu-controls.compact-controls #enemy-toolbar-control,
+#app #menu #menu-controls.compact-controls .enemy-animation-controls,
+#app #menu #menu-controls.compact-controls #toolbar-tools,
+#app #menu #menu-controls.compact-controls #menu-icons {display:contents;}
+#app #menu #menu-controls.compact-controls [hidden] {display:none!important;}
+#app #menu #menu-controls.compact-controls .animation-progress-group {display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;white-space:nowrap;width:94px;margin:0;}
+#app #menu #menu-controls.compact-controls .animation-progress-group input[type=range] {flex:1 1 62px;width:62px;min-width:0;max-width:62px;margin:0;padding:0;}
+#app #menu #menu-controls.compact-controls .animation-progress-group output {flex:0 0 28px;width:28px;min-width:0;margin:0;font-size:11px;text-align:right;font-variant-numeric:tabular-nums;}
+#app #menu #menu-controls.compact-controls #animation-selector,
+#app #menu #menu-controls.compact-controls #enemy-animation-select {width:156px;min-width:156px;max-width:156px;flex:0 0 156px;}
+#app #menu #menu-controls.compact-controls #expression-selector {width:112px;min-width:112px;max-width:112px;flex:0 0 112px;}
+#app #menu #menu-controls.compact-controls #animation-repetitions,
+#app #menu #menu-controls.compact-controls #enemy-animation-repetitions {box-sizing:border-box;min-width:46px;max-width:46px;width:46px;flex:0 0 46px;padding:2px;}
+#app #menu #menu-controls.compact-controls #animation-action-status:empty {display:none;}
+#app #menu #menu-controls.compact-controls #animation-action-status {flex-basis:auto;}
+@media(max-width:600px){
+ #app #menu #menu-controls.compact-controls #animation-selector,
+ #app #menu #menu-controls.compact-controls #enemy-animation-select {width:112px;min-width:112px;max-width:112px;flex-basis:112px;}
+ #app #menu #menu-controls.compact-controls #expression-selector {width:104px;min-width:104px;max-width:104px;flex-basis:104px;}
+ #app #menu #menu-controls.compact-controls #character-selector,
+ #app #menu #menu-controls.compact-controls #enemy-toolbar-select {width:156px;max-width:156px;min-width:156px;flex:0 0 156px;}
+}
+
+#viewport-node-panel .ve-node-chooser {grid-template-columns:1fr 1.4fr auto;}
+#viewport-node-panel #viewport-focus-detail {font-size:11px;border-radius:6px;padding:4px 7px;white-space:nowrap;}
+#viewport-editor #viewport-node-panel .ve-joint-node {margin:0;box-sizing:border-box;min-height:40px;}
+
+/* Keep one finger together even on a 360px phone: no orphan fourth joint. */
+#viewport-node-panel .ve-joints[data-group=hands] {grid-template-columns:repeat(auto-fit,minmax(68px,1fr));}

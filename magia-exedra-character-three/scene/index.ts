@@ -309,7 +309,7 @@ export class MagiaExedraScene3D {
             // pose: pending Orbit damping must not overwrite it after update.
             if (this.controls.enabled) this.controls.update();
             // apply user rotation
-            if (this.cameraRotation != undefined) {
+            if (this.controls.enabled && this.cameraRotation != undefined) {
                 const rad = THREE.MathUtils.degToRad(this.cameraRotation)
                 this.camera.quaternion.multiply(
                     new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), rad)

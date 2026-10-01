@@ -38,27 +38,64 @@ export class DirectPoseHistory {
 }
 
 export interface PosePart { id: string; label: string; bone: Object3D; mode: 'rotate' | 'translate' }
-const excluded = /twist|roll|assist|finger|thumb|index|middle|pinky|hair|cloth|skirt|weapon|dummy|nub|end/i
+const excluded = /twist|roll|assist|bend|finger|thumb|index|middle|pinky|hair|cloth|skirt|weapon|dummy|nub|end/i
 const side = (name: string, s: 'left' | 'right') => s === 'left'
     ? /(?:^|[_. :/\-])(?:l|left)(?:$|[_. :/\-])|^left|left$/i.test(name)
     : /(?:^|[_. :/\-])(?:r|right)(?:$|[_. :/\-])|^right|right$/i.test(name)
 
+/** AssetStudio expands one Unity transform into nested, same-name identity
+ * bones for different skinned renderers. Expose the outer driving transform,
+ * not one useless control for every renderer-specific copy. */
+export function canonicalPoseBone(node: Object3D): Object3D {
+    let result = node
+    while (result.parent instanceof Bone && result.parent.name === result.name
+        && result.position.lengthSq() < 1e-12) result = result.parent
+    return result
+}
+export function poseBones(actor: Object3D): Bone[] {
+    const seen = new Set<Object3D>(), bones: Bone[] = []
+    actor.traverse(node => {
+        if (!(node instanceof Bone)) return
+        const bone = canonicalPoseBone(node)
+        if (bone instanceof Bone && !seen.has(bone)) { seen.add(bone); bones.push(bone) }
+    })
+    return bones
+}
+/** Zero-scale native branches select alternate heads/accessories. They remain
+ * in saved-pose data but are not useful handles in the visible pose editor. */
+export function poseBoneIsActive(node:Object3D,actor:Object3D):boolean {
+    for(let p:Object3D|null=node;p&&p!==actor;p=p.parent)if(Math.abs(p.scale.x)<1e-9||Math.abs(p.scale.y)<1e-9||Math.abs(p.scale.z)<1e-9)return false
+    return true
+}
 export function findDirectPoseParts(actor: Object3D): PosePart[] {
-    const bones: Bone[] = []
-    actor.traverse(node => { if (node instanceof Bone && !excluded.test(node.name)) bones.push(node) })
+    const bones = poseBones(actor).filter(bone => poseBoneIsActive(bone,actor) && !excluded.test(bone.name))
     const parts: PosePart[] = []
-    for (const [part, pattern] of [
-        ['hand', /hand|wrist/i], ['foot', /foot|ankle/i],
-        ['elbow', /forearm|lowerarm|elbow/i], ['knee', /calf|shin|lowerleg|knee|(?:^|[_. :/\-])leg(?:$|[_. :/\-])/i],
+    const axisName = (word: string) => new RegExp('(?:^|[_. :/\\-])(?:'+word+')(?:$|[_. :/\\-])', 'i')
+    for (const [id, label, pattern] of [
+        ['head', 'Head', axisName('head')], ['neck', 'Neck', axisName('neck')],
+        ['chest', 'Chest', axisName('chest|spine0?2')],
+        ['waist', 'Waist', axisName('waist')], ['spine', 'Spine', axisName('spine|spine0?1')],
+        ['pelvis', 'Pelvis', axisName('hip|hips|pelvis')],
+    ] as const) {
+        const bone = bones.find(b => pattern.test(b.name))
+        if (bone && !parts.some(p => p.bone === bone)) parts.push({ id, label, bone, mode: 'rotate' })
+    }
+    for (const [part, label, pattern] of [
+        ['shoulder', 'shoulder', axisName('shoulder|clavicle')],
+        ['upper-arm', 'upper arm', axisName('arm|upperarm')],
+        ['elbow', 'elbow', axisName('forearm|lowerarm|elbow')],
+        ['hand', 'hand', axisName('hand|wrist')],
+        ['upper-leg', 'thigh', axisName('upleg|upperleg|thigh')],
+        ['knee', 'knee', axisName('leg|lowerleg|calf|shin|knee')],
+        ['foot', 'foot', axisName('foot|ankle')],
     ] as const) {
         for (const s of ['left', 'right'] as const) {
             const bone = bones.find(b => pattern.test(b.name) && side(b.name, s))
-            if (bone) parts.push({ id: `${s}-${part}`, label: `${s === 'left' ? 'Left' : 'Right'} ${part}`, bone, mode: part === 'elbow' || part === 'knee' ? 'rotate' : 'translate' })
+            if (bone && !parts.some(p => p.bone === bone)) parts.push({
+                id: `${s}-${part}`, label: `${s === 'left' ? 'Left' : 'Right'} ${label}`, bone,
+                mode: part === 'hand' || part === 'foot' ? 'translate' : 'rotate',
+            })
         }
-    }
-    for (const [id, label, pattern] of [['head', 'Head', /head/i], ['chest', 'Chest', /chest|spine0?2/i]] as const) {
-        const bone = bones.find(b => pattern.test(b.name))
-        if (bone) parts.push({ id, label, bone, mode: 'rotate' })
     }
     return parts
 }

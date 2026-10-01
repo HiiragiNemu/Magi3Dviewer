@@ -1,8 +1,10 @@
+import { capturePlaneGesture, resolvePlaneGesture, type PlaneGestureBase } from './cameraPlaneGesture.ts'
 import * as THREE from 'three'
 import { TpsViewTouch } from './TpsViewTouch.ts'
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 interface CameraHost {
+    cameraRotation?: number
     camera: THREE.PerspectiveCamera
     controls: OrbitControls
     renderer: { domElement: HTMLCanvasElement }
@@ -18,6 +20,7 @@ interface CameraHooks {
 export class ThirdPersonCamera {
     yaw = 0
     pitch = 0
+    roll = 0
     distance = 7.5
     active = false
     private center = new THREE.Vector3()
@@ -28,6 +31,8 @@ export class ThirdPersonCamera {
     private orbit?: { controls: OrbitControls; enabled: boolean; up: THREE.Vector3 }
     private listeners?: AbortController
     private touchView?: TpsViewTouch
+    private touchBase?:PlaneGestureBase
+    private touchRoll=0
     private drag?: { id: number; x: number; y: number }
     private locked = false
     private lockPending = false
@@ -36,7 +41,7 @@ export class ThirdPersonCamera {
     private stream = 'pointermove'
     private eventCount = 0
     private lastExit?: { position: THREE.Vector3; quaternion: THREE.Quaternion; distance: number }
-    private readonly gain = 0.0015 // radians per device delta, identical at every angle
+    private readonly gain = 0.0015 // direct device displacement; no angular inertia
 
     private hooks: CameraHooks
     constructor(hooks: CameraHooks) { this.hooks = hooks }
@@ -53,11 +58,9 @@ export class ThirdPersonCamera {
         this.orbit = { controls, enabled: controls.enabled, up: camera.up.clone() }
         controls.enabled = false
         controls.disconnect()
-        const right = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion)
-        const up = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion)
-        this.backward.set(0, 0, 1).applyQuaternion(camera.quaternion)
-        this.yaw = Math.atan2(-right.z, right.x)
-        this.pitch = Math.atan2(this.backward.y, up.y)
+        this.orientation.setFromQuaternion(camera.quaternion,'YXZ')
+        this.yaw=this.orientation.y;this.pitch=-this.orientation.x;this.roll=this.orientation.z
+        this.backward.set(0,0,1).applyQuaternion(camera.quaternion)
         const sameExit = this.lastExit
             && camera.position.distanceToSquared(this.lastExit.position) < 1e-16
             && 1 - Math.abs(camera.quaternion.dot(this.lastExit.quaternion)) < 1e-12
@@ -77,8 +80,20 @@ export class ThirdPersonCamera {
     }
 
     zoom(delta: number): void {
-        if (!Number.isFinite(delta)) return
-        this.distance = Math.min(10, Math.max(0, this.distance + delta * 0.0035))
+        if (!this.active || !Number.isFinite(delta)) return
+        const {camera,controls}=this.hooks.scene(),step=delta*.0035*(controls.zoomSpeed??1)
+        const next=this.distance+step,pivot=Math.max(camera.near*2,.01)
+        this.backward.set(0,0,1).applyQuaternion(camera.quaternion)
+        if(next<pivot)this.center.addScaledVector(this.backward,next-pivot)
+        this.distance=Math.max(pivot,next)
+    }
+
+    /** Match Orbit's radians per CSS pixel for screen drags. Raw mouse-lock
+     * deltas retain their separate, device-space sensitivity. */
+    rotateViewport(dx:number,dy:number):void {
+        const {controls,renderer}=this.hooks.scene()
+        const gain=2*Math.PI*(controls.rotateSpeed??1)/Math.max(1,renderer.domElement.clientHeight||renderer.domElement.getBoundingClientRect().height)
+        this.move(dx*gain/this.gain,dy*gain/this.gain,0,'viewport-drag')
     }
 
     pan(dx:number,dy:number):void {
@@ -100,15 +115,18 @@ export class ThirdPersonCamera {
         const actor = this.hooks.actor()
         if (actor) {
             const position = actor.getWorldPosition(new THREE.Vector3())
-            if (actor === this.previousActorObject) this.center.add(position.clone().sub(this.previousActor))
+            if (actor === this.previousActorObject) {
+                const delta=position.clone().sub(this.previousActor);this.center.add(delta)
+                this.touchBase?.target.add(delta);this.touchBase?.position.add(delta)
+            }
             this.previousActor.copy(position)
             this.previousActorObject = actor
         }
-        this.orientation.set(-this.pitch, this.yaw, 0, 'YXZ')
+        this.orientation.set(-this.pitch, this.yaw, this.roll, 'YXZ')
         camera.quaternion.setFromEuler(this.orientation)
         this.backward.set(0, 0, 1).applyQuaternion(camera.quaternion)
         camera.position.copy(this.center).addScaledVector(this.backward, this.distance)
-        camera.up.set(0, 1, 0)
+        camera.up.copy(this.orbit?.up??new THREE.Vector3(0,1,0))
         controls.target.copy(this.center)
         this.trace([1, performance.now(), this.yaw, this.pitch, ...camera.quaternion.toArray(), ...camera.position.toArray(), this.distance])
     }
@@ -135,6 +153,9 @@ export class ThirdPersonCamera {
         camera.up.copy(this.orbit?.up ?? new THREE.Vector3(0, 1, 0))
         controls.target.copy(position).addScaledVector(this.backward, -Math.max(this.distance, camera.near))
         controls.update()
+        const relative=camera.quaternion.clone().invert().multiply(quaternion)
+        this.hooks.scene().cameraRotation=THREE.MathUtils.radToDeg(2*Math.atan2(relative.z,relative.w))
+        camera.quaternion.copy(quaternion)
         this.lastExit = { position: camera.position.clone(), quaternion: camera.quaternion.clone(), distance: this.distance }
         controls.enableDamping = damping
         controls.connect(renderer.domElement)
@@ -185,9 +206,13 @@ export class ThirdPersonCamera {
             active: () => this.active,
             canvas: () => this.hooks.scene().renderer.domElement,
             isControl: target => this.isControl(target),
-            rotate: (dx,dy) => this.move(dx*2,dy*2,0,'touch'),
-            pinch: ratio => { if(Number.isFinite(ratio)&&ratio>0)this.distance=Math.min(20,Math.max(.12,this.distance*ratio)) },
+            rotate: (dx,dy) => this.rotateViewport(dx,dy),
+            pinch: () => {},
+            twoStart:()=>{const {camera,controls,renderer}=this.hooks.scene();this.touchBase=capturePlaneGesture(camera,this.center,renderer.domElement.clientHeight||renderer.domElement.getBoundingClientRect().height,controls.zoomSpeed??1);this.touchRoll=this.roll},
+            two:delta=>{if(!this.touchBase)return;const next=resolvePlaneGesture(this.touchBase,delta);if(!next)return;this.center.copy(next.target);this.distance=next.distance;this.roll=this.touchRoll+delta.roll},
+            twoEnd:()=>{this.touchBase=undefined},
             pan:(dx,dy)=>this.pan(dx,dy),
+            roll:radians=>{if(this.active&&Number.isFinite(radians))this.roll+=radians},
             tap:(x,y)=>document.dispatchEvent(new CustomEvent('magius:tps-select-at',{detail:{x,y}})),
         })
         // Never subscribe to mousemove alongside Pointer Events. Raw and normal
@@ -204,7 +229,7 @@ export class ThirdPersonCamera {
             if (event.pointerType === 'touch') return
             if (!this.active || document.pointerLockElement === this.hooks.scene().renderer.domElement || this.drag?.id !== event.pointerId) return
             if (event.cancelable) event.preventDefault()
-            this.move(event.clientX - this.drag.x, event.clientY - this.drag.y, event.timeStamp, 'drag', event.isTrusted)
+            this.rotateViewport(event.clientX - this.drag.x, event.clientY - this.drag.y)
             this.drag.x = event.clientX; this.drag.y = event.clientY
         }, { signal })
         document.addEventListener('pointerdown', event => {
@@ -237,7 +262,7 @@ export class ThirdPersonCamera {
             if (!locked && (this.isControl(event.target) || !this.inside(event.clientX, event.clientY))) return
             event.preventDefault()
             const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? this.hooks.scene().renderer.domElement.clientHeight : 1
-            this.zoom(Math.max(-120, Math.min(120, event.deltaY * unit)))
+            this.zoom(event.deltaY * unit)
         }, { passive: false, capture: true, signal })
         window.addEventListener('blur', () => { this.drag = undefined; if (this.active) this.hooks.released() }, { signal })
         document.addEventListener('visibilitychange', () => { if (document.hidden) this.drag = undefined }, { signal })
@@ -246,6 +271,6 @@ export class ThirdPersonCamera {
 
     diagnostics(): Record<string, unknown> {
         return { implementation: 'clean-third-person-v1', yaw: this.yaw, pitch: this.pitch, distance: this.distance,
-            active: this.active, stream: this.stream, rawLock: this.rawLock, events: this.eventCount, angularLimits: null }
+            active: this.active, roll: this.roll, stream: this.stream, rawLock: this.rawLock, events: this.eventCount, angularLimits: null }
     }
 }

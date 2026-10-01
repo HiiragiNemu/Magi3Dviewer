@@ -1,5 +1,16 @@
 /** Japanese presentation strings for the Viewer UI. Canonical keys remain English. */
 export const jaJpUiText: Readonly<Record<string, string>> = {
+    "Neck": "首",
+    "Waist": "腰",
+    "Spine": "背骨",
+    "Pelvis": "骨盤",
+    "Left shoulder": "左肩",
+    "Right shoulder": "右肩",
+    "Left upper arm": "左上腕",
+    "Right upper arm": "右上腕",
+    "Left thigh": "左太もも",
+    "Right thigh": "右太もも",
+
     "Redo pose": "ポーズをやり直す",
     "Reset selected part": "選択部位をリセット",
     "Move whole character": "キャラクター全体を移動",
@@ -785,6 +796,9 @@ const jaOfficialAnimationBaseLabels: Readonly<Record<string, string>> = {
     Standby: '戦闘待機', Victory: '勝利', Wait: '待機', Attack: '攻撃', Skill: 'スキル',
     Magia: 'マギア', Guard: '防御', Dodge: '回避', Run: '走る', Walk: '歩く', Entry: '登場',
     Appear: '出現', Death: '退場',
+    Idle: '待機',
+    Stun: 'スタン',
+    Break: 'ブレイク',
 }
 
 const jaAnimationSuffixLabels: Readonly<Record<string, string>> = { L: 'ループ', S: '開始', SE: '単発' }
@@ -812,6 +826,7 @@ const jaTechnicalTokenLabels: Readonly<Record<string, string>> = {
     animation:'アニメーション',anim:'アニメーション',home:'ホーム',wait:'待機',standby:'戦闘待機',transition:'遷移',
     victory:'勝利',attack:'攻撃',skill:'スキル',magia:'マギア',guard:'防御',dodge:'回避',run:'走る',walk:'歩く',
     entry:'登場',appear:'出現',death:'退場',loop:'ループ',expression:'表情',facial:'表情',
+    E:'終了',
 }
 
 function splitJaTechnicalTokens(value: string): string[] {
@@ -839,13 +854,14 @@ function translateJaOfficialRuntimeOption(text: string): string | undefined {
         W_HomeWait01_L: '武器ホーム待機1（ループ）',
     }
     if (special[canonical]) return special[canonical]
-    const match = canonical.match(/^(.+?)_(SE|S|L)$/)
+    const match = canonical.match(/^(.+?)_(SE|S|L|E)(?:_(\d+))?$/)
     const base = match?.[1] ?? canonical
     const suffix = match?.[2]
+    const variant=match?.[3] ? ' '+match[3] : ''
     const baseLabel = jaOfficialAnimationBaseLabels[base]
-    if (baseLabel) return suffix ? `${baseLabel}（${jaAnimationSuffixLabels[suffix]}）` : baseLabel
+    if (baseLabel) return suffix ? `${baseLabel}${variant}（${jaAnimationSuffixLabels[suffix]}）` : baseLabel
     const technical = translateJaTechnicalTokens(base)
-    return technical ? (suffix ? `${technical}（${jaAnimationSuffixLabels[suffix]}）` : technical) : undefined
+    return technical ? (suffix ? `${technical}${variant}（${jaAnimationSuffixLabels[suffix]}）` : technical) : undefined
 }
 
 export function translateJaJpUiText(text: string): string {
