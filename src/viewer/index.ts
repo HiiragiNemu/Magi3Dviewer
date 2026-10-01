@@ -29,6 +29,8 @@ import { createViewportFraming } from './performanceEditor/viewportFraming'
 import { mountPerformanceStudio } from './performanceEditor/studio'
 import { PerformanceRecorder } from './performanceEditor/recorder'
 import type { RecordedActor } from './performanceEditor/recordings'
+import { StableGarmentContacts, GARMENT_CONTACT_SETTING } from './garmentContacts'
+import { PoseGravityPreview } from './poseGravityPreview'
 import { createJointNodeLayer, beginJointPointerDrag, beginExistingJointGizmoPointerDrag } from './performanceEditor/jointNodes'
 import * as THREE from 'three'
 import Stats from 'three/addons/libs/stats.module.js';
@@ -312,7 +314,59 @@ let performanceEditorController: ReturnType<typeof mountPerformanceEditor> | und
 let performanceHost: ReturnType<typeof createViewerPerformanceHost> | undefined
 let performanceRecorder: PerformanceRecorder | undefined
 const studioAdoptedExpressions=new WeakSet<THREE.Object3D>()
-function restoreStudioOutputs(){performanceRecorder?.restore()}
+const poseGravity = new PoseGravityPreview()
+const garmentContacts = new Map<THREE.Object3D, StableGarmentContacts>()
+const garmentPreparing = new Set<THREE.Object3D>()
+const garmentContactsAvailable = import.meta.env.VITE_MAGIUS_GARMENT_CONTACTS !== 'off'
+let garmentContactsEnabled = garmentContactsAvailable
+try { if(localStorage.getItem(GARMENT_CONTACT_SETTING)==='off')garmentContactsEnabled=false } catch { /* privacy mode */ }
+function setGarmentContactsEnabled(value:boolean){
+    value=Boolean(value&&garmentContactsAvailable);garmentContactsEnabled=value
+    if(!value)for(const solver of garmentContacts.values())solver.restore()
+    try{localStorage.setItem(GARMENT_CONTACT_SETTING,value?'on':'off')}catch{}
+    const input=document.getElementById('garment-contacts-enabled') as HTMLInputElement|null;if(input)input.checked=value
+}
+function warmGarmentContacts(object:THREE.Object3D){
+    if(!garmentContactsAvailable||garmentContacts.has(object)||garmentPreparing.has(object))return
+    garmentPreparing.add(object)
+    const prepare=()=>{garmentPreparing.delete(object);if(!scene.characters.some(s=>s.character?.object===object))return;try{garmentContacts.set(object,new StableGarmentContacts(object))}catch(error){console.warn('Garment contact capability unavailable',error)}}
+    if('requestIdleCallback' in window)window.requestIdleCallback(prepare,{timeout:1500});else setTimeout(prepare,200)
+}
+function restoreStudioOutputs(){performanceRecorder?.restore();for(const contact of garmentContacts.values())contact.restore()}
+function preparePoseGravity(){
+    if(!poseGravity.enabled)return
+    poseGravity.prepare(scene.characters.flatMap(slot=>{
+        const character=slot.character;if(!character||slot.removed)return[]
+        const object=character.object,frozen=poseFrozenBases.get(object),generation=slot.loadGeneration??0
+        return[{object,generation,current:()=>slot.character===character&&!slot.removed&&!character.disposed,
+            frozen:!!frozen&&character.animation.paused&&!performanceRecorder?.ownsMotion(object),
+            inputs:[...manualPoseByCharacter.get(object)?.values()??[]].filter(entry=>!isPerformanceBoneLeased(entry.bone)).map(entry=>({node:entry.bone,
+                manual:entry.offsets.lengthSq()>1e-12||entry.positionOffsets.lengthSq()>1e-12||!!entry.scaleFactors||directPoseSelection?.entry===entry,
+                apply:()=>{const base=frozen?.get(entry.bone.uuid);if(!base)return;writeLocal(entry.bone,base);entry.lastApplied=entry.lastAppliedPosition=entry.lastAppliedScale=undefined;applyPoseEntry(entry)},
+            }))}]
+    }))
+}
+function updateGarmentContacts(){
+    for(const slot of scene.characters){const character=slot.character;if(!character)continue
+        const object=character.object,active=garmentContactsEnabled&&!performanceRecorder?.ownsMotion(object)&&(
+            (isViewerLocomotionEnabled()&&scene.characterSelected===slot)||
+            (poseGravity.enabled&&poseFrozenBases.has(object))||/walk|run|jump|airborne|land/i.test(character.animation.current??''))
+        if(active)warmGarmentContacts(object)
+        garmentContacts.get(object)?.solve(active,!poseFrozenBases.has(object)||isViewerLocomotionEnabled(),node=>{if(isPerformanceBoneLeased(node))return true;const entry=manualPoseByCharacter.get(object)?.get(node.uuid);return !!entry&&(entry.offsets.lengthSq()>1e-12||entry.positionOffsets.lengthSq()>1e-12||!!entry.scaleFactors||directPoseSelection?.entry===entry)})
+    }
+    for(const [object,solver]of garmentContacts)if(!scene.characters.some(s=>s.character?.object===object)){solver.dispose();garmentContacts.delete(object)}
+}
+function setupMotionContactOptions(){
+    const section=document.createElement('section');section.id='motion-contact-options';section.dataset.i18nIgnore='true';section.style.cssText='display:grid;gap:6px;padding:8px;font-size:12px'
+    const contact=document.createElement('input');contact.type='checkbox';contact.id='garment-contacts-enabled';contact.checked=garmentContactsEnabled;contact.disabled=!garmentContactsAvailable
+    const contactLabel=document.createElement('label');contactLabel.append(contact,document.createTextNode('稳定防穿模（可单独关闭）'));contact.onchange=()=>setGarmentContactsEnabled(contact.checked)
+    const gravity=document.createElement('input');gravity.type='checkbox';gravity.id='pose-gravity-enabled';gravity.disabled=!garmentContactsAvailable
+    const gravityLabel=document.createElement('label');gravityLabel.append(gravity,document.createTextNode('自定义姿态重力预览（原生物理）'));gravity.onchange=()=>poseGravity.setEnabled(gravity.checked&&garmentContactsAvailable)
+    const note=document.createElement('small');note.textContent='姿态重力默认关闭，保留固定姿态。开启后，仅未手动控制的头发、衣服、饰品继续原生物理；防穿模不增加弹簧或风力。'
+    section.append(contactLabel,gravityLabel,note)
+    const dock=document.getElementById('advanced-controls-dock')!;(dock.querySelector('.floating-panel-scroll')??dock).append(section)
+    Object.assign(window,{magiusGarmentContacts:{setEnabled:setGarmentContactsEnabled,evaluateOnce:updateGarmentContacts,get enabled(){return garmentContactsEnabled},setPoseGravity:(value:boolean)=>{gravity.checked=Boolean(value&&garmentContactsAvailable);poseGravity.setEnabled(gravity.checked)},diagnostics:()=>({contacts:[...garmentContacts].map(([root,solver])=>({uuid:root.uuid,...solver.diagnostics})),gravity:poseGravity.diagnostics()})}})
+}
 function listRecordedActors():RecordedActor[]{
     const counts=new Map<string,number>(),result:RecordedActor[]=[]
     for(const slot of scene.characters){const character=slot.character;if(!character||slot.loading||slot.removed||character.disposed)continue
@@ -816,12 +870,16 @@ export function setupViewer() {
     setupBackgroundImageSelector()
     setupCameraModeButtons()
 
+    setupMotionContactOptions()
     addBeforeAnimationLoop(restoreStudioOutputs)
     addBeforeAnimationLoop(restoreManualPoseOverrides)
+    addBeforeAnimationLoop(preparePoseGravity)
     scene.animateLoopCallback = animateLoop
 
     onPermanentPageExit(() => {
         removeBeforeAnimationLoop(restoreStudioOutputs)
+        removeBeforeAnimationLoop(preparePoseGravity)
+        poseGravity.dispose();for(const contact of garmentContacts.values())contact.dispose();garmentContacts.clear()
         removeBeforeAnimationLoop(restoreManualPoseOverrides)
         finishDirectPoseDrag()
         directPoseToolsUi?.dispose()
@@ -3248,13 +3306,16 @@ function setupViewerInputHandler() {
 }
 
 function animateLoop() {
+    poseGravity.capture()
     recordPoseDiagnosticFrame()
     applySelectedAnimationPlaybackRate()
     applyManualExpressionOverrides()
     voicePanelController?.update()
     applyManualPoseOverrides()
+    poseGravity.compose()
     performanceGizmoFlush?.()
     performanceHost?.flushFinalPoseBeforeCamera()
+    updateGarmentContacts()
     performanceRecorder?.frame()
     if (objectTransformUiPending) {
         objectTransformUiPending = false
@@ -3392,6 +3453,7 @@ async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneC
         }
 
         attachViewerLocomotion(sceneCharacter)
+        warmGarmentContacts(character.object)
 
         return sceneCharacter
     })
