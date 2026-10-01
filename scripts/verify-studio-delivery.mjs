@@ -1,0 +1,9 @@
+import fs from 'node:fs'
+import path from 'node:path'
+import crypto from 'node:crypto'
+import assert from 'node:assert/strict'
+const base=process.env.MAGIUS_SITE_URL||'https://magius3dviewer.pages.dev/',root=process.env.MAGIUS_BUILD_DIR||'dist-deploy',out=process.env.MAGIUS_DELIVERY_REPORT||'artifacts/studio/production-delivery.json'
+const local=fs.readFileSync(path.join(root,'index.html'),'utf8'),version=JSON.parse(fs.readFileSync(path.join(root,'site-version.json'))),sha=data=>crypto.createHash('sha256').update(data).digest('hex'),files=[...new Set(['/site-version.json',...Array.from(local.matchAll(/(?:src|href)="([^"?#]+\.(?:js|css))"/g),m=>new URL(m[1],base)).filter(u=>u.origin===new URL(base).origin).map(u=>u.pathname),...fs.readdirSync(path.join(root,'assets')).filter(n=>/\.(js|css)$/.test(n)).map(n=>'/assets/'+n)])],rows=[]
+for(const suffix of ['/','/?runtimeDelivery=release']){const response=await fetch(new URL(suffix,base),{cache:'no-store'}),body=await response.text();assert.equal(response.status,200);assert.equal(sha(body),sha(local));assert.ok(body.includes(version.revision));rows.push({path:suffix,status:response.status,sha256:sha(body),cacheControl:response.headers.get('cache-control')})}
+for(let i=0;i<files.length;i+=4)await Promise.all(files.slice(i,i+4).map(async file=>{const expected=fs.readFileSync(path.join(root,file.replace(/^\//,''))),response=await fetch(new URL(file,base),{cache:'no-store'}),body=Buffer.from(await response.arrayBuffer());assert.equal(response.status,200,file);assert.equal(sha(body),sha(expected),file);rows.push({path:file,status:response.status,bytes:body.length,sha256:sha(body)})}))
+fs.mkdirSync(path.dirname(out),{recursive:true});fs.writeFileSync(out,JSON.stringify({passed:true,base,version,checkedAt:new Date().toISOString(),files:rows},null,2));console.log(JSON.stringify({passed:true,revision:version.revision,files:rows.length}))

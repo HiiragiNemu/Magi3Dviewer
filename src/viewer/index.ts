@@ -58,7 +58,7 @@ import { fetchVoiceCatalogManifest, VoiceCatalog } from './voice/catalog'
 import { getViewerCharacterPhysicsAttachment } from './characterPhysics'
 import type { VoicePoseAvailability, VoicePoseChannelLease } from './voice/poseChannels'
 import {
-    loadStageById,getCurrentStageDefinition,
+    loadStageById,getCurrentStageDefinition,setupStageSelector,
     STAGE_SHADOW_QUALITY_CHANGE_EVENT,
     getStageShadowQuality,
     getStageShadowQualityState,
@@ -653,7 +653,7 @@ function setupPerformanceEditor() {
             schedule: callback => requestAnimationFrame(callback), cancel: id => cancelAnimationFrame(id),
         })
         performanceRecorder = new PerformanceRecorder(editor.runtime,{
-            scene:()=>getCurrentStageDefinition()?.id,loadScene:async id=>{const select=document.getElementById('stage-selector') as HTMLSelectElement;const option=[...select.options].find(o=>o.value===id);if(!option||option.disabled)throw Error('项目场景当前不可加载：'+id);if(getCurrentStageDefinition()?.id!==id)await loadStageById(id);if(getCurrentStageDefinition()?.id!==id)throw Error('项目场景加载失败，保留现有项目：'+id)},
+            scene:()=>getCurrentStageDefinition()?.id,loadScene:async id=>{await setupStageSelector();const select=document.getElementById('stage-selector') as HTMLSelectElement;const option=[...select.options].find(o=>o.value===id);if(!option||option.disabled)throw Error('项目场景当前不可加载：'+id);if(getCurrentStageDefinition()?.id!==id)await loadStageById(id);if(getCurrentStageDefinition()?.id!==id)throw Error('项目场景加载失败，保留现有项目：'+id)},
             actors:listRecordedActors,camera:()=>({camera:scene.camera,target:scene.controls.target}),
             select:actor=>{const slot=scene.characters.find(s=>s.character?.object===actor.object);if(slot&&slot!==scene.characterSelected)selectCharacter(slot);else{const enemy=enemyPanelController?.enemyResources.getInstances().find(e=>e.object===actor.object);if(enemy)enemyPanelController?.selectInstance(enemy.instanceId)}},
             playback:()=>{if(isViewerLocomotionEnabled())setViewerLocomotionEnabled(false);setDirectPoseEditing(false);closeObjectTransform()},

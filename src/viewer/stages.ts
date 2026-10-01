@@ -869,7 +869,15 @@ function refreshStageSelectorLabels() {
 
 document.addEventListener('magius:localechange', refreshStageSelectorLabels)
 
-export async function setupStageSelector() {
+let stageSelectorInitialization: Promise<void> | undefined
+/** One initialization barrier owns catalog population AND the initial scene.
+ * Project imports can await it before validating an entry. They must not race
+ * a later default-sky load or install a duplicate change handler. */
+export function setupStageSelector(): Promise<void> {
+    return stageSelectorInitialization ??= initializeStageSelector()
+}
+
+async function initializeStageSelector() {
     try {
         stageSceneNameIndex = await loadStageSceneNameIndex()
         stageSceneNameError = null

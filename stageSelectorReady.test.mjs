@@ -1,0 +1,11 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import fs from 'node:fs'
+import ts from 'typescript'
+const source=fs.readFileSync('src/viewer/stages.ts','utf8'),ast=ts.createSourceFile('stages.ts',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS)
+const declaration=ast.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='setupStageSelector');assert.ok(declaration)
+const code=ts.transpile('let stageSelectorInitialization;'+declaration.getText(ast).replace(/^export /,''),{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None})
+const instantiate=initialize=>new Function('initializeStageSelector',code+';return setupStageSelector')(initialize)
+test('catalog and initial scene finish before any concurrent project importer proceeds',async()=>{let catalog,initial,initializations=0,stage='none';const catalogReady=new Promise(r=>catalog=r),initialReady=new Promise(r=>initial=r);const setup=instantiate(async()=>{initializations++;await catalogReady;await initialReady;stage='sky-reference'});const a=setup(),b=setup();assert.equal(a,b);let imported=false;const project=b.then(()=>{stage='recorded-stage';imported=true});await Promise.resolve();assert.equal(imported,false);catalog();await Promise.resolve();assert.equal(imported,false);initial();await project;assert.equal(stage,'recorded-stage');await setup();assert.equal(stage,'recorded-stage');assert.equal(initializations,1)})
+test('initialization rejection is not reported as a ready catalog and does not retry duplicate listeners',async()=>{let calls=0;const setup=instantiate(async()=>{calls++;throw Error('initial scene failed')});await assert.rejects(setup(),/initial scene failed/);await assert.rejects(setup(),/initial scene failed/);assert.equal(calls,1)})
+test('project host awaits the authoritative initialization barrier before reading selector eligibility',()=>{const host=fs.readFileSync('src/viewer/index.ts','utf8');assert.match(host,/loadScene:async id=>\{await setupStageSelector\(\);const select=/);assert.match(host,/if\(!option\|\|option.disabled\)throw Error/);assert.match(source,/await loadStageById\('sky-reference'\)/);assert.equal((source.match(/stageSelector.addEventListener\('change'/g)||[]).length,1)})
