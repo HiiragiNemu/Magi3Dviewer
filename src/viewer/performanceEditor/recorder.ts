@@ -10,6 +10,8 @@ export interface RecorderHost {
     camera():{camera:PerspectiveCamera;target:Vector3}
     select(actor:RecordedActor):void
     playback():void
+    stopInput?():void
+    syncRoot?(actor:RecordedActor):void
     releaseCamera():void
     loadActors?(targets:RecordedTarget[]):Promise<void>
     beforeCapture?():void
@@ -82,7 +84,7 @@ export class PerformanceRecorder {
         for(const l of this.lanes){if(kinds.includes(l.kind)&&(actorKey==='camera'?l.kind==='camera':target&&l.target&&identity(l.target)===identity(target))){this.live.add(l.id);if(l.kind!=='camera'){const rig=this.rig(l);values.push({rig,values:rig.capture(true)})}}}
         this.restore();for(const row of values)row.rig.apply(row.values,true)
         if(cameraValue)applyRecordedCamera(this.host.camera().camera,this.host.camera().target,cameraValue)
-        if(target){this.host.select(target);if(values.length&&adoptForEditing)this.host.adoptPose?.(target,kinds)}
+        if(target){this.host.select(target);if(values.length&&kinds.includes('motion'))this.host.syncRoot?.(target);if(values.length&&adoptForEditing)this.host.adoptPose?.(target,kinds)}
         this.host.releaseCamera();this.notify()
     }
     private newLane(kind:RecordedKind,target?:RecordedActor):{lane:RecordedLane;rig?:RecordedRig}{
@@ -130,14 +132,14 @@ export class PerformanceRecorder {
     finish(){
         const state=this.captureState;if(!state)return
         try{this.captureFrame(true)}catch(error){this.error=String((error as Error).message)}
-        const time=this.runtime.time;this.captureState=undefined;this.runtime.pause();this.runtime.liveCaptureClock=false
+        const time=this.runtime.time;this.captureState=undefined;this.host.stopInput?.();this.runtime.pause();this.runtime.liveCaptureClock=false
         const document=this.runtime.timeline.value,lanes=[...(document.recordedLanes??[])]
         for(const incoming of state.lanes){if(!incoming.frames.length)continue;const index=lanes.findIndex(l=>l.id===incoming.id),merged=insertRecordedInterval(index<0?undefined:lanes[index],incoming);if(index<0)lanes.push(merged);else lanes[index]=merged}
         this.remember(state.before)
         this.setDocument({...document,recordedLanes:lanes,loop:state.previousLoop,duration:Math.max(state.previousDuration,...lanes.flatMap(l=>l.frames.map(f=>f.time)),.1)})
         this.runtime.time=time;this.live.clear();this.replay=true;this.frame();this.notify()
     }
-    cancel(){const state=this.captureState;if(!state)return;this.captureState=undefined;this.runtime.pause();this.runtime.liveCaptureClock=false;this.setDocument(state.before);this.runtime.time=state.start;this.replay=false;this.live.clear();this.restore();this.notify()}
+    cancel(){const state=this.captureState;if(!state)return;this.captureState=undefined;this.host.stopInput?.();this.runtime.pause();this.runtime.liveCaptureClock=false;this.setDocument(state.before);this.runtime.time=state.start;this.replay=false;this.live.clear();this.restore();this.notify()}
     captureKey(actorKey:string,kinds:RecordedKind[]=['motion','expression']){
         if(this.recording)throw Error('实时录制已自动产生关键帧')
         this.host.beforeCapture?.();this.runtime.pause()

@@ -657,6 +657,8 @@ function setupPerformanceEditor() {
             actors:listRecordedActors,camera:()=>({camera:scene.camera,target:scene.controls.target}),
             select:actor=>{const slot=scene.characters.find(s=>s.character?.object===actor.object);if(slot&&slot!==scene.characterSelected)selectCharacter(slot);else{const enemy=enemyPanelController?.enemyResources.getInstances().find(e=>e.object===actor.object);if(enemy)enemyPanelController?.selectInstance(enemy.instanceId)}},
             playback:()=>{if(isViewerLocomotionEnabled())setViewerLocomotionEnabled(false);setDirectPoseEditing(false);closeObjectTransform()},
+            stopInput:()=>{if(isViewerLocomotionEnabled())setViewerLocomotionEnabled(false)},
+            syncRoot:actor=>{teleportViewerCharacter(actor.object,actor.object.position.clone(),actor.object.quaternion.clone())},
             releaseCamera:()=>{adoptViewerCamera();if(!isViewerLocomotionEnabled()&&!directPoseGizmoDragging)scene.controls.enabled=true},
             beforeCapture:finishDirectPoseDrag,
             adoptPose:(actor,kinds)=>{
