@@ -38,6 +38,23 @@ export class DirectPoseHistory {
 }
 
 export interface PosePart { id: string; label: string; bone: Object3D; mode: 'rotate' | 'translate' }
+export type PoseSide = 'left' | 'right'
+/** Raw L/R are the character's anatomical identities in these imported rigs.
+ * Display names use the user's fixed FRONT observer convention, never camera
+ * position or a posed limb's current screen position. Raw names/IDs stay intact. */
+export function frontViewPoseSide(name: string): PoseSide | undefined {
+    if (/(?:^|[_ .:/-])(?:l\d*|left)(?:$|[_ .:/-])|^left|left$/i.test(name)) return 'right'
+    if (/(?:^|[_ .:/-])(?:r\d*|right)(?:$|[_ .:/-])|^right|right$/i.test(name)) return 'left'
+    return undefined
+}
+export function primaryPoseRegion(part: PosePart): 'top' | 'bottom' | PoseSide {
+    if (part.id === 'head' || part.id === 'neck') return 'top'
+    return frontViewPoseSide(part.bone.name) ?? 'bottom'
+}
+export function primaryPoseOrder(part: PosePart): number {
+    const role = part.id.replace(/^(?:left|right)-/, '')
+    return ['head','neck','shoulder','upper-arm','elbow','hand','upper-leg','knee','foot','chest','waist','spine'].indexOf(role)
+}
 const excluded = /twist|roll|assist|bend|finger|thumb|index|middle|pinky|hair|cloth|skirt|weapon|dummy|nub|end/i
 const side = (name: string, s: 'left' | 'right') => s === 'left'
     ? /(?:^|[_. :/\-])(?:l|left)(?:$|[_. :/\-])|^left|left$/i.test(name)
@@ -74,11 +91,17 @@ export function findDirectPoseParts(actor: Object3D): PosePart[] {
     for (const [id, label, pattern] of [
         ['head', 'Head', axisName('head')], ['neck', 'Neck', axisName('neck')],
         ['chest', 'Chest', axisName('chest|spine0?2')],
-        ['waist', 'Waist', axisName('waist')], ['spine', 'Spine', axisName('spine|spine0?1')],
-        ['pelvis', 'Pelvis', axisName('hip|hips|pelvis')],
+        ['waist', 'Waist', axisName('waist')],
     ] as const) {
         const bone = bones.find(b => pattern.test(b.name))
         if (bone && !parts.some(p => p.bone === bone)) parts.push({ id, label, bone, mode: 'rotate' })
+    }
+    // Spine and Waist are distinct pivots, not duplicate bones. Keep the
+    // simpler upper-torso Waist in the main UI; Spine stays in torso details.
+    // Rigs without Waist retain their actual Spine as the main torso control.
+    if (!parts.some(p => p.id === 'waist')) {
+        const bone = bones.find(b => axisName('spine|spine0?1').test(b.name))
+        if (bone && !parts.some(p => p.bone === bone)) parts.push({id:'spine',label:'Spine',bone,mode:'rotate'})
     }
     for (const [part, label, pattern] of [
         ['shoulder', 'shoulder', axisName('shoulder|clavicle')],
@@ -92,7 +115,7 @@ export function findDirectPoseParts(actor: Object3D): PosePart[] {
         for (const s of ['left', 'right'] as const) {
             const bone = bones.find(b => pattern.test(b.name) && side(b.name, s))
             if (bone && !parts.some(p => p.bone === bone)) parts.push({
-                id: `${s}-${part}`, label: `${s === 'left' ? 'Left' : 'Right'} ${label}`, bone,
+                id: `${s}-${part}`, label: `${s === 'left' ? 'Right' : 'Left'} ${label}`, bone,
                 mode: part === 'hand' || part === 'foot' ? 'translate' : 'rotate',
             })
         }

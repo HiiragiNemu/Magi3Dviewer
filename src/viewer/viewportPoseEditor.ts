@@ -1,6 +1,6 @@
 import { Camera, Object3D, Vector3 } from 'three'
 import { groupedPoseParts, nodePath, poseNodePages, posePartLabel, poseCategoryLabel, posePageLabel, type PoseNodePage, type PoseNodeGroup } from './poseWorkspace'
-import type { PosePart } from './directPoseTools'
+import { primaryPoseRegion, primaryPoseOrder, type PosePart } from './directPoseTools'
 
 export interface ViewportEditorState {
     actor?: Object3D; object?: Object3D; pose: boolean; active: boolean
@@ -39,6 +39,41 @@ const labels = {
     en: {joints:'Main nodes',hands:'Hand nodes',more:'More nodes',parameters:'Parameters',undo:'Undo',redo:'Redo',reset:'Reset part','reset-all':'Reset pose',save:'Save pose',pose:'Pose edit',object:'Place object',move:'Move XYZ',rotate:'Rotate','editor-close':'Close',focus:'Frame actor','focus-detail':'Frame part',collapse:'Fold controls',grip:'Drag to arrange; double-click to restore; arrow keys to nudge'},
 }
 interface Chip {key:string;root:HTMLDivElement;control:HTMLElement;grip:HTMLButtonElement;x:number;y:number;width:number;height:number;homeX:number;homeY:number}
+interface PrimaryChipBox {key:string;region:'top'|'bottom'|'left'|'right';role:string;width:number;height:number}
+/** A fixed front-view body diagram. Neither camera coordinates, entry angle,
+ * current joint positions nor animation frame decide a button's side/order. */
+export function layoutPrimaryPoseControls(items:PrimaryChipBox[],view:{left:number;right:number;top:number;bottom:number},mirror=false) {
+    const result=new Map<string,{x:number;y:number}>(),gap=6
+    const row=(group:PrimaryChipBox[],y:number)=>{
+        const width=group.reduce((sum,c)=>sum+c.width,0)+Math.max(0,group.length-1)*gap
+        let x=(view.left+view.right-width)/2
+        for(const c of group){result.set(c.key,{x,y});x+=c.width+gap}
+        return Math.max(0,...group.map(c=>c.height))
+    }
+    const topItems=items.filter(c=>c.region==='top'),bottomItems=items.filter(c=>c.region==='bottom')
+    const topHeight=row(topItems,view.top),bottomHeight=Math.max(0,...bottomItems.map(c=>c.height))
+    row(bottomItems,view.bottom-bottomHeight)
+    const start=view.top+topHeight+10,end=view.bottom-bottomHeight-10
+    const sides=items.filter(c=>c.region==='left'||c.region==='right')
+    const h=Math.max(28,...sides.map(c=>c.height)),w=Math.max(0,...sides.map(c=>c.width))
+    const count=Math.max(...['left','right'].map(s=>sides.filter(c=>c.region===s).length),0)
+    // On short landscape screens, arms and legs form separate compact lanes,
+    // still paired left/right and in shoulder-to-wrist / thigh-to-ankle order.
+    const split=count*(h+gap)>end-start&&view.right-view.left>=4*w+3*gap
+    for(const side of ['left','right'] as const){
+        const list=sides.filter(c=>c.region===side)
+        const lanes=split?[list.filter(c=>!['upper-leg','knee','foot'].includes(c.role)),list.filter(c=>['upper-leg','knee','foot'].includes(c.role))]:[list]
+        const rows=Math.max(...lanes.map(l=>l.length),0)
+        const spacing=rows>1?Math.max(h+gap,Math.min(68,(end-start-h)/(rows-1))):0
+        const y0=start+Math.max(0,(end-start-h-Math.max(0,rows-1)*spacing)/2)
+        lanes.forEach((lane,j)=>lane.forEach((c,i)=>{
+            let x=side==='left'?view.left+j*(w+gap):view.right-c.width-j*(w+gap)
+            if(mirror)x=view.left+view.right-x-c.width
+            result.set(c.key,{x,y:y0+i*spacing})
+        }))
+    }
+    return result
+}
 const LAYOUT_KEY='magius.viewport-chip-layout.v1'
 /** Independent fit-content chips, not a modal tray. Only actual controls claim
  * pointer input. Layout handles move UI only; joint buttons still edit pose. */
@@ -61,12 +96,14 @@ export function createViewportPoseEditor(options: Options) {
     try {const p=JSON.parse(localStorage.getItem(LAYOUT_KEY)||'{}');if(p&&typeof p==='object'&&!Array.isArray(p))preferences=p} catch { /* Storage may be unavailable; editing is still usable. */ }
     let layoutDrag:{chip:Chip;id:number;x:number;y:number;startX:number;startY:number}|undefined
     let nodeDrag:{id:number;button:Element}|undefined
-    let actor:Object3D|undefined,group:PoseNodeGroup='primary',parts:PosePart[]=[],pages:PoseNodePage[]=[],page=0,folded=false,lastKey='',wasPose=false,layoutDirty=true
+    let actor:Object3D|undefined,group:PoseNodeGroup='primary',parts:PosePart[]=[],pages:PoseNodePage[]=[],page=0,folded=false,lastKey='',wasPose=false,layoutDirty=true,mirrorPrimary=false
     const primaryHomes=new Map<string,{x:number;y:number}>()
+    let primaryGeometryKey=''
     let rect=options.canvas.getBoundingClientRect(),top=0,bottom=innerHeight,viewWidth=innerWidth
     const text=()=>labels[options.locale() as keyof typeof labels]??labels.en
     const camera=()=>typeof options.camera==='function'?options.camera():options.camera
-    const persist=(c:Chip)=>{preferences[c.key]={x:c.x/Math.max(1,viewWidth-c.width),y:(c.y-top)/Math.max(1,bottom-top-c.height)};try{localStorage.setItem(LAYOUT_KEY,JSON.stringify(preferences))}catch{}}
+    const mirrored=(c:Chip)=>mirrorPrimary&&group==='primary'&&['left','right'].includes(c.root.dataset.primaryRegion??'')
+    const persist=(c:Chip)=>{preferences[c.key]={x:(mirrored(c)?viewWidth-c.width-c.x:c.x)/Math.max(1,viewWidth-c.width),y:(c.y-top)/Math.max(1,bottom-top-c.height)};try{localStorage.setItem(LAYOUT_KEY,JSON.stringify(preferences))}catch{}}
     const place=(c:Chip,x:number,y:number)=>{
         c.x=Math.max(4,Math.min(x,viewWidth-c.width-4));c.y=Math.max(top+4,Math.min(y,bottom-c.height-4))
         c.root.style.transform=`translate(${c.x}px,${c.y}px)`
@@ -97,6 +134,7 @@ export function createViewportPoseEditor(options: Options) {
     tool(right,'focus',()=>options.focus()).textContent='⌖'
     const collapse=tool(right,'editor-collapse',()=>{folded=!folded;layoutDirty=true});collapse.textContent='−'
     tool(right,'pose',()=>{folded=false;options.pose()});tool(right,'object',()=>options.place('translate'))
+    tool(right,'mirror-layout',()=>{mirrorPrimary=!mirrorPrimary;primaryHomes.clear();layoutDirty=true})
     tool(right,'move',()=>options.state().pose?options.mode('translate'):options.place('translate'))
     tool(right,'rotate',()=>options.state().pose?options.mode('rotate'):options.place('rotate'))
     tool(right,'editor-close',options.close).classList.add('ve-close')
@@ -125,7 +163,11 @@ export function createViewportPoseEditor(options: Options) {
         for(const part of parts){
             const b=document.createElement('button');b.type='button';b.className='ve-joint-node';b.dataset.viewportJoint=part.id;b.dataset.boneUuid=part.bone.uuid
             const label=document.createElement('span');label.className='ve-joint-label';const fullLabel=posePartLabel(part,locale);label.textContent=group==='hands'?fullLabel.replace(/ · 第 (\d+) 节/,'$1').replace(' · 掌骨／起点','根'):fullLabel;b.append(label);b.title=fullLabel+' · '+part.bone.name;b.setAttribute('aria-label',fullLabel)
-            const key='node:'+modelName+':'+(group==='primary'?part.id:nodePath(part.bone,actor!));jointChips.push(makeChip(nodes,key,b));const nodeEvents={signal:nodeAbort.signal}
+            // Only obsolete primary UI offsets get a fresh namespace. Saved
+            // poses, raw bone paths and other hand/tool chip positions survive.
+            const key='node:'+modelName+':'+(group==='primary'?'front-v2:'+part.id:nodePath(part.bone,actor!));const chip=makeChip(nodes,key,b);jointChips.push(chip)
+            if(group==='primary'){chip.root.dataset.primaryRegion=primaryPoseRegion(part);chip.root.dataset.nodeRole=part.id.replace(/^(?:left|right)-/,'')}
+            const nodeEvents={signal:nodeAbort.signal}
             b.addEventListener('pointerdown',e=>{if(e.button!==0||nodeDrag||layoutDrag)return;e.preventDefault();e.stopPropagation();if(options.begin(part,e)){nodeDrag={id:e.pointerId,button:b};b.setPointerCapture(e.pointerId)}lastKey='';refresh()},nodeEvents)
             b.addEventListener('pointermove',e=>{if(nodeDrag?.id===e.pointerId)options.move(e)},nodeEvents)
             for(const type of ['pointerup','pointercancel','lostpointercapture'] as const)b.addEventListener(type,stopNodes,nodeEvents)
@@ -151,7 +193,7 @@ export function createViewportPoseEditor(options: Options) {
         bottom=Math.min(rect.bottom,(viewport?.offsetTop??0)+(viewport?.height??innerHeight));viewWidth=Math.min(innerWidth,rect.right)
         const visible=[...chips.values()].filter(c=>!isHidden(c));for(const c of visible){const r=c.root.getBoundingClientRect();c.width=r.width;c.height=r.height}
         const gap=4,wide=viewWidth>=700
-        const assign=(c:Chip,x:number,y:number)=>{c.homeX=x;c.homeY=y;const saved=preferences[c.key];if(layoutDrag?.chip===c)return;if(saved&&Number.isFinite(saved.x)&&Number.isFinite(saved.y))place(c,saved.x*(viewWidth-c.width),top+saved.y*(bottom-top-c.height));else place(c,x,y)}
+        const assign=(c:Chip,x:number,y:number)=>{c.homeX=x;c.homeY=y;const saved=preferences[c.key];if(layoutDrag?.chip===c)return;if(saved&&Number.isFinite(saved.x)&&Number.isFinite(saved.y))place(c,(mirrored(c)?1-saved.x:saved.x)*(viewWidth-c.width),top+saved.y*(bottom-top-c.height));else place(c,x,y)}
         const toolChips=visible.filter(c=>c.root.parentElement===left||c.root.parentElement===right)
         let toolsBottom=top+4
         if(wide){
@@ -164,28 +206,20 @@ export function createViewportPoseEditor(options: Options) {
         }
         const nodeChips=visible.filter(c=>c.root.parentElement===nodes)
         if(group==='primary'){
+            const geometryKey=[top,bottom,viewWidth,toolsBottom,mirrorPrimary,...nodeChips.map(c=>c.width+':'+c.height)].join('|')
+            if(geometryKey!==primaryGeometryKey){primaryHomes.clear();primaryGeometryKey=geometryKey}
             if(!primaryHomes.size){
-                const ranked=nodeChips.map(c=>({c,p:projectPoseAnchor(parts.find(p=>p.bone.uuid===c.control.dataset.boneUuid)!.bone,camera(),rect)})).sort((a,b)=>a.p.x-b.p.x)
-                const mid=Math.ceil(ranked.length/2),minX=Math.min(...ranked.map(r=>r.p.x)),maxX=Math.max(...ranked.map(r=>r.p.x))
-                const start=wide?top+10:toolsBottom,last=bottom-10
-                const spacing=Math.max(...nodeChips.map(c=>c.height),28)+4,maxWidth=Math.max(...nodeChips.map(c=>c.width))
-                const lanes=viewWidth>=480&&mid*spacing>last-start?2:1
-                for(const [column,side]of [ranked.slice(0,mid),ranked.slice(mid)].entries()){
-                    side.sort((a,b)=>a.p.y-b.p.y)
-                    for(let lane=0;lane<lanes;lane++){
-                        const list=side.filter((_,i)=>i%lanes===lane)
-                        const ys=list.map(r=>Math.max(start,Math.min(r.p.y-r.c.height/2,last-r.c.height)))
-                        for(let i=1;i<ys.length;i++)ys[i]=Math.max(ys[i],ys[i-1]+spacing)
-                        if(ys.length&&ys.at(-1)!+list.at(-1)!.c.height>last){ys[ys.length-1]=last-list.at(-1)!.c.height;for(let i=ys.length-2;i>=0;i--)ys[i]=Math.min(ys[i],ys[i+1]-spacing)}
-                        list.forEach(({c},i)=>{let x:number
-                            if(lanes===2)x=column===0?(wide?120:8)+lane*(maxWidth+6):viewWidth-c.width-(wide?120:8)-lane*(maxWidth+6)
-                            else x=column===0?(wide?Math.max(120,minX-150-c.width):8):(wide?Math.min(viewWidth-c.width-120,maxX+150):viewWidth-c.width-8)
-                            primaryHomes.set(c.key,{x,y:ys[i]})
-                        })
-                    }
-                }
+                const order=new Map(parts.map(p=>[p.bone.uuid,primaryPoseOrder(p)]))
+                const maxToolWidth=Math.max(0,...toolChips.map(c=>c.width))
+                const gutter=wide?Math.max(maxToolWidth+24,(viewWidth-780)/2):8
+                const sorted=[...nodeChips].sort((a,b)=>(order.get(a.control.dataset.boneUuid!)??0)-(order.get(b.control.dataset.boneUuid!)??0))
+                const homes=layoutPrimaryPoseControls(sorted.map(c=>({key:c.key,
+                    region:c.root.dataset.primaryRegion as PrimaryChipBox['region'],
+                    role:c.root.dataset.nodeRole!,width:c.width,height:c.height})),
+                    {left:gutter,right:viewWidth-gutter,top:wide?top+8:toolsBottom+4,bottom:bottom-8},mirrorPrimary)
+                for(const [key,value]of homes)primaryHomes.set(key,value)
             }
-            nodeChips.forEach(c=>{const home=primaryHomes.get(c.key)!;assign(c,home.x,home.y)})
+            nodeChips.forEach(c=>{const home=primaryHomes.get(c.key);if(home)assign(c,home.x,home.y)})
         }else{
             const chooserChips=visible.filter(c=>c.root.parentElement===chooser)
             const maxW=wide?Math.min(600,viewWidth-260):viewWidth-16
@@ -203,24 +237,29 @@ export function createViewportPoseEditor(options: Options) {
     const refresh=()=>{
         const state=options.state();lines.style.display=state.pose&&!folded?'':'none';root.hidden=!state.active;dock.hidden=!state.active;detailPanel.hidden=!state.pose||folded;fine.disabled=!state.pose||!state.selected
         if(state.actor!==actor||(state.pose&&!wasPose)||state.group!==group){actor=state.actor;group=state.group;page=0;buildNodes();lastKey=''}wasPose=state.pose
-        const key=[state.active,state.pose,state.group,state.selected?.uuid,state.mode,state.canTranslate,state.history?.canUndo,state.history?.canRedo,folded,options.locale()].join('|')
+        const key=[state.active,state.pose,state.group,state.selected?.uuid,state.mode,state.canTranslate,state.history?.canUndo,state.history?.canRedo,folded,mirrorPrimary,options.locale()].join('|')
         if(key!==lastKey){lastKey=key;const t=text()
             for(const[id,b]of buttons){const c=chips.get('tool:'+id)!;let show=!folded
                 if(['joints','hands','more','save'].includes(id))show=show&&state.pose
-                if(id==='reset')show=show&&state.pose&&!!state.selected
+                if(id==='reset')show=show&&state.pose
                 if(id==='object')show=show&&state.pose
                 if(id==='focus-detail')show=show&&state.pose&&group!=='primary'
+                if(id==='mirror-layout')show=show&&state.pose&&group==='primary'
                 if(id==='editor-close'||id==='editor-collapse')show=true
                 c.root.hidden=!show;b.hidden=false
                 b.textContent=id==='focus'?'⌖':id==='editor-collapse'?(folded?'+':'−'):t[id as keyof typeof t]||id
                 b.title=id==='editor-collapse'?t.collapse:t[id as keyof typeof t]||id;b.setAttribute('aria-label',b.title)
             }
             collapse.setAttribute('aria-expanded',String(!folded))
+            const mirror=buttons.get('mirror-layout')!;mirror.textContent=options.locale()==='zh-CN'?(mirrorPrimary?'背面排布':'正面排布'):options.locale()==='ja-JP'?(mirrorPrimary?'背面配置':'正面配置'):(mirrorPrimary?'Back layout':'Front layout')
+            mirror.title=options.locale()==='zh-CN'?'交换左右按钮位置；左右名称始终以模型正面为准，不改变骨骼绑定':'Swap button positions only; names always use the fixed front observer view'
+            mirror.setAttribute('aria-label',mirror.title);mirror.setAttribute('aria-pressed',String(mirrorPrimary));root.dataset.primaryView=mirrorPrimary?'back':'front';root.dataset.sideConvention='front-observer-v1'
             for(const[id,g]of[['joints','primary'],['hands','hands'],['more','more']] as const){const b=buttons.get(id)!;b.setAttribute('aria-pressed',String(group===g));b.disabled=!actor||!groupedPoseParts(actor,g).length}
             buttons.get('pose')!.disabled=!actor;buttons.get('pose')!.setAttribute('aria-pressed',String(state.pose))
             buttons.get('object')!.setAttribute('aria-pressed',String(!state.pose));buttons.get('move')!.disabled=state.pose&&!state.canTranslate
             buttons.get('move')!.setAttribute('aria-pressed',String(state.mode==='translate'));buttons.get('rotate')!.setAttribute('aria-pressed',String(state.mode==='rotate'))
             buttons.get('undo')!.disabled=!state.history?.canUndo;buttons.get('redo')!.disabled=!state.history?.canRedo
+            buttons.get('reset')!.disabled=!state.selected
             for(const c of chips.values()){
                 if(c.root.parentElement===nodes){c.root.hidden=!state.pose||folded;c.control.setAttribute('aria-pressed',String(c.control.dataset.boneUuid===state.selected?.uuid));c.grip.setAttribute('aria-label',t.grip+' · '+c.control.textContent)}
                 else c.grip.setAttribute('aria-label',t.grip+' · '+(c.control.getAttribute('aria-label')||c.control.textContent))
@@ -261,5 +300,12 @@ export function createViewportPoseEditor(options: Options) {
     window.addEventListener('blur',()=>{stopNodes();if(layoutDrag){persist(layoutDrag.chip);layoutDrag.chip.root.classList.remove('is-arranging');layoutDrag=undefined}},events)
     document.addEventListener('magius:localechange',()=>{buildNodes();lastKey='';refresh()},events)
     refresh()
-    return {update,refresh,reposition(){primaryHomes.clear();layoutDirty=true;refresh()},dispose(){stopNodes();nodeAbort.abort();abort.abort();observer.disconnect();fineDetails.remove();root.remove()}}
+    const framingRect=()=>{
+        if(!options.state().pose||group!=='primary'||folded)return undefined
+        layout()
+        const current=jointChips.filter(c=>!isHidden(c)),topChips=current.filter(c=>c.root.dataset.primaryRegion==='top'),bottomChips=current.filter(c=>c.root.dataset.primaryRegion==='bottom')
+        const sides=current.filter(c=>['left','right'].includes(c.root.dataset.primaryRegion??'')),leftChips=sides.filter(c=>c.x+c.width/2<viewWidth/2),rightChips=sides.filter(c=>c.x+c.width/2>=viewWidth/2)
+        return{left:Math.max(rect.left+8,...leftChips.map(c=>c.x+c.width+8)),right:Math.min(rect.right-8,...rightChips.map(c=>c.x-8)),top:Math.max(top+8,...topChips.map(c=>c.y+c.height+8)),bottom:Math.min(bottom-8,...bottomChips.map(c=>c.y-8))}
+    }
+    return {update,refresh,framingRect,reposition(){primaryHomes.clear();layoutDirty=true;refresh()},dispose(){stopNodes();nodeAbort.abort();abort.abort();observer.disconnect();fineDetails.remove();root.remove()}}
 }

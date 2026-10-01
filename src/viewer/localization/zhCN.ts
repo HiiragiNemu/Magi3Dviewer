@@ -960,9 +960,9 @@ export function translateBoneChannelLabel(name: string, locale: UiLocale = curre
     if (locale === 'en' || !name) return name
     if (locale === 'ja-JP') return translateJaJpBoneChannelLabel(name)
     const side = /(?:^|[_ .:/-])(?:left|l)(?:$|[_ .:/-])/i.test(name) || /^L(?=[A-Z])/.test(name)
-        ? '左'
+        ? '右'
         : /(?:^|[_ .:/-])(?:right|r)(?:$|[_ .:/-])/i.test(name) || /^R(?=[A-Z])/.test(name)
-            ? '右'
+            ? '左'
             : ''
     const semantic = boneSemanticLabels.find(([pattern]) => pattern.test(name))?.[1]
     if (semantic) {

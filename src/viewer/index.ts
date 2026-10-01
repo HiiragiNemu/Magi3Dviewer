@@ -1,6 +1,6 @@
 import { createTpsTargetMenu } from './tpsTargetMenu'
 import { createCameraCornerControls } from './cameraCornerControls'
-import { frameWholeObject, safePartFocusDistance } from './cameraFraming'
+import { frameWholeObject, frameObjectInEditorArea, safePartFocusDistance } from './cameraFraming'
 import { installOrbitTwoFingerGesture } from './OrbitTwoFingerGesture'
 import { installContextRecovery } from './pageLifecycle'
 import { readWorkspaceSession, writeWorkspaceSession, type WorkspaceSession } from './sessionWorkspace'
@@ -2351,6 +2351,12 @@ function setupViewportEditor() {
             const bounds = editorGround.visualBounds(object), center = bounds.getCenter(new THREE.Vector3()), size = bounds.getSize(new THREE.Vector3())
             const direction = scene.camera.position.clone().sub(scene.controls.target).normalize()
             const canvasRect=scene.renderer.domElement.getBoundingClientRect()
+            const editorArea=viewportEditor?.framingRect()
+            if(editorArea&&frameObjectInEditorArea(scene.camera,scene.controls.target,bounds,canvasRect,editorArea)){
+                const roll=scene.cameraRotation
+                editorGround.constrainCamera(scene.camera,scene.controls);scene.controls.update();scene.cameraRotation=roll
+                viewportEditor?.reposition();return
+            }
             const top=Math.max(canvasRect.top,document.getElementById('menu')?.getBoundingClientRect().bottom??canvasRect.top)
             const visibleHeight=Math.max(120,canvasRect.bottom-top)
             const sideSpace=Math.min(104,Math.max(76,canvasRect.width*.215))+25

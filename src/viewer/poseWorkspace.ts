@@ -1,5 +1,5 @@
 import { Bone, Object3D, Quaternion, Vector3 } from 'three'
-import { canonicalPoseBone, poseBones, poseBoneIsActive, findDirectPoseParts, type PosePart } from './directPoseTools.ts'
+import { canonicalPoseBone, poseBones, poseBoneIsActive, findDirectPoseParts, frontViewPoseSide, type PosePart } from './directPoseTools.ts'
 export type { PosePart } from './directPoseTools.ts'
 
 export type PoseNodeGroup = 'primary' | 'hands' | 'more'
@@ -51,7 +51,7 @@ export function nodePath(node: Object3D, root: Object3D): string {
     if(n!==root)throw new Error('Node is outside the selected model')
     return parts.join('/')
 }
-const wholeObjectBone = /^(?:root\d*|origin|visualroot|armature|chara_\d+|.*_model)$/i
+const wholeObjectBone = /^(?:root\d*|origin|visualroot|armature|hip|hips|pelvis|chara_\d+|.*_model)$/i
 export interface PoseNodePage {
     id: string
     /** Semantic category and chain identity, never an arbitrary fixed-size slice. */
@@ -73,12 +73,11 @@ export function groupedPoseParts(actor: Object3D, group: PoseNodeGroup): PosePar
 const fingerKind = (name: string): PoseNodePage['finger'] => /thumb/i.test(name) ? 'thumb'
     : /index/i.test(name) ? 'index' : /middle/i.test(name) ? 'middle'
         : /ring/i.test(name) ? 'ring' : /pinky|little/i.test(name) ? 'pinky' : undefined
-const nodeSide = (name: string): PoseNodePage['side'] => /(?:^|[_ .:/-])(?:l\d*|left)(?:$|[_ .:/-])/i.test(name) ? 'left'
-    : /(?:^|[_ .:/-])(?:r\d*|right)(?:$|[_ .:/-])/i.test(name) ? 'right' : undefined
+const nodeSide = frontViewPoseSide
 const nodeCategory = (name: string) => /ribbon/i.test(name) ? 'ribbons' : /hair/i.test(name) ? 'hair'
     : /skirt|dress/i.test(name) ? 'skirt' : /cloth|coat|cape|sleeve/i.test(name) ? 'clothing'
     : /wing|tail|tentacle|leg|arm|hand|foot|wrist|toe/i.test(name) ? 'limbs'
-    : /bust/i.test(name) ? 'torso' : /eye|jaw|mouth|face/i.test(name) ? 'face' : /acc|jewel|ornament|weapon/i.test(name) ? 'accessories' : 'other'
+    : /bust|spine|waist|chest/i.test(name) ? 'torso' : /eye|jaw|mouth|face/i.test(name) ? 'face' : /acc|jewel|ornament|weapon/i.test(name) ? 'accessories' : 'other'
 export function poseNodePages(actor: Object3D, group: PoseNodeGroup): PoseNodePage[] {
     const parts = groupedPoseParts(actor, group)
     if (group === 'primary') return parts.length ? [{id:'primary',category:'primary',chain:'primary',parts}] : []
@@ -110,18 +109,21 @@ export function poseCategoryLabel(category: string, locale: string): string {
 /** Compact human labels. Technical identities remain in title/search and never
  * become the lookup key used for editing or loading saved poses. */
 export function posePartLabel(part: PosePart, locale: string): string {
-    if(locale==='en')return part.label
     const zh=locale==='zh-CN',name=part.bone.name,s=nodeSide(name),f=fingerKind(name)
-    const side=s==='left'?(zh?'左':'左'):s==='right'?(zh?'右':'右'):''
+    const english=locale==='en'
+    const side=s==='left'?(english?'Left ':'左'):s==='right'?(english?'Right ':'右'):''
     if(f&&isFinger(part.bone)) {
-        const joint=/meta/i.test(name)?(zh?'掌骨／起点':'中手骨'):(zh?'第 '+(name.match(/(?:finger|thumb)(\d+)/i)?.[1]??'1')+' 节':(name.match(/(?:finger|thumb)(\d+)/i)?.[1]??'1')+'節')
+        const number=name.match(/(?:finger|thumb)(\d+)/i)?.[1]??'1'
+        const joint=/meta/i.test(name)?(english?'Base':zh?'掌骨／起点':'中手骨'):(english?'Joint '+number:zh?'第 '+number+' 节':number+'節')
         return `${side}${poseCategoryLabel(f,locale)} · ${joint}`
     }
+    if(/^(?:spine|spine0?1)$/i.test(name)&&part.id!=='spine')return english?'Lower spine':zh?'脊柱根部':'背骨の根元'
+    if(english)return part.label
     const main:Record<string,readonly[string,string]>={head:['头部','頭'],neck:['颈部','首'],chest:['胸部','胸'],waist:['腰部','腰'],spine:['脊柱','背骨'],pelvis:['骨盆','骨盤'],shoulder:['肩部','肩'],'upper-arm':['上臂','上腕'],elbow:['手肘','肘'],hand:['手腕','手首'],'upper-leg':['大腿','太もも'],knee:['膝盖','膝'],foot:['脚踝','足首']}
     const k=part.id.replace(/^(?:left|right)-/,'');if(main[k])return side+main[k][zh?0:1]
     if(/^Wrist_[LR]$/i.test(name))return side+(zh?'腕部附加骨骼':'手首の補助骨')
-    const tokens:Record<string,string>=zh?{hair:'头发',ribbon:'缎带',skirt:'裙摆',neck:'颈',leg:'腿',arm:'手臂',forearm:'前臂',wrist:'手腕',toe:'脚趾',bust:'胸部',eye:'眼睛',acc:'饰品',weapon:'武器',wing:'翅膀',tail:'尾部',twist:'扭转',bend:'弯曲',s:'侧',f:'前',b:'后',c:'中',l:'左',r:'右',sp:'',end:''}
-        :{hair:'髪',ribbon:'リボン',skirt:'スカート',acc:'装飾',weapon:'武器',eye:'目',twist:'ねじれ',s:'横',f:'前',b:'後',c:'中',l:'左',r:'右',sp:'',end:''}
+    const tokens:Record<string,string>=zh?{hair:'头发',ribbon:'缎带',skirt:'裙摆',neck:'颈',leg:'腿',arm:'手臂',forearm:'前臂',wrist:'手腕',toe:'脚趾',bust:'胸部',eye:'眼睛',acc:'饰品',weapon:'武器',wing:'翅膀',tail:'尾部',twist:'扭转',bend:'弯曲',s:'侧',f:'前',b:'后',c:'中',l:'右',r:'左',sp:'',end:''}
+        :{hair:'髪',ribbon:'リボン',skirt:'スカート',acc:'装飾',weapon:'武器',eye:'目',twist:'ねじれ',s:'横',f:'前',b:'後',c:'中',l:'右',r:'左',sp:'',end:''}
     return name.replace(/([a-z])([A-Z])/g,'$1_$2').split('_').map(t=>{const m=t.match(/^([a-z]+)(\d*)$/i);return m&&m[1].toLowerCase() in tokens?tokens[m[1].toLowerCase()]+m[2]:t}).filter(Boolean).join(' ')
 }
 export function posePageLabel(page: PoseNodePage, locale:string):string {

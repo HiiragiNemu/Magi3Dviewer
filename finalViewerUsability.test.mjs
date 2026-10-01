@@ -26,12 +26,21 @@ for(const id of ['100101','101401','100201','101901'])test(`real ${id}: main ana
   assert.deepEqual(hands.filter(p=>p.side===side).map(p=>p.finger),['thumb','index','middle','ring','pinky'])
   for(const page of hands.filter(p=>p.side===side)){
    assert.equal(page.parts.length,page.finger==='thumb'?3:4)
-   assert.ok(page.parts.every(p=>p.bone.name.endsWith(side==='left'?'_L':'_R')))
+   // Display side is now fixed to the FRONT observer, not native anatomical L/R.
+   assert.ok(page.parts.every(p=>p.bone.name.endsWith(side==='left'?'_R':'_L')))
    const labels=page.parts.map(p=>posePartLabel(p,'zh-CN'));assert.equal(new Set(labels).size,labels.length)
   }
  }
  assert.deepEqual(captureModelLocal(actor),before,'classification must never mutate native bones')
  assert.ok(poseBones(actor).length>main.length)
+ assert.ok(!main.some(p=>/^(?:Hip|Spine)$/i.test(p.bone.name)))
+ assert.ok(!more.some(p=>/^(?:Hip|Hips|Pelvis)$/i.test(p.bone.name)))
+ const spine=poseBones(actor).find(b=>b.name==='Spine'),waist=poseBones(actor).find(b=>b.name==='Waist')
+ assert.ok(spine&&waist&&spine!==waist)
+ assert.ok(more.some(p=>p.bone===spine),'independent lower-spine control was lost')
+ assert.ok(poseNodePages(actor,'more').some(p=>p.category==='torso'&&p.parts.some(n=>n.bone===spine)))
+ actor.updateMatrixWorld(true);assert.ok(spine.getWorldPosition(new T.Vector3()).distanceTo(waist.getWorldPosition(new T.Vector3()))>.04,'real pivots were incorrectly treated as identical')
+
 })
 test('Momoko matched-body atlas is pinned to the audited native texture identities',()=>{
  const report=JSON.parse(fs.readFileSync('docs/reports/2026-10-01-momoko-texture-identity.json','utf8'))

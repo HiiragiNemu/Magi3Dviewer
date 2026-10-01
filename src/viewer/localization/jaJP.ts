@@ -878,7 +878,7 @@ export function translateJaJpUiText(text: string): string {
 export function translateJaJpBoneChannelLabel(name: string): string {
     if (!name) return name
     const side = /(?:^|[_ .:/-])(?:left|l)(?:$|[_ .:/-])/i.test(name) || /^L(?=[A-Z])/.test(name)
-        ? '左' : /(?:^|[_ .:/-])(?:right|r)(?:$|[_ .:/-])/i.test(name) || /^R(?=[A-Z])/.test(name) ? '右' : ''
+        ? '右' : /(?:^|[_ .:/-])(?:right|r)(?:$|[_ .:/-])/i.test(name) || /^R(?=[A-Z])/.test(name) ? '左' : ''
     const semantic = jaBoneSemanticLabels.find(([pattern]) => pattern.test(name))?.[1]
     if (semantic) {
         const detail = /(?:twist|roll)/i.test(name) ? '（ひねり）' : ''

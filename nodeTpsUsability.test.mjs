@@ -6,19 +6,19 @@ import {pathToFileURL} from 'node:url'
 import {JSDOM} from 'jsdom'
 import {build} from 'esbuild'
 import * as T from 'three'
-import {safePartFocusDistance,frameWholeObject} from './src/viewer/cameraFraming.ts'
+import {safePartFocusDistance,frameWholeObject,frameObjectInEditorArea} from './src/viewer/cameraFraming.ts'
 import {createTpsTargetMenu} from './src/viewer/tpsTargetMenu.ts'
 import {ThirdPersonCamera} from './src/viewer/ThirdPersonCamera.ts'
 const temp=fs.mkdtempSync(path.resolve('.node-tps-tests-'))
 after(()=>fs.rmSync(temp,{recursive:true,force:true}))
 await build({entryPoints:['src/viewer/viewportPoseEditor.ts'],outfile:path.join(temp,'editor.mjs'),bundle:true,platform:'node',format:'esm',external:['three'],logLevel:'silent'})
-const {createViewportPoseEditor,projectPoseAnchor}=await import(pathToFileURL(path.join(temp,'editor.mjs')))
+const {createViewportPoseEditor,projectPoseAnchor,layoutPrimaryPoseControls}=await import(pathToFileURL(path.join(temp,'editor.mjs')))
 function dom(t){
  const d=new JSDOM('<div id="menu"></div><canvas></canvas><div id="fine"></div><button id="toggle"></button>',{url:'https://example.test/',pretendToBeVisual:true}),w=d.window
  const previous=new Map(),globals={window:w,document:w.document,Element:w.Element,HTMLElement:w.HTMLElement,HTMLButtonElement:w.HTMLButtonElement,localStorage:w.localStorage,AbortController:w.AbortController,innerWidth:1000,innerHeight:800,ResizeObserver:class{observe(){}disconnect(){}},CSS:{escape:x=>x}}
  for(const [k,v] of Object.entries(globals)){previous.set(k,Object.getOwnPropertyDescriptor(globalThis,k));Object.defineProperty(globalThis,k,{value:v,configurable:true,writable:true})}
  const canvas=w.document.querySelector('canvas');canvas.getBoundingClientRect=()=>({left:0,top:60,right:1000,bottom:800,width:1000,height:740});Object.defineProperty(canvas,'clientHeight',{value:740})
- const captures=new Map();w.HTMLElement.prototype.setPointerCapture=function(id){captures.set(id,this)};w.HTMLElement.prototype.hasPointerCapture=function(id){return captures.get(id)===this};w.HTMLElement.prototype.releasePointerCapture=function(id){captures.delete(id)}
+ const captures=new Map();w.Element.prototype.setPointerCapture=function(id){captures.set(id,this)};w.Element.prototype.hasPointerCapture=function(id){return captures.get(id)===this};w.Element.prototype.releasePointerCapture=function(id){captures.delete(id)}
  const original=w.HTMLElement.prototype.getBoundingClientRect
  w.HTMLElement.prototype.getBoundingClientRect=function(){if(this.id==='menu')return{x:0,y:0,left:0,top:0,right:1000,bottom:60,width:1000,height:60};if(this.classList.contains('ve-chip')){const [x,y]=(this.style.transform.match(/-?\d+(?:\.\d+)?/g)||[0,0]).map(Number);return{x,y,left:x,top:y,right:x+96,bottom:y+28,width:96,height:28}}return original.call(this)}
  const send=(target,type,x,y,id=1,button=0)=>target.dispatchEvent(new w.PointerEvent(type,{bubbles:true,cancelable:true,clientX:x,clientY:y,pointerId:id,pointerType:'mouse',button,buttons:type==='pointerup'?0:1}))
@@ -29,7 +29,7 @@ function rig(){const actor=new T.Group(),hip=new T.Bone(),chest=new T.Bone(),hea
  for(const side of ['L','R']){const shoulder=new T.Bone(),arm=new T.Bone(),fore=new T.Bone(),hand=new T.Bone();shoulder.name='Shoulder_'+side;arm.name='Arm_'+side;fore.name='Forearm_'+side;hand.name='Hand_'+side;chest.add(shoulder);shoulder.add(arm);arm.position.x=(side==='L'?1:-1)*.25;arm.add(fore);fore.position.y=-.25;fore.add(hand);hand.position.y=-.2
   for(const finger of ['Thumb','Indexfinger']){let parent=hand;for(let i=1;i<=3;i++){const b=new T.Bone();b.name=finger+i+'_'+side;b.position.set(.01,-.04,.01);parent.add(b);parent=b}}
  }actor.updateMatrixWorld(true);return actor}
-function editorFixture(t){const d=dom(t),actor=rig(),camera=new T.PerspectiveCamera(40,1000/740,.05,100);camera.position.set(0,1,4);camera.lookAt(0,1,0);const state={actor,object:actor,active:true,pose:true,mode:'rotate',group:'primary',stretch:false,limited:false,canTranslate:true,history:{canUndo:true,canRedo:false}};let focuses=0,selects=0,begins=0
+function editorFixture(t,{back=false}={}){const d=dom(t),actor=rig(),camera=new T.PerspectiveCamera(40,1000/740,.05,100);camera.position.set(0,1,back?-4:4);camera.lookAt(0,1,0);const state={actor,object:actor,active:true,pose:true,mode:'rotate',group:'primary',stretch:false,limited:false,canTranslate:true,history:{canUndo:true,canRedo:false}};let focuses=0,selects=0,begins=0
  const editor=createViewportPoseEditor({state:()=>state,camera,canvas:d.canvas,translate:x=>x,locale:()=> 'zh-CN',place(){},pose(){},mode(v){state.mode=v},close(){state.active=false},parameters(){},focus(){focuses++},focusPart(){focuses++},select(p){state.selected=p.bone;selects++},begin(p){state.selected=p.bone;begins++;return true},move(){},end(){},undo(){},redo(){},reset(){},nudge(){},group(v){state.group=v},fineHost:d.w.document.querySelector('#fine'),resetAll(){},save(){}})
  t.after(()=>editor.dispose());editor.update();return{...d,actor,camera,state,editor,get focuses(){return focuses},get selects(){return selects},get begins(){return begins}}
 }
@@ -87,3 +87,58 @@ test('a selected non-TPS story actor does not disable choosing another controlla
 test('switching node chains aborts detached node handlers rather than retaining old DOM listeners',t=>{const f=editorFixture(t);document.querySelector('#viewport-hands').click();const old=document.querySelector('.ve-joint-node'),grip=old.parentElement.querySelector('.ve-chip-grip');const category=document.querySelector('#viewport-node-category');category.value='right';category.dispatchEvent(new f.w.Event('change'));f.send(old,'pointerdown',20,20);f.send(grip,'pointerdown',20,20);assert.equal(f.begins,0);assert.equal(old.parentElement.classList.contains('is-arranging'),false)})
 
 test('the actual anchor remains directly draggable without an offset fake hit point',t=>{const f=editorFixture(t),hit=document.querySelector('.ve-anchor-hit');assert.ok(hit);const button=document.querySelector('[data-bone-uuid="'+hit.dataset.anchorBone+'"].ve-joint-node');assert.equal(hit.getAttribute('cx'),button.dataset.anchorX);assert.equal(hit.getAttribute('cy'),button.dataset.anchorY);f.send(hit,'pointerdown',Number(hit.getAttribute('cx')),Number(hit.getAttribute('cy')));assert.equal(f.begins,1);assert.equal(f.state.selected.uuid,hit.dataset.anchorBone);f.send(hit,'pointerup',Number(hit.getAttribute('cx')),Number(hit.getAttribute('cy')))})
+
+// Front-view layout regression: raw bone identities must not be renamed or
+// rebound to satisfy the presentation convention.
+for(const back of [false,true])test('fixed front-observer names and columns when opening from '+(back?'back':'front'),t=>{
+ const f=editorFixture(t,{back})
+ const button=id=>document.querySelector('[data-viewport-joint="'+id+'"]')
+ const left=button('right-upper-arm'),right=button('left-upper-arm')
+ assert.equal(left.textContent,'左上臂');assert.equal(right.textContent,'右上臂')
+ assert.equal(left.parentElement.dataset.primaryRegion,'left');assert.equal(right.parentElement.dataset.primaryRegion,'right')
+ assert.ok(left.parentElement.getBoundingClientRect().x<right.parentElement.getBoundingClientRect().x)
+ const identity=[...document.querySelectorAll('.ve-joint-node')].map(e=>[e.dataset.boneUuid,e.textContent,e.parentElement.style.transform])
+ f.camera.position.set(2,1.5,4);f.camera.lookAt(0,1,0);f.actor.rotation.y=.7;f.actor.getObjectByName('Hand_R').position.x=3;f.editor.reposition();f.editor.update()
+ assert.deepEqual([...document.querySelectorAll('.ve-joint-node')].map(e=>[e.dataset.boneUuid,e.textContent,e.parentElement.style.transform]),identity)
+ assert.equal(f.focuses,0)
+})
+test('back-layout toggle exchanges side positions only and returns exactly after a manual grip move',t=>{
+ const f=editorFixture(t),button=document.querySelector('[data-viewport-joint="right-upper-arm"]'),chip=button.parentElement,grip=chip.querySelector('.ve-chip-grip')
+ const bone=f.actor.getObjectByName('Arm_R'),beforeBone=bone.quaternion.toArray(),uuid=button.dataset.boneUuid
+ f.send(grip,'pointerdown',120,180);f.send(grip,'pointermove',145,197);f.send(grip,'pointerup',145,197)
+ const before=chip.getBoundingClientRect(),top=document.querySelector('[data-viewport-joint="head"]').parentElement.style.transform
+ document.querySelector('#viewport-mirror-layout').click();f.editor.update();const after=chip.getBoundingClientRect()
+ assert.ok(Math.abs(before.x+after.x+before.width-innerWidth)<1e-6);assert.equal(before.y,after.y)
+ assert.equal(button.textContent,'左上臂');assert.equal(button.dataset.boneUuid,uuid);assert.equal(document.querySelector('[data-viewport-joint="head"]').parentElement.style.transform,top)
+ assert.deepEqual(bone.quaternion.toArray(),beforeBone);assert.equal(f.begins,0);assert.equal(f.focuses,0)
+ document.querySelector('#viewport-mirror-layout').click();f.editor.update();assert.equal(chip.getBoundingClientRect().x,before.x)
+ assert.ok(chip.dataset.layoutKey.includes('front-v2:'));assert.ok(localStorage.getItem('magius.viewport-chip-layout.v1'))
+})
+test('head and neck form the top row, torso the bottom row, and paired limbs remain ordered at all supported sizes',()=>{
+ const items=[{key:'head',role:'head',region:'top'},{key:'neck',role:'neck',region:'top'},...['left','right'].flatMap(side=>['shoulder','upper-arm','elbow','hand','upper-leg','knee','foot'].map(role=>({key:side+'-'+role,region:side,role}))),{key:'chest',role:'chest',region:'bottom'},{key:'waist',role:'waist',region:'bottom'}].map(c=>({...c,width:72,height:32}))
+ for(const view of [{left:8,right:352,top:300,bottom:772},{left:128,right:804,top:55,bottom:422},{left:280,right:1086,top:80,bottom:892}]){
+  const layout=layoutPrimaryPoseControls(items,view),mirror=layoutPrimaryPoseControls(items,view,true)
+  assert.equal(layout.get('head').y,layout.get('neck').y);assert.ok(layout.get('head').x<layout.get('neck').x)
+  assert.equal(layout.get('waist').y,view.bottom-32);assert.equal(layout.get('chest').y,layout.get('waist').y)
+  for(const side of ['left','right']){const row=items.filter(c=>c.region===side);for(let i=1;i<row.length;i++)assert.ok(layout.get(row[i].key).y>=layout.get(row[i-1].key).y,'anatomy order');for(const c of row){const a=layout.get(c.key),b=mirror.get(c.key);assert.ok(Math.abs(a.x+b.x+c.width-view.left-view.right)<1e-6);assert.equal(a.y,b.y)}}
+  for(const c of items){const p=layout.get(c.key);assert.ok(p.x>=view.left&&p.x+c.width<=view.right+.001&&p.y>=view.top&&p.y+c.height<=view.bottom+.001,c.key+' offscreen')}
+  for(let i=0;i<items.length;i++)for(let j=i+1;j<items.length;j++){const a={...items[i],...layout.get(items[i].key)},b={...items[j],...layout.get(items[j].key)};const area=Math.max(0,Math.min(a.x+a.width,b.x+b.width)-Math.max(a.x,b.x))*Math.max(0,Math.min(a.y+a.height,b.y+b.height)-Math.max(a.y,b.y));assert.equal(area,0,'default chips overlap')}
+ }
+})
+test('front-left hand pages control native R fingers and retain the fixed label when camera crosses the back',t=>{
+ const f=editorFixture(t,{back:true});document.querySelector('#viewport-hands').click()
+ const category=document.querySelector('#viewport-node-category');assert.equal(category.value,'left')
+ const buttons=[...document.querySelectorAll('.ve-joint-node')];assert.ok(buttons.length)
+ for(const b of buttons){let bone;f.actor.traverse(n=>{if(n.uuid===b.dataset.boneUuid)bone=n});assert.ok(bone.name.endsWith('_R'));assert.ok(b.textContent.startsWith('左'))}
+ const identities=buttons.map(b=>[b.dataset.boneUuid,b.textContent]);f.camera.position.z=4;f.camera.lookAt(0,1,0);f.editor.update();assert.deepEqual(buttons.map(b=>[b.dataset.boneUuid,b.textContent]),identities)
+})
+
+for(const [width,height,area]of [[360,780,{left:81,right:279,top:417,bottom:732}],[1366,900,{left:365,right:1001,top:115,bottom:856}],[932,430,{left:256,right:676,top:147,bottom:382}]])test('explicit focus reserves editor rows and preserves optical orientation '+width+'x'+height,()=>{
+ const bounds=new T.Box3(new T.Vector3(-.4,0,-.15),new T.Vector3(.4,1.65,.15)),target=new T.Vector3(),camera=new T.PerspectiveCamera(40,width/height,.03,100)
+ const canvas={left:0,top:0,right:width,bottom:height,width,height}
+ for(const roll of [0,.1,-.2]){
+  camera.position.set(0,.9,3);camera.lookAt(0,.85,0);camera.rotateZ(roll);const q=camera.quaternion.toArray()
+  assert.equal(frameObjectInEditorArea(camera,target,bounds,canvas,area),true);assert.deepEqual(camera.quaternion.toArray(),q)
+  for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z]){const v=new T.Vector3(x,y,z).project(camera),px=(v.x+1)*width/2,py=(1-v.y)*height/2;assert.ok(px>=area.left&&px<=area.right&&py>=area.top&&py<=area.bottom,'model intersects UI reserved area')}
+ }
+})
