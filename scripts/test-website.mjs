@@ -12,6 +12,7 @@ const tests = [
   'studioFollowup.test.mjs',
   'garmentContacts.test.mjs',
   'garmentSurfaceContact.test.mjs',
+  'cameraPlaneControl.test.mjs',
   'performanceAudioLane.test.mjs',
   'performanceAudioTimelineBridge.test.mjs',
   'startupGuard.test.mjs',

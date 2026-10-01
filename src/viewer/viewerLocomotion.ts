@@ -12148,6 +12148,12 @@ export function rotateViewerCameraPlane(degrees:number):void {
     else scene.cameraRotation=(scene.cameraRotation??0)+degrees
 }
 
+export function viewerCameraPlaneAngle():number {return enabled?THREE.MathUtils.radToDeg(tpsCamera.roll):scene.cameraRotation??0}
+export function resetViewerCameraPlane():void {
+    if(enabled)tpsCamera.resetRoll()
+    else {scene.cameraRotation=0;scene.controls.update()}
+}
+
 function updateLocomotionModeLabel(): void {
     modeToggle.textContent = translateUiText(enabled ? 'TPS Move: On' : 'TPS Move: Off')
     const label = translateUiText(enabled ? 'Disable TPS character control' : 'Enable TPS character control')

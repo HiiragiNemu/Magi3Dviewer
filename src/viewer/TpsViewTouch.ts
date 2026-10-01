@@ -3,7 +3,7 @@ export interface TouchPoint { id:number;x:number;y:number }
 interface GestureHooks {rotate(dx:number,dy:number):void;pinch(ratio:number):void;pan?(dx:number,dy:number):void;roll?(radians:number):void;twoStart?():void;two?(delta:PlaneGestureDelta):void;twoEnd?():void}
 export class TpsViewGesture {
     private points=new Map<number,TouchPoint>()
-    private pair?:{x:number;y:number;distance:number;angle:number;roll:number}
+    private pair?:{x:number;y:number;distance:number}
     private readonly hooks:GestureHooks
     constructor(hooks:GestureHooks){this.hooks=hooks}
     has(id:number){return this.points.has(id)}
@@ -11,7 +11,7 @@ export class TpsViewGesture {
     begin(point:TouchPoint){
         if(this.points.size>=2||this.has(point.id)||!Number.isFinite(point.x)||!Number.isFinite(point.y))return
         this.points.set(point.id,{...point})
-        if(this.points.size===2){const[a,b]=[...this.points.values()];this.pair={x:(a.x+b.x)/2,y:(a.y+b.y)/2,distance:Math.hypot(b.x-a.x,b.y-a.y),angle:Math.atan2(b.y-a.y,b.x-a.x),roll:0};this.hooks.twoStart?.()}
+        if(this.points.size===2){const[a,b]=[...this.points.values()];this.pair={x:(a.x+b.x)/2,y:(a.y+b.y)/2,distance:Math.hypot(b.x-a.x,b.y-a.y)};this.hooks.twoStart?.()}
     }
     move(changed:readonly TouchPoint[]){
         const before=[...this.points.values()].map(p=>({...p}))
@@ -22,17 +22,12 @@ export class TpsViewGesture {
             const bv={x:before[1].x-before[0].x,y:before[1].y-before[0].y},av={x:after[1].x-after[0].x,y:after[1].y-after[0].y}
             const a=Math.hypot(bv.x,bv.y),b=Math.hypot(av.x,av.y)
             if(this.hooks.two&&this.pair&&this.pair.distance>8&&b>8){
-                const angle=Math.atan2(av.y,av.x);let turn=angle-this.pair.angle
-                while(turn>Math.PI)turn-=2*Math.PI;while(turn< -Math.PI)turn+=2*Math.PI
-                this.pair.roll+=turn;this.pair.angle=angle
-                this.hooks.two({x:(after[0].x+after[1].x)/2-this.pair.x,y:(after[0].y+after[1].y)/2-this.pair.y,spread:b-this.pair.distance,roll:this.pair.roll});return
+                // A pinch is only zoom/pan. Incidental finger twist must not tilt the horizon.
+                this.hooks.two({x:(after[0].x+after[1].x)/2-this.pair.x,y:(after[0].y+after[1].y)/2-this.pair.y,spread:b-this.pair.distance,roll:0});return
             }
             if(a>8&&b>8){
                 this.hooks.pinch(a/b)
-                let turn=Math.atan2(av.y,av.x)-Math.atan2(bv.y,bv.x)
-                while(turn>Math.PI)turn-=Math.PI*2
-                while(turn< -Math.PI)turn+=Math.PI*2
-                if(Math.abs(turn)>1e-4)this.hooks.roll?.(turn)
+
             }
             this.hooks.pan?.((after[0].x+after[1].x-before[0].x-before[1].x)/2,(after[0].y+after[1].y-before[0].y-before[1].y)/2)
         }

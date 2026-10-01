@@ -108,4 +108,11 @@ body.theme-light #tps-target-menu {background:#f5fbfc;color:#243f47;}
 #camera-corner-controls {position:fixed;right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom));display:flex;gap:4px;z-index:960;pointer-events:none;}
 #camera-corner-controls button {pointer-events:auto;width:30px;height:30px;border:1px solid #6c9298;border-radius:50%;background:#203a43e8;color:#f0f8f7;font:18px/1 system-ui;box-shadow:0 1px 4px #0004;cursor:pointer;}
 body.theme-light #camera-corner-controls button {background:#f3fafbf2;color:#264650;}
-@media(pointer:coarse) and (hover:none) {#camera-corner-controls {display:none;}}
+#camera-corner-controls button {touch-action:none;user-select:none;-webkit-user-select:none;}
+#camera-corner-controls #camera-roll-control {width:48px;height:36px;border-radius:10px;font-size:12px;display:grid;place-content:center;gap:2px;}
+#camera-corner-controls #camera-roll-control output {font-size:10px;pointer-events:none;}
+#camera-corner-controls #camera-roll-control.is-dragging {outline:2px solid currentColor;outline-offset:1px;}
+@media(pointer:coarse),(max-width:600px) {#camera-corner-controls button {min-width:44px;min-height:44px;}#camera-corner-controls #camera-roll-control {min-width:52px;}}
+
+#camera-corner-controls #camera-roll-control {padding:2px 4px !important;width:auto;min-width:56px;}
+#camera-corner-controls #camera-roll-control span,#camera-corner-controls #camera-roll-control output {white-space:nowrap;line-height:1.1;}

@@ -70,7 +70,7 @@ import {
     detachViewerLocomotion,
     selectViewerLocomotion,
     setViewerLocomotionEnabled,
-    isViewerLocomotionEnabled, adoptViewerCamera, rotateViewerCameraPlane, canControlViewerActor,
+    isViewerLocomotionEnabled, adoptViewerCamera, rotateViewerCameraPlane, resetViewerCameraPlane, viewerCameraPlaneAngle, canControlViewerActor,
     setupViewerLocomotion,
     teleportViewerCharacter,
     createViewerPerformanceHost,
@@ -3186,7 +3186,7 @@ function setupViewerInputHandler() {
             const label=document.querySelector<HTMLOptionElement>(`#character-selector option[value="${id}"]`)?.textContent??id
             return[{key:actor.object.uuid,label:`${i+1}. ${label}`,enabled:canControlViewerActor(slot)}]
         }),select:key=>{const slot=scene.characters.find(c=>c.character?.object.uuid===key);if(slot&&canControlViewerActor(slot)&&slot!==scene.characterSelected)selectCharacter(slot)}})
-    const corner=createCameraCornerControls({locale:getUiLocale,roll:rotateViewerCameraPlane,focus:()=>{
+    const corner=createCameraCornerControls({locale:getUiLocale,roll:rotateViewerCameraPlane,reset:resetViewerCameraPlane,angle:viewerCameraPlaneAngle,focus:()=>{
         finishDirectPoseDrag()
         const actor=isViewerLocomotionEnabled()?scene.characterSelected?.character?.object:movementSelection.current?.object??scene.characterSelected?.character?.object
         if(!actor)return
@@ -3197,7 +3197,8 @@ function setupViewerInputHandler() {
             else {scene.controls.update();scene.cameraRotation=roll}
         }
     }})
-    onPermanentPageExit(()=>{targetMenu.dispose();corner.dispose()})
+    const releaseCorner=scene.addBeforeRenderCallback(()=>corner.update())
+    onPermanentPageExit(()=>{releaseCorner();targetMenu.dispose();corner.dispose()})
     const twoFinger=installOrbitTwoFingerGesture({canvas:scene.renderer.domElement,camera:()=>scene.camera,controls:()=>scene.controls,
         enabled:()=>!document.body.classList.contains('locomotion-mode-enabled')&&!performanceGizmoActive,
         beforeBegin:()=>finishDirectPoseDrag(),getRoll:()=>scene.cameraRotation??0,setRoll:value=>{scene.cameraRotation=value}})

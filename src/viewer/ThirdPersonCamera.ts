@@ -182,6 +182,14 @@ export class ThirdPersonCamera {
         this.update()
     }
     rollBy(radians:number):void {if(this.active&&Number.isFinite(radians)){this.roll+=radians;this.update()}}
+    resetRoll():void {
+        if(!this.active)return
+        // Re-express unwrapped pitch before zeroing optical roll; keep the
+        // current viewing direction even when the user has crossed a pole.
+        this.orientation.setFromQuaternion(this.hooks.scene().camera.quaternion,'YXZ')
+        this.yaw=this.orientation.y;this.pitch=-this.orientation.x;this.roll=0
+        this.touchView?.reset();this.touchBase=undefined;this.update()
+    }
 
     private isControl(target: EventTarget | null): boolean {
         return target instanceof Element && !!target.closest('[data-tps-touch],button,input,select,textarea,[contenteditable="true"],[role="button"],[role="slider"],[role="listbox"],[role="combobox"]')
@@ -232,7 +240,7 @@ export class ThirdPersonCamera {
             two:delta=>{if(!this.touchBase)return;const next=resolvePlaneGesture(this.touchBase,delta);if(!next)return;this.center.copy(next.target);this.distance=next.distance;this.roll=this.touchRoll+delta.roll},
             twoEnd:()=>{this.touchBase=undefined},
             pan:(dx,dy)=>this.pan(dx,dy),
-            roll:radians=>{if(this.active&&Number.isFinite(radians))this.roll+=radians},
+
             tap:(x,y)=>document.dispatchEvent(new CustomEvent('magius:tps-select-at',{detail:{x,y}})),
         })
         // Never subscribe to mousemove alongside Pointer Events. Raw and normal

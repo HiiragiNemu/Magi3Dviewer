@@ -52,14 +52,14 @@ test('Momoko matched-body atlas is pinned to the audited native texture identiti
   assert.ok(row.differentPixels>0)
  }
 })
-test('optical roll preserves exact position/target/separation, including interleaved finger events',()=>{
+test('two-finger twist preserves optical orientation and exact position/target/separation, including interleaved events',()=>{
  const camera=new T.PerspectiveCamera(40,1,.05,100);camera.position.set(0,1,5);const target=new T.Vector3(0,1,0);camera.lookAt(target)
  const base=capturePlaneGesture(camera,target,900);let result
  const gesture=new TpsViewGesture({rotate(){throw Error('orbit leaked into two-finger roll')},pinch(){throw Error('legacy ratio zoom leaked')},two:d=>result=resolvePlaneGesture(base,d)})
  gesture.begin({id:1,x:200,y:300});gesture.begin({id:2,x:400,y:300})
  gesture.move([{id:1,x:300,y:200}]);gesture.move([{id:2,x:300,y:400}])
  assert.deepEqual(result.position.toArray(),camera.position.toArray());assert.deepEqual(result.target.toArray(),target.toArray());assert.ok(Math.abs(result.distance-5)<1e-12)
- assert.ok(Math.abs(result.quaternion.angleTo(camera.quaternion)-Math.PI/2)<1e-7)
+ assert.ok(result.quaternion.angleTo(camera.quaternion)<1e-7,'pinching must not roll the horizon')
  gesture.move([{id:2,x:400,y:300}]);gesture.move([{id:1,x:200,y:300}]);assert.ok(result.quaternion.angleTo(camera.quaternion)<1e-7);assert.deepEqual(result.position.toArray(),camera.position.toArray())
 })
 function cameraFixture(distance=5){const camera=new T.PerspectiveCamera(40,1,.05,100),target=new T.Vector3(0,1,0);camera.position.set(0,1,distance);camera.lookAt(target);const controls={target,enabled:true,rotateSpeed:1,zoomSpeed:1,connect(){},disconnect(){},update(){}};const scene={camera,controls,renderer:{domElement:{clientHeight:900,getBoundingClientRect:()=>({height:900})}}};const owner=new ThirdPersonCamera({scene:()=>scene,actor:()=>undefined,released(){},status(){}});owner.start();owner.update();return{camera,target,owner,scene}}
