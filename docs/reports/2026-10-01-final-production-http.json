@@ -1,0 +1,25 @@
+{
+  "origin": "https://magius3dviewer.pages.dev/",
+  "deployment": "3278e11e",
+  "version": {
+    "revision": "c1743880fe27f7ac24ee1e3ac9d6d3880d596512",
+    "jumpStyle": "expressive",
+    "entryPolicy": "single-production-no-store-v1",
+    "landing": "continuous-grounded-gait-v1",
+    "builtAt": "2026-10-01T07:44:52.192Z",
+    "poseEditor": "bind-limited-ik-v3",
+    "viewportEditor": "persistent-v1",
+    "groundGuard": "scene-floor-v1",
+    "selection": "existing-outline-uniforms",
+    "deploymentTarget": "cloudflare",
+    "stageDelivery": "cloudflare-same-origin"
+  },
+  "indexSHA256": "a7ce113ad78b86478ee0f6ac2b467dd4a1ecd12f8995b709f8f3d0e4f616169b",
+  "httpStatus": {
+    "version": 200,
+    "index": 200
+  },
+  "cacheControl": "no-store, max-age=0",
+  "buildHeader": null,
+  "verifiedAt": "2026-10-01T07:47:20.674Z"
+}

@@ -48,3 +48,17 @@ node scripts/site-smoke-final-usability.mjs
 ```
 
 The final check must match `site-version.json`, the HTML build revision and the loaded 101401 image pixels on the formal production origin. A successful upload alone is not production acceptance. Preserve the preceding production deployment as a rollback point.
+
+## Production acceptance
+
+Published application: `c1743880fe27f7ac24ee1e3ac9d6d3880d596512` on the existing `magius3dviewer` Git branch. Cloudflare production deployment: `3278e11e` on its pre-existing `main` production channel. The 4,677 unchanged uploads were reused; 26 changed files were uploaded.
+
+The formal origin `https://magius3dviewer.pages.dev/` returned HTTP 200 for the exact version and index. The served index SHA-256 matches the built artifact (`a7ce113ad78b86478ee0f6ac2b467dd4a1ecd12f8995b709f8f3d0e4f616169b`), with `Cache-Control: no-store, max-age=0`.
+
+The same full browser acceptance script then passed on the formal production origin: exact application revision; native 101401 loaded-image RGBA digest; independent enemy manipulation/reset/save/load; left/right named fingers; five real double-tap body locations; ordinary/TPS optical roll and transition continuity; desktop/mobile control switching; 360/430/932/1366 responsive bounds. Browser page errors: zero. The four finger controls now stay on one row even at 360px width.
+
+Permanent evidence: `2026-10-01-final-production-http.json`, `2026-10-01-final-production-browser.json` and screenshots in `2026-10-01-final-usability-images/`. This report update is documentation only; it does not require republishing application assets.
+
+GitHub's separate automatic-delivery run `36832003796` stopped at its initial configuration check because the repository/environment supplied neither Cloudflare token nor account. It did not run or fail the application build. The pose-editor CI run `36832003773` passed. This release was built with the full website gate locally and published with the already authorized local Wrangler OAuth session; the formal-site checks above passed. No OAuth credential was copied into repository files or GitHub secrets. Future unattended GitHub publication still requires its own properly scoped credentials.
+
+A separate uninterrupted production touch session verified five camera-visible enemy surfaces (head, body and sofa meshes): each double-tap opened the correct enemy editor and remained open after 500 ms. See `2026-10-01-final-production-enemy-doubletap.json`.
