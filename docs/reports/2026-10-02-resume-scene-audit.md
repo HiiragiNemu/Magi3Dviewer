@@ -26,7 +26,7 @@
 
 证据索引：`assets/20261002-scene-surfaces/audit.json`。抽查器：`scripts/audit-late-scene-browser.mjs`；原始图、完整运行时 sceneProfilePackage 与源材质记录保留在 `artifacts/resume-20261002/scenes-baseline/`。本地可直接读取的 67 份已启用场景 profile 中，35 份包含本轮调查的三类 shader；这是材质引用统计，不等同 35 场景均已逐一修好，也不是 408 场景的完整分母。
 
-### 已实现、候选浏览器验证通过的共享修复
+### 已正式部署的共享修复
 
 **ShadowOnly 被错当作普通不透明白地板。** `dungeon-65000-bg-3d-652-01-11-001-002` 的 groundShadowOnly 原始材质来自精确原始 bundle；Shader PathID 为 -3296666697305076964，原生 GLES Universal Forward 和 blend/depth/cull 状态已提取。原生输出 RGB 为 _ShadowColor.rgb，alpha 为 `(1 - mainLightShadowAttenuation) * pow(1 - saturate(NdotV), _frenelPower)`；颜色值的 alpha=0 并不表示禁用阴影。原生通道是透明叠加、ZWrite Off，而旧绑定用 lit/opaque 白色载体遮住了真正地面。
 
@@ -48,4 +48,8 @@
 
 候选网站回归 542/542，通过且无跳过；TypeScript 通过。相较接续基线 507 项增加特殊表面、主光级联、粒子混合与体积光的覆盖。附带修正旧级联测试仅匹配 LF 的文本正则，兼容 Windows CRLF；四个固定半像素采样断言完整保留，没有修改主光阴影实现或弱化测试。
 
-场景候选正式部署及版本将在本报告下一次提交补齐。连续碰撞原始指标、生产录制及镜头日志位于 `artifacts/resume-20261002/`。
+正式应用提交 **9c89be323c1f72bd730764801df7f75c29f48eaa**，Cloudflare 生产部署 **703e4c42**。原正式域名复测上述 7 场景，实际场景 ID 均匹配，无加载/页面/着色器/HTTP 异常；白地板的生产图已查看并更新前后对比图。HTML、版本及关联 JS/CSS 共 19 项文件摘要与本地构建完全一致。542 网站回归、类型及 build:deploy 全部通过。
+
+仅对两类已验证表面作共享分派，未改角色动作、物理、节点、录制、镜头源文件。未把云层、612 烟雾以及其余未逐一验收的场景标成完成。生产复验结构数据写入 audit.json 的 production 字段。连续碰撞原始指标、生产录制及镜头日志位于 `artifacts/resume-20261002/`。
+
+接续入口仍为本报告的“明确保留的视觉缺口”；三维噪声及 shader 原始提取结果在同目录的 cloud-programs/、cloud-shader-index.json、cloud-volume-metadata.json。后续修复须基于原始绑定、正确体素解码与 native 算子，不以随机噪声、统一提亮或隐藏场景代替。

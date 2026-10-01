@@ -502,5 +502,173 @@
     "allScenes": {
       "status": "16 sampled, not 408 visually accepted"
     }
+  },
+  "production": {
+    "revision": "9c89be323c1f72bd730764801df7f75c29f48eaa",
+    "deployment": "703e4c42",
+    "stageChecks": [
+      {
+        "id": "dungeon-65000-bg-3d-652-01-11-001-002",
+        "failure": "",
+        "errors": [],
+        "httpFailures": []
+      },
+      {
+        "id": "dungeon-intro-0001-001",
+        "failure": "",
+        "errors": [],
+        "httpFailures": []
+      },
+      {
+        "id": "gallery-memory-room-story",
+        "failure": "",
+        "errors": [],
+        "httpFailures": []
+      },
+      {
+        "id": "battle-600-01-01-003",
+        "failure": "",
+        "errors": [],
+        "httpFailures": []
+      },
+      {
+        "id": "battle-610-00-01-002",
+        "failure": "",
+        "errors": [],
+        "httpFailures": []
+      },
+      {
+        "id": "dungeon-61000-bg-3d-610-00-12-001-001",
+        "failure": "",
+        "errors": [],
+        "httpFailures": []
+      },
+      {
+        "id": "dungeon-61200-bg-3d-612-00-14-001-002",
+        "failure": "",
+        "errors": [],
+        "httpFailures": []
+      }
+    ],
+    "assets": {
+      "site": "https://magius3dviewer.pages.dev/",
+      "revision": "9c89be323c1f72bd730764801df7f75c29f48eaa",
+      "files": [
+        {
+          "path": "index.html",
+          "bytes": 70802,
+          "sha256": "7d6065cfc25afc9a3da8b1838d4493f2e882b8a741075fab844fc6696200bc9b",
+          "matches": true
+        },
+        {
+          "path": "site-version.json",
+          "bytes": 543,
+          "sha256": "eab15e8579f3c3c77028b848c98d65841c6ef66a08b0c76cf712d129683231e4",
+          "matches": true
+        },
+        {
+          "path": "./assets/polyfills-C81vJE_w.js",
+          "bytes": 119596,
+          "sha256": "961b88dd65fcc01acc2aa416101dd620072c48a6b4cd870d90f192977acd915f",
+          "matches": true
+        },
+        {
+          "path": "./assets/main-CoE_Xarc.js",
+          "bytes": 1514,
+          "sha256": "6f02ff78f8f9f8aca09035a0ec110a93198eecca516cd22564795c9a5e1c3f56",
+          "matches": true
+        },
+        {
+          "path": "./assets/modulepreload-polyfill-B5Qt9EMX.js",
+          "bytes": 771,
+          "sha256": "607112fb81d7899ceedf89cdb1b3540a53eb96ad5e4202fb1e22f873281de839",
+          "matches": true
+        },
+        {
+          "path": "./assets/three-core-B5rszqHp.js",
+          "bytes": 704474,
+          "sha256": "90ace8e38ea7577f21a845715b3ceb2f97f92c91ba414061f38ace41d0a1fc81",
+          "matches": true
+        },
+        {
+          "path": "./assets/viewer-localization-BixBjYBT.js",
+          "bytes": 100927,
+          "sha256": "00894fe3a4bd5b5b8198e1fab0f8720d96e4985996eb649c6bc3fb6ba166f746",
+          "matches": true
+        },
+        {
+          "path": "./assets/three-libs-BE0iLUPD.js",
+          "bytes": 34980,
+          "sha256": "8cb8b51e762131638932918b5623d5e92ca857640c4316d780492b478502594f",
+          "matches": true
+        },
+        {
+          "path": "./assets/three-controls-Bnk1UDsS.js",
+          "bytes": 41246,
+          "sha256": "3f8dd96285899a446282c956de72dd0f8d157fe229d2416cbe0e9330f157f1f6",
+          "matches": true
+        },
+        {
+          "path": "./assets/lz-string-UNqkxtPb.js",
+          "bytes": 4854,
+          "sha256": "21e2482a980f5599ca3ac6b0af9f1a8919983d689c9a5d2c289c4f0c4770df0b",
+          "matches": true
+        },
+        {
+          "path": "./assets/three-loaders-BvuwbfaA.js",
+          "bytes": 91305,
+          "sha256": "717fe24705687048bd88e0db206799084ad294a2af3ab8587d001694fa035a04",
+          "matches": true
+        },
+        {
+          "path": "./assets/three-postprocessing-Bo09VK2T.js",
+          "bytes": 107223,
+          "sha256": "a7e1b73a1e25ce035a3762f455d0849fb05a983ce3628920351cf75af85f2110",
+          "matches": true
+        },
+        {
+          "path": "./assets/fflate-DWcM8ZDX.js",
+          "bytes": 6026,
+          "sha256": "c27ccbad7d063a2a11dcdfc79b52edda176c5a4427891f7c65888c4071858fe2",
+          "matches": true
+        },
+        {
+          "path": "./assets/vendor-BNguDoK7.js",
+          "bytes": 8220,
+          "sha256": "a6f1273706381a1f132785397f2d9b706d29afc0317af83db30943bee1b3cf3a",
+          "matches": true
+        },
+        {
+          "path": "./assets/viewer-runtime-DvMsPsiP.js",
+          "bytes": 24422479,
+          "sha256": "2313d6f62e6f9124aab0612a5711ea728e78978364808c49e3e97894b83d65fa",
+          "matches": true
+        },
+        {
+          "path": "./assets/viewer-runtime-DY820rRz.css",
+          "bytes": 37192,
+          "sha256": "bd07bb3b4e3a8dcf6eedda1c734779aabf80819609d6368c0282772a09acce59",
+          "matches": true
+        },
+        {
+          "path": "./assets/main-CTyG4zv2.css",
+          "bytes": 69272,
+          "sha256": "168910342edc92bd491891790c348c34048bdd7d7a53d729d913525b3865bffe",
+          "matches": true
+        },
+        {
+          "path": "./assets/polyfills-legacy-CXKHYqks.js",
+          "bytes": 157377,
+          "sha256": "8e35a26e31e06dcbc05b752fef7149df3e2ee59806ab268c1964e3389a243517",
+          "matches": true
+        },
+        {
+          "path": "./assets/main-legacy-DHpYbLXV.js",
+          "bytes": 70420,
+          "sha256": "26ea5ad4d2d39825cc34ee8d50e531573a7af5689b9af96141d141a491a58120",
+          "matches": true
+        }
+      ]
+    }
   }
 }
