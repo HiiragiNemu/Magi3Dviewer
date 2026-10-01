@@ -1,0 +1,29 @@
+{
+  "schema": "magius.node-tps-release-verification.v1",
+  "applicationRevision": "bcfb1e8c40f90926c3101a6d4e05449081ef75cb",
+  "gitBranch": "magius3dviewer",
+  "cloudflareProductionChannel": "main",
+  "project": "magius3dviewer",
+  "deployment": "099637dd",
+  "url": "https://magius3dviewer.pages.dev/",
+  "buildCommand": "npm run build:deploy",
+  "buildExitCode": 0,
+  "websiteRegression": {
+    "passed": 418,
+    "failed": 0,
+    "skipped": 0
+  },
+  "typeScriptPassed": true,
+  "newProductionBrowserSections": 16,
+  "retainedProductionBrowserSections": 14,
+  "actualMaterialAtlasGroups": 4,
+  "exactNativePngResponsesVerified": 12,
+  "htmlSha256": "180457d70bec4f186208470d9792f6dccfbb5af4e665ff8177b342d48de75359",
+  "pageErrors": [],
+  "completedAt": "2026-10-01T14:45:11.247135+00:00",
+  "remainingScopeNotes": [
+    "98 audited character FBX resources include clothing/shape variants and three typed story actors; this is not an audit of every enemy/stage texture.",
+    "Research/corpus-wide test gate is separate from the 418-test website gate; no unrelated test is claimed green.",
+    "Pre-existing untracked runtime archives remain untouched. Wrangler dirty warning refers to these untracked files; tracked application files were clean and build revision matched the committed application."
+  ]
+}

@@ -2,7 +2,7 @@
 
 ## Release status
 
-Candidate application is locally validated. Production revision/deployment verification will be appended after publishing the existing Cloudflare project. Baseline repository: `0ea625a`; previous production application: `c174388`. Continue only `magius3dviewer`; do not alter default `main`, Reader, L2D or unrelated repositories.
+**Published and verified on the formal website.** Application revision: `bcfb1e8c40f90926c3101a6d4e05449081ef75cb`; Cloudflare production deployment: `099637dd`; project: `magius3dviewer`, production channel: `main`. Git remains on `magius3dviewer`. Baseline repository: `0ea625a`; previous production application: `c174388`. No Reader/L2D or unrelated repository changes.
 
 ## Verified root causes and behavior
 
@@ -28,7 +28,7 @@ With one actor the existing TPS button toggles on/off. With several loaded actor
 
 ## Native atlas census and repairs
 
-The audit covers **98 shipped FBX resource directories**, including alternate FBX filenames and all three typed story actors, and **1,619 native/local texture comparison items**. These are per-model comparisons, not a claim of 1,619 unique texture assets or 98 unique people.
+The audit covers **98 shipped character FBX resource directories**, including alternate FBX filenames and all three typed story actors, and **1,619 native/local texture comparison items**. These are per-model comparisons, not a claim of 1,619 unique texture assets or 98 unique people.
 
 Confirmed additional affected ordinary model: **101501** — body, accessory and weapon_a color/shadow/control atlases. Confirmed additional affected part of previously repaired **101401**: weapon_a. Twelve PNGs were restored as four complete native texture triples. Target FBX UVs match the exact native mesh, and native Material PPtr bindings prove which texture belongs to each affected material slot. Source bundle hashes, mesh/texture/material IDs, pixel hashes and before/after PNG hashes are retained in `2026-10-01-atlas-repair.json`.
 
@@ -60,3 +60,11 @@ npm run build:deploy
 The before-audit census is deliberately retained; a later after-repair rerun is a different snapshot. Native bundle paths are explicit in `2026-10-01-atlas-inputs.json`. Use only the source corresponding to each model; do not substitute neighboring models.
 
 Publish `dist-deploy` to the existing Cloudflare Pages project `magius3dviewer`, production channel `main`, while retaining Git branch `magius3dviewer`. Do not weaken the release gate or deploy an ordinary full research build. Run both browser scripts against the formal URL and verify the exact `site-version.json` revision before claiming completion.
+
+## Formal production verification
+
+The committed bounded build was published through the existing authorized local Wrangler workflow. The formal domain returns the exact built HTML digest `180457d70bec4f186208470d9792f6dccfbb5af4e665ff8177b342d48de75359` and the expected application revision in `site-version.json`.
+
+The new browser acceptance passed **16 production sections** (the 15 behavior/layout sections plus the explicit revision check). The retained prior browser acceptance passed **14 production sections**. Both recorded zero page exceptions. Twelve repaired PNG responses match the exact native-repair hashes. In addition, the real displayed material images for 101501 body/accessory/weapon and 101401 weapon were compared after browser decoding against those verified native PNGs; all four groups match. The loader intentionally revokes temporary Blob URLs after decoding, so this final material test reads the live decoded image rather than trying to fetch a revoked URL.
+
+Production screenshots, actual-material checks and raw pass records are in `evidence/2026-10-01-node-tps/production-*`; the compact summary is `release-verification.json` in that directory. Reports-only commits after the application revision do not require rebuilding or redeploying unchanged application code.

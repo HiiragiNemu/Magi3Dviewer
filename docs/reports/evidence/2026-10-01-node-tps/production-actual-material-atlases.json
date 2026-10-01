@@ -1,0 +1,238 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "id": 101501,
+      "expected": [
+        "chara_101501_body_color",
+        "chara_101501_acc_color",
+        "chara_101501_weapon_a_color"
+      ],
+      "textures": [
+        {
+          "mesh": "Acc_Mesh",
+          "slot": 0,
+          "width": 512,
+          "height": 512,
+          "rgba256": "ce870d5b941e89dbf2e59f4621b3fe7848360b75d7273c75fcd35bbf1109c7fb"
+        },
+        {
+          "mesh": "Acc_Mesh",
+          "slot": 1,
+          "width": 512,
+          "height": 512,
+          "rgba256": "ce870d5b941e89dbf2e59f4621b3fe7848360b75d7273c75fcd35bbf1109c7fb"
+        },
+        {
+          "mesh": "Acc_Mesh",
+          "slot": 2,
+          "width": 512,
+          "height": 512,
+          "rgba256": "ce870d5b941e89dbf2e59f4621b3fe7848360b75d7273c75fcd35bbf1109c7fb"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 0,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "f66a1a8ca2aded23c137408400803e5aa2200f9f5471d6aaa8bf3b4e0a836221"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 1,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "f66a1a8ca2aded23c137408400803e5aa2200f9f5471d6aaa8bf3b4e0a836221"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 2,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "f66a1a8ca2aded23c137408400803e5aa2200f9f5471d6aaa8bf3b4e0a836221"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 3,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "f66a1a8ca2aded23c137408400803e5aa2200f9f5471d6aaa8bf3b4e0a836221"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 4,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "f66a1a8ca2aded23c137408400803e5aa2200f9f5471d6aaa8bf3b4e0a836221"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 5,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "f66a1a8ca2aded23c137408400803e5aa2200f9f5471d6aaa8bf3b4e0a836221"
+        },
+        {
+          "mesh": "Weapon_Mesh",
+          "slot": 0,
+          "width": 512,
+          "height": 512,
+          "rgba256": "019c4981687d03c91a3471c63b8263944e9597d84f9b114367541463b1c27112"
+        },
+        {
+          "mesh": "Weapon_Mesh",
+          "slot": 1,
+          "width": 512,
+          "height": 512,
+          "rgba256": "019c4981687d03c91a3471c63b8263944e9597d84f9b114367541463b1c27112"
+        },
+        {
+          "mesh": "Weapon_Mesh",
+          "slot": 2,
+          "width": 512,
+          "height": 512,
+          "rgba256": "019c4981687d03c91a3471c63b8263944e9597d84f9b114367541463b1c27112"
+        },
+        {
+          "mesh": "Weapon_Mesh",
+          "slot": 3,
+          "width": 512,
+          "height": 512,
+          "rgba256": "019c4981687d03c91a3471c63b8263944e9597d84f9b114367541463b1c27112"
+        },
+        {
+          "mesh": "Weapon_Mesh",
+          "slot": 4,
+          "width": 512,
+          "height": 512,
+          "rgba256": "019c4981687d03c91a3471c63b8263944e9597d84f9b114367541463b1c27112"
+        }
+      ],
+      "reference": [
+        {
+          "name": "chara_101501_body_color",
+          "url": "/assets/chara_101501_body_color-CXDTdiAc.png",
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "f66a1a8ca2aded23c137408400803e5aa2200f9f5471d6aaa8bf3b4e0a836221"
+        },
+        {
+          "name": "chara_101501_acc_color",
+          "url": "/assets/chara_101501_acc_color-ivSBvCOW.png",
+          "width": 512,
+          "height": 512,
+          "rgba256": "ce870d5b941e89dbf2e59f4621b3fe7848360b75d7273c75fcd35bbf1109c7fb"
+        },
+        {
+          "name": "chara_101501_weapon_a_color",
+          "url": "/assets/chara_101501_weapon_a_color-DmNYOYY_.png",
+          "width": 512,
+          "height": 512,
+          "rgba256": "019c4981687d03c91a3471c63b8263944e9597d84f9b114367541463b1c27112"
+        }
+      ]
+    },
+    {
+      "id": 101401,
+      "expected": [
+        "chara_101401_weapon_a_color"
+      ],
+      "textures": [
+        {
+          "mesh": "Acc_Mesh",
+          "slot": 0,
+          "width": 512,
+          "height": 512,
+          "rgba256": "07d5c8f3139c7de8c0cd59a65711a923b5c21e3130d460d5c93b49543562eb54"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 0,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "2f163b0454180a6ecce77fd835bc3ca21a12948699f16bcf1e9c8a5cd4de383f"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 1,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "2f163b0454180a6ecce77fd835bc3ca21a12948699f16bcf1e9c8a5cd4de383f"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 2,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "2f163b0454180a6ecce77fd835bc3ca21a12948699f16bcf1e9c8a5cd4de383f"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 3,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "2f163b0454180a6ecce77fd835bc3ca21a12948699f16bcf1e9c8a5cd4de383f"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 4,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "2f163b0454180a6ecce77fd835bc3ca21a12948699f16bcf1e9c8a5cd4de383f"
+        },
+        {
+          "mesh": "Body_Mesh",
+          "slot": 5,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "2f163b0454180a6ecce77fd835bc3ca21a12948699f16bcf1e9c8a5cd4de383f"
+        },
+        {
+          "mesh": "Body_Mesh:mt_chara_101401_body_alpha:writer-forward",
+          "slot": 0,
+          "width": 1024,
+          "height": 1024,
+          "rgba256": "2f163b0454180a6ecce77fd835bc3ca21a12948699f16bcf1e9c8a5cd4de383f"
+        },
+        {
+          "mesh": "Weapon_Mesh",
+          "slot": 0,
+          "width": 512,
+          "height": 512,
+          "rgba256": "834f9e6e0afc35f903647aedee49274857c4c58c4311ddc4c696e6b36a7ba0fd"
+        },
+        {
+          "mesh": "Weapon_Mesh",
+          "slot": 1,
+          "width": 512,
+          "height": 512,
+          "rgba256": "834f9e6e0afc35f903647aedee49274857c4c58c4311ddc4c696e6b36a7ba0fd"
+        },
+        {
+          "mesh": "Weapon_Mesh",
+          "slot": 2,
+          "width": 512,
+          "height": 512,
+          "rgba256": "834f9e6e0afc35f903647aedee49274857c4c58c4311ddc4c696e6b36a7ba0fd"
+        },
+        {
+          "mesh": "Weapon_Mesh",
+          "slot": 3,
+          "width": 512,
+          "height": 512,
+          "rgba256": "834f9e6e0afc35f903647aedee49274857c4c58c4311ddc4c696e6b36a7ba0fd"
+        }
+      ],
+      "reference": [
+        {
+          "name": "chara_101401_weapon_a_color",
+          "url": "/assets/chara_101401_weapon_a_color-DwAn-L0g.png",
+          "width": 512,
+          "height": 512,
+          "rgba256": "834f9e6e0afc35f903647aedee49274857c4c58c4311ddc4c696e6b36a7ba0fd"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

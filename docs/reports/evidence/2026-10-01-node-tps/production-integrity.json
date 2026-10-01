@@ -1,0 +1,94 @@
+{
+  "passed": true,
+  "site": "https://magius3dviewer.pages.dev",
+  "revision": "bcfb1e8c40f90926c3101a6d4e05449081ef75cb",
+  "htmlSha256": "180457d70bec4f186208470d9792f6dccfbb5af4e665ff8177b342d48de75359",
+  "version": {
+    "revision": "bcfb1e8c40f90926c3101a6d4e05449081ef75cb",
+    "jumpStyle": "expressive",
+    "entryPolicy": "single-production-no-store-v1",
+    "landing": "continuous-grounded-gait-v1",
+    "builtAt": "2026-10-01T14:33:51.910Z",
+    "poseEditor": "bind-limited-ik-v3",
+    "viewportEditor": "persistent-v1",
+    "groundGuard": "scene-floor-v1",
+    "selection": "existing-outline-uniforms",
+    "deploymentTarget": "cloudflare",
+    "stageDelivery": "cloudflare-same-origin"
+  },
+  "textures": [
+    {
+      "name": "chara_101401_weapon_a_color",
+      "url": "/assets/chara_101401_weapon_a_color-DwAn-L0g.png",
+      "bytes": 34065,
+      "sha256": "1c8a3149758ca3c68ef477f35cb6486d6640b44925cdc19493e57a697549d0d2"
+    },
+    {
+      "name": "chara_101401_weapon_a_shadow",
+      "url": "/assets/chara_101401_weapon_a_shadow-BT1pdm0r.png",
+      "bytes": 28682,
+      "sha256": "4d6ef27df5271d263abd0aecb0a914bc612c1d397d6b6b9bb322d39e1ce24098"
+    },
+    {
+      "name": "chara_101401_weapon_a_ctrl",
+      "url": "/assets/chara_101401_weapon_a_ctrl-gwljLvJ9.png",
+      "bytes": 36514,
+      "sha256": "6842ec7807951695757e8f8d2badb7c07c9eb8006deb23eecefe5bbc11a74ceb"
+    },
+    {
+      "name": "chara_101501_body_color",
+      "url": "/assets/chara_101501_body_color-CXDTdiAc.png",
+      "bytes": 74680,
+      "sha256": "6d74e1159337e8e1a0ac779e366a8ec89fbec5ef788e22e666ee106daddf9eae"
+    },
+    {
+      "name": "chara_101501_body_shadow",
+      "url": "/assets/chara_101501_body_shadow-OtUYw58M.png",
+      "bytes": 84602,
+      "sha256": "ad886749a5d2c7f3a5e8a0385d80891e8d0b8149ca67d2008033275b0540521f"
+    },
+    {
+      "name": "chara_101501_body_ctrl",
+      "url": "/assets/chara_101501_body_ctrl-BlGRJ3GJ.png",
+      "bytes": 235785,
+      "sha256": "7ffa4c52320bea2c506fed7d2e0e89aefbee9827658c34cc308337e6a8a351e7"
+    },
+    {
+      "name": "chara_101501_acc_color",
+      "url": "/assets/chara_101501_acc_color-ivSBvCOW.png",
+      "bytes": 59985,
+      "sha256": "7e60f35dc830b244bdd7d7fbe41e0fe25e792d808eb0427d1a349fc417994d49"
+    },
+    {
+      "name": "chara_101501_acc_shadow",
+      "url": "/assets/chara_101501_acc_shadow-BvYJAGZ_.png",
+      "bytes": 29482,
+      "sha256": "e94974f75dc22833b90e6f88c8ca86f81195289ef94000aad6158bf8bb237d0a"
+    },
+    {
+      "name": "chara_101501_acc_ctrl",
+      "url": "/assets/chara_101501_acc_ctrl-m3-4jPv6.png",
+      "bytes": 76708,
+      "sha256": "f264aec5150ef8f66ce61ed9bb8c1f5166b0d50bebd90e277af956158f3075a5"
+    },
+    {
+      "name": "chara_101501_weapon_a_color",
+      "url": "/assets/chara_101501_weapon_a_color-DmNYOYY_.png",
+      "bytes": 32025,
+      "sha256": "5b858be4e23ca257d6dcff54bf73cd991b07929f692b0878fe20ac4516e0da31"
+    },
+    {
+      "name": "chara_101501_weapon_a_shadow",
+      "url": "/assets/chara_101501_weapon_a_shadow-BLzjJZBW.png",
+      "bytes": 15352,
+      "sha256": "93ba0e3def14f72338c6b2690c54720ff4d66438d9846e24ecd4635b5bd96039"
+    },
+    {
+      "name": "chara_101501_weapon_a_ctrl",
+      "url": "/assets/chara_101501_weapon_a_ctrl-B4dKr4IN.png",
+      "bytes": 50494,
+      "sha256": "247fa0ce8d101d6fa02635a3fef3ac7c98ca6deff8691fa8d43aba46803e7b45"
+    }
+  ],
+  "verifiedAt": "2026-10-01T14:36:45.022Z"
+}
