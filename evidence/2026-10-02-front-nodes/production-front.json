@@ -1,0 +1,5901 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "test": "production-version",
+      "version": {
+        "revision": "f5100f9615dd282398ce2d689938efe3b3d05bd6",
+        "jumpStyle": "expressive",
+        "entryPolicy": "single-production-no-store-v1",
+        "landing": "continuous-grounded-gait-v1",
+        "builtAt": "2026-10-01T17:21:56.325Z",
+        "poseEditor": "bind-limited-ik-v3",
+        "viewportEditor": "persistent-v1",
+        "groundGuard": "scene-floor-v1",
+        "selection": "existing-outline-uniforms",
+        "deploymentTarget": "cloudflare",
+        "stageDelivery": "cloudflare-same-origin"
+      }
+    },
+    {
+      "test": "front-reference-layout",
+      "state": {
+        "joints": [
+          {
+            "id": "head",
+            "name": "Head",
+            "uuid": "3fab22c4-b1df-43aa-87a0-2906f4def580",
+            "label": "头部",
+            "aria": "头部",
+            "key": "node:chara_100101:front-v2:head",
+            "region": "top",
+            "role": "head",
+            "box": {
+              "x": 628,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 680,
+              "bottom": 107,
+              "left": 628
+            },
+            "anchor": [
+              686.7283006932806,
+              380.7445289540064
+            ],
+            "expected": [
+              686.7283006932806,
+              380.7445289540064
+            ]
+          },
+          {
+            "id": "neck",
+            "name": "Neck",
+            "uuid": "adfb6112-84fb-4279-aedf-989ff51f39e2",
+            "label": "颈部",
+            "aria": "颈部",
+            "key": "node:chara_100101:front-v2:neck",
+            "region": "top",
+            "role": "neck",
+            "box": {
+              "x": 686,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 738,
+              "bottom": 107,
+              "left": 686
+            },
+            "anchor": [
+              688.0404022637334,
+              392.9117705106582
+            ],
+            "expected": [
+              688.0404022637334,
+              392.9117705106582
+            ]
+          },
+          {
+            "id": "chest",
+            "name": "Chest",
+            "uuid": "38c1f04b-abd8-4164-a384-2bbb372695ec",
+            "label": "胸部",
+            "aria": "胸部",
+            "key": "node:chara_100101:front-v2:chest",
+            "region": "bottom",
+            "role": "chest",
+            "box": {
+              "x": 628,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 680,
+              "bottom": 892,
+              "left": 628
+            },
+            "anchor": [
+              690.0671211392623,
+              425.6650737708094
+            ],
+            "expected": [
+              690.0671211392623,
+              425.6650737708094
+            ]
+          },
+          {
+            "id": "waist",
+            "name": "Waist",
+            "uuid": "e4d4489a-2b83-4e89-ac53-f26cfd2b8e7d",
+            "label": "腰部",
+            "aria": "腰部",
+            "key": "node:chara_100101:front-v2:waist",
+            "region": "bottom",
+            "role": "waist",
+            "box": {
+              "x": 686,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 738,
+              "bottom": 892,
+              "left": 686
+            },
+            "anchor": [
+              690.2506483482949,
+              438.4080451569616
+            ],
+            "expected": [
+              690.2506483482949,
+              438.4080451569616
+            ]
+          },
+          {
+            "id": "left-shoulder",
+            "name": "Shoulder_L",
+            "uuid": "c53eb544-b356-4c83-95e4-c8d928fc4eac",
+            "label": "右肩部",
+            "aria": "右肩部",
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "region": "right",
+            "role": "shoulder",
+            "box": {
+              "x": 1009,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 1073,
+              "bottom": 295.5,
+              "left": 1009
+            },
+            "anchor": [
+              693.1586102658965,
+              398.76371217852386
+            ],
+            "expected": [
+              693.1586102658965,
+              398.76371217852386
+            ]
+          },
+          {
+            "id": "right-shoulder",
+            "name": "Shoulder_R",
+            "uuid": "ad3ff818-e126-4625-a894-b4e18f5ce58a",
+            "label": "左肩部",
+            "aria": "左肩部",
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "region": "left",
+            "role": "shoulder",
+            "box": {
+              "x": 293,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 357,
+              "bottom": 295.5,
+              "left": 293
+            },
+            "anchor": [
+              683.2397837125666,
+              398.75194360421176
+            ],
+            "expected": [
+              683.2397837125666,
+              398.75194360421176
+            ]
+          },
+          {
+            "id": "left-upper-arm",
+            "name": "Arm_L",
+            "uuid": "ed266103-24b9-45cd-b41c-085003d2978f",
+            "label": "右上臂",
+            "aria": "右上臂",
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "region": "right",
+            "role": "upper-arm",
+            "box": {
+              "x": 1009,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 1073,
+              "bottom": 363.5,
+              "left": 1009
+            },
+            "anchor": [
+              706.2731364337221,
+              399.35716524529283
+            ],
+            "expected": [
+              706.2731364337221,
+              399.35716524529283
+            ]
+          },
+          {
+            "id": "right-upper-arm",
+            "name": "Arm_R",
+            "uuid": "e5b91070-b331-4e0d-9069-a1cfd3156867",
+            "label": "左上臂",
+            "aria": "左上臂",
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "region": "left",
+            "role": "upper-arm",
+            "box": {
+              "x": 293,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 357,
+              "bottom": 363.5,
+              "left": 293
+            },
+            "anchor": [
+              671.5810066667688,
+              399.36347034566984
+            ],
+            "expected": [
+              671.5810066667688,
+              399.36347034566984
+            ]
+          },
+          {
+            "id": "left-elbow",
+            "name": "Forearm_L",
+            "uuid": "6034a3ab-9080-4d04-9149-6828f9e7876c",
+            "label": "右手肘",
+            "aria": "右手肘",
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "region": "right",
+            "role": "elbow",
+            "box": {
+              "x": 1009,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 1073,
+              "bottom": 431.5,
+              "left": 1009
+            },
+            "anchor": [
+              707.6014724592194,
+              431.5524448009426
+            ],
+            "expected": [
+              707.6014724592194,
+              431.5524448009426
+            ]
+          },
+          {
+            "id": "right-elbow",
+            "name": "Forearm_R",
+            "uuid": "9c532715-e6d6-4159-91e4-b7169d687e42",
+            "label": "左手肘",
+            "aria": "左手肘",
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "region": "left",
+            "role": "elbow",
+            "box": {
+              "x": 293,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 357,
+              "bottom": 431.5,
+              "left": 293
+            },
+            "anchor": [
+              671.5461737465102,
+              432.5523538450367
+            ],
+            "expected": [
+              671.5461737465102,
+              432.5523538450367
+            ]
+          },
+          {
+            "id": "left-hand",
+            "name": "Hand_L",
+            "uuid": "13de28c6-d436-4447-bf74-1657533f06a6",
+            "label": "右手腕",
+            "aria": "右手腕",
+            "key": "node:chara_100101:front-v2:left-hand",
+            "region": "right",
+            "role": "hand",
+            "box": {
+              "x": 1009,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 1073,
+              "bottom": 499.5,
+              "left": 1009
+            },
+            "anchor": [
+              706.9776069577019,
+              454.7145231664968
+            ],
+            "expected": [
+              706.9776069577019,
+              454.7145231664968
+            ]
+          },
+          {
+            "id": "right-hand",
+            "name": "Hand_R",
+            "uuid": "695c6dc4-98c9-4d75-9940-b3657d2d3d3d",
+            "label": "左手腕",
+            "aria": "左手腕",
+            "key": "node:chara_100101:front-v2:right-hand",
+            "region": "left",
+            "role": "hand",
+            "box": {
+              "x": 293,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 357,
+              "bottom": 499.5,
+              "left": 293
+            },
+            "anchor": [
+              683.6431979398135,
+              455.210016284904
+            ],
+            "expected": [
+              683.6431979398135,
+              455.210016284904
+            ]
+          },
+          {
+            "id": "left-upper-leg",
+            "name": "UpLeg_L",
+            "uuid": "f98fad42-3dd1-41fd-9abb-24c764c04ba9",
+            "label": "右大腿",
+            "aria": "右大腿",
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "region": "right",
+            "role": "upper-leg",
+            "box": {
+              "x": 1009,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 1073,
+              "bottom": 567.5,
+              "left": 1009
+            },
+            "anchor": [
+              700.7425627012558,
+              463.7397964877578
+            ],
+            "expected": [
+              700.7425627012558,
+              463.7397964877578
+            ]
+          },
+          {
+            "id": "right-upper-leg",
+            "name": "UpLeg_R",
+            "uuid": "7fed422b-46d3-43f7-9a20-2a0cf6e9d569",
+            "label": "左大腿",
+            "aria": "左大腿",
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "region": "left",
+            "role": "upper-leg",
+            "box": {
+              "x": 293,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 357,
+              "bottom": 567.5,
+              "left": 293
+            },
+            "anchor": [
+              680.0934547808331,
+              464.58616473617144
+            ],
+            "expected": [
+              680.0934547808331,
+              464.58616473617144
+            ]
+          },
+          {
+            "id": "left-knee",
+            "name": "Leg_L",
+            "uuid": "a65793ef-aaf9-4a34-8516-08f991cebede",
+            "label": "右膝盖",
+            "aria": "右膝盖",
+            "key": "node:chara_100101:front-v2:left-knee",
+            "region": "right",
+            "role": "knee",
+            "box": {
+              "x": 1009,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 1073,
+              "bottom": 635.5,
+              "left": 1009
+            },
+            "anchor": [
+              699.9490303795164,
+              505.7518773225954
+            ],
+            "expected": [
+              699.9490303795164,
+              505.7518773225954
+            ]
+          },
+          {
+            "id": "right-knee",
+            "name": "Leg_R",
+            "uuid": "ff932acb-45a1-4c5e-9df9-f392742ddecf",
+            "label": "左膝盖",
+            "aria": "左膝盖",
+            "key": "node:chara_100101:front-v2:right-knee",
+            "region": "left",
+            "role": "knee",
+            "box": {
+              "x": 293,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 357,
+              "bottom": 635.5,
+              "left": 293
+            },
+            "anchor": [
+              676.719893794467,
+              506.37752978735693
+            ],
+            "expected": [
+              676.719893794467,
+              506.37752978735693
+            ]
+          },
+          {
+            "id": "left-foot",
+            "name": "Foot_L",
+            "uuid": "95d69c08-ebae-45b2-886e-2ad4b054da93",
+            "label": "右脚踝",
+            "aria": "右脚踝",
+            "key": "node:chara_100101:front-v2:left-foot",
+            "region": "right",
+            "role": "foot",
+            "box": {
+              "x": 1009,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 1073,
+              "bottom": 703.5,
+              "left": 1009
+            },
+            "anchor": [
+              699.8230500651775,
+              568.7854692754053
+            ],
+            "expected": [
+              699.8230500651775,
+              568.7854692754053
+            ]
+          },
+          {
+            "id": "right-foot",
+            "name": "Foot_R",
+            "uuid": "90270e2e-0e98-4227-aeb2-a521b2c5f5f1",
+            "label": "左脚踝",
+            "aria": "左脚踝",
+            "key": "node:chara_100101:front-v2:right-foot",
+            "region": "left",
+            "role": "foot",
+            "box": {
+              "x": 293,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 357,
+              "bottom": 703.5,
+              "left": 293
+            },
+            "anchor": [
+              667.6862825110691,
+              568.5085553252022
+            ],
+            "expected": [
+              667.6862825110691,
+              568.5085553252022
+            ]
+          }
+        ],
+        "chips": [
+          {
+            "key": "node:chara_100101:front-v2:head",
+            "box": {
+              "x": 628,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 680,
+              "bottom": 107,
+              "left": 628
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:neck",
+            "box": {
+              "x": 686,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 738,
+              "bottom": 107,
+              "left": 686
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:chest",
+            "box": {
+              "x": 628,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 680,
+              "bottom": 892,
+              "left": 628
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:waist",
+            "box": {
+              "x": 686,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 738,
+              "bottom": 892,
+              "left": 686
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "box": {
+              "x": 1009,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 1073,
+              "bottom": 295.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "box": {
+              "x": 293,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 357,
+              "bottom": 295.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "box": {
+              "x": 1009,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 1073,
+              "bottom": 363.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "box": {
+              "x": 293,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 357,
+              "bottom": 363.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "box": {
+              "x": 1009,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 1073,
+              "bottom": 431.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "box": {
+              "x": 293,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 357,
+              "bottom": 431.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-hand",
+            "box": {
+              "x": 1009,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 1073,
+              "bottom": 499.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-hand",
+            "box": {
+              "x": 293,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 357,
+              "bottom": 499.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "box": {
+              "x": 1009,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 1073,
+              "bottom": 567.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "box": {
+              "x": 293,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 357,
+              "bottom": 567.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-knee",
+            "box": {
+              "x": 1009,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 1073,
+              "bottom": 635.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-knee",
+            "box": {
+              "x": 293,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 357,
+              "bottom": 635.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-foot",
+            "box": {
+              "x": 1009,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 1073,
+              "bottom": 703.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-foot",
+            "box": {
+              "x": 293,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 357,
+              "bottom": 703.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "tool:joints",
+            "box": {
+              "x": 8,
+              "y": 79,
+              "width": 76,
+              "height": 28,
+              "top": 79,
+              "right": 84,
+              "bottom": 107,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:hands",
+            "box": {
+              "x": 8,
+              "y": 111,
+              "width": 76,
+              "height": 28,
+              "top": 111,
+              "right": 84,
+              "bottom": 139,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:more",
+            "box": {
+              "x": 8,
+              "y": 143,
+              "width": 76,
+              "height": 28,
+              "top": 143,
+              "right": 84,
+              "bottom": 171,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:parameters",
+            "box": {
+              "x": 8,
+              "y": 175,
+              "width": 76,
+              "height": 28,
+              "top": 175,
+              "right": 84,
+              "bottom": 203,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:undo",
+            "box": {
+              "x": 8,
+              "y": 207,
+              "width": 52,
+              "height": 28,
+              "top": 207,
+              "right": 60,
+              "bottom": 235,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:redo",
+            "box": {
+              "x": 8,
+              "y": 239,
+              "width": 52,
+              "height": 28,
+              "top": 239,
+              "right": 60,
+              "bottom": 267,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:reset",
+            "box": {
+              "x": 8,
+              "y": 271,
+              "width": 76,
+              "height": 28,
+              "top": 271,
+              "right": 84,
+              "bottom": 299,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:reset-all",
+            "box": {
+              "x": 8,
+              "y": 303,
+              "width": 76,
+              "height": 28,
+              "top": 303,
+              "right": 84,
+              "bottom": 331,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:save",
+            "box": {
+              "x": 8,
+              "y": 335,
+              "width": 76,
+              "height": 28,
+              "top": 335,
+              "right": 84,
+              "bottom": 363,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:focus",
+            "box": {
+              "x": 1324,
+              "y": 79,
+              "width": 34,
+              "height": 28,
+              "top": 79,
+              "right": 1358,
+              "bottom": 107,
+              "left": 1324
+            }
+          },
+          {
+            "key": "tool:editor-collapse",
+            "box": {
+              "x": 1321.09375,
+              "y": 111,
+              "width": 36.90625,
+              "height": 28,
+              "top": 111,
+              "right": 1358,
+              "bottom": 139,
+              "left": 1321.09375
+            }
+          },
+          {
+            "key": "tool:pose",
+            "box": {
+              "x": 1282,
+              "y": 143,
+              "width": 76,
+              "height": 28,
+              "top": 143,
+              "right": 1358,
+              "bottom": 171,
+              "left": 1282
+            }
+          },
+          {
+            "key": "tool:object",
+            "box": {
+              "x": 1282,
+              "y": 175,
+              "width": 76,
+              "height": 28,
+              "top": 175,
+              "right": 1358,
+              "bottom": 203,
+              "left": 1282
+            }
+          },
+          {
+            "key": "tool:mirror-layout",
+            "box": {
+              "x": 1282,
+              "y": 207,
+              "width": 76,
+              "height": 28,
+              "top": 207,
+              "right": 1358,
+              "bottom": 235,
+              "left": 1282
+            }
+          },
+          {
+            "key": "tool:move",
+            "box": {
+              "x": 1280.015625,
+              "y": 239,
+              "width": 77.984375,
+              "height": 28,
+              "top": 239,
+              "right": 1358,
+              "bottom": 267,
+              "left": 1280.015625
+            }
+          },
+          {
+            "key": "tool:rotate",
+            "box": {
+              "x": 1294,
+              "y": 271,
+              "width": 64,
+              "height": 28,
+              "top": 271,
+              "right": 1358,
+              "bottom": 299,
+              "left": 1294
+            }
+          },
+          {
+            "key": "tool:editor-close",
+            "box": {
+              "x": 1306,
+              "y": 303,
+              "width": 52,
+              "height": 28,
+              "top": 303,
+              "right": 1358,
+              "bottom": 331,
+              "left": 1306
+            }
+          }
+        ],
+        "view": {
+          "width": 1366,
+          "height": 900,
+          "scroll": 1366,
+          "menu": 71
+        },
+        "mirror": "front"
+      }
+    },
+    {
+      "test": "manual-back-swap-layout-only",
+      "bonesAndCameraUnchanged": true
+    },
+    {
+      "test": "back-entry-return-to-front",
+      "state": {
+        "joints": [
+          {
+            "id": "head",
+            "name": "Head",
+            "uuid": "3fab22c4-b1df-43aa-87a0-2906f4def580",
+            "label": "头部",
+            "aria": "头部",
+            "key": "node:chara_100101:front-v2:head",
+            "region": "top",
+            "role": "head",
+            "box": {
+              "x": 628,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 680,
+              "bottom": 107,
+              "left": 628
+            },
+            "anchor": [
+              690.953910654334,
+              302.4608222396122
+            ],
+            "expected": [
+              690.953910654334,
+              302.4608222396122
+            ]
+          },
+          {
+            "id": "neck",
+            "name": "Neck",
+            "uuid": "adfb6112-84fb-4279-aedf-989ff51f39e2",
+            "label": "颈部",
+            "aria": "颈部",
+            "key": "node:chara_100101:front-v2:neck",
+            "region": "top",
+            "role": "neck",
+            "box": {
+              "x": 686,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 738,
+              "bottom": 107,
+              "left": 686
+            },
+            "anchor": [
+              693.7347577953109,
+              328.73445434074483
+            ],
+            "expected": [
+              693.7347577953109,
+              328.73445434074483
+            ]
+          },
+          {
+            "id": "chest",
+            "name": "Chest",
+            "uuid": "38c1f04b-abd8-4164-a384-2bbb372695ec",
+            "label": "胸部",
+            "aria": "胸部",
+            "key": "node:chara_100101:front-v2:chest",
+            "region": "bottom",
+            "role": "chest",
+            "box": {
+              "x": 628,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 680,
+              "bottom": 892,
+              "left": 628
+            },
+            "anchor": [
+              698.1818518907927,
+              397.6357068166653
+            ],
+            "expected": [
+              698.1818518907927,
+              397.6357068166653
+            ]
+          },
+          {
+            "id": "waist",
+            "name": "Waist",
+            "uuid": "e4d4489a-2b83-4e89-ac53-f26cfd2b8e7d",
+            "label": "腰部",
+            "aria": "腰部",
+            "key": "node:chara_100101:front-v2:waist",
+            "region": "bottom",
+            "role": "waist",
+            "box": {
+              "x": 686,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 738,
+              "bottom": 892,
+              "left": 686
+            },
+            "anchor": [
+              698.5887095503438,
+              424.96727639727146
+            ],
+            "expected": [
+              698.5887095503438,
+              424.96727639727146
+            ]
+          },
+          {
+            "id": "left-shoulder",
+            "name": "Shoulder_L",
+            "uuid": "c53eb544-b356-4c83-95e4-c8d928fc4eac",
+            "label": "右肩部",
+            "aria": "右肩部",
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "region": "right",
+            "role": "shoulder",
+            "box": {
+              "x": 1009,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 1073,
+              "bottom": 295.5,
+              "left": 1009
+            },
+            "anchor": [
+              704.6293965620354,
+              341.2499158402565
+            ],
+            "expected": [
+              704.6293965620354,
+              341.2499158402565
+            ]
+          },
+          {
+            "id": "right-shoulder",
+            "name": "Shoulder_R",
+            "uuid": "ad3ff818-e126-4625-a894-b4e18f5ce58a",
+            "label": "左肩部",
+            "aria": "左肩部",
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "region": "left",
+            "role": "shoulder",
+            "box": {
+              "x": 293,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 357,
+              "bottom": 295.5,
+              "left": 293
+            },
+            "anchor": [
+              683.511548363004,
+              340.9059440919401
+            ],
+            "expected": [
+              683.511548363004,
+              340.9059440919401
+            ]
+          },
+          {
+            "id": "left-upper-arm",
+            "name": "Arm_L",
+            "uuid": "ed266103-24b9-45cd-b41c-085003d2978f",
+            "label": "右上臂",
+            "aria": "右上臂",
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "region": "right",
+            "role": "upper-arm",
+            "box": {
+              "x": 1009,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 1073,
+              "bottom": 363.5,
+              "left": 1009
+            },
+            "anchor": [
+              732.5737777320211,
+              342.4453950617791
+            ],
+            "expected": [
+              732.5737777320211,
+              342.4453950617791
+            ]
+          },
+          {
+            "id": "right-upper-arm",
+            "name": "Arm_R",
+            "uuid": "e5b91070-b331-4e0d-9069-a1cfd3156867",
+            "label": "左上臂",
+            "aria": "左上臂",
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "region": "left",
+            "role": "upper-arm",
+            "box": {
+              "x": 293,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 357,
+              "bottom": 363.5,
+              "left": 293
+            },
+            "anchor": [
+              658.4998623424982,
+              341.29483599970445
+            ],
+            "expected": [
+              658.4998623424982,
+              341.29483599970445
+            ]
+          },
+          {
+            "id": "left-elbow",
+            "name": "Forearm_L",
+            "uuid": "6034a3ab-9080-4d04-9149-6828f9e7876c",
+            "label": "右手肘",
+            "aria": "右手肘",
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "region": "right",
+            "role": "elbow",
+            "box": {
+              "x": 1009,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 1073,
+              "bottom": 431.5,
+              "left": 1009
+            },
+            "anchor": [
+              735.9446133012934,
+              410.12640019756236
+            ],
+            "expected": [
+              735.9446133012934,
+              410.12640019756236
+            ]
+          },
+          {
+            "id": "right-elbow",
+            "name": "Forearm_R",
+            "uuid": "9c532715-e6d6-4159-91e4-b7169d687e42",
+            "label": "左手肘",
+            "aria": "左手肘",
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "region": "left",
+            "role": "elbow",
+            "box": {
+              "x": 293,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 357,
+              "bottom": 431.5,
+              "left": 293
+            },
+            "anchor": [
+              658.2322778646054,
+              411.84688536036697
+            ],
+            "expected": [
+              658.2322778646054,
+              411.84688536036697
+            ]
+          },
+          {
+            "id": "left-hand",
+            "name": "Hand_L",
+            "uuid": "13de28c6-d436-4447-bf74-1657533f06a6",
+            "label": "右手腕",
+            "aria": "右手腕",
+            "key": "node:chara_100101:front-v2:left-hand",
+            "region": "right",
+            "role": "hand",
+            "box": {
+              "x": 1009,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 1073,
+              "bottom": 499.5,
+              "left": 1009
+            },
+            "anchor": [
+              735.9204945298716,
+              458.9182681523442
+            ],
+            "expected": [
+              735.9204945298716,
+              458.9182681523442
+            ]
+          },
+          {
+            "id": "right-hand",
+            "name": "Hand_R",
+            "uuid": "695c6dc4-98c9-4d75-9940-b3657d2d3d3d",
+            "label": "左手腕",
+            "aria": "左手腕",
+            "key": "node:chara_100101:front-v2:right-hand",
+            "region": "left",
+            "role": "hand",
+            "box": {
+              "x": 293,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 357,
+              "bottom": 499.5,
+              "left": 293
+            },
+            "anchor": [
+              684.4233487286841,
+              459.89962684521765
+            ],
+            "expected": [
+              684.4233487286841,
+              459.89962684521765
+            ]
+          },
+          {
+            "id": "left-upper-leg",
+            "name": "UpLeg_L",
+            "uuid": "f98fad42-3dd1-41fd-9abb-24c764c04ba9",
+            "label": "右大腿",
+            "aria": "右大腿",
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "region": "right",
+            "role": "upper-leg",
+            "box": {
+              "x": 1009,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 1073,
+              "bottom": 567.5,
+              "left": 1009
+            },
+            "anchor": [
+              721.0320100020027,
+              479.5380132363543
+            ],
+            "expected": [
+              721.0320100020027,
+              479.5380132363543
+            ]
+          },
+          {
+            "id": "right-upper-leg",
+            "name": "UpLeg_R",
+            "uuid": "7fed422b-46d3-43f7-9a20-2a0cf6e9d569",
+            "label": "左大腿",
+            "aria": "左大腿",
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "region": "left",
+            "role": "upper-leg",
+            "box": {
+              "x": 293,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 357,
+              "bottom": 567.5,
+              "left": 293
+            },
+            "anchor": [
+              676.7475074039462,
+              481.27759701285584
+            ],
+            "expected": [
+              676.7475074039462,
+              481.27759701285584
+            ]
+          },
+          {
+            "id": "left-knee",
+            "name": "Leg_L",
+            "uuid": "a65793ef-aaf9-4a34-8516-08f991cebede",
+            "label": "右膝盖",
+            "aria": "右膝盖",
+            "key": "node:chara_100101:front-v2:left-knee",
+            "region": "right",
+            "role": "knee",
+            "box": {
+              "x": 1009,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 1073,
+              "bottom": 635.5,
+              "left": 1009
+            },
+            "anchor": [
+              719.4372133568345,
+              569.8525797716525
+            ],
+            "expected": [
+              719.4372133568345,
+              569.8525797716525
+            ]
+          },
+          {
+            "id": "right-knee",
+            "name": "Leg_R",
+            "uuid": "ff932acb-45a1-4c5e-9df9-f392742ddecf",
+            "label": "左膝盖",
+            "aria": "左膝盖",
+            "key": "node:chara_100101:front-v2:right-knee",
+            "region": "left",
+            "role": "knee",
+            "box": {
+              "x": 293,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 357,
+              "bottom": 635.5,
+              "left": 293
+            },
+            "anchor": [
+              669.4985992460385,
+              571.200391070065
+            ],
+            "expected": [
+              669.4985992460385,
+              571.200391070065
+            ]
+          },
+          {
+            "id": "left-foot",
+            "name": "Foot_L",
+            "uuid": "95d69c08-ebae-45b2-886e-2ad4b054da93",
+            "label": "右脚踝",
+            "aria": "右脚踝",
+            "key": "node:chara_100101:front-v2:left-foot",
+            "region": "right",
+            "role": "foot",
+            "box": {
+              "x": 1009,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 1073,
+              "bottom": 703.5,
+              "left": 1009
+            },
+            "anchor": [
+              718.6729631754088,
+              702.692761186939
+            ],
+            "expected": [
+              718.6729631754088,
+              702.692761186939
+            ]
+          },
+          {
+            "id": "right-foot",
+            "name": "Foot_R",
+            "uuid": "90270e2e-0e98-4227-aeb2-a521b2c5f5f1",
+            "label": "左脚踝",
+            "aria": "左脚踝",
+            "key": "node:chara_100101:front-v2:right-foot",
+            "region": "left",
+            "role": "foot",
+            "box": {
+              "x": 293,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 357,
+              "bottom": 703.5,
+              "left": 293
+            },
+            "anchor": [
+              650.546131810627,
+              701.9910286358545
+            ],
+            "expected": [
+              650.546131810627,
+              701.9910286358545
+            ]
+          }
+        ],
+        "chips": [
+          {
+            "key": "node:chara_100101:front-v2:head",
+            "box": {
+              "x": 628,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 680,
+              "bottom": 107,
+              "left": 628
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:neck",
+            "box": {
+              "x": 686,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 738,
+              "bottom": 107,
+              "left": 686
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:chest",
+            "box": {
+              "x": 628,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 680,
+              "bottom": 892,
+              "left": 628
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:waist",
+            "box": {
+              "x": 686,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 738,
+              "bottom": 892,
+              "left": 686
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "box": {
+              "x": 1009,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 1073,
+              "bottom": 295.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "box": {
+              "x": 293,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 357,
+              "bottom": 295.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "box": {
+              "x": 1009,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 1073,
+              "bottom": 363.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "box": {
+              "x": 293,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 357,
+              "bottom": 363.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "box": {
+              "x": 1009,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 1073,
+              "bottom": 431.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "box": {
+              "x": 293,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 357,
+              "bottom": 431.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-hand",
+            "box": {
+              "x": 1009,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 1073,
+              "bottom": 499.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-hand",
+            "box": {
+              "x": 293,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 357,
+              "bottom": 499.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "box": {
+              "x": 1009,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 1073,
+              "bottom": 567.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "box": {
+              "x": 293,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 357,
+              "bottom": 567.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-knee",
+            "box": {
+              "x": 1009,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 1073,
+              "bottom": 635.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-knee",
+            "box": {
+              "x": 293,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 357,
+              "bottom": 635.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-foot",
+            "box": {
+              "x": 1009,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 1073,
+              "bottom": 703.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-foot",
+            "box": {
+              "x": 293,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 357,
+              "bottom": 703.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "tool:joints",
+            "box": {
+              "x": 8,
+              "y": 79,
+              "width": 76,
+              "height": 28,
+              "top": 79,
+              "right": 84,
+              "bottom": 107,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:hands",
+            "box": {
+              "x": 8,
+              "y": 111,
+              "width": 76,
+              "height": 28,
+              "top": 111,
+              "right": 84,
+              "bottom": 139,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:more",
+            "box": {
+              "x": 8,
+              "y": 143,
+              "width": 76,
+              "height": 28,
+              "top": 143,
+              "right": 84,
+              "bottom": 171,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:parameters",
+            "box": {
+              "x": 8,
+              "y": 175,
+              "width": 76,
+              "height": 28,
+              "top": 175,
+              "right": 84,
+              "bottom": 203,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:undo",
+            "box": {
+              "x": 8,
+              "y": 207,
+              "width": 52,
+              "height": 28,
+              "top": 207,
+              "right": 60,
+              "bottom": 235,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:redo",
+            "box": {
+              "x": 8,
+              "y": 239,
+              "width": 52,
+              "height": 28,
+              "top": 239,
+              "right": 60,
+              "bottom": 267,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:reset",
+            "box": {
+              "x": 8,
+              "y": 271,
+              "width": 76,
+              "height": 28,
+              "top": 271,
+              "right": 84,
+              "bottom": 299,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:reset-all",
+            "box": {
+              "x": 8,
+              "y": 303,
+              "width": 76,
+              "height": 28,
+              "top": 303,
+              "right": 84,
+              "bottom": 331,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:save",
+            "box": {
+              "x": 8,
+              "y": 335,
+              "width": 76,
+              "height": 28,
+              "top": 335,
+              "right": 84,
+              "bottom": 363,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:focus",
+            "box": {
+              "x": 1324,
+              "y": 79,
+              "width": 34,
+              "height": 28,
+              "top": 79,
+              "right": 1358,
+              "bottom": 107,
+              "left": 1324
+            }
+          },
+          {
+            "key": "tool:editor-collapse",
+            "box": {
+              "x": 1321.09375,
+              "y": 111,
+              "width": 36.90625,
+              "height": 28,
+              "top": 111,
+              "right": 1358,
+              "bottom": 139,
+              "left": 1321.09375
+            }
+          },
+          {
+            "key": "tool:pose",
+            "box": {
+              "x": 1282,
+              "y": 143,
+              "width": 76,
+              "height": 28,
+              "top": 143,
+              "right": 1358,
+              "bottom": 171,
+              "left": 1282
+            }
+          },
+          {
+            "key": "tool:object",
+            "box": {
+              "x": 1282,
+              "y": 175,
+              "width": 76,
+              "height": 28,
+              "top": 175,
+              "right": 1358,
+              "bottom": 203,
+              "left": 1282
+            }
+          },
+          {
+            "key": "tool:mirror-layout",
+            "box": {
+              "x": 1282,
+              "y": 207,
+              "width": 76,
+              "height": 28,
+              "top": 207,
+              "right": 1358,
+              "bottom": 235,
+              "left": 1282
+            }
+          },
+          {
+            "key": "tool:move",
+            "box": {
+              "x": 1280.015625,
+              "y": 239,
+              "width": 77.984375,
+              "height": 28,
+              "top": 239,
+              "right": 1358,
+              "bottom": 267,
+              "left": 1280.015625
+            }
+          },
+          {
+            "key": "tool:rotate",
+            "box": {
+              "x": 1294,
+              "y": 271,
+              "width": 64,
+              "height": 28,
+              "top": 271,
+              "right": 1358,
+              "bottom": 299,
+              "left": 1294
+            }
+          },
+          {
+            "key": "tool:editor-close",
+            "box": {
+              "x": 1306,
+              "y": 303,
+              "width": 52,
+              "height": 28,
+              "top": 303,
+              "right": 1358,
+              "bottom": 331,
+              "left": 1306
+            }
+          }
+        ],
+        "view": {
+          "width": 1366,
+          "height": 900,
+          "scroll": 1366,
+          "menu": 71
+        },
+        "mirror": "front"
+      }
+    },
+    {
+      "test": "four-camera-angles-do-not-relabel-or-reorder",
+      "angles": 4
+    },
+    {
+      "test": "waist-main-spine-details-no-sticky-focus",
+      "choices": [
+        {
+          "value": "54",
+          "text": "胸部 右"
+        },
+        {
+          "value": "55",
+          "text": "胸部 左"
+        },
+        {
+          "value": "56",
+          "text": "脊柱根部"
+        }
+      ]
+    },
+    {
+      "test": "hand-convention-and-one-shot-focus"
+    },
+    {
+      "test": "responsive-primary-360x780",
+      "state": {
+        "joints": [
+          {
+            "id": "head",
+            "name": "Head",
+            "uuid": "16f3212d-fbba-48c3-b057-1e24b817b9e2",
+            "label": "头部",
+            "aria": "头部",
+            "key": "node:chara_100101:front-v2:head",
+            "region": "top",
+            "role": "head",
+            "box": {
+              "x": 124,
+              "y": 377,
+              "width": 53,
+              "height": 32,
+              "top": 377,
+              "right": 177,
+              "bottom": 409,
+              "left": 124
+            },
+            "anchor": [
+              177.570401050271,
+              494.85399485945965
+            ],
+            "expected": [
+              177.570401050271,
+              494.85399485945965
+            ]
+          },
+          {
+            "id": "neck",
+            "name": "Neck",
+            "uuid": "290ebb22-7719-4323-83a4-0626d42c6f46",
+            "label": "颈部",
+            "aria": "颈部",
+            "key": "node:chara_100101:front-v2:neck",
+            "region": "top",
+            "role": "neck",
+            "box": {
+              "x": 183,
+              "y": 377,
+              "width": 53,
+              "height": 32,
+              "top": 377,
+              "right": 236,
+              "bottom": 409,
+              "left": 183
+            },
+            "anchor": [
+              178.7847540078621,
+              505.784798474052
+            ],
+            "expected": [
+              178.7847540078621,
+              505.784798474052
+            ]
+          },
+          {
+            "id": "chest",
+            "name": "Chest",
+            "uuid": "096195d8-0a10-41e1-afc1-b68b8e12089c",
+            "label": "胸部",
+            "aria": "胸部",
+            "key": "node:chara_100101:front-v2:chest",
+            "region": "bottom",
+            "role": "chest",
+            "box": {
+              "x": 124,
+              "y": 740,
+              "width": 53,
+              "height": 32,
+              "top": 740,
+              "right": 177,
+              "bottom": 772,
+              "left": 124
+            },
+            "anchor": [
+              180.5377775045524,
+              537.264366510688
+            ],
+            "expected": [
+              180.5377775045524,
+              537.264366510688
+            ]
+          },
+          {
+            "id": "waist",
+            "name": "Waist",
+            "uuid": "69843ff9-ea38-4abe-a2c4-000c08d737b8",
+            "label": "腰部",
+            "aria": "腰部",
+            "key": "node:chara_100101:front-v2:waist",
+            "region": "bottom",
+            "role": "waist",
+            "box": {
+              "x": 183,
+              "y": 740,
+              "width": 53,
+              "height": 32,
+              "top": 740,
+              "right": 236,
+              "bottom": 772,
+              "left": 183
+            },
+            "anchor": [
+              180.6814221522673,
+              549.1094028105083
+            ],
+            "expected": [
+              180.6814221522673,
+              549.1094028105083
+            ]
+          },
+          {
+            "id": "left-shoulder",
+            "name": "Shoulder_L",
+            "uuid": "b0f43b18-f834-43ae-9166-fddd66b75af3",
+            "label": "右肩部",
+            "aria": "右肩部",
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "region": "right",
+            "role": "shoulder",
+            "box": {
+              "x": 287,
+              "y": 419,
+              "width": 65,
+              "height": 32,
+              "top": 419,
+              "right": 352,
+              "bottom": 451,
+              "left": 287
+            },
+            "anchor": [
+              183.51161740725078,
+              511.1336018223993
+            ],
+            "expected": [
+              183.51161740725078,
+              511.1336018223993
+            ]
+          },
+          {
+            "id": "right-shoulder",
+            "name": "Shoulder_R",
+            "uuid": "dfc29814-5b10-4a93-bc9d-fc2e5cb458d1",
+            "label": "左肩部",
+            "aria": "左肩部",
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "region": "left",
+            "role": "shoulder",
+            "box": {
+              "x": 8,
+              "y": 419,
+              "width": 65,
+              "height": 32,
+              "top": 419,
+              "right": 73,
+              "bottom": 451,
+              "left": 8
+            },
+            "anchor": [
+              174.31827139717225,
+              511.40996877816065
+            ],
+            "expected": [
+              174.31827139717225,
+              511.40996877816065
+            ]
+          },
+          {
+            "id": "left-upper-arm",
+            "name": "Arm_L",
+            "uuid": "3fd53237-c4ea-4c39-9e3d-9761fcd1b10a",
+            "label": "右上臂",
+            "aria": "右上臂",
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "region": "right",
+            "role": "upper-arm",
+            "box": {
+              "x": 287,
+              "y": 465.5,
+              "width": 65,
+              "height": 32,
+              "top": 465.5,
+              "right": 352,
+              "bottom": 497.5,
+              "left": 287
+            },
+            "anchor": [
+              195.6453947443748,
+              511.7787381963534
+            ],
+            "expected": [
+              195.6453947443748,
+              511.7787381963534
+            ]
+          },
+          {
+            "id": "right-upper-arm",
+            "name": "Arm_R",
+            "uuid": "630ed93d-c0fb-4d63-a936-e733ecfda3f0",
+            "label": "左上臂",
+            "aria": "左上臂",
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "region": "left",
+            "role": "upper-arm",
+            "box": {
+              "x": 8,
+              "y": 465.5,
+              "width": 65,
+              "height": 32,
+              "top": 465.5,
+              "right": 73,
+              "bottom": 497.5,
+              "left": 8
+            },
+            "anchor": [
+              163.48630579049666,
+              512.8307112558523
+            ],
+            "expected": [
+              163.48630579049666,
+              512.8307112558523
+            ]
+          },
+          {
+            "id": "left-elbow",
+            "name": "Forearm_L",
+            "uuid": "3ccb67d6-e790-4f78-bf16-46f36e87cfed",
+            "label": "右手肘",
+            "aria": "右手肘",
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "region": "right",
+            "role": "elbow",
+            "box": {
+              "x": 287,
+              "y": 512,
+              "width": 65,
+              "height": 32,
+              "top": 512,
+              "right": 352,
+              "bottom": 544,
+              "left": 287
+            },
+            "anchor": [
+              196.77194228227484,
+              543.0050045007218
+            ],
+            "expected": [
+              196.77194228227484,
+              543.0050045007218
+            ]
+          },
+          {
+            "id": "right-elbow",
+            "name": "Forearm_R",
+            "uuid": "5a2a84fc-60f5-4c92-8272-7a73c6cedc91",
+            "label": "左手肘",
+            "aria": "左手肘",
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "region": "left",
+            "role": "elbow",
+            "box": {
+              "x": 8,
+              "y": 512,
+              "width": 65,
+              "height": 32,
+              "top": 512,
+              "right": 73,
+              "bottom": 544,
+              "left": 8
+            },
+            "anchor": [
+              163.33116572600989,
+              544.5781588502178
+            ],
+            "expected": [
+              163.33116572600989,
+              544.5781588502178
+            ]
+          },
+          {
+            "id": "left-hand",
+            "name": "Hand_L",
+            "uuid": "9d6e72b9-d9bf-4295-a6aa-a84a5f4b6fa4",
+            "label": "右手腕",
+            "aria": "右手腕",
+            "key": "node:chara_100101:front-v2:left-hand",
+            "region": "right",
+            "role": "hand",
+            "box": {
+              "x": 287,
+              "y": 558.5,
+              "width": 65,
+              "height": 32,
+              "top": 558.5,
+              "right": 352,
+              "bottom": 590.5,
+              "left": 287
+            },
+            "anchor": [
+              196.01175607688364,
+              568.1655815577037
+            ],
+            "expected": [
+              196.01175607688364,
+              568.1655815577037
+            ]
+          },
+          {
+            "id": "right-hand",
+            "name": "Hand_R",
+            "uuid": "036397dd-56e2-4c62-80b9-dc0642c7bb70",
+            "label": "左手腕",
+            "aria": "左手腕",
+            "key": "node:chara_100101:front-v2:right-hand",
+            "region": "left",
+            "role": "hand",
+            "box": {
+              "x": 8,
+              "y": 558.5,
+              "width": 65,
+              "height": 32,
+              "top": 558.5,
+              "right": 73,
+              "bottom": 590.5,
+              "left": 8
+            },
+            "anchor": [
+              174.34387313438867,
+              569.0891174578308
+            ],
+            "expected": [
+              174.34387313438867,
+              569.0891174578308
+            ]
+          },
+          {
+            "id": "left-upper-leg",
+            "name": "UpLeg_L",
+            "uuid": "5b1a603e-c463-48c8-9038-95bbf25a0a90",
+            "label": "右大腿",
+            "aria": "右大腿",
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "region": "right",
+            "role": "upper-leg",
+            "box": {
+              "x": 287,
+              "y": 605,
+              "width": 65,
+              "height": 32,
+              "top": 605,
+              "right": 352,
+              "bottom": 637,
+              "left": 287
+            },
+            "anchor": [
+              190.37333385691912,
+              571.9499286272495
+            ],
+            "expected": [
+              190.37333385691912,
+              571.9499286272495
+            ]
+          },
+          {
+            "id": "right-upper-leg",
+            "name": "UpLeg_R",
+            "uuid": "353164f5-92a5-41e6-9126-1e9d8480d000",
+            "label": "左大腿",
+            "aria": "左大腿",
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "region": "left",
+            "role": "upper-leg",
+            "box": {
+              "x": 8,
+              "y": 605,
+              "width": 65,
+              "height": 32,
+              "top": 605,
+              "right": 73,
+              "bottom": 637,
+              "left": 8
+            },
+            "anchor": [
+              171.23050107218464,
+              573.2429380350206
+            ],
+            "expected": [
+              171.23050107218464,
+              573.2429380350206
+            ]
+          },
+          {
+            "id": "left-knee",
+            "name": "Leg_L",
+            "uuid": "6aa90d8d-e344-467e-9131-ef3633917562",
+            "label": "右膝盖",
+            "aria": "右膝盖",
+            "key": "node:chara_100101:front-v2:left-knee",
+            "region": "right",
+            "role": "knee",
+            "box": {
+              "x": 287,
+              "y": 651.5,
+              "width": 65,
+              "height": 32,
+              "top": 651.5,
+              "right": 352,
+              "bottom": 683.5,
+              "left": 287
+            },
+            "anchor": [
+              189.68615838921755,
+              611.0384961897503
+            ],
+            "expected": [
+              189.68615838921755,
+              611.0384961897503
+            ]
+          },
+          {
+            "id": "right-knee",
+            "name": "Leg_R",
+            "uuid": "2b3d963c-f21e-437d-ae33-5ea31523399c",
+            "label": "左膝盖",
+            "aria": "左膝盖",
+            "key": "node:chara_100101:front-v2:right-knee",
+            "region": "left",
+            "role": "knee",
+            "box": {
+              "x": 8,
+              "y": 651.5,
+              "width": 65,
+              "height": 32,
+              "top": 651.5,
+              "right": 73,
+              "bottom": 683.5,
+              "left": 8
+            },
+            "anchor": [
+              168.15847673560404,
+              611.5717357956516
+            ],
+            "expected": [
+              168.15847673560404,
+              611.5717357956516
+            ]
+          },
+          {
+            "id": "left-foot",
+            "name": "Foot_L",
+            "uuid": "9822aff4-7d4b-4f2a-a845-b7f930363045",
+            "label": "右脚踝",
+            "aria": "右脚踝",
+            "key": "node:chara_100101:front-v2:left-foot",
+            "region": "right",
+            "role": "foot",
+            "box": {
+              "x": 287,
+              "y": 698,
+              "width": 65,
+              "height": 32,
+              "top": 698,
+              "right": 352,
+              "bottom": 730,
+              "left": 287
+            },
+            "anchor": [
+              189.76850179316236,
+              666.668265591308
+            ],
+            "expected": [
+              189.76850179316236,
+              666.668265591308
+            ]
+          },
+          {
+            "id": "right-foot",
+            "name": "Foot_R",
+            "uuid": "827e4a00-05bc-4acf-933a-0e0ea15e603f",
+            "label": "左脚踝",
+            "aria": "左脚踝",
+            "key": "node:chara_100101:front-v2:right-foot",
+            "region": "left",
+            "role": "foot",
+            "box": {
+              "x": 8,
+              "y": 698,
+              "width": 65,
+              "height": 32,
+              "top": 698,
+              "right": 73,
+              "bottom": 730,
+              "left": 8
+            },
+            "anchor": [
+              160.00973911372367,
+              666.3923047536236
+            ],
+            "expected": [
+              160.00973911372367,
+              666.3923047536236
+            ]
+          }
+        ],
+        "chips": [
+          {
+            "key": "node:chara_100101:front-v2:head",
+            "box": {
+              "x": 124,
+              "y": 377,
+              "width": 53,
+              "height": 32,
+              "top": 377,
+              "right": 177,
+              "bottom": 409,
+              "left": 124
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:neck",
+            "box": {
+              "x": 183,
+              "y": 377,
+              "width": 53,
+              "height": 32,
+              "top": 377,
+              "right": 236,
+              "bottom": 409,
+              "left": 183
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:chest",
+            "box": {
+              "x": 124,
+              "y": 740,
+              "width": 53,
+              "height": 32,
+              "top": 740,
+              "right": 177,
+              "bottom": 772,
+              "left": 124
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:waist",
+            "box": {
+              "x": 183,
+              "y": 740,
+              "width": 53,
+              "height": 32,
+              "top": 740,
+              "right": 236,
+              "bottom": 772,
+              "left": 183
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "box": {
+              "x": 287,
+              "y": 419,
+              "width": 65,
+              "height": 32,
+              "top": 419,
+              "right": 352,
+              "bottom": 451,
+              "left": 287
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "box": {
+              "x": 8,
+              "y": 419,
+              "width": 65,
+              "height": 32,
+              "top": 419,
+              "right": 73,
+              "bottom": 451,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "box": {
+              "x": 287,
+              "y": 465.5,
+              "width": 65,
+              "height": 32,
+              "top": 465.5,
+              "right": 352,
+              "bottom": 497.5,
+              "left": 287
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "box": {
+              "x": 8,
+              "y": 465.5,
+              "width": 65,
+              "height": 32,
+              "top": 465.5,
+              "right": 73,
+              "bottom": 497.5,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "box": {
+              "x": 287,
+              "y": 512,
+              "width": 65,
+              "height": 32,
+              "top": 512,
+              "right": 352,
+              "bottom": 544,
+              "left": 287
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "box": {
+              "x": 8,
+              "y": 512,
+              "width": 65,
+              "height": 32,
+              "top": 512,
+              "right": 73,
+              "bottom": 544,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-hand",
+            "box": {
+              "x": 287,
+              "y": 558.5,
+              "width": 65,
+              "height": 32,
+              "top": 558.5,
+              "right": 352,
+              "bottom": 590.5,
+              "left": 287
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-hand",
+            "box": {
+              "x": 8,
+              "y": 558.5,
+              "width": 65,
+              "height": 32,
+              "top": 558.5,
+              "right": 73,
+              "bottom": 590.5,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "box": {
+              "x": 287,
+              "y": 605,
+              "width": 65,
+              "height": 32,
+              "top": 605,
+              "right": 352,
+              "bottom": 637,
+              "left": 287
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "box": {
+              "x": 8,
+              "y": 605,
+              "width": 65,
+              "height": 32,
+              "top": 605,
+              "right": 73,
+              "bottom": 637,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-knee",
+            "box": {
+              "x": 287,
+              "y": 651.5,
+              "width": 65,
+              "height": 32,
+              "top": 651.5,
+              "right": 352,
+              "bottom": 683.5,
+              "left": 287
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-knee",
+            "box": {
+              "x": 8,
+              "y": 651.5,
+              "width": 65,
+              "height": 32,
+              "top": 651.5,
+              "right": 73,
+              "bottom": 683.5,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-foot",
+            "box": {
+              "x": 287,
+              "y": 698,
+              "width": 65,
+              "height": 32,
+              "top": 698,
+              "right": 352,
+              "bottom": 730,
+              "left": 287
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-foot",
+            "box": {
+              "x": 8,
+              "y": 698,
+              "width": 65,
+              "height": 32,
+              "top": 698,
+              "right": 73,
+              "bottom": 730,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:joints",
+            "box": {
+              "x": 8,
+              "y": 225,
+              "width": 77,
+              "height": 32,
+              "top": 225,
+              "right": 85,
+              "bottom": 257,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:hands",
+            "box": {
+              "x": 89,
+              "y": 225,
+              "width": 77,
+              "height": 32,
+              "top": 225,
+              "right": 166,
+              "bottom": 257,
+              "left": 89
+            }
+          },
+          {
+            "key": "tool:more",
+            "box": {
+              "x": 170,
+              "y": 225,
+              "width": 77,
+              "height": 32,
+              "top": 225,
+              "right": 247,
+              "bottom": 257,
+              "left": 170
+            }
+          },
+          {
+            "key": "tool:parameters",
+            "box": {
+              "x": 251,
+              "y": 225,
+              "width": 77,
+              "height": 32,
+              "top": 225,
+              "right": 328,
+              "bottom": 257,
+              "left": 251
+            }
+          },
+          {
+            "key": "tool:undo",
+            "box": {
+              "x": 8,
+              "y": 261,
+              "width": 53,
+              "height": 32,
+              "top": 261,
+              "right": 61,
+              "bottom": 293,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:redo",
+            "box": {
+              "x": 65,
+              "y": 261,
+              "width": 53,
+              "height": 32,
+              "top": 261,
+              "right": 118,
+              "bottom": 293,
+              "left": 65
+            }
+          },
+          {
+            "key": "tool:reset",
+            "box": {
+              "x": 122,
+              "y": 261,
+              "width": 77,
+              "height": 32,
+              "top": 261,
+              "right": 199,
+              "bottom": 293,
+              "left": 122
+            }
+          },
+          {
+            "key": "tool:reset-all",
+            "box": {
+              "x": 203,
+              "y": 261,
+              "width": 77,
+              "height": 32,
+              "top": 261,
+              "right": 280,
+              "bottom": 293,
+              "left": 203
+            }
+          },
+          {
+            "key": "tool:save",
+            "box": {
+              "x": 8,
+              "y": 297,
+              "width": 77,
+              "height": 32,
+              "top": 297,
+              "right": 85,
+              "bottom": 329,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:focus",
+            "box": {
+              "x": 89,
+              "y": 297,
+              "width": 35,
+              "height": 32,
+              "top": 297,
+              "right": 124,
+              "bottom": 329,
+              "left": 89
+            }
+          },
+          {
+            "key": "tool:editor-collapse",
+            "box": {
+              "x": 128,
+              "y": 297,
+              "width": 37.90625,
+              "height": 32,
+              "top": 297,
+              "right": 165.90625,
+              "bottom": 329,
+              "left": 128
+            }
+          },
+          {
+            "key": "tool:pose",
+            "box": {
+              "x": 169.90625,
+              "y": 297,
+              "width": 77,
+              "height": 32,
+              "top": 297,
+              "right": 246.90625,
+              "bottom": 329,
+              "left": 169.90625
+            }
+          },
+          {
+            "key": "tool:object",
+            "box": {
+              "x": 250.90625,
+              "y": 297,
+              "width": 77,
+              "height": 32,
+              "top": 297,
+              "right": 327.90625,
+              "bottom": 329,
+              "left": 250.90625
+            }
+          },
+          {
+            "key": "tool:mirror-layout",
+            "box": {
+              "x": 8,
+              "y": 333,
+              "width": 77,
+              "height": 32,
+              "top": 333,
+              "right": 85,
+              "bottom": 365,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:move",
+            "box": {
+              "x": 89,
+              "y": 333,
+              "width": 78.984375,
+              "height": 32,
+              "top": 333,
+              "right": 167.984375,
+              "bottom": 365,
+              "left": 89
+            }
+          },
+          {
+            "key": "tool:rotate",
+            "box": {
+              "x": 171.984375,
+              "y": 333,
+              "width": 65,
+              "height": 32,
+              "top": 333,
+              "right": 236.984375,
+              "bottom": 365,
+              "left": 171.984375
+            }
+          },
+          {
+            "key": "tool:editor-close",
+            "box": {
+              "x": 240.984375,
+              "y": 333,
+              "width": 53,
+              "height": 32,
+              "top": 333,
+              "right": 293.984375,
+              "bottom": 365,
+              "left": 240.984375
+            }
+          }
+        ],
+        "view": {
+          "width": 360,
+          "height": 780,
+          "scroll": 360,
+          "menu": 219
+        },
+        "mirror": "front"
+      }
+    },
+    {
+      "test": "responsive-primary-430x932",
+      "state": {
+        "joints": [
+          {
+            "id": "head",
+            "name": "Head",
+            "uuid": "16f3212d-fbba-48c3-b057-1e24b817b9e2",
+            "label": "头部",
+            "aria": "头部",
+            "key": "node:chara_100101:front-v2:head",
+            "region": "top",
+            "role": "head",
+            "box": {
+              "x": 159,
+              "y": 347,
+              "width": 53,
+              "height": 32,
+              "top": 347,
+              "right": 212,
+              "bottom": 379,
+              "left": 159
+            },
+            "anchor": [
+              211.23324618776562,
+              512.2655883506546
+            ],
+            "expected": [
+              211.23324618776562,
+              512.2655883506546
+            ]
+          },
+          {
+            "id": "neck",
+            "name": "Neck",
+            "uuid": "290ebb22-7719-4323-83a4-0626d42c6f46",
+            "label": "颈部",
+            "aria": "颈部",
+            "key": "node:chara_100101:front-v2:neck",
+            "region": "top",
+            "role": "neck",
+            "box": {
+              "x": 218,
+              "y": 347,
+              "width": 53,
+              "height": 32,
+              "top": 347,
+              "right": 271,
+              "bottom": 379,
+              "left": 218
+            },
+            "anchor": [
+              213.11706991053134,
+              529.4103844955611
+            ],
+            "expected": [
+              213.11706991053134,
+              529.4103844955611
+            ]
+          },
+          {
+            "id": "chest",
+            "name": "Chest",
+            "uuid": "096195d8-0a10-41e1-afc1-b68b8e12089c",
+            "label": "胸部",
+            "aria": "胸部",
+            "key": "node:chara_100101:front-v2:chest",
+            "region": "bottom",
+            "role": "chest",
+            "box": {
+              "x": 159,
+              "y": 892,
+              "width": 53,
+              "height": 32,
+              "top": 892,
+              "right": 212,
+              "bottom": 924,
+              "left": 159
+            },
+            "anchor": [
+              215.8349488182893,
+              577.6155908750069
+            ],
+            "expected": [
+              215.8349488182893,
+              577.615590875007
+            ]
+          },
+          {
+            "id": "waist",
+            "name": "Waist",
+            "uuid": "69843ff9-ea38-4abe-a2c4-000c08d737b8",
+            "label": "腰部",
+            "aria": "腰部",
+            "key": "node:chara_100101:front-v2:waist",
+            "region": "bottom",
+            "role": "waist",
+            "box": {
+              "x": 218,
+              "y": 892,
+              "width": 53,
+              "height": 32,
+              "top": 892,
+              "right": 271,
+              "bottom": 924,
+              "left": 218
+            },
+            "anchor": [
+              216.05805591718195,
+              595.9849784535245
+            ],
+            "expected": [
+              216.05805591718195,
+              595.9849784535246
+            ]
+          },
+          {
+            "id": "left-shoulder",
+            "name": "Shoulder_L",
+            "uuid": "b0f43b18-f834-43ae-9166-fddd66b75af3",
+            "label": "右肩部",
+            "aria": "右肩部",
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "region": "right",
+            "role": "shoulder",
+            "box": {
+              "x": 357,
+              "y": 415.5,
+              "width": 65,
+              "height": 32,
+              "top": 415.5,
+              "right": 422,
+              "bottom": 447.5,
+              "left": 357
+            },
+            "anchor": [
+              220.44021851068442,
+              537.7426618557714
+            ],
+            "expected": [
+              220.44021851068442,
+              537.7426618557714
+            ]
+          },
+          {
+            "id": "right-shoulder",
+            "name": "Shoulder_R",
+            "uuid": "dfc29814-5b10-4a93-bc9d-fc2e5cb458d1",
+            "label": "左肩部",
+            "aria": "左肩部",
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "region": "left",
+            "role": "shoulder",
+            "box": {
+              "x": 8,
+              "y": 415.5,
+              "width": 65,
+              "height": 32,
+              "top": 415.5,
+              "right": 73,
+              "bottom": 447.5,
+              "left": 8
+            },
+            "anchor": [
+              206.19299779360117,
+              537.9957529408509
+            ],
+            "expected": [
+              206.19299779360114,
+              537.995752940851
+            ]
+          },
+          {
+            "id": "left-upper-arm",
+            "name": "Arm_L",
+            "uuid": "3fd53237-c4ea-4c39-9e3d-9761fcd1b10a",
+            "label": "右上臂",
+            "aria": "右上臂",
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "region": "right",
+            "role": "upper-arm",
+            "box": {
+              "x": 357,
+              "y": 483.5,
+              "width": 65,
+              "height": 32,
+              "top": 483.5,
+              "right": 422,
+              "bottom": 515.5,
+              "left": 357
+            },
+            "anchor": [
+              239.24081142436296,
+              538.7043978184632
+            ],
+            "expected": [
+              239.24081142436296,
+              538.7043978184632
+            ]
+          },
+          {
+            "id": "right-upper-arm",
+            "name": "Arm_R",
+            "uuid": "630ed93d-c0fb-4d63-a936-e733ecfda3f0",
+            "label": "左上臂",
+            "aria": "左上臂",
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "region": "left",
+            "role": "upper-arm",
+            "box": {
+              "x": 8,
+              "y": 483.5,
+              "width": 65,
+              "height": 32,
+              "top": 483.5,
+              "right": 73,
+              "bottom": 515.5,
+              "left": 8
+            },
+            "anchor": [
+              189.3623114408566,
+              539.6966060735894
+            ],
+            "expected": [
+              189.3623114408566,
+              539.6966060735895
+            ]
+          },
+          {
+            "id": "left-elbow",
+            "name": "Forearm_L",
+            "uuid": "3ccb67d6-e790-4f78-bf16-46f36e87cfed",
+            "label": "右手肘",
+            "aria": "右手肘",
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "region": "right",
+            "role": "elbow",
+            "box": {
+              "x": 357,
+              "y": 551.5,
+              "width": 65,
+              "height": 32,
+              "top": 551.5,
+              "right": 422,
+              "bottom": 583.5,
+              "left": 357
+            },
+            "anchor": [
+              241.05130530442338,
+              586.4108291859737
+            ],
+            "expected": [
+              241.05130530442338,
+              586.4108291859739
+            ]
+          },
+          {
+            "id": "right-elbow",
+            "name": "Forearm_R",
+            "uuid": "5a2a84fc-60f5-4c92-8272-7a73c6cedc91",
+            "label": "左手肘",
+            "aria": "左手肘",
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "region": "left",
+            "role": "elbow",
+            "box": {
+              "x": 8,
+              "y": 551.5,
+              "width": 65,
+              "height": 32,
+              "top": 551.5,
+              "right": 73,
+              "bottom": 583.5,
+              "left": 8
+            },
+            "anchor": [
+              189.0746654420232,
+              588.5004698096225
+            ],
+            "expected": [
+              189.0746654420232,
+              588.5004698096225
+            ]
+          },
+          {
+            "id": "left-hand",
+            "name": "Hand_L",
+            "uuid": "9d6e72b9-d9bf-4295-a6aa-a84a5f4b6fa4",
+            "label": "右手腕",
+            "aria": "右手腕",
+            "key": "node:chara_100101:front-v2:left-hand",
+            "region": "right",
+            "role": "hand",
+            "box": {
+              "x": 357,
+              "y": 619.5,
+              "width": 65,
+              "height": 32,
+              "top": 619.5,
+              "right": 422,
+              "bottom": 651.5,
+              "left": 357
+            },
+            "anchor": [
+              240.03849327685586,
+              623.9291719048888
+            ],
+            "expected": [
+              240.0384932768559,
+              623.9291719048888
+            ]
+          },
+          {
+            "id": "right-hand",
+            "name": "Hand_R",
+            "uuid": "036397dd-56e2-4c62-80b9-dc0642c7bb70",
+            "label": "左手腕",
+            "aria": "左手腕",
+            "key": "node:chara_100101:front-v2:right-hand",
+            "region": "left",
+            "role": "hand",
+            "box": {
+              "x": 8,
+              "y": 619.5,
+              "width": 65,
+              "height": 32,
+              "top": 619.5,
+              "right": 73,
+              "bottom": 651.5,
+              "left": 8
+            },
+            "anchor": [
+              206.14912384019817,
+              625.2144949247738
+            ],
+            "expected": [
+              206.14912384019817,
+              625.2144949247739
+            ]
+          },
+          {
+            "id": "left-upper-leg",
+            "name": "UpLeg_L",
+            "uuid": "5b1a603e-c463-48c8-9038-95bbf25a0a90",
+            "label": "右大腿",
+            "aria": "右大腿",
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "region": "right",
+            "role": "upper-leg",
+            "box": {
+              "x": 357,
+              "y": 687.5,
+              "width": 65,
+              "height": 32,
+              "top": 687.5,
+              "right": 422,
+              "bottom": 719.5,
+              "left": 357
+            },
+            "anchor": [
+              231.0889532903555,
+              631.7004129250695
+            ],
+            "expected": [
+              231.0889532903555,
+              631.7004129250695
+            ]
+          },
+          {
+            "id": "right-upper-leg",
+            "name": "UpLeg_R",
+            "uuid": "353164f5-92a5-41e6-9126-1e9d8480d000",
+            "label": "左大腿",
+            "aria": "左大腿",
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "region": "left",
+            "role": "upper-leg",
+            "box": {
+              "x": 8,
+              "y": 687.5,
+              "width": 65,
+              "height": 32,
+              "top": 687.5,
+              "right": 73,
+              "bottom": 719.5,
+              "left": 8
+            },
+            "anchor": [
+              201.38539099473172,
+              633.4894189907722
+            ],
+            "expected": [
+              201.38539099473172,
+              633.4894189907722
+            ]
+          },
+          {
+            "id": "left-knee",
+            "name": "Leg_L",
+            "uuid": "6aa90d8d-e344-467e-9131-ef3633917562",
+            "label": "右膝盖",
+            "aria": "右膝盖",
+            "key": "node:chara_100101:front-v2:left-knee",
+            "region": "right",
+            "role": "knee",
+            "box": {
+              "x": 357,
+              "y": 755.5,
+              "width": 65,
+              "height": 32,
+              "top": 755.5,
+              "right": 422,
+              "bottom": 787.5,
+              "left": 357
+            },
+            "anchor": [
+              230.02830535765477,
+              692.2699772590101
+            ],
+            "expected": [
+              230.02830535765477,
+              692.2699772590103
+            ]
+          },
+          {
+            "id": "right-knee",
+            "name": "Leg_R",
+            "uuid": "2b3d963c-f21e-437d-ae33-5ea31523399c",
+            "label": "左膝盖",
+            "aria": "左膝盖",
+            "key": "node:chara_100101:front-v2:right-knee",
+            "region": "left",
+            "role": "knee",
+            "box": {
+              "x": 8,
+              "y": 755.5,
+              "width": 65,
+              "height": 32,
+              "top": 755.5,
+              "right": 73,
+              "bottom": 787.5,
+              "left": 8
+            },
+            "anchor": [
+              196.62768665432188,
+              693.0981308215877
+            ],
+            "expected": [
+              196.62768665432188,
+              693.0981308215878
+            ]
+          },
+          {
+            "id": "left-foot",
+            "name": "Foot_L",
+            "uuid": "9822aff4-7d4b-4f2a-a845-b7f930363045",
+            "label": "右脚踝",
+            "aria": "右脚踝",
+            "key": "node:chara_100101:front-v2:left-foot",
+            "region": "right",
+            "role": "foot",
+            "box": {
+              "x": 357,
+              "y": 823.5,
+              "width": 65,
+              "height": 32,
+              "top": 823.5,
+              "right": 422,
+              "bottom": 855.5,
+              "left": 357
+            },
+            "anchor": [
+              230.08734917035503,
+              778.9359460869215
+            ],
+            "expected": [
+              230.08734917035503,
+              778.9359460869215
+            ]
+          },
+          {
+            "id": "right-foot",
+            "name": "Foot_R",
+            "uuid": "827e4a00-05bc-4acf-933a-0e0ea15e603f",
+            "label": "左脚踝",
+            "aria": "左脚踝",
+            "key": "node:chara_100101:front-v2:right-foot",
+            "region": "left",
+            "role": "foot",
+            "box": {
+              "x": 8,
+              "y": 823.5,
+              "width": 65,
+              "height": 32,
+              "top": 823.5,
+              "right": 73,
+              "bottom": 855.5,
+              "left": 8
+            },
+            "anchor": [
+              184.12864694174525,
+              778.5183504196633
+            ],
+            "expected": [
+              184.12864694174522,
+              778.5183504196634
+            ]
+          }
+        ],
+        "chips": [
+          {
+            "key": "node:chara_100101:front-v2:head",
+            "box": {
+              "x": 159,
+              "y": 347,
+              "width": 53,
+              "height": 32,
+              "top": 347,
+              "right": 212,
+              "bottom": 379,
+              "left": 159
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:neck",
+            "box": {
+              "x": 218,
+              "y": 347,
+              "width": 53,
+              "height": 32,
+              "top": 347,
+              "right": 271,
+              "bottom": 379,
+              "left": 218
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:chest",
+            "box": {
+              "x": 159,
+              "y": 892,
+              "width": 53,
+              "height": 32,
+              "top": 892,
+              "right": 212,
+              "bottom": 924,
+              "left": 159
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:waist",
+            "box": {
+              "x": 218,
+              "y": 892,
+              "width": 53,
+              "height": 32,
+              "top": 892,
+              "right": 271,
+              "bottom": 924,
+              "left": 218
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "box": {
+              "x": 357,
+              "y": 415.5,
+              "width": 65,
+              "height": 32,
+              "top": 415.5,
+              "right": 422,
+              "bottom": 447.5,
+              "left": 357
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "box": {
+              "x": 8,
+              "y": 415.5,
+              "width": 65,
+              "height": 32,
+              "top": 415.5,
+              "right": 73,
+              "bottom": 447.5,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "box": {
+              "x": 357,
+              "y": 483.5,
+              "width": 65,
+              "height": 32,
+              "top": 483.5,
+              "right": 422,
+              "bottom": 515.5,
+              "left": 357
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "box": {
+              "x": 8,
+              "y": 483.5,
+              "width": 65,
+              "height": 32,
+              "top": 483.5,
+              "right": 73,
+              "bottom": 515.5,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "box": {
+              "x": 357,
+              "y": 551.5,
+              "width": 65,
+              "height": 32,
+              "top": 551.5,
+              "right": 422,
+              "bottom": 583.5,
+              "left": 357
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "box": {
+              "x": 8,
+              "y": 551.5,
+              "width": 65,
+              "height": 32,
+              "top": 551.5,
+              "right": 73,
+              "bottom": 583.5,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-hand",
+            "box": {
+              "x": 357,
+              "y": 619.5,
+              "width": 65,
+              "height": 32,
+              "top": 619.5,
+              "right": 422,
+              "bottom": 651.5,
+              "left": 357
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-hand",
+            "box": {
+              "x": 8,
+              "y": 619.5,
+              "width": 65,
+              "height": 32,
+              "top": 619.5,
+              "right": 73,
+              "bottom": 651.5,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "box": {
+              "x": 357,
+              "y": 687.5,
+              "width": 65,
+              "height": 32,
+              "top": 687.5,
+              "right": 422,
+              "bottom": 719.5,
+              "left": 357
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "box": {
+              "x": 8,
+              "y": 687.5,
+              "width": 65,
+              "height": 32,
+              "top": 687.5,
+              "right": 73,
+              "bottom": 719.5,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-knee",
+            "box": {
+              "x": 357,
+              "y": 755.5,
+              "width": 65,
+              "height": 32,
+              "top": 755.5,
+              "right": 422,
+              "bottom": 787.5,
+              "left": 357
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-knee",
+            "box": {
+              "x": 8,
+              "y": 755.5,
+              "width": 65,
+              "height": 32,
+              "top": 755.5,
+              "right": 73,
+              "bottom": 787.5,
+              "left": 8
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-foot",
+            "box": {
+              "x": 357,
+              "y": 823.5,
+              "width": 65,
+              "height": 32,
+              "top": 823.5,
+              "right": 422,
+              "bottom": 855.5,
+              "left": 357
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-foot",
+            "box": {
+              "x": 8,
+              "y": 823.5,
+              "width": 65,
+              "height": 32,
+              "top": 823.5,
+              "right": 73,
+              "bottom": 855.5,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:joints",
+            "box": {
+              "x": 8,
+              "y": 195,
+              "width": 77,
+              "height": 32,
+              "top": 195,
+              "right": 85,
+              "bottom": 227,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:hands",
+            "box": {
+              "x": 89,
+              "y": 195,
+              "width": 77,
+              "height": 32,
+              "top": 195,
+              "right": 166,
+              "bottom": 227,
+              "left": 89
+            }
+          },
+          {
+            "key": "tool:more",
+            "box": {
+              "x": 170,
+              "y": 195,
+              "width": 77,
+              "height": 32,
+              "top": 195,
+              "right": 247,
+              "bottom": 227,
+              "left": 170
+            }
+          },
+          {
+            "key": "tool:parameters",
+            "box": {
+              "x": 251,
+              "y": 195,
+              "width": 77,
+              "height": 32,
+              "top": 195,
+              "right": 328,
+              "bottom": 227,
+              "left": 251
+            }
+          },
+          {
+            "key": "tool:undo",
+            "box": {
+              "x": 332,
+              "y": 195,
+              "width": 53,
+              "height": 32,
+              "top": 195,
+              "right": 385,
+              "bottom": 227,
+              "left": 332
+            }
+          },
+          {
+            "key": "tool:redo",
+            "box": {
+              "x": 8,
+              "y": 231,
+              "width": 53,
+              "height": 32,
+              "top": 231,
+              "right": 61,
+              "bottom": 263,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:reset",
+            "box": {
+              "x": 65,
+              "y": 231,
+              "width": 77,
+              "height": 32,
+              "top": 231,
+              "right": 142,
+              "bottom": 263,
+              "left": 65
+            }
+          },
+          {
+            "key": "tool:reset-all",
+            "box": {
+              "x": 146,
+              "y": 231,
+              "width": 77,
+              "height": 32,
+              "top": 231,
+              "right": 223,
+              "bottom": 263,
+              "left": 146
+            }
+          },
+          {
+            "key": "tool:save",
+            "box": {
+              "x": 227,
+              "y": 231,
+              "width": 77,
+              "height": 32,
+              "top": 231,
+              "right": 304,
+              "bottom": 263,
+              "left": 227
+            }
+          },
+          {
+            "key": "tool:focus",
+            "box": {
+              "x": 308,
+              "y": 231,
+              "width": 35,
+              "height": 32,
+              "top": 231,
+              "right": 343,
+              "bottom": 263,
+              "left": 308
+            }
+          },
+          {
+            "key": "tool:editor-collapse",
+            "box": {
+              "x": 347,
+              "y": 231,
+              "width": 37.90625,
+              "height": 32,
+              "top": 231,
+              "right": 384.90625,
+              "bottom": 263,
+              "left": 347
+            }
+          },
+          {
+            "key": "tool:pose",
+            "box": {
+              "x": 8,
+              "y": 267,
+              "width": 77,
+              "height": 32,
+              "top": 267,
+              "right": 85,
+              "bottom": 299,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:object",
+            "box": {
+              "x": 89,
+              "y": 267,
+              "width": 77,
+              "height": 32,
+              "top": 267,
+              "right": 166,
+              "bottom": 299,
+              "left": 89
+            }
+          },
+          {
+            "key": "tool:mirror-layout",
+            "box": {
+              "x": 170,
+              "y": 267,
+              "width": 77,
+              "height": 32,
+              "top": 267,
+              "right": 247,
+              "bottom": 299,
+              "left": 170
+            }
+          },
+          {
+            "key": "tool:move",
+            "box": {
+              "x": 251,
+              "y": 267,
+              "width": 78.984375,
+              "height": 32,
+              "top": 267,
+              "right": 329.984375,
+              "bottom": 299,
+              "left": 251
+            }
+          },
+          {
+            "key": "tool:rotate",
+            "box": {
+              "x": 333.984375,
+              "y": 267,
+              "width": 65,
+              "height": 32,
+              "top": 267,
+              "right": 398.984375,
+              "bottom": 299,
+              "left": 333.984375
+            }
+          },
+          {
+            "key": "tool:editor-close",
+            "box": {
+              "x": 8,
+              "y": 303,
+              "width": 53,
+              "height": 32,
+              "top": 303,
+              "right": 61,
+              "bottom": 335,
+              "left": 8
+            }
+          }
+        ],
+        "view": {
+          "width": 430,
+          "height": 932,
+          "scroll": 430,
+          "menu": 189
+        },
+        "mirror": "front"
+      }
+    },
+    {
+      "test": "responsive-primary-932x430",
+      "state": {
+        "joints": [
+          {
+            "id": "head",
+            "name": "Head",
+            "uuid": "16f3212d-fbba-48c3-b057-1e24b817b9e2",
+            "label": "头部",
+            "aria": "头部",
+            "key": "node:chara_100101:front-v2:head",
+            "region": "top",
+            "role": "head",
+            "box": {
+              "x": 408,
+              "y": 107,
+              "width": 55,
+              "height": 32,
+              "top": 107,
+              "right": 463,
+              "bottom": 139,
+              "left": 408
+            },
+            "anchor": [
+              464.22210243321035,
+              206.47522390741722
+            ],
+            "expected": [
+              464.22210243321035,
+              206.47522390741722
+            ]
+          },
+          {
+            "id": "neck",
+            "name": "Neck",
+            "uuid": "290ebb22-7719-4323-83a4-0626d42c6f46",
+            "label": "颈部",
+            "aria": "颈部",
+            "key": "node:chara_100101:front-v2:neck",
+            "region": "top",
+            "role": "neck",
+            "box": {
+              "x": 469,
+              "y": 107,
+              "width": 55,
+              "height": 32,
+              "top": 107,
+              "right": 524,
+              "bottom": 139,
+              "left": 469
+            },
+            "anchor": [
+              465.1113160692096,
+              214.64759865325104
+            ],
+            "expected": [
+              465.1113160692096,
+              214.64759865325104
+            ]
+          },
+          {
+            "id": "chest",
+            "name": "Chest",
+            "uuid": "096195d8-0a10-41e1-afc1-b68b8e12089c",
+            "label": "胸部",
+            "aria": "胸部",
+            "key": "node:chara_100101:front-v2:chest",
+            "region": "bottom",
+            "role": "chest",
+            "box": {
+              "x": 408,
+              "y": 390,
+              "width": 55,
+              "height": 32,
+              "top": 390,
+              "right": 463,
+              "bottom": 422,
+              "left": 408
+            },
+            "anchor": [
+              466.3941505399139,
+              237.13287754704112
+            ],
+            "expected": [
+              466.3941505399139,
+              237.13287754704112
+            ]
+          },
+          {
+            "id": "waist",
+            "name": "Waist",
+            "uuid": "69843ff9-ea38-4abe-a2c4-000c08d737b8",
+            "label": "腰部",
+            "aria": "腰部",
+            "key": "node:chara_100101:front-v2:waist",
+            "region": "bottom",
+            "role": "waist",
+            "box": {
+              "x": 469,
+              "y": 390,
+              "width": 55,
+              "height": 32,
+              "top": 390,
+              "right": 524,
+              "bottom": 422,
+              "left": 469
+            },
+            "anchor": [
+              466.49947577263356,
+              245.79394813864428
+            ],
+            "expected": [
+              466.49947577263356,
+              245.79394813864428
+            ]
+          },
+          {
+            "id": "left-shoulder",
+            "name": "Shoulder_L",
+            "uuid": "b0f43b18-f834-43ae-9166-fddd66b75af3",
+            "label": "右肩部",
+            "aria": "右肩部",
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "region": "right",
+            "role": "shoulder",
+            "box": {
+              "x": 760.015625,
+              "y": 149,
+              "width": 67,
+              "height": 32,
+              "top": 149,
+              "right": 827.015625,
+              "bottom": 181,
+              "left": 760.015625
+            },
+            "anchor": [
+              468.56757636662775,
+              218.59866014394936
+            ],
+            "expected": [
+              468.56757636662775,
+              218.59866014394936
+            ]
+          },
+          {
+            "id": "right-shoulder",
+            "name": "Shoulder_R",
+            "uuid": "dfc29814-5b10-4a93-bc9d-fc2e5cb458d1",
+            "label": "左肩部",
+            "aria": "左肩部",
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "region": "left",
+            "role": "shoulder",
+            "box": {
+              "x": 104.984375,
+              "y": 149,
+              "width": 67,
+              "height": 32,
+              "top": 149,
+              "right": 171.984375,
+              "bottom": 181,
+              "left": 104.984375
+            },
+            "anchor": [
+              461.8432006013825,
+              218.64564143841818
+            ],
+            "expected": [
+              461.8432006013825,
+              218.64564143841818
+            ]
+          },
+          {
+            "id": "left-upper-arm",
+            "name": "Arm_L",
+            "uuid": "3fd53237-c4ea-4c39-9e3d-9761fcd1b10a",
+            "label": "右上臂",
+            "aria": "右上臂",
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "region": "right",
+            "role": "upper-arm",
+            "box": {
+              "x": 760.015625,
+              "y": 215.3333282470703,
+              "width": 67,
+              "height": 32,
+              "top": 215.3333282470703,
+              "right": 827.015625,
+              "bottom": 247.3333282470703,
+              "left": 760.015625
+            },
+            "anchor": [
+              477.4408777350979,
+              219.03692764764313
+            ],
+            "expected": [
+              477.4408777350979,
+              219.03692764764313
+            ]
+          },
+          {
+            "id": "right-upper-arm",
+            "name": "Arm_R",
+            "uuid": "630ed93d-c0fb-4d63-a936-e733ecfda3f0",
+            "label": "左上臂",
+            "aria": "左上臂",
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "region": "left",
+            "role": "upper-arm",
+            "box": {
+              "x": 104.984375,
+              "y": 215.3333282470703,
+              "width": 67,
+              "height": 32,
+              "top": 215.3333282470703,
+              "right": 171.984375,
+              "bottom": 247.3333282470703,
+              "left": 104.984375
+            },
+            "anchor": [
+              453.8973947973488,
+              219.23950992362361
+            ],
+            "expected": [
+              453.8973947973488,
+              219.23950992362361
+            ]
+          },
+          {
+            "id": "left-elbow",
+            "name": "Forearm_L",
+            "uuid": "3ccb67d6-e790-4f78-bf16-46f36e87cfed",
+            "label": "右手肘",
+            "aria": "右手肘",
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "region": "right",
+            "role": "elbow",
+            "box": {
+              "x": 760.015625,
+              "y": 281.6666564941406,
+              "width": 67,
+              "height": 32,
+              "top": 281.6666564941406,
+              "right": 827.015625,
+              "bottom": 313.6666564941406,
+              "left": 760.015625
+            },
+            "anchor": [
+              478.2984609177886,
+              241.2282531399073
+            ],
+            "expected": [
+              478.2984609177886,
+              241.2282531399073
+            ]
+          },
+          {
+            "id": "right-elbow",
+            "name": "Forearm_R",
+            "uuid": "5a2a84fc-60f5-4c92-8272-7a73c6cedc91",
+            "label": "左手肘",
+            "aria": "左手肘",
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "region": "left",
+            "role": "elbow",
+            "box": {
+              "x": 104.984375,
+              "y": 281.6666564941406,
+              "width": 67,
+              "height": 32,
+              "top": 281.6666564941406,
+              "right": 171.984375,
+              "bottom": 313.6666564941406,
+              "left": 104.984375
+            },
+            "anchor": [
+              453.7593818231698,
+              242.0431510104979
+            ],
+            "expected": [
+              453.7593818231698,
+              242.0431510104979
+            ]
+          },
+          {
+            "id": "left-hand",
+            "name": "Hand_L",
+            "uuid": "9d6e72b9-d9bf-4295-a6aa-a84a5f4b6fa4",
+            "label": "右手腕",
+            "aria": "右手腕",
+            "key": "node:chara_100101:front-v2:left-hand",
+            "region": "right",
+            "role": "hand",
+            "box": {
+              "x": 760.015625,
+              "y": 348,
+              "width": 67,
+              "height": 32,
+              "top": 348,
+              "right": 827.015625,
+              "bottom": 380,
+              "left": 760.015625
+            },
+            "anchor": [
+              477.82836494801575,
+              258.0733216762516
+            ],
+            "expected": [
+              477.82836494801575,
+              258.0733216762516
+            ]
+          },
+          {
+            "id": "right-hand",
+            "name": "Hand_R",
+            "uuid": "036397dd-56e2-4c62-80b9-dc0642c7bb70",
+            "label": "左手腕",
+            "aria": "左手腕",
+            "key": "node:chara_100101:front-v2:right-hand",
+            "region": "left",
+            "role": "hand",
+            "box": {
+              "x": 104.984375,
+              "y": 348,
+              "width": 67,
+              "height": 32,
+              "top": 348,
+              "right": 171.984375,
+              "bottom": 380,
+              "left": 104.984375
+            },
+            "anchor": [
+              461.81849133715366,
+              258.59182632240754
+            ],
+            "expected": [
+              461.81849133715366,
+              258.59182632240754
+            ]
+          },
+          {
+            "id": "left-upper-leg",
+            "name": "UpLeg_L",
+            "uuid": "5b1a603e-c463-48c8-9038-95bbf25a0a90",
+            "label": "右大腿",
+            "aria": "右大腿",
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "region": "right",
+            "role": "upper-leg",
+            "box": {
+              "x": 687.015625,
+              "y": 149,
+              "width": 67,
+              "height": 32,
+              "top": 149,
+              "right": 754.015625,
+              "bottom": 181,
+              "left": 687.015625
+            },
+            "anchor": [
+              473.5942527633201,
+              262.7961772377707
+            ],
+            "expected": [
+              473.5942527633201,
+              262.7961772377707
+            ]
+          },
+          {
+            "id": "right-upper-leg",
+            "name": "UpLeg_R",
+            "uuid": "353164f5-92a5-41e6-9126-1e9d8480d000",
+            "label": "左大腿",
+            "aria": "左大腿",
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "region": "left",
+            "role": "upper-leg",
+            "box": {
+              "x": 177.984375,
+              "y": 149,
+              "width": 67,
+              "height": 32,
+              "top": 149,
+              "right": 244.984375,
+              "bottom": 181,
+              "left": 177.984375
+            },
+            "anchor": [
+              459.5730525865049,
+              263.51687596797984
+            ],
+            "expected": [
+              459.5730525865049,
+              263.51687596797984
+            ]
+          },
+          {
+            "id": "left-knee",
+            "name": "Leg_L",
+            "uuid": "6aa90d8d-e344-467e-9131-ef3633917562",
+            "label": "右膝盖",
+            "aria": "右膝盖",
+            "key": "node:chara_100101:front-v2:left-knee",
+            "region": "right",
+            "role": "knee",
+            "box": {
+              "x": 687.015625,
+              "y": 215.3333282470703,
+              "width": 67,
+              "height": 32,
+              "top": 215.3333282470703,
+              "right": 754.015625,
+              "bottom": 247.3333282470703,
+              "left": 687.015625
+            },
+            "anchor": [
+              473.09385392824663,
+              291.3431875807345
+            ],
+            "expected": [
+              473.09385392824663,
+              291.3431875807345
+            ]
+          },
+          {
+            "id": "right-knee",
+            "name": "Leg_R",
+            "uuid": "2b3d963c-f21e-437d-ae33-5ea31523399c",
+            "label": "左膝盖",
+            "aria": "左膝盖",
+            "key": "node:chara_100101:front-v2:right-knee",
+            "region": "left",
+            "role": "knee",
+            "box": {
+              "x": 177.984375,
+              "y": 215.3333282470703,
+              "width": 67,
+              "height": 32,
+              "top": 215.3333282470703,
+              "right": 244.984375,
+              "bottom": 247.3333282470703,
+              "left": 177.984375
+            },
+            "anchor": [
+              457.327668785637,
+              291.73472781414694
+            ],
+            "expected": [
+              457.327668785637,
+              291.73472781414694
+            ]
+          },
+          {
+            "id": "left-foot",
+            "name": "Foot_L",
+            "uuid": "9822aff4-7d4b-4f2a-a845-b7f930363045",
+            "label": "右脚踝",
+            "aria": "右脚踝",
+            "key": "node:chara_100101:front-v2:left-foot",
+            "region": "right",
+            "role": "foot",
+            "box": {
+              "x": 687.015625,
+              "y": 281.6666564941406,
+              "width": 67,
+              "height": 32,
+              "top": 281.6666564941406,
+              "right": 754.015625,
+              "bottom": 313.6666564941406,
+              "left": 687.015625
+            },
+            "anchor": [
+              473.11848083441464,
+              332.79952826286353
+            ],
+            "expected": [
+              473.11848083441464,
+              332.79952826286353
+            ]
+          },
+          {
+            "id": "right-foot",
+            "name": "Foot_R",
+            "uuid": "827e4a00-05bc-4acf-933a-0e0ea15e603f",
+            "label": "左脚踝",
+            "aria": "左脚踝",
+            "key": "node:chara_100101:front-v2:right-foot",
+            "region": "left",
+            "role": "foot",
+            "box": {
+              "x": 177.984375,
+              "y": 281.6666564941406,
+              "width": 67,
+              "height": 32,
+              "top": 281.6666564941406,
+              "right": 244.984375,
+              "bottom": 313.6666564941406,
+              "left": 177.984375
+            },
+            "anchor": [
+              451.4345044323931,
+              332.61571121995945
+            ],
+            "expected": [
+              451.4345044323931,
+              332.61571121995945
+            ]
+          }
+        ],
+        "chips": [
+          {
+            "key": "node:chara_100101:front-v2:head",
+            "box": {
+              "x": 408,
+              "y": 107,
+              "width": 55,
+              "height": 32,
+              "top": 107,
+              "right": 463,
+              "bottom": 139,
+              "left": 408
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:neck",
+            "box": {
+              "x": 469,
+              "y": 107,
+              "width": 55,
+              "height": 32,
+              "top": 107,
+              "right": 524,
+              "bottom": 139,
+              "left": 469
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:chest",
+            "box": {
+              "x": 408,
+              "y": 390,
+              "width": 55,
+              "height": 32,
+              "top": 390,
+              "right": 463,
+              "bottom": 422,
+              "left": 408
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:waist",
+            "box": {
+              "x": 469,
+              "y": 390,
+              "width": 55,
+              "height": 32,
+              "top": 390,
+              "right": 524,
+              "bottom": 422,
+              "left": 469
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "box": {
+              "x": 760.015625,
+              "y": 149,
+              "width": 67,
+              "height": 32,
+              "top": 149,
+              "right": 827.015625,
+              "bottom": 181,
+              "left": 760.015625
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "box": {
+              "x": 104.984375,
+              "y": 149,
+              "width": 67,
+              "height": 32,
+              "top": 149,
+              "right": 171.984375,
+              "bottom": 181,
+              "left": 104.984375
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "box": {
+              "x": 760.015625,
+              "y": 215.3333282470703,
+              "width": 67,
+              "height": 32,
+              "top": 215.3333282470703,
+              "right": 827.015625,
+              "bottom": 247.3333282470703,
+              "left": 760.015625
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "box": {
+              "x": 104.984375,
+              "y": 215.3333282470703,
+              "width": 67,
+              "height": 32,
+              "top": 215.3333282470703,
+              "right": 171.984375,
+              "bottom": 247.3333282470703,
+              "left": 104.984375
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "box": {
+              "x": 760.015625,
+              "y": 281.6666564941406,
+              "width": 67,
+              "height": 32,
+              "top": 281.6666564941406,
+              "right": 827.015625,
+              "bottom": 313.6666564941406,
+              "left": 760.015625
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "box": {
+              "x": 104.984375,
+              "y": 281.6666564941406,
+              "width": 67,
+              "height": 32,
+              "top": 281.6666564941406,
+              "right": 171.984375,
+              "bottom": 313.6666564941406,
+              "left": 104.984375
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-hand",
+            "box": {
+              "x": 760.015625,
+              "y": 348,
+              "width": 67,
+              "height": 32,
+              "top": 348,
+              "right": 827.015625,
+              "bottom": 380,
+              "left": 760.015625
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-hand",
+            "box": {
+              "x": 104.984375,
+              "y": 348,
+              "width": 67,
+              "height": 32,
+              "top": 348,
+              "right": 171.984375,
+              "bottom": 380,
+              "left": 104.984375
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "box": {
+              "x": 687.015625,
+              "y": 149,
+              "width": 67,
+              "height": 32,
+              "top": 149,
+              "right": 754.015625,
+              "bottom": 181,
+              "left": 687.015625
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "box": {
+              "x": 177.984375,
+              "y": 149,
+              "width": 67,
+              "height": 32,
+              "top": 149,
+              "right": 244.984375,
+              "bottom": 181,
+              "left": 177.984375
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-knee",
+            "box": {
+              "x": 687.015625,
+              "y": 215.3333282470703,
+              "width": 67,
+              "height": 32,
+              "top": 215.3333282470703,
+              "right": 754.015625,
+              "bottom": 247.3333282470703,
+              "left": 687.015625
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-knee",
+            "box": {
+              "x": 177.984375,
+              "y": 215.3333282470703,
+              "width": 67,
+              "height": 32,
+              "top": 215.3333282470703,
+              "right": 244.984375,
+              "bottom": 247.3333282470703,
+              "left": 177.984375
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-foot",
+            "box": {
+              "x": 687.015625,
+              "y": 281.6666564941406,
+              "width": 67,
+              "height": 32,
+              "top": 281.6666564941406,
+              "right": 754.015625,
+              "bottom": 313.6666564941406,
+              "left": 687.015625
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-foot",
+            "box": {
+              "x": 177.984375,
+              "y": 281.6666564941406,
+              "width": 67,
+              "height": 32,
+              "top": 281.6666564941406,
+              "right": 244.984375,
+              "bottom": 313.6666564941406,
+              "left": 177.984375
+            }
+          },
+          {
+            "key": "tool:joints",
+            "box": {
+              "x": 8,
+              "y": 107,
+              "width": 79,
+              "height": 32,
+              "top": 107,
+              "right": 87,
+              "bottom": 139,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:hands",
+            "box": {
+              "x": 8,
+              "y": 143,
+              "width": 79,
+              "height": 32,
+              "top": 143,
+              "right": 87,
+              "bottom": 175,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:more",
+            "box": {
+              "x": 8,
+              "y": 179,
+              "width": 79,
+              "height": 32,
+              "top": 179,
+              "right": 87,
+              "bottom": 211,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:parameters",
+            "box": {
+              "x": 8,
+              "y": 215,
+              "width": 79,
+              "height": 32,
+              "top": 215,
+              "right": 87,
+              "bottom": 247,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:undo",
+            "box": {
+              "x": 8,
+              "y": 251,
+              "width": 55,
+              "height": 32,
+              "top": 251,
+              "right": 63,
+              "bottom": 283,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:redo",
+            "box": {
+              "x": 8,
+              "y": 287,
+              "width": 55,
+              "height": 32,
+              "top": 287,
+              "right": 63,
+              "bottom": 319,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:reset",
+            "box": {
+              "x": 8,
+              "y": 323,
+              "width": 79,
+              "height": 32,
+              "top": 323,
+              "right": 87,
+              "bottom": 355,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:reset-all",
+            "box": {
+              "x": 8,
+              "y": 359,
+              "width": 79,
+              "height": 32,
+              "top": 359,
+              "right": 87,
+              "bottom": 391,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:save",
+            "box": {
+              "x": 8,
+              "y": 394,
+              "width": 79,
+              "height": 32,
+              "top": 394,
+              "right": 87,
+              "bottom": 426,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:focus",
+            "box": {
+              "x": 887,
+              "y": 107,
+              "width": 37,
+              "height": 32,
+              "top": 107,
+              "right": 924,
+              "bottom": 139,
+              "left": 887
+            }
+          },
+          {
+            "key": "tool:editor-collapse",
+            "box": {
+              "x": 884.09375,
+              "y": 143,
+              "width": 39.90625,
+              "height": 32,
+              "top": 143,
+              "right": 924,
+              "bottom": 175,
+              "left": 884.09375
+            }
+          },
+          {
+            "key": "tool:pose",
+            "box": {
+              "x": 845,
+              "y": 179,
+              "width": 79,
+              "height": 32,
+              "top": 179,
+              "right": 924,
+              "bottom": 211,
+              "left": 845
+            }
+          },
+          {
+            "key": "tool:object",
+            "box": {
+              "x": 845,
+              "y": 215,
+              "width": 79,
+              "height": 32,
+              "top": 215,
+              "right": 924,
+              "bottom": 247,
+              "left": 845
+            }
+          },
+          {
+            "key": "tool:mirror-layout",
+            "box": {
+              "x": 845,
+              "y": 251,
+              "width": 79,
+              "height": 32,
+              "top": 251,
+              "right": 924,
+              "bottom": 283,
+              "left": 845
+            }
+          },
+          {
+            "key": "tool:move",
+            "box": {
+              "x": 843.015625,
+              "y": 287,
+              "width": 80.984375,
+              "height": 32,
+              "top": 287,
+              "right": 924,
+              "bottom": 319,
+              "left": 843.015625
+            }
+          },
+          {
+            "key": "tool:rotate",
+            "box": {
+              "x": 857,
+              "y": 323,
+              "width": 67,
+              "height": 32,
+              "top": 323,
+              "right": 924,
+              "bottom": 355,
+              "left": 857
+            }
+          },
+          {
+            "key": "tool:editor-close",
+            "box": {
+              "x": 869,
+              "y": 359,
+              "width": 55,
+              "height": 32,
+              "top": 359,
+              "right": 924,
+              "bottom": 391,
+              "left": 869
+            }
+          }
+        ],
+        "view": {
+          "width": 932,
+          "height": 430,
+          "scroll": 932,
+          "menu": 99
+        },
+        "mirror": "front"
+      }
+    },
+    {
+      "test": "responsive-primary-1366x900",
+      "state": {
+        "joints": [
+          {
+            "id": "head",
+            "name": "Head",
+            "uuid": "07aea271-0367-4ac9-af71-4b5b83267f10",
+            "label": "头部",
+            "aria": "头部",
+            "key": "node:chara_100101:front-v2:head",
+            "region": "top",
+            "role": "head",
+            "box": {
+              "x": 628,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 680,
+              "bottom": 107,
+              "left": 628
+            },
+            "anchor": [
+              677.4563135212038,
+              309.5725413396465
+            ],
+            "expected": [
+              677.4563135212038,
+              309.5725413396465
+            ]
+          },
+          {
+            "id": "neck",
+            "name": "Neck",
+            "uuid": "1bad66b4-678a-4fc2-a17e-3500c7f1a009",
+            "label": "颈部",
+            "aria": "颈部",
+            "key": "node:chara_100101:front-v2:neck",
+            "region": "top",
+            "role": "neck",
+            "box": {
+              "x": 686,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 738,
+              "bottom": 107,
+              "left": 686
+            },
+            "anchor": [
+              680.1635090291684,
+              334.8690090073891
+            ],
+            "expected": [
+              680.1635090291684,
+              334.8690090073891
+            ]
+          },
+          {
+            "id": "chest",
+            "name": "Chest",
+            "uuid": "0cab5f0b-d57f-4bfc-9319-9e6490d83f74",
+            "label": "胸部",
+            "aria": "胸部",
+            "key": "node:chara_100101:front-v2:chest",
+            "region": "bottom",
+            "role": "chest",
+            "box": {
+              "x": 628,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 680,
+              "bottom": 892,
+              "left": 628
+            },
+            "anchor": [
+              684.0608949096772,
+              401.9081144499492
+            ],
+            "expected": [
+              684.0608949096772,
+              401.9081144499492
+            ]
+          },
+          {
+            "id": "waist",
+            "name": "Waist",
+            "uuid": "269c9488-213f-4ef4-964f-b57fa77133f9",
+            "label": "腰部",
+            "aria": "腰部",
+            "key": "node:chara_100101:front-v2:waist",
+            "region": "bottom",
+            "role": "waist",
+            "box": {
+              "x": 686,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 738,
+              "bottom": 892,
+              "left": 686
+            },
+            "anchor": [
+              684.3818649621625,
+              428.27257941755886
+            ],
+            "expected": [
+              684.3818649621625,
+              428.27257941755886
+            ]
+          },
+          {
+            "id": "left-shoulder",
+            "name": "Shoulder_L",
+            "uuid": "211502eb-fc4e-457d-960b-fe01d5acea09",
+            "label": "右肩部",
+            "aria": "右肩部",
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "region": "right",
+            "role": "shoulder",
+            "box": {
+              "x": 1009,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 1073,
+              "bottom": 295.5,
+              "left": 1009
+            },
+            "anchor": [
+              690.6567252645139,
+              346.96771774099653
+            ],
+            "expected": [
+              690.6567252645139,
+              346.96771774099653
+            ]
+          },
+          {
+            "id": "right-shoulder",
+            "name": "Shoulder_R",
+            "uuid": "9f7f0f91-199f-4b4e-8db8-388dd87bbad1",
+            "label": "左肩部",
+            "aria": "左肩部",
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "region": "left",
+            "role": "shoulder",
+            "box": {
+              "x": 293,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 357,
+              "bottom": 295.5,
+              "left": 293
+            },
+            "anchor": [
+              670.2283557580353,
+              346.7158254268737
+            ],
+            "expected": [
+              670.2283557580353,
+              346.7158254268737
+            ]
+          },
+          {
+            "id": "left-upper-arm",
+            "name": "Arm_L",
+            "uuid": "93bb0769-40d1-4309-89b3-21eb3ea36b82",
+            "label": "右上臂",
+            "aria": "右上臂",
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "region": "right",
+            "role": "upper-arm",
+            "box": {
+              "x": 1009,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 1073,
+              "bottom": 363.5,
+              "left": 1009
+            },
+            "anchor": [
+              717.6024598261632,
+              348.2139153483781
+            ],
+            "expected": [
+              717.6024598261632,
+              348.2139153483781
+            ]
+          },
+          {
+            "id": "right-upper-arm",
+            "name": "Arm_R",
+            "uuid": "c306a6cc-ab16-4124-86da-531f32ea9de0",
+            "label": "左上臂",
+            "aria": "左上臂",
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "region": "left",
+            "role": "upper-arm",
+            "box": {
+              "x": 293,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 357,
+              "bottom": 363.5,
+              "left": 293
+            },
+            "anchor": [
+              645.9603367649343,
+              347.38393108326767
+            ],
+            "expected": [
+              645.9603367649343,
+              347.38393108326767
+            ]
+          },
+          {
+            "id": "left-elbow",
+            "name": "Forearm_L",
+            "uuid": "35b87ea0-48de-494d-888a-dc06bdff6ca5",
+            "label": "右手肘",
+            "aria": "右手肘",
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "region": "right",
+            "role": "elbow",
+            "box": {
+              "x": 1009,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 1073,
+              "bottom": 431.5,
+              "left": 1009
+            },
+            "anchor": [
+              720.3926530832542,
+              414.14153214379775
+            ],
+            "expected": [
+              720.3926530832542,
+              414.14153214379775
+            ]
+          },
+          {
+            "id": "right-elbow",
+            "name": "Forearm_R",
+            "uuid": "2dcdfbb8-0ad9-46a6-854d-29524d56662a",
+            "label": "左手肘",
+            "aria": "左手肘",
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "region": "left",
+            "role": "elbow",
+            "box": {
+              "x": 293,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 357,
+              "bottom": 431.5,
+              "left": 293
+            },
+            "anchor": [
+              645.3992649402977,
+              415.8568089718562
+            ],
+            "expected": [
+              645.3992649402977,
+              415.8568089718562
+            ]
+          },
+          {
+            "id": "left-hand",
+            "name": "Hand_L",
+            "uuid": "5fa28377-777e-4c0f-9676-c9c867b6ff6c",
+            "label": "右手腕",
+            "aria": "右手腕",
+            "key": "node:chara_100101:front-v2:left-hand",
+            "region": "right",
+            "role": "hand",
+            "box": {
+              "x": 1009,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 1073,
+              "bottom": 499.5,
+              "left": 1009
+            },
+            "anchor": [
+              719.4530378964346,
+              462.2444724152338
+            ],
+            "expected": [
+              719.4530378964346,
+              462.2444724152338
+            ]
+          },
+          {
+            "id": "right-hand",
+            "name": "Hand_R",
+            "uuid": "15d3a92c-92cf-4f36-bfd5-e754be791f67",
+            "label": "左手腕",
+            "aria": "左手腕",
+            "key": "node:chara_100101:front-v2:right-hand",
+            "region": "left",
+            "role": "hand",
+            "box": {
+              "x": 293,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 357,
+              "bottom": 499.5,
+              "left": 293
+            },
+            "anchor": [
+              669.892609075719,
+              463.50882765059174
+            ],
+            "expected": [
+              669.892609075719,
+              463.50882765059174
+            ]
+          },
+          {
+            "id": "left-upper-leg",
+            "name": "UpLeg_L",
+            "uuid": "d57ece74-c0d1-45e0-abe6-bcd668c2a2d2",
+            "label": "右大腿",
+            "aria": "右大腿",
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "region": "right",
+            "role": "upper-leg",
+            "box": {
+              "x": 1009,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 1073,
+              "bottom": 567.5,
+              "left": 1009
+            },
+            "anchor": [
+              705.9672901898064,
+              480.62648710898884
+            ],
+            "expected": [
+              705.9672901898064,
+              480.62648710898884
+            ]
+          },
+          {
+            "id": "right-upper-leg",
+            "name": "UpLeg_R",
+            "uuid": "ec636d21-619c-4e0c-bf7d-6de16b1117a8",
+            "label": "左大腿",
+            "aria": "左大腿",
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "region": "left",
+            "role": "upper-leg",
+            "box": {
+              "x": 293,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 357,
+              "bottom": 567.5,
+              "left": 293
+            },
+            "anchor": [
+              663.2632477860463,
+              482.38619268033733
+            ],
+            "expected": [
+              663.2632477860463,
+              482.38619268033733
+            ]
+          },
+          {
+            "id": "left-knee",
+            "name": "Leg_L",
+            "uuid": "0370ec9d-1c1b-4cd6-8f0f-1a431ace7edb",
+            "label": "右膝盖",
+            "aria": "右膝盖",
+            "key": "node:chara_100101:front-v2:left-knee",
+            "region": "right",
+            "role": "knee",
+            "box": {
+              "x": 1009,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 1073,
+              "bottom": 635.5,
+              "left": 1009
+            },
+            "anchor": [
+              704.4601070638141,
+              567.3970691070714
+            ],
+            "expected": [
+              704.4601070638141,
+              567.3970691070714
+            ]
+          },
+          {
+            "id": "right-knee",
+            "name": "Leg_R",
+            "uuid": "57cda0a6-1d2c-45b4-9ff5-c4daa4015a53",
+            "label": "左膝盖",
+            "aria": "左膝盖",
+            "key": "node:chara_100101:front-v2:right-knee",
+            "region": "left",
+            "role": "knee",
+            "box": {
+              "x": 293,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 357,
+              "bottom": 635.5,
+              "left": 293
+            },
+            "anchor": [
+              656.4523625594039,
+              568.5900089420996
+            ],
+            "expected": [
+              656.4523625594039,
+              568.5900089420996
+            ]
+          },
+          {
+            "id": "left-foot",
+            "name": "Foot_L",
+            "uuid": "47be7ae0-c81e-4a37-8dc9-254444d79620",
+            "label": "右脚踝",
+            "aria": "右脚踝",
+            "key": "node:chara_100101:front-v2:left-foot",
+            "region": "right",
+            "role": "foot",
+            "box": {
+              "x": 1009,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 1073,
+              "bottom": 703.5,
+              "left": 1009
+            },
+            "anchor": [
+              704.3439346286871,
+              693.7152032015063
+            ],
+            "expected": [
+              704.3439346286871,
+              693.7152032015063
+            ]
+          },
+          {
+            "id": "right-foot",
+            "name": "Foot_R",
+            "uuid": "d9adf069-46c0-4180-b43b-8a29611bc84c",
+            "label": "左脚踝",
+            "aria": "左脚踝",
+            "key": "node:chara_100101:front-v2:right-foot",
+            "region": "left",
+            "role": "foot",
+            "box": {
+              "x": 293,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 357,
+              "bottom": 703.5,
+              "left": 293
+            },
+            "anchor": [
+              638.9260449753806,
+              693.1636470111567
+            ],
+            "expected": [
+              638.9260449753806,
+              693.1636470111567
+            ]
+          }
+        ],
+        "chips": [
+          {
+            "key": "node:chara_100101:front-v2:head",
+            "box": {
+              "x": 628,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 680,
+              "bottom": 107,
+              "left": 628
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:neck",
+            "box": {
+              "x": 686,
+              "y": 79,
+              "width": 52,
+              "height": 28,
+              "top": 79,
+              "right": 738,
+              "bottom": 107,
+              "left": 686
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:chest",
+            "box": {
+              "x": 628,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 680,
+              "bottom": 892,
+              "left": 628
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:waist",
+            "box": {
+              "x": 686,
+              "y": 864,
+              "width": 52,
+              "height": 28,
+              "top": 864,
+              "right": 738,
+              "bottom": 892,
+              "left": 686
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-shoulder",
+            "box": {
+              "x": 1009,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 1073,
+              "bottom": 295.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-shoulder",
+            "box": {
+              "x": 293,
+              "y": 267.5,
+              "width": 64,
+              "height": 28,
+              "top": 267.5,
+              "right": 357,
+              "bottom": 295.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-arm",
+            "box": {
+              "x": 1009,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 1073,
+              "bottom": 363.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-arm",
+            "box": {
+              "x": 293,
+              "y": 335.5,
+              "width": 64,
+              "height": 28,
+              "top": 335.5,
+              "right": 357,
+              "bottom": 363.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-elbow",
+            "box": {
+              "x": 1009,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 1073,
+              "bottom": 431.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-elbow",
+            "box": {
+              "x": 293,
+              "y": 403.5,
+              "width": 64,
+              "height": 28,
+              "top": 403.5,
+              "right": 357,
+              "bottom": 431.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-hand",
+            "box": {
+              "x": 1009,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 1073,
+              "bottom": 499.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-hand",
+            "box": {
+              "x": 293,
+              "y": 471.5,
+              "width": 64,
+              "height": 28,
+              "top": 471.5,
+              "right": 357,
+              "bottom": 499.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-upper-leg",
+            "box": {
+              "x": 1009,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 1073,
+              "bottom": 567.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-upper-leg",
+            "box": {
+              "x": 293,
+              "y": 539.5,
+              "width": 64,
+              "height": 28,
+              "top": 539.5,
+              "right": 357,
+              "bottom": 567.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-knee",
+            "box": {
+              "x": 1009,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 1073,
+              "bottom": 635.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-knee",
+            "box": {
+              "x": 293,
+              "y": 607.5,
+              "width": 64,
+              "height": 28,
+              "top": 607.5,
+              "right": 357,
+              "bottom": 635.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:left-foot",
+            "box": {
+              "x": 1009,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 1073,
+              "bottom": 703.5,
+              "left": 1009
+            }
+          },
+          {
+            "key": "node:chara_100101:front-v2:right-foot",
+            "box": {
+              "x": 293,
+              "y": 675.5,
+              "width": 64,
+              "height": 28,
+              "top": 675.5,
+              "right": 357,
+              "bottom": 703.5,
+              "left": 293
+            }
+          },
+          {
+            "key": "tool:joints",
+            "box": {
+              "x": 8,
+              "y": 79,
+              "width": 76,
+              "height": 28,
+              "top": 79,
+              "right": 84,
+              "bottom": 107,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:hands",
+            "box": {
+              "x": 8,
+              "y": 111,
+              "width": 76,
+              "height": 28,
+              "top": 111,
+              "right": 84,
+              "bottom": 139,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:more",
+            "box": {
+              "x": 8,
+              "y": 143,
+              "width": 76,
+              "height": 28,
+              "top": 143,
+              "right": 84,
+              "bottom": 171,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:parameters",
+            "box": {
+              "x": 8,
+              "y": 175,
+              "width": 76,
+              "height": 28,
+              "top": 175,
+              "right": 84,
+              "bottom": 203,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:undo",
+            "box": {
+              "x": 8,
+              "y": 207,
+              "width": 52,
+              "height": 28,
+              "top": 207,
+              "right": 60,
+              "bottom": 235,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:redo",
+            "box": {
+              "x": 8,
+              "y": 239,
+              "width": 52,
+              "height": 28,
+              "top": 239,
+              "right": 60,
+              "bottom": 267,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:reset",
+            "box": {
+              "x": 8,
+              "y": 271,
+              "width": 76,
+              "height": 28,
+              "top": 271,
+              "right": 84,
+              "bottom": 299,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:reset-all",
+            "box": {
+              "x": 8,
+              "y": 303,
+              "width": 76,
+              "height": 28,
+              "top": 303,
+              "right": 84,
+              "bottom": 331,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:save",
+            "box": {
+              "x": 8,
+              "y": 335,
+              "width": 76,
+              "height": 28,
+              "top": 335,
+              "right": 84,
+              "bottom": 363,
+              "left": 8
+            }
+          },
+          {
+            "key": "tool:focus",
+            "box": {
+              "x": 1324,
+              "y": 79,
+              "width": 34,
+              "height": 28,
+              "top": 79,
+              "right": 1358,
+              "bottom": 107,
+              "left": 1324
+            }
+          },
+          {
+            "key": "tool:editor-collapse",
+            "box": {
+              "x": 1321.09375,
+              "y": 111,
+              "width": 36.90625,
+              "height": 28,
+              "top": 111,
+              "right": 1358,
+              "bottom": 139,
+              "left": 1321.09375
+            }
+          },
+          {
+            "key": "tool:pose",
+            "box": {
+              "x": 1282,
+              "y": 143,
+              "width": 76,
+              "height": 28,
+              "top": 143,
+              "right": 1358,
+              "bottom": 171,
+              "left": 1282
+            }
+          },
+          {
+            "key": "tool:object",
+            "box": {
+              "x": 1282,
+              "y": 175,
+              "width": 76,
+              "height": 28,
+              "top": 175,
+              "right": 1358,
+              "bottom": 203,
+              "left": 1282
+            }
+          },
+          {
+            "key": "tool:mirror-layout",
+            "box": {
+              "x": 1282,
+              "y": 207,
+              "width": 76,
+              "height": 28,
+              "top": 207,
+              "right": 1358,
+              "bottom": 235,
+              "left": 1282
+            }
+          },
+          {
+            "key": "tool:move",
+            "box": {
+              "x": 1280.015625,
+              "y": 239,
+              "width": 77.984375,
+              "height": 28,
+              "top": 239,
+              "right": 1358,
+              "bottom": 267,
+              "left": 1280.015625
+            }
+          },
+          {
+            "key": "tool:rotate",
+            "box": {
+              "x": 1294,
+              "y": 271,
+              "width": 64,
+              "height": 28,
+              "top": 271,
+              "right": 1358,
+              "bottom": 299,
+              "left": 1294
+            }
+          },
+          {
+            "key": "tool:editor-close",
+            "box": {
+              "x": 1306,
+              "y": 303,
+              "width": 52,
+              "height": 28,
+              "top": 303,
+              "right": 1358,
+              "bottom": 331,
+              "left": 1306
+            }
+          }
+        ],
+        "view": {
+          "width": 1366,
+          "height": 900,
+          "scroll": 1366,
+          "menu": 71
+        },
+        "mirror": "front"
+      }
+    }
+  ],
+  "errors": [],
+  "cameraMaxDrift": 0
+}

@@ -1,0 +1,88 @@
+{
+  "passed": true,
+  "base": "9fce938a70f8e10d9f02603696700e50c98a8fd1",
+  "app": "f5100f9615dd282398ce2d689938efe3b3d05bd6",
+  "unchanged": [
+    {
+      "file": "index.html",
+      "blob": "df6e66ff149e6bf2b463a683b960efc64e868a92"
+    },
+    {
+      "file": "src/main.ts",
+      "blob": "d46f7717c9cfef16e70da36b3316ff7e5b58c0d2"
+    },
+    {
+      "file": "src/viewer/viewerLocomotion.ts",
+      "blob": "05d629357b2a234cdcde0fbdfeaedf9652dc8a7d"
+    },
+    {
+      "file": "src/viewer/characterLocomotion.ts",
+      "blob": "6dac1d1f345dca8805a250b1e5c33357ecb7c77d"
+    },
+    {
+      "file": "src/viewer/jumpArmKinematics.ts",
+      "blob": "3087fc4bdd12019d1308864a312a8c68f4b8bfd8"
+    },
+    {
+      "file": "src/viewer/jumpStyle.ts",
+      "blob": "ace87490cd3c55ee5497bcceb84149441abf8fec"
+    },
+    {
+      "file": "src/viewer/ThirdPersonCamera.ts",
+      "blob": "280a902c6e9c063b52f925c01b913cb9a2631963"
+    },
+    {
+      "file": "src/viewer/tpsTargetMenu.ts",
+      "blob": "7e910542feadd9f71fcd12a7f2f9b93dde6d04c2"
+    },
+    {
+      "file": "package.json",
+      "blob": "e62b09953b3b0b265d937740d218f543472db099"
+    },
+    {
+      "file": "package-lock.json",
+      "blob": "6018ed9a86339370d91b83113a94406ded39b3b8"
+    },
+    {
+      "file": "docs/reports/2026-10-01-android-startup.md",
+      "blob": "0582f9ef951ce319cf055e3a6eb14772049eac67"
+    },
+    {
+      "file": "docs/reports/evidence/2026-10-01-android-startup/android-production.json",
+      "blob": "4f78d92efb841df4935723f6bdd9f6c73f9aaa22"
+    },
+    {
+      "file": "docs/reports/evidence/2026-10-01-android-startup/android-production.png",
+      "blob": "3c5a2f65d6c247c29fed65579f2cd3d4d8ee4de4"
+    },
+    {
+      "file": "docs/reports/evidence/2026-10-01-android-startup/production-browser.json",
+      "blob": "bcc326e8dda5f4f72505fd73b35bdf79171f0f68"
+    },
+    {
+      "file": "docs/reports/evidence/2026-10-01-android-startup/production-http.json",
+      "blob": "2377c3b88a5b22f3147d626a98b3467b94a32f69"
+    },
+    {
+      "file": "docs/reports/evidence/2026-10-01-android-startup/script-failure.png",
+      "blob": "fd283ccdb143c1b7d90576cb12f5a55a75d919ab"
+    },
+    {
+      "file": "docs/reports/evidence/2026-10-01-android-startup/webgl-failure.png",
+      "blob": "14f59e0a700212787553319cac41291a085e0443"
+    },
+    {
+      "file": "scripts/site-smoke-startup.mjs",
+      "blob": "aabe98d61d7e6eeda6a0cbc2a6cb921136e5eda0"
+    },
+    {
+      "file": "src/startupGuard.js",
+      "blob": "71a2b50ff6d7107d916ce07d9c22918108f1955e"
+    },
+    {
+      "file": "startupGuard.test.mjs",
+      "blob": "a051800378378ddf1bbaf92fb6e53419a6d96ec1"
+    }
+  ],
+  "allPublicAndNativeAssetDiffEmpty": true
+}

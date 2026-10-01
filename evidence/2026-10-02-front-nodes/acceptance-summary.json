@@ -1,0 +1,41 @@
+{
+  "appRevision": "f5100f9615dd282398ce2d689938efe3b3d05bd6",
+  "deployment": "c0645068",
+  "site": "https://magius3dviewer.pages.dev/",
+  "tests": {
+    "passed": 439,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser": [
+    {
+      "name": "production-front-confirmed",
+      "passed": true,
+      "sections": 11,
+      "errors": [],
+      "cameraMaxDrift": 0
+    },
+    {
+      "name": "production-node-tps",
+      "passed": true,
+      "sections": 16,
+      "errors": []
+    },
+    {
+      "name": "production-final",
+      "passed": true,
+      "sections": 15,
+      "errors": []
+    }
+  ],
+  "startup": [
+    "normal-start",
+    "blocked-script-visible-and-explicit-retry-recovers",
+    "webgl-initialization-error-is-visible-before-main",
+    "slow-start-is-not-labeled-failed-and-finishes-without-refresh"
+  ],
+  "verifiedFiles": 34,
+  "modelsAudited": 97,
+  "identicalInfluencesButDistinctPivots": 30,
+  "verifiedAt": "2026-10-01T17:38:37.904Z"
+}
