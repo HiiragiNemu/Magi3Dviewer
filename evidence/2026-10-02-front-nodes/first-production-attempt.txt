@@ -1,0 +1,22 @@
+production-version PASS
+front-reference-layout PASS
+manual-back-swap-layout-only PASS
+back-entry-return-to-front PASS
+four-camera-angles-do-not-relabel-or-reorder PASS
+waist-main-spine-details-no-sticky-focus PASS
+hand-convention-and-one-shot-focus PASS
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: focused head remains underneath the head/neck control row
+    at file:///D:/magia/MyProducts/Magius3Dviewer-Cloudflare/scripts/site-smoke-front-nodes.mjs:76:88 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.0
