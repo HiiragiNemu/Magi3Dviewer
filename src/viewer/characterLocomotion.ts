@@ -1993,6 +1993,10 @@ export class CharacterLocomotionController {
         return this._state
     }
 
+    /** A one-frame jump edge must keep the fixed-step clock alive even when
+     * its first render delta is shorter than one physics step. */
+    get hasPendingJump(): boolean { return this.jumpQueued || this.jumpTakeoffRemainingSeconds > 0 }
+
     get grounded(): boolean {
         return this._grounded
     }

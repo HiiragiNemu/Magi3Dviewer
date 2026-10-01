@@ -11978,6 +11978,7 @@ function updateFrame(): void {
         const horizontalSpeed = Math.hypot(binding.snapshot.velocity.x, binding.snapshot.velocity.z)
         const locomotionNeedsStep = (
             input.jumpPressed
+            || binding.controller.hasPendingJump
             || Math.hypot(input.moveX, input.moveZ) > 1e-4
             || horizontalSpeed > 1e-4
             || !binding.snapshot.grounded

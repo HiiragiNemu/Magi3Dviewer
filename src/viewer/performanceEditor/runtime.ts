@@ -41,6 +41,7 @@ export class PerformanceEditorRuntime {
     private playbackEpoch = 0
     private loopIteration = 0
     private audioFrameStamp: number | undefined
+    liveCaptureClock = false
     private get transition() { return this.options.transitionSeconds ?? 0.18 }
 
     constructor(options: EditorOptions) {
@@ -61,7 +62,7 @@ export class PerformanceEditorRuntime {
     }
     private emitClock(reason: TimelineClockReason, deltaSeconds = 0) {
         const snapshot: TimelineClockSnapshot = {
-            frameId: this.frameId, time: this.time, duration: this.timeline.value.duration,
+            frameId: this.frameId, time: this.time, duration: this.timeline.duration,
             deltaSeconds, playing: this.playing, loopIteration: this.loopIteration, reason,
         }
         for (const listener of this.clockListeners) {
@@ -75,8 +76,8 @@ export class PerformanceEditorRuntime {
             || (this.audioFrameStamp !== undefined && timestampMilliseconds <= this.audioFrameStamp)) return false
         const previous = this.audioFrameStamp
         this.audioFrameStamp = timestampMilliseconds
-        const document = this.timeline.value
-        if (previous === undefined || !this.playing || this.active.size || document.tracks.length || !document.audioTracks?.length) return false
+        const document = this.timeline
+        if (previous === undefined || !this.playing || this.active.size || document.tracks.length || (!document.audioTracks.length&&!document.recordedLanes.length&&!this.liveCaptureClock)) return false
         const delta = (timestampMilliseconds - previous) / 1000
         if (document.loop && delta > document.duration * 16) { this.fail(new Error('Timeline frame spans more than 16 loops')); return false }
         const next = this.time + delta
@@ -129,7 +130,7 @@ export class PerformanceEditorRuntime {
         return { status: 'ready', value: active }
     }
     private prepareTracks() {
-        const tracks = this.timeline.value.tracks
+        const tracks = this.timeline.tracks
         for (const track of tracks) this.requirePoseChannel(track.channel)
         for (const key of new Set(tracks.map(track => track.actorKey))) {
             const actor = this.actors.get(key)
@@ -168,12 +169,13 @@ export class PerformanceEditorRuntime {
         }
     }
     play() {
+        this.audioFrameStamp = undefined
         this.endDrag()
         try {
             // A completed non-loop document is a fresh replay request, not a no-op.
             // Emit the explicit reposition before the play clock so media consumers
             // reset their ended elements even when their drift is within tolerance.
-            if (!this.timeline.value.loop && this.time >= this.timeline.value.duration) {
+            if (!this.timeline.loop && this.time >= this.timeline.duration) {
                 this.time = 0
                 this.loopIteration = 0
                 this.frameSamples = this.timeline.sample(0)
@@ -192,7 +194,7 @@ export class PerformanceEditorRuntime {
         if (!Number.isFinite(time)) throw new Error('Invalid seek time')
         this.endDrag()
         try { this.prepareTracks(); this.recapture() } catch (error) { this.fail(error); return }
-        this.time = Math.max(0, Math.min(this.timeline.value.duration, time))
+        this.time = Math.max(0, Math.min(this.timeline.duration, time))
         this.includeCurrentBeat = false
         this.lastError = null; this.emitClock('seek'); this.emit()
     }
@@ -243,7 +245,7 @@ export class PerformanceEditorRuntime {
             this.frameCrossings.push(...rows.map(row => ({ ...row, occurrenceId: `${this.playbackEpoch}:${this.loopIteration}:${row.key.id}` })))
         }
         if (this.playing && this.active.size > 0) {
-            const document = this.timeline.value
+            const document = this.timeline
             if (this.includeCurrentBeat) {
                 queue(this.timeline.actionCrossings(-1, this.time).filter(row => row.key.time === this.time))
                 this.includeCurrentBeat = false
@@ -348,7 +350,7 @@ export class PerformanceEditorRuntime {
         const actor = this.actors.get(actorKey)
         if (!actor?.current) throw new Error('Actor absent')
         const id = `${actorKey}:${channel}:${property || ''}`
-        const current = this.timeline.value.tracks.find(row => row.id === id)
+        const current = this.timeline.tracks.find(row => row.id === id)
         const track: PerformanceTrack = current || { id, actorKey, channel, property, keys: [] }
         if (value === undefined) {
             const pose = actor.capture(this.channels(actor, [track]))
@@ -408,7 +410,7 @@ export class PerformanceEditorRuntime {
         const previous = this.active.get(actorKey)
         // ensureActor may return this same object; snapshot held ownership before replacing it.
         const previousManualBones = [...(previous?.manualBones ?? [])], previousManualRoot = previous?.manualRoot === true
-        const documentChannels = this.channels(actor, this.timeline.value.tracks.filter(track => track.actorKey === actorKey))
+        const documentChannels = this.channels(actor, this.timeline.tracks.filter(track => track.actorKey === actorKey))
         const requestedBones = mode === 'root' ? [] : mode === 'joint' ? [boneKey!] : [...actor.bones].filter(([, node]) => chain.includes(node)).map(([key]) => key)
         // Host exclusivity includes document constraints; only dragged joints become held overrides.
         const manualBones = [...new Set([...requestedBones, ...(previous?.manual ? previousManualBones : [])])]

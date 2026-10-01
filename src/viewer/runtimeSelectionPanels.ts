@@ -169,8 +169,9 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
         elements.use.textContent = translateUiText(config.useLabel)
         elements.use.disabled = !sourceOption || sourceOption.disabled || elements.source.disabled
         elements.detail.textContent = sourceOption
-            ? `${sourceOption.textContent?.trim() || sourceOption.value} · ${sourceOption.value}`
+            ? `${sourceOption.textContent?.trim() || sourceOption.value} · ${sourceOption.value}${sourceOption.disabled ? ' · ' + translateUiText('Awaiting restoration') : ''}`
             : translateUiText(config.noSelectionLabel)
+        elements.use.title = sourceOption?.disabled ? translateUiText('Awaiting restoration') : translateUiText(config.useLabel)
         updatePreview(sourceOption)
         renderTileSelection()
     }
@@ -187,7 +188,10 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
     const createThumbnailTile = (sourceOption: HTMLOptionElement) => {
         const tile = document.createElement('button')
         tile.type = 'button'
-        tile.disabled = sourceOption.disabled
+        // Unrestored catalog entries remain inspectable. Eligibility controls
+        // Load, not thumbnail selection; otherwise the old preview looks stuck.
+        tile.disabled = false
+        tile.dataset.loadable = String(!sourceOption.disabled)
         tile.className = 'runtime-selection-tile'
         tile.dataset.value = sourceOption.value
         tile.setAttribute('role', 'option')
@@ -242,7 +246,7 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
             option.value = sourceOption.value
             option.textContent = sourceOption.textContent
             option.title = sourceOption.title
-            option.disabled = sourceOption.disabled
+            option.dataset.loadable = String(!sourceOption.disabled)
             for (const [key, value] of Object.entries(sourceOption.dataset)) {
                 option.dataset[key] = value
             }

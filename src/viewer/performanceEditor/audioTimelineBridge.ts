@@ -92,7 +92,7 @@ export class AudioTimelineBridge {
         this.releases = [runtime.subscribeClock(snapshot => this.onClock(snapshot)), runtime.subscribe(kind => {
             if (kind === 'actors') { this.invalidateActors(); this.sync(this.runtimeSnapshot()) }
         })]
-        this.prepare(runtime.timeline.value.audioTracks ?? [])
+        this.prepare(runtime.timeline.audioTracks ?? [])
     }
     get snapshot(): readonly AudioTimelineTrackState[] { return [...this.sessions.values()].map(row => ({ ...row.state })) }
     subscribe(listener: (state: readonly AudioTimelineTrackState[]) => void) {
@@ -109,7 +109,7 @@ export class AudioTimelineBridge {
     setCatalog(catalog: VoiceCatalog) {
         const changed = this.catalog !== catalog
         if (this.catalog !== catalog) { for (const id of [...this.sessions.keys()]) this.remove(id); this.catalog = catalog }
-        this.prepare(this.runtime.timeline.value.audioTracks ?? [])
+        this.prepare(this.runtime.timeline.audioTracks ?? [])
         if (changed) for (const listener of this.catalogListeners) listener(this.catalogEntries)
     }
     private emit() { const snapshot = this.snapshot; for (const listener of this.listeners) listener(snapshot) }
@@ -180,7 +180,7 @@ export class AudioTimelineBridge {
         }
     }
     private runtimeSnapshot(): TimelineClockSnapshot {
-        return { frameId: -1, time: this.runtime.time, duration: this.runtime.timeline.value.duration, deltaSeconds: 0,
+        return { frameId: -1, time: this.runtime.time, duration: this.runtime.timeline.duration, deltaSeconds: 0,
             playing: this.runtime.playing, loopIteration: this.clock?.loopIteration ?? 0, reason: 'frame' }
     }
     private invalidateActors() {
@@ -189,7 +189,7 @@ export class AudioTimelineBridge {
     private onClock(snapshot: TimelineClockSnapshot) {
         if (this.disposed) return
         this.clock = snapshot
-        if (snapshot.reason === 'document') this.prepare(this.runtime.timeline.value.audioTracks ?? [])
+        if (snapshot.reason === 'document') this.prepare(this.runtime.timeline.audioTracks ?? [])
         if (snapshot.reason === 'play') void this.lips.resume().catch(() => {})
         this.invalidateActors(); this.sync(snapshot); this.emit()
     }

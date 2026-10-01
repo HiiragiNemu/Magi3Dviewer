@@ -110,6 +110,9 @@ export interface PerformanceDocument {
     tracks: PerformanceTrack[]
     /** Optional explicit audio metadata kept separate from pose/action tracks. */
     audioTracks?: PerformanceAudioTrack[]
+    /** Baked final-pose lanes share this document's clock and actor instances. */
+    recordedLanes?: import('./recordings.ts').RecordedLane[]
+    sceneId?: string
 }
 export interface SampledPerformanceTrack {
     track: PerformanceTrack

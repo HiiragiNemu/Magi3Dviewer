@@ -1998,3 +1998,11 @@ button img {
     white-space: nowrap;
     padding: 2px 6px;
 }
+
+/* Catalogue footer is information, not an empty padded panel. */
+.runtime-selection-panel :is(#stage-list-status,#scene-list-status,#character-list-status){margin:0;padding:2px 6px 4px;line-height:1.3;font-size:12px;flex:0 0 auto;}
+.runtime-selection-tile[data-loadable="false"]{opacity:.78;}
+.runtime-selection-tile.is-selected{opacity:1;}
+.ve-chip.is-selected{border-color:var(--ve-leader-colour);}
+
+.runtime-selection-panel > .runtime-selection-panel-content{padding:8px 10px 4px;gap:6px;}

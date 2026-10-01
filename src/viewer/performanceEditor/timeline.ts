@@ -1,3 +1,4 @@
+import {validateRecordedLanes} from './recordings.ts'
 import { CHARACTER_TIMELINE_SCHEMA, CharacterTimeline } from '../characterTimeline.ts'
 import type { CharacterTimelineTrack } from '../characterTimeline.ts'
 import type { PerformanceDocument, PerformanceKey, PerformanceTrack, SampledPerformanceTrack } from './types.ts'
@@ -41,6 +42,8 @@ export class PerformanceTimeline {
                 audioIds.add(audio.id)
             }
         }
+        if(d.sceneId!==undefined&&(typeof d.sceneId!=='string'||!d.sceneId||d.sceneId.length>250||!/^[-\w.:]+$/.test(d.sceneId)))throw Error('Invalid recorded scene identity')
+        validateRecordedLanes(d.recordedLanes,d.duration)
         const ids = new Set<string>()
         const keyIds = new Set<string>()
         const channels = new Set<string>()
@@ -65,6 +68,13 @@ export class PerformanceTimeline {
         this.sampler = new CharacterTimeline({ schema: CHARACTER_TIMELINE_SCHEMA, duration: d.duration, loop: false, tracks })
     }
     get value() { return structuredClone(this.document) }
+    // Frame consumers never clone potentially large recorded keyframe payloads.
+    get duration(){return this.document.duration}
+    get loop(){return this.document.loop}
+    get tracks(){return this.document.tracks as readonly PerformanceTrack[]}
+    get audioTracks(){return this.document.audioTracks??[]}
+    get recordedLanes(){return this.document.recordedLanes??[]}
+
     replace(document: PerformanceDocument) {
         const validated = new PerformanceTimeline(document)
         this.document = validated.document; this.sampler = validated.sampler

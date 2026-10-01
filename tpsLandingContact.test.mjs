@@ -41,3 +41,14 @@ test('landing with another queued jump is not permanently locked or replayed eve
  for(let i=0;i<120;i++){const s=controller.advance(1/60);if(lastGround&&!s.grounded)launches++;lastGround=s.grounded}
  assert.equal(launches,1)
 })
+
+for(const fps of [90,144,240])test(`one-frame idle jump survives the renderer idle optimization at ${fps} FPS`,()=>{
+ const {controller}=fixture();let airborne=false,launches=0,lastGrounded=true
+ for(let i=0;i<fps*3;i++){
+  const input={moveX:0,moveZ:0,run:false,jumpPressed:i===0};controller.setInput(input)
+  const before=controller.snapshot(),speed=Math.hypot(before.velocity.x,before.velocity.z)
+  if(input.jumpPressed||controller.hasPendingJump||speed>1e-4||!before.grounded||before.state!=='idle')controller.advance(1/fps)
+  const state=controller.snapshot();if(lastGrounded&&!state.grounded)launches++;lastGrounded=state.grounded;airborne ||= !state.grounded
+ }
+ assert.ok(airborne);assert.equal(launches,1);assert.equal(controller.snapshot().state,'idle');assert.equal(controller.hasPendingJump,false)
+})

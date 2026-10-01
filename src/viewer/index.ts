@@ -26,7 +26,9 @@ import { setupFloatingPanelDrag } from './floatingPanelInteraction'
 import { getNonBattleExpressionRuntime } from '../../magia-exedra-character-three/nonBattleExpressionRuntime.ts'
 import { createLoadingProgressPanel } from './loadingProgressPanel'
 import { createViewportFraming } from './performanceEditor/viewportFraming'
-import { mountPerformanceWorkspace } from './performanceEditor/workspace'
+import { mountPerformanceStudio } from './performanceEditor/studio'
+import { PerformanceRecorder } from './performanceEditor/recorder'
+import type { RecordedActor } from './performanceEditor/recordings'
 import { createJointNodeLayer, beginJointPointerDrag, beginExistingJointGizmoPointerDrag } from './performanceEditor/jointNodes'
 import * as THREE from 'three'
 import Stats from 'three/addons/libs/stats.module.js';
@@ -54,6 +56,7 @@ import { fetchVoiceCatalogManifest, VoiceCatalog } from './voice/catalog'
 import { getViewerCharacterPhysicsAttachment } from './characterPhysics'
 import type { VoicePoseAvailability, VoicePoseChannelLease } from './voice/poseChannels'
 import {
+    loadStageById,getCurrentStageDefinition,
     STAGE_SHADOW_QUALITY_CHANGE_EVENT,
     getStageShadowQuality,
     getStageShadowQualityState,
@@ -307,6 +310,20 @@ let singleCharacterTransformOrbitWasEnabled = true
 let singleObjectTransformOnChange: (() => void) | undefined
 let performanceEditorController: ReturnType<typeof mountPerformanceEditor> | undefined
 let performanceHost: ReturnType<typeof createViewerPerformanceHost> | undefined
+let performanceRecorder: PerformanceRecorder | undefined
+const studioAdoptedExpressions=new WeakSet<THREE.Object3D>()
+function restoreStudioOutputs(){performanceRecorder?.restore()}
+function listRecordedActors():RecordedActor[]{
+    const counts=new Map<string,number>(),result:RecordedActor[]=[]
+    for(const slot of scene.characters){const character=slot.character;if(!character||slot.loading||slot.removed||character.disposed)continue
+        const resourceId=String(character.userData.characterId),instance=counts.get(resourceId)??0;counts.set(resourceId,instance+1)
+        result.push({object:character.object,actorKey:character.object.uuid,resourceId,instance,type:'character',generation:slot.loadGeneration??0,label:formatCharacterTrilingualName(resourceId,characters.getCharacterNameById(resourceId)),current:()=>slot.character===character&&!slot.removed&&!character.disposed})
+    }
+    const enemyCounts=new Map<string,number>()
+    for(const enemy of enemyPanelController?.enemyResources.getInstances()??[]){const resourceId=String(enemy.entry.enemyMstId),instance=enemyCounts.get(resourceId)??0;enemyCounts.set(resourceId,instance+1);result.push({object:enemy.object,actorKey:enemy.object.uuid,resourceId,instance,type:'enemy',generation:0,label:'敌人 '+resourceId,current:()=>!!enemyPanelController?.enemyResources.getInstances().includes(enemy)})}
+    return result
+}
+
 const performanceEditorTransitionSeconds = 0.18
 const performanceActorListeners = new Set<() => void>()
 const performanceExternalLeases = new Map<THREE.Object3D, {
@@ -541,7 +558,7 @@ function setupPerformanceEditor() {
     panel.id = 'performance-editor-panel'; panel.hidden = true
     // The hidden mount owns editor lifecycle; regions are placed around #viewer.
     menu.append(toggle); workspace.append(panel)
-    let layout: ReturnType<typeof mountPerformanceWorkspace> | undefined
+    let layout: ReturnType<typeof mountPerformanceStudio> | undefined
     let jointNodes: ReturnType<typeof createJointNodeLayer> | undefined
     let framing: ReturnType<typeof createViewportFraming> | undefined
     const host = createViewerPerformanceHost({
@@ -581,12 +598,53 @@ function setupPerformanceEditor() {
             }, report: editor.panel.reportJointError,
             schedule: callback => requestAnimationFrame(callback), cancel: id => cancelAnimationFrame(id),
         })
-        layout = mountPerformanceWorkspace({
-            workspace, panel: performanceEditorController.panel, toggle,
-            onExit: () => performanceEditorController?.runtime.stop(),
-            onOpenChange: open => { framing?.setEnabled(open); jointNodes?.setEnabled(open) },
-            onFrameActor: () => framing?.frame(),
+        performanceRecorder = new PerformanceRecorder(editor.runtime,{
+            scene:()=>getCurrentStageDefinition()?.id,loadScene:async id=>{const select=document.getElementById('stage-selector') as HTMLSelectElement;const option=[...select.options].find(o=>o.value===id);if(!option||option.disabled)throw Error('项目场景当前不可加载：'+id);if(getCurrentStageDefinition()?.id!==id)await loadStageById(id);if(getCurrentStageDefinition()?.id!==id)throw Error('项目场景加载失败，保留现有项目：'+id)},
+            actors:listRecordedActors,camera:()=>({camera:scene.camera,target:scene.controls.target}),
+            select:actor=>{const slot=scene.characters.find(s=>s.character?.object===actor.object);if(slot&&slot!==scene.characterSelected)selectCharacter(slot);else{const enemy=enemyPanelController?.enemyResources.getInstances().find(e=>e.object===actor.object);if(enemy)enemyPanelController?.selectInstance(enemy.instanceId)}},
+            playback:()=>{if(isViewerLocomotionEnabled())setViewerLocomotionEnabled(false);setDirectPoseEditing(false);closeObjectTransform()},
+            releaseCamera:()=>{adoptViewerCamera();if(!isViewerLocomotionEnabled()&&!directPoseGizmoDragging)scene.controls.enabled=true},
+            beforeCapture:finishDirectPoseDrag,
+            adoptPose:(actor,kinds)=>{
+                finishDirectPoseDrag()
+                const object=actor.object,character=scene.characters.find(s=>s.character?.object===object)?.character
+                if(kinds.includes('motion')){
+                    const snapshot=captureModelLocal(object)
+                    getPoseEntries(object).forEach(entry=>{entry.offsets.set(0,0,0);entry.positionOffsets.set(0,0,0);entry.scaleFactors=undefined;entry.lastApplied=entry.lastBase=undefined;entry.lastAppliedPosition=entry.lastBasePosition=undefined;entry.lastAppliedScale=entry.lastBaseScale=undefined;entry.unrestricted=false})
+                    poseOrigins.set(object,snapshot);poseFrozenBases.set(object,snapshot)
+                    if(character)character.animation.paused=true
+                    else enemyPanelController?.enemyResources.getInstances().find(e=>e.object===object)?.setAnimationPaused(true)
+                    teleportViewerCharacter(object,object.position.clone(),object.quaternion.clone())
+                    for(const [id,pose]of snapshot){const entry=manualPoseByCharacter.get(object)?.get(id);if(entry)writeLocal(entry.bone,pose)}
+                }
+                if(kinds.includes('expression')){
+                    const meshes=getMorphTargetMeshes(object),map=new Map<string,ManualMorphEntry>()
+                    for(const mesh of meshes)for(const[name,index]of Object.entries(mesh.morphTargetDictionary)){
+                        const value=mesh.morphTargetInfluences[index]??0;let entry=map.get(name);if(!entry){entry={value,baselineByMesh:new Map()};map.set(name,entry)}entry.baselineByMesh.set(mesh,value)
+                    }
+                    manualMorphsByCharacter.set(object,map);studioAdoptedExpressions.add(object)
+                }
+                rebuildActionParameterChannels();rebuildExpressionParameterChannels();updateDirectPoseUi()
+            },
+            loadActors:async targets=>{for(const target of targets){if(target.type==='enemy'){if(!enemyPanelController)throw Error('敌人资源管理器尚未就绪');while(listRecordedActors().filter(a=>a.type==='enemy'&&a.resourceId===target.resourceId).length<=target.instance)await enemyPanelController.enemyResources.addEnemy(Number(target.resourceId),scene.scene);enemyPanelController.refreshInstances();continue}while(listRecordedActors().filter(a=>a.type==='character'&&a.resourceId===target.resourceId).length<=target.instance)await addOrChangeCharacter(target.resourceId)}notifyPerformanceActors()},
         })
+        layout = mountPerformanceStudio({
+            panel:editor.panel,toggle,recorder:performanceRecorder,
+            selected:()=>scene.characterSelected?.character?.object.uuid,
+            pose:()=>setDirectPoseEditing(true),
+            expression:()=>{if(!expressionPanel.classList.contains('is-open'))expressionPanelToggle.click()},
+            tps:()=>setViewerLocomotionEnabled(!isViewerLocomotionEnabled()),
+            focus:()=>{
+                const bounds=new THREE.Box3();for(const actor of listRecordedActors())bounds.union(editorGround.visualBounds(actor.object));if(bounds.isEmpty())return
+                const center=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3()),rect=scene.renderer.domElement.getBoundingClientRect(),top=Math.max(0,(document.getElementById('menu')?.getBoundingClientRect().bottom??0)-rect.top),bottom=parseFloat(document.body.style.getPropertyValue('--studio-reserved-height'))||0
+                const tangent=Math.tan(THREE.MathUtils.degToRad(scene.camera.fov)/2),fraction=Math.max(.28,(rect.height-top-bottom)/rect.height),distance=Math.max(size.y/(2*tangent*fraction*.78),size.x/(2*tangent*scene.camera.aspect*.8),size.z*1.6,1)
+                const direction=scene.camera.getWorldDirection(new THREE.Vector3()).negate(),up=new THREE.Vector3(0,1,0).applyQuaternion(scene.camera.quaternion)
+                scene.controls.target.copy(center).addScaledVector(up,(top-bottom)/rect.height*tangent*distance);scene.camera.position.copy(scene.controls.target).addScaledVector(direction,distance)
+                scene.camera.updateMatrixWorld(true);adoptViewerCamera()
+            },
+            onOpenChange:()=>{framing?.setEnabled(false);jointNodes?.setEnabled(false)},
+        })
+        Object.assign(window,{magiusPerformanceStudio:{recorder:performanceRecorder,runtime:editor.runtime,open:()=>layout?.setOpen(true),close:()=>layout?.setOpen(false)}})
         // Load the official voice manifest independently of the voice popup so
         // timeline projects can drive several actors without stealing its player.
         void fetchVoiceCatalogManifest().then(manifest => {
@@ -605,6 +663,7 @@ function setupPerformanceEditor() {
         disposed = true
         scene.scene.removeEventListener('childadded', changed); scene.scene.removeEventListener('childremoved', changed)
         layout?.dispose()
+        performanceRecorder?.dispose();performanceRecorder=undefined
         framing?.dispose()
         jointNodes?.dispose()
         performanceEditorController?.dispose(); performanceEditorController = undefined
@@ -757,10 +816,12 @@ export function setupViewer() {
     setupBackgroundImageSelector()
     setupCameraModeButtons()
 
+    addBeforeAnimationLoop(restoreStudioOutputs)
     addBeforeAnimationLoop(restoreManualPoseOverrides)
     scene.animateLoopCallback = animateLoop
 
     onPermanentPageExit(() => {
+        removeBeforeAnimationLoop(restoreStudioOutputs)
         removeBeforeAnimationLoop(restoreManualPoseOverrides)
         finishDirectPoseDrag()
         directPoseToolsUi?.dispose()
@@ -3194,6 +3255,7 @@ function animateLoop() {
     applyManualPoseOverrides()
     performanceGizmoFlush?.()
     performanceHost?.flushFinalPoseBeforeCamera()
+    performanceRecorder?.frame()
     if (objectTransformUiPending) {
         objectTransformUiPending = false
         if (singleObjectTransformOnChange) singleObjectTransformOnChange()
@@ -3429,6 +3491,7 @@ function selectCharacter(sceneCharacter: SceneCharacter) {
                 'Default face': officialDefaultFaceState,
             } as Record<string, string>),
             value => {
+                if(studioAdoptedExpressions.has(character.object)){manualMorphsByCharacter.delete(character.object);studioAdoptedExpressions.delete(character.object)}
                 if (value === officialDefaultFaceState) {
                     character.expression?.resetToDefault()
                 } else {

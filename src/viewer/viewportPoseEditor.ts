@@ -74,6 +74,30 @@ export function layoutPrimaryPoseControls(items:PrimaryChipBox[],view:{left:numb
     }
     return result
 }
+/** Distinct, deterministic hues within the currently visible panel. Brightness,
+ * not glow/blur, identifies the selected leader. Colour is redundant with text. */
+export function poseLeaderColour(index:number,count:number,selected=false,lightTheme=false){
+    const hue=(index*137.50776405+Math.max(0,count-1)*3)%360
+    const light=selected?(lightTheme?48:82):(lightTheme?32:55)
+    return `hsl(${hue.toFixed(2)} ${selected?90:68}% ${light}%)`
+}
+export function avoidDefaultChipOverlap(items:Array<{key:string;x:number;y:number;width:number;height:number;manual:boolean}>,view:{left:number;right:number;top:number;bottom:number}){
+    const result=new Map<string,{x:number;y:number}>(),placed:typeof items=[]
+    const overlaps=(a:typeof items[number],b:typeof items[number])=>a.x<b.x+b.width+3&&a.x+a.width+3>b.x&&a.y<b.y+b.height+3&&a.y+a.height+3>b.y
+    for(const item of [...items.filter(x=>x.manual),...items.filter(x=>!x.manual)]){
+        let best={...item}
+        if(!item.manual&&placed.some(b=>overlaps(best,b))){
+            let distance=Infinity
+            const xs=[item.x,view.left,view.right-item.width]
+            for(let x=view.left;x+item.width<=view.right;x+=item.width+5)xs.push(x)
+            const ys=[item.y]
+            for(let y=view.top;y+item.height<=view.bottom;y+=item.height+5)ys.push(y)
+            for(const x of xs)for(const y of ys){const candidate={...item,x,y};if(x<view.left||x+item.width>view.right||y<view.top||y+item.height>view.bottom||placed.some(b=>overlaps(candidate,b)))continue;const d=(x-item.x)**2+(y-item.y)**2;if(d<distance){distance=d;best=candidate}}
+        }
+        placed.push(best);result.set(item.key,{x:best.x,y:best.y})
+    }
+    return result
+}
 const LAYOUT_KEY='magius.viewport-chip-layout.v1'
 /** Independent fit-content chips, not a modal tray. Only actual controls claim
  * pointer input. Layout handles move UI only; joint buttons still edit pose. */
@@ -190,7 +214,7 @@ export function createViewportPoseEditor(options: Options) {
     const layout=()=>{
         rect=options.canvas.getBoundingClientRect();const viewport=window.visualViewport
         top=Math.max(rect.top,viewport?.offsetTop??0,document.getElementById('menu')?.getBoundingClientRect().bottom??0)
-        bottom=Math.min(rect.bottom,(viewport?.offsetTop??0)+(viewport?.height??innerHeight));viewWidth=Math.min(innerWidth,rect.right)
+        bottom=Math.min(rect.bottom,(viewport?.offsetTop??0)+(viewport?.height??innerHeight),innerHeight-(parseFloat(document.body.style.getPropertyValue('--studio-reserved-height'))||0));viewWidth=Math.min(innerWidth,rect.right)
         const visible=[...chips.values()].filter(c=>!isHidden(c));for(const c of visible){const r=c.root.getBoundingClientRect();c.width=r.width;c.height=r.height}
         const gap=4,wide=viewWidth>=700
         const assign=(c:Chip,x:number,y:number)=>{c.homeX=x;c.homeY=y;const saved=preferences[c.key];if(layoutDrag?.chip===c)return;if(saved&&Number.isFinite(saved.x)&&Number.isFinite(saved.y))place(c,(mirrored(c)?1-saved.x:saved.x)*(viewWidth-c.width),top+saved.y*(bottom-top-c.height));else place(c,x,y)}
@@ -231,6 +255,11 @@ export function createViewportPoseEditor(options: Options) {
             let y=Math.max(wide?top+10:toolsBottom,bottom-(countRows+2)*38-8)
             y=pack(chooserChips,y)+gap;pack(nodeChips,y)
         }
+        // Preserve deliberate user placements. Default chips must never cover
+        // one another after viewport shrink, text resize or mode changes.
+        const priority=[...nodeChips,...visible.filter(c=>c.root.parentElement===chooser),...toolChips]
+        const resolved=avoidDefaultChipOverlap(priority.map(c=>({key:c.key,x:c.x,y:c.y,width:c.width,height:c.height,manual:!!preferences[c.key]})),{left:4,right:viewWidth-4,top:top+4,bottom:bottom-4})
+        for(const c of priority){const next=resolved.get(c.key);if(next&&!preferences[c.key]){c.homeX=next.x;c.homeY=next.y;place(c,next.x,next.y)}}
         selection.hidden=true // The selected chip is already named and highlighted.
         layoutDirty=false
     }
@@ -284,6 +313,10 @@ export function createViewportPoseEditor(options: Options) {
             const signature=[p.x.toFixed(3),p.y.toFixed(3),p.z.toFixed(5),c.x,c.y,c.width,c.height,visible,part.bone===selected].join('|')
             if(projectionSignatures[i]===signature)continue
             projectionSignatures[i]=signature
+            const colour=poseLeaderColour(i,parts.length,part.bone===selected,document.body.classList.contains('theme-light'))
+            line.style.stroke=colour;line.style.strokeOpacity=part.bone===selected?'1':'.72';line.style.strokeWidth=part.bone===selected?'2.8':'1.35'
+            dot.style.fill=colour;c.root.style.setProperty('--ve-leader-colour',colour)
+            c.root.dataset.leaderColour=colour
             line.setAttribute('visibility',visible?'visible':'hidden');dot.setAttribute('visibility',visible?'visible':'hidden');hit.setAttribute('visibility',visible?'visible':'hidden')
             c.root.classList.toggle('anchor-offscreen',!visible);c.root.classList.toggle('is-selected',part.bone===selected)
             c.control.dataset.anchorX=String(p.x);c.control.dataset.anchorY=String(p.y);c.control.dataset.anchorZ=String(p.z)
@@ -296,7 +329,7 @@ export function createViewportPoseEditor(options: Options) {
     }
     const resize=()=>{primaryHomes.clear();layoutDirty=true;refresh()}
     const observer=new ResizeObserver(resize);observer.observe(options.canvas);const menu=document.getElementById('menu');if(menu)observer.observe(menu)
-    window.addEventListener('resize',resize,events);window.visualViewport?.addEventListener('resize',resize,events);window.visualViewport?.addEventListener('scroll',resize,events)
+    document.addEventListener('magius:studio-layout',resize,events);window.addEventListener('resize',resize,events);window.visualViewport?.addEventListener('resize',resize,events);window.visualViewport?.addEventListener('scroll',resize,events)
     window.addEventListener('blur',()=>{stopNodes();if(layoutDrag){persist(layoutDrag.chip);layoutDrag.chip.root.classList.remove('is-arranging');layoutDrag=undefined}},events)
     document.addEventListener('magius:localechange',()=>{buildNodes();lastKey='';refresh()},events)
     refresh()

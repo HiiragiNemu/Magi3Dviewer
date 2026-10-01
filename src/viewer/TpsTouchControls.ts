@@ -107,6 +107,7 @@ export class TpsTouchControls {
         }, options)
         this.exitButton.addEventListener('click', event => { swallow(event); this.hooks.exit() }, options)
         const layout = () => { this.reset(); this.layout() }
+        document.addEventListener('magius:studio-layout', () => this.layout(), options)
         window.addEventListener('resize', layout, options)
         window.visualViewport?.addEventListener('resize', layout, options)
         window.visualViewport?.addEventListener('scroll', layout, options)
@@ -170,7 +171,7 @@ export class TpsTouchControls {
         const left = Math.max(rect.left, viewport?.offsetLeft ?? 0)
         const top = Math.max(rect.top, viewport?.offsetTop ?? 0)
         const right = Math.min(rect.right, (viewport?.offsetLeft ?? 0) + (viewport?.width ?? innerWidth))
-        const bottom = Math.min(rect.bottom, (viewport?.offsetTop ?? 0) + (viewport?.height ?? innerHeight))
+        const bottom = Math.min(rect.bottom, (viewport?.offsetTop ?? 0) + (viewport?.height ?? innerHeight), innerHeight-(parseFloat(document.body.style.getPropertyValue('--studio-reserved-height'))||0))
         Object.assign(this.element.style, { left: `${left}px`, top: `${top}px`, width: `${Math.max(0, right-left)}px`, height: `${Math.max(0, bottom-top)}px` })
     }
     consume(): TpsMovementInput {

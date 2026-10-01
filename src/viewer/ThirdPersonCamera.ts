@@ -263,7 +263,7 @@ export class ThirdPersonCamera {
             if (this.drag && this.drag.id !== event.pointerId) return
             // A click selects; a drag looks/pans. Neither silently locks the
             // cursor. Double-clicking the canvas is the explicit recapture.
-            this.drag={id:event.pointerId,x:event.clientX,y:event.clientY,startX:event.clientX,startY:event.clientY,mode:event.button!==0||event.shiftKey?'pan':'rotate',moved:false}
+            this.drag={id:event.pointerId,x:event.clientX,y:event.clientY,startX:event.clientX,startY:event.clientY,mode:event.button!==0||event.shiftKey||event.ctrlKey||event.metaKey?'pan':'rotate',moved:false}
             this.hooks.scene().renderer.domElement.setPointerCapture(event.pointerId)
         }, {capture:true,signal})
         for (const name of ['pointerup','pointercancel','lostpointercapture']) document.addEventListener(name,event=>{
