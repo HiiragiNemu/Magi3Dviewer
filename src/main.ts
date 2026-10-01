@@ -7,6 +7,8 @@ import { setupStageSelector } from './viewer/stages'
 
 installOfficialStageTextureResolver()
 installLocalization()
+window.dispatchEvent(new CustomEvent('magius:bootstrap-stage', { detail: 'viewer-initializing' }))
 setupViewer()
 installOfficialStageAlphaCutoutFixes()
 void setupStageSelector()
+window.dispatchEvent(new Event('magius:bootstrap-ready'))

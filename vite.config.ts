@@ -3,6 +3,7 @@ import legacy from '@vitejs/plugin-legacy'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import { visualizer } from "rollup-plugin-visualizer"
 import { magiusCompressedAssetProxyPlugin } from './viteCompressedAssetProxy.mjs'
+import { magiusStartupGuardPlugin } from './viteStartupGuard.mjs'
 
 const lightweightDeployment = process.env.MAGIUS_DEPLOY_LIGHTWEIGHT === '1'
 
@@ -10,6 +11,7 @@ export default defineConfig({
   publicDir: lightweightDeployment ? false : 'public',
   base: '',
   plugins: [
+    magiusStartupGuardPlugin(),
     magiusCompressedAssetProxyPlugin(),
     legacy({
       // tested working on chrome 61, firefox 68
