@@ -1,3 +1,6 @@
+import { createTpsTargetMenu } from './tpsTargetMenu'
+import { createCameraCornerControls } from './cameraCornerControls'
+import { frameWholeObject, safePartFocusDistance } from './cameraFraming'
 import { installOrbitTwoFingerGesture } from './OrbitTwoFingerGesture'
 import { installContextRecovery } from './pageLifecycle'
 import { readWorkspaceSession, writeWorkspaceSession, type WorkspaceSession } from './sessionWorkspace'
@@ -62,6 +65,7 @@ import {
     detachViewerLocomotion,
     selectViewerLocomotion,
     setViewerLocomotionEnabled,
+    isViewerLocomotionEnabled, adoptViewerCamera, rotateViewerCameraPlane, canControlViewerActor,
     setupViewerLocomotion,
     teleportViewerCharacter,
     createViewerPerformanceHost,
@@ -2316,7 +2320,7 @@ function setupViewportEditor() {
         } })
     }
     viewportEditor = createViewportPoseEditor({
-        camera: scene.camera, canvas: scene.renderer.domElement, translate: translateUiText, locale: getUiLocale,
+        camera: () => scene.camera, canvas: scene.renderer.domElement, translate: translateUiText, locale: getUiLocale,
         state: () => ({ actor: getPoseActor(), object: movementSelection.current?.object,
             active: directPoseEditingEnabled || singleCharacterTransformActive || Boolean(scene.transformControls.object && scene.characterSelectionVisible),
             pose: directPoseEditingEnabled, mode: directPoseEditingEnabled ? directPoseTransformMode : (singleCharacterTransformActive ? singleCharacterTransformControls?.mode : scene.transformControls.mode) === 'rotate' ? 'rotate' : 'translate',
@@ -2375,7 +2379,7 @@ function setupViewportEditor() {
             const bounds=new THREE.Box3().setFromPoints(points),center=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3())
             const canvas=scene.renderer.domElement.getBoundingClientRect(),top=Math.max(canvas.top,document.getElementById('menu')?.getBoundingClientRect().bottom??0)
             const fraction=Math.max(.25,(canvas.bottom-top-130)/canvas.height),tangent=Math.tan(THREE.MathUtils.degToRad(scene.camera.fov)/2)
-            const distance=Math.max(scene.camera.near*4,Math.max(size.length()*1.7,.17*scale)/(2*tangent*fraction*.55))
+            const desiredDistance=Math.max(scene.camera.near*4,Math.max(size.length()*1.7,.17*scale)/(2*tangent*fraction*.55))
             // Approach a hand from outside the torso, not straight through the
             // chest. A hands-on-hips pose can otherwise hide every finger even
             // though the camera was mathematically centered on its joint.
@@ -2384,6 +2388,7 @@ function setupViewportEditor() {
             if(hand)direction.y=0
             if(direction.lengthSq()<1e-10)direction.copy(scene.camera.position).sub(scene.controls.target)
             direction.normalize();const up=new THREE.Vector3(0,1,0)
+            const distance=safePartFocusDistance(center,direction,desiredDistance,editorGround.visualBounds(actor),scene.camera.near)
             scene.controls.target.copy(center).addScaledVector(up,(top-canvas.top-100)/canvas.height*tangent*distance)
             scene.camera.position.copy(scene.controls.target).addScaledVector(direction,distance);scene.controls.update();scene.camera.updateMatrixWorld(true)
         },
@@ -3027,6 +3032,27 @@ function setupCharacterAddSelector() {
 
 function setupViewerInputHandler() {
     setupSingleCharacterTransformControls()
+    const targetMenu=createTpsTargetMenu({button:locomotionModeToggle,locale:getUiLocale,
+        active:isViewerLocomotionEnabled,setActive:setViewerLocomotionEnabled,
+        selected:()=>scene.characterSelected?.character?.object.uuid,
+        targets:()=>scene.characters.flatMap((slot,i)=>{
+            const actor=slot.character;if(!actor)return[]
+            const id=String(actor.userData.characterId)
+            const label=document.querySelector<HTMLOptionElement>(`#character-selector option[value="${id}"]`)?.textContent??id
+            return[{key:actor.object.uuid,label:`${i+1}. ${label}`,enabled:canControlViewerActor(slot)}]
+        }),select:key=>{const slot=scene.characters.find(c=>c.character?.object.uuid===key);if(slot&&canControlViewerActor(slot)&&slot!==scene.characterSelected)selectCharacter(slot)}})
+    const corner=createCameraCornerControls({locale:getUiLocale,roll:rotateViewerCameraPlane,focus:()=>{
+        finishDirectPoseDrag()
+        const actor=isViewerLocomotionEnabled()?scene.characterSelected?.character?.object:movementSelection.current?.object??scene.characterSelected?.character?.object
+        if(!actor)return
+        const rect=scene.renderer.domElement.getBoundingClientRect(),roll=scene.cameraRotation
+        if(frameWholeObject(scene.camera,scene.controls.target,editorGround.visualBounds(actor),rect,document.getElementById('menu')?.getBoundingClientRect().bottom??0)){
+            editorGround.constrainCamera(scene.camera,scene.controls)
+            if(isViewerLocomotionEnabled())adoptViewerCamera()
+            else {scene.controls.update();scene.cameraRotation=roll}
+        }
+    }})
+    onPermanentPageExit(()=>{targetMenu.dispose();corner.dispose()})
     const twoFinger=installOrbitTwoFingerGesture({canvas:scene.renderer.domElement,camera:()=>scene.camera,controls:()=>scene.controls,
         enabled:()=>!document.body.classList.contains('locomotion-mode-enabled')&&!performanceGizmoActive,
         beforeBegin:()=>finishDirectPoseDrag(),getRoll:()=>scene.cameraRotation??0,setRoll:value=>{scene.cameraRotation=value}})
@@ -3039,9 +3065,9 @@ function setupViewerInputHandler() {
         if(!document.body.classList.contains('locomotion-mode-enabled')||performanceGizmoActive)return
         const {x,y}=(event as CustomEvent<{x:number;y:number}>).detail
         if(!Number.isFinite(x)||!Number.isFinite(y))return
-        const rect=scene.renderer.domElement.getBoundingClientRect()
-        const character=scene.getIntersectedCharacter(x-rect.left,y-rect.top)
-        if(character&&character!==scene.characterSelected)selectCharacter(character)
+        const hit=pickObject({clientX:x,clientY:y} as MouseEvent)
+        const character=scene.characters.find(slot=>slot.character?.object===hit?.object)
+        if(character&&canControlViewerActor(character)&&character!==scene.characterSelected)selectCharacter(character)
     })
     // A touch activation owns its following compatibility click/dblclick.
     // Newly mounted editor buttons must not receive the opening finger's click.
@@ -3093,6 +3119,13 @@ function setupViewerInputHandler() {
     }
     function mouseClickHandler(e: MouseEvent) {
         if (directPoseEditingEnabled || performanceGizmoActive) return
+        if(document.body.classList.contains('locomotion-mode-enabled')) {
+            if(document.pointerLockElement&&document.pointerLockElement===scene.renderer.domElement)return
+            if(Math.abs(mouseMoveX)>3||Math.abs(mouseMoveY)>3)return
+            const hit=pickObject(e),slot=scene.characters.find(c=>c.character?.object===hit?.object)
+            if(slot&&canControlViewerActor(slot)&&slot!==scene.characterSelected)selectCharacter(slot)
+            return
+        }
         if (Math.abs(mouseMoveX) > 3 || Math.abs(mouseMoveY) > 3) return
         if (singleCharacterTransformControls?.dragging || scene.transformControls.dragging
             || singleCharacterTransformControls?.axis || scene.transformControls.axis) return
@@ -3102,6 +3135,11 @@ function setupViewerInputHandler() {
     }
     function mouseDoubleClickHandler(e: MouseEvent) {
         if (directPoseEditingEnabled || performanceGizmoActive) return
+        if(document.body.classList.contains('locomotion-mode-enabled')) {
+            e.preventDefault();e.stopPropagation()
+            if(document.pointerLockElement!==scene.renderer.domElement)document.dispatchEvent(new CustomEvent('magius:tps-capture'))
+            return
+        }
         const target = pickObject(e)
         if (!target) return
         if(document.body.classList.contains('locomotion-mode-enabled'))setViewerLocomotionEnabled(false)

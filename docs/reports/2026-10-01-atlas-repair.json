@@ -1,0 +1,1861 @@
+{
+  "schema": "magius.native-atlas-repair.v1",
+  "baseline": "0ea625a",
+  "unityVersion": "2022.3.62f2",
+  "scope": {
+    "battleModels": 90,
+    "nativeTextureComparisons": 1619,
+    "strictMeshComparisons": 529,
+    "strictMeshMatches": 524,
+    "allShippedFbxModels": 98,
+    "additionalModelResources": 8,
+    "additionalNativeTextureComparisons": 93,
+    "proceduralNoiseOnlyModels": 1
+  },
+  "newAffectedCharacterIds": [
+    "101501"
+  ],
+  "additionalAffectedPartsInPreviouslyFixedCharacter": [
+    "101401 weapon_a"
+  ],
+  "repairedFiles": [
+    {
+      "model": "chara_101401_battle_unit",
+      "name": "chara_101401_weapon_a_color",
+      "texturePathId": "3315105633423777482",
+      "bundleSha256": "fdcb3dfbdcdcfa8bb5e2cb66d52dda0b911a29c5c24eea18394cb8149a3b457c",
+      "nativeRGBA256": "834f9e6e0afc35f903647aedee49274857c4c58c4311ddc4c696e6b36a7ba0fd",
+      "beforePngSha256": "1929fbddc79d28796a79d5770f0e7ecb1592960c30ebeb9b4e97ffa34e613a00",
+      "afterPngSha256": "1c8a3149758ca3c68ef477f35cb6486d6640b44925cdc19493e57a697549d0d2",
+      "changedPixels": 100041,
+      "size": [
+        512,
+        512
+      ],
+      "pairedSet": "weapon_a",
+      "meshes": [
+        {
+          "name": "Weapon_Mesh",
+          "vertexCount": 3498,
+          "meshPathId": "-1563916031558516916",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101401_weapon_a_jewel",
+          "pathId": "-8068907213397821919",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101401_weapon_a_aniso",
+          "pathId": "-7601197476344129608",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101401_weapon_a",
+          "pathId": "-7439452214471173098",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101401_weapon_a_blade",
+          "pathId": "782322236103981834",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101401_battle_unit",
+      "name": "chara_101401_weapon_a_shadow",
+      "texturePathId": "-7866645577373402791",
+      "bundleSha256": "fdcb3dfbdcdcfa8bb5e2cb66d52dda0b911a29c5c24eea18394cb8149a3b457c",
+      "nativeRGBA256": "d47ab4d831d152cba22c5d92d9c45e83ff8306dd2958f8b809b3f0dea2a49a12",
+      "beforePngSha256": "ff1a60e030414f20ba649fba88c0d2f8863b627592a6e3b854b5d75fa4a2889c",
+      "afterPngSha256": "4d6ef27df5271d263abd0aecb0a914bc612c1d397d6b6b9bb322d39e1ce24098",
+      "changedPixels": 209560,
+      "size": [
+        512,
+        512
+      ],
+      "pairedSet": "weapon_a",
+      "meshes": [
+        {
+          "name": "Weapon_Mesh",
+          "vertexCount": 3498,
+          "meshPathId": "-1563916031558516916",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101401_weapon_a_jewel",
+          "pathId": "-8068907213397821919",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101401_weapon_a_aniso",
+          "pathId": "-7601197476344129608",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101401_weapon_a",
+          "pathId": "-7439452214471173098",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101401_weapon_a_blade",
+          "pathId": "782322236103981834",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101401_battle_unit",
+      "name": "chara_101401_weapon_a_ctrl",
+      "texturePathId": "189645085961434893",
+      "bundleSha256": "fdcb3dfbdcdcfa8bb5e2cb66d52dda0b911a29c5c24eea18394cb8149a3b457c",
+      "nativeRGBA256": "77ed77c9b137fbbf7fd63230f210ea8593c3b19da2e261e9ee231bc1bf9bbb19",
+      "beforePngSha256": "81bb7ffb95188e50b02e773420dbb1a06d327525e30943b3a2ea1a4c398609f4",
+      "afterPngSha256": "6842ec7807951695757e8f8d2badb7c07c9eb8006deb23eecefe5bbc11a74ceb",
+      "changedPixels": 63842,
+      "size": [
+        512,
+        512
+      ],
+      "pairedSet": "weapon_a",
+      "meshes": [
+        {
+          "name": "Weapon_Mesh",
+          "vertexCount": 3498,
+          "meshPathId": "-1563916031558516916",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101401_weapon_a_jewel",
+          "pathId": "-8068907213397821919",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101401_weapon_a_aniso",
+          "pathId": "-7601197476344129608",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101401_weapon_a",
+          "pathId": "-7439452214471173098",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101401_weapon_a_blade",
+          "pathId": "782322236103981834",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101401_weapon_a_color",
+              "texturePathId": "3315105633423777482"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101401_weapon_a_ctrl",
+              "texturePathId": "189645085961434893"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101401_weapon_a_shadow",
+              "texturePathId": "-7866645577373402791"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101501_battle_unit",
+      "name": "chara_101501_body_color",
+      "texturePathId": "-3596398646026840520",
+      "bundleSha256": "57d4df4285464e8f81756cf0493a7919919884b1bd6fb5658e903ce676f5154f",
+      "nativeRGBA256": "f66a1a8ca2aded23c137408400803e5aa2200f9f5471d6aaa8bf3b4e0a836221",
+      "beforePngSha256": "d8b9f526bbcfc524b749947aa2728548d75c06c9e5597e93647051bd0c20c82a",
+      "afterPngSha256": "6d74e1159337e8e1a0ac779e366a8ec89fbec5ef788e22e666ee106daddf9eae",
+      "changedPixels": 839765,
+      "size": [
+        1024,
+        1024
+      ],
+      "pairedSet": "body",
+      "meshes": [
+        {
+          "name": "Body_Mesh",
+          "vertexCount": 36450,
+          "meshPathId": "-5485233983254588161",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101501_body_aniso",
+          "pathId": "-3697431847719182426",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_alpha",
+          "pathId": "-3355410495519815343",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body",
+          "pathId": "-1588682212415206973",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_matcap",
+          "pathId": "848030371676661086",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_fresnel",
+          "pathId": "2303629096911702351",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_sj",
+          "pathId": "5067033708622102859",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101501_battle_unit",
+      "name": "chara_101501_body_shadow",
+      "texturePathId": "5102238958495320003",
+      "bundleSha256": "57d4df4285464e8f81756cf0493a7919919884b1bd6fb5658e903ce676f5154f",
+      "nativeRGBA256": "90794f66790c9344e86fa945ca1cf09284e63e9964c322ef0aa8ab1ebdcb84af",
+      "beforePngSha256": "54df30c5c1351bf8d70fd4f83377db06290f35b8a6d1b8f9a7509b26d1e3e78d",
+      "afterPngSha256": "ad886749a5d2c7f3a5e8a0385d80891e8d0b8149ca67d2008033275b0540521f",
+      "changedPixels": 716795,
+      "size": [
+        1024,
+        1024
+      ],
+      "pairedSet": "body",
+      "meshes": [
+        {
+          "name": "Body_Mesh",
+          "vertexCount": 36450,
+          "meshPathId": "-5485233983254588161",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101501_body_aniso",
+          "pathId": "-3697431847719182426",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_alpha",
+          "pathId": "-3355410495519815343",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body",
+          "pathId": "-1588682212415206973",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_matcap",
+          "pathId": "848030371676661086",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_fresnel",
+          "pathId": "2303629096911702351",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_sj",
+          "pathId": "5067033708622102859",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101501_battle_unit",
+      "name": "chara_101501_body_ctrl",
+      "texturePathId": "587933954749388219",
+      "bundleSha256": "57d4df4285464e8f81756cf0493a7919919884b1bd6fb5658e903ce676f5154f",
+      "nativeRGBA256": "64e5883ea5b3e0d5b490a2f41402aee3f9cea7c53ba2e44aca369bfbd48a76ae",
+      "beforePngSha256": "e4a605d937c900ec84a2082251f9181285c163ea4c6520f133ab4c91f6d2b706",
+      "afterPngSha256": "7ffa4c52320bea2c506fed7d2e0e89aefbee9827658c34cc308337e6a8a351e7",
+      "changedPixels": 607072,
+      "size": [
+        1024,
+        1024
+      ],
+      "pairedSet": "body",
+      "meshes": [
+        {
+          "name": "Body_Mesh",
+          "vertexCount": 36450,
+          "meshPathId": "-5485233983254588161",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101501_body_aniso",
+          "pathId": "-3697431847719182426",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_alpha",
+          "pathId": "-3355410495519815343",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body",
+          "pathId": "-1588682212415206973",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_matcap",
+          "pathId": "848030371676661086",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_fresnel",
+          "pathId": "2303629096911702351",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_body_sj",
+          "pathId": "5067033708622102859",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_body_color",
+              "texturePathId": "-3596398646026840520"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_body_ctrl",
+              "texturePathId": "587933954749388219"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_body_shadow",
+              "texturePathId": "5102238958495320003"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101501_battle_unit",
+      "name": "chara_101501_acc_color",
+      "texturePathId": "-4222191800711511655",
+      "bundleSha256": "57d4df4285464e8f81756cf0493a7919919884b1bd6fb5658e903ce676f5154f",
+      "nativeRGBA256": "ce870d5b941e89dbf2e59f4621b3fe7848360b75d7273c75fcd35bbf1109c7fb",
+      "beforePngSha256": "7c4603ccc3602d346831d4017e15498e33ccfbaa567528c39abeb377618a47c8",
+      "afterPngSha256": "7e60f35dc830b244bdd7d7fbe41e0fe25e792d808eb0427d1a349fc417994d49",
+      "changedPixels": 254308,
+      "size": [
+        512,
+        512
+      ],
+      "pairedSet": "acc",
+      "meshes": [
+        {
+          "name": "Acc_Mesh",
+          "vertexCount": 5064,
+          "meshPathId": "2972687590609284690",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101501_acc_Gold",
+          "pathId": "5179295441444653962",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_acc_color",
+              "texturePathId": "-4222191800711511655"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_acc_ctrl",
+              "texturePathId": "-1921199975210714793"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_acc_shadow",
+              "texturePathId": "-7921742147109795662"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_acc_aniso",
+          "pathId": "7112971336472673513",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_acc_color",
+              "texturePathId": "-4222191800711511655"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_acc_ctrl",
+              "texturePathId": "-1921199975210714793"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_acc_shadow",
+              "texturePathId": "-7921742147109795662"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_acc",
+          "pathId": "8841466841111532201",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_acc_color",
+              "texturePathId": "-4222191800711511655"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_acc_ctrl",
+              "texturePathId": "-1921199975210714793"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_acc_shadow",
+              "texturePathId": "-7921742147109795662"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101501_battle_unit",
+      "name": "chara_101501_acc_shadow",
+      "texturePathId": "-7921742147109795662",
+      "bundleSha256": "57d4df4285464e8f81756cf0493a7919919884b1bd6fb5658e903ce676f5154f",
+      "nativeRGBA256": "54a4e240b4bbd1c1e9ef78f76780084434edd112c6a7f952f81fb8aaa248f402",
+      "beforePngSha256": "8db6bcdeb0fc0d69792bef2a5ac1edb4678bcdcc504bffd72af8b8f60d5a6744",
+      "afterPngSha256": "e94974f75dc22833b90e6f88c8ca86f81195289ef94000aad6158bf8bb237d0a",
+      "changedPixels": 139090,
+      "size": [
+        512,
+        512
+      ],
+      "pairedSet": "acc",
+      "meshes": [
+        {
+          "name": "Acc_Mesh",
+          "vertexCount": 5064,
+          "meshPathId": "2972687590609284690",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101501_acc_Gold",
+          "pathId": "5179295441444653962",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_acc_color",
+              "texturePathId": "-4222191800711511655"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_acc_ctrl",
+              "texturePathId": "-1921199975210714793"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_acc_shadow",
+              "texturePathId": "-7921742147109795662"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_acc_aniso",
+          "pathId": "7112971336472673513",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_acc_color",
+              "texturePathId": "-4222191800711511655"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_acc_ctrl",
+              "texturePathId": "-1921199975210714793"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_acc_shadow",
+              "texturePathId": "-7921742147109795662"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_acc",
+          "pathId": "8841466841111532201",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_acc_color",
+              "texturePathId": "-4222191800711511655"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_acc_ctrl",
+              "texturePathId": "-1921199975210714793"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_acc_shadow",
+              "texturePathId": "-7921742147109795662"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101501_battle_unit",
+      "name": "chara_101501_acc_ctrl",
+      "texturePathId": "-1921199975210714793",
+      "bundleSha256": "57d4df4285464e8f81756cf0493a7919919884b1bd6fb5658e903ce676f5154f",
+      "nativeRGBA256": "64adca733f9a230045148c9377e0cf01df220433871505501299ceaf049d30fc",
+      "beforePngSha256": "7e4cdfbbe4524a920c80fc36106989fab61b390e251fe5306486b33f2a641aa8",
+      "afterPngSha256": "f264aec5150ef8f66ce61ed9bb8c1f5166b0d50bebd90e277af956158f3075a5",
+      "changedPixels": 111651,
+      "size": [
+        512,
+        512
+      ],
+      "pairedSet": "acc",
+      "meshes": [
+        {
+          "name": "Acc_Mesh",
+          "vertexCount": 5064,
+          "meshPathId": "2972687590609284690",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101501_acc_Gold",
+          "pathId": "5179295441444653962",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_acc_color",
+              "texturePathId": "-4222191800711511655"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_acc_ctrl",
+              "texturePathId": "-1921199975210714793"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_acc_shadow",
+              "texturePathId": "-7921742147109795662"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_acc_aniso",
+          "pathId": "7112971336472673513",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_acc_color",
+              "texturePathId": "-4222191800711511655"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_acc_ctrl",
+              "texturePathId": "-1921199975210714793"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_acc_shadow",
+              "texturePathId": "-7921742147109795662"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_acc",
+          "pathId": "8841466841111532201",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_acc_color",
+              "texturePathId": "-4222191800711511655"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_acc_ctrl",
+              "texturePathId": "-1921199975210714793"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_acc_shadow",
+              "texturePathId": "-7921742147109795662"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101501_battle_unit",
+      "name": "chara_101501_weapon_a_color",
+      "texturePathId": "-8075346163039718821",
+      "bundleSha256": "57d4df4285464e8f81756cf0493a7919919884b1bd6fb5658e903ce676f5154f",
+      "nativeRGBA256": "019c4981687d03c91a3471c63b8263944e9597d84f9b114367541463b1c27112",
+      "beforePngSha256": "2547aa981d5915ca919b25cdfa96d8bb79499e743670557d68d87c784e71a765",
+      "afterPngSha256": "5b858be4e23ca257d6dcff54bf73cd991b07929f692b0878fe20ac4516e0da31",
+      "changedPixels": 241786,
+      "size": [
+        512,
+        512
+      ],
+      "pairedSet": "weapon_a",
+      "meshes": [
+        {
+          "name": "Weapon_Mesh",
+          "vertexCount": 4350,
+          "meshPathId": "-2975822481985688281",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101501_weapon_a_blade",
+          "pathId": "-6639156599204470402",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a_grow",
+          "pathId": "-5623114071895751576",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a_handle",
+          "pathId": "-1957325160529469310",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a",
+          "pathId": "-629325463390696107",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a_ornament",
+          "pathId": "8550816801086662817",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101501_battle_unit",
+      "name": "chara_101501_weapon_a_shadow",
+      "texturePathId": "-7533766245908925015",
+      "bundleSha256": "57d4df4285464e8f81756cf0493a7919919884b1bd6fb5658e903ce676f5154f",
+      "nativeRGBA256": "a64f4f39a065f8f55850d5ed4bb8427bd78a7d94823c882aff3bb921e180d280",
+      "beforePngSha256": "96650b2276edf7998c5f0f58eb5279313190f5b4515f0639368495719742770d",
+      "afterPngSha256": "93ba0e3def14f72338c6b2690c54720ff4d66438d9846e24ecd4635b5bd96039",
+      "changedPixels": 200498,
+      "size": [
+        512,
+        512
+      ],
+      "pairedSet": "weapon_a",
+      "meshes": [
+        {
+          "name": "Weapon_Mesh",
+          "vertexCount": 4350,
+          "meshPathId": "-2975822481985688281",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101501_weapon_a_blade",
+          "pathId": "-6639156599204470402",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a_grow",
+          "pathId": "-5623114071895751576",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a_handle",
+          "pathId": "-1957325160529469310",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a",
+          "pathId": "-629325463390696107",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a_ornament",
+          "pathId": "8550816801086662817",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "model": "chara_101501_battle_unit",
+      "name": "chara_101501_weapon_a_ctrl",
+      "texturePathId": "4026756814997992522",
+      "bundleSha256": "57d4df4285464e8f81756cf0493a7919919884b1bd6fb5658e903ce676f5154f",
+      "nativeRGBA256": "39c4f27e41acbecb3263fcad0d4c64e857bb72a670f277812f6201a8ea1de828",
+      "beforePngSha256": "eae996f59055fe3a8bea18edaaf0b124e6035b0eddbb83ca177e8c0554a0d508",
+      "afterPngSha256": "247fa0ce8d101d6fa02635a3fef3ac7c98ca6deff8691fa8d43aba46803e7b45",
+      "changedPixels": 70247,
+      "size": [
+        512,
+        512
+      ],
+      "pairedSet": "weapon_a",
+      "meshes": [
+        {
+          "name": "Weapon_Mesh",
+          "vertexCount": 4350,
+          "meshPathId": "-2975822481985688281",
+          "maxUVError": 0.0
+        }
+      ],
+      "materialBindings": [
+        {
+          "name": "mt_chara_101501_weapon_a_blade",
+          "pathId": "-6639156599204470402",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a_grow",
+          "pathId": "-5623114071895751576",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a_handle",
+          "pathId": "-1957325160529469310",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a",
+          "pathId": "-629325463390696107",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        },
+        {
+          "name": "mt_chara_101501_weapon_a_ornament",
+          "pathId": "8550816801086662817",
+          "textures": [
+            {
+              "property": "_BaseMap",
+              "textureName": "chara_101501_weapon_a_color",
+              "texturePathId": "-8075346163039718821"
+            },
+            {
+              "property": "_ControlMap",
+              "textureName": "chara_101501_weapon_a_ctrl",
+              "texturePathId": "4026756814997992522"
+            },
+            {
+              "property": "_ShadowTex",
+              "textureName": "chara_101501_weapon_a_shadow",
+              "texturePathId": "-7533766245908925015"
+            },
+            {
+              "property": "_SpecularGradientMap",
+              "textureName": "RDToon_metallic_gradient_map",
+              "texturePathId": "-2280542337700329421"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "excludedCandidates": [
+    {
+      "model": "chara_109801_battle_unit",
+      "name": "chara_109801_weapon_a_prism",
+      "classification": "same prism layout; compression/color differences, no atlas relocation",
+      "rgbCorrelation": 0.9939212900259444,
+      "currentSize": [
+        256,
+        256
+      ],
+      "nativeSize": [
+        256,
+        256
+      ],
+      "mae128": 4.0833,
+      "over32": 0.00787,
+      "edited": false
+    },
+    {
+      "model": "chara_114601_battle_unit",
+      "name": "chara_114601_acc_ctrl",
+      "classification": "uniform control map at different resolution; no atlas layout",
+      "rgbCorrelation": 0.9999889277672823,
+      "currentSize": [
+        512,
+        512
+      ],
+      "nativeSize": [
+        32,
+        32
+      ],
+      "mae128": 0.0771,
+      "over32": 0.0,
+      "edited": false
+    }
+  ],
+  "policy": "Only native PPtr material-bound texture sets whose target FBX UVs match the same native mesh exactly are repaired. Native animations, mesh topology, normals, shaders, and render profiles unchanged.",
+  "nonAtlasMeshComparisonDetails": [
+    {
+      "model": "chara_108002_battle_unit",
+      "mesh": "Body_Mesh",
+      "fbxVertices": 51276,
+      "nativeVertices": 51276,
+      "uvIslandVertexSetEqual": true,
+      "uvBoundaryEqual": true,
+      "boundaryDifference": 0,
+      "totalUVAreaDifference": 1.0771330494208087e-09,
+      "interpretation": "same UV layout, exporter triangle ordering/diagonal triangulation differs"
+    },
+    {
+      "model": "chara_108002_battle_unit",
+      "mesh": "Face_Mesh",
+      "fbxVertices": 7728,
+      "nativeVertices": 7728,
+      "uvIslandVertexSetEqual": true,
+      "uvBoundaryEqual": true,
+      "boundaryDifference": 0,
+      "totalUVAreaDifference": 7.938680823826871e-10,
+      "interpretation": "same UV layout, exporter triangle ordering/diagonal triangulation differs"
+    },
+    {
+      "model": "chara_108002_battle_unit",
+      "mesh": "Hair_Mesh",
+      "fbxVertices": 12303,
+      "nativeVertices": 12303,
+      "uvIslandVertexSetEqual": true,
+      "uvBoundaryEqual": true,
+      "boundaryDifference": 0,
+      "totalUVAreaDifference": 7.503331289626658e-12,
+      "interpretation": "same UV layout, exporter triangle ordering/diagonal triangulation differs"
+    },
+    {
+      "model": "chara_111401_battle_unit",
+      "mesh": "Body_Mesh",
+      "fbxVertices": 40680,
+      "nativeVertices": 40680,
+      "uvIslandVertexSetEqual": true,
+      "uvBoundaryEqual": true,
+      "boundaryDifference": 0,
+      "totalUVAreaDifference": 5.804423608424258e-10,
+      "interpretation": "same UV layout, exporter triangle ordering/diagonal triangulation differs"
+    },
+    {
+      "model": "chara_111601_battle_unit",
+      "mesh": "Sword_Mesh",
+      "fbxVertices": 4272,
+      "nativeVertices": 4272,
+      "uvIslandVertexSetEqual": true,
+      "uvBoundaryEqual": true,
+      "boundaryDifference": 0,
+      "totalUVAreaDifference": 0.0,
+      "interpretation": "four native Sword_* meshes combined"
+    }
+  ],
+  "additionalAuditSummary": [
+    {
+      "model": "chara_100102",
+      "texturesCompared": 13,
+      "atlasMismatchCandidates": 0,
+      "strictUVMeshes": 3,
+      "totalMeshes": 4
+    },
+    {
+      "model": "chara_100108_battle_unit",
+      "texturesCompared": 16,
+      "atlasMismatchCandidates": 0,
+      "strictUVMeshes": 7,
+      "totalMeshes": 7
+    },
+    {
+      "model": "chara_100208_battle_unit",
+      "texturesCompared": 14,
+      "atlasMismatchCandidates": 0,
+      "strictUVMeshes": 4,
+      "totalMeshes": 4
+    },
+    {
+      "model": "chara_101002_battle_unit",
+      "texturesCompared": 20,
+      "atlasMismatchCandidates": 0,
+      "strictUVMeshes": 8,
+      "totalMeshes": 8
+    },
+    {
+      "model": "chara_110702_battle_unit",
+      "texturesCompared": 16,
+      "atlasMismatchCandidates": 0,
+      "strictUVMeshes": 6,
+      "totalMeshes": 6
+    },
+    {
+      "model": "chara_113401_model",
+      "texturesCompared": 0,
+      "atlasMismatchCandidates": 0,
+      "strictUVMeshes": 3,
+      "totalMeshes": 3
+    },
+    {
+      "model": "chara_113501_model",
+      "texturesCompared": 7,
+      "atlasMismatchCandidates": 0,
+      "strictUVMeshes": 2,
+      "totalMeshes": 2
+    },
+    {
+      "model": "chara_113601_model",
+      "texturesCompared": 7,
+      "atlasMismatchCandidates": 0,
+      "strictUVMeshes": 7,
+      "totalMeshes": 7
+    }
+  ],
+  "additionalUVNote": {
+    "model": "chara_100102",
+    "mesh": "Body_Mesh",
+    "expandedVertices": 33000,
+    "differingVerticesAbove1e5": 253,
+    "maxUVDelta": 0.008638840168714523,
+    "meanAbsoluteUVDelta": 6.933723852853291e-06,
+    "interpretation": "Existing small UV adjustment in the school uniform export; all 13 native/local texture comparisons preserve atlas layout, no texture set is replaced. This is not counted as a 101401-type atlas mismatch."
+  },
+  "provenanceClarification": {
+    "101002": "model-binding-contract.sourceCommit is a 40-character Git revision, not a bundle SHA-256. Compared against the real JP_GL bundle: all FBX mesh UVs match, all 20 native textures have no atlas mismatch candidate; no new asset copied."
+  }
+}

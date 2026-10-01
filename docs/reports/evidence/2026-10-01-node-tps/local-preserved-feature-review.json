@@ -1,0 +1,873 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "test": "101401-native-atlas",
+      "textureUrl": "blob:http://127.0.0.1:6595/5449e5dd-4e40-481a-93f8-851087fa9f55",
+      "sha256": "2f163b0454180a6ecce77fd835bc3ca21a12948699f16bcf1e9c8a5cd4de383f"
+    },
+    {
+      "test": "mobile-right-index",
+      "chains": [
+        {
+          "v": "5",
+          "t": "右手 · 拇指"
+        },
+        {
+          "v": "6",
+          "t": "右手 · 食指"
+        },
+        {
+          "v": "7",
+          "t": "右手 · 中指"
+        },
+        {
+          "v": "8",
+          "t": "右手 · 无名指"
+        },
+        {
+          "v": "9",
+          "t": "右手 · 小指"
+        }
+      ],
+      "joints": [
+        {
+          "label": "右食指根",
+          "rect": {
+            "x": 26,
+            "y": 846,
+            "width": 59,
+            "height": 32,
+            "top": 846,
+            "right": 85,
+            "bottom": 878,
+            "left": 26
+          }
+        },
+        {
+          "label": "右食指1",
+          "rect": {
+            "x": 107,
+            "y": 846,
+            "width": 54.046875,
+            "height": 32,
+            "top": 846,
+            "right": 161.046875,
+            "bottom": 878,
+            "left": 107
+          }
+        },
+        {
+          "label": "右食指2",
+          "rect": {
+            "x": 183.046875,
+            "y": 846,
+            "width": 54.046875,
+            "height": 32,
+            "top": 846,
+            "right": 237.09375,
+            "bottom": 878,
+            "left": 183.046875
+          }
+        },
+        {
+          "label": "右食指3",
+          "rect": {
+            "x": 259.09375,
+            "y": 846,
+            "width": 54.046875,
+            "height": 32,
+            "top": 846,
+            "right": 313.140625,
+            "bottom": 878,
+            "left": 259.09375
+          }
+        }
+      ],
+      "touchEdit": true,
+      "undo": true,
+      "redo": true
+    },
+    {
+      "test": "semantic-more",
+      "categories": [
+        "头发",
+        "蝴蝶结与缎带",
+        "裙摆",
+        "肢体辅助",
+        "躯干辅助",
+        "面部",
+        "饰品与武器"
+      ],
+      "chains": [
+        "头发 后 中1",
+        "头发 前 中1",
+        "头发 前 左1",
+        "头发 前 右1",
+        "头发 侧 左1",
+        "头发 侧 右1"
+      ]
+    },
+    {
+      "test": "touch-double-tap-body",
+      "points": [
+        {
+          "name": "Head",
+          "x": 220.62230836951525,
+          "y": 272.92621933471565
+        },
+        {
+          "name": "Chest",
+          "x": 221.09022416706821,
+          "y": 360.1306215442092
+        },
+        {
+          "name": "Waist",
+          "x": 218.25124510948203,
+          "y": 410.6904848307226
+        },
+        {
+          "name": "UpLeg_L",
+          "x": 234.8926092602137,
+          "y": 491.9174283578819
+        },
+        {
+          "name": "Leg_R",
+          "x": 194.1516883607336,
+          "y": 619.5066591813935
+        }
+      ],
+      "stable": true
+    },
+    {
+      "test": "ordinary-optical-roll",
+      "before": {
+        "p": [
+          0,
+          1.0200000000000002,
+          3.2
+        ],
+        "q": [
+          -0.018740121275212122,
+          0,
+          0,
+          0.9998243885075968
+        ],
+        "t": [
+          0,
+          0.9,
+          0
+        ],
+        "roll": 0,
+        "enabled": true
+      },
+      "after": {
+        "p": [
+          0,
+          1.0200000002989458,
+          3.2000000079718824
+        ],
+        "q": [
+          -0.016229421125161105,
+          0.00937006058421354,
+          0.49991219140519677,
+          0.8658733214154621
+        ],
+        "t": [
+          0,
+          0.9,
+          0
+        ],
+        "roll": 59.999999623009856,
+        "enabled": true
+      },
+      "drift": 7.971882265422892e-9
+    },
+    {
+      "test": "enemy-save-feedback",
+      "data": {
+        "location": "http://127.0.0.1:6595/?diagnostic=pose-editor&runtimeDelivery=release",
+        "status": "已保存到此浏览器；关闭并重开仍可载入。",
+        "keys": [
+          "magius.saved-poses.v1",
+          "magius3dviewer.locale"
+        ],
+        "name": "QA enemy independent pose",
+        "list": "<select id=\"pose-saved-list\" aria-label=\"当前模型保存的姿态\"><option value=\"0\">QA enemy independent pose</option></select>"
+      }
+    },
+    {
+      "test": "enemy-load-feedback",
+      "enemyEdited": {
+        "q": [
+          -0.3694692807080594,
+          -0.34307167450569703,
+          0.6411652208098697,
+          0.5785338679703698
+        ],
+        "p": [
+          -0.7663151621818542,
+          -0.21565598249435422,
+          -0.2817886769771576
+        ],
+        "s": [
+          1,
+          1,
+          1
+        ],
+        "root": "Hip"
+      },
+      "enemyLoaded": {
+        "q": [
+          -0.36946928070805934,
+          -0.34307167450569703,
+          0.6411652208098697,
+          0.5785338679703698
+        ],
+        "p": [
+          -0.7663151621818542,
+          -0.21565598249435422,
+          -0.2817886769771576
+        ],
+        "s": [
+          1,
+          1,
+          1
+        ],
+        "root": "Hip"
+      },
+      "data": {
+        "status": "已载入；可撤销。",
+        "keys": [
+          "magius.saved-poses.v1",
+          "magius3dviewer.locale"
+        ],
+        "list": "<select id=\"pose-saved-list\" aria-label=\"当前模型保存的姿态\"><option value=\"0\">QA enemy independent pose</option></select>"
+      }
+    },
+    {
+      "test": "enemy-pose-edit",
+      "instanceId": "enemy-600001-1",
+      "enemyJoint": "50c31e20-238a-46a5-9caf-b80d858a5972",
+      "before": {
+        "q": [
+          -0.4233089130051748,
+          -0.36664399856817154,
+          0.6488331022593107,
+          0.5151673008808678
+        ],
+        "p": [
+          -0.7663151621818542,
+          -0.21565598249435422,
+          -0.2817886769771576
+        ],
+        "s": [
+          1,
+          1,
+          1
+        ],
+        "root": "Hip"
+      },
+      "after": {
+        "q": [
+          -0.3694692807080594,
+          -0.34307167450569703,
+          0.6411652208098697,
+          0.5785338679703698
+        ],
+        "p": [
+          -0.7663151621818542,
+          -0.21565598249435422,
+          -0.2817886769771576
+        ],
+        "s": [
+          1,
+          1,
+          1
+        ],
+        "root": "Hip"
+      },
+      "girlUnchanged": true,
+      "undo": true,
+      "redo": true,
+      "reset": true,
+      "saveLoad": true
+    },
+    {
+      "test": "animation-toolbar-atomic-progress",
+      "progress": {
+        "animation-selector": {
+          "x": 5,
+          "y": 35.5,
+          "width": 112,
+          "height": 26,
+          "top": 35.5,
+          "right": 117,
+          "bottom": 61.5,
+          "left": 5
+        },
+        "enemy-animation-select": {
+          "x": 227,
+          "y": 157.5,
+          "width": 112,
+          "height": 26,
+          "top": 157.5,
+          "right": 339,
+          "bottom": 183.5,
+          "left": 227
+        },
+        "animation-slider": {
+          "x": 235,
+          "y": 33,
+          "width": 62,
+          "height": 31,
+          "top": 33,
+          "right": 297,
+          "bottom": 64,
+          "left": 235
+        },
+        "animation-progress-value": {
+          "x": 299,
+          "y": 41.5,
+          "width": 28,
+          "height": 14,
+          "top": 41.5,
+          "right": 327,
+          "bottom": 55.5,
+          "left": 299
+        },
+        "enemy-animation-slider": {
+          "x": 87,
+          "y": 188.5,
+          "width": 62,
+          "height": 31,
+          "top": 188.5,
+          "right": 149,
+          "bottom": 219.5,
+          "left": 87
+        },
+        "enemy-animation-progress": {
+          "x": 151,
+          "y": 197,
+          "width": 28,
+          "height": 14,
+          "top": 197,
+          "right": 179,
+          "bottom": 211,
+          "left": 151
+        }
+      },
+      "enemyNames": [
+        {
+          "value": "Abnormality_E_1",
+          "label": "异常状态 1（结束）"
+        },
+        {
+          "value": "Abnormality_L",
+          "label": "异常状态（循环）"
+        },
+        {
+          "value": "Abnormality_S_1",
+          "label": "异常状态 1（起始）"
+        },
+        {
+          "value": "Damage_SE",
+          "label": "受伤（单次）"
+        },
+        {
+          "value": "Down_SE",
+          "label": "倒地（单次）"
+        },
+        {
+          "value": "Down_SE_1",
+          "label": "倒地 1（单次）"
+        },
+        {
+          "value": "Wait_L",
+          "label": "待机（循环）"
+        }
+      ]
+    },
+    {
+      "test": "hybrid-desktop-tps-no-mobile-controls",
+      "hidden": true
+    },
+    {
+      "test": "tps-two-finger-and-exit",
+      "tpsDrift": 1.503949365044832e-7,
+      "after": {
+        "p": [
+          -2.610398554090967e-17,
+          1.4999999879684054,
+          7.4999998496050635
+        ],
+        "q": [
+          -0.0368668537007546,
+          0.015270750804877284,
+          0.3823786259410711,
+          0.9231436647085224
+        ],
+        "t": [
+          0,
+          0.8999999999999998,
+          0
+        ],
+        "roll": 0,
+        "enabled": false
+      },
+      "exited": {
+        "p": [
+          -2.6103985540909648e-17,
+          1.4999999879684047,
+          7.499999849605056
+        ],
+        "q": [
+          -0.036866853700754584,
+          0.015270750804877277,
+          0.38237862594107114,
+          0.9231436647085225
+        ],
+        "t": [
+          0,
+          0.8999999999999998,
+          0
+        ],
+        "roll": 45.00000000000001,
+        "enabled": true
+      }
+    },
+    {
+      "test": "responsive-details",
+      "width": 360,
+      "height": 780,
+      "viewport": [
+        360,
+        780
+      ],
+      "scroll": 360,
+      "tray": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 780,
+        "top": 0,
+        "right": 360,
+        "bottom": 780,
+        "left": 0
+      },
+      "chips": [
+        {
+          "x": 8,
+          "y": 658,
+          "width": 108,
+          "height": 32,
+          "top": 658,
+          "right": 116,
+          "bottom": 690,
+          "left": 8
+        },
+        {
+          "x": 120,
+          "y": 658,
+          "width": 136,
+          "height": 32,
+          "top": 658,
+          "right": 256,
+          "bottom": 690,
+          "left": 120
+        },
+        {
+          "x": 260,
+          "y": 658,
+          "width": 77,
+          "height": 32,
+          "top": 658,
+          "right": 337,
+          "bottom": 690,
+          "left": 260
+        },
+        {
+          "x": 8,
+          "y": 694,
+          "width": 77,
+          "height": 32,
+          "top": 694,
+          "right": 85,
+          "bottom": 726,
+          "left": 8
+        },
+        {
+          "x": 89,
+          "y": 694,
+          "width": 72.046875,
+          "height": 32,
+          "top": 694,
+          "right": 161.046875,
+          "bottom": 726,
+          "left": 89
+        },
+        {
+          "x": 165.046875,
+          "y": 694,
+          "width": 72.046875,
+          "height": 32,
+          "top": 694,
+          "right": 237.09375,
+          "bottom": 726,
+          "left": 165.046875
+        },
+        {
+          "x": 241.09375,
+          "y": 694,
+          "width": 72.046875,
+          "height": 32,
+          "top": 694,
+          "right": 313.140625,
+          "bottom": 726,
+          "left": 241.09375
+        }
+      ],
+      "buttons": [
+        {
+          "x": 26,
+          "y": 694,
+          "width": 59,
+          "height": 32,
+          "top": 694,
+          "right": 85,
+          "bottom": 726,
+          "left": 26
+        },
+        {
+          "x": 107,
+          "y": 694,
+          "width": 54.046875,
+          "height": 32,
+          "top": 694,
+          "right": 161.046875,
+          "bottom": 726,
+          "left": 107
+        },
+        {
+          "x": 183.046875,
+          "y": 694,
+          "width": 54.046875,
+          "height": 32,
+          "top": 694,
+          "right": 237.09375,
+          "bottom": 726,
+          "left": 183.046875
+        },
+        {
+          "x": 259.09375,
+          "y": 694,
+          "width": 54.046875,
+          "height": 32,
+          "top": 694,
+          "right": 313.140625,
+          "bottom": 726,
+          "left": 259.09375
+        }
+      ],
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 360,
+        "height": 219,
+        "top": 0,
+        "right": 360,
+        "bottom": 219,
+        "left": 0
+      }
+    },
+    {
+      "test": "responsive-details",
+      "width": 932,
+      "height": 430,
+      "viewport": [
+        932,
+        430
+      ],
+      "scroll": 932,
+      "tray": {
+        "x": 0,
+        "y": 0,
+        "width": 932,
+        "height": 430,
+        "top": 0,
+        "right": 932,
+        "bottom": 430,
+        "left": 0
+      },
+      "chips": [
+        {
+          "x": 166,
+          "y": 308,
+          "width": 130,
+          "height": 32,
+          "top": 308,
+          "right": 296,
+          "bottom": 340,
+          "left": 166
+        },
+        {
+          "x": 300,
+          "y": 308,
+          "width": 166,
+          "height": 32,
+          "top": 308,
+          "right": 466,
+          "bottom": 340,
+          "left": 300
+        },
+        {
+          "x": 470,
+          "y": 308,
+          "width": 79,
+          "height": 32,
+          "top": 308,
+          "right": 549,
+          "bottom": 340,
+          "left": 470
+        },
+        {
+          "x": 166,
+          "y": 344,
+          "width": 79,
+          "height": 32,
+          "top": 344,
+          "right": 245,
+          "bottom": 376,
+          "left": 166
+        },
+        {
+          "x": 249,
+          "y": 344,
+          "width": 74.046875,
+          "height": 32,
+          "top": 344,
+          "right": 323.046875,
+          "bottom": 376,
+          "left": 249
+        },
+        {
+          "x": 327.046875,
+          "y": 344,
+          "width": 74.046875,
+          "height": 32,
+          "top": 344,
+          "right": 401.09375,
+          "bottom": 376,
+          "left": 327.046875
+        },
+        {
+          "x": 405.09375,
+          "y": 344,
+          "width": 74.046875,
+          "height": 32,
+          "top": 344,
+          "right": 479.140625,
+          "bottom": 376,
+          "left": 405.09375
+        }
+      ],
+      "buttons": [
+        {
+          "x": 184,
+          "y": 344,
+          "width": 61,
+          "height": 32,
+          "top": 344,
+          "right": 245,
+          "bottom": 376,
+          "left": 184
+        },
+        {
+          "x": 267,
+          "y": 344,
+          "width": 56.046875,
+          "height": 32,
+          "top": 344,
+          "right": 323.046875,
+          "bottom": 376,
+          "left": 267
+        },
+        {
+          "x": 345.046875,
+          "y": 344,
+          "width": 56.046875,
+          "height": 32,
+          "top": 344,
+          "right": 401.09375,
+          "bottom": 376,
+          "left": 345.046875
+        },
+        {
+          "x": 423.09375,
+          "y": 344,
+          "width": 56.046875,
+          "height": 32,
+          "top": 344,
+          "right": 479.140625,
+          "bottom": 376,
+          "left": 423.09375
+        }
+      ],
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 932,
+        "height": 99,
+        "top": 0,
+        "right": 932,
+        "bottom": 99,
+        "left": 0
+      }
+    },
+    {
+      "test": "responsive-details",
+      "width": 1366,
+      "height": 900,
+      "viewport": [
+        1366,
+        900
+      ],
+      "scroll": 1366,
+      "tray": {
+        "x": 0,
+        "y": 0,
+        "width": 1366,
+        "height": 900,
+        "top": 0,
+        "right": 1366,
+        "bottom": 900,
+        "left": 0
+      },
+      "chips": [
+        {
+          "x": 383,
+          "y": 778,
+          "width": 130,
+          "height": 32,
+          "top": 778,
+          "right": 513,
+          "bottom": 810,
+          "left": 383
+        },
+        {
+          "x": 517,
+          "y": 778,
+          "width": 166,
+          "height": 32,
+          "top": 778,
+          "right": 683,
+          "bottom": 810,
+          "left": 517
+        },
+        {
+          "x": 687,
+          "y": 778,
+          "width": 79,
+          "height": 32,
+          "top": 778,
+          "right": 766,
+          "bottom": 810,
+          "left": 687
+        },
+        {
+          "x": 383,
+          "y": 814,
+          "width": 79,
+          "height": 32,
+          "top": 814,
+          "right": 462,
+          "bottom": 846,
+          "left": 383
+        },
+        {
+          "x": 466,
+          "y": 814,
+          "width": 74.046875,
+          "height": 32,
+          "top": 814,
+          "right": 540.046875,
+          "bottom": 846,
+          "left": 466
+        },
+        {
+          "x": 544.046875,
+          "y": 814,
+          "width": 74.046875,
+          "height": 32,
+          "top": 814,
+          "right": 618.09375,
+          "bottom": 846,
+          "left": 544.046875
+        },
+        {
+          "x": 622.09375,
+          "y": 814,
+          "width": 74.046875,
+          "height": 32,
+          "top": 814,
+          "right": 696.140625,
+          "bottom": 846,
+          "left": 622.09375
+        }
+      ],
+      "buttons": [
+        {
+          "x": 401,
+          "y": 814,
+          "width": 61,
+          "height": 32,
+          "top": 814,
+          "right": 462,
+          "bottom": 846,
+          "left": 401
+        },
+        {
+          "x": 484,
+          "y": 814,
+          "width": 56.046875,
+          "height": 32,
+          "top": 814,
+          "right": 540.046875,
+          "bottom": 846,
+          "left": 484
+        },
+        {
+          "x": 562.046875,
+          "y": 814,
+          "width": 56.046875,
+          "height": 32,
+          "top": 814,
+          "right": 618.09375,
+          "bottom": 846,
+          "left": 562.046875
+        },
+        {
+          "x": 640.09375,
+          "y": 814,
+          "width": 56.046875,
+          "height": 32,
+          "top": 814,
+          "right": 696.140625,
+          "bottom": 846,
+          "left": 640.09375
+        }
+      ],
+      "menu": {
+        "x": 0,
+        "y": 0,
+        "width": 1366,
+        "height": 71,
+        "top": 0,
+        "right": 1366,
+        "bottom": 71,
+        "left": 0
+      }
+    }
+  ],
+  "errors": []
+}

@@ -61,6 +61,7 @@ test('mode label uses the real updater and translated visible and accessible tex
   assert.equal(modeToggle.title,`translated:${label}`);
   assert.equal(modeToggle.getAttribute('aria-label'),`translated:${label}`);
   assert.equal(modeToggle.getAttribute('aria-pressed'),String(enabled));
-  assert.deepEqual(translations.splice(0),[text,label]);
+  const help='Drag to look, right-drag to pan; double-click the view to lock the mouse. Escape releases the cursor and keeps TPS on.';
+  assert.deepEqual(translations.splice(0),enabled?[text,label,help]:[text,label]);
  }
 });

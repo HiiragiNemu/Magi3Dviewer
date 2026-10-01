@@ -1,0 +1,48 @@
+{
+  "baseline": "0ea625a",
+  "checks": [
+    {
+      "path": "src/viewer/characterLocomotion.ts",
+      "gitBlobSha256": "c39710d32f36b96b82fb15ea3707dd301188d3b5ead2b86d38a70ade4e5bcee3",
+      "workingSha256": "641282288d5e44633ca5258570a69fa6f832d41e8669b04969e25816bdfadd14",
+      "gitUnchanged": true
+    },
+    {
+      "path": "src/viewer/jumpArmKinematics.ts",
+      "gitBlobSha256": "3eabdf33b98d095777a276faecb85e20afb1e93320b081e35f0bcbacd98b6c1d",
+      "workingSha256": "3eabdf33b98d095777a276faecb85e20afb1e93320b081e35f0bcbacd98b6c1d",
+      "gitUnchanged": true
+    },
+    {
+      "path": "src/viewer/jumpStyle.ts",
+      "gitBlobSha256": "9d4d6cbd30f46abe94bb860c18192b2f7ea1bc4bda09d3bbd118140c0df91b8a",
+      "workingSha256": "9d4d6cbd30f46abe94bb860c18192b2f7ea1bc4bda09d3bbd118140c0df91b8a",
+      "gitUnchanged": true
+    },
+    {
+      "path": "src/viewer/landingGaitPhase.ts",
+      "gitBlobSha256": "0122d20766a133931ea3b6789757b229cd7b25c99b2be2688d3454617af0c138",
+      "workingSha256": "0122d20766a133931ea3b6789757b229cd7b25c99b2be2688d3454617af0c138",
+      "gitUnchanged": true
+    },
+    {
+      "path": "src/viewer/characterActions/data/native-dungeon-fixed-transitions.json",
+      "gitBlobSha256": "5f8fab13d39a3f2289c4f049a3661c3d8453e5bb453e3326d8974a446074e42c",
+      "workingSha256": "5f8fab13d39a3f2289c4f049a3661c3d8453e5bb453e3326d8974a446074e42c",
+      "gitUnchanged": true
+    },
+    {
+      "path": "public/character-actions/manifest.v1.json",
+      "gitBlobSha256": "946eacdb35fdaae63607870c79a7626859e5f047e8a77466a8e6d57efd9f2f11",
+      "workingSha256": "946eacdb35fdaae63607870c79a7626859e5f047e8a77466a8e6d57efd9f2f11",
+      "gitUnchanged": true
+    },
+    {
+      "path": "src/viewer/viewerLocomotion.ts",
+      "region": "generated jump rotations / hip / upper body through end of applyJumpNaturalUpperBodyPose",
+      "baselineRegionSha256": "176785099b2002daca7fb457097584e81b7e3ac273f3bc924cb0b83e0be5657d",
+      "exactRegionUnchanged": true,
+      "wholeFileChanges": "only input ownership, cursor/help, and public camera UI entry points"
+    }
+  ]
+}

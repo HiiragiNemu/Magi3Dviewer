@@ -36,6 +36,7 @@ const pageMetadata: Record<UiLocale, {
  * to the DOM.
  */
 export const zhCnUiText: Readonly<Record<string, string>> = {
+    "Drag to look, right-drag to pan; double-click the view to lock the mouse. Escape releases the cursor and keeps TPS on.": "拖动转视角，右键拖动平移；双击画面锁定鼠标。Esc 释放鼠标但保持 TPS。",
     "Neck": "颈部",
     "Waist": "腰部",
     "Spine": "脊柱",

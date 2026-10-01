@@ -56,21 +56,6 @@ body.theme-light #pose-workspace select option { background:#fff; color:#20242a;
 #pose-fine-panel #viewport-editor-fine { margin:5px 0; padding:4px; display:grid; gap:5px; border:0; background:none; color:inherit; }
 #pose-fine-panel .ve-fine-axis { display:flex; align-items:center; justify-content:space-between; gap:5px; }
 #pose-fine-panel .ve-fine-axis button { min-height:30px; flex:1; padding:4px 9px; }
-#viewport-editor .ve-branch { max-height:calc(var(--ve-available-height,100dvh) - 16px); overflow-y:auto; scrollbar-width:thin; overscroll-behavior:contain; }
-#viewport-editor .ve-node-lines { position:fixed; inset:0; width:100vw; height:100dvh; pointer-events:none; overflow:visible; }
-#viewport-editor .ve-node-lines line { stroke:#55bdaabb; stroke-width:1; }
-#viewport-editor .ve-node-pages { display:flex; gap:3px; align-items:center; font-size:10px; }
-#viewport-editor .ve-node-pages[hidden] { display:none; }
-#viewport-editor .ve-node-pages button { flex:1; min-height:26px; padding:2px; }
-#viewport-editor .ve-node-pages output { flex:1; text-align:center; }
-#viewport-editor .ve-branch>button { min-height:30px; padding:5px 7px; font-size:12px; }
-#viewport-editor-selection { max-height:32px; overflow:hidden; font-size:10px; overflow-wrap:anywhere; }
-#viewport-editor .ve-joints[data-group=hands] .ve-joint-node,
-#viewport-editor .ve-joints[data-group=more] .ve-joint-node,
-#viewport-editor .ve-joints[data-group=free] .ve-joint-node { width:24px; height:24px; }
-#viewport-editor .ve-joints[data-group=hands] .ve-joint-node::before,
-#viewport-editor .ve-joints[data-group=more] .ve-joint-node::before,
-#viewport-editor .ve-joints[data-group=free] .ve-joint-node::before { width:8px; height:8px; }
 @media(max-width:600px) {
  #menu-controls.compact-controls { gap:3px; }
  #menu-controls.compact-controls button,#menu-controls.compact-controls select,#menu-controls.compact-controls input { font-size:12px; min-height:31px; }
@@ -84,20 +69,6 @@ body.theme-light #pose-workspace select option { background:#fff; color:#20242a;
  #advanced-controls-dock { max-height:calc(100dvh - 16px); }
  #menu-controls.compact-controls button,#menu-controls.compact-controls select,#menu-controls.compact-controls input { min-height:28px; }
 }
-
-/* Detail nodes are a named, ordered chain, not an automatic radial scatter. */
-#viewport-node-panel { position:fixed; left:50%; transform:translateX(-50%); width:min(460px,calc(100vw - 16px)); z-index:34; box-sizing:border-box; padding:8px; border:1px solid #8daaa288; border-radius:12px; background:rgba(28,49,56,.93); color:#edf6f5; pointer-events:auto; }
-#viewport-node-panel[hidden] { display:none!important; }
-#viewport-node-panel .ve-node-chooser { display:grid;grid-template-columns:1fr 1.5fr;gap:6px; }
-#viewport-node-panel select { min-width:0;width:100%;min-height:34px;color:inherit;background:#243f46;border:1px solid #92aba077;border-radius:6px;font:inherit;font-size:12px; }
-#viewport-node-panel .ve-joints { position:static; display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:5px;margin-top:6px;pointer-events:auto; }
-#viewport-editor #viewport-node-panel .ve-joint-node { position:relative;inset:auto;display:flex;align-items:center;justify-content:center;width:auto;height:auto;min-height:34px;padding:6px;font:inherit;font-size:12px;transform:none!important;border-radius:6px;background:#405c63;border:1px solid #7bb5a588; }
-#viewport-editor #viewport-node-panel .ve-joint-node::before { display:none; }
-#viewport-editor #viewport-node-panel .ve-joint-label { position:static;display:block;opacity:1;visibility:visible;transform:none;white-space:normal;background:transparent;padding:0;color:inherit;pointer-events:none; }
-#viewport-editor #viewport-node-panel .ve-joint-node[aria-pressed=true] { background:#147b68;border-color:#66e8bb; }
-.ve-node-hint { display:block;font-size:10px;line-height:1.5;opacity:.78;margin-top:5px; }
-#viewport-editor .ve-node-lines circle { fill:#54c8b0;stroke:#e7f7f3;stroke-width:1; }
-@media(orientation:landscape) and (max-height:540px) { #viewport-node-panel { left:50%;width:min(480px,56vw);padding:5px; } #viewport-node-panel .ve-node-hint {display:none;} #viewport-node-panel .ve-node-chooser select,#viewport-editor #viewport-node-panel .ve-joint-node {min-height:28px;font-size:11px;} }
 
 /* Both animation transports share atomic slider+percentage and selector widths. */
 #app #menu #menu-controls.compact-controls > div,
@@ -124,9 +95,17 @@ body.theme-light #pose-workspace select option { background:#fff; color:#20242a;
  #app #menu #menu-controls.compact-controls #enemy-toolbar-select {width:156px;max-width:156px;min-width:156px;flex:0 0 156px;}
 }
 
-#viewport-node-panel .ve-node-chooser {grid-template-columns:1fr 1.4fr auto;}
-#viewport-node-panel #viewport-focus-detail {font-size:11px;border-radius:6px;padding:4px 7px;white-space:nowrap;}
-#viewport-editor #viewport-node-panel .ve-joint-node {margin:0;box-sizing:border-box;min-height:40px;}
 
-/* Keep one finger together even on a 360px phone: no orphan fourth joint. */
-#viewport-node-panel .ve-joints[data-group=hands] {grid-template-columns:repeat(auto-fit,minmax(68px,1fr));}
+#app #menu #locomotion-mode-toggle {position:relative;box-sizing:border-box;width:112px;min-width:112px;max-width:112px;flex:0 0 112px;padding-right:14px;}
+#locomotion-mode-toggle.tps-multiple-targets::after {content:'▾';position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:10px;}
+#tps-target-menu {position:fixed;z-index:50010;width:min(300px,calc(100vw - 12px));max-height:55vh;overflow:auto;padding:4px;background:#203942;color:#eff8f7;border:1px solid #82a59d;border-radius:7px;box-shadow:0 3px 14px #0005;}
+#tps-target-menu[hidden] {display:none;}
+#tps-target-menu button {display:block;box-sizing:border-box;width:100%;margin:0;min-height:34px;padding:5px 7px;font:12px/1.4 system-ui,sans-serif;color:inherit;background:transparent;border:0;text-align:left;border-radius:4px;white-space:normal;}
+#tps-target-menu button[aria-selected=true],#tps-target-menu button:hover {background:#1d806c;color:#fff;}
+#tps-target-menu button:focus-visible {outline:2px solid #e1b730;outline-offset:-2px;}
+#tps-target-menu button:disabled {opacity:.5;}
+body.theme-light #tps-target-menu {background:#f5fbfc;color:#243f47;}
+#camera-corner-controls {position:fixed;right:max(8px,env(safe-area-inset-right));bottom:max(8px,env(safe-area-inset-bottom));display:flex;gap:4px;z-index:960;pointer-events:none;}
+#camera-corner-controls button {pointer-events:auto;width:30px;height:30px;border:1px solid #6c9298;border-radius:50%;background:#203a43e8;color:#f0f8f7;font:18px/1 system-ui;box-shadow:0 1px 4px #0004;cursor:pointer;}
+body.theme-light #camera-corner-controls button {background:#f3fafbf2;color:#264650;}
+@media(pointer:coarse) and (hover:none) {#camera-corner-controls {display:none;}}

@@ -7,10 +7,10 @@ const connected=Boolean(process.env.MAGIUS_BROWSER_ENDPOINT_FILE);
 const chrome=process.env.CHROME_BIN||(process.platform==='win32'?'C:/Program Files/Google/Chrome/Application/chrome.exe':execFileSync('bash',['-lc','command -v google-chrome-stable || command -v google-chrome || command -v chromium'],{encoding:'utf8'}).trim());
 const b=connected?await puppeteer.connect({browserWSEndpoint:JSON.parse(fs.readFileSync(process.env.MAGIUS_BROWSER_ENDPOINT_FILE)).endpoint,protocolTimeout:300000,defaultViewport:null})
  :await puppeteer.launch({executablePath:chrome,headless:true,protocolTimeout:300000,args:['--no-sandbox','--use-gl=angle',process.platform==='win32'?'--use-angle=d3d11':'--use-angle=swiftshader','--enable-unsafe-swiftshader']});
-const rows=[],errors=[];let passed=false,page;
+const rows=[],errors=[];let passed=false,page,context;
 const artifact=name=>path.join(out,name);
 const record=r=>{rows.push(r);fs.writeFileSync(artifact('progress.json'),JSON.stringify({rows,errors},null,2));console.log(JSON.stringify(r))};
-try{const p=await b.newPage();page=p;await p.setViewport({width:430,height:932,deviceScaleFactor:1,isMobile:true,hasTouch:true});p.on('pageerror',e=>errors.push(String(e)));const cdp=await p.createCDPSession();
+try{context=await b.createBrowserContext();const p=await context.newPage();page=p;await p.setViewport({width:430,height:932,deviceScaleFactor:1,isMobile:true,hasTouch:true});p.on('pageerror',e=>errors.push(String(e)));const cdp=await p.createCDPSession();
 await p.goto(new URL('?diagnostic=pose-editor&runtimeDelivery=release',site).href,{waitUntil:'domcontentloaded',timeout:90000});
 const frames=n=>p.evaluate(n=>new Promise(r=>{let k=0;function tick(){if(++k>=n)r();else requestAnimationFrame(tick)}requestAnimationFrame(tick)}),n);
 const click=async selector=>{await p.waitForSelector(selector,{visible:true,timeout:30000});await p.click(selector);await frames(3)};
@@ -72,10 +72,10 @@ for(const [width,height]of [[360,780],[932,430],[1366,900]]){
  if(await p.evaluate(()=>window.magiusViewerLocomotion.enabled))await click('#locomotion-mode-toggle');
  await click('#position-controls-toggle');await click('#viewport-pose');await click('#viewport-hands');
  await p.select('#viewport-node-category','right');const options=await p.$$eval('#viewport-node-chain option',ns=>ns.map(n=>({v:n.value,t:n.textContent})));await p.select('#viewport-node-chain',options.find(n=>n.t.includes('食指')).v);await frames(5);
- const boxes=await p.evaluate(()=>({viewport:[innerWidth,innerHeight],scroll:document.documentElement.scrollWidth,tray:document.querySelector('#viewport-node-panel').getBoundingClientRect().toJSON(),buttons:[...document.querySelectorAll('#viewport-node-panel .ve-joint-node')].map(n=>n.getBoundingClientRect().toJSON()),menu:document.querySelector('#menu').getBoundingClientRect().toJSON()}));
- assert.ok(boxes.scroll<=width+1,'horizontal overflow '+width);assert.ok(boxes.tray.x>=0&&boxes.tray.right<=width+1&&boxes.tray.bottom<=height+1&&boxes.tray.y>boxes.menu.bottom,'detail tray overlaps toolbar or viewport');
+ const boxes=await p.evaluate(()=>({viewport:[innerWidth,innerHeight],scroll:document.documentElement.scrollWidth,tray:document.querySelector('#viewport-node-panel').getBoundingClientRect().toJSON(),chips:[...document.querySelectorAll('#viewport-node-panel .ve-chip')].filter(e=>e.getClientRects().length).map(e=>e.getBoundingClientRect().toJSON()),buttons:[...document.querySelectorAll('#viewport-node-panel .ve-joint-node')].map(n=>n.getBoundingClientRect().toJSON()),menu:document.querySelector('#menu').getBoundingClientRect().toJSON()}));
+ assert.ok(boxes.scroll<=width+1,'horizontal overflow '+width);assert.ok(boxes.chips.every(r=>r.x>=0&&r.right<=width+1&&r.y>=boxes.menu.bottom&&r.bottom<=height+1),'detail chips overlap toolbar or viewport');
  assert.ok(boxes.buttons.every(r=>r.x>=boxes.tray.x&&r.right<=boxes.tray.right+1&&r.bottom<=boxes.tray.bottom+1));
  record({test:'responsive-details',width,height,...boxes});await p.screenshot({path:artifact('layout-'+width+'x'+height+'.png')});
 }
 assert.deepEqual(errors,[]);passed=true;
-}finally{fs.writeFileSync(artifact('review.json'),JSON.stringify({passed,rows,errors},null,2));if(page)await page.close();if(connected)b.disconnect();else await b.close()}
+}finally{fs.writeFileSync(artifact('review.json'),JSON.stringify({passed,rows,errors},null,2));if(context)await context.close();else if(page)await page.close();if(connected)b.disconnect();else await b.close()}

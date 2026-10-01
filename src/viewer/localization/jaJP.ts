@@ -1,5 +1,6 @@
 /** Japanese presentation strings for the Viewer UI. Canonical keys remain English. */
 export const jaJpUiText: Readonly<Record<string, string>> = {
+    "Drag to look, right-drag to pan; double-click the view to lock the mouse. Escape releases the cursor and keeps TPS on.": "ドラッグで視点回転、右ドラッグで移動。画面をダブルクリックでマウス固定。Esc は TPS を終了せずカーソルを戻します。",
     "Neck": "首",
     "Waist": "腰",
     "Spine": "背骨",

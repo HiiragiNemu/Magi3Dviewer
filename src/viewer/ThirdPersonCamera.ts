@@ -33,7 +33,8 @@ export class ThirdPersonCamera {
     private touchView?: TpsViewTouch
     private touchBase?:PlaneGestureBase
     private touchRoll=0
-    private drag?: { id: number; x: number; y: number }
+    private drag?: { id:number; x:number; y:number; startX:number; startY:number; mode:'rotate'|'pan'; moved:boolean }
+    private suppressClickUntil=0
     private locked = false
     private lockPending = false
     private lockGeneration = 0
@@ -163,6 +164,25 @@ export class ThirdPersonCamera {
         this.orbit = undefined
     }
 
+
+    /** Pointer ownership is independent of TPS locomotion ownership. */
+    releasePointer(): void {
+        this.drag=undefined;this.lockGeneration++
+        if(document.pointerLockElement===this.hooks.scene().renderer.domElement)document.exitPointerLock()
+    }
+    /** Adopt an explicit user framing action without restarting locomotion. */
+    adoptView():void {
+        if(!this.active)return
+        const {camera,controls}=this.hooks.scene()
+        this.orientation.setFromQuaternion(camera.quaternion,'YXZ')
+        this.yaw=this.orientation.y;this.pitch=-this.orientation.x;this.roll=this.orientation.z
+        this.center.copy(controls.target);this.distance=camera.position.distanceTo(this.center)
+        this.touchBase=undefined;this.drag=undefined
+        this.previousActorObject=this.hooks.actor();this.previousActorObject?.getWorldPosition(this.previousActor)
+        this.update()
+    }
+    rollBy(radians:number):void {if(this.active&&Number.isFinite(radians)){this.roll+=radians;this.update()}}
+
     private isControl(target: EventTarget | null): boolean {
         return target instanceof Element && !!target.closest('[data-tps-touch],button,input,select,textarea,[contenteditable="true"],[role="button"],[role="slider"],[role="listbox"],[role="combobox"]')
     }
@@ -172,7 +192,7 @@ export class ThirdPersonCamera {
         return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
     }
 
-    private async capture(): Promise<void> {
+    async capture(): Promise<void> {
         if (this.lockPending || !this.active) return
         const canvas = this.hooks.scene().renderer.domElement
         if (document.pointerLockElement === canvas) return
@@ -229,32 +249,47 @@ export class ThirdPersonCamera {
             if (event.pointerType === 'touch') return
             if (!this.active || document.pointerLockElement === this.hooks.scene().renderer.domElement || this.drag?.id !== event.pointerId) return
             if (event.cancelable) event.preventDefault()
-            this.rotateViewport(event.clientX - this.drag.x, event.clientY - this.drag.y)
-            this.drag.x = event.clientX; this.drag.y = event.clientY
+            const drag=this.drag
+            if(!drag.moved&&Math.hypot(event.clientX-drag.startX,event.clientY-drag.startY)<4)return
+            const dx=event.clientX-drag.x,dy=event.clientY-drag.y
+            drag.moved=true
+            if(drag.mode==='pan')this.pan(dx,dy);else this.rotateViewport(dx,dy)
+            drag.x=event.clientX;drag.y=event.clientY
         }, { signal })
         document.addEventListener('pointerdown', event => {
             if (event.pointerType === 'touch') return
-            if (!this.active || event.button !== 0 || this.isControl(event.target) || !this.inside(event.clientX, event.clientY)) return
-            if (document.pointerLockElement !== this.hooks.scene().renderer.domElement) {
-                if (this.drag && this.drag.id !== event.pointerId) return
-                this.drag = { id: event.pointerId, x: event.clientX, y: event.clientY }
-                // Touch look is an independent finger, not a mouse-lock request.
-                // A joystick/jump finger must neither steal nor release it.
-                if (!event.pointerType || event.pointerType === 'mouse') void this.capture()
-                else this.hooks.scene().renderer.domElement.setPointerCapture(event.pointerId)
-            }
-            event.preventDefault()
-        }, { capture: true, signal })
-        for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) document.addEventListener(name, event => {
-            if (this.drag?.id === (event as PointerEvent).pointerId) this.drag = undefined
-        }, { signal })
+            if (!this.active || ![0,1,2].includes(event.button) || this.isControl(event.target) || !this.inside(event.clientX,event.clientY)) return
+            if (document.pointerLockElement === this.hooks.scene().renderer.domElement) return
+            if (this.drag && this.drag.id !== event.pointerId) return
+            // A click selects; a drag looks/pans. Neither silently locks the
+            // cursor. Double-clicking the canvas is the explicit recapture.
+            this.drag={id:event.pointerId,x:event.clientX,y:event.clientY,startX:event.clientX,startY:event.clientY,mode:event.button!==0||event.shiftKey?'pan':'rotate',moved:false}
+            this.hooks.scene().renderer.domElement.setPointerCapture(event.pointerId)
+        }, {capture:true,signal})
+        for (const name of ['pointerup','pointercancel','lostpointercapture']) document.addEventListener(name,event=>{
+            const e=event as PointerEvent,drag=this.drag;if(drag?.id!==e.pointerId)return
+            this.drag=undefined
+            if(drag.moved)this.suppressClickUntil=performance.now()+250
+            const canvas=this.hooks.scene().renderer.domElement
+            if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId)
+        }, {signal})
+        document.addEventListener('click',event=>{
+            if(this.active&&performance.now()<this.suppressClickUntil&&!this.isControl(event.target)){event.preventDefault();event.stopImmediatePropagation()}
+        }, {capture:true,signal})
+        document.addEventListener('contextmenu',event=>{
+            if(this.active&&!this.isControl(event.target)&&this.inside(event.clientX,event.clientY))event.preventDefault()
+        },{signal})
+        document.addEventListener('magius:tps-capture',()=>{if(this.active)void this.capture()},{signal})
         document.addEventListener('pointerlockchange', () => {
             const wasLocked = this.locked
             this.locked = document.pointerLockElement === this.hooks.scene().renderer.domElement
             this.drag = undefined
             document.body.classList.toggle('locomotion-pointer-locked', this.locked)
             this.trace([3, performance.now(), 'lock', this.locked, this.rawLock, this.stream])
-            if (wasLocked && !this.locked && this.active) this.hooks.released()
+            if (wasLocked && !this.locked && this.active) {
+                this.hooks.released()
+                this.hooks.status('Drag to look, right-drag to pan; double-click the view to lock the mouse. Escape releases the cursor and keeps TPS on.')
+            }
         }, { signal })
         document.addEventListener('wheel', event => {
             if (!this.active) return

@@ -1419,8 +1419,8 @@ let virtualInput: VirtualInput | undefined
 const tpsCamera = new ThirdPersonCamera({
     scene: () => scene,
     actor: () => selectedBinding()?.character.object,
-    released: () => setViewerLocomotionEnabled(false),
-    status: text => { feedbackOutput.value = text; feedbackOutput.textContent = text },
+    released: () => { pressed.clear();jumpQueued=false;virtualInput=undefined;touchControls?.reset() },
+    status: text => { const label=translateUiText(text);feedbackOutput.value=label;feedbackOutput.textContent=label },
 })
 
 function objectIsWorldVisible(object: THREE.Object3D): boolean {
@@ -12130,12 +12130,21 @@ export function setViewerLocomotionEnabled(value: boolean): void {
         if (!wasEnabled) tpsCamera.start()
         feedbackOutput.value = touchControls && !touchControls.element.hidden
             ? '左侧摇杆移动／转向；右侧跑步、跳跃；空白处拖动视角。'
-            : 'Click the Viewer to capture the mouse.'
+            : translateUiText('Drag to look, right-drag to pan; double-click the view to lock the mouse. Escape releases the cursor and keeps TPS on.')
     } else {
         tpsCamera.stop()
     }
     feedbackOutput.textContent = feedbackOutput.value
     updateHud(selectedBinding())
+}
+
+export function canControlViewerActor(slot:SceneCharacter):boolean {return !!slot.character&&getViewerCharacterControlAuthority(slot.character).tps}
+export function isViewerLocomotionEnabled():boolean {return enabled}
+export function adoptViewerCamera():void {tpsCamera.adoptView()}
+export function rotateViewerCameraPlane(degrees:number):void {
+    if(!Number.isFinite(degrees))return
+    if(enabled)tpsCamera.rollBy(THREE.MathUtils.degToRad(degrees))
+    else scene.cameraRotation=(scene.cameraRotation??0)+degrees
 }
 
 function updateLocomotionModeLabel(): void {
@@ -12162,7 +12171,7 @@ function installInputHandlers(): void {
         hudToggle.textContent = expanded ? '−' : '＋'
         updateLocomotionHudLabel()
     })
-    modeToggle.addEventListener('click', () => setViewerLocomotionEnabled(!enabled))
+    modeToggle.addEventListener('click', () => document.dispatchEvent(new CustomEvent('magius:tps-toggle-request')))
     const releasePhysicalTpsInput = (): void => {
         pressed.clear()
         jumpQueued = false
@@ -12175,8 +12184,7 @@ function installInputHandlers(): void {
         if (enabled && event.code === 'Escape' && !event.repeat) {
             event.preventDefault()
             releasePhysicalTpsInput()
-
-            setViewerLocomotionEnabled(false)
+            tpsCamera.releasePointer()
             return
         }
         if (!enabled || (isTextInputTarget(event.target) && document.pointerLockElement !== scene.renderer.domElement)) return
