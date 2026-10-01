@@ -1,0 +1,29 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "revisionHeader": "3b72a3d662b855bdb2fa0f76bd83449dcf3dbb14",
+    "sha256": "dd5aa0f2cd239f0b76e9cf3cdf19352c7a2b85694972f12bce05e5b7808e49d0",
+    "guard": true,
+    "matchesBuild": true
+  },
+  {
+    "path": "site-version.json",
+    "status": 200,
+    "revisionHeader": null,
+    "sha256": "4eb6698e1337acc912273af7ce5aeb5204408110447f161cb56290f3d061f115",
+    "version": {
+      "revision": "3b72a3d662b855bdb2fa0f76bd83449dcf3dbb14",
+      "jumpStyle": "expressive",
+      "entryPolicy": "single-production-no-store-v1",
+      "landing": "continuous-grounded-gait-v1",
+      "builtAt": "2026-10-01T15:28:41.484Z",
+      "poseEditor": "bind-limited-ik-v3",
+      "viewportEditor": "persistent-v1",
+      "groundGuard": "scene-floor-v1",
+      "selection": "existing-outline-uniforms",
+      "deploymentTarget": "cloudflare",
+      "stageDelivery": "cloudflare-same-origin"
+    }
+  }
+]

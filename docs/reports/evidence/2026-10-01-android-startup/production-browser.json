@@ -1,0 +1,606 @@
+[
+  {
+    "test": "normal-start",
+    "actual": {
+      "diagnostic": {
+        "schema": "magius.startup-diagnostic.v1",
+        "revision": "3b72a3d662b855bdb2fa0f76bd83449dcf3dbb14",
+        "stage": "viewer-ready",
+        "status": "ready",
+        "elapsedMs": 9658,
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+        "page": "https://magius3dviewer.pages.dev/",
+        "features": {
+          "webgl2API": true,
+          "resizeObserver": true,
+          "abortController": true,
+          "structuredClone": true
+        },
+        "errors": [],
+        "completedScripts": [
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/modulepreload-polyfill-B5Qt9EMX.js",
+            "durationMs": 166,
+            "transferredBytes": 713,
+            "decodedBytes": 771
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-core-C9jFyDPB.js",
+            "durationMs": 501,
+            "transferredBytes": 180262,
+            "decodedBytes": 704474
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-libs-BE0iLUPD.js",
+            "durationMs": 190,
+            "transferredBytes": 11844,
+            "decodedBytes": 34980
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-controls-CDz8APAQ.js",
+            "durationMs": 316,
+            "transferredBytes": 10237,
+            "decodedBytes": 41246
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-localization-BNbYEJon.js",
+            "durationMs": 345,
+            "transferredBytes": 31062,
+            "decodedBytes": 100927
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/lz-string-UNqkxtPb.js",
+            "durationMs": 295,
+            "transferredBytes": 1755,
+            "decodedBytes": 4854
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-loaders-XgHMU8JP.js",
+            "durationMs": 409,
+            "transferredBytes": 28967,
+            "decodedBytes": 91305
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-postprocessing-BBOwb36w.js",
+            "durationMs": 383,
+            "transferredBytes": 48042,
+            "decodedBytes": 107223
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/fflate-DWcM8ZDX.js",
+            "durationMs": 385,
+            "transferredBytes": 3388,
+            "decodedBytes": 6026
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/vendor-BNguDoK7.js",
+            "durationMs": 411,
+            "transferredBytes": 3366,
+            "decodedBytes": 8220
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-runtime-0_1ZzwWy.js",
+            "durationMs": 781,
+            "transferredBytes": 2984152,
+            "decodedBytes": 24347355
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/WorkerThread-Ca9HRGgQ.js",
+            "durationMs": -83,
+            "transferredBytes": 1241,
+            "decodedBytes": 2562
+          }
+        ]
+      },
+      "locale": "zh-CN",
+      "actor": 100107,
+      "panel": false
+    },
+    "errors": []
+  },
+  {
+    "test": "blocked-script-visible-and-explicit-retry-recovers",
+    "failure": {
+      "diagnostic": {
+        "schema": "magius.startup-diagnostic.v1",
+        "revision": "3b72a3d662b855bdb2fa0f76bd83449dcf3dbb14",
+        "stage": "module-loading",
+        "status": "failed",
+        "elapsedMs": 513,
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+        "page": "https://magius3dviewer.pages.dev/",
+        "features": {
+          "webgl2API": true,
+          "resizeObserver": true,
+          "abortController": true,
+          "structuredClone": true
+        },
+        "errors": [
+          {
+            "kind": "resource-load",
+            "message": "Startup resource could not be loaded",
+            "source": "https://magius3dviewer.pages.dev/assets/viewer-runtime-0_1ZzwWy.js",
+            "line": 0
+          },
+          {
+            "kind": "resource-load",
+            "message": "Startup resource could not be loaded",
+            "source": "https://magius3dviewer.pages.dev/assets/main-B13YNUz6.js",
+            "line": 0
+          }
+        ],
+        "completedScripts": [
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/main-B13YNUz6.js",
+            "durationMs": 176,
+            "transferredBytes": 1139,
+            "decodedBytes": 1514
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/modulepreload-polyfill-B5Qt9EMX.js",
+            "durationMs": 177,
+            "transferredBytes": 713,
+            "decodedBytes": 771
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-libs-BE0iLUPD.js",
+            "durationMs": 284,
+            "transferredBytes": 11844,
+            "decodedBytes": 34980
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-localization-BNbYEJon.js",
+            "durationMs": 335,
+            "transferredBytes": 31004,
+            "decodedBytes": 100927
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-core-C9jFyDPB.js",
+            "durationMs": 463,
+            "transferredBytes": 180079,
+            "decodedBytes": 704474
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/lz-string-UNqkxtPb.js",
+            "durationMs": 267,
+            "transferredBytes": 1755,
+            "decodedBytes": 4854
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-controls-CDz8APAQ.js",
+            "durationMs": 306,
+            "transferredBytes": 10181,
+            "decodedBytes": 41246
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-loaders-XgHMU8JP.js",
+            "durationMs": 353,
+            "transferredBytes": 28967,
+            "decodedBytes": 91305
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/fflate-DWcM8ZDX.js",
+            "durationMs": 336,
+            "transferredBytes": 3388,
+            "decodedBytes": 6026
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-postprocessing-BBOwb36w.js",
+            "durationMs": 384,
+            "transferredBytes": 47931,
+            "decodedBytes": 107223
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/vendor-BNguDoK7.js",
+            "durationMs": 386,
+            "transferredBytes": 3366,
+            "decodedBytes": 8220
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-runtime-0_1ZzwWy.js",
+            "durationMs": 14,
+            "transferredBytes": 0,
+            "decodedBytes": 0
+          }
+        ]
+      },
+      "locale": "en",
+      "panel": true
+    },
+    "recovered": {
+      "diagnostic": {
+        "schema": "magius.startup-diagnostic.v1",
+        "revision": "3b72a3d662b855bdb2fa0f76bd83449dcf3dbb14",
+        "stage": "viewer-ready",
+        "status": "ready",
+        "elapsedMs": 5391,
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+        "page": "https://magius3dviewer.pages.dev/",
+        "features": {
+          "webgl2API": true,
+          "resizeObserver": true,
+          "abortController": true,
+          "structuredClone": true
+        },
+        "errors": [],
+        "completedScripts": [
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/modulepreload-polyfill-B5Qt9EMX.js",
+            "durationMs": 173,
+            "transferredBytes": 300,
+            "decodedBytes": 0
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-localization-BNbYEJon.js",
+            "durationMs": 173,
+            "transferredBytes": 300,
+            "decodedBytes": 0
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-controls-CDz8APAQ.js",
+            "durationMs": 173,
+            "transferredBytes": 300,
+            "decodedBytes": 0
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-core-C9jFyDPB.js",
+            "durationMs": 173,
+            "transferredBytes": 300,
+            "decodedBytes": 0
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-libs-BE0iLUPD.js",
+            "durationMs": 173,
+            "transferredBytes": 300,
+            "decodedBytes": 0
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-loaders-XgHMU8JP.js",
+            "durationMs": 173,
+            "transferredBytes": 300,
+            "decodedBytes": 0
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-postprocessing-BBOwb36w.js",
+            "durationMs": 173,
+            "transferredBytes": 300,
+            "decodedBytes": 0
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/vendor-BNguDoK7.js",
+            "durationMs": 174,
+            "transferredBytes": 300,
+            "decodedBytes": 0
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/lz-string-UNqkxtPb.js",
+            "durationMs": 174,
+            "transferredBytes": 300,
+            "decodedBytes": 0
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/fflate-DWcM8ZDX.js",
+            "durationMs": 174,
+            "transferredBytes": 300,
+            "decodedBytes": 0
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-runtime-0_1ZzwWy.js",
+            "durationMs": 686,
+            "transferredBytes": 2982759,
+            "decodedBytes": 24347355
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/WorkerThread-Ca9HRGgQ.js",
+            "durationMs": -27,
+            "transferredBytes": 1241,
+            "decodedBytes": 2562
+          }
+        ]
+      },
+      "locale": "zh-CN",
+      "actor": 100107,
+      "panel": false
+    },
+    "expectedErrors": []
+  },
+  {
+    "test": "webgl-initialization-error-is-visible-before-main",
+    "failure": {
+      "diagnostic": {
+        "schema": "magius.startup-diagnostic.v1",
+        "revision": "3b72a3d662b855bdb2fa0f76bd83449dcf3dbb14",
+        "stage": "module-loading",
+        "status": "failed",
+        "elapsedMs": 1032,
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+        "page": "https://magius3dviewer.pages.dev/",
+        "features": {
+          "webgl2API": true,
+          "resizeObserver": true,
+          "abortController": true,
+          "structuredClone": true
+        },
+        "errors": [
+          {
+            "kind": "javascript",
+            "message": "Uncaught Error: Error creating WebGL context.",
+            "source": "https://magius3dviewer.pages.dev/assets/three-core-C9jFyDPB.js",
+            "line": 1
+          }
+        ],
+        "completedScripts": [
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/main-B13YNUz6.js",
+            "durationMs": 162,
+            "transferredBytes": 1139,
+            "decodedBytes": 1514
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/modulepreload-polyfill-B5Qt9EMX.js",
+            "durationMs": 164,
+            "transferredBytes": 713,
+            "decodedBytes": 771
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-core-C9jFyDPB.js",
+            "durationMs": 524,
+            "transferredBytes": 180262,
+            "decodedBytes": 704474
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-localization-BNbYEJon.js",
+            "durationMs": 298,
+            "transferredBytes": 31062,
+            "decodedBytes": 100927
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-controls-CDz8APAQ.js",
+            "durationMs": 185,
+            "transferredBytes": 10181,
+            "decodedBytes": 41246
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-libs-BE0iLUPD.js",
+            "durationMs": 243,
+            "transferredBytes": 11844,
+            "decodedBytes": 34980
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/lz-string-UNqkxtPb.js",
+            "durationMs": 299,
+            "transferredBytes": 1755,
+            "decodedBytes": 4854
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-loaders-XgHMU8JP.js",
+            "durationMs": 430,
+            "transferredBytes": 28869,
+            "decodedBytes": 91305
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/fflate-DWcM8ZDX.js",
+            "durationMs": 357,
+            "transferredBytes": 3388,
+            "decodedBytes": 6026
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/vendor-BNguDoK7.js",
+            "durationMs": 360,
+            "transferredBytes": 3366,
+            "decodedBytes": 8220
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-postprocessing-BBOwb36w.js",
+            "durationMs": 415,
+            "transferredBytes": 47931,
+            "decodedBytes": 107223
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-runtime-0_1ZzwWy.js",
+            "durationMs": 784,
+            "transferredBytes": 2986884,
+            "decodedBytes": 24347355
+          }
+        ]
+      },
+      "locale": "en",
+      "panel": true
+    },
+    "expectedErrors": [
+      "Error creating WebGL context."
+    ]
+  },
+  {
+    "test": "slow-start-is-not-labeled-failed-and-finishes-without-refresh",
+    "pending": {
+      "diagnostic": {
+        "schema": "magius.startup-diagnostic.v1",
+        "revision": "3b72a3d662b855bdb2fa0f76bd83449dcf3dbb14",
+        "stage": "module-loading",
+        "status": "pending-longer-than-expected",
+        "elapsedMs": 20042,
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+        "page": "https://magius3dviewer.pages.dev/",
+        "features": {
+          "webgl2API": true,
+          "resizeObserver": true,
+          "abortController": true,
+          "structuredClone": true
+        },
+        "errors": [],
+        "completedScripts": [
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/polyfills-C81vJE_w.js",
+            "durationMs": 326,
+            "transferredBytes": 45139,
+            "decodedBytes": 119596
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/main-B13YNUz6.js",
+            "durationMs": 234,
+            "transferredBytes": 1139,
+            "decodedBytes": 1514
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/modulepreload-polyfill-B5Qt9EMX.js",
+            "durationMs": 233,
+            "transferredBytes": 713,
+            "decodedBytes": 771
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-core-C9jFyDPB.js",
+            "durationMs": 516,
+            "transferredBytes": 180079,
+            "decodedBytes": 704474
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-libs-BE0iLUPD.js",
+            "durationMs": 341,
+            "transferredBytes": 11844,
+            "decodedBytes": 34980
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/lz-string-UNqkxtPb.js",
+            "durationMs": 345,
+            "transferredBytes": 1755,
+            "decodedBytes": 4854
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-localization-BNbYEJon.js",
+            "durationMs": 372,
+            "transferredBytes": 31062,
+            "decodedBytes": 100927
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-controls-CDz8APAQ.js",
+            "durationMs": 403,
+            "transferredBytes": 10237,
+            "decodedBytes": 41246
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-loaders-XgHMU8JP.js",
+            "durationMs": 393,
+            "transferredBytes": 28967,
+            "decodedBytes": 91305
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/fflate-DWcM8ZDX.js",
+            "durationMs": 395,
+            "transferredBytes": 3388,
+            "decodedBytes": 6026
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/vendor-BNguDoK7.js",
+            "durationMs": 406,
+            "transferredBytes": 3366,
+            "decodedBytes": 8220
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-postprocessing-BBOwb36w.js",
+            "durationMs": 435,
+            "transferredBytes": 48042,
+            "decodedBytes": 107223
+          }
+        ]
+      },
+      "locale": "en",
+      "panel": true
+    },
+    "recovered": {
+      "diagnostic": {
+        "schema": "magius.startup-diagnostic.v1",
+        "revision": "3b72a3d662b855bdb2fa0f76bd83449dcf3dbb14",
+        "stage": "viewer-ready",
+        "status": "ready",
+        "elapsedMs": 25528,
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+        "page": "https://magius3dviewer.pages.dev/",
+        "features": {
+          "webgl2API": true,
+          "resizeObserver": true,
+          "abortController": true,
+          "structuredClone": true
+        },
+        "errors": [],
+        "completedScripts": [
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/modulepreload-polyfill-B5Qt9EMX.js",
+            "durationMs": 233,
+            "transferredBytes": 713,
+            "decodedBytes": 771
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-core-C9jFyDPB.js",
+            "durationMs": 516,
+            "transferredBytes": 180079,
+            "decodedBytes": 704474
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-libs-BE0iLUPD.js",
+            "durationMs": 341,
+            "transferredBytes": 11844,
+            "decodedBytes": 34980
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/lz-string-UNqkxtPb.js",
+            "durationMs": 345,
+            "transferredBytes": 1755,
+            "decodedBytes": 4854
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-localization-BNbYEJon.js",
+            "durationMs": 372,
+            "transferredBytes": 31062,
+            "decodedBytes": 100927
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-controls-CDz8APAQ.js",
+            "durationMs": 403,
+            "transferredBytes": 10237,
+            "decodedBytes": 41246
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-loaders-XgHMU8JP.js",
+            "durationMs": 393,
+            "transferredBytes": 28967,
+            "decodedBytes": 91305
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/fflate-DWcM8ZDX.js",
+            "durationMs": 395,
+            "transferredBytes": 3388,
+            "decodedBytes": 6026
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/vendor-BNguDoK7.js",
+            "durationMs": 406,
+            "transferredBytes": 3366,
+            "decodedBytes": 8220
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/three-postprocessing-BBOwb36w.js",
+            "durationMs": 435,
+            "transferredBytes": 48042,
+            "decodedBytes": 107223
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/viewer-runtime-0_1ZzwWy.js",
+            "durationMs": 20854,
+            "transferredBytes": 2983407,
+            "decodedBytes": 24347355
+          },
+          {
+            "url": "https://magius3dviewer.pages.dev/assets/WorkerThread-Ca9HRGgQ.js",
+            "durationMs": -46,
+            "transferredBytes": 1241,
+            "decodedBytes": 2562
+          }
+        ]
+      },
+      "locale": "zh-CN",
+      "actor": 100107,
+      "panel": false
+    }
+  }
+]
