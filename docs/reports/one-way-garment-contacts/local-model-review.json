@@ -1,0 +1,799 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "test": "102001-walk-contact-stability",
+      "phase": "walk",
+      "live": {
+        "state": "walk",
+        "position": [
+          0,
+          0,
+          -0.49865003419815734
+        ],
+        "clip": "Magius102001TargetRigMorphologyWalkV45_L",
+        "grounded": true
+      },
+      "diag": {
+        "uuid": "2a24dad8-355b-4018-b3fb-0259b9b216a4",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 699,
+        "joints": 39,
+        "contacts": 44,
+        "beforeDepth": 0.03298760971605125,
+        "afterDepth": 0,
+        "maxRotation": 0.10888062992052085,
+        "correctedJoints": 6,
+        "milliseconds": 10.699999988079071,
+        "limited": false,
+        "surface": {
+          "vertices": 989,
+          "correctedVertices": 38,
+          "maxDisplacement": 0.00445869017884838,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "102001-run-contact-stability",
+      "phase": "run",
+      "live": {
+        "state": "run",
+        "position": [
+          0,
+          0,
+          -1.8697202958261503
+        ],
+        "clip": "Magius102001TargetRigMorphologyRunV45_L",
+        "grounded": true
+      },
+      "diag": {
+        "uuid": "2a24dad8-355b-4018-b3fb-0259b9b216a4",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 699,
+        "joints": 39,
+        "contacts": 181,
+        "beforeDepth": 0.051394175600320204,
+        "afterDepth": 0,
+        "maxRotation": 0.22000000000000064,
+        "correctedJoints": 8,
+        "milliseconds": 5.5999999940395355,
+        "limited": true,
+        "surface": {
+          "vertices": 989,
+          "correctedVertices": 239,
+          "maxDisplacement": 0.10837306599783382,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "102001-jump-contact-stability",
+      "phase": "jump",
+      "live": {
+        "state": "jump",
+        "position": [
+          0,
+          0.07033333333333334,
+          -2.662210045554748
+        ],
+        "clip": "Magius102001StandingJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE",
+        "grounded": false
+      },
+      "diag": {
+        "uuid": "2a24dad8-355b-4018-b3fb-0259b9b216a4",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 699,
+        "joints": 39,
+        "contacts": 116,
+        "beforeDepth": 0.04739378371947447,
+        "afterDepth": 0,
+        "maxRotation": 0.3999999999999978,
+        "correctedJoints": 11,
+        "milliseconds": 5.5999999940395355,
+        "limited": true,
+        "surface": {
+          "vertices": 989,
+          "correctedVertices": 56,
+          "maxDisplacement": 0.02061821430382905,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "102001-contact-off-restored",
+      "uuid": "2a24dad8-355b-4018-b3fb-0259b9b216a4",
+      "policy": "one-way-damped-garment-contacts-v2",
+      "supported": true,
+      "samples": 699,
+      "joints": 39,
+      "contacts": 0,
+      "beforeDepth": 0,
+      "afterDepth": 0,
+      "maxRotation": 0,
+      "correctedJoints": 0,
+      "milliseconds": 0,
+      "limited": false,
+      "worstCollider": "",
+      "worstGarment": ""
+    },
+    {
+      "test": "101901-walk-contact-stability",
+      "phase": "walk",
+      "live": {
+        "state": "walk",
+        "position": [
+          0,
+          0.8459999999999996,
+          -3.2264603447528275
+        ],
+        "clip": "Magius101901NaturalArmFingerWalkV37_L",
+        "grounded": true
+      },
+      "diag": {
+        "uuid": "9acc8c69-e05b-453a-b95d-c9261dcb7ebc",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 923,
+        "joints": 30,
+        "contacts": 79,
+        "beforeDepth": 0.026144121954470058,
+        "afterDepth": 0,
+        "maxRotation": 0.4,
+        "correctedJoints": 7,
+        "milliseconds": 11.099999994039536,
+        "limited": true,
+        "surface": {
+          "vertices": 2291,
+          "correctedVertices": 93,
+          "maxDisplacement": 0.02353632830755958,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "101901-run-contact-stability",
+      "phase": "run",
+      "live": {
+        "state": "run",
+        "position": [
+          0,
+          0.8459999999999996,
+          -4.763679065181504
+        ],
+        "clip": "Magius101901NaturalArmFingerRunV37_L",
+        "grounded": true
+      },
+      "diag": {
+        "uuid": "9acc8c69-e05b-453a-b95d-c9261dcb7ebc",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 923,
+        "joints": 30,
+        "contacts": 41,
+        "beforeDepth": 0.04620010571904222,
+        "afterDepth": 0,
+        "maxRotation": 0.15864563617313035,
+        "correctedJoints": 8,
+        "milliseconds": 6.199999988079071,
+        "limited": false,
+        "surface": {
+          "vertices": 2291,
+          "correctedVertices": 18,
+          "maxDisplacement": 0.03008621892920052,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "101901-jump-contact-stability",
+      "phase": "jump",
+      "live": {
+        "state": "jump",
+        "position": [
+          0,
+          0.916333333333333,
+          -5.644636954646545
+        ],
+        "clip": "Magius101901StandingJumpTakeoffV37SetA_ExpressiveV1_SE",
+        "grounded": false
+      },
+      "diag": {
+        "uuid": "9acc8c69-e05b-453a-b95d-c9261dcb7ebc",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 923,
+        "joints": 30,
+        "contacts": 65,
+        "beforeDepth": 0.02528008924203421,
+        "afterDepth": 0,
+        "maxRotation": 0.31448397169454156,
+        "correctedJoints": 2,
+        "milliseconds": 7.399999976158142,
+        "limited": true,
+        "surface": {
+          "vertices": 2291,
+          "correctedVertices": 172,
+          "maxDisplacement": 0.016350633653121376,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "101901-contact-off-restored",
+      "uuid": "9acc8c69-e05b-453a-b95d-c9261dcb7ebc",
+      "policy": "one-way-damped-garment-contacts-v2",
+      "supported": true,
+      "samples": 923,
+      "joints": 30,
+      "contacts": 0,
+      "beforeDepth": 0,
+      "afterDepth": 0,
+      "maxRotation": 0,
+      "correctedJoints": 0,
+      "milliseconds": 0,
+      "limited": false,
+      "worstCollider": "",
+      "worstGarment": ""
+    },
+    {
+      "test": "100101-walk-contact-stability",
+      "phase": "walk",
+      "live": {
+        "state": "walk",
+        "position": [
+          0,
+          1.5829999999999993,
+          -5.874528944987861
+        ],
+        "clip": "Magius100101TargetRigMorphologyWalkV45_L",
+        "grounded": true
+      },
+      "diag": {
+        "uuid": "e0167b40-0209-4e09-989c-5239196534af",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 432,
+        "joints": 12,
+        "contacts": 21,
+        "beforeDepth": 0.02367198239176379,
+        "afterDepth": 0,
+        "maxRotation": 0.3999999999999978,
+        "correctedJoints": 1,
+        "milliseconds": 5.100000023841858,
+        "limited": true,
+        "surface": {
+          "vertices": 1309,
+          "correctedVertices": 41,
+          "maxDisplacement": 0.05045543818589434,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "100101-run-contact-stability",
+      "phase": "run",
+      "live": {
+        "state": "run",
+        "position": [
+          0,
+          1.5829999999999993,
+          -6.699014449337893
+        ],
+        "clip": "Magius100101TargetRigMorphologyRunV45_L",
+        "grounded": true
+      },
+      "diag": {
+        "uuid": "e0167b40-0209-4e09-989c-5239196534af",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 432,
+        "joints": 12,
+        "contacts": 20,
+        "beforeDepth": 0.023699245574229436,
+        "afterDepth": 0,
+        "maxRotation": 0.07937382579000503,
+        "correctedJoints": 4,
+        "milliseconds": 4.000000029802322,
+        "limited": false,
+        "surface": {
+          "vertices": 1309,
+          "correctedVertices": 40,
+          "maxDisplacement": 0.06130779695209584,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "100101-jump-contact-stability",
+      "phase": "jump",
+      "live": {
+        "state": "jump",
+        "position": [
+          0,
+          1.6533333333333327,
+          -7.166681116004559
+        ],
+        "clip": "Magius100101StandingJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE",
+        "grounded": false
+      },
+      "diag": {
+        "uuid": "e0167b40-0209-4e09-989c-5239196534af",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 432,
+        "joints": 12,
+        "contacts": 10,
+        "beforeDepth": 0,
+        "afterDepth": 0,
+        "maxRotation": 0.0746103620485046,
+        "correctedJoints": 1,
+        "milliseconds": 6.0999999940395355,
+        "limited": false,
+        "surface": {
+          "vertices": 1309,
+          "correctedVertices": 28,
+          "maxDisplacement": 0.04178214332647975,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "100101-contact-off-restored",
+      "uuid": "e0167b40-0209-4e09-989c-5239196534af",
+      "policy": "one-way-damped-garment-contacts-v2",
+      "supported": true,
+      "samples": 432,
+      "joints": 12,
+      "contacts": 0,
+      "beforeDepth": 0,
+      "afterDepth": 0,
+      "maxRotation": 0,
+      "correctedJoints": 0,
+      "milliseconds": 0,
+      "limited": false,
+      "worstCollider": "",
+      "worstGarment": ""
+    },
+    {
+      "test": "100201-walk-contact-stability",
+      "phase": "walk",
+      "live": {
+        "state": "walk",
+        "position": [
+          0,
+          2.4373333333333322,
+          -7.695014449337886
+        ],
+        "clip": "OfficialDungeon_100201_Walk_L",
+        "grounded": true
+      },
+      "diag": {
+        "uuid": "d3fc5e47-4192-4cef-95c1-063f9b89f0af",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 460,
+        "joints": 16,
+        "contacts": 59,
+        "beforeDepth": 0.05876861954415057,
+        "afterDepth": 0,
+        "maxRotation": 0.4,
+        "correctedJoints": 7,
+        "milliseconds": 2.7999999821186066,
+        "limited": true,
+        "surface": {
+          "vertices": 611,
+          "correctedVertices": 25,
+          "maxDisplacement": 0.009945580522699974,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "100201-run-contact-stability",
+      "phase": "run",
+      "live": {
+        "state": "run",
+        "position": [
+          0,
+          2.4373333333333322,
+          -9.057514449337882
+        ],
+        "clip": "OfficialDungeon_100201_Run_L",
+        "grounded": true
+      },
+      "diag": {
+        "uuid": "d3fc5e47-4192-4cef-95c1-063f9b89f0af",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 460,
+        "joints": 16,
+        "contacts": 43,
+        "beforeDepth": 0.0335444473970985,
+        "afterDepth": 0,
+        "maxRotation": 0.4,
+        "correctedJoints": 5,
+        "milliseconds": 5,
+        "limited": true,
+        "surface": {
+          "vertices": 611,
+          "correctedVertices": 8,
+          "maxDisplacement": 0.0031331473967410005,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "100201-jump-contact-stability",
+      "phase": "jump",
+      "live": {
+        "state": "jump",
+        "position": [
+          0,
+          2.5231666666666657,
+          -9.44390333822677
+        ],
+        "clip": "Magius100201StandingJumpTakeoffV45TargetRigMorphology_ExpressiveV1_SE",
+        "grounded": false
+      },
+      "diag": {
+        "uuid": "d3fc5e47-4192-4cef-95c1-063f9b89f0af",
+        "policy": "one-way-damped-garment-contacts-v2",
+        "supported": true,
+        "samples": 460,
+        "joints": 16,
+        "contacts": 166,
+        "beforeDepth": 0.03572435872864809,
+        "afterDepth": 0,
+        "maxRotation": 0.4,
+        "correctedJoints": 12,
+        "milliseconds": 6.000000029802322,
+        "limited": true,
+        "surface": {
+          "vertices": 611,
+          "correctedVertices": 58,
+          "maxDisplacement": 0.008835425922740652,
+          "remainingDepth": 0,
+          "limited": false
+        },
+        "worstCollider": "",
+        "worstGarment": ""
+      },
+      "drift": 0,
+      "lengths": true,
+      "originalBody": true,
+      "rootUnchanged": true
+    },
+    {
+      "test": "100201-contact-off-restored",
+      "uuid": "d3fc5e47-4192-4cef-95c1-063f9b89f0af",
+      "policy": "one-way-damped-garment-contacts-v2",
+      "supported": true,
+      "samples": 460,
+      "joints": 16,
+      "contacts": 0,
+      "beforeDepth": 0,
+      "afterDepth": 0,
+      "maxRotation": 0,
+      "correctedJoints": 0,
+      "milliseconds": 0,
+      "limited": false,
+      "worstCollider": "",
+      "worstGarment": ""
+    },
+    {
+      "test": "102001-native-gravity-custom-pose",
+      "state": {
+        "enabled": true,
+        "actors": [
+          {
+            "uuid": "ec670155-a6d2-414b-8b7d-e6eba1a40076",
+            "freeOutputs": 69,
+            "heldOutputs": 0,
+            "solver": {
+              "profileStableKey": "character-physics:style3dCharacterMstId=102001|resourceName=chara_102001_battle_unit",
+              "status": "ready",
+              "active": true,
+              "clothTeams": 10,
+              "boneSpringTeams": 0,
+              "particles": 95,
+              "writableBones": 69,
+              "bodyColliders": 1,
+              "magicaColliders": 35,
+              "windZones": 0,
+              "missingBindings": [],
+              "duplicateBindings": [],
+              "resetCount": 1,
+              "simulationSteps": 2200,
+              "colliderContacts": 4413,
+              "selfContacts": 0,
+              "speedClamps": 559,
+              "angleClamps": 2928,
+              "teleportResets": 0,
+              "nonFiniteCorrections": 0
+            }
+          }
+        ]
+      },
+      "changed": [
+        {
+          "name": "Skirt_B_C_01_Sp",
+          "delta": 1.9268566193674883
+        },
+        {
+          "name": "Skirt_B_C_02_Sp",
+          "delta": 0.09953946621149831
+        },
+        {
+          "name": "Skirt_B_L_01_Sp",
+          "delta": 1.7650870274512012
+        },
+        {
+          "name": "Skirt_B_L_02_Sp",
+          "delta": 0.1617303808571696
+        },
+        {
+          "name": "Skirt_B_R_01_Sp",
+          "delta": 1.7640438109110441
+        },
+        {
+          "name": "Skirt_B_R_02_Sp",
+          "delta": 0.08456385650698481
+        },
+        {
+          "name": "Skirt_F_C_01_Sp",
+          "delta": 1.9958292198300525
+        },
+        {
+          "name": "Skirt_F_C_02_Sp",
+          "delta": 0.010438345792920703
+        },
+        {
+          "name": "Skirt_F_L_01_Sp",
+          "delta": 1.8945956103518689
+        },
+        {
+          "name": "Skirt_F_L_02_Sp",
+          "delta": 0.02884536784507087
+        },
+        {
+          "name": "Skirt_F_R_01_Sp",
+          "delta": 0.005140784806138568
+        },
+        {
+          "name": "Skirt_F_R_02_Sp",
+          "delta": 0.012233055334382681
+        },
+        {
+          "name": "Skirt_S_L_01_Sp",
+          "delta": 1.3885421329179355
+        },
+        {
+          "name": "Skirt_S_L_02_Sp",
+          "delta": 0.047651318182848956
+        },
+        {
+          "name": "Skirt_S_R_01_Sp",
+          "delta": 0.018078087082921634
+        },
+        {
+          "name": "Skirt_S_R_02_Sp",
+          "delta": 0.04240381469450211
+        },
+        {
+          "name": "Cape_B_C_01_Sp",
+          "delta": 1.8057073850039291
+        },
+        {
+          "name": "Cape_B_C_03_Sp",
+          "delta": 0.020301341800763498
+        },
+        {
+          "name": "Cape_B_C_04_Sp",
+          "delta": 0.010771840268413282
+        },
+        {
+          "name": "Cape_B_C_05_Sp",
+          "delta": 0.009601220631046249
+        },
+        {
+          "name": "Hair_F_L1_02_Sp",
+          "delta": 0.0061455923324874595
+        },
+        {
+          "name": "Hair_F_R1_01_Sp",
+          "delta": 1.5750727284310475
+        },
+        {
+          "name": "Hair_F_R1_02_Sp",
+          "delta": 1.9283525320222328
+        },
+        {
+          "name": "Hair_S_R1_01_02_Sp",
+          "delta": 0.005182737718100413
+        },
+        {
+          "name": "Hair_S_R1_01_03_Sp",
+          "delta": 0.011442081110083963
+        },
+        {
+          "name": "HatAcc_F_L1_01_Sp",
+          "delta": 0.01355106171011311
+        },
+        {
+          "name": "HatAcc_F_L1_02_Sp",
+          "delta": 0.01617977698155204
+        },
+        {
+          "name": "Cape_B_L_01_Sp",
+          "delta": 0.00611017860995542
+        },
+        {
+          "name": "Cape_B_L_02_Sp",
+          "delta": 0.005433213303232094
+        },
+        {
+          "name": "Cape_B_L_03_Sp",
+          "delta": 0.039833068148173716
+        },
+        {
+          "name": "Cape_B_L_04_Sp",
+          "delta": 0.013650898451067721
+        },
+        {
+          "name": "Cape_B_L_05_Sp",
+          "delta": 0.06280133568049683
+        },
+        {
+          "name": "Cape_F_L_01_Sp",
+          "delta": 0.010497271567370903
+        },
+        {
+          "name": "Cape_B_R_01_Sp",
+          "delta": 1.3448484454385348
+        },
+        {
+          "name": "Cape_B_R_02_Sp",
+          "delta": 0.01967837515497174
+        },
+        {
+          "name": "Cape_B_R_04_Sp",
+          "delta": 0.00977028684959574
+        },
+        {
+          "name": "Cape_F_R_01_Sp",
+          "delta": 1.3199150511134372
+        },
+        {
+          "name": "Cape_S_R_01_Sp",
+          "delta": 0.01231802768152468
+        },
+        {
+          "name": "Cape_S_R_02_Sp",
+          "delta": 0.017630856497648097
+        },
+        {
+          "name": "Legchain_S_L1_01_Sp",
+          "delta": 0.01138335414364261
+        },
+        {
+          "name": "Legchain_S_L1_02_Sp",
+          "delta": 0.01307499577543654
+        },
+        {
+          "name": "Legchain_S_L1_03_Sp",
+          "delta": 0.006382871257017503
+        },
+        {
+          "name": "Legchain_S_L1_04_Sp",
+          "delta": 0.007033642942528874
+        },
+        {
+          "name": "Legchain_S_L1_05_Sp",
+          "delta": 0.01892407967008629
+        },
+        {
+          "name": "Legchain_S_L1_06_Sp",
+          "delta": 0.014414822707726573
+        },
+        {
+          "name": "Legchain_S_L1_07_Sp",
+          "delta": 0.08006726090426444
+        },
+        {
+          "name": "Leglock_S_L1_01_Sp",
+          "delta": 1.9866367831526293
+        }
+      ]
+    },
+    {
+      "test": "102001-stationary-native-gravity-stability",
+      "maxQuaternionComponentDeltaPerFrame": 0.00047752186105692873
+    },
+    {
+      "test": "pose-gravity-off-exact-frozen-restore",
+      "restoreDelta": 0
+    }
+  ],
+  "errors": []
+}

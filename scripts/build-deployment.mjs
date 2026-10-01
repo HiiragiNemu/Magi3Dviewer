@@ -29,7 +29,7 @@ await run(process.execPath, ['scripts/site-prepare-carriers.mjs'])
 await run(process.execPath, [viteEntry, 'build'])
 await run(process.execPath, ['scripts/copy-deployment-public.mjs'])
 await fs.writeFile(path.resolve(repoRoot, environment.MAGIUS_DEPLOY_OUT_DIR, 'site-version.json'), JSON.stringify({
-  revision, jumpStyle, garmentContacts, garmentContactPolicy:'quasistatic-body-capsules-v1', performanceStudio:'live-recorded-lanes-v1', entryPolicy:'single-production-no-store-v1', landing:'continuous-grounded-gait-v1', builtAt:new Date().toISOString(), poseEditor:'bind-limited-ik-v3', viewportEditor:'persistent-v1', groundGuard:'scene-floor-v1', selection:'existing-outline-uniforms',
+  revision, jumpStyle, garmentContacts, garmentContactPolicy:'one-way-damped-garment-contacts-v2', performanceStudio:'live-recorded-lanes-v1', entryPolicy:'single-production-no-store-v1', landing:'continuous-grounded-gait-v1', builtAt:new Date().toISOString(), poseEditor:'bind-limited-ik-v3', viewportEditor:'persistent-v1', groundGuard:'scene-floor-v1', selection:'existing-outline-uniforms',
   deploymentTarget:environment.MAGIUS_DEPLOY_TARGET, stageDelivery:'cloudflare-same-origin',
 }) + '\n')
 

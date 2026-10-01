@@ -19,7 +19,7 @@ import { registerPoseJointLimits, clampPoseJoint, poseJointLimitSnapshot } from 
 import { installPoseDiagnostics } from './poseDiagnostics'
 import { createDirectPoseTools, canonicalPoseBone, DirectPoseHistory, type PosePart, type PoseSnapshot } from './directPoseTools'
 import { DirectPoseTarget } from './directPoseTarget'
-import { addBeforeAnimationLoop, removeBeforeAnimationLoop } from '../../magia-exedra-character-three/renderer'
+import { addBeforeAnimationLoop, removeBeforeAnimationLoop, getClockDelta } from '../../magia-exedra-character-three/renderer'
 import { ObjectMovementSelection, pickMovementTarget, visiblePickMeshes, type MovementTarget } from './objectMovementSelection'
 import { setupWeaponPanel } from './weaponPanel'
 import { setupFloatingPanelDrag } from './floatingPanelInteraction'
@@ -29,7 +29,7 @@ import { createViewportFraming } from './performanceEditor/viewportFraming'
 import { mountPerformanceStudio } from './performanceEditor/studio'
 import { PerformanceRecorder } from './performanceEditor/recorder'
 import type { RecordedActor } from './performanceEditor/recordings'
-import { StableGarmentContacts, GARMENT_CONTACT_SETTING } from './garmentContacts'
+import { StableGarmentContacts, GARMENT_CONTACT_SETTING, GARMENT_DAMPING_SETTING, DEFAULT_GARMENT_HALF_LIFE } from './garmentContacts'
 import { PoseGravityPreview } from './poseGravityPreview'
 import { createJointNodeLayer, beginJointPointerDrag, beginExistingJointGizmoPointerDrag } from './performanceEditor/jointNodes'
 import * as THREE from 'three'
@@ -319,17 +319,19 @@ const garmentContacts = new Map<THREE.Object3D, StableGarmentContacts>()
 const garmentPreparing = new Set<THREE.Object3D>()
 const garmentContactsAvailable = import.meta.env.VITE_MAGIUS_GARMENT_CONTACTS !== 'off'
 let garmentContactsEnabled = garmentContactsAvailable
+let garmentRecoveryHalfLife=DEFAULT_GARMENT_HALF_LIFE
+try { const saved=Number(localStorage.getItem(GARMENT_DAMPING_SETTING));if(Number.isFinite(saved)&&saved>=.04&&saved<=.3)garmentRecoveryHalfLife=saved } catch {}
 try { if(localStorage.getItem(GARMENT_CONTACT_SETTING)==='off')garmentContactsEnabled=false } catch { /* privacy mode */ }
 function setGarmentContactsEnabled(value:boolean){
     value=Boolean(value&&garmentContactsAvailable);garmentContactsEnabled=value
-    if(!value)for(const solver of garmentContacts.values())solver.restore()
+    if(!value)for(const solver of garmentContacts.values())solver.restore(true)
     try{localStorage.setItem(GARMENT_CONTACT_SETTING,value?'on':'off')}catch{}
     const input=document.getElementById('garment-contacts-enabled') as HTMLInputElement|null;if(input)input.checked=value
 }
 function warmGarmentContacts(object:THREE.Object3D){
     if(!garmentContactsAvailable||garmentContacts.has(object)||garmentPreparing.has(object))return
     garmentPreparing.add(object)
-    const prepare=()=>{garmentPreparing.delete(object);if(!scene.characters.some(s=>s.character?.object===object))return;try{garmentContacts.set(object,new StableGarmentContacts(object))}catch(error){console.warn('Garment contact capability unavailable',error)}}
+    const prepare=()=>{garmentPreparing.delete(object);if(!scene.characters.some(s=>s.character?.object===object))return;try{const solver=new StableGarmentContacts(object);solver.setRecoveryHalfLife(garmentRecoveryHalfLife);garmentContacts.set(object,solver)}catch(error){console.warn('Garment contact capability unavailable',error)}}
     if('requestIdleCallback' in window)window.requestIdleCallback(prepare,{timeout:1500});else setTimeout(prepare,200)
 }
 function restoreStudioOutputs(){performanceRecorder?.restore();for(const contact of garmentContacts.values())contact.restore()}
@@ -346,15 +348,27 @@ function preparePoseGravity(){
             }))}]
     }))
 }
-function updateGarmentContacts(){
+function updateGarmentContacts(deltaSeconds=0){
     for(const slot of scene.characters){const character=slot.character;if(!character)continue
         const object=character.object,active=garmentContactsEnabled&&!performanceRecorder?.ownsMotion(object)&&(
             (isViewerLocomotionEnabled()&&scene.characterSelected===slot)||
-            (poseGravity.enabled&&poseFrozenBases.has(object))||/walk|run|jump|airborne|land/i.test(character.animation.current??''))
+            (poseFrozenBases.has(object)?poseGravity.enabled:/walk|run|jump|airborne|land/i.test(character.animation.current??'')))
         if(active)warmGarmentContacts(object)
-        garmentContacts.get(object)?.solve(active,!poseFrozenBases.has(object)||isViewerLocomotionEnabled(),node=>{if(isPerformanceBoneLeased(node))return true;const entry=manualPoseByCharacter.get(object)?.get(node.uuid);return !!entry&&(entry.offsets.lengthSq()>1e-12||entry.positionOffsets.lengthSq()>1e-12||!!entry.scaleFactors||directPoseSelection?.entry===entry)})
+        garmentContacts.get(object)?.solve(active,node=>{if(isPerformanceBoneLeased(node))return true;const entry=manualPoseByCharacter.get(object)?.get(node.uuid);return !!entry&&(entry.offsets.lengthSq()>1e-12||entry.positionOffsets.lengthSq()>1e-12||!!entry.scaleFactors||directPoseSelection?.entry===entry)},deltaSeconds)
     }
     for(const [object,solver]of garmentContacts)if(!scene.characters.some(s=>s.character?.object===object)){solver.dispose();garmentContacts.delete(object)}
+}
+function updateGarmentSurfaces(){
+    if(!garmentContactsEnabled)return
+    for(const slot of scene.characters){const character=slot.character;if(!character)continue
+        const object=character.object,active=performanceRecorder?.ownsMotion(object)||(isViewerLocomotionEnabled()&&scene.characterSelected===slot)||poseFrozenBases.has(object)||/walk|run|jump|airborne|land/i.test(character.animation.current??'')
+        if(!active)continue;warmGarmentContacts(object)
+        garmentContacts.get(object)?.projectSurface(node=>{
+            if(!performanceRecorder?.ownsMotion(object)&&isPerformanceBoneLeased(node))return true
+            const entry=manualPoseByCharacter.get(object)?.get(node.uuid)
+            return !!entry&&(entry.offsets.lengthSq()>1e-12||entry.positionOffsets.lengthSq()>1e-12||!!entry.scaleFactors||directPoseSelection?.entry===entry)
+        })
+    }
 }
 function setupMotionContactOptions(){
     const section=document.createElement('section');section.id='motion-contact-options';section.dataset.i18nIgnore='true';section.style.cssText='display:grid;gap:6px;padding:8px;font-size:12px'
@@ -362,10 +376,14 @@ function setupMotionContactOptions(){
     const contactLabel=document.createElement('label');contactLabel.append(contact,document.createTextNode('稳定防穿模（可单独关闭）'));contact.onchange=()=>setGarmentContactsEnabled(contact.checked)
     const gravity=document.createElement('input');gravity.type='checkbox';gravity.id='pose-gravity-enabled';gravity.disabled=!garmentContactsAvailable
     const gravityLabel=document.createElement('label');gravityLabel.append(gravity,document.createTextNode('自定义姿态重力预览（原生物理）'));gravity.onchange=()=>poseGravity.setEnabled(gravity.checked&&garmentContactsAvailable)
-    const note=document.createElement('small');note.textContent='姿态重力默认关闭，保留固定姿态。开启后，仅未手动控制的头发、衣服、饰品继续原生物理；防穿模不增加弹簧或风力。'
-    section.append(contactLabel,gravityLabel,note)
+    const note=document.createElement('small');note.textContent='姿态重力默认关闭，保留固定姿态。开启后，仅未手动控制的头发、衣服、饰品继续原生物理；身体姿态不受碰撞改写；只对衣服做即时让位和平滑回落。'
+    const recovery=document.createElement('input');recovery.type='range';recovery.min='40';recovery.max='300';recovery.step='10';recovery.id='garment-recovery-damping';recovery.value=String(Math.round(garmentRecoveryHalfLife*1000));recovery.disabled=!garmentContactsAvailable
+    const recoveryValue=document.createElement('output');recoveryValue.textContent=recovery.value+' ms'
+    const recoveryLabel=document.createElement('label');recoveryLabel.style.cssText='display:flex;align-items:center;gap:6px';recoveryLabel.append(document.createTextNode('衣服回落阻尼'),recovery,recoveryValue);recovery.setAttribute('aria-label','衣服回落阻尼（毫秒）');recovery.title='越大回落越平缓；不延迟手臂、腿推动衣服时的碰撞让位'
+    recovery.oninput=()=>{garmentRecoveryHalfLife=Number(recovery.value)/1000;recoveryValue.textContent=recovery.value+' ms';for(const solver of garmentContacts.values())solver.setRecoveryHalfLife(garmentRecoveryHalfLife);try{localStorage.setItem(GARMENT_DAMPING_SETTING,String(garmentRecoveryHalfLife))}catch{}}
+    section.append(contactLabel,recoveryLabel,gravityLabel,note)
     const dock=document.getElementById('advanced-controls-dock')!;(dock.querySelector('.floating-panel-scroll')??dock).append(section)
-    Object.assign(window,{magiusGarmentContacts:{setEnabled:setGarmentContactsEnabled,evaluateOnce:updateGarmentContacts,get enabled(){return garmentContactsEnabled},setPoseGravity:(value:boolean)=>{gravity.checked=Boolean(value&&garmentContactsAvailable);poseGravity.setEnabled(gravity.checked)},diagnostics:()=>({contacts:[...garmentContacts].map(([root,solver])=>({uuid:root.uuid,...solver.diagnostics})),gravity:poseGravity.diagnostics()})}})
+    Object.assign(window,{magiusGarmentContacts:{setEnabled:setGarmentContactsEnabled,evaluateOnce:()=>{updateGarmentContacts();updateGarmentSurfaces()},get enabled(){return garmentContactsEnabled},setPoseGravity:(value:boolean)=>{gravity.checked=Boolean(value&&garmentContactsAvailable);poseGravity.setEnabled(gravity.checked)},diagnostics:()=>({contacts:[...garmentContacts].map(([root,solver])=>({uuid:root.uuid,...solver.diagnostics})),gravity:poseGravity.diagnostics()})}})
 }
 function listRecordedActors():RecordedActor[]{
     const counts=new Map<string,number>(),result:RecordedActor[]=[]
@@ -3317,8 +3335,9 @@ function animateLoop() {
     poseGravity.compose()
     performanceGizmoFlush?.()
     performanceHost?.flushFinalPoseBeforeCamera()
-    updateGarmentContacts()
+    updateGarmentContacts(getClockDelta())
     performanceRecorder?.frame()
+    updateGarmentSurfaces()
     if (objectTransformUiPending) {
         objectTransformUiPending = false
         if (singleObjectTransformOnChange) singleObjectTransformOnChange()

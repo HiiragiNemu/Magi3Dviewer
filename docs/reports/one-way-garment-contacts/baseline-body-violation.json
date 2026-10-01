@@ -1,0 +1,67 @@
+{
+  "revision": "008e04d6e28b1fa418aedba18bbf69fbc36d74b7",
+  "rows": [
+    {
+      "id": "102001",
+      "mode": "walk",
+      "bodyChanges": [
+        {
+          "name": "Arm_R",
+          "delta": 0.004289900166237537
+        }
+      ]
+    },
+    {
+      "id": "102001",
+      "mode": "run",
+      "bodyChanges": []
+    },
+    {
+      "id": "102001",
+      "mode": "jump",
+      "bodyChanges": [
+        {
+          "name": "Arm_L",
+          "delta": 0.031749835917798674
+        },
+        {
+          "name": "Arm_R",
+          "delta": 0.03405753960960223
+        }
+      ]
+    },
+    {
+      "id": "101901",
+      "mode": "walk",
+      "bodyChanges": [
+        {
+          "name": "Arm_L",
+          "delta": 0.06740379289640341
+        },
+        {
+          "name": "Arm_R",
+          "delta": 0.06360792089966005
+        }
+      ]
+    },
+    {
+      "id": "101901",
+      "mode": "run",
+      "bodyChanges": []
+    },
+    {
+      "id": "101901",
+      "mode": "jump",
+      "bodyChanges": [
+        {
+          "name": "Arm_L",
+          "delta": 0.10061337923976232
+        },
+        {
+          "name": "Arm_R",
+          "delta": 0.07505170450037113
+        }
+      ]
+    }
+  ]
+}
