@@ -20,6 +20,7 @@ export function mountPerformanceStudio(options:Options){
     const drawer=document.createElement('section');drawer.id='studio-drawer';drawer.hidden=true
     const scrub=document.createElement('input');scrub.type='range';scrub.id='studio-scrub';scrub.min='0';scrub.step='.001';scrub.setAttribute('aria-label','演出时间轴')
     const report=(action:()=>unknown)=>{try{const result=action();if(result instanceof Promise)void result.catch(error=>message((error as Error).message));else refresh()}catch(error){message((error as Error).message)}}
+    let targetExplicit=false
     let lastMessage='',messageUntil=0,open=false,compact=false,saving:ReturnType<typeof setTimeout>|undefined,lastFrame=-1
     const message=(text:string)=>{lastMessage=text;messageUntil=performance.now()+8000;status.textContent=text}
     const button=(host:HTMLElement,id:string,label:string,action:()=>unknown)=>{const b=document.createElement('button');b.type='button';b.id='studio-'+id;b.textContent=label;b.setAttribute('aria-label',label);b.addEventListener('click',()=>report(action),ev);host.append(b);return b}
@@ -85,7 +86,7 @@ export function mountPerformanceStudio(options:Options){
         restoreRegions();drawer.replaceChildren();drawer.hidden=false;button(drawer,'lane-close','关闭轨道工具',()=>{drawer.hidden=true});drawer.append(editor)
     }
     const refreshActors=()=>{
-        const previous=target.value||options.selected();target.replaceChildren(...recorder.host.actors().filter(a=>a.current()).map(a=>{const o=document.createElement('option');o.value=a.actorKey;o.textContent=(a.instance?`${a.instance+1} · `:'')+a.label;return o}));const camera=document.createElement('option');camera.value='camera';camera.textContent='镜头';target.append(camera)
+        const previous=targetExplicit?target.value:options.selected()||target.value;target.replaceChildren(...recorder.host.actors().filter(a=>a.current()).map(a=>{const o=document.createElement('option');o.value=a.actorKey;o.textContent=(a.instance?`${a.instance+1} · `:'')+a.label;return o}));const camera=document.createElement('option');camera.value='camera';camera.textContent='镜头';target.append(camera)
         if([...target.options].some(o=>o.value===previous))target.value=previous!;refresh()
     }
     const refreshTracks=()=>{
@@ -115,7 +116,7 @@ export function mountPerformanceStudio(options:Options){
         motion.disabled=face.disabled=target.value==='camera'||recorder.recording;loop.checked=runtime.timeline.loop;undo.disabled=!recorder.canUndo||recorder.recording;redo.disabled=!recorder.canRedo||recorder.recording
         status.textContent=recorder.error||runtime.lastError||(performance.now()<messageUntil?lastMessage:recorder.recording?'录制中 · 其他轨道同步播放':runtime.playing?'播放中':recorder.lanes.length?'就绪 · 选择角色可继续叠录':'选择角色 → 录制 → 起点 → 换角色叠录')
     }
-    target.addEventListener('change',()=>report(()=>{recorder.prepareLive(target.value,kinds());refresh()}),ev)
+    target.addEventListener('change',()=>report(()=>{targetExplicit=true;recorder.prepareLive(target.value,kinds());refresh()}),ev)
     scrub.addEventListener('input',()=>report(()=>recorder.seek(Number(scrub.value))),ev)
     const setOpen=(value:boolean)=>{if(value===open)return;if(!value){recorder.stop();drawer.hidden=true;restoreRegions()}open=value;root.hidden=!value;document.body.classList.toggle('performance-studio-open',value);toggle.setAttribute('aria-expanded',String(value));options.onOpenChange?.(value);if(value){refreshActors();refreshTracks();refresh()}else toggle.focus()}
     toggle.setAttribute('aria-controls',root.id);toggle.addEventListener('click',()=>setOpen(!open),ev)

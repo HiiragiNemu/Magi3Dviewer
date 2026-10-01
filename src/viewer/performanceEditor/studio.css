@@ -46,3 +46,5 @@ body.theme-light .studio-cursor{background:#19313f}
 @media(max-height:520px){#performance-studio:not([data-compact=true]){font-size:11px;gap:2px}.studio-bar{flex-wrap:nowrap!important}#performance-studio :is(button,select,input:not([type=range]):not([type=checkbox])){min-height:27px}#studio-tracks{max-height:95px}#studio-drawer{max-height:150px}}
 
 body.performance-studio-open #camera-corner-controls{bottom:calc(var(--studio-reserved-height,90px) + 6px);}
+
+@media(max-width:600px){#performance-studio[data-compact=true]{left:4px;right:4px;width:auto;max-width:none}#performance-studio[data-compact=true] .studio-bar{flex-wrap:nowrap}#performance-studio[data-compact=true] #studio-target{flex:1 1 90px;max-width:none}#performance-studio[data-compact=true] #studio-record{flex:0 0 94px}}
