@@ -3,6 +3,8 @@ import { Pass } from 'three/addons/postprocessing/Pass.js';
 
 export interface BackgroundDepthConsumer {
     object: THREE.Object3D;
+    /** Mixed meshes: exclude this material slot, not the opaque siblings. */
+    material?: THREE.Material;
     depthTextureUniform: THREE.IUniform<THREE.Texture | null>;
     resolutionUniform: THREE.IUniform<THREE.Vector2>;
 }
@@ -76,8 +78,8 @@ export class BackgroundDepthPass extends Pass {
         const previousShadowNeedsUpdate = renderer.shadowMap.needsUpdate;
         const previousAutoClear = renderer.autoClear;
         const visibility = [...this.consumers].map(consumer => ({
-            object: consumer.object,
-            visible: consumer.object.visible,
+            object: consumer.material ?? consumer.object,
+            visible: (consumer.material ?? consumer.object).visible,
         }));
         try {
             for (const entry of visibility) entry.object.visible = false;

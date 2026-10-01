@@ -7,7 +7,10 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 // Keep the extracted native-corpus research suite separate. These are real
 // regression tests used by website delivery; no missing tests are skipped.
 const tests = [
-  'stageSelectorReady.test.mjs',
+  'stageSpecialSurfaces.test.mjs',
+  'stageMainLightCascades.test.mjs',
+  'stageParticleBlendState.test.mjs',
+  'stageVolumetricLightBeams.test.mjs',
   'performanceRecording.test.mjs',
   'studioFollowup.test.mjs',
   'garmentContacts.test.mjs',
@@ -48,6 +51,7 @@ const tests = [
   'runtimeProductDelivery.test.mjs',
   'siteStageDelivery.test.mjs',
   'runtimeProductGateway.test.mjs',
+  'stageSelectorReady.test.mjs',
 ]
 for (const file of tests) {
   if (!fs.existsSync(path.join(root, file))) throw new Error('Required website regression is missing: ' + file)

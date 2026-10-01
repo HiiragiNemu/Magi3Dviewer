@@ -1,0 +1,506 @@
+{
+  "baselineRevision": "7c5d5d1e5bb7f2e746fd012c12757a5ac3620a71",
+  "catalog": {
+    "total": 599,
+    "enabled": 408,
+    "builtIn": 5,
+    "notEnabled": 191
+  },
+  "browserSampleCount": 16,
+  "samples": [
+    {
+      "enabledIndex": 8,
+      "id": "battle-600-01-01-003",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 36,
+      "id": "battle-605-00-01-001",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 204,
+      "id": "dungeon-60300-bg-3d-603-00-12-001-002",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 241,
+      "id": "dungeon-60700-bg-3d-607-00-12-001-001",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 269,
+      "id": "dungeon-61000-bg-3d-610-00-11-001-003",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 297,
+      "id": "dungeon-61200-bg-3d-612-00-14-001-002",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 311,
+      "id": "dungeon-61500-bg-3d-615-00-14-001-001",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 325,
+      "id": "dungeon-61800-bg-3d-618-00-14-001-001",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 339,
+      "id": "dungeon-62100-bg-3d-621-00-11-001-002",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 353,
+      "id": "dungeon-63700-bg-3d-654a-00-11-001-002",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 367,
+      "id": "dungeon-65000-bg-3d-652-01-11-001-002",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 381,
+      "id": "dungeon-65200-bg-3d-652-00-11-001-001",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 395,
+      "id": "dollhouse-doll-house-3d-background-bg-3d-661-00-00-001",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 398,
+      "id": "gallery-memory-room-story",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 402,
+      "id": "battle-602-00-00-001",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    },
+    {
+      "enabledIndex": 407,
+      "id": "battle-603-00-00-001",
+      "loadFailure": "",
+      "consoleErrors": [],
+      "httpFailures": []
+    }
+  ],
+  "localSpecialSurfaceCounts": {
+    "checked": 67,
+    "matches": [
+      {
+        "index": 13,
+        "id": "battle-601-00-00-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 14,
+        "id": "battle-601-00-01-003",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 15,
+        "id": "battle-601-14-00-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 16,
+        "id": "battle-601-15-00-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 19,
+        "id": "battle-602-00-01-003",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 20,
+        "id": "battle-602-11-00-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 21,
+        "id": "battle-602-11-01-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 22,
+        "id": "battle-602-11-01-002",
+        "hits": {
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 23,
+        "id": "battle-602-11-01-003",
+        "hits": {
+          "Creative/Effect/Particle/Common": 4
+        }
+      },
+      {
+        "index": 28,
+        "id": "battle-603-00-01-003",
+        "hits": {
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 32,
+        "id": "battle-604-00-01-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 39,
+        "id": "battle-606-00-00-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 40,
+        "id": "battle-606-00-01-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 41,
+        "id": "battle-606-00-01-002",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 63,
+        "id": "battle-610-00-01-002",
+        "hits": {
+          "Creative/Effect/Particle/Common": 4,
+          "Creative/Bg/BgSkyCloudSurface": 7
+        }
+      },
+      {
+        "index": 70,
+        "id": "battle-612-00-00-002",
+        "hits": {
+          "Creative/Effect/Particle/Common": 2
+        }
+      },
+      {
+        "index": 139,
+        "id": "alternative-background-alternative-bg-model-00",
+        "hits": {
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 140,
+        "id": "alternative-background-alternative-bg-model-01",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 141,
+        "id": "alternative-stage-model-alternative-stage-model-01-released",
+        "hits": {
+          "Creative/Effect/Particle/Common": 16
+        }
+      },
+      {
+        "index": 142,
+        "id": "alternative-stage-model-alternative-stage-model-1-released",
+        "hits": {
+          "Creative/Effect/Particle/Common": 16
+        }
+      },
+      {
+        "index": 143,
+        "id": "alternative-stage-model-alternative-stage-model-1-unreleased",
+        "hits": {
+          "Creative/Effect/Particle/Common": 5
+        }
+      },
+      {
+        "index": 186,
+        "id": "dungeon-60100-bg-3d-601-00-14-001-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 208,
+        "id": "dungeon-60300-bg-3d-603-00-13-001-003",
+        "hits": {
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 270,
+        "id": "dungeon-61000-bg-3d-610-00-12-001-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 4,
+          "Creative/Bg/BgSkyCloudSurface": 8
+        }
+      },
+      {
+        "index": 271,
+        "id": "dungeon-61000-bg-3d-610-00-12-001-002",
+        "hits": {
+          "Creative/Effect/Particle/Common": 4,
+          "Creative/Bg/BgSkyCloudSurface": 8
+        }
+      },
+      {
+        "index": 272,
+        "id": "dungeon-61000-bg-3d-610-00-12-001-003",
+        "hits": {
+          "Creative/Effect/Particle/Common": 4,
+          "Creative/Bg/BgSkyCloudSurface": 8
+        }
+      },
+      {
+        "index": 333,
+        "id": "dungeon-62000-bg-3d-620-00-12-001-002",
+        "hits": {
+          "Creative/Effect/Particle/Common": 2
+        }
+      },
+      {
+        "index": 344,
+        "id": "dungeon-62101-bg-3d-621-00-12-001-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 345,
+        "id": "dungeon-62101-bg-3d-621-00-12-001-002",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 346,
+        "id": "dungeon-62101-bg-3d-621-00-12-001-003",
+        "hits": {
+          "Creative/Effect/Particle/Common": 3
+        }
+      },
+      {
+        "index": 397,
+        "id": "dungeon-intro-0001-001",
+        "hits": {
+          "Creative/Bg/BgShadowOnlyShader_Trs": 1,
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 398,
+        "id": "gallery-memory-room-story",
+        "hits": {
+          "Creative/Effect/Particle/Common": 15
+        }
+      },
+      {
+        "index": 400,
+        "id": "battle-616-00-01-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 1
+        }
+      },
+      {
+        "index": 401,
+        "id": "battle-601-00-01-001",
+        "hits": {
+          "Creative/Effect/Particle/Common": 2
+        }
+      },
+      {
+        "index": 403,
+        "id": "battle-601-00-01-002",
+        "hits": {
+          "Creative/Effect/Particle/Common": 2
+        }
+      }
+    ]
+  },
+  "candidateBrowserChecks": [
+    {
+      "id": "dungeon-65000-bg-3d-652-01-11-001-002",
+      "failure": "",
+      "errors": [],
+      "httpFailures": [],
+      "visibleMeshes": 529
+    },
+    {
+      "id": "dungeon-intro-0001-001",
+      "failure": "",
+      "errors": [],
+      "httpFailures": [],
+      "visibleMeshes": 33
+    },
+    {
+      "id": "gallery-memory-room-story",
+      "failure": "",
+      "errors": [],
+      "httpFailures": [],
+      "visibleMeshes": 134
+    },
+    {
+      "id": "battle-600-01-01-003",
+      "failure": "",
+      "errors": [],
+      "httpFailures": [],
+      "visibleMeshes": 53
+    },
+    {
+      "id": "battle-610-00-01-002",
+      "failure": "",
+      "errors": [],
+      "httpFailures": [],
+      "visibleMeshes": 378
+    },
+    {
+      "id": "dungeon-61000-bg-3d-610-00-12-001-001",
+      "failure": "",
+      "errors": [],
+      "httpFailures": [],
+      "visibleMeshes": 391
+    },
+    {
+      "id": "dungeon-61200-bg-3d-612-00-14-001-002",
+      "failure": "",
+      "errors": [],
+      "httpFailures": [],
+      "visibleMeshes": 463
+    }
+  ],
+  "nativeShadowOnly": {
+    "bundle": "dungeon/bg/65000/bg_3d_652_01_11_001_002",
+    "shaderPathId": "-3296666697305076964",
+    "materialPathId": "-3670852823274885734",
+    "shader": "Creative/Bg/BgShadowOnlyShader_Trs",
+    "rgb": "_ShadowColor.rgb",
+    "alpha": "saturate((1 - mainLightShadowAttenuation) * pow(1 - saturate(dot(normal, view)), _frenelPower))",
+    "passState": {
+      "rtBlend0": {
+        "srcBlend": {
+          "val": 5.0,
+          "name": "<noninit>"
+        },
+        "destBlend": {
+          "val": 10.0,
+          "name": "<noninit>"
+        },
+        "srcBlendAlpha": {
+          "val": 1.0,
+          "name": "<noninit>"
+        },
+        "destBlendAlpha": {
+          "val": 10.0,
+          "name": "<noninit>"
+        },
+        "blendOp": {
+          "val": 0.0,
+          "name": "<noninit>"
+        },
+        "blendOpAlpha": {
+          "val": 0.0,
+          "name": "<noninit>"
+        },
+        "colMask": {
+          "val": 15.0,
+          "name": "<noninit>"
+        }
+      },
+      "zTest": {
+        "val": 4.0,
+        "name": "<noninit>"
+      },
+      "zWrite": {
+        "val": 0.0,
+        "name": "<noninit>"
+      },
+      "culling": {
+        "val": 2.0,
+        "name": "<noninit>"
+      }
+    },
+    "sourceBundleSHA256": "ba978071003871be4ad174b8d5fcd45e87b89b526fa9fa782fbd42c30382bf11",
+    "sourceProgramSHA256": "13f31ad3e9869c99d6d1d8c2dee08ce2008d405cf13a21794eb24bade5461fc5"
+  },
+  "remaining": {
+    "cloudSurface": {
+      "example": "dungeon-61000-bg-3d-610-00-11-001-003",
+      "nativeVolumeName": "3DNoise",
+      "nativeVolumePathId": "-1645627217008615320",
+      "dimensions": [
+        64,
+        64,
+        64
+      ],
+      "dataBytes": 1198372,
+      "mipCount": 7,
+      "status": "native volume and shader recovered for research, complete verified web port pending; no fabricated noise replacement shipped"
+    },
+    "smoke612": {
+      "example": "dungeon-61200-bg-3d-612-00-14-001-002",
+      "status": "large particle-system smoke occlusion still under review; not fixed by static-mesh material dispatch"
+    },
+    "allScenes": {
+      "status": "16 sampled, not 408 visually accepted"
+    }
+  }
+}

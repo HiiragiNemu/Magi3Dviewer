@@ -2124,6 +2124,7 @@ async function loadExternalStage(
             resolveReDriveBackgroundShaderGlobals(
                 definition.renderProfile?.reDriveVolume,
             ),
+            scene.effects,
         )
         signal.throwIfAborted()
         return {

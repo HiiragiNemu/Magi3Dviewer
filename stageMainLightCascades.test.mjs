@@ -249,7 +249,7 @@ test('converts serialized Unity bias per cascade and rejects non-finite inputs',
 
 test('injects the exact URP LOW four half-texel comparison taps', () => {
     const match = source.match(
-        /const officialUrpLowShadowFunction = `([\s\S]*?)`\n\nconst officialUrpShadowSample/,
+        /const officialUrpLowShadowFunction = `([\s\S]*?)`\r?\n\r?\nconst officialUrpShadowSample/,
     )
     assert.ok(match)
     const lowFunction = match[1]

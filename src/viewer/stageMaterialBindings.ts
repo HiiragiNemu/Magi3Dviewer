@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import type { ReDriveBackgroundShaderGlobals } from './reDriveVolumeRuntime'
 import { resolveRuntimeAssetUrl } from './runtimeProductDelivery'
 import { loadNativeMatcapMips } from './stageNativeMatcapMips'
+import { createStageShadowOnlyMaterial, SHADOW_ONLY_SOURCE } from './stageShadowOnlyMaterial'
+import { createStageParticleSurfaceMaterial, type StageParticleDepthRegistrar } from './stageParticles'
 
 export interface StageAtlasProfile {
     columns: number
@@ -406,6 +408,7 @@ export async function applyStageMaterialBindings(
     renderer: THREE.WebGLRenderer,
     signal?: AbortSignal,
     backgroundShaderGlobals?: ReDriveBackgroundShaderGlobals,
+    depthRegistrar?: StageParticleDepthRegistrar,
 ): Promise<StageMaterialBindingResult> {
     if (!bindings?.length) {
         return {
@@ -639,7 +642,7 @@ export async function applyStageMaterialBindings(
                                 : undefined,
                         ),
                         ownedTextures,
-                    }, materialBackgroundGlobals)
+                    }, materialBackgroundGlobals, depthRegistrar)
                     createdMaterials.add(material)
                     signal?.throwIfAborted()
                     material.name = sourceMaterial.name
@@ -733,6 +736,7 @@ function effectiveUnityRenderQueue(binding: StageMaterialBinding) {
     if (
         binding.transparent
         || binding.sourceShader === 'Creative/Effect/Particle/Common'
+        || binding.sourceShader === SHADOW_ONLY_SOURCE
     ) {
         return 3000
     }
@@ -792,6 +796,14 @@ function applyDeterministicMeshShadowPolicy(
     }
     if (receiveValues.length > 0) {
         mesh.userData.stageReceiveShadow = receiveValues.some(Boolean)
+    }
+    // Both compiled shader families have no ShadowCaster pass. Do not invent
+    // an opaque depth caster for an otherwise transparent effect/receiver.
+    // Mixed meshes retain the conservative union until their slots are split.
+    if (bindings.length > 0 && bindings.every(binding =>
+        binding.sourceShader === SHADOW_ONLY_SOURCE
+        || binding.sourceShader === 'Creative/Effect/Particle/Common')) {
+        mesh.userData.stageCastShadow = false
     }
     if (
         new Set(castValues).size > 1
@@ -898,7 +910,12 @@ async function createBoundMaterial(
     mesh: THREE.Mesh,
     textures: BoundTextureSet,
     backgroundShaderGlobals?: ReDriveBackgroundShaderGlobals,
+    depthRegistrar?: StageParticleDepthRegistrar,
 ): Promise<THREE.Material> {
+    if (binding.sourceShader === SHADOW_ONLY_SOURCE) return createStageShadowOnlyMaterial(binding)
+    if (binding.sourceShader === 'Creative/Effect/Particle/Common') {
+        return createStageParticleSurfaceMaterial(binding, mesh, textures.ownedTextures, depthRegistrar)
+    }
     requireExactTextureCoordinates(mesh, textures.baseMap, 'base')
     requireExactTextureCoordinates(mesh, textures.normalMap, 'normal')
     requireExactTextureCoordinates(mesh, textures.smoothnessMap, 'smoothness')

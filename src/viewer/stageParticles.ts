@@ -873,7 +873,7 @@ function particleMaterial(
     preset: StageParticlePresetProfile,
     official: OfficialParticleMaterialProfile | undefined,
     textures: readonly THREE.Texture[],
-    renderMode: 'billboard' | 'mesh' | 'trail',
+    renderMode: 'billboard' | 'mesh' | 'trail' | 'surface',
 ) {
     const base = Array.isArray(binding.color)
         ? binding.color
@@ -913,7 +913,31 @@ function particleMaterial(
         && official?.invalidKeywords?.includes('IS_RAMP') !== true
     const zTest = softParticle.zTest
     const usesParticleUv = renderMode !== 'billboard'
-    const vertexShader = renderMode === 'mesh'
+    const vertexShader = renderMode === 'surface'
+        ? /* glsl */ `
+            #include <common>
+            #include <color_pars_vertex>
+            varying vec2 vParticleUv;
+            varying vec4 vStageColor;
+            varying float vStageRotation;
+            varying float vStageFrame;
+            varying float vParticleEyeDepth;
+            void main() {
+                vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                gl_Position = projectionMatrix * mvPosition;
+                vParticleUv = uv;
+                vStageColor = vec4(1.0);
+                #if defined(USE_COLOR_ALPHA)
+                    vStageColor = color;
+                #elif defined(USE_COLOR)
+                    vStageColor.rgb = color;
+                #endif
+                vStageRotation = 0.0;
+                vStageFrame = 0.0;
+                vParticleEyeDepth = -mvPosition.z;
+            }
+        `
+        : renderMode === 'mesh'
         ? /* glsl */ `
             attribute vec4 stageColor;
             attribute vec4 stageMeshColor;
@@ -3104,4 +3128,61 @@ export class StageParticleRuntimeController {
         )
         this.activeParticleCount += active
     }
+}
+
+/** Static native effect meshes must use their alpha/wave/colour operator too.
+ * Keeping their source geometry is different from spawning a particle emitter.
+ * The shared carrier remains the sole implementation of effect operators. */
+export function createStageParticleSurfaceMaterial(
+    binding: StageMaterialBinding,
+    mesh: THREE.Mesh,
+    textures: Set<THREE.Texture>,
+    depthRegistrar?: StageParticleDepthRegistrar,
+): THREE.ShaderMaterial {
+    if (binding.sourceShader !== 'Creative/Effect/Particle/Common') throw new Error('Not an EffectCommon surface')
+    const sourceTextures = binding.serializedTextures ?? {}
+    const official: OfficialParticleMaterialProfile = {
+        name: binding.materialName ?? '',
+        floats: binding.serializedFloats,
+        colors: binding.serializedColors,
+        validKeywords: binding.validKeywords,
+        invalidKeywords: binding.invalidKeywords,
+        textures: Object.fromEntries(Object.entries(sourceTextures).map(([key,value]) => [key, {
+            url:value.url, scale:value.transform.scale, offset:value.transform.offset,
+        }])),
+    }
+    if (!official.textures!._MainTex && binding.textures?.base) {
+        const value = binding.textures.base
+        official.textures!._MainTex = {url:value.url, scale:value.transform.scale, offset:value.transform.offset}
+    }
+    let base = particleTexture(binding, [...textures])
+    if (!base) { base = createParticleFallbackTexture(); textures.add(base) }
+    const preset = { modules: {}, renderer: {} } as StageParticlePresetProfile
+    const material = particleMaterial(binding, base, preset, official, [...textures], 'surface')
+    // EffectCommon's compiled pass fixes ZWrite Off. Some extracted bindings
+    // incorrectly inferred an opaque default because the material has no _Surface.
+    material.depthWrite = false
+    const cull = binding.serializedFloats?._Culling ?? 0
+    material.side = cull === 1 ? THREE.BackSide : cull === 2 ? THREE.FrontSide : THREE.DoubleSide
+    material.vertexColors = !!mesh.geometry.getAttribute('color')
+    material.userData.stageNativeSurface = { sourceShader:binding.sourceShader,
+        policy:'shared-effect-common-static-surface-v1', sourceGeometryPreserved:true }
+    // Keep the source vertex colour and per-material depth ownership intact.
+    material.userData.stageRigidVertexPosition = false
+    const release = material.userData.stageParticleOfficialPass.softParticleDeclared && depthRegistrar
+        ? depthRegistrar.registerBackgroundDepthConsumer({object:mesh, material,
+            depthTextureUniform:material.uniforms.uSceneDepth,
+            resolutionUniform:material.uniforms.uDepthResolution}) : undefined
+    if (release) material.uniforms.uUseSoftParticle.value = 1
+    material.onBeforeRender = (_renderer, _scene, camera, _geometry, object) => {
+        syncParticleDepthCameraUniforms(material, camera)
+        let time = 0
+        for (let node: THREE.Object3D | null = object; node; node = node.parent) {
+            if (Number.isFinite(node.userData.stageRuntimeTime)) { time = node.userData.stageRuntimeTime; break }
+        }
+        material.uniforms.uTime.value = time
+        material.uniformsNeedUpdate = true
+    }
+    if (release) material.addEventListener('dispose', release)
+    return material
 }
