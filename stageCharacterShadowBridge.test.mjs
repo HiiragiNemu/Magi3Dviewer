@@ -75,6 +75,15 @@ test('mirrors animated character casters into the background shadow scene only',
     assert.equal(proxy.layers.isEnabled(6), true)
     assert.deepEqual(proxy.matrixWorld.elements, source.matrixWorld.elements)
 
+    const contactGeometry=source.geometry.clone()
+    source.geometry=contactGeometry
+    bridge.update()
+    assert.equal(proxy.geometry,contactGeometry,'late actor-local contact geometry must reach the stage caster')
+    source.geometry=geometry
+    bridge.update()
+    assert.equal(proxy.geometry,geometry,'disabling/disposal restores the caster as well')
+    contactGeometry.dispose()
+
     const depthMaterial = new THREE.MeshDepthMaterial()
     const backgroundOnlyShadowCamera = new THREE.PerspectiveCamera()
     backgroundOnlyShadowCamera.userData[

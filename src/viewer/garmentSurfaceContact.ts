@@ -6,15 +6,18 @@ export interface SurfaceCapsule { arm?:boolean; start:Vector3; end:Vector3; worl
 export interface GarmentSurfaceStats {
     vertices:number; correctedVertices:number; maxDisplacement:number; remainingDepth:number; limited:boolean
     contacts:number; maxEdgeRatio:number; recoveryOnly:boolean; triangleContacts:number; minAreaRatio:number
+    beforeVertexDepth:number; afterVertexDepth:number; incomingContacts:number
 }
-interface SkinGroup { mesh:SkinnedMesh; indices:number[]; weights:number[]; inverse:Matrix3; forward:Matrix3; world:Matrix4; frame:number }
+interface SkinGroup { mesh:SkinnedMesh; indices:number[]; weights:number[]; inverse:Matrix3; forward:Matrix3; world:Matrix4; frame:number; inverseFrame:number }
+interface CapsuleBounds { capsule:SurfaceCapsule;minX:number;minY:number;minZ:number;maxX:number;maxY:number;maxZ:number }
+interface MeshFrame { frame:number; palette:Matrix4[]; baseInfluence:number }
 interface VertexGroup {
     mesh:SkinnedMesh; indices:number[]; node?:Object3D; preferred:Vector3; skin:SkinGroup
     state:GeometryState; native:Vector3; point:Vector3; normal:Vector3; history:Vector3; previous:Vector3; previousNative?:Vector3; nativeTravel:number; movable:boolean
     morphIndices:number[]; morphBaseInfluence:number; adjacent:number[]; component:number; contactDirection?:Vector3
 }
 interface GeometryState { original:BufferGeometry; geometry:BufferGeometry; position:BufferAttribute; base:Float32Array; changed:Set<number>; users:Mesh[] }
-interface Face { a:number;b:number;c:number; normal:Vector3; area:number }
+interface Face { a:number;b:number;c:number; normal:Vector3; area:number; candidates:SurfaceCapsule[] }
 interface Edge { a:number; b:number; length:number; materialLength:number; constraintLength:number }
 const clamp=(x:number,a:number,b:number)=>Math.max(a,Math.min(b,x))
 
@@ -55,6 +58,7 @@ function capsuleExit(point:Vector3,direction:Vector3,c:SurfaceCapsule,r:number):
  */
 export class GarmentSurfaceContact {
     private readonly geometries:GeometryState[]=[]
+    private readonly views:Array<{mesh:Mesh;original:BufferGeometry;geometry:BufferGeometry}>=[]
     private readonly vertices:VertexGroup[]=[]
     private readonly lookup=new Map<SkinnedMesh,Map<number,number>>()
     private readonly edges:Edge[]=[]
@@ -65,8 +69,8 @@ export class GarmentSurfaceContact {
     private readonly gradientB=new Vector3()
     private readonly gradientC=new Vector3()
     private readonly boneMatrix=new Matrix4()
-    private readonly blended=new Matrix4()
     private readonly worldSkin=new Matrix4()
+    private readonly meshFrames=new Map<SkinnedMesh,MeshFrame>()
     private readonly delta=new Vector3()
     private readonly direction=new Vector3()
     private readonly average=new Vector3()
@@ -81,6 +85,9 @@ export class GarmentSurfaceContact {
     private readonly componentScales:number[]=[]
     private readonly nearby:SurfaceCapsule[]=[]
     private readonly candidateCapsules=new Map<VertexGroup,SurfaceCapsule[]>()
+    private readonly activeFaces:Face[]=[]
+    private readonly capsuleBounds=new Map<SurfaceCapsule,CapsuleBounds>()
+    private readonly frameBounds:CapsuleBounds[]=[]
     private lastProjection=0
     private readonly root:Object3D
     private readonly rootInverse=new Matrix4()
@@ -94,7 +101,7 @@ export class GarmentSurfaceContact {
     private halfLife=.12
     private readonly length:number
     private readonly maxStrain=1.12
-    private readonly stats:GarmentSurfaceStats={vertices:0,correctedVertices:0,maxDisplacement:0,remainingDepth:0,limited:false,contacts:0,maxEdgeRatio:1,recoveryOnly:false,triangleContacts:0,minAreaRatio:1}
+    private readonly stats:GarmentSurfaceStats={vertices:0,correctedVertices:0,maxDisplacement:0,remainingDepth:0,limited:false,contacts:0,maxEdgeRatio:1,recoveryOnly:false,triangleContacts:0,minAreaRatio:1,beforeVertexDepth:0,afterVertexDepth:0,incomingContacts:0}
 
     constructor(root:Object3D,source:SurfaceVertex[],length:number) {
         this.length=length;this.root=root
@@ -120,7 +127,7 @@ export class GarmentSurfaceContact {
             for(let k=0;k<4;k++){indices.push(skinIndex.getComponent(index,k));weights.push(skinWeight.getComponent(index,k))}
             const skinKey=mesh.uuid+':'+indices.join(',')+':'+weights.join(',')
             let skin=skins.get(skinKey)
-            if(!skin){skin={mesh,indices,weights,inverse:new Matrix3(),forward:new Matrix3(),world:new Matrix4(),frame:-1};skins.set(skinKey,skin)}
+            if(!skin){skin={mesh,indices,weights,inverse:new Matrix3(),forward:new Matrix3(),world:new Matrix4(),frame:-1,inverseFrame:-1};skins.set(skinKey,skin)}
             const morphIndices:number[]=[],morphSignature:string[]=[]
             for(const [morphIndex,attribute]of (old.morphAttributes.position??[]).entries()){
                 const values=[0,1,2].map(k=>attribute.getComponent(index,k))
@@ -149,7 +156,7 @@ export class GarmentSurfaceContact {
                 const triangle=[get(t),get(t+1),get(t+2)]
                 if(!triangle.some(i=>selected.has(i)))continue
                 const ids=triangle.map(i=>addVertex(mesh,i,selected.get(i)))
-                if(ids.every(i=>i>=0)&&new Set(ids).size===3)this.faces.push({a:ids[0],b:ids[1],c:ids[2],normal:new Vector3(),area:0})
+                if(ids.every(i=>i>=0)&&new Set(ids).size===3)this.faces.push({a:ids[0],b:ids[1],c:ids[2],normal:new Vector3(),area:0,candidates:[]})
                 for(let e=0;e<3;e++) {
                     const a=ids[e],b=ids[(e+1)%3]
                     if(a<0||b<0||a===b)continue
@@ -175,7 +182,25 @@ export class GarmentSurfaceContact {
             component++
         }
         this.componentScales.length=component
-        root.traverse(node=>{const mesh=node as Mesh;if(!mesh.isMesh)return;const state=byGeometry.get(mesh.geometry);if(state){state.users.push(mesh);mesh.geometry=state.geometry}})
+        // Native material-slot outlines use separate Geometry objects sharing
+        // the source position attribute. Identity-by-geometry alone left those
+        // backfaces undeformed: they protruded through a dent as solid black
+        // patches. Rebind every exact buffer view, preserving its draw range.
+        const byPosition=new Map(this.geometries.map(state=>[state.original.getAttribute('position'),state]))
+        root.traverse(node=>{
+            const mesh=node as Mesh;if(!mesh.isMesh)return
+            const old=mesh.geometry,state=byGeometry.get(old)??byPosition.get(old.getAttribute('position'))
+            if(!state)return
+            if(old===state.original){state.users.push(mesh);mesh.geometry=state.geometry;return}
+            const geometry=new BufferGeometry();geometry.name=old.name
+            if(old.index)geometry.setIndex(old.index)
+            for(const [name,attribute]of Object.entries(old.attributes))geometry.setAttribute(name,name==='position'?state.position:attribute)
+            geometry.morphAttributes=old.morphAttributes;geometry.morphTargetsRelative=old.morphTargetsRelative
+            geometry.setDrawRange(old.drawRange.start,old.drawRange.count)
+            for(const group of old.groups)geometry.addGroup(group.start,group.count,group.materialIndex)
+            geometry.boundingBox=state.geometry.boundingBox;geometry.boundingSphere=state.geometry.boundingSphere
+            this.views.push({mesh,original:old,geometry});mesh.geometry=geometry
+        })
         for(const state of this.geometries){state.geometry.boundingBox?.expandByScalar(length*.24);if(state.geometry.boundingSphere)state.geometry.boundingSphere.radius+=length*.24}
         this.stats.vertices=this.vertices.filter(v=>v.node).length
     }
@@ -196,19 +221,28 @@ export class GarmentSurfaceContact {
     }
     private skin(group:SkinGroup):boolean {
         if(group.frame===this.frame)return true
-        const mesh=group.mesh,e=this.blended.elements;e.fill(0)
+        const mesh=group.mesh
+        let cached=this.meshFrames.get(mesh)
+        if(!cached){cached={frame:-1,palette:mesh.skeleton.bones.map(()=>new Matrix4()),baseInfluence:1};this.meshFrames.set(mesh,cached)}
+        if(cached.frame!==this.frame){
+            this.boneMatrix.copy(mesh.matrixWorld).multiply(mesh.bindMatrixInverse)
+            for(let i=0;i<mesh.skeleton.bones.length;i++)cached.palette[i].copy(this.boneMatrix)
+                .multiply(mesh.skeleton.bones[i].matrixWorld).multiply(mesh.skeleton.boneInverses[i]).multiply(mesh.bindMatrix)
+            cached.baseInfluence=mesh.geometry.morphAttributes.position?.length&&!mesh.geometry.morphTargetsRelative
+                ?1-(mesh.morphTargetInfluences??[]).reduce((a,b)=>a+b,0):1
+            cached.frame=this.frame
+        }
+        const e=this.worldSkin.elements;e.fill(0)
         for(let k=0;k<4;k++) {
             const weight=group.weights[k],index=group.indices[k]
             if(!weight)continue
-            const bone=mesh.skeleton.bones[index];if(!bone)return false
-            this.boneMatrix.multiplyMatrices(bone.matrixWorld,mesh.skeleton.boneInverses[index])
-            for(let j=0;j<16;j++)e[j]+=this.boneMatrix.elements[j]*weight
+            const transform=cached.palette[index];if(!transform)return false
+            const values=transform.elements
+            for(let j=0;j<16;j++)e[j]+=values[j]*weight
         }
-        this.worldSkin.copy(mesh.matrixWorld).multiply(mesh.bindMatrixInverse).multiply(this.blended).multiply(mesh.bindMatrix)
-        if(Math.abs(this.worldSkin.determinant())<1e-12)return false
-        group.world.copy(this.worldSkin)
         group.forward.setFromMatrix4(this.worldSkin)
-        group.inverse.copy(group.forward).invert();group.frame=this.frame
+        if(Math.abs(group.forward.determinant())<1e-12)return false
+        group.world.copy(this.worldSkin);group.frame=this.frame
         return true
     }
     private projectContacts(_capsules:readonly SurfaceCapsule[],skin:number,maximum:number):number {
@@ -267,33 +301,50 @@ export class GarmentSurfaceContact {
         }
         return count
     }
-    private projectTriangleContacts(capsules:readonly SurfaceCapsule[],skin:number,maximum:number,measureOnly=false):number {
-        let contacts=0
+    private refreshTriangleCandidates(){
+        this.activeFaces.length=0
         for(const face of this.faces){
-            const vertices=[this.vertices[face.a],this.vertices[face.b],this.vertices[face.c]]
-            if(face.area<1e-10||!vertices.some(v=>v.movable))continue
-            const [a,b,c]=vertices.map(v=>v.point)
-            for(const capsule of capsules){
+            face.candidates.length=0
+            const va=this.vertices[face.a],vb=this.vertices[face.b],vc=this.vertices[face.c]
+            if(!va.movable&&!vb.movable&&!vc.movable)continue
+            const a=va.point,b=vb.point,c=vc.point
+            const minX=Math.min(a.x,b.x,c.x),maxX=Math.max(a.x,b.x,c.x),minY=Math.min(a.y,b.y,c.y),maxY=Math.max(a.y,b.y,c.y),minZ=Math.min(a.z,b.z,c.z),maxZ=Math.max(a.z,b.z,c.z)
+            for(const box of this.frameBounds){
+                if(maxX<box.minX||minX>box.maxX||maxY<box.minY||minY>box.maxY||maxZ<box.minZ||minZ>box.maxZ)continue
+                face.candidates.push(box.capsule)
+            }
+            if(face.candidates.length)this.activeFaces.push(face)
+        }
+    }
+    private projectTriangleContacts(_capsules:readonly SurfaceCapsule[],skin:number,maximum:number,measureOnly=false):number {
+        let contacts=0
+        for(const face of this.activeFaces){
+            const va=this.vertices[face.a],vb=this.vertices[face.b],vc=this.vertices[face.c]
+            if(face.area<1e-10||!va.movable&&!vb.movable&&!vc.movable)continue
+            const a=va.point,b=vb.point,c=vc.point
+            for(const capsule of face.candidates){
                 const radius=capsule.worldRadius+skin
                 if(Math.max(a.x,b.x,c.x)<Math.min(capsule.start.x,capsule.end.x)-radius||Math.min(a.x,b.x,c.x)>Math.max(capsule.start.x,capsule.end.x)+radius
                     ||Math.max(a.y,b.y,c.y)<Math.min(capsule.start.y,capsule.end.y)-radius||Math.min(a.y,b.y,c.y)>Math.max(capsule.start.y,capsule.end.y)+radius
                     ||Math.max(a.z,b.z,c.z)<Math.min(capsule.start.z,capsule.end.z)-radius||Math.min(a.z,b.z,c.z)>Math.max(capsule.start.z,capsule.end.z)+radius)continue
                 const distance=closestTriangleSegment(a,b,c,capsule.start,capsule.end,this.facePoint,this.barycentric)
                 if(distance>=radius)continue
-                const weights=this.barycentric.toArray().map((w,i)=>vertices[i].movable?Math.max(0,w):0),denominator=weights.reduce((n,w)=>n+w*w,0)
+                const wa=va.movable?Math.max(0,this.barycentric.x):0,wb=vb.movable?Math.max(0,this.barycentric.y):0,wc=vc.movable?Math.max(0,this.barycentric.z):0
+                const denominator=wa*wa+wb*wb+wc*wc
                 if(denominator<.02)continue // the sewn/pinned boundary is not a freely translating sheet
                 contacts++
                 if(measureOnly){this.stats.remainingDepth=Math.max(this.stats.remainingDepth,capsule.worldRadius-distance);continue}
-                const outward=!capsule.arm||vertices.some(v=>v.node&&/cape|mantle/i.test(v.node.name))
+                const outward=!capsule.arm||!!(va.node&&/cape|mantle/i.test(va.node.name)||vb.node&&/cape|mantle/i.test(vb.node.name)||vc.node&&/cape|mantle/i.test(vc.node.name))
                 this.direction.set(0,0,0)
-                for(let i=0;i<3;i++)this.direction.addScaledVector(vertices[i].normal,weights[i])
+                this.direction.addScaledVector(va.normal,wa).addScaledVector(vb.normal,wb).addScaledVector(vc.normal,wc)
                 if(this.direction.lengthSq()<1e-10)this.direction.copy(face.normal)
                 this.direction.normalize().multiplyScalar(outward?1:-1)
                 const amount=capsuleExit(this.facePoint,this.direction,capsule,radius)
                 if(!Number.isFinite(amount)||amount<=0)continue
                 this.lastProjection=Math.max(this.lastProjection,radius-distance)
-                for(let i=0;i<3;i++)if(weights[i]){
-                    const vertex=vertices[i];vertex.point.addScaledVector(this.direction,(amount+skin*.01)*weights[i]/denominator)
+                for(let i=0;i<3;i++){
+                    const weight=i===0?wa:i===1?wb:wc;if(!weight)continue
+                    const vertex=i===0?va:i===1?vb:vc;vertex.point.addScaledVector(this.direction,(amount+skin*.01)*weight/denominator)
                     this.delta.subVectors(vertex.point,vertex.native)
                     if(this.delta.length()>maximum){vertex.point.copy(vertex.native).add(this.delta.setLength(maximum));this.stats.limited=true}
                 }
@@ -358,7 +409,7 @@ export class GarmentSurfaceContact {
             this.edgeDelta.subVectors(b.native,a.native)
             this.delta.subVectors(b.point,b.native).sub(this.average.subVectors(a.point,a.native))
             const maximum=edge.constraintLength*this.maxStrain
-            if(this.edgeDelta.clone().add(this.delta).length()<=maximum+1e-8)continue
+            if(this.trial.copy(this.edgeDelta).add(this.delta).length()<=maximum+1e-8)continue
             const aa=this.delta.lengthSq(),bb=this.edgeDelta.dot(this.delta),cc=edge.length*edge.length-maximum*maximum
             const alpha=aa>1e-14?clamp((-bb+Math.sqrt(Math.max(0,bb*bb-aa*cc)))/aa,0,1):1
             this.componentScales[component]=Math.min(this.componentScales[component],alpha)
@@ -368,7 +419,7 @@ export class GarmentSurfaceContact {
         // into the black slits produced by edge-length-only constraints.
         for(const face of this.faces){
             if(face.area<1e-10)continue
-            const a=this.vertices[face.a],b=this.vertices[face.b],c=this.vertices[face.c],component=[a,b,c].find(v=>v.movable)?.component
+            const a=this.vertices[face.a],b=this.vertices[face.b],c=this.vertices[face.c],component=a.movable?a.component:b.movable?b.component:c.movable?c.component:undefined
             if(component===undefined)continue
             const ab=this.gradientA.subVectors(b.native,a.native),ac=this.gradientB.subVectors(c.native,a.native)
             const dab=this.delta.subVectors(b.point,a.point).sub(ab),dac=this.average.subVectors(c.point,a.point).sub(ac)
@@ -424,14 +475,22 @@ export class GarmentSurfaceContact {
     }
     project(capsules:readonly SurfaceCapsule[],hip:Quaternion,blocked:(node:Object3D)=>boolean,scale=1,deltaSeconds=0) {
         this.restore();this.frame++;this.up.set(0,1,0).applyQuaternion(hip);this.inverseHip.copy(hip).invert();this.hipRotation.copy(hip)
-        Object.assign(this.stats,{correctedVertices:0,maxDisplacement:0,remainingDepth:0,limited:false,contacts:0,maxEdgeRatio:1,recoveryOnly:false,triangleContacts:0,minAreaRatio:1})
+        Object.assign(this.stats,{correctedVertices:0,maxDisplacement:0,remainingDepth:0,limited:false,contacts:0,maxEdgeRatio:1,recoveryOnly:false,triangleContacts:0,minAreaRatio:1,beforeVertexDepth:0,afterVertexDepth:0,incomingContacts:0})
         const skin=this.length*.002*scale,maximum=this.length*.20*scale
         const temporal=Number.isFinite(deltaSeconds)&&deltaSeconds>0&&deltaSeconds<=.12
         this.rootInverse.copy(this.root.matrixWorld).invert()
+        this.frameBounds.length=0
         for(const c of capsules){
             const a=c.start.clone().applyMatrix4(this.rootInverse),b=c.end.clone().applyMatrix4(this.rootInverse),previous=this.previousCapsules.get(c)
             this.capsuleTravel.set(c,temporal&&previous?Math.max(a.distanceTo(previous.a),b.distanceTo(previous.b))*scale:0)
             this.previousCapsules.set(c,{a,b})
+            let box=this.capsuleBounds.get(c)
+            if(!box){box={capsule:c,minX:0,minY:0,minZ:0,maxX:0,maxY:0,maxZ:0};this.capsuleBounds.set(c,box)}
+            const r=c.worldRadius+skin
+            box.minX=Math.min(c.start.x,c.end.x)-r;box.maxX=Math.max(c.start.x,c.end.x)+r
+            box.minY=Math.min(c.start.y,c.end.y)-r;box.maxY=Math.max(c.start.y,c.end.y)+r
+            box.minZ=Math.min(c.start.z,c.end.z)-r;box.maxZ=Math.max(c.start.z,c.end.z)+r
+            this.frameBounds.push(box)
         }
         const decay=temporal?Math.exp(-Math.LN2*deltaSeconds/this.halfLife):0
         let recovering=false,unchanged=temporal&&this.frame>1&&Math.abs(scale-this.previousScale)<1e-12
@@ -439,8 +498,17 @@ export class GarmentSurfaceContact {
         for(const c of capsules)if((this.capsuleTravel.get(c)??0)>this.length*1e-9*scale)unchanged=false
         for(const vertex of this.vertices) {
             const validSkin=this.skin(vertex.skin)
-            if(validSkin&&!vertex.morphIndices.some(index=>(vertex.mesh.morphTargetInfluences?.[index]??0)!==0)){
-                vertex.native.fromArray(vertex.state.base,vertex.indices[0]*3).applyMatrix4(vertex.skin.world)
+            if(validSkin){
+                const index=vertex.indices[0],offset=index*3,base=vertex.state.base
+                let x=base[offset],y=base[offset+1],z=base[offset+2]
+                for(const morph of vertex.morphIndices){
+                    const influence=vertex.mesh.morphTargetInfluences?.[morph]??0;if(influence===0)continue
+                    const attribute=vertex.mesh.geometry.morphAttributes.position![morph],relative=vertex.mesh.geometry.morphTargetsRelative
+                    x+=(attribute.getX(index)-(relative?0:base[offset]))*influence
+                    y+=(attribute.getY(index)-(relative?0:base[offset+1]))*influence
+                    z+=(attribute.getZ(index)-(relative?0:base[offset+2]))*influence
+                }
+                vertex.native.set(x,y,z).applyMatrix4(vertex.skin.world)
             }else vertex.mesh.getVertexPosition(vertex.indices[0],vertex.native).applyMatrix4(vertex.mesh.matrixWorld)
             vertex.previous.copy(vertex.native)
             this.localPoint.copy(vertex.native).applyMatrix4(this.rootInverse)
@@ -448,8 +516,7 @@ export class GarmentSurfaceContact {
             if(!vertex.previousNative||vertex.nativeTravel>this.length*1e-9*scale)unchanged=false
             vertex.previousNative??=new Vector3();vertex.previousNative.copy(this.localPoint)
             vertex.point.copy(vertex.native)
-            const absolute=vertex.mesh.geometry.morphAttributes.position?.length&&!vertex.mesh.geometry.morphTargetsRelative
-            vertex.morphBaseInfluence=absolute?1-(vertex.mesh.morphTargetInfluences??[]).reduce((a,b)=>a+b,0):1
+            vertex.morphBaseInfluence=this.meshFrames.get(vertex.mesh)?.baseInfluence??1
             const writableMorph=Math.abs(vertex.morphBaseInfluence)>=.1
             const movable=!!vertex.node&&!blocked(vertex.node)&&validSkin&&writableMorph
             if(movable!==vertex.movable)unchanged=false
@@ -457,38 +524,50 @@ export class GarmentSurfaceContact {
             if(vertex.node&&!writableMorph)this.stats.limited=true
             vertex.normal.copy(vertex.preferred).applyQuaternion(hip).normalize()
             if(!vertex.movable){vertex.history.set(0,0,0);vertex.contactDirection=undefined;continue}
-            const nearby=capsules.filter(c=>{
-                const margin=c.worldRadius+maximum+skin,p=vertex.native
-                return p.x>=Math.min(c.start.x,c.end.x)-margin&&p.x<=Math.max(c.start.x,c.end.x)+margin
-                    &&p.y>=Math.min(c.start.y,c.end.y)-margin&&p.y<=Math.max(c.start.y,c.end.y)+margin
-                    &&p.z>=Math.min(c.start.z,c.end.z)-margin&&p.z<=Math.max(c.start.z,c.end.z)+margin
-            })
-            this.candidateCapsules.set(vertex,nearby)
-            if(!nearby.some(c=>capsuleDistance(vertex.native,c)<c.worldRadius+this.length*.02*scale))vertex.contactDirection=undefined
+            let nearby=this.candidateCapsules.get(vertex)
+            if(!nearby){nearby=[];this.candidateCapsules.set(vertex,nearby)}nearby.length=0
+            for(const box of this.frameBounds){const p=vertex.native
+                if(p.x>=box.minX-maximum&&p.x<=box.maxX+maximum&&p.y>=box.minY-maximum&&p.y<=box.maxY+maximum&&p.z>=box.minZ-maximum&&p.z<=box.maxZ+maximum)nearby.push(box.capsule)
+            }
+            let nativeDepth=-Infinity
+            for(const c of nearby)nativeDepth=Math.max(nativeDepth,c.worldRadius-capsuleDistance(vertex.native,c))
+            this.stats.beforeVertexDepth=Math.max(this.stats.beforeVertexDepth,nativeDepth)
+            if(nativeDepth>0)this.stats.incomingContacts++
+            if(nativeDepth< -this.length*.02*scale)vertex.contactDirection=undefined
             if(temporal&&vertex.history.lengthSq()>1e-14) {
                 this.delta.copy(vertex.history).applyMatrix3(vertex.skin.forward)
                 if(this.delta.length()>maximum)this.delta.setLength(maximum)
-                vertex.previous.add(this.delta);const held=nearby.some(c=>capsuleDistance(vertex.native,c)<c.worldRadius+skin);vertex.point.addScaledVector(this.delta,held?1:decay);recovering=true
+                vertex.previous.add(this.delta);vertex.point.addScaledVector(this.delta,nativeDepth> -skin?1:decay);recovering=true
             }
         }
         for(const edge of this.edges){edge.length=this.vertices[edge.a].native.distanceTo(this.vertices[edge.b].native);edge.constraintLength=Math.max(edge.length,edge.materialLength*scale)}
-        for(const face of this.faces){const a=this.vertices[face.a],b=this.vertices[face.b],c=this.vertices[face.c];face.normal.subVectors(b.native,a.native).cross(this.delta.subVectors(c.native,a.native));face.area=face.normal.length();if(face.area>1e-12)face.normal.multiplyScalar(1/face.area)}
+        for(const face of this.faces){
+            const a=this.vertices[face.a],b=this.vertices[face.b],c=this.vertices[face.c]
+            face.normal.subVectors(b.native,a.native).cross(this.delta.subVectors(c.native,a.native));face.area=face.normal.length();if(face.area>1e-12)face.normal.multiplyScalar(1/face.area)
+        }
+        this.refreshTriangleCandidates()
         // A kinematic contact has no stored velocity: identical body/cloth input
         // must reproduce the same display, not keep iterating into a limit cycle.
         const resting=unchanged&&this.inputContact
         if(resting)for(const vertex of this.vertices)if(vertex.movable)vertex.point.copy(vertex.previous)
-        const initial=resting?1:this.projectContacts(capsules,skin,maximum)+this.projectTriangleContacts(capsules,skin,maximum);this.inputContact=initial>0;this.stats.contacts=initial;this.stats.recoveryOnly=recovering&&initial===0
+        const vertexContacts=resting?1:this.projectContacts(capsules,skin,maximum)
+        this.stats.triangleContacts=resting?0:this.projectTriangleContacts(capsules,skin,maximum)
+        const initial=vertexContacts+this.stats.triangleContacts;this.inputContact=initial>0;this.stats.contacts=initial;this.stats.recoveryOnly=recovering&&initial===0
         if(!resting&&(initial||recovering)) {
             // Alternate current-body constraints with real cloth topology. This
             // spreads a contact into a fold instead of stretching one triangle.
-            for(let pass=0;pass<18;pass++) {
+            // Bounded work per displayed frame; do not run 18 global contact
+            // sweeps against immovable hoop/waist boundaries every RAF. The
+            // geometry validity projection below is still mandatory.
+            for(let pass=0;pass<2;pass++) {
                 const correction=this.relaxEdges(scale)
                 this.relaxTriangleAreas()
                 this.stats.contacts+=this.projectContacts(capsules,skin,maximum)
-                this.stats.triangleContacts+=this.projectTriangleContacts(capsules,skin,maximum)
+                // Interior crossings are projected once before local relaxation;
+                // repeated dense triangle projection was the expensive V3 loop.
                 if(correction<skin*.1&&this.lastProjection<skin*.2)break
             }
-            for(let pass=0;pass<16;pass++){this.relaxTriangleAreas();if(this.relaxEdges(scale)<skin*.02)break}
+            for(let pass=0;pass<2;pass++){this.relaxTriangleAreas();if(this.relaxEdges(scale)<skin*.02)break}
             this.enforceStrain(maximum)
             this.rejectWorsenedComponents(capsules,skin)
         }
@@ -497,8 +576,9 @@ export class GarmentSurfaceContact {
             if(!vertex.movable)continue
             this.delta.subVectors(vertex.point,vertex.native)
             const distance=this.delta.length()
-            for(const c of this.candidateCapsules.get(vertex)??[])this.stats.remainingDepth=Math.max(this.stats.remainingDepth,c.worldRadius-capsuleDistance(vertex.point,c))
+            for(const c of this.candidateCapsules.get(vertex)??[])this.stats.afterVertexDepth=Math.max(this.stats.afterVertexDepth,c.worldRadius-capsuleDistance(vertex.point,c))
             if(distance<=this.length*1e-7){vertex.history.set(0,0,0);continue}
+            if(vertex.skin.inverseFrame!==this.frame){vertex.skin.inverse.copy(vertex.skin.forward).invert();vertex.skin.inverseFrame=this.frame}
             this.delta.applyMatrix3(vertex.skin.inverse)
             if(!this.delta.toArray().every(Number.isFinite)){vertex.history.set(0,0,0);this.stats.limited=true;continue}
             if(temporal)vertex.history.copy(this.delta);else vertex.history.set(0,0,0)
@@ -511,11 +591,13 @@ export class GarmentSurfaceContact {
             this.stats.correctedVertices+=vertex.indices.length;this.stats.maxDisplacement=Math.max(this.stats.maxDisplacement,distance)
         }
         for(const edge of this.edges)if(edge.length>1e-7)this.stats.maxEdgeRatio=Math.max(this.stats.maxEdgeRatio,this.vertices[edge.a].point.distanceTo(this.vertices[edge.b].point)/edge.constraintLength)
+        this.stats.remainingDepth=this.stats.afterVertexDepth
+        this.refreshTriangleCandidates()
         this.projectTriangleContacts(capsules,0,maximum,true)
         for(const face of this.faces)if(face.area>1e-10){const a=this.vertices[face.a].point,b=this.vertices[face.b].point,c=this.vertices[face.c].point;this.stats.minAreaRatio=Math.min(this.stats.minAreaRatio,this.delta.subVectors(b,a).cross(this.average.subVectors(c,a)).dot(face.normal)/face.area)}
         this.stats.limited ||= this.stats.remainingDepth>this.length*.002*scale
         for(const state of this.geometries)if(state.changed.size)state.position.needsUpdate=true
         return this.diagnostics
     }
-    dispose(){this.restore();for(const state of this.geometries){for(const mesh of state.users)if(mesh.geometry===state.geometry)mesh.geometry=state.original;state.geometry.dispose()}this.geometries.length=0;this.vertices.length=0;this.edges.length=0}
+    dispose(){this.restore();for(const view of this.views){if(view.mesh.geometry===view.geometry)view.mesh.geometry=view.original;view.geometry.dispose()}this.views.length=0;for(const state of this.geometries){for(const mesh of state.users)if(mesh.geometry===state.geometry)mesh.geometry=state.original;state.geometry.dispose()}this.geometries.length=0;this.vertices.length=0;this.edges.length=0}
 }

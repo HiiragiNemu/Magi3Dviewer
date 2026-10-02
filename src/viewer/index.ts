@@ -317,7 +317,11 @@ const studioAdoptedExpressions=new WeakSet<THREE.Object3D>()
 const poseGravity = new PoseGravityPreview()
 const garmentContacts = new Map<THREE.Object3D, StableGarmentContacts>()
 const garmentPreparing = new Set<THREE.Object3D>()
-const garmentContactsAvailable = import.meta.env.VITE_MAGIUS_GARMENT_CONTACTS !== 'off'
+// Production remains on the native cloth path until the extra contact layer
+// passes real-frame visual AND performance review. Saved browser preferences
+// cannot silently re-enable a rejected experimental release.
+const garmentContactsAvailable = import.meta.env.VITE_MAGIUS_GARMENT_CONTACTS === 'on'
+const poseGravityAvailable = import.meta.env.VITE_MAGIUS_POSE_GRAVITY !== 'off'
 let garmentContactsEnabled = garmentContactsAvailable
 let garmentRecoveryHalfLife=DEFAULT_GARMENT_HALF_LIFE
 try { const saved=Number(localStorage.getItem(GARMENT_DAMPING_SETTING));if(Number.isFinite(saved)&&saved>=.04&&saved<=.3)garmentRecoveryHalfLife=saved } catch {}
@@ -366,17 +370,17 @@ function updateGarmentContacts(deltaSeconds=0){
 function setupMotionContactOptions(){
     const section=document.createElement('section');section.id='motion-contact-options';section.dataset.i18nIgnore='true';section.style.cssText='display:grid;gap:6px;padding:8px;font-size:12px'
     const contact=document.createElement('input');contact.type='checkbox';contact.id='garment-contacts-enabled';contact.checked=garmentContactsEnabled;contact.disabled=!garmentContactsAvailable
-    const contactLabel=document.createElement('label');contactLabel.append(contact,document.createTextNode('稳定防穿模（可单独关闭）'));contact.onchange=()=>setGarmentContactsEnabled(contact.checked)
-    const gravity=document.createElement('input');gravity.type='checkbox';gravity.id='pose-gravity-enabled';gravity.disabled=!garmentContactsAvailable
-    const gravityLabel=document.createElement('label');gravityLabel.append(gravity,document.createTextNode('自定义姿态重力预览（原生物理）'));gravity.onchange=()=>poseGravity.setEnabled(gravity.checked&&garmentContactsAvailable)
-    const note=document.createElement('small');note.textContent='姿态重力默认关闭，保留固定姿态。开启后，仅未手动控制的头发、衣服、饰品继续原生物理；身体姿态不受碰撞改写；只对衣服做即时让位和平滑回落。'
+    const contactLabel=document.createElement('label');contactLabel.append(contact,document.createTextNode(garmentContactsAvailable?'额外衣料接触（试验验证用）':'额外衣料防穿模（安全回退，本版暂停）'));contact.onchange=()=>setGarmentContactsEnabled(contact.checked)
+    const gravity=document.createElement('input');gravity.type='checkbox';gravity.id='pose-gravity-enabled';gravity.disabled=!poseGravityAvailable
+    const gravityLabel=document.createElement('label');gravityLabel.append(gravity,document.createTextNode('自定义姿态重力预览（原生物理）'));gravity.onchange=()=>poseGravity.setEnabled(gravity.checked&&poseGravityAvailable)
+    const note=document.createElement('small');note.textContent=garmentContactsAvailable?'试验性接触层仍有穿模与性能限制，不代表完整布料模拟。姿态重力独立、默认关闭，只作用于未手动固定的头发、衣服和饰品。':'已撤回产生黑块与性能回归的额外衣料变形；原生动画、原生衣物物理继续运行。原有穿模尚未全部解决。姿态重力预览独立可用且默认关闭。'
     const recovery=document.createElement('input');recovery.type='range';recovery.min='40';recovery.max='300';recovery.step='10';recovery.id='garment-recovery-damping';recovery.value=String(Math.round(garmentRecoveryHalfLife*1000));recovery.disabled=!garmentContactsAvailable
     const recoveryValue=document.createElement('output');recoveryValue.textContent=recovery.value+' ms'
     const recoveryLabel=document.createElement('label');recoveryLabel.style.cssText='display:flex;align-items:center;gap:6px';recoveryLabel.append(document.createTextNode('衣服回落阻尼'),recovery,recoveryValue);recovery.setAttribute('aria-label','衣服回落阻尼（毫秒）');recovery.title='越大回落越平缓；不延迟手臂、腿推动衣服时的碰撞让位'
     recovery.oninput=()=>{garmentRecoveryHalfLife=Number(recovery.value)/1000;recoveryValue.textContent=recovery.value+' ms';for(const solver of garmentContacts.values())solver.setRecoveryHalfLife(garmentRecoveryHalfLife);try{localStorage.setItem(GARMENT_DAMPING_SETTING,String(garmentRecoveryHalfLife))}catch{}}
     section.append(contactLabel,recoveryLabel,gravityLabel,note)
     const dock=document.getElementById('advanced-controls-dock')!;(dock.querySelector('.floating-panel-scroll')??dock).append(section)
-    Object.assign(window,{magiusGarmentContacts:{setEnabled:setGarmentContactsEnabled,evaluateOnce:()=>{updateGarmentContacts()},get enabled(){return garmentContactsEnabled},setPoseGravity:(value:boolean)=>{gravity.checked=Boolean(value&&garmentContactsAvailable);poseGravity.setEnabled(gravity.checked)},diagnostics:()=>({contacts:[...garmentContacts].map(([root,solver])=>({uuid:root.uuid,...solver.diagnostics})),gravity:poseGravity.diagnostics()})}})
+    Object.assign(window,{magiusGarmentContacts:{setEnabled:setGarmentContactsEnabled,evaluateOnce:()=>{updateGarmentContacts()},get enabled(){return garmentContactsEnabled},get available(){return garmentContactsAvailable},setPoseGravity:(value:boolean)=>{gravity.checked=Boolean(value&&poseGravityAvailable);poseGravity.setEnabled(gravity.checked)},diagnostics:()=>({policy:garmentContactsAvailable?'coherent-bounded-surface-v4':'native-only-safety-revert',contacts:[...garmentContacts].map(([root,solver])=>({uuid:root.uuid,...solver.diagnostics})),gravity:poseGravity.diagnostics()})}})
 }
 function listRecordedActors():RecordedActor[]{
     const counts=new Map<string,number>(),result:RecordedActor[]=[]

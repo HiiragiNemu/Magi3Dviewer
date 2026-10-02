@@ -7,7 +7,7 @@ import { canonicalPoseBone, poseBones, poseBoneIsActive } from './directPoseTool
  * native pose. Body transforms are read-only colliders: only actual garment
  * surface vertices can be written. Contact projection is immediate; damping applies to
  * unconstrained cloth recovery, never to the incoming body trajectory. */
-export const GARMENT_CONTACT_POLICY = 'native-bones-strain-limited-surface-v3'
+export const GARMENT_CONTACT_POLICY = 'coherent-bounded-surface-v4'
 export const GARMENT_CONTACT_SETTING = 'magius.garment-contacts.v1'
 const garment = /skirt|dress|coat|mantle|cape|hem|cloth/i
 const excluded = /hair|ribbon|weapon|finger|thumb|face|eye|bust|(?:root|end|tip|nub)$/i
@@ -32,7 +32,10 @@ export class StableGarmentContacts {
     private hipBindInverse = q()
     private hipRotation = q()
     private rootScale = v()
-    private end=v();private offset=v();private nearest=v()
+    private framePosition=v()
+    private frameRotation=q()
+    private scratchPosition=v()
+    private scratchScale=v()
     private surface?:GarmentSurfaceContact
     private previousRootPosition?:Vector3
     private pendingDelta=0
@@ -86,18 +89,17 @@ export class StableGarmentContacts {
             if(!position||!skinWeight||!skinIndex)continue
             const canonical=mesh.skeleton.bones.map(canonicalPoseBone)
             for(let i=0;i<position.count;i++){
-                let best=-1,weight=0,clothWeight=0,nonAnchorWeight=0
+                let best=-1,weight=0,clothWeight=0
                 for(let k=0;k<4;k++){
                     const w=skinWeight.getComponent(i,k),index=skinIndex.getComponent(i,k),bone=canonical[index]
                     if(bone&&poseBoneIsActive(bone,root)&&garment.test(bone.name)&&!excluded.test(bone.name)){
                         clothWeight+=w;if(w>weight){weight=w;best=index}
-                    }else if(bone&&!/^(?:root|hip|hips|pelvis|chara_\d+|spine|waist)$/i.test(bone.name))nonAnchorWeight+=w
+                    }
                 }
                 const p=v().fromBufferAttribute(position,i).applyMatrix4(mesh.bindMatrix)
-                // A low-weight cloth/waist blend at the waistband is sewn, not free fabric.
-                // Only the lower hanging band may yield; body-dominant vertices remain immutable.
-                const clothBoundary=clothWeight>.20&&nonAnchorWeight<.05&&p.y-hipPosition.y< -this.legLength*.10
-                if((clothWeight>.55||clothBoundary)&&best>=0){const node=canonical[best];if(!candidates.has(node))candidates.set(node,[]);candidates.get(node)!.push({mesh,index:i,rest:p})}
+                // Do not turn weakly cloth-weighted waist/hoop attachments into
+                // free fabric merely because they lie below the pelvis.
+                if(clothWeight>.55&&best>=0){const node=canonical[best];if(!candidates.has(node))candidates.set(node,[]);candidates.get(node)!.push({mesh,index:i,rest:p})}
                 if(clothWeight<.05){for(const c of this.capsules){let w=0;for(let k=0;k<4;k++){const bone=canonical[skinIndex.getComponent(i,k)];if(bone===c.a||bone===c.b)w+=skinWeight.getComponent(i,k)}if(w>.8&&rest.has(c.a)&&rest.has(c.b)){const a=v().setFromMatrixPosition(rest.get(c.a)!),b=v().setFromMatrixPosition(rest.get(c.b)!),d=b.sub(a);const t=p.clone().sub(a).dot(d)/Math.max(1e-12,d.lengthSq());if(t>.2&&t<.8){const distance=p.distanceTo(a.addScaledVector(d,t));radii.get(c)!.push(distance)}}}}
             }
         }
@@ -130,58 +132,44 @@ export class StableGarmentContacts {
         this.surface?.restore()
         if(clearHistory){this.surface?.clearHistory();this.previousRootPosition=undefined;this.pendingDelta=0}
     }
-    private point(sample:ContactSample):Vector3{
-        sample.mesh.getVertexPosition(sample.index,sample.point)
-        return sample.point.applyMatrix4(sample.mesh.matrixWorld)
-    }
-    private distance(p:Vector3,c:Capsule):number{
-        this.end.subVectors(c.end,c.start)
-        const t=clamp(this.offset.subVectors(p,c.start).dot(this.end)/Math.max(this.end.lengthSq(),1e-10),0,1)
-        this.nearest.copy(c.start).addScaledVector(this.end,t)
-        return p.distanceTo(this.nearest)
-    }
-    private measure(corrected=true){
-        let worst=0,energy=0,collider='',part=''
-        for(const sample of this.samples){
-            const p=this.surface?.sampledPosition(sample.mesh,sample.index,corrected)??this.point(sample)
-            for(const c of this.capsules){
-                const depth=Math.max(0,c.worldRadius-this.distance(p,c))
-                if(depth>worst){worst=depth;collider=c.a.name+' → '+c.b.name;part=sample.node.name};energy+=depth*depth
-            }
-        }
-        return {worst,energy,score:energy+worst*worst*4,collider,part}
+    private refreshFrame(){
+        // One hierarchy update, followed by reads of the resulting matrices.
+        // getWorldPosition/getWorldQuaternion on every capsule endpoint walked
+        // and recomposed the same ancestors dozens of times per frame.
+        this.root.updateWorldMatrix(true,true)
+        this.root.matrixWorld.decompose(this.framePosition,this.frameRotation,this.rootScale)
+        this.hip!.matrixWorld.decompose(this.scratchPosition,this.hipRotation,this.scratchScale)
+        const factor=Math.max(Math.abs(this.rootScale.x),Math.abs(this.rootScale.y),Math.abs(this.rootScale.z))
+        for(const c of this.capsules){c.start.setFromMatrixPosition(c.a.matrixWorld);c.end.setFromMatrixPosition(c.b.matrixWorld);c.worldRadius=(c.radius+this.legLength*.004)*factor}
+        return factor
     }
     solve(active=true,blocked:((node:Object3D)=>boolean)=()=>false,deltaSeconds=0):GarmentContactStats{
         this.restore()
         const started=performance.now()
         Object.assign(this.stats,{contacts:0,beforeDepth:0,afterDepth:0,maxRotation:0,correctedJoints:0,limited:false,surface:undefined})
         if(!active||!this.stats.supported){this.restore(true);this.stats.milliseconds=0;return this.diagnostics}
-        this.hip!.getWorldQuaternion(this.hipRotation);this.root.getWorldScale(this.rootScale)
-        const factor=Math.max(Math.abs(this.rootScale.x),Math.abs(this.rootScale.y),Math.abs(this.rootScale.z))
-        const rootPosition=this.root.getWorldPosition(v())
+        const factor=this.refreshFrame(),rootPosition=this.framePosition
         const temporal=Number.isFinite(deltaSeconds)&&deltaSeconds>0&&deltaSeconds<=.12
             &&(!this.previousRootPosition||rootPosition.distanceTo(this.previousRootPosition)<this.legLength*factor)
         this.pendingDelta=temporal?deltaSeconds:0
         if(!temporal)this.surface?.clearHistory()
-        this.previousRootPosition=rootPosition
-        for(const c of this.capsules){c.a.getWorldPosition(c.start);c.b.getWorldPosition(c.end);c.worldRadius=(c.radius+this.legLength*.004)*factor}
+        this.previousRootPosition??=v();this.previousRootPosition.copy(rootPosition)
         // Native physics is the sole garment-bone writer. Contacts are surface
         // constraints, never torques that lift an entire skirt to clear a hand.
         this.stats.milliseconds=performance.now()-started
-        return this.projectSurface(blocked)
+        return this.projectSurface(blocked,factor)
     }
-    projectSurface(blocked:((node:Object3D)=>boolean)=()=>false){
+    projectSurface(blocked:((node:Object3D)=>boolean)=()=>false,preparedScale?:number){
         if(!this.surface||!this.hip)return this.diagnostics
-        this.root.updateMatrixWorld(true);this.hip.getWorldQuaternion(this.hipRotation);this.root.getWorldScale(this.rootScale)
-        const factor=Math.max(Math.abs(this.rootScale.x),Math.abs(this.rootScale.y),Math.abs(this.rootScale.z))
-        for(const c of this.capsules){c.a.getWorldPosition(c.start);c.b.getWorldPosition(c.end);c.worldRadius=(c.radius+this.legLength*.004)*factor}
-        const started=performance.now();this.stats.surface=this.surface.project(this.capsules,this.hipRotation,blocked,factor,this.pendingDelta);this.pendingDelta=0
-        const native=this.measure(false);this.stats.beforeDepth=native.worst
-        this.stats.contacts=this.samples.reduce((sum,s)=>{
-            const point=this.surface?.sampledPosition(s.mesh,s.index,false)??this.point(s)
-            return sum+this.capsules.filter(c=>this.distance(point,c)<c.worldRadius).length
-        },0)
-        const result=this.measure();this.stats.afterDepth=result.worst;this.stats.worstCollider=result.collider;this.stats.worstGarment=result.part
+        const started=performance.now(),factor=preparedScale??this.refreshFrame()
+        this.stats.surface=this.surface.project(this.capsules,this.hipRotation,blocked,factor,this.pendingDelta);this.pendingDelta=0
+        // The surface already measures every movable welded vertex. Do not
+        // reskin and rescan a second probe set three more times per RAF merely
+        // to produce diagnostics; interior-triangle residuals remain reported
+        // independently as surface.remainingDepth.
+        this.stats.beforeDepth=this.stats.surface.beforeVertexDepth
+        this.stats.afterDepth=this.stats.surface.afterVertexDepth
+        this.stats.contacts=this.stats.surface.incomingContacts
         this.stats.limited ||= this.stats.surface.limited;this.stats.milliseconds+=performance.now()-started
         return this.diagnostics
     }

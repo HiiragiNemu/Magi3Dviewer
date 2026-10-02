@@ -99,6 +99,9 @@ export class StageCharacterShadowBridge {
     private updateBindings(bindings: readonly ShadowProxyBinding[]) {
         for (const binding of bindings) {
             const { source, proxy, characterRoot } = binding
+            // Contact display geometries are actor-local and may be installed
+            // or disposed after the stage proxy was created.
+            if(proxy.geometry!==source.geometry)proxy.geometry=source.geometry
             proxy.visible = isVisibleWithinCharacter(source, characterRoot)
             proxy.matrix.copy(source.matrixWorld)
             proxy.matrixWorld.copy(source.matrixWorld)

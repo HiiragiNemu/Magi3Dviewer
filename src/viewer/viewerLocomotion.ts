@@ -4594,9 +4594,7 @@ function attachParameterizedHumanoidMotionProfile(
     const morphologyUpperBodyWeights = targetRigMorphologyBlend
         ? normalizedDonorWeightSubset(targetRigMorphologyBlend.weights, naturalArmFingerDonorIds)
         : undefined
-    const naturalUpperBodyWeights = characterId===101901&&naturalUpperBodyProfileId==='set-a'
-        ? {walk:{114501:1},run:{114501:1}}
-        : naturalUpperBodyTrajectoryWeights[naturalUpperBodyProfileId]
+    const naturalUpperBodyWeights = naturalUpperBodyTrajectoryWeights[naturalUpperBodyProfileId]
     const effectiveNaturalUpperBodyWeights = morphologyUpperBodyWeights
         ? { walk: morphologyUpperBodyWeights, run: morphologyUpperBodyWeights }
         : naturalUpperBodyWeights
@@ -5348,12 +5346,6 @@ function attachParameterizedHumanoidMotionProfile(
                     frame => frame.directions[segment.directionRole],
                     true,
                 )
-            // This fixed retarget adjustment is baked once into Touka's
-            // generated fallback, not a collision-driven arm displacement.
-            // Her hoop is broader relative to arm length than donor 114501.
-            if(characterId===101901&&naturalUpperBodyProfileId==='set-a'&&/^(?:upperArm|forearm)[LR]$/.test(segment.directionRole)){
-                donorDirection.applyAxisAngle(new THREE.Vector3(0,0,1),THREE.MathUtils.degToRad(segment.directionRole.endsWith('L')?10:-10))
-            }
             let desiredDirection = referenceVectorToTargetWorld(donorDirection)
             const bone = rig.get(motionPaths[segment.boneRole])!
             const child = rig.get(motionPaths[segment.childRole])!
@@ -5365,7 +5357,7 @@ function attachParameterizedHumanoidMotionProfile(
                     .sub(bone.getWorldPosition(new THREE.Vector3()))
                     .normalize()
                 desiredDirection = currentDirection.lerp(desiredDirection.normalize(), 0.32).normalize()
-            } else if (semantic === 'walk' && !(characterId===101901&&naturalUpperBodyProfileId==='set-a') && /^forearm[LR]$/.test(segment.directionRole)) {
+            } else if (semantic === 'walk' && /^forearm[LR]$/.test(segment.directionRole)) {
                 // Native exploration walks swing an already-bent arm; they do
                 // not straighten and re-fold the elbow every step. Preserve the
                 // complete authored upper-arm swing, then carry one fixed
@@ -7085,7 +7077,6 @@ function attachParameterizedHumanoidMotionProfile(
             applyNativeHandFingerPose('walk', 0.5, 0, pose.fingerStrength)
             for (const side of ['L', 'R'] as const) {
                 const angles = side === 'L' ? pose.left : pose.right
-                if(characterId===101901&&naturalUpperBodyProfileId==='set-a')angles.outward+=10
                 const upper = rig.get(side === 'L' ? motionPaths.upperArmL : motionPaths.upperArmR)!
                 const elbow = rig.get(side === 'L' ? motionPaths.forearmL : motionPaths.forearmR)!
                 const hand = rig.get(side === 'L' ? motionPaths.handL : motionPaths.handR)!
@@ -7465,7 +7456,7 @@ function attachParameterizedHumanoidMotionProfile(
             ? 'target-rig-morphology-nine-native-arms-fingers-v45'
             : setB
                 ? '101901-mami-dress-clearance-nine-native-arms-fingers-v37'
-                : characterId===101901 ? '101901-114501-native-arms-target-hoop-retarget-v46' : 'native-arms-target-rig-v37',
+                : '101901-low-abduction-nine-native-arms-fingers-v37',
         upperBodyDonorBlendWeights: { ...effectiveNaturalUpperBodyWeights.walk },
         upperBodyTrajectoryDonorBlendWeights: {
             walk: { ...effectiveNaturalUpperBodyWeights.walk },
