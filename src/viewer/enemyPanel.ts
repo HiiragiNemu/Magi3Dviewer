@@ -152,7 +152,7 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
     }
     const renderStatus = () => {
         const text = translateUiText(statusState.key)
-        const catalogMessage=['Available enemies','Matching enemies','Selected enemy','Enemy animation paused','Enemy animation playing'].includes(statusState.key)
+        const catalogMessage=['Available enemies','Matching enemies','Selected enemy','Enemy animation paused','Enemy animation playing','Enemy added','Enemies added','Enemy removed','All enemies removed','Enemy replaced'].includes(statusState.key)
         elements.feedback.textContent = statusState.detail
             ? `${text}: ${statusState.detail}`
             : text
