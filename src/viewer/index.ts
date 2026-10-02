@@ -879,7 +879,35 @@ export function setupViewer() {
 
     setupCharacterSearch()
     setupCharacterAddSelector()
-    setupRuntimeSelectionPanels()
+    const resourcePanels=setupRuntimeSelectionPanels({
+        instances:()=>scene.characters.flatMap(slot=>{
+            const actor=slot.character??slot.retainedCharacter
+            return actor?[{key:actor.object.uuid,id:String(actor.userData.characterId),selected:scene.characterSelected===slot}]:[]
+        }),
+        add:async(id,quantity)=>{
+            const created:SceneCharacter[]=[]
+            try{for(let i=0;i<quantity;i++)created.push(await addOrChangeCharacter(id))}
+            catch(error){for(const slot of created)removeResourceCharacter(slot);throw error}
+            if(created.length)selectCharacter(created[created.length-1])
+        },
+        replace:async(id,key)=>{
+            const slot=scene.characters.find(item=>(item.character??item.retainedCharacter)?.object.uuid===key)
+            if(!slot||slot.loading)throw new Error('所选角色已移除或仍在加载')
+            if(slot===scene.characterSelected){voicePanelController?.setCharacter(null,null);disposeCharacterActionPlayback();setDirectPoseEditing(false)}
+            try{const loaded=await addOrChangeCharacter(id,slot);selectCharacter(loaded)}
+            catch(error){if(slot.character){attachViewerLocomotion(slot);if(scene.characterSelected===slot)selectCharacter(slot)}throw error}
+        },
+        select:key=>{const slot=scene.characters.find(item=>item.character?.object.uuid===key);if(slot&&!slot.loading)selectCharacter(slot)},
+        remove:key=>{const slot=scene.characters.find(item=>item.character?.object.uuid===key);if(slot&&!slot.loading)removeResourceCharacter(slot)},
+    })
+    // Actor instances can also change through presets, Studio imports or TPS.
+    // Compare only the small live-instance list; never traverse model geometry.
+    let resourceActorSignature=''
+    const stopResourceSync=scene.addBeforeRenderCallback(()=>{
+        const signature=scene.characters.map(slot=>(slot.character??slot.retainedCharacter)?.object.uuid+':'+slot.loading+':'+(scene.characterSelected===slot)).join('|')
+        if(signature!==resourceActorSignature){resourceActorSignature=signature;resourcePanels.refreshActors()}
+    })
+    onPermanentPageExit(stopResourceSync)
     setupCombatVfxPanel()
     voicePanelController = setupVoicePanel({
         workspaceRuntime: createViewerVoiceWorkspaceRuntime(),
@@ -3008,11 +3036,11 @@ function setupCharacterSearch() {
     const updateInputWidth = () => {
         const viewportWidth = window.innerWidth
         const textLength = Array.from(characterSearchInput.value.trim()).length
-        const baseChars = textLength > 0 ? textLength + 2 : 8
+        const baseChars = textLength > 0 ? textLength + 1 : 7
         const maxChars = viewportWidth < 760 ? 20 : 26
-        const clampedChars = Math.max(8, Math.min(baseChars, maxChars))
+        const clampedChars = Math.max(7, Math.min(baseChars, maxChars))
         const approximatePx = Math.round(clampedChars * (viewportWidth < 760 ? 8 : 8.6) + 16)
-        const minPx = viewportWidth < 520 ? 82 : 88
+        const minPx = 76
         const maxPx = Math.min(viewportWidth - 16, viewportWidth < 760 ? 220 : 260)
         const widthPx = Math.max(minPx, Math.min(approximatePx, maxPx))
         document.getElementById('character-search-box')?.style.setProperty('--character-search-width', `${widthPx}px`)
@@ -3416,17 +3444,17 @@ async function changeCharacter(id: number | string) {
     return loaded
 }
 
+function removeResourceCharacter(slot:SceneCharacter) {
+    if(!scene.characters.includes(slot))return
+    const wasSelected=scene.characterSelected===slot
+    if(slot.character)forgetMovementTarget(slot.character.object)
+    if(wasSelected){voicePanelController?.setCharacter(null,null);disposeCharacterActionPlayback();setDirectPoseEditing(false)}
+    detachViewerLocomotion(slot);scene.removeCharacter(slot)
+    if(wasSelected){scene.characterSelected=undefined;deselectCharacter()}
+    syncVoiceCharacter()
+}
 function removeSelectedCharacter() {
-    if (scene.characterSelected) {
-        const removedCharacter = scene.characterSelected
-        if (removedCharacter.character) forgetMovementTarget(removedCharacter.character.object)
-        voicePanelController?.setCharacter(null, null)
-        disposeCharacterActionPlayback()
-        detachViewerLocomotion(removedCharacter)
-        scene.removeCharacter(removedCharacter)
-        scene.characterSelected = undefined
-        deselectCharacter()
-    }
+    if(scene.characterSelected)removeResourceCharacter(scene.characterSelected)
 }
 
 async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneCharacter): Promise<SceneCharacter> {
@@ -3435,8 +3463,9 @@ async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneC
     let oldTransform = undefined
     if (sceneCharacter?.character?.object) {
         oldTransform = {
-            position: sceneCharacter.character.object.position,
-            rotation: sceneCharacter.character.object.rotation,
+            position: sceneCharacter.character.object.position.clone(),
+            rotation: sceneCharacter.character.object.rotation.clone(),
+            scale: sceneCharacter.character.object.scale.clone(),
         }
         detachViewerLocomotion(sceneCharacter)
     }
@@ -3464,6 +3493,7 @@ async function addOrChangeCharacter(id: number | string, sceneCharacter?: SceneC
         if (oldTransform) {
             character.object.position.copy(oldTransform.position)
             character.object.rotation.copy(oldTransform.rotation)
+            character.object.scale.copy(oldTransform.scale)
         } else {
             character.object.position.copy(calculateNewCharacterPosition(sceneCharacter))
         }

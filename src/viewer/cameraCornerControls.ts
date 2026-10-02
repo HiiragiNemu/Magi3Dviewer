@@ -9,6 +9,7 @@ export function createCameraCornerControls(hooks:Hooks){
     const roll=document.createElement('button');roll.type='button';roll.id='camera-roll-control';roll.setAttribute('role','slider');roll.setAttribute('aria-valuemin','-180');roll.setAttribute('aria-valuemax','180');roll.setAttribute('aria-orientation','horizontal')
     const label=document.createElement('span'),value=document.createElement('output');value.setAttribute('aria-hidden','true');roll.append(label,value)
     const focus=document.createElement('button');focus.type='button';focus.id='camera-frame-actor';focus.textContent='⌖';focus.onclick=hooks.focus
+    roll.dataset.viewportObstacle='true';focus.dataset.viewportObstacle='true'
     root.append(roll,focus);document.body.append(root)
     let drag:{id:number;start:number;last:number;moved:boolean}|undefined,lastValue=''
     const update=()=>{
@@ -50,11 +51,10 @@ export function createCameraCornerControls(hooks:Hooks){
         else if(event.key==='Home'){event.preventDefault();event.stopPropagation();hooks.reset();update()}
     },options)
     const layout=()=>{
-        const mobile=innerWidth<=600||matchMedia('(pointer: coarse)').matches
-        if(mobile){
-            const canvas=document.querySelector('#workspace canvas')??document.querySelector('canvas'),top=Math.max(canvas?.getBoundingClientRect().top??0,document.getElementById('menu')?.getBoundingClientRect().bottom??0,window.visualViewport?.offsetTop??0)
-            root.style.top=(top+8)+'px';root.style.bottom='auto'
-        }else{root.style.top='';root.style.bottom=''}
+        const canvas=document.querySelector('#workspace canvas')??document.querySelector('canvas')
+        const top=Math.max(canvas?.getBoundingClientRect().top??0,document.getElementById('menu')?.getBoundingClientRect().bottom??0,window.visualViewport?.offsetTop??0)
+        root.style.top=(top+8)+'px';root.style.bottom='auto'
+        document.dispatchEvent(new window.Event('magius:camera-controls-layout'))
     }
     const resize=typeof ResizeObserver==='undefined'?undefined:new ResizeObserver(layout)
     const menu=document.getElementById('menu');if(menu)resize?.observe(menu)

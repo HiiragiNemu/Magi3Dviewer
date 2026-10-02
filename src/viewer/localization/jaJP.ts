@@ -1,5 +1,15 @@
 /** Japanese presentation strings for the Viewer UI. Canonical keys remain English. */
 export const jaJpUiText: Readonly<Record<string, string>> = {
+    "Replace": "置換",
+    "Load": "読込",
+    "Added": "追加済",
+    "Add character": "キャラ追加",
+    "Active characters": "配置済キャラ",
+    "No characters added": "配置キャラなし",
+    "Select an added character to replace": "置換する配置済キャラを選択",
+    "Select an added enemy to replace": "置換する配置済敵を選択",
+    "Enemy replaced": "敵を置換しました",
+    "0 repeats forever": "0 はループ・空欄は自動",
     "Drag to look, right-drag to pan; double-click the view to lock the mouse. Escape releases the cursor and keeps TPS on.": "ドラッグで視点回転、右ドラッグで移動。画面をダブルクリックでマウス固定。Esc は TPS を終了せずカーソルを戻します。",
     "Neck": "首",
     "Waist": "腰",

@@ -13,6 +13,7 @@ import {
     type EnemyManifestEntry,
 } from './enemies'
 import { translateUiText } from './localization/zhCN'
+import { createResourceTile, markResourceSelection, installResourceGridKeys } from './resourcePanelUi'
 import { scene } from './scene'
 
 interface EnemyPanelElements {
@@ -24,6 +25,9 @@ interface EnemyPanelElements {
     close: HTMLButtonElement
     search: HTMLInputElement
     catalog: HTMLSelectElement
+    grid: HTMLElement
+    replace: HTMLButtonElement
+    feedback: HTMLOutputElement
     status: HTMLOutputElement
     preview: HTMLImageElement
     selectedDetail: HTMLOutputElement
@@ -80,6 +84,9 @@ function getElements(): EnemyPanelElements {
         close: requireElement<HTMLButtonElement>('enemy-panel-close'),
         search: requireElement<HTMLInputElement>('enemy-catalog-search'),
         catalog: requireElement<HTMLSelectElement>('enemy-catalog-select'),
+        grid: requireElement<HTMLElement>('enemy-catalog-grid'),
+        replace: requireElement<HTMLButtonElement>('enemy-replace-button'),
+        feedback: requireElement<HTMLOutputElement>('enemy-panel-feedback'),
         status: requireElement<HTMLOutputElement>('enemy-catalog-status'),
         preview: requireElement<HTMLImageElement>('enemy-preview-image'),
         selectedDetail: requireElement<HTMLOutputElement>('enemy-selected-detail'),
@@ -129,6 +136,7 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
 
     const elements = getElements()
     const enemyResources = new EnemyResourceManager()
+    installResourceGridKeys(elements.grid)
     const abortController = new AbortController()
     let entries: readonly EnemyManifestEntry[] = []
     let selectedEnemyMstId: number | undefined
@@ -137,12 +145,21 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
     let busy = false
     let disposed = false
 
+    const renderCounts = () => {
+        const visible=entries.filter(entry=>matchesSearch(entry,elements.search.value.trim().toLocaleLowerCase())).length
+        elements.status.textContent=`${translateUiText('Available enemies')} ${visible} / ${entries.length} · ${translateUiText('Added')} ${enemyResources.getInstances().length}`
+        elements.status.title=elements.status.textContent
+    }
     const renderStatus = () => {
         const text = translateUiText(statusState.key)
-        elements.status.textContent = statusState.detail
+        const catalogMessage=['Available enemies','Matching enemies','Selected enemy','Enemy animation paused','Enemy animation playing'].includes(statusState.key)
+        elements.feedback.textContent = statusState.detail
             ? `${text}: ${statusState.detail}`
             : text
-        elements.status.classList.toggle('is-error', Boolean(statusState.error))
+        elements.feedback.classList.toggle('is-error', Boolean(statusState.error))
+        if(catalogMessage&&!statusState.error)elements.feedback.textContent=''
+        elements.feedback.title=elements.feedback.textContent
+        renderCounts()
     }
 
     const setStatus = (state: StatusState) => {
@@ -185,7 +202,11 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
     animationProgress.id = 'enemy-animation-progress'
     const progressGroup=document.createElement('span');progressGroup.className='animation-progress-group'
     progressGroup.append(animationSlider,animationProgress)
-    animationSection.append(animationSelect, animationRepetitions, animationApply, animationToggle, progressGroup)
+    animationSection.append(animationSelect, animationApply, animationToggle, progressGroup)
+    const playbackSettings=document.createElement('details');playbackSettings.className='resource-playback-settings'
+    const playbackSummary=document.createElement('summary');playbackSummary.textContent=translateUiText('Total plays')
+    const repeatLabel=document.createElement('label');const repeatText=document.createElement('span');repeatText.textContent=translateUiText('Total plays: blank uses default, 0 repeats forever');repeatLabel.append(repeatText,animationRepetitions);playbackSettings.append(playbackSummary,repeatLabel)
+    elements.panel.querySelector('.resource-active-heading')!.insertBefore(playbackSettings,elements.clear)
     requireElement<HTMLElement>('enemy-toolbar-control').append(animationSection)
 
     const pendingAnimations = new WeakMap<EnemyInstance, string>()
@@ -317,6 +338,11 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
     const renderSelected = () => {
         const entry = selectedEntry()
         elements.add.disabled = busy || !entry
+        elements.add.textContent=translateUiText('Add enemy')
+        elements.replace.textContent=translateUiText('Replace')
+        elements.replace.disabled=busy||!entry||!selectedInstance()
+        elements.replace.title=selectedInstance()?`${translateUiText('Replace')}: ${enemyLabel(selectedInstance()!.entry)} · ${selectedInstanceId}`:translateUiText('Select an added enemy to replace')
+        markResourceSelection(elements.grid,entry?String(entry.enemyMstId):'')
         elements.toolbarAdd.disabled = busy || !entry
         if (!entry) {
             elements.toolbarAdd.disabled = true
@@ -330,7 +356,8 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
         const label = enemyLabel(entry)
         elements.toolbarCatalog.value = String(entry.enemyMstId)
         elements.toolbarAdd.disabled = busy
-        elements.selectedDetail.textContent = `${label} · ID ${entry.enemyMstId}`
+        elements.selectedDetail.textContent = `${label} · ${entry.enemyMstId}`
+        elements.selectedDetail.title=elements.selectedDetail.textContent
         if (entry.thumbnail.url) {
             elements.preview.src = entry.thumbnail.url
             elements.preview.alt = label
@@ -372,6 +399,11 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
             fragment.append(option)
         }
         elements.catalog.replaceChildren(fragment)
+        const scrollTop=elements.grid.scrollTop
+        elements.grid.replaceChildren(...visibleEntries.map(entry=>createResourceTile({value:String(entry.enemyMstId),label:enemyLabel(entry),title:`${enemyLabel(entry)} · ${entry.enemyMstId}`,image:entry.thumbnail.url??undefined},()=>{
+            selectedEnemyMstId=entry.enemyMstId;elements.catalog.value=String(entry.enemyMstId);renderSelected()
+        })))
+        elements.grid.scrollTop=scrollTop
         elements.catalog.disabled = busy || visibleEntries.length === 0
 
         const preserved = previous != null
@@ -400,51 +432,22 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
         if (selectedInstanceId && !instances.some(instance => instance.instanceId === selectedInstanceId)) {
             selectedInstanceId = undefined
         }
+        const scrollTop=elements.instances.scrollTop
         const fragment = document.createDocumentFragment()
-        if (instances.length === 0) {
-            const empty = document.createElement('p')
-            empty.className = 'enemy-instance-empty'
-            empty.textContent = translateUiText('No enemies added')
-            fragment.append(empty)
-        } else {
-            for (const instance of instances) {
-                const row = document.createElement('div')
-                row.className = 'enemy-instance-row'
-                row.dataset.instanceId = instance.instanceId
-                row.dataset.position = instance.object.position.toArray()
-                    .map(value => value.toFixed(4))
-                    .join(',')
-                row.tabIndex = 0
-                row.setAttribute('role', 'option')
-                row.setAttribute('aria-selected', String(instance.instanceId === selectedInstanceId))
-                row.classList.toggle('is-selected', instance.instanceId === selectedInstanceId)
-                row.onclick = () => selectInstance(instance.instanceId)
-                row.onkeydown = event => {
-                    if (event.key !== 'Enter' && event.key !== ' ') return
-                    event.preventDefault()
-                    selectInstance(instance.instanceId)
-                }
-
-                const label = document.createElement('span')
-                const animation = instance.currentAnimationName ? ` · ${instance.currentAnimationName}` : ''
-                label.textContent = `${enemyLabel(instance.entry)} · ${instance.instanceId}${animation}`
-                label.title = instance.instanceId
-
-                const remove = document.createElement('button')
-                remove.type = 'button'
-                remove.textContent = translateUiText('Remove')
-                remove.setAttribute('aria-label', `${translateUiText('Remove')} ${enemyLabel(instance.entry)}`)
-                remove.disabled = busy
-                remove.onclick = event => {
-                    event.stopPropagation()
-                    removeInstance(instance)
-                }
-
-                row.append(label, remove)
-                fragment.append(row)
-            }
-        }
+        if(!instances.length){const empty=document.createElement('span');empty.className='resource-empty';empty.textContent=translateUiText('No enemies added');fragment.append(empty)}
+        instances.forEach((instance,index)=>{
+            const row=document.createElement('div');row.className='enemy-instance-row resource-instance-row';row.dataset.instanceId=instance.instanceId
+            row.dataset.position=instance.object.position.toArray().map(value=>value.toFixed(4)).join(',')
+            row.classList.toggle('is-selected',instance.instanceId===selectedInstanceId);row.setAttribute('aria-selected',String(instance.instanceId===selectedInstanceId))
+            const select=document.createElement('button');select.type='button';select.className='resource-instance-select';select.textContent=`${index+1}. ${enemyLabel(instance.entry)}`
+            select.title=`${instance.instanceId} · ${translateUiText(instance.currentAnimationName??'')}`;select.setAttribute('aria-selected',String(instance.instanceId===selectedInstanceId));select.disabled=busy;select.onclick=()=>selectInstance(instance.instanceId)
+            const remove=document.createElement('button');remove.type='button';remove.textContent=translateUiText('Remove');remove.disabled=busy;remove.setAttribute('aria-label',`${translateUiText('Remove')} ${index+1}. ${enemyLabel(instance.entry)}`);remove.onclick=()=>removeInstance(instance)
+            row.append(select,remove);fragment.append(row)
+        })
         elements.instances.replaceChildren(fragment)
+        elements.instances.scrollTop=scrollTop
+        renderCounts()
+        elements.replace.disabled=busy||!selectedEntry()||!selectedInstance()
         elements.clear.disabled = busy || instances.length === 0
         elements.toolbarRemove.disabled = busy || !selectedInstance()
         renderAnimationControls()
@@ -456,6 +459,7 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
         if (!instance) return undefined
         selectedInstanceId = instance.instanceId
         renderInstances()
+        renderSelected()
         setStatus({ key: 'Selected enemy', detail: instance.instanceId })
         options.onInstanceSelected?.(instance)
         return instance
@@ -486,13 +490,14 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
         elements.panel.classList.toggle('is-open', open)
         elements.panel.setAttribute('aria-hidden', String(!open))
         elements.toggle.setAttribute('aria-expanded', String(open))
-        const label = translateUiText(open ? 'Hide enemies' : 'Enemies')
+        const label = translateUiText('Enemies')
         elements.toggle.textContent = label
         elements.toggle.title = label
         elements.toggle.setAttribute('aria-label', label)
     }
 
     const handleLocaleChange = () => {
+        playbackSummary.textContent=translateUiText('Total plays');repeatText.textContent=translateUiText('Total plays: blank uses default, 0 repeats forever')
         renderToolbarCatalog()
         renderCatalog()
         renderInstances()
@@ -504,8 +509,11 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
         if (event.key === 'Escape') setOpen(false)
     }
 
+    let lastInstanceSignature=''
     const tick = () => {
         enemyResources.update(getClockDelta())
+        const signature=enemyResources.getInstances().map(item=>item.instanceId).join('|')
+        if(signature!==lastInstanceSignature){lastInstanceSignature=signature;renderInstances();renderSelected()}
         if (!animationSection.hidden) renderAnimationProgress()
     }
 
@@ -587,6 +595,22 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
                 renderInstances()
             }
         }
+    }
+    elements.replace.onclick = async () => {
+        const entry=selectedEntry(),original=selectedInstance()
+        if(!entry||!original||busy)return
+        const position=original.object.position.clone(),quaternion=original.object.quaternion.clone(),scale=original.object.scale.clone()
+        setBusy(true);setStatus({key:'Loading...'})
+        let replacement:EnemyInstance|undefined
+        try{
+            replacement=await enemyResources.addEnemy(entry.enemyMstId,scene.scene,{position:position.toArray()},abortController.signal)
+            if(disposed||!enemyResources.getInstances().includes(original))throw new Error('所选敌人已被移除，未执行替换')
+            replacement.object.position.copy(position);replacement.object.quaternion.copy(quaternion);replacement.object.scale.copy(scale);replacement.object.updateMatrixWorld(true)
+            options.onInstanceWillRemove?.(original)
+            enemyResources.removeEnemy(original.instanceId);selectedInstanceId=undefined
+            selectInstance(replacement.instanceId);setStatus({key:'Enemy replaced'})
+        }catch(error){if(replacement)enemyResources.removeEnemy(replacement.instanceId);if(!isAbortError(error))setStatus(describeError(error))}
+        finally{if(!disposed){setBusy(false);renderSelected();renderInstances()}}
     }
     elements.clear.onclick = () => {
         const selected = selectedInstance()

@@ -79,7 +79,7 @@ test('runtime localization supports complete persistent English, Simplified Chin
         "'Tilt character left': '角色左倾'",
         "'Enter VR': '进入 VR'",
         "Smile: '微笑'",
-        "'Default face': '默认表情'",
+        "'Default face': '默认'",
         "HomeWait01: '看板待机 1'",
         "StandbyTransition: '战斗准备过渡'",
         "'Direct drag pose': '直接拖拽编辑动作'",
@@ -473,9 +473,9 @@ test('character search follows the compact adaptive name-or-ID toolbar contract'
     assert.match(html, /id="character-search-results"[^>]*role="listbox"[^>]*hidden/)
     assert.match(uiCharacterCatalog, /normalize\('NFKC'\)/)
     assert.match(uiCharacterCatalog, /entry\.normalizedId === query[\s\S]*entry\.normalizedId\.startsWith\(query\)[\s\S]*entry\.normalizedName\.includes\(query\)[\s\S]*entry\.normalizedAliases\.includes\(query\)/)
-    assert.match(viewer, /const baseChars = textLength > 0 \? textLength \+ 2 : 8/)
+    assert.match(viewer, /const baseChars = textLength > 0 \? textLength \+ 1 : 7/)
     assert.match(viewer, /const maxChars = viewportWidth < 760 \? 20 : 26/)
-    assert.match(viewer, /const minPx = viewportWidth < 520 \? 82 : 88/)
+    assert.match(viewer, /const minPx = 76/)
     assert.match(viewer, /const maxPx = Math\.min\(viewportWidth - 16, viewportWidth < 760 \? 220 : 260\)/)
     assert.match(viewer, /--character-search-width/)
     assert.match(viewer, /event\.key === 'ArrowDown'/)
@@ -578,7 +578,7 @@ test('magical girl and scene lists invoke the retained runtime selectors while t
     assert.equal(catalogDocument.vfx.filter(entry => entry.domain === 'character').length, 211)
 
     assert.match(viewerRuntime, /import \{ setupRuntimeSelectionPanels \} from '\.\/runtimeSelectionPanels'/)
-    assert.match(viewerRuntime, /enemyPanelController = setupEnemyPanel\(\{[\s\S]*setupRuntimeSelectionPanels\(\)/)
+    assert.match(viewerRuntime, /enemyPanelController = setupEnemyPanel\(\{[\s\S]*setupRuntimeSelectionPanels\(\{/)
     assert.match(selectorPanels, /sourceId: 'character-selector'/)
     assert.match(selectorPanels, /sourceId: 'stage-selector'/)
     assert.match(selectorPanels, /elements\.source\.value = sourceOption\.value[\s\S]*dispatchEvent\(new Event\('change', \{ bubbles: true \}\)\)/)
@@ -636,7 +636,7 @@ test('actual Viewer click and double-click handlers yield before hit-testing to 
     const executable = ts.transpileModule([...declarations.values()].join('\n'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None } }).outputText
     const create = ({ direct = false, performance = false, characterCount = 1, hitCharacter = true, hitEnemy = false, leasedRoot = false, tps = false } = {}) => {
         const calls = [], object = {}, character = { character: { object } }, enemy = { object: {}, instanceId: 'exact-enemy' }
-        const scene = { characters: Array.from({ length: characterCount }, () => character), characterSelected: undefined, controls: { enabled: true },
+        const scene = { renderer:{domElement:{}}, characters: Array.from({ length: characterCount }, () => character), characterSelected: undefined, controls: { enabled: true },
             transformControls: { dragging: false, axis: null, detach: () => calls.push('scene-transform-detach') },
             getIntersectedCharacter: () => { calls.push('character-hit-test'); return hitCharacter ? character : undefined } }
         const controls = { attach: value => calls.push(value === object ? 'character-attach' : 'enemy-attach'), enabled: false, dragging: false, axis: null }
@@ -655,7 +655,7 @@ test('actual Viewer click and double-click handlers yield before hit-testing to 
                 if (hitCharacter) return { object, select: () => calls.push('character-select'), refresh() {} }
             }, controls, { visible: false }, mode => calls.push(mode), () => calls.push('controller-update'), () => calls.push('close-transform'),
             {capture(){calls.push('ground-capture')},constrainObject(){calls.push('ground-constrain')}},
-            {body:{classList:{contains:()=>tps}}}, value=>calls.push(['tps',value]), () => calls.push('placement-history'))
+            {body:{classList:{contains:()=>tps}},dispatchEvent:event=>calls.push(event.type)}, value=>calls.push(['tps',value]), () => calls.push('placement-history'))
         const event = { offsetX: 5, offsetY: 6, clientX: 7, clientY: 8, preventDefault: () => calls.push('prevent'), stopPropagation: () => calls.push('stop') }
         return { handlers, event, calls, controls, sceneControls: scene.transformControls }
     }
@@ -682,7 +682,7 @@ test('actual Viewer click and double-click handlers yield before hit-testing to 
     const enemy = create({ characterCount: 2, hitEnemy: true }); enemy.handlers.double(enemy.event)
     assert.deepEqual(enemy.calls, ['combined-hit-test', 'exact-enemy', 'scene-transform-detach', 'placement-history', 'ground-capture', 'ground-constrain', 'enemy-attach', 'translate', 'prevent', 'stop'])
     const tps = create({tps:true}); tps.handlers.double(tps.event)
-    assert.deepEqual(tps.calls.slice(0,3), ['combined-hit-test', ['tps',false], 'character-select'], 'TPS releases its input ownership before an explicit double-click enters editing')
+    assert.deepEqual(tps.calls, ['prevent','stop','magius:tps-capture'], 'TPS double-click only reclaims the mouse; it must not hit-test, alter selection or exit TPS')
     const leased = create({ leasedRoot: true }); leased.handlers.double(leased.event)
     assert.deepEqual(leased.calls, ['combined-hit-test', 'character-select', 'prevent', 'stop'])
     assert.equal(leased.controls.enabled, false, 'root placement lease prevents an ordinary transform writer')

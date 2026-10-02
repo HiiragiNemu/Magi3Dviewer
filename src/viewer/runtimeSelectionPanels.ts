@@ -1,4 +1,15 @@
-import { translateUiText } from './localization/zhCN'
+import { translateUiText, getUiLocale } from './localization/zhCN'
+import { createResourceTile, installResourceGridKeys, compactResourceLabel, normalizedResourceQuantity } from './resourcePanelUi'
+import './style/resource-browser.css'
+
+export interface CharacterPanelInstance { key:string; id:string; selected:boolean }
+export interface CharacterPanelHooks {
+    instances(): CharacterPanelInstance[]
+    add(id:string,quantity:number):Promise<void>
+    replace(id:string,key:string):Promise<void>
+    select(key:string):void
+    remove(key:string):void
+}
 
 interface RuntimeSelectionPanelConfig {
     toggleId: string
@@ -91,25 +102,46 @@ export function formatSceneCatalogStatus(
     visible: ReadonlyArray<Pick<HTMLOptionElement, 'disabled' | 'dataset'>>,
     total: number,
 ): string {
-    const official = visible.filter(option => option.dataset.official === 'true').length
-    const builtin = visible.filter(option => option.dataset.official === 'false').length
-    const pending = visible.filter(option => option.disabled).length
-    const unknown = visible.length - official - builtin
-    return [
-        `${translateUiText('Scene catalog')}: ${visible.length} / ${total}`,
-        `${translateUiText('Official entries')}: ${official}`,
-        `${translateUiText('Built-in references')}: ${builtin}`,
-        `${translateUiText('Selectable entries')}: ${visible.length - pending}`,
-        `${translateUiText('Awaiting restoration')}: ${pending}`,
-        ...(unknown ? [`${translateUiText('Unclassified entries')}: ${unknown}`] : []),
-    ].join(' · ')
+    const selectable = visible.filter(option => !option.disabled).length
+    return `${translateUiText('Selectable entries')} ${selectable} / ${total}${visible.length !== total ? ` · ${translateUiText('Matching scenes')} ${visible.length}` : ''}`
 }
 
-function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
+function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig, actors?:CharacterPanelHooks): (()=>void) {
     const elements = getElements(config)
-    if (elements.panel.dataset.runtimeSelectionSetup === 'true') return
+    if (elements.panel.dataset.runtimeSelectionSetup === 'true') return ()=>{}
     elements.panel.dataset.runtimeSelectionSetup = 'true'
     let thumbnailManifest: RuntimeSelectionThumbnailManifest | undefined
+    let busy=false,gridKey='',catalogChosen=false
+    const isCharacter=config.thumbnailKind==='character'
+    const add=isCharacter?document.getElementById('character-list-add') as HTMLButtonElement:null
+    const quantity=isCharacter?document.getElementById('character-add-quantity') as HTMLInputElement:null
+    const instances=isCharacter?document.getElementById('character-instance-list'):null
+    const feedback=isCharacter?document.getElementById('character-list-feedback'):null
+    installResourceGridKeys(elements.grid)
+    const labelFor=(option:HTMLOptionElement)=>compactResourceLabel(option.textContent?.trim()||option.value,config.thumbnailKind,getUiLocale())
+    const report=(text:string,error=false)=>{if(feedback){feedback.textContent=text;feedback.title=text;feedback.classList.toggle('is-error',error)}}
+    const counts=()=>{
+        const options=sourceOptions(),visible=options.filter(option=>normalizeSearchText(`${option.value} ${option.textContent??''} ${option.title}`).includes(normalizeSearchText(elements.search.value)))
+        elements.status.textContent=isCharacter
+            ? `${translateUiText('Available characters')} ${visible.length} / ${options.length} · ${translateUiText('Added')} ${actors?.instances().length??0}`
+            : formatSceneCatalogStatus(visible,options.length)
+        elements.status.title=elements.status.textContent
+    }
+    const renderInstances=()=>{
+        if(!instances||!actors)return
+        const scroll=instances.scrollTop,rows=actors.instances()
+        instances.replaceChildren(...rows.map((item,i)=>{
+            const row=document.createElement('div');row.className='resource-instance-row';row.dataset.instanceId=item.key;row.classList.toggle('is-selected',item.selected)
+            const option=sourceOptionFor(item.id),label=option?labelFor(option):item.id
+            const select=document.createElement('button');select.type='button';select.className='resource-instance-select';select.textContent=`${i+1}. ${label}`;select.title=`${item.id} · ${label}`;select.setAttribute('aria-selected',String(item.selected));select.disabled=busy
+            select.onclick=()=>{actors.select(item.key);renderInstances();renderSelected()}
+            const remove=document.createElement('button');remove.type='button';remove.textContent=translateUiText('Remove');remove.setAttribute('aria-label',`${translateUiText('Remove')} ${i+1}. ${label}`);remove.disabled=busy
+            remove.onclick=()=>{actors.remove(item.key);renderInstances();renderSelected()}
+            row.append(select,remove);return row
+        }))
+        if(!rows.length){const empty=document.createElement('span');empty.className='resource-empty';empty.textContent=translateUiText('No characters added');instances.append(empty)}
+        instances.scrollTop=scroll;counts()
+    }
     elements.preview.addEventListener('error', () => {
         elements.preview.hidden = true
         elements.preview.removeAttribute('src')
@@ -167,70 +199,43 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
     const renderSelected = () => {
         const sourceOption = sourceOptionFor(elements.list.value)
         elements.use.textContent = translateUiText(config.useLabel)
-        elements.use.disabled = !sourceOption || sourceOption.disabled || elements.source.disabled
+        elements.use.disabled = busy || !sourceOption || sourceOption.disabled || elements.source.disabled || !!(isCharacter && actors && !actors.instances().some(item=>item.selected))
+        if(add)add.disabled=busy||!sourceOption||sourceOption.disabled||elements.source.disabled
+        if(quantity)quantity.disabled=busy
         elements.detail.textContent = sourceOption
-            ? `${sourceOption.textContent?.trim() || sourceOption.value} · ${sourceOption.value}${sourceOption.disabled ? ' · ' + translateUiText('Awaiting restoration') : ''}`
+            ? `${labelFor(sourceOption)} · ${sourceOption.value}${sourceOption.disabled ? ' · ' + translateUiText('Awaiting restoration') : ''}`
             : translateUiText(config.noSelectionLabel)
         elements.use.title = sourceOption?.disabled ? translateUiText('Awaiting restoration') : translateUiText(config.useLabel)
+        if(isCharacter&&actors){const target=actors.instances().find(item=>item.selected);elements.use.title=target?`${translateUiText('Replace')}: ${target.id}`:translateUiText('Select an added character to replace')}
+        elements.detail.title=elements.detail.textContent||''
+        if(add)add.textContent=translateUiText('Add character')
         updatePreview(sourceOption)
         renderTileSelection()
+        counts()
     }
 
+    const runActorOperation=async(operation:()=>Promise<void>)=>{
+        if(busy)return
+        busy=true;report(translateUiText('Loading...'));renderSelected();renderInstances()
+        try{await operation();report('')}
+        catch(error){report((error as Error).message||String(error),true)}
+        finally{busy=false;renderInstances();renderSelected()}
+    }
     const applySelection = () => {
         const sourceOption = sourceOptionFor(elements.list.value)
-        if (!sourceOption || sourceOption.disabled || elements.source.disabled) return
+        if (!sourceOption || sourceOption.disabled || elements.source.disabled || busy) return
+        if(isCharacter&&actors){
+            const target=actors.instances().find(item=>item.selected);if(!target)return
+            void runActorOperation(()=>actors.replace(sourceOption.value,target.key));return
+        }
         elements.source.value = sourceOption.value
         elements.source.dispatchEvent(new Event('change', { bubbles: true }))
-        elements.status.textContent = `${translateUiText(config.selectedLabel)}: ${sourceOption.textContent?.trim() || sourceOption.value}`
         renderSelected()
     }
-
-    const createThumbnailTile = (sourceOption: HTMLOptionElement) => {
-        const tile = document.createElement('button')
-        tile.type = 'button'
-        // Unrestored catalog entries remain inspectable. Eligibility controls
-        // Load, not thumbnail selection; otherwise the old preview looks stuck.
-        tile.disabled = false
-        tile.dataset.loadable = String(!sourceOption.disabled)
-        tile.className = 'runtime-selection-tile'
-        tile.dataset.value = sourceOption.value
-        tile.setAttribute('role', 'option')
-        tile.setAttribute('aria-selected', 'false')
-        tile.title = sourceOption.textContent?.trim() || sourceOption.value
-
-        const frame = document.createElement('span')
-        frame.className = 'runtime-selection-tile-image'
-        const thumbnailUrl = thumbnailUrlFor(sourceOption)
-        if (thumbnailUrl) {
-            const image = document.createElement('img')
-            image.src = thumbnailUrl
-            image.alt = ''
-            image.loading = 'lazy'
-            image.decoding = 'async'
-            image.draggable = false
-            image.addEventListener('error', () => {
-                image.remove()
-                frame.classList.add('is-missing')
-            }, { once: true })
-            frame.append(image)
-        } else {
-            frame.classList.add('is-missing')
-        }
-
-        const label = document.createElement('span')
-        label.className = 'runtime-selection-tile-label'
-        label.textContent = sourceOption.textContent?.trim() || sourceOption.value
-        const identity = document.createElement('span')
-        identity.className = 'runtime-selection-tile-identity'
-        identity.textContent = sourceOption.value
-        tile.append(frame, label, identity)
-        tile.addEventListener('click', () => {
-            elements.list.value = sourceOption.value
-            renderSelected()
-        })
-        tile.addEventListener('dblclick', applySelection)
-        return tile
-    }
+    const createThumbnailTile = (sourceOption: HTMLOptionElement) => createResourceTile({
+        value:sourceOption.value,label:labelFor(sourceOption),title:sourceOption.textContent?.trim(),
+        image:thumbnailUrlFor(sourceOption),loadable:!sourceOption.disabled,
+    },()=>{catalogChosen=true;elements.list.value=sourceOption.value;renderSelected()},applySelection)
 
     const refreshList = () => {
         const options = sourceOptions()
@@ -239,6 +244,10 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
             `${option.value} ${option.textContent ?? ''} ${option.title}`,
         ).includes(query))
         const previousValue = elements.list.value || elements.source.value
+        const nextKey=[query,getUiLocale(),Boolean(thumbnailManifest),...visible.map(o=>o.value+'|'+o.textContent+'|'+o.disabled)].join('\n')
+        if(nextKey===gridKey){renderSelected();renderInstances();return}
+        gridKey=nextKey
+        const scrollTop=elements.grid.scrollTop
         const fragment = document.createDocumentFragment()
         const tileFragment = document.createDocumentFragment()
         for (const sourceOption of visible) {
@@ -255,22 +264,14 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
         }
         elements.list.replaceChildren(fragment)
         elements.grid.replaceChildren(tileFragment)
+        elements.grid.scrollTop=scrollTop
         elements.grid.dataset.empty = String(visible.length === 0)
         elements.list.disabled = visible.length === 0
         elements.list.value = visible.some(option => option.value === previousValue)
             ? previousValue
             : visible[0]?.value ?? ''
-        const statusLabel = visible.length === 0
-            ? config.emptyLabel
-            : query ? config.matchingLabel : config.availableLabel
-        elements.status.textContent = config.thumbnailKind === 'scene'
-            ? formatSceneCatalogStatus(visible, options.length)
-            : visible.length === 0
-                ? translateUiText(statusLabel)
-                : `${translateUiText(statusLabel)}: ${visible.length} / ${options.length}`
-        if (config.thumbnailKind === 'scene') {
-            elements.status.title = translateUiText('Catalog and selectable counts do not mean load-tested or user-accepted.')
-        }
+        counts()
+        renderInstances()
         renderSelected()
     }
 
@@ -296,6 +297,10 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
     elements.search.oninput = refreshList
     elements.list.onchange = renderSelected
     elements.use.onclick = applySelection
+    if(add&&quantity&&actors){
+        quantity.onchange=()=>normalizedResourceQuantity(quantity)
+        add.onclick=()=>{const option=sourceOptionFor(elements.list.value);if(!option||option.disabled||busy)return;const n=normalizedResourceQuantity(quantity);void runActorOperation(()=>actors.add(option.value,n))}
+    }
     elements.source.addEventListener('change', syncFromSource)
 
     const sourceObserver = new MutationObserver(refreshList)
@@ -323,10 +328,11 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig): void {
             refreshList()
         })
         .catch(error => console.warn('Could not load runtime selection thumbnails:', error))
+    return ()=>{if(isCharacter&&!catalogChosen&&sourceOptionFor(elements.source.value))elements.list.value=elements.source.value;renderInstances();renderSelected()}
 }
 
-export function setupRuntimeSelectionPanels(): void {
-    setupRuntimeSelectionPanel({
+export function setupRuntimeSelectionPanels(actors?:CharacterPanelHooks) {
+    const refreshActors=setupRuntimeSelectionPanel({
         toggleId: 'character-list-panel-toggle',
         panelId: 'character-list-panel',
         closeId: 'character-list-panel-close',
@@ -346,9 +352,9 @@ export function setupRuntimeSelectionPanels(): void {
         matchingLabel: 'Matching characters',
         emptyLabel: 'No matching characters',
         noSelectionLabel: 'No character selected',
-        useLabel: 'Switch character',
+        useLabel: 'Replace',
         selectedLabel: 'Character selected in viewer',
-    })
+    },actors)
     setupRuntimeSelectionPanel({
         toggleId: 'stage-list-panel-toggle',
         panelId: 'stage-list-panel',
@@ -369,7 +375,8 @@ export function setupRuntimeSelectionPanels(): void {
         matchingLabel: 'Matching scenes',
         emptyLabel: 'No matching scenes',
         noSelectionLabel: 'No scene selected',
-        useLabel: 'Load selected scene',
+        useLabel: 'Load',
         selectedLabel: 'Scene selected in viewer',
     })
+    return {refreshActors}
 }

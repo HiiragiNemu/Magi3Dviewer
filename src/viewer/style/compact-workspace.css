@@ -116,3 +116,23 @@ body.theme-light #camera-corner-controls button {background:#f3fafbf2;color:#264
 
 #camera-corner-controls #camera-roll-control {padding:2px 4px !important;width:auto;min-width:56px;}
 #camera-corner-controls #camera-roll-control span,#camera-corner-controls #camera-roll-control output {white-space:nowrap;line-height:1.1;}
+
+/* Intrinsic toolbar sizing: no reserved blank tail in text controls. */
+#app #menu #menu-controls.compact-controls #locomotion-mode-toggle {width:auto;min-width:0;max-width:none;flex:0 0 auto;padding:4px 7px;}
+#app #menu #menu-controls.compact-controls #locomotion-mode-toggle.tps-multiple-targets {padding-right:17px;}
+#app #menu #menu-controls.compact-controls #character-search-box {width:var(--character-search-width,76px);min-width:76px;max-width:min(240px,42vw);flex:0 1 var(--character-search-width,76px);}
+#app #menu #menu-controls.compact-controls #character-search-input {box-sizing:border-box;width:100%;padding:4px 5px;min-width:0;}
+#app #menu #menu-controls.compact-controls #expression-selector {width:calc(2em + 24px);min-width:calc(2em + 24px);max-width:calc(2em + 24px);flex:0 0 auto;padding:2px 4px;}
+html[lang=en] #app #menu #menu-controls.compact-controls #expression-selector {width:calc(7em + 20px);min-width:calc(7em + 20px);max-width:calc(7em + 20px);}
+#app #menu #menu-controls.compact-controls #perf-stat.performance-toolbar {display:flex!important;align-items:center;gap:2px;position:relative!important;inset:auto!important;flex:0 0 auto;padding:0!important;margin:0!important;width:auto!important;height:34px;opacity:.9;z-index:auto;}
+#app #menu #menu-controls.compact-controls #perf-stat.performance-toolbar[hidden] {display:none!important;}
+#perf-stat.performance-toolbar #perf-stat-js {height:34px;width:57px;transform:none;overflow:hidden;}
+#perf-stat.performance-toolbar #perf-stat-js canvas {width:57px!important;height:34px!important;}
+#app #menu #menu-controls.compact-controls #performance-overlay-close {display:block;width:20px;min-width:20px;height:30px;min-height:30px;padding:0;font:16px/1 system-ui;}
+#camera-corner-controls {left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:auto;justify-content:space-between;align-items:flex-start;}
+
+#app #menu #menu-controls.compact-controls #perf-stat.performance-toolbar {flex-direction:row!important;min-width:79px!important;width:79px!important;overflow:visible!important;}
+#app #menu #menu-controls.compact-controls #perf-stat.performance-toolbar #perf-stat-js {display:block!important;flex:0 0 57px!important;width:57px!important;height:34px!important;min-height:34px!important;transform:none!important;}
+#app #menu #menu-controls.compact-controls #perf-stat.performance-toolbar #perf-stat-js > div {display:block!important;width:57px!important;height:34px!important;transform:none!important;}
+
+#app #menu #menu-controls.compact-controls #perf-stat.performance-toolbar,#app #menu #menu-controls.compact-controls #performance-overlay-close {pointer-events:auto!important;}

@@ -102,18 +102,19 @@ for(const back of [false,true])test('fixed front-observer names and columns when
  assert.deepEqual([...document.querySelectorAll('.ve-joint-node')].map(e=>[e.dataset.boneUuid,e.textContent,e.parentElement.style.transform]),identity)
  assert.equal(f.focuses,0)
 })
-test('back-layout toggle exchanges side positions only and returns exactly after a manual grip move',t=>{
+test('front layout has no flip toggle; manual placement retains stable identity through camera reversal',t=>{
  const f=editorFixture(t),button=document.querySelector('[data-viewport-joint="right-upper-arm"]'),chip=button.parentElement,grip=chip.querySelector('.ve-chip-grip')
+ assert.equal(document.querySelector('#viewport-mirror-layout'),null)
  const bone=f.actor.getObjectByName('Arm_R'),beforeBone=bone.quaternion.toArray(),uuid=button.dataset.boneUuid
  f.send(grip,'pointerdown',120,180);f.send(grip,'pointermove',145,197);f.send(grip,'pointerup',145,197)
  const before=chip.getBoundingClientRect(),top=document.querySelector('[data-viewport-joint="head"]').parentElement.style.transform
- document.querySelector('#viewport-mirror-layout').click();f.editor.update();const after=chip.getBoundingClientRect()
- assert.ok(Math.abs(before.x+after.x+before.width-innerWidth)<1e-6);assert.equal(before.y,after.y)
+ f.camera.position.z=-4;f.camera.lookAt(0,1,0);f.editor.reposition();f.editor.update()
+ assert.equal(chip.getBoundingClientRect().x,before.x);assert.equal(chip.getBoundingClientRect().y,before.y)
  assert.equal(button.textContent,'左上臂');assert.equal(button.dataset.boneUuid,uuid);assert.equal(document.querySelector('[data-viewport-joint="head"]').parentElement.style.transform,top)
  assert.deepEqual(bone.quaternion.toArray(),beforeBone);assert.equal(f.begins,0);assert.equal(f.focuses,0)
- document.querySelector('#viewport-mirror-layout').click();f.editor.update();assert.equal(chip.getBoundingClientRect().x,before.x)
  assert.ok(chip.dataset.layoutKey.includes('front-v2:'));assert.ok(localStorage.getItem('magius.viewport-chip-layout.v1'))
 })
+
 test('head and neck form the top row, torso the bottom row, and paired limbs remain ordered at all supported sizes',()=>{
  const items=[{key:'head',role:'head',region:'top'},{key:'neck',role:'neck',region:'top'},...['left','right'].flatMap(side=>['shoulder','upper-arm','elbow','hand','upper-leg','knee','foot'].map(role=>({key:side+'-'+role,region:side,role}))),{key:'chest',role:'chest',region:'bottom'},{key:'waist',role:'waist',region:'bottom'}].map(c=>({...c,width:72,height:32}))
  for(const view of [{left:8,right:352,top:300,bottom:772},{left:128,right:804,top:55,bottom:422},{left:280,right:1086,top:80,bottom:892}]){

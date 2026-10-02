@@ -47,7 +47,6 @@
 
                 <div id="character-animation-controls" class="animation-controls" data-performance-resource="actions" hidden>
                     <select id="animation-selector" class="target-true" title="Choose animation"></select>
-                    <input id="animation-repetitions" class="target-true" type="number" min="0" max="9007199254740991" step="1" placeholder="Default" aria-label="Total plays" title="Total plays: blank uses default, 0 repeats forever">
                     <button id="animation-apply" class="target-true" type="button" title="Play selected animation">Play</button>
                     <button id="animation-play" class="target-true" style="display: none;" title="Play animation"><img src="src/icons/playback-play.svg"></button>
                     <button id="animation-pause" class="target-true" title="Pause animation"><img src="src/icons/playback-pause.svg"></button>
@@ -315,6 +314,7 @@
             </header>
             <div class="floating-panel-scroll">
                 <div id="action-basic-controls" class="parameter-basics target-true">
+                    <label class="animation-repeat-field"><span>Total plays</span><input id="animation-repetitions" class="target-true" type="number" min="0" max="9007199254740991" step="1" placeholder="Auto" aria-label="Total plays" title="Total plays: blank uses default, 0 repeats forever"><small>0 repeats forever</small></label>
                     <label>
                         <span>Animation speed</span>
                         <input id="animation-speed" type="range" min="0" max="2" step="0.05" value="1">
@@ -418,73 +418,52 @@
             </footer>
         </section>
 
-        <section id="character-list-panel" class="floating-panel runtime-selection-panel" role="dialog" aria-modal="false" aria-labelledby="character-list-panel-title" aria-hidden="true">
+        <section id="character-list-panel" class="floating-panel runtime-selection-panel resource-browser-panel" role="dialog" aria-modal="false" aria-labelledby="character-list-panel-title" aria-hidden="true">
             <header class="floating-panel-header">
                 <strong id="character-list-panel-title">Characters</strong>
                 <button id="character-list-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
             </header>
-            <div class="floating-panel-scroll runtime-selection-panel-content">
-                <label class="runtime-selection-field" for="character-list-search">
-                    <span>Search characters</span>
-                    <input id="character-list-search" type="search" placeholder="Type a name or ID" autocomplete="off">
-                </label>
-                <div class="runtime-selection-browser">
-                    <section class="runtime-selection-catalog">
-                        <div class="runtime-selection-field runtime-selection-list-field">
-                            <span id="character-list-label">Character list</span>
-                            <select id="character-list-select" class="runtime-selection-native-list" size="12" data-i18n-ignore="true" aria-label="Character list" aria-hidden="true" tabindex="-1" hidden disabled></select>
-                            <div id="character-list-grid" class="runtime-selection-thumbnail-grid character-thumbnail-grid" role="listbox" aria-labelledby="character-list-label" data-i18n-ignore="true"></div>
-                        </div>
-                        <output id="character-list-status" data-i18n-ignore="true" aria-live="polite">Available characters</output>
+            <div class="resource-panel-body">
+                <label class="resource-search" for="character-list-search"><span>Search characters</span><input id="character-list-search" type="search" placeholder="Type a name or ID" autocomplete="off"></label>
+                <div class="resource-catalog-heading"><span id="character-list-label">Character list</span><output id="character-list-status" data-i18n-ignore="true" aria-live="polite"></output></div>
+                <select id="character-list-select" class="runtime-selection-native-list" size="12" data-i18n-ignore="true" aria-label="Character list" aria-hidden="true" tabindex="-1" hidden disabled></select>
+                <div id="character-list-grid" class="runtime-selection-thumbnail-grid character-thumbnail-grid" role="listbox" aria-labelledby="character-list-label" data-i18n-ignore="true"></div>
+                <footer class="resource-panel-footer">
+                    <div class="resource-selection-row">
+                        <img id="character-list-preview" class="resource-selected-icon" alt="" hidden>
+                        <div class="resource-selected-copy"><strong>Selected character</strong><output id="character-list-detail" data-i18n-ignore="true"></output></div>
+                        <button id="character-list-use" type="button" data-i18n-ignore="true" disabled>Replace</button>
+                    </div>
+                    <div class="resource-add-row">
+                        <label for="character-add-quantity"><span>Quantity</span><input id="character-add-quantity" type="number" min="1" max="8" step="1" value="1" inputmode="numeric"></label>
+                        <button id="character-list-add" type="button" data-i18n-ignore="true">Add character</button>
+                        <output id="character-list-feedback" class="resource-operation-status" data-i18n-ignore="true" aria-live="polite"></output>
+                    </div>
+                    <section class="resource-active-section" aria-labelledby="character-active-title">
+                        <strong id="character-active-title">Active characters</strong>
+                        <div id="character-instance-list" class="resource-active-list" data-i18n-ignore="true" role="listbox" aria-label="Active characters"></div>
                     </section>
-                    <aside class="runtime-selection-selection">
-                        <article class="runtime-selection-card runtime-selection-preview-card">
-                            <div class="runtime-selection-preview-frame">
-                                <img id="character-list-preview" alt="" hidden>
-                            </div>
-                            <div class="runtime-selection-preview-copy">
-                                <strong>Selected character</strong>
-                                <output id="character-list-detail" data-i18n-ignore="true">No character selected</output>
-                            </div>
-                        </article>
-                        <button id="character-list-use" type="button" disabled>Switch character</button>
-                    </aside>
-                </div>
+                </footer>
             </div>
         </section>
 
-        <section id="stage-list-panel" class="floating-panel runtime-selection-panel" role="dialog" aria-modal="false" aria-labelledby="stage-list-panel-title" aria-hidden="true">
+        <section id="stage-list-panel" class="floating-panel runtime-selection-panel resource-browser-panel" role="dialog" aria-modal="false" aria-labelledby="stage-list-panel-title" aria-hidden="true">
             <header class="floating-panel-header">
                 <strong id="stage-list-panel-title">Scenes</strong>
                 <button id="stage-list-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
             </header>
-            <div class="floating-panel-scroll runtime-selection-panel-content">
-                <label class="runtime-selection-field" for="stage-list-search">
-                    <span>Search scenes</span>
-                    <input id="stage-list-search" type="search" placeholder="Type a name or ID" autocomplete="off">
-                </label>
-                <div class="runtime-selection-browser">
-                    <section class="runtime-selection-catalog">
-                        <div class="runtime-selection-field runtime-selection-list-field">
-                            <span id="stage-list-label">Scene list</span>
-                            <select id="stage-list-select" class="runtime-selection-native-list" size="12" data-i18n-ignore="true" aria-label="Scene list" aria-hidden="true" tabindex="-1" hidden disabled></select>
-                            <div id="stage-list-grid" class="runtime-selection-thumbnail-grid scene-thumbnail-grid" role="listbox" aria-labelledby="stage-list-label" data-i18n-ignore="true"></div>
-                        </div>
-                        <output id="stage-list-status" data-i18n-ignore="true" aria-live="polite">Available scenes</output>
-                    </section>
-                    <aside class="runtime-selection-selection">
-                        <article class="runtime-selection-card runtime-selection-preview-card">
-                            <div class="runtime-selection-preview-frame">
-                                <img id="stage-list-preview" alt="" hidden>
-                            </div>
-                            <div class="runtime-selection-preview-copy">
-                                <strong>Selected scene</strong>
-                                <output id="stage-list-detail" data-i18n-ignore="true">No scene selected</output>
-                            </div>
-                        </article>
-                        <button id="stage-list-use" type="button" disabled>Load selected scene</button>
-                    </aside>
-                </div>
+            <div class="resource-panel-body">
+                <label class="resource-search" for="stage-list-search"><span>Search scenes</span><input id="stage-list-search" type="search" placeholder="Type a name or ID" autocomplete="off"></label>
+                <div class="resource-catalog-heading"><span id="stage-list-label">Scene list</span><output id="stage-list-status" data-i18n-ignore="true" aria-live="polite"></output></div>
+                <select id="stage-list-select" class="runtime-selection-native-list" size="12" data-i18n-ignore="true" aria-label="Scene list" aria-hidden="true" tabindex="-1" hidden disabled></select>
+                <div id="stage-list-grid" class="runtime-selection-thumbnail-grid scene-thumbnail-grid" role="listbox" aria-labelledby="stage-list-label" data-i18n-ignore="true"></div>
+                <footer class="resource-panel-footer">
+                    <div class="resource-selection-row">
+                        <img id="stage-list-preview" class="resource-selected-icon" alt="" hidden>
+                        <div class="resource-selected-copy"><strong>Selected scene</strong><output id="stage-list-detail" data-i18n-ignore="true"></output></div>
+                        <button id="stage-list-use" type="button" data-i18n-ignore="true" disabled>Load</button>
+                    </div>
+                </footer>
             </div>
         </section>
 
@@ -505,46 +484,29 @@
             </div>
         </section>
 
-        <section id="enemy-panel" class="floating-panel" role="dialog" aria-modal="false" aria-labelledby="enemy-panel-title" aria-hidden="true">
-            <header class="floating-panel-header">
-                <strong id="enemy-panel-title">Enemies</strong>
-                <button id="enemy-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
-            </header>
-            <div class="floating-panel-scroll enemy-panel-content">
-                <div class="enemy-catalog-column">
-                    <label class="enemy-field" for="enemy-catalog-search">
-                        <span>Search enemies</span>
-                        <input id="enemy-catalog-search" type="search" placeholder="Type a name or ID" autocomplete="off">
-                    </label>
-                    <label class="enemy-field enemy-catalog-field" for="enemy-catalog-select">
-                        <span>Enemy list</span>
-                        <select id="enemy-catalog-select" size="10" data-i18n-ignore="true" aria-label="Enemy list" disabled></select>
-                    </label>
-                    <output id="enemy-catalog-status" data-i18n-ignore="true" aria-live="polite">Loading enemy list...</output>
-                </div>
-                <div class="enemy-instance-column">
-                    <div class="enemy-selected-card">
-                        <img id="enemy-preview-image" alt="" hidden>
-                        <div>
-                            <strong>Selected enemy</strong>
-                            <output id="enemy-selected-detail" data-i18n-ignore="true">No enemy selected</output>
-                        </div>
+        <section id="enemy-panel" class="floating-panel resource-browser-panel" role="dialog" aria-modal="false" aria-labelledby="enemy-panel-title" aria-hidden="true">
+            <header class="floating-panel-header"><strong id="enemy-panel-title">Enemies</strong><button id="enemy-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button></header>
+            <div class="resource-panel-body">
+                <label class="resource-search" for="enemy-catalog-search"><span>Search enemies</span><input id="enemy-catalog-search" type="search" placeholder="Type a name or ID" autocomplete="off"></label>
+                <div class="resource-catalog-heading"><span id="enemy-list-label">Enemy list</span><output id="enemy-catalog-status" data-i18n-ignore="true" aria-live="polite"></output></div>
+                <select id="enemy-catalog-select" class="runtime-selection-native-list" size="10" data-i18n-ignore="true" aria-label="Enemy list" aria-hidden="true" tabindex="-1" hidden disabled></select>
+                <div id="enemy-catalog-grid" class="runtime-selection-thumbnail-grid enemy-thumbnail-grid" role="listbox" aria-labelledby="enemy-list-label" data-i18n-ignore="true"></div>
+                <footer class="resource-panel-footer">
+                    <div class="resource-selection-row">
+                        <img id="enemy-preview-image" class="resource-selected-icon" alt="" hidden>
+                        <div class="resource-selected-copy"><strong>Selected enemy</strong><output id="enemy-selected-detail" data-i18n-ignore="true"></output></div>
+                        <button id="enemy-replace-button" type="button" data-i18n-ignore="true" disabled>Replace</button>
                     </div>
-                    <div class="enemy-add-controls">
-                        <label for="enemy-add-quantity">
-                            <span>Quantity</span>
-                            <input id="enemy-add-quantity" type="number" min="1" max="8" step="1" value="1" inputmode="numeric">
-                        </label>
-                        <button id="enemy-add-button" type="button" disabled>Add enemy</button>
+                    <div class="resource-add-row">
+                        <label for="enemy-add-quantity"><span>Quantity</span><input id="enemy-add-quantity" type="number" min="1" max="8" step="1" value="1" inputmode="numeric"></label>
+                        <button id="enemy-add-button" type="button" data-i18n-ignore="true" disabled>Add enemy</button>
+                        <output id="enemy-panel-feedback" class="resource-operation-status" data-i18n-ignore="true" aria-live="polite"></output>
                     </div>
-                    <section class="enemy-active-section" aria-labelledby="enemy-active-title">
-                        <header>
-                            <strong id="enemy-active-title">Active enemies</strong>
-                            <button id="enemy-clear-button" type="button" disabled>Clear all</button>
-                        </header>
-                        <div id="enemy-instance-list" data-i18n-ignore="true" aria-live="polite"></div>
+                    <section class="resource-active-section" aria-labelledby="enemy-active-title">
+                        <div class="resource-active-heading"><strong id="enemy-active-title">Active enemies</strong><button id="enemy-clear-button" type="button" disabled>Clear all</button></div>
+                        <div id="enemy-instance-list" class="resource-active-list" data-i18n-ignore="true" role="listbox" aria-label="Active enemies"></div>
                     </section>
-                </div>
+                </footer>
             </div>
         </section>
 

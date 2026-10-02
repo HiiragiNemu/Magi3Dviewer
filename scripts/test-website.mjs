@@ -7,6 +7,11 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 // Keep the extracted native-corpus research suite separate. These are real
 // regression tests used by website delivery; no missing tests are skipped.
 const tests = [
+  'sceneCatalogStatus.test.mjs',
+  'uiLocalization.test.mjs',
+  'enemyUiPanel.test.mjs',
+  'enemyAnimationInteraction.test.mjs',
+  'resourcePanels.test.mjs',
   'stageSpecialSurfaces.test.mjs',
   'stageMainLightCascades.test.mjs',
   'stageParticleBlendState.test.mjs',

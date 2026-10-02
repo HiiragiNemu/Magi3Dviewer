@@ -8,3 +8,7 @@ patches/*.patch whitespace=-blank-at-eol,-space-before-tab
 # This generated shard is byte-hashed in its evidence/rollback records. Preserve
 # the emitted CRLF bytes while treating CR as part of the line ending.
 public/stages/catalog/battle-601-00-01-001.json whitespace=cr-at-eol
+
+# Existing committed CRLF test fixtures keep their native line endings.
+uiLocalization.test.mjs whitespace=cr-at-eol
+enemyAnimationInteraction.test.mjs whitespace=cr-at-eol

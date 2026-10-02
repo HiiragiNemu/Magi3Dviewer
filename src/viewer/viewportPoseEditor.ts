@@ -88,11 +88,11 @@ export function avoidDefaultChipOverlap(items:Array<{key:string;x:number;y:numbe
         let best={...item}
         if(!item.manual&&placed.some(b=>overlaps(best,b))){
             let distance=Infinity
-            const xs=[item.x,view.left,view.right-item.width]
+            const xs=[item.x,view.left,view.right-item.width,...placed.flatMap(b=>[b.x+b.width+4,b.x-item.width-4])]
             for(let x=view.left;x+item.width<=view.right;x+=item.width+5)xs.push(x)
             const ys=[item.y]
             for(let y=view.top;y+item.height<=view.bottom;y+=item.height+5)ys.push(y)
-            for(const x of xs)for(const y of ys){const candidate={...item,x,y};if(x<view.left||x+item.width>view.right||y<view.top||y+item.height>view.bottom||placed.some(b=>overlaps(candidate,b)))continue;const d=(x-item.x)**2+(y-item.y)**2;if(d<distance){distance=d;best=candidate}}
+            for(const x of xs)for(const y of ys){const candidate={...item,x,y};if(x<view.left||x+item.width>view.right||y<view.top||y+item.height>view.bottom||placed.some(b=>overlaps(candidate,b)))continue;const d=(x-item.x)**2+4*(y-item.y)**2;if(d<distance){distance=d;best=candidate}}
         }
         placed.push(best);result.set(item.key,{x:best.x,y:best.y})
     }
@@ -158,7 +158,6 @@ export function createViewportPoseEditor(options: Options) {
     tool(right,'focus',()=>options.focus()).textContent='⌖'
     const collapse=tool(right,'editor-collapse',()=>{folded=!folded;layoutDirty=true});collapse.textContent='−'
     tool(right,'pose',()=>{folded=false;options.pose()});tool(right,'object',()=>options.place('translate'))
-    tool(right,'mirror-layout',()=>{mirrorPrimary=!mirrorPrimary;primaryHomes.clear();layoutDirty=true})
     tool(right,'move',()=>options.state().pose?options.mode('translate'):options.place('translate'))
     tool(right,'rotate',()=>options.state().pose?options.mode('rotate'):options.place('rotate'))
     tool(right,'editor-close',options.close).classList.add('ve-close')
@@ -216,17 +215,29 @@ export function createViewportPoseEditor(options: Options) {
         top=Math.max(rect.top,viewport?.offsetTop??0,document.getElementById('menu')?.getBoundingClientRect().bottom??0)
         bottom=Math.min(rect.bottom,(viewport?.offsetTop??0)+(viewport?.height??innerHeight),innerHeight-(parseFloat(document.body.style.getPropertyValue('--studio-reserved-height'))||0));viewWidth=Math.min(innerWidth,rect.right)
         const visible=[...chips.values()].filter(c=>!isHidden(c));for(const c of visible){const r=c.root.getBoundingClientRect();c.width=r.width;c.height=r.height}
+        const obstacles=[...document.querySelectorAll<HTMLElement>('[data-viewport-obstacle="true"]')].flatMap((element,index)=>{
+            const r=element.getBoundingClientRect();return r.width&&r.height?[{key:'reserved:'+index,x:r.left,y:r.top,width:r.width,height:r.height,manual:true}]:[]
+        })
+        const obstructs=(x:number,y:number,w:number,h:number)=>obstacles.find(r=>x<r.x+r.width+4&&x+w+4>r.x&&y<r.y+r.height+4&&y+h+4>r.y)
         const gap=4,wide=viewWidth>=700
         const assign=(c:Chip,x:number,y:number)=>{c.homeX=x;c.homeY=y;const saved=preferences[c.key];if(layoutDrag?.chip===c)return;if(saved&&Number.isFinite(saved.x)&&Number.isFinite(saved.y))place(c,(mirrored(c)?1-saved.x:saved.x)*(viewWidth-c.width),top+saved.y*(bottom-top-c.height));else place(c,x,y)}
         const toolChips=visible.filter(c=>c.root.parentElement===left||c.root.parentElement===right)
         let toolsBottom=top+4
         if(wide){
-            for(const host of [left,right]){let y=top+8;for(const c of toolChips.filter(c=>c.root.parentElement===host)){assign(c,host===left?8:viewWidth-c.width-8,y);y+=c.height+gap}toolsBottom=Math.max(toolsBottom,y)}
+            for(const host of [left,right]){let y=top+8;for(const c of toolChips.filter(c=>c.root.parentElement===host)){const x=host===left?8:viewWidth-c.width-8;const obstacle=obstructs(x,y,c.width,c.height);if(obstacle)y=obstacle.y+obstacle.height+gap;assign(c,x,y);y+=c.height+gap}toolsBottom=Math.max(toolsBottom,y)}
         }else{
             // Compact wrapping controls occupy only their text+grip, not two tall
             // full-width columns. The center remains free for orbit gestures.
             let x=8,y=top+6,rowHeight=0
-            for(const c of toolChips){if(x+c.width>viewWidth-8){x=8;y+=rowHeight+gap;rowHeight=0}assign(c,x,y);x+=c.width+gap;rowHeight=Math.max(rowHeight,c.height)}toolsBottom=y+rowHeight+8
+            for(const c of toolChips){
+                for(let tries=0;tries<12;tries++){
+                    if(x+c.width>viewWidth-8){x=8;y+=Math.max(rowHeight,c.height)+gap;rowHeight=0}
+                    const obstacle=obstructs(x,y,c.width,c.height)
+                    if(!obstacle)break
+                    x=obstacle.x+obstacle.width+gap
+                }
+                assign(c,x,y);x+=c.width+gap;rowHeight=Math.max(rowHeight,c.height)
+            }toolsBottom=y+rowHeight+8
         }
         const nodeChips=visible.filter(c=>c.root.parentElement===nodes)
         if(group==='primary'){
@@ -258,7 +269,7 @@ export function createViewportPoseEditor(options: Options) {
         // Preserve deliberate user placements. Default chips must never cover
         // one another after viewport shrink, text resize or mode changes.
         const priority=[...nodeChips,...visible.filter(c=>c.root.parentElement===chooser),...toolChips]
-        const resolved=avoidDefaultChipOverlap(priority.map(c=>({key:c.key,x:c.x,y:c.y,width:c.width,height:c.height,manual:!!preferences[c.key]})),{left:4,right:viewWidth-4,top:top+4,bottom:bottom-4})
+        const resolved=avoidDefaultChipOverlap([...obstacles,...priority.map(c=>({key:c.key,x:c.x,y:c.y,width:c.width,height:c.height,manual:!!preferences[c.key]}))],{left:4,right:viewWidth-4,top:top+4,bottom:bottom-4})
         for(const c of priority){const next=resolved.get(c.key);if(next&&!preferences[c.key]){c.homeX=next.x;c.homeY=next.y;place(c,next.x,next.y)}}
         selection.hidden=true // The selected chip is already named and highlighted.
         layoutDirty=false
@@ -273,16 +284,13 @@ export function createViewportPoseEditor(options: Options) {
                 if(id==='reset')show=show&&state.pose
                 if(id==='object')show=show&&state.pose
                 if(id==='focus-detail')show=show&&state.pose&&group!=='primary'
-                if(id==='mirror-layout')show=show&&state.pose&&group==='primary'
                 if(id==='editor-close'||id==='editor-collapse')show=true
                 c.root.hidden=!show;b.hidden=false
                 b.textContent=id==='focus'?'⌖':id==='editor-collapse'?(folded?'+':'−'):t[id as keyof typeof t]||id
                 b.title=id==='editor-collapse'?t.collapse:t[id as keyof typeof t]||id;b.setAttribute('aria-label',b.title)
             }
             collapse.setAttribute('aria-expanded',String(!folded))
-            const mirror=buttons.get('mirror-layout')!;mirror.textContent=options.locale()==='zh-CN'?(mirrorPrimary?'背面排布':'正面排布'):options.locale()==='ja-JP'?(mirrorPrimary?'背面配置':'正面配置'):(mirrorPrimary?'Back layout':'Front layout')
-            mirror.title=options.locale()==='zh-CN'?'交换左右按钮位置；左右名称始终以模型正面为准，不改变骨骼绑定':'Swap button positions only; names always use the fixed front observer view'
-            mirror.setAttribute('aria-label',mirror.title);mirror.setAttribute('aria-pressed',String(mirrorPrimary));root.dataset.primaryView=mirrorPrimary?'back':'front';root.dataset.sideConvention='front-observer-v1'
+            root.dataset.primaryView='front';root.dataset.sideConvention='front-observer-v1'
             for(const[id,g]of[['joints','primary'],['hands','hands'],['more','more']] as const){const b=buttons.get(id)!;b.setAttribute('aria-pressed',String(group===g));b.disabled=!actor||!groupedPoseParts(actor,g).length}
             buttons.get('pose')!.disabled=!actor;buttons.get('pose')!.setAttribute('aria-pressed',String(state.pose))
             buttons.get('object')!.setAttribute('aria-pressed',String(!state.pose));buttons.get('move')!.disabled=state.pose&&!state.canTranslate
@@ -329,7 +337,7 @@ export function createViewportPoseEditor(options: Options) {
     }
     const resize=()=>{primaryHomes.clear();layoutDirty=true;refresh()}
     const observer=new ResizeObserver(resize);observer.observe(options.canvas);const menu=document.getElementById('menu');if(menu)observer.observe(menu)
-    document.addEventListener('magius:studio-layout',resize,events);window.addEventListener('resize',resize,events);window.visualViewport?.addEventListener('resize',resize,events);window.visualViewport?.addEventListener('scroll',resize,events)
+    document.addEventListener('magius:camera-controls-layout',resize,events);document.addEventListener('magius:studio-layout',resize,events);window.addEventListener('resize',resize,events);window.visualViewport?.addEventListener('resize',resize,events);window.visualViewport?.addEventListener('scroll',resize,events)
     window.addEventListener('blur',()=>{stopNodes();if(layoutDrag){persist(layoutDrag.chip);layoutDrag.chip.root.classList.remove('is-arranging');layoutDrag=undefined}},events)
     document.addEventListener('magius:localechange',()=>{buildNodes();lastKey='';refresh()},events)
     refresh()

@@ -27,7 +27,7 @@ async function assertWebp(url) {
     return bytes.length
 }
 
-test('runtime selection thumbnail product covers every viewer character with official gamedata sources', async () => {
+test('declared native thumbnail product stays source-backed; newer unindexed variants retain explicit placeholders', async () => {
     const manifest = JSON.parse(await readFile(manifestPath, 'utf8'))
     const authority = JSON.parse(await readFile(authorityPath, 'utf8'))
     const modelEntries = await readdir(path.join(repo, 'magia-exedra-character-three', 'models'), {
@@ -39,8 +39,9 @@ test('runtime selection thumbnail product covers every viewer character with off
         .sort()
 
     assert.equal(manifest.schema, 'magius.runtime-selection-thumbnails.v1')
-    assert.deepEqual(Object.keys(manifest.characters).sort(), characterIds)
-    assert.equal(characterIds.length, 90)
+    assert.equal(Object.keys(manifest.characters).length,90)
+    assert.ok(Object.keys(manifest.characters).every(id=>characterIds.includes(id)))
+    assert.deepEqual(characterIds.filter(id=>!manifest.characters[id]),['100108','100208','101002','110702'])
     assert.equal(Object.values(authority.characterSources).filter(source => /\\style\\/.test(source)).length, 89)
     assert.match(authority.characterSources['100205'], /\\outer\\character\\1002_thumbnail/i)
 
@@ -93,8 +94,10 @@ test('magical girl and scene panels render lazy thumbnail cards while retaining 
     assert.match(html, /id="character-list-select"[^>]*hidden/)
     assert.match(html, /id="stage-list-select"[^>]*hidden/)
     assert.match(runtime, /fetch\('\/ui-thumbnails\/runtime-selection\/manifest\.v1\.json'\)/)
-    assert.match(runtime, /image\.loading = 'lazy'/)
-    assert.match(runtime, /tile\.addEventListener\('dblclick', applySelection\)/)
+    const helper=await readText('src/viewer/resourcePanelUi.ts')
+    assert.match(helper,/img\.loading='lazy'/)
+    assert.match(helper,/tile\.addEventListener\('dblclick'/)
+    assert.match(runtime,/createResourceTile/)
     assert.match(runtime, /elements\.source\.dispatchEvent\(new Event\('change', \{ bubbles: true \}\)\)/)
     assert.match(runtime, /thumbnailManifest\.scenes\[sourceOption\.value\][\s\S]*thumbnailManifest\.sceneResources\[resourceName\]/)
     assert.match(css, /\.runtime-selection-thumbnail-grid\s*\{[^}]*display:\s*grid[^}]*overflow:\s*auto/)
