@@ -1,0 +1,680 @@
+{
+  "passed": true,
+  "site": "http://127.0.0.1:6596/",
+  "rows": [
+    {
+      "test": "compact-toolbar-fps-after-studio-repetitions-in-settings",
+      "fpsParent": "menu-controls",
+      "fpsPrevious": "performance-editor-toggle",
+      "fpsRect": {
+        "x": 936.75,
+        "y": 37,
+        "width": 57,
+        "height": 34,
+        "top": 37,
+        "right": 993.75,
+        "bottom": 71,
+        "left": 936.75
+      },
+      "fpsHost": {
+        "x": 936.75,
+        "y": 37,
+        "width": 57,
+        "height": 34,
+        "top": 37,
+        "right": 993.75,
+        "bottom": 71,
+        "left": 936.75
+      },
+      "repeatToolbar": false,
+      "repeatSettings": true,
+      "tps": {
+        "x": 351,
+        "y": 41,
+        "width": 89.75,
+        "height": 26,
+        "top": 41,
+        "right": 440.75,
+        "bottom": 67,
+        "left": 351
+      },
+      "search": {
+        "x": 316,
+        "y": 7,
+        "width": 76,
+        "height": 26,
+        "top": 7,
+        "right": 392,
+        "bottom": 33,
+        "left": 316
+      },
+      "expression": {
+        "x": 860,
+        "y": 7,
+        "width": 48,
+        "height": 26,
+        "top": 7,
+        "right": 908,
+        "bottom": 33,
+        "left": 860
+      },
+      "expressionLabel": "默认",
+      "roll": {
+        "x": 8,
+        "y": 85,
+        "width": 58,
+        "height": 36,
+        "top": 85,
+        "right": 66,
+        "bottom": 121,
+        "left": 8
+      },
+      "focus": {
+        "x": 1328,
+        "y": 85,
+        "width": 30,
+        "height": 30,
+        "top": 85,
+        "right": 1358,
+        "bottom": 115,
+        "left": 1328
+      }
+    },
+    {
+      "test": "performance-close-and-render-setting-restore"
+    },
+    {
+      "test": "pc-character-panel-add-has-real-loading-progress",
+      "text": "角色加载 · 组装场景与材质\n正在读取资源定义…\n0 / 0 个已发现文件\n0 B / 总量待确认",
+      "z": "60000",
+      "rect": {
+        "x": 12,
+        "y": 803.015625,
+        "width": 500,
+        "height": 84.984375,
+        "top": 803.015625,
+        "right": 512,
+        "bottom": 888,
+        "left": 12
+      }
+    },
+    {
+      "0": {
+        "key": "0852c128-9227-47fa-89db-f5cc43340f8d",
+        "id": "100107",
+        "p": [
+          0,
+          0,
+          0
+        ],
+        "q": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "s": [
+          1,
+          1,
+          1
+        ],
+        "selected": false
+      },
+      "1": {
+        "key": "caf26649-3057-4f1c-bbd7-f92f6aa0eefa",
+        "id": "100101",
+        "p": [
+          0.6666666666666666,
+          0,
+          0
+        ],
+        "q": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "s": [
+          1,
+          1,
+          1
+        ],
+        "selected": false
+      },
+      "2": {
+        "key": "84efe984-6820-435c-a8e2-d19b6c9bcb32",
+        "id": "100101",
+        "p": [
+          -0.6666666666666666,
+          0,
+          0
+        ],
+        "q": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "s": [
+          1,
+          1,
+          1
+        ],
+        "selected": true
+      },
+      "test": "two-independent-character-additions-and-accurate-count"
+    },
+    {
+      "test": "character-replace-exact-instance-preserves-placement-and-neighbor",
+      "actors": [
+        {
+          "key": "0852c128-9227-47fa-89db-f5cc43340f8d",
+          "id": "100107",
+          "p": [
+            0,
+            0,
+            0
+          ],
+          "q": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "s": [
+            1,
+            1,
+            1
+          ],
+          "selected": false
+        },
+        {
+          "key": "5eeb38e2-d894-4754-b937-6a2148b31669",
+          "id": "100201",
+          "p": [
+            1.2,
+            0,
+            -0.4
+          ],
+          "q": [
+            0,
+            0.14943813247359922,
+            0,
+            0.9887710779360422
+          ],
+          "s": [
+            1.05,
+            1.05,
+            1.05
+          ],
+          "selected": true
+        },
+        {
+          "key": "84efe984-6820-435c-a8e2-d19b6c9bcb32",
+          "id": "100101",
+          "p": [
+            -0.6666666666666666,
+            0,
+            0
+          ],
+          "q": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "s": [
+            1,
+            1,
+            1
+          ],
+          "selected": false
+        }
+      ]
+    },
+    {
+      "test": "character-remove-updates-live-count"
+    },
+    {
+      "test": "visual-enemy-grid-quantity-add-and-live-count",
+      "instances": [
+        "enemy-600001-1",
+        "enemy-600001-2"
+      ]
+    },
+    {
+      "test": "enemy-replace-preserves-other-instance-and-count"
+    },
+    {
+      "test": "enemy-remove-updates-live-count"
+    },
+    {
+      "test": "pc-scene-panel-has-real-loading-progress",
+      "text": "场景加载 · 下载资源\nscene-profile.json\n0 / 1 个已发现文件\n310.0 KB / 392.7 KB",
+      "z": "60000"
+    },
+    {
+      "test": "second-scene-selection-and-load-not-hover-dependent"
+    },
+    {
+      "test": "360x780-character-grid-fixed-footer",
+      "cols": 2,
+      "fullyVisible": 6,
+      "grid": {
+        "x": 19,
+        "y": 188.3984375,
+        "width": 322,
+        "height": 358.609375,
+        "top": 188.3984375,
+        "right": 341,
+        "bottom": 547.0078125,
+        "left": 19
+      },
+      "footer": {
+        "x": 19,
+        "y": 552.0078125,
+        "width": 322,
+        "height": 135.1875,
+        "top": 552.0078125,
+        "right": 341,
+        "bottom": 687.1953125,
+        "left": 19
+      },
+      "icon": {
+        "x": 19,
+        "y": 559.0078125,
+        "width": 40,
+        "height": 40,
+        "top": 559.0078125,
+        "right": 59,
+        "bottom": 599.0078125,
+        "left": 19
+      },
+      "status": "可用角色 98 / 98 · 已添加 1"
+    },
+    {
+      "test": "360x780-stage-grid-fixed-footer",
+      "cols": 2,
+      "fullyVisible": 6,
+      "grid": {
+        "x": 19,
+        "y": 188.3984375,
+        "width": 322,
+        "height": 444.796875,
+        "top": 188.3984375,
+        "right": 341,
+        "bottom": 633.1953125,
+        "left": 19
+      },
+      "footer": {
+        "x": 19,
+        "y": 638.1953125,
+        "width": 322,
+        "height": 49,
+        "top": 638.1953125,
+        "right": 341,
+        "bottom": 687.1953125,
+        "left": 19
+      },
+      "status": "可选条目 408 / 599"
+    },
+    {
+      "test": "360x780-enemy-grid-fixed-footer",
+      "cols": 2,
+      "fullyVisible": 6,
+      "grid": {
+        "x": 15,
+        "y": 159,
+        "width": 330,
+        "height": 402.59375,
+        "top": 159,
+        "right": 345,
+        "bottom": 561.59375,
+        "left": 15
+      },
+      "footer": {
+        "x": 15,
+        "y": 566.59375,
+        "width": 330,
+        "height": 144,
+        "top": 566.59375,
+        "right": 345,
+        "bottom": 710.59375,
+        "left": 15
+      },
+      "icon": {
+        "x": 15,
+        "y": 573.59375,
+        "width": 40,
+        "height": 40,
+        "top": 573.59375,
+        "right": 55,
+        "bottom": 613.59375,
+        "left": 15
+      },
+      "status": "可用敌人 516 / 516 · 已添加 0"
+    },
+    {
+      "test": "360x780-camera-controls-priority-flow-no-overlap",
+      "count": 36
+    },
+    {
+      "test": "430x932-character-grid-fixed-footer",
+      "cols": 2,
+      "fullyVisible": 6,
+      "grid": {
+        "x": 19,
+        "y": 218.59375,
+        "width": 392,
+        "height": 450.21875,
+        "top": 218.59375,
+        "right": 411,
+        "bottom": 668.8125,
+        "left": 19
+      },
+      "footer": {
+        "x": 19,
+        "y": 673.8125,
+        "width": 392,
+        "height": 135.1875,
+        "top": 673.8125,
+        "right": 411,
+        "bottom": 809,
+        "left": 19
+      },
+      "icon": {
+        "x": 19,
+        "y": 680.8125,
+        "width": 40,
+        "height": 40,
+        "top": 680.8125,
+        "right": 59,
+        "bottom": 720.8125,
+        "left": 19
+      },
+      "status": "可用角色 98 / 98 · 已添加 1"
+    },
+    {
+      "test": "430x932-stage-grid-fixed-footer",
+      "cols": 2,
+      "fullyVisible": 6,
+      "grid": {
+        "x": 19,
+        "y": 218.59375,
+        "width": 392,
+        "height": 536.40625,
+        "top": 218.59375,
+        "right": 411,
+        "bottom": 755,
+        "left": 19
+      },
+      "footer": {
+        "x": 19,
+        "y": 760,
+        "width": 392,
+        "height": 49,
+        "top": 760,
+        "right": 411,
+        "bottom": 809,
+        "left": 19
+      },
+      "status": "可选条目 408 / 599"
+    },
+    {
+      "test": "430x932-enemy-grid-fixed-footer",
+      "cols": 2,
+      "fullyVisible": 8,
+      "grid": {
+        "x": 15,
+        "y": 171.15625,
+        "width": 400,
+        "height": 530.28125,
+        "top": 171.15625,
+        "right": 415,
+        "bottom": 701.4375,
+        "left": 15
+      },
+      "footer": {
+        "x": 15,
+        "y": 706.4375,
+        "width": 400,
+        "height": 144,
+        "top": 706.4375,
+        "right": 415,
+        "bottom": 850.4375,
+        "left": 15
+      },
+      "icon": {
+        "x": 15,
+        "y": 713.4375,
+        "width": 40,
+        "height": 40,
+        "top": 713.4375,
+        "right": 55,
+        "bottom": 753.4375,
+        "left": 15
+      },
+      "status": "可用敌人 516 / 516 · 已添加 0"
+    },
+    {
+      "test": "mobile-real-touch-character-add",
+      "count": 2
+    },
+    {
+      "test": "mobile-real-touch-enemy-add",
+      "count": 1
+    },
+    {
+      "test": "430x932-camera-controls-priority-flow-no-overlap",
+      "count": 24
+    },
+    {
+      "test": "932x430-character-grid-fixed-footer",
+      "cols": 7,
+      "fullyVisible": 7,
+      "grid": {
+        "x": 19,
+        "y": 108.59375,
+        "width": 894,
+        "height": 181.21875,
+        "top": 108.59375,
+        "right": 913,
+        "bottom": 289.8125,
+        "left": 19
+      },
+      "footer": {
+        "x": 19,
+        "y": 294.8125,
+        "width": 894,
+        "height": 122.1875,
+        "top": 294.8125,
+        "right": 913,
+        "bottom": 417,
+        "left": 19
+      },
+      "icon": {
+        "x": 19,
+        "y": 299.8125,
+        "width": 32,
+        "height": 32,
+        "top": 299.8125,
+        "right": 51,
+        "bottom": 331.8125,
+        "left": 19
+      },
+      "status": "可用角色 98 / 98 · 已添加 1"
+    },
+    {
+      "test": "932x430-stage-grid-fixed-footer",
+      "cols": 5,
+      "fullyVisible": 10,
+      "grid": {
+        "x": 19,
+        "y": 108.59375,
+        "width": 894,
+        "height": 266.40625,
+        "top": 108.59375,
+        "right": 913,
+        "bottom": 375,
+        "left": 19
+      },
+      "footer": {
+        "x": 19,
+        "y": 380,
+        "width": 894,
+        "height": 37,
+        "top": 380,
+        "right": 913,
+        "bottom": 417,
+        "left": 19
+      },
+      "status": "可选条目 408 / 599"
+    },
+    {
+      "test": "932x430-enemy-grid-fixed-footer",
+      "cols": 6,
+      "fullyVisible": 6,
+      "grid": {
+        "x": 93,
+        "y": 102.59375,
+        "width": 746,
+        "height": 169.40625,
+        "top": 102.59375,
+        "right": 839,
+        "bottom": 272,
+        "left": 93
+      },
+      "footer": {
+        "x": 93,
+        "y": 277,
+        "width": 746,
+        "height": 140,
+        "top": 277,
+        "right": 839,
+        "bottom": 417,
+        "left": 93
+      },
+      "icon": {
+        "x": 93,
+        "y": 282,
+        "width": 40,
+        "height": 40,
+        "top": 282,
+        "right": 133,
+        "bottom": 322,
+        "left": 93
+      },
+      "status": "可用敌人 516 / 516 · 已添加 0"
+    },
+    {
+      "test": "932x430-camera-controls-priority-flow-no-overlap",
+      "count": 36
+    },
+    {
+      "test": "1366x900-character-grid-fixed-footer",
+      "cols": 7,
+      "fullyVisible": 21,
+      "grid": {
+        "x": 220,
+        "y": 202.59375,
+        "width": 926,
+        "height": 450.21875,
+        "top": 202.59375,
+        "right": 1146,
+        "bottom": 652.8125,
+        "left": 220
+      },
+      "footer": {
+        "x": 220,
+        "y": 657.8125,
+        "width": 926,
+        "height": 135.1875,
+        "top": 657.8125,
+        "right": 1146,
+        "bottom": 793,
+        "left": 220
+      },
+      "icon": {
+        "x": 220,
+        "y": 664.8125,
+        "width": 40,
+        "height": 40,
+        "top": 664.8125,
+        "right": 260,
+        "bottom": 704.8125,
+        "left": 220
+      },
+      "status": "可用角色 98 / 98 · 已添加 1"
+    },
+    {
+      "test": "1366x900-stage-grid-fixed-footer",
+      "cols": 5,
+      "fullyVisible": 15,
+      "grid": {
+        "x": 220,
+        "y": 202.59375,
+        "width": 926,
+        "height": 536.40625,
+        "top": 202.59375,
+        "right": 1146,
+        "bottom": 739,
+        "left": 220
+      },
+      "footer": {
+        "x": 220,
+        "y": 744,
+        "width": 926,
+        "height": 49,
+        "top": 744,
+        "right": 1146,
+        "bottom": 793,
+        "left": 220
+      },
+      "status": "可选条目 408 / 599"
+    },
+    {
+      "test": "1366x900-enemy-grid-fixed-footer",
+      "cols": 6,
+      "fullyVisible": 18,
+      "grid": {
+        "x": 310,
+        "y": 206.59375,
+        "width": 746,
+        "height": 427.40625,
+        "top": 206.59375,
+        "right": 1056,
+        "bottom": 634,
+        "left": 310
+      },
+      "footer": {
+        "x": 310,
+        "y": 639,
+        "width": 746,
+        "height": 144,
+        "top": 639,
+        "right": 1056,
+        "bottom": 783,
+        "left": 310
+      },
+      "icon": {
+        "x": 310,
+        "y": 646,
+        "width": 40,
+        "height": 40,
+        "top": 646,
+        "right": 350,
+        "bottom": 686,
+        "left": 310
+      },
+      "status": "可用敌人 516 / 516 · 已添加 0"
+    },
+    {
+      "test": "1366x900-camera-controls-priority-flow-no-overlap",
+      "count": 36
+    },
+    {
+      "test": "weapon-inline-label-fields-visible"
+    }
+  ],
+  "errors": []
+}
