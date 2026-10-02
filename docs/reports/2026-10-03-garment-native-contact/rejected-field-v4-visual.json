@@ -1,0 +1,217 @@
+{
+  "rows": [
+    {
+      "id": "101901",
+      "routing": "original",
+      "mode": "idle",
+      "contacts": 4091,
+      "live": {
+        "state": "idle",
+        "grounded": true,
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "currentClip": "HomeWait01_L"
+      }
+    },
+    {
+      "id": "101901",
+      "routing": "original",
+      "mode": "walk",
+      "contacts": 6587,
+      "live": {
+        "state": "walk",
+        "grounded": true,
+        "velocity": [
+          0,
+          0,
+          -0.8680887632907293
+        ],
+        "position": [
+          0,
+          0,
+          -0.6986621343035101
+        ],
+        "currentClip": "Magius101901NaturalArmFingerWalkV37_L"
+      }
+    },
+    {
+      "id": "101901",
+      "routing": "original",
+      "mode": "run",
+      "contacts": 9689,
+      "live": {
+        "state": "run",
+        "grounded": true,
+        "velocity": [
+          0,
+          0,
+          -3.438413119394705
+        ],
+        "position": [
+          0,
+          0,
+          -3.152791019904106
+        ],
+        "currentClip": "Magius101901NaturalArmFingerRunV37_L"
+      }
+    },
+    {
+      "id": "101901",
+      "routing": "original",
+      "mode": "jump",
+      "contacts": 12724,
+      "live": {
+        "state": "fall",
+        "grounded": false,
+        "velocity": [
+          0,
+          -0.2800000000000008,
+          -1.9800000000000013
+        ],
+        "position": [
+          0,
+          0.8536666666666664,
+          -4.781248909369149
+        ],
+        "currentClip": "Magius101901RunJumpAirborneV37SetA_ExpressiveV1_L"
+      }
+    },
+    {
+      "id": "101901",
+      "routing": "panel",
+      "mode": "idle",
+      "contacts": 16140,
+      "panel": [
+        {
+          "team": "BoneCloth_skirtOuter",
+          "samples": 1895,
+          "contacts": 10,
+          "maxOffset": 0.02140306868575971,
+          "before": 0.000046499299775598635,
+          "residual": 0.000046499299775598635,
+          "ms": 5.5
+        }
+      ],
+      "live": {
+        "state": "idle",
+        "grounded": true,
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          0,
+          0,
+          -5.301248909369148
+        ],
+        "currentClip": "HomeWait01_L"
+      }
+    },
+    {
+      "id": "101901",
+      "routing": "panel",
+      "mode": "walk",
+      "contacts": 18705,
+      "panel": [
+        {
+          "team": "BoneCloth_skirtOuter",
+          "samples": 1895,
+          "contacts": 108,
+          "maxOffset": 0.1600000000000001,
+          "before": 0.037681184941809776,
+          "residual": 0.03064550661005248,
+          "ms": 7.5
+        }
+      ],
+      "live": {
+        "state": "walk",
+        "grounded": true,
+        "velocity": [
+          0,
+          0,
+          -0.8680887632907293
+        ],
+        "position": [
+          0,
+          0,
+          -5.999911043672658
+        ],
+        "currentClip": "Magius101901NaturalArmFingerWalkV37_L"
+      }
+    },
+    {
+      "id": "101901",
+      "routing": "panel",
+      "mode": "run",
+      "contacts": 21774,
+      "panel": [
+        {
+          "team": "BoneCloth_skirtOuter",
+          "samples": 1895,
+          "contacts": 43,
+          "maxOffset": 0.16000000000000056,
+          "before": 0.037515653075284774,
+          "residual": 0.022225477454187535,
+          "ms": 7.899999976158142
+        }
+      ],
+      "live": {
+        "state": "run",
+        "grounded": true,
+        "velocity": [
+          0,
+          0,
+          -3.438413119394705
+        ],
+        "position": [
+          0,
+          0,
+          -8.396733043950011
+        ],
+        "currentClip": "Magius101901NaturalArmFingerRunV37_L"
+      }
+    },
+    {
+      "id": "101901",
+      "routing": "panel",
+      "mode": "jump",
+      "contacts": 24749,
+      "panel": [
+        {
+          "team": "BoneCloth_skirtOuter",
+          "samples": 1895,
+          "contacts": 215,
+          "maxOffset": 0.1600000000000003,
+          "before": 0.13080050403416615,
+          "residual": 0.11358700482632776,
+          "ms": 8.899999976158142
+        }
+      ],
+      "live": {
+        "state": "fall",
+        "grounded": false,
+        "velocity": [
+          0,
+          -0.10000000000000081,
+          -1.9400000000000013
+        ],
+        "position": [
+          0,
+          0.8583333333333331,
+          -9.992190933415054
+        ],
+        "currentClip": "Magius101901RunJumpAirborneV37SetA_ExpressiveV1_L"
+      }
+    }
+  ],
+  "errors": []
+}
