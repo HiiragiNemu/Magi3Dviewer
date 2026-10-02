@@ -43,3 +43,17 @@ test('manually pinned cloth is not overwritten, and a later live pose evaluates 
 test('overlarge or conflicting contacts stop at a bounded surface displacement rather than moving the actor',()=>{
  const f=fixture(),body=f.root.position.toArray(),result=f.solver.project([{start:new Vector3(0,0,0),end:new Vector3(0,2,0),worldRadius:3}],new Quaternion(),()=>false);assert.ok(result.limited);assert.ok(result.maxDisplacement<=.192001);assert.ok(result.remainingDepth>0);assert.deepEqual(f.root.position.toArray(),body);assert.ok([...f.mesh.geometry.getAttribute('position').array].every(Number.isFinite))
 });
+
+
+test('cached native and corrected samples exactly match actual Three skinning, including active garment morphs',()=>{
+ const f=fixture();f.solver.dispose();const base=f.geometry.getAttribute('position'),morph=new Float32BufferAttribute(base.array.slice(),3);morph.setZ(0,morph.getZ(0)+.013);f.geometry.morphAttributes.position=[morph];f.geometry.morphTargetsRelative=false;f.mesh.updateMorphTargets();f.mesh.morphTargetInfluences[0]=.6
+ const solver=new GarmentSurfaceContact(f.root,[0,1,2,4].map(index=>({mesh:f.mesh,index,node:f.cloth,preferred:new Vector3(0,0,1)})),.8)
+ f.root.rotation.y=.7;f.root.position.set(3,2,-7);f.cloth.rotation.x=.12;f.root.updateMatrixWorld(true)
+ const native=[0,1,2,4].map(i=>vertexWorld(f.mesh,i)),center=native[0],capsule={start:center.clone().add(new Vector3(0,-.1,-.02)),end:center.clone().add(new Vector3(0,.1,-.02)),worldRadius:.07}
+ solver.project([capsule],f.root.quaternion,()=>false)
+ for(const [j,i]of [0,1,2,4].entries()){
+  assert.ok(solver.sampledPosition(f.mesh,i,false).distanceTo(native[j])<1e-9)
+  assert.ok(solver.sampledPosition(f.mesh,i,true).distanceTo(vertexWorld(f.mesh,i))<1e-6)
+ }
+ solver.dispose()
+})

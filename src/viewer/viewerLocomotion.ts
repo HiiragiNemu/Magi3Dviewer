@@ -347,6 +347,7 @@ interface OfficialCombatAttachResult {
 
 interface CharacterSpecificMotionProfile {
     status: 'attached' | 'not-configured' | 'incompatible'
+    generationFrame?: { policy: string; sampledYawRadians: number; correctionRadians: number; lateralAfter: number[]; forwardAfter?: number[] }
     characterId: number
     provenance: 'custom-character-profile'
     profileId?: string
@@ -1348,6 +1349,11 @@ function deriveMorphologyNearestBlendWeights(
         // while strongly preferring the target's own height/limb/clothing cluster.
         rawWeights[characterId] = Math.exp(-8 * distance * distance)
     }
+    // Log-sum-exp keeps a valid nearest neighbour even for unusual but finite
+    // silhouettes. It does not change the relative kernel or the chosen donor.
+    const closest=Math.min(...Object.values(distances).map(value=>value*value))
+    if(!Number.isFinite(closest))throw new Error('non-finite target morphology')
+    for(const [id,distance] of Object.entries(distances))rawWeights[id]=Math.exp(Math.max(-700,-8*(distance*distance-closest)))
     const total = profileWeightSum(rawWeights)
     if (total <= 0) throw new Error('morphology-nearest donor kernel has no positive weight')
     return {
@@ -4315,6 +4321,27 @@ function attachParameterizedHumanoidMotionProfile(
             else target.quaternion.fromArray(value).normalize()
         }
     }
+    // A HomeWait is often a three-quarter presentation pose. It must not
+    // define a diagonal locomotion plane while the controller moves along +Z.
+    // Normalize only the temporary generation baseline; the official idle and
+    // every original native walk/run clip are restored/unmodified below.
+    character.object.updateMatrixWorld(true)
+    const generationWorld=character.object.getWorldQuaternion(new THREE.Quaternion())
+    const generationUp=new THREE.Vector3(0,1,0).applyQuaternion(generationWorld)
+    const generationLeft=new THREE.Vector3(1,0,0).applyQuaternion(generationWorld)
+    const sampledLeft=rig.get(motionPaths.upperArmL)!.getWorldPosition(new THREE.Vector3())
+        .sub(rig.get(motionPaths.upperArmR)!.getWorldPosition(new THREE.Vector3()))
+    sampledLeft.addScaledVector(generationUp,-sampledLeft.dot(generationUp)).normalize()
+    const generationYaw=Math.atan2(new THREE.Vector3().crossVectors(sampledLeft,generationLeft).dot(generationUp),sampledLeft.dot(generationLeft))
+    profile.generationFrame={policy:'controller-aligned-transient-generation-v1',sampledYawRadians:-generationYaw,correctionRadians:generationYaw,lateralAfter:[]}
+    if(Number.isFinite(generationYaw)&&Math.abs(generationYaw)>1e-7){
+        const hip=rig.get(motionPaths.hip)!
+        if(!savedBaselineTransforms.has(hip))savedBaselineTransforms.set(hip,{position:hip.position.clone(),quaternion:hip.quaternion.clone(),scale:hip.scale.clone()})
+        const world=hip.getWorldQuaternion(new THREE.Quaternion()).premultiply(new THREE.Quaternion().setFromAxisAngle(generationUp,generationYaw))
+        const parent=hip.parent?.getWorldQuaternion(new THREE.Quaternion())??new THREE.Quaternion()
+        hip.quaternion.copy(parent.invert().multiply(world)).normalize()
+        character.object.updateMatrixWorld(true)
+    }
     const sampledBaselineTransforms = new Map<THREE.Object3D, {
         position: THREE.Vector3
         quaternion: THREE.Quaternion
@@ -4353,7 +4380,11 @@ function attachParameterizedHumanoidMotionProfile(
         if (!mesh.isSkinnedMesh || !mesh.skeleton) return
         mesh.skeleton.bones.forEach((bone, index) => {
             if (!skeletonRestWorld.has(bone)) {
-                skeletonRestWorld.set(bone, mesh.skeleton.boneInverses[index].clone().invert())
+                // Transport the bind frame into this instance's current world.
+                // Raw bone inverses are not in a moved/replaced actor's world.
+                skeletonRestWorld.set(bone, mesh.matrixWorld.clone()
+                    .multiply(mesh.bindMatrix.clone().invert())
+                    .multiply(mesh.skeleton.boneInverses[index].clone().invert()))
             }
         })
     })
@@ -4449,7 +4480,7 @@ function attachParameterizedHumanoidMotionProfile(
     }
     const targetRigMorphologyFeatures: HumanoidMorphologyFeatures | undefined = targetRigMorphologyProfile
         ? (() => {
-            const restUp = new THREE.Vector3(0, 1, 0)
+            const restUp = worldUp.clone()
             const hipPosition = targetRigRestPosition(rig.get(motionPaths.hip)!)
             const headPosition = targetRigRestPosition(rig.get(motionPaths.head)!)
             const toePositions = [
@@ -4563,7 +4594,9 @@ function attachParameterizedHumanoidMotionProfile(
     const morphologyUpperBodyWeights = targetRigMorphologyBlend
         ? normalizedDonorWeightSubset(targetRigMorphologyBlend.weights, naturalArmFingerDonorIds)
         : undefined
-    const naturalUpperBodyWeights = naturalUpperBodyTrajectoryWeights[naturalUpperBodyProfileId]
+    const naturalUpperBodyWeights = characterId===101901&&naturalUpperBodyProfileId==='set-a'
+        ? {walk:{114501:1},run:{114501:1}}
+        : naturalUpperBodyTrajectoryWeights[naturalUpperBodyProfileId]
     const effectiveNaturalUpperBodyWeights = morphologyUpperBodyWeights
         ? { walk: morphologyUpperBodyWeights, run: morphologyUpperBodyWeights }
         : naturalUpperBodyWeights
@@ -4975,6 +5008,11 @@ function attachParameterizedHumanoidMotionProfile(
         targetRigForward.copy(worldUp).cross(targetRigLeftAxis)
     }
     targetRigForward.normalize()
+    if(profile.generationFrame){
+        const inversePlacement=modelWorld.clone().invert()
+        profile.generationFrame.lateralAfter=targetRigLeftAxis.clone().applyQuaternion(inversePlacement).toArray()
+        profile.generationFrame.forwardAfter=targetRigForward.clone().applyQuaternion(inversePlacement).toArray()
+    }
     const targetRigOutwardFor = (side: 'L' | 'R'): THREE.Vector3 => (
         targetRigLeftAxis.clone().multiplyScalar(side === 'L' ? 1 : -1)
     )
@@ -5134,10 +5172,10 @@ function attachParameterizedHumanoidMotionProfile(
     const baselineToeDirections = {
         L: targetRigRestPosition(rig.get(motionPaths.toeL)!)
             .sub(targetRigRestPosition(rig.get(motionPaths.footL)!))
-            .transformDirection(character.object.matrixWorld),
+            .normalize(),
         R: targetRigRestPosition(rig.get(motionPaths.toeR)!)
             .sub(targetRigRestPosition(rig.get(motionPaths.footR)!))
-            .transformDirection(character.object.matrixWorld),
+            .normalize(),
     }
     // A toe direction is only one axis. Keep the target's full bind foot frame
     // so shortest-swing alignment does not inherit roll from the posed hip and
@@ -5148,7 +5186,7 @@ function attachParameterizedHumanoidMotionProfile(
         const rest = skeletonRestWorld.get(foot)!
         const quaternion = new THREE.Quaternion()
         rest.decompose(new THREE.Vector3(), quaternion, new THREE.Vector3())
-        baselineFootWorldRotations[side] = modelWorld.clone().multiply(quaternion).normalize()
+        baselineFootWorldRotations[side] = quaternion.normalize()
     }
     // Keep the authored donor foot direction through swing, then blend back to
     // the target shoe's rest sole over a deliberately broad contact window.
@@ -5310,6 +5348,12 @@ function attachParameterizedHumanoidMotionProfile(
                     frame => frame.directions[segment.directionRole],
                     true,
                 )
+            // This fixed retarget adjustment is baked once into Touka's
+            // generated fallback, not a collision-driven arm displacement.
+            // Her hoop is broader relative to arm length than donor 114501.
+            if(characterId===101901&&naturalUpperBodyProfileId==='set-a'&&/^(?:upperArm|forearm)[LR]$/.test(segment.directionRole)){
+                donorDirection.applyAxisAngle(new THREE.Vector3(0,0,1),THREE.MathUtils.degToRad(segment.directionRole.endsWith('L')?10:-10))
+            }
             let desiredDirection = referenceVectorToTargetWorld(donorDirection)
             const bone = rig.get(motionPaths[segment.boneRole])!
             const child = rig.get(motionPaths[segment.childRole])!
@@ -5321,7 +5365,7 @@ function attachParameterizedHumanoidMotionProfile(
                     .sub(bone.getWorldPosition(new THREE.Vector3()))
                     .normalize()
                 desiredDirection = currentDirection.lerp(desiredDirection.normalize(), 0.32).normalize()
-            } else if (semantic === 'walk' && /^forearm[LR]$/.test(segment.directionRole)) {
+            } else if (semantic === 'walk' && !(characterId===101901&&naturalUpperBodyProfileId==='set-a') && /^forearm[LR]$/.test(segment.directionRole)) {
                 // Native exploration walks swing an already-bent arm; they do
                 // not straighten and re-fold the elbow every step. Preserve the
                 // complete authored upper-arm swing, then carry one fixed
@@ -7041,6 +7085,7 @@ function attachParameterizedHumanoidMotionProfile(
             applyNativeHandFingerPose('walk', 0.5, 0, pose.fingerStrength)
             for (const side of ['L', 'R'] as const) {
                 const angles = side === 'L' ? pose.left : pose.right
+                if(characterId===101901&&naturalUpperBodyProfileId==='set-a')angles.outward+=10
                 const upper = rig.get(side === 'L' ? motionPaths.upperArmL : motionPaths.upperArmR)!
                 const elbow = rig.get(side === 'L' ? motionPaths.forearmL : motionPaths.forearmR)!
                 const hand = rig.get(side === 'L' ? motionPaths.handL : motionPaths.handR)!
@@ -7420,7 +7465,7 @@ function attachParameterizedHumanoidMotionProfile(
             ? 'target-rig-morphology-nine-native-arms-fingers-v45'
             : setB
                 ? '101901-mami-dress-clearance-nine-native-arms-fingers-v37'
-                : '101901-low-abduction-nine-native-arms-fingers-v37',
+                : characterId===101901 ? '101901-114501-native-arms-target-hoop-retarget-v46' : 'native-arms-target-rig-v37',
         upperBodyDonorBlendWeights: { ...effectiveNaturalUpperBodyWeights.walk },
         upperBodyTrajectoryDonorBlendWeights: {
             walk: { ...effectiveNaturalUpperBodyWeights.walk },

@@ -90,7 +90,7 @@ export default defineConfig({
             ...(assetInfo.names ?? []),
             ...(assetInfo.originalFileNames ?? []),
           ].filter((name): name is string => typeof name === 'string')
-          return names.some(name => name.toLowerCase().endsWith('.gz'))
+          return names.some(name => /\.(?:gz|bin)$/i.test(name))
             ? 'assets/[name]-[hash].fbxdata'
             : 'assets/[name]-[hash][extname]'
         },

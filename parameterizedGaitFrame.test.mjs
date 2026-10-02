@@ -29,7 +29,7 @@ function fixture(yaw=0,legacy=false){
   const parent=new THREE.Bone(),foot=new THREE.Bone(),toe=new THREE.Bone();object.add(parent);parent.add(foot);foot.add(toe);
   parent.position.set(side==='L'?.08:-.08,.6,0);foot.position.set(0,-.4,0);toe.position.set(.03,-.02,.12);
   const q=new THREE.Quaternion().setFromEuler(new THREE.Euler(side==='L'?.27:-.39,.17,side==='L'?-.21:.31));
-  rest.set(foot,new THREE.Matrix4().compose(new THREE.Vector3(),q,new THREE.Vector3(1,1,1)));
+  rest.set(foot,new THREE.Matrix4().compose(new THREE.Vector3(),modelWorld.clone().multiply(q),new THREE.Vector3(1,1,1)));
   motionPaths['foot'+side]=side;rig.set(side,foot);rig.set(side+'toe',toe);parents[side]=parent;feet[side]=foot;
   restQuaternions[side]=modelWorld.clone().multiply(q).normalize();
   directions[side]=toe.position.clone().normalize().applyQuaternion(restQuaternions[side]);

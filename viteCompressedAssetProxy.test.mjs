@@ -189,3 +189,24 @@ test('middleware serves exact gzip bytes inline with Range and stable identity',
     rmSync(root, { recursive: true, force: true })
   }
 })
+
+
+test('uncompressed native index/channel binaries use the same byte-exact safe transport', async()=>{
+ const root=mkdtempSync(path.join(tmpdir(),'magius-raw-native-'));mkdirSync(path.join(root,'models'))
+ const bytes=Buffer.from([0,0,128,63,0,0,0,64,4,3,2,1]),name='/models/native-extra-channels.bin'
+ writeFileSync(path.join(root,name),bytes)
+ const plugin=magiusCompressedAssetProxyPlugin(),safe=toBrowserSafeCompressedAssetUrl(name+'?v=exact')
+ assert.ok(safe.startsWith(compressedAssetBrowserRoutePrefix));assert.doesNotMatch(safe,/\.bin/)
+ assert.equal(fromBrowserSafeCompressedAssetUrl(safe),name+'?v=exact')
+ assert.ok(plugin.transform('export default "'+name+'"',name+'?url')?.code.includes(compressedAssetBrowserRoutePrefix))
+ let middleware;plugin.configureServer({config:{root},middlewares:{use(fn){middleware=fn}}})
+ const server=createServer((req,res)=>middleware(req,res,()=>res.writeHead(404).end()))
+ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const base='http://127.0.0.1:'+server.address().port
+ try{
+  const response=await fetch(base+safe);assert.equal(response.status,200);assert.equal(response.headers.get('x-magius-source-suffix'),'binary');assert.equal(response.headers.get('content-encoding'),null)
+  assert.deepEqual(Buffer.from(await response.arrayBuffer()),bytes)
+  const range=await fetch(base+safe,{headers:{Range:'bytes=4-7'}});assert.equal(range.status,206);assert.deepEqual(Buffer.from(await range.arrayBuffer()),bytes.subarray(4,8))
+  assert.equal(fromBrowserSafeCompressedAssetUrl(compressedAssetBrowserRoutePrefix+Buffer.from('/private.json').toString('base64url')),null)
+  const escaped=toBrowserSafeCompressedAssetUrl('/../outside.bin');assert.equal((await fetch(base+escaped)).status,403)
+ }finally{await new Promise(resolve=>server.close(resolve));rmSync(root,{recursive:true,force:true})}
+})

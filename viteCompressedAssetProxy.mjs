@@ -57,7 +57,7 @@ function decodeAssetPath(token) {
  */
 export function toBrowserSafeCompressedAssetUrl(value) {
   const { pathname, suffix } = splitUrlSuffix(value)
-  if (!pathname.toLowerCase().endsWith('.gz')) return value
+  if (!/\.(?:gz|bin)$/i.test(pathname)) return value
   return `${compressedAssetBrowserRoutePrefix}${encodeAssetPath(pathname)}${suffix}`
 }
 
@@ -67,7 +67,7 @@ export function fromBrowserSafeCompressedAssetUrl(value) {
     const token = pathname.slice(compressedAssetBrowserRoutePrefix.length)
     if (!token || token.includes('/')) return null
     const original = decodeAssetPath(token)
-    if (original == null || !original.toLowerCase().endsWith('.gz')) return null
+    if (original == null || !/\.(?:gz|bin)$/i.test(original)) return null
     return `${original}${suffix}`
   }
 
@@ -106,8 +106,8 @@ export function parseSingleByteRange(header, size) {
 }
 
 function transformGzipUrlModule(code, id) {
-  if (!/\.gz(?:\?|$)/i.test(id)) return null
-  const match = code.match(/^export default (["'])([^"']+\.gz(?:[?#][^"']*)?)\1;?/m)
+  if (!/\.(?:gz|bin)(?:\?|$)/i.test(id)) return null
+  const match = code.match(/^export default (["'])([^"']+\.(?:gz|bin)(?:[?#][^"']*)?)\1;?/m)
   if (!match) return null
   const safeUrl = toBrowserSafeCompressedAssetUrl(match[2])
   return {
@@ -297,7 +297,7 @@ export function magiusCompressedAssetProxyPlugin() {
           ETag: etag,
           'Last-Modified': stat.mtime.toUTCString(),
           'X-Magius-Asset-Identity': encodeURIComponent(originalPathname),
-          'X-Magius-Source-Suffix': 'gzip',
+          'X-Magius-Source-Suffix': originalPathname.toLowerCase().endsWith('.gz') ? 'gzip' : 'binary',
         }
         if (request.headers['if-none-match'] === etag && request.headers.range == null) {
           response.writeHead(304, commonHeaders).end()

@@ -100,7 +100,17 @@ export class ThirdPersonCamera {
     pan(dx:number,dy:number):void {
         if(!this.active||!Number.isFinite(dx)||!Number.isFinite(dy))return
         const {camera,renderer}=this.hooks.scene()
-        const scale=2*Math.max(this.distance,.2)*Math.tan(THREE.MathUtils.degToRad(camera.fov)/2)/Math.max(1,renderer.domElement.clientHeight)
+        // Dolly may travel past the old orbit target. Its near-plane-sized
+        // pivot is not the scene's manipulation plane: using it here made Ctrl
+        // pan up to hundreds of times slower while the actor was still metres
+        // away. Pan at the actor depth, with the normal Orbit panSpeed gain.
+        const actor=this.hooks.actor()
+        const anchor=actor?.getObjectByName('Hip')??actor
+        const backward=new THREE.Vector3(0,0,1).applyQuaternion(camera.quaternion)
+        const actorDepth=anchor?Math.abs(anchor.getWorldPosition(new THREE.Vector3()).sub(camera.position).dot(backward)):0
+        const planeDepth=Math.max(this.distance,actorDepth,camera.near*2,.2)
+        const gain=Number.isFinite(this.hooks.scene().controls.panSpeed)?this.hooks.scene().controls.panSpeed:1
+        const scale=2*planeDepth*Math.tan(THREE.MathUtils.degToRad(camera.fov)/2)*gain/Math.max(1,renderer.domElement.clientHeight)
         this.center.addScaledVector(new THREE.Vector3(1,0,0).applyQuaternion(camera.quaternion),-dx*scale)
         this.center.addScaledVector(new THREE.Vector3(0,1,0).applyQuaternion(camera.quaternion),dy*scale)
     }
