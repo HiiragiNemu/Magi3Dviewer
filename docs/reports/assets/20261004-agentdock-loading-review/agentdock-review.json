@@ -1,0 +1,366 @@
+{
+  "checkedArchives": 79,
+  "passed": 79,
+  "heldFiles": [
+    {
+      "path": "public/stages/catalogs/official-gallery-diorama-original.v1.json",
+      "sha256": "d90a951c846f704245977acf44818a88930c809103af65abdace265c3cab0884"
+    },
+    {
+      "path": "scripts/test-website.mjs",
+      "sha256": "b52938ba0431d7550eb242db77e340168105fe87f35171334e453425f7ec2bd5"
+    },
+    {
+      "path": "src/viewer/stages.ts",
+      "sha256": "be2103e5e1fca91935c2b7daaac01d1ace8000ca09f9de31644fc9d1c34bdc59"
+    },
+    {
+      "path": "docs/research/native-gallery-backgrounds.v1.json",
+      "sha256": "959c9d5aaf1a677240bbc7ddbc2219b532687a5b4019a58356b2dab38811a9d5"
+    },
+    {
+      "path": "scripts/audit-native-gallery-backgrounds.py",
+      "sha256": "14c1958c87bef9f27bc22582eaebffe3a2f569d2498ca41111a32944e3e30a50"
+    },
+    {
+      "path": "src/viewer/stageNativeImage.ts",
+      "sha256": "ffedf4e23bc3032a219d250e527d57c0057f58d67f5f61d4f2cc0f71d87acb1d"
+    },
+    {
+      "path": "stageNativeImage.test.mjs",
+      "sha256": "7cbffc77455ebb0c4c73c43ee42c368a33296359d3dae55e3d9b9d33f58a6335"
+    },
+    {
+      "path": "src/viewer/data/native-cloud/3DNoise.argb32.fbxdata",
+      "sha256": "fd0911a1141af88b74d8258700fa8219564630cc3f0182fc9935a35f8eb7e971"
+    },
+    {
+      "path": "src/viewer/data/native-cloud/BlueNoise64Magnified.png",
+      "sha256": "54ffd11ccb46ea5e650fc9c27502ad3dab966bdd12679fb6ef47b672fe0ff41a"
+    },
+    {
+      "path": "src/viewer/data/native-cloud/metadata.json",
+      "sha256": "195e9cc7a3d04d315ecb2c8446e74657a5bf5949f78dd2abe90b02f91fa0473a"
+    }
+  ],
+  "rows": [
+    {
+      "id": "gallery-diorama-diorama-background-110119-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-110319-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-110419-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-110919-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-111013-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-111019-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-111119-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-111314-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-111319-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-210119-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-210219-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-210319-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-210419-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-310119-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-600-10-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-600-10-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-600-10-01-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-600-10-01-003-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-601-14-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-601-15-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-602-11-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-602-11-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-602-11-01-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-602-11-01-003-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-602-14-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-602-15-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-603-14-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-603-15-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-607-14-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-607-15-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-607-16-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-607-16-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-609-14-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-609-15-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-612-00-00-004-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-613-00-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-613-00-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-618-12-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-618-12-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-621-00-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-621-00-00-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-621-00-00-003-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-621-00-00-004-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-621-00-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-621-00-01-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-621-00-01-003-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-625-00-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-625-00-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-637-00-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-637-00-00-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-637-00-00-003-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-638-00-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-639-00-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-639-00-00-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-641-00-01-001-originall",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-650-00-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-650-01-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-650-01-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-650-02-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-650-02-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-652-00-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-652-00-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-652-00-01-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-652-00-01-003-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-652-01-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-652-01-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-652-01-01-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-653-00-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-654-00-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-654-00-01-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-654-00-01-003-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-654-01-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-656-00-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-656-00-00-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-656-00-01-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-656-00-01-002-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-658-00-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-689-13-00-001-original",
+      "archiveAndPngMatch": true
+    },
+    {
+      "id": "gallery-diorama-diorama-background-bg-3d-689-13-01-001-original",
+      "archiveAndPngMatch": true
+    }
+  ],
+  "sourceBundlePixelReaudit": false,
+  "mergeDecision": "HOLD: historical real-browser sample has a timeout; 79-file identity and 8 unit tests are not full integration/visual acceptance."
+}

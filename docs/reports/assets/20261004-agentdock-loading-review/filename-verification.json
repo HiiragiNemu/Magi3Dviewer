@@ -1,0 +1,64 @@
+{
+  "baseline": "9f25a15",
+  "modified": "5365e6e",
+  "rollbackExecutedOn": "D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare\\artifacts\\cloud-publish-loading-20261004\\filename-replay",
+  "originalMainUntouchedByRollback": true,
+  "records": [
+    {
+      "label": "baseline",
+      "cwd": "D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare\\artifacts\\cloud-publish-loading-20261004\\filename-replay",
+      "command": [
+        "node",
+        "probe.mjs"
+      ],
+      "exitStatus": 1,
+      "literalOutput": "{\"url\":\"/assets/VisualRoot.fbx-Dsv0y9Ia.fbxdata\",\"expected\":\"VisualRoot.fbx.gz\",\"actual\":\"角色模型与骨骼\"}\nnode:internal/modules/run_main:107\r\n    triggerUncaughtException(\r\n    ^\r\n\r\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\r\n+ actual - expected\r\n\r\n+ '角色模型与骨骼'\r\n- 'VisualRoot.fbx.gz'\r\n\r\n    at file:///D:/magia/MyProducts/Magius3Dviewer-Cloudflare/artifacts/cloud-publish-loading-20261004/filename-replay/probe.mjs:10:8\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\r\n    at async node:internal/modules/esm/loader:643:26\r\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\r\n  generatedMessage: true,\r\n  code: 'ERR_ASSERTION',\r\n  actual: '角色模型与骨骼',\r\n  expected: 'VisualRoot.fbx.gz',\r\n  operator: 'strictEqual',\r\n  diff: 'simple'\r\n}\r\n\r\nNode.js v24.18.0\r\n"
+    },
+    {
+      "label": "apply",
+      "cwd": "D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare",
+      "command": [
+        "git",
+        "-c",
+        "core.autocrlf=false",
+        "apply",
+        "--directory=artifacts/cloud-publish-loading-20261004/filename-replay",
+        "D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare\\artifacts\\cloud-publish-loading-20261004\\filename-fix.patch"
+      ],
+      "exitStatus": 0,
+      "literalOutput": ""
+    },
+    {
+      "label": "modified",
+      "cwd": "D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare\\artifacts\\cloud-publish-loading-20261004\\filename-replay",
+      "command": [
+        "node",
+        "probe.mjs"
+      ],
+      "exitStatus": 0,
+      "literalOutput": "{\"url\":\"/assets/VisualRoot.fbx-Dsv0y9Ia.fbxdata\",\"expected\":\"VisualRoot.fbx.gz\",\"actual\":\"VisualRoot.fbx.gz\"}\nORIGINAL_FILENAME_PASS\n"
+    },
+    {
+      "label": "rollback",
+      "cwd": "D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare",
+      "command": [
+        "python",
+        "D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare\\artifacts\\cloud-publish-loading-20261004\\rollback-filenames.py",
+        "--root",
+        "D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare\\artifacts\\cloud-publish-loading-20261004\\filename-replay"
+      ],
+      "exitStatus": 0,
+      "literalOutput": "RESTORED D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare\\artifacts\\cloud-publish-loading-20261004\\filename-replay\\magia-exedra-character-three\\loader.ts\r\nRESTORED D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare\\artifacts\\cloud-publish-loading-20261004\\filename-replay\\src\\viewer\\loadingProgressPanel.ts\r\nRESTORED D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare\\artifacts\\cloud-publish-loading-20261004\\filename-replay\\loadingPaintIndependence.test.mjs\r\n"
+    },
+    {
+      "label": "rollback-baseline",
+      "cwd": "D:\\magia\\MyProducts\\Magius3Dviewer-Cloudflare\\artifacts\\cloud-publish-loading-20261004\\filename-replay",
+      "command": [
+        "node",
+        "probe.mjs"
+      ],
+      "exitStatus": 1,
+      "literalOutput": "{\"url\":\"/assets/VisualRoot.fbx-Dsv0y9Ia.fbxdata\",\"expected\":\"VisualRoot.fbx.gz\",\"actual\":\"角色模型与骨骼\"}\nnode:internal/modules/run_main:107\r\n    triggerUncaughtException(\r\n    ^\r\n\r\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\r\n+ actual - expected\r\n\r\n+ '角色模型与骨骼'\r\n- 'VisualRoot.fbx.gz'\r\n\r\n    at file:///D:/magia/MyProducts/Magius3Dviewer-Cloudflare/artifacts/cloud-publish-loading-20261004/filename-replay/probe.mjs:10:8\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\r\n    at async node:internal/modules/esm/loader:643:26\r\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\r\n  generatedMessage: true,\r\n  code: 'ERR_ASSERTION',\r\n  actual: '角色模型与骨骼',\r\n  expected: 'VisualRoot.fbx.gz',\r\n  operator: 'strictEqual',\r\n  diff: 'simple'\r\n}\r\n\r\nNode.js v24.18.0\r\n"
+    }
+  ]
+}

@@ -42,3 +42,13 @@ AgentDock 原始任务记录位置：C:/Users/proje/.agentdock/tasks/。
 GitHub 仅 main、0 个 open PR（本次实时读取）。环境 magius3dviewer-live 已有 CLOUDFLARE_ACCOUNT_ID，仍无 CLOUDFLARE_API_TOKEN。9f25a15 的自动运行 37138792390 配置关卡失败，构建验证仍在执行；不得写成自动发布成功。浏览器许可服务故障与该凭据缺失保持明确记录，不改认证服务或使用短期 OAuth 冒充持久 API token。
 
 本次机器可复核证据：artifacts/cloud-publish-loading-20261004/agentdock-review.json、agentdock-scene-tests.log、filename-tests.log、filename-typecheck.log。所有未合并文件的摘要记录在 agentdock-review.json；发布前重新检查未被本次改动。
+
+## 文件名纠正已发布（2026-10-04 01:25 +08:00 后核对）
+
+应用修订 `5365e6e100be064df3171010f6ae4b3f45ebfb83`，Cloudflare 部署 `a22c8dfb`。正式域名 site-version、HTML、现代入口 JS 与 viewer-runtime JS 都已对照干净构建核对；响应仍为哈希资源一年 immutable、HTML no-store。79 项场景候选仍未进入构建，10 个保留文件摘要不变。
+
+干净构建：637 项网站测试通过、TypeScript 通过、部署包 4704 文件。新增 5 项加载测试通过；补丁回放严格得到“旧版显示泛化标签而失败 → 修正显示原始文件名而通过 → 回退精确恢复旧字节与失败行为”。这是静态/单元/HTTP 发布验证，不代表用户浏览器的完整加载耗时或全角色视觉验收。
+
+本次仍为本机 Wrangler 发布。GitHub 自动发布仍缺持久 API token；再次读取内置 Cloudflare 标签仍返回 saved browser permissions could not be verified，没有创建 token 或修改认证/权限服务。
+
+可随仓库接手的原始核验记录：[10 文件与 79 包审查](assets/20261004-agentdock-loading-review/agentdock-review.json)、[补丁/回退实际输出](assets/20261004-agentdock-loading-review/filename-verification.json)、[生产资源摘要](assets/20261004-agentdock-loading-review/filename-live-asset-verification.json)、[生产版本](assets/20261004-agentdock-loading-review/filename-live-version.json)。
