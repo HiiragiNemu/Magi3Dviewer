@@ -50,7 +50,10 @@ jobs:
     environment:
       name: magius3dviewer-live
       url: https://magius3dviewer.pages.dev/
-    timeout-minutes: 75
+    # Full candidate + production WebGL suites use software rendering on hosted
+    # runners. The measured 75-minute run reached the final landing cases; retain
+    # every gate and budget time for those cases instead of canceling mid-check.
+    timeout-minutes: 120
     defaults:
       run:
         shell: bash
