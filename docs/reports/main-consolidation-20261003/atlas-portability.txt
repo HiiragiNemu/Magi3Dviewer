@@ -1,0 +1,12 @@
+✔ atlas census covers all shipped ordinary/story FBX resource directories, not only VisualRoot filenames (4.4134ms)
+✔ only native-material-linked, exact-mesh-UV proven complete texture triples replace the affected atlas sets (1.8026ms)
+✔ the 1,619 audited atlas files remain byte-identical outside the twelve specifically proven repairs (182.9168ms)
+✔ common exporter UV triangle-order/triangulation differences are not mislabeled as atlas corruption (0.2386ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 264.1619

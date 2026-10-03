@@ -1,0 +1,286 @@
+{
+  "revision": "a4dafeccbd8e2ee2f07a3952ab2c204c6fc0eb70",
+  "deployment": "227e14d7",
+  "site": "https://magius3dviewer.pages.dev/",
+  "metadata": {
+    "revision": "a4dafeccbd8e2ee2f07a3952ab2c204c6fc0eb70",
+    "toukaArms": "111501-motion-114501-spread-v3",
+    "jumpStyle": "expressive",
+    "garmentContacts": "on",
+    "garmentContactPolicy": "db8e279-contact-and-surface",
+    "poseGravity": "on",
+    "performanceStudio": "live-recorded-lanes-v1",
+    "entryPolicy": "single-production-no-store-v1",
+    "landing": "continuous-grounded-gait-v1",
+    "builtAt": "2026-10-03T11:58:33.224Z",
+    "poseEditor": "bind-limited-ik-v3",
+    "viewportEditor": "persistent-v1",
+    "groundGuard": "scene-floor-v1",
+    "selection": "existing-outline-uniforms",
+    "deploymentTarget": "cloudflare",
+    "stageDelivery": "cloudflare-same-origin",
+    "garmentRendering": "v5-native-lining-outline"
+  },
+  "files": [
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/index.html",
+      "status": 200,
+      "bytes": 71417,
+      "sha256": "853630dbbf3be3ce55325a9bde5ed4bce06d5f4e26058b4c77210d70ba44ec1f",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/site-version.json",
+      "status": 200,
+      "bytes": 646,
+      "sha256": "3a1a76c5c30cb540a1c19814e782e1a4ccd02e03c194815ff1ea1f13fc3649af",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/catalogs/runtime-product-delivery.v1.json",
+      "status": 200,
+      "bytes": 1265027,
+      "sha256": "cdf7552f062a4b0b911c08c4cbb4d7a468c0c7153dda82dc866b35a84d970af4",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/stages/catalog.json",
+      "status": 200,
+      "bytes": 41876,
+      "sha256": "a2e180728399803f02fa986e6b7a558c42355c409eef1814662fa23887b9f49f",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/enemies/manifest.v1.json",
+      "status": 200,
+      "bytes": 6319104,
+      "sha256": "cd9a256a0ff92723ecc1a6fc0ab5e8be5c44ddd3b98b995384bf41dccb5fd51e",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/fflate-DWcM8ZDX.js",
+      "status": 200,
+      "bytes": 6026,
+      "sha256": "c27ccbad7d063a2a11dcdfc79b52edda176c5a4427891f7c65888c4071858fe2",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/fflate-legacy-BrnnTKjX.js",
+      "status": 200,
+      "bytes": 5951,
+      "sha256": "394b8819ceee9cebd553ae7381e6d1c6bf01b2da2492b70cc435029e548e576d",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/lz-string-legacy-CWXjGfxK.js",
+      "status": 200,
+      "bytes": 4877,
+      "sha256": "1160ab8ee2bb249b2f8ba763cc41b740d65996bdb5e571f65ad094011ebe63bc",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/lz-string-UNqkxtPb.js",
+      "status": 200,
+      "bytes": 4854,
+      "sha256": "21e2482a980f5599ca3ac6b0af9f1a8919983d689c9a5d2c289c4f0c4770df0b",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/main-BH_gjb_8.js",
+      "status": 200,
+      "bytes": 1514,
+      "sha256": "c0fc0627f1d2d478dd40ca41f0c0398eef88eb7230185279b242a2c82f69700a",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/main-CTyG4zv2.css",
+      "status": 200,
+      "bytes": 69272,
+      "sha256": "168910342edc92bd491891790c348c34048bdd7d7a53d729d913525b3865bffe",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/main-legacy-CDUv2Y4e.js",
+      "status": 200,
+      "bytes": 70420,
+      "sha256": "7297d67f4df6741fe913abe7fc7aad792db24e8844ff57bbe044cc373463feae",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/modulepreload-polyfill-B5Qt9EMX.js",
+      "status": 200,
+      "bytes": 771,
+      "sha256": "607112fb81d7899ceedf89cdb1b3540a53eb96ad5e4202fb1e22f873281de839",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/modulepreload-polyfill-legacy-CnvmjJHj.js",
+      "status": 200,
+      "bytes": 145,
+      "sha256": "71bc49193430340a870a220b8305f0ba29831835710e12a6a653145b5ac10025",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/polyfills-C81vJE_w.js",
+      "status": 200,
+      "bytes": 119596,
+      "sha256": "961b88dd65fcc01acc2aa416101dd620072c48a6b4cd870d90f192977acd915f",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/polyfills-legacy-CXKHYqks.js",
+      "status": 200,
+      "bytes": 157377,
+      "sha256": "8e35a26e31e06dcbc05b752fef7149df3e2ee59806ab268c1964e3389a243517",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/resourcePreview-legacy-C9f8kb7k.js",
+      "status": 200,
+      "bytes": 11118,
+      "sha256": "fac4b8f631149189921379377195b89a1214833f3a135bab70448f5487123379",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/resourcePreview-mvzdcGh-.js",
+      "status": 200,
+      "bytes": 6391,
+      "sha256": "7b3827e33f306cc39c5b847e0f9a05b94db87a48467d0ea2e31d1bd20ed7e4c5",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/three-controls-D9s2T231.js",
+      "status": 200,
+      "bytes": 41246,
+      "sha256": "4ab613854cf4f89e21389d26c2a3f4abdf22de41afc454154901ed803a118976",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/three-controls-legacy-CYrb9t-v.js",
+      "status": 200,
+      "bytes": 40597,
+      "sha256": "9615f6b39e094ab15791765bea558da3d67663870c2a4d1405dbaf741598c850",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/three-core-DNtZl9hk.js",
+      "status": 200,
+      "bytes": 704474,
+      "sha256": "7fb2e4d6c8a0f0297886323ef2d105ad87e1fdc335b09dd78884bcf717f3edab",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/three-core-legacy-CI3wAspd.js",
+      "status": 200,
+      "bytes": 706857,
+      "sha256": "de86de0f8a0a3c5e37231af9b768c58270133c7195ac66c7a2dd40b91e8cea43",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/three-libs-BE0iLUPD.js",
+      "status": 200,
+      "bytes": 34980,
+      "sha256": "8cb8b51e762131638932918b5623d5e92ca857640c4316d780492b478502594f",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/three-libs-legacy-D6fK2dDo.js",
+      "status": 200,
+      "bytes": 35233,
+      "sha256": "90ca11ec3540a6331f8ba365ad274df84c93f3cd4f1cb96291dca182dfb530e4",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/three-loaders-DNKJef6C.js",
+      "status": 200,
+      "bytes": 91305,
+      "sha256": "461607df4706fd30098b9dd16f40957c3d5151793a927b701565737ddb50e2cf",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/three-loaders-legacy-DdwtKNes.js",
+      "status": 200,
+      "bytes": 92729,
+      "sha256": "81c18b798de66b1a96accb7c625c20d1708ce559045f31ea133900a2bf63b1e9",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/three-postprocessing-DoPUR2Xa.js",
+      "status": 200,
+      "bytes": 107223,
+      "sha256": "efd0743808869c07b8237550fbfd0d6a90e1ccf524f20bdfecec89834884d9f8",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/three-postprocessing-legacy-Brjs1fDa.js",
+      "status": 200,
+      "bytes": 110531,
+      "sha256": "dbd40617f65b51d2ec3963e5f05ee7a4be1c1a02c1d2ee9f1e12497f5fc796b9",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/vendor-BNguDoK7.js",
+      "status": 200,
+      "bytes": 8220,
+      "sha256": "a6f1273706381a1f132785397f2d9b706d29afc0317af83db30943bee1b3cf3a",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/vendor-legacy-BdXU3G6_.js",
+      "status": 200,
+      "bytes": 8254,
+      "sha256": "b3e50f04932f3f19ca126f9f9e13e80f0f73d450900a2dc62cbfd2708d273d76",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/viewer-localization-CdEcG_0E.js",
+      "status": 200,
+      "bytes": 101743,
+      "sha256": "6bdb427af81752a9d1ddf7d6112043a232fef67881e6564e5e5163300fd53c73",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/viewer-localization-legacy-HA05Oe7a.js",
+      "status": 200,
+      "bytes": 103673,
+      "sha256": "2b88d2e0f3fb933a09226e676e12038d78305bb3d33511e7376a6f7542d03982",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/viewer-runtime-BJDL8LDB.css",
+      "status": 200,
+      "bytes": 50692,
+      "sha256": "c0dbf6b1234f0bb9b8b691ec71a9fb112bbe788d080f57c0b752587d4e04b96f",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/viewer-runtime-legacy-DIJq6YN8.js",
+      "status": 200,
+      "bytes": 23811531,
+      "sha256": "6abd3afedc28bbf18d0062baf824341413e348b86ee445cb84a0884e591eae76",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/viewer-runtime-PtBsS-1c.js",
+      "status": 200,
+      "bytes": 23639766,
+      "sha256": "ea9254831ef673629db41db58e2835b0f6ac660ba7524dfff2485e92f36c7327",
+      "exact": true
+    },
+    {
+      "command": "HTTP GET https://magius3dviewer.pages.dev/assets/WorkerThread-Ca9HRGgQ.js",
+      "status": 200,
+      "bytes": 2562,
+      "sha256": "ed07126031bdbfd91dcf0f4066d4a7023665d4dc2d4c7259f1d3cb20b291dc87",
+      "exact": true
+    }
+  ],
+  "health": {
+    "status": 200,
+    "body": "{\"schema\":\"magius.runtime-product-gateway.v1\",\"repository\":\"HiiragiNemu/Magi3Dviewer\",\"releaseTags\":[\"runtime-products-v1-a\",\"runtime-products-v1-b\",\"runtime-products-enemy-models-v2\",\"runtime-products-voice-v1\"],\"status\":\"ready\",\"probe\":{\"releaseTag\":\"runtime-products-v1-a\",\"assetName\":\"0660-stage-dungeon-10000-bg-3d-intro-0001-001.zip\",\"assetBytes\":7927,\"httpStatus\":206}}\n"
+  },
+  "websiteTests": 637,
+  "rollbackBaselineTests": 629,
+  "cleanCheckoutBuild": "PASS",
+  "visualAcceptance": "PENDING_USER; HTTP and offline tests are not live visual acceptance"
+}

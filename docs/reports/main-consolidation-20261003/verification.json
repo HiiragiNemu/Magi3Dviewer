@@ -1,0 +1,58 @@
+{
+  "updatedAt": "2026-10-03T16:21:42.087Z",
+  "deployedRevision": "a4dafeccbd8e2ee2f07a3952ab2c204c6fc0eb70",
+  "deployment": "227e14d7",
+  "source": [
+    {
+      "path": "src/viewer/garmentContacts.ts",
+      "sha256": "3419c6781e245c2f4110e81096640736ac37a97727cf1119c7f9b88f80c80b04",
+      "gitBlob": "2dd88ff6807ffea12e9776ff14fd8eaf38717a41"
+    },
+    {
+      "path": "src/viewer/garmentSurfaceContact.ts",
+      "sha256": "187096cba5b6a2ec33b2791b45071b61c130fd040d6ed2232056ab611a72982d",
+      "gitBlob": "5ff174d439d143a0a7684fa1cd8d99c6ee877914"
+    },
+    {
+      "path": "src/viewer/characterPhysics/runtime.ts",
+      "sha256": "df503f5fc0d1f3a48adf9a718e375b56f94e89728586a3928db69400e40dfb05",
+      "gitBlob": "0e8f5b1e332457f066bdfe1392be3cc8a9229280"
+    }
+  ],
+  "baseline": {
+    "command": "npm run test:website",
+    "exitStatus": 0,
+    "literalOutput": "baseline-tests.txt",
+    "tests": 629
+  },
+  "modified": {
+    "command": "npm run test:website",
+    "exitStatus": 0,
+    "literalOutput": "modified-tests.txt",
+    "tests": 637
+  },
+  "build": {
+    "command": "npm ci && npm run build:deploy",
+    "exitStatus": 0,
+    "scope": "Fresh tracked-source clone, independent dependencies; original development overlays not available"
+  },
+  "rollback": {
+    "command": "rollback.ps1 -Repository <isolated clean-checkout>; npm run test:website; git apply release.patch; npm run test:website",
+    "exitStatus": 0,
+    "baselineTests": 629,
+    "modifiedTests": 637
+  },
+  "cloud": {
+    "run": 37121755145,
+    "install": "PASS",
+    "tests": "637 PASS",
+    "typecheck": "PASS",
+    "package": "PASS",
+    "poseAndSkinningBrowser": "PASS",
+    "stageDeliveryBrowser": "PASS",
+    "viewportBrowser": "FAIL: Collapsed tools must leave the viewport free",
+    "publishCredentials": "ACCOUNT_ID configured; API_TOKEN pending browser permission service recovery"
+  },
+  "visualAcceptance": "Not claimed; prior cloth visual requests remain open",
+  "unrelatedConcurrentEdits": "New native gallery scene files and stages.ts/test list changes observed after cleanup; preserved and not included in this release"
+}
