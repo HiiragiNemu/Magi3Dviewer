@@ -37,3 +37,5 @@ The release uses the existing v5 solver and shared BoneCloth continuity. The lat
 ## Rollback
 
 Use a reviewed Git revert on main and rerun site-delivery; do not reset main to a rejected experimental tree. The consolidation commit preserves the former branch ancestry while keeping the chosen current tree. For immediate deployment rollback, retain the preceding Cloudflare deployment until the new public revision is verified. Do not delete runtime releases as part of a rollback.
+
+Native cloud-shader diagnostic programs and volume metadata are now versioned under docs/research/cloud-native-evidence/. They are evidence only; voxel payload extraction/decoding remains an explicit scene task.
