@@ -187,10 +187,20 @@ try{
  const secondChanged=secondAfter.bones.filter(b=>/^(Arm_L|Forearm_L|Hand_L)$/.test(b.name)&&secondBeforeById.has(b.uuid)&&b.quaternion.some((v,i)=>Math.abs(v-secondBeforeById.get(b.uuid).quaternion[i])>1e-5))
  assert.ok(secondChanged.length>0,'The new actor must actually change its own arm pose; merely loading it is insufficient')
  assert.equal(secondAfter.actorCount,2)
- assert.equal(await page.$eval('#viewport-editor-selection',e=>e.textContent),'左手')
+ // The current chip editor marks the selected native bone on the actual joint
+ // button; the old output node is intentionally empty. Native Hand_L is the
+ // observer's right wrist under the established fixed front-view convention.
+ const selectedJoint=await page.$eval('[data-viewport-joint="left-hand"]',e=>({
+  text:e.textContent,label:e.getAttribute('aria-label'),pressed:e.getAttribute('aria-pressed'),uuid:e.dataset.boneUuid,
+ }))
+ assert.equal(selectedJoint.text,'右手腕')
+ assert.equal(selectedJoint.label,'右手腕')
+ assert.equal(selectedJoint.pressed,'true')
+ assert.equal(selectedJoint.uuid,secondAfter.bones.find(b=>b.name==='Hand_L')?.uuid,'Selected chip must belong to the newly loaded actor')
+ assert.notEqual(secondAfter.selected,wristAfter.selected,'Editor must rebind to the second actor, not the previous one')
  assert.equal(await page.evaluate(()=>window.scene.controls.enabled),true)
  await page.screenshot({path:path.join(evidence,'second-character-editor.png'),fullPage:true})
- record({test:'second-character-editor-rebind',actorCount:2,character:100201,selected:await page.$eval('#viewport-editor-selection',e=>e.textContent),changed:secondChanged.map(b=>b.name),hitJoint})
+ record({test:'second-character-editor-rebind',actorCount:2,character:100201,selected:selectedJoint,changed:secondChanged.map(b=>b.name),hitJoint})
  assert.equal(errors.filter(e=>/ReferenceError|TypeError|SyntaxError|GL_INVALID|VALIDATE_STATUS/i.test(e)).length,0,errors.join('\n'))
  result={passed:true,site:base,renderer:'Chrome ANGLE SwiftShader, not a user GPU benchmark',observations,errors,missing}
 }catch(error){result={passed:false,site:base,error:String(error),observations,errors,missing};await page?.screenshot({path:path.join(evidence,'viewport-failure.png'),fullPage:true}).catch(()=>{});throw error}

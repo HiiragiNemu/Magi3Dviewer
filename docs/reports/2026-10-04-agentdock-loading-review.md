@@ -52,3 +52,9 @@ GitHub 仅 main、0 个 open PR（本次实时读取）。环境 magius3dviewer-
 本次仍为本机 Wrangler 发布。GitHub 自动发布仍缺持久 API token；再次读取内置 Cloudflare 标签仍返回 saved browser permissions could not be verified，没有创建 token 或修改认证/权限服务。
 
 可随仓库接手的原始核验记录：[10 文件与 79 包审查](assets/20261004-agentdock-loading-review/agentdock-review.json)、[补丁/回退实际输出](assets/20261004-agentdock-loading-review/filename-verification.json)、[生产资源摘要](assets/20261004-agentdock-loading-review/filename-live-asset-verification.json)、[生产版本](assets/20261004-agentdock-loading-review/filename-live-version.json)。
+
+## 云端最后一个旧界面断言
+
+运行 37138792390 在 01:26 +08:00 结束：配置步骤缺 API token；构建末项在 viewport 测试第 190 行失败，读取旧 `#viewport-editor-selection` 得到空串而期待“左手”。之前的真实指针、关节上下限、地面限制、收起/拖拽、腕部旋转稳定测试均已通过。
+
+Git blame 将该空占位元素与实际节点 `aria-pressed` 选中机制对应到 AgentDock 任务记录内的 `bcfb1e8`（10月1日节点界面）；前视左右命名在现有 nodeTpsUsability 测试中有明确契约。修订仅更新测试观察对象：验证实际节点的“右手腕”文字/无障碍名、按下状态、第二个演员 Hand_L 的精确 UUID 与不同演员身份，保留先前真实骨骼变换断言。没有为了测试改动产品的手臂/左右命名，也没有删除本项或降低关节限值。本地现行界面契约测试通过；新云端完整测试仍需完成。
