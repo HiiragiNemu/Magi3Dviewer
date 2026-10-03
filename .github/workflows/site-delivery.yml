@@ -44,8 +44,13 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Target: existing Cloudflare project magius3dviewer; production branch ${branch}. No GitHub Pages deployment.\n`);
           NODE
   build:
+    needs: configuration
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    environment:
+      name: magius3dviewer-live
+      url: https://magius3dviewer.pages.dev/
+    timeout-minutes: 75
     defaults:
       run:
         shell: bash
@@ -75,8 +80,6 @@ jobs:
         run: |
           set -euo pipefail
           node scripts/build-deployment.mjs 2>&1 | tee /tmp/site-evidence/build.log
-      - name: Install isolated browser driver
-        run: npm install --no-save --ignore-scripts puppeteer-core@25.12.0
       - name: Verify real pointer interaction, skinning and multi-character rendering
         run: |
           set -euo pipefail
@@ -89,52 +92,17 @@ jobs:
         env:
           MAGIUS_EVIDENCE_DIR: /tmp/site-evidence/viewport
         run: node scripts/site-smoke-viewport.mjs
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: site-delivery-evidence
-          path: /tmp/site-evidence/
-          retention-days: 14
-      - uses: actions/upload-artifact@v4
-        with:
-          name: verified-website
-          path: dist-deploy/
-          compression-level: 1
-          retention-days: 3
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cloudflare-delivery-tools
-          path: |
-            scripts/site-smoke-cloudflare.mjs
-            scripts/site-smoke-viewport.mjs
-            scripts/site-smoke-entry-landing.mjs
-          retention-days: 3
-  cloudflare:
-    needs: [build, configuration]
-    runs-on: ubuntu-latest
-    environment:
-      name: magius3dviewer-live
-      url: https://magius3dviewer.pages.dev/
-    timeout-minutes: 30
-    steps:
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 22
-      - uses: actions/download-artifact@v4
-        with:
-          name: verified-website
-          path: dist-deploy
-      - uses: actions/download-artifact@v4
-        with:
-          name: cloudflare-delivery-tools
-          path: scripts
+      # Keep the exact tested package on this runner; do not upload a multi-GB
+      # intermediate artifact against the private repository storage allowance.
       - name: Publish full verified website to the existing Cloudflare production branch
+        if: ${{ success() && github.ref == 'refs/heads/main' && needs.configuration.result == 'success' }}
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CF_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID || vars.CF_ACCOUNT_ID }}
           command: pages deploy dist-deploy --project-name=magius3dviewer --branch=${{ needs.configuration.outputs.branch }} --commit-hash=${{ github.sha }}
       - name: Verify actual production version and current scene route
+        if: ${{ success() && github.ref == 'refs/heads/main' && needs.configuration.result == 'success' }}
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
@@ -161,18 +129,17 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Published Cloudflare production: ${site}\nApplication revision: ${process.env.GITHUB_SHA}\nCurrent scenes are same-origin; private Release products use the existing server-side gateway.\n`);
           NODE
       - name: Verify real browser against the public Cloudflare site
+        if: ${{ success() && github.ref == 'refs/heads/main' && needs.configuration.result == 'success' }}
         env:
           MAGIUS_SITE_URL: https://magius3dviewer.pages.dev/
         run: |
-          printf '{"private":true,"type":"module"}\n' > package.json
-          npm install --no-save --ignore-scripts puppeteer-core@25.12.0
           mkdir -p /tmp/site-evidence
           node scripts/site-smoke-cloudflare.mjs
-          MAGIUS_EVIDENCE_DIR=/tmp/site-evidence/viewport node scripts/site-smoke-viewport.mjs
+          MAGIUS_EVIDENCE_DIR=/tmp/site-evidence/production-viewport node scripts/site-smoke-viewport.mjs
           MAGIUS_EVIDENCE_DIR=/tmp/site-evidence/entry-landing node scripts/site-smoke-entry-landing.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: cloudflare-publication-evidence
+          name: site-delivery-evidence
           path: /tmp/site-evidence/
-          retention-days: 14
+          retention-days: 7

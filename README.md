@@ -36,6 +36,7 @@ For interactive development: `npm run dev:local`. For production-package preview
 - Direct pose editing, bounded IK, touch controls, saved workspaces and recorded performance lanes.
 - Scene catalog (581 entries), enemy catalog (514 records / 493 render-ready products), and character/enemy combat VFX.
 - Resource panels, localized names, voice presentation and locale-specific fonts.
+- First visit defaults to Simplified Chinese, including English/Japanese browsers; an explicitly saved language choice still takes priority.
 - Lighting, outlines, screenshots/camera mode and preset sharing.
 
 Catalog membership and successful loading are **not** proof of full native visual parity. Resource IDs and coverage come from the versioned catalogs, not arbitrary substitutions.
@@ -48,14 +49,16 @@ Keep collisions enabled. Do not reduce colliders or collision strength, permit e
 
 ## Deployment
 
-The **Deploy tested website to Cloudflare** workflow (`.github/workflows/site-delivery.yml`) runs on `main` and can be dispatched manually. It runs website tests, typechecking, packaging and browser gates, then deploys to the existing **magius3dviewer** Cloudflare Pages project. It checks the actual public revision after deployment.
+The **Deploy tested website to Cloudflare** workflow (`.github/workflows/site-delivery.yml`) runs on `main` and can be dispatched manually. It runs website tests, typechecking, packaging and browser gates, then deploys to the existing **magius3dviewer** Cloudflare Pages project. It checks the actual public revision after deployment. The same cloud runner retains the exact tested `dist-deploy/` package through publication: there is no full-site Actions upload/download between jobs, no duplicate dependency installation, and no local manual deployment required. Only test logs and browser screenshots are uploaded as Actions evidence, retained for seven days. This reduces artifact storage and transfer overhead without removing validation gates.
 
-Deployment uses the existing `magius3dviewer-live` GitHub environment and its `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` secrets (the workflow also supports the existing CF-prefixed aliases). Website validation runs without deployment credentials. The environment currently needs its two Cloudflare Secrets configured before cloud publication; a cloud chat can commit/push and run validation in the meantime. After Secrets are configured, use the workflow; it should not create another website or expose credentials in client files.
+Deployment uses the existing `magius3dviewer-live` GitHub environment and its `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` secrets (the workflow also supports the existing CF-prefixed aliases). Website validation runs without deployment credentials. Both Secrets were configured and API access to the existing Pages project was verified on 2026-10-04; successful end-to-end publication is recorded separately in the workflow run. The production Pages project belongs to the Crynet account; a token scoped only to the separate Sena account does not grant access to this project. Use the workflow; it should not create another website or expose credentials in client files.
 
 App and selected scene closures are served by Cloudflare. Larger stage/enemy/VFX products remain in the repository's versioned GitHub Release assets, accessed through the existing restricted gateway:
 `magius3dviewer-runtime-products.crynetsystemscell.workers.dev`.
 
 Do **not** delete release tags/assets, alter gateway routing or remove committed carriers during branch cleanup. They are live resource dependencies. Do not publish local test badges in the formal website.
+
+Private-repository planning: this account is on GitHub Free, and its paid Actions budget is currently zero with usage stopped at the limit. Included usage remains available; the actual remaining minutes and account-wide artifact storage must be checked in GitHub Billing before changing visibility. The local site's roughly 2.8 GiB unpacked size is **not** a measured Actions upload size. Existing runtime Release assets remain separate from Actions intermediate artifacts.
 
 ## Evidence and remaining work
 

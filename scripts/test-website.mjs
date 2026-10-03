@@ -9,10 +9,12 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const tests = [
   'sceneCatalogStatus.test.mjs',
   'uiLocalization.test.mjs',
+  'siteDeliveryWorkflow.test.mjs',
   'enemyUiPanel.test.mjs',
   'enemyAnimationInteraction.test.mjs',
   'resourcePanels.test.mjs',
   'stageSpecialSurfaces.test.mjs',
+  'stageNativeImage.test.mjs',
   'stageMainLightCascades.test.mjs',
   'stageParticleBlendState.test.mjs',
   'stageVolumetricLightBeams.test.mjs',

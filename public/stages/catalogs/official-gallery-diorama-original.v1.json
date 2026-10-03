@@ -17,8 +17,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/110119_original",
       "backgroundResourceName": "110119_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-110119-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-110119-original/110119_original.png",
       "scale": 1,
       "position": [
         0,
@@ -32,10 +32,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -45,6 +46,19 @@
         "sourceBytes": 708089,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/110119_original",
+        "spritePathId": "3202669721618215219",
+        "texturePathId": "-5055259529183982571",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1587055,
+        "sha256": "1ca7af014ab6693f7446b1832f88a0600c5709564b1121a183bbe4b89bed8d6c",
+        "pixelSha256": "88a071ba0da55b4cf2ce92a5555e16142cc38412194cfa5059a6d60228e56d44"
       }
     },
     {
@@ -61,8 +75,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/110319_original",
       "backgroundResourceName": "110319_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-110319-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-110319-original/110319_original.png",
       "scale": 1,
       "position": [
         0,
@@ -76,10 +90,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -89,6 +104,19 @@
         "sourceBytes": 790451,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/110319_original",
+        "spritePathId": "8712131191433045811",
+        "texturePathId": "-4486019421223153927",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1680205,
+        "sha256": "795d37203ce68899a07363947a2ffe5650481cc5e9ab469af8e31e633bd11e9c",
+        "pixelSha256": "ce5e983fd4bfce1ed00f0d35e324ddc8fa4eb88b005ca8677ccef50e600e8539"
       }
     },
     {
@@ -105,8 +133,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/110419_original",
       "backgroundResourceName": "110419_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-110419-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-110419-original/110419_original.png",
       "scale": 1,
       "position": [
         0,
@@ -120,10 +148,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -133,6 +162,19 @@
         "sourceBytes": 850957,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/110419_original",
+        "spritePathId": "-6458533488258676116",
+        "texturePathId": "9122382571298099632",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2179020,
+        "sha256": "6e79bed57ed8714926945ba1da7bf561781dd5fc2e10100ca3b354258fbc71a3",
+        "pixelSha256": "8ca6064f4b3632d9934a02d58e27d3fed1d023f8f8ec2cf76b5567332d6798c7"
       }
     },
     {
@@ -149,8 +191,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/110919_original",
       "backgroundResourceName": "110919_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-110919-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-110919-original/110919_original.png",
       "scale": 1,
       "position": [
         0,
@@ -164,10 +206,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -177,6 +220,19 @@
         "sourceBytes": 895908,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/110919_original",
+        "spritePathId": "-4307126038272549621",
+        "texturePathId": "-9002369659031047441",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2249272,
+        "sha256": "c44f98452afe8472f0d3c8662470a1d522769f08ccb43522bc2bb579eeff97c7",
+        "pixelSha256": "70efceedad1b7fe25af451c9aa7619028ecff98be4cf97404f6399221d52ef2d"
       }
     },
     {
@@ -193,8 +249,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/111013_original",
       "backgroundResourceName": "111013_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-111013-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-111013-original/111013_original.png",
       "scale": 1,
       "position": [
         0,
@@ -208,10 +264,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -221,6 +278,19 @@
         "sourceBytes": 795923,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/111013_original",
+        "spritePathId": "2741024923638961165",
+        "texturePathId": "-7325408551257621869",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2012568,
+        "sha256": "0ae23a52439d553ebce088d090f7a0668a026c72fdacde09d1f1fce2cb0bdc8d",
+        "pixelSha256": "0a4097d6e0c5d2dce54ce3307dc20a5d5176445e12d7bd97ee96e880a6e569d0"
       }
     },
     {
@@ -237,8 +307,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/111019_original",
       "backgroundResourceName": "111019_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-111019-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-111019-original/111019_original.png",
       "scale": 1,
       "position": [
         0,
@@ -252,10 +322,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -265,6 +336,19 @@
         "sourceBytes": 796481,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/111019_original",
+        "spritePathId": "1005834319648999373",
+        "texturePathId": "4500640792621136240",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2017030,
+        "sha256": "8ff693c49bf81f6afaf8344e22c7df76a49dddcb590d44dc31dd0da5ca52011c",
+        "pixelSha256": "36eb2ff71374f76d6ed65c4e7218a666fc0aeb51ca88506e4060f950073211ce"
       }
     },
     {
@@ -281,8 +365,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/111119_original",
       "backgroundResourceName": "111119_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-111119-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-111119-original/111119_original.png",
       "scale": 1,
       "position": [
         0,
@@ -296,10 +380,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -309,6 +394,19 @@
         "sourceBytes": 568203,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/111119_original",
+        "spritePathId": "8958097323367035398",
+        "texturePathId": "-2992356023965602446",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1424661,
+        "sha256": "f933f41039d90aa20750afc054ebf9605711fbd4836cff6bd0ab779b44ada437",
+        "pixelSha256": "f0b195262c3ddc7a3669d0463bed4bc8133118fc1545c59ef6e9fa0f3c54eb12"
       }
     },
     {
@@ -325,8 +423,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/111314_original",
       "backgroundResourceName": "111314_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-111314-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-111314-original/111314_original.png",
       "scale": 1,
       "position": [
         0,
@@ -340,10 +438,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -353,6 +452,19 @@
         "sourceBytes": 764589,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/111314_original",
+        "spritePathId": "8838839026575379715",
+        "texturePathId": "-6142295916921536251",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1592792,
+        "sha256": "2510169cb960148469056101742eb4d7dc92a52a5a910cbd577db276838d16fa",
+        "pixelSha256": "61bfd2bea59cc5588c3e9312c8403a256447464426cd3db6cf2888f11bb2a616"
       }
     },
     {
@@ -369,8 +481,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/111319_original",
       "backgroundResourceName": "111319_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-111319-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-111319-original/111319_original.png",
       "scale": 1,
       "position": [
         0,
@@ -384,10 +496,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -397,6 +510,19 @@
         "sourceBytes": 746163,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/111319_original",
+        "spritePathId": "2988982388991761171",
+        "texturePathId": "6664944376882707466",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1479673,
+        "sha256": "9e197268ddd6670d74b4153503a6a51dd851ba4c328619f8e7cffac047d830f3",
+        "pixelSha256": "2dad289fdb90f0ac40f2c42fdf8d476bd74c169278b4dc5b1d5d9a40e0db7a38"
       }
     },
     {
@@ -413,8 +539,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/210119_original",
       "backgroundResourceName": "210119_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-210119-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-210119-original/210119_original.png",
       "scale": 1,
       "position": [
         0,
@@ -428,10 +554,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -441,6 +568,19 @@
         "sourceBytes": 848875,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/210119_original",
+        "spritePathId": "-4818737275045385347",
+        "texturePathId": "8485136192559050377",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2048858,
+        "sha256": "c5337702d7d1044ef6513025c57d12f3c8199e659784c41f8c0d19eaecf93721",
+        "pixelSha256": "e23e78ab8db41a43764286f0244efdbcb0e92941ad807a17a9dc7cf41373d371"
       }
     },
     {
@@ -457,8 +597,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/210219_original",
       "backgroundResourceName": "210219_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-210219-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-210219-original/210219_original.png",
       "scale": 1,
       "position": [
         0,
@@ -472,10 +612,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -485,6 +626,19 @@
         "sourceBytes": 901405,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/210219_original",
+        "spritePathId": "-5580085340208029062",
+        "texturePathId": "-6992127243024959991",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2217724,
+        "sha256": "427aec26b84808fea7ce14b58d7af7b3defd3b350baf2e544e126bb422813f28",
+        "pixelSha256": "131138bb706a280562a299c6af43d292f9da0d81c7bd3c9c01e6ca05021b4226"
       }
     },
     {
@@ -501,8 +655,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/210319_original",
       "backgroundResourceName": "210319_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-210319-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-210319-original/210319_original.png",
       "scale": 1,
       "position": [
         0,
@@ -516,10 +670,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -529,6 +684,19 @@
         "sourceBytes": 799688,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/210319_original",
+        "spritePathId": "2465840372661838672",
+        "texturePathId": "7517072083349255096",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2288877,
+        "sha256": "da0a3243e2dad58126cc7ccc4a1b85422901adb244b09d0a14a23eca198671cf",
+        "pixelSha256": "5e921d5d54e30b9a3abded3beeae56bbfb54038f75116171c9107804f0202518"
       }
     },
     {
@@ -545,8 +713,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/210419_original",
       "backgroundResourceName": "210419_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-210419-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-210419-original/210419_original.png",
       "scale": 1,
       "position": [
         0,
@@ -560,10 +728,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -573,6 +742,19 @@
         "sourceBytes": 951772,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/210419_original",
+        "spritePathId": "8914342680527029864",
+        "texturePathId": "7884230763352454730",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2310715,
+        "sha256": "61e3e013bc7a647a5600403075e3f6c039da6d0bb10b7c533b68585770ea3d4f",
+        "pixelSha256": "00511b592f158b7801b61906786d18e00836686c2b71b124a2ea631b4585f727"
       }
     },
     {
@@ -589,8 +771,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/310119_original",
       "backgroundResourceName": "310119_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-310119-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-310119-original/310119_original.png",
       "scale": 1,
       "position": [
         0,
@@ -604,10 +786,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -617,6 +800,19 @@
         "sourceBytes": 738207,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/310119_original",
+        "spritePathId": "-3871849126552577209",
+        "texturePathId": "8636395794014073033",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1657364,
+        "sha256": "f3b61813ef8ab7cd010c8e464ef16f0bdfaf0330aa951285042e7ed760221209",
+        "pixelSha256": "c6cc9cd2c7e7fd7d10be41e04663e63e55aaff59c1e81d39d7b93cd618049e2f"
       }
     },
     {
@@ -633,8 +829,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_600_10_00_001_original",
       "backgroundResourceName": "bg_3d_600_10_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-600-10-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-600-10-00-001-original/bg_3d_600_10_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -648,10 +844,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -661,6 +858,19 @@
         "sourceBytes": 846655,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_600_10_00_001_original",
+        "spritePathId": "6785717546966514768",
+        "texturePathId": "7075997851858723036",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2124197,
+        "sha256": "02260512fe54031dbc5fe8eea7f59afa196202982d85796e3c1a319a293b21bc",
+        "pixelSha256": "d3cc91cf30eb6430a98698b6368b8838bbc52f664c705208bd8feb032a0718ab"
       }
     },
     {
@@ -677,8 +887,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_600_10_01_001_original",
       "backgroundResourceName": "bg_3d_600_10_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-600-10-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-600-10-01-001-original/bg_3d_600_10_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -692,10 +902,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -705,6 +916,19 @@
         "sourceBytes": 694654,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_600_10_01_001_original",
+        "spritePathId": "-7820404923610484576",
+        "texturePathId": "-9091549829925501818",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1591490,
+        "sha256": "de28a0baebc5e0c04ee632566d91f21d4459063e20c5aa8bbd04739852043d0f",
+        "pixelSha256": "9a403d07e19257f22426b69792b950d2c863250e4ec2149ccdf6487183c394c7"
       }
     },
     {
@@ -721,8 +945,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_600_10_01_002_original",
       "backgroundResourceName": "bg_3d_600_10_01_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-600-10-01-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-600-10-01-002-original/bg_3d_600_10_01_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -736,10 +960,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -749,6 +974,19 @@
         "sourceBytes": 854013,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_600_10_01_002_original",
+        "spritePathId": "-7864768401247747693",
+        "texturePathId": "6283453416032898952",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2464398,
+        "sha256": "be76f1f258b4837aa6033e802b9683516720906b6f5fceecea1a6867a4ef7163",
+        "pixelSha256": "6c691f865f112cfbc3e4cc851091e755dae38c3f72c62487a633a87342dd85e2"
       }
     },
     {
@@ -765,8 +1003,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_600_10_01_003_original",
       "backgroundResourceName": "bg_3d_600_10_01_003_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-600-10-01-003-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-600-10-01-003-original/bg_3d_600_10_01_003_original.png",
       "scale": 1,
       "position": [
         0,
@@ -780,10 +1018,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -793,6 +1032,19 @@
         "sourceBytes": 766001,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_600_10_01_003_original",
+        "spritePathId": "-3921603820120772620",
+        "texturePathId": "1002269362347123248",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1965975,
+        "sha256": "f261439ea08fac48c76121e43105c15b1b765c62b11731406679d49e5b7c8bd4",
+        "pixelSha256": "23b0d3daa73123a4c0e2c550b4d77406792f9915f055bfb7b4d9aac136bc37f6"
       }
     },
     {
@@ -809,8 +1061,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_601_14_00_001_original",
       "backgroundResourceName": "bg_3d_601_14_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-601-14-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-601-14-00-001-original/bg_3d_601_14_00_001_Original.png",
       "scale": 1,
       "position": [
         0,
@@ -824,10 +1076,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -837,6 +1090,19 @@
         "sourceBytes": 704783,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_601_14_00_001_original",
+        "spritePathId": "-9162782173446690168",
+        "texturePathId": "8732643171100652924",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1742899,
+        "sha256": "ba5f0b005b1bbf990b6eeb9609d1279ca132747ddaa8184dd8165d77fe0f2762",
+        "pixelSha256": "3eec4c453c644c7528486d7376590b190cb8a1f86f1decf4bde86757ad6c9bf1"
       }
     },
     {
@@ -853,8 +1119,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_601_15_00_001_original",
       "backgroundResourceName": "bg_3d_601_15_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-601-15-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-601-15-00-001-original/bg_3d_601_15_00_001_Original.png",
       "scale": 1,
       "position": [
         0,
@@ -868,10 +1134,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -881,6 +1148,19 @@
         "sourceBytes": 792500,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_601_15_00_001_original",
+        "spritePathId": "-4243514211610089586",
+        "texturePathId": "342302065942646316",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1999705,
+        "sha256": "8e9e8acf00dc0a388719f7d7ade23a65293f9330824f78544b0a7b848d20786c",
+        "pixelSha256": "70a2e7c522b5ec5929dbad2e6ae8c7ca18c048424e97b26044c66aa6d66f165e"
       }
     },
     {
@@ -897,8 +1177,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_602_11_00_001_original",
       "backgroundResourceName": "bg_3d_602_11_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-11-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-11-00-001-original/bg_3d_602_11_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -912,10 +1192,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -925,6 +1206,19 @@
         "sourceBytes": 784075,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_602_11_00_001_original",
+        "spritePathId": "8940005977328978094",
+        "texturePathId": "5922476297480049141",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1650420,
+        "sha256": "2c03fa9d0104c9d350111c483887592dbafc85d1398d5254f29c4fd2881fa9eb",
+        "pixelSha256": "1180968b8b098952f4dd2e9df9b9e37e4aeb11416957563b341242c4984b68f2"
       }
     },
     {
@@ -941,8 +1235,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_602_11_01_001_original",
       "backgroundResourceName": "bg_3d_602_11_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-11-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-11-01-001-original/bg_3d_602_11_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -956,10 +1250,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -969,6 +1264,19 @@
         "sourceBytes": 605415,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_602_11_01_001_original",
+        "spritePathId": "-8789300491548364762",
+        "texturePathId": "-3226816131348367502",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1215638,
+        "sha256": "91c8177678b88401a711f184d8fe52a317be6c778574a9ae730fdb6e882d7a29",
+        "pixelSha256": "cb29751eff968a7ee4e321f045c8140aab69518f34ae1e5cac5b03134bb48dfa"
       }
     },
     {
@@ -985,8 +1293,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_602_11_01_002_original",
       "backgroundResourceName": "bg_3d_602_11_01_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-11-01-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-11-01-002-original/bg_3d_602_11_01_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1000,10 +1308,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1013,6 +1322,19 @@
         "sourceBytes": 490085,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_602_11_01_002_original",
+        "spritePathId": "-3928065253756165037",
+        "texturePathId": "3639174771026689842",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1177262,
+        "sha256": "98ea3009a487f2a61da3d27e7c6d7bb10bc82be0b23c34143b64836e293fbd7e",
+        "pixelSha256": "6fb8bb77189cfdad5d5ceaf59c0e6b5cef50d2d559a9178e39a843dbb9360422"
       }
     },
     {
@@ -1029,8 +1351,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_602_11_01_003_original",
       "backgroundResourceName": "bg_3d_602_11_01_003_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-11-01-003-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-11-01-003-original/bg_3d_602_11_01_003_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1044,10 +1366,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1057,6 +1380,19 @@
         "sourceBytes": 618435,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_602_11_01_003_original",
+        "spritePathId": "1412141746328779519",
+        "texturePathId": "-5171698766460451278",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1369920,
+        "sha256": "3a979c81988c85bb420de3d3c337bafd64207d564c6d70f1cd2b4de479842c6f",
+        "pixelSha256": "281d43ac9c2667446b11f2e8153b18c9bcfc8f491ae92a65cbd57d58cd36157d"
       }
     },
     {
@@ -1073,8 +1409,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_602_14_00_001_original",
       "backgroundResourceName": "bg_3d_602_14_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-14-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-14-00-001-original/bg_3d_602_14_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1088,10 +1424,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1101,6 +1438,19 @@
         "sourceBytes": 750459,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_602_14_00_001_original",
+        "spritePathId": "-9206046359811066758",
+        "texturePathId": "-1439592108091557110",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1594014,
+        "sha256": "4b7b2b3749f6beacabedb32819dfac814168b0241a49415659bc86656f0e3534",
+        "pixelSha256": "3e408663ae7bc37a04e5adda52b30ac03f131aa140ae8bfdd660b7d4d85288f8"
       }
     },
     {
@@ -1117,8 +1467,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_602_15_00_001_original",
       "backgroundResourceName": "bg_3d_602_15_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-15-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-602-15-00-001-original/bg_3d_602_15_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1132,10 +1482,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1145,6 +1496,19 @@
         "sourceBytes": 749653,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_602_15_00_001_original",
+        "spritePathId": "6527209202001271358",
+        "texturePathId": "-4710774431221513439",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1643539,
+        "sha256": "3695599c6fcc60555a8759c1c2e781659b5f6cce46aa55a17fb4baf6da3280a4",
+        "pixelSha256": "85d6295d9eba4a442eacd422f8e4a3f66701578f3eca0261d3b4cb2c041a1467"
       }
     },
     {
@@ -1161,8 +1525,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_603_14_00_001_original",
       "backgroundResourceName": "bg_3d_603_14_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-603-14-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-603-14-00-001-original/bg_3d_603_14_00_001_Original.png",
       "scale": 1,
       "position": [
         0,
@@ -1176,10 +1540,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1189,6 +1554,19 @@
         "sourceBytes": 928350,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_603_14_00_001_original",
+        "spritePathId": "2273516141512173530",
+        "texturePathId": "1512635416757843131",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2664547,
+        "sha256": "7c085c22b7548acd266f0a4b0bf3198a39e160d04ea89e0a2d616ef6eac3a068",
+        "pixelSha256": "a4d520a73450c597552478b8a568560ced34c1eaba94e0b6935bbc9dd122fef3"
       }
     },
     {
@@ -1205,8 +1583,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_603_15_00_001_original",
       "backgroundResourceName": "bg_3d_603_15_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-603-15-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-603-15-00-001-original/bg_3d_603_15_00_001_Original.png",
       "scale": 1,
       "position": [
         0,
@@ -1220,10 +1598,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1233,6 +1612,19 @@
         "sourceBytes": 902479,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_603_15_00_001_original",
+        "spritePathId": "-5956694873327745428",
+        "texturePathId": "5048411208833455266",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2507207,
+        "sha256": "8a6049ef6a2bf2cc62eeb24704ee4953d3cace35ab2967b3882759180e64a989",
+        "pixelSha256": "22070406cc5ba808b4d87dd60e24d79da33f66877ea3b571cca3ad3995698e33"
       }
     },
     {
@@ -1249,8 +1641,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_607_14_00_001_original",
       "backgroundResourceName": "bg_3d_607_14_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-607-14-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-607-14-00-001-original/bg_3d_607_14_00_001_Original.png",
       "scale": 1,
       "position": [
         0,
@@ -1264,10 +1656,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1277,6 +1670,19 @@
         "sourceBytes": 222375,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_607_14_00_001_original",
+        "spritePathId": "5715671805011786749",
+        "texturePathId": "9179609532505235076",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 436961,
+        "sha256": "f2ba4f6f1c710a326e1eaf64c0712fd94ced3fe0965cfc09e4073f712f000a44",
+        "pixelSha256": "663ea35b228cd45cf7260cb90481f57b6e867ec94769daae094a06ee71f4861b"
       }
     },
     {
@@ -1293,8 +1699,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_607_15_00_001_original",
       "backgroundResourceName": "bg_3d_607_15_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-607-15-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-607-15-00-001-original/bg_3d_607_15_00_001_Original.png",
       "scale": 1,
       "position": [
         0,
@@ -1308,10 +1714,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1321,6 +1728,19 @@
         "sourceBytes": 249955,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_607_15_00_001_original",
+        "spritePathId": "-8304353764936873446",
+        "texturePathId": "7919083791289116614",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 493156,
+        "sha256": "58c8d453f034184c44502f42e5c848f3431f2c5775726ff9496b487bb0b9de63",
+        "pixelSha256": "cb9bf4f29c7015fe37b29c5f89ee755f1ebb87c0f2b3596039aede97c052e40f"
       }
     },
     {
@@ -1337,8 +1757,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_607_16_00_001_original",
       "backgroundResourceName": "bg_3d_607_16_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-607-16-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-607-16-00-001-original/bg_3d_607_16_00_001_Original.png",
       "scale": 1,
       "position": [
         0,
@@ -1352,10 +1772,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1365,6 +1786,19 @@
         "sourceBytes": 377870,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_607_16_00_001_original",
+        "spritePathId": "-5448201946392473396",
+        "texturePathId": "7839919325594824673",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 690972,
+        "sha256": "cac60af63c738d4e95bc994cd55ec4e150d9dd60f9d6269a78377a889ceea806",
+        "pixelSha256": "b7077efd7e146695e78f4d24b65b78876976f78daf589231074e5b88e3875817"
       }
     },
     {
@@ -1381,8 +1815,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_607_16_01_001_original",
       "backgroundResourceName": "bg_3d_607_16_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-607-16-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-607-16-01-001-original/bg_3d_607_16_01_001_Original.png",
       "scale": 1,
       "position": [
         0,
@@ -1396,10 +1830,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1409,6 +1844,19 @@
         "sourceBytes": 788283,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_607_16_01_001_original",
+        "spritePathId": "-921301053556247002",
+        "texturePathId": "-5769688561194382385",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1709187,
+        "sha256": "df451270a92084e91b150a89e66bfe1b3e0b4b7d69eac1014703203fb0aecebc",
+        "pixelSha256": "440c310afa4c61c10cea982d66f7c4017f19ae9b14a9eb1e6e9a0903f0ec76cb"
       }
     },
     {
@@ -1425,8 +1873,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_609_14_00_001_original",
       "backgroundResourceName": "bg_3d_609_14_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-609-14-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-609-14-00-001-original/bg_3d_609_14_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1440,10 +1888,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1453,6 +1902,19 @@
         "sourceBytes": 787963,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_609_14_00_001_original",
+        "spritePathId": "-1838256867829535059",
+        "texturePathId": "2975698297741943698",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1774836,
+        "sha256": "49186066fa9ee80235bf275ef121b0b61a7cf46d2e5af837b05aabaac2b42454",
+        "pixelSha256": "2a1704e95a5cb35a2beb92b4e1254a50618304f546cfdd709623b5e6558cf0e6"
       }
     },
     {
@@ -1469,8 +1931,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_609_15_01_001_original",
       "backgroundResourceName": "bg_3d_609_15_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-609-15-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-609-15-01-001-original/bg_3d_609_15_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1484,10 +1946,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1497,6 +1960,19 @@
         "sourceBytes": 827961,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_609_15_01_001_original",
+        "spritePathId": "-3591906005643373199",
+        "texturePathId": "2942358743015231151",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1884406,
+        "sha256": "2ca66b93fc1c6c1f4f5da4f7ba5796a3d2833e19376ef7c2f90d7e28d57f86fc",
+        "pixelSha256": "088a96bd3889eef2b5e72eb7a89012611fba8b919abaf2e6911935052b1d1443"
       }
     },
     {
@@ -1513,8 +1989,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_612_00_00_004_original",
       "backgroundResourceName": "bg_3d_612_00_00_004_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-612-00-00-004-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-612-00-00-004-original/bg_3d_612_00_00_004_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1528,10 +2004,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1541,6 +2018,19 @@
         "sourceBytes": 682434,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_612_00_00_004_original",
+        "spritePathId": "1275894433184033304",
+        "texturePathId": "4482464782370639376",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1371889,
+        "sha256": "8037364e4a7429714ecd532ee2c9664d935cedd9e7a9b2844fc4190b81d74a10",
+        "pixelSha256": "2b137652fa72b62cb3d4aaebc2c870f06c111c2fb496494b5f6d2249ac4fda7b"
       }
     },
     {
@@ -1557,8 +2047,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_613_00_00_001_original",
       "backgroundResourceName": "bg_3d_613_00_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-613-00-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-613-00-00-001-original/bg_3d_613_00_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1572,10 +2062,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1585,6 +2076,19 @@
         "sourceBytes": 727430,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_613_00_00_001_original",
+        "spritePathId": "1454307600085436041",
+        "texturePathId": "-5604242570547760131",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1605470,
+        "sha256": "a5ddf6db77d8ffa172e6cecf889b2bd3314f3924a26d0673fd378f97b3692601",
+        "pixelSha256": "a9631fa530bb1ac2e58576e0987263000b988e6c0af7432f8fa37615def8430c"
       }
     },
     {
@@ -1601,8 +2105,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_613_00_01_001_original",
       "backgroundResourceName": "bg_3d_613_00_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-613-00-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-613-00-01-001-original/bg_3d_613_00_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1616,10 +2120,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1629,6 +2134,19 @@
         "sourceBytes": 675899,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_613_00_01_001_original",
+        "spritePathId": "-1810554513502986559",
+        "texturePathId": "-1636219581669546849",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1507764,
+        "sha256": "b258cefd18e7789ae53eac67a48a3dfdfc712f1f970bec53234858aa3f8efe5d",
+        "pixelSha256": "204ed26c0d549cbda398d1a2eeb7e86bb06486fdd02ab83ca88ef339d55431b8"
       }
     },
     {
@@ -1645,8 +2163,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_618_12_00_001_original",
       "backgroundResourceName": "bg_3d_618_12_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-618-12-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-618-12-00-001-original/bg_3d_618_12_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1660,10 +2178,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1673,6 +2192,19 @@
         "sourceBytes": 775976,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_618_12_00_001_original",
+        "spritePathId": "-5406416269417160002",
+        "texturePathId": "-8142446765712259208",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1763655,
+        "sha256": "015eaf20ff23d1c7f240cfd95676577a68e7b3f28af8d8b2c5f8bed73c0f6b74",
+        "pixelSha256": "ce6bf18a4ea5205a38a0fe51c2a87cf86fd39132df5fdd82bc58f891e0901c7d"
       }
     },
     {
@@ -1689,8 +2221,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_618_12_01_001_original",
       "backgroundResourceName": "bg_3d_618_12_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-618-12-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-618-12-01-001-original/bg_3d_618_12_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1704,10 +2236,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1717,6 +2250,19 @@
         "sourceBytes": 799109,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_618_12_01_001_original",
+        "spritePathId": "-3208907695045296159",
+        "texturePathId": "3631753826060537858",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1630491,
+        "sha256": "372360ec055aba78e5a82e6f65d2e1dde4713c45c57d4e3f0792fba51903d23b",
+        "pixelSha256": "925b2a3f2f3e8dd49fa93633076171a9ed5c6927d4b6c3bd173a52db1f23f1f6"
       }
     },
     {
@@ -1733,8 +2279,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_621_00_00_001_original",
       "backgroundResourceName": "bg_3d_621_00_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-00-001-original/bg_3d_621_00_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1748,10 +2294,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1761,6 +2308,19 @@
         "sourceBytes": 730999,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_621_00_00_001_original",
+        "spritePathId": "5934699040796800236",
+        "texturePathId": "-522075342089778316",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1682005,
+        "sha256": "41a1298f636068cd5192bee452fe58633ee6c5a462c4afb8f53784a400f0e003",
+        "pixelSha256": "845e6f35c06ab8bc942d24adb5ea01cc7e2e7419f69cb4094c4428e56574e0c6"
       }
     },
     {
@@ -1777,8 +2337,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_621_00_00_002_original",
       "backgroundResourceName": "bg_3d_621_00_00_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-00-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-00-002-original/bg_3d_621_00_00_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1792,10 +2352,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1805,6 +2366,19 @@
         "sourceBytes": 743631,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_621_00_00_002_original",
+        "spritePathId": "3104190230602428449",
+        "texturePathId": "-8859649680443966439",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1674464,
+        "sha256": "c6de6801c81de6357687d5f05b1c1e74138876d1c7b2f6889919f19df945b8b2",
+        "pixelSha256": "cb0adac7d07b4ce4c08862e608e225e3e8b2a6fa7695e37f5c1f34dc0d830e3f"
       }
     },
     {
@@ -1821,8 +2395,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_621_00_00_003_original",
       "backgroundResourceName": "bg_3d_621_00_00_003_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-00-003-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-00-003-original/bg_3d_621_00_00_003_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1836,10 +2410,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1849,6 +2424,19 @@
         "sourceBytes": 783256,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_621_00_00_003_original",
+        "spritePathId": "8956989640485872549",
+        "texturePathId": "-3072902055556515861",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1741189,
+        "sha256": "09eb949292b640482b9ef662dfcc4447b130fc253ba208f9672bdcd9455ca27f",
+        "pixelSha256": "064d7de087c1919ba37f03fc32019bbd56b336b70832e442fdb98aade537943e"
       }
     },
     {
@@ -1865,8 +2453,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_621_00_00_004_original",
       "backgroundResourceName": "bg_3d_621_00_00_004_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-00-004-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-00-004-original/bg_3d_621_00_00_004_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1880,10 +2468,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1893,6 +2482,19 @@
         "sourceBytes": 682614,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_621_00_00_004_original",
+        "spritePathId": "-2854195663765438430",
+        "texturePathId": "-3505229927308735579",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1458604,
+        "sha256": "692f257b9e3dfeccc22686ae97108094ff745955215599c2c5c8e41ad47c15ef",
+        "pixelSha256": "e0ddba7b8cc206e53fd886cb01af6f0b787a2c7e31857b0a253c7b1319cbdfa0"
       }
     },
     {
@@ -1909,8 +2511,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_621_00_01_001_original",
       "backgroundResourceName": "bg_3d_621_00_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-01-001-original/bg_3d_621_00_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1924,10 +2526,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1937,6 +2540,19 @@
         "sourceBytes": 697859,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_621_00_01_001_original",
+        "spritePathId": "-2855739083523244880",
+        "texturePathId": "-5531080126060522541",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1517485,
+        "sha256": "796e8e0b2ca8d0539982037838e279cb5f3c12d613f3b9bb74808089182c87ee",
+        "pixelSha256": "abcb6db7f881d3e34daa7cab1b4614600f3315f50a37d81e6929f090e4503576"
       }
     },
     {
@@ -1953,8 +2569,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_621_00_01_002_original",
       "backgroundResourceName": "bg_3d_621_00_01_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-01-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-01-002-original/bg_3d_621_00_01_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -1968,10 +2584,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -1981,6 +2598,19 @@
         "sourceBytes": 753933,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_621_00_01_002_original",
+        "spritePathId": "3393607658246364960",
+        "texturePathId": "-4098533802302275916",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1588256,
+        "sha256": "dc2c1c6d65a44032239fc3c6f2f5aaf57482f679afde41c32e558b6d775432b5",
+        "pixelSha256": "5175d744f83374fbd760bab0f190e7e76ae4019097d6ed52b985ee6ad2849cf5"
       }
     },
     {
@@ -1997,8 +2627,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_621_00_01_003_original",
       "backgroundResourceName": "bg_3d_621_00_01_003_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-01-003-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-621-00-01-003-original/bg_3d_621_00_01_003_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2012,10 +2642,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2025,6 +2656,19 @@
         "sourceBytes": 788742,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_621_00_01_003_original",
+        "spritePathId": "-6640509205804663051",
+        "texturePathId": "6359440956853650623",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1782276,
+        "sha256": "4dbc8fd9ba5153b88cd468c431b5b07bff09def661dc90126c3672d0109c8f8e",
+        "pixelSha256": "cb7eabebe3157824de53ab376e6024f9d01e005e726e4fdaa278cb97e19e0c1e"
       }
     },
     {
@@ -2041,8 +2685,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_625_00_00_001_original",
       "backgroundResourceName": "bg_3d_625_00_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-625-00-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-625-00-00-001-original/bg_3d_625_00_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2056,10 +2700,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2069,6 +2714,19 @@
         "sourceBytes": 964954,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_625_00_00_001_original",
+        "spritePathId": "3487327914666265738",
+        "texturePathId": "651568311816704743",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2591040,
+        "sha256": "3db05e9780a60482fbffbb645919bcabdf506f32a0a48a8c209128deef5ee6fe",
+        "pixelSha256": "60dae282813c01bc6999bca9267bc51bad8b36ef82d0b100e3391cf207f628ef"
       }
     },
     {
@@ -2085,8 +2743,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_625_00_01_001_original",
       "backgroundResourceName": "bg_3d_625_00_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-625-00-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-625-00-01-001-original/bg_3d_625_00_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2100,10 +2758,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2113,6 +2772,19 @@
         "sourceBytes": 951093,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_625_00_01_001_original",
+        "spritePathId": "5773886352476751240",
+        "texturePathId": "-3981140543074796813",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2511597,
+        "sha256": "d64bbb41bb216713720023705dc07e74a8833683437ee05845a0d1a277afe8ab",
+        "pixelSha256": "d1669f5a7fca6a91371cef0c8c61b5fee7824e4d1cd03ba3638893a7b3fc872b"
       }
     },
     {
@@ -2129,8 +2801,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_637_00_00_001_original",
       "backgroundResourceName": "bg_3d_637_00_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-637-00-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-637-00-00-001-original/bg_3d_637_00_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2144,10 +2816,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2157,6 +2830,19 @@
         "sourceBytes": 881573,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_637_00_00_001_original",
+        "spritePathId": "-7918847915935029872",
+        "texturePathId": "-4424460264435281088",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2040811,
+        "sha256": "ff9e64e2ccedfdd43c0ec163018ea4f9d888ebf8d7f2dd35b74c56d133254467",
+        "pixelSha256": "27ec3e3b7fc705f152e8e35b6b0866eb3a837dc2dbd0bf29dcf67ff3c2b9de7a"
       }
     },
     {
@@ -2173,8 +2859,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_637_00_00_002_original",
       "backgroundResourceName": "bg_3d_637_00_00_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-637-00-00-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-637-00-00-002-original/bg_3d_637_00_00_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2188,10 +2874,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2201,6 +2888,19 @@
         "sourceBytes": 891555,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_637_00_00_002_original",
+        "spritePathId": "2058924166841617167",
+        "texturePathId": "4685609290978839819",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2071598,
+        "sha256": "a806bb2314f751fee2fd5c5a01db1a3a4bac5e484dd9034dbb9b145566b7adec",
+        "pixelSha256": "70914247fa9eaef4ff1b9a1516ca0cabf92ad1756e2f04cfbcfd2a026fa3c21d"
       }
     },
     {
@@ -2217,8 +2917,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_637_00_00_003_original",
       "backgroundResourceName": "bg_3d_637_00_00_003_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-637-00-00-003-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-637-00-00-003-original/bg_3d_637_00_00_003_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2232,10 +2932,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2245,6 +2946,19 @@
         "sourceBytes": 710705,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_637_00_00_003_original",
+        "spritePathId": "-969952478070424479",
+        "texturePathId": "-7074836534438745907",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1554702,
+        "sha256": "6349b92ea4fedbdb21df5a6dc7e79a97494c22ec4960549bda54e22f4876391b",
+        "pixelSha256": "5cbee06c515649850ff762fa21185d029b18da7628668a4f10491b07a4ccdecc"
       }
     },
     {
@@ -2261,8 +2975,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_638_00_00_001_original",
       "backgroundResourceName": "bg_3d_638_00_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-638-00-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-638-00-00-001-original/bg_3d_638_00_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2276,10 +2990,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2289,6 +3004,19 @@
         "sourceBytes": 720501,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_638_00_00_001_original",
+        "spritePathId": "-4546642466079258614",
+        "texturePathId": "9155642559937150197",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1598024,
+        "sha256": "33924b73c529f48b4c45fd026e27548dfac7c5881a3f0fe4d3ccf859c547b0f7",
+        "pixelSha256": "929619e9b1152e33827f0e5ef9368a47827cfbd87097464947932f8ae53dbb41"
       }
     },
     {
@@ -2305,8 +3033,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_639_00_00_001_original",
       "backgroundResourceName": "bg_3d_639_00_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-639-00-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-639-00-00-001-original/bg_3d_639_00_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2320,10 +3048,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2333,6 +3062,19 @@
         "sourceBytes": 742556,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_639_00_00_001_original",
+        "spritePathId": "-7633933162607384630",
+        "texturePathId": "1371643803490569840",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1504618,
+        "sha256": "51b22335d23743f18aaf7a108784667657c8336824e46ddaec1bf81c8206470f",
+        "pixelSha256": "7da8955d64ec108bb7cbb095d829d4cb70605532f5a11c000a0ca479cf9a0511"
       }
     },
     {
@@ -2349,8 +3091,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_639_00_00_002_original",
       "backgroundResourceName": "bg_3d_639_00_00_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-639-00-00-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-639-00-00-002-original/bg_3d_639_00_00_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2364,10 +3106,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2377,6 +3120,19 @@
         "sourceBytes": 762800,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_639_00_00_002_original",
+        "spritePathId": "-2173402514111137408",
+        "texturePathId": "-2268487661277720415",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1768101,
+        "sha256": "56bbf488c8266a175f5593545079709c908d47f2eb6adb832b65369ae58e3645",
+        "pixelSha256": "3dd929492b61aafb6a6b94b2d972e2aa19498171f9889ff557a8de1d3aeaf424"
       }
     },
     {
@@ -2393,8 +3149,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_641_00_01_001_originall",
       "backgroundResourceName": "bg_3d_641_00_01_001_originall",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-641-00-01-001-originall/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-641-00-01-001-originall/bg_3d_641_00_01_001_originall.png",
       "scale": 1,
       "position": [
         0,
@@ -2408,10 +3164,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2421,6 +3178,19 @@
         "sourceBytes": 772598,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_641_00_01_001_originall",
+        "spritePathId": "-8011997694425394309",
+        "texturePathId": "-2444439529843420856",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1558157,
+        "sha256": "ba9bfe0b4c6db4ba2d72953686772eb7eb38f048437b85742b7cc037d2776075",
+        "pixelSha256": "0a686290bff45698bfba2be10ad4aab38b522fd777a091c71bee72749a7efdbc"
       }
     },
     {
@@ -2437,8 +3207,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_650_00_01_001_original",
       "backgroundResourceName": "bg_3d_650_00_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-650-00-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-650-00-01-001-original/bg_3d_650_00_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2452,10 +3222,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2465,6 +3236,19 @@
         "sourceBytes": 711794,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_650_00_01_001_original",
+        "spritePathId": "5374018593615825247",
+        "texturePathId": "4347891603601480364",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1572211,
+        "sha256": "f6b55fedf7b29c1fcdbd05979ca589f5c1505ab4cb78e25734b2798981e412f8",
+        "pixelSha256": "cdaf50ab9db0da6417dabbb0bc7cd0a6dd6064fab59d2bf36291dec380e8c8f1"
       }
     },
     {
@@ -2481,8 +3265,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_650_01_00_001_original",
       "backgroundResourceName": "bg_3d_650_01_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-650-01-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-650-01-00-001-original/bg_3d_650_01_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2496,10 +3280,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2509,6 +3294,19 @@
         "sourceBytes": 714259,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_650_01_00_001_original",
+        "spritePathId": "-3161131338002803689",
+        "texturePathId": "4337064362192613417",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1540458,
+        "sha256": "f566df78f257541c9e3f28147b3e2a6f6ddf45d9bee005769c5c7944038887fb",
+        "pixelSha256": "793784f8d01ae2f856b5a1fe4a74267892181f640da692e755b32c49252caf9f"
       }
     },
     {
@@ -2525,8 +3323,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_650_01_01_001_original",
       "backgroundResourceName": "bg_3d_650_01_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-650-01-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-650-01-01-001-original/bg_3d_650_01_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2540,10 +3338,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2553,6 +3352,19 @@
         "sourceBytes": 786867,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_650_01_01_001_original",
+        "spritePathId": "-6911212283135386773",
+        "texturePathId": "4615569149846232756",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1945711,
+        "sha256": "97eedc7af03b1f17c8cb37850debe962b44cde50bc17c666c1bab79751c0a797",
+        "pixelSha256": "7abbf645215f5a70d2cbc8a3c38bd119d99b8aa4afa4a3ee0fecb04ca6620aea"
       }
     },
     {
@@ -2569,8 +3381,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_650_02_00_001_original",
       "backgroundResourceName": "bg_3d_650_02_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-650-02-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-650-02-00-001-original/bg_3d_650_02_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2584,10 +3396,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2597,6 +3410,19 @@
         "sourceBytes": 780755,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_650_02_00_001_original",
+        "spritePathId": "1557986935358350805",
+        "texturePathId": "-8774362256237873000",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1601543,
+        "sha256": "eb8ca76d54dd6cf75de55cbc2862467f7dffdc1f037efe1c2c820d900ce06bb3",
+        "pixelSha256": "b87c70a30affece0e9ec024cafdc942b08d24ee9de55c9861fcb0fec09a6d980"
       }
     },
     {
@@ -2613,8 +3439,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_650_02_01_001_original",
       "backgroundResourceName": "bg_3d_650_02_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-650-02-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-650-02-01-001-original/bg_3d_650_02_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2628,10 +3454,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2641,6 +3468,19 @@
         "sourceBytes": 802395,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_650_02_01_001_original",
+        "spritePathId": "-4114696848849091350",
+        "texturePathId": "-6239994005066213710",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1896205,
+        "sha256": "dc8b772492b61315af65e7e55c4e71924bd6ff74ab90e2152495e22443d858e0",
+        "pixelSha256": "880b932f8a82e4bfe179f57427fa7af5c6175892d3d451364d5fd72b4edee072"
       }
     },
     {
@@ -2657,8 +3497,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_652_00_00_001_original",
       "backgroundResourceName": "bg_3d_652_00_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-00-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-00-00-001-original/bg_3d_652_00_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2672,10 +3512,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2685,6 +3526,19 @@
         "sourceBytes": 781255,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_652_00_00_001_original",
+        "spritePathId": "-7170019827321816921",
+        "texturePathId": "-1299543832590006864",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1655838,
+        "sha256": "9196e41c94e3f4e232bfa99e015a555e4b60ae91fa4b890afafae1402be4312b",
+        "pixelSha256": "d158bdf18dddb66e8014b42b7f333a6d819840ddc6f7f86e0bd112a1cba5583b"
       }
     },
     {
@@ -2701,8 +3555,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_652_00_01_001_original",
       "backgroundResourceName": "bg_3d_652_00_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-00-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-00-01-001-original/bg_3d_652_00_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2716,10 +3570,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2729,6 +3584,19 @@
         "sourceBytes": 919996,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_652_00_01_001_original",
+        "spritePathId": "-8678185782029037654",
+        "texturePathId": "7363369910203567947",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2181966,
+        "sha256": "55067d62d46e6d81e172de56e167073194910f1011a64fd2a1caf12e5823d5df",
+        "pixelSha256": "456075b3ff805b1ec10b53d880c160029a804dbe59c150d1d4cd51796eb2286a"
       }
     },
     {
@@ -2745,8 +3613,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_652_00_01_002_original",
       "backgroundResourceName": "bg_3d_652_00_01_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-00-01-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-00-01-002-original/bg_3d_652_00_01_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2760,10 +3628,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2773,6 +3642,19 @@
         "sourceBytes": 647144,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_652_00_01_002_original",
+        "spritePathId": "-3293137052133604953",
+        "texturePathId": "-5188967930761290429",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1427577,
+        "sha256": "d4521188e52cf881f9ad50b44991ba7bcc11b1243ac216d9e297acdeadfb9bac",
+        "pixelSha256": "83a2c84a67e47871739424e47d1835640a2e62c980989f49388cf99351d47f9e"
       }
     },
     {
@@ -2789,8 +3671,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_652_00_01_003_original",
       "backgroundResourceName": "bg_3d_652_00_01_003_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-00-01-003-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-00-01-003-original/bg_3d_652_00_01_003_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2804,10 +3686,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2817,6 +3700,19 @@
         "sourceBytes": 722727,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_652_00_01_003_original",
+        "spritePathId": "3360192772301187352",
+        "texturePathId": "-3633658402059602760",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1475424,
+        "sha256": "fccfffc9f448765bb31231183fd2857519646f66e97631bb27a489cc1231a728",
+        "pixelSha256": "3895831072592a81fa5b7625c426e8896897cdfc98f7054d5556a2f0bda11adf"
       }
     },
     {
@@ -2833,8 +3729,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_652_01_00_001_original",
       "backgroundResourceName": "bg_3d_652_01_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-01-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-01-00-001-original/bg_3d_652_01_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2848,10 +3744,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2861,6 +3758,19 @@
         "sourceBytes": 756188,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_652_01_00_001_original",
+        "spritePathId": "-6641585082402390606",
+        "texturePathId": "3450187776934139220",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1852830,
+        "sha256": "62283101d1cf4dd3b99d20d953029011bf2ff049675d08ab64061689e9369d24",
+        "pixelSha256": "4d51f6d862529728075e7ffaa32618fcb419c0e9136699579bac2f260ef43666"
       }
     },
     {
@@ -2877,8 +3787,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_652_01_01_001_original",
       "backgroundResourceName": "bg_3d_652_01_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-01-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-01-01-001-original/bg_3d_652_01_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2892,10 +3802,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2905,6 +3816,19 @@
         "sourceBytes": 789373,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_652_01_01_001_original",
+        "spritePathId": "-822380861553202780",
+        "texturePathId": "-7417509437285575775",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1746289,
+        "sha256": "5b6fa84a62aefb80269e82b46b0cc18eb110edea7923ee30d2e5e6c56004682b",
+        "pixelSha256": "c06393be8b6c7da8627b5a89c4ab4fd71b2aad0b8a8ba6c7b079e0c3153ca54b"
       }
     },
     {
@@ -2921,8 +3845,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_652_01_01_002_original",
       "backgroundResourceName": "bg_3d_652_01_01_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-01-01-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-652-01-01-002-original/bg_3d_652_01_01_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2936,10 +3860,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2949,6 +3874,19 @@
         "sourceBytes": 731533,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_652_01_01_002_original",
+        "spritePathId": "-5581765595954125395",
+        "texturePathId": "-2105225061902204765",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1766983,
+        "sha256": "fcfeac5d26bae6faf891623e0b8248be3387661d66f3d30eabdce0a234658cf9",
+        "pixelSha256": "16b21ea9329aff744325fa854ac4ddf99df7b4fcf60dab1d3d19c4ede9e2fb5e"
       }
     },
     {
@@ -2965,8 +3903,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_653_00_00_001_original",
       "backgroundResourceName": "bg_3d_653_00_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-653-00-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-653-00-00-001-original/bg_3d_653_00_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -2980,10 +3918,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -2993,6 +3932,19 @@
         "sourceBytes": 441149,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_653_00_00_001_original",
+        "spritePathId": "-3087500507001738397",
+        "texturePathId": "7136191729707293544",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1142910,
+        "sha256": "ddf350758cb247156f7508dec378f81557531c2733ac45cb224d73c6f01806b7",
+        "pixelSha256": "978552d30cb6975c5b6defb163db3e0a000dbd81a5481af286ef7b788e7ea24f"
       }
     },
     {
@@ -3009,8 +3961,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_654_00_01_001_original",
       "backgroundResourceName": "bg_3d_654_00_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-654-00-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-654-00-01-001-original/bg_3d_654_00_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3024,10 +3976,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3037,6 +3990,19 @@
         "sourceBytes": 782251,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_654_00_01_001_original",
+        "spritePathId": "-2759070349815740784",
+        "texturePathId": "3783381066560995097",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1756421,
+        "sha256": "866d37b5a2b0ec091b96053e7c43bbcfc0f0c9c137b6846dfb6d7aab3a73b574",
+        "pixelSha256": "0aff67753133fccfc4aa28014c773b52875172e9e49c1c671253084408a9c56e"
       }
     },
     {
@@ -3053,8 +4019,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_654_00_01_002_original",
       "backgroundResourceName": "bg_3d_654_00_01_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-654-00-01-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-654-00-01-002-original/bg_3d_654_00_01_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3068,10 +4034,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3081,6 +4048,19 @@
         "sourceBytes": 820204,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_654_00_01_002_original",
+        "spritePathId": "7109479824698437929",
+        "texturePathId": "2414155469547001472",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2001279,
+        "sha256": "b9c5e4810c1387acce859d597eab8171071ec8387219116164d96d1bee1bc7c3",
+        "pixelSha256": "32cc3840e79be529f598eea9ae8a54f22a3b3631582da5c7f9113f7e707585f6"
       }
     },
     {
@@ -3097,8 +4077,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_654_00_01_003_original",
       "backgroundResourceName": "bg_3d_654_00_01_003_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-654-00-01-003-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-654-00-01-003-original/bg_3d_654_00_01_003_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3112,10 +4092,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3125,6 +4106,19 @@
         "sourceBytes": 772408,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_654_00_01_003_original",
+        "spritePathId": "3043409966418916459",
+        "texturePathId": "9088153230023467366",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1923600,
+        "sha256": "e95d0d35543c75fe7e3b49f1e00a86c7b1278601013d3be70e9ba6c847ffda5e",
+        "pixelSha256": "7946c0898a6f01548928c23dc0d0d504a58340c55a0d66f87a8331633a90f841"
       }
     },
     {
@@ -3141,8 +4135,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_654_01_01_001_original",
       "backgroundResourceName": "bg_3d_654_01_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-654-01-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-654-01-01-001-original/bg_3d_654_01_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3156,10 +4150,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3169,6 +4164,19 @@
         "sourceBytes": 772657,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_654_01_01_001_original",
+        "spritePathId": "-4770468402939576204",
+        "texturePathId": "-4055675504308247223",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1692975,
+        "sha256": "1ba1d70c2ffc6250e63f202ab4347516a2fa4c11a530bf64619d89f45559bc58",
+        "pixelSha256": "7c18efdaa9a38971411aebede2fc4bb516d36c6d585a005ce19b412320464f73"
       }
     },
     {
@@ -3185,8 +4193,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_656_00_00_001_original",
       "backgroundResourceName": "bg_3d_656_00_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-656-00-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-656-00-00-001-original/bg_3d_656_00_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3200,10 +4208,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3213,6 +4222,19 @@
         "sourceBytes": 822141,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_656_00_00_001_original",
+        "spritePathId": "-4452561312853527964",
+        "texturePathId": "-877818191780809155",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 2158596,
+        "sha256": "72e7b1d5c2ecdb12470f2820d9372199fde76d4ae7537826170904ca98766b5e",
+        "pixelSha256": "b92672f8e65d7ce1925ceaf54335945779856a6ea27571d1c888c08614f16d92"
       }
     },
     {
@@ -3229,8 +4251,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_656_00_00_002_original",
       "backgroundResourceName": "bg_3d_656_00_00_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-656-00-00-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-656-00-00-002-original/bg_3d_656_00_00_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3244,10 +4266,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3257,6 +4280,19 @@
         "sourceBytes": 734015,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_656_00_00_002_original",
+        "spritePathId": "-390892413135689802",
+        "texturePathId": "7891038361538668110",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1603315,
+        "sha256": "5909acd4a0e2f1d954ee46e2c0f9ad1260d7b54a01fc7f0bb71247ecee5f8112",
+        "pixelSha256": "56e7f51ebabd4414c7b640fe12400d51e674c275a18f911b3997da8dcd1ae004"
       }
     },
     {
@@ -3273,8 +4309,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_656_00_01_001_original",
       "backgroundResourceName": "bg_3d_656_00_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-656-00-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-656-00-01-001-original/bg_3d_656_00_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3288,10 +4324,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3301,6 +4338,19 @@
         "sourceBytes": 731764,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_656_00_01_001_original",
+        "spritePathId": "-2697899352933503717",
+        "texturePathId": "7324940385908322475",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1818703,
+        "sha256": "115f98e79bd2eb6b442125599122461bda4fd99b621e2c87563fbd37526c24bb",
+        "pixelSha256": "70a3fb1c9a0b6aba73414356b557057f8d372106b05e8c7d87f23fce9024d14e"
       }
     },
     {
@@ -3317,8 +4367,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_656_00_01_002_original",
       "backgroundResourceName": "bg_3d_656_00_01_002_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-656-00-01-002-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-656-00-01-002-original/bg_3d_656_00_01_002_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3332,10 +4382,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3345,6 +4396,19 @@
         "sourceBytes": 639772,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_656_00_01_002_original",
+        "spritePathId": "-7862914459509584109",
+        "texturePathId": "8331475008564808540",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1507520,
+        "sha256": "19e5dc1f6d5a04a961948478c9f4c74b782b56d6c597a7eb504157ecbc0069b5",
+        "pixelSha256": "d0473e31bd031df9988b2b01db70813ccb8d7caf1fea9862a000b4798cd127cb"
       }
     },
     {
@@ -3361,8 +4425,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_658_00_00_001_original",
       "backgroundResourceName": "bg_3d_658_00_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-658-00-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-658-00-00-001-original/bg_3d_658_00_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3376,10 +4440,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3389,6 +4454,19 @@
         "sourceBytes": 724318,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_658_00_00_001_original",
+        "spritePathId": "3206257493547096750",
+        "texturePathId": "-1124276756748601625",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1338872,
+        "sha256": "fa35d71350c3ccbed7af61b6a0c45d14cf5e285734092a51ea72513a4fe9d204",
+        "pixelSha256": "e38e9d642379a1643aea3696159408fcf435418d5bd5d7aaa8d6d9a832bd8d0e"
       }
     },
     {
@@ -3405,8 +4483,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_689_13_00_001_original",
       "backgroundResourceName": "bg_3d_689_13_00_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-689-13-00-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-689-13-00-001-original/bg_3d_689_13_00_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3420,10 +4498,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3433,6 +4512,19 @@
         "sourceBytes": 818198,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_689_13_00_001_original",
+        "spritePathId": "-8735181615985157750",
+        "texturePathId": "-1520918967018336755",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1848386,
+        "sha256": "f24fae45ed7cfe42f1839fca6435182c4d6583a0f7166ea9b24f858ed05fd021",
+        "pixelSha256": "2382a243491a220664dca25386ec88dc768c5d9cdb0d9584a9e48d520159a3b6"
       }
     },
     {
@@ -3449,8 +4541,8 @@
       "official": true,
       "assetBundleName": "gallery/library/diorama_background/bg_3d_689_13_01_001_original",
       "backgroundResourceName": "bg_3d_689_13_01_001_original",
-      "type": "gltf",
-      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-689-13-01-001-original/scene.gltf",
+      "type": "image",
+      "url": "./stages/official/gallery-diorama-diorama-background-bg-3d-689-13-01-001-original/bg_3d_689_13_01_001_original.png",
       "scale": 1,
       "position": [
         0,
@@ -3464,10 +4556,11 @@
       ],
       "dynamic": {
         "expected": false,
-        "status": "product-presentation",
+        "status": "static",
         "evidence": [
-          "dependency-closed official bundle product",
-          "official-image-plane"
+          "Native bundle contains only one Texture2D and one Sprite, no 3D scene or omitted components.",
+          "Existing release PNG matches the native Steam Sprite pixel-for-pixel; see native-gallery audit.",
+          "Displayed as an aspect-preserving screen-space 2D backdrop, not a reconstructed 3D scene."
         ]
       },
       "product": {
@@ -3477,6 +4570,19 @@
         "sourceBytes": 848413,
         "externalCabCount": 0,
         "syntheticMarker": false
+      },
+      "nativeImage": {
+        "schema": "magius.native-image-background.v1",
+        "sourceType": "Sprite",
+        "sourceRegion": "steam-jp",
+        "sourceBundle": "gallery/library/diorama_background/bg_3d_689_13_01_001_original",
+        "spritePathId": "-5594710772892903245",
+        "texturePathId": "1457693299206712148",
+        "width": 2048,
+        "height": 1000,
+        "byteLength": 1988957,
+        "sha256": "881357bda1c8773712cf50b91e60e52f4a3a0c32165ee4d11bf1131a542c2ace",
+        "pixelSha256": "41cee6e7a3fa90d8e0184756a7bf62282e5649f75421d36baf4bf77fdbc2c5b9"
       }
     }
   ],

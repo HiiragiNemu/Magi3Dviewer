@@ -27,6 +27,10 @@ try{
  await page.goto(base+'?diagnostic=pose-editor&runtimeDelivery=release',{waitUntil:'domcontentloaded',timeout:90000})
  await page.waitForFunction(()=>window.scene?.characterSelected?.character?.userData?.characterId===100107&&window.magiusPoseInspection,{timeout:180000})
  await page.waitForSelector('#position-controls-toggle',{visible:true,timeout:30000});assert.equal(await page.$('#viewport-editor-launch'),null)
+ // Pin the user-facing language before layout measurements and exact label
+ // assertions. A cloud runner's English default is not a UI regression.
+ assert.deepEqual(await page.select('#language-toggle','zh-CN'),['zh-CN'])
+ await page.waitForFunction(()=>document.documentElement.lang==='zh-CN',{timeout:10000})
  const frames=n=>page.evaluate(n=>new Promise(resolve=>{let i=0;const tick=()=>++i>=n?resolve():requestAnimationFrame(tick);requestAnimationFrame(tick)}),n)
  const inspect=()=>page.evaluate(()=>window.magiusPoseInspection())
  const click=async selector=>{await page.waitForSelector(selector,{visible:true,timeout:20000});await page.click(selector);await frames(3)}

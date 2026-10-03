@@ -1189,15 +1189,12 @@ function detectInitialLocale(): UiLocale {
         const saved = localStorage.getItem(LOCALE_STORAGE_KEY)
         if (isUiLocale(saved)) return saved
     } catch {
-        // Fall through to browser-language detection.
+        // Use the site default when browser storage is unavailable.
     }
 
-    const languages = navigator.languages?.length
-        ? navigator.languages
-        : [navigator.language]
-    if (languages.some(language => language.toLowerCase().startsWith('zh'))) return 'zh-CN'
-    if (languages.some(language => language.toLowerCase().startsWith('ja'))) return 'ja-JP'
-    return 'en'
+    // Chinese is the product default, independent of the browser or CI locale.
+    // A language explicitly selected and saved by the user still takes priority.
+    return 'zh-CN'
 }
 
 function isUiLocale(value: string | null): value is UiLocale {

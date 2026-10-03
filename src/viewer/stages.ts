@@ -1,6 +1,7 @@
 import { getLoadingTask, startLoadingTask, readLoadingResponse, yieldLoadingFrame } from '../../magia-exedra-character-three/loadingProgress.ts'
 import * as THREE from 'three'
 import { enableRigidStageCulling } from './stageRigidCulling'
+import { loadNativeImageBackground, validateNativeImageBackground, type NativeImageBackground } from './stageNativeImage'
 import { batchStaticStageMeshes, hasStageRuntimeMeshWriters } from './stageStaticBatching'
 import { applyStageNativeVisibility, type StageNativeVisibilityProfile } from './stageNativeVisibility'
 import { captureStageFields, captureStageRecord, captureStageUniforms } from './stageCommitState'
@@ -317,7 +318,9 @@ export interface StageDefinition {
     backgroundResourceName?: string
     /** Exact AssetBundle-manifest evidence retained with exported stages. */
     bundleProvenance?: StageBundleProvenance
-    type: 'procedural' | 'gltf' | 'fbx' | 'group'
+    type: 'procedural' | 'gltf' | 'fbx' | 'group' | 'image'
+    /** Verified pure native Sprite backgrounds have no missing 3D geometry. */
+    nativeImage?: NativeImageBackground
     preset?: 'sky-reference' | 'studio' | 'battle-arena'
     url?: string
     assets?: StageAssetDefinition[]
@@ -536,6 +539,7 @@ let lastStageLoadFailure: {
 } | undefined
 export type StageVisibleContentClassification =
     | 'formal-scene'
+    | 'native-2d-background'
     | 'product-presentation'
     | 'incomplete-product'
     | 'empty-geometry'
@@ -809,6 +813,17 @@ function createStageSelectorOption(definition: StageDefinition) {
     option.dataset.official = definition.official ? 'true' : 'false'
     option.dataset.dynamic = definition.dynamic?.status ?? 'unspecified'
     option.dataset.i18nIgnore = 'true'
+    if (definition.type === 'image') {
+        try {
+            validateNativeImageBackground(definition)
+            option.textContent += getUiLocale() === 'en' ? ' · 2D background' : ' · 2D 背景'
+            option.dataset.availability = 'native-2d-background'
+            option.title = getUiLocale() === 'zh-CN' ? '原生二维图片背景，完整保留比例；不是三维场景。' : 'Original 2D image, full aspect preserved; not a 3D scene.'
+        } catch {
+            option.disabled = true
+            option.title = 'Native image identity is unverified.'
+        }
+    }
     // A tested drawable carrier may be entered while fidelity work continues.
     // Do not equate entry readiness with recovered animation/effects, or enable
     // untested, empty and presentation-only carriers merely because a URL exists.
@@ -1028,7 +1043,11 @@ function inspectStageVisibleContent(
         && materialSlotCount > 0
         && mappedMaterialSlotCount === 0,
     )
-    const classification: StageVisibleContentClassification = productPresentation
+    const nativeImage = definition.type === 'image' && object.userData.nativeImageBackground?.id === definition.id
+        && object.userData.nativeImageBackground?.sha256 === definition.nativeImage?.sha256
+    const classification: StageVisibleContentClassification = nativeImage
+        ? 'native-2d-background'
+        : productPresentation
         ? 'product-presentation'
         : meshes.length === 0
             ? 'empty-geometry'
@@ -1036,6 +1055,7 @@ function inspectStageVisibleContent(
                 ? 'incomplete-product'
                 : 'formal-scene'
     const reason = {
+        'native-2d-background': 'verified original 2D Sprite displayed as a screen-space background, not 3D geometry',
         'product-presentation': 'catalog identifies a marker/product-presentation, not formal scene content',
         'empty-geometry': 'loaded candidate contains no mesh geometry',
         'incomplete-product': 'official geometry is present but material/profile closure is pending',
@@ -1049,7 +1069,7 @@ function inspectStageVisibleContent(
     const snapshot: StageVisibleContentSnapshot = {
         stageId: definition.id,
         classification,
-        accepted: classification === 'formal-scene'
+        accepted: (classification === 'formal-scene' || classification === 'native-2d-background')
             && drawableMeshCount > 0
             && visibleMeshCount > 0,
         reason,
@@ -1079,6 +1099,11 @@ function inspectStageVisibleContent(
 }
 
 function updateStageCameraEvidence(inspection: StageVisibleContentInspection) {
+    if (inspection.snapshot.classification === 'native-2d-background') {
+        inspection.snapshot.cameraFrustumMeshCount = 1
+        inspection.snapshot.bounds = null
+        return
+    }
     scene.camera.updateMatrixWorld(true)
     const projectionView = new THREE.Matrix4().multiplyMatrices(
         scene.camera.projectionMatrix,
@@ -2005,6 +2030,7 @@ function prepareStageObject(object: THREE.Object3D, stageLayer?: number) {
         const mesh = child as THREE.Mesh
         if (!mesh.isMesh) return
         mesh.castShadow = mesh.userData.stageCastShadow ?? true
+        if (mesh.userData.nativeImageBackground) return
         mesh.receiveShadow = mesh.userData.stageReceiveShadow ?? true
         enableRigidStageCulling(mesh)
 
@@ -2081,6 +2107,7 @@ async function loadExternalStage(
     definition: StageDefinition,
     signal: AbortSignal,
 ): Promise<LoadedExternalStage> {
+    if (definition.type === 'image') return loadNativeImageBackground(definition, signal)
     let object: THREE.Object3D
     if (definition.type === 'group') {
         if (!definition.assets?.length) throw new Error(`Stage ${definition.id} has no asset parts`)

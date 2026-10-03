@@ -24,6 +24,7 @@ fs.mkdirSync(evidence, {recursive: true})
 const types = {'.html':'text/html', '.js':'text/javascript', '.json':'application/json', '.css':'text/css', '.png':'image/png', '.webp':'image/webp', '.jpg':'image/jpeg', '.woff2':'font/woff2'}
 let server, browser, page, before, after, profileProof, geometryProofs = []
 const errors = [], rejectedRepositoryRequests = [], responses = [], failures = [], finished = new Set()
+const galleryRows = []
 let result = {passed: false, site}
 
 // The loader may ADD the two build-owned animation defaults. Compare every
@@ -187,10 +188,76 @@ try {
   assert.equal(after.pixelRatio,before.pixelRatio)
   assert.equal(after.antialiasing,before.antialiasing)
   await page.screenshot({path:path.join(evidence,remote?'cloudflare-live-stage.png':'cloudflare-candidate-stage.png'),fullPage:true})
-  result = {passed:true,site,publicSourceRequestsBlocked:true,sceneState:{before,after},profileProof,geometryProofs,responses,errors,failures,rejectedRepositoryRequests}
+  // Audit every newly enabled native Sprite, not an invented scene ID or a
+  // handful of samples. A missing/disabled option must fail immediately rather
+  // than silently selecting "none" and later being reported as a load timeout.
+  const gallery = JSON.parse(fs.readFileSync(path.join(output,'stages/catalogs/official-gallery-diorama-original.v1.json'),'utf8')).stages
+  assert.equal(gallery.length,79)
+  const galleryDir = path.join(evidence,remote?'gallery-production':'gallery-candidate')
+  fs.mkdirSync(galleryDir,{recursive:true})
+  const saveGallery = () => fs.writeFileSync(path.join(galleryDir,'review.json'),JSON.stringify({site,total:gallery.length,rows:galleryRows},null,2)+'\n')
+  const actorIdentity = await page.evaluate(()=>window.scene.characterSelected.character.object.uuid)
+  for (const entry of gallery) {
+    const started = Date.now()
+    const row = {id:entry.id,implemented:true,payloadIdentity:'pending',browser:'pending',visualReview:'pending',humanAcceptance:'pending'}
+    galleryRows.push(row)
+    try {
+      assert.equal(entry.type,'image')
+      const option = await page.$eval('#stage-selector',(select,id)=>{
+        const found=[...select.options].find(option=>option.value===id)
+        return found?{disabled:found.disabled,availability:found.dataset.availability}:null
+      },entry.id)
+      assert.ok(option,'Catalog entry is missing from the actual selector: '+entry.id)
+      assert.equal(option.disabled,false,entry.id)
+      assert.equal(option.availability,'native-2d-background')
+      assert.deepEqual(await page.select('#stage-selector',entry.id),[entry.id])
+      await page.waitForFunction(id=>{
+        const root=window.scene.backgroundScene.getObjectByName('Magius3DviewerStageRoot')
+        const visible=root?.userData.stageVisibleContent
+        return root?.userData.stageLoadFailure?.requestedStageId===id
+          || (root?.userData.stageDefinition?.id===id&&visible?.drawProbeComplete&&visible.drawnMeshCount>0)
+      },{timeout:120000,polling:300},entry.id)
+      const proof = await page.evaluate(()=>{
+        const viewer=window.scene,root=viewer.backgroundScene.getObjectByName('Magius3DviewerStageRoot'),images=[]
+        root.traverse(mesh=>{if(mesh.isMesh&&mesh.userData.nativeImageBackground){
+          const texture=mesh.material.uniforms.uImage.value
+          images.push({identity:mesh.userData.nativeImageBackground,width:texture.image.width,height:texture.image.height,
+            scale:mesh.material.uniforms.uImageScale.value.toArray(),depthWrite:mesh.material.depthWrite,depthTest:mesh.material.depthTest})
+        }})
+        return {stageId:root.userData.stageDefinition.id,failure:root.userData.stageLoadFailure??null,
+          visible:root.userData.stageVisibleContent,images,actor:viewer.characterSelected.character.object.uuid}
+      })
+      assert.equal(proof.stageId,entry.id);assert.equal(proof.failure,null)
+      assert.equal(proof.visible.classification,'native-2d-background')
+      assert.equal(proof.visible.accepted,true);assert.ok(proof.visible.drawnMeshCount>0)
+      assert.equal(proof.actor,actorIdentity,'Scene switch replaced the foreground actor')
+      assert.equal(proof.images.length,1,'A previous screen background survived the scene switch')
+      assert.equal(proof.images[0].identity.sha256,entry.nativeImage.sha256)
+      assert.equal(proof.images[0].width,entry.nativeImage.width);assert.equal(proof.images[0].height,entry.nativeImage.height)
+      assert.equal(proof.images[0].depthWrite,false);assert.equal(proof.images[0].depthTest,false)
+      await page.screenshot({path:path.join(galleryDir,entry.id+'.png')})
+      Object.assign(row,{payloadIdentity:'pass',browser:'pass',seconds:(Date.now()-started)/1000,proof})
+      console.log(JSON.stringify({test:'native-gallery-render',id:entry.id,seconds:row.seconds}))
+    } catch(error) {
+      Object.assign(row,{browser:'fail',error:String(error),seconds:(Date.now()-started)/1000})
+      throw error
+    } finally {saveGallery()}
+  }
+  assert.deepEqual(await page.select('#stage-selector',stageId),[stageId])
+  await page.waitForFunction(id=>{
+    const root=window.scene.backgroundScene.getObjectByName('Magius3DviewerStageRoot')
+    return root?.userData.stageDefinition?.id===id&&root.userData.stageVisibleContent?.drawProbeComplete
+      &&root.userData.stageVisibleContent.drawnMeshCount>0
+  },{timeout:240000},stageId)
+  assert.equal(await page.evaluate(()=>{
+    let images=0;window.scene.backgroundScene.getObjectByName('Magius3DviewerStageRoot').traverse(mesh=>{if(mesh.userData.nativeImageBackground)images++});return images
+  }),0,'The 2D background must be removed when returning to a 3D scene')
+  assert.deepEqual(rejectedRepositoryRequests,[])
+  assert.ok(!errors.some(error=>/ReferenceError|TypeError|SyntaxError|VALIDATE_STATUS|Error compiling|GL_INVALID|CORS policy/i.test(error)),errors.join('\n'))
+  result = {passed:true,site,publicSourceRequestsBlocked:true,sceneState:{before,after},profileProof,geometryProofs,galleryRows,responses,errors,failures,rejectedRepositoryRequests}
 } catch (error) {
   after = await page?.evaluate(sceneState).catch(()=>after)
-  result = {...result,error:String(error),sceneState:{before,after},profileProof,geometryProofs,responses,errors,failures,rejectedRepositoryRequests,
+  result = {...result,error:String(error),sceneState:{before,after},profileProof,geometryProofs,galleryRows,responses,errors,failures,rejectedRepositoryRequests,
     finishedStageRequests:[...finished].filter(url=>url.includes('/stages/official/'))}
   await page?.screenshot({path:path.join(evidence,'cloudflare-stage-failure.png'),fullPage:true}).catch(()=>{})
   throw error

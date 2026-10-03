@@ -42,8 +42,16 @@ Native cloud-shader diagnostic programs and volume metadata are now versioned un
 
 ## Cloud deployment credential gate
 
-Rechecked 2026-10-04: magius3dviewer-live has CLOUDFLARE_ACCOUNT_ID, but CLOUDFLARE_API_TOKEN is still missing. Run 37138792390 therefore failed its configuration gate. Configure the persistent API-token Secret named in README to enable future cloud publication. Website build/validation is independent of this gate, but production publishing still requires it. Do not upload the developer OAuth session as a long-lived repository credential. The manual source-equivalent shortcut no longer runs automatically alongside a full deployment.
+Rechecked 2026-10-04: magius3dviewer-live has both CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN. The API token was active and accessed the existing magius3dviewer Pages project on account 9810127b0434fc919d963595b0418768; its Secret was written at 2026-10-03T17:57:44Z. Old runs 37138792390 and 37140838567 started before configuration and failed that gate. The new end-to-end workflow must still prove publication. Website build/validation is independent of this gate, but production publishing still requires it. Do not upload the developer OAuth session as a long-lived repository credential. The manual source-equivalent shortcut no longer runs automatically alongside a full deployment.
 
 ## Concurrent AgentDock changes and loading review
 
-See docs/reports/2026-10-04-agentdock-loading-review.md. The 79 native-image backgrounds and three cloud-research payload files remain uncommitted and excluded from deployment. Their existing browser evidence includes a timeout; passing unit tests and payload hashes alone does not approve integration. Original resource filenames are retained rather than replaced with category labels.
+See docs/reports/2026-10-04-agentdock-loading-review.md. The user approved integrating the 79 verified native-image backgrounds subject to release validation. A previous timeout used a nonexistent catalog ID and selected none; it is not evidence that an actual catalog entry failed. The release browser gate now checks every one of the 79 exact selector options, identity/dimensions/draw submission, actor preservation, a screenshot per entry, and return to 3D, before and after publication. These are original 2D Sprite backgrounds, not reconstructed 3D geometry. Visual review and human acceptance remain separate. Three unconsumed cloud-research payload files remain excluded; they do not implement a cloud shader. Original resource filenames are retained rather than replaced with category labels.
+
+## Cloud-runner transfer and private quota
+
+The full tested build now stays on one Actions runner through tests, publication and public-site checks. There is no multi-GB `verified-website` intermediate artifact or second dependency install. Only `/tmp/site-evidence/` is uploaded for seven days, including all 79 gallery screenshots and their per-entry review ledger. Tests are not removed to save quota.
+
+The user requested a real cloud publication while the repository remains public. Do not use local Wrangler upload as proof of automated publication. Do not change repository visibility or paid budgets as part of this run. GitHub Free and a zero paid Actions budget are confirmed from the user's billing screenshots; actual remaining included minutes and account-wide artifact storage are not yet shown. Gross metered dollars and a 100% zero-budget badge do not measure remaining minutes.
+
+First visits default to Simplified Chinese; a saved explicit language choice still wins. The cloud viewport test selects Chinese before comparing labels; source files for the advanced node/pose UI have not been downgraded or replaced.

@@ -33,6 +33,28 @@ function readStaticStringMap(source, variableName) {
     return result
 }
 
+test('first visit defaults to Simplified Chinese regardless of browser language and retains explicit language choices', async () => {
+    const source = await read('./src/viewer/localization/zhCN.ts')
+    const ast = ts.createSourceFile('zhCN.ts', source, ts.ScriptTarget.Latest, true)
+    const functions = ast.statements.filter(node => ts.isFunctionDeclaration(node)
+        && ['detectInitialLocale', 'isUiLocale'].includes(node.name?.text))
+    assert.equal(functions.length, 2)
+    const compiled = ts.transpileModule("const LOCALE_STORAGE_KEY = 'magius3dviewer.locale';\n"
+        + functions.map(node => node.getText(ast)).join('\n'), {
+        compilerOptions: {target: ts.ScriptTarget.ES2022},
+    }).outputText
+    const initialLocale = new Function('localStorage', 'navigator', compiled + '\nreturn detectInitialLocale();')
+    for (const browserLanguage of ['en-US', 'ja-JP', 'zh-TW']) {
+        const navigator = {language: browserLanguage, languages: [browserLanguage]}
+        for (const saved of [null, '', 'invalid', 'en', 'ja-JP', 'zh-CN']) {
+            const storage = {getItem(key) {assert.equal(key, 'magius3dviewer.locale'); return saved}}
+            const expected = ['en', 'ja-JP', 'zh-CN'].includes(saved) ? saved : 'zh-CN'
+            assert.equal(initialLocale(storage, navigator), expected, JSON.stringify({browserLanguage, saved}))
+        }
+        assert.equal(initialLocale({getItem() {throw new Error('Storage unavailable')}}, navigator), 'zh-CN')
+    }
+})
+
 test('static viewer shell keeps canonical English keys and exposes a language toggle', async () => {
     const html = await read('./index.html')
     assert.match(html, /<html lang="en">/)
@@ -108,8 +130,6 @@ test('runtime localization supports complete persistent English, Simplified Chin
     assert.match(localization, /from '\.\/jaJP'/)
     assert.match(localization, /if \(locale === 'ja-JP'\) return translateJaJpUiText\(text\)/)
     assert.match(localization, /localStorage\.setItem\(LOCALE_STORAGE_KEY, locale\)/)
-    assert.match(localization, /navigator\.languages/)
-    assert.match(localization, /startsWith\('ja'\)\)\) return 'ja-JP'/)
     assert.match(localization, /MutationObserver/)
     assert.match(localization, /element\.getAttribute\(attribute\) !== translated/)
     assert.match(localization, /document\.dispatchEvent\(new CustomEvent\('magius:localechange'/)
