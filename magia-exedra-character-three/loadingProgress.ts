@@ -29,8 +29,16 @@ export function loadingFileName(url: string): string {
 }
 export async function yieldLoadingFrame(signal?: AbortSignal) {
     signal?.throwIfAborted()
-    if (typeof requestAnimationFrame === 'function' && typeof document !== 'undefined' && !document.hidden) {
-        await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))
+    if (typeof document !== 'undefined' && !document.hidden) {
+        // Loading must not depend on the renderer producing another frame.
+        // Embedded/occluded tabs may stop rAF after the visibility check. Yield
+        // the event loop for UI work, without making decoding wait for a paint.
+        await new Promise<void>((resolve, reject) => {
+            const finish = () => { signal?.removeEventListener('abort', abort); resolve() }
+            const timer = setTimeout(finish, 0)
+            const abort = () => { clearTimeout(timer); reject(signal?.reason) }
+            signal?.addEventListener('abort', abort, { once: true })
+        })
     }
     signal?.throwIfAborted()
 }

@@ -30,7 +30,14 @@ try{
  const frames=n=>page.evaluate(n=>new Promise(resolve=>{let i=0;const tick=()=>++i>=n?resolve():requestAnimationFrame(tick);requestAnimationFrame(tick)}),n)
  const inspect=()=>page.evaluate(()=>window.magiusPoseInspection())
  const click=async selector=>{await page.waitForSelector(selector,{visible:true,timeout:20000});await page.click(selector);await frames(3)}
- const card=()=>page.$eval('#viewport-editor-dock .ve-branch-right',el=>{const r=el.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,overflow:el.scrollWidth-el.clientWidth}})
+ // The current editor uses independent draggable chips in an inert full-screen
+ // host, not the old solid card. Measure the actual visible controls.
+ const card=()=>page.$$eval('#viewport-editor-dock .ve-branch-right .ve-chip',els=>{
+  const visible=els.map(el=>({el,r:el.getBoundingClientRect()})).filter(({r})=>r.width>0&&r.height>0)
+  if(!visible.length)throw Error('No visible editor controls')
+  const x=Math.min(...visible.map(v=>v.r.left)),y=Math.min(...visible.map(v=>v.r.top))
+  return{x,y,w:Math.max(...visible.map(v=>v.r.right))-x,h:Math.max(...visible.map(v=>v.r.bottom))-y,overflow:Math.max(...visible.map(v=>v.el.scrollWidth-v.el.clientWidth))}
+ })
  record({test:'initial-position',ground:await page.evaluate(()=>window.magiusGroundInspection?.()),actor:await page.evaluate(()=>window.scene.characterSelected.character.object.position.toArray())})
  await click('#position-controls-toggle');assert.equal(await page.$eval('#action-parameter-panel',e=>e.classList.contains('is-open')),false)
  assert.equal(await page.$eval('#viewport-move',e=>e.getAttribute('aria-pressed')),'true')
@@ -113,6 +120,8 @@ try{
  await page.screenshot({path:path.join(evidence,'viewport-mobile.png'),fullPage:true})
  await click('#viewport-editor-collapse');assert.equal((await inspect()).editing,true)
  assert.ok((await card()).h<65,'Collapsed tools must leave the viewport free')
+ assert.equal(await page.$eval('#viewport-editor-dock',e=>getComputedStyle(e).pointerEvents),'none','Inert full-screen host must never block the viewport')
+ assert.equal(await page.$$eval('#viewport-editor-dock .ve-chip',els=>els.filter(e=>e.getBoundingClientRect().width>0).length),2,'Folding leaves only expand and close controls')
  assert.equal(await page.$eval('.ve-joints',e=>e.hidden),false)
  await page.screenshot({path:path.join(evidence,'viewport-mobile-collapsed.png'),fullPage:true})
  await click('#viewport-editor-close');assert.equal((await inspect()).editing,false)
@@ -128,10 +137,13 @@ try{
  // Isolate toolbar input on a fresh page, before any camera gesture has
  // started Orbit damping. Previous floor-test inertia is not toolbar input.
  await click('#viewport-editor-collapse')
- const dockBefore=await card(),cameraBeforeDock=await camera()
- const handle=await page.$eval('#viewport-editor-dock .ve-branch-grip',e=>{const r=e.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}})
- await page.mouse.move(handle.x,handle.y);await page.mouse.down();await page.mouse.move(handle.x+12,handle.y-150,{steps:8});await page.mouse.up();await frames(3)
- const dockAfter=await card();assert.ok(dockAfter.y<dockBefore.y-100,'The viewport tool must be draggable')
+ const foldChip=()=>page.$eval('#viewport-editor-collapse',e=>{const r=e.closest('.ve-chip').getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height}})
+ const dockBefore=await foldChip(),cameraBeforeDock=await camera()
+ const handle=await page.$eval('#viewport-editor-collapse',e=>{const r=e.closest('.ve-chip').querySelector('.ve-chip-grip').getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}})
+ // Its default position is already at the top boundary; move down into the
+ // viewport, instead of requiring the tool to cross the toolbar boundary.
+ await page.mouse.move(handle.x,handle.y);await page.mouse.down();await page.mouse.move(handle.x-12,handle.y+150,{steps:8});await page.mouse.up();await frames(3)
+ const dockAfter=await foldChip();assert.ok(dockAfter.y>dockBefore.y+100,'The viewport tool must be draggable')
  const cameraAfterDock=await camera()
  record({test:'collapsed-tool-keeps-editing-and-drags',before:dockBefore,after:dockAfter,cameraBefore:cameraBeforeDock,cameraAfter:cameraAfterDock})
  assert.ok(cameraBeforeDock.p.every((v,i)=>Math.abs(v-cameraAfterDock.p[i])<1e-4),'Dragging the toolbar moved the camera')
@@ -149,7 +161,7 @@ try{
    for(const limit of limits.filter(s=>s.hinge))assert.ok(limit.flexion>=-1e-5&&limit.flexion<=limit.maximumFlexion+1e-5,'Elbow/knee limit exceeded: '+JSON.stringify(limit))
    const nodeWorld=await page.evaluate(id=>{const name=id==='left-foot'?'Foot_L':'Foot_R',o=window.scene.characterSelected.character.object,b=o.getObjectByName(name);return b?.getWorldPosition(window.scene.camera.position.clone()).toArray()},joint)
    if(joint.includes('foot'))assert.ok(nodeWorld[1]>=-0.015+0.06,'Direct foot drag crossed the floor: '+nodeWorld)
-   stress.push({joint,mode:end.mode,limited:await page.$eval('.ve-guard',e=>e.classList.contains('is-limited')),hinges:limits.filter(s=>s.hinge).map(s=>({name:s.name,flexion:s.flexion,maximum:s.maximumFlexion})),footPosition:joint.includes('foot')?nodeWorld:undefined})
+   stress.push({joint,mode:end.mode,hinges:limits.filter(s=>s.hinge).map(s=>({name:s.name,flexion:s.flexion,maximum:s.maximumFlexion})),footPosition:joint.includes('foot')?nodeWorld:undefined})
  }
  record({test:'extreme-limb-edits-lengths-hinges-floor',cases:stress})
  p=await pin('right-hand');await page.mouse.click(p.x,p.y);await frames(2);await click('#viewport-rotate')

@@ -1,5 +1,10 @@
 # Static delivery for the single Cloudflare production site.
 # No credentials, cookies or private API routes are exposed by these headers.
+# Vite emits content-hashed names in this directory. Only immutable build
+# assets get a long browser cache; HTML and mutable catalogs stay revalidated.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /stages/official/*
   Access-Control-Allow-Origin: *
   Access-Control-Allow-Methods: GET, HEAD, OPTIONS

@@ -63,6 +63,7 @@ jobs:
       - name: Pose, selection, IK, resource transport and private gateway regressions
         run: |
           set -euo pipefail
+          node --test loadingPaintIndependence.test.mjs
           npm run test:website 2>&1 | tee /tmp/site-evidence/functional-tests.log
       - name: Complete production typecheck
         run: |
