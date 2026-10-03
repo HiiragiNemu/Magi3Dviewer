@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import {createHash} from 'node:crypto';
 const report=JSON.parse(fs.readFileSync('docs/reports/2026-10-01-atlas-repair.json','utf8')),census=JSON.parse(fs.readFileSync('docs/reports/2026-10-01-atlas-census.json','utf8')),inputs=JSON.parse(fs.readFileSync('docs/reports/2026-10-01-atlas-inputs.json','utf8'));
-const sha=p=>createHash('sha256').update(fs.readFileSync(p)).digest('hex'),root=new Map(inputs.map(r=>[r.model,r.assetDirectory])),repaired=new Map(report.repairedFiles.map(r=>[r.name,r]));
+const sha=p=>createHash('sha256').update(fs.readFileSync(p)).digest('hex'),root=new Map(inputs.map(r=>[r.model,r.assetDirectory.replaceAll('\\','/')])),repaired=new Map(report.repairedFiles.map(r=>[r.name,r]));
 test('atlas census covers all shipped ordinary/story FBX resource directories, not only VisualRoot filenames',()=>{
  const actual=[];for(const base of ['magia-exedra-character-three/models','magia-exedra-character-three/nonbattle-models'])for(const folder of fs.readdirSync(base,{withFileTypes:true})){if(folder.isDirectory()&&fs.readdirSync(path.join(base,folder.name)).some(n=>/\.fbx(?:\.gz)?$/.test(n)))actual.push(folder.name)}
  assert.equal(actual.length,98);assert.deepEqual(census.models.map(r=>r.model).sort(),actual.sort());assert.equal(new Set(census.models.map(r=>r.model)).size,98);assert.equal(census.models.reduce((n,r)=>n+r.textures.length,0),1619)
