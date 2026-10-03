@@ -48,9 +48,9 @@ Keep collisions enabled. Do not reduce colliders or collision strength, permit e
 
 ## Deployment
 
-The **Publish tested website to Cloudflare** workflow (`.github/workflows/site-delivery.yml`) runs on `main` and can be dispatched manually. It runs website tests, typechecking, packaging and browser gates, then deploys to the existing **magius3dviewer** Cloudflare Pages project. It checks the actual public revision after deployment.
+The **Deploy tested website to Cloudflare** workflow (`.github/workflows/site-delivery.yml`) runs on `main` and can be dispatched manually. It runs website tests, typechecking, packaging and browser gates, then deploys to the existing **magius3dviewer** Cloudflare Pages project. It checks the actual public revision after deployment.
 
-Deployment uses the existing `magius3dviewer-live` GitHub environment and its `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` secrets (the workflow also supports the existing CF-prefixed aliases). A cloud chat without deploy credentials can commit/push and use the configured workflow; it should not create another website or expose credentials in client files.
+Deployment uses the existing `magius3dviewer-live` GitHub environment and its `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` secrets (the workflow also supports the existing CF-prefixed aliases). Website validation runs without deployment credentials. The environment currently needs its two Cloudflare Secrets configured before cloud publication; a cloud chat can commit/push and run validation in the meantime. After Secrets are configured, use the workflow; it should not create another website or expose credentials in client files.
 
 App and selected scene closures are served by Cloudflare. Larger stage/enemy/VFX products remain in the repository's versioned GitHub Release assets, accessed through the existing restricted gateway:
 `magius3dviewer-runtime-products.crynetsystemscell.workers.dev`.
