@@ -1,289 +1,70 @@
 # Magius3Dviewer
 
-Magius3Dviewer is an independently maintained, browser-based 3D viewer for
-Magia Exedra characters, official scenes, enemy models and combat VFX.
+Browser-based Magia Exedra character, scene, enemy and VFX viewer, built with [three.js](https://threejs.org/).
 
-Built with [three.js](https://github.com/mrdoob/three.js/)
+**[Production website](https://magius3dviewer.pages.dev/)** · **Maintained branch: main**
 
-**Website: [magius3dviewer.pages.dev](https://magius3dviewer.pages.dev/)**
+## 云端接手 / Cloud handoff
 
-## Features
-- View all 3D character models from the game
-- Browse 581 data-driven official scene products and the protected existing scene set
-- Browse 514 enemy records backed by 493 render-ready model and thumbnail products
-- Preview direction-keyed enemy and character combat VFX products
-- Add multiple characters to the scene, and arrange them
-- Play and seek animations, or T-pose without animations
-- Custom lighting, includes color, strength and angle
-- Take photos with the characters in the real world with camera mode
-  - Light changes dynamically with the camera
-  - Up to 4K photo quality depending on your hardware
-  - Color filters with brightness, contrast, saturation
-  - And additionally, AR mode
-- Export and share presets
+Use this repository's **main** as the sole application source. Do not restore an old research branch, copy a local preview overlay, or replace the current tree with an older build. A later timestamp alone is not evidence of a correct implementation.
 
-## Install and run
+Start with [the handoff and acceptance ledger](docs/CLOUD_HANDOFF.md). It records the retained behavior, rejected cloth experiments, remaining work and release checks. The next product focus is **scene completeness and native correctness**, not a claim that all scenes are already visually complete.
 
-Requirements: a current Node.js LTS release and npm.
+### Clone, test and build
+
+Node.js **22.18+ (22 LTS)** and npm are supported. No Windows drive, game installation, sibling checkout or symlink is required for the website source build.
 
 ```sh
+git clone --branch main https://github.com/HiiragiNemu/Magi3Dviewer.git
+cd Magi3Dviewer
 npm ci
-npm run dev
+npm run test:website
+npx tsc --noEmit --pretty false
+node scripts/build-deployment.mjs
 ```
 
-The development server and production build consume only files declared by this
-repository and its lockfile. A game installation, sibling checkout, junction or
-machine-specific `C:/` or `D:/` path is not a runtime prerequisite.
+Or use `npm run build:deploy` for those three validation/build steps together. The deployable output is `dist-deploy/`; a production revision is embedded in `site-version.json` and the HTML. The build restores required gzip runtime aliases from committed `.magius-runtime` carriers; **do not commit those generated aliases**.
 
-To run the full native-resource release gate (requires the extracted research
-corpus and shader-authority fixtures in addition to this source checkout):
+For interactive development: `npm run dev:local`. For production-package preview: `npx vite preview --outDir dist-deploy --host 127.0.0.1`. Online runtime products need network access to the existing product gateway. Cloning a private repository requires the caller's GitHub access; credentials are not stored in the source.
 
-```sh
-npm run build
-npm run preview
-```
+`npm run build` / `test:release` are the larger **native research** gates, which additionally require extracted authority fixtures. They are not the default clean-checkout website build and must not be weakened to conceal absent research inputs.
 
-To produce the bounded website artifact without copying the 16+ GiB raw
-product corpus into the website, run:
+## Features retained
 
-```sh
-npm run build:deploy
-```
+- Character selection, multiple independent actors, animation playback and native action resources.
+- Third-person walking/running/jumping, collision controls and independent camera controls.
+- Direct pose editing, bounded IK, touch controls, saved workspaces and recorded performance lanes.
+- Scene catalog (581 entries), enemy catalog (514 records / 493 render-ready products), and character/enemy combat VFX.
+- Resource panels, localized names, voice presentation and locale-specific fonts.
+- Lighting, outlines, screenshots/camera mode and preset sharing.
 
-This command runs the catalog, UI, delivery and gateway gates before compiling
-the application. Its final packaging step also verifies local action-runtime
-authorities and the original shared enemy-texture corpus against the release
-manifests. Those extracted build inputs must be present for packaging; a source
-checkout alone can run the bounded tests and compile the client, but is not a
-complete native-resource packaging workspace.
+Catalog membership and successful loading are **not** proof of full native visual parity. Resource IDs and coverage come from the versioned catalogs, not arbitrary substitutions.
 
-`build:deploy` keeps catalogs, thumbnails, character-action products and the app
-in `dist-deploy/`. Official stage, enemy-model and target VFX payloads resolve
-from repository-owned GitHub Release ZIP products through
-`/catalogs/runtime-product-delivery.v1.json`; local development continues to use
-the workspace files directly.
+## Cloth release policy
 
-GitHub Release assets do not expose browser CORS headers. The repository's
-zero-dependency Worker at
-`magius3dviewer-runtime-products.crynetsystemscell.workers.dev` adds only CORS
-and streams the fixed `HiiragiNemu/Magi3Dviewer` release tags; it is not an
-arbitrary URL proxy. GitHub Releases remain the product authority.
+The release integrates the v5 shared cloth/outline behavior and the native-lining rendering fix into ordinary source files. A close opposing inner lining must not receive another outward-facing colour/outline pass; ordinary exterior backs retain their colour coverage. There is no character-ID exception for this fix.
 
-## Project status and data contracts
+Keep collisions enabled. Do not reduce colliders or collision strength, permit extra penetration, or freeze cloth to hide jitter. Nemu's existing clipping and remaining fast motion are **open acceptance issues**, not completed fixes. The later contact-history experiment is excluded because some motion peaks regressed, despite smoother walking. Rejected v6–v8 experiments must not be restored.
 
-- Scene catalog: `/stages/catalog.json`
-- Enemy catalog: `/enemies/manifest.v1.json`
-- Combat VFX catalog: `/vfx/catalog.v1.json`
-- UI-neutral combined catalog: `/catalogs/official-resources.v1.json`
+## Deployment
 
-Catalog lookups use stable resource keys. Missing or incomplete products fail
-closed instead of selecting a different scene, model or effect by numeric-ID
-special case.
+The **Publish tested website to Cloudflare** workflow (`.github/workflows/site-delivery.yml`) runs on `main` and can be dispatched manually. It runs website tests, typechecking, packaging and browser gates, then deploys to the existing **magius3dviewer** Cloudflare Pages project. It checks the actual public revision after deployment.
 
-## Screenshots
+Deployment uses the existing `magius3dviewer-live` GitHub environment and its `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` secrets (the workflow also supports the existing CF-prefixed aliases). A cloud chat without deploy credentials can commit/push and use the configured workflow; it should not create another website or expose credentials in client files.
 
-<img width="520" alt="Screenshot" src="https://github.com/user-attachments/assets/ccebda22-7908-448f-a0dd-e91ba2df4464" />
-<img width="280" alt="Camera mode" src="https://github.com/user-attachments/assets/e4b41d5a-b3d3-4243-8d85-328de11374e9" />
+App and selected scene closures are served by Cloudflare. Larger stage/enemy/VFX products remain in the repository's versioned GitHub Release assets, accessed through the existing restricted gateway:
+`magius3dviewer-runtime-products.crynetsystemscell.workers.dev`.
 
-## Known issues
+Do **not** delete release tags/assets, alter gateway routing or remove committed carriers during branch cleanup. They are live resource dependencies. Do not publish local test badges in the formal website.
 
-- **There are currently no expressions on the face (mouth open, eye close, etc.).** This is because the animations extracted with the tools doesn't contain shape keys, which is crucial for the face expressions. Can't find a tool to extract the shape keys for now.
+## Evidence and remaining work
 
-- The face of "Madoka Senpai (まどか先輩)" does not render correctly because of the missing shape keys mentioned above. The face is assembled with many meshes and require using shape keys to resize and fit properly.
+- [Current handoff](docs/CLOUD_HANDOFF.md)
+- [Scene gaps and prior release evidence](docs/reports/2026-10-02-resume-scene-audit.md)
+- [Old scene delivery reconciliation](docs/reports/2026-09-30-scene-directory-audit.md)
+- [Touka 111501 motion + 114501 arm spread](docs/reports/2026-10-03-touka-hybrid-db8-release.md)
+- [Release/consolidation record](docs/reports/2026-10-03-main-consolidation.md)
 
-- **Some characters have weird poses.** This is probably due to some brokenly exported animations. **Changing "animation" to `<None>` solves the problem, at the expense of having only a T-style pose.**
+Important remaining scene cases include the native 3D-noise cloud shader, dungeon-612 particle/depth behavior, other special shaders and the unreviewed catalog remainder. Technical tests, deployment verification and user visual acceptance are recorded separately.
 
-- The dress of "斧乃木余接" appears black because it has another 3 "cosmic" textures that should render dynamically over the black area. That 3 textures applies to different part of the dress, but the model is probably missing some UVs so they can't be mapped to the correct area of the surface. Simply applying one of the textures to the whole black area won't be perfect.
-
-## Shader detail
-
-### General shader
-
-Source: [general.ts](magia-exedra-character-three/shaders/general.ts)
-
-Each mesh has 3 kinds of material: `color`, `shadow` and `ctrl`.
-
-`color` material is brighter, `shadow` is darker.  
-`color` is displayed where light casts upon, otherwise, `shadow` is displayed.
-
-`ctrl` color channel specifications:
-- Red: Controls the pre-mix of `color` and `shadow`, to make the diffuse color more cartoonic
-- Green: Inverted roughness
-- Blue: Metalness
-- Alpha: The alpha map for the mesh
-
-Official material profiles select surface alpha per draw: transparent/cutout
-surfaces use the authored `shadow` alpha and available shadow-color alpha, while
-opaque surfaces remain opaque. Legacy profiles retain their original alpha-map
-selection. This is separate from the hair AngelRing highlight.
-
-### Face shader
-
-Source: [face.ts](magia-exedra-character-three/shaders/face.ts)
-
-The face has an additional material `eyehighlight_ctrl`, a grayscale texture containing eye highlight and blushes.  
-It uses UV2 (or, UV1 if exported with AssetStudio option "Export all UVs as diffuse maps").
-- For eye highlight, pixels that have brightness below 50% are discarded
-- For the blush, subtract green + blue from the face material to make it appear red
-
-Face `ctrl` (WIP)
-
-### Hair shader
-
-Source: [hair.ts](magia-exedra-character-three/shaders/hair.ts)
-
-Angel ring (WIP)
-
-### Outline shader
-
-Source: [outline.ts](magia-exedra-character-three/shaders/outline.ts)
-
-### Special shaders
-
-- "Portal" effect inside Ultimate Madoka & Akuma Homura's dresses: [BodyInside.ts](magia-exedra-character-three/shaders/BodyInside.ts)
-
-## Animation
-
-Source: [character.ts](magia-exedra-character-three/character.ts)
-
-Character and its weapon have separate animations.
-
-For example:
-
-```
-CommonWait_L    - for body  
-CommonWait_L_1  - for weapon 1
-CommonWait_L_2  - for weapon 2 (if available)
-```
-
-If you want to play `CommonWait`, you should play all the animations above.
-
-Naming:
-- `_L` - Animations that play in infinite loops (idle animation)
-- `_SE` - Transitions between two idle animations (two `_L`s)
-
-## Reverse engineering
-
-From decrypted asset bundle files, these files may be useful:
-
-| Files | Contains |
-| --- | --- |
-| `/battle/character/chara_XXXXXX_battle_unit` | Most of the character model files |
-| `/dungeon/character/XXXXXX` | Has Madoka School Uniform in earlier versions, but removed later |
-| `/shader/` | Shader materials such as `RDToon_AngelRingMap`, `face_ctrl_base` and `face_ctrl_nose` |
-
-Almost everything we need can be exported with [AssetStudio](https://github.com/aelurum/AssetStudio).
-- Unity version is `2022.3.21f1`, some of the assets may have the version stripped
-- To export models, enable `Export all UVs as diffuse maps`, load a model asset file and select everything in `Asset list`, then use `Export -> Animator + selected AnimationClips`
-
-You can find the exported models at [here](magia-exedra-character-three/models).
-
-## Character list
-
-Source: [getStyle3dCharacterMstList.json](magia-exedra-character-three/getStyle3dCharacterMstList.json)
-
-The list may not be up to date with the repository.
-
-- 100101 - Madoka Kaname (Magical Girl)
-- 100107 - 鹿目まどか/魔法少女
-- 113701 - アルティメットまどか/魔法少女
-- 100106 - 鹿目まどか/水着
-- 100103 - 鹿目まどか/晴着
-- 100102 - 鹿目まどか/制服
-- 100202 - 暁美ほむら/魔法少女
-- 100201 - 暁美ほむら/魔法少女(眼鏡)
-- 100203 - 暁美ほむら/魔法少女(リボン)
-- 100205 - 暁美ほむら/制服(眼鏡)
-- 113801 - 悪魔ほむら/魔法少女
-- 100207 - 暁美ほむら/水着
-- 100301 - 巴マミ/魔法少女
-- 100303 - 巴マミ/水着
-- 113901 - ホーリーマミ/魔法少女
-- 100302 - 巴マミ/ハロウィン
-- 100304 - 巴マミ/パティシエール
-- 100305 - 巴マミ/ドッペル
-- 100401 - 美樹さやか/魔法少女
-- 100402 - 美樹さやか/水着
-- 100403 - 美樹さやか/クリスマス
-- 100501 - 佐倉杏子/魔法少女
-- 100503 - 佐倉杏子/クリスマス
-- 100504 - 佐倉杏子/パティシエール
-- 100502 - 佐倉杏子/水着
-- 100601 - 百江なぎさ/魔法少女
-- 100701 - 愛生まばゆ/魔法少女
-- 100702 - 愛生まばゆ/魔法少女2
-- 100801 - 環いろは/魔法少女
-- 100805 - 環いろは/魔法少女(ドッペル)
-- 100804 - 環いろは/水着
-- 100901 - 七海やちよ/魔法少女
-- 101001 - 由比鶴乃/魔法少女
-- 101101 - 二葉さな/魔法少女
-- 101201 - 深月フェリシア/魔法少女
-- 101301 - 梓みふゆ/魔法少女
-- 101401 - 十咎ももこ/魔法少女
-- 101501 - 水波レナ/魔法少女
-- 101601 - 秋野かえで/魔法少女
-- 101701 - 御園かりん/魔法少女
-- 101801 - 竜城明日香/魔法少女
-- 101901 - 里見灯花/魔法少女
-- 102001 - 柊ねむ/魔法少女
-- 102101 - アリナ・グレイ/魔法少女
-- 102102 - アリナ・グレイ/ハロウィン
-- 102201 - 環うい/魔法少女
-- 102301 - 和泉十七夜/魔法少女
-- 102401 - 八雲みたま/魔法少女
-- 102501 - 天音月夜/魔法少女
-- 102601 - 天音月咲/魔法少女
-- 105801 - 空穂夏希/魔法少女
-- 105901 - 都ひなの/魔法少女
-- 106101 - 常盤ななか/魔法少女
-- 106201 - 木崎衣美里/魔法少女
-- 106701 - 夏目かこ/魔法少女
-- 106801 - 純美雨/魔法少女
-- 106901 - 伊吹れいら/魔法少女
-- 107001 - 桑水せいか/魔法少女
-- 107101 - 相野みと/魔法少女
-- 107201 - 粟根こころ/魔法少女
-- 107401 - 更紗帆奈/魔法少女
-- 107601 - 眞尾ひみか/魔法少女
-- 108001 - 五十鈴れん/魔法少女
-- 108002 - 五十鈴れん/クリスマス
-- 108101 - 静海このは/魔法少女
-- 108201 - 遊佐葉月/魔法少女
-- 108301 - 三栗あやめ/魔法少女
-- 108401 - 加賀見まさら/魔法少女
-- 108601 - 綾野梨花/魔法少女
-- 108602 - 綾野梨花/クリスマス
-- 109001 - 千秋理子/魔法少女
-- 109201 - 安名メル/魔法少女
-- 109801 - 万年桜のウワサ/魔法少女
-- 110401 - 雪野かなえ/魔法少女
-- 110701 - アシュリー・テイラー/魔法少女
-- 111401 - 入名クシュ/魔法少女
-- 111501 - タルト/魔法少女
-- 114401 - タルトver.Final
-- 111601 - リズ・ホークウッド/魔法少女
-- 111701 - メリッサ・ド・ヴィニョル/魔法少女
-- 112001 - コルボー/魔法少女
-- 112401 - 美国織莉子/魔法少女
-- 112501 - 呉キリカ/魔法少女
-- 112601 - 千歳ゆま/魔法少女
-- 113301 - 浅古小糸/魔法少女
-- 114501 - 夜明すみれ/魔法少女
-- 114601 - 日暮ふうか/魔法少女
-- 114901 - 斧乃木余接/魔法少女 (WIP)
-- 115001 - 八九寺真宵/魔法少女
-- 115101 - 忍野忍/魔法少女
-- 115201 - まどか先輩/魔法少女 (WIP)
-
-## Website deployment
-
-The maintained source branch is `magius3dviewer`. The production website is served
-by Cloudflare Pages; it is deployed from a tested, frozen `build:deploy` artifact.
-GitHub Releases remain the authority for runtime product ZIPs. A source push does
-not dispatch the retired GitHub Pages deployment workflow.
-
-The full native-resource tests intentionally fail when required extracted
-resource/authority inputs are missing; they are not substitutes for the bounded
-deployment gates or browser checks. Local coordination reports and machine-local
-capture logs are not part of the published application source.
+This is an independently maintained viewer, derived from [Magi3Dviewer](https://github.com/haojiezhe12345/Magi3Dviewer). Original game content belongs to its respective rights holders. See the repository's existing license notices.

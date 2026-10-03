@@ -31,7 +31,7 @@ await run(process.execPath, ['scripts/site-prepare-carriers.mjs'])
 await run(process.execPath, [viteEntry, 'build'])
 await run(process.execPath, ['scripts/copy-deployment-public.mjs'])
 await fs.writeFile(path.resolve(repoRoot, environment.MAGIUS_DEPLOY_OUT_DIR, 'site-version.json'), JSON.stringify({
-  revision, toukaArms:'111501-motion-114501-spread-v3', jumpStyle, garmentContacts, garmentContactPolicy:garmentContacts==='on'?'db8e279-contact-and-surface':'native-only-build-disabled', poseGravity, performanceStudio:'live-recorded-lanes-v1', entryPolicy:'single-production-no-store-v1', landing:'continuous-grounded-gait-v1', builtAt:new Date().toISOString(), poseEditor:'bind-limited-ik-v3', viewportEditor:'persistent-v1', groundGuard:'scene-floor-v1', selection:'existing-outline-uniforms',
+  revision, toukaArms:'111501-motion-114501-spread-v3', jumpStyle, garmentContacts, garmentRendering:'v5-native-lining-outline', garmentContactPolicy:garmentContacts==='on'?'db8e279-contact-and-surface':'native-only-build-disabled', poseGravity, performanceStudio:'live-recorded-lanes-v1', entryPolicy:'single-production-no-store-v1', landing:'continuous-grounded-gait-v1', builtAt:new Date().toISOString(), poseEditor:'bind-limited-ik-v3', viewportEditor:'persistent-v1', groundGuard:'scene-floor-v1', selection:'existing-outline-uniforms',
   deploymentTarget:environment.MAGIUS_DEPLOY_TARGET, stageDelivery:'cloudflare-same-origin',
 }) + '\n')
 

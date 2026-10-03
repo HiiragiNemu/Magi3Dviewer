@@ -1,7 +1,7 @@
 name: Deploy tested website to Cloudflare
 on:
   push:
-    branches: [magius3dviewer]
+    branches: [main]
     paths-ignore:
       - '.github/workflows/site-publish-verified.yml'
       - 'docs/reports/**'
@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   configuration:
-    if: github.ref == 'refs/heads/magius3dviewer'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: magius3dviewer-live
     timeout-minutes: 5

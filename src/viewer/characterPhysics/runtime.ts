@@ -173,6 +173,9 @@ interface ParticleRuntime {
     hasLastWrite: boolean
     hasPositionResidualHistory: boolean
     hasResidualHistory: boolean
+    /** Two critically damped display stages in the chain root frame. Never solver input. */
+    clothDisplayFirst?: THREE.Vector3
+    clothDisplaySecond?: THREE.Vector3
 }
 
 interface ConnectionRuntime {
@@ -854,6 +857,7 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
     private clearManualOutputHistory(objects: ReadonlySet<THREE.Object3D>): void {
         for (const team of this.teams) for (const particle of team.particles) if (objects.has(particle.bone)) {
             particle.hasLastWrite = false; particle.hasResidualHistory = false; particle.hasPositionResidualHistory = false
+            particle.clothDisplayFirst = undefined; particle.clothDisplaySecond = undefined
         }
     }
 
@@ -1806,6 +1810,7 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
             particle.hasLastWrite = false
             particle.hasPositionResidualHistory = false
             particle.hasResidualHistory = false
+            particle.clothDisplayFirst = undefined; particle.clothDisplaySecond = undefined
         }
         team.initialized = true
     }
@@ -2912,6 +2917,37 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
         return result
     }
 
+    private displayContactClearance(point: THREE.Vector3, radius: number, geometry: ColliderGeometry): number {
+        if (geometry.kind === 'sphere') return point.distanceTo(geometry.frameCurrentCenter) - geometry.frameCurrentRadius - radius
+        if (geometry.kind === 'plane') return point.clone().sub(geometry.frameCurrentCenter).dot(geometry.frameCurrentNormal) - radius
+        const axis = geometry.frameCurrentEnd.clone().sub(geometry.frameCurrentStart)
+        const ratio = clamp(point.clone().sub(geometry.frameCurrentStart).dot(axis) / Math.max(axis.lengthSq(), 1e-12), 0, 1)
+        const center = geometry.frameCurrentStart.clone().addScaledVector(axis, ratio)
+        return point.distanceTo(center) - THREE.MathUtils.lerp(geometry.frameCurrentStartRadius, geometry.frameCurrentEndRadius, ratio) - radius
+    }
+
+    private retainDisplayContacts(team: TeamRuntime, particle: ParticleRuntime, raw: THREE.Vector3, filtered: THREE.Vector3): void {
+        if (team.cloth.serializeData.colliderCollisionConstraint.mode === 0) return
+        const constraints = team.colliders.flatMap(collider => {
+            const geometry = this.colliderGeometryByStableKey.get(collider.stableKey)
+            return geometry ? [{ geometry, minimum: Math.min(0, this.displayContactClearance(raw, particle.radius, geometry)) - 1e-7 }] : []
+        })
+        const clear = (point: THREE.Vector3) => constraints.every(c => this.displayContactClearance(point, particle.radius, c.geometry) >= c.minimum)
+        if (clear(filtered)) return
+        // Advance only as far toward the native contact result as necessary.
+        // A temporal filter may not add penetration, shrink collider radii or
+        // feed its displayed output into the physical integration state.
+        let low = 0, high = 1
+        const trial = new THREE.Vector3()
+        for (let pass = 0; pass < 18; pass++) {
+            const ratio = (low + high) * .5
+            trial.lerpVectors(filtered, raw, ratio)
+            if (clear(trial)) high = ratio
+            else low = ratio
+        }
+        filtered.lerp(raw, high)
+    }
+
     private applySolvedPose(): void {
         // Magica's BoneCloth output is a two-stage proxy operation. First it
         // reconstructs world rotations root-to-child from the solved baseline;
@@ -2921,6 +2957,10 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
         // the visible 90/60 Hz hair and skirt sign flip.
         for (const team of this.teams) {
             if (team.failClosedReason) continue
+            // All published BoneCloth teams use one continuous output policy.
+            // Character IDs and bone-name guesses must not decide coverage.
+            // BoneSpring (10) retains its separate native spring mechanism.
+            const fabricDisplay = team.cloth.serializeData.clothType !== 10
             const stabilizationDuration = Math.max(
                 0,
                 team.cloth.serializeData.stablizationTimeAfterReset,
@@ -2951,6 +2991,7 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
                     const world = this.manualProxyWorld(particle.bone)
                     world.decompose(team.outputWorldPositions[index]!, team.outputWorldQuaternions[index]!, new THREE.Vector3())
                     particle.hasPositionResidualHistory = false; particle.hasResidualHistory = false
+                    particle.clothDisplayFirst = undefined; particle.clothDisplaySecond = undefined
                     continue
                 }
                 const moving = spring || !team.rootIndices.includes(index)
@@ -2970,7 +3011,7 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
                 const targetWorldPositionResidual = team.outputWorldPositions[index]!
                     .clone()
                     .sub(particle.frameCurrentAnimationPosition)
-                const outputWorldPositionResidual = particle.hasPositionResidualHistory
+                const outputWorldPositionResidual = !fabricDisplay && particle.hasPositionResidualHistory
                     ? particle.lastWrittenResidualWorldPosition.clone().lerp(
                         targetWorldPositionResidual,
                         positionResidualInterpolation,
@@ -2981,6 +3022,36 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
                     .add(outputWorldPositionResidual)
                 particle.lastWrittenResidualWorldPosition.copy(outputWorldPositionResidual)
                 particle.hasPositionResidualHistory = true
+                if (fabricDisplay && moving) {
+                    // Filter the complete cloth proxy, not only its physics residual:
+                    // baseline animation/solver handoffs must not bypass continuity.
+                    // The moving chain-root frame transports normal actor motion
+                    // exactly. Analytic two-pole response has no overshoot and no
+                    // frame-count dependent gain or abrupt noise-gate releases.
+                    const rootParticle = team.particles[particle.rootIndex]!
+                    const displayFrame = rootParticle.frameCurrentAnimationWorldQuaternion
+                    const displayOrigin = rootParticle.frameCurrentAnimationPosition
+                    const raw = team.outputWorldPositions[index]!.clone()
+                    const target = raw.clone()
+                        .sub(displayOrigin).applyQuaternion(displayFrame.clone().invert())
+                    if (!particle.clothDisplayFirst || !particle.clothDisplaySecond) {
+                        particle.clothDisplayFirst = target.clone()
+                        particle.clothDisplaySecond = target.clone()
+                    } else {
+                        const h = Math.max(0, team.lastFrameDelta) / .045, decay = Math.exp(-h)
+                        particle.clothDisplaySecond.multiplyScalar(decay)
+                            .addScaledVector(particle.clothDisplayFirst, h * decay)
+                            .addScaledVector(target, 1 - (1 + h) * decay)
+                        particle.clothDisplayFirst.lerp(target, 1 - decay)
+                    }
+                    team.outputWorldPositions[index]!.copy(particle.clothDisplaySecond)
+                        .applyQuaternion(displayFrame).add(displayOrigin)
+                    this.retainDisplayContacts(team, particle, raw, team.outputWorldPositions[index]!)
+                    particle.clothDisplaySecond.copy(team.outputWorldPositions[index]!)
+                        .sub(displayOrigin).applyQuaternion(displayFrame.clone().invert())
+                } else {
+                    particle.clothDisplayFirst = undefined; particle.clothDisplaySecond = undefined
+                }
                 team.outputWorldQuaternions[index]!.copy(
                     particle.frameCurrentAnimationWorldQuaternion,
                 )

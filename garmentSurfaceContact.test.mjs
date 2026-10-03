@@ -20,7 +20,9 @@ test('cloth surface moves outside the collider immediately while body vertex and
 test('projection uses an actor-local clone, including its outline but never another instance',()=>{
  const f=fixture(),base=f.geometry.getAttribute('position').array.slice();assert.notEqual(f.mesh.geometry,f.geometry);assert.equal(f.helper.geometry,f.mesh.geometry);assert.equal(f.independent.geometry,f.geometry);
  f.solver.project([f.capsule],new Quaternion(),()=>false);assert.deepEqual(f.independent.geometry.getAttribute('position').array,base);assert.notDeepEqual(f.mesh.geometry.getAttribute('position').array,base);
- for(const attr of ['normal','uv','skinIndex','skinWeight'])assert.deepEqual(f.mesh.geometry.getAttribute(attr).array,f.geometry.getAttribute(attr).array);
+ for(const attr of ['uv','skinIndex','skinWeight'])assert.deepEqual(f.mesh.geometry.getAttribute(attr).array,f.geometry.getAttribute(attr).array);
+ assert.deepEqual(f.mesh.geometry.getAttribute('normal').array.slice(9,12),f.geometry.getAttribute('normal').array.slice(9,12),'body normal stays exact');
+ assert.notDeepEqual(f.mesh.geometry.getAttribute('normal').array.slice(0,3),f.geometry.getAttribute('normal').array.slice(0,3),'deformed cloth normals follow the fold');
  f.solver.dispose();assert.equal(f.mesh.geometry,f.geometry);assert.equal(f.helper.geometry,f.geometry);assert.deepEqual(f.mesh.geometry.getAttribute('position').array,base)
 });
 test('inverse skin transport stays correct with a rotated and nonuniformly scaled actor',()=>{

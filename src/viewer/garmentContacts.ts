@@ -36,6 +36,7 @@ export class StableGarmentContacts {
     private parentRotation=q();private delta=q()
     private elapsed=0
     private recoveryHalfLife=DEFAULT_GARMENT_HALF_LIFE
+    private surfaceDeltaSeconds=0
     private previousRootPosition?:Vector3
     private readonly maxAngle=.4
     private surface?:GarmentSurfaceContact
@@ -77,6 +78,7 @@ export class StableGarmentContacts {
             }
         }
         const candidates=new Map<Object3D,Array<{mesh:SkinnedMesh;index:number;rest:Vector3}>>()
+        const surfaceCandidates=new Map<Object3D,Array<{mesh:SkinnedMesh;index:number;rest:Vector3;contact:boolean}>>()
         const radii=new Map<Capsule,number[]>()
         for(const c of this.capsules)radii.set(c,[])
         for(const mesh of meshes){
@@ -88,7 +90,30 @@ export class StableGarmentContacts {
                 for(let k=0;k<4;k++){const w=skinWeight.getComponent(i,k),index=skinIndex.getComponent(i,k),bone=canonical[index];if(bone&&poseBoneIsActive(bone,root)&&garment.test(bone.name)&&!excluded.test(bone.name)){clothWeight+=w;if(w>weight){weight=w;best=index}}}
                 const p=v().fromBufferAttribute(position,i).applyMatrix4(mesh.bindMatrix)
                 if(clothWeight>.55&&best>=0){const node=canonical[best];if(!candidates.has(node))candidates.set(node,[]);candidates.get(node)!.push({mesh,index:i,rest:p})}
+                // Mixed hip/cloth seam vertices belong to the same cloth sheet.
+                // They follow the surface constraints, not the cloth driver probes.
+                if(clothWeight>.05&&best>=0){const node=canonical[best];if(!surfaceCandidates.has(node))surfaceCandidates.set(node,[]);surfaceCandidates.get(node)!.push({mesh,index:i,rest:p,contact:clothWeight>.55})}
                 if(clothWeight<.05){for(const c of this.capsules){let w=0;for(let k=0;k<4;k++){const bone=canonical[skinIndex.getComponent(i,k)];if(bone===c.a||bone===c.b)w+=skinWeight.getComponent(i,k)}if(w>.8&&rest.has(c.a)&&rest.has(c.b)){const a=v().setFromMatrixPosition(rest.get(c.a)!),b=v().setFromMatrixPosition(rest.get(c.b)!),d=b.sub(a);const t=p.clone().sub(a).dot(d)/Math.max(1e-12,d.lengthSq());if(t>.2&&t<.8){const distance=p.distanceTo(a.addScaledVector(d,t));radii.get(c)!.push(distance)}}}}
+            }
+        }
+        // The waist/lining is sometimes rigidly hip weighted even within the
+        // same cloth triangles. Recruit a narrow connected support band; do
+        // not mistake its skin weights for an immovable body surface.
+        for(const mesh of meshes){
+            const position=mesh.geometry.getAttribute('position'),weights=mesh.geometry.getAttribute('skinWeight'),indices=mesh.geometry.getAttribute('skinIndex');if(!position||!weights||!indices)continue
+            const all=[...surfaceCandidates].flatMap(([node,list])=>list.filter(i=>i.mesh===mesh).map(i=>({...i,node}))),byIndex=new Map(all.map(i=>[i.index,i])),keys:string[]=[],weld=new Map<string,number[]>(),eligible=new Set<number>()
+            for(let i=0;i<position.count;i++){const key=[position.getX(i),position.getY(i),position.getZ(i),...[0,1,2,3].flatMap(k=>[indices.getComponent(i,k),weights.getComponent(i,k)])].join(',');keys.push(key);let group=weld.get(key);if(!group)weld.set(key,group=[]);group.push(i)
+                let hipOnly=true;for(let k=0;k<4;k++)if(weights.getComponent(i,k)>1e-6&&canonicalPoseBone(mesh.skeleton.bones[indices.getComponent(i,k)])!==this.hip)hipOnly=false
+                if(hipOnly&&v().fromBufferAttribute(position,i).applyMatrix4(mesh.bindMatrix).y<hipPosition.y+this.legLength*.1)eligible.add(i)
+            }
+            const index=mesh.geometry.index,count=index?.count??position.count
+            for(let pass=0;pass<3;pass++){const added=new Map<number,typeof all[number]>()
+                for(let i=0;i+2<count;i+=3){const face=[0,1,2].map(k=>index?index.getX(i+k):i+k),anchor=face.map(j=>byIndex.get(j)).find(Boolean);if(!anchor)continue
+                    for(const j of face){if(byIndex.has(j)||!eligible.has(j))continue;const p=v().fromBufferAttribute(position,j).applyMatrix4(mesh.bindMatrix);if(p.distanceTo(anchor.rest)>this.legLength*.1)continue
+                        for(const duplicate of weld.get(keys[j])!)added.set(duplicate,{mesh,index:duplicate,node:anchor.node,rest:p,contact:false})
+                    }
+                }
+                for(const [i,item]of added){byIndex.set(i,item);surfaceCandidates.get(item.node)!.push(item)}if(!added.size)break
             }
         }
         for(const c of this.capsules){const values=radii.get(c)!.filter(n=>Number.isFinite(n)).sort((a,b)=>a-b);if(values.length)c.radius=clamp(values[Math.floor(values.length*(c.arm?.5:.82))]*(c.arm?1:1.08),this.legLength*(c.arm?.022:.035),c.arm?c.radius*1.05:this.legLength*.14)}
@@ -123,10 +148,10 @@ export class StableGarmentContacts {
         this.joints.sort((a,b)=>depth(a.node)-depth(b.node)||a.node.name.localeCompare(b.node.name))
         this.stats.supported=this.joints.length>0&&completeLegs
         this.stats.samples=this.samples.length;this.stats.joints=this.joints.length
-        if(this.stats.supported)this.surface=new GarmentSurfaceContact(root,[...candidates].flatMap(([node,list])=>list.map(item=>{
+        if(this.stats.supported)this.surface=new GarmentSurfaceContact(root,[...surfaceCandidates].flatMap(([node,list])=>list.map(item=>{
             const preferred=item.rest.clone().sub(hipPosition);preferred.y=0;if(preferred.lengthSq()<1e-8)preferred.z=1
-            return {mesh:item.mesh,index:item.index,node,preferred:preferred.normalize().applyQuaternion(this.hipBindInverse)}
-        })),this.legLength)
+            return {mesh:item.mesh,index:item.index,node,contact:item.contact,preferred:preferred.normalize().applyQuaternion(this.hipBindInverse)}
+        })),this.legLength,this.hipBindInverse.clone().invert())
 
     }
     get diagnostics():GarmentContactStats{return {...this.stats}}
@@ -136,7 +161,8 @@ export class StableGarmentContacts {
     /** Restore display overrides before native animation/physics. The passive
      * recovery state is separate, so no contact output becomes spring input. */
     restore(clearHistory=false){
-        this.surface?.restore()
+        this.surface?.restore(clearHistory)
+        if(clearHistory)this.surfaceDeltaSeconds=0
         let changed=false
         for(const j of this.joints){
             if(j.applied&&1-Math.abs(j.node.quaternion.dot(j.after))<1e-9){
@@ -219,6 +245,7 @@ export class StableGarmentContacts {
         const rootPosition=this.root.getWorldPosition(v())
         const temporal=Number.isFinite(deltaSeconds)&&deltaSeconds>0&&deltaSeconds<=.12
             &&(!this.previousRootPosition||rootPosition.distanceTo(this.previousRootPosition)<this.legLength*factor)
+        this.surfaceDeltaSeconds=temporal?deltaSeconds:0
         const blend=temporal?1-Math.exp(-Math.LN2*deltaSeconds/this.recoveryHalfLife):1
         for(const c of this.capsules){c.a.getWorldPosition(c.start);c.b.getWorldPosition(c.end);c.worldRadius=(c.radius+this.legLength*.004)*factor}
         let bodyTravel=0
@@ -310,7 +337,7 @@ export class StableGarmentContacts {
         this.root.updateMatrixWorld(true);this.hip.getWorldQuaternion(this.hipRotation);this.root.getWorldScale(this.rootScale)
         const factor=Math.max(Math.abs(this.rootScale.x),Math.abs(this.rootScale.y),Math.abs(this.rootScale.z))
         for(const c of this.capsules){c.a.getWorldPosition(c.start);c.b.getWorldPosition(c.end);c.worldRadius=(c.radius+this.legLength*.004)*factor}
-        const started=performance.now();this.stats.surface=this.surface.project(this.capsules,this.hipRotation,blocked,factor)
+        const started=performance.now();this.stats.surface=this.surface.project(this.capsules,this.hipRotation,blocked,factor,this.surfaceDeltaSeconds,this.hip.getWorldPosition(this.pivot))
         const result=this.measure();this.stats.afterDepth=result.worst;this.stats.worstCollider=result.collider;this.stats.worstGarment=result.part
         this.stats.limited ||= this.stats.surface.limited;this.stats.milliseconds+=performance.now()-started
         return this.diagnostics

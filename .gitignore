@@ -31,3 +31,9 @@ dist-deploy
 /artifacts/
 **/__pycache__/
 *.py[cod]
+
+# Regenerated carrier aliases and temporary test workspaces
+/public/character-actions/**/runtime.v1.json.gz
+/.garment-render-test/
+/.action-carrier-deployment-test/
+/.viewport-tests-*/

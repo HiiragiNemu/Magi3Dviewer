@@ -1,7 +1,7 @@
 name: Publish verified website to Cloudflare
 on:
   push:
-    branches: [magius3dviewer]
+    branches: [main]
     paths: ['.github/workflows/site-publish-verified.yml']
   workflow_dispatch:
 permissions:
@@ -80,7 +80,7 @@ jobs:
           const build=jobs.jobs.find(j=>j.name==='build');assert.equal(build?.conclusion,'success');
           assert.equal(build.steps.find(s=>s.name==='Verify real pointer interaction, skinning and multi-character rendering')?.conclusion,'success');
           const allowed=new Set(['.github/workflows/site-delivery.yml','.github/workflows/site-publish-verified.yml','scripts/site-smoke-stage-delivery.mjs','siteStageDelivery.test.mjs','scripts/site-smoke-cloudflare.mjs','scripts/test-website.mjs','scripts/build-deployment.mjs','package.json','docs/reports/2026-09-29-pose-delivery-resume.md','docs/reports/2026-09-29-cloudflare-delivery.md']);
-          const head=(await get('/branches/magius3dviewer')).commit.sha;
+          const head=(await get('/branches/main')).commit.sha;
           const comparisons=[];
           for(const ref of new Set([process.env.GITHUB_SHA,head])){
             const c=await get('/compare/'+process.env.POSE_SOURCE+'...'+ref);assert.ok(['ahead','identical'].includes(c.status));assert.equal(c.merge_base_commit.sha,process.env.POSE_SOURCE);assert.ok(c.total_commits<100&&c.files.length<300);
