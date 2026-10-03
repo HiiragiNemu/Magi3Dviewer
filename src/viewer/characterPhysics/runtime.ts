@@ -3063,6 +3063,9 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
         // Match Magica's world-transform pass followed by its local-transform
         // pass. The precomputed order avoids rebuilding and sorting the complete
         // cloth graph every render frame.
+        const outputParentInverse = new THREE.Matrix4()
+        const outputParentPosition = new THREE.Vector3()
+        const outputParentScale = new THREE.Vector3()
         for (const { team, particle, index } of this.outputEntries) {
             if (team.failClosedReason) continue
             const spring = team.cloth.serializeData.clothType === 10
@@ -3080,7 +3083,7 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
                 particle.bone.position.fromArray(displayed.position)
                 particle.bone.quaternion.fromArray(displayed.quaternion)
                 particle.hasLastWrite = false
-                particle.bone.updateMatrixWorld(true)
+                particle.bone.updateWorldMatrix(false, false)
                 continue
             }
             const moving = spring || !team.rootIndices.includes(index)
@@ -3089,10 +3092,15 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
                 ? team.outputWorldPositions[index]!
                 : particle.frameCurrentAnimationPosition
             if (parent) parent.updateWorldMatrix(true, false)
-            const outputLocalPosition = parent ? parent.worldToLocal(targetWorldPosition.clone()) : targetWorldPosition.clone()
-            const parentWorld = parent
-                ? parent.getWorldQuaternion(new THREE.Quaternion())
-                : new THREE.Quaternion()
+            const outputLocalPosition = targetWorldPosition.clone()
+            const parentWorld = new THREE.Quaternion()
+            if (parent) {
+                // worldToLocal and getWorldQuaternion each refresh every
+                // ancestor again. The parent matrix was just refreshed above;
+                // read that same matrix without two more hierarchy traversals.
+                outputLocalPosition.applyMatrix4(outputParentInverse.copy(parent.matrixWorld).invert())
+                parent.matrixWorld.decompose(outputParentPosition, parentWorld, outputParentScale)
+            }
             const targetLocalQuaternion = parentWorld.invert()
                 .multiply(team.outputWorldQuaternions[index]!)
                 .normalize()
@@ -3136,7 +3144,10 @@ class NativeCharacterPhysics implements NativeCharacterPhysicsRuntime {
             if (manual) manual.displayed.set(particle.bone, this.readManualPose(particle.bone))
             particle.lastWrittenResidualQuaternion.copy(outputResidual)
             particle.hasResidualHistory = true
-            particle.bone.updateMatrixWorld(true)
+            // Later outputs explicitly refresh their parent chain. Descendant
+            // subtrees need not be recursively recomposed after every bone;
+            // the final root traversal publishes every terminal/helper matrix.
+            particle.bone.updateWorldMatrix(false, false)
             particle.lastWrittenLocalPosition.copy(particle.bone.position)
             particle.lastWrittenLocalQuaternion.copy(particle.bone.quaternion)
             particle.hasLastWrite = true

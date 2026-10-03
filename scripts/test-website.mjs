@@ -19,6 +19,7 @@ const tests = [
   'performanceRecording.test.mjs',
   'studioFollowup.test.mjs',
   'garmentContacts.test.mjs',
+  'garmentReplayAudit.test.mjs',
   'garmentSurfaceContact.test.mjs','garmentStabilityV3.test.mjs','garmentRenderCoherence.test.mjs','garmentSafetyRelease.test.mjs','locomotionGenerationFacing.test.mjs',
   'cameraPlaneControl.test.mjs',
   'performanceAudioLane.test.mjs',

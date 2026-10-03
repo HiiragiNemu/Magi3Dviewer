@@ -228,6 +228,67 @@ function countNativeTransformWrites(objects) {
     return {counts,clear(){for(const value of counts.values()){value.position=0;value.quaternion=0}},restore(){restores.forEach(fn=>fn())}}
 }
 
+// Inspect the actual publication pass: a final tree flush is required, but
+// recursively flushing every output's descendants first repeats the same work.
+for (const state of ['native', 'held', 'return-waiting', 'return-fresh']) {
+    test(`native output publication flushes helper descendants once with current world matrices (${state})`, () => {
+        const f = manualLeaseFixture()
+        const selected = f.outputs[0]
+        const helpers = f.outputs.map((output, i) => {
+            const helper = new THREE.Group(), tip = new THREE.Group()
+            helper.name = `non-output-helper-${i}`
+            helper.position.set(0.013, -0.02, 0.007)
+            helper.rotation.set(0.1, 0.2, -0.05)
+            tip.position.set(0.03, 0.01, -0.04)
+            output.add(helper); helper.add(tip)
+            return tip
+        })
+        let lease
+        try {
+            if (state !== 'native') {
+                lease = f.acquire([selected]).value
+                selected.position.x += 0.07
+                selected.quaternion.setFromAxisAngle(new THREE.Vector3(0, 0, 1), 0.4)
+                f.root.updateMatrixWorld(true)
+                if (state.startsWith('return')) {
+                    assert.equal(lease.beginReturn({transitionSeconds: 0.2}).status, 'ready')
+                    if (state === 'return-fresh') {
+                        assert.equal(f.submit(lease, [selected], 1).status, 'ready')
+                    }
+                }
+            }
+            // Exercise a non-identity ancestor and deliberately stale helpers.
+            f.root.position.set(0.2, 0.7, -0.1)
+            f.root.rotation.set(0.13, -0.31, 0.09)
+            f.root.scale.setScalar(1.3)
+            const visits = new Map(helpers.map(node => [node, 0]))
+            for (const node of helpers) {
+                const original = node.updateMatrixWorld
+                node.updateMatrixWorld = function (...args) {
+                    visits.set(this, visits.get(this) + 1)
+                    return original.apply(this, args)
+                }
+            }
+            // JS can call this TypeScript-private method; isolate output
+            // publication from the solver's necessary input snapshot traversals.
+            f.runtime.applySolvedPose()
+            for (const [node, count] of visits) assert.equal(count, 1, node.parent.name)
+            const expected = new Map()
+            f.root.traverse(node => {
+                const local = new THREE.Matrix4().compose(node.position, node.quaternion, node.scale)
+                const world = node.parent && expected.has(node.parent)
+                    ? expected.get(node.parent).clone().multiply(local) : local
+                expected.set(node, world)
+                const error = Math.max(...world.elements.map((value, i) => Math.abs(value - node.matrixWorld.elements[i])))
+                assert.ok(error < 1e-12, `stale matrix for ${node.name}: ${error}`)
+            })
+        } finally {
+            lease?.cancel()
+            f.runtime.dispose()
+        }
+    })
+}
+
 test('native manual output lease requires exact ready root generation and potential output membership',()=>{
     const f=manualLeaseFixture(),request={root:f.root,actorGeneration:1,isCurrent:()=>true,outputs:[f.outputs[0]]}
     for(const change of [{root:new THREE.Group()},{actorGeneration:-1},{isCurrent:()=>false},{outputs:[]},
