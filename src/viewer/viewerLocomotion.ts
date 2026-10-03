@@ -4588,6 +4588,27 @@ function attachParameterizedHumanoidMotionProfile(
         if (normalize && blended.lengthSq() > 1e-12) blended.normalize()
         return blended
     }
+    // Authored wide-dress arms; lower-body gait and facing are unchanged.
+    const wideSkirtNativeArms = characterId === 101901 || (
+        targetRigSkirtProxyBones.length >= 6
+        && (targetRigMorphologyFeatures?.skirtRadialEnvelopeMeters ?? 0) >= armLengthMeters * .95
+    )
+    // Requested local comparison: change only Touka, not other wide skirts.
+    const wideSkirtArmDonorId = characterId === 101901 ? 111501 : 114501
+    // Keep Tart's timing, forward swing and elbow bend. Use 114501 only as
+    // a phase-matched outward-angle floor, rotating the entire arm together.
+    const widenToukaArmDirection = (direction: THREE.Vector3, semantic: NormalizedMotionSemantic, phase: number, role: string): THREE.Vector3 => {
+        if(characterId !== 101901 || !/^(?:upperArm|forearm)[LR]$/.test(role))return direction
+        const side=role.endsWith('L')?'L':'R',sign=side==='L'?1:-1
+        const source=normalizedHumanoidMotionReference.donors.find(d=>d.characterId===111501)!
+        const spread=normalizedHumanoidMotionReference.donors.find(d=>d.characterId===114501)!
+        const a=sampleDonorVector(source,semantic,phase,f=>f.directions[`upperArm${side}`]).normalize()
+        const b=sampleDonorVector(spread,semantic,phase,f=>f.directions[`upperArm${side}`]).normalize()
+        const outward=(v:THREE.Vector3)=>Math.atan2(sign*v.x,-v.y)
+        const angle=Math.max(0,outward(b)-outward(a))*sign
+        const c=Math.cos(angle),s=Math.sin(angle),x=direction.x,y=direction.y
+        return direction.set(c*x-s*y,s*x+c*y,direction.z).normalize()
+    }
     const naturalUpperBodyProfileId: NaturalUpperBodyProfileId = profileId === '101901-dress-clearance-multidonor'
         ? '101901-dress-clearance-multidonor'
         : 'set-a'
@@ -4595,7 +4616,9 @@ function attachParameterizedHumanoidMotionProfile(
         ? normalizedDonorWeightSubset(targetRigMorphologyBlend.weights, naturalArmFingerDonorIds)
         : undefined
     const naturalUpperBodyWeights = naturalUpperBodyTrajectoryWeights[naturalUpperBodyProfileId]
-    const effectiveNaturalUpperBodyWeights = morphologyUpperBodyWeights
+    const effectiveNaturalUpperBodyWeights = wideSkirtNativeArms
+        ? { walk: { [wideSkirtArmDonorId]: 1 } as Record<string,number>, run: { [wideSkirtArmDonorId]: 1 } as Record<string,number> }
+        : morphologyUpperBodyWeights
         ? { walk: morphologyUpperBodyWeights, run: morphologyUpperBodyWeights }
         : naturalUpperBodyWeights
     const naturalHandFingerDonors = naturalArmFingerDonorIds.map(characterId => {
@@ -4822,7 +4845,9 @@ function attachParameterizedHumanoidMotionProfile(
         phase: number,
         rigPath: string,
     ): THREE.Quaternion => {
-        const accumulated = new THREE.Vector4()
+        // Vector4 defaults w to 1, which would halve the selected donor's
+        // wrist/finger rotations. Keep this comparison scoped to Touka.
+        const accumulated = new THREE.Vector4(0, 0, 0, characterId === 101901 ? 0 : 1)
         let hemisphere: THREE.Quaternion | undefined
         let accumulatedWeight = 0
         for (const donor of naturalHandFingerDonors) {
@@ -4914,7 +4939,7 @@ function attachParameterizedHumanoidMotionProfile(
         // 101901's own inverse-bind rest quaternion, never to HomeWait. Layering
         // locomotion over the asymmetric lookboard pose fixed one hand in front
         // and inverted the other palm throughout the cycle.
-        const handStrength = blendStrength * (semantic === 'run' ? 0.82 : 0.72)
+        const handStrength = blendStrength * (wideSkirtNativeArms ? 1 : semantic === 'run' ? 0.82 : 0.72)
         for (const rigPath of nativeUpperBodyHandPaths) {
             const target = rig.get(rigPath)!
             const targetRest = skeletonRestLocal.get(target)!
@@ -5346,10 +5371,10 @@ function attachParameterizedHumanoidMotionProfile(
                     frame => frame.directions[segment.directionRole],
                     true,
                 )
-            let desiredDirection = referenceVectorToTargetWorld(donorDirection)
+            let desiredDirection = referenceVectorToTargetWorld(widenToukaArmDirection(donorDirection,semantic,phase,segment.directionRole))
             const bone = rig.get(motionPaths[segment.boneRole])!
             const child = rig.get(motionPaths[segment.childRole])!
-            if (/^shoulder[LR]$/.test(segment.directionRole)) {
+            if (!wideSkirtNativeArms && /^shoulder[LR]$/.test(segment.directionRole)) {
                 // Keep 101901's clavicle/rest-shoulder axes dominant. Directly
                 // replacing this short segment with a donor direction lifts both
                 // elbows sideways and produces the visible "swimming" silhouette.
@@ -5357,7 +5382,7 @@ function attachParameterizedHumanoidMotionProfile(
                     .sub(bone.getWorldPosition(new THREE.Vector3()))
                     .normalize()
                 desiredDirection = currentDirection.lerp(desiredDirection.normalize(), 0.32).normalize()
-            } else if (semantic === 'walk' && /^forearm[LR]$/.test(segment.directionRole)) {
+            } else if (!wideSkirtNativeArms && semantic === 'walk' && /^forearm[LR]$/.test(segment.directionRole)) {
                 // Native exploration walks swing an already-bent arm; they do
                 // not straighten and re-fold the elbow every step. Preserve the
                 // complete authored upper-arm swing, then carry one fixed
@@ -7110,12 +7135,12 @@ function attachParameterizedHumanoidMotionProfile(
             /^(?:shoulder|upperArm|forearm)[LR]$/.test(candidate.directionRole)
         ))) {
             const side = segment.directionRole.endsWith('L') ? 'L' : 'R'
-            const donorDirection = referenceVectorToTargetWorld(blendNaturalUpperBodyVector(
+            const donorDirection = referenceVectorToTargetWorld(widenToukaArmDirection(blendNaturalUpperBodyVector(
                 'run',
                 sidePhases[side],
                 frame => frame.directions[segment.directionRole],
                 true,
-            )).normalize()
+            ),'run',sidePhases[side],segment.directionRole)).normalize()
             const bone = rig.get(motionPaths[segment.boneRole])!
             const child = rig.get(motionPaths[segment.childRole])!
             const currentDirection = child.getWorldPosition(new THREE.Vector3())
@@ -7342,6 +7367,49 @@ function attachParameterizedHumanoidMotionProfile(
         { state: 'fall', phase: 'airborne', duration: 0.64 },
         { state: 'land', phase: 'land', duration: 0.42 },
     ] as const
+    const wideSkirtIdleName = `Magius${characterId}NativeArmsIdle${wideSkirtArmDonorId}-${profileId}_L`
+    const makeWideSkirtIdleClip = (): THREE.AnimationClip => {
+        const donor = normalizedHumanoidMotionReference.donors.find(d => d.characterId === wideSkirtArmDonorId)!
+        const armRoles = ['shoulderL','upperArmL','forearmL','handL','shoulderR','upperArmR','forearmR','handR'] as const
+        const armBones = armRoles.map(role => rig.get(motionPaths[role])!)
+        const armTrackNames = new Set(armBones.map(bone => `${bone.uuid}.quaternion`))
+        const bodyTracks = baselineFamilyClips.flatMap(clip => clip.tracks).filter(track => baselineBindings.has(track.name))
+        // A generated idle can also be evaluated before TPS takes ownership.
+        // Preserve this character's authored prop and hide-helper channels;
+        // stripping them resets the sibling weapon rig onto the floor.
+        const idleTracks = [...new Map(baselineFamilyClips.flatMap(clip => clip.tracks)
+            .map(track => [track.name, track] as const)).values()]
+        const duration = Math.max(...baselineFamilyClips.map(clip => clip.duration))
+        const times = makeFrameTimes(duration)
+        const sampled = bodyTracks.map(track => ({binding:baselineBindings.get(track.name)!,interpolant:(track as THREE.KeyframeTrack & {createInterpolant():{evaluate(time:number):ArrayLike<number>}}).createInterpolant()}))
+        const values = armBones.map(() => [] as number[])
+        for(const time of times){
+            resetToSampledBaseline()
+            for(const {binding,interpolant} of sampled){const value=interpolant.evaluate(time)
+                if(binding.property==='quaternion')binding.target.quaternion.fromArray(value).normalize()
+                else binding.target[binding.property].fromArray(value)
+            }
+            // Directions follow this frame's authored body heading. No hip,
+            // bone-length, scale or lower-body track is replaced by a donor.
+            character.object.updateMatrixWorld(true)
+            const left=rig.get(motionPaths.upperArmL)!.getWorldPosition(new THREE.Vector3()).sub(rig.get(motionPaths.upperArmR)!.getWorldPosition(new THREE.Vector3()))
+            left.addScaledVector(worldUp,-left.dot(worldUp)).normalize()
+            const forward=new THREE.Vector3().crossVectors(left,worldUp).normalize()
+            for(const bone of armBones){const rest=skeletonRestLocal.get(bone);if(rest)bone.quaternion.copy(rest.quaternion)}
+            character.object.updateMatrixWorld(true)
+            for(const segment of referenceSegments.filter(item=>/^(?:shoulder|upperArm|forearm)[LR]$/.test(item.directionRole))){
+                const direction=widenToukaArmDirection(sampleDonorVector(donor,'idle',time/duration,frame=>frame.directions[segment.directionRole]).normalize(),'idle',time/duration,segment.directionRole)
+                const desired=left.clone().multiplyScalar(direction.x).addScaledVector(worldUp,direction.y).addScaledVector(forward,direction.z).normalize()
+                alignSegmentDirection(rig.get(motionPaths[segment.boneRole])!,rig.get(motionPaths[segment.childRole])!,desired)
+            }
+            armBones.forEach((bone,i)=>bone.quaternion.toArray(values[i],values[i].length))
+        }
+        // Keep the target's own breathing, face, legs and secondary tracks.
+        return new THREE.AnimationClip(wideSkirtIdleName,duration,[
+            ...idleTracks.filter(track=>!armTrackNames.has(track.name)).map(track=>track.clone()),
+            ...armBones.map((bone,i)=>new THREE.QuaternionKeyframeTrack(`${bone.uuid}.quaternion`,[...times],values[i])),
+        ])
+    }
     let generated: Array<{ state: LocomotionState; clip: THREE.AnimationClip }>
     try {
         generated = [
@@ -7386,6 +7454,7 @@ function attachParameterizedHumanoidMotionProfile(
                 }))
             )),
         ]
+        if(wideSkirtNativeArms)generated.unshift({state:'idle',clip:makeWideSkirtIdleClip()})
         // Preserve every original clip and its name. Refined tracks are an
         // additive alternative product, never destructive replacement assets.
         sampledJumpStyle = 'expressive'
@@ -7452,7 +7521,7 @@ function attachParameterizedHumanoidMotionProfile(
             ]),
         ) as Record<NormalizedMotionSemantic, number>,
         donorBlendWeights: { ...effectiveBlendWeights },
-        upperBodyProfileId: targetRigMorphologyProfile
+        upperBodyProfileId: characterId===101901 ? 'touka-111501-arms-114501-spread-v3' : wideSkirtNativeArms ? `wide-skirt-native-${wideSkirtArmDonorId}-arms-v2` : targetRigMorphologyProfile
             ? 'target-rig-morphology-nine-native-arms-fingers-v45'
             : setB
                 ? '101901-mami-dress-clearance-nine-native-arms-fingers-v37'
@@ -7575,7 +7644,7 @@ function attachParameterizedHumanoidMotionProfile(
     return {
         profile,
         animations: {
-            idle: baselineClip,
+            idle: wideSkirtNativeArms ? wideSkirtIdleName : baselineClip,
             walk: names.walk,
             run: names.run,
             jump: jumpNames.standing.jump,

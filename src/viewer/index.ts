@@ -279,7 +279,7 @@ let directPoseGizmoPointerId: number | undefined
 let directPoseFeedbackPending = false
 let directPoseTarget: DirectPoseTarget | StructurePoseTarget | undefined
 let directPoseInputRoot: THREE.Group | undefined
-const directPoseDragBases = new Map<THREE.Object3D, THREE.Quaternion>()
+const poseDragResults = new Map<THREE.Object3D, LocalTransform>()
 let directPoseFinishing = false
 let viewportEditor: ReturnType<typeof createViewportPoseEditor> | undefined
 let directPoseToolsUi: ReturnType<typeof createDirectPoseTools> | undefined
@@ -290,7 +290,6 @@ let poseAllowStretch = false
 const poseOrigins = new WeakMap<THREE.Object3D, Map<string,LocalTransform>>()
 const poseFrozenBases = new WeakMap<THREE.Object3D, Map<string,LocalTransform>>()
 const placementHistories = new WeakMap<THREE.Object3D,PlacementHistory>()
-const poseDragTransforms = new Map<THREE.Object3D,LocalTransform>()
 let poseStructurePanel: ReturnType<typeof installPoseWorkspacePanel> | undefined
 let directPoseKeepOrientation = false
 let directPoseBendEditing = false
@@ -317,15 +316,13 @@ const studioAdoptedExpressions=new WeakSet<THREE.Object3D>()
 const poseGravity = new PoseGravityPreview()
 const garmentContacts = new Map<THREE.Object3D, StableGarmentContacts>()
 const garmentPreparing = new Set<THREE.Object3D>()
-// Production remains on the native cloth path until the extra contact layer
-// passes real-frame visual AND performance review. Saved browser preferences
-// cannot silently re-enable a rejected experimental release.
-const garmentContactsAvailable = import.meta.env.VITE_MAGIUS_GARMENT_CONTACTS === 'on'
+// Local preview: use only the requested db8e279 contact implementation.
+const garmentContactsAvailable = import.meta.env.VITE_MAGIUS_GARMENT_CONTACTS !== 'off'
 const poseGravityAvailable = import.meta.env.VITE_MAGIUS_POSE_GRAVITY !== 'off'
 let garmentContactsEnabled = garmentContactsAvailable
 let garmentRecoveryHalfLife=DEFAULT_GARMENT_HALF_LIFE
 try { const saved=Number(localStorage.getItem(GARMENT_DAMPING_SETTING));if(Number.isFinite(saved)&&saved>=.04&&saved<=.3)garmentRecoveryHalfLife=saved } catch {}
-try { if(localStorage.getItem(GARMENT_CONTACT_SETTING)==='off')garmentContactsEnabled=false } catch { /* privacy mode */ }
+// Local db8e279 acceptance: start contacts enabled; checkbox can still disable them.
 function setGarmentContactsEnabled(value:boolean){
     value=Boolean(value&&garmentContactsAvailable);garmentContactsEnabled=value
     if(!value)for(const solver of garmentContacts.values())solver.restore(true)
@@ -353,34 +350,40 @@ function preparePoseGravity(){
     }))
 }
 function updateGarmentContacts(deltaSeconds=0){
-    for(const slot of scene.characters){
-        const character=slot.character;if(!character||slot.removed)continue
-        const object=character.object
-        // Selection and TPS ownership are UI state, not material properties.
-        // A stationary actor must have the same cloth before and after selection.
-        if(garmentContactsEnabled)warmGarmentContacts(object)
-        garmentContacts.get(object)?.solve(garmentContactsEnabled,node=>{
+    for(const slot of scene.characters){const character=slot.character;if(!character)continue
+        const object=character.object,active=garmentContactsEnabled&&!performanceRecorder?.ownsMotion(object)&&(
+            (poseFrozenBases.has(object)?poseGravity.enabled:/walk|run|jump|airborne|land|DungeonWait|NativeArmsIdle/i.test(character.animation.current??'')))
+        if(active)warmGarmentContacts(object)
+        garmentContacts.get(object)?.solve(active,node=>{if(isPerformanceBoneLeased(node))return true;const entry=manualPoseByCharacter.get(object)?.get(node.uuid);return !!entry&&(entry.offsets.lengthSq()>1e-12||entry.positionOffsets.lengthSq()>1e-12||!!entry.scaleFactors||directPoseSelection?.entry===entry)},deltaSeconds)
+    }
+    for(const [object,solver]of garmentContacts)if(!scene.characters.some(s=>s.character?.object===object)){solver.dispose();garmentContacts.delete(object)}
+}
+function updateGarmentSurfaces(){
+    if(!garmentContactsEnabled)return
+    for(const slot of scene.characters){const character=slot.character;if(!character)continue
+        const object=character.object,active=performanceRecorder?.ownsMotion(object)||poseFrozenBases.has(object)||/walk|run|jump|airborne|land|DungeonWait|NativeArmsIdle/i.test(character.animation.current??'')
+        if(!active)continue;warmGarmentContacts(object)
+        garmentContacts.get(object)?.projectSurface(node=>{
             if(!performanceRecorder?.ownsMotion(object)&&isPerformanceBoneLeased(node))return true
             const entry=manualPoseByCharacter.get(object)?.get(node.uuid)
             return !!entry&&(entry.offsets.lengthSq()>1e-12||entry.positionOffsets.lengthSq()>1e-12||!!entry.scaleFactors||directPoseSelection?.entry===entry)
-        },deltaSeconds)
+        })
     }
-    for(const [object,solver]of garmentContacts)if(!scene.characters.some(s=>s.character?.object===object)){solver.dispose();garmentContacts.delete(object)}
 }
 function setupMotionContactOptions(){
     const section=document.createElement('section');section.id='motion-contact-options';section.dataset.i18nIgnore='true';section.style.cssText='display:grid;gap:6px;padding:8px;font-size:12px'
     const contact=document.createElement('input');contact.type='checkbox';contact.id='garment-contacts-enabled';contact.checked=garmentContactsEnabled;contact.disabled=!garmentContactsAvailable
-    const contactLabel=document.createElement('label');contactLabel.append(contact,document.createTextNode(garmentContactsAvailable?'额外衣料接触（试验验证用）':'额外衣料防穿模（安全回退，本版暂停）'));contact.onchange=()=>setGarmentContactsEnabled(contact.checked)
+    const contactLabel=document.createElement('label');contactLabel.append(contact,document.createTextNode(garmentContactsAvailable?'db8e279 防穿模（可单独关闭）':'db8e279 防穿模（构建开关关闭）'));contact.onchange=()=>setGarmentContactsEnabled(contact.checked)
     const gravity=document.createElement('input');gravity.type='checkbox';gravity.id='pose-gravity-enabled';gravity.disabled=!poseGravityAvailable
     const gravityLabel=document.createElement('label');gravityLabel.append(gravity,document.createTextNode('自定义姿态重力预览（原生物理）'));gravity.onchange=()=>poseGravity.setEnabled(gravity.checked&&poseGravityAvailable)
-    const note=document.createElement('small');note.textContent=garmentContactsAvailable?'试验性接触层仍有穿模与性能限制，不代表完整布料模拟。姿态重力独立、默认关闭，只作用于未手动固定的头发、衣服和饰品。':'已撤回产生黑块与性能回归的额外衣料变形；原生动画、原生衣物物理继续运行。原有穿模尚未全部解决。姿态重力预览独立可用且默认关闭。'
+    const note=document.createElement('small');note.textContent='本地使用 db8e279 防碰撞。姿态重力独立、默认关闭，只作用于未手动固定的头发、衣服和饰品。'
     const recovery=document.createElement('input');recovery.type='range';recovery.min='40';recovery.max='300';recovery.step='10';recovery.id='garment-recovery-damping';recovery.value=String(Math.round(garmentRecoveryHalfLife*1000));recovery.disabled=!garmentContactsAvailable
     const recoveryValue=document.createElement('output');recoveryValue.textContent=recovery.value+' ms'
     const recoveryLabel=document.createElement('label');recoveryLabel.style.cssText='display:flex;align-items:center;gap:6px';recoveryLabel.append(document.createTextNode('衣服回落阻尼'),recovery,recoveryValue);recovery.setAttribute('aria-label','衣服回落阻尼（毫秒）');recovery.title='越大回落越平缓；不延迟手臂、腿推动衣服时的碰撞让位'
     recovery.oninput=()=>{garmentRecoveryHalfLife=Number(recovery.value)/1000;recoveryValue.textContent=recovery.value+' ms';for(const solver of garmentContacts.values())solver.setRecoveryHalfLife(garmentRecoveryHalfLife);try{localStorage.setItem(GARMENT_DAMPING_SETTING,String(garmentRecoveryHalfLife))}catch{}}
     section.append(contactLabel,recoveryLabel,gravityLabel,note)
     const dock=document.getElementById('advanced-controls-dock')!;(dock.querySelector('.floating-panel-scroll')??dock).append(section)
-    Object.assign(window,{magiusGarmentContacts:{setEnabled:setGarmentContactsEnabled,evaluateOnce:()=>{updateGarmentContacts()},get enabled(){return garmentContactsEnabled},get available(){return garmentContactsAvailable},setPoseGravity:(value:boolean)=>{gravity.checked=Boolean(value&&poseGravityAvailable);poseGravity.setEnabled(gravity.checked)},diagnostics:()=>({policy:garmentContactsAvailable?'coherent-bounded-surface-v4':'native-only-safety-revert',contacts:[...garmentContacts].map(([root,solver])=>({uuid:root.uuid,...solver.diagnostics})),gravity:poseGravity.diagnostics()})}})
+    Object.assign(window,{magiusGarmentContacts:{setEnabled:setGarmentContactsEnabled,evaluateOnce:()=>{updateGarmentContacts();updateGarmentSurfaces()},get enabled(){return garmentContactsEnabled},get available(){return garmentContactsAvailable},setPoseGravity:(value:boolean)=>{gravity.checked=Boolean(value&&poseGravityAvailable);poseGravity.setEnabled(gravity.checked)},diagnostics:()=>({policy:garmentContactsAvailable?'db8e279-contact-and-surface':'native-only-build-disabled',contacts:[...garmentContacts].map(([root,solver])=>({uuid:root.uuid,...solver.diagnostics})),gravity:poseGravity.diagnostics()})}})
 }
 function listRecordedActors():RecordedActor[]{
     const counts=new Map<string,number>(),result:RecordedActor[]=[]
@@ -2043,7 +2046,8 @@ function applyManualPoseOverrides() {
         const object = actor.object
         if (object) manualPoseByCharacter.get(object)?.forEach(applyPoseEntry)
     }
-    // Never feed a solved bone back into the active input handle.
+    // Refresh the displayed pivot only after every upstream pose overlay is
+    // applied. Active input orientation and queued targets remain untouched.
     directPoseTarget?.sync()
 }
 
@@ -2222,7 +2226,7 @@ function selectDirectPoseBone(object: THREE.Object3D, bone: THREE.Object3D, _par
         ? new StructurePoseTarget(object,bone,poseAllowStretch,isPerformanceBoneLeased)
         : new DirectPoseTarget(object,bone,isPerformanceBoneLeased)
     if(directPoseTarget instanceof DirectPoseTarget)directPoseTarget.projectPosition = createPoseContactGuard(object, editorGround)
-    entry.unrestricted = false
+    // Reselection must preserve a previously edited/imported rotation policy.
     directPoseTarget.preserveEndOrientation = directPoseKeepOrientation
     directPoseInputRoot?.add(directPoseTarget.handle)
     directPoseSelection = {
@@ -2245,7 +2249,7 @@ function clearDirectPoseSelection() {
     if (directPoseControlsHelper) directPoseControlsHelper.visible = false
     directPoseTarget?.handle.removeFromParent()
     directPoseTarget = undefined
-    directPoseDragBases.clear()
+    poseDragResults.clear()
     directPoseSelection = undefined
     directPosePointerDrag = undefined
     directPoseGizmoDragging = false
@@ -2264,13 +2268,12 @@ function setDirectPoseEditing(enabled: boolean) {
     directPoseEditingEnabled = enabled
     document.body.classList.toggle('direct-pose-editing', enabled)
     if (enabled) {
-        if (document.body.classList.contains('locomotion-mode-enabled')) setViewerLocomotionEnabled(false)
         closeObjectTransform()
         directPoseOrbitControlsWasEnabled = scene.controls.enabled
         directPoseOutlineSelection = [...scene.effects.outlinePass.selectedObjects]
         scene.effects.outlinePass.selectedObjects = []
         // Only an actual pointer drag leases Orbit input.
-        scene.controls.enabled = true
+        scene.controls.enabled = !document.body.classList.contains('locomotion-mode-enabled')
         if (directPoseControls) directPoseControls.enabled = true
         // Pause the official action transport too, not only the legacy mixer.
         if(object)pausePoseActor(object)
@@ -2282,7 +2285,7 @@ function setDirectPoseEditing(enabled: boolean) {
         if (directPoseControls) directPoseControls.enabled = false
         scene.effects.outlinePass.selectedObjects = directPoseOutlineSelection
         directPoseOutlineSelection = []
-        scene.controls.enabled = directPoseOrbitControlsWasEnabled
+        scene.controls.enabled = directPoseOrbitControlsWasEnabled && !document.body.classList.contains('locomotion-mode-enabled')
     }
     updateDirectPoseUi()
 }
@@ -2290,12 +2293,10 @@ function setDirectPoseEditing(enabled: boolean) {
 function beginDirectPoseTransaction(): boolean {
     if (!directPoseSelection || !directPoseTarget?.begin(directPoseTransformMode)) return false
     const entries = manualPoseByCharacter.get(directPoseSelection.object)
-    directPoseDragBases.clear(); poseDragTransforms.clear()
+    poseDragResults.clear()
     for (const bone of directPoseTarget.editedBones) {
         const entry = entries?.get(bone.uuid)
         if (!entry) { directPoseTarget.end(); return false }
-        directPoseDragBases.set(bone, getPoseEntryBase(entry))
-        poseDragTransforms.set(bone,{p:getPoseEntryPositionBase(entry).toArray(),q:getPoseEntryBase(entry).toArray(),s:(entry.lastBaseScale??bone.scale).toArray()})
     }
     getDirectPoseHistory(directPoseSelection.object).begin(captureDirectPose(directPoseSelection.object))
     scene.controls.enabled = false
@@ -2327,25 +2328,37 @@ function syncDirectPoseOffsetsFromBone() {
         }
         target.queue()
     }
-    const changed = target.flush()
-    if (!changed.length) return
+    if (!target.dragging || target.editedBones.some(isPerformanceBoneLeased)) return
     const entries = manualPoseByCharacter.get(selection.object)
-    for (const bone of changed) {
-        const entry = entries?.get(bone.uuid), base = directPoseDragBases.get(bone)
-        if (!entry || !base) continue
+    // Capture this frame's native base BEFORE the solver writes. Keep only the
+    // edited joints at the last pointer solution between input samples; TPS and
+    // all other joints continue animating. Rebase the overlay every frame so
+    // native animation never sees our previous output and release has no jump.
+    const bases = new Map<THREE.Object3D, {q: THREE.Quaternion; p: THREE.Vector3}>()
+    for (const bone of target.editedBones) {
+        const entry = entries?.get(bone.uuid)
+        if (entry) bases.set(bone, {q:getPoseEntryBase(entry), p:getPoseEntryPositionBase(entry)})
+    }
+    const changed = target.flush()
+    for (const bone of changed) poseDragResults.set(bone, readLocal(bone))
+    for (const [bone, held] of poseDragResults) {
+        const entry = entries?.get(bone.uuid), native = bases.get(bone)
+        if (!entry || !native) continue
+        const base = native.q
+        bone.quaternion.fromArray(held.q)
         const delta = base.clone().normalize().invert().multiply(bone.quaternion).normalize()
         const angles = new THREE.Euler().setFromQuaternion(delta, 'XYZ')
         entry.offsets.set(THREE.MathUtils.radToDeg(angles.x), THREE.MathUtils.radToDeg(angles.y), THREE.MathUtils.radToDeg(angles.z))
-        const local=poseDragTransforms.get(bone)
-        if(directPoseTarget instanceof StructurePoseTarget&&local&&directPoseTarget.canTranslate){
-            entry.positionOffsets.copy(bone.position).sub(new THREE.Vector3().fromArray(local.p))
-            entry.lastBasePosition=new THREE.Vector3().fromArray(local.p);entry.lastAppliedPosition=bone.position.clone()
+        if(target instanceof StructurePoseTarget&&target.canTranslate){
+            bone.position.fromArray(held.p)
+            entry.positionOffsets.copy(bone.position).sub(native.p)
+            entry.lastBasePosition=native.p;entry.lastAppliedPosition=bone.position.clone()
         }
-        entry.unrestricted=false
+        entry.unrestricted=directPoseTransformMode === 'rotate'
         entry.lastBase = base.clone()
         entry.lastApplied = bone.quaternion.clone()
     }
-    requestDirectPoseFeedback()
+    if (changed.length) requestDirectPoseFeedback()
 }
 
 function captureDirectPose(object: THREE.Object3D): PoseSnapshot {
@@ -2667,11 +2680,12 @@ function finishDirectPoseDrag(event?: PointerEvent) {
         if (directPoseControls?.dragging) directPoseControls.pointerUp(null)
         directPoseGizmoDragging = false
         directPoseTarget?.end()
+        poseDragResults.clear()
         directPoseBendEditing = false
         commitDirectPoseHistory()
         const canvas = scene.renderer.domElement
         if (pointerId !== undefined && canvas.hasPointerCapture(pointerId)) canvas.releasePointerCapture(pointerId)
-        scene.controls.enabled = directPoseOrbitControlsWasEnabled
+        scene.controls.enabled = directPoseOrbitControlsWasEnabled && !document.body.classList.contains('locomotion-mode-enabled')
     } finally { directPoseFinishing = false }
 }
 
@@ -2721,7 +2735,7 @@ function setupDirectPoseEditing() {
             directPoseTarget?.end()
             commitDirectPoseHistory()
         }
-        scene.controls.enabled = !event.value && directPoseOrbitControlsWasEnabled
+        scene.controls.enabled = !event.value && directPoseOrbitControlsWasEnabled && !document.body.classList.contains('locomotion-mode-enabled')
     })
     directPoseControls.addEventListener('objectChange', () => {
         if (directPoseGizmoDragging) directPoseTarget?.queue()
@@ -2735,6 +2749,7 @@ function setupDirectPoseEditing() {
         if (directPoseControls?.axis && directPoseControls.enabled) {
             directPoseGizmoPointerId = event.pointerId
             scene.controls.enabled = false
+            event.preventDefault() // Claim this pointer before TPS's bubble listener.
             return // TransformControls receives its normal event, not Orbit.
         }
         const weighted = getWeightedBoneAtPointer(event)
@@ -3361,8 +3376,9 @@ function animateLoop() {
     poseGravity.compose()
     performanceGizmoFlush?.()
     performanceHost?.flushFinalPoseBeforeCamera()
-    performanceRecorder?.frame()
     updateGarmentContacts(getClockDelta())
+    performanceRecorder?.frame()
+    updateGarmentSurfaces()
     if (objectTransformUiPending) {
         objectTransformUiPending = false
         if (singleObjectTransformOnChange) singleObjectTransformOnChange()

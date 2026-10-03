@@ -29,6 +29,7 @@ const tests = [
   'nativeAtlasRepair.test.mjs',
   'finalViewerUsability.test.mjs',
   'jumpArmKinematics.test.mjs',
+  'toukaHybridArms.test.mjs',
   'poseSnapshotPlayback.test.mjs',
   'poseWorkspace.test.mjs',
   'workspaceLifecycle.test.mjs',

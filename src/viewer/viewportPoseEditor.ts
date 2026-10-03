@@ -74,12 +74,11 @@ export function layoutPrimaryPoseControls(items:PrimaryChipBox[],view:{left:numb
     }
     return result
 }
-/** Distinct, deterministic hues within the currently visible panel. Brightness,
- * not glow/blur, identifies the selected leader. Colour is redundant with text. */
+/** Keep unselected leaders distinct; the selected leader is always white. */
 export function poseLeaderColour(index:number,count:number,selected=false,lightTheme=false){
+    if(selected)return '#ffffff'
     const hue=(index*137.50776405+Math.max(0,count-1)*3)%360
-    const light=selected?(lightTheme?48:82):(lightTheme?32:55)
-    return `hsl(${hue.toFixed(2)} ${selected?90:68}% ${light}%)`
+    return `hsl(${hue.toFixed(2)} 68% ${lightTheme?32:55}%)`
 }
 export function avoidDefaultChipOverlap(items:Array<{key:string;x:number;y:number;width:number;height:number;manual:boolean}>,view:{left:number;right:number;top:number;bottom:number}){
     const result=new Map<string,{x:number;y:number}>(),placed:typeof items=[]

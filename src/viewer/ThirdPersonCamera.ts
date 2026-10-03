@@ -276,6 +276,9 @@ export class ThirdPersonCamera {
         }, { signal })
         document.addEventListener('pointerdown', event => {
             if (event.pointerType === 'touch') return
+            // Canvas manipulators claim the event first. In capture phase TPS
+            // used to start a camera drag before the pose gizmo could claim it.
+            if (event.defaultPrevented) return
             if (!this.active || ![0,1,2].includes(event.button) || this.isControl(event.target) || !this.inside(event.clientX,event.clientY)) return
             if (document.pointerLockElement === this.hooks.scene().renderer.domElement) return
             if (this.drag && this.drag.id !== event.pointerId) return
@@ -283,7 +286,7 @@ export class ThirdPersonCamera {
             // cursor. Double-clicking the canvas is the explicit recapture.
             this.drag={id:event.pointerId,x:event.clientX,y:event.clientY,startX:event.clientX,startY:event.clientY,mode:event.button!==0||event.shiftKey||event.ctrlKey||event.metaKey?'pan':'rotate',moved:false}
             this.hooks.scene().renderer.domElement.setPointerCapture(event.pointerId)
-        }, {capture:true,signal})
+        }, {signal})
         for (const name of ['pointerup','pointercancel','lostpointercapture']) document.addEventListener(name,event=>{
             const e=event as PointerEvent,drag=this.drag;if(drag?.id!==e.pointerId)return
             this.drag=undefined

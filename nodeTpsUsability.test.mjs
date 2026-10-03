@@ -57,6 +57,37 @@ test('detail focus is one shot; changing hand, finger or main node does not invo
  assert.equal(document.querySelector('.ve-node-hint'),null)
 })
 test('collapse preserves pose state and separate explicit close exits editing',t=>{const f=editorFixture(t);document.querySelector('#viewport-editor-collapse').click();assert.equal(f.state.active,true);assert.equal(f.state.pose,true);document.querySelector('#viewport-editor-close').click();assert.equal(f.state.active,false)})
+
+test('selected node leader is white in both themes and transfers when another joint is chosen', t => {
+ const f=editorFixture(t)
+ const buttons=[...document.querySelectorAll('.ve-joint-node')]
+ for(const light of [false,true]){
+  document.body.classList.toggle('theme-light',light)
+  for(const button of buttons.slice(0,2)){
+   button.click();f.editor.update()
+   const selected=document.querySelector('line.is-selected')
+   assert.equal(selected.dataset.boneUuid,button.dataset.boneUuid)
+   assert.equal(selected.style.stroke,'rgb(255, 255, 255)')
+   assert.equal(document.querySelectorAll('line.is-selected').length,1)
+  }
+ }
+})
+
+test('a canvas-owned pose drag never also rotates the TPS camera; background still works',t=>{
+ const f=dom(t),camera=new T.PerspectiveCamera(40,1,.05,100);camera.position.set(0,1,5)
+ const controls={target:new T.Vector3(0,1,0),enabled:true,rotateSpeed:1,zoomSpeed:1,connect(){},disconnect(){},update(){}}
+ const owner=new ThirdPersonCamera({scene:()=>({camera,controls,renderer:{domElement:f.canvas}}),actor:()=>undefined,released(){},status(){}})
+ owner.install();owner.start();t.after(()=>owner.stop())
+ const claim=e=>e.preventDefault();f.canvas.addEventListener('pointerdown',claim,{capture:true})
+ const before=[owner.yaw,owner.pitch]
+ f.send(f.canvas,'pointerdown',500,300);f.send(f.canvas,'pointermove',570,340);f.send(f.canvas,'pointerup',570,340)
+ assert.deepEqual([owner.yaw,owner.pitch],before,'one pointer has only one owner')
+ assert.equal(owner.active,true)
+ f.canvas.removeEventListener('pointerdown',claim,{capture:true})
+ f.send(f.canvas,'pointerdown',500,300);f.send(f.canvas,'pointermove',570,340);f.send(f.canvas,'pointerup',570,340)
+ assert.notEqual(owner.yaw,before[0],'unclaimed background drag still rotates')
+ owner.stop()
+})
 for(const size of [1,10,40])test('a one-node focus cannot put the lens inside an enemy with extent '+size,()=>{const box=new T.Box3(new T.Vector3(-size,0,-size),new T.Vector3(size,size*2,size)),center=new T.Vector3(0,size,0),direction=new T.Vector3(.2,.05,1).normalize(),distance=safePartFocusDistance(center,direction,.2,box,.05);assert.equal(box.containsPoint(center.clone().addScaledVector(direction,distance)),false);assert.ok(distance>.2)})
 test('whole-actor frame preserves optical roll and changes no model transform',()=>{const camera=new T.PerspectiveCamera(40,1.5,.05,100);camera.position.set(0,1,4);const target=new T.Vector3(0,1,0);camera.lookAt(target);camera.rotateZ(.7);const q=camera.quaternion.toArray();const box=new T.Box3(new T.Vector3(5,0,5),new T.Vector3(6,2,6));assert.equal(frameWholeObject(camera,target,box,{top:0,bottom:800,height:800},80),true);assert.deepEqual(camera.quaternion.toArray(),q);assert.ok(target.x>5)})
 test('single actor toggles; multi-actor menu picks a concrete duplicate instance and offers off without resizing the button',t=>{

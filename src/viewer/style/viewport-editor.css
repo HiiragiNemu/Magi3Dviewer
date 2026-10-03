@@ -20,9 +20,9 @@ body.theme-light #viewport-editor .ve-close{color:#a82039!important;}
 #viewport-editor select option{color:var(--ve-text);background:var(--ve-bg);}
 #viewport-editor .ve-node-lines{position:fixed;inset:0;width:100vw;height:100dvh;pointer-events:none;overflow:visible;}
 #viewport-editor .ve-node-lines line{stroke:#409e92;stroke-width:1;stroke-opacity:.35;}
-#viewport-editor .ve-node-lines line.is-selected{stroke:#ba9210;stroke-width:1.5;stroke-opacity:.95;}
+#viewport-editor .ve-node-lines line.is-selected{stroke:#ffffff;stroke-width:2.8;stroke-opacity:1;}
 #viewport-editor .ve-node-lines circle{fill:#319782;stroke:#ecfff7;stroke-width:1.2;}
-#viewport-editor .ve-node-lines circle.is-selected{fill:#d4a516;stroke:#fff7c9;stroke-width:2;}
+#viewport-editor .ve-node-lines circle.is-selected{fill:#ffffff;stroke:#ffffff;stroke-width:2;}
 #viewport-editor .anchor-offscreen>.ve-joint-node{border-style:dashed;}
 @media(pointer:coarse){#viewport-editor .ve-chip>button,#viewport-editor .ve-chip>select{min-height:32px;}#viewport-editor .ve-chip>button.ve-chip-grip{width:18px;min-width:18px;}}
 @media(max-width:600px){#viewport-editor{font-size:12px;}#viewport-node-category{width:90px;}#viewport-node-chain{width:118px;}#viewport-editor .ve-chip>button{padding:3px 5px;}}

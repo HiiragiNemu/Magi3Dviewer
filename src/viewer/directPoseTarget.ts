@@ -107,9 +107,11 @@ export class DirectPoseTarget {
     get editedBones(): readonly Bone[] { return this.mode === 'translate' ? (this.preserveEndOrientation ? this.orientationBones : this.joints) : this.rotationBones }
 
     sync() {
-        if (this.active) return
+        // Publish the FINAL rendered pivot, including upstream manual edits.
+        // During a gesture keep the input orientation and queued target intact;
+        // refreshing a display position must never enqueue another solve.
         this.bone.getWorldPosition(this.handle.position)
-        this.bone.getWorldQuaternion(this.handle.quaternion).normalize()
+        if (!this.active) this.bone.getWorldQuaternion(this.handle.quaternion).normalize()
         this.handle.scale.set(1, 1, 1)
         this.handle.updateMatrixWorld()
     }
@@ -166,9 +168,15 @@ export class DirectPoseTarget {
             this.bone.parent.getWorldQuaternion(this.rotation)
             this.bone.quaternion.copy(this.rotation.invert()).multiply(this.startWorld).normalize()
         }
-        for (const joint of this.editedBones) this.limited = clampPoseJoint(joint) || this.limited
+        // XYZ rotation is an explicit pose edit, not an anatomical IK solve.
+        // Projecting it onto a one-axis hinge discards two visible ring axes
+        // and can even change a native elbow pose on a zero-distance press.
+        // Translation keeps the existing IK limits; neither mode changes length.
+        if (this.mode === 'translate') for (const joint of this.editedBones) this.limited = clampPoseJoint(joint) || this.limited
         this.bone.updateWorldMatrix(true, false)
-        if (this.projectPosition && !this.contactSafe()) {
+        // This guard constrains endpoint translation. Rotation leaves the pivot
+        // fixed; an existing pivot overlap must not cancel every rotation.
+        if (this.mode === 'translate' && this.projectPosition && !this.contactSafe()) {
             this.limited = true
             const candidates = new Map(this.editedBones.map(joint => [joint, joint.quaternion.clone()]))
             const applyFraction = (fraction: number) => {
@@ -191,7 +199,7 @@ export class DirectPoseTarget {
         }
         // Render the constrained endpoint, not an unreachable input proxy.
         this.bone.getWorldPosition(this.handle.position)
-        this.bone.getWorldQuaternion(this.handle.quaternion)
+        if (this.mode === 'translate') this.bone.getWorldQuaternion(this.handle.quaternion)
         this.handle.updateMatrixWorld()
         return this.editedBones
     }

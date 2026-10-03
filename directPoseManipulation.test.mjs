@@ -26,7 +26,7 @@ fs.writeFileSync(toolsModule, ts.transpileModule(fs.readFileSync(path.join(root,
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext },
 }).outputText)
 const { DirectPoseHistory, findDirectPoseParts } = await import(pathToFileURL(toolsModule))
-const { StructurePoseTarget, groupedPoseParts, structuralNodes, captureModelLocal, writeLocal } = await import(pathToFileURL(path.join(root,'src/viewer/poseWorkspace.ts')))
+const { StructurePoseTarget, groupedPoseParts, structuralNodes, captureModelLocal, writeLocal, readLocal } = await import(pathToFileURL(path.join(root,'src/viewer/poseWorkspace.ts')))
 const source = fs.readFileSync(path.join(root, 'src/viewer/index.ts'), 'utf8')
 const ast = ts.createSourceFile('viewer.ts', source, ts.ScriptTarget.Latest, true)
 assert.equal(ast.parseDiagnostics.length, 0, 'production viewer syntax')
@@ -80,7 +80,7 @@ function fixture({ scaled = false, orthographic = false } = {}) {
     const meshEntry = { object: mesh, defaultVisible: true, path: 'mesh', label: 'mesh' }
     let weighted, partUiCalls = 0, catalogState, pauses = 0, objectCloses = 0, selectedPart
     const deps = {
-        THREE: T, TransformControls, DirectPoseTarget, DirectPoseHistory, StructurePoseTarget, groupedPoseParts, movementSelection:{}, enemyPanelController:undefined, structuralNodes, captureModelLocal, writeLocal, scene, document, window, registerPoseJointLimits, clampPoseJoint,
+        THREE: T, TransformControls, DirectPoseTarget, DirectPoseHistory, StructurePoseTarget, groupedPoseParts, movementSelection:{}, enemyPanelController:undefined, structuralNodes, captureModelLocal, writeLocal, readLocal, scene, document, window, registerPoseJointLimits, clampPoseJoint,
         createPoseContactGuard: () => () => false, editorGround: {}, setViewerLocomotionEnabled() {},
         freezePoseForEditing() {}, // Isolate the active-animation overlay; snapshot freezing is covered by workspace tests.
         requestAnimationFrame: fn => feedback.push(fn),
@@ -97,12 +97,12 @@ function fixture({ scaled = false, orthographic = false } = {}) {
     }
     const api = Function(...Object.keys(deps), `
         const poseActorCapabilities = new WeakMap();
-        const manualPoseByCharacter = new WeakMap(), poseOrigins = new WeakMap(), poseFrozenBases = new WeakMap(), poseDragTransforms = new Map();
+        const manualPoseByCharacter = new WeakMap(), poseOrigins = new WeakMap(), poseFrozenBases = new WeakMap(), poseDragResults = new Map();
         let poseNodeGroup="primary", poseAllowStretch=false,poseStructurePanel;
         let directPoseControls, directPoseControlsHelper, directPoseSelection, selectedModelPart, directPosePointerDrag, directPoseGizmoPointerId;
         let directPoseFeedbackPending=false, directPoseEditingEnabled=false, directPoseTransformMode='rotate', directPoseGizmoDragging=false;
         let directPoseOrbitControlsWasEnabled=true, directPoseOutlineSelection=[], performanceGizmoActive=false, directPoseTarget, directPoseInputRoot, directPoseFinishing=false;
-        const directPoseDragBases = new Map(), directPoseHistories = new WeakMap();
+        const directPoseHistories = new WeakMap();
         let viewportEditor, directPoseToolsUi, directPoseKeepOrientation = false, directPoseBendEditing = false;
         ${js}
         setupDirectPoseEditing();
@@ -110,7 +110,16 @@ function fixture({ scaled = false, orthographic = false } = {}) {
             reset:resetActionParameters, undo:undoDirectPose, mode:setDirectPoseTransformMode, edit:setDirectPoseEditing, select:selectDirectPoseBone, finish:finishDirectPoseDrag,
             get selection(){return directPoseSelection}, get drag(){return directPosePointerDrag}, get controls(){return directPoseControls}, get target(){return directPoseTarget} };
     `)(...Object.values(deps))
-    const event = (x = 600, y = 400, extra = {}) => ({ pointerId: 1, pointerType: 'mouse', button: 0, buttons: 1, clientX: x, clientY: y, shiftKey: false, altKey: false, preventDefault() {}, stopPropagation() {}, stopImmediatePropagation() {}, ...extra })
+    const event = (x = 600, y = 400, extra = {}) => ({ pointerId: 1, pointerType: 'mouse', button: 0, buttons: 1, clientX: x, clientY: y, shiftKey: false, altKey: false,
+        preventDefault() { this.defaultPrevented = true }, stopPropagation() { this.propagationStopped = true }, stopImmediatePropagation() { this.immediateStopped = true }, ...extra })
+    const dispatch = (name, value) => {
+        const previous = globalThis.document
+        globalThis.document = document
+        try {
+            const handlers = [...(canvas.listeners.get(name) ?? [])].sort((a, b) => Number(b.capture) - Number(a.capture))
+            for (const handler of handlers) { handler.fn(value); if (value.immediateStopped) break }
+        } finally { globalThis.document = previous }
+    }
     const direct = (name, value) => {
         const list = canvas.listeners.get(name) ?? []
         const handler = name === 'pointermove'
@@ -129,13 +138,127 @@ function fixture({ scaled = false, orthographic = false } = {}) {
         })
         assert.deepEqual(otherActor.position.toArray(), [4, 0, 0], 'other actors untouched')
     }
-    return { actor, anchor, upper, lower, hand, sibling, mesh, api, scene, leases, translate, rotate, output, feedback, canvas, window, choose, startBody, direct, event, render, noStretch, vertex,
+    return { actor, anchor, upper, lower, hand, sibling, mesh, api, scene, leases, translate, rotate, output, feedback, canvas, window, choose, startBody, direct, dispatch, event, render, noStretch, vertex,
         partUiCalls: () => partUiCalls, setCatalog: state => { catalogState = state }, pauses: () => pauses, objectCloses: () => objectCloses, selectedPart: () => selectedPart,
         flushFeedback() { for (const fn of feedback.splice(0)) fn() },
         cleanup() { geometry.dispose(); mesh.material.dispose(); api.controls.dispose() },
     }
 }
 const sameRotation = (a, b) => 1 - Math.abs(a.clone().normalize().dot(b.clone().normalize())) < 1e-11
+
+for (const axis of ['X', 'Y', 'Z']) for (const horizontal of [false, true]) test('real elbow ring pointer capture and ' + (horizontal ? 'horizontal' : 'vertical') + ' drag: ' + axis, () => {
+    const f = fixture(); f.choose(f.lower)
+    f.api.entries(f.actor).get(f.upper.uuid).offsets.z = 55; f.render()
+    f.lower.rotation.set(.2, -.4, .12); f.api.target.sync(); f.scene.scene.updateMatrixWorld(true)
+    const control = f.api.controls, pivot = f.lower.getWorldPosition(new T.Vector3()), initial = f.lower.quaternion.clone()
+    const startWorld = f.lower.getWorldQuaternion(new T.Quaternion()), center = pivot.clone().project(f.scene.camera)
+    let hit
+    // Hit the REAL rendered picker rather than assigning control.axis by hand.
+    for (let radius = 14; radius <= 64 && !hit; radius += 5) for (let degrees = 15; degrees < 360; degrees += 25) {
+        const x = (center.x + 1) * 600 + radius * Math.cos(degrees * Math.PI / 180)
+        const y = (1 - center.y) * 400 + radius * Math.sin(degrees * Math.PI / 180)
+        f.dispatch('pointermove', f.event(x, y, { buttons: 0, button: -1 }))
+        if (control.axis === axis) { hit = { x, y }; break }
+    }
+    assert.ok(hit, 'visible ' + axis + ' ring is pickable')
+    f.dispatch('pointerdown', f.event(hit.x, hit.y)); assert.equal(control.dragging, true)
+    assert.equal(f.api.selection.entry.bone, f.lower, 'no weighted-mesh reselection under the ring')
+    f.dispatch('pointermove', f.event(hit.x + (horizontal ? 25 : 0), hit.y + (horizontal ? 0 : 25), { button: -1 }))
+    const input = control.object.quaternion.clone(), expected = initial.clone().multiply(startWorld.clone().invert().multiply(input))
+    assert.ok(!sameRotation(initial, expected), 'screen drag produces nonzero input')
+    f.render()
+    assert.ok(sameRotation(expected, f.lower.quaternion), 'solver preserves the ring rotation')
+    assert.ok(control.object.position.distanceTo(f.lower.getWorldPosition(new T.Vector3())) < 1e-9, 'ring stays at elbow')
+    f.dispatch('pointerup', f.event(hit.x, hit.y, { buttons: 0 })); assert.equal(control.dragging, false)
+    for (let i = 0; i < 30; i++) f.render()
+    assert.ok(sameRotation(expected, f.lower.quaternion)); f.noStretch(); f.cleanup()
+})
+
+test('right elbow ring stays on the rendered elbow after an upstream manual pose is restored each frame', () => {
+    const f = fixture(); f.choose(f.lower)
+    const parentEntry = f.api.entries(f.actor).get(f.upper.uuid)
+    parentEntry.offsets.z = 55; f.render()
+    const control = f.api.controls; control.axis = 'Y'; f.scene.scene.updateMatrixWorld(true)
+    const pivot = f.lower.getWorldPosition(new T.Vector3())
+    const from = pivot.clone().add(new T.Vector3(.2, 0, .1)).project(f.scene.camera)
+    const to = pivot.clone().add(new T.Vector3(.2, 0, .2)).project(f.scene.camera)
+    control.pointerDown({ x: from.x, y: from.y, button: 0 })
+    assert.equal(f.api.selection.entry.bone, f.lower)
+    assert.ok(f.api.target.handle.position.distanceTo(pivot) < 1e-9, 'press does not change pivot')
+    control.pointerMove({ x: to.x, y: to.y, button: -1 }); f.render()
+    for (let i = 0; i < 20; i++) {
+        assert.ok(f.api.target.handle.position.distanceTo(f.lower.getWorldPosition(new T.Vector3())) < 1e-9,
+            'ring and white elbow leader share the FINAL rendered pivot, not the native parent pose')
+        f.render()
+    }
+    control.pointerUp({ button: 0 }); f.noStretch(); f.cleanup()
+})
+
+for (const axis of ['X', 'Y', 'Z']) test('explicit elbow rotation accepts local ' + axis + ' without an IK hinge cancelling it', () => {
+    const f = fixture(); f.choose(f.lower)
+    const control = f.api.controls, target = f.api.target
+    // Native elbow poses may already include roll. A zero-distance press must
+    // not project that existing pose onto an invented one-axis bind pose.
+    f.lower.rotation.set(.2, -.4, .12); target.sync(); f.scene.scene.updateMatrixWorld(true)
+    const initial = f.lower.quaternion.clone(), pivot = target.handle.position.clone()
+    control.axis = axis; f.scene.scene.updateMatrixWorld(true)
+    const from = pivot.clone().add(new T.Vector3(.2, .15, .1)).project(f.scene.camera)
+    control.pointerDown({ x: from.x, y: from.y, button: 0 })
+    target.queue(); f.render()
+    assert.ok(sameRotation(initial, f.lower.quaternion), 'press with no delta preserves native orientation')
+    const unit = new T.Vector3(axis === 'X' ? 1 : 0, axis === 'Y' ? 1 : 0, axis === 'Z' ? 1 : 0)
+    const expected = initial.clone().multiply(new T.Quaternion().setFromAxisAngle(unit, .25))
+    target.handle.quaternion.copy(expected); target.queue(); f.render()
+    assert.ok(sameRotation(expected, f.lower.quaternion), 'requested axis is not silently discarded')
+    control.pointerUp({ button: 0 }); f.api.select(f.actor, f.hand); f.api.select(f.actor, f.lower)
+    for (let i = 0; i < 60; i++) f.render()
+    assert.ok(sameRotation(expected, f.lower.quaternion), 'release and reselection keep the edited rotation')
+    f.noStretch(); f.cleanup()
+})
+
+test('a pivot already inside the position guard must not cancel joint rotation', () => {
+    const f = fixture(); f.choose(); const target = f.api.target
+    let projections = 0
+    target.projectPosition = point => { projections++; point.x += .2; return true }
+    const before = f.hand.quaternion.clone(), position = f.hand.position.clone()
+    assert.equal(target.begin('rotate'), true)
+    target.handle.quaternion.multiply(new T.Quaternion().setFromAxisAngle(new T.Vector3(0, 0, 1), .3))
+    target.queue(); target.flush()
+    assert.ok(!sameRotation(before, f.hand.quaternion), 'rotation is not a pivot translation')
+    assert.equal(projections, 0); assert.deepEqual(f.hand.position.toArray(), position.toArray())
+    target.end(); f.cleanup()
+})
+
+for (const mode of ['translate', 'rotate']) test('live TPS animation cannot alternate the dragged pose with its old relative offset: ' + mode, () => {
+    const f = fixture(); f.choose(); f.api.mode(mode)
+    f.canvas.ownerDocument.body.classList.add('locomotion-mode-enabled')
+    f.scene.controls.enabled = false
+    const native = phase => () => {
+        f.upper.rotation.z = .08 * Math.sin(phase)
+        f.lower.rotation.z = -.04 * Math.sin(phase)
+        f.hand.rotation.z = .06 * Math.sin(phase)
+        f.sibling.rotation.z = .1 * phase
+    }
+    f.startBody(); f.direct('pointermove', f.event(570, 360)); f.render(native(.1))
+    const joints = [...f.api.target.editedBones], held = joints.map(b => b.quaternion.clone()), solves = f.api.target.solves
+    for (let i = 1; i <= 120; i++) {
+        f.render(native(i / 30))
+        joints.forEach((b, j) => assert.ok(sameRotation(b.quaternion, held[j]), b.name + ' stable without a new pointer sample at ' + i))
+        assert.ok(Math.abs(f.sibling.rotation.z - .1 * i / 30) < 1e-10, 'unowned animation keeps running')
+    }
+    assert.equal(f.api.target.solves, solves, 'no per-frame IK re-solve')
+    f.direct('pointerup', f.event(570, 360)); f.render(native(4))
+    joints.forEach((b, j) => assert.ok(sameRotation(b.quaternion, held[j]), 'release has no pose jump'))
+    assert.equal(f.scene.controls.enabled, false, 'releasing a pose keeps TPS camera ownership')
+    f.noStretch(); f.cleanup()
+})
+
+test('opening pose editing preserves an already enabled TPS camera', () => {
+    const f = fixture()
+    f.canvas.ownerDocument.body.classList.add('locomotion-mode-enabled'); f.scene.controls.enabled = false
+    f.choose(); assert.equal(f.scene.controls.enabled, false)
+    f.api.edit(false); assert.equal(f.scene.controls.enabled, false); f.cleanup()
+})
 
 test('TransformControls owns an isolated input handle, not a bone or the whole scene', () => {
     const f = fixture(); f.choose()
@@ -285,7 +408,7 @@ test('pointer hot path performs no solve, full skeleton traversal, layout read o
     // local offsets; only the opt-in structure target may produce translation.
     assert.match(source, /poseAllowStretch\s*=\s*false/)
     assert.match(source, /new StructurePoseTarget\(object,bone,poseAllowStretch/)
-    assert.match(source, /directPoseTarget instanceof StructurePoseTarget&&local&&directPoseTarget.canTranslate/)
+    assert.match(source, /target instanceof StructurePoseTarget&&target.canTranslate/)
     assert.equal(new StructurePoseTarget(new T.Group(),new T.Bone(),false,()=>false).canTranslate,false)
     assert.match(source, /addBeforeAnimationLoop\(restoreManualPoseOverrides\)/)
     assert.match(source, /request\.mode === 'joint' \? 'rotate' : 'translate'/)
