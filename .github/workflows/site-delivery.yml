@@ -44,7 +44,6 @@ jobs:
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,`Target: existing Cloudflare project magius3dviewer; production branch ${branch}. No GitHub Pages deployment.\n`);
           NODE
   build:
-    needs: configuration
     runs-on: ubuntu-latest
     timeout-minutes: 45
     defaults:
