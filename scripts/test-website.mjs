@@ -13,6 +13,7 @@ const tests = [
   'enemyUiPanel.test.mjs',
   'enemyAnimationInteraction.test.mjs',
   'resourcePanels.test.mjs',
+  'nativeSelectionImages.test.mjs',
   'stageSpecialSurfaces.test.mjs',
   'stageNativeImage.test.mjs',
   'stageMainLightCascades.test.mjs',

@@ -86,10 +86,17 @@ function index(records, authoredScenes = []) {
   }
 }
 
-test('public scene-name index preserves the official 139-scene cross-region authority', () => {
+test('public scene-name index preserves cross-region authority and includes 143 held JP records', () => {
   const sceneIndex = readJson(publicIndexPath)
   assert.equal(sceneIndex.schemaVersion, 1)
-  assert.equal(sceneIndex.dioramaScenes.length, 139)
+  assert.equal(sceneIndex.dioramaScenes.length, 143)
+  for (const id of [411011, 411012, 411111, 411112]) {
+    const addition = sceneIndex.dioramaScenes.find(row => row.dioramaBackgroundMstId === id)
+    assert.equal(addition.names.ja.available, true)
+    assert.equal(addition.names.zhHant.value, null)
+    assert.equal(addition.names.en.value, null)
+  }
+  assert.equal(sceneIndex.dioramaScenes.find(row => row.dioramaBackgroundMstId === 910301).names.ja.value, '無限の白い闇の空間')
   assert.equal(sceneIndex.authoredScenes.length, 1)
   assert.equal(sceneIndex.coverage.diorama.allThreeUsable, 120)
   assert.equal(sceneIndex.dioramaScenes.filter(row =>

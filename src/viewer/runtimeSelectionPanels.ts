@@ -1,6 +1,9 @@
 import { translateUiText, getUiLocale } from './localization/zhCN'
 import { createResourceTile, installResourceGridKeys, compactResourceLabel, normalizedResourceQuantity } from './resourcePanelUi'
 import './style/resource-browser.css'
+import { getCharacterTrilingualName } from './localization/characterNames'
+import { matchesResourceSearch } from './resourceSearch'
+import { installResourcePanelSizeToggle } from './resourcePanelSizing'
 
 export interface CharacterPanelInstance { key:string; id:string; selected:boolean }
 export interface CharacterPanelHooks {
@@ -93,10 +96,6 @@ function getElements(config: RuntimeSelectionPanelConfig): RuntimeSelectionPanel
     }
 }
 
-function normalizeSearchText(value: unknown): string {
-    return String(value ?? '').normalize('NFKC').trim().toLocaleLowerCase()
-}
-
 // Counts describe the catalog and selector state, never successful loads or acceptance.
 export function formatSceneCatalogStatus(
     visible: ReadonlyArray<Pick<HTMLOptionElement, 'disabled' | 'dataset'>>,
@@ -110,6 +109,7 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig, actors?
     const elements = getElements(config)
     if (elements.panel.dataset.runtimeSelectionSetup === 'true') return ()=>{}
     elements.panel.dataset.runtimeSelectionSetup = 'true'
+    installResourcePanelSizeToggle(elements.panel)
     let thumbnailManifest: RuntimeSelectionThumbnailManifest | undefined
     let busy=false,gridKey='',catalogChosen=false
     const isCharacter=config.thumbnailKind==='character'
@@ -118,10 +118,18 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig, actors?
     const instances=isCharacter?document.getElementById('character-instance-list'):null
     const feedback=isCharacter?document.getElementById('character-list-feedback'):null
     installResourceGridKeys(elements.grid)
-    const labelFor=(option:HTMLOptionElement)=>compactResourceLabel(option.textContent?.trim()||option.value,config.thumbnailKind,getUiLocale())
+    let nameMode: 'latin' | 'ja' | undefined
+    const languageButton = document.getElementById(isCharacter ? 'character-list-name-language' : 'stage-list-name-language') as HTMLButtonElement
+    const labelFor=(option:HTMLOptionElement)=>{
+        const fallback=option.textContent?.trim()||option.value
+        const names=isCharacter?getCharacterTrilingualName(option.value,fallback):undefined
+        const text=nameMode==='ja'?(names?.ja||option.dataset.nameJa||fallback):nameMode==='latin'?(names?.romaji||option.dataset.nameEn||fallback):fallback
+        return compactResourceLabel(text,config.thumbnailKind,nameMode==='ja'?'ja-JP':nameMode==='latin'?'en':getUiLocale())
+    }
+    const matches=(option:HTMLOptionElement)=>matchesResourceSearch(elements.search.value,[option.value,option.textContent,option.title,option.dataset.searchText,...(isCharacter?Object.values(getCharacterTrilingualName(option.value,'')):[])])
     const report=(text:string,error=false)=>{if(feedback){feedback.textContent=text;feedback.title=text;feedback.classList.toggle('is-error',error)}}
     const counts=()=>{
-        const options=sourceOptions(),visible=options.filter(option=>normalizeSearchText(`${option.value} ${option.textContent??''} ${option.title}`).includes(normalizeSearchText(elements.search.value)))
+        const options=sourceOptions(),visible=options.filter(matches)
         elements.status.textContent=isCharacter
             ? `${translateUiText('Available characters')} ${visible.length} / ${options.length} · ${translateUiText('Added')} ${actors?.instances().length??0}`
             : formatSceneCatalogStatus(visible,options.length)
@@ -134,8 +142,12 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig, actors?
             const row=document.createElement('div');row.className='resource-instance-row';row.dataset.instanceId=item.key;row.classList.toggle('is-selected',item.selected)
             const option=sourceOptionFor(item.id),label=option?labelFor(option):item.id
             const select=document.createElement('button');select.type='button';select.className='resource-instance-select';select.textContent=`${i+1}. ${label}`;select.title=`${item.id} · ${label}`;select.setAttribute('aria-selected',String(item.selected));select.disabled=busy
+            const copy=document.createElement('span');copy.textContent=select.textContent;select.replaceChildren(copy)
+            const thumbnail=thumbnailUrlFor(option)
+            if(thumbnail){const image=document.createElement('img');image.src=thumbnail;image.alt='';image.className='resource-instance-image';select.prepend(image)}
             select.onclick=()=>{actors.select(item.key);renderInstances();renderSelected()}
             const remove=document.createElement('button');remove.type='button';remove.textContent=translateUiText('Remove');remove.setAttribute('aria-label',`${translateUiText('Remove')} ${i+1}. ${label}`);remove.disabled=busy
+            remove.title=remove.getAttribute('aria-label')||'';remove.textContent='×'
             remove.onclick=()=>{actors.remove(item.key);renderInstances();renderSelected()}
             row.append(select,remove);return row
         }))
@@ -238,13 +250,12 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig, actors?
     },()=>{catalogChosen=true;elements.list.value=sourceOption.value;renderSelected()},applySelection)
 
     const refreshList = () => {
+        languageButton.textContent = translateUiText(nameMode === 'latin' ? 'Japanese' : isCharacter ? 'Romaji' : 'English')
         const options = sourceOptions()
-        const query = normalizeSearchText(elements.search.value)
-        const visible = options.filter(option => normalizeSearchText(
-            `${option.value} ${option.textContent ?? ''} ${option.title}`,
-        ).includes(query))
+        const query = elements.search.value.trim()
+        const visible = options.filter(matches)
         const previousValue = elements.list.value || elements.source.value
-        const nextKey=[query,getUiLocale(),Boolean(thumbnailManifest),...visible.map(o=>o.value+'|'+o.textContent+'|'+o.disabled)].join('\n')
+        const nextKey=[query,nameMode,getUiLocale(),Boolean(thumbnailManifest),...visible.map(o=>o.value+'|'+o.textContent+'|'+o.disabled)].join('\n')
         if(nextKey===gridKey){renderSelected();renderInstances();return}
         gridKey=nextKey
         const scrollTop=elements.grid.scrollTop
@@ -295,6 +306,11 @@ function setupRuntimeSelectionPanel(config: RuntimeSelectionPanelConfig, actors?
     elements.toggle.onclick = () => setOpen(!elements.panel.classList.contains('is-open'))
     elements.close.onclick = () => setOpen(false)
     elements.search.oninput = refreshList
+    languageButton.onclick = () => {
+        nameMode = nameMode === 'latin' ? 'ja' : 'latin'
+        languageButton.textContent = translateUiText(nameMode === 'latin' ? 'Japanese' : isCharacter ? 'Romaji' : 'English')
+        refreshList()
+    }
     elements.list.onchange = renderSelected
     elements.use.onclick = applySelection
     if(add&&quantity&&actors){

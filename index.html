@@ -424,10 +424,9 @@
                 <button id="character-list-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
             </header>
             <div class="resource-panel-body">
-                <label class="resource-search" for="character-list-search"><span>Search characters</span><input id="character-list-search" type="search" placeholder="Type a name or ID" autocomplete="off"></label>
-                <div class="resource-catalog-heading"><span id="character-list-label">Character list</span><output id="character-list-status" data-i18n-ignore="true" aria-live="polite"></output></div>
+                <div class="resource-search"><label for="character-list-search">Search characters</label><input id="character-list-search" type="search" placeholder="Search using romaji or Japanese" autocomplete="off"><div class="resource-search-tools"><output id="character-list-status" data-i18n-ignore="true" aria-live="polite"></output><button id="character-list-name-language" type="button" data-i18n-ignore="true">Romaji</button></div></div>
                 <select id="character-list-select" class="runtime-selection-native-list" size="12" data-i18n-ignore="true" aria-label="Character list" aria-hidden="true" tabindex="-1" hidden disabled></select>
-                <div id="character-list-grid" class="runtime-selection-thumbnail-grid character-thumbnail-grid" role="listbox" aria-labelledby="character-list-label" data-i18n-ignore="true"></div>
+                <div id="character-list-grid" class="runtime-selection-thumbnail-grid character-thumbnail-grid" role="listbox" aria-labelledby="character-list-panel-title" data-i18n-ignore="true"></div>
                 <footer class="resource-panel-footer">
                     <div class="resource-selection-row">
                         <img id="character-list-preview" class="resource-selected-icon" alt="" hidden>
@@ -453,10 +452,9 @@
                 <button id="stage-list-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button>
             </header>
             <div class="resource-panel-body">
-                <label class="resource-search" for="stage-list-search"><span>Search scenes</span><input id="stage-list-search" type="search" placeholder="Type a name or ID" autocomplete="off"></label>
-                <div class="resource-catalog-heading"><span id="stage-list-label">Scene list</span><output id="stage-list-status" data-i18n-ignore="true" aria-live="polite"></output></div>
+                <div class="resource-search"><label for="stage-list-search">Search scenes</label><input id="stage-list-search" type="search" placeholder="Search using English or Japanese" autocomplete="off"><div class="resource-search-tools"><output id="stage-list-status" data-i18n-ignore="true" aria-live="polite"></output><button id="stage-list-name-language" type="button" data-i18n-ignore="true">English</button></div></div>
                 <select id="stage-list-select" class="runtime-selection-native-list" size="12" data-i18n-ignore="true" aria-label="Scene list" aria-hidden="true" tabindex="-1" hidden disabled></select>
-                <div id="stage-list-grid" class="runtime-selection-thumbnail-grid scene-thumbnail-grid" role="listbox" aria-labelledby="stage-list-label" data-i18n-ignore="true"></div>
+                <div id="stage-list-grid" class="runtime-selection-thumbnail-grid scene-thumbnail-grid" role="listbox" aria-labelledby="stage-list-panel-title" data-i18n-ignore="true"></div>
                 <footer class="resource-panel-footer">
                     <div class="resource-selection-row">
                         <img id="stage-list-preview" class="resource-selected-icon" alt="" hidden>
@@ -487,10 +485,9 @@
         <section id="enemy-panel" class="floating-panel resource-browser-panel" role="dialog" aria-modal="false" aria-labelledby="enemy-panel-title" aria-hidden="true">
             <header class="floating-panel-header"><strong id="enemy-panel-title">Enemies</strong><button id="enemy-panel-close" class="floating-panel-close" type="button" title="Close" aria-label="Close">×</button></header>
             <div class="resource-panel-body">
-                <label class="resource-search" for="enemy-catalog-search"><span>Search enemies</span><input id="enemy-catalog-search" type="search" placeholder="Type a name or ID" autocomplete="off"></label>
-                <div class="resource-catalog-heading"><span id="enemy-list-label">Enemy list</span><output id="enemy-catalog-status" data-i18n-ignore="true" aria-live="polite"></output></div>
+                <div class="resource-search"><label for="enemy-catalog-search">Search enemies</label><input id="enemy-catalog-search" type="search" placeholder="Search using romaji or Japanese" autocomplete="off"><div class="resource-search-tools"><output id="enemy-catalog-status" data-i18n-ignore="true" aria-live="polite"></output><button id="enemy-catalog-name-language" type="button" data-i18n-ignore="true">Romaji</button></div></div>
                 <select id="enemy-catalog-select" class="runtime-selection-native-list" size="10" data-i18n-ignore="true" aria-label="Enemy list" aria-hidden="true" tabindex="-1" hidden disabled></select>
-                <div id="enemy-catalog-grid" class="runtime-selection-thumbnail-grid enemy-thumbnail-grid" role="listbox" aria-labelledby="enemy-list-label" data-i18n-ignore="true"></div>
+                <div id="enemy-catalog-grid" class="runtime-selection-thumbnail-grid enemy-thumbnail-grid" role="listbox" aria-labelledby="enemy-panel-title" data-i18n-ignore="true"></div>
                 <footer class="resource-panel-footer">
                     <div class="resource-selection-row">
                         <img id="enemy-preview-image" class="resource-selected-icon" alt="" hidden>

@@ -34,12 +34,23 @@ For interactive development: `npm run dev:local`. For production-package preview
 - Character selection, multiple independent actors, animation playback and native action resources.
 - Third-person walking/running/jumping, collision controls and independent camera controls.
 - Direct pose editing, bounded IK, touch controls, saved workspaces and recorded performance lanes.
-- Scene catalog (581 entries), enemy catalog (514 records / 493 render-ready products), and character/enemy combat VFX.
+- Official scene shards (585 entries), enemy catalog (516 records / 495 render-ready products), and character/enemy combat VFX. The combined scene selector also includes retained research/QA environments.
 - Resource panels, localized names, voice presentation and locale-specific fonts.
+- Character and witch panels use square image frames with full width-wrapped names; scene previews retain landscape framing. Character portraits use official 3D upper-body previews rather than chibi style icons.
 - First visit defaults to Simplified Chinese, including English/Japanese browsers; an explicitly saved language choice still takes priority.
 - Lighting, outlines, screenshots/camera mode and preset sharing.
 
 Catalog membership and successful loading are **not** proof of full native visual parity. Resource IDs and coverage come from the versioned catalogs, not arbitrary substitutions.
+
+### Selection images and official names
+
+The 2026-10-04 image refresh first filled gaps from already-held Japanese assets, then checked the newly delivered official JP snapshot (`3d98d4e8583896341a0e661c713bcc5c`): 99 model-keyed 3D portraits, including nine previously missing keys. Two portraits (`111601`, `114801`) were updated from the new verified PNGs. The native master joins `resourceName` to `style3dCharacterMstId`; these numbers are not interchangeable (for example, model `100102` uses school-uniform portrait `100106`). Only transparent image padding is trimmed; characters are not cut off to fill the square frame.
+
+Five landscape images and five usable Japanese scene-name records were added. Four of those preview/name pairs are prepared for newer master resources, not a claim that four new scene models were implemented. The refreshed Taiwanese official tables were also compared: all their usable scene/enemy names and every thumbnail for the 516 existing enemy records were already covered. Valid images were retained instead of being replaced merely because their encoded bytes differ. The committed image-source receipt is `public/ui-thumbnails/runtime-selection/source-projection-20261004.v1.json`; no extraction keys or login credentials are included.
+
+The website builds from the committed images alone. `scripts/update-selection-images.py` is an optional offline projection tool for maintainers with held official bundles; it is not a cloud-build dependency. `scripts/site-smoke-resource-panels.mjs` validates real desktop/mobile panels, search, add/remove avatars, header dragging, resize reflow, compact/restore and idle DOM stability against a running preview or `MAGIUS_SITE_URL`.
+
+Characters and witches accept Chinese/ID, Japanese and romaji searches; scenes accept Chinese/ID, Japanese and English. One name-language button and the catalog counts share the search row. Added actors use small portrait tiles with independent select/remove controls. The compact button fits five portrait columns by two rows, or three landscape scene columns by two rows; narrow screens reflow rather than overlay text. Scene panels default to 840×640 (bounded by the screen), with four landscape columns at desktop width. Drag the header to move a panel or either corner to resize; restoring the preset preserves the prior custom size. Images load lazily and idle lists are not rebuilt every animation frame.
 
 ## Cloth release policy
 
@@ -62,6 +73,7 @@ Private-repository planning: this account is on GitHub Free, and its paid Action
 
 ## Evidence and remaining work
 
+- [Image/panel release and verified full cloud publication](docs/reports/2026-10-04-resource-panels-release.md)
 - [Current handoff](docs/CLOUD_HANDOFF.md)
 - [Scene gaps and prior release evidence](docs/reports/2026-10-02-resume-scene-audit.md)
 - [Old scene delivery reconciliation](docs/reports/2026-09-30-scene-directory-audit.md)

@@ -813,6 +813,10 @@ function createStageSelectorOption(definition: StageDefinition) {
     option.dataset.official = definition.official ? 'true' : 'false'
     option.dataset.dynamic = definition.dynamic?.status ?? 'unspecified'
     option.dataset.i18nIgnore = 'true'
+    option.dataset.nameEn = record?.names.en.value || definition.name
+    option.dataset.nameJa = record?.names.ja.value || definition.name
+    option.dataset.searchText = [definition.id, definition.name, definition.backgroundResourceName,
+        record?.names.en.value, record?.names.ja.value, record?.names.zhHant.value].filter(Boolean).join(' ')
     if (definition.type === 'image') {
         try {
             validateNativeImageBackground(definition)
@@ -878,6 +882,7 @@ function refreshStageSelectorLabels() {
             option.textContent = updated.textContent
             option.title = updated.title
             option.disabled = updated.disabled
+            Object.assign(option.dataset, updated.dataset)
         }
     }
 }

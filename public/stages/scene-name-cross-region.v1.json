@@ -9,7 +9,9 @@
     "steamMasterDataRevision": "f4ea49424208d48deb6591ea168bdf4e",
     "steamPayloadLocale": "en-Latn",
     "steamCatalogLanguage": "ja-Jpan",
-    "twMasterDataRevision": "2b616df87a801565c44401391a3ae74c"
+    "twMasterDataRevision": "2b616df87a801565c44401391a3ae74c",
+    "heldJapaneseDioramaMasterSha256": "a232e7d6818696c37b3cee1340baa418c238d207f9b60b9c868b87342c3cfc1a",
+    "checkedTraditionalChineseMasterRevision": "a06b42aff83728729bb06ade96d6b0b5"
   },
   "sources": {
     "englishSceneNames": "D:\\magia\\MyProducts\\MagiaExedraSteamResearch\\manifests\\bootstrap-ja-Jpan",
@@ -25,10 +27,10 @@
   },
   "coverage": {
     "diorama": {
-      "union": 139,
+      "union": 143,
       "en": 139,
-      "jaLocalRows": 138,
-      "jaUsable": 138,
+      "jaLocalRows": 143,
+      "jaUsable": 143,
       "zhHant": 120,
       "allThreeUsable": 120
     },
@@ -3517,6 +3519,134 @@
       }
     },
     {
+      "dioramaBackgroundMstId": 411011,
+      "backgroundResourceName": "bg_3d_605_14_00_001",
+      "viewerStageId": "battle-605-14-00-001",
+      "names": {
+        "en": {
+          "value": null,
+          "available": false,
+          "quality": "missing-official-row",
+          "source": "not-yet-held"
+        },
+        "ja": {
+          "value": "【天辺の姿】銀の魔女 ボス階層",
+          "available": true,
+          "quality": "official-jp",
+          "source": "authority://held-jp-master/20261002/getDioramaBackgroundMstList.json"
+        },
+        "zhHant": {
+          "value": null,
+          "available": false,
+          "quality": "missing-official-row",
+          "source": "not-yet-held"
+        }
+      },
+      "resourceLookup": {
+        "directRelativePath": "battle/stage/bg_3d_605_14_00_001",
+        "steamLogicalPath": null,
+        "steamCatalogPresent": false,
+        "twFullPath": null,
+        "twCatalogPresent": false
+      }
+    },
+    {
+      "dioramaBackgroundMstId": 411012,
+      "backgroundResourceName": "bg_3d_605_15_00_001",
+      "viewerStageId": "battle-605-15-00-001",
+      "names": {
+        "en": {
+          "value": null,
+          "available": false,
+          "quality": "missing-official-row",
+          "source": "not-yet-held"
+        },
+        "ja": {
+          "value": "【天辺越えの姿】銀の魔女 ボス階層",
+          "available": true,
+          "quality": "official-jp",
+          "source": "authority://held-jp-master/20261002/getDioramaBackgroundMstList.json"
+        },
+        "zhHant": {
+          "value": null,
+          "available": false,
+          "quality": "missing-official-row",
+          "source": "not-yet-held"
+        }
+      },
+      "resourceLookup": {
+        "directRelativePath": "battle/stage/bg_3d_605_15_00_001",
+        "steamLogicalPath": null,
+        "steamCatalogPresent": false,
+        "twFullPath": null,
+        "twCatalogPresent": false
+      }
+    },
+    {
+      "dioramaBackgroundMstId": 411111,
+      "backgroundResourceName": "bg_3d_600_14_00_001",
+      "viewerStageId": "battle-600-14-00-001",
+      "names": {
+        "en": {
+          "value": null,
+          "available": false,
+          "quality": "missing-official-row",
+          "source": "not-yet-held"
+        },
+        "ja": {
+          "value": "【天辺の姿】薔薇園の魔女 ボス階層",
+          "available": true,
+          "quality": "official-jp",
+          "source": "authority://held-jp-master/20261002/getDioramaBackgroundMstList.json"
+        },
+        "zhHant": {
+          "value": null,
+          "available": false,
+          "quality": "missing-official-row",
+          "source": "not-yet-held"
+        }
+      },
+      "resourceLookup": {
+        "directRelativePath": "battle/stage/bg_3d_600_14_00_001",
+        "steamLogicalPath": null,
+        "steamCatalogPresent": false,
+        "twFullPath": null,
+        "twCatalogPresent": false
+      }
+    },
+    {
+      "dioramaBackgroundMstId": 411112,
+      "backgroundResourceName": "bg_3d_600_15_00_001",
+      "viewerStageId": "battle-600-15-00-001",
+      "names": {
+        "en": {
+          "value": null,
+          "available": false,
+          "quality": "missing-official-row",
+          "source": "not-yet-held"
+        },
+        "ja": {
+          "value": "【天辺越えの姿】薔薇園の魔女 ボス階層",
+          "available": true,
+          "quality": "official-jp",
+          "source": "authority://held-jp-master/20261002/getDioramaBackgroundMstList.json"
+        },
+        "zhHant": {
+          "value": null,
+          "available": false,
+          "quality": "missing-official-row",
+          "source": "not-yet-held"
+        }
+      },
+      "resourceLookup": {
+        "directRelativePath": "battle/stage/bg_3d_600_15_00_001",
+        "steamLogicalPath": null,
+        "steamCatalogPresent": false,
+        "twFullPath": null,
+        "twCatalogPresent": false
+      }
+    },
+    {
       "dioramaBackgroundMstId": 710111,
       "backgroundResourceName": "bg_3d_641_00_01_001",
       "viewerStageId": "battle-641-00-01-001",
@@ -4168,10 +4298,10 @@
           "source": "MagiaExedraSteamResearch:bootstrap-ja-Jpan"
         },
         "ja": {
-          "value": null,
-          "available": false,
-          "quality": "missing",
-          "source": "D:/magia/magia_exedra_jp_data/manifests/ja-Jpan"
+          "value": "無限の白い闇の空間",
+          "available": true,
+          "quality": "official-jp",
+          "source": "authority://held-jp-master/20261002/getDioramaBackgroundMstList.json"
         },
         "zhHant": {
           "value": null,

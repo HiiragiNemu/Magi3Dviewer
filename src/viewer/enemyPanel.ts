@@ -1,4 +1,6 @@
 import { onPermanentPageExit } from './pageLifecycle'
+import { enemyRomanizedName, matchesResourceSearch } from './resourceSearch'
+import { installResourcePanelSizeToggle } from './resourcePanelSizing'
 import {
     addAnimationLoop,
     getClockDelta,
@@ -101,7 +103,7 @@ function currentEnemyLocale(): string {
     return document.documentElement.lang || navigator.language || 'en'
 }
 
-function enemyLabel(entry: EnemyManifestEntry): string {
+function defaultEnemyLabel(entry: EnemyManifestEntry): string {
     return resolveEnemyDisplayName(entry, currentEnemyLocale())
 }
 
@@ -135,6 +137,13 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
     if (activeController) return activeController
 
     const elements = getElements()
+    installResourcePanelSizeToggle(elements.panel)
+    let nameMode: 'latin' | 'ja' | undefined
+    const languageButton = requireElement<HTMLButtonElement>('enemy-catalog-name-language')
+    const enemyLabel = (entry: EnemyManifestEntry) => nameMode === 'ja'
+        ? entry.names.ja || defaultEnemyLabel(entry)
+        : nameMode === 'latin' ? enemyRomanizedName(entry.names.ja) || entry.names.runes || entry.names.en || defaultEnemyLabel(entry)
+        : defaultEnemyLabel(entry)
     const enemyResources = new EnemyResourceManager()
     installResourceGridKeys(elements.grid)
     const abortController = new AbortController()
@@ -379,11 +388,13 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
             entry.names.ja,
             entry.names.zhHant,
             entry.names.runes,
-        ].filter(value => value != null).join(' ').toLocaleLowerCase()
-        return searchable.includes(query)
+            enemyRomanizedName(entry.names.ja),
+        ]
+        return matchesResourceSearch(query, searchable)
     }
 
     const renderCatalog = () => {
+        languageButton.textContent = translateUiText(nameMode === 'latin' ? 'Japanese' : 'Romaji')
         const chooseEnemy = translateUiText('Choose enemy')
         elements.toolbarCatalog.title = chooseEnemy
         elements.toolbarCatalog.setAttribute('aria-label', chooseEnemy)
@@ -440,8 +451,11 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
             row.dataset.position=instance.object.position.toArray().map(value=>value.toFixed(4)).join(',')
             row.classList.toggle('is-selected',instance.instanceId===selectedInstanceId);row.setAttribute('aria-selected',String(instance.instanceId===selectedInstanceId))
             const select=document.createElement('button');select.type='button';select.className='resource-instance-select';select.textContent=`${index+1}. ${enemyLabel(instance.entry)}`
+            const copy=document.createElement('span');copy.textContent=select.textContent;select.replaceChildren(copy)
+            if(instance.entry.thumbnail.url){const image=document.createElement('img');image.src=instance.entry.thumbnail.url;image.alt='';image.className='resource-instance-image';select.prepend(image)}
             select.title=`${instance.instanceId} · ${translateUiText(instance.currentAnimationName??'')}`;select.setAttribute('aria-selected',String(instance.instanceId===selectedInstanceId));select.disabled=busy;select.onclick=()=>selectInstance(instance.instanceId)
             const remove=document.createElement('button');remove.type='button';remove.textContent=translateUiText('Remove');remove.disabled=busy;remove.setAttribute('aria-label',`${translateUiText('Remove')} ${index+1}. ${enemyLabel(instance.entry)}`);remove.onclick=()=>removeInstance(instance)
+            remove.title=remove.getAttribute('aria-label')||'';remove.textContent='×'
             row.append(select,remove);fragment.append(row)
         })
         elements.instances.replaceChildren(fragment)
@@ -545,6 +559,12 @@ export function setupEnemyPanel(options: EnemyPanelOptions = {}): EnemyPanelCont
         elements.toggle.onclick = () => setOpen(!elements.panel.classList.contains('is-open'))
     elements.close.onclick = () => setOpen(false)
     elements.search.oninput = renderCatalog
+    languageButton.onclick = () => {
+        nameMode = nameMode === 'latin' ? 'ja' : 'latin'
+        languageButton.textContent = translateUiText(nameMode === 'latin' ? 'Japanese' : 'Romaji')
+        renderCatalog()
+        renderInstances()
+    }
     elements.catalog.onchange = () => {
         selectedEnemyMstId = Number.parseInt(elements.catalog.value, 10)
         renderSelected()

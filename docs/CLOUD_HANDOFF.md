@@ -17,7 +17,7 @@
 | CLOTH-3 | No further collision weakening or forced body/arm changes | Collider/strength policy retained; tests preserve body, bones, other actors and restoration |
 | CLOTH-4 | Smooth cloth under walking/jumping, all cloth and characters | **Open**: existing high-speed bursts/clipping remain. Do not mark universal motion acceptance complete |
 | POSE-1 | Touka style 111501 with 114501 spread; pose/IK/TPS/workspace features | Existing c5297e5 source preserved outside the selected cloth files; regression suite remains enabled |
-| SCENE-1 | Complete correct native scene reconstruction, not one sample | **Open**: 581 catalog entries are a denominator, not 581 accepted reconstructions; start from the scene audit linked in README |
+| SCENE-1 | Complete correct native scene reconstruction, not one sample | **Open**: 585 official shard entries are a denominator, not 585 accepted reconstructions; the combined selector also retains research/QA environments; start from the scene audit linked in README |
 | HANDOFF-1 | Cloud development without former Windows directories | Clean-checkout test/build and main workflow evidence in the consolidation report |
 
 ## Cloth implementation and rejected work
@@ -42,7 +42,7 @@ Native cloud-shader diagnostic programs and volume metadata are now versioned un
 
 ## Cloud deployment credential gate
 
-Rechecked 2026-10-04: magius3dviewer-live has both CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN. The API token was active and accessed the existing magius3dviewer Pages project on account 9810127b0434fc919d963595b0418768; its Secret was written at 2026-10-03T17:57:44Z. Old runs 37138792390 and 37140838567 started before configuration and failed that gate. The new end-to-end workflow must still prove publication. Website build/validation is independent of this gate, but production publishing still requires it. Do not upload the developer OAuth session as a long-lived repository credential. The manual source-equivalent shortcut no longer runs automatically alongside a full deployment.
+Rechecked 2026-10-04: magius3dviewer-live has both CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN. The API token was active and accessed the existing magius3dviewer Pages project on account 9810127b0434fc919d963595b0418768; its Secret was written at 2026-10-03T17:57:44Z. Old runs 37138792390 and 37140838567 started before configuration and failed that gate. Full cloud run 37148193845 completed successfully at 2026-10-03T20:51:24Z: configuration, build/tests, publication, exact public revision and all production browser gates passed. The run published ebd927a6c87f2aa0be884e262e5538fc9fb5ccc8. Its evidence artifact is 182,610,468 bytes; the complete site is not an Actions intermediate artifact. Website build/validation is independent of this gate, but production publishing still requires it. Do not upload the developer OAuth session as a long-lived repository credential. The manual source-equivalent shortcut no longer runs automatically alongside a full deployment.
 
 ## Concurrent AgentDock changes and loading review
 
@@ -55,3 +55,15 @@ The full tested build now stays on one Actions runner through tests, publication
 The user requested a real cloud publication while the repository remains public. Do not use local Wrangler upload as proof of automated publication. Do not change repository visibility or paid budgets as part of this run. GitHub Free and a zero paid Actions budget are confirmed from the user's billing screenshots; actual remaining included minutes and account-wide artifact storage are not yet shown. Gross metered dollars and a 100% zero-budget badge do not measure remaining minutes.
 
 First visits default to Simplified Chinese; a saved explicit language choice still wins. The cloud viewport test selects Chinese before comparing labels; source files for the advanced node/pose UI have not been downgraded or replaced.
+
+## Selection portraits and names — 2026-10-04
+
+User-selected portrait appearance: official 3D upper-body previews, not the former chibi icons. 99 model-keyed thumbnails now use held JP native bundles, with nine missing keys filled. The native model/resource-to-style join and the legacy default-Madoka outfit alias are explicit in the source-projection receipt; do not match the two numeric ID namespaces by accident. The current character selector exposes 98 entries; image coverage and exposed model count are separate.
+
+Character and enemy image frames are square, compact and use width-wrapped names. Scene previews remain landscape. The browser gate covers twelve viewport layouts, actual header dragging and corner resizing at 560/420/310 px, search/language toggles, added portrait selection/removal, compact/restore and zero idle card rebuilding. Character and witch compact presets show five columns/two complete rows; scenes show three columns/two rows, with a 840×640 bounded desktop default. Narrow windows reflow by panel width, not just viewport width. Avatar physics and the advanced pose/node editor are not modified.
+
+Held JP data supplied four newer diorama preview/name pairs plus the exact `641...originall` preview and the previously missing Japanese name for scene 910301. These are image/name additions, not newly reconstructed scene geometry. TW master revision `a06b42aff83728729bb06ade96d6b0b5` was checked against the existing scene/enemy names and thumbnail inventory: no additional usable names or missing supported-enemy thumbnails were found. The old local `MasterData/active` folder is not the refreshed TW snapshot. Public source receipts contain logical resource paths and hashes only.
+
+The subsequent JP delivery is now verified against master `3d98d4e8583896341a0e661c713bcc5c` and asset catalog `8929198713b2ee622f4131b8a25dc4e5`. All 99 portrait sources were checked: 97 retain identical decoded pixels; 111601/114801 use the new verified PNGs. No additional usable scene/enemy names were found beyond the held-JP additions. Placeholder `-` names are not upgrades. Official image bindings explicitly lack enemy 650061/650062/650063; never invent a substitute image for those IDs. This release does not import the unrelated model/shader/audio changes in the same delivery.
+
+Characters/witches search all Japanese and romaji aliases independently of the displayed label; scenes search English and Japanese names. Chinese/IDs remain searchable. Counts and the single name-language toggle are on the search row, and selected details/add controls share footer space before wrapping. Added actors have bounded square portraits and accessible independent remove buttons.

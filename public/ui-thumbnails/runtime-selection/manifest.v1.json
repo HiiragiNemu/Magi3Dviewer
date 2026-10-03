@@ -2,14 +2,17 @@
   "schema": "magius.runtime-selection-thumbnails.v1",
   "characters": {
     "100101": "/ui-thumbnails/runtime-selection/characters/100101.webp",
+    "100102": "/ui-thumbnails/runtime-selection/characters/100102.webp",
     "100103": "/ui-thumbnails/runtime-selection/characters/100103.webp",
     "100106": "/ui-thumbnails/runtime-selection/characters/100106.webp",
     "100107": "/ui-thumbnails/runtime-selection/characters/100107.webp",
+    "100108": "/ui-thumbnails/runtime-selection/characters/100108.webp",
     "100201": "/ui-thumbnails/runtime-selection/characters/100201.webp",
     "100202": "/ui-thumbnails/runtime-selection/characters/100202.webp",
     "100203": "/ui-thumbnails/runtime-selection/characters/100203.webp",
     "100205": "/ui-thumbnails/runtime-selection/characters/100205.webp",
     "100207": "/ui-thumbnails/runtime-selection/characters/100207.webp",
+    "100208": "/ui-thumbnails/runtime-selection/characters/100208.webp",
     "100301": "/ui-thumbnails/runtime-selection/characters/100301.webp",
     "100302": "/ui-thumbnails/runtime-selection/characters/100302.webp",
     "100303": "/ui-thumbnails/runtime-selection/characters/100303.webp",
@@ -30,6 +33,7 @@
     "100805": "/ui-thumbnails/runtime-selection/characters/100805.webp",
     "100901": "/ui-thumbnails/runtime-selection/characters/100901.webp",
     "101001": "/ui-thumbnails/runtime-selection/characters/101001.webp",
+    "101002": "/ui-thumbnails/runtime-selection/characters/101002.webp",
     "101101": "/ui-thumbnails/runtime-selection/characters/101101.webp",
     "101201": "/ui-thumbnails/runtime-selection/characters/101201.webp",
     "101301": "/ui-thumbnails/runtime-selection/characters/101301.webp",
@@ -72,6 +76,7 @@
     "109801": "/ui-thumbnails/runtime-selection/characters/109801.webp",
     "110401": "/ui-thumbnails/runtime-selection/characters/110401.webp",
     "110701": "/ui-thumbnails/runtime-selection/characters/110701.webp",
+    "110702": "/ui-thumbnails/runtime-selection/characters/110702.webp",
     "111401": "/ui-thumbnails/runtime-selection/characters/111401.webp",
     "111501": "/ui-thumbnails/runtime-selection/characters/111501.webp",
     "111601": "/ui-thumbnails/runtime-selection/characters/111601.webp",
@@ -81,12 +86,16 @@
     "112501": "/ui-thumbnails/runtime-selection/characters/112501.webp",
     "112601": "/ui-thumbnails/runtime-selection/characters/112601.webp",
     "113301": "/ui-thumbnails/runtime-selection/characters/113301.webp",
+    "113401": "/ui-thumbnails/runtime-selection/characters/113401.webp",
+    "113501": "/ui-thumbnails/runtime-selection/characters/113501.webp",
+    "113601": "/ui-thumbnails/runtime-selection/characters/113601.webp",
     "113701": "/ui-thumbnails/runtime-selection/characters/113701.webp",
     "113801": "/ui-thumbnails/runtime-selection/characters/113801.webp",
     "113901": "/ui-thumbnails/runtime-selection/characters/113901.webp",
     "114401": "/ui-thumbnails/runtime-selection/characters/114401.webp",
     "114501": "/ui-thumbnails/runtime-selection/characters/114501.webp",
     "114601": "/ui-thumbnails/runtime-selection/characters/114601.webp",
+    "114801": "/ui-thumbnails/runtime-selection/characters/114801.webp",
     "114901": "/ui-thumbnails/runtime-selection/characters/114901.webp",
     "115001": "/ui-thumbnails/runtime-selection/characters/115001.webp",
     "115101": "/ui-thumbnails/runtime-selection/characters/115101.webp",
@@ -341,7 +350,8 @@
     "gallery-diorama-diorama-background-bg-3d-689-13-00-001-original": "/ui-thumbnails/runtime-selection/scenes/diorama/bg_3d_689_13_00_001.webp",
     "gallery-diorama-diorama-background-bg-3d-689-13-01-001-original": "/ui-thumbnails/runtime-selection/scenes/diorama/bg_3d_689_13_01_001.webp",
     "dollhouse-doll-house-3d-background-bg-3d-661-00-00-001": "/ui-thumbnails/runtime-selection/scenes/dollhouse/bg_3d_661_00_00_001.webp",
-    "dollhouse-doll-house-3d-background-bg-3d-661-00-00-002": "/ui-thumbnails/runtime-selection/scenes/dollhouse/bg_3d_661_00_00_002.webp"
+    "dollhouse-doll-house-3d-background-bg-3d-661-00-00-002": "/ui-thumbnails/runtime-selection/scenes/dollhouse/bg_3d_661_00_00_002.webp",
+    "gallery-diorama-diorama-background-bg-3d-641-00-01-001-originall": "/ui-thumbnails/runtime-selection/scenes/native/gallery-diorama-diorama-background-bg-3d-641-00-01-001-originall.webp"
   },
   "sceneResources": {
     "110111": "/ui-thumbnails/runtime-selection/scenes/diorama/110111.webp",
@@ -728,13 +738,18 @@
     "bg_3d_615_00_01_001": "/ui-thumbnails/runtime-selection/scenes/diorama/310111.webp",
     "bg_3d_615_00_01_002": "/ui-thumbnails/runtime-selection/scenes/diorama/310112.webp",
     "bg_3d_615_00_01_003": "/ui-thumbnails/runtime-selection/scenes/diorama/310113.webp",
-    "bg_3d_615_00_00_001": "/ui-thumbnails/runtime-selection/scenes/diorama/310119.webp"
+    "bg_3d_615_00_00_001": "/ui-thumbnails/runtime-selection/scenes/diorama/310119.webp",
+    "bg_3d_605_14_00_001": "/ui-thumbnails/runtime-selection/scenes/diorama/411011.webp",
+    "bg_3d_605_15_00_001": "/ui-thumbnails/runtime-selection/scenes/diorama/411012.webp",
+    "bg_3d_600_14_00_001": "/ui-thumbnails/runtime-selection/scenes/diorama/411111.webp",
+    "bg_3d_600_15_00_001": "/ui-thumbnails/runtime-selection/scenes/diorama/411112.webp",
+    "bg_3d_641_00_01_001_originall": "/ui-thumbnails/runtime-selection/scenes/native/gallery-diorama-diorama-background-bg-3d-641-00-01-001-originall.webp"
   },
   "counts": {
-    "characterModels": 90,
-    "characterThumbnails": 90,
-    "sceneIds": 249,
-    "sceneResourceNames": 385,
-    "generatedImages": 262
+    "characterModels": 99,
+    "characterThumbnails": 99,
+    "sceneIds": 250,
+    "sceneResourceNames": 390,
+    "generatedImages": 276
   }
 }

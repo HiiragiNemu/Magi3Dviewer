@@ -1,0 +1,2938 @@
+{
+  "schema": "magius.selection-image-projection.v1",
+  "masterSha256": "129bf511fa22d804ee3b4fe126422f99aa6c5de4110eff8f04d813af8c2d5d0c",
+  "portraits": [
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100101_thumbnail",
+      "bundleSha256": "57444cdfb415e2bd30099ae18fadaab70493977c1c3209b080e03fb20b30ba82",
+      "sourceType": "Texture2D",
+      "pathId": "-4289848671235112741",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "_FEr",
+      "decodedBundleSha256": "d1c025e581debc950b7a3b1bcb2a250c42b8e6050e7eb01548aff891c5df5a07",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "6b310b3486f67730241467016380c03c52fd69d1a6688b1e6b600e4cb9ed554c",
+      "modelId": "100101",
+      "style3dCharacterMstId": 100101,
+      "resourceName": "chara_100107_battle_unit",
+      "legacyOutfitAlias": "100107: default Madoka magical-girl outfit; legacy 100101 model retained",
+      "transparentPaddingCrop": [
+        0,
+        20,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100101.webp",
+      "outputSize": [
+        256,
+        155
+      ],
+      "outputSha256": "23464b4fe1b061b7829e7e51b57c2798bb55fade212c83fe7cf67e984adfba4b",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100106_thumbnail",
+      "bundleSha256": "2d9945a6cdc93199486a808a9c92c56e3f80dff53613167a5d432e55fefd0758",
+      "sourceType": "Texture2D",
+      "pathId": "5108858008177785282",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "b7503567aeed7d15be3c1e770a37ee602449e011b7491cd913571d090acde852",
+      "modelId": "100102",
+      "style3dCharacterMstId": 100106,
+      "resourceName": "chara_100102_battle_unit",
+      "transparentPaddingCrop": [
+        126,
+        20,
+        336,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100102.webp",
+      "outputSize": [
+        195,
+        256
+      ],
+      "outputSha256": "e8b9b3c86c90386452f91b10409776073f3f01b33aa23ea2199c6de0e99fe3e7",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100104_thumbnail",
+      "bundleSha256": "290a8e4a43067a7849156cf854ce330d2f580b69c9624257fd220a0ff1fdb379",
+      "sourceType": "Texture2D",
+      "pathId": "8722045799548096658",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "9989e1c2d53c289a06cc4872a6d155d20f108d6e1864e24d8d57218f89031944",
+      "modelId": "100103",
+      "style3dCharacterMstId": 100104,
+      "resourceName": "chara_100103_battle_unit",
+      "transparentPaddingCrop": [
+        83,
+        10,
+        392,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100103.webp",
+      "outputSize": [
+        256,
+        237
+      ],
+      "outputSha256": "5c9b0dbc710a7ccd3c2dced52b61399b735d9b7cbdc5c0da1401cfe47127038e",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100103_thumbnail",
+      "bundleSha256": "91c27ea6776fa7075fb15706885b38e4fa06237c178f692b33b7f6d2c4c3f9b5",
+      "sourceType": "Texture2D",
+      "pathId": "4376309283575260563",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "44a567144172e6ef498157063594f0177c70f852d156ca166f464749cc3a15d2",
+      "modelId": "100106",
+      "style3dCharacterMstId": 100103,
+      "resourceName": "chara_100106_battle_unit",
+      "transparentPaddingCrop": [
+        90,
+        14,
+        420,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100106.webp",
+      "outputSize": [
+        256,
+        219
+      ],
+      "outputSha256": "77feaca4f346fe6ac22c776def7914c3c5e55438b2e259d4a51d3fb550f1150e",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100101_thumbnail",
+      "bundleSha256": "57444cdfb415e2bd30099ae18fadaab70493977c1c3209b080e03fb20b30ba82",
+      "sourceType": "Texture2D",
+      "pathId": "-4289848671235112741",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "_FEr",
+      "decodedBundleSha256": "d1c025e581debc950b7a3b1bcb2a250c42b8e6050e7eb01548aff891c5df5a07",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "6b310b3486f67730241467016380c03c52fd69d1a6688b1e6b600e4cb9ed554c",
+      "modelId": "100107",
+      "style3dCharacterMstId": 100101,
+      "resourceName": "chara_100107_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        20,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100107.webp",
+      "outputSize": [
+        256,
+        155
+      ],
+      "outputSha256": "23464b4fe1b061b7829e7e51b57c2798bb55fade212c83fe7cf67e984adfba4b",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100105_thumbnail",
+      "bundleSha256": "1d31614ce78435f3a711ee0df499782d1a026c73e668119ff8b6d2d88557d632",
+      "sourceType": "Texture2D",
+      "pathId": "-7887783815900658044",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "eTll",
+      "decodedBundleSha256": "34ec2c173e0dca17579a252637cb1c415183f13e7bfe469bd00f23d18cf6c649",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "74ae3555bacb97483874457c723827ca277917b72001b482974a58a24f80ae45",
+      "modelId": "100108",
+      "style3dCharacterMstId": 100105,
+      "resourceName": "chara_100108_battle_unit",
+      "transparentPaddingCrop": [
+        72,
+        14,
+        378,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100108.webp",
+      "outputSize": [
+        256,
+        236
+      ],
+      "outputSha256": "183457cc5de1a8f3816368036675c0dd33d88aa8b4cc5405ce7b87dadbaba5ea",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100202_thumbnail",
+      "bundleSha256": "7e3fa7a2df52e9452c3159ed9f6653173a82e743a4c2e9aa5b2d8d2959a27ae1",
+      "sourceType": "Texture2D",
+      "pathId": "3833641112471596092",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "VeLW",
+      "decodedBundleSha256": "35842549ac2e72fac21f49a80151d9fc9f92875c231896c1c8f5df89e2045926",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "fc831d3e231d27b06255f228fe162664106de5bb17875cb950e1f4871df8f4af",
+      "modelId": "100201",
+      "style3dCharacterMstId": 100202,
+      "resourceName": "chara_100201_battle_unit",
+      "transparentPaddingCrop": [
+        132,
+        0,
+        402,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100201.webp",
+      "outputSize": [
+        234,
+        256
+      ],
+      "outputSha256": "1dd05fde16063e084352a167930cfa8f321cfb80fe0939a64cad215810c17447",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100201_thumbnail",
+      "bundleSha256": "1b1b0273d31c1456201a058af3927f19f77e5b5cd8c7ced87b7ca3e6fc95f826",
+      "sourceType": "Texture2D",
+      "pathId": "-2308208171106239477",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "e2fa0d689c0e4cd95bb239f77a53c72a1177b567956f2d7f31d61be593df22ed",
+      "modelId": "100202",
+      "style3dCharacterMstId": 100201,
+      "resourceName": "chara_100202_battle_unit",
+      "transparentPaddingCrop": [
+        48,
+        0,
+        366,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100202.webp",
+      "outputSize": [
+        256,
+        238
+      ],
+      "outputSha256": "d51176cecba76c5c923f972e299a395132b0141f89c95755c7b6a02a88624895",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100203_thumbnail",
+      "bundleSha256": "9e85ebd670e0ba7ef4742e5a2284f036071c66dfe9719e2fda043b0aa0b8d0b7",
+      "sourceType": "Texture2D",
+      "pathId": "5189103025175686601",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "7b8f792d3525f89bc0bebf4795f20094d436b7d366c498e43b4ad73bd7361b90",
+      "modelId": "100203",
+      "style3dCharacterMstId": 100203,
+      "resourceName": "chara_100203_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        396,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100203.webp",
+      "outputSize": [
+        256,
+        191
+      ],
+      "outputSha256": "7538801b111f1a52deaeb8aa6b6ff0432ded30a8bfa709e583160ebd9fc0af5c",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100204_thumbnail",
+      "bundleSha256": "af20ef25c19be505154aeab0e4f1260706c18c303e02fa4568ef3498d58c2ef9",
+      "sourceType": "Texture2D",
+      "pathId": "-3137673094717568049",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "44608883ef5892a4b739eec60d0b1cc49d1318e7c92114837f1b35bbee1ba81b",
+      "modelId": "100205",
+      "style3dCharacterMstId": 100204,
+      "resourceName": "chara_100205_battle_unit",
+      "transparentPaddingCrop": [
+        102,
+        0,
+        324,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100205.webp",
+      "outputSize": [
+        192,
+        256
+      ],
+      "outputSha256": "9880947e1b5dbb1fa982ed4337122d55047cdd7329eee0eda68bd8a31e0ee598",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100206_thumbnail",
+      "bundleSha256": "57e24d4338dbc1ef5116167ef473ac71aa2ad7698b470e24fcdb8e8e84ed7cde",
+      "sourceType": "Texture2D",
+      "pathId": "-1128768348579891151",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "LWRu",
+      "decodedBundleSha256": "9add3496a756ac8bceefe4b94300f30eaf9c5c28e332c5f73363259482c7d14a",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "a872d7f20a7a6dc2e53ba775ef63817da14448d4909af0c858f85329376e0778",
+      "modelId": "100207",
+      "style3dCharacterMstId": 100206,
+      "resourceName": "chara_100207_battle_unit",
+      "transparentPaddingCrop": [
+        114,
+        0,
+        384,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100207.webp",
+      "outputSize": [
+        234,
+        256
+      ],
+      "outputSha256": "c6e5eef1902b7b44152295edd2818cb4146b34c08f8571b0b3132cca6f10f3e1",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100207_thumbnail",
+      "bundleSha256": "da07543f86ae813070bfa2d86e2a696929e33bef18e6612f682fbf6446052bfc",
+      "sourceType": "Texture2D",
+      "pathId": "-1904867574248523096",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "9dcdd5e331fd19d9c7dd93e601d1561461b79ebab3f8892795318d4ace1afb62",
+      "modelId": "100208",
+      "style3dCharacterMstId": 100207,
+      "resourceName": "chara_100208_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        21,
+        354,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100208.webp",
+      "outputSize": [
+        256,
+        199
+      ],
+      "outputSha256": "9b526204c18dac97d6ca519fb51c5e4b13d1a4d23b69aab40bd27cdec02141fc",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100301_thumbnail",
+      "bundleSha256": "ef6ba358ce2b47011f0b47742cbdd17d70acb9dc8ca4b39792fccd31346394ad",
+      "sourceType": "Texture2D",
+      "pathId": "6361335256315172996",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "3a4328d84fdb284398840f6e5301273f536b19b40de986443f1d1367913ffa0f",
+      "modelId": "100301",
+      "style3dCharacterMstId": 100301,
+      "resourceName": "chara_100301_battle_unit",
+      "transparentPaddingCrop": [
+        36,
+        0,
+        450,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100301.webp",
+      "outputSize": [
+        256,
+        183
+      ],
+      "outputSha256": "bd44ad300d30045659d662d09813e68af8daab436bdc9d55ef11cb8e94521053",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100304_thumbnail",
+      "bundleSha256": "c398f4b9148204d581468cb4ad3c5ff8c7771cc9ff092f251f3ce92a4a5a5072",
+      "sourceType": "Texture2D",
+      "pathId": "-4059225458877387127",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "de7c389f13aaae54af904ac601fd55cdfa0fd18c92a22a36e9f03a32e6c8869f",
+      "modelId": "100302",
+      "style3dCharacterMstId": 100304,
+      "resourceName": "chara_100302_battle_unit",
+      "transparentPaddingCrop": [
+        66,
+        2,
+        414,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100302.webp",
+      "outputSize": [
+        256,
+        216
+      ],
+      "outputSha256": "3329353bd0c7fb3f170c7adbc77487e64c3324e2d7070f80480a179ea0579df9",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100302_thumbnail",
+      "bundleSha256": "4a7005abc891adf61faa5d9a1d4654d19c5f2326c296c0b644a5da36a11fcde5",
+      "sourceType": "Texture2D",
+      "pathId": "7818736800291194543",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "f1de5f5cdc54ec522750cb2f89cf6c48c093c38be79e21f776bbc31841da3cab",
+      "modelId": "100303",
+      "style3dCharacterMstId": 100302,
+      "resourceName": "chara_100303_battle_unit",
+      "transparentPaddingCrop": [
+        132,
+        20,
+        390,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100303.webp",
+      "outputSize": [
+        239,
+        256
+      ],
+      "outputSha256": "7ca7f1131b24d1e17ea8e1242a562b442367fc052e8ce6c907cab980a2729d96",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100305_thumbnail",
+      "bundleSha256": "91f165ba6fbbcd1822a35517a0bbd693863c01165e01a231b1f6ea05e32d4306",
+      "sourceType": "Texture2D",
+      "pathId": "29025328002384969",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "c70dba2bf7cfcfd9fc06cb4d5744e7c560af1fbab2999bbe0c286f6fde26c011",
+      "modelId": "100304",
+      "style3dCharacterMstId": 100305,
+      "resourceName": "chara_100304_battle_unit",
+      "transparentPaddingCrop": [
+        72,
+        0,
+        324,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100304.webp",
+      "outputSize": [
+        218,
+        256
+      ],
+      "outputSha256": "addf15684d61262ab8f0e0b63aa6c5b8991f77b8bec73fa7577e7880f1ef5ca6",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100306_thumbnail",
+      "bundleSha256": "572b1cf415309c49ab3c7f9cca76debe97f4bcd1e620cd651877c800b306fe00",
+      "sourceType": "Texture2D",
+      "pathId": "-7192102023942891481",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "c6b843450acefa36d1749a058980139424dbe7d5d0e8405d824721f7ddfc682b",
+      "modelId": "100305",
+      "style3dCharacterMstId": 100306,
+      "resourceName": "chara_100305_battle_unit",
+      "transparentPaddingCrop": [
+        106,
+        0,
+        414,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100305.webp",
+      "outputSize": [
+        256,
+        246
+      ],
+      "outputSha256": "9a07262171b9d42f89fef4fd5e8cf139f4209e862869b83ed4cb5c26799f3e4e",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100401_thumbnail",
+      "bundleSha256": "a8e0163122084fd8911a5c28e771fdc4305fcecf3db4688ac5652651993bb2d3",
+      "sourceType": "Texture2D",
+      "pathId": "7641106653956202441",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "d36377611800ac3c602425e9b7970ddb4331b272a0270db8017d2e79b239d413",
+      "modelId": "100401",
+      "style3dCharacterMstId": 100401,
+      "resourceName": "chara_100401_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        348,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100401.webp",
+      "outputSize": [
+        256,
+        218
+      ],
+      "outputSha256": "05a75f4382157e5b00f24043cd32fe2e17e2aa6e22c10048d501b3279d943a61",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100402_thumbnail",
+      "bundleSha256": "4d33ee72e0f66b95f61e3ba8e166566e0d8f9beffbb62ec6e6edf820bace4bee",
+      "sourceType": "Texture2D",
+      "pathId": "-798105656900453371",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "lPYx",
+      "decodedBundleSha256": "3bcfaa5ad9f7537fd8a3924f81fef5ff8dd9089c241ea760fcc119cd8a3501da",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "559274e1edca0266c04b1c8b47e1faf3c38d004d004266b3e262c4c96a9300b0",
+      "modelId": "100402",
+      "style3dCharacterMstId": 100402,
+      "resourceName": "chara_100402_battle_unit",
+      "transparentPaddingCrop": [
+        30,
+        0,
+        342,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100402.webp",
+      "outputSize": [
+        256,
+        243
+      ],
+      "outputSha256": "5c6b05e7e43cea212322cbaad72db853e7529a77e81ef6530ad07378b33fc2b3",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100403_thumbnail",
+      "bundleSha256": "0c3d3a7b145aab6f0f2641d1b987deba4d0cce2f5e007d8f49a2767019e89607",
+      "sourceType": "Texture2D",
+      "pathId": "-5096222358258048671",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "52b27fb7cb65cd907b01e1a305a420a469f7263d5e0a068d5c7c70ad1afe35a4",
+      "modelId": "100403",
+      "style3dCharacterMstId": 100403,
+      "resourceName": "chara_100403_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        336,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100403.webp",
+      "outputSize": [
+        256,
+        226
+      ],
+      "outputSha256": "9607ef6d641a20be249c9ae747cd92c78bd491b6e99d038190ae089ed0a0b309",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100501_thumbnail",
+      "bundleSha256": "833b9d52ffed6f091d8dd5c94b0567af7ba42e77dcd5cd268ce7111106ca222f",
+      "sourceType": "Texture2D",
+      "pathId": "-2333358339385461568",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "41a8e0ee3455066d11fd914a0702f54319e3f13a6d0b1d9268414a5e2ce547bc",
+      "modelId": "100501",
+      "style3dCharacterMstId": 100501,
+      "resourceName": "chara_100501_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        14,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100501.webp",
+      "outputSize": [
+        256,
+        158
+      ],
+      "outputSha256": "cd6184eaded0241f6fcd7456fb2948ccdc4a347c98e0f20fac893b49cd5b357e",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100504_thumbnail",
+      "bundleSha256": "6a833f38798ae484037cc75c89a040f109c90d779d068f166cd81504709800c4",
+      "sourceType": "Texture2D",
+      "pathId": "9182630774718356253",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "262945e3f08f3ba20278a2fe8a2ac394c36bdc0e88306c858e4226c877acb4d8",
+      "modelId": "100502",
+      "style3dCharacterMstId": 100504,
+      "resourceName": "chara_100502_battle_unit",
+      "transparentPaddingCrop": [
+        120,
+        0,
+        402,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100502.webp",
+      "outputSize": [
+        244,
+        256
+      ],
+      "outputSha256": "c88fcccf6b511906e473606f44447c7c935e8782070c862b7eab8f2e7bc041b2",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100502_thumbnail",
+      "bundleSha256": "747966187de22d0c69cdf205c259176b7c31a4951edd517686b4aba4622cbfdd",
+      "sourceType": "Texture2D",
+      "pathId": "2549271531536001200",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "zeab",
+      "decodedBundleSha256": "2c5d83d393f31146f453ecc59d690203ee5bb0cf4e83f06bdd50ace7fa702d06",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "8b14cfc7f821191ece56e50dd2d4e7c14c3c2bb8c2a86e5c9aef9b8cd6e5cffd",
+      "modelId": "100503",
+      "style3dCharacterMstId": 100502,
+      "resourceName": "chara_100503_battle_unit",
+      "transparentPaddingCrop": [
+        72,
+        0,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100503.webp",
+      "outputSize": [
+        256,
+        197
+      ],
+      "outputSha256": "2dc2a16188e1af9c923238f39372ddf4d3df9d37d22df7dd6d978e5424a168e2",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100503_thumbnail",
+      "bundleSha256": "cae9f36dd4492230509537b2575a5f239035919a05a85833f8b186b8ca5af987",
+      "sourceType": "Texture2D",
+      "pathId": "-5753333884473373059",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "b3495258afa95065d801bb97a5aa11af3744a30a5fa383024b422296a7026a8f",
+      "modelId": "100504",
+      "style3dCharacterMstId": 100503,
+      "resourceName": "chara_100504_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100504.webp",
+      "outputSize": [
+        256,
+        166
+      ],
+      "outputSha256": "91d56183b0b24d1294b80287b691dfe55fc229989e091efca118e7e415e0b9db",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100601_thumbnail",
+      "bundleSha256": "01a2922372f829a70f27f64014a4b12e75d2cb8abc7962e749b552f0cc7bb411",
+      "sourceType": "Texture2D",
+      "pathId": "5426059825183853440",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "VAzd",
+      "decodedBundleSha256": "743881ed819b9f992948783d66e73b63b2cad1672f89135fcef0fa98c707a417",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "8333666ef3f1591329c58f1d100d873fc7dddca46fbbeea71e34782ef153afa6",
+      "modelId": "100601",
+      "style3dCharacterMstId": 100601,
+      "resourceName": "chara_100601_battle_unit",
+      "transparentPaddingCrop": [
+        30,
+        0,
+        384,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100601.webp",
+      "outputSize": [
+        256,
+        214
+      ],
+      "outputSha256": "b52194b41db204fcfa8d367862f8f2dab695c1e5f2cc27ea6bfd278cde2347f5",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100701_thumbnail",
+      "bundleSha256": "e771e336a1dcc52ce765395591681013782d31d15b903ca53e139736002e2024",
+      "sourceType": "Texture2D",
+      "pathId": "-7267507597344473355",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "8a26e3afbcf6a57f6b459d2111774a41bd5ad59811f74304bd71277050805e91",
+      "modelId": "100701",
+      "style3dCharacterMstId": 100701,
+      "resourceName": "chara_100701_battle_unit",
+      "transparentPaddingCrop": [
+        84,
+        0,
+        336,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100701.webp",
+      "outputSize": [
+        218,
+        256
+      ],
+      "outputSha256": "aafae1d3e499fa92c76161d5650ed181bf0a5f09461ce9e848e3e50fcf3aff5b",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100702_thumbnail",
+      "bundleSha256": "db0d235aa132a35724285ec33d450e1892c1b58700cca005b294d8dbbb000bb3",
+      "sourceType": "Texture2D",
+      "pathId": "8318903141366800672",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "31de603e1e174a210e0d7e994c03110a637347e6d1775b89b8dc97d8c4db386a",
+      "modelId": "100702",
+      "style3dCharacterMstId": 100702,
+      "resourceName": "chara_100702_battle_unit",
+      "transparentPaddingCrop": [
+        145,
+        0,
+        360,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100702.webp",
+      "outputSize": [
+        186,
+        256
+      ],
+      "outputSha256": "124b611923d04e4c0aa69b49229382c1d03aea7b3b021ab4ed3758d13da8f713",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100801_thumbnail",
+      "bundleSha256": "3446026630247dd511661352d97d0a1dc5972cf9990c0daaff17be3d06b957bd",
+      "sourceType": "Texture2D",
+      "pathId": "-4852574614398522075",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "5b87cfd9e65b859d10463da9109c9aad9c3ad88a971a71f5a99403f8123e63ac",
+      "modelId": "100801",
+      "style3dCharacterMstId": 100801,
+      "resourceName": "chara_100801_battle_unit",
+      "transparentPaddingCrop": [
+        126,
+        0,
+        354,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100801.webp",
+      "outputSize": [
+        197,
+        256
+      ],
+      "outputSha256": "4a04e50dcf61feaf4873667ad8f6dbc92c9b6285b5bbf822a48a11326d6ede9c",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100803_thumbnail",
+      "bundleSha256": "0325a5ba97a584281cb2e97a4328b83413782d3064983c2a54db329d7056c7b4",
+      "sourceType": "Texture2D",
+      "pathId": "-8062318854200254172",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "489f7e3889a21a565e43d8bdb3fe5d859d1a4a2b015c882f96d0c3f02e8927b4",
+      "modelId": "100804",
+      "style3dCharacterMstId": 100803,
+      "resourceName": "chara_100804_battle_unit",
+      "transparentPaddingCrop": [
+        144,
+        14,
+        348,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100804.webp",
+      "outputSize": [
+        185,
+        256
+      ],
+      "outputSha256": "15244d23a78815fe1ff5d1797c9c8e96a42045c0c845f975d66cfc2ca2362498",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100802_thumbnail",
+      "bundleSha256": "18b092c7f1a01870c9788427509241dca46a3933b76cb6890d1ca7ece0a1858e",
+      "sourceType": "Texture2D",
+      "pathId": "-5171933334896449686",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "74e710f66c355c41c01ae72d20706bc387397075c89c5dd174f9d52815863236",
+      "modelId": "100805",
+      "style3dCharacterMstId": 100802,
+      "resourceName": "chara_100805_battle_unit",
+      "transparentPaddingCrop": [
+        120,
+        14,
+        336,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100805.webp",
+      "outputSize": [
+        196,
+        256
+      ],
+      "outputSha256": "92a2fcc5de9c8a3123c3cd3f46f8031296f8a2fcfc83a8f3cb5ca630687df053",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100901_thumbnail",
+      "bundleSha256": "ef47d74abdbbf6b1df84f95eb1276077fe91e8f06950fbfacf3b85bd27d47059",
+      "sourceType": "Texture2D",
+      "pathId": "-3639432768156028167",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "37dd551646b900e9bc720eca96f377312d03494cf13763318409755ec91211aa",
+      "modelId": "100901",
+      "style3dCharacterMstId": 100901,
+      "resourceName": "chara_100901_battle_unit",
+      "transparentPaddingCrop": [
+        90,
+        0,
+        396,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/100901.webp",
+      "outputSize": [
+        256,
+        248
+      ],
+      "outputSha256": "07831a6369440f0d135e37efc5e104e05a3efef92c29590f2e623c4a54b6fa75",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101001_thumbnail",
+      "bundleSha256": "7ecefb12e42198a59434e2b8b9e0506ceb29bdc225e90f2665327e10b1cd178e",
+      "sourceType": "Texture2D",
+      "pathId": "757555359003708214",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "99c9150f4364dcdced669edd208301558f1da63c3374a4ccebf9354729e6b9c1",
+      "modelId": "101001",
+      "style3dCharacterMstId": 101001,
+      "resourceName": "chara_101001_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        312,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101001.webp",
+      "outputSize": [
+        256,
+        243
+      ],
+      "outputSha256": "faa1afc8498f42c623971bf8f7a5e4b1b8aabef205bdcc5720bd721f0eae7c2a",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101002_thumbnail",
+      "bundleSha256": "5197b410c39262f647306a020f69659e8c9798c1f5d4793103051a731a879c02",
+      "sourceType": "Texture2D",
+      "pathId": "-3554125728426090890",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "5d77ce72477736d23042eb74b3fcf57e879c5542f6738c9b574c1da0d194d9bc",
+      "modelId": "101002",
+      "style3dCharacterMstId": 101002,
+      "resourceName": "chara_101002_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        366,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101002.webp",
+      "outputSize": [
+        256,
+        207
+      ],
+      "outputSha256": "436968dafc2ed560d9e4a1ea68e4e2faa3ddc2d9566c9e988af2d67076e49abd",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101101_thumbnail",
+      "bundleSha256": "7209b97ed8a2b2a6021389b8f944aa4bf0572e6daddf28383827308b351472fb",
+      "sourceType": "Texture2D",
+      "pathId": "2688903081431095467",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "507a65c24d3fea249f912b72713120b44d90dded8bc7fc35934da8b3ebec67a0",
+      "modelId": "101101",
+      "style3dCharacterMstId": 101101,
+      "resourceName": "chara_101101_battle_unit",
+      "transparentPaddingCrop": [
+        60,
+        14,
+        318,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101101.webp",
+      "outputSize": [
+        234,
+        256
+      ],
+      "outputSha256": "3a0210c18dbc1fc314298749b2b064bb1a9d0bd06d0f750d009070951a4f377f",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101201_thumbnail",
+      "bundleSha256": "8d27ea36a1286c1e6afa7387f66dcdc6d8a726b52930ff806700e389a9dc1bc5",
+      "sourceType": "Texture2D",
+      "pathId": "5685402478938641232",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "c3b5af202b6e9db2557c0d871e1414abee8a501a31dd84ce28274dbfd38bcb64",
+      "modelId": "101201",
+      "style3dCharacterMstId": 101201,
+      "resourceName": "chara_101201_battle_unit",
+      "transparentPaddingCrop": [
+        18,
+        0,
+        426,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101201.webp",
+      "outputSize": [
+        256,
+        186
+      ],
+      "outputSha256": "d68306a857935dad35b79565aa097e5579e2a27c85213a6ef662850e24ab10cb",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101301_thumbnail",
+      "bundleSha256": "e0ec91aaf961a296405b29b0517053a43cc8f840e1772008b06e3f8284eeb649",
+      "sourceType": "Texture2D",
+      "pathId": "-3823113807507952126",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "4f0f9e9376828458012f4a69c16413ebd2607ff7fcb91a0b56c7d47e38aaa5bf",
+      "modelId": "101301",
+      "style3dCharacterMstId": 101301,
+      "resourceName": "chara_101301_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        1,
+        324,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101301.webp",
+      "outputSize": [
+        256,
+        233
+      ],
+      "outputSha256": "c7a276c015a80706b854e6cee11bbac7a28bbec7278e146391fe44c626e16e4f",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101401_thumbnail",
+      "bundleSha256": "99a90b47b161c894cdede55031e02f8a69f10eb87cb58c889f45c9be0a7039dd",
+      "sourceType": "Texture2D",
+      "pathId": "-5396137351980118857",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "ce7767981cb135498a10bd5f2db6ce9d3dfb47e1d6a7014f0cb1fc20bf47ad41",
+      "modelId": "101401",
+      "style3dCharacterMstId": 101401,
+      "resourceName": "chara_101401_battle_unit",
+      "transparentPaddingCrop": [
+        132,
+        8,
+        330,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101401.webp",
+      "outputSize": [
+        176,
+        256
+      ],
+      "outputSha256": "750ea25bf85c619d4eecdee09ba7a90dce1fbc1e8619cbad5a2fabd7ebc83115",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101501_thumbnail",
+      "bundleSha256": "0bbc98f5050241972d41c972ba437d160e5a712df6d73f67012c61485f5efecf",
+      "sourceType": "Texture2D",
+      "pathId": "8160565706545952376",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "66983e15ffd13e881684dcf7dd58ead690a81ac42765bce664be98cd9dbb1958",
+      "modelId": "101501",
+      "style3dCharacterMstId": 101501,
+      "resourceName": "chara_101501_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        20,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101501.webp",
+      "outputSize": [
+        256,
+        155
+      ],
+      "outputSha256": "a6b136291aee21aa3952bc76047c8a6b38e78eb110145f96e923a389776d2812",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101601_thumbnail",
+      "bundleSha256": "0f3bc490847395892262a0223dcfc1715f480e1d0fe8e2b9a1e6971aab232418",
+      "sourceType": "Texture2D",
+      "pathId": "-244246651860117403",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "a4f0c4060c9bb23cf79a0f22aa501824a0dbbeb18ef1545f4117958565f77f0a",
+      "modelId": "101601",
+      "style3dCharacterMstId": 101601,
+      "resourceName": "chara_101601_battle_unit",
+      "transparentPaddingCrop": [
+        72,
+        0,
+        342,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101601.webp",
+      "outputSize": [
+        234,
+        256
+      ],
+      "outputSha256": "bb84343de25fb4d68c0b221342ee864ab6b517ff8b408b7a48af6039539bcd35",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101701_thumbnail",
+      "bundleSha256": "f11906eebaf99c9413958fbba6d6621d9e807b6636151f89de62d871f148b864",
+      "sourceType": "Texture2D",
+      "pathId": "-3196194285773402820",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "ff0f016aabbc21994a222566904117909340fc8309f41743c3267dcf7b91d805",
+      "modelId": "101701",
+      "style3dCharacterMstId": 101701,
+      "resourceName": "chara_101701_battle_unit",
+      "transparentPaddingCrop": [
+        66,
+        0,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101701.webp",
+      "outputSize": [
+        256,
+        194
+      ],
+      "outputSha256": "4ca35313af8dfee97699722589ad086be3716ac73f3a4e98773bc7b68238f809",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101801_thumbnail",
+      "bundleSha256": "76d766b311800ba55bd23768f9bede7292d04ecc0cb136d6c7df058e748b14ec",
+      "sourceType": "Texture2D",
+      "pathId": "187822991771242882",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "62dceb6b10707baf2b50d76d08ce857212b3b407f8580e84a634392843804164",
+      "modelId": "101801",
+      "style3dCharacterMstId": 101801,
+      "resourceName": "chara_101801_battle_unit",
+      "transparentPaddingCrop": [
+        120,
+        20,
+        354,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101801.webp",
+      "outputSize": [
+        217,
+        256
+      ],
+      "outputSha256": "4ac446b715b230964e035f22c9b50a0259bb235aefebf228a10153b518f49beb",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/101901_thumbnail",
+      "bundleSha256": "7a19d4998736212854cc9d09248119450d5db0094927a1dae65a399321831c08",
+      "sourceType": "Texture2D",
+      "pathId": "5422669746241778912",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "73ebc7d5de969086f0bc47913c339a1d20d7305709aa84b6f03d2d33bfc29ff9",
+      "modelId": "101901",
+      "style3dCharacterMstId": 101901,
+      "resourceName": "chara_101901_battle_unit",
+      "transparentPaddingCrop": [
+        12,
+        0,
+        354,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/101901.webp",
+      "outputSize": [
+        256,
+        222
+      ],
+      "outputSha256": "4f34d8bc772ed01c43b568503b07f848e4485aeb85cec69cb05eb55d15d4432d",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/102001_thumbnail",
+      "bundleSha256": "33c7a922fcb6c0114fb07b6fa928f2eca6489e51baae4c48f2f1d67571aecaf4",
+      "sourceType": "Texture2D",
+      "pathId": "4612235852521530159",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "77b5cabc260af8685d56bb849a7fb86d4fb6f9d56430713cea1c412fce0b639c",
+      "modelId": "102001",
+      "style3dCharacterMstId": 102001,
+      "resourceName": "chara_102001_battle_unit",
+      "transparentPaddingCrop": [
+        90,
+        0,
+        384,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/102001.webp",
+      "outputSize": [
+        254,
+        256
+      ],
+      "outputSha256": "9ab449d9dcf3514e14ed6b46c0264031b02e8bd655e519ca3edfb29e842557cd",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/102101_thumbnail",
+      "bundleSha256": "15770788dd2add7800062521532ca3bdbb3a61e565b1fc0f5b6411beda9c02fb",
+      "sourceType": "Texture2D",
+      "pathId": "-3172388191986735814",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "2ef11f8ce40e9e92c952a6b62c2222248b3d9df28a6af647bf98c62de8b920f4",
+      "modelId": "102101",
+      "style3dCharacterMstId": 102101,
+      "resourceName": "chara_102101_battle_unit",
+      "transparentPaddingCrop": [
+        42,
+        0,
+        414,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/102101.webp",
+      "outputSize": [
+        256,
+        204
+      ],
+      "outputSha256": "3429674945888367c56bdb21966b143461e0cb89f295378cd3bc382156772f99",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/102102_thumbnail",
+      "bundleSha256": "1a19c9066a568b673761eb6e0cfe430fc3fe2a5c974fbe12cf37f6acd90a6fe8",
+      "sourceType": "Texture2D",
+      "pathId": "6309067269847170386",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "829ffb5372b245cbc9ef2d15841438e23d3616e69462e1e3ad375911251cd588",
+      "modelId": "102102",
+      "style3dCharacterMstId": 102102,
+      "resourceName": "chara_102102_battle_unit",
+      "transparentPaddingCrop": [
+        96,
+        8,
+        324,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/102102.webp",
+      "outputSize": [
+        203,
+        256
+      ],
+      "outputSha256": "dc49a365d4cc44aa33208ba5b45c29439271216fd4a3435b0ab93f14874d1da6",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/102201_thumbnail",
+      "bundleSha256": "abd79239f055a92e98ecfad80beb40db21497526b1e07dae17b99bfc61ecb9b3",
+      "sourceType": "Texture2D",
+      "pathId": "5287944551874195620",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "thIl",
+      "decodedBundleSha256": "a41780b4a813474b8666fe53ab553b0f0933f1b51df5b95db8f31175db585ccb",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "40ae5809a78bd2c074399b4f0d9e303c6c7fb001eea8e9d9265270952f13fab9",
+      "modelId": "102201",
+      "style3dCharacterMstId": 102201,
+      "resourceName": "chara_102201_battle_unit",
+      "transparentPaddingCrop": [
+        90,
+        0,
+        420,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/102201.webp",
+      "outputSize": [
+        256,
+        230
+      ],
+      "outputSha256": "4b840da22a3ca6e724cee8b14a0a6a4dc7bc6dadf2fc1766fb8cd9c0aff292a6",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/102301_thumbnail",
+      "bundleSha256": "c27c15e91c09c5f6bd34f216fbccaecc002ede1a25c63ab2ea85577d31ae0781",
+      "sourceType": "Texture2D",
+      "pathId": "-7027873401062149252",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "bb030c3e791e570eaea5467faef201697ddb15b73415709d381cd57bf29b0499",
+      "modelId": "102301",
+      "style3dCharacterMstId": 102301,
+      "resourceName": "chara_102301_battle_unit",
+      "transparentPaddingCrop": [
+        108,
+        2,
+        360,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/102301.webp",
+      "outputSize": [
+        219,
+        256
+      ],
+      "outputSha256": "43f716b5e6a24fd0fcbc79ee6992369848ab6e9dcc402df16895794528922384",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/102401_thumbnail",
+      "bundleSha256": "48d0b452855974532a72f3978b9500c57ac3646d109e11910f70d9fb2386ac62",
+      "sourceType": "Texture2D",
+      "pathId": "-8196942847792768975",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "73072c7e5acbc226464fc4d244bfae6c22a5e6b277866efed7c7c04f601d3372",
+      "modelId": "102401",
+      "style3dCharacterMstId": 102401,
+      "resourceName": "chara_102401_battle_unit",
+      "transparentPaddingCrop": [
+        90,
+        26,
+        408,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/102401.webp",
+      "outputSize": [
+        256,
+        217
+      ],
+      "outputSha256": "3e96e1b8f3c1c84689912459d1e624f00af2c7d09ef8127e392f5816f9107614",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/102501_thumbnail",
+      "bundleSha256": "e9821a9d0baa077780b48a0f8adfac32ca64600c7d2155bf39f4afe35414d2b0",
+      "sourceType": "Texture2D",
+      "pathId": "-6514523903111047116",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "53712705e13a3aeb71c31f273beb8407fc6ead0b2a158cdab72cc052e364ad08",
+      "modelId": "102501",
+      "style3dCharacterMstId": 102501,
+      "resourceName": "chara_102501_battle_unit",
+      "transparentPaddingCrop": [
+        108,
+        2,
+        318,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/102501.webp",
+      "outputSize": [
+        183,
+        256
+      ],
+      "outputSha256": "3fd1eb22f4795456530a4956221ae171e90ff7854d5b62b86f8be8f66dfdd67d",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/102601_thumbnail",
+      "bundleSha256": "5888fa252035a266c6fd997657d59dedfce46a9ff6fe1bf211b27c5b514a965e",
+      "sourceType": "Texture2D",
+      "pathId": "-8533228504591710243",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "184f2023c42765f39e35393a73bb7380f19d9ad88f711df535b930fb94731fa6",
+      "modelId": "102601",
+      "style3dCharacterMstId": 102601,
+      "resourceName": "chara_102601_battle_unit",
+      "transparentPaddingCrop": [
+        126,
+        2,
+        366,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/102601.webp",
+      "outputSize": [
+        209,
+        256
+      ],
+      "outputSha256": "94751437a1cb4a567b374204550203a6500ed9a8751fd47ef21b555807b6c089",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/105801_thumbnail",
+      "bundleSha256": "b3803f38c24f297e89270b91a8b6c553aef40c95428b3d801f04d330fb396073",
+      "sourceType": "Texture2D",
+      "pathId": "1832612691008688598",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "8b140d895e30b95a585b0a668e341dee4e8dc95a3bbe0b53cd5582a143730306",
+      "modelId": "105801",
+      "style3dCharacterMstId": 105801,
+      "resourceName": "chara_105801_battle_unit",
+      "transparentPaddingCrop": [
+        120,
+        0,
+        408,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/105801.webp",
+      "outputSize": [
+        249,
+        256
+      ],
+      "outputSha256": "a4e60003a277133c79bce778282d37886dc4ced5e0e01795231947d070381840",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/105901_thumbnail",
+      "bundleSha256": "616d669999d583fdd7ecb337d42e746a0f0f5fb6e61c96018862df87c58f8cb4",
+      "sourceType": "Texture2D",
+      "pathId": "-4368183883943628618",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "02cdf1e686e4d1240e73fd90b5b5d7d03b98659045a893e9d018cf6a52d1940a",
+      "modelId": "105901",
+      "style3dCharacterMstId": 105901,
+      "resourceName": "chara_105901_battle_unit",
+      "transparentPaddingCrop": [
+        66,
+        2,
+        366,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/105901.webp",
+      "outputSize": [
+        256,
+        251
+      ],
+      "outputSha256": "a714bf3a6df3336e9af13afb5d34aa329e9615fabe221fc299e62c7b3b49ef07",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/106101_thumbnail",
+      "bundleSha256": "08b3a7860a09f6978e2223e65639a16cb8ab9729aff97d257c62e47ea17b3f7d",
+      "sourceType": "Texture2D",
+      "pathId": "6792336167502637913",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "9204d3cec7a7d66857d2a81697c6ba1758149a88739c9c6ff1904183e99232a7",
+      "modelId": "106101",
+      "style3dCharacterMstId": 106101,
+      "resourceName": "chara_106101_battle_unit",
+      "transparentPaddingCrop": [
+        54,
+        20,
+        378,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/106101.webp",
+      "outputSize": [
+        256,
+        218
+      ],
+      "outputSha256": "55d7d5009b3bdb2ae8da2cbcb707d486c38cde62f6a0c5c24df1451cfca3dd40",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/106201_thumbnail",
+      "bundleSha256": "a58f11511233811039245cc0fa745ef6ecf28f390e8f8e7f8441581ba4099b2b",
+      "sourceType": "Texture2D",
+      "pathId": "6676637897919828425",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "nq5h",
+      "decodedBundleSha256": "42003f26a612ec3df4db28e5b9db27b0ee3d177f922989406a0be35c4ec71cc1",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "cb5aa1077347dbaadea97e00011093a4e9b29b3ad59bdcd40ced59812d6476b6",
+      "modelId": "106201",
+      "style3dCharacterMstId": 106201,
+      "resourceName": "chara_106201_battle_unit",
+      "transparentPaddingCrop": [
+        24,
+        8,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/106201.webp",
+      "outputSize": [
+        256,
+        171
+      ],
+      "outputSha256": "1e31ea0c19013c33fcb3ca36e5331db75ba4be2ad107655e4635169b925e26f7",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/106701_thumbnail",
+      "bundleSha256": "b4cebad2010614c29c30e58cf61dddc90250a856a2296a818e2a5ddf4a5d1f84",
+      "sourceType": "Texture2D",
+      "pathId": "5412902436108941015",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "850f2c983b2b1db149738213e7a1d97099f2c3b6628ed54e3caba794726a36a6",
+      "modelId": "106701",
+      "style3dCharacterMstId": 106701,
+      "resourceName": "chara_106701_battle_unit",
+      "transparentPaddingCrop": [
+        138,
+        0,
+        414,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/106701.webp",
+      "outputSize": [
+        239,
+        256
+      ],
+      "outputSha256": "6322afa2cb96246be11aeb8067e934e2f18e2c9ca2db1f318799c7cc414fe297",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/106801_thumbnail",
+      "bundleSha256": "95cee8f4b2eb0fc553b0ab7bcd99b439ab6c7e233b468fbd3861e0815aa99ea4",
+      "sourceType": "Texture2D",
+      "pathId": "3084087407264797778",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "40vu",
+      "decodedBundleSha256": "d13b5b7174f38639f896ecaefbdb5451ae11956bdd0d78ef9fc88715c2aae9b4",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "8ea36519d9407507a873a31761b6411d5a2c814b76f48d3036c35363b15a0259",
+      "modelId": "106801",
+      "style3dCharacterMstId": 106801,
+      "resourceName": "chara_106801_battle_unit",
+      "transparentPaddingCrop": [
+        156,
+        20,
+        324,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/106801.webp",
+      "outputSize": [
+        156,
+        256
+      ],
+      "outputSha256": "3c0f3f843e69c6565939c6fb9dcfe59e5318e13beda9f794f558fa90dd07eea8",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/106901_thumbnail",
+      "bundleSha256": "02900f1c0e49d0d623707099c970fb33bfe7720cc2212d68c0e1ec6e485af535",
+      "sourceType": "Texture2D",
+      "pathId": "3594111674759488588",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "d919a1b0cd38a316c37890f35a8364837ee121d4527337cbf10a98ddbd5c94a0",
+      "modelId": "106901",
+      "style3dCharacterMstId": 106901,
+      "resourceName": "chara_106901_battle_unit",
+      "transparentPaddingCrop": [
+        108,
+        0,
+        360,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/106901.webp",
+      "outputSize": [
+        218,
+        256
+      ],
+      "outputSha256": "9bf4dcde051b61c1f982f023a964c735e2c7b8ce2deb62570c3bfd4e616a3bee",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/107001_thumbnail",
+      "bundleSha256": "cd221223407d9ed8223de83e6117d8523a49e884834c6e783617cc5b078b7d64",
+      "sourceType": "Texture2D",
+      "pathId": "8818164255466110048",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "3a900cf8b2c015a3faa73a6e55d6000f001c8389149f6c0feb92ed34d2e102c3",
+      "modelId": "107001",
+      "style3dCharacterMstId": 107001,
+      "resourceName": "chara_107001_battle_unit",
+      "transparentPaddingCrop": [
+        114,
+        0,
+        318,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/107001.webp",
+      "outputSize": [
+        176,
+        256
+      ],
+      "outputSha256": "8093e84b06e7d88e9e8f7058628d33411b3b257129ab53ae878e6a7731358adc",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/107101_thumbnail",
+      "bundleSha256": "ce8892cb5cdfd4b52a71c220f843b053d5e0891eb74dc780dc1a51404f5ae1ab",
+      "sourceType": "Texture2D",
+      "pathId": "-2515551284779006194",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "1013643855088d033f9de50fb4237832f95c05f61aff1f6a6f06bcc292d7901b",
+      "modelId": "107101",
+      "style3dCharacterMstId": 107101,
+      "resourceName": "chara_107101_battle_unit",
+      "transparentPaddingCrop": [
+        102,
+        0,
+        360,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/107101.webp",
+      "outputSize": [
+        223,
+        256
+      ],
+      "outputSha256": "aa9e5d6f63685abbc3b232e39a201a5a9c2782c9af9c7edadf4549239065a417",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/107201_thumbnail",
+      "bundleSha256": "655c244e5597e539cf6fe4f277a8cb6a8088329a519cc51d7b1c05e8630c313d",
+      "sourceType": "Texture2D",
+      "pathId": "1192747927135470995",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "510e45a1b1e829c0c0b1a24640dd2b4446188d805914b984a27c06ea62a3fab4",
+      "modelId": "107201",
+      "style3dCharacterMstId": 107201,
+      "resourceName": "chara_107201_battle_unit",
+      "transparentPaddingCrop": [
+        42,
+        2,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/107201.webp",
+      "outputSize": [
+        256,
+        182
+      ],
+      "outputSha256": "3b0bce75b6cf1bd48e0948e9e484497c036e18d377fe822e88564303e6df4ce5",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/107401_thumbnail",
+      "bundleSha256": "b003b573c711e0614a3881259067cdc88976ac7bfaa1e5f11e6a3bc9d83df588",
+      "sourceType": "Texture2D",
+      "pathId": "-5191018217113586780",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "4b28bcbd83d9cbaa58a02c99256cf1ec9760e756e502217765d354d55f3c5992",
+      "modelId": "107401",
+      "style3dCharacterMstId": 107401,
+      "resourceName": "chara_107401_battle_unit",
+      "transparentPaddingCrop": [
+        42,
+        0,
+        408,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/107401.webp",
+      "outputSize": [
+        256,
+        207
+      ],
+      "outputSha256": "1a62cbafc198014eb45b02d8569c08f4bd1f71ceab5f7c3da0ed40d6bba65429",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/107601_thumbnail",
+      "bundleSha256": "d92fa2fe86196c2cef870df9de2389811f346bb536acddd9520dd5e0748124bc",
+      "sourceType": "Texture2D",
+      "pathId": "8189250904952436959",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "2a4e384e422af2c0ff3e5b51779bfeaabd95f8ed57b0ea88460fd122c8d06368",
+      "modelId": "107601",
+      "style3dCharacterMstId": 107601,
+      "resourceName": "chara_107601_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        324,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/107601.webp",
+      "outputSize": [
+        256,
+        234
+      ],
+      "outputSha256": "cbac0a7f0e9557a1c53f78f8ddde6c10390e60305d9ffef764366c1d37a09837",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/108001_thumbnail",
+      "bundleSha256": "f2f266ad2584603c12035acc6356bd3dbcf3e1c19d12fa28f312506046909ab6",
+      "sourceType": "Texture2D",
+      "pathId": "-3923916445697235713",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "d3d430bea27630777c65db005137e488ab5c6fb99df99cea5e63e287b1ae925b",
+      "modelId": "108001",
+      "style3dCharacterMstId": 108001,
+      "resourceName": "chara_108001_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        20,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/108001.webp",
+      "outputSize": [
+        256,
+        155
+      ],
+      "outputSha256": "8bbeeef1c6b10b941a0f16e29d419534d13d65afd3895f340ff284de553f1430",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/108002_thumbnail",
+      "bundleSha256": "a26d2da801c73a8c072dfb0c0d1eb3e1f9fba2605fdd1714134f3407993f2133",
+      "sourceType": "Texture2D",
+      "pathId": "-4099119608525038843",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "967b0f689b78300a8faeed34ad0a6efb553d58606e8a28670bfaa78b3c74197e",
+      "modelId": "108002",
+      "style3dCharacterMstId": 108002,
+      "resourceName": "chara_108002_battle_unit",
+      "transparentPaddingCrop": [
+        114,
+        14,
+        420,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/108002.webp",
+      "outputSize": [
+        256,
+        236
+      ],
+      "outputSha256": "ed301bb5b9b5d3ca96e64fc091b3398a0959de3e588944e3ca4217633e4aaf34",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/108101_thumbnail",
+      "bundleSha256": "c775d88ee19f07be9e3c0e58b1fca82dacfa529889f7d417b1177782b1382ab8",
+      "sourceType": "Texture2D",
+      "pathId": "8416005855108608947",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "b08b5911474cd3e1280961afc3a1bd163bc808e204702721b801af1062e42490",
+      "modelId": "108101",
+      "style3dCharacterMstId": 108101,
+      "resourceName": "chara_108101_battle_unit",
+      "transparentPaddingCrop": [
+        12,
+        0,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/108101.webp",
+      "outputSize": [
+        256,
+        171
+      ],
+      "outputSha256": "d09b9dea53edaf55aa220cb8c1a4a8ab2ae18fb8c5122a0ebdde7745c8e0052e",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/108201_thumbnail",
+      "bundleSha256": "eb77d228525d9395ac955db0228ef34eef61e01b63c01526f77c8220e4355af3",
+      "sourceType": "Texture2D",
+      "pathId": "7863703822264984099",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "7bd087455415c10c36fb4309963324b02c79cf83548a617a945de98c7a2b7ca6",
+      "modelId": "108201",
+      "style3dCharacterMstId": 108201,
+      "resourceName": "chara_108201_battle_unit",
+      "transparentPaddingCrop": [
+        12,
+        0,
+        360,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/108201.webp",
+      "outputSize": [
+        256,
+        218
+      ],
+      "outputSha256": "e824d88e37f59cf6698b45c6536cc77edefc84bc4dc956a16de417e6130efa36",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/108301_thumbnail",
+      "bundleSha256": "0d0df3da458316c6ec1c0e83543c11774f78794b43f12fa31535419f3165105c",
+      "sourceType": "Texture2D",
+      "pathId": "235080549385742183",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "cd1e06e87520107eb8579ea420c3b0cd4427184d86812b282457b00d3edd54a1",
+      "modelId": "108301",
+      "style3dCharacterMstId": 108301,
+      "resourceName": "chara_108301_battle_unit",
+      "transparentPaddingCrop": [
+        126,
+        0,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/108301.webp",
+      "outputSize": [
+        256,
+        230
+      ],
+      "outputSha256": "72a0d5cea33953982f5d273d51a5b21dda06cf34b2356aaeb291b2c1b1e9f701",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/108401_thumbnail",
+      "bundleSha256": "d1c2ff004451cc263d1c7e973456c8e65d7f34230138bb59c37b247ca60ad7b1",
+      "sourceType": "Texture2D",
+      "pathId": "-5709664006759117203",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "c29965ca4f97e6eafd3a93047cba40d60b9facde80fbb421fd920288ff6ed157",
+      "modelId": "108401",
+      "style3dCharacterMstId": 108401,
+      "resourceName": "chara_108401_battle_unit",
+      "transparentPaddingCrop": [
+        60,
+        0,
+        372,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/108401.webp",
+      "outputSize": [
+        256,
+        243
+      ],
+      "outputSha256": "d67fa39be1bd65e511d5a94ec6d09930b2193bdb6e402b1054986f7de83cdd69",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/108601_thumbnail",
+      "bundleSha256": "59d054294f3f761ee415d29982425ca097c34fddef72c318e7b8f2230f273267",
+      "sourceType": "Texture2D",
+      "pathId": "6061920243340028101",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "0cbe2f6420767ddbdb0c4098afd02a2e8f8943df9f45a6d4e53bb5df6dc68e02",
+      "modelId": "108601",
+      "style3dCharacterMstId": 108601,
+      "resourceName": "chara_108601_battle_unit",
+      "transparentPaddingCrop": [
+        96,
+        20,
+        354,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/108601.webp",
+      "outputSize": [
+        239,
+        256
+      ],
+      "outputSha256": "0730339bb011f0e2f9d5e42dc98934182e54dcfd320ab210102d91280dc14719",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/108602_thumbnail",
+      "bundleSha256": "ffc920fbcaa0471f7ff539a8f44cecd4391901a73bd6f80dacd3e7ee4751f40e",
+      "sourceType": "Texture2D",
+      "pathId": "-1873570092225749681",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "ca1fb2320aba1477ca6078515be0de6acc8c94d6225b33e038177d5501337c92",
+      "modelId": "108602",
+      "style3dCharacterMstId": 108602,
+      "resourceName": "chara_108602_battle_unit",
+      "transparentPaddingCrop": [
+        96,
+        14,
+        348,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/108602.webp",
+      "outputSize": [
+        229,
+        256
+      ],
+      "outputSha256": "3e1c2d1f561340160091571a275e73feed486c6ed08a7e0c310ef15ed5eabb61",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/109001_thumbnail",
+      "bundleSha256": "022e664e1bcb97c09b9fd9a0ea33f87899bd9b7b7a95afbd6ebd9fb69981629b",
+      "sourceType": "Texture2D",
+      "pathId": "-7287169626639416933",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "b465a087832dc953debcc08b43aa39f3d03935bc52a2e445e8132c0df1d60322",
+      "modelId": "109001",
+      "style3dCharacterMstId": 109001,
+      "resourceName": "chara_109001_battle_unit",
+      "transparentPaddingCrop": [
+        108,
+        0,
+        426,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/109001.webp",
+      "outputSize": [
+        256,
+        238
+      ],
+      "outputSha256": "239584c828d16ba661bc3815287c70da4aa7dcb61889626583af1eaac5b8393a",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/109201_thumbnail",
+      "bundleSha256": "5a5671b8e60b138cbd65dcab5057430e5cf60efa8dbc76eb3e1f35472e3542c0",
+      "sourceType": "Texture2D",
+      "pathId": "162321737358208987",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "b5f7ffe82d0db3c799ce5a56c9240c47e7fc5abb950112dbe241e6110bf05f70",
+      "modelId": "109201",
+      "style3dCharacterMstId": 109201,
+      "resourceName": "chara_109201_battle_unit",
+      "transparentPaddingCrop": [
+        48,
+        0,
+        414,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/109201.webp",
+      "outputSize": [
+        256,
+        207
+      ],
+      "outputSha256": "00c5911eb3f6f01a27a0c3430619a70943f6f67938a3aaf6b41cd797a99488fa",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/109801_thumbnail",
+      "bundleSha256": "540ecc348806af8c7eec6f28f5eff5b30952344c66abc9c59a8a008795b8cadc",
+      "sourceType": "Texture2D",
+      "pathId": "-7270773608587581386",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "bcb6773f282340d5957141acad8769603e3ef1be3f250eb6fbfb6c12e07a3825",
+      "modelId": "109801",
+      "style3dCharacterMstId": 109801,
+      "resourceName": "chara_109801_battle_unit",
+      "transparentPaddingCrop": [
+        114,
+        14,
+        354,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/109801.webp",
+      "outputSize": [
+        218,
+        256
+      ],
+      "outputSha256": "dc300e94690cf5166fd53cdfd7a9197ee10335fbd79e3c675cf85dca2382c1be",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/110401_thumbnail",
+      "bundleSha256": "a124bfcef38335432fedee68fd3d417bdc08ee83ab947687337aab4fb51ea9d9",
+      "sourceType": "Texture2D",
+      "pathId": "4588558578657229544",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "b6c5416d4f02457bd1a7390c74250de588ec7c0ecadfa6bdab40ae4f338aee12",
+      "modelId": "110401",
+      "style3dCharacterMstId": 110401,
+      "resourceName": "chara_110401_battle_unit",
+      "transparentPaddingCrop": [
+        86,
+        19,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/110401.webp",
+      "outputSize": [
+        256,
+        192
+      ],
+      "outputSha256": "3ced6cd9cb0be26ab1e9ecb02e4ce3f8176c6fbc2d26d9e005e000fe4ed72a5d",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/110701_thumbnail",
+      "bundleSha256": "187d6e4ba47fdfff5a6b2f9fc4ea4a29145fcd1ab474c8cae241554ea3afae17",
+      "sourceType": "Texture2D",
+      "pathId": "-8192114212559487793",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "cc8db3d52e071bd22f1aa4f9b928e864cc31705552d6fd6322103bfb99c13e5b",
+      "modelId": "110701",
+      "style3dCharacterMstId": 110701,
+      "resourceName": "chara_110701_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        390,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/110701.webp",
+      "outputSize": [
+        256,
+        194
+      ],
+      "outputSha256": "f04cd14c6fd75ac3ecafcc04030c9ba7028d327fcf3b09bb61a46a920904ee60",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/110702_thumbnail",
+      "bundleSha256": "36fbbd012a29b6f886e9e0432eaa265a331a5bd7c84963f8f975693ec30a82fc",
+      "sourceType": "Texture2D",
+      "pathId": "5834275825566192057",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "4907119bd87e7cae524f2c4ab107107633bbcaf8741cfbec83090d8905e6c35a",
+      "modelId": "110702",
+      "style3dCharacterMstId": 110702,
+      "resourceName": "chara_110702_battle_unit",
+      "transparentPaddingCrop": [
+        48,
+        0,
+        366,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/110702.webp",
+      "outputSize": [
+        256,
+        238
+      ],
+      "outputSha256": "7ef98893bbd18305035592dc0113b31941b8cb1136131dd2df64ba5adb212dc4",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/111401_thumbnail",
+      "bundleSha256": "6e380fac344378fb49b3b679286bd2ba0cad39fec072b9b1405385ccb5ccb35a",
+      "sourceType": "Texture2D",
+      "pathId": "2973955218402167345",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "b5d2853ef322cc833e8b188d7c02d813b37d6707cef351cf002aad36ccfd7c79",
+      "modelId": "111401",
+      "style3dCharacterMstId": 111401,
+      "resourceName": "chara_111401_battle_unit",
+      "transparentPaddingCrop": [
+        72,
+        0,
+        454,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/111401.webp",
+      "outputSize": [
+        256,
+        198
+      ],
+      "outputSha256": "2a9bc7f2969c408c4ba867572e653bdfdc4ece24b8cb00ee2b46a648683d94d5",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/111501_thumbnail",
+      "bundleSha256": "89ef15e81661c6ce3f16e53eb968bf29d0d946141755b933a8eeec8dc6937b33",
+      "sourceType": "Texture2D",
+      "pathId": "-7097337846431123090",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "572f9c8f73ca4c1c5ca2e0d9bcce0a607be6db675a0fe26dccc106e396df2b73",
+      "modelId": "111501",
+      "style3dCharacterMstId": 111501,
+      "resourceName": "chara_111501_battle_unit",
+      "transparentPaddingCrop": [
+        54,
+        20,
+        312,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/111501.webp",
+      "outputSize": [
+        239,
+        256
+      ],
+      "outputSha256": "53b7f368f49256849805b195bc8b11edfa3025b7ff982635e649f8ff5b49b764",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/111601_thumbnail",
+      "bundleSha256": "a0ee0c941a304a68f926d87f52a77e2c107da7e048c44c28c47b80b486323d62",
+      "sourceType": "verified-decoded-Texture2D",
+      "pathId": "-34704189038702207",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "e3541998d95c6424c5e80164bcabaeb2d851dfdb03b19b2bd4a56d3afe5619e9",
+      "modelId": "111601",
+      "style3dCharacterMstId": 111601,
+      "resourceName": "chara_111601_battle_unit",
+      "transparentPaddingCrop": [
+        42,
+        0,
+        378,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/111601.webp",
+      "outputSize": [
+        256,
+        226
+      ],
+      "outputSha256": "7d7efc78f998a3fc78a2a61246e7809ec1345e6efc563c6ffcc987d4d6b4ce69",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c",
+      "sourcePngSha256": "0e702864cfbdf4c925c39f5800ca036cbeec8f9feea34d52aff53167c726839a"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/111701_thumbnail",
+      "bundleSha256": "ce1f3dcab3925d7052cbc6fd14ac889b048ae04e9cae4dc5ed31c0554b187983",
+      "sourceType": "Texture2D",
+      "pathId": "6791773260475445957",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "fc6c7ffa737cf380a51095defe3f29985d776062a5452c66ff022d63f4d1a4d3",
+      "modelId": "111701",
+      "style3dCharacterMstId": 111701,
+      "resourceName": "chara_111701_battle_unit",
+      "transparentPaddingCrop": [
+        6,
+        0,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/111701.webp",
+      "outputSize": [
+        256,
+        168
+      ],
+      "outputSha256": "eb3d2c15f1c15db79f71bb2780ff43ce3891552fc74ad330f198663ea84ef859",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/112001_thumbnail",
+      "bundleSha256": "fffa21faa86aece4c4249296ec9239d5d60bb8c2f76acd7304d1437613706605",
+      "sourceType": "Texture2D",
+      "pathId": "5906573944260416",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "edf17f54b145b67b5b26c7d70dcba4415924639b60c2c15e4abdc3fa17549728",
+      "modelId": "112001",
+      "style3dCharacterMstId": 112001,
+      "resourceName": "chara_112001_battle_unit",
+      "transparentPaddingCrop": [
+        30,
+        20,
+        396,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/112001.webp",
+      "outputSize": [
+        256,
+        193
+      ],
+      "outputSha256": "2f204d1006aa63c6f08d86732fec6710997884a746d7059425ee5fa72cb092f0",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/112401_thumbnail",
+      "bundleSha256": "88fde538082d27536ce620b477e7c1eefe982a48588364c80810186b42a4871b",
+      "sourceType": "Texture2D",
+      "pathId": "4550640086705358766",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "5880727c52095070cabdc4a15abdfbb12320643794f97f80d13510359fae6d13",
+      "modelId": "112401",
+      "style3dCharacterMstId": 112401,
+      "resourceName": "chara_112401_battle_unit",
+      "transparentPaddingCrop": [
+        42,
+        0,
+        396,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/112401.webp",
+      "outputSize": [
+        256,
+        214
+      ],
+      "outputSha256": "41cff2f439ba6090f62d7f4b463b4e08b37269907e45f3ecdf348597745af473",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/112501_thumbnail",
+      "bundleSha256": "948c8a46dce85523b4c9993ac47ba16fbcfc4d85b47cb5a0d427750876d516bf",
+      "sourceType": "Texture2D",
+      "pathId": "-3877909057642327237",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "1c7b1b8d8eb1a5c9f320b449d604b6d65c1fb1a6a1a213adf157689410b62810",
+      "modelId": "112501",
+      "style3dCharacterMstId": 112501,
+      "resourceName": "chara_112501_battle_unit",
+      "transparentPaddingCrop": [
+        48,
+        0,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/112501.webp",
+      "outputSize": [
+        256,
+        186
+      ],
+      "outputSha256": "562190a57a807c5ee4c4e06b685cf07445255114834e74c80ec6a9c94a1a4942",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/112601_thumbnail",
+      "bundleSha256": "c9197ccae4c76aec24ae2ab09b463744725b68244d85c56933800f50df6a8ef8",
+      "sourceType": "Texture2D",
+      "pathId": "5090472583821080212",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "ee8c6788a07728602c3595bf828644832ad4015cd204de07884f53dc97ba6baf",
+      "modelId": "112601",
+      "style3dCharacterMstId": 112601,
+      "resourceName": "chara_112601_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        408,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/112601.webp",
+      "outputSize": [
+        256,
+        186
+      ],
+      "outputSha256": "33c7ed97aca7a076facfa1da6f617ac1dcac5e0f6dee6750510cd2c4c874092a",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/113301_thumbnail",
+      "bundleSha256": "9367b8307e3edd96cbb4d5b279674397b56ce573a62e3f97352b26f7193adf32",
+      "sourceType": "Texture2D",
+      "pathId": "-8683897862547477759",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "20b6e1571a4662be328f6a5109246246cc949b928ba994f8a925677e7ad584cf",
+      "modelId": "113301",
+      "style3dCharacterMstId": 113301,
+      "resourceName": "chara_113301_battle_unit",
+      "transparentPaddingCrop": [
+        90,
+        0,
+        439,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/113301.webp",
+      "outputSize": [
+        256,
+        217
+      ],
+      "outputSha256": "79fff4c6a68f7b14a4faa1f7d0f4fa6509d943957e9ad84310323f235254047a",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/113401_thumbnail",
+      "bundleSha256": "a15bb476ae13c675196f5cd71def402e0dfeab863da1030b273fdc395f96736b",
+      "sourceType": "Texture2D",
+      "pathId": "5901497533939201348",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "1d4870e512dcd5adb5247e994d096c7e4b1f82875b6665e34677605178ce1f37",
+      "modelId": "113401",
+      "style3dCharacterMstId": 113401,
+      "resourceName": "chara_113401_model",
+      "transparentPaddingCrop": [
+        132,
+        0,
+        318,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/113401.webp",
+      "outputSize": [
+        161,
+        256
+      ],
+      "outputSha256": "cb73c506b1e90ee55cfc2fb3cc76c91b7a71b24441145c9d991f6d7265d10868",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/113501_thumbnail",
+      "bundleSha256": "8351c67b65f3f4b493a621138619104ee8ba082ee31e09392d3aff12f2aec96b",
+      "sourceType": "Texture2D",
+      "pathId": "8017460641192270406",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "8eb163ac022b49b827764dc664eb861036ddd5e2e65ed86b37327d0f7e0a59df",
+      "modelId": "113501",
+      "style3dCharacterMstId": 113501,
+      "resourceName": "chara_113501_model",
+      "transparentPaddingCrop": [
+        120,
+        62,
+        342,
+        260
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/113501.webp",
+      "outputSize": [
+        222,
+        198
+      ],
+      "outputSha256": "d730316a9fb35193201b7d0efdbdadb6d241115d4193acb3eae1e977c5b1461e",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/113601_thumbnail",
+      "bundleSha256": "a89eb1e1c449da15bb57017cbdc7b29574a5f170329bfac4caeaa7545b2da0af",
+      "sourceType": "Texture2D",
+      "pathId": "-733273658644626116",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "5b2275674384d1ff93647e37ce208fdafb15f2bedb140cd8b863b94f160724fe",
+      "modelId": "113601",
+      "style3dCharacterMstId": 113601,
+      "resourceName": "chara_113601_model",
+      "transparentPaddingCrop": [
+        132,
+        14,
+        354,
+        284
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/113601.webp",
+      "outputSize": [
+        210,
+        256
+      ],
+      "outputSha256": "8a769aa7a21fd9a4c2ecd803ffc258a8a0454e291fdf678f191183269b3b5717",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100102_thumbnail",
+      "bundleSha256": "2c5a4fc6eb77ebf1adf70b6c78f3780a160e70f4420df27fb3e461239a0cd292",
+      "sourceType": "Texture2D",
+      "pathId": "-1185487865791090701",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "7bfadbe044218e2d4fd9e66058f863b42233b61a3b9148cdee4f2f5a20e8725d",
+      "modelId": "113701",
+      "style3dCharacterMstId": 100102,
+      "resourceName": "chara_113701_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/113701.webp",
+      "outputSize": [
+        256,
+        166
+      ],
+      "outputSha256": "21ce6aa84f114caae52d7e07f5bc2f85b54ee7048deb10a0dedd33f1c17fcfe6",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/113801_thumbnail",
+      "bundleSha256": "1091f42a6e9992541628e2a5292b5bda70a77e20064f5420b4b17ff4d5acc816",
+      "sourceType": "Texture2D",
+      "pathId": "7150902466842514575",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "540a00b2de4b4711fc6a5242b32c08cc15f6654cddf22412b39cb50726263506",
+      "modelId": "113801",
+      "style3dCharacterMstId": 113801,
+      "resourceName": "chara_113801_battle_unit",
+      "transparentPaddingCrop": [
+        0,
+        0,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/113801.webp",
+      "outputSize": [
+        256,
+        166
+      ],
+      "outputSha256": "3c527e2c11f97d6344e2deeb01f7ed0a0a14354a46a168f41fb72e7b11b0fb23",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/100303_thumbnail",
+      "bundleSha256": "b99cce5d93bf8c62076c2cf9bc996a2005339c385f182e4ca2e12b3446cf3a81",
+      "sourceType": "Texture2D",
+      "pathId": "-5667211895119523094",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "26b990dc729ce3b353713f447eec22dfa52b93b964d24dd0f5ff3762f476cd1e",
+      "modelId": "113901",
+      "style3dCharacterMstId": 100303,
+      "resourceName": "chara_113901_battle_unit",
+      "transparentPaddingCrop": [
+        24,
+        0,
+        438,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/113901.webp",
+      "outputSize": [
+        256,
+        183
+      ],
+      "outputSha256": "80b5b4b57f6eac43ddfde44324488f8124323095aeeac496ff3d4551ab5e7092",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/114401_thumbnail",
+      "bundleSha256": "c2efc869414c2cca908a81677bdea3cbc5d511c30ff5a499c46034b38c44a488",
+      "sourceType": "Texture2D",
+      "pathId": "130588218022751049",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "7c6b617d24c4f3c4339fb132ba4c8bb2c6c7c22d290fd3e224a24f88e5deca02",
+      "modelId": "114401",
+      "style3dCharacterMstId": 114401,
+      "resourceName": "chara_114401_battle_unit",
+      "transparentPaddingCrop": [
+        132,
+        20,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/114401.webp",
+      "outputSize": [
+        256,
+        218
+      ],
+      "outputSha256": "fcafd166e6e91b4926896b00d8c83056c8a3b355579b252f1fe3e465867459db",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/114501_thumbnail",
+      "bundleSha256": "49637d777a0a49dfce67fdffe4b4b8d110aa6bbd2147509c35594afd6066b429",
+      "sourceType": "Texture2D",
+      "pathId": "-1197682610930783912",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "98c1da03c1ca3d7871d3586115bff9ba5d8a539ae0f03a15fe1e74e245a0f6f8",
+      "modelId": "114501",
+      "style3dCharacterMstId": 114501,
+      "resourceName": "chara_114501_battle_unit",
+      "transparentPaddingCrop": [
+        84,
+        0,
+        420,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/114501.webp",
+      "outputSize": [
+        256,
+        226
+      ],
+      "outputSha256": "8f022cbab6f9d15b5c93f9a1f3dc09602737e784cdf0d9ceb1ed76e53f63850b",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/114601_thumbnail",
+      "bundleSha256": "adf58e87af1158ea4d96b9644c4d708c6892273acdace44767fdbf8932e44158",
+      "sourceType": "Texture2D",
+      "pathId": "6201301520344438372",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "c9e8808cfd24b81f39fbb0794d3d2583915298d6072e7319a5fdd12bdaff7c39",
+      "modelId": "114601",
+      "style3dCharacterMstId": 114601,
+      "resourceName": "chara_114601_battle_unit",
+      "transparentPaddingCrop": [
+        102,
+        20,
+        366,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/114601.webp",
+      "outputSize": [
+        245,
+        256
+      ],
+      "outputSha256": "573f49c20ec5f3249cfccd484b12a292b1499f91327ebb3f4704d6788dca6b4a",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/114801_thumbnail",
+      "bundleSha256": "8729016eeb64c569c8802b3f66c205c45f313374a7fece0fb770555323654efb",
+      "sourceType": "verified-decoded-Texture2D",
+      "pathId": "6351216128246582708",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "7a09ea38576a15c90853dd8acc53e392a248acecc3ba99b465f585028d7c135d",
+      "modelId": "114801",
+      "style3dCharacterMstId": 114801,
+      "resourceName": "chara_114801_model",
+      "transparentPaddingCrop": [
+        61,
+        55,
+        398,
+        289
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/114801.webp",
+      "outputSize": [
+        256,
+        178
+      ],
+      "outputSha256": "d43e462bd00e476df9328c6d6cccb4a8693b5588caef629785ef774ac9951468",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c",
+      "sourcePngSha256": "2fa52bd3b283e62aa6f1c0100832a74490a05a5c212e304507a06bd1e7fb9ef2"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/114901_thumbnail",
+      "bundleSha256": "84a7e5a067a76472abbfcb0952c548449a98e6b283af65045e403e5b2c6e7482",
+      "sourceType": "Texture2D",
+      "pathId": "1789848581318681706",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "4636045c1646263403ca8481a93a76a089a4b29506cb5f7b22400e063f14cca8",
+      "modelId": "114901",
+      "style3dCharacterMstId": 114901,
+      "resourceName": "chara_114901_battle_unit",
+      "transparentPaddingCrop": [
+        66,
+        0,
+        348,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/114901.webp",
+      "outputSize": [
+        244,
+        256
+      ],
+      "outputSha256": "f376fcbbcd33cf91fd7f5c084bc5074e3cf8e83761814ceb97b89139ac941fef",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/115001_thumbnail",
+      "bundleSha256": "46febb2610d5e58f621e0aab40b6a6b418e5f5c510e811adbcb39daea82b434f",
+      "sourceType": "Texture2D",
+      "pathId": "-6092008470184879911",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "e5c965bd8d79e113820886f9f9f7d81272965f89bc96b14a19de2c47efdb5972",
+      "modelId": "115001",
+      "style3dCharacterMstId": 115001,
+      "resourceName": "chara_115001_battle_unit",
+      "transparentPaddingCrop": [
+        114,
+        0,
+        456,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/115001.webp",
+      "outputSize": [
+        256,
+        222
+      ],
+      "outputSha256": "4cf4e42c6467763a824e9999b29889b1fad7acf545e952498bc32bc935632b30",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/115101_thumbnail",
+      "bundleSha256": "dd38e5f9bcbe240caa15a2a23c66f3fe902ab61fba8db9305af6c626be124885",
+      "sourceType": "Texture2D",
+      "pathId": "-1830957588881947512",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "69bf09429e809803aabf32ef79b838dcc48cb76082b8db763168f137e1a966a9",
+      "modelId": "115101",
+      "style3dCharacterMstId": 115101,
+      "resourceName": "chara_115101_battle_unit",
+      "transparentPaddingCrop": [
+        96,
+        14,
+        366,
+        296
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/115101.webp",
+      "outputSize": [
+        245,
+        256
+      ],
+      "outputSha256": "4df4483dd792619bc1f3893018c724b81fd3e8931abed7c818663919427d4b59",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    },
+    {
+      "sourceBundle": "AssetBundles/home/doll_house_character/thumbnail_3d/115201_thumbnail",
+      "bundleSha256": "f44e0ccd1d607f4089a9db068880d81a8703903b3dc4eb3e31b80834069a64d7",
+      "sourceType": "Texture2D",
+      "pathId": "-1589975671117365338",
+      "unityFallback": "2022.3.62f2",
+      "sourceSize": [
+        456,
+        296
+      ],
+      "sourcePixelSha256": "70b132032f3b013b71a8fc27475c0b012cb2c324125a44e721c931d2ab750097",
+      "modelId": "115201",
+      "style3dCharacterMstId": 115201,
+      "resourceName": "chara_115201_battle_unit",
+      "transparentPaddingCrop": [
+        150,
+        26,
+        306,
+        260
+      ],
+      "output": "/ui-thumbnails/runtime-selection/characters/115201.webp",
+      "outputSize": [
+        156,
+        234
+      ],
+      "outputSha256": "fad05d82f87af2da7b665b57b3f4365bda291c57dce4d704f7e4fab23e13b7ea",
+      "verifiedCurrentMasterRevision": "3d98d4e8583896341a0e661c713bcc5c"
+    }
+  ],
+  "scenes": [
+    {
+      "sourceBundle": "AssetBundles/gallery/library/diorama_background/bg_3d_641_00_01_001_originall",
+      "bundleSha256": "5e5d74528b9a178712595803c5785d930a35c9bc737db03a1ace5f7dd4537f1f",
+      "sourceType": "Texture2D",
+      "pathId": "-2444439529843420856",
+      "unityFallback": "2022.3.62f2",
+      "catalogRevision": "n-Kb",
+      "decodedBundleSha256": "32ad7e4a6c128e42c1a10de2988d48a44c14609033648b0defde1458e508f9d7",
+      "decodeProvenance": "held-official-catalog-matched-per-file-metadata",
+      "sourceSize": [
+        2048,
+        1000
+      ],
+      "sourcePixelSha256": "4a785a8271f3a8546f1ba8528da4612935a6a2c4f400feb1d8e61b10f77b500c",
+      "sceneId": "gallery-diorama-diorama-background-bg-3d-641-00-01-001-originall",
+      "backgroundResourceName": "bg_3d_641_00_01_001_originall",
+      "output": "/ui-thumbnails/runtime-selection/scenes/native/gallery-diorama-diorama-background-bg-3d-641-00-01-001-originall.webp",
+      "outputSize": [
+        320,
+        156
+      ],
+      "outputSha256": "e689675d87285a42ce1316f70541dac13ebbb00e524686ea40183b6825d4d1f5"
+    }
+  ],
+  "unresolved": [],
+  "portraitVersion": "official-home-3d-upper-body",
+  "sourceRegion": "held-jp-android",
+  "onlineJapaneseUpdate": false,
+  "requestedAppearance": "Official 3D upper-body previews, transparent padding cropped without clipping the figure",
+  "nameChanges": [
+    {
+      "id": 411011,
+      "before": null,
+      "after": "【天辺の姿】銀の魔女 ボス階層"
+    },
+    {
+      "id": 411012,
+      "before": null,
+      "after": "【天辺越えの姿】銀の魔女 ボス階層"
+    },
+    {
+      "id": 411111,
+      "before": null,
+      "after": "【天辺の姿】薔薇園の魔女 ボス階層"
+    },
+    {
+      "id": 411112,
+      "before": null,
+      "after": "【天辺越えの姿】薔薇園の魔女 ボス階層"
+    },
+    {
+      "id": 910301,
+      "before": null,
+      "after": "無限の白い闇の空間"
+    }
+  ],
+  "twComparison": {
+    "masterRevision": "a06b42aff83728729bb06ade96d6b0b5",
+    "comparedAt": "2026-10-04",
+    "enemyNewUsableNames": 0,
+    "sceneNewUsableNames": 0,
+    "reason": "Current Viewer already contains every usable name in the refreshed TW enemy/diorama tables."
+  },
+  "sourceTables": {
+    "JP": {
+      "getStyle3dCharacterMstList": "129bf511fa22d804ee3b4fe126422f99aa6c5de4110eff8f04d813af8c2d5d0c",
+      "getDioramaBackgroundMstList": "a232e7d6818696c37b3cee1340baa418c238d207f9b60b9c868b87342c3cfc1a",
+      "getEnemyMstList": "fb875bd62efe06c59f5d4fd19c96d2f380779ecb234b866e56ca8311929a48a6",
+      "getEnemyProfileMstList": "71ebd327129855f942ea70c97bf9d64cb12a27c9ab73bf61e830db336f7c10b1"
+    },
+    "TW": {
+      "getStyle3dCharacterMstList": "bbc9686bc863052b0d698c1ed9a3cad0ba42e3fc934cc262a45a603c4a832fc1",
+      "getDioramaBackgroundMstList": "6e52aebcbef5aa8d4bf12480396b7b42e063928acd8856da709d7aed32694cbc",
+      "getEnemyMstList": "866775d11dae5996efbc169a9482266757727b52e6a84e109548fde17d9582b2",
+      "getEnemyProfileMstList": "c7f4755e982e1adcd328e551a810ad8b8fcbc8606d0b9ff741fb6c2688a7790f"
+    }
+  },
+  "enemyAudit": {
+    "records": 516,
+    "distinctThumbnails": 495,
+    "missingFiles": 0,
+    "newNames": 0
+  },
+  "newDioramaThumbnailBindings": [
+    {
+      "id": 411011,
+      "resourceName": "bg_3d_605_14_00_001",
+      "output": "/ui-thumbnails/runtime-selection/scenes/diorama/411011.webp"
+    },
+    {
+      "id": 411012,
+      "resourceName": "bg_3d_605_15_00_001",
+      "output": "/ui-thumbnails/runtime-selection/scenes/diorama/411012.webp"
+    },
+    {
+      "id": 411111,
+      "resourceName": "bg_3d_600_14_00_001",
+      "output": "/ui-thumbnails/runtime-selection/scenes/diorama/411111.webp"
+    },
+    {
+      "id": 411112,
+      "resourceName": "bg_3d_600_15_00_001",
+      "output": "/ui-thumbnails/runtime-selection/scenes/diorama/411112.webp"
+    }
+  ],
+  "currentJpVerification": {
+    "masterRevision": "3d98d4e8583896341a0e661c713bcc5c",
+    "assetRevision": "8929198713b2ee622f4131b8a25dc4e5",
+    "portraitRows": 99,
+    "updatedPortraitModelIds": [
+      "111601",
+      "114801"
+    ],
+    "usableEnemyNameUpdates": 0,
+    "sceneNameUpdatesBeyondHeldSupplement": 0,
+    "officialAbsentEnemyThumbnailIds": [
+      650061,
+      650062,
+      650063
+    ],
+    "decoderAuthority": "Game-Madoka_Magica_Magia_Exedra_jp.py; producer decoder-parity.json",
+    "scope": "Existing Viewer-supported resources only; no model, shader, physics or audio replacement."
+  }
+}

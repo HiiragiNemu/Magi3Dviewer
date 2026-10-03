@@ -67,6 +67,14 @@ function mount(instances) {
     './localization/zhCN': { translateUiText: text => text },
     './scene': { scene: { characters: [] } },
   }
+  const search={exports:{}}
+  const searchCode=ts.transpileModule(readFileSync('src/viewer/resourceSearch.ts','utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText
+  new Function('module','exports',searchCode)(search,search.exports)
+  imports['./resourceSearch']=search.exports
+  const sizing={exports:{}}
+  const sizingCode=ts.transpileModule(readFileSync('src/viewer/resourcePanelSizing.ts','utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText
+  new Function('require','module','exports','document','window','MutationObserver','getComputedStyle',sizingCode)(name=>imports[name],sizing,sizing.exports,document,window,window.MutationObserver,window.getComputedStyle.bind(window))
+  imports['./resourcePanelSizing']=sizing.exports
   const source = readFileSync(resolve(process.env.S6_TEST_ROOT ?? dirname(fileURLToPath(import.meta.url)), 'src/viewer/enemyPanel.ts'), 'utf8')
   const { outputText } = ts.transpileModule(source, {
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS },
