@@ -3,20 +3,6 @@ const phaseLabels = {
     discovering: '发现资源', downloading: '下载资源', unpacking: '解包资源',
     decompressing: '解压资源', decoding: '解码模型与纹理', assembling: '组装场景与材质', complete: '准备完成',
 }
-/** Presentation only. Never rewrite the URL passed to the resource loader. */
-export function loadingResourceLabel(name: string): string {
-    const source = name.toLowerCase()
-    if (/visualroot|\.fbx(?:[.-]|$)|\.fbxdata$/.test(source)) return '角色模型与骨骼'
-    if (/home[-_]?expressions/.test(source)) return '角色表情数据'
-    if (/home[-_]?animations|home[-_]?actions/.test(source)) return '角色动作数据'
-    if (/baked[-_]?normal/.test(source)) return '模型法线数据'
-    if (/eyehighlight/.test(source)) return '眼部高光纹理'
-    if (/face.*ctrl|face.*control/.test(source)) return '面部控制纹理'
-    if (/\.(?:png|jpe?g|webp|dds|ktx2?)(?:$|[?#])/.test(source)) return '角色与场景纹理'
-    if (/\.zip(?:$|[?#])/.test(source)) return '资源包'
-    if (/\.json(?:[.-]|$)/.test(source)) return '资源配置数据'
-    return name ? '模型与场景资源' : '正在读取资源定义…'
-}
 function bytesLabel(value: number) {
     const units = ['B', 'KB', 'MB', 'GB']; let unit = 0; let n = Math.max(0, value)
     while (n >= 1024 && unit < 3) { n /= 1024; unit++ }
@@ -26,7 +12,7 @@ export function createLoadingProgressPanel(doc: Document) {
     const card = doc.getElementById('load-progress-card')!
     const title = doc.getElementById('load-progress')!
     const current = doc.getElementById('load-progress-file')!
-    // Technical filenames in the tooltip must not be passed through the
+    // Original resource filenames must not be passed through the
     // animation/bone-name translator (VisualRoot is not a UI bone label).
     current.dataset.i18nIgnore = 'true'
     const track = doc.getElementById('load-progress-track')!
@@ -47,9 +33,9 @@ export function createLoadingProgressPanel(doc: Document) {
         const unpacked = state.phase === 'unpacking' && state.archiveFiles !== undefined ? ` · 解包 ${state.unpackedFiles} / ${state.archiveFiles}` : ''
         current.textContent = state.status === 'error'
             ? `${state.currentName ? state.currentName + ' · ' : ''}${state.message}`
-            : `${loadingResourceLabel(state.currentName)}${unpacked}`
+            : `${state.currentName || '正在读取资源定义…'}${unpacked}`
         current.title = state.currentName || current.textContent
-        count.textContent = `已读取 ${state.completedFiles} / ${state.totalFiles} 项资源`
+        count.textContent = `${state.completedFiles} / ${state.totalFiles} 个已发现文件`
         bytes.textContent = `${bytesLabel(state.downloadedBytes)} / ${state.totalBytes === undefined ? '总量待确认' : bytesLabel(state.totalBytes)}`
         // Resource ratio is measured. Assembly completion is an independent terminal event.
         if (state.ratio === undefined) {

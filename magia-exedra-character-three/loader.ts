@@ -1,4 +1,4 @@
-import { getLoadingTask, startLoadingTask, yieldLoadingFrame } from './loadingProgress.ts'
+import { getLoadingTask, registerLoadingResourceName, startLoadingTask, yieldLoadingFrame } from './loadingProgress.ts'
 import { resolveNativeAngelRingReference, resolveNativeFaceDirectionReference } from './nativeCharacterController';
 import * as THREE from 'three';
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
@@ -637,6 +637,9 @@ export async function loadCharacter(
     files: Record<string, string>,
     callbacks?: Partial<LoadCharacterCallbacks>,
 ): Promise<MagiaExedraCharacter3D> {
+    // The file map retains source names even when the build hashes asset URLs.
+    // Register before the first request; this changes telemetry, never routing.
+    for (const [sourcePath, url] of Object.entries(files)) registerLoadingResourceName(url, sourcePath)
     const signal = callbacks?.signal ?? new AbortController().signal
     const previousLoadingTask = getLoadingTask(signal)
     const inheritedLoadingTask = previousLoadingTask?.snapshot().status === 'loading' ? previousLoadingTask : undefined

@@ -42,4 +42,8 @@ Native cloud-shader diagnostic programs and volume metadata are now versioned un
 
 ## Cloud deployment credential gate
 
-Run 37121201231 confirmed that magius3dviewer-live currently has neither Cloudflare API token nor account ID. Configure the two environment Secrets named in README to enable future cloud publication. Website build/validation is independent of this gate, but production publishing still requires it. Do not upload the developer OAuth session as a long-lived repository credential. The manual source-equivalent shortcut no longer runs automatically alongside a full deployment.
+Rechecked 2026-10-04: magius3dviewer-live has CLOUDFLARE_ACCOUNT_ID, but CLOUDFLARE_API_TOKEN is still missing. Run 37138792390 therefore failed its configuration gate. Configure the persistent API-token Secret named in README to enable future cloud publication. Website build/validation is independent of this gate, but production publishing still requires it. Do not upload the developer OAuth session as a long-lived repository credential. The manual source-equivalent shortcut no longer runs automatically alongside a full deployment.
+
+## Concurrent AgentDock changes and loading review
+
+See docs/reports/2026-10-04-agentdock-loading-review.md. The 79 native-image backgrounds and three cloud-research payload files remain uncommitted and excluded from deployment. Their existing browser evidence includes a timeout; passing unit tests and payload hashes alone does not approve integration. Original resource filenames are retained rather than replaced with category labels.
